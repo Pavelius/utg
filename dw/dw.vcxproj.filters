@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{41277d82-dc45-4020-8691-3550198f0f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{d4fdf618-491b-4d70-a4f4-50f641be5ab9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="action.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="move.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="property.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="race.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="statable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>Data</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

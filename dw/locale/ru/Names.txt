@@ -1,0 +1,5 @@
+﻿AppTitle: Мир подземелья
+Cancel: Отмена
+CharacterGeneration: Генерация персонажа
+No: Нет
+Yes: Да
