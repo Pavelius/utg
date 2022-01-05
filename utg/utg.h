@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "crt.h"
 #include "point.h"
 #include "variant.h"
@@ -16,4 +17,11 @@ void paint();
 int run(fnevent proc);
 void tips();
 }
+}
+namespace logs {
+extern const char* url;
+extern const char* header;
+const char* getchooseprompt(const char* id);
+void* choose(const char* id, const char* cancel);
+int choosei(const char* id, const char* cancel);
 }

@@ -1,5 +1,15 @@
 ﻿AppTitle: Мир подземелья
 Cancel: Отмена
 CharacterGeneration: Генерация персонажа
+ChooseClass: Выбирайте класс вашего персонажа
+ChooseRace: Выбирайте расу персонажа
+Cleric: Клерик
+Dwarf: Дварф
+Elf: Эльф
+Fighter: Воин
+Halfling: Полурослик 
+Human: Человек
 No: Нет
+Theif: Вор
+Wizard: Волшебник
 Yes: Да

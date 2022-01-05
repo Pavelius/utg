@@ -1,7 +1,7 @@
-#include "answers.h"
 #include "crt.h"
 #include "flagable.h"
 #include "gender.h"
+#include "objecta.h"
 #include "utg.h"
 
 #pragma once
@@ -39,7 +39,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Action, Item, Move, Tag,
+	Action, Class, Item, Move, Race, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -52,6 +52,9 @@ typedef flagable<1 + Halfling / 8> racea;
 typedef char abilitya[Charisma + 1];
 
 struct racei {
+	const char* id;
+};
+struct classi {
 	const char* id;
 };
 struct tagi {

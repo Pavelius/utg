@@ -1,16 +1,14 @@
 #include "main.h"
 
-static void test_a1() {
-}
-
-static void main_game() {
-	answers an;
-	an.add(test_a1, "Тестирование");
-	an.choose("Что будете делать?", getnm("Cancel"), true, "meet", -1, getnm("CharacterGeneration"));
+static void generate_character() {
+	logs::header = getnm("CharacterGeneration");
+	logs::url = "meet";
+	auto vclass = logs::choosei("Class", getnm("Cancel"));
+	auto vrace = logs::choosei("Race", getnm("Cancel"));
 }
 
 int main(int argc, char* argv[]) {
-	return draw::utg::run(main_game);
+	return draw::utg::run(generate_character);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

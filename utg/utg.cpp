@@ -81,9 +81,13 @@ void draw::answerbt(int i, const void* pv, const char* title) {
 	};
 	if(i >= (int)(sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0])))
 		i = sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0]) - 1;
+	auto push_caret = caret;
+	auto push_width = width;
 	hotkeybutton(answer_hotkeys[i]);
 	if(button(title, answer_hotkeys[i], buttonfd))
 		execute(buttonparam, (long)pv);
+	caret.x = push_caret.x;
+	width = push_width;
 }
 
 void draw::texth2(const char* title) {
@@ -104,7 +108,7 @@ void draw::texth2(const char* title) {
 
 static int getcolumns(const answers& an) {
 	auto divider = an.getcount() % 2;
-	if(an.getcount() <= 4 && divider > 0)
+	if(an.getcount() <= 14)
 		return 1;
 	for(auto& e : an) {
 		auto len = zlen(e.text);
@@ -164,8 +168,12 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		}
 		caret.x = x1; caret.y = y2;
 		width = push_width_normal;
-		if(cancel_text)
+		if(cancel_text) {
+			auto push_fore = fore;
+			fore = fore.mix(colors::h3, 128);
 			answerbt(elements.getcount(), 0, cancel_text);
+			fore = push_fore;
+		}
 		width = push_width;
 		if(afterpaint)
 			afterpaint();

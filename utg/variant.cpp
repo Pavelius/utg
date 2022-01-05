@@ -54,6 +54,18 @@ int varianti::found(const char* id) const {
 	return i;
 }
 
+const varianti* varianti::getsource(const char* id) {
+	if(id) {
+		for(auto& e : bsdata<varianti>()) {
+			if(!e.source || !e.id)
+				continue;
+			if(strcmp(e.id, id) == 0)
+				return &e;
+		}
+	}
+	return 0;
+}
+
 template<> variant::variant(const char* v) : u(0) {
 	if(v) {
 		for(auto& e : bsdata<varianti>()) {

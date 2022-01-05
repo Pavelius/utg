@@ -43,5 +43,8 @@
     <Text Include="errors.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="rules\basic.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

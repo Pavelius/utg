@@ -15,6 +15,7 @@ struct varianti {
 	array*				source;
 	int                 key_count;
 	unsigned			flags;
+	static const varianti* getsource(const char* id);
 	int					found(const char* id) const;
 	constexpr bool		is(unsigned v) const { return (flags & FG(v)) != 0; }
 	constexpr bool		isnamed() const { return !is(NotFoundByName); }

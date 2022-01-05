@@ -70,3 +70,10 @@ DungeonRations weight(1) coins(3) uses(5)
  tags Ration
 ElvenBread weight(1) coins(10) uses(7)
  tags Ration
+
+#Class
+
+Cleric
+Fighter
+Theif
+Wizard

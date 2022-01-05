@@ -167,8 +167,9 @@
     <ClCompile Include="stringact.cpp" />
     <ClCompile Include="stringbuilder.cpp" />
     <ClCompile Include="szdup.cpp" />
+    <ClCompile Include="utg_logs.cpp" />
     <ClCompile Include="variant.cpp" />
-    <ClCompile Include="varianta.cpp" />
+    <ClCompile Include="objecta.cpp" />
     <ClCompile Include="win_draw.cpp" />
     <ClCompile Include="win_io_file.cpp" />
     <ClCompile Include="zip.cpp" />
@@ -193,7 +194,7 @@
     <ClInclude Include="stringact.h" />
     <ClInclude Include="stringbuilder.h" />
     <ClInclude Include="variant.h" />
-    <ClInclude Include="varianta.h" />
+    <ClInclude Include="objecta.h" />
     <ClInclude Include="win.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

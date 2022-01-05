@@ -11,10 +11,17 @@ BSDATAD(variant)
 BSMETA(actioni) = {
 	BSREQ(id),
 	{}};
+BSMETA(classi) = {
+	BSREQ(id),
+	{}};
+BSDATAC(classi, 16)
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(movei) = {
+	BSREQ(id),
+	{}};
+BSMETA(racei) = {
 	BSREQ(id),
 	{}};
 BSMETA(itemi) = {
@@ -28,8 +35,10 @@ BSDATAC(itemi, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Action", VRSTD(actioni)},
+	{"Class", VRSTD(classi)},
 	{"Item", VRSTD(itemi)},
 	{"Move", VRSTD(movei)},
+	{"Race", VRSTD(racei)},
 	{"Tag", VRSTD(tagi)},
 };
 assert_enum(varianti, Tag)

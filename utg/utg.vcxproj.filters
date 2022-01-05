@@ -84,7 +84,7 @@
     <ClCompile Include="variant.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="varianta.cpp">
+    <ClCompile Include="objecta.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="win_draw.cpp">
@@ -109,6 +109,9 @@
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="surface_serial.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="utg_logs.cpp">
       <Filter>Support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,7 +164,7 @@
     <ClInclude Include="variant.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="varianta.h">
+    <ClInclude Include="objecta.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="win.h">
