@@ -1,5 +1,7 @@
 #include "main.h"
 
+void initialize_png();
+
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
@@ -9,6 +11,7 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
+	initialize_png();
 	return draw::utg::run(generate_character);
 }
 

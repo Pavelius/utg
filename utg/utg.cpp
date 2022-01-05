@@ -190,7 +190,7 @@ void draw::avatar(const char* id) {
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	rectb();
+	strokeout();
 }
 
 void draw::bar(int value, int maximum) {
@@ -240,6 +240,17 @@ void draw::utg::paint() {
 	fore = push_fore;
 }
 
+static void infopaint() {
+	caret.y += metrics::padding;
+	avatar("mistra");
+	caret.x += width + metrics::padding;
+	avatar("gordek");
+	caret.x += width + metrics::padding;
+	avatar("airel");
+	caret.x += width + metrics::padding;
+	avatar("airel");
+}
+
 int draw::utg::run(fnevent proc) {
 	if(!proc)
 		return -1;
@@ -249,6 +260,7 @@ int draw::utg::run(fnevent proc) {
 	check_translation();
 	if(log::geterrors())
 		return -1;
+	answers::beforepaint = infopaint;
 	pbackground = paint;
 	awindow.flags = 0;
 	initialize(getnm("AppTitle"));
