@@ -10,7 +10,30 @@ void set_dark_theme();
 void set_light_theme();
 
 bool draw::buttonfd(const char* title) {
-	return false;
+	auto push_caret = caret;
+	textfs(title);
+	textf(title);
+	caret = push_caret;
+	auto hilited = ishilite();
+	if(hilited)
+		hot.cursor = cursor::Hand;
+	return hilited;
+}
+
+static void radiobutton(const char* title) {
+	auto push_fore = fore;
+	fore = fore.mix(colors::form, 192);
+	text(title);
+	auto dx = textw('0') * 3;
+	caret.x += dx; width -= dx;
+	fore = push_fore;
+}
+
+static void hotkeybutton(char key) {
+	char temp[16]; stringbuilder sb(temp);
+	sb.add(key);
+	sb.add(")");
+	radiobutton(temp);
 }
 
 void draw::answerbt(int i, const void* pv, const char* title) {
@@ -20,6 +43,7 @@ void draw::answerbt(int i, const void* pv, const char* title) {
 	};
 	if(i >= (int)(sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0])))
 		i = sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0]) - 1;
+	hotkeybutton(answer_hotkeys[i]);
 	if(button(title, answer_hotkeys[i], buttonfd))
 		execute(buttonparam, (long)pv);
 	//if(pv == hilite_object) {
@@ -91,7 +115,8 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	auto push_width = width;
 	if(columns == -1)
 		columns = getcolumns(*this);
-	auto column_width = getwidth() - 320 - (metrics::padding + metrics::border);
+	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border) * 3;
+	auto column_width = standart_width;
 	if(columns > 1)
 		column_width = column_width / columns - metrics::border;
 	while(ismodal()) {
@@ -99,21 +124,19 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pbackground();
 		if(pwindow)
 			pwindow();
-		auto push_caret = caret;
-		auto push_width = width;
 		setposru();
-		texth2(header);
 		imagev(resid);
 		if(beforepaint)
 			beforepaint();
+		setposlu();
+		width = standart_width;
+		texth2(header);
 		auto index = 0;
 		auto y1 = caret.y, x1 = caret.x;
 		auto y2 = caret.y;
 		auto next_column = (elements.getcount() + columns - 1) / columns;
 		auto push_width_normal = width;
 		width = column_width;
-		auto push_padding = metrics::padding;
-		metrics::padding = 0;
 		for(auto& e : *this) {
 			answerbt(index, e.value, e.text);
 			if(caret.y > y2)
@@ -124,13 +147,10 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			}
 			index++;
 		}
-		metrics::padding = push_padding;
 		caret.x = x1; caret.y = y2;
 		width = push_width_normal;
-		if(cancel_text) {
-			if(button(cancel_text, KeyEscape, buttonfd))
-				execute(buttoncancel);
-		}
+		if(cancel_text)
+			answerbt(elements.getcount(), 0, cancel_text);
 		width = push_width;
 		if(afterpaint)
 			afterpaint();
@@ -207,6 +227,7 @@ int draw::utg::run(fnevent proc) {
 	if(log::geterrors())
 		return -1;
 	pbackground = paint;
+	awindow.flags = 0;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();
