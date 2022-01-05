@@ -20,6 +20,44 @@ bool draw::buttonfd(const char* title) {
 	return hilited;
 }
 
+static void stroke() {
+	auto push_fore = fore;
+	fore = colors::border;
+	rectb();
+	fore = push_fore;
+}
+
+static void strokeout() {
+	rectpush push;
+	caret.x -= 1;
+	caret.y -= 1;
+	width += 1;
+	height += 1;
+	stroke();
+}
+
+static void stroke(const sprite* p, int frame) {
+	auto push_width = width;
+	auto push_height = height;
+	auto& f = p->get(0);
+	width = f.sx;
+	height = f.sy;
+	strokeout();
+	width = push_width;
+	height = push_height;
+}
+
+static void imagev(const char* resid) {
+	if(!resid)
+		return;
+	auto p = gres(resid, "art/images");
+	if(!p)
+		return;
+	image(p, 0, 0);
+	stroke(p, 0);
+	caret.y += p->get(0).sy;
+}
+
 static void radiobutton(const char* title) {
 	auto push_fore = fore;
 	fore = fore.mix(colors::form, 192);
@@ -46,11 +84,6 @@ void draw::answerbt(int i, const void* pv, const char* title) {
 	hotkeybutton(answer_hotkeys[i]);
 	if(button(title, answer_hotkeys[i], buttonfd))
 		execute(buttonparam, (long)pv);
-	//if(pv == hilite_object) {
-	//	hot.cursor = cursor::Hand;
-	//	if(hot.key==MouseLeft && !hot.pressed)
-	//		execute(buttonparam, (long)pv);
-	//}
 }
 
 void draw::texth2(const char* title) {
@@ -67,31 +100,6 @@ void draw::texth2(const char* title) {
 	caret.y += texth() + metrics::border * 2 + metrics::padding;
 	height = push_height;
 	font = push_font;
-}
-
-static void stroke(const sprite* p, int frame) {
-	auto push_width = width;
-	auto push_height = height;
-	auto push_fore = fore;
-	auto& f = p->get(0);
-	width = f.sx;
-	height = f.sy;
-	fore = colors::border;
-	rectb();
-	fore = push_fore;
-	width = push_width;
-	height = push_height;
-}
-
-void imagev(const char* resid) {
-	if(!resid)
-		return;
-	auto p = gres(resid, "art/images");
-	if(!p)
-		return;
-	image(p, 0, 0);
-	stroke(p, 0);
-	caret.y += p->get(0).sy;
 }
 
 static int getcolumns(const answers& an) {
@@ -131,6 +139,13 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		setposlu();
 		width = standart_width;
 		texth2(header);
+		if(title) {
+			auto push_fore = fore;
+			fore = colors::h3;
+			textf(title);
+			fore = push_fore;
+			caret.y += metrics::padding;
+		}
 		auto index = 0;
 		auto y1 = caret.y, x1 = caret.x;
 		auto y2 = caret.y;
