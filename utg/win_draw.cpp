@@ -277,10 +277,12 @@ void draw::syscursor(bool enable) {
 void draw::create(int x, int y, int width, int height, unsigned flags, int bpp) {
 	if(!bpp)
 		bpp = draw::canvas->bpp;
+	auto screen_w = GetSystemMetrics(SM_CXFULLSCREEN);
+	auto screen_h = GetSystemMetrics(SM_CYFULLSCREEN);
 	if(!width)
-		width = (GetSystemMetrics(SM_CXFULLSCREEN) / 3) * 2;
+		width = (screen_w / 3) * 2;
 	if(!height)
-		height = (GetSystemMetrics(SM_CYFULLSCREEN) / 3) * 2;
+		height = (screen_h / 3) * 2;
 	// custom
 	unsigned dwStyle = WS_CAPTION | WS_SYSMENU; // Windows Style;
 	if(flags&WFResize)
@@ -301,9 +303,9 @@ void draw::create(int x, int y, int width, int height, unsigned flags, int bpp) 
 	if(minimum.y > height)
 		minimum.y = height;
 	if(x == -1)
-		x = (GetSystemMetrics(SM_CXFULLSCREEN) - minimum.x) / 2;
+		x = (screen_w - minimum.x) / 2;
 	if(y == -1)
-		y = (GetSystemMetrics(SM_CYFULLSCREEN) - minimum.y) / 2;
+		y = (screen_h - minimum.y) / 2;
 	// Update current surface
 	if(draw::canvas)
 		draw::canvas->resize(width, height, bpp, true);

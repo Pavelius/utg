@@ -3,8 +3,9 @@
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
-	auto vclass = logs::choosei("Class", getnm("Cancel"));
-	auto vrace = logs::choosei("Race", getnm("Cancel"));
+	logs::interactive = true;
+	creature e;
+	e.generate();
 }
 
 int main(int argc, char* argv[]) {

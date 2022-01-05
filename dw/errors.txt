@@ -1,6 +1,3 @@
 ﻿In file `Names.txt`:
- Define translate for `ChooseClass`
- Define translate for `Cleric`
- Define translate for `Fighter`
- Define translate for `Theif`
- Define translate for `Wizard`
+ Define translate for `BagOfBooks`
+ Define translate for `LeatherArmor`

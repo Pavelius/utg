@@ -1,15 +1,49 @@
-﻿AppTitle: Мир подземелья
+﻿AdventuringGear: Инструменты
+Antitoxin: Противоядие
+AppTitle: Мир подземелья
+BagOfBooks: Сумка с книгами
+Bandages: Бинты
+BundleArrows: Стрелы
 Cancel: Отмена
+ChainMailArmor: Кольчуга
+Chaotic: Хаотичный
 CharacterGeneration: Генерация персонажа
-ChooseClass: Выбирайте класс вашего персонажа
-ChooseRace: Выбирайте расу персонажа
+ChooseAlignment: Каков будет его характер?
+ChooseArmament: Что будет вашим оружием?
+ChooseClass: Кто будет ваш персонаж?
+ChooseDefences: Что будет служить вам защитой?
+ChooseGears: Что вы таскаете с собой?
+ChooseGender: Кто вы?
+ChooseRace: Из каких краев вы родом?
+ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Клерик
+Dagger: Кинжал
+DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
+Evil: Злой
+Female: Женщина
 Fighter: Воин
+Good: Добрый
 Halfling: Полурослик 
+HealingPotion: Лечебное зелье
 Human: Человек
+Knife: Нож
+Lawful: Законопослушный
+LeatherArmor: Кожанная броня
+Mace: Булава
+Male: Мужчина
+Neutral: Нейтральный
 No: Нет
+NoGender: Безполый
+PoulticesAndHerbs: Травы и припарки
+RaggedBow: Лук
+Rapier: Рапира
+ScaleMailArmor: Хаулберк
+Shield: Щит
+ShortSword: Короткий меч
+Staff: Посох
 Theif: Вор
+Warhammer: Молот
 Wizard: Волшебник
 Yes: Да

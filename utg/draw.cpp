@@ -63,7 +63,7 @@ static fnevent		next_proc;
 extern rect			sys_static_area;
 static char			tips_text[4096];
 stringbuilder		draw::tips_sb(tips_text);
-awindowi			draw::awindow = {100, 100, 800, 600, 160, WFMinmax | WFResize};
+awindowi			draw::awindow = {-1, -1, 800, 600, 160, WFMinmax | WFResize};
 
 long distance(point p1, point p2) {
 	auto dx = p1.x - p2.x;

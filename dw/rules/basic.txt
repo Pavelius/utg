@@ -44,12 +44,14 @@ DuelingRapier weight(2) coins(50) pierce(1)
  tags Close Precise
 
 LeatherArmor weight(1) coins(10) armor(1)
+ChainMailArmor weight(1) coins(20) armor(1)
 ScaleMailArmor weight(3) coins(50) armor(2)
  tags Clumsy
 PlateMailArmor weight(4) coins(350) armor(3)
  tags Clumsy
 Shield weight(2) coins(15) armor(1)
 
+Antitoxin weight(0) coins(20)
 Bandages weight(0) coins(5) uses(5) heal(4)
  tags Slow
 PoulticesAndHerbs weight(1) coins(10) uses(2) heal(7)
@@ -71,9 +73,97 @@ DungeonRations weight(1) coins(3) uses(5)
 ElvenBread weight(1) coins(10) uses(7)
  tags Ration
 
+#Pack
+
+ClericArmor1
+ elements ChainMailArmor
+ClericArmor2
+ elements Shield
+ClericWeapon1
+ elements Warhammer
+ClericWeapon2
+ elements Mace
+ClericWeapon3
+ elements Staff Bandages
+ClericGear1
+ elements AdventuringGear DungeonRations
+ClericGear2
+ elements HealingPotion
+FighterArmor1
+ elements ChainMailArmor AdventuringGear
+FighterArmor2
+ elements ScaleMailArmor
+FighterGear1
+ elements HealingPotion HealingPotion
+FighterGear2
+ elements Shield
+FighterGear3
+ elements Antitoxin DungeonRations PoulticesAndHerbs
+TheifWeapon1
+ elements Dagger ShortSword
+TheifWeapon2
+ elements Rapier
+TheifRangedWeapon1
+ elements Knife Knife Knife
+TheifRangedWeapon2
+ elements RaggedBow BundleArrows
+TheifGear1
+ elements AdventuringGear
+TheifGear2
+ elements HealingPotion
+WizardArmor1
+ elements LeatherArmor
+WizardArmor2
+ elements BagOfBooks HealingPotion HealingPotion HealingPotion
+WizardWeapon1
+ elements Dagger
+WizardWeapon2
+ elements Staff
+WizardGear1
+ elements HealingPotion
+WizardGear2
+ elements Antitoxin Antitoxin Antitoxin
+
 #Class
 
 Cleric
+ alignment Good Lawful Evil
+ gender Male Female
+ race Dwarf Human
 Fighter
+ alignment Good Neutral Evil
+ gender Male Female
+ race Dwarf Elf Halfling Human
 Theif
+ alignment Chaotic Neutral Evil
+ gender Male Female
+ race Halfling Human
 Wizard
+ alignment Good Neutral Evil
+ gender Male Female
+ race Elf Human
+
+#StartEquipment
+
+ChooseDefences Cleric
+ elements ClericArmor1 ClericArmor2
+ChooseArmament Cleric
+ elements ClericWeapon1 ClericWeapon2 ClericWeapon3
+ChooseGears Cleric
+ elements ClericGear1 ClericGear2
+ChooseDefences Fighter
+ elements FighterArmor1 FighterArmor2
+ChooseGears Fighter
+ elements FighterGear1 FighterGear2 FighterGear3
+ChooseArmament Theif
+ elements TheifWeapon1 TheifWeapon2
+ChooseRangedWeapons Theif
+ elements TheifRangedWeapon1 TheifRangedWeapon2
+ChooseGears Theif
+ elements TheifGear1 TheifGear2
+ChooseDefences Wizard
+ elements WizardArmor1 WizardArmor2
+ChooseArmament Wizard
+ elements WizardWeapon1 WizardWeapon2
+ChooseGears Wizard
+ elements WizardGear1 WizardGear2

@@ -1,7 +1,7 @@
 #include "crt.h"
 #include "flagable.h"
 #include "gender.h"
-#include "objecta.h"
+#include "recordset.h"
 #include "utg.h"
 
 #pragma once
@@ -39,7 +39,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Action, Class, Item, Move, Race, Tag,
+	Action, Class, Item, Move, Pack, Race, StartEquipment, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -51,45 +51,66 @@ typedef flagable<1 + Carouse / 8> movea;
 typedef flagable<1 + Halfling / 8> racea;
 typedef char abilitya[Charisma + 1];
 
+struct packi {
+	const char*		id;
+	variants		elements;
+	void			getinfo(stringbuilder& sb) const;
+};
+struct alignmenti {
+	const char*		id;
+};
 struct racei {
-	const char* id;
+	const char*		id;
 };
 struct classi {
-	const char* id;
+	const char*		id;
+	flaga			gender;
+	flaga			race;
+	flaga			alignment;
+};
+struct startequipmenti {
+	const char*		id;
+	unsigned char	type;
+	variants		elements;
 };
 struct tagi {
 	const char* id;
 };
 struct actioni {
-	const char* id;
+	const char*		id;
 };
 struct resulti {
-	const char* name;
-	int options;
-	variants effect;
-};
-struct optioni {
-	const char* id;
-	int choose_count;
-	variants actions;
+	const char*		name;
+	int				options;
+	variants		effect;
 };
 struct movei {
-	const char* id;
-	ability_s ability;
-	resulti results[4];
+	const char*		id;
+	ability_s		ability;
+	resulti			results[4];
 };
 struct moveable {
-	movea moves;
-	char forward;
-	bool is(move_s v) const { return moves.is(v); }
+	movea			moves;
+	char			forward;
+	bool			is(move_s v) const { return moves.is(v); }
 };
-struct itemi : moveable {
-	const char* id;
-	wear_s slot;
-	taga tags;
-	racea need;
-	char coins;
-	char weight, damage, pierce, armor, uses, heal;
+struct nameable {
+	const char*		id;
+	race_s			race;
+	gender_s		gender;
+public:
+	void			act(const char* format, ...) { actv(format, xva_start(format)); }
+	void			actv(const char* format, const char* format_param);
+	gender_s		getgender() const { return gender; }
+	const char*		getname() const { return getnm(id); }
+	race_s			getrace() const { return race; }
+};
+struct itemi : nameable, moveable {
+	wear_s			slot;
+	taga			tags;
+	racea			need;
+	char			coins;
+	char			weight, damage, pierce, armor, uses, heal;
 };
 union item {
 	unsigned u;
@@ -108,31 +129,24 @@ union item {
 };
 typedef item weara[LastBackpack + 1];
 struct statable : moveable {
-	abilitya abilities;
+	abilitya		abilities;
 	static result_s last_result;
-	static int last_roll;
+	static int		last_roll;
 	static result_s rollv(int bonus);
 };
-struct nameable {
-	char name[16];
-	race_s race;
-	gender_s gender;
-public:
-	void act(const char* format, ...) { actv(format, xva_start(format)); }
-	void actv(const char* format, const char* format_param);
-	gender_s getgender() const { return gender; }
-	const char* getname() const { return name; }
-	race_s getrace() const { return race; }
-};
 class creature : public nameable, public statable {
-	statable basic;
+	unsigned char	alignment;
+	unsigned char	type;
+	statable		basic;
+	void			choose_equipment();
 public:
-	int	get(ability_s v) const { return abilities[v]; }
-	int getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
+	void			generate();
+	int				get(ability_s v) const { return abilities[v]; }
+	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 };
 class gamei {
-	char bolster;
+	char			bolster;
 public:
-	int	getbolster() const { return bolster; }
-	void usebolster() { bolster--; }
+	int				getbolster() const { return bolster; }
+	void			usebolster() { bolster--; }
 };

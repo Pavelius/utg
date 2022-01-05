@@ -84,7 +84,7 @@
     <ClCompile Include="variant.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="objecta.cpp">
+    <ClCompile Include="recordset.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="win_draw.cpp">
@@ -164,7 +164,7 @@
     <ClInclude Include="variant.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="objecta.h">
+    <ClInclude Include="recordset.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="win.h">

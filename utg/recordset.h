@@ -2,7 +2,7 @@
 
 #pragma once
 
-struct objecta : public adat<void*> {
+struct recordset : public adat<void*> {
 	static void* choose(const char* id, const char* title, const char* cancel, bool interactive, const char* resid, const char* header);
 	static void* choose(const array& source, const char* title, const char* cancel, bool interactive, const char* resid, const char* header);
 	void* choose(const char* title, const char* cancel, bool interactive, const char* resid, const char* header) const;
@@ -10,5 +10,6 @@ struct objecta : public adat<void*> {
 	void distinct();
 	static const char* getid(const void* v) { return *((const char**)v); }
 	void select(const array& source);
+	void select(const array& source, fnvisible proc);
 	void shuffle();
 };

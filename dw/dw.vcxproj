@@ -147,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="alignment.cpp" />
+    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move.cpp" />
     <ClCompile Include="property.cpp" />

@@ -40,8 +40,8 @@ union variant {
 	constexpr bool operator!=(const variant& v) const { return u != v.u; }
 	template<class T> operator T*() const { return (T*)((kind<T>() == type) ? getpointer() : 0); }
 	void				clear() { u = 0; }
-	variant				getaction() const;
-	int					getbonus() const;
+	//variant			getaction() const;
+	//int				getbonus() const;
 	const char*			getdescription() const;
 	const char*			getid() const;
 	int					getindex(int t) const { return (type == t) ? value : 0; }
@@ -50,14 +50,14 @@ union variant {
 	const char*			getname() const;
 	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; }
 };
-struct bonusi {
+/*struct bonusi {
 	enum { Condition };
 	const char*			id;
 	variant				type;
 	int					bonus;
 	unsigned			flags;
 	constexpr bool		is(int v) const { return (flags & FG(v)) != 0; }
-};
+};*/
 typedef sliceu<variant> variants;
 template<> variant::variant(const char* v);
 template<> variant::variant(const void* v);
