@@ -1,5 +1,7 @@
 #include "main.h"
 
+static char standart_ability[] = {16, 15, 13, 12, 9, 8};
+
 static variant choose_eqipment_option(startequipmenti& se) {
 	answers an;
 	for(auto& e1 : se.elements) {
@@ -21,6 +23,16 @@ void creature::choose_equipment() {
 	}
 }
 
+void creature::random_ability() {
+	auto& ei = bsdata<classi>::get(type);
+	ability_s random[6]; memcpy(random, ei.abilities, sizeof(random));
+	zshuffle(random + 3, 3);
+	if(d100() < 30)
+		iswap(random[1], random[2]);
+	for(auto i = 0; i < 6; i++)
+		basic.abilities[random[i]] = standart_ability[i];
+}
+
 void creature::generate() {
 	type = logs::choosei(bsdata<classi>::source,
 		logs::getchoose("Class"), 0);
@@ -33,6 +45,8 @@ void creature::generate() {
 	race = (race_s)logs::choosei(bsdata<racei>::source,
 		bsdata<classi>::elements[type].race,
 		logs::getchoose("Race"), 0);
+	if(!logs::interactive)
+		random_ability();
 	choose_equipment();
 	setavatar("mistra");
 }

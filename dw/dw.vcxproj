@@ -146,6 +146,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ability.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="alignment.cpp" />
     <ClCompile Include="creature.cpp" />

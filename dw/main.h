@@ -40,7 +40,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Action, Class, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
+	Ability, Action, Class, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -57,6 +57,9 @@ struct packi {
 	variants		elements;
 	void			getinfo(stringbuilder& sb) const;
 };
+struct abilityi {
+	const char*		id;
+};
 struct alignmenti {
 	const char*		id;
 };
@@ -68,6 +71,7 @@ struct classi {
 	flaga			gender;
 	flaga			race;
 	flaga			alignment;
+	ability_s		abilities[6];
 };
 struct dietyi {
 	const char*		id;
@@ -143,6 +147,7 @@ class creature : public nameable, public avatarable, public statable {
 	unsigned char	type, diety;
 	statable		basic;
 	void			choose_equipment();
+	void			random_ability();
 public:
 	explicit operator bool() const { return getavatar()[0] != 0; }
 	void			generate();
@@ -155,3 +160,4 @@ public:
 	int				getbolster() const { return bolster; }
 	void			usebolster() { bolster--; }
 };
+inline int			d100() { return rand() % 100; }

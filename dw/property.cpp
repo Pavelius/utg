@@ -4,11 +4,16 @@
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
 
+LNK(ability_s, abilityi)
+
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
 BSDATAC(creature, 4)
+BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
 BSMETA(actioni) = {
 	BSREQ(id),
 	{}};
@@ -17,6 +22,7 @@ BSMETA(alignmenti) = {
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
+	BSREQ(abilities),
 	BSFLG(alignment, alignmenti),
 	BSFLG(gender, genderi),
 	BSFLG(race, racei),
@@ -60,6 +66,7 @@ BSDATAC(itemi, 256)
 #define VRSTN(T, N) bsmeta<T>::meta, bsdata<T>::source_ptr, N
 BSDATA(varianti) = {
 	{"NoVariant"},
+	{"Ability", VRSTD(abilityi)},
 	{"Action", VRSTD(actioni)},
 	{"Class", VRSTD(classi)},
 	{"Diety", VRSTD(dietyi)},

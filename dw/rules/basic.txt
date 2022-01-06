@@ -127,19 +127,19 @@ WizardGear2
 
 #Class
 
-Cleric
+Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity)
  alignment Good Lawful Evil
  gender Male Female
  race Dwarf Human
-Fighter
+Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma)
  alignment Good Neutral Evil
  gender Male Female
  race Dwarf Elf Halfling Human
-Theif
+Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow)
  alignment Chaotic Neutral Evil
  gender Male Female
  race Halfling Human
-Wizard
+Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution)
  alignment Good Neutral Evil
  gender Male Female
  race Elf Human
