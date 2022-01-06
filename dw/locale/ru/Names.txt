@@ -16,7 +16,7 @@ ChooseGears: Что вы таскаете с собой?
 ChooseGender: Кто вы?
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
-Cleric: Клерик
+Cleric: Священник
 Dagger: Кинжал
 DungeonRations: Еда
 Dwarf: Дварф

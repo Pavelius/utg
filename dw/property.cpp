@@ -25,6 +25,10 @@ BSDATAC(classi, 16)
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
+BSMETA(dietyi) = {
+	BSREQ(id),
+	{}};
+BSDATAC(dietyi, 32)
 BSMETA(movei) = {
 	BSREQ(id),
 	{}};
@@ -58,6 +62,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Action", VRSTD(actioni)},
 	{"Class", VRSTD(classi)},
+	{"Diety", VRSTD(dietyi)},
 	{"Item", VRSTD(itemi)},
 	{"Move", VRSTD(movei)},
 	{"Pack", VRSTD(packi)},

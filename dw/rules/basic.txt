@@ -52,6 +52,7 @@ PlateMailArmor weight(4) coins(350) armor(3)
 Shield weight(2) coins(15) armor(1)
 
 Antitoxin weight(0) coins(20)
+ tags HealPoison
 Bandages weight(0) coins(5) uses(5) heal(4)
  tags Slow
 PoulticesAndHerbs weight(1) coins(10) uses(2) heal(7)

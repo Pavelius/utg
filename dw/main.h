@@ -40,7 +40,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Action, Class, Item, Move, Pack, Race, StartEquipment, Tag,
+	Action, Class, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -68,6 +68,9 @@ struct classi {
 	flaga			gender;
 	flaga			race;
 	flaga			alignment;
+};
+struct dietyi {
+	const char*		id;
 };
 struct startequipmenti {
 	const char*		id;
@@ -137,7 +140,7 @@ struct statable : moveable {
 };
 class creature : public nameable, public avatarable, public statable {
 	unsigned char	alignment;
-	unsigned char	type;
+	unsigned char	type, diety;
 	statable		basic;
 	void			choose_equipment();
 public:
