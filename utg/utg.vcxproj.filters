@@ -114,6 +114,9 @@
     <ClCompile Include="utg_logs.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="avatarable.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -177,6 +180,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="flagable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="avatarable.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

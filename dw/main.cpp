@@ -2,16 +2,38 @@
 
 void initialize_png();
 
+static void party_information() {
+	draw::offset.x = 1;
+	for(auto i = 0; i < 4; i++) {
+		auto& e = bsdata<creature>::elements[i];
+		if(e)
+			draw::avatar(e.getavatar(), &e);
+		else
+			draw::noavatar();
+		draw::nextpos();
+	}
+}
+
+static creature* create_hero(bool interactive) {
+	auto push_interactive = logs::interactive;
+	logs::interactive = interactive;
+	auto p = bsdata<creature>::add();
+	p->generate();
+	logs::interactive = push_interactive;
+	return p;
+}
+
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
-	logs::interactive = true;
-	creature e;
-	e.generate();
+	create_hero(false);
+	create_hero(false);
+	create_hero(true);
 }
 
 int main(int argc, char* argv[]) {
 	initialize_png();
+	answers::beforepaint = party_information;
 	return draw::utg::run(generate_character);
 }
 

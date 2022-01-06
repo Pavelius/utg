@@ -8,6 +8,7 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
+BSDATAC(creature, 4)
 BSMETA(actioni) = {
 	BSREQ(id),
 	{}};

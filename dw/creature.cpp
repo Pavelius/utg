@@ -34,4 +34,5 @@ void creature::generate() {
 		bsdata<classi>::elements[type].race,
 		logs::getchoose("Race"), 0);
 	choose_equipment();
+	setavatar("mistra");
 }

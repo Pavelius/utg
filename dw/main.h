@@ -1,3 +1,4 @@
+#include "avatarable.h"
 #include "crt.h"
 #include "flagable.h"
 #include "gender.h"
@@ -134,12 +135,13 @@ struct statable : moveable {
 	static int		last_roll;
 	static result_s rollv(int bonus);
 };
-class creature : public nameable, public statable {
+class creature : public nameable, public avatarable, public statable {
 	unsigned char	alignment;
 	unsigned char	type;
 	statable		basic;
 	void			choose_equipment();
 public:
+	explicit operator bool() const { return getavatar()[0] != 0; }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }

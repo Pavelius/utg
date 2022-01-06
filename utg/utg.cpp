@@ -6,6 +6,9 @@
 
 using namespace draw;
 
+point draw::offset;
+static void* hilite_object;
+
 void set_dark_theme();
 void set_light_theme();
 
@@ -27,12 +30,19 @@ static void stroke() {
 	fore = push_fore;
 }
 
+static void stroke_hilite() {
+	auto push_fore = fore;
+	fore = colors::active;
+	rectb();
+	fore = push_fore;
+}
+
 static void strokeout() {
 	rectpush push;
-	caret.x -= 1;
-	caret.y -= 1;
-	width += 1;
-	height += 1;
+	caret.x -= metrics::border;
+	caret.y -= metrics::border;
+	width += metrics::border * 2 - 1;
+	height += metrics::border * 2 - 1;
 	stroke();
 }
 
@@ -55,7 +65,7 @@ static void imagev(const char* resid) {
 		return;
 	image(p, 0, 0);
 	stroke(p, 0);
-	caret.y += p->get(0).sy;
+	caret.y += p->get(0).sy + metrics::padding + metrics::border;
 }
 
 static void radiobutton(const char* title) {
@@ -183,13 +193,27 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	return (void*)getresult();
 }
 
-void draw::avatar(const char* id) {
+static bool hiliting(const void* object) {
+	control_hilited = ishilite({caret.x, caret.y, caret.x + width, caret.y + height});
+	if(control_hilited)
+		hilite_object = const_cast<void*>(object);
+	return control_hilited;
+}
+
+void draw::avatar(const char* id, const void* object) {
 	auto p = gres(id, "art/portraits");
 	if(!p)
 		return;
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
+	strokeout();
+	hiliting(object);
+}
+
+void draw::noavatar() {
+	width = 64;
+	height = 64;
 	strokeout();
 }
 
@@ -216,18 +240,33 @@ void draw::bar(int value, int maximum) {
 	caret.y += height;
 }
 
-static void tooltips_paint() {
-	if(!draw::font)
+static void hilite_paint() {
+	if(!hot.hilite)
 		return;
+	rectpush push;
+	caret.x = hot.hilite.x1;
+	caret.y = hot.hilite.y1;
+	width = hot.hilite.width();
+	height = hot.hilite.height();
+	stroke_hilite();
+}
+
+static void tooltips_paint() {
+	if(hilite_object)
+		hilite_paint();
 	if(!tips_sb)
 		return;
 }
 
-void draw::utg::tips() {
-	tooltips_paint();
+void draw::nextpos() {
+	if(offset.x)
+		caret.x += width + offset.x * (metrics::padding + metrics::border * 2);
+	if(offset.y)
+		caret.y += height + offset.y * (metrics::padding + metrics::border * 2);
 }
 
 void draw::utg::beforemodal() {
+	hilite_object = 0;
 	tips_caret.x = metrics::padding + metrics::border;
 	tips_caret.y = getheight() - (metrics::padding + metrics::border);
 	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
@@ -240,15 +279,8 @@ void draw::utg::paint() {
 	fore = push_fore;
 }
 
-static void infopaint() {
-	caret.y += metrics::padding;
-	avatar("mistra");
-	caret.x += width + metrics::padding;
-	avatar("gordek");
-	caret.x += width + metrics::padding;
-	avatar("airel");
-	caret.x += width + metrics::padding;
-	avatar("airel");
+void draw::utg::tips() {
+	tooltips_paint();
 }
 
 int draw::utg::run(fnevent proc) {
@@ -260,9 +292,12 @@ int draw::utg::run(fnevent proc) {
 	check_translation();
 	if(log::geterrors())
 		return -1;
-	answers::beforepaint = infopaint;
 	pbackground = paint;
+	pbeforemodal = beforemodal;
+	ptips = tips;
 	awindow.flags = 0;
+	metrics::border = 2;
+	metrics::padding = 4;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();
