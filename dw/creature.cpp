@@ -2,6 +2,16 @@
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 
+void creature::update() {
+	copy(basic);
+}
+
+void creature::finish() {
+	update();
+	update_player();
+	hp = get(HP);
+}
+
 static variant choose_eqipment_option(startequipmenti& se) {
 	answers an;
 	for(auto& e1 : se.elements) {
@@ -33,6 +43,11 @@ void creature::random_ability() {
 		basic.abilities[random[i]] = standart_ability[i];
 }
 
+void creature::choose_abilities() {
+	for(auto v : standart_ability)
+		basic.apply_ability(v);
+}
+
 void creature::generate() {
 	type = logs::choosei(bsdata<classi>::source,
 		logs::getchoose("Class"), 0);
@@ -47,7 +62,10 @@ void creature::generate() {
 		logs::getchoose("Race"), 0);
 	if(!logs::interactive)
 		random_ability();
+	else
+		choose_abilities();
 	id = "Mistra";
 	choose_equipment();
 	setavatar("mistra");
+	finish();
 }

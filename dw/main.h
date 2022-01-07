@@ -1,5 +1,6 @@
 #include "avatarable.h"
 #include "crt.h"
+#include "dice.h"
 #include "flagable.h"
 #include "gender.h"
 #include "recordset.h"
@@ -140,14 +141,21 @@ struct statable : moveable {
 	abilitya		abilities;
 	static result_s last_result;
 	static int		last_roll;
+	void			copy(statable& v) { *this = v; }
+	void			apply_ability(int v);
 	static result_s rollv(int bonus);
+	void			update_player();
 };
 class creature : public nameable, public avatarable, public statable {
 	unsigned char	alignment;
 	unsigned char	type, diety;
 	statable		basic;
+	char			hp;
+	void			choose_abilities();
 	void			choose_equipment();
+	void			finish();
 	void			random_ability();
+	void			update();
 public:
 	explicit operator bool() const { return getavatar()[0] != 0; }
 	void			generate();

@@ -1,6 +1,7 @@
 ﻿AdventuringGear: Инструменты
 Antitoxin: Противоядие
 AppTitle: Мир подземелья
+ApplyAbility: Какая ваша способность будет равна [%1i]?
 BagOfBooks: Сумка с книгами
 Bandages: Бинты
 BundleArrows: Стрелы
@@ -8,6 +9,7 @@ Cancel: Отмена
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
 CharacterGeneration: Генерация персонажа
+Charisma: Харизма
 ChooseAlignment: Каков будет его характер?
 ChooseArmament: Что будет вашим оружием?
 ChooseClass: Кто будет ваш персонаж?
@@ -17,7 +19,9 @@ ChooseGender: Кто вы?
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник
+Constitution: Телосложение
 Dagger: Кинжал
+Dexterity: Ловкость
 DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
@@ -28,6 +32,7 @@ Good: Добрый
 Halfling: Полурослик 
 HealingPotion: Лечебное зелье
 Human: Человек
+Intellegence: Интеллект
 Knife: Нож
 Lawful: Законопослушный
 LeatherArmor: Кожанная броня
@@ -44,7 +49,9 @@ ScaleMailArmor: Хаулберк
 Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
+Strenght: Сила
 Theif: Вор
 Warhammer: Молот
+Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да

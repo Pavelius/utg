@@ -19,3 +19,20 @@ result_s statable::rollv(int b) {
 		last_result = PartialSuccess;
 	return last_result;
 }
+
+void statable::update_player() {
+	abilities[HP] = abilities[Constitution];
+}
+
+void statable::apply_ability(int v) {
+	answers an;
+	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1)) {
+		if(abilities[i])
+			continue;
+		an.add((void*)i, getnm(bsdata<abilityi>::get(i).id));
+	}
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(getnm("ApplyAbility"), v);
+	auto r = (int)an.choose(temp, 0, logs::interactive, logs::url, -1, logs::header);
+	abilities[r] = v;
+}

@@ -1,2 +1,8 @@
 ﻿In file `Names.txt`:
- Define translate for `Mistra`
+ Define translate for `ApplyAbility`
+ Define translate for `Charisma`
+ Define translate for `Constitution`
+ Define translate for `Dexterity`
+ Define translate for `Intellegence`
+ Define translate for `Strenght`
+ Define translate for `Wisdow`
