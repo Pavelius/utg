@@ -153,6 +153,7 @@ public:
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
+	void			getinfo(stringbuilder& sb) const;
 };
 class gamei {
 	char			bolster;

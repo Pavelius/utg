@@ -7,7 +7,9 @@
 using namespace draw;
 
 point draw::offset;
-static void* hilite_object;
+const void* draw::hilite_object;
+figure draw::hilite_type;
+fnstatus draw::pstatus;
 
 void set_dark_theme();
 void set_light_theme();
@@ -23,27 +25,40 @@ bool draw::buttonfd(const char* title) {
 	return hilited;
 }
 
-static void stroke() {
+static void stroke_border() {
 	auto push_fore = fore;
 	fore = colors::border;
 	rectb();
 	fore = push_fore;
 }
 
-static void stroke_hilite() {
+static void stroke_active() {
 	auto push_fore = fore;
 	fore = colors::active;
 	rectb();
 	fore = push_fore;
 }
 
-static void strokeout() {
+static void stroke_active_fill() {
+	auto push_fore = fore;
+	auto push_alpha = alpha;
+	if(hot.pressed)
+		fore = colors::active.mix(colors::button, 128);
+	else
+		fore = colors::active;
+	alpha = 32;
+	rectf();
+	alpha = push_alpha;
+	fore = push_fore;
+}
+
+static void strokex(fnevent proc, int dx = 0, int dy = 0) {
 	rectpush push;
 	caret.x -= metrics::border;
 	caret.y -= metrics::border;
-	width += metrics::border * 2 - 1;
-	height += metrics::border * 2 - 1;
-	stroke();
+	width += metrics::border * 2 + dx;
+	height += metrics::border * 2 + dy;
+	proc();
 }
 
 static void stroke(const sprite* p, int frame) {
@@ -52,7 +67,7 @@ static void stroke(const sprite* p, int frame) {
 	auto& f = p->get(0);
 	width = f.sx;
 	height = f.sy;
-	strokeout();
+	strokex(stroke_border, -1);
 	width = push_width;
 	height = push_height;
 }
@@ -96,6 +111,10 @@ void draw::answerbt(int i, const void* pv, const char* title) {
 	hotkeybutton(answer_hotkeys[i]);
 	if(button(title, answer_hotkeys[i], buttonfd))
 		execute(buttonparam, (long)pv);
+	if(control_hilited) {
+		hilite_object = pv;
+		hilite_type = figure::RectFill;
+	}
 	caret.x = push_caret.x;
 	width = push_width;
 }
@@ -146,11 +165,13 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pbackground();
 		if(pwindow)
 			pwindow();
-		setposru();
+		auto push_caret = caret;
+		caret.x = getwidth() - 320 - metrics::padding - metrics::border * 2;
 		imagev(resid);
 		if(beforepaint)
 			beforepaint();
-		setposlu();
+		caret = push_caret;
+		caret.x = metrics::padding + metrics::border * 2;
 		width = standart_width;
 		texth2(header);
 		if(title) {
@@ -207,14 +228,14 @@ void draw::avatar(const char* id, const void* object) {
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	strokeout();
+	strokex(stroke_border);
 	hiliting(object);
 }
 
 void draw::noavatar() {
 	width = 64;
 	height = 64;
-	strokeout();
+	strokex(stroke_border);
 }
 
 void draw::bar(int value, int maximum) {
@@ -241,21 +262,77 @@ void draw::bar(int value, int maximum) {
 }
 
 static void hilite_paint() {
-	if(!hot.hilite)
-		return;
 	rectpush push;
 	caret.x = hot.hilite.x1;
 	caret.y = hot.hilite.y1;
 	width = hot.hilite.width();
 	height = hot.hilite.height();
-	stroke_hilite();
+	switch(hilite_type) {
+	case figure::Rect:
+		strokex(stroke_active);
+		break;
+	case figure::RectFill:
+		strokex(stroke_active_fill, 2);
+		break;
+	}
 }
 
 static void tooltips_paint() {
-	if(hilite_object)
+	if(hilite_object && hot.hilite)
 		hilite_paint();
-	if(!tips_sb)
+}
+
+static void statusbar_paint() {
+	if(!hilite_object || !pstatus)
 		return;
+	char temp[512]; stringbuilder sb(temp); sb.clear();
+	pstatus(hilite_object, sb);
+	if(!temp[0])
+		return;
+	rectpush push;
+	caret.x = metrics::padding + metrics::border;
+	caret.y = getheight() - texth() - metrics::border;
+	width = getwidth() - caret.x * 2;
+	auto push_width = width;
+	textfs(temp);
+	caret.x += (push_width - width) / 2;
+	textf(temp);
+}
+
+static void stroke_line() {
+	rectpush push;
+	auto push_fore = fore;
+	fore = colors::border;
+	line(caret.x + width, caret.y);
+	fore = push_fore;
+}
+
+static void topbar() {
+	auto push_height = height;
+	height = texth() + metrics::border * 2;
+	gradv(colors::form, colors::window, 0);
+	caret.y += height;
+	stroke_line();
+	caret.y += metrics::padding + metrics::border * 2;
+	height = push_height;
+	height -= caret.y;
+}
+
+static void statusbar() {
+	auto push_height = height;
+	auto dy = texth() + metrics::border * 2; height = dy;
+	caret.y = getheight() - dy;
+	gradv(colors::form, colors::window, 0);
+	stroke_line();
+	caret.y += metrics::border;
+	height = push_height;
+	height -= dy;
+}
+
+static void statusinfo() {
+	auto push_caret = caret;
+	statusbar();
+	caret = push_caret;
 }
 
 void draw::nextpos() {
@@ -265,28 +342,37 @@ void draw::nextpos() {
 		caret.y += height + offset.y * (metrics::padding + metrics::border * 2);
 }
 
-void draw::utg::beforemodal() {
-	hilite_object = 0;
-	tips_caret.x = metrics::padding + metrics::border;
-	tips_caret.y = getheight() - (metrics::padding + metrics::border);
-	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
-}
-
-void draw::utg::paint() {
+static void background_window() {
 	auto push_fore = fore;
 	fore = colors::window;
 	rectf();
 	fore = push_fore;
 }
 
+void draw::utg::beforemodal() {
+	hilite_object = 0;
+	hilite_type = figure::Rect;
+	tips_caret.x = metrics::padding + metrics::border;
+	tips_caret.y = getheight() - (metrics::padding + metrics::border);
+	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
+}
+
+void draw::utg::paint() {
+	background_window();
+	topbar();
+	statusinfo();
+}
+
 void draw::utg::tips() {
 	tooltips_paint();
+	statusbar_paint();
 }
 
 int draw::utg::run(fnevent proc) {
 	if(!proc)
 		return -1;
-	set_dark_theme();
+	//set_dark_theme();
+	set_light_theme();
 	initialize_translation("ru");
 	bsreq::read("rules/basic.txt");
 	check_translation();

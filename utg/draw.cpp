@@ -1098,14 +1098,14 @@ void draw::gradv(const color c1, const color c2, int skip) {
 	int y2 = caret.y + height;
 	auto pf = fore;
 	for(int y1 = caret.y + skip; y1 < y2; y1++) {
-		auto k2 = (float)(y0 - y1) / k3;
+		auto k2 = (float)(y1 - y0) / k3;
 		auto k1 = 1.00f - k2;
 		fore.r = (unsigned char)(c1.r * k1 + c2.r * k2);
 		fore.g = (unsigned char)(c1.g * k1 + c2.g * k2);
 		fore.b = (unsigned char)(c1.b * k1 + c2.b * k2);
 		if(y1 >= clipping.y2 || y1 < clipping.y1)
 			continue;
-		set32x(canvas->ptr(caret.x, y1), canvas->scanline, width, 1);
+		set32((color*)canvas->ptr(caret.x, y1), width);
 	}
 	fore = pf;
 }

@@ -117,6 +117,9 @@
     <ClCompile Include="avatarable.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="draw_figure.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="avatarable.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_figure.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,11 @@
 
 void initialize_png();
 
+static void statusinfo(const void* object, stringbuilder& sb) {
+	if(bsdata<creature>::source.have(object))
+		((creature*)object)->getinfo(sb);
+}
+
 static void party_information() {
 	draw::offset.x = 1;
 	for(auto i = 0; i < 4; i++) {
@@ -34,6 +39,7 @@ static void generate_character() {
 int main(int argc, char* argv[]) {
 	initialize_png();
 	answers::beforepaint = party_information;
+	draw::pstatus = statusinfo;
 	return draw::utg::run(generate_character);
 }
 

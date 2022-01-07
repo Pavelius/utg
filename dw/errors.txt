@@ -1,2 +1,2 @@
-﻿In file `rules/basic.txt`:
- Line 142: Not found requisit `first`
+﻿In file `Names.txt`:
+ Define translate for `Mistra`

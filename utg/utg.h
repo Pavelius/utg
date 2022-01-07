@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "crt.h"
+#include "draw_figure.h"
 #include "flagable.h"
 #include "point.h"
 #include "variant.h"
@@ -7,7 +8,11 @@
 #pragma once
 
 namespace draw {
+typedef void (*fnstatus)(const void* object, stringbuilder& sb);
 extern point offset;
+extern const void* hilite_object;
+extern figure hilite_type;
+extern fnstatus pstatus;
 void answerbt(int index, const void* id, const char* title);
 void avatar(const char* id, const void* object);
 void bar(int value, int maximum);

@@ -47,6 +47,7 @@ void creature::generate() {
 		logs::getchoose("Race"), 0);
 	if(!logs::interactive)
 		random_ability();
+	id = "Mistra";
 	choose_equipment();
 	setavatar("mistra");
 }

@@ -12,3 +12,7 @@ void packi::getinfo(stringbuilder& sb) const {
 		sb.add(elements.begin()[i].getname());
 	}
 }
+
+void creature::getinfo(stringbuilder& sb) const {
+	sb.add(getname());
+}

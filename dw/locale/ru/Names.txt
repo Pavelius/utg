@@ -33,6 +33,7 @@ Lawful: Законопослушный
 LeatherArmor: Кожанная броня
 Mace: Булава
 Male: Мужчина
+Mistra: Мистра
 Neutral: Нейтральный
 No: Нет
 NoGender: Безполый
