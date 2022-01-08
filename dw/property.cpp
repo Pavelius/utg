@@ -10,6 +10,13 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
+BSMETA(creature) = {
+	BSREQ(id),
+	BSENM(type, classi),
+	BSENM(race, racei),
+	BSENM(alignment, alignmenti),
+	BSENM(diety, dietyi),
+	{}};
 BSDATAC(creature, 4)
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -50,8 +57,8 @@ BSMETA(racei) = {
 	BSREQ(id),
 	{}};
 BSMETA(startequipmenti) = {
-	BSREQ(id),
 	BSENM(type, classi),
+	BSREQ(id),
 	BSREQ(elements),
 	{}};
 BSDATAC(startequipmenti, 64)
@@ -69,6 +76,7 @@ BSDATA(varianti) = {
 	{"Ability", VRSTD(abilityi)},
 	{"Action", VRSTD(actioni)},
 	{"Class", VRSTD(classi)},
+	{"Creature", VRSTD(creature)},
 	{"Diety", VRSTD(dietyi)},
 	{"Item", VRSTD(itemi)},
 	{"Move", VRSTD(movei)},

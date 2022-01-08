@@ -19,6 +19,8 @@ struct varianti {
 	int					found(const char* id) const;
 	constexpr bool		is(unsigned v) const { return (flags & FG(v)) != 0; }
 	constexpr bool		isnamed() const { return !is(NotFoundByName); }
+	void				set(void* object, const char* id, void* value) const;
+	void				set(void* object, const char* id, int value) const;
 };
 union variant {
 	unsigned char		uc[4];

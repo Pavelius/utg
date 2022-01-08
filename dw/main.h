@@ -8,6 +8,8 @@
 
 #pragma once
 
+template<typename T> struct bsmeta;
+
 enum ability_s : unsigned char {
 	HP, Damage, Armor, Pierce,
 	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
@@ -41,7 +43,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Class, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
+	Ability, Action, Class, Creature, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -78,8 +80,10 @@ struct dietyi {
 	const char*		id;
 };
 struct startequipmenti {
-	const char*		id;
 	unsigned char	type;
+	const char*		id;
+	const char*		result;
+	const char*		mask;
 	variants		elements;
 };
 struct tagi {
@@ -147,15 +151,16 @@ struct statable : moveable {
 	void			update_player();
 };
 class creature : public nameable, public avatarable, public statable {
-	unsigned char	alignment;
-	unsigned char	type, diety;
+	unsigned char	alignment, type, diety;
 	statable		basic;
 	char			hp;
+	void			apply_advance();
 	void			choose_abilities();
 	void			choose_equipment();
 	void			finish();
 	void			random_ability();
 	void			update();
+	friend bsmeta<creature>;
 public:
 	explicit operator bool() const { return getavatar()[0] != 0; }
 	void			generate();

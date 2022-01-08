@@ -33,6 +33,7 @@ extern const char* url;
 extern const char* header;
 extern bool interactive;
 const char* getchoose(const char* id);
-int choosei(const array& source, const char* title, const char* cancel);
-int choosei(const array& source, const flaga& mask, const char* title, const char* cancel);
+int choose(const answers& source, const char* title, const char* cancel);
+int choose(const array& source, const char* title, const char* cancel);
+int choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 }

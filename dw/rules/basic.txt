@@ -146,25 +146,25 @@ Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution)
 
 #StartEquipment
 
-ChooseDefences Cleric
+Cleric ChooseDefences
  elements ClericArmor1 ClericArmor2
-ChooseArmament Cleric
+Cleric ChooseArmament
  elements ClericWeapon1 ClericWeapon2 ClericWeapon3
-ChooseGears Cleric
+Cleric ChooseGears
  elements ClericGear1 ClericGear2
-ChooseDefences Fighter
+Fighter ChooseDefences
  elements FighterArmor1 FighterArmor2
-ChooseGears Fighter
+Fighter ChooseGears
  elements FighterGear1 FighterGear2 FighterGear3
-ChooseArmament Theif
+Theif ChooseArmament
  elements TheifWeapon1 TheifWeapon2
-ChooseRangedWeapons Theif
+Theif ChooseRangedWeapons
  elements TheifRangedWeapon1 TheifRangedWeapon2
-ChooseGears Theif
+Theif ChooseGears
  elements TheifGear1 TheifGear2
-ChooseDefences Wizard
+Wizard ChooseDefences
  elements WizardArmor1 WizardArmor2
-ChooseArmament Wizard
+Wizard ChooseArmament
  elements WizardWeapon1 WizardWeapon2
-ChooseGears Wizard
+Wizard ChooseGears
  elements WizardGear1 WizardGear2

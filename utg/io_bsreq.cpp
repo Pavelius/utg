@@ -251,6 +251,8 @@ static bool islevel(int level) {
 }
 
 const bsreq* find_requisit(const bsreq* type, const char* id) {
+	if(!type)
+		return 0;
 	auto req = type->find(temp);
 	if(!req)
 		log::error(p, "Not found requisit `%1`", id);
@@ -319,6 +321,26 @@ static varianti* find_type(const char* id) {
 			return &e;
 	}
 	return 0;
+}
+
+void varianti::set(void* object, const char* id, void* value) const {
+	auto req = find_requisit(metadata, id);
+	if(!req)
+		return;
+	valuei v; v.clear();
+	v.data = value;
+	if(req->source)
+		v.number = req->source->indexof(v.data);
+	write_value(object, req, 0, v);
+}
+
+void varianti::set(void* object, const char* id, int value) const {
+	auto req = find_requisit(metadata, id);
+	if(!req)
+		return;
+	valuei v; v.clear();
+	v.number = value;
+	write_value(object, req, 0, v);
 }
 
 static void parse() {

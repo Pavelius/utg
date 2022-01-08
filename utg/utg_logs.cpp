@@ -11,11 +11,15 @@ const char* logs::getchoose(const char* id) {
 	return getnm(temp);
 }
 
-int logs::choosei(const array& source, const char* title, const char* cancel) {
+int logs::choose(const array& source, const char* title, const char* cancel) {
 	return source.indexof(recordset::choose(source, title, cancel, interactive, url, header));
 }
 
-int logs::choosei(const array& source, const flaga& mask, const char* title, const char* cancel) {
+int logs::choose(const answers& source, const char* title, const char* cancel) {
+	return (int)source.choose(title, cancel, interactive, url, -1, header);
+}
+
+int logs::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
 	recordset records;
 	for(auto i = 0; i < mask.getmaximum(); i++) {
 		if(!mask.is(i))

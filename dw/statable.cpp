@@ -33,6 +33,5 @@ void statable::apply_ability(int v) {
 	}
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(getnm("ApplyAbility"), v);
-	auto r = (int)an.choose(temp, 0, logs::interactive, logs::url, -1, logs::header);
-	abilities[r] = v;
+	abilities[logs::choose(an, temp, 0)] = v;
 }
