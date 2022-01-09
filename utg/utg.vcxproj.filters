@@ -123,6 +123,9 @@
     <ClCompile Include="advancement.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="front.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -195,6 +198,12 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="advancement.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="front.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

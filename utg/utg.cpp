@@ -6,10 +6,11 @@
 
 using namespace draw;
 
-point draw::offset;
 const void* draw::hilite_object;
+const void* draw::focus_object;
 figure draw::hilite_type;
 fnstatus draw::pstatus;
+int draw::title_width = 220;
 
 void set_dark_theme();
 void set_light_theme();
@@ -117,15 +118,87 @@ static int getmaximumheight() {
 	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2;
 }
 
-static void property_bar() {
-	auto push_height = height;
+void draw::propertybar() {
 	height = getmaximumheight() - caret.y;
 	strokex(fill_window);
 	strokex(stroke_border);
+	caret.x += metrics::padding;
+	caret.y += metrics::padding;
+	width -= metrics::padding * 2;
 }
 
-void draw::pages() {
-	property_bar();
+static void labelheader(const char* title) {
+	if(!title || title[0] == 0)
+		return;
+	auto push_caret = caret;
+	textf(title);
+	caret = push_caret;
+	caret.x += title_width;
+}
+
+static void labelvalue(const char* title) {
+	auto push_fore = fore;
+	auto push_caret = caret;
+	textf(title);
+	caret = push_caret;
+	fore = push_fore;
+}
+
+void draw::label(const char* title, const char* value) {
+	auto push_caret = caret;
+	labelheader(title);
+	labelvalue(value);
+	caret = push_caret;
+	caret.y += texth() + 2;
+}
+
+void draw::label(const char* title, int value, const char* format) {
+	if(!format)
+		format = "%1i";
+	char temp[32]; stringbuilder sb(temp);
+	sb.add(format, value);
+	label(title, temp);
+}
+
+static void separator() {
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::border;
+	caret.x -= metrics::padding + 1;
+	caret.y += texth() / 2;
+	line(caret.x + width + metrics::padding * 2 + 2, caret.y);
+	fore = push_fore;
+	caret = push_caret;
+	caret.y += texth();
+}
+
+static void right_align_value() {
+	title_width = 320 - textw('0') * 4 - metrics::padding * 2;
+}
+
+void draw::label(const void* object, const variants& elements, fngetinfo pget) {
+	char temp[260]; stringbuilder sb(temp);
+	auto push_tab = draw::tab_pixels;
+	draw::tab_pixels = textw('0') * 6;
+	for(auto v : elements) {
+		if(v.geti().metadata == bsmeta<widget>::meta)
+			bsdata<widget>::elements[v.value].proc();
+		else {
+			auto id = v.getid();
+			sb.clear(); pget(object, v, sb);
+			if(sb)
+				label(getnm(id), temp);
+		}
+	}
+	draw::tab_pixels = push_tab;
+}
+
+void draw::fronts() {
+	for(auto& e : bsdata<front>()) {
+		if(!e)
+			continue;
+		textf(getnm(e.id));
+	}
 }
 
 void draw::vertical(fnevent proc) {
@@ -206,13 +279,14 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pwindow();
 		auto push_caret = caret;
 		caret.x = getwidth() - 320 - metrics::padding - metrics::border * 2;
+		width = 320;
 		imagev(resid);
 		if(beforepaint)
 			beforepaint();
 		caret = push_caret;
 		caret.x = metrics::padding + metrics::border * 2;
 		width = standart_width;
-		height = push_height - metrics::padding - metrics::border*2;
+		height = push_height - metrics::padding - metrics::border * 2;
 		strokex(fill_window);
 		strokex(stroke_border);
 		caret.x += metrics::padding; width -= metrics::padding;
@@ -257,11 +331,19 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	return (void*)getresult();
 }
 
-static bool hiliting(const void* object) {
+static void hiliting(const void* object) {
 	control_hilited = ishilite({caret.x, caret.y, caret.x + width, caret.y + height});
 	if(control_hilited)
 		hilite_object = const_cast<void*>(object);
-	return control_hilited;
+}
+
+static void focusing(const void* object) {
+	if(!object)
+		return;
+	if(control_hilited && hot.key == MouseLeft && hot.pressed)
+		execute(cbsetptr, (long)hilite_object, 0, &focus_object);
+	if(focus_object == object)
+		stroke_active();
 }
 
 void draw::avatar(const char* id, const void* object) {
@@ -273,35 +355,15 @@ void draw::avatar(const char* id, const void* object) {
 	height = p->get(0).sy;
 	strokex(stroke_border, -1);
 	hiliting(object);
+	focusing(object);
+	caret.x += width + metrics::padding + metrics::border * 2;
 }
 
 void draw::noavatar() {
 	width = 64;
 	height = 64;
 	strokex(stroke_border);
-}
-
-void draw::bar(int value, int maximum) {
-	if(!value || !maximum)
-		return;
-	int w2 = width;
-	if(value != maximum)
-		w2 = (width - 2) * value / maximum;
-	auto push_fore = fore;
-	auto push_width = width;
-	fore = colors::form;
-	rectf();
-	fore = push_fore;
-	width = w2;
-	auto push_caret = caret;
-	setoffset(1, 1);
-	rectf();
-	caret = push_caret;
-	fore = colors::border;
-	rectb();
-	fore = push_fore;
-	width = push_width;
-	caret.y += height;
+	caret.x += width + metrics::padding + metrics::border * 2;
 }
 
 static void hilite_paint() {
@@ -378,12 +440,14 @@ static void downbar() {
 	caret = push_caret;
 }
 
-void draw::nextpos() {
-	if(offset.x)
-		caret.x += width + offset.x * (metrics::padding + metrics::border * 2);
-	if(offset.y)
-		caret.y += height + offset.y * (metrics::padding + metrics::border * 2);
-}
+BSMETA(widget) = {
+	BSREQ(id),
+	{}};
+BSDATA(widget) = {
+	{"RightAlignValue", right_align_value},
+	{"Separator", separator},
+};
+BSDATAF(widget)
 
 void draw::utg::beforemodal() {
 	hilite_object = 0;

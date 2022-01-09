@@ -128,10 +128,10 @@ WizardGear2
 
 #Class
 
-Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity)
-Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma)
-Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow)
-Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution)
+Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(6)
+Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(10)
+Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow) damage(8)
+Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(4)
 
 #Advancement
 
@@ -177,3 +177,12 @@ Wizard ChooseArmament result(wear)
  elements WizardWeapon1 WizardWeapon2
 Wizard ChooseGears result(wear)
  elements WizardGear1 WizardGear2
+
+#Front
+
+UndeadInvasion current(3) maximum(10)
+
+#Menu
+
+CharacterAbility
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma Separator HP Armor Damage

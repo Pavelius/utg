@@ -2,26 +2,36 @@
 #include "crt.h"
 #include "draw_figure.h"
 #include "flagable.h"
+#include "front.h"
+#include "menu.h"
 #include "point.h"
 #include "variant.h"
 
 #pragma once
 
+struct widget {
+	const char*		id;
+	fnevent			proc;
+};
 namespace draw {
 typedef void (*fnstatus)(const void* object, stringbuilder& sb);
-extern point offset;
+typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
+extern const void* focus_object;
 extern const void* hilite_object;
 extern figure hilite_type;
 extern fnstatus pstatus;
+extern int title_width;
 void answerbt(int index, const void* id, const char* title);
 void avatar(const char* id, const void* object);
-void bar(int value, int maximum);
 bool buttonfd(const char* title);
-void nextpos();
+void label(const char* id, const char* value);
+void label(const char* id, int value, const char* format = 0);
+void label(const void* object, const variants& elements, fngetinfo pget);
 void noavatar();
-void pages();
+void propertybar();
 void texth2(const char* title);
 void vertical(fnevent proc);
+void fronts();
 namespace utg {
 void beforemodal();
 void paint();

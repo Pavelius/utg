@@ -59,3 +59,29 @@ void creature::getinfo(stringbuilder& sb) const {
 	addn(sb, "Armor", get(Armor));
 	sb.add(")");
 }
+
+void creature::getinfo(const void* object, variant v, stringbuilder& sb) {
+	auto p = (creature*)object;
+	switch(v.type) {
+	case Ability:
+		switch(v.value) {
+		case Strenght:
+		case Dexterity:
+		case Constitution:
+		case Intellegence:
+		case Wisdow:
+		case Charisma:
+			sb.add("[%1i] \t%+2i", p->abilities[v.value], p->getbonus((ability_s)v.value)); break;
+			break;
+		case Damage:
+			sb.add("[");
+			addn(sb, p->getdamage());
+			sb.add("]");
+			break;
+		default:
+			sb.add("[%1i]", p->abilities[v.value]); break;
+			break;
+		}
+	default: break;
+	}
+}

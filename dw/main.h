@@ -44,7 +44,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Gender, Item, Move, Pack, Race, Tag,
+	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Front, Gender, Item, Menu, Move, Pack, Race, Tag, Widget
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -73,6 +73,7 @@ struct racei {
 struct classi {
 	const char*		id;
 	ability_s		abilities[6];
+	int				damage;
 };
 struct dietyi {
 	const char*		id;
@@ -162,7 +163,10 @@ public:
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
+	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
+	dice			getdamage() const;
 	void			getinfo(stringbuilder& sb) const;
+	static void		getinfo(const void* object, variant v, stringbuilder& sb);
 	bool			ismatch(variant v) const;
 };
 class gamei {

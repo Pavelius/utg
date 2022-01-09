@@ -45,10 +45,11 @@ union variant {
 	template<class T> operator T*() const { return (T*)((kind<T>() == type) ? getpointer() : 0); }
 	void				clear() { u = 0; }
 	const char*			getdescription() const;
+	const varianti&		geti() const { return bsdata<varianti>::elements[type]; }
 	const char*			getid() const;
 	int					getindex(int t) const { return (type == t) ? value : 0; }
 	void				getinfo(stringbuilder& sb) const;
-	void*				getpointer() const { return bsdata<varianti>::elements[type].source->ptr(value); }
+	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
 	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; }
 };

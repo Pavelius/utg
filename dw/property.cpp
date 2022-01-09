@@ -32,6 +32,7 @@ BSMETA(alignmenti) = {
 BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(abilities),
+	BSREQ(damage),
 	{}};
 BSDATAC(classi, 16)
 BSMETA(tagi) = {
@@ -41,6 +42,11 @@ BSMETA(dietyi) = {
 	BSREQ(id),
 	{}};
 BSDATAC(dietyi, 32)
+BSMETA(menu) = {
+	BSREQ(id),
+	BSREQ(elements),
+	{}};
+BSDATAC(menu, 256)
 BSMETA(movei) = {
 	BSREQ(id),
 	{}};
@@ -73,11 +79,14 @@ BSDATA(varianti) = {
 	{"Class", VRSTD(classi)},
 	{"Creature", VRSTD(creature)},
 	{"Diety", VRSTD(dietyi)},
+	{"Front", VRSTD(front)},
 	{"Gender", VRSTD(genderi)},
 	{"Item", VRSTD(itemi)},
+	{"Menu", VRSTD(menu)},
 	{"Move", VRSTD(movei)},
 	{"Pack", VRSTD(packi)},
 	{"Race", VRSTD(racei)},
 	{"Tag", VRSTD(tagi)},
+	{"Widget", VRSTD(widget)},
 };
-assert_enum(varianti, Tag)
+assert_enum(varianti, Widget)
