@@ -412,17 +412,6 @@ static void stroke_line() {
 	fore = push_fore;
 }
 
-static void topbar() {
-	auto push_height = height;
-	height = texth() + metrics::border * 2;
-	gradv(colors::form, colors::window, 0);
-	caret.y += height;
-	stroke_line();
-	caret.y += metrics::padding + metrics::border * 2;
-	height = push_height;
-	height -= caret.y;
-}
-
 static void statusbar() {
 	auto push_height = height;
 	auto dy = texth() + metrics::border * 2; height = dy;
@@ -459,7 +448,8 @@ void draw::utg::beforemodal() {
 
 void draw::utg::paint() {
 	fill_form();
-	topbar();
+	caret.y += metrics::padding + metrics::border * 2;
+	height -= metrics::padding + metrics::border * 2;
 	downbar();
 }
 
@@ -484,7 +474,7 @@ int draw::utg::run(fnevent proc, bool darkmode) {
 	pbackground = paint;
 	ptips = tips;
 	awindow.flags = 0;
-	metrics::border = 2;
+	metrics::border = 1;
 	metrics::padding = 4;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
