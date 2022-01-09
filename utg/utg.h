@@ -19,7 +19,9 @@ void bar(int value, int maximum);
 bool buttonfd(const char* title);
 void nextpos();
 void noavatar();
+void pages();
 void texth2(const char* title);
+void vertical(fnevent proc);
 namespace utg {
 void beforemodal();
 void paint();

@@ -31,9 +31,9 @@ static creature* create_hero(bool interactive) {
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
+	create_hero(false);
+	create_hero(false);
 	create_hero(true);
-	create_hero(false);
-	create_hero(false);
 }
 
 int main(int argc, char* argv[]) {

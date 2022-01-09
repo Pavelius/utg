@@ -25,6 +25,20 @@ bool draw::buttonfd(const char* title) {
 	return hilited;
 }
 
+static void fill_form() {
+	auto push_fore = fore;
+	fore = colors::form;
+	rectf();
+	fore = push_fore;
+}
+
+static void fill_window() {
+	auto push_fore = fore;
+	fore = colors::window;
+	rectf();
+	fore = push_fore;
+}
+
 static void stroke_border() {
 	auto push_fore = fore;
 	fore = colors::border;
@@ -99,6 +113,30 @@ static void hotkeybutton(char key) {
 	radiobutton(temp);
 }
 
+static int getmaximumheight() {
+	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2;
+}
+
+static void property_bar() {
+	auto push_height = height;
+	height = getmaximumheight() - caret.y;
+	strokex(fill_window);
+	strokex(stroke_border);
+}
+
+void draw::pages() {
+	property_bar();
+}
+
+void draw::vertical(fnevent proc) {
+	auto push_caret = caret;
+	auto push_width = width;
+	proc();
+	width = push_width;
+	caret = push_caret;
+	caret.y += height + metrics::padding + metrics::border * 2;
+}
+
 void draw::answerbt(int i, const void* pv, const char* title) {
 	static char answer_hotkeys[] = {
 		'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
@@ -156,13 +194,14 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	auto push_width = width;
 	if(columns == -1)
 		columns = getcolumns(*this);
-	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border) * 3;
-	auto column_width = standart_width;
+	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 3;
+	auto column_width = standart_width - metrics::padding * 2;
 	if(columns > 1)
 		column_width = column_width / columns - metrics::border;
 	while(ismodal()) {
 		if(pbackground)
 			pbackground();
+		auto push_height = height;
 		if(pwindow)
 			pwindow();
 		auto push_caret = caret;
@@ -173,6 +212,10 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		caret = push_caret;
 		caret.x = metrics::padding + metrics::border * 2;
 		width = standart_width;
+		height = push_height - metrics::padding - metrics::border*2;
+		strokex(fill_window);
+		strokex(stroke_border);
+		caret.x += metrics::padding; width -= metrics::padding;
 		texth2(header);
 		if(title) {
 			auto push_fore = fore;
@@ -228,7 +271,7 @@ void draw::avatar(const char* id, const void* object) {
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	strokex(stroke_border);
+	strokex(stroke_border, -1);
 	hiliting(object);
 }
 
@@ -329,7 +372,7 @@ static void statusbar() {
 	height -= dy;
 }
 
-static void statusinfo() {
+static void downbar() {
 	auto push_caret = caret;
 	statusbar();
 	caret = push_caret;
@@ -342,13 +385,6 @@ void draw::nextpos() {
 		caret.y += height + offset.y * (metrics::padding + metrics::border * 2);
 }
 
-static void background_window() {
-	auto push_fore = fore;
-	fore = colors::window;
-	rectf();
-	fore = push_fore;
-}
-
 void draw::utg::beforemodal() {
 	hilite_object = 0;
 	hilite_type = figure::Rect;
@@ -358,9 +394,9 @@ void draw::utg::beforemodal() {
 }
 
 void draw::utg::paint() {
-	background_window();
+	fill_form();
 	topbar();
-	statusinfo();
+	downbar();
 }
 
 void draw::utg::tips() {
@@ -380,8 +416,8 @@ int draw::utg::run(fnevent proc, bool darkmode) {
 	check_translation();
 	if(log::geterrors())
 		return -1;
-	pbackground = paint;
 	pbeforemodal = beforemodal;
+	pbackground = paint;
 	ptips = tips;
 	awindow.flags = 0;
 	metrics::border = 2;
