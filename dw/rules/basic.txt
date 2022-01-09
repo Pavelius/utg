@@ -128,21 +128,9 @@ WizardGear2
 #Class
 
 Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity)
- alignment Good Lawful Evil
- gender Male Female
- race Dwarf Human
 Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma)
- alignment Good Neutral Evil
- gender Male Female
- race Dwarf Elf Halfling Human
 Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow)
- alignment Chaotic Neutral Evil
- gender Male Female
- race Halfling Human
 Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution)
- alignment Good Neutral Evil
- gender Male Female
- race Elf Human
 
 #StartEquipment
 
@@ -168,3 +156,26 @@ Wizard ChooseArmament
  elements WizardWeapon1 WizardWeapon2
 Wizard ChooseGears
  elements WizardGear1 WizardGear2
+
+#Advancement
+
+0 ChooseClass result(type)
+ elements Fighter Cleric Theif Wizard
+Cleric ChooseAlignment result(alignment)
+ elements Good Lawful Evil
+Cleric ChooseRace result(race)
+ elements Dwarf Human
+Fighter ChooseAlignment result(alignment)
+ elements Good Neutral Evil
+Fighter ChooseRace result(race)
+ elements Dwarf Elf Halfling Human
+Theif ChooseAlignment result(alignment)
+ elements Chaotic Neutral Evil
+Theif ChooseRace result(race)
+ elements Halfling Human
+Wizard ChooseAlignment result(alignment)
+ elements Good Neutral Evil
+Wizard ChooseRace result(race)
+ elements Elf Human
+0 ChooseGender result(gender)
+ elements Male Female

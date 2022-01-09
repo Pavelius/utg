@@ -66,6 +66,16 @@ const varianti* varianti::getsource(const char* id) {
 	return 0;
 }
 
+const varianti* varianti::getmetadata(const void* object) {
+	if(object) {
+		for(auto& e : bsdata<varianti>()) {
+			if(e.source && e.source->indexof(object) != -1)
+				return &e;
+		}
+	}
+	return 0;
+}
+
 template<> variant::variant(const char* v) : u(0) {
 	if(v) {
 		for(auto& e : bsdata<varianti>()) {

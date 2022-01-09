@@ -1,8 +1,13 @@
-﻿In file `Names.txt`:
- Define translate for `ApplyAbility`
- Define translate for `Charisma`
- Define translate for `Constitution`
- Define translate for `Dexterity`
- Define translate for `Intellegence`
- Define translate for `Strenght`
- Define translate for `Wisdow`
+﻿In file `rules/basic.txt`:
+ Line 177: Can't find variant `Good`
+ Line 177: Can't find variant `Lawful`
+ Line 177: Can't find variant `Evil`
+ Line 179: Can't find variant `Good`
+ Line 179: Can't find variant `Neutral`
+ Line 179: Can't find variant `Evil`
+ Line 181: Can't find variant `Chaotic`
+ Line 181: Can't find variant `Neutral`
+ Line 181: Can't find variant `Evil`
+ Line 183: Can't find variant `Good`
+ Line 183: Can't find variant `Neutral`
+ Line 183: Can't find variant `Evil`

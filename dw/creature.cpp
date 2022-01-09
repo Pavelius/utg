@@ -74,17 +74,11 @@ void creature::choose_abilities() {
 }
 
 void creature::generate() {
-	type = logs::choose(bsdata<classi>::source,
-		logs::getchoose("Class"), 0);
-	alignment = logs::choose(bsdata<alignmenti>::source,
-		bsdata<classi>::elements[type].alignment,
-		logs::getchoose("Alignment"), 0);
-	gender = (gender_s)logs::choose(bsdata<genderi>::source,
-		bsdata<classi>::elements[type].gender,
-		logs::getchoose("Gender"), 0);
-	race = (race_s)logs::choose(bsdata<racei>::source,
-		bsdata<classi>::elements[type].race,
-		logs::getchoose("Race"), 0);
+	for(auto& e : bsdata<advancement>()) {
+		if(e.type && !ismatch(e.type))
+			continue;
+		e.apply(this);
+	}
 	if(!logs::interactive)
 		random_ability();
 	else
@@ -93,4 +87,13 @@ void creature::generate() {
 	id = "Mistra";
 	setavatar("mistra");
 	finish();
+}
+
+bool creature::ismatch(variant v) const {
+	switch(v.type) {
+	case Class: return type == v.value;
+	case Gender: return gender == v.value;
+	case Race: return race == v.value;
+	default: return false;
+	}
 }

@@ -120,6 +120,9 @@
     <ClCompile Include="draw_figure.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="advancement.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="draw_figure.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="advancement.h">
+      <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

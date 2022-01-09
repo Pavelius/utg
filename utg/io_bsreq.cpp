@@ -324,7 +324,7 @@ static varianti* find_type(const char* id) {
 }
 
 void varianti::set(void* object, const char* id, void* value) const {
-	auto req = find_requisit(metadata, id);
+	auto req = metadata->find(id);
 	if(!req)
 		return;
 	valuei v; v.clear();

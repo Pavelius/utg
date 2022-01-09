@@ -100,5 +100,3 @@ template<class T> struct meta_kind<const T> : static_value<bstype_s, meta_kind<T
 template<class T> struct meta_kind<sliceu<T>> : static_value<bstype_s, KindSlice> {};
 template<class T, unsigned N> struct meta_kind<T[N]> : static_value<bstype_s, meta_kind<T>::value> {};
 template<class T, unsigned N> struct meta_kind<adat<T, N>> : static_value<bstype_s, KindADat> {};
-//template<class T> struct meta_kind<std::initializer_list<T>> : static_value<bstype_s, KindList> {};
-//template<class T, class DT> struct meta_kind<cflags<T, DT>> : static_value<bstype_s, KindCFlags> {};

@@ -31,16 +31,16 @@ static creature* create_hero(bool interactive) {
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
-	create_hero(false);
-	create_hero(false);
 	create_hero(true);
+	create_hero(false);
+	create_hero(false);
 }
 
 int main(int argc, char* argv[]) {
 	initialize_png();
 	answers::beforepaint = party_information;
 	draw::pstatus = statusinfo;
-	return draw::utg::run(generate_character);
+	return draw::utg::run(generate_character, true);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

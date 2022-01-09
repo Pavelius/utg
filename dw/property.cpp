@@ -5,6 +5,7 @@
 template<> struct bsdata<V> : bsdata<T> {};
 
 LNK(ability_s, abilityi)
+LNK(gender_s, genderi)
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
@@ -12,6 +13,7 @@ BSDATAD(variant)
 
 BSMETA(creature) = {
 	BSREQ(id),
+	BSREQ(gender),
 	BSENM(type, classi),
 	BSENM(race, racei),
 	BSENM(alignment, alignmenti),
@@ -30,9 +32,6 @@ BSMETA(alignmenti) = {
 BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(abilities),
-	BSFLG(alignment, alignmenti),
-	BSFLG(gender, genderi),
-	BSFLG(race, racei),
 	{}};
 BSDATAC(classi, 16)
 BSMETA(tagi) = {
@@ -70,14 +69,17 @@ BSMETA(itemi) = {
 BSDATAC(itemi, 256)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
-#define VRSTN(T, N) bsmeta<T>::meta, bsdata<T>::source_ptr, N
+#define VRSTN(T, N) bsmeta<T>::meta, bsdata<T>::source_ptr, N, FG(varianti::NotFoundByName)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi)},
 	{"Action", VRSTD(actioni)},
+	{"Advancement", VRSTN(advancement, 2)},
+	{"Alignment", VRSTD(alignmenti)},
 	{"Class", VRSTD(classi)},
 	{"Creature", VRSTD(creature)},
 	{"Diety", VRSTD(dietyi)},
+	{"Gender", VRSTD(genderi)},
 	{"Item", VRSTD(itemi)},
 	{"Move", VRSTD(movei)},
 	{"Pack", VRSTD(packi)},

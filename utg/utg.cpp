@@ -368,11 +368,13 @@ void draw::utg::tips() {
 	statusbar_paint();
 }
 
-int draw::utg::run(fnevent proc) {
+int draw::utg::run(fnevent proc, bool darkmode) {
 	if(!proc)
 		return -1;
-	//set_dark_theme();
-	set_light_theme();
+	if(darkmode)
+		set_dark_theme();
+	else
+		set_light_theme();
 	initialize_translation("ru");
 	bsreq::read("rules/basic.txt");
 	check_translation();

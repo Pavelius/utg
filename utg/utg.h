@@ -23,7 +23,7 @@ void texth2(const char* title);
 namespace utg {
 void beforemodal();
 void paint();
-int run(fnevent proc);
+int run(fnevent proc, bool darkmode);
 void tips();
 }
 }

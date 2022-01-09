@@ -1,3 +1,4 @@
+#include "advancement.h"
 #include "avatarable.h"
 #include "crt.h"
 #include "dice.h"
@@ -43,7 +44,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Class, Creature, Diety, Item, Move, Pack, Race, StartEquipment, Tag,
+	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Gender, Item, Move, Pack, Race, StartEquipment, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -71,9 +72,6 @@ struct racei {
 };
 struct classi {
 	const char*		id;
-	flaga			gender;
-	flaga			race;
-	flaga			alignment;
 	ability_s		abilities[6];
 };
 struct dietyi {
@@ -167,6 +165,7 @@ public:
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	void			getinfo(stringbuilder& sb) const;
+	bool			ismatch(variant v) const;
 };
 class gamei {
 	char			bolster;

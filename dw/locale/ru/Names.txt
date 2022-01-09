@@ -42,7 +42,7 @@ Mistra: Мистра
 Neutral: Нейтральный
 No: Нет
 NoGender: Безполый
-PoulticesAndHerbs: Травы и припарки
+PoulticesAndHerbs: Травы
 RaggedBow: Лук
 Rapier: Рапира
 ScaleMailArmor: Хаулберк
