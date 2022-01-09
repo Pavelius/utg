@@ -55,12 +55,6 @@ BSDATAC(packi, 256)
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
-BSMETA(startequipmenti) = {
-	BSENM(type, classi),
-	BSREQ(id),
-	BSREQ(elements),
-	{}};
-BSDATAC(startequipmenti, 64)
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(damage), BSREQ(armor), BSREQ(uses), BSREQ(pierce), BSREQ(heal), BSREQ(forward),
 	BSFLG(tags, tagi),
@@ -84,7 +78,6 @@ BSDATA(varianti) = {
 	{"Move", VRSTD(movei)},
 	{"Pack", VRSTD(packi)},
 	{"Race", VRSTD(racei)},
-	{"StartEquipment", VRSTN(startequipmenti, 2)},
 	{"Tag", VRSTD(tagi)},
 };
 assert_enum(varianti, Tag)

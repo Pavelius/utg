@@ -42,6 +42,9 @@
     <ClCompile Include="ability.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="wearable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

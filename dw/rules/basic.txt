@@ -1,5 +1,6 @@
 #Item
 
+NoItem
 RaggedBow weight(2) coins(15)
  tags Near NeedArrows
 FineBow weight(2) coins(60)
@@ -132,31 +133,6 @@ Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma)
 Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow)
 Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution)
 
-#StartEquipment
-
-Cleric ChooseDefences
- elements ClericArmor1 ClericArmor2
-Cleric ChooseArmament
- elements ClericWeapon1 ClericWeapon2 ClericWeapon3
-Cleric ChooseGears
- elements ClericGear1 ClericGear2
-Fighter ChooseDefences
- elements FighterArmor1 FighterArmor2
-Fighter ChooseGears
- elements FighterGear1 FighterGear2 FighterGear3
-Theif ChooseArmament
- elements TheifWeapon1 TheifWeapon2
-Theif ChooseRangedWeapons
- elements TheifRangedWeapon1 TheifRangedWeapon2
-Theif ChooseGears
- elements TheifGear1 TheifGear2
-Wizard ChooseDefences
- elements WizardArmor1 WizardArmor2
-Wizard ChooseArmament
- elements WizardWeapon1 WizardWeapon2
-Wizard ChooseGears
- elements WizardGear1 WizardGear2
-
 #Advancement
 
 0 ChooseClass result(type)
@@ -179,3 +155,25 @@ Wizard ChooseRace result(race)
  elements Elf Human
 0 ChooseGender result(gender)
  elements Male Female
+Cleric ChooseDefences result(wear)
+ elements ClericArmor1 ClericArmor2
+Cleric ChooseArmament result(wear)
+ elements ClericWeapon1 ClericWeapon2 ClericWeapon3
+Cleric ChooseGears result(wear)
+ elements ClericGear1 ClericGear2
+Fighter ChooseDefences result(wear)
+ elements FighterArmor1 FighterArmor2
+Fighter ChooseGears result(wear)
+ elements FighterGear1 FighterGear2 FighterGear3
+Theif ChooseArmament result(wear)
+ elements TheifWeapon1 TheifWeapon2
+Theif ChooseRangedWeapons result(wear)
+ elements TheifRangedWeapon1 TheifRangedWeapon2
+Theif ChooseGears result(wear)
+ elements TheifGear1 TheifGear2
+Wizard ChooseDefences result(wear)
+ elements WizardArmor1 WizardArmor2
+Wizard ChooseArmament result(wear)
+ elements WizardWeapon1 WizardWeapon2
+Wizard ChooseGears result(wear)
+ elements WizardGear1 WizardGear2

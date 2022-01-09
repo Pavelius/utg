@@ -343,6 +343,16 @@ void varianti::set(void* object, const char* id, int value) const {
 	write_value(object, req, 0, v);
 }
 
+const array* varianti::getarray(const void* object, const char* id) {
+	auto pm = getmetadata(object);
+	if(!pm)
+		return 0;
+	auto req = pm->metadata->find(id);
+	if(!req)
+		return 0;
+	return req->source;
+}
+
 static void parse() {
 	while(*p && allow_continue) {
 		skipsym('#');

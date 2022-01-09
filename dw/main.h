@@ -44,7 +44,7 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Gender, Item, Move, Pack, Race, StartEquipment, Tag,
+	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Gender, Item, Move, Pack, Race, Tag,
 };
 enum result_s : unsigned char {
 	Fail, PartialSuccess, Success, CriticalSuccess,
@@ -76,13 +76,6 @@ struct classi {
 };
 struct dietyi {
 	const char*		id;
-};
-struct startequipmenti {
-	unsigned char	type;
-	const char*		id;
-	const char*		result;
-	const char*		mask;
-	variants		elements;
 };
 struct tagi {
 	const char* id;
@@ -133,7 +126,8 @@ union item {
 		itemufa feats;
 	};
 	constexpr item() : u(0) {}
-	constexpr item(unsigned char type) : type(0), signature(0), used(0), feats() {}
+	constexpr item(unsigned char type) : type(type), signature(0), used(0), feats() {}
+	constexpr explicit operator bool() const { return u != 0; }
 	constexpr const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	constexpr bool is(itemuf_s v) const { return feats.is(v); }
 	constexpr bool is(tag_s v) const { return geti().tags.is(v); }
@@ -148,13 +142,17 @@ struct statable : moveable {
 	static result_s rollv(int bonus);
 	void			update_player();
 };
-class creature : public nameable, public avatarable, public statable {
+class wearable {
+	item			wears[LastBackpack + 1];
+public:
+	bool			additem(const item& it);
+};
+class creature : public nameable, public avatarable, public statable, public wearable {
 	unsigned char	alignment, type, diety;
 	statable		basic;
 	char			hp;
 	void			apply_advance();
 	void			choose_abilities();
-	void			choose_equipment();
 	void			finish();
 	void			random_ability();
 	void			update();

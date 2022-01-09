@@ -1,13 +1,3 @@
-﻿In file `rules/basic.txt`:
- Line 177: Can't find variant `Good`
- Line 177: Can't find variant `Lawful`
- Line 177: Can't find variant `Evil`
- Line 179: Can't find variant `Good`
- Line 179: Can't find variant `Neutral`
- Line 179: Can't find variant `Evil`
- Line 181: Can't find variant `Chaotic`
- Line 181: Can't find variant `Neutral`
- Line 181: Can't find variant `Evil`
- Line 183: Can't find variant `Good`
- Line 183: Can't find variant `Neutral`
- Line 183: Can't find variant `Evil`
+﻿In file `Names.txt`:
+ Define translate for `FighterArmor1`
+ Define translate for `FighterArmor2`

@@ -15,6 +15,7 @@ struct varianti {
 	array*				source;
 	int                 key_count;
 	unsigned			flags;
+	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);
 	int					found(const char* id) const;

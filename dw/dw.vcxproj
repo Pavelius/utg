@@ -157,6 +157,7 @@
     <ClCompile Include="race.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="wearable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
