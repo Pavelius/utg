@@ -2,9 +2,18 @@
 
 void initialize_png();
 
+static void getinformation(const char* id, stringbuilder& sb) {
+	auto p = getdescription(id);
+	if(!p)
+		return;
+	sb.add(p);
+}
+
 static void statusinfo(const void* object, stringbuilder& sb) {
 	if(bsdata<creature>::source.have(object))
 		((creature*)object)->getinfo(sb);
+	else if(bsdata<abilityi>::source.have(object))
+		getinformation(((abilityi*)object)->id, sb);
 }
 
 static void party_information() {
@@ -25,8 +34,6 @@ static void tabs_panel() {
 		draw::label(draw::focus_object, pm->elements, creature::getinfo);
 		draw::title_width = push_title;
 	} else {
-		draw::label("Освещение факела", 3);
-		draw::label("Инструменты и оборудование", 5);
 	}
 }
 

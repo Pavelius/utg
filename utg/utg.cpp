@@ -87,6 +87,21 @@ static void stroke(const sprite* p, int frame) {
 	height = push_height;
 }
 
+static void hiliting(const void* object) {
+	control_hilited = ishilite({caret.x, caret.y, caret.x + width, caret.y + height});
+	if(control_hilited)
+		hilite_object = const_cast<void*>(object);
+}
+
+static void focusing(const void* object) {
+	if(!object)
+		return;
+	if(control_hilited && hot.key == MouseLeft && hot.pressed)
+		execute(cbsetptr, (long)hilite_object, 0, &focus_object);
+	if(focus_object == object)
+		stroke_active();
+}
+
 static void imagev(const char* resid) {
 	if(!resid)
 		return;
@@ -115,13 +130,39 @@ static void hotkeybutton(char key) {
 }
 
 static int getmaximumheight() {
-	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2;
+	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2 - texth() - metrics::border*2;
+}
+
+static void paintborder() {
+	auto push_caret = caret;
+	auto push_height = height;
+	auto push_fore = fore;
+	height = texth() + metrics::border;
+	fill_window();
+	fore = colors::border;
+	line(caret.x, caret.y + height);
+	line(caret.x + width, caret.y);
+	line(caret.x, caret.y - height);
+	fore = push_fore;
+	height = push_height;
+	caret = push_caret;
+}
+
+static void paintbar(const char* id) {
+	auto push_caret = caret;
+	auto push_width = width;
+	caret.y += height;
+	width = textw(id) + metrics::border * 2 + metrics::padding;
+	paintborder();
+	width = push_width;
+	caret = push_caret;
 }
 
 void draw::propertybar() {
 	height = getmaximumheight() - caret.y;
 	strokex(fill_window);
 	strokex(stroke_border);
+	paintbar("Strenght");
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
 	width -= metrics::padding * 2;
@@ -152,12 +193,14 @@ void draw::label(const char* title, const char* value) {
 	caret.y += texth() + 2;
 }
 
-void draw::label(const char* title, int value, const char* format) {
-	if(!format)
-		format = "%1i";
-	char temp[32]; stringbuilder sb(temp);
-	sb.add(format, value);
-	label(title, temp);
+void draw::label(const char* title, const char* value, const void* object) {
+	auto push_height = height;
+	height = texth();
+	hiliting(object);
+	if(control_hilited)
+		hilite_type = figure::RectFill;
+	label(title, value);
+	height = push_height;
 }
 
 static void separator() {
@@ -187,7 +230,7 @@ void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 			auto id = v.getid();
 			sb.clear(); pget(object, v, sb);
 			if(sb)
-				label(getnm(id), temp);
+				label(getnm(id), temp, v.getpointer());
 		}
 	}
 	draw::tab_pixels = push_tab;
@@ -267,7 +310,7 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	auto push_width = width;
 	if(columns == -1)
 		columns = getcolumns(*this);
-	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 3;
+	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
 	auto column_width = standart_width - metrics::padding * 2;
 	if(columns > 1)
 		column_width = column_width / columns - metrics::border;
@@ -277,14 +320,11 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		auto push_height = height;
 		if(pwindow)
 			pwindow();
-		auto push_caret = caret;
-		caret.x = getwidth() - 320 - metrics::padding - metrics::border * 2;
-		width = 320;
+		setposru();
 		imagev(resid);
 		if(beforepaint)
 			beforepaint();
-		caret = push_caret;
-		caret.x = metrics::padding + metrics::border * 2;
+		setposlu();
 		width = standart_width;
 		height = push_height - metrics::padding - metrics::border * 2;
 		strokex(fill_window);
@@ -329,21 +369,6 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		domodal();
 	}
 	return (void*)getresult();
-}
-
-static void hiliting(const void* object) {
-	control_hilited = ishilite({caret.x, caret.y, caret.x + width, caret.y + height});
-	if(control_hilited)
-		hilite_object = const_cast<void*>(object);
-}
-
-static void focusing(const void* object) {
-	if(!object)
-		return;
-	if(control_hilited && hot.key == MouseLeft && hot.pressed)
-		execute(cbsetptr, (long)hilite_object, 0, &focus_object);
-	if(focus_object == object)
-		stroke_active();
 }
 
 void draw::avatar(const char* id, const void* object) {

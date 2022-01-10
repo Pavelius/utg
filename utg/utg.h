@@ -25,7 +25,7 @@ void answerbt(int index, const void* id, const char* title);
 void avatar(const char* id, const void* object);
 bool buttonfd(const char* title);
 void label(const char* id, const char* value);
-void label(const char* id, int value, const char* format = 0);
+void label(const char* id, const char* value, const void* object);
 void label(const void* object, const variants& elements, fngetinfo pget);
 void noavatar();
 void propertybar();
