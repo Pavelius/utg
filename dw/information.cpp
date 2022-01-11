@@ -79,7 +79,8 @@ void creature::getinfo(const void* object, variant v, stringbuilder& sb) {
 			sb.add("]");
 			break;
 		default:
-			sb.add("[%1i]", p->abilities[v.value]); break;
+			if(p->abilities[v.value])
+				sb.add("[%1i]", p->abilities[v.value]);
 			break;
 		}
 	default: break;

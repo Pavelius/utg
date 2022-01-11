@@ -11,6 +11,7 @@ const void* draw::focus_object;
 figure draw::hilite_type;
 fnstatus draw::pstatus;
 int draw::title_width = 220;
+static void* current_tab;
 
 void set_dark_theme();
 void set_light_theme();
@@ -87,10 +88,12 @@ static void stroke(const sprite* p, int frame) {
 	height = push_height;
 }
 
-static void hiliting(const void* object) {
+static void hiliting(const void* object, figure type = figure::Rect) {
 	control_hilited = ishilite({caret.x, caret.y, caret.x + width, caret.y + height});
-	if(control_hilited)
+	if(control_hilited) {
 		hilite_object = const_cast<void*>(object);
+		hilite_type = type;
+	}
 }
 
 static void focusing(const void* object) {
@@ -130,39 +133,74 @@ static void hotkeybutton(char key) {
 }
 
 static int getmaximumheight() {
-	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2 - texth() - metrics::border*2;
+	return getheight() - texth() - metrics::border * 2 - metrics::padding * 2;
 }
 
-static void paintborder() {
+static void strokebar() {
 	auto push_caret = caret;
-	auto push_height = height;
-	auto push_fore = fore;
-	height = texth() + metrics::border;
-	fill_window();
-	fore = colors::border;
 	line(caret.x, caret.y + height);
 	line(caret.x + width, caret.y);
 	line(caret.x, caret.y - height);
-	fore = push_fore;
-	height = push_height;
 	caret = push_caret;
+}
+
+static void barborder() {
+	auto push_fore = fore;
+	fore = colors::border;
+	strokebar();
+	fore = push_fore;
+}
+
+static void bartext(const char* format) {
+	auto push_caret = caret;
+	caret.y += metrics::border * 2;
+	caret.x += metrics::padding;
+	text(format);
+	caret = push_caret;
+}
+
+static void bartextselected(const char* format) {
+	auto push_fore = fore;
+	fore = colors::active;
+	bartext(format);
+	fore = push_fore;
 }
 
 static void paintbar(const char* id) {
-	auto push_caret = caret;
 	auto push_width = width;
-	caret.y += height;
-	width = textw(id) + metrics::border * 2 + metrics::padding;
-	paintborder();
+	width = textw(id) + metrics::padding * 2;
+	if(current_tab == id) {
+		fill_window();
+		barborder();
+		bartextselected(id);
+	} else {
+		bartext(id);
+		hiliting(id, figure::RectFill);
+		if(control_hilited && hot.key == MouseLeft && hot.pressed)
+			execute(cbsetptr, (long)id, 0, &current_tab);
+	}
+	caret.x += width + metrics::border * 2;
 	width = push_width;
-	caret = push_caret;
+}
+
+static int getbarpageheight() {
+	return texth() + metrics::border * 2;
+}
+
+static void paintbars() {
+	rectpush push;
+	caret.y += height + metrics::border;
+	caret.x -= metrics::border;
+	height = getbarpageheight() + metrics::border;
+	paintbar(getnm("Strenght"));
+	paintbar(getnm("Dexterity"));
 }
 
 void draw::propertybar() {
-	height = getmaximumheight() - caret.y;
+	height = getmaximumheight() - caret.y - getbarpageheight();
 	strokex(fill_window);
 	strokex(stroke_border);
-	paintbar("Strenght");
+	paintbars();
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
 	width -= metrics::padding * 2;
@@ -196,9 +234,7 @@ void draw::label(const char* title, const char* value) {
 void draw::label(const char* title, const char* value, const void* object) {
 	auto push_height = height;
 	height = texth();
-	hiliting(object);
-	if(control_hilited)
-		hilite_type = figure::RectFill;
+	hiliting(object, figure::RectFill);
 	label(title, value);
 	height = push_height;
 }
