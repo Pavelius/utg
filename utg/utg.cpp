@@ -166,6 +166,13 @@ static void bartextselected(const char* format) {
 	fore = push_fore;
 }
 
+static void hilitingx(const char* id, figure v) {
+	rectpush push;
+	caret.x += 1;
+	caret.y += 1;
+	hiliting(id, v);
+}
+
 static void paintbar(const char* id) {
 	auto push_width = width;
 	width = textw(id) + metrics::padding * 2;
@@ -175,11 +182,11 @@ static void paintbar(const char* id) {
 		bartextselected(id);
 	} else {
 		bartext(id);
-		hiliting(id, figure::RectFill);
+		hilitingx(id, figure::Rect3D);
 		if(control_hilited && hot.key == MouseLeft && hot.pressed)
 			execute(cbsetptr, (long)id, 0, &current_tab);
 	}
-	caret.x += width + metrics::border * 2;
+	caret.x += width;
 	width = push_width;
 }
 
@@ -439,6 +446,9 @@ static void hilite_paint() {
 		break;
 	case figure::RectFill:
 		strokex(stroke_active_fill, 2);
+		break;
+	case figure::Rect3D:
+		stroke_active_fill();
 		break;
 	}
 }
