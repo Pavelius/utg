@@ -1,0 +1,6 @@
+#Item
+
+NoItem
+Quarterstaff wear(3)
+ skills Parry
+ tags Close Reach Blunted

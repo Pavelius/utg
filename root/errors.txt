@@ -1,0 +1,2 @@
+﻿In file `rules/basic.txt`:
+ Line 5: Not found identifier `Parry`

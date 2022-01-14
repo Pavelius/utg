@@ -21,16 +21,16 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9783172d-540b-4517-b85c-5dd5643ec9db}</ProjectGuid>
-    <RootNamespace>utg</RootNamespace>
+    <ProjectGuid>{3db6e1b0-853a-4f0b-9b0b-038463a886ba}</ProjectGuid>
+    <RootNamespace>root</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath />
+    <IncludePath>$(SolutionDir)utg</IncludePath>
     <ExternalIncludePath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -92,7 +92,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -141,72 +141,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="advancement.cpp" />
-    <ClCompile Include="answers.cpp" />
-    <ClCompile Include="archive.cpp" />
-    <ClCompile Include="avatarable.cpp" />
-    <ClCompile Include="bsreq.cpp" />
-    <ClCompile Include="bstream.cpp" />
-    <ClCompile Include="color.cpp" />
-    <ClCompile Include="crt.cpp" />
-    <ClCompile Include="crt_file.cpp" />
-    <ClCompile Include="crt_translate.cpp" />
-    <ClCompile Include="dice.cpp" />
-    <ClCompile Include="draw.cpp" />
-    <ClCompile Include="draw_figure.cpp" />
-    <ClCompile Include="front.cpp" />
-    <ClCompile Include="resource_dynamic.cpp" />
-    <ClCompile Include="surface_serial.cpp" />
-    <ClCompile Include="utg.cpp" />
-    <ClCompile Include="draw_text.cpp" />
-    <ClCompile Include="draw_textf.cpp" />
-    <ClCompile Include="draw_theme.cpp" />
-    <ClCompile Include="draw_tooltips.cpp" />
-    <ClCompile Include="gender.cpp" />
-    <ClCompile Include="io_bsreq.cpp" />
-    <ClCompile Include="io_stream.cpp" />
-    <ClCompile Include="log.cpp" />
-    <ClCompile Include="png.cpp" />
-    <ClCompile Include="point.cpp" />
-    <ClCompile Include="stringact.cpp" />
-    <ClCompile Include="stringbuilder.cpp" />
-    <ClCompile Include="szdup.cpp" />
-    <ClCompile Include="utg_logs.cpp" />
-    <ClCompile Include="variant.cpp" />
-    <ClCompile Include="recordset.cpp" />
-    <ClCompile Include="win_draw.cpp" />
-    <ClCompile Include="win_io_file.cpp" />
-    <ClCompile Include="zip.cpp" />
+    <ProjectReference Include="..\utg\utg.vcxproj">
+      <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ability.h" />
-    <ClInclude Include="advancement.h" />
-    <ClInclude Include="answers.h" />
-    <ClInclude Include="archive.h" />
-    <ClInclude Include="avatarable.h" />
-    <ClInclude Include="bsreq.h" />
-    <ClInclude Include="bstream.h" />
-    <ClInclude Include="color.h" />
-    <ClInclude Include="crt.h" />
-    <ClInclude Include="dice.h" />
-    <ClInclude Include="draw.h" />
-    <ClInclude Include="draw_figure.h" />
-    <ClInclude Include="front.h" />
-    <ClInclude Include="menu.h" />
-    <ClInclude Include="tag.h" />
-    <ClInclude Include="utg.h" />
-    <ClInclude Include="flagable.h" />
-    <ClInclude Include="gender.h" />
-    <ClInclude Include="io_stream.h" />
-    <ClInclude Include="log.h" />
-    <ClInclude Include="my_initialize_list.h" />
-    <ClInclude Include="point.h" />
-    <ClInclude Include="rect.h" />
-    <ClInclude Include="stringact.h" />
-    <ClInclude Include="stringbuilder.h" />
-    <ClInclude Include="variant.h" />
-    <ClInclude Include="recordset.h" />
-    <ClInclude Include="win.h" />
+    <ClCompile Include="ability.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="property.cpp" />
+    <ClCompile Include="skill.cpp" />
+    <ClCompile Include="tag.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt" />
+    <Text Include="locale\ru\Descriptions.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\basic.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

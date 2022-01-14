@@ -206,5 +206,11 @@
     <ClInclude Include="menu.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="ability.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
