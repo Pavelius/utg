@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "log.h"
 #include "quest.h"
 
@@ -141,6 +142,8 @@ void quest::read(const char* url) {
 }
 
 static bool isallow(const variants& source, quest::fnallow proc) {
+	if(!proc)
+		return true;
 	for(auto v : source) {
 		if(!proc(v))
 			return false;
@@ -159,4 +162,18 @@ const quest* quest::findprompt(short id, fnallow proc) {
 		return &e;
 	}
 	return 0;
+}
+
+const quest* quest::choose(int id, fnallow proc, const char* title, const char* resid, const char* header) const {
+	answers an;
+	for(auto& e : bsdata<quest>()) {
+		if(e.index != id)
+			continue;
+		if(!e.isanswer())
+			continue;
+		if(!isallow(e.tags, proc))
+			continue;
+		an.add(&e, e.text);
+	}
+	return (quest*)an.choose(title, 0, true, resid, -1, header);
 }

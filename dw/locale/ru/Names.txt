@@ -11,6 +11,7 @@ ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
 CharacterGeneration: Генерация персонажа
 Charisma: Харизма
+Choose: Выбирай
 ChooseAlignment: Каков будет его характер?
 ChooseArmament: Что будет вашим оружием?
 ChooseClass: Кто будет ваш персонаж?

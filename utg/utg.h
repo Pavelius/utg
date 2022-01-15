@@ -44,6 +44,8 @@ namespace logs {
 extern const char* url;
 extern const char* header;
 extern bool interactive;
+extern flagable<4> multiply_choose;
+void apply(const answers& source, const char* title, fncommand proc, int count);
 const char* getchoose(const char* id);
 int choose(const answers& source, const char* title, const char* cancel);
 int choose(const array& source, const char* title, const char* cancel);

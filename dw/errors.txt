@@ -1,3 +1,2 @@
 ﻿In file `Names.txt`:
- Define translate for `Armor`
- Define translate for `HP`
+ Define translate for `Choose`
