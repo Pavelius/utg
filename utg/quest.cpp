@@ -115,6 +115,9 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 	return p;
 }
 
+quest::fnallow quest::allow;
+quest::fnallow quest::apply;
+
 void quest::clear() {
 	memset(this, 0, sizeof(*this));
 }
@@ -141,39 +144,53 @@ void quest::read(const char* url) {
 	delete p_alloc;
 }
 
-static bool isallow(const variants& source, quest::fnallow proc) {
-	if(!proc)
+static bool isallow(const variants& source) {
+	if(!quest::allow)
 		return true;
 	for(auto v : source) {
-		if(!proc(v))
+		if(!quest::allow(v))
 			return false;
 	}
 	return true;
 }
 
-const quest* quest::findprompt(short id, fnallow proc) {
+const quest* quest::findprompt(short id) {
 	for(auto& e : bsdata<quest>()) {
 		if(e.index != id)
 			continue;
 		if(e.isanswer())
 			continue;
-		if(!isallow(e.tags, proc))
+		if(!isallow(e.tags))
 			continue;
 		return &e;
 	}
 	return 0;
 }
 
-const quest* quest::choose(int id, fnallow proc, const char* title, const char* resid, const char* header) const {
+const quest* quest::choose(int id, const char* title, const char* resid, const char* header) const {
 	answers an;
 	for(auto& e : bsdata<quest>()) {
 		if(e.index != id)
 			continue;
 		if(!e.isanswer())
 			continue;
-		if(!isallow(e.tags, proc))
+		if(!isallow(e.tags))
 			continue;
 		an.add(&e, e.text);
 	}
 	return (quest*)an.choose(title, 0, true, resid, -1, header);
+}
+
+void quest::run(int id, const char* title, const char* resid, const char* header) {
+	while(true) {
+		auto p = findprompt(id);
+		if(!p)
+			return;
+		for(auto v : p->tags)
+			apply(v);
+		p = p->choose(p->index, title, resid, header);
+		for(auto v : p->tags)
+			apply(v);
+		id = p->next;
+	}
 }
