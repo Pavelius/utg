@@ -1,10 +1,13 @@
+#include "ability.h"
 #include "advancement.h"
 #include "avatarable.h"
 #include "crt.h"
 #include "dice.h"
 #include "flagable.h"
 #include "gender.h"
+#include "quest.h"
 #include "recordset.h"
+#include "tag.h"
 #include "utg.h"
 
 #pragma once
@@ -61,9 +64,6 @@ struct packi {
 	variants		elements;
 	void			getinfo(stringbuilder& sb) const;
 };
-struct abilityi {
-	const char*		id;
-};
 struct alignmenti {
 	const char*		id;
 };
@@ -77,9 +77,6 @@ struct classi {
 };
 struct dietyi {
 	const char*		id;
-};
-struct tagi {
-	const char* id;
 };
 struct actioni {
 	const char*		id;

@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
 	initialize_png();
 	answers::beforepaint = right_panel;
 	draw::pstatus = statusinfo;
+	quest::read("rules/Quest.txt");
 	return draw::utg::run(generate_character, true);
 }
 

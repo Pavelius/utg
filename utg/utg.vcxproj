@@ -155,6 +155,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="front.cpp" />
+    <ClCompile Include="quest.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="utg.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="draw_figure.h" />
     <ClInclude Include="front.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="quest.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />
     <ClInclude Include="flagable.h" />

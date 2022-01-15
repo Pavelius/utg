@@ -126,6 +126,9 @@
     <ClCompile Include="front.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="quest.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -210,6 +213,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="tag.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="quest.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
