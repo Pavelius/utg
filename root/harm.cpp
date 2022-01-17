@@ -7,6 +7,5 @@ BSDATA(harmi) {
 	{"Depletion"},
 	{"Morale"},
 	{"Value"},
-	{"Harm"},
 };
-assert_enum(harmi, Harm)
+assert_enum(harmi, Value)

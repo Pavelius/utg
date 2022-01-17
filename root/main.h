@@ -16,7 +16,9 @@ enum ability_s : unsigned char {
 enum harm_s : unsigned char {
 	Injury, Exhaustion, Wear, Depletion,
 	Morale, Value,
-	Harm,
+};
+enum special_s : unsigned char {
+	Choose, Harm, Range
 };
 enum roguish_s : unsigned char {
 	Acrobatics, Blindside, Counterfeit, DisableDevice, Hide,
@@ -32,7 +34,8 @@ enum move_type_s : unsigned char {
 	BasicMove, WeaponSkill, ReputationMove, TravelMove,
 };
 enum move_mechanic_s : unsigned char {
-	PlainMove, Choose1, Choose1or2, Choose1or3, Choose2or3,
+	PlainMove,
+	Choose1, Choose1or2, Choose1or3, Choose2or3,
 };
 enum move_s : unsigned char {
 	AttemptRoguishFeat, FigureSomeoneOut, PersuadeNPC,
@@ -45,7 +48,7 @@ enum move_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Bonus, Item, Menu, Move, Resource, Result, Tag, Widget,
+	Ability, Bonus, Item, Menu, Move, Resource, Result, Special, Tag, Widget,
 };
 enum slot_s : unsigned char {
 	Weapon, Armor, Shield
@@ -57,6 +60,10 @@ struct nameable {
 	void			act(stringbuilder& sb, const char* format, ...) { actv(sb, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* param);
 };
+struct statable {
+	char			abilities[Might + 1];
+	int				get(ability_s v) const { return abilities[v]; }
+};
 struct movei {
 	const char*		id;
 	move_type_s		type;
@@ -64,6 +71,9 @@ struct movei {
 	move_mechanic_s	mechanic;
 };
 struct harmi {
+	const char*		id;
+};
+struct speciali {
 	const char*		id;
 };
 struct harmable {
@@ -99,11 +109,18 @@ struct effectable {
 	char			distance, value;
 	void			apply(variant v);
 	void			clear();
+	harmable&		getharm(int m);
 };
 struct equiped {
 	item			wears[Shield + 1];
 };
-struct creature : nameable, equiped {
+struct creature : nameable, equiped, statable {
+	void			roll(move_s v);
+	void			move(move_s v);
 };
+extern effectable	game;
 
 VKIND(harm_s, Resource)
+VKIND(move_s, Move)
+VKIND(result_s, Result)
+VKIND(special_s, Special)

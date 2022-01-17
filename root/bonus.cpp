@@ -30,5 +30,15 @@ BSDATA(bonusi) = {
 	{"Harm1", Harm, 1},
 	{"Harm2", Harm, 2},
 	{"Harm3", Harm, 3},
+	{"HarmM1", Harm, -1},
+	{"SufferHarm1", Harm, 1, 1},
+	{"SufferHarm2", Harm, 2, 1},
+	{"SufferHarm3", Harm, 3, 1},
+	{"SufferHarmM1", Harm, -1, 1},
+	{"RangeP", Range, 1},
+	{"RangeM", Range, -1},
+	{"Choose1", Choose, 1},
+	{"Choose2", Choose, 2},
+	{"Choose3", Choose, 3},
 };
 BSDATAF(bonusi)

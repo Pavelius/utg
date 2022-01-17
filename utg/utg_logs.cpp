@@ -5,6 +5,8 @@ const char* logs::url;
 const char* logs::header;
 bool logs::interactive;
 flagable<4> logs::multiply_choose;
+static char sb_value[4096];
+stringbuilder logs::sb(sb_value);
 
 const char* logs::getchoose(const char* id) {
 	char temp[128]; stringbuilder sb(temp);
@@ -51,16 +53,19 @@ void logs::apply(const answers& source, const char* title, fncommand proc, int c
 	while(count > 0) {
 		an.clear();
 		sb.clear();
-		sb.add(title);
-		if(count > 1)
-			sb.adds("(%-Choose [%1i])", count);
+		if(title) {
+			sb.add(title);
+			if(count > 1)
+				sb.adds("(%-Choose [%1i])", count);
+		} else
+			sb.adds("%Choose [%1i]", count);
 		for(auto& e : source) {
 			auto index = source.indexof(&e);
 			if(choosed.is(index) && !multiply_choose.is(index))
 				continue;
 			an.add(e.value, e.text);
 		}
-		auto result = an.choose(temp, 0, interactive, url, -1, header);
+		auto result = an.choose(temp, 0, interactive, url, -1, header, sb_value);
 		auto result_index = get_answer_index(source, result);
 		proc(result);
 		if(result_index != -1)

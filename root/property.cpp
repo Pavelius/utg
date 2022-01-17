@@ -38,6 +38,9 @@ BSMETA(harmi) = {
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
+BSMETA(speciali) = {
+	BSREQ(id),
+	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(wear),
 	BSFLG(tags, tagi),
@@ -56,6 +59,7 @@ BSDATA(varianti) = {
 	{"Move", VRSTD(movei)},
 	{"Resource", VRSTD(harmi)},
 	{"Result", VRSTD(resulti)},
+	{"Specail", VRSTD(speciali)},
 	{"Tag", VRSTD(tagi)},
 	{"Widget", VRSTD(widget)},
 };

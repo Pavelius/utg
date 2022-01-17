@@ -344,7 +344,7 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void* answers::choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int columns, const char* header) const {
+void* answers::choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int columns, const char* header, const char* promt) const {
 	if(!interactive)
 		return random();
 	if(!elements)
@@ -373,7 +373,12 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		strokex(fill_window);
 		strokex(stroke_border);
 		caret.x += metrics::padding; width -= metrics::padding;
+		caret.y += metrics::padding; height -= metrics::padding;
 		texth2(header);
+		if(promt && promt[0]) {
+			textf(promt);
+			caret.y += metrics::padding;
+		}
 		if(title) {
 			auto push_fore = fore;
 			fore = colors::h3;

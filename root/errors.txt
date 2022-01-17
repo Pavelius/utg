@@ -1,3 +1,2 @@
-﻿In file `rules/MoveMessages.txt`:
- Line 9: Can't find variant `Injure1`
- Line 10: Can't find variant `SufferInjureM1`
+﻿In file `Names.txt`:
+ Define translate for `Success`

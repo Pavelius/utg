@@ -28,6 +28,12 @@
     <ClCompile Include="information.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="special.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="creature.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -59,6 +65,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\MoveMessages.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\MoveConcept.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

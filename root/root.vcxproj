@@ -148,11 +148,13 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="bonus.cpp" />
+    <ClCompile Include="creature.cpp" />
     <ClCompile Include="effectable.cpp" />
     <ClCompile Include="harm.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="property.cpp" />
+    <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="move.cpp" />
   </ItemGroup>
@@ -164,6 +166,7 @@
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\basic.txt" />
+    <Text Include="rules\MoveConcept.txt" />
     <Text Include="rules\MoveMessages.txt" />
     <Text Include="rules\Moves.txt" />
   </ItemGroup>

@@ -18,23 +18,29 @@ static int getparam(variant v) {
 	return 0;
 }
 
+harmable& effectable::getharm(int m) {
+	switch(m) {
+	case 1: return suffer;
+	case 2: return group;
+	default: return inflict;
+	}
+}
+
 void effectable::apply(variant object) {
 	auto v = getobject(object);
 	auto c = getvalue(object);
 	auto m = getparam(object);
-	harmable* ph;
 	switch(v.type) {
-	case Resource:
-		ph = &inflict;
-		switch(m) {
-		case 1: ph = &suffer; break;
-		case 2: ph = &group; break;
-		default: ph = &inflict; break;
+	case Special:
+		switch(v.value) {
+		case Harm:
+			apply(getharm(m).getdefault());
+			break;
 		}
-		if(v.value == Harm)
-			v.value = ph->getdefault();
-		if(v.value < sizeof(ph->harm) / sizeof(ph->harm[0]))
-			ph->harm[v.value] += c;
+		break;
+	case Resource:
+		if(v.value < sizeof(harmable::harm) / sizeof(harmable::harm[0]))
+			getharm(m).harm[v.value] += c;
 		break;
 	}
 }

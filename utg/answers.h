@@ -20,7 +20,7 @@ public:
 	void				add(const void* value, const char* name, ...) { addv(value, name, xva_start(name)); }
 	void				addv(const void* value, const char* name, const char* format);
 	const element*		begin() const { return elements.data; }
-	void*				choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int column_count = -1, const char* header = 0) const;
+	void*				choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int column_count = -1, const char* header = 0, const char* prompt = 0) const;
 	void				clear();
 	static int			compare(const void* v1, const void* v2);
 	const element*		end() const { return elements.end(); }
