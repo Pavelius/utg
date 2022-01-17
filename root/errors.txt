@@ -1,2 +1,3 @@
-﻿In file `rules/basic.txt`:
- Line 5: Not found identifier `Parry`
+﻿In file `rules/MoveMessages.txt`:
+ Line 9: Can't find variant `Injure1`
+ Line 10: Can't find variant `SufferInjureM1`

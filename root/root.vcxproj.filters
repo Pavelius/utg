@@ -13,7 +13,19 @@
     <ClCompile Include="tag.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="skill.cpp">
+    <ClCompile Include="move.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="effectable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="bonus.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="harm.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="information.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,6 +53,12 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="errors.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Moves.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\MoveMessages.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

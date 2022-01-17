@@ -2,5 +2,5 @@
 
 NoItem
 Quarterstaff wear(3)
- skills Parry
+ moves Parry
  tags Close Reach Blunted

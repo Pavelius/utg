@@ -1,0 +1,12 @@
+FigureSomeoneOut Success: Да? О чем хотите поговорить?
+FigureSomeoneOut Fail: Мне нечего вам сказать. Простите меня, но я немного занят%а.
+FigureSomeoneOut Fail: Не сейчас. Я собираюсь заняться другими делами.
+FigureSomeoneOut 1: Он говорит правду?
+FigureSomeoneOut 2: Что он чувствует прямо сейчас?
+FigureSomeoneOut 3: Что он собирается делать?
+FigureSomeoneOut 4: Что он хочет чтобы я сделал?
+FigureSomeoneOut 5: Как я могу заставить его сделать то, что мне надо?
+EngageMelee 1 Injury1: Нанести больше урона
+EngageMelee 2 SufferInjuryM1: Получить меньше урона
+EngageMelee 3: Изменить дистанцию
+EngageMelee 4: Впечатлить, озадачить или испугать врага

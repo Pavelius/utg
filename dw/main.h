@@ -6,6 +6,7 @@
 #include "flagable.h"
 #include "gender.h"
 #include "quest.h"
+#include "pbta.h"
 #include "recordset.h"
 #include "tag.h"
 #include "utg.h"
@@ -48,9 +49,6 @@ enum action_s : unsigned char {
 enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Front, Gender, Item, Menu, Move, Pack, Race, Tag, Widget
-};
-enum result_s : unsigned char {
-	Fail, PartialSuccess, Success, CriticalSuccess,
 };
 
 typedef flagable<1> itemufa;

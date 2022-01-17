@@ -15,6 +15,25 @@ void log::seturl(const char* v) {
     current_url = v;
 }
 
+const char* log::read(const char* url, bool error_if_not_exist) {
+	auto p_alloc = loadt(url);
+	if(!p_alloc) {
+		current_url = 0;
+		if(error_if_not_exist)
+			error(0, "Can't find file '%1'", url);
+		return 0;
+	}
+	seturl(url);
+	setfile(p_alloc);
+	return p_alloc;
+}
+
+void log::close() {
+	if(current_file)
+		delete current_file;
+	current_url = 0;
+}
+
 const char* endline(const char* p) {
 	while(*p && !(*p == 10 || *p == 13))
 		p++;

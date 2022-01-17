@@ -1,0 +1,31 @@
+#include "main.h"
+
+BSDATA(movei) = {
+	{"AttemptRoguishFeat", BasicMove, Finess},
+	{"FigureSomeoneOut", BasicMove, Charm, Choose1or3},
+	{"PersuadeNPC", BasicMove, Charm},
+	{"ReadTenseSituation", BasicMove, Cunning, Choose1or3},
+	{"TrickNPC", BasicMove, Cunning},
+	{"TrustFate", BasicMove, Luck},
+	{"WreckSomething", BasicMove, Might},
+	{"EngageMelee", BasicMove, Might, Choose1or3},
+	{"GrappleEnemy", BasicMove, Might, Choose1},
+	{"TargetSomeone", BasicMove, Finess},
+	{"Cleave", WeaponSkill, Might},
+	{"ConfuseSenses", WeaponSkill, Finess},
+	{"Disarm", WeaponSkill, Finess},
+	{"HarryGroup", WeaponSkill, Cunning},
+	{"ImproviseWeapon", WeaponSkill, Cunning},
+	{"Parry", WeaponSkill, Finess, Choose1or3},
+	{"QuickShot", WeaponSkill, Luck, Choose1or3},
+	{"StormGroup", WeaponSkill, Might, Choose1or2},
+	{"TrickShot", WeaponSkill, Finess, Choose2or3},
+	{"ViciousStrike", WeaponSkill, Might},
+	{"AskFavor", ReputationMove},
+	{"MeetSomeoneImportant", ReputationMove, {}, Choose1or2},
+	{"DrawAttention", ReputationMove, {}, Choose1or2},
+	{"SwayNPC", ReputationMove},
+	{"MakePointedThread", ReputationMove},
+	{"CommandResources", ReputationMove},
+};
+assert_enum(movei, CommandResources)

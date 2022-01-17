@@ -1,7 +1,5 @@
 #include "main.h"
 
-void initialize_png();
-
 static void getinformation(const char* id, stringbuilder& sb) {
 	auto p = getdescription(id);
 	if(!p)
@@ -75,7 +73,6 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
-	initialize_png();
 	answers::beforepaint = right_panel;
 	draw::pstatus = statusinfo;
 	quest::read("rules/Quest.txt");

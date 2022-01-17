@@ -53,7 +53,7 @@ void logs::apply(const answers& source, const char* title, fncommand proc, int c
 		sb.clear();
 		sb.add(title);
 		if(count > 1)
-			sb.adds("(%Choose [%1i])", count);
+			sb.adds("(%-Choose [%1i])", count);
 		for(auto& e : source) {
 			auto index = source.indexof(&e);
 			if(choosed.is(index) && !multiply_choose.is(index))

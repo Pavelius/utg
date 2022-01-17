@@ -529,7 +529,10 @@ void draw::utg::tips() {
 	statusbar_paint();
 }
 
+void initialize_png();
+
 int draw::utg::run(fnevent proc, bool darkmode) {
+	initialize_png();
 	if(!proc)
 		return -1;
 	if(darkmode)

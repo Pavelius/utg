@@ -14,8 +14,8 @@ BSDATAD(variant)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(skilli) = {
-	BSREQ(id),
+BSMETA(bonusi) = {
+	BSREQ(id), BSREQ(object), BSREQ(value),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -25,13 +25,23 @@ BSMETA(menu) = {
 	BSREQ(elements),
 	{}};
 BSDATAC(menu, 256)
+BSMETA(resulti) = {
+	BSREQ(id),
+	{}};
+BSMETA(movei) = {
+	BSREQ(id),
+	BSREQ(roll),
+	{}};
+BSMETA(harmi) = {
+	BSREQ(id),
+	{}};
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(wear),
 	BSFLG(tags, tagi),
-	BSFLG(skills, skilli),
+	BSFLG(moves, movei),
 	{}};
 BSDATAC(itemi, 256)
 
@@ -40,9 +50,12 @@ BSDATAC(itemi, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi)},
+	{"Bonus", VRSTD(bonusi)},
 	{"Item", VRSTD(itemi)},
 	{"Menu", VRSTD(menu)},
-	{"Skill", VRSTD(skilli)},
+	{"Move", VRSTD(movei)},
+	{"Resource", VRSTD(harmi)},
+	{"Result", VRSTD(resulti)},
 	{"Tag", VRSTD(tagi)},
 	{"Widget", VRSTD(widget)},
 };

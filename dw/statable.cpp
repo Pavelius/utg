@@ -10,7 +10,7 @@ result_s statable::rollv(int b) {
 		b = 3;
 	last_roll = 2 + rand() % 6 + rand() % 6 + b;
 	if(last_roll <= 6)
-		last_result = Fail;
+		last_result = Miss;
 	else if(last_roll >= 12)
 		last_result = CriticalSuccess;
 	else if(last_roll >= 10)

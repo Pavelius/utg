@@ -155,8 +155,10 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="front.cpp" />
+    <ClCompile Include="message.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
+    <ClCompile Include="result.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
@@ -185,8 +187,10 @@
     <ClInclude Include="answers.h" />
     <ClInclude Include="archive.h" />
     <ClInclude Include="avatarable.h" />
+    <ClInclude Include="bonus.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
+    <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="crt.h" />
     <ClInclude Include="dice.h" />
@@ -195,6 +199,7 @@
     <ClInclude Include="front.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="quest.h" />
+    <ClInclude Include="result.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />
     <ClInclude Include="flagable.h" />

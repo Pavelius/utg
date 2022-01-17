@@ -147,10 +147,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="bonus.cpp" />
+    <ClCompile Include="effectable.cpp" />
+    <ClCompile Include="harm.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="property.cpp" />
-    <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="move.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -160,6 +164,8 @@
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\basic.txt" />
+    <Text Include="rules\MoveMessages.txt" />
+    <Text Include="rules\Moves.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -129,6 +129,12 @@
     <ClCompile Include="quest.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="message.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -216,6 +222,15 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="quest.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="result.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="bonus.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

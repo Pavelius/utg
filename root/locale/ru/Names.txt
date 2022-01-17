@@ -11,6 +11,7 @@ ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
 CharacterGeneration: Генерация персонажа
 Charisma: Харизма
+Choose: Выбирайте
 ChooseAlignment: Каков будет его характер?
 ChooseArmament: Что будет вашим оружием?
 ChooseClass: Кто будет ваш персонаж?
@@ -35,6 +36,7 @@ HP: Хиты
 Halfling: Полурослик 
 HealingPotion: Лечебное зелье
 Human: Человек
+Injury: Ранение
 Intellegence: Интеллект
 Knife: Нож
 Lawful: Законопослушный
