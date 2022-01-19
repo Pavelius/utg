@@ -18,7 +18,7 @@ enum harm_s : unsigned char {
 	Morale, Value,
 };
 enum special_s : unsigned char {
-	Choose, Harm, Range
+	Choose, Harm, Range, Ignore,
 };
 enum roguish_s : unsigned char {
 	Acrobatics, Blindside, Counterfeit, DisableDevice, Hide,
@@ -36,6 +36,7 @@ enum move_type_s : unsigned char {
 enum move_mechanic_s : unsigned char {
 	PlainMove,
 	Choose1, Choose1or2, Choose1or3, Choose2or3,
+	ChooseYouAndEnemy,
 };
 enum move_s : unsigned char {
 	AttemptRoguishFeat, FigureSomeoneOut, PersuadeNPC,
@@ -58,8 +59,11 @@ typedef char choosea[CriticalSuccess + 1];
 struct nameable {
 	const char*		id;
 	gender_s		gender = Male;
-	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
+	void			act(const char* format, ...) const { actv(logs::sb, format, xva_start(format)); }
+	void			acts(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* param) const;
+	const char*		getname() const { return getnm(id); }
+	gender_s		getgender() const { return gender; }
 };
 struct statable {
 	char			abilities[Might + 1];
@@ -78,10 +82,14 @@ struct speciali {
 	const char*		id;
 };
 struct harmable {
+	typedef slice<harm_s> harma;
 	char			harm[Value + 1];
 	void			add(harm_s v, int i) { harm[v] += i; }
+	void			clear();
+	void			fix(stringbuilder& sb, harma source) const;
 	harm_s			getdefault() const;
 	int				getdistinct() const;
+	int				getdistinct(harma source) const;
 	void			getinfo(stringbuilder& sb, const char* prompt) const;
 };
 struct tagable {
@@ -121,8 +129,8 @@ struct rangeable {
 	void			setrange(tag_s v) { range = v; }
 };
 struct creature : nameable, harmable, statable, rangeable {
+	void			apply(const effectable& source);
 	void			roll(move_s v);
-	void			sufferinjury(int v);
 	void			move(move_s v);
 };
 extern effectable	game;

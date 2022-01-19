@@ -86,7 +86,7 @@ struct adat {
 	const T*						endof() const { return data + count_max; }
 	int								getcount() const { return count; }
 	int								getmaximum() const { return count_max; }
-	int								indexof(const T* e) const { if(e >= data && e < data + count) return e - data; return -1; }
+	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
 	int								indexof(const T t) const { for(auto& e : *this) if(e == t) return &e - data; return -1; }
 	bool							is(const T t) const { return indexof(t) != -1; }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }

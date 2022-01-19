@@ -1,3 +1,22 @@
+EngageMelee Fail NoInflict: %герой резко напал%а на врага, но замедлил%а лишь на секунду. ¬раг нанес удар.
+EngageMelee PartialSuccess: %герой и %враг обмен€лись несколькими ударами.
+EngageMelee Success: %герой и %враг обмен€лись несколькими ударами, затем %герой перехватил%а преемущество и резко по%шла в атаку, нанос€ мощные удары.
+EngageMelee CriticalSuccess: %герой и %враг обмен€лись несколькими ударами, затем %герой перехватил%а преемущество и резко по%шла в атаку, нанос€ мощные удары.
+EngageMelee Injury1 1: Ќанести больше урона
+EngageMelee SufferInjuryM1 2: ѕолучить меньше урона
+EngageMelee 3: »зменить дистанцию
+EngageMelee Morale1 4: ¬печатлить, озадачить или испугать врага
+
+GrappleEnemy Success: %герой и враг схватили друг друга. 
+GrappleEnemy Injury1 1: Ќанести несколько быстрых ударов
+GrappleEnemy Exhaustion1 2: Ѕросить его на землю
+GrappleEnemy SufferExhaustion1 Injury2 3: Ќащупать полевое место
+GrappleEnemy SufferExhaustion1 Injury2 4: –азорвать захват и оттолкнуть врага
+
+TargetSomeone Success: %герой выстрелил%а по врагу.
+TargetSomeone Injury1 1: —делать еще один залп, но тогда вас замет€т.
+TargetSomeone 2: ќстатьс€ незамеченым.
+
 FigureSomeoneOut Success: ƒа? ќ чем хотите поговорить?
 FigureSomeoneOut Fail: ћне нечего вам сказать. ѕростите мен€, но € немного зан€т%а.
 FigureSomeoneOut Fail: Ќе сейчас. я собираюсь зан€тьс€ другими делами.
@@ -6,11 +25,3 @@ FigureSomeoneOut 2: „то он чувствует пр€мо сейчас?
 FigureSomeoneOut 3: „то он собираетс€ делать?
 FigureSomeoneOut 4: „то он хочет чтобы € сделал?
 FigureSomeoneOut 5:  ак € могу заставить его сделать то, что мне надо?
-
-EngageMelee Fail: %герой резко напал%а на врага, но замедлил%а лишь на секунду. ¬раг не заставил себ€ ждать и нанес вам удар.
-EngageMelee PartialSuccess: %герой и %враг обмен€лись несколькими ударами.
-EngageMelee Success: %герой и %враг обмен€лись несколькими ударами, затем %герой перехватил%а преемущество и резко пош%ла в атаку, нанос€ мощные удары.
-EngageMelee 1: Ќанести больше урона
-EngageMelee 2: ѕолучить меньше урона
-EngageMelee 3: »зменить дистанцию
-EngageMelee 4: ¬печатлить, озадачить или испугать врага

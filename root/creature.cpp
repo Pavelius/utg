@@ -2,11 +2,17 @@
 
 effectable game;
 
-static void apply_effect(void* object) {
-	auto p = (messagei*)object;
-	for(auto v : p->conditions)
-		game.apply(v);
-}
+class apply_move : public logs::choosei {
+	void apply(int index, const void* object) override {
+		auto p = (messagei*)object;
+		for(auto v : p->conditions) {
+			if(v)
+				game.apply(v);
+		}
+	}
+public:
+	apply_move(answers& an) : choosei(an) {}
+};
 
 static void make_move(variant v, int choose_count) {
 	answers an;
@@ -17,7 +23,8 @@ static void make_move(variant v, int choose_count) {
 			continue;
 		an.add(&e, e.text);
 	}
-	logs::apply(an, 0, apply_effect, choose_count);
+	apply_move source(an);
+	source.choose(0, choose_count);
 }
 
 void creature::roll(move_s v) {
@@ -58,7 +65,7 @@ static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
 	if(!p)
 		return;
 	sb.addsep(' ');
-	pc->act(sb, p->text);
+	pc->acts(sb, p->text);
 }
 
 void creature::move(move_s v) {
@@ -78,10 +85,24 @@ void rangeable::addrange(int v) {
 	range = (tag_s)i;
 }
 
-void creature::sufferinjury(int v) {
-	logs::sb.add("%герой получил%а %1i %2", v, stringbuilder::getbycount("Injury", v));
-	add(Injury, -1);
-	if(harm[Injury] < 0)
-		logs::sb.add("и упала на землю");
+void creature::apply(const effectable& effect) {
+	static harm_s harms[] = {Injury, Exhaustion, Wear, Morale, Depletion};
+	auto ni = effect.inflict.getdistinct();
+	auto ns = effect.suffer.getdistinct();
+	if(ni==0 && ns==0)
+		return;
+	act(getname());
+	if(ni) {
+		act("%-Inflict");
+		effect.inflict.fix(logs::sb, harms);
+	}
+	if(ns) {
+		if(ni)
+			logs::sb.add(", %-But");
+		act("%-Suffer");
+		effect.suffer.fix(logs::sb, harms);
+		for(auto v : harms)
+			add(v, effect.suffer.harm[v]);
+	}
 	logs::sb.add(".");
 }

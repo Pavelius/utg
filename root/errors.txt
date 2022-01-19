@@ -1,2 +1,4 @@
-﻿In file `Names.txt`:
- Define translate for `Umberto`
+﻿In file `rules/MoveMessages.txt`:
+ Line 11: Can't find variant `Exhaustion1`
+ Line 12: Can't find variant `SufferExhaustion1`
+ Line 13: Can't find variant `SufferExhaustion1`

@@ -2,13 +2,12 @@
 #include "recordset.h"
 #include "utg.h"
 
-const char* logs::url;
-const char* logs::url_avatars = "art/avatars";
-const char* logs::header;
-bool logs::interactive;
-flagable<4> logs::multiply_choose;
-static char sb_value[4096];
-stringbuilder logs::sb(sb_value);
+const char*		logs::url;
+const char*		logs::url_avatars = "art/avatars";
+const char*		logs::header;
+bool			logs::interactive;
+static char		sb_value[4096];
+stringbuilder	logs::sb(sb_value);
 
 const char* logs::getchoose(const char* id) {
 	char temp[128]; stringbuilder sb(temp);
@@ -42,19 +41,44 @@ static int get_answer_index(const answers& source, const void* pv) {
 	return -1;
 }
 
-void logs::apply(const answers& source, const char* title, fncommand proc, int count) {
-	if(source.getcount() > sizeof(multiply_choose) * 8)
-		return;
-	if(!proc)
-		return;
+const char* logs::chooseavatar(answers& an, const char* title) {
+	auto push_paint = answers::paintcell;
+	answers::paintcell = draw::avatarch;
+	auto p = (const char*)an.choose(title, 0, interactive, logs::url, 1, logs::header, 0);
+	answers::paintcell = push_paint;
+	return p;
+}
+
+void logs::pause() {
+	answers an;
+	an.add(0, getnm("Continue"));
+	an.choose(0, 0, true, logs::url, 1, logs::header, logs::sb.begin());
+}
+
+int logs::choosei::getmarked(int i) const {
+	if(i >= sizeof(marked)/ sizeof(marked[0]))
+		return 0;
+	return marked[i];
+}
+
+void logs::choosei::addmarked(int i) {
+	if(i < sizeof(marked) / sizeof(marked[0]))
+		marked[i]++;
+}
+
+bool logs::choosei::isallow(int index, const void* object) const {
+	if(ismarked(index))
+		return false;
+	return true;
+}
+
+void logs::choosei::choose(const char* title, int count) {
 	if(count > source.getcount())
 		count = source.getcount();
-	flagable<4> choosed;
 	answers an;
 	char temp[512]; stringbuilder sb(temp);
 	while(count > 0) {
-		an.clear();
-		sb.clear();
+		an.clear(); sb.clear();
 		if(title) {
 			sb.add(title);
 			if(count > 1)
@@ -63,24 +87,15 @@ void logs::apply(const answers& source, const char* title, fncommand proc, int c
 			sb.adds(getnm("ChooseOptions"), count);
 		for(auto& e : source) {
 			auto index = source.indexof(&e);
-			if(choosed.is(index) && !multiply_choose.is(index))
+			if(!isallow(index, e.value))
 				continue;
 			an.add(e.value, e.text);
 		}
 		auto result = an.choose(temp, 0, interactive, url, -1, header, sb_value);
 		auto result_index = get_answer_index(source, result);
-		proc(result);
+		apply(result_index, result);
 		if(result_index != -1)
-			choosed.set(result_index);
+			addmarked(result_index);
 		count--;
 	}
-	multiply_choose.clear();
-}
-
-const char* logs::chooseavatar(answers& an, const char* title) {
-	auto push_paint = answers::paintcell;
-	answers::paintcell = draw::avatarch;
-	auto p = (const char*)an.choose(title, 0, interactive, logs::url, 1, logs::header, 0);
-	answers::paintcell = push_paint;
-	return p;
 }

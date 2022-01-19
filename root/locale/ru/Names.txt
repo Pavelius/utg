@@ -1,4 +1,5 @@
 ﻿AdventuringGear: Инструменты
+And: И
 Antitoxin: Противоядие
 AppTitle: Мир подземелья
 ApplyAbility: Какая ваша способность будет равна [%1i]?
@@ -6,6 +7,7 @@ Armor: Броня
 BagOfBooks: Сумка с книгами
 Bandages: Бинты
 BundleArrows: Стрелы
+But: Но
 Cancel: Отмена
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
@@ -23,6 +25,7 @@ ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник
 Constitution: Телосложение
+Continue: Продолжить
 Dagger: Кинжал
 Damage: Урон
 Dexterity: Ловкость
@@ -30,6 +33,7 @@ DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
 Evil: Злой
+Exhaustion: Истощение
 Female: Женщина
 Fighter: Воин
 Good: Добрый
@@ -37,6 +41,7 @@ HP: Хиты
 Halfling: Полурослик 
 HealingPotion: Лечебное зелье
 Human: Человек
+Inflict: Нанес%ла
 Injury: Ранение
 Intellegence: Интеллект
 Knife: Нож
@@ -45,6 +50,7 @@ LeatherArmor: Кожанная броня
 Mace: Булава
 Male: Мужчина
 Mistra: Мистра
+Morale: Испуг
 Neutral: Нейтральный
 No: Нет
 NoGender: Безполый
@@ -56,6 +62,7 @@ Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
+Suffer: Получил%а
 Theif: Вор
 Umberto: Умберто
 UndeadInvasion: Нашествие мертвецов
@@ -63,3 +70,4 @@ Warhammer: Молот
 Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да
+враг: 

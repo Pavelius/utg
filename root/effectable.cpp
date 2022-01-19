@@ -36,6 +36,9 @@ void effectable::apply(variant object) {
 		case Harm:
 			apply(getharm(m).getdefault());
 			break;
+		case Ignore:
+			getharm(m).clear();
+			break;
 		}
 		break;
 	case Resource:

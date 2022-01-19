@@ -135,6 +135,9 @@
     <ClCompile Include="message.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="win_time.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

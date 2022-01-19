@@ -4,5 +4,6 @@ BSDATA(speciali) = {
 	{"Choose"},
 	{"Harm"},
 	{"Range"},
+	{"Ignore"},
 };
-assert_enum(speciali, Range)
+assert_enum(speciali, Ignore)

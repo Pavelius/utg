@@ -168,6 +168,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\NamesOf.txt" />
     <Text Include="rules\basic.txt" />
     <Text Include="rules\MoveConcept.txt" />
     <Text Include="rules\MoveMessages.txt" />

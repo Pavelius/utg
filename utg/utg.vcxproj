@@ -179,6 +179,7 @@
     <ClCompile Include="recordset.cpp" />
     <ClCompile Include="win_draw.cpp" />
     <ClCompile Include="win_io_file.cpp" />
+    <ClCompile Include="win_time.cpp" />
     <ClCompile Include="zip.cpp" />
   </ItemGroup>
   <ItemGroup>

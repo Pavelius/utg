@@ -25,17 +25,18 @@ static void generate_character() {
 	char temp[16]; stringbuilder sb(temp);
 	logs::interactive = true;
 	logs::url = "northmen";
-	choose_avatars();
 	game.clear();
 	game.suffer.add(Injury, 2);
 	game.inflict.add(Injury, 1);
 	creature player = {};
 	player.id = "Umberto";
 	player.move(EngageMelee);
+	player.apply(game);
+	logs::pause();
 }
 
 int main(int argc, char* argv[]) {
-	srand(102);
+	srand(getcputime());
 	answers::beforepaint = right_panel;
 	quest::read("rules/Moves.txt");
 	messagei::read("rules/MoveMessages.txt");
