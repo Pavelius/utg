@@ -18,7 +18,7 @@ static void party_information() {
 	for(auto i = 0; i < 4; i++) {
 		auto& e = bsdata<creature>::elements[i];
 		if(e)
-			draw::avatar(e.getavatar(), &e);
+			draw::avatar(i, &e, e.getavatar());
 		else
 			draw::noavatar();
 	}

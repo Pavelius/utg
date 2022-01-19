@@ -50,15 +50,16 @@ enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Bonus, Item, Menu, Move, Resource, Result, Special, Tag, Widget,
 };
-enum slot_s : unsigned char {
-	Weapon, Armor, Shield
+enum fraction_s : unsigned char {
+	Marquisat, ForestAlliance, Denziers,
 };
 typedef flagable<4> flaga;
 typedef char choosea[CriticalSuccess + 1];
 struct nameable {
 	const char*		id;
-	void			act(stringbuilder& sb, const char* format, ...) { actv(sb, format, xva_start(format)); }
-	void			actv(stringbuilder& sb, const char* format, const char* param);
+	gender_s		gender = Male;
+	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
+	void			actv(stringbuilder& sb, const char* format, const char* param) const;
 };
 struct statable {
 	char			abilities[Might + 1];
@@ -89,11 +90,12 @@ struct tagable {
 	void			add(tag_s v) { tags.set(v); }
 	void			add(roguish_s v) { feats.set(v); }
 	void			add(move_s v) { feats.set(v); }
-	bool			is(tag_s v) const { return tags.is(v); }
-	bool			is(roguish_s v) const { return feats.is(v); }
+	constexpr bool	is(tag_s v) const { return tags.is(v); }
+	constexpr bool	is(roguish_s v) const { return feats.is(v); }
 };
 struct itemi : nameable, tagable {
 	char			wear;
+	constexpr bool	isweapon() const { return is(Far) || is(Close) || is(Intimate); }
 };
 struct item {
 	unsigned char	type;
@@ -105,16 +107,19 @@ struct item {
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 };
 struct effectable {
+	fraction_s		fraction;
 	harmable		inflict, suffer, group;
 	char			distance, value;
 	void			apply(variant v);
 	void			clear();
 	harmable&		getharm(int m);
 };
-struct equiped {
-	item			wears[Shield + 1];
+struct rangeable {
+	tag_s			range = Close;
+	void			addrange(int v);
+	void			setrange(tag_s v) { range = v; }
 };
-struct creature : nameable, equiped, statable {
+struct creature : nameable, statable, rangeable {
 	void			roll(move_s v);
 	void			move(move_s v);
 };

@@ -1,7 +1,9 @@
+#include "io_stream.h"
 #include "recordset.h"
 #include "utg.h"
 
 const char* logs::url;
+const char* logs::url_avatars = "art/avatars";
 const char* logs::header;
 bool logs::interactive;
 flagable<4> logs::multiply_choose;
@@ -58,7 +60,7 @@ void logs::apply(const answers& source, const char* title, fncommand proc, int c
 			if(count > 1)
 				sb.adds("(%-Choose [%1i])", count);
 		} else
-			sb.adds("%Choose [%1i]", count);
+			sb.adds(getnm("ChooseOptions"), count);
 		for(auto& e : source) {
 			auto index = source.indexof(&e);
 			if(choosed.is(index) && !multiply_choose.is(index))
@@ -73,4 +75,12 @@ void logs::apply(const answers& source, const char* title, fncommand proc, int c
 		count--;
 	}
 	multiply_choose.clear();
+}
+
+const char* logs::chooseavatar(answers& an, const char* title) {
+	auto push_paint = answers::paintcell;
+	answers::paintcell = draw::avatarch;
+	auto p = (const char*)an.choose(title, 0, interactive, logs::url, 1, logs::header, 0);
+	answers::paintcell = push_paint;
+	return p;
 }

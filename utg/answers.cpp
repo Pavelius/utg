@@ -2,6 +2,7 @@
 
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;
+answers::fnpaint answers::paintcell;
 bool answers::show_tips = true;
 
 int answers::compare(const void* v1, const void* v2) {

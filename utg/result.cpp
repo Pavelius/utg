@@ -9,11 +9,13 @@ BSDATA(resulti) = {
 };
 assert_enum(resulti, CriticalSuccess)
 
-int last_roll;
+int last_roll, last_roll_result, last_roll_bonus;
 result_s last_result;
 
 result_s pbaroll(int b) {
-	last_roll = 2 + rand() % 6 + rand() % 6 + b;
+	last_roll_bonus = b;
+	last_roll_result = 2 + rand() % 6 + rand() % 6;
+	last_roll = last_roll_result + last_roll_bonus;
 	if(last_roll <= 6)
 		last_result = Fail;
 	else if(last_roll >= 12)

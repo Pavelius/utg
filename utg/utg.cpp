@@ -349,15 +349,17 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		return random();
 	if(!elements)
 		return 0;
+	if(!paintcell)
+		paintcell = answerbt;
 	auto push_caret = caret;
 	auto push_width = width;
 	if(columns == -1)
 		columns = getcolumns(*this);
-	auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
-	auto column_width = standart_width - metrics::padding * 2;
-	if(columns > 1)
-		column_width = column_width / columns - metrics::border;
 	while(ismodal()) {
+		auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
+		auto column_width = standart_width - metrics::padding * 2;
+		if(columns > 1)
+			column_width = column_width / columns - metrics::border;
 		if(pbackground)
 			pbackground();
 		auto push_height = height;
@@ -386,14 +388,18 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			fore = push_fore;
 			caret.y += metrics::padding;
 		}
+		auto next_column = (elements.getcount() + columns - 1) / columns;
 		auto index = 0;
 		auto y1 = caret.y, x1 = caret.x;
 		auto y2 = caret.y;
-		auto next_column = (elements.getcount() + columns - 1) / columns;
 		auto push_width_normal = width;
 		width = column_width;
-		for(auto& e : *this) {
-			answerbt(index, e.value, e.text);
+		for(auto& e : elements) {
+			paintcell(index, e.value, e.text);
+			if(caret.x > x1 + column_width - 64) {
+				caret.x = x1;
+				caret.y += height + metrics::padding + metrics::border * 2;
+			}
 			if(caret.y > y2)
 				y2 = caret.y;
 			if((index % next_column) == next_column - 1) {
@@ -419,17 +425,32 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 	return (void*)getresult();
 }
 
-void draw::avatar(const char* id, const void* object) {
-	auto p = gres(id, "art/portraits");
+static void focusing_choose(const void* object) {
+	if(!object)
+		return;
+	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
+		execute(buttonparam, (long)hilite_object);
+}
+
+static void avatar_common(int index, const void* object, const char* id, void(*proc)(const void* object)) {
+	auto p = gres(id, logs::url_avatars);
 	if(!p)
 		return;
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	strokex(stroke_border, -1);
+	strokex(stroke_border, 0);
 	hiliting(object);
-	focusing(object);
+	proc(object);
 	caret.x += width + metrics::padding + metrics::border * 2;
+}
+
+void draw::avatar(int index, const void* object, const char* id) {
+	avatar_common(index, object, id, focusing);
+}
+
+void draw::avatarch(int index, const void* object, const char* id) {
+	avatar_common(index, object, id, focusing_choose);
 }
 
 void draw::noavatar() {

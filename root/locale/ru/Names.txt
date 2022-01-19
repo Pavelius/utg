@@ -18,6 +18,7 @@ ChooseClass: Кто будет ваш персонаж?
 ChooseDefences: Что будет служить вам защитой?
 ChooseGears: Что вы таскаете с собой?
 ChooseGender: Кто вы?
+ChooseOptions: Выбирайте опции (осталось [%1i]):
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник
@@ -56,10 +57,9 @@ ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
 Theif: Вор
+Umberto: Умберто
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот
 Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да
-враг: 
-герой: 

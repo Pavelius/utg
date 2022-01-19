@@ -38,6 +38,7 @@ static int get_choose_count(move_mechanic_s v) {
 static void fix_roll(stringbuilder& sb) {
 	switch(last_result) {
 	case Fail: sb.add("[-{%1i}]", last_roll); break;
+	case PartialSuccess: sb.add("{%1i}", last_roll); break;
 	default: sb.add("[+{%1i}]", last_roll); break;
 	}
 }
@@ -52,17 +53,27 @@ const messagei* find_message(variant type, variant result) {
 	return 0;
 }
 
-static void fix_move(stringbuilder& sb, move_s v) {
+static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
 	auto p = find_message(v, last_result);
 	if(!p)
 		return;
-	sb.adds(p->text);
+	sb.addsep(' ');
+	pc->act(sb, p->text);
 }
 
 void creature::move(move_s v) {
 	auto& ei = bsdata<movei>::elements[v];
 	pbaroll(get(ei.roll));
 	fix_roll(logs::sb);
-	fix_move(logs::sb, v);
+	fix_move(logs::sb, v, this);
 	make_move(v, get_choose_count(ei.mechanic));
+}
+
+void rangeable::addrange(int v) {
+	int i = range + v;
+	if(i < Intimate)
+		i = Intimate;
+	else if(i > Far)
+		i = Far;
+	range = (tag_s)i;
 }

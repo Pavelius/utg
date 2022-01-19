@@ -6,8 +6,8 @@
 #include "flagable.h"
 #include "gender.h"
 #include "quest.h"
-#include "pbta.h"
 #include "recordset.h"
+#include "result.h"
 #include "tag.h"
 #include "utg.h"
 
@@ -79,15 +79,9 @@ struct dietyi {
 struct actioni {
 	const char*		id;
 };
-struct resulti {
-	const char*		name;
-	int				options;
-	variants		effect;
-};
 struct movei {
 	const char*		id;
 	ability_s		ability;
-	resulti			results[4];
 };
 struct moveable {
 	movea			moves;
@@ -131,11 +125,8 @@ union item {
 typedef item weara[LastBackpack + 1];
 struct statable : moveable {
 	abilitya		abilities;
-	static result_s last_result;
-	static int		last_roll;
 	void			copy(statable& v) { *this = v; }
 	void			apply_ability(int v);
-	static result_s rollv(int bonus);
 	void			update_player();
 };
 class wearable {

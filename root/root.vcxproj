@@ -90,6 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +154,7 @@
     <ClCompile Include="harm.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="name.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
