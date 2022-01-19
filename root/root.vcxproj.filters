@@ -37,6 +37,9 @@
     <ClCompile Include="name.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="harmable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

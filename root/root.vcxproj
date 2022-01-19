@@ -152,6 +152,7 @@
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="effectable.cpp" />
     <ClCompile Include="harm.cpp" />
+    <ClCompile Include="harmable.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="name.cpp" />

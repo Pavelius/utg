@@ -45,7 +45,7 @@ public:
 	void				copy(const char* v);
 	const char*			end() const { return pe; }
 	char*				get() const { return p; }
-	const char*			getbycount(const char* id, int count);
+	static const char*	getbycount(const char* id, int count);
 	static int			getnum(const char* v);
 	unsigned			getlenght() const { return pb - p; }
 	unsigned			getmaximum() const { return pe - pb - 1; }

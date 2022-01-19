@@ -66,7 +66,6 @@ static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
 	logs::interactive = true;
-	test_choose_many();
 	create_hero(false);
 	create_hero(true);
 	create_hero(true);

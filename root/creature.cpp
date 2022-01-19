@@ -77,3 +77,11 @@ void rangeable::addrange(int v) {
 		i = Far;
 	range = (tag_s)i;
 }
+
+void creature::sufferinjury(int v) {
+	logs::sb.add("%герой получил%а %1i %2", v, stringbuilder::getbycount("Injury", v));
+	add(Injury, -1);
+	if(harm[Injury] < 0)
+		logs::sb.add("и упала на землю");
+	logs::sb.add(".");
+}

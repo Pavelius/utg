@@ -81,6 +81,7 @@ struct harmable {
 	char			harm[Value + 1];
 	void			add(harm_s v, int i) { harm[v] += i; }
 	harm_s			getdefault() const;
+	int				getdistinct() const;
 	void			getinfo(stringbuilder& sb, const char* prompt) const;
 };
 struct tagable {
@@ -119,8 +120,9 @@ struct rangeable {
 	void			addrange(int v);
 	void			setrange(tag_s v) { range = v; }
 };
-struct creature : nameable, statable, rangeable {
+struct creature : nameable, harmable, statable, rangeable {
 	void			roll(move_s v);
+	void			sufferinjury(int v);
 	void			move(move_s v);
 };
 extern effectable	game;
