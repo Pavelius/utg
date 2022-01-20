@@ -40,6 +40,9 @@
     <ClCompile Include="harmable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="risk.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

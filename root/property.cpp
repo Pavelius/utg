@@ -38,6 +38,9 @@ BSMETA(harmi) = {
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
+BSMETA(riski) = {
+	BSREQ(id),
+	{}};
 BSMETA(speciali) = {
 	BSREQ(id),
 	{}};
@@ -59,6 +62,7 @@ BSDATA(varianti) = {
 	{"Move", VRSTD(movei)},
 	{"Resource", VRSTD(harmi)},
 	{"Result", VRSTD(resulti)},
+	{"Result", VRSTD(riski)},
 	{"Specail", VRSTD(speciali)},
 	{"Tag", VRSTD(tagi)},
 	{"Widget", VRSTD(widget)},

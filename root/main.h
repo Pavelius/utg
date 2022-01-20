@@ -20,10 +20,6 @@ enum harm_s : unsigned char {
 enum special_s : unsigned char {
 	Choose, Harm, Range, Ignore,
 };
-enum roguish_s : unsigned char {
-	Acrobatics, Blindside, Counterfeit, DisableDevice, Hide,
-	PickLock, PickPocket, SleightOfHand, Sneak
-};
 enum tag_s : unsigned char {
 	Blunted, Cumbersome, Flexible, Large, Makeshift, MetalBoss,
 	Precise, Quick, Reach, Reinforced, Sharp, SteelOfRabbitfolk, SteelOfFoxfolk,
@@ -31,7 +27,7 @@ enum tag_s : unsigned char {
 	Intimate, Close, Far,
 };
 enum move_type_s : unsigned char {
-	BasicMove, WeaponSkill, ReputationMove, TravelMove,
+	BasicMove, RoguishFeat, WeaponSkill, ReputationMove, TravelMove,
 };
 enum move_mechanic_s : unsigned char {
 	PlainMove,
@@ -39,7 +35,9 @@ enum move_mechanic_s : unsigned char {
 	ChooseYouAndEnemy,
 };
 enum move_s : unsigned char {
-	AttemptRoguishFeat, FigureSomeoneOut, PersuadeNPC,
+	Acrobatics, Blindside, Counterfeit, DisableDevice, Hide,
+	PickLock, PickPocket, SleightOfHand, Sneak,
+	FigureSomeoneOut, PersuadeNPC,
 	ReadTenseSituation, TrickNPC, TrustFate, WreckSomething,
 	EngageMelee, GrappleEnemy, TargetSomeone,
 	Cleave, ConfuseSenses, Disarm,
@@ -47,14 +45,14 @@ enum move_s : unsigned char {
 	QuickShot, StormGroup, TrickShot, ViciousStrike,
 	AskFavor, MeetSomeoneImportant, DrawAttention, SwayNPC, MakePointedThread, CommandResources,
 };
-enum variant_s : unsigned char {
-	NoVariant,
-	Ability, Bonus, Item, Menu, Move, Resource, Result, Special, Tag, Widget,
-};
 enum fraction_s : unsigned char {
 	Marquisat, ForestAlliance, Denziers,
 };
-typedef flagable<4> flaga;
+enum variant_s : unsigned char {
+	NoVariant,
+	Ability, Bonus, Item, Menu, Move, Resource, Result, Risk, Special, Tag, Widget,
+};
+typedef flagable<1 + CommandResources / 8> movea;
 typedef char choosea[CriticalSuccess + 1];
 struct nameable {
 	const char*		id;
@@ -68,6 +66,10 @@ struct nameable {
 struct statable {
 	char			abilities[Might + 1];
 	int				get(ability_s v) const { return abilities[v]; }
+};
+struct riski {
+	const char*		id;
+	int				page;
 };
 struct movei {
 	const char*		id;
@@ -94,13 +96,11 @@ struct harmable {
 };
 struct tagable {
 	flaga			tags;
-	flaga			feats;
-	flaga			moves;
+	movea			moves;
 	void			add(tag_s v) { tags.set(v); }
-	void			add(roguish_s v) { feats.set(v); }
-	void			add(move_s v) { feats.set(v); }
+	void			add(move_s v) { moves.set(v); }
 	constexpr bool	is(tag_s v) const { return tags.is(v); }
-	constexpr bool	is(roguish_s v) const { return feats.is(v); }
+	constexpr bool	is(move_s v) const { return moves.is(v); }
 };
 struct itemi : nameable, tagable {
 	char			wear;

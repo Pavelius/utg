@@ -1,7 +1,15 @@
 #include "main.h"
 
 BSDATA(movei) = {
-	{"AttemptRoguishFeat", BasicMove, Finess},
+	{"Acrobatics", RoguishFeat, Finess},
+	{"Blindside", RoguishFeat, Finess},
+	{"Counterfeit", RoguishFeat, Finess},
+	{"DisableDevice", RoguishFeat, Finess},
+	{"Hide", RoguishFeat, Finess},
+	{"PickLock", RoguishFeat, Finess},
+	{"PickPocket", RoguishFeat, Finess},
+	{"SleightOfHand", RoguishFeat, Finess},
+	{"Sneak", RoguishFeat, Finess},
 	{"FigureSomeoneOut", BasicMove, Charm, Choose1or3},
 	{"PersuadeNPC", BasicMove, Charm},
 	{"ReadTenseSituation", BasicMove, Cunning, Choose1or3},
@@ -9,7 +17,7 @@ BSDATA(movei) = {
 	{"TrustFate", BasicMove, Luck},
 	{"WreckSomething", BasicMove, Might},
 	{"EngageMelee", BasicMove, Might, Choose1or3},
-	{"GrappleEnemy", BasicMove, Might, Choose1},
+	{"GrappleEnemy", BasicMove, Might, ChooseYouAndEnemy},
 	{"TargetSomeone", BasicMove, Finess},
 	{"Cleave", WeaponSkill, Might},
 	{"ConfuseSenses", WeaponSkill, Finess},
