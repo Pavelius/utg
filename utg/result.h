@@ -1,7 +1,7 @@
 #pragma once
 
 enum result_s : unsigned char {
-	Fail, PartialSuccess, Success, CriticalSuccess
+	Fail, Success, StrongSuccess
 };
 struct resulti {
 	const char*			id;

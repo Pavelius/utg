@@ -7,16 +7,17 @@ static void start_mission() {
 }
 
 static void test_game() {
-	mission.clear();
-	mission.add("Marines");
-	mission.add("Marines");
-	answers an;
-	an.add(start_mission, "Начать миссию");
-	logs::choose(an, "Что делать дальше?", 0);
+	game.clear();
+	game.add("Marines");
+	game.add("Marines");
+	game.add("Raiders", true);
+	game.getally().move(EngageMelee);
 }
 
 int main(int argc, char* argv[]) {
 	logs::url = "EliteTroops";
+	bsreq::read("rules/Basic.txt");
+	messagei::read("rules/Quest.txt");
 	return draw::utg::run(test_game, true);
 }
 

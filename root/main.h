@@ -53,7 +53,7 @@ enum variant_s : unsigned char {
 	Ability, Bonus, Item, Menu, Move, Resource, Result, Risk, Special, Tag, Widget,
 };
 typedef flagable<1 + CommandResources / 8> movea;
-typedef char choosea[CriticalSuccess + 1];
+typedef char choosea[StrongSuccess + 1];
 struct nameable {
 	const char*		id;
 	gender_s		gender = Male;

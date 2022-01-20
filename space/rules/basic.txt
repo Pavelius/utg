@@ -1,5 +1,7 @@
 ﻿#Squad
 
-Marines injury(3) exhause(2) morale(3) count(6)
-Raiders injury(2) infiltrate(1) count(8)
-Scientists research(2) count(3)
+Marines
+ tags Regular Close
+Raiders
+ tags Close Intimate
+Scientists

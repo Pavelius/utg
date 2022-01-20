@@ -47,7 +47,7 @@ static int get_choose_count(move_mechanic_s v) {
 static void fix_roll(stringbuilder& sb) {
 	switch(last_result) {
 	case Fail: sb.add("[-{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
-	case PartialSuccess: sb.add("{%2i%+3i=%1i}", last_roll, last_roll_result, last_roll_bonus); break;
+	case Success: sb.add("{%2i%+3i=%1i}", last_roll, last_roll_result, last_roll_bonus); break;
 	default: sb.add("[+{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
 	}
 }

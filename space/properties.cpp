@@ -13,16 +13,28 @@ BSDATAD(variant)
 BSMETA(effecti) = {
 	BSREQ(id),
 	{}};
+BSMETA(movei) = {
+	BSREQ(id),
+	{}};
+BSMETA(resulti) = {
+	BSREQ(id),
+	{}};
 BSMETA(squadi) = {
 	BSREQ(id),
-	BSREQ(injury), BSREQ(gear), BSREQ(morale), BSREQ(exhause),
+	BSFLG(tags, tagi),
 	{}};
-BSDATAC(squadi, 128)
+BSMETA(tagi) = {
+	BSREQ(id),
+	{}};
 
 #define VRSTD(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN
+#define VRNOV() 0, 0, 0
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Effect", VRSTD(effecti, 1)},
+	{"Move", VRSTD(movei, 1)},
+	{"Prefix", VRNOV()},
+	{"Result", VRSTD(resulti, 1)},
 	{"Squad", VRSTD(squadi, 1)},
 };
 assert_enum(varianti, Squad)

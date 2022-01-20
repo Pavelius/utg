@@ -2,21 +2,38 @@
 
 const int maximum_danger = 5;
 
-missioni mission;
+missioni game;
 
 void missioni::clear() {
 	memset(this, 0, sizeof(*this));
+	for(auto& e : allies)
+		e.clear();
+	for(auto& e : enemies)
+		e.clear();
+	enemy = ally = 0xFF;
 }
 
-void missioni::add(const squad& v) {
+static squad* newsquad(squad* source) {
+	auto pm = source + sizeof(missioni::allies) / sizeof(missioni::allies[0]);
+	for(auto p = source; p < pm; p++) {
+		if(*p)
+			continue;
+		return p;
+	}
+	return 0;
 }
 
-void missioni::add(const char* id) {
+void missioni::add(const char* id, bool enemy) {
 	auto i = bsdata<varianti>::elements[Squad].found(id);
 	if(i == -1)
 		return;
-	squad e = {};
-	add(e);
+	auto p = newsquad(enemy ? enemies : allies);
+	if(!p)
+		return;
+	p->clear();
+	p->create(i);
+	if(ally == 0xFF && !enemy)
+		ally = 0;
 }
 
 bool missioni::dangerous() {
@@ -36,5 +53,38 @@ bool missioni::lucky() {
 	} else {
 		luck = 0;
 		return true;
+	}
+}
+
+void missioni::beforemove() {
+	inflict.clear();
+	suffer.clear();
+}
+
+void missioni::apply(variantsl source) {
+	for(auto v : source)
+		apply(v);
+}
+
+void missioni::apply(variant v) {
+	switch(v.type) {
+	case Prefix:
+		switch(v.value) {
+		case Plus: multiplier = 1; break;
+		case Minus: multiplier = -1; break;
+		default: break;
+		}
+		break;
+	case Effect:
+		switch(v.value) {
+		case SufferHarm: suffer.clear(); getenemy().getharm(suffer); break;
+		case InflictHarm: inflict.clear(); getally().getharm(suffer); break;
+		case Injury: case Exhause: case Morale: case Gear:
+			suffer.set((effect_s)v.value, suffer.get((effect_s)v.value) + multiplier);
+			break;
+		}
+		break;
+	default:
+		break;
 	}
 }

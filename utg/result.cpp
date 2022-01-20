@@ -3,11 +3,10 @@
 
 BSDATA(resulti) = {
 	{"Fail"},
-	{"PartialSuccess"},
 	{"Success"},
-	{"CriticalSuccess"},
+	{"StrongSuccess"},
 };
-assert_enum(resulti, CriticalSuccess)
+assert_enum(resulti, StrongSuccess)
 
 int last_roll, last_roll_result, last_roll_bonus;
 result_s last_result;
@@ -16,13 +15,11 @@ result_s pbta_roll(int b) {
 	last_roll_bonus = b;
 	last_roll_result = 2 + rand() % 6 + rand() % 6;
 	last_roll = last_roll_result + last_roll_bonus;
-	if(last_roll <= 6)
-		last_result = Fail;
-	else if(last_roll >= 12)
-		last_result = CriticalSuccess;
-	else if(last_roll >= 10)
+	if(last_roll >= 10)
+		last_result = StrongSuccess;
+	else if(last_roll >= 7)
 		last_result = Success;
 	else
-		last_result = PartialSuccess;
+		last_result = Fail;
 	return last_result;
 }

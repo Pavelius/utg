@@ -1,18 +1,25 @@
 #include "main.h"
 
 BSDATA(tagi) = {
-	{"Explosion", {Gear}},
-	{"HeavyWeapon", {Gear}},
-	{"Tought", {Gear}},
-	{"Regular", {Injury, Gear}},
-	{"Veteran", {Injury, Morale}},
-	{"Elite", {Injury, Gear}},
-	{"Vehicle", {Armor}},
 	{"BadSpot"}, // Бонус -1 на один следующий бросок до конца сцены
 	{"Opportunity"}, // Бонус +1 на один следующий бросок до конца сцены
-	{"Hiding"}, // Скрыт из виду.
+	{"Armored"},
+	{"Explosion"},
+	{"HeavyWeapon"},
+	{"Smashing"},// Inflict gear as additional harm
+	{"Tricky"}, // Inflict exhause as additional harm
+	{"Agile"}, // +1 exhause
+	{"Tought"},
+	{"Leader"},
+	{"Regular"},
+	{"Veteran"},
+	{"Elite"},
+	{"Rifle"},
+	{"Vehicle"},
+	{"Broken"},
 	{"Covered"},
 	{"Illuminated"},
+	{"Hiding"}, // Скрыт из виду.
 	{"Intimate"},
 	{"Close"},
 	{"Far"},

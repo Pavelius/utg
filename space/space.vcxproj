@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="effect.cpp" />
+    <ClCompile Include="harmable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="move.cpp" />

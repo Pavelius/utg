@@ -8,6 +8,6 @@ BSDATA(effecti) = {
 	{"Morale"},
 	{"Exhause"},
 	{"Time"},
-	{"Armor"},
+	{"Supply"},
 };
-assert_enum(effecti, Armor)
+assert_enum(effecti, Supply)

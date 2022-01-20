@@ -1,3 +1,4 @@
 ﻿AppTitle: Космические миссии
+Continue: Продолжить
 Marines: Морпехи
 Squad: Отряд

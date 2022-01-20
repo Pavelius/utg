@@ -25,6 +25,9 @@
     <ClCompile Include="move.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="harmable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
