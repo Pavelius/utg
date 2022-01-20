@@ -14,10 +14,12 @@ public:
 	apply_move(answers& an) : choosei(an) {}
 };
 
-static void make_move(variant v, int choose_count) {
+static void choose_options(variant v, int choose_count) {
+	if(!choose_count)
+		return;
 	answers an;
 	for(auto& e : bsdata<messagei>()) {
-		if(!e.match(v))
+		if(e.type != v)
 			continue;
 		if(!e.value)
 			continue;
@@ -44,17 +46,17 @@ static int get_choose_count(move_mechanic_s v) {
 
 static void fix_roll(stringbuilder& sb) {
 	switch(last_result) {
-	case Fail: sb.add("[-{%1i}]", last_roll); break;
-	case PartialSuccess: sb.add("{%1i}", last_roll); break;
-	default: sb.add("[+{%1i}]", last_roll); break;
+	case Fail: sb.add("[-{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
+	case PartialSuccess: sb.add("{%2i%+3i=%1i}", last_roll, last_roll_result, last_roll_bonus); break;
+	default: sb.add("[+{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
 	}
 }
 
 const messagei* find_message(variant type, variant result) {
 	for(auto& e : bsdata<messagei>()) {
-		if(e.value != 0)
+		if(e.value != 0 || e.type != type)
 			continue;
-		if(e.conditions[0]==type && e.conditions[1] == result)
+		if(e.conditions[0] == result)
 			return &e;
 	}
 	return 0;
@@ -73,7 +75,7 @@ void creature::move(move_s v) {
 	pbaroll(get(ei.roll));
 	fix_roll(logs::sb);
 	fix_move(logs::sb, v, this);
-	make_move(v, get_choose_count(ei.mechanic));
+	choose_options(v, get_choose_count(ei.mechanic));
 }
 
 void rangeable::addrange(int v) {
@@ -89,7 +91,7 @@ void creature::apply(const effectable& effect) {
 	static harm_s harms[] = {Injury, Exhaustion, Wear, Morale, Depletion};
 	auto ni = effect.inflict.getdistinct();
 	auto ns = effect.suffer.getdistinct();
-	if(ni==0 && ns==0)
+	if(ni == 0 && ns == 0)
 		return;
 	act(getname());
 	if(ni) {

@@ -3,6 +3,10 @@
 
 BSDATAC(messagei, 1024)
 
+void messagei::clear() {
+	memset(this, 0, sizeof(*this));
+}
+
 static bool matchv(variant v, const messagei::variants& source) {
 	for(auto e : source) {
 		if(e == v)
@@ -78,23 +82,46 @@ static const char* read_identifier(const char* p, stringbuilder& result) {
 	return result.psidf(p);
 }
 
+static const char* read_variant(const char* p, stringbuilder& sb, variant& result) {
+	p = read_identifier(p, sb);
+	result = (const char*)sb.begin();
+	if(!result)
+		log::error(p, "Can't find variant `%1`", sb.begin());
+	return p;
+}
+
 static const char* read_conditions(const char* p, stringbuilder& sb, messagei* ps) {
 	while(true) {
 		if(isnum(p[0])) {
 			p = sb.read(p, ps->value);
 			p = skipsp(p);
 		} else if(ischa(p[0])) {
-			p = read_identifier(p, sb);
+			variant v;
+			p = read_variant(p, sb, v);
 			p = skipsp(p);
-			variant v = (const char*)sb.begin();
-			if(!v) {
-				log::error(p, "Can't find variant `%1`", sb.begin());
-				continue;
+			if(v) {
+				if(!ps->add(v))
+					log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), sizeof(ps->conditions) / sizeof(ps->conditions[0]));
 			}
-			if(!ps->add(v))
-				log::error(p, "Too many conditions when save variant %1 (only %1i allowed)", v.getid(), sizeof(ps->conditions) / sizeof(ps->conditions[0]));
 		} else
 			break;
+	}
+	return p;
+}
+
+static const char* read_part(const char* p, variant type, stringbuilder& sb, bool& allowrun) {
+	while(allowrun && *p && *p != '#') {
+		auto pe = bsdata<messagei>::add(); pe->clear();
+		pe->type = type;
+		p = read_conditions(skipspcr(p), sb, pe);
+		if(*p != ':') {
+			log::error(p, "Expected symbol `:`");
+			allowrun = false;
+			break;
+		}
+		p = read_string(skipsp(p + 1), sb);
+		pe->text = getstring(sb);
+		p = skipspcr(p);
 	}
 	return p;
 }
@@ -103,17 +130,21 @@ void messagei::read(const char* url) {
 	auto p = log::read(url);
 	if(!p)
 		return;
-	variants resolves;
 	char temp[4096]; stringbuilder sb(temp);
-	while(*p) {
-		auto pe = bsdata<messagei>::add();
-		p = read_conditions(skipspcr(p), sb, pe);
-		if(*p != ':') {
-			log::error(p, "Expected symbol `:`");
+	auto allowrun = true;
+	while(allowrun && *p) {
+		if(*p != '#') {
+			log::error(p, "Expected symbol `#`");
 			break;
 		}
-		p = read_string(skipsp(p + 1), sb);
-		pe->text = getstring(sb);
+		variant type;
+		p = read_variant(skipsp(p + 1), sb, type);
+		p = skipsp(p);
+		if(*p != 13 && *p != 10) {
+			log::error(p, "Expected symbol line feed");
+			break;
+		}
+		p = read_part(p, type, sb, allowrun);
 	}
 	log::close();
 }

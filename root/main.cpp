@@ -30,6 +30,8 @@ static void generate_character() {
 	game.inflict.add(Injury, 1);
 	creature player = {};
 	player.id = "Umberto";
+	player.abilities[Might] += 2;
+	player.abilities[Cunning] -= 1;
 	player.move(EngageMelee);
 	player.apply(game);
 	logs::pause();
