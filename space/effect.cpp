@@ -1,6 +1,8 @@
 #include "main.h"
 
 BSDATA(effecti) = {
+	{"InflictHarm"},
+	{"SufferHarm"},
 	{"Injury"},
 	{"Gear"},
 	{"Morale"},

@@ -146,9 +146,10 @@
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
+    <ClCompile Include="move.cpp" />
     <ClCompile Include="properties.cpp" />
     <ClCompile Include="squad.cpp" />
-    <ClCompile Include="statable.cpp" />
+    <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -162,6 +163,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\basic.txt" />
+    <Text Include="rules\Quest.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

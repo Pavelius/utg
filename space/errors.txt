@@ -1,1 +1,10 @@
-﻿
+﻿In file `rules/basic.txt`:
+ Line 3: Not found requisit `combat`
+ Line 3: Not found requisit `count`
+ Line 4: Not found requisit `heal`
+ Line 4: Not found requisit `count`
+ Line 5: Not found requisit `combat`
+ Line 5: Not found requisit `infiltrate`
+ Line 5: Not found requisit `count`
+ Line 6: Not found requisit `research`
+ Line 6: Not found requisit `count`

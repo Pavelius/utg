@@ -16,10 +16,13 @@
     <ClCompile Include="mission.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="statable.cpp">
+    <ClCompile Include="effect.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="effect.cpp">
+    <ClCompile Include="tag.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="move.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,6 +47,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\basic.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Quest.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

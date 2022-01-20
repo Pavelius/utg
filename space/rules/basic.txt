@@ -1,6 +1,5 @@
 ﻿#Squad
 
-Marines combat(2) count(6)
-Medics heal(2) count(3)
-Raiders combat(1) infiltrate(1) count(8)
+Marines injury(3) exhause(2) morale(3) count(6)
+Raiders injury(2) infiltrate(1) count(8)
 Scientists research(2) count(3)

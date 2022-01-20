@@ -15,7 +15,7 @@ BSMETA(effecti) = {
 	{}};
 BSMETA(squadi) = {
 	BSREQ(id),
-	BSREQ(combat), BSREQ(infiltrate), BSREQ(research), BSREQ(heal), BSREQ(count),
+	BSREQ(injury), BSREQ(gear), BSREQ(morale), BSREQ(exhause),
 	{}};
 BSDATAC(squadi, 128)
 
