@@ -5,7 +5,7 @@
 const char*		logs::url;
 const char*		logs::url_avatars = "art/avatars";
 const char*		logs::header;
-bool			logs::interactive;
+bool			logs::interactive = true;
 static char		sb_value[4096];
 stringbuilder	logs::sb(sb_value);
 

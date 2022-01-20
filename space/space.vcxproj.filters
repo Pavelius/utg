@@ -1,2 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="action.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="properties.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="squad.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="mission.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="statable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Логика">
+      <UniqueIdentifier>{47534718-efd7-4009-aecc-0d6310c1a3b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Данные">
+      <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\basic.txt">
+      <Filter>Данные</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

@@ -72,7 +72,7 @@ static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
 
 void creature::move(move_s v) {
 	auto& ei = bsdata<movei>::elements[v];
-	pbaroll(get(ei.roll));
+	pbta_roll(get(ei.roll));
 	fix_roll(logs::sb);
 	fix_move(logs::sb, v, this);
 	choose_options(v, get_choose_count(ei.mechanic));

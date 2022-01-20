@@ -8,4 +8,4 @@ struct resulti {
 };
 extern result_s			last_result;
 extern int				last_roll, last_roll_result, last_roll_bonus;
-extern result_s			pbaroll(int b);
+extern result_s			pbta_roll(int b);
