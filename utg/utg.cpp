@@ -6,7 +6,8 @@
 
 using namespace draw;
 
-const varianti*	draw::protogonists;
+array*			draw::heroes;
+fngetname		draw::heroes_getavatar;
 const void*		draw::hilite_object;
 const void*		draw::focus_object;
 figure			draw::hilite_type;
@@ -222,16 +223,15 @@ static void properties() {
 
 static void avatars() {
 	height = width = 0;
-	auto pbs = protogonists;
-	if(!pbs || !pbs->pgetavatar || !pbs->source)
+	if(!heroes || !heroes_getavatar)
 		return;
 	auto index = 0;
-	auto size = pbs->source->size;
-	auto pe = pbs->source->end();
+	auto size = heroes->size;
+	auto pe = heroes->end();
 	char temp[128]; stringbuilder sb(temp);
-	for(auto p = pbs->source->begin(); p < pe; p += size) {
+	for(auto p = heroes->begin(); p < pe; p += size) {
 		sb.clear();
-		auto pn = pbs->pgetavatar(p);
+		auto pn = heroes_getavatar(p);
 		if(!pn || pn[0] == 0)
 			continue;
 		avatar(index++, p, pn);

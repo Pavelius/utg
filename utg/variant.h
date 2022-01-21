@@ -18,7 +18,7 @@ struct varianti {
 	array*				source;
 	int                 key_count;
 	unsigned			flags;
-	fngetname			pgetname, pgetavatar;
+	fngetname			pgetname;
 	fnstatus			pgetinfo;
 	fngetinfo			pgetproperty;
 	static const array* getarray(const void* object, const char* id);

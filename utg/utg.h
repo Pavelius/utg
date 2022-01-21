@@ -15,7 +15,8 @@ struct widget {
 	explicit operator bool() const { return id != 0; }
 };
 namespace draw {
-extern const varianti* protogonists;
+extern array*		heroes;
+extern fngetname	heroes_getavatar;
 extern const void*	focus_object;
 extern const void*	hilite_object;
 extern figure		hilite_type;

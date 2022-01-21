@@ -19,7 +19,8 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
-	draw::protogonists = bsdata<varianti>::elements + Creature;
+	draw::heroes = bsdata<creature>::source_ptr;
+	draw::heroes_getavatar = creature::getavatarst;
 	quest::read("rules/Quest.txt");
 	logs::url = "meet";
 	srand(getcputime());
