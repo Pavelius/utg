@@ -2414,14 +2414,14 @@ void draw::paintstart() {
 		pwindow();
 }
 
-long draw::scene(fnevent proc) {
+void* draw::scene(fnevent proc) {
 	while(ismodal()) {
 		paintstart();
 		if(proc)
 			proc();
 		domodal();
 	}
-	return getresult();
+	return (void*)getresult();
 }
 
 void draw::scene() {

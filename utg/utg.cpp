@@ -10,8 +10,9 @@ const void*		draw::hilite_object;
 const void*		draw::focus_object;
 figure			draw::hilite_type;
 fnstatus		draw::pstatus;
+const widget*	draw::panel_pages;
 int				draw::title_width = 220;
-static void*	current_tab;
+static const widget* current_tab;
 
 void set_dark_theme();
 void set_light_theme();
@@ -136,10 +137,10 @@ static void hilitingx(const char* id, figure v) {
 	hiliting(id, v);
 }
 
-static void paintbar(const char* id) {
+static void paintbar(const char* id, const widget* element) {
 	auto push_width = width;
 	width = textw(id) + metrics::padding * 2;
-	if(current_tab == id) {
+	if(current_tab == element) {
 		fillwindow();
 		barborder();
 		bartextselected(id);
@@ -147,7 +148,7 @@ static void paintbar(const char* id) {
 		bartext(id);
 		hilitingx(id, figure::Rect3D);
 		if(control_hilited && hot.key == MouseLeft && hot.pressed)
-			execute(cbsetptr, (long)id, 0, &current_tab);
+			execute(cbsetptr, (long)element, 0, &current_tab);
 	}
 	caret.x += width;
 	width = push_width;
@@ -157,23 +158,60 @@ static int getbarpageheight() {
 	return texth() + metrics::border * 2;
 }
 
-static void paintbars() {
+static void paintbars(const widget** pages, unsigned count) {
 	rectpush push;
 	caret.y += height + metrics::border;
 	caret.x -= metrics::border;
 	height = getbarpageheight() + metrics::border;
-	paintbar(getnm("Strenght"));
-	paintbar(getnm("Dexterity"));
+	auto pe = pages + count;
+	for(auto ps = pages; ps < pe; ps++)
+		paintbar(getnm((*ps)->id), *ps);
 }
 
-void draw::propertybar() {
-	height = getmaximumheight() - caret.y - getbarpageheight();
+static unsigned choose_pages(const widget** ps, const widget** pe, const widget* pages) {
+	if(!pages)
+		return 0;
+	auto pb = ps;
+	for(auto p = pages; *p; p++) {
+		if(p->visible && !p->visible(p))
+			continue;
+		if(ps < pe)
+			*ps++ = p;
+	}
+	return ps - pb;
+}
+
+static void page_notes() {
+	for(auto& e : bsdata<front>()) {
+		if(!e)
+			continue;
+		auto pn = getnm(e.id);
+		label(pn, 0, &e);
+	}
+}
+
+static void propertybar() {
+	static widget standart_panel[] = {
+		{"Notes", page_notes},
+		{}
+	};
+	const widget* pages[32];
+	auto count = choose_pages(pages, pages + sizeof(pages) / sizeof(pages[0]), draw::panel_pages);
+	count += choose_pages(pages + count, pages + sizeof(pages) / sizeof(pages[0]), standart_panel);
+	height = getmaximumheight() - caret.y + 1;
+	if(count > 1)
+		height -= getbarpageheight() + metrics::border;
 	strokeout(fillwindow);
 	strokeout(strokeborder);
-	paintbars();
+	if(!current_tab && count > 0)
+		current_tab = pages[0];
+	if(count > 1)
+		paintbars(pages, count);
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
 	width -= metrics::padding * 2;
+	if(current_tab && current_tab->proc)
+		current_tab->proc();
 }
 
 static void labelheader(const char* title) {
@@ -186,11 +224,11 @@ static void labelheader(const char* title) {
 }
 
 static void labelvalue(const char* title) {
-	auto push_fore = fore;
+	if(!title || title[0] == 0)
+		return;
 	auto push_caret = caret;
 	textf(title);
 	caret = push_caret;
-	fore = push_fore;
 }
 
 void draw::label(const char* title, const char* value) {
@@ -240,14 +278,6 @@ void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 		}
 	}
 	draw::tab_pixels = push_tab;
-}
-
-void draw::fronts() {
-	for(auto& e : bsdata<front>()) {
-		if(!e)
-			continue;
-		textf(getnm(e.id));
-	}
 }
 
 void draw::answerbt(int i, const void* pv, const char* title) {
@@ -321,6 +351,7 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pwindow();
 		setposru();
 		imagev(resid);
+		propertybar();
 		if(beforepaint)
 			beforepaint();
 		setposlu();
@@ -393,7 +424,7 @@ static void avatar_common(int index, const void* object, const char* id, void(*p
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	strokeout(strokeborder, 0);
+	strokeout(strokeborder);
 	hiliting(object);
 	proc(object);
 	caret.x += width + metrics::padding + metrics::border * 2;

@@ -181,6 +181,7 @@ Wizard ChooseGears result(wear)
 #Front
 
 UndeadInvasion current(3) maximum(10)
+RuleshipOfThaine current(1) maximum(10)
 
 #Menu
 

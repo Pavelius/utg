@@ -287,7 +287,7 @@ long getresult();
 bool isnext();
 void initialize(const char* title);
 bool ismodal();
-long scene(fnevent proc);
+void* scene(fnevent proc);
 void scene();
 void setneedupdate();
 void setnext(fnevent v);

@@ -35,9 +35,14 @@ static void tabs_panel() {
 	}
 }
 
+static widget right_pages[] = {
+	{"Strenght"},
+	{"Dexterity"},
+	{}
+};
+
 static void right_panel() {
 	draw::vertical(party_information);
-	draw::propertybar();
 	tabs_panel();
 }
 
@@ -63,8 +68,8 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
-	answers::beforepaint = right_panel;
 	draw::pstatus = statusinfo;
+	draw::panel_pages = right_pages;
 	quest::read("rules/Quest.txt");
 	return draw::utg::run(generate_character, true);
 }

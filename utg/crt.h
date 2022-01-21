@@ -216,10 +216,6 @@ typedef bool(*fnchoose)(const void* object, array& source, void* pointer);
 typedef bool(*fnvisible)(const void* object);
 // Callback function of object command executing
 typedef void(*fncommand)(void* object);
-// Callback function of source identification. Return property filled 'source'.
-typedef void(*fnsource)(const void* object, array& source);
-// Callback function of draw custom draw object.
-typedef int(*fndraw)(int x, int y, int width, const void* object);
 // Common functions
 void								check_translation();
 bool								equal(const char* s1, const char* s2);

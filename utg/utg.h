@@ -12,6 +12,8 @@
 struct widget {
 	const char*		id;
 	fnevent			proc;
+	fnvisible		visible;
+	explicit operator bool() const { return id != 0; }
 };
 namespace draw {
 typedef void (*fnstatus)(const void* object, stringbuilder& sb);
@@ -20,6 +22,7 @@ extern const void*	focus_object;
 extern const void*	hilite_object;
 extern figure		hilite_type;
 extern fnstatus		pstatus;
+extern const widget* panel_pages;
 extern int			title_width;
 void				answerbt(int index, const void* id, const char* title);
 void				avatar(int index, const void* object, const char* id);
@@ -29,9 +32,7 @@ void				label(const char* id, const char* value);
 void				label(const char* id, const char* value, const void* object);
 void				label(const void* object, const variants& elements, fngetinfo pget);
 void				noavatar();
-void				propertybar();
 void				texth2(const char* title);
-void				fronts();
 void				vertical(fnevent proc);
 namespace utg {
 void				beforemodal();

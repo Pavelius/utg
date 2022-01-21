@@ -1,10 +1,6 @@
 #include "io_stream.h"
 #include "main.h"
 
-static void right_panel() {
-	draw::propertybar();
-}
-
 static void choose_avatars() {
 	answers an; char temp[260];
 	for(io::file::find fn(logs::url_avatars); fn; fn.next()) {
@@ -39,7 +35,6 @@ static void generate_character() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	answers::beforepaint = right_panel;
 	quest::read("rules/Moves.txt");
 	messagei::read("rules/MoveMessages.txt");
 	return draw::utg::run(generate_character, true);
