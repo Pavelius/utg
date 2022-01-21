@@ -180,8 +180,8 @@ Wizard ChooseGears result(wear)
 
 #Front
 
-UndeadInvasion current(3) maximum(10)
-RuleshipOfThaine current(1) maximum(10)
+UndeadInvasion current(3) maximum(10) present("%1 ([%2i] из %3i)")
+RuleshipOfThaine current(1) maximum(10) present("%1 ([%2i] из %3i)")
 
 #Menu
 

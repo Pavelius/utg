@@ -182,11 +182,16 @@ static unsigned choose_pages(const widget** ps, const widget** pe, const widget*
 }
 
 static void page_notes() {
+	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : bsdata<front>()) {
 		if(!e)
 			continue;
+		auto pr = e.present;
+		if(!pr)
+			pr = "%1";
 		auto pn = getnm(e.id);
-		label(pn, 0, &e);
+		sb.clear(); sb.add(pr, pn, e.current, e.maximum);
+		label(temp, 0, &e);
 	}
 }
 
