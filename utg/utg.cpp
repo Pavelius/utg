@@ -11,9 +11,9 @@ const void*		draw::hilite_object;
 const void*		draw::focus_object;
 figure			draw::hilite_type;
 fnstatus		draw::pstatus;
-const widget*	draw::panel_pages;
 int				draw::title_width = 220;
-static const widget* current_tab;
+static void*	current_tab;
+static const menu* last_menu;
 
 void set_dark_theme();
 void set_light_theme();
@@ -138,7 +138,7 @@ static void hilitingx(const char* id, figure v) {
 	hiliting(id, v);
 }
 
-static void paintbar(const char* id, const widget* element) {
+static void paintbar(const char* id, const void* element) {
 	auto push_width = width;
 	width = textw(id) + metrics::padding * 2;
 	if(current_tab == element) {
@@ -159,44 +159,68 @@ static int getbarpageheight() {
 	return texth() + metrics::border * 2;
 }
 
-static void paintbars(const widget** pages, unsigned count) {
+static void paintbars(void** pages, unsigned count) {
 	rectpush push;
 	caret.y += height + metrics::border;
 	caret.x -= metrics::border;
 	height = getbarpageheight() + metrics::border;
 	auto pe = pages + count;
-	for(auto ps = pages; ps < pe; ps++)
-		paintbar(getnm((*ps)->id), *ps);
+	for(auto ps = pages; ps < pe; ps++) {
+		auto pv = *ps;
+		if(bsdata<menu>::have(pv))
+			paintbar(getnm(((menu*)pv)->id), pv);
+		else
+			paintbar("Unknown", pv);
+	}
 }
 
-static unsigned choose_pages(const widget** ps, const widget** pe, const widget* pages) {
-	if(!pages)
+static unsigned choose_pages_by_focus(void** ps, void** pe) {
+	if(!focus_object)
+		return 0;
+	auto pm = varianti::getmetadata(focus_object);
+	if(!pm)
 		return 0;
 	auto pb = ps;
-	for(auto p = pages; *p; p++) {
-		if(p->visible && !p->visible(p))
+	for(auto& e : bsdata<menu>()) {
+		if(e.source != pm)
 			continue;
 		if(ps < pe)
-			*ps++ = p;
+			*ps++ = &e;
 	}
 	return ps - pb;
 }
 
-static void page_notes() {
-	char temp[260]; stringbuilder sb(temp);
-	for(auto& e : bsdata<front>()) {
-		if(!e)
-			continue;
-		auto pr = e.present;
-		if(!pr)
-			pr = "%1";
-		auto pn = getnm(e.id);
-		sb.clear(); sb.add(pr, pn, e.current, e.maximum);
-		label(temp, 0, &e);
+static void properties() {
+	void* pages[32];
+	auto count = choose_pages_by_focus(pages, pages + sizeof(pages) / sizeof(pages[0]));
+	height = getmaximumheight() - caret.y + 1;
+	if(count > 1)
+		height -= getbarpageheight() + metrics::border;
+	strokeout(fillwindow);
+	strokeout(strokeborder);
+	if(!current_tab && count > 0)
+		current_tab = pages[0];
+	if(count > 1)
+		paintbars(pages, count);
+	caret.x += metrics::padding;
+	caret.y += metrics::padding;
+	width -= metrics::padding * 2;
+	if(!current_tab)
+		return;
+	if(bsdata<menu>::have(current_tab)) {
+		auto push_menu = last_menu;
+		last_menu = (menu*)current_tab;
+		if(last_menu->source && last_menu->source->pgetproperty) {
+			auto push_title = title_width;
+			title_width = 120;
+			label(focus_object, last_menu->elements, last_menu->source->pgetproperty);
+			title_width = push_title;
+		}
+		last_menu = push_menu;
 	}
 }
 
-static void paint_avatars() {
+static void avatars() {
 	height = width = 0;
 	auto pbs = protogonists;
 	if(!pbs || !pbs->pgetavatar || !pbs->source)
@@ -214,47 +238,9 @@ static void paint_avatars() {
 	}
 }
 
-static void paint_properties() {
-	static widget standart_panel[] = {
-		{"Notes", page_notes},
-		{}
-	};
-	const widget* pages[32];
-	auto count = choose_pages(pages, pages + sizeof(pages) / sizeof(pages[0]), draw::panel_pages);
-	count += choose_pages(pages + count, pages + sizeof(pages) / sizeof(pages[0]), standart_panel);
-	height = getmaximumheight() - caret.y + 1;
-	if(count > 1)
-		height -= getbarpageheight() + metrics::border;
-	strokeout(fillwindow);
-	strokeout(strokeborder);
-	if(!current_tab && count > 0)
-		current_tab = pages[0];
-	if(count > 1)
-		paintbars(pages, count);
-	caret.x += metrics::padding;
-	caret.y += metrics::padding;
-	width -= metrics::padding * 2;
-	if(current_tab) {
-		if(current_tab->proc)
-			current_tab->proc();
-		else {
-			auto index = bsdata<menu>::source.find(current_tab->id, 0);
-			if(index != -1) {
-				auto& e = bsdata<menu>::get(index);
-				if(e.source && e.source->pgetproperty) {
-					auto push_title = title_width;
-					title_width = 120;
-					label(focus_object, e.elements, e.source->pgetproperty);
-					title_width = push_title;
-				}
-			}
-		}
-	}
-}
-
-static void paint_panel() {
-	draw::vertical(paint_avatars);
-	paint_properties();
+static void panelv() {
+	vertical(avatars);
+	properties();
 }
 
 static void labelheader(const char* title) {
@@ -394,7 +380,7 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pwindow();
 		setposru();
 		imagev(resid);
-		paint_panel();
+		panelv();
 		if(beforepaint)
 			beforepaint();
 		setposlu();
@@ -541,6 +527,43 @@ static void downbar() {
 	caret = push_caret;
 }
 
+static void getinformation(const char* id, stringbuilder& sb) {
+	auto p = getdescription(id);
+	if(!p)
+		return;
+	sb.add(p);
+}
+
+static void statusinfo(const void* object, stringbuilder& sb) {
+	auto pm = varianti::getmetadata(object);
+	if(!pm)
+		return;
+	if(pm->pgetinfo)
+		pm->pgetinfo(object, sb);
+	else if(pm->metadata) {
+		auto pk = pm->metadata->find("id");
+		if(pk) {
+			auto id = pk->gets(object);
+			if(id)
+				getinformation(id, sb);
+		}
+	}
+}
+
+static void list_of_fronts() {
+	char temp[260]; stringbuilder sb(temp);
+	for(auto& e : bsdata<front>()) {
+		if(!e)
+			continue;
+		auto pr = e.present;
+		if(!pr)
+			pr = "%1";
+		auto pn = getnm(e.id);
+		sb.clear(); sb.add(pr, pn, e.current, e.maximum);
+		label(temp, 0, &e);
+	}
+}
+
 BSMETA(widget) = {
 	BSREQ(id),
 	{}};
@@ -574,6 +597,8 @@ void initialize_png();
 
 int draw::utg::run(fnevent proc, bool darkmode) {
 	initialize_png();
+	if(!pstatus)
+		pstatus = statusinfo;
 	if(!proc)
 		return -1;
 	if(darkmode)

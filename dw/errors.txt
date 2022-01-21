@@ -1,2 +1,2 @@
-﻿In file `rules/basic.txt`:
- Line 188: Not found identifier `Creature1`
+﻿In file `Names.txt`:
+ Define translate for `Continue`

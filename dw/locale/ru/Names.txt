@@ -23,6 +23,7 @@ ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник
 Constitution: Телосложение
+Continue: Продолжить
 Dagger: Кинжал
 Damage: Урон
 Dexterity: Ловкость

@@ -12,7 +12,6 @@
 struct widget {
 	const char*		id;
 	fnevent			proc;
-	fnvisible		visible;
 	explicit operator bool() const { return id != 0; }
 };
 namespace draw {
@@ -21,7 +20,6 @@ extern const void*	focus_object;
 extern const void*	hilite_object;
 extern figure		hilite_type;
 extern fnstatus		pstatus;
-extern const widget* panel_pages;
 extern int			title_width;
 void				answerbt(int index, const void* id, const char* title);
 void				avatar(int index, const void* object, const char* id);
@@ -61,6 +59,7 @@ extern const char*	url_avatars;
 extern const char*	header;
 extern bool			interactive;
 const char*			chooseavatar(answers& an, const char* title);
+void				chooseavatar(stringbuilder& result, const char* title);
 int					choose(const answers& source, const char* title, const char* cancel);
 int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);

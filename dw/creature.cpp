@@ -31,8 +31,19 @@ void creature::choose_abilities() {
 		basic.apply_ability(v);
 }
 
+static bool match_party(variant v) {
+	for(auto& e : bsdata<creature>()) {
+		if(e.ismatch(v))
+			return true;
+	}
+	return false;
+}
+
 static void add_variant(answers& an, const void* object, variant v) {
-	if(v.type == Pack) {
+	if(v.type == Class) {
+		if(!match_party(v))
+			an.add(v.getpointer(), getnm(v.getid()));
+	} else if(v.type == Pack) {
 		char temp[260]; stringbuilder sb(temp);
 		bsdata<packi>::get(v.value).getinfo(sb);
 		an.add(v.getpointer(), temp);
@@ -57,7 +68,13 @@ static bool set_value(void* object, const char* result, const void* value) {
 	return true;
 }
 
+void creature::choose_avatar() {
+	stringbuilder sb(avatar);
+	logs::chooseavatar(sb, "Как вы выглядите?");
+}
+
 void creature::generate() {
+	choose_avatar();
 	for(auto& e : bsdata<advancement>()) {
 		if(e.type && !ismatch(e.type))
 			continue;
@@ -68,7 +85,6 @@ void creature::generate() {
 	else
 		choose_abilities();
 	id = "Mistra";
-	setavatar("mistra");
 	finish();
 }
 

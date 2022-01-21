@@ -49,6 +49,22 @@ const char* logs::chooseavatar(answers& an, const char* title) {
 	return p;
 }
 
+void logs::chooseavatar(stringbuilder& result, const char* title) {
+	answers an; char temp[260];
+	for(io::file::find fn(logs::url_avatars); fn; fn.next()) {
+		auto p = fn.name();
+		if(p[0] == '.')
+			continue;
+		szfnamewe(temp, p);
+		an.add(0, temp);
+	}
+	for(auto& e : an)
+		e.value = (void*)e.text;
+	auto p = logs::chooseavatar(an, title);
+	if(p)
+		result.add(p);
+}
+
 void logs::pause() {
 	answers an;
 	an.add(0, getnm("Continue"));

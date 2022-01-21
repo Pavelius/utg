@@ -48,7 +48,8 @@ enum action_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Advancement, Alignment, Class, Creature, Diety, Front, Gender, Item, Menu, Move, Pack, Race, Tag, Widget
+	Ability, Action, Advancement, Alignment, Class, Creature,
+	Diety, Front, Gender, Item, Menu, Move, Pack, Race, Tag, Widget
 };
 
 typedef flagable<1> itemufa;
@@ -119,8 +120,8 @@ union item {
 	constexpr item(unsigned char type) : type(type), signature(0), used(0), feats() {}
 	constexpr explicit operator bool() const { return u != 0; }
 	constexpr const itemi& geti() const { return bsdata<itemi>::elements[type]; }
-	constexpr bool is(itemuf_s v) const { return feats.is(v); }
-	constexpr bool is(tag_s v) const { return geti().tags.is(v); }
+	constexpr bool	is(itemuf_s v) const { return feats.is(v); }
+	constexpr bool	is(tag_s v) const { return geti().tags.is(v); }
 };
 typedef item weara[LastBackpack + 1];
 struct statable : moveable {
@@ -139,6 +140,7 @@ class creature : public nameable, public avatarable, public statable, public wea
 	statable		basic;
 	char			hp;
 	void			apply_advance();
+	void			choose_avatar();
 	void			choose_abilities();
 	void			finish();
 	void			random_ability();
