@@ -43,7 +43,7 @@ BSMETA(dietyi) = {
 	{}};
 BSDATAC(dietyi, 32)
 BSMETA(menu) = {
-	BSREQ(id),
+	BSREQ(id), BSREQ(source),
 	BSREQ(elements),
 	{}};
 BSDATAC(menu, 256)
@@ -69,6 +69,7 @@ BSMETA(itemi) = {
 BSDATAC(itemi, 256)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
+#define VRSTX(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
 #define VRSTN(T, N) bsmeta<T>::meta, bsdata<T>::source_ptr, N, FG(varianti::NotFoundByName)
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -77,7 +78,7 @@ BSDATA(varianti) = {
 	{"Advancement", VRSTN(advancement, 2)},
 	{"Alignment", VRSTD(alignmenti)},
 	{"Class", VRSTD(classi)},
-	{"Creature", VRSTD(creature)},
+	{"Creature", VRSTD(creature), 0, 0, creature::getavatarst, creature::getinfost, creature::getpropertyst},
 	{"Diety", VRSTD(dietyi)},
 	{"Front", VRSTD(front)},
 	{"Gender", VRSTD(genderi)},

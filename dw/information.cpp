@@ -60,7 +60,7 @@ void creature::getinfo(stringbuilder& sb) const {
 	sb.add(")");
 }
 
-void creature::getinfo(const void* object, variant v, stringbuilder& sb) {
+void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	auto p = (creature*)object;
 	switch(v.type) {
 	case Ability:

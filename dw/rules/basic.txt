@@ -185,5 +185,5 @@ RuleshipOfThaine current(1) maximum(10) present("%1 ([%2i] из %3i)")
 
 #Menu
 
-CharacterAbility
+CharacterAbility source(Creature)
  elements Strenght Dexterity Constitution Intellegence Wisdow Charisma Separator HP Armor Damage

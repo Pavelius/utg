@@ -6,7 +6,10 @@
 #define VKIND(T, V) template<> constexpr variant_s variant::kind<T>() { return V; }
 
 struct bsreq;
+union variant;
 enum variant_s : unsigned char;
+
+typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
 	enum { NotFoundByName, FoundByIndex };
@@ -15,6 +18,9 @@ struct varianti {
 	array*				source;
 	int                 key_count;
 	unsigned			flags;
+	fngetname			pgetname, pgetavatar;
+	fnstatus			pgetinfo;
+	fngetinfo			pgetproperty;
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);

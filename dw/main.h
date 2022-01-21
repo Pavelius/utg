@@ -151,9 +151,10 @@ public:
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
 	dice			getdamage() const;
-	static const char* getavatar(const void* p, stringbuilder& sb) { return ((creature*)p)->avatarable::getavatar(); }
+	static const char* getavatarst(const void* object);
 	void			getinfo(stringbuilder& sb) const;
-	static void		getinfo(const void* object, variant v, stringbuilder& sb);
+	static void		getinfost(const void* object, stringbuilder& sb) { ((creature*)object)->getinfo(sb); }
+	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	bool			ismatch(variant v) const;
 };
 class gamei {

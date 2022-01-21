@@ -16,13 +16,7 @@ struct widget {
 	explicit operator bool() const { return id != 0; }
 };
 namespace draw {
-struct avatarsi {
-	const array*	source;
-	fntext			pgetavatar;
-};
-typedef void (*fnstatus)(const void* object, stringbuilder& sb);
-typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
-extern avatarsi		avatars;
+extern const varianti* protogonists;
 extern const void*	focus_object;
 extern const void*	hilite_object;
 extern figure		hilite_type;

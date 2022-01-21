@@ -14,17 +14,15 @@ static void statusinfo(const void* object, stringbuilder& sb) {
 		getinformation(((abilityi*)object)->id, sb);
 }
 
-void paint_character() {
-	auto pm = bsdata<menu>::elements;
-	auto push_title = draw::title_width;
-	draw::title_width = 120;
-	draw::label(draw::focus_object, pm->elements, creature::getinfo);
-	draw::title_width = push_title;
+void paint_items() {
+}
+
+bool view_character(const void* object) {
+	return bsdata<creature>::have(draw::focus_object);
 }
 
 static widget right_pages[] = {
-	{"Strenght"},
-	{"Dexterity"},
+	{"CharacterAbility", 0, view_character},
 	{}
 };
 
@@ -37,9 +35,6 @@ static creature* create_hero(bool interactive) {
 	return p;
 }
 
-static void apply_test(void* object) {
-}
-
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";
@@ -50,8 +45,7 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
-	draw::avatars.source = bsdata<creature>::source_ptr;
-	draw::avatars.pgetavatar = creature::getavatar;
+	draw::protogonists = bsdata<varianti>::elements + Creature;
 	draw::pstatus = statusinfo;
 	draw::panel_pages = right_pages;
 	quest::read("rules/Quest.txt");

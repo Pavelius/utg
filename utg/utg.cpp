@@ -6,7 +6,7 @@
 
 using namespace draw;
 
-avatarsi		draw::avatars;
+const varianti*	draw::protogonists;
 const void*		draw::hilite_object;
 const void*		draw::focus_object;
 figure			draw::hilite_type;
@@ -198,16 +198,16 @@ static void page_notes() {
 
 static void paint_avatars() {
 	height = width = 0;
-	auto pa = avatars.source;
-	if(!pa || !avatars.pgetavatar)
+	auto pbs = protogonists;
+	if(!pbs || !pbs->pgetavatar || !pbs->source)
 		return;
 	auto index = 0;
-	auto size = pa->size;
-	auto pe = pa->end();
+	auto size = pbs->source->size;
+	auto pe = pbs->source->end();
 	char temp[128]; stringbuilder sb(temp);
-	for(auto p = pa->begin(); p < pe; p += size) {
+	for(auto p = pbs->source->begin(); p < pe; p += size) {
 		sb.clear();
-		auto pn = avatars.pgetavatar(p, sb);
+		auto pn = pbs->pgetavatar(p);
 		if(!pn || pn[0] == 0)
 			continue;
 		avatar(index++, p, pn);
@@ -234,8 +234,22 @@ static void paint_properties() {
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
 	width -= metrics::padding * 2;
-	if(current_tab && current_tab->proc)
-		current_tab->proc();
+	if(current_tab) {
+		if(current_tab->proc)
+			current_tab->proc();
+		else {
+			auto index = bsdata<menu>::source.find(current_tab->id, 0);
+			if(index != -1) {
+				auto& e = bsdata<menu>::get(index);
+				if(e.source && e.source->pgetproperty) {
+					auto push_title = title_width;
+					title_width = 120;
+					label(focus_object, e.elements, e.source->pgetproperty);
+					title_width = push_title;
+				}
+			}
+		}
+	}
 }
 
 static void paint_panel() {

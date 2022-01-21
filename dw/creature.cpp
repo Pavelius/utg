@@ -2,6 +2,10 @@
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 
+const char* creature::getavatarst(const void* p) {
+	return ((creature*)p)->avatarable::getavatar();
+}
+
 void creature::update() {
 	copy(basic);
 }

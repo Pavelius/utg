@@ -214,6 +214,8 @@ typedef bool(*fnallow)(const void* object, int index);
 typedef bool(*fnchoose)(const void* object, array& source, void* pointer);
 // Callback function of checking some functionality of `object`
 typedef bool(*fnvisible)(const void* object);
+// Callback function of get object name
+typedef const char*(*fngetname)(const void* object);
 // Callback function of object command executing
 typedef void(*fncommand)(void* object);
 // Common functions

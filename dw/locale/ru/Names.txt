@@ -9,6 +9,7 @@ BundleArrows: Стрелы
 Cancel: Отмена
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
+CharacterAbility: Характеристики
 CharacterGeneration: Генерация персонажа
 Charisma: Харизма
 Choose: Выбирай
