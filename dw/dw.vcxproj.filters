@@ -67,5 +67,8 @@
     <Text Include="rules\Quest.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\CharacterNames.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,10 +1,12 @@
 #include "ability.h"
 #include "advancement.h"
 #include "avatarable.h"
+#include "charname.h"
 #include "crt.h"
 #include "dice.h"
 #include "flagable.h"
 #include "gender.h"
+#include "namenpc.h"
 #include "quest.h"
 #include "recordset.h"
 #include "result.h"
@@ -135,25 +137,30 @@ class wearable {
 public:
 	bool			additem(const item& it);
 };
-class creature : public nameable, public avatarable, public statable, public wearable {
+class creature : public namenpc, public avatarable, public statable, public wearable {
 	unsigned char	alignment, type, diety;
+	race_s			race;
+	gender_s		gender;
 	statable		basic;
 	char			hp;
 	void			apply_advance();
 	void			choose_avatar();
 	void			choose_abilities();
+	void			choose_name();
 	void			finish();
 	void			random_ability();
 	void			update();
+	void			update_class(classi& e);
 	friend bsmeta<creature>;
 public:
 	explicit operator bool() const { return avatarable::getavatar()[0] != 0; }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
+	static const char* getavatarst(const void* object);
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
 	dice			getdamage() const;
-	static const char* getavatarst(const void* object);
+	gender_s		getgender() const { return gender; }
 	void			getinfo(stringbuilder& sb) const;
 	static void		getinfost(const void* object, stringbuilder& sb) { ((creature*)object)->getinfo(sb); }
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
@@ -166,3 +173,6 @@ public:
 	void			usebolster() { bolster--; }
 };
 inline int			d100() { return rand() % 100; }
+
+VKIND(race_s, Race)
+VKIND(gender_s, Gender)

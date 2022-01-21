@@ -49,6 +49,7 @@ Neutral: Нейтральный
 No: Нет
 NoGender: Безполый
 Notes: Заметки
+Npc: НИП
 PoulticesAndHerbs: Травы
 RaggedBow: Лук
 Rapier: Рапира

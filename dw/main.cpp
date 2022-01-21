@@ -10,6 +10,12 @@ static creature* create_hero(bool interactive) {
 }
 
 static void generate_character() {
+	quest::read("rules/Quest.txt");
+	charname::read("locale/ru/CharacterNames.txt");
+	variant f1[] = {"Cleric", Male, Dwarf};
+	auto n1 = charname::random(f1);
+	variant f2[] = {"Fighter", Male, Dwarf};
+	auto n2 = charname::random(f2);
 	logs::header = getnm("CharacterGeneration");
 	create_hero(false);
 	create_hero(false);
@@ -21,8 +27,7 @@ static void generate_character() {
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = creature::getavatarst;
-	quest::read("rules/Quest.txt");
-	logs::url = "meet";
+	logs::url = "grand_tree";
 	srand(getcputime());
 	return draw::utg::run(generate_character, true);
 }

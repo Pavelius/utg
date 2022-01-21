@@ -10,9 +10,14 @@ void creature::update() {
 	copy(basic);
 }
 
+void creature::update_class(classi& e) {
+	abilities[HP] += e.damage;
+}
+
 void creature::finish() {
 	update();
 	update_player();
+	update_class(bsdata<classi>::get(type));
 	hp = get(HP);
 }
 
@@ -29,6 +34,21 @@ void creature::random_ability() {
 void creature::choose_abilities() {
 	for(auto v : standart_ability)
 		basic.apply_ability(v);
+}
+
+void creature::choose_name() {
+	clearname();
+	short unsigned temp[512];
+	variant source[2] = {getgender(), variant(Class, type)};
+	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
+	if(!count)
+		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 1));
+	if(!count)
+		return;
+	answers an;
+	for(auto v : slice<short unsigned>(temp, count))
+		an.add((void*)v, charname::getname(v));
+	setname(logs::choose(an, "Как вас зовут?", 0));
 }
 
 static bool match_party(variant v) {
@@ -84,7 +104,7 @@ void creature::generate() {
 		random_ability();
 	else
 		choose_abilities();
-	id = "Mistra";
+	choose_name();
 	finish();
 }
 
@@ -99,7 +119,7 @@ dice creature::getdamage() const {
 bool creature::ismatch(variant v) const {
 	switch(v.type) {
 	case Class: return type == v.value;
-	case Gender: return gender == v.value;
+	case Gender: return getgender() == v.value;
 	case Race: return race == v.value;
 	default: return false;
 	}

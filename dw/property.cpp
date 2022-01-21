@@ -12,7 +12,6 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
 BSMETA(creature) = {
-	BSREQ(id),
 	BSREQ(gender),
 	BSENM(type, classi),
 	BSENM(race, racei),
@@ -78,7 +77,7 @@ BSDATA(varianti) = {
 	{"Advancement", VRSTN(advancement, 2)},
 	{"Alignment", VRSTD(alignmenti)},
 	{"Class", VRSTD(classi)},
-	{"Creature", VRSTD(creature), 0, 0, creature::getinfost, creature::getpropertyst},
+	{"Creature", VRSTD(creature), FG(varianti::NotFoundByName), 0, creature::getinfost, creature::getpropertyst},
 	{"Diety", VRSTD(dietyi)},
 	{"Front", VRSTD(front)},
 	{"Gender", VRSTD(genderi)},
