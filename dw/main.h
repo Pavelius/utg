@@ -145,12 +145,13 @@ class creature : public nameable, public avatarable, public statable, public wea
 	void			update();
 	friend bsmeta<creature>;
 public:
-	explicit operator bool() const { return getavatar()[0] != 0; }
+	explicit operator bool() const { return avatarable::getavatar()[0] != 0; }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
 	dice			getdamage() const;
+	static const char* getavatar(const void* p, stringbuilder& sb) { return ((creature*)p)->avatarable::getavatar(); }
 	void			getinfo(stringbuilder& sb) const;
 	static void		getinfo(const void* object, variant v, stringbuilder& sb);
 	bool			ismatch(variant v) const;

@@ -6,6 +6,7 @@
 
 using namespace draw;
 
+avatarsi		draw::avatars;
 const void*		draw::hilite_object;
 const void*		draw::focus_object;
 figure			draw::hilite_type;
@@ -195,7 +196,25 @@ static void page_notes() {
 	}
 }
 
-static void propertybar() {
+static void paint_avatars() {
+	height = width = 0;
+	auto pa = avatars.source;
+	if(!pa || !avatars.pgetavatar)
+		return;
+	auto index = 0;
+	auto size = pa->size;
+	auto pe = pa->end();
+	char temp[128]; stringbuilder sb(temp);
+	for(auto p = pa->begin(); p < pe; p += size) {
+		sb.clear();
+		auto pn = avatars.pgetavatar(p, sb);
+		if(!pn || pn[0] == 0)
+			continue;
+		avatar(index++, p, pn);
+	}
+}
+
+static void paint_properties() {
 	static widget standart_panel[] = {
 		{"Notes", page_notes},
 		{}
@@ -217,6 +236,11 @@ static void propertybar() {
 	width -= metrics::padding * 2;
 	if(current_tab && current_tab->proc)
 		current_tab->proc();
+}
+
+static void paint_panel() {
+	draw::vertical(paint_avatars);
+	paint_properties();
 }
 
 static void labelheader(const char* title) {
@@ -356,7 +380,7 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 			pwindow();
 		setposru();
 		imagev(resid);
-		propertybar();
+		paint_panel();
 		if(beforepaint)
 			beforepaint();
 		setposlu();

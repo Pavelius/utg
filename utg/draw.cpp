@@ -2374,7 +2374,8 @@ void draw::vertical(fnevent proc) {
 	auto push_height = height;
 	proc();
 	caret = push_caret;
-	caret.y += height + metrics::padding + metrics::border * 2;
+	if(height)
+		caret.y += height + metrics::padding + metrics::border * 2;
 	height = push_height;
 	width = push_width;
 }

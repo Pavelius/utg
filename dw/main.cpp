@@ -14,25 +14,12 @@ static void statusinfo(const void* object, stringbuilder& sb) {
 		getinformation(((abilityi*)object)->id, sb);
 }
 
-static void party_information() {
-	for(auto i = 0; i < 4; i++) {
-		auto& e = bsdata<creature>::elements[i];
-		if(e)
-			draw::avatar(i, &e, e.getavatar());
-		else
-			draw::noavatar();
-	}
-}
-
-static void tabs_panel() {
-	if(bsdata<creature>::source.have(draw::focus_object)) {
-		auto pm = bsdata<menu>::elements;
-		auto push_title = draw::title_width;
-		draw::title_width = 120;
-		draw::label(draw::focus_object, pm->elements, creature::getinfo);
-		draw::title_width = push_title;
-	} else {
-	}
+void paint_character() {
+	auto pm = bsdata<menu>::elements;
+	auto push_title = draw::title_width;
+	draw::title_width = 120;
+	draw::label(draw::focus_object, pm->elements, creature::getinfo);
+	draw::title_width = push_title;
 }
 
 static widget right_pages[] = {
@@ -40,11 +27,6 @@ static widget right_pages[] = {
 	{"Dexterity"},
 	{}
 };
-
-static void right_panel() {
-	draw::vertical(party_information);
-	tabs_panel();
-}
 
 static creature* create_hero(bool interactive) {
 	auto push_interactive = logs::interactive;
@@ -68,6 +50,8 @@ static void generate_character() {
 }
 
 int main(int argc, char* argv[]) {
+	draw::avatars.source = bsdata<creature>::source_ptr;
+	draw::avatars.pgetavatar = creature::getavatar;
 	draw::pstatus = statusinfo;
 	draw::panel_pages = right_pages;
 	quest::read("rules/Quest.txt");
