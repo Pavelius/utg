@@ -53,15 +53,6 @@ static creature* create_hero(bool interactive) {
 static void apply_test(void* object) {
 }
 
-static void test_choose_many() {
-	answers an;
-	an.add((void*)1, "Самая большая пушка в этой комнате");
-	an.add((void*)2, "Лошадь, которая унесет тебя за три девять земель");
-	an.add((void*)3, "Невероятная защита из камня");
-	an.add((void*)4, "Сапоги отличнейшего качества");
-	logs::apply(an, "Что вы выберете?", apply_test, 2);
-}
-
 static void generate_character() {
 	logs::header = getnm("CharacterGeneration");
 	logs::url = "meet";

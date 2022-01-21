@@ -6,54 +6,15 @@
 
 using namespace draw;
 
-const void* draw::hilite_object;
-const void* draw::focus_object;
-figure draw::hilite_type;
-fnstatus draw::pstatus;
-int draw::title_width = 220;
-static void* current_tab;
+const void*		draw::hilite_object;
+const void*		draw::focus_object;
+figure			draw::hilite_type;
+fnstatus		draw::pstatus;
+int				draw::title_width = 220;
+static void*	current_tab;
 
 void set_dark_theme();
 void set_light_theme();
-
-bool draw::buttonfd(const char* title) {
-	auto push_caret = caret;
-	textfs(title);
-	textf(title);
-	caret = push_caret;
-	auto hilited = ishilite();
-	if(hilited)
-		hot.cursor = cursor::Hand;
-	return hilited;
-}
-
-static void fill_form() {
-	auto push_fore = fore;
-	fore = colors::form;
-	rectf();
-	fore = push_fore;
-}
-
-static void fill_window() {
-	auto push_fore = fore;
-	fore = colors::window;
-	rectf();
-	fore = push_fore;
-}
-
-static void stroke_border() {
-	auto push_fore = fore;
-	fore = colors::border;
-	rectb();
-	fore = push_fore;
-}
-
-static void stroke_active() {
-	auto push_fore = fore;
-	fore = colors::active;
-	rectb();
-	fore = push_fore;
-}
 
 static void stroke_active_fill() {
 	auto push_fore = fore;
@@ -68,13 +29,15 @@ static void stroke_active_fill() {
 	fore = push_fore;
 }
 
-static void strokex(fnevent proc, int dx = 0, int dy = 0) {
-	rectpush push;
-	caret.x -= metrics::border;
-	caret.y -= metrics::border;
-	width += metrics::border * 2 + dx;
-	height += metrics::border * 2 + dy;
-	proc();
+bool draw::buttonfd(const char* title) {
+	auto push_caret = caret;
+	textfs(title);
+	textf(title);
+	caret = push_caret;
+	auto hilited = ishilite();
+	if(hilited)
+		hot.cursor = cursor::Hand;
+	return hilited;
 }
 
 static void stroke(const sprite* p, int frame) {
@@ -83,7 +46,7 @@ static void stroke(const sprite* p, int frame) {
 	auto& f = p->get(0);
 	width = f.sx;
 	height = f.sy;
-	strokex(stroke_border, -1);
+	strokeout(strokeborder);
 	width = push_width;
 	height = push_height;
 }
@@ -102,7 +65,7 @@ static void focusing(const void* object) {
 	if(control_hilited && hot.key == MouseLeft && hot.pressed)
 		execute(cbsetptr, (long)hilite_object, 0, &focus_object);
 	if(focus_object == object)
-		stroke_active();
+		strokeactive();
 }
 
 static void imagev(const char* resid) {
@@ -177,7 +140,7 @@ static void paintbar(const char* id) {
 	auto push_width = width;
 	width = textw(id) + metrics::padding * 2;
 	if(current_tab == id) {
-		fill_window();
+		fillwindow();
 		barborder();
 		bartextselected(id);
 	} else {
@@ -205,8 +168,8 @@ static void paintbars() {
 
 void draw::propertybar() {
 	height = getmaximumheight() - caret.y - getbarpageheight();
-	strokex(fill_window);
-	strokex(stroke_border);
+	strokeout(fillwindow);
+	strokeout(strokeborder);
 	paintbars();
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
@@ -287,15 +250,6 @@ void draw::fronts() {
 	}
 }
 
-void draw::vertical(fnevent proc) {
-	auto push_caret = caret;
-	auto push_width = width;
-	proc();
-	width = push_width;
-	caret = push_caret;
-	caret.y += height + metrics::padding + metrics::border * 2;
-}
-
 void draw::answerbt(int i, const void* pv, const char* title) {
 	static char answer_hotkeys[] = {
 		'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
@@ -372,8 +326,8 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		setposlu();
 		width = standart_width;
 		height = push_height - metrics::padding - metrics::border * 2;
-		strokex(fill_window);
-		strokex(stroke_border);
+		strokeout(fillwindow);
+		strokeout(strokeborder);
 		caret.x += metrics::padding; width -= metrics::padding;
 		caret.y += metrics::padding; height -= metrics::padding;
 		texth2(header);
@@ -439,7 +393,7 @@ static void avatar_common(int index, const void* object, const char* id, void(*p
 	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	strokex(stroke_border, 0);
+	strokeout(strokeborder, 0);
 	hiliting(object);
 	proc(object);
 	caret.x += width + metrics::padding + metrics::border * 2;
@@ -456,7 +410,7 @@ void draw::avatarch(int index, const void* object, const char* id) {
 void draw::noavatar() {
 	width = 64;
 	height = 64;
-	strokex(stroke_border);
+	strokeout(strokeborder);
 	caret.x += width + metrics::padding + metrics::border * 2;
 }
 
@@ -467,20 +421,15 @@ static void hilite_paint() {
 	width = hot.hilite.width();
 	height = hot.hilite.height();
 	switch(hilite_type) {
-	case figure::Rect:
-		strokex(stroke_active);
-		break;
-	case figure::RectFill:
-		strokex(stroke_active_fill, 2);
-		break;
-	case figure::Rect3D:
-		stroke_active_fill();
-		break;
+	case figure::Rect: strokeout(strokeactive); break;
+	case figure::RectFill: strokeout(stroke_active_fill, 2); break;
+	case figure::Rect3D: stroke_active_fill(); break;
+	default: break;
 	}
 }
 
 static void tooltips_paint() {
-	if(hilite_object && hot.hilite)
+	if(hot.hilite)
 		hilite_paint();
 }
 
@@ -501,20 +450,12 @@ static void statusbar_paint() {
 	textf(temp);
 }
 
-static void stroke_line() {
-	rectpush push;
-	auto push_fore = fore;
-	fore = colors::border;
-	line(caret.x + width, caret.y);
-	fore = push_fore;
-}
-
 static void statusbar() {
 	auto push_height = height;
 	auto dy = texth() + metrics::border * 2; height = dy;
 	caret.y = getheight() - dy;
 	gradv(colors::form, colors::window, 0);
-	stroke_line();
+	strokeline();
 	caret.y += metrics::border;
 	height = push_height;
 	height -= dy;
@@ -544,7 +485,7 @@ void draw::utg::beforemodal() {
 }
 
 void draw::utg::paint() {
-	fill_form();
+	fillform();
 	caret.y += metrics::padding + metrics::border * 2;
 	height -= metrics::padding + metrics::border * 2;
 	downbar();

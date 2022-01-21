@@ -1,2 +1,3 @@
-﻿In file `rules/MoveMessagesX.txt`:
- Line 10: Expected symbol `:`
+﻿In file `rules/MoveMessages.txt`:
+ Line 6: Can't find variant `PartialSuccess`
+ Line 8: Can't find variant `CriticalSuccess`

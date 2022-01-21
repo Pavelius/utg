@@ -187,6 +187,8 @@ bool					dragactive();
 void					dragbegin(const void* p);
 void					dropshadow();
 void					execute(fnevent proc, long value = 0, long value2 = 0, const void* object = 0);
+void					fillform();
+void					fillwindow();
 int						getbpp();
 inline rect				getrect() { return {caret.x, caret.y, caret.x + width, caret.y + height}; }
 int						getheight();
@@ -229,6 +231,10 @@ void					setpos(int x, int y, int width, int height);
 void					settimer(unsigned milleseconds);
 const char*				skiptr(const char* string);
 void					stroke(int x, int y, const sprite* e, int id, int flags, unsigned char thin = 1, unsigned char* koeff = 0);
+void					strokeactive();
+void					strokeborder();
+void					strokeline();
+void					strokeout(fnevent proc, int dx = 0, int dy = 0);
 void					syscursor(bool enable);
 void					text(const char* string, int count = -1, unsigned flags = 0);
 int						text(rect rc, const char* string, unsigned state = 0, int* max_width = 0);
@@ -249,6 +255,7 @@ void					tipspos();
 inline void				tooltips(const char* format, ...) { tips_sb.addv(format, xva_start(format)); }
 void					updatewindow();
 void					write(const char* url, unsigned char* bits, int width, int height, int bpp, int scanline, color* pallette);
+void					vertical(fnevent proc);
 }
 namespace draw {
 struct awindowi {

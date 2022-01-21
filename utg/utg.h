@@ -31,8 +31,8 @@ void				label(const void* object, const variants& elements, fngetinfo pget);
 void				noavatar();
 void				propertybar();
 void				texth2(const char* title);
-void				vertical(fnevent proc);
 void				fronts();
+void				vertical(fnevent proc);
 namespace utg {
 void				beforemodal();
 void				paint();

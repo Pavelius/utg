@@ -34,12 +34,12 @@ void creature::roll(move_s v) {
 }
 
 static int get_choose_count(move_mechanic_s v) {
-	static int result[Choose2or3 + 1][CriticalSuccess + 1] = {
+	static int result[Choose2or3 + 1][StrongSuccess + 1] = {
 		{},
-		{0, 1, 1, 1},
-		{0, 1, 2, 2},
-		{0, 1, 3, 3},
-		{0, 2, 3, 3},
+		{0, 1, 1},
+		{0, 1, 2},
+		{0, 1, 3},
+		{0, 2, 3},
 	};
 	return result[v][last_result];
 }

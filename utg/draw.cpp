@@ -2323,6 +2323,62 @@ void draw::cbsetptr() {
 	*p = (void*)hot.param;
 }
 
+void draw::fillform() {
+	auto push_fore = fore;
+	fore = colors::form;
+	rectf();
+	fore = push_fore;
+}
+
+void draw::fillwindow() {
+	auto push_fore = fore;
+	fore = colors::window;
+	rectf();
+	fore = push_fore;
+}
+
+void draw::strokeout(fnevent proc, int dx, int dy) {
+	rectpush push;
+	caret.x -= metrics::border;
+	caret.y -= metrics::border;
+	width += metrics::border * 2 + dx;
+	height += metrics::border * 2 + dy;
+	proc();
+}
+
+void draw::strokeborder() {
+	auto push_fore = fore;
+	fore = colors::border;
+	rectb();
+	fore = push_fore;
+}
+
+void draw::strokeactive() {
+	auto push_fore = fore;
+	fore = colors::active;
+	rectb();
+	fore = push_fore;
+}
+
+void draw::strokeline() {
+	rectpush push;
+	auto push_fore = fore;
+	fore = colors::border;
+	line(caret.x + width, caret.y);
+	fore = push_fore;
+}
+
+void draw::vertical(fnevent proc) {
+	auto push_caret = caret;
+	auto push_width = width;
+	auto push_height = height;
+	proc();
+	caret = push_caret;
+	caret.y += height + metrics::padding + metrics::border * 2;
+	height = push_height;
+	width = push_width;
+}
+
 bool draw::isnext() {
 	return next_proc != 0;
 }

@@ -96,13 +96,20 @@ static const char* read_conditions(const char* p, stringbuilder& sb, messagei* p
 			p = sb.read(p, ps->value);
 			p = skipsp(p);
 		} else if(ischa(p[0])) {
-			variant v;
-			p = read_variant(p, sb, v);
-			p = skipsp(p);
-			if(v) {
-				if(!ps->add(v))
+			p = read_identifier(p, sb);
+			auto pn = sb.begin();
+			if(equal(pn, "Random"))
+				ps->set(messagei::Random);
+			else if(equal(pn, "Unique"))
+				ps->set(messagei::Unique);
+			else {
+				variant v = (const char*)sb.begin();
+				if(!v)
+					log::error(p, "Can't find variant `%1`", sb.begin());
+				else if(!ps->add(v))
 					log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), sizeof(ps->conditions) / sizeof(ps->conditions[0]));
 			}
+			p = skipsp(p);
 		} else
 			break;
 	}
