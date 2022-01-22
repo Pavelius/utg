@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Логика">
+      <UniqueIdentifier>{8186fd53-cd8f-47f4-8923-06f40dd0699e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Данные">
+      <UniqueIdentifier>{eed5a1d7-90be-4af7-a910-497a2beebdcc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="pirate.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="property.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="roll10.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="historyable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="group.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="special.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="npcname.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\History.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\CharacterNames.txt">
+      <Filter>Данные</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

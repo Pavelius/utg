@@ -1,0 +1,40 @@
+#Group
+
+Pirate
+
+AdventureProfession
+AttackMove
+Animal
+CollectioneerItem
+CondimentSoupDessert
+FamousMan
+FriendOrFamousPerson
+HeavyObject
+LargeAnimal
+LargeBeast
+PreferredWeapon
+ReallyHighAndCoolNumber
+SmellyAnimal
+TypeOfLocation
+UglyFamily
+WellRegardedProfession
+
+#Class
+
+Seeker types(AdventureProfession UglyFamily Animal CollectioneerItem Pirate)
+ maximum 7 2 5 5 5 6
+ levelup 2 6 10 14 18
+
+AllSeein types(LargeAnimal HeavyObject WellRegardedProfession TypeOfLocation FamousMan)
+ maximum 6 5 5 7 2 5
+ levelup 3 8 14 15 18
+
+Grifter types(CondimentSoupDessert SmellyAnimal FriendOrFamousPerson Pirate Pirate)
+ maximum 2 5 5 5 6 7
+ levelup 2 7 11 15 18
+
+Assassin types(AttackMove ReallyHighAndCoolNumber PreferredWeapon UglyFamily LargeBeast)
+ maximum 5 6 7 5 5 2
+ levelup 2 5 9 14 18
+
+Survivor

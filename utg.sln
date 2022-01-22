@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "root", "root\root.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "space", "space\space.vcxproj", "{FF662244-B28B-434C-A1AD-FF4842F3C566}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lastsea", "lastsea\lastsea.vcxproj", "{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{FF662244-B28B-434C-A1AD-FF4842F3C566}.Release|x64.Build.0 = Release|x64
 		{FF662244-B28B-434C-A1AD-FF4842F3C566}.Release|x86.ActiveCfg = Release|Win32
 		{FF662244-B28B-434C-A1AD-FF4842F3C566}.Release|x86.Build.0 = Release|Win32
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Debug|x64.ActiveCfg = Debug|x64
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Debug|x64.Build.0 = Debug|x64
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Debug|x86.Build.0 = Debug|Win32
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Release|x64.ActiveCfg = Release|x64
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Release|x64.Build.0 = Release|x64
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Release|x86.ActiveCfg = Release|Win32
+		{DD3D68E0-8084-43DA-B0E6-79B15BECA8F5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

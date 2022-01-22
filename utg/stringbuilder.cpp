@@ -439,7 +439,7 @@ void stringbuilder::addsep(char separator) {
 		return;
 	switch(separator) {
 	case ' ':
-		if(p[-1] == '\n' || p[-1] == '\t')
+		if(p[-1] == '\n' || p[-1] == '\t' || p[-1]=='[' || p[-1]=='(')
 			return;
 		break;
 	case '.':
@@ -684,7 +684,8 @@ const char* stringbuilder::psstr(const char* pb, char end_symbol) {
 }
 
 void stringbuilder::addof(const char* s) {
-	static grammar map[] = {{"ый", "ого"},
+	static grammar map[] = {
+		{"ый", "ого"},
 		{"ий", "ого"},
 		{"ое", "ого"},
 		{"ая", "ой"},
@@ -698,6 +699,14 @@ void stringbuilder::addof(const char* s) {
 		{"я", "и"},
 		{}};
 	add(s, map, "а");
+}
+
+void stringbuilder::addnounf(const char* s) {
+	static grammar map[] = {
+		{"ий", "ая"},
+		{"ый", "ая"},
+		{}};
+	add(s, map, "");
 }
 
 void stringbuilder::addby(const char* s) {

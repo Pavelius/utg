@@ -57,6 +57,8 @@ static const char* read_name(const char* p, stringbuilder& result) {
 			sym = *p++;
 		switch(sym) {
 		case 17: sym = '-'; break;
+		case 0xA8: sym = 'Å'; break;
+		case 0xB8: sym = 'å'; break;
 		}
 		result.add(sym);
 	}

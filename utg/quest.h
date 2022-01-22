@@ -6,6 +6,7 @@ struct quest {
 	typedef bool (*fnallow)(variant v);
 	short				index, next;
 	const char*			text;
+	const char*			image;
 	variants			tags;
 	static fnallow		allow;
 	static fnallow		apply;

@@ -57,14 +57,43 @@ static const char* read_identifier(const char* p, stringbuilder& result) {
 	return result.psidf(p);
 }
 
-static const char* read_variants(const char* p, stringbuilder& result, variants& source, bool& allow_continue) {
+static const char* getstring(stringbuilder& sb) {
+	auto p = sb.begin();
+	if(!p[0])
+		return 0;
+	return szdup(p);
+}
+
+static const char* read_params(const char* p, stringbuilder& result, bool& allow_continue) {
+	if(p[0] != '(') {
+		log::error(p, "Expected symbol `(`");
+		allow_continue = false;
+		return p;
+	}
+	p = read_identifier(skipsp(p + 1), result);
+	if(p[0] != ')') {
+		log::error(p, "Expected symbol `(`");
+		allow_continue = false;
+		return p;
+	}
+	p = skipsp(p + 1);
+	return p;
+}
+
+static const char* read_variants(const char* p, stringbuilder& result, variants& source, bool& allow_continue, quest* pe) {
 	while(allow_continue && ischa(*p)) {
 		p = read_identifier(p, result);
 		p = skipsp(p);
-		variant v = (const char*)result.begin();
-		if(!v)
-			log::error(p, "Can't find variant `%1`", result.begin());
-		add(source, v);
+		auto pn = result.begin();
+		if(equal(pn, "image")) {
+			p = read_params(p, result, allow_continue);
+			pe->image = getstring(result);
+		} else {
+			variant v = (const char*)result.begin();
+			if(!v)
+				log::error(p, "Can't find variant `%1`", result.begin());
+			add(source, v);
+		}
 	}
 	return p;
 }
@@ -79,13 +108,6 @@ static const char* skipcr(const char* p, bool& allow_continue) {
 	return p;
 }
 
-static const char* getstring(stringbuilder& sb) {
-	auto p = sb.begin();
-	if(!p[0])
-		return 0;
-	return szdup(p);
-}
-
 static const char* read_event(const char* p, short& parent, stringbuilder& sb, bool& allow_continue) {
 	if(!allow_continue)
 		return p;
@@ -93,7 +115,7 @@ static const char* read_event(const char* p, short& parent, stringbuilder& sb, b
 	auto pe = bsdata<quest>::add(); pe->clear();
 	pe->index = parent;
 	pe->next = -1;
-	p = read_variants(skipsp(p), sb, pe->tags, allow_continue);
+	p = read_variants(skipsp(p), sb, pe->tags, allow_continue, pe);
 	p = read_string(skipspcr(p), sb);
 	pe->text = getstring(sb);
 	return p;
@@ -104,7 +126,7 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 		auto pe = bsdata<quest>::add(); pe->clear();
 		pe->index = parent;
 		p = stringbuilder::read(p, pe->next);
-		p = read_variants(skipsp(p), sb, pe->tags, allow_continue);
+		p = read_variants(skipsp(p), sb, pe->tags, allow_continue, pe);
 		if(p[0]!=')') {
 			log::error(p, "Expected symbol `)` after a number");
 			break;
@@ -178,7 +200,7 @@ const quest* quest::choose(int id, const char* title, const char* resid, const c
 			continue;
 		an.add(&e, e.text);
 	}
-	return (quest*)an.choose(title, 0, true, resid, -1, header);
+	return (quest*)an.choose(title, 0, true, resid, -1, header, text);
 }
 
 void quest::run(int id, const char* title, const char* resid, const char* header) {
@@ -188,6 +210,8 @@ void quest::run(int id, const char* title, const char* resid, const char* header
 			return;
 		for(auto v : p->tags)
 			apply(v);
+		if(p->image)
+			resid = p->image;
 		p = p->choose(p->index, title, resid, header);
 		for(auto v : p->tags)
 			apply(v);

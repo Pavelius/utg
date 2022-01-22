@@ -42,10 +42,10 @@ void creature::choose_abilities() {
 void creature::choose_name() {
 	clearname();
 	short unsigned temp[512];
-	variant source[2] = {last_gender, variant(Class, type)};
+	variant source[3] = {last_gender, variant(Class, type), variant(Race, race)};
 	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
 	if(!count)
-		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 1));
+		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 2));
 	if(!count)
 		return;
 	answers an;
@@ -108,8 +108,8 @@ void creature::generate() {
 		random_ability();
 	else
 		choose_abilities();
-	choose_avatar();
 	choose_name();
+	choose_avatar();
 	finish();
 }
 

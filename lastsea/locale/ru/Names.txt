@@ -1,0 +1,8 @@
+﻿AllSeein: Провидец
+AppTitle: Утраченные моря
+Assassin: Убийца
+ChooseClass: Кто %такая [%герой]?
+Continue: Продолжить
+Grifter: Пройдоха
+Seeker: Искатель
+Survivor: Недобиток

@@ -12,16 +12,12 @@ static creature* create_hero(bool interactive) {
 static void generate_character() {
 	quest::read("rules/Quest.txt");
 	charname::read("locale/ru/CharacterNames.txt");
-	variant f1[] = {"Cleric", Male, Dwarf};
-	auto n1 = charname::random(f1);
-	variant f2[] = {"Fighter", Male, Dwarf};
-	auto n2 = charname::random(f2);
 	logs::header = getnm("CharacterGeneration");
 	create_hero(false);
 	create_hero(false);
 	create_hero(false);
-	create_hero(true);
-	logs::pause();
+	create_hero(false);
+	quest::run(1, "Что будете делать?", logs::url, logs::header);
 }
 
 int main(int argc, char* argv[]) {
