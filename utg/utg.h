@@ -60,7 +60,7 @@ extern const char*	url_avatars;
 extern const char*	header;
 extern bool			interactive;
 const char*			chooseavatar(answers& an, const char* title);
-void				chooseavatar(stringbuilder& result, const char* title);
+void				chooseavatar(stringbuilder& result, const char* title, const char* mask = 0);
 int					choose(const answers& source, const char* title, const char* cancel);
 int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);

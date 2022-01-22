@@ -49,11 +49,13 @@ const char* logs::chooseavatar(answers& an, const char* title) {
 	return p;
 }
 
-void logs::chooseavatar(stringbuilder& result, const char* title) {
+void logs::chooseavatar(stringbuilder& result, const char* title, const char* mask) {
 	answers an; char temp[260];
 	for(io::file::find fn(logs::url_avatars); fn; fn.next()) {
 		auto p = fn.name();
 		if(p[0] == '.')
+			continue;
+		if(mask && !szpmatch(p, mask))
 			continue;
 		szfnamewe(temp, p);
 		an.add(0, temp);

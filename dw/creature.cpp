@@ -1,8 +1,11 @@
 #include "main.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
+static gender_s last_gender;
 
 const char* creature::getavatarst(const void* p) {
+	if(!((creature*)p)->isvalidname())
+		return 0;
 	return ((creature*)p)->avatarable::getavatar();
 }
 
@@ -39,7 +42,7 @@ void creature::choose_abilities() {
 void creature::choose_name() {
 	clearname();
 	short unsigned temp[512];
-	variant source[2] = {getgender(), variant(Class, type)};
+	variant source[2] = {last_gender, variant(Class, type)};
 	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
 	if(!count)
 		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 1));
@@ -75,7 +78,7 @@ static bool set_value(void* object, const char* result, const void* value) {
 	auto p = (creature*)object;
 	if(!value)
 		return false;
-	if(bsdata<packi>::source.have(value)) {
+	if(bsdata<packi>::have(value)) {
 		auto pv = (packi*)value;
 		for(auto v : pv->elements)
 			set_value(object, result, v.getpointer());
@@ -83,18 +86,19 @@ static bool set_value(void* object, const char* result, const void* value) {
 		auto v = bsdata<itemi>::source.indexof(value);
 		if(v != -1)
 			p->additem(v);
-	} else
+	} else if(bsdata<genderi>::have(value))
+		last_gender = (gender_s)bsdata<genderi>::source.indexof(value);
+	else
 		return false;
 	return true;
 }
 
 void creature::choose_avatar() {
 	stringbuilder sb(avatar);
-	logs::chooseavatar(sb, "Как вы выглядите?");
+	logs::chooseavatar(sb, getnm("ChooseLook"), (last_gender == Female) ? "f*.*" : "m*.*");
 }
 
 void creature::generate() {
-	choose_avatar();
 	for(auto& e : bsdata<advancement>()) {
 		if(e.type && !ismatch(e.type))
 			continue;
@@ -104,6 +108,7 @@ void creature::generate() {
 		random_ability();
 	else
 		choose_abilities();
+	choose_avatar();
 	choose_name();
 	finish();
 }

@@ -140,7 +140,6 @@ public:
 class creature : public namenpc, public avatarable, public statable, public wearable {
 	unsigned char	alignment, type, diety;
 	race_s			race;
-	gender_s		gender;
 	statable		basic;
 	char			hp;
 	void			apply_advance();
@@ -153,14 +152,13 @@ class creature : public namenpc, public avatarable, public statable, public wear
 	void			update_class(classi& e);
 	friend bsmeta<creature>;
 public:
-	explicit operator bool() const { return avatarable::getavatar()[0] != 0; }
+	explicit operator bool() const { return isvalidname(); }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
 	dice			getdamage() const;
-	gender_s		getgender() const { return gender; }
 	void			getinfo(stringbuilder& sb) const;
 	static void		getinfost(const void* object, stringbuilder& sb) { ((creature*)object)->getinfo(sb); }
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);

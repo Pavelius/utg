@@ -12,7 +12,6 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
 BSMETA(creature) = {
-	BSREQ(gender),
 	BSENM(type, classi),
 	BSENM(race, racei),
 	BSENM(alignment, alignmenti),

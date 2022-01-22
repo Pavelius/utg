@@ -19,6 +19,7 @@ ChooseClass: Кто будет ваш персонаж?
 ChooseDefences: Что будет служить вам защитой?
 ChooseGears: Что вы таскаете с собой?
 ChooseGender: Кто вы?
+ChooseLook: Как вы выглядите?
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник

@@ -27,7 +27,7 @@ static void generate_character() {
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = creature::getavatarst;
-	logs::url = "grand_tree";
+	logs::url = "plain_village";
 	srand(getcputime());
 	return draw::utg::run(generate_character, true);
 }
