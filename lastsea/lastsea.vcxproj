@@ -143,13 +143,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="historyable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="npcname.cpp" />
     <ClCompile Include="pirate.cpp" />
+    <ClCompile Include="piratea.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll10.cpp" />
+    <ClCompile Include="shipstat.cpp" />
     <ClCompile Include="special.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,11 +165,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\PirateHistoryVariants.txt" />
     <Text Include="locale\ru\PirateNames.txt" />
     <Text Include="locale\ru\PirateHistory.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="scenario\BeyondTheOceanEdge.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

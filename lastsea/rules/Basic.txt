@@ -52,3 +52,11 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
  exploration(1 3) brawl(1 3 4) hunting(1 2 4 5) aim(3 4) swagger(2 5) navigation(1 2)
  maximum 5 7 6 2 5 5
  levelup 4 7 12 15 18
+
+#Action
+
+Marketplace script(One Swagger Plus Roll) result(1 7 11 16)
+
+#Location
+
+Port actions(Marketplace)

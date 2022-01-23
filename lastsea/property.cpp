@@ -13,6 +13,11 @@ BSDATAD(variant)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
+BSMETA(actioni) = {
+	BSREQ(id),
+	BSREQ(result), BSREQ(script),
+	{}};
+BSDATAC(actioni, 128)
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
@@ -22,6 +27,11 @@ BSMETA(classi) = {
 	BSREQ(exploration), BSREQ(brawl), BSREQ(hunting), BSREQ(aim), BSREQ(swagger), BSREQ(navigation),
 	{}};
 BSDATAC(classi, 64)
+BSMETA(locationi) = {
+	BSREQ(id),
+	BSREQ(actions),
+	{}};
+BSDATAC(locationi, 64)
 BSMETA(menu) = {
 	BSREQ(id), BSREQ(source),
 	BSREQ(elements),
@@ -39,9 +49,11 @@ BSMETA(speciali) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi)},
+	{"Action", VRSTD(actioni)},
 	{"Class", VRSTD(classi)},
 	{"Gender", VRSTD(genderi)},
 	{"Group", VRSTD(groupi)},
+	{"Location", VRSTD(locationi)},
 	{"Pirate", VRSTD(pirate)},
 	{"Special", VRSTD(speciali)},
 	{"Value", VRSTD(groupvaluei)},

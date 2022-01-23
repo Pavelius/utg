@@ -1,2 +1,1 @@
-﻿In file `locale/ru/PirateHistory.txt`:
- Line 0: Expected symbol `#`
+﻿Can't find file 'locale/ru/Names.txt'

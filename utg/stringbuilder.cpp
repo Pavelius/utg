@@ -609,6 +609,25 @@ const char* stringbuilder::psline(const char* pb) {
 	return pb;
 }
 
+void stringbuilder::addch(char sym) {
+	switch(sym) {
+	case -85: case -69: add('\"'); break;
+	case -72: add('å'); break;
+	case -105: case 17: add('-'); break;
+	default: add(sym);
+	}
+}
+
+const char* stringbuilder::psstrlf(const char* p) {
+	while(*p) {
+		if(*p == '\n' || *p == '\r')
+			break;
+		else
+			addch(*p++);
+	}
+	return p;
+}
+
 const char* stringbuilder::psstr(const char* pb, char end_symbol) {
 	p[0] = 0;
 	if(!pb)

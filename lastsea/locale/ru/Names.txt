@@ -19,10 +19,12 @@ LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
 MadeUpInterrogationTactic: Несуществующая пытка
+MakeRoll: Выполнить бросок
 NameOfWoman: Женское имя
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды
+Port: Порт
 PreferredWeapon: Ваше любимое оружие
 ProfessionThatInvolvesTravel: Профессия, связанная с путешествиями
 PromtHistory: [%герой] имеет парочку пробелов в истории. Надо бы заполнить. %ShowValues
@@ -32,8 +34,11 @@ Seeker: Искатель
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
 Survivor: Недобиток
+Swagger: Важность
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
 VillainousName: Мужская злодейская фамилия
 WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
+YouRoll: Вы выбросили %2i%+3i=%1i.
+YouRollAbility: Тестировать %1. Бросаем кабик d12 с бонусом %+2i.

@@ -22,6 +22,7 @@ public:
 	void				add(const char* format, ...) { addv(format, xva_start(format)); }
 	void				add(char sym);
 	void				addby(const char* s);
+	void				addch(char sym);
 	void				addcount(const char* id, int count, const char* format = 0);
 	virtual void		addidentifier(const char* identifier);
 	void				addicon(const char* id, int value);
@@ -59,6 +60,7 @@ public:
 	const char*			psidf(const char* pb);
 	const char*			psline(const char* pb);
 	const char*			psstr(const char* p, char end_symbol);
+	const char*			psstrlf(const char* p);
 	static const char*	read(const char* p, long& result);
 	static const char*	read(const char* p, int& result);
 	static const char*	read(const char* p, short& result);

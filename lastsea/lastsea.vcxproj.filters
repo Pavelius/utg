@@ -36,6 +36,15 @@
     <ClCompile Include="game.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="shipstat.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="piratea.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -59,6 +68,12 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\PirateHistoryVariants.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="scenario\BeyondTheOceanEdge.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\Descriptions.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

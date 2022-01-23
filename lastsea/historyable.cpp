@@ -99,9 +99,10 @@ void historyable::clear() {
 	npcname::clear();
 }
 
-void historyable::actv(stringbuilder& sbs, const char* format, const char* format_param) const {
+void historyable::actv(stringbuilder& sbs, const char* format, const char* format_param, bool add_space) const {
 	string sb(*this, sbs);
-	sb.addsep(' ');
+	if(add_space)
+		sb.addsep(' ');
 	sb.addv(format, format_param);
 	sbs = sb;
 }

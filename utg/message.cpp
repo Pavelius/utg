@@ -58,20 +58,7 @@ const messagei* messagei::find(variants source) {
 
 static const char* read_string(const char* p, stringbuilder& result) {
 	result.clear();
-	while(*p) {
-		char sym;
-		if(*p == '\n' || *p == '\r')
-			break;
-		else
-			sym = *p++;
-		switch(sym) {
-		case -85: case -69: sym = '\"'; break;
-		case -72: sym = 'å'; break;
-		case -105: case 17: sym = '-'; break;
-		}
-		result.add(sym);
-	}
-	return p;
+	return result.psstrlf(p);
 }
 
 static const char* getstring(stringbuilder& sb) {
