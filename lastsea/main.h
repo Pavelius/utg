@@ -31,7 +31,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Class, Gender, Group, Location, Menu, Pirate, Special, Tag, Treasure, Value, Widget
+	Ability, Action, Class, Gender, Group, Location, Menu, Pirate, Ship, Special, Tag, Treasure, Value, Widget
 };
 
 typedef flagable<1> itemufa;
@@ -163,6 +163,7 @@ public:
 	static void		choosehistory();
 	pirate*			choosepirate(const char* title, const historyable* exclude) const;
 	pirate*			getpirate(int order) const;
+	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	void			fillpirates();
 	static void		play();
 	const treasurei* picktreasure();

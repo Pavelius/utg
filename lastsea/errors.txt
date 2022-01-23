@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
- Define translate for `i`
+ Define translate for `CharacterAbility`
+ Define translate for `General`

@@ -47,6 +47,10 @@ BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(widget) = {
+	BSREQ(id),
+	{}};
+BSMETA(shipstati) = {
+	BSREQ(id),
 	{}};
 BSMETA(treasurei) = {
 	BSREQ(id),
@@ -66,6 +70,7 @@ BSDATA(varianti) = {
 	{"Location", VRSTD(locationi)},
 	{"Menu", VRSTD(menu)},
 	{"Pirate", VRSTD(pirate), 0, 0, 0, pirate::getpropertyst},
+	{"Ship", VRSTD(shipstati)},
 	{"Special", VRSTD(speciali)},
 	{"Tag", VRSTD(tagi)},
 	{"Treasure", VRSTD(treasurei)},

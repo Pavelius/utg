@@ -2,16 +2,16 @@
 #include "main.h"
 
 static void generate_crew(bool interactive) {
-	auto push_interactive = logs::interactive;
-	auto push_header = logs::header;
-	logs::interactive = interactive;
-	logs::header = getnm("GenerateCrew");
+	auto push_interactive = utg::interactive;
+	auto push_header = utg::header;
+	utg::interactive = interactive;
+	utg::header = getnm("GenerateCrew");
 	game.generate();
-	bsdata<pirate>::get(0).act(logs::sb, getnm("PromtStart"));
-	logs::pause();
+	bsdata<pirate>::get(0).act(utg::sb, getnm("PromtStart"));
+	utg::pause();
 	game.choosehistory();
-	logs::header = push_header;
-	logs::interactive = push_interactive;
+	utg::header = push_header;
+	utg::interactive = push_interactive;
 }
 
 static void all_gaintreasure() {
@@ -41,11 +41,10 @@ static void read_files() {
 }
 
 int main(int argc, char* argv[]) {
-	draw::heroes = bsdata<pirate>::source_ptr;
-	draw::heroes_getavatar = pirate::getavatarst;
-	logs::url = "pirate_kingship";
+	utg::url = "pirate_kingship";
+	utg::callback::getinfo = game.getpropertyst;
 	//srand(getcputime());
-	return draw::utg::run(initialize_game, true, read_files);
+	return draw::utgx::run(initialize_game, true, read_files);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

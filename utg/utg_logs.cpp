@@ -2,32 +2,33 @@
 #include "recordset.h"
 #include "utg.h"
 
-const char*		logs::url;
-const char*		logs::url_avatars = "art/avatars";
-const char*		logs::header;
-bool			logs::interactive = true;
+fngetinfo		utg::callback::getinfo;
+const char*		utg::url;
+const char*		utg::url_avatars = "art/avatars";
+const char*		utg::header;
+bool			utg::interactive = true;
 static char		sb_value[4096];
-stringbuilder	logs::sb(sb_value);
+stringbuilder	utg::sb(sb_value);
 
-const char* logs::getchoose(const char* id) {
+const char* utg::getchoose(const char* id) {
 	char temp[128]; stringbuilder sb(temp);
 	sb.add("Choose%1", id);
 	return getnm(temp);
 }
 
-int logs::choose(const array& source, const char* title, const char* cancel) {
+int utg::choose(const array& source, const char* title, const char* cancel) {
 	return source.indexof(recordset::choose(source, title, cancel, interactive, url, header));
 }
 
-int logs::choose(const answers& source, const char* title, const char* cancel) {
+int utg::choose(const answers& source, const char* title, const char* cancel) {
 	return (int)source.choose(title, cancel, interactive, url, -1, header);
 }
 
-void* logs::choose(const answers& source, const char* title) {
+void* utg::choose(const answers& source, const char* title) {
 	return source.choose(title, 0, interactive, url, -1, header, sb_value);
 }
 
-int logs::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
+int utg::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
 	recordset records;
 	for(auto i = 0; i < mask.getmaximum(); i++) {
 		if(!mask.is(i))
@@ -45,17 +46,17 @@ static int get_answer_index(const answers& source, const void* pv) {
 	return -1;
 }
 
-const char* logs::chooseavatar(answers& an, const char* title) {
+const char* utg::chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
 	answers::paintcell = draw::avatarch;
-	auto p = (const char*)an.choose(title, 0, interactive, logs::url, 1, logs::header, 0);
+	auto p = (const char*)an.choose(title, 0, interactive, utg::url, 1, utg::header, 0);
 	answers::paintcell = push_paint;
 	return p;
 }
 
-void logs::chooseavatar(stringbuilder& result, const char* title, const char* mask) {
+void utg::chooseavatar(stringbuilder& result, const char* title, const char* mask) {
 	answers an; char temp[260];
-	for(io::file::find fn(logs::url_avatars); fn; fn.next()) {
+	for(io::file::find fn(utg::url_avatars); fn; fn.next()) {
 		auto p = fn.name();
 		if(p[0] == '.')
 			continue;
@@ -66,39 +67,39 @@ void logs::chooseavatar(stringbuilder& result, const char* title, const char* ma
 	}
 	for(auto& e : an)
 		e.value = (void*)e.text;
-	auto p = logs::chooseavatar(an, title);
+	auto p = utg::chooseavatar(an, title);
 	if(p)
 		result.add(p);
 }
 
-void logs::pause() {
+void utg::pause() {
 	pause(getnm("Continue"));
 }
 
-void logs::pause(const char* title) {
+void utg::pause(const char* title) {
 	answers an;
 	an.add(0, title);
 	choose(an, 0);
 }
 
-int logs::choosei::getmarked(int i) const {
+int utg::choosei::getmarked(int i) const {
 	if(i >= sizeof(marked)/ sizeof(marked[0]))
 		return 0;
 	return marked[i];
 }
 
-void logs::choosei::addmarked(int i) {
+void utg::choosei::addmarked(int i) {
 	if(i < sizeof(marked) / sizeof(marked[0]))
 		marked[i]++;
 }
 
-bool logs::choosei::isallow(int index, const void* object) const {
+bool utg::choosei::isallow(int index, const void* object) const {
 	if(ismarked(index))
 		return false;
 	return true;
 }
 
-void logs::choosei::choose(const char* title, int count) {
+void utg::choosei::choose(const char* title, int count) {
 	if(count > source.getcount())
 		count = source.getcount();
 	answers an;

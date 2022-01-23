@@ -89,9 +89,9 @@ int	pirate::getmaximum(ability_s v) const {
 }
 
 void pirate::information(const char* format, ...) {
-	logs::sb.addn("[+");
-	actv(logs::sb, format, xva_start(format), false);
-	logs::sb.add("]");
+	utg::sb.addn("[+");
+	actv(utg::sb, format, xva_start(format), false);
+	utg::sb.add("]");
 }
 
 const char* classi::getearn(ability_s v) const {
@@ -165,7 +165,7 @@ void pirate::roll() {
 		sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
 		answers an;
 		an.add(0, getnm("MakeRoll"));
-		auto pv = logs::choose(an, temp);
+		auto pv = utg::choose(an, temp);
 		if(!pv)
 			break;
 	}

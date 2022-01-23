@@ -176,14 +176,18 @@ static void paintbars(void** pages, unsigned count) {
 }
 
 static unsigned choose_pages_by_focus(void** ps, void** pe) {
-	if(!focus_object)
-		return 0;
-	auto pm = varianti::getmetadata(focus_object);
-	if(!pm)
-		return 0;
 	auto pb = ps;
+	auto pm = varianti::getmetadata(focus_object);
+	if(pm) {
+		for(auto& e : bsdata<menu>()) {
+			if(e.source != pm)
+				continue;
+			if(ps < pe)
+				*ps++ = &e;
+		}
+	}
 	for(auto& e : bsdata<menu>()) {
-		if(e.source != pm)
+		if(e.source != 0)
 			continue;
 		if(ps < pe)
 			*ps++ = &e;
@@ -210,13 +214,15 @@ static void properties() {
 		return;
 	if(bsdata<menu>::have(current_tab)) {
 		auto push_menu = last_menu;
+		auto push_title = title_width;
+		title_width = 120;
 		last_menu = (menu*)current_tab;
-		if(last_menu->source && last_menu->source->pgetproperty) {
-			auto push_title = title_width;
-			title_width = 120;
-			label(focus_object, last_menu->elements, last_menu->source->pgetproperty);
-			title_width = push_title;
-		}
+		if(last_menu->source) {
+			if(last_menu->source->pgetproperty)
+				label(focus_object, last_menu->elements, last_menu->source->pgetproperty);
+		} else if(utg::callback::getinfo)
+			label(last_menu, last_menu->elements, utg::callback::getinfo);
+		title_width = push_title;
 		last_menu = push_menu;
 	}
 }
@@ -447,7 +453,7 @@ static void focusing_choose(const void* object) {
 }
 
 static void avatar_common(int index, const void* object, const char* id, void(*proc)(const void* object)) {
-	auto p = gres(id, logs::url_avatars);
+	auto p = gres(id, utg::url_avatars);
 	if(!p)
 		return;
 	image(caret.x, caret.y, p, 0, 0);
@@ -573,7 +579,7 @@ BSDATA(widget) = {
 };
 BSDATAF(widget)
 
-void draw::utg::beforemodal() {
+void draw::utgx::beforemodal() {
 	hilite_object = 0;
 	hilite_type = figure::Rect;
 	tips_caret.x = metrics::padding + metrics::border;
@@ -581,21 +587,21 @@ void draw::utg::beforemodal() {
 	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
 }
 
-void draw::utg::paint() {
+void draw::utgx::paint() {
 	fillform();
 	caret.y += metrics::padding + metrics::border * 2;
 	height -= metrics::padding + metrics::border * 2;
 	downbar();
 }
 
-void draw::utg::tips() {
+void draw::utgx::tips() {
 	tooltips_paint();
 	statusbar_paint();
 }
 
 void initialize_png();
 
-int draw::utg::run(fnevent proc, bool darkmode, fnevent afterread) {
+int draw::utgx::run(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!pstatus)
 		pstatus = statusinfo;

@@ -67,5 +67,7 @@ Port actions(Marketplace CaptainMission)
 
 #Menu
 
-CharacterAbility source(Pirate)
+CharacterAbility
  elements Exploration Brawl Hunting Aim Swagger Navigation Separator Experience Stars
+General
+ elements Hull Crew Supply

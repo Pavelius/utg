@@ -20,11 +20,11 @@ static void generate_pirate() {
 }
 
 static void generate_classes() {
-	auto push_interactive = logs::interactive;
-	logs::interactive = false;
+	auto push_interactive = utg::interactive;
+	utg::interactive = false;
 	for(auto& e : bsdata<pirate>())
 		e.generate();
-	logs::interactive = push_interactive;
+	utg::interactive = push_interactive;
 }
 
 void gamei::clear() {
@@ -56,13 +56,13 @@ pirate* gamei::choosepirate(const char* title, const historyable* exclude) const
 		stringbuilder sb(temp); e.getname(sb);
 		an.add(&e, temp);
 	}
-	return (pirate*)logs::choose(an, title);
+	return (pirate*)utg::choose(an, title);
 }
 
 static void fixerror(const char* id, ...) {
-	logs::sb.addn("[-");
-	logs::sb.addv(getnm(id), xva_start(id));
-	logs::sb.addn("]");
+	utg::sb.addn("[-");
+	utg::sb.addv(getnm(id), xva_start(id));
+	utg::sb.addn("]");
 }
 
 static void special_command(special_s v) {
@@ -131,10 +131,10 @@ pirate* gamei::getpirate(int order) const {
 }
 
 void gamei::play() {
-	auto push_header = logs::header;
+	auto push_header = utg::header;
 	auto& loc = game.getlocation();
-	logs::header = getnm(loc.id);
-	logs::sb.clear();
+	utg::header = getnm(loc.id);
+	utg::sb.clear();
 	for(auto index = 0; index < sizeof(loc.actions) / sizeof(loc.actions[0]); index++) {
 		if(!loc.actions[index])
 			continue;
@@ -143,13 +143,13 @@ void gamei::play() {
 			continue;
 		piratea source(index);
 		for(auto p : source) {
-			p->act(logs::sb, getdescription(pa->id));
+			p->act(utg::sb, getdescription(pa->id));
 			last_pirate = p;
 			game.apply(pa->script);
-			logs::pause();
+			utg::pause();
 		}
 	}
-	logs::header = push_header;
+	utg::header = push_header;
 }
 
 void gamei::createtreasure() {
@@ -165,4 +165,18 @@ const treasurei* gamei::picktreasure() {
 	auto pv = bsdata<treasurei>::elements + treasures.data[0];
 	treasures.remove(0);
 	return pv;
+}
+
+void gamei::getpropertyst(const void* object, variant v, stringbuilder& sb) {
+	int value;
+	switch(v.type) {
+	case Ship:
+		value = game.get((shipstat_s)v.value);
+		sb.add("%1i", value);
+		break;
+	case Ability:
+		if(last_pirate)
+			pirate::getpropertyst(last_pirate, v, sb);
+		break;
+	}
 }

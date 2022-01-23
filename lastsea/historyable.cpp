@@ -117,7 +117,7 @@ void historyable::chooseclass() {
 	char temp[260]; temp[0] = 0;
 	stringbuilder sb(temp);
 	act(sb, getnm("ChooseClass"));
-	classid = (int)an.choose(temp, 0, logs::interactive, logs::url, -1, logs::header);
+	classid = (int)an.choose(temp, 0, utg::interactive, utg::url, -1, utg::header);
 }
 
 static variant choose_answer(const historyable* source, variant group) {
@@ -137,26 +137,26 @@ const messagei* find_message(variant type, int value) {
 }
 
 void historyable::background() const {
-	if(!logs::interactive)
+	if(!utg::interactive)
 		return;
 	auto pn = find_message(variant(Class, classid), 4);
 	if(!pn)
 		return;
-	logs::sb.clear();
+	utg::sb.clear();
 	//act(logs::sb, getnm("HereIsAHistory"));
-	act(logs::sb, pn->text);
-	logs::pause();
+	act(utg::sb, pn->text);
+	utg::pause();
 }
 
 void historyable::choosehistory() {
 	auto index = 0;
 	for(auto v : getclass().types) {
-		logs::sb.clear();
-		act(logs::sb, getnm("PromtHistory"));
+		utg::sb.clear();
+		act(utg::sb, getnm("PromtHistory"));
 		values[index++] = choose_answer(this, v);
 	}
-	logs::sb.clear();
-	act(logs::sb, getnm("PromtHistory"));
-	logs::pause(getnm("WhatAboutHistory"));
+	utg::sb.clear();
+	act(utg::sb, getnm("PromtHistory"));
+	utg::pause(getnm("WhatAboutHistory"));
 	background();
 }
