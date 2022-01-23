@@ -45,6 +45,9 @@
     <ClCompile Include="action.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -74,6 +77,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\Descriptions.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Treasure.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

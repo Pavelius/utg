@@ -9,11 +9,56 @@ void pirate::clear() {
 	memset(this, 0, sizeof(*this));
 	historyable::clear();
 	clearactions();
+	for(auto& v : treasures)
+		v = 0xFFFF;
+}
+
+int pirate::getnextstar(int value) const {
+	auto& ei = getclass();
+	auto old_value = 0;
+	for(auto v : ei.levelup) {
+		if(value >= old_value && value < v)
+			return v;
+	}
+	return 0;
+}
+
+void pirate::getpropertyst(const void* object, variant v, stringbuilder& sb) {
+	auto p = (pirate*)object;
+	int value;
+	switch(v.type) {
+	case Ability:
+		switch(v.value) {
+		case Experience:
+			value = p->get((ability_s)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->getnextstar(value);
+			if(value)
+				sb.adds("(%1 %2i)", getnm("NextStar"), value);
+			break;
+		case Stars:
+			value = p->get((ability_s)v.value);
+			if(value)
+				sb.add("%1i", value);
+			break;
+		default:
+			value = p->get((ability_s)v.value);
+			sb.add("%1i", value);
+			break;
+		}
+		break;
+	}
 }
 
 const char* pirate::getavatarst(const void* object) {
 	auto p = (pirate*)object;
-	return p->avatar;
+	auto i = bsdata<pirate>::source.indexof(p);
+	if(i == -1)
+		return 0;
+	static char temp[260];
+	stringbuilder sb(temp);
+	sb.add("pirate%1i", i + 1);
+	return temp;
 }
 
 void pirate::generate() {
@@ -37,8 +82,9 @@ int	pirate::getmaximum(ability_s v) const {
 	case Swagger:
 	case Navigation:
 		return getclass().maximum[v - Exploration];
-	default:
-		return 10;
+	case Experience: return 18;
+	case Stars: case Level: return 5;
+	default: return 10;
 	}
 }
 
@@ -100,6 +146,8 @@ void pirate::set(ability_s v, int i) {
 	if(i > m)
 		i = m;
 	if(abilities[v] != i) {
+		if(abilities[v] < i)
+			information(getnm("AbilityGrow"), getnm(bsdata<abilityi>::elements[v].id), i - abilities[v]);
 		abilities[v] = i;
 		afterchange(v);
 	}
@@ -131,4 +179,21 @@ bool pirate::isuse(int v) const {
 
 void pirate::setaction(int i) {
 	action = i;
+}
+
+void pirate::gaintreasure(const treasurei* pv) {
+	auto index = bsdata<treasurei>::source.indexof(pv);
+	if(index == -1)
+		return;
+	for(auto& e : treasures) {
+		if(e != 0xFFFF)
+			continue;
+		e = index;
+		break;
+	}
+}
+
+void pirate::gaintreasure() {
+	auto pv = game.picktreasure();
+	gaintreasure(pv);
 }

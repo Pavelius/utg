@@ -154,6 +154,7 @@
     <ClCompile Include="roll10.cpp" />
     <ClCompile Include="shipstat.cpp" />
     <ClCompile Include="special.cpp" />
+    <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -171,6 +172,7 @@
     <Text Include="locale\ru\PirateHistory.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Treasure.txt" />
     <Text Include="scenario\BeyondTheOceanEdge.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

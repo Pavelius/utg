@@ -55,8 +55,17 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
 
 #Action
 
+CaptainCabine
+CaptainMission
+DigTreasure
+
 Marketplace script(One Swagger Plus Roll) result(1 7 11 16)
 
 #Location
 
-Port actions(Marketplace)
+Port actions(Marketplace CaptainMission)
+
+#Menu
+
+CharacterAbility source(Pirate)
+ elements Exploration Brawl Hunting Aim Swagger Navigation Separator Experience Stars

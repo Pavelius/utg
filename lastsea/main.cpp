@@ -1,4 +1,4 @@
-#include "charname.h"
+#include "bsreq.h"
 #include "main.h"
 
 static void generate_crew(bool interactive) {
@@ -14,14 +14,27 @@ static void generate_crew(bool interactive) {
 	logs::interactive = push_interactive;
 }
 
+static void all_gaintreasure() {
+	piratea source;
+	for(auto p : source)
+		p->gaintreasure();
+}
+
+static void generate_scenario() {
+	game.createtreasure();
+	all_gaintreasure();
+}
+
 static void initialize_game() {
 	game.clear();
 	generate_crew(false);
+	generate_scenario();
 	game.getpirate(0)->setaction(0);
 	game.play();
 }
 
 static void read_files() {
+	bsreq::read("rules/Treasure.txt");
 	charname::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");

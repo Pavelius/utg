@@ -1,26 +1,35 @@
-﻿AllSeein: Провидец
+﻿AbilityGrow: Навык %1 растет на %+2i
+Aim: Меткость
+AllSeein: Провидец
 Animal: Животное
 AnotherPirateOfYouCrew: Еще один пират из вашей команды
 AppTitle: Утраченные моря
 Assassin: Убийца
 AttackMove: Название боевого приема
+Brawl: Сила
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 Continue: Продолжить
+Experience: Созвездие
+Exploration: Исследование
 FamousMan: Известный человек
 FriendOrFamousPerson: Друг или известный человек
+From: Из
 GenerateCrew: Создание команды
 Grifter: Пройдоха
 HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
+Hunting: Охота
 LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
 MadeUpInterrogationTactic: Несуществующая пытка
 MakeRoll: Выполнить бросок
 NameOfWoman: Женское имя
+Navigation: Навигация
+NextStar: Следующая звезда
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды
@@ -33,6 +42,7 @@ ReallyHighAndCoolNumber: Большое и красивое число
 Seeker: Искатель
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
+Stars: Звезды
 Survivor: Недобиток
 Swagger: Важность
 TypeOfLocation: Тип ландшафта

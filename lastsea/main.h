@@ -1,4 +1,3 @@
-#include "avatarable.h"
 #include "charname.h"
 #include "gender.h"
 #include "group.h"
@@ -23,13 +22,19 @@ enum special_s : unsigned char {
 	Plus, Minus,
 	Choose, Roll,
 };
+enum tag_s : unsigned char {
+	NoDigging, NoSteal, Usable,
+};
+enum event_s : unsigned char {
+	WhenRoll, WhenRollOther, WhenDigging,
+	WhenStartActingPhase, WhenActing, WhenUseReroll,
+};
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Class, Gender, Group, Location, Pirate, Special, Value
+	Ability, Action, Class, Gender, Group, Location, Menu, Pirate, Special, Tag, Treasure, Value, Widget
 };
 
 typedef flagable<1> itemufa;
-typedef char abilitya[Navigation + 1];
 typedef char shipstata[Threat + 1];
 typedef short unsigned indext;
 
@@ -62,6 +67,9 @@ class oceani {
 public:
 	short unsigned	getlocation(indext i) const { return data[i]; }
 	void			setlocation(indext i, int v) { data[i] = v; }
+};
+struct tagi {
+	const char*		id;
 };
 class npcname {
 	short unsigned	nameid;
@@ -98,6 +106,14 @@ public:
 struct speciali {
 	const char*		id;
 };
+struct treasurei {
+	const char*		id;
+	char			abilities[6]; // Bonus to abilities
+	short unsigned	index;
+	flaga			tags, conditions; // Special tags
+	variant			reduce, reduce_count; // reduce this
+	variant			gain, gain_count;
+};
 class textable {
 	char			data[32];
 public:
@@ -105,9 +121,10 @@ public:
 	void operator=(const char* v) { stringbuilder sb(data); sb.add(v); }
 	operator const char*() const { return data; }
 };
-class pirate : public historyable, public avatarable {
-	abilitya		abilities;
+class pirate : public historyable {
+	char			abilities[Level + 1];
 	unsigned char	action, action_additional;
+	unsigned short	treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			checkstars();
@@ -115,10 +132,14 @@ public:
 	void			clear();
 	void			clearactions();
 	void			information(const char* format, ...);
+	void			gaintreasure();
+	void			gaintreasure(const treasurei* p);
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
 	int				getmaximum(ability_s v) const;
+	int				getnextstar(int value) const;
+	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	void			roll();
 	void			set(ability_s v, int i);
 	void			setaction(int i);
@@ -132,16 +153,19 @@ struct piratea : adat<pirate*, 6> {
 class gamei : public shipi, public oceani {
 	char			scenario[32];
 	unsigned char	location;
+	adat<indext, 512> treasures;
 public:
 	adat<unsigned char, 8> pirates;
 	static void		apply(variant v);
 	static void		apply(const variants& source);
+	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
 	pirate*			choosepirate(const char* title, const historyable* exclude) const;
 	pirate*			getpirate(int order) const;
 	void			fillpirates();
 	static void		play();
+	const treasurei* picktreasure();
 	static void		generate();
 	locationi&		getlocation();
 	static bool		match(variant v);

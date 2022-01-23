@@ -151,3 +151,18 @@ void gamei::play() {
 	}
 	logs::header = push_header;
 }
+
+void gamei::createtreasure() {
+	auto m = bsdata<treasurei>::source.getcount();
+	for(unsigned i = 0; i < m; i++)
+		treasures.add(i);
+	zshuffle(treasures.data, treasures.count);
+}
+
+const treasurei* gamei::picktreasure() {
+	if(!treasures.count)
+		return 0;
+	auto pv = bsdata<treasurei>::elements + treasures.data[0];
+	treasures.remove(0);
+	return pv;
+}

@@ -1,0 +1,16 @@
+#Treasure
+
+Magic19 abilities(0 0 0 1 1 0)
+
+Treasure37 abilities(0 0 1 1 0 0)
+Treasure41 abilities(0 0 0 0 2 0)
+Treasure47 abilities(1 0 0 0 0 0)
+Treasure54 abilities(0 0 0 0 0 2)
+Treasure62 abilities(1 0 0 0 1 0)
+Treasure66 abilities(0 2 0 0 0 0)
+Treasure73 abilities(0 0 0 0 2 1)
+Treasure74 abilities(1 1 0 0 0 0)
+Treasure82 abilities(0 0 1 0 0 1)
+Treasure84 abilities(0 0 2 0 0 0)
+Treasure85 abilities(0 1 0 0 0 1)
+Treasure88 abilities(1 0 0 1 0 0)

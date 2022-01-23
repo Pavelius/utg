@@ -38,12 +38,22 @@ BSMETA(menu) = {
 	{}};
 BSDATAC(menu, 256)
 BSMETA(pirate) = {
-	BSREQ(avatar),
 	{}};
 BSDATAC(pirate, 4)
 BSMETA(speciali) = {
 	BSREQ(id),
 	{}};
+BSMETA(tagi) = {
+	BSREQ(id),
+	{}};
+BSMETA(widget) = {
+	{}};
+BSMETA(treasurei) = {
+	BSREQ(id),
+	BSREQ(abilities),
+	BSFLG(tags, tagi),
+	{}};
+BSDATAC(treasurei, 256)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
 BSDATA(varianti) = {
@@ -54,8 +64,12 @@ BSDATA(varianti) = {
 	{"Gender", VRSTD(genderi)},
 	{"Group", VRSTD(groupi)},
 	{"Location", VRSTD(locationi)},
-	{"Pirate", VRSTD(pirate)},
+	{"Menu", VRSTD(menu)},
+	{"Pirate", VRSTD(pirate), 0, 0, 0, pirate::getpropertyst},
 	{"Special", VRSTD(speciali)},
+	{"Tag", VRSTD(tagi)},
+	{"Treasure", VRSTD(treasurei)},
 	{"Value", VRSTD(groupvaluei)},
+	{"Widget", VRSTD(widget)},
 };
-assert_enum(varianti, Value)
+assert_enum(varianti, Widget)
