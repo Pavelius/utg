@@ -144,6 +144,9 @@
     <ClCompile Include="namenpc.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="group.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -246,6 +249,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="namenpc.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="group.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

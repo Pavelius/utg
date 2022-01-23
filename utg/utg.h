@@ -35,7 +35,7 @@ void				vertical(fnevent proc);
 namespace utg {
 void				beforemodal();
 void				paint();
-int					run(fnevent proc, bool darkmode);
+int					run(fnevent proc, bool darkmode, fnevent afterread = 0);
 void				tips();
 }
 }
@@ -61,9 +61,11 @@ extern const char*	header;
 extern bool			interactive;
 const char*			chooseavatar(answers& an, const char* title);
 void				chooseavatar(stringbuilder& result, const char* title, const char* mask = 0);
+void*				choose(const answers& source, const char* title);
 int					choose(const answers& source, const char* title, const char* cancel);
 int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 const char*			getchoose(const char* id);
 void				pause();
+void				pause(const char* title);
 }

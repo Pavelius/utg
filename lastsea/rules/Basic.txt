@@ -1,40 +1,54 @@
 #Group
 
-Pirate
+PirateOfYouCrew
+AnotherPirateOfYouCrew
 
-AdventureProfession
 AttackMove
 Animal
-CollectioneerItem
+CollectorItem
 CondimentSoupDessert
 FamousMan
 FriendOrFamousPerson
 HeavyObject
 LargeAnimal
 LargeBeast
+LastNameFamilyYouAreAssassinate
+MadeUpInterrogationTactic
+NameOfWoman
+ParticularlySmellyAnimal
 PreferredWeapon
+ProfessionThatInvolvesTravel
 ReallyHighAndCoolNumber
-SmellyAnimal
+SomethingFoul
+SomeoneYouHoldDear
 TypeOfLocation
 UglyFamily
+VillainousName
 WellRegardedProfession
 
 #Class
 
-Seeker types(AdventureProfession UglyFamily Animal CollectioneerItem Pirate)
+Seeker types(ProfessionThatInvolvesTravel UglyFamily Animal CollectorItem PirateOfYouCrew)\
+ exploration(1 2 4 5) brawl(1 2) hunting(1 3) aim(1 4) swagger(2 3) navigation(1 3 4)
  maximum 7 2 5 5 5 6
  levelup 2 6 10 14 18
 
-AllSeein types(LargeAnimal HeavyObject WellRegardedProfession TypeOfLocation FamousMan)
+AllSeein types(LargeAnimal HeavyObject WellRegardedProfession TypeOfLocation FamousMan)\
+ exploration(1 3 4) brawl(3 4) hunting(1 3) aim(1 2 4 5) swagger(1 2) navigation(1 3)
  maximum 6 5 5 7 2 5
  levelup 3 8 14 15 18
 
-Grifter types(CondimentSoupDessert SmellyAnimal FriendOrFamousPerson Pirate Pirate)
+Grifter types(CondimentSoupDessert ParticularlySmellyAnimal FriendOrFamousPerson PirateOfYouCrew AnotherPirateOfYouCrew)\
+ exploration(1 2) brawl(1 3) hunting(2 4) aim(1 4) swagger(1 2 4 5) navigation(2 3 4)
  maximum 2 5 5 5 6 7
  levelup 2 7 11 15 18
 
-Assassin types(AttackMove ReallyHighAndCoolNumber PreferredWeapon UglyFamily LargeBeast)
+Assassin types(AttackMove ReallyHighAndCoolNumber PreferredWeapon LastNameFamilyYouAreAssassinate LargeBeast)\
+ exploration(1 3) brawl(1 3 4) hunting(1 2 4 5) aim(3 4) swagger(2 5) navigation(1 2)
  maximum 5 6 7 5 5 2
  levelup 2 5 9 14 18
 
-Survivor
+Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYouHoldDear NameOfWoman)\
+ exploration(1 3) brawl(1 3 4) hunting(1 2 4 5) aim(3 4) swagger(2 5) navigation(1 2)
+ maximum 5 7 6 2 5 5
+ levelup 4 7 12 15 18

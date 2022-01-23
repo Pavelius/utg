@@ -1,8 +1,39 @@
 ﻿AllSeein: Провидец
+Animal: Животное
+AnotherPirateOfYouCrew: Еще один пират из вашей команды
 AppTitle: Утраченные моря
 Assassin: Убийца
+AttackMove: Название боевого приема
+ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
+CollectorItem: Предмет коллекционирования
+CondimentSoupDessert: Приправа, суп или дессерт
 Continue: Продолжить
+FamousMan: Известный человек
+FriendOrFamousPerson: Друг или известный человек
+GenerateCrew: Создание команды
 Grifter: Пройдоха
+HeavyObject: Тяжелый предмет
+HereIsAHistory: [%герой] поведал%а свою историю.
+LargeAnimal: Большое животное
+LargeBeast: Большой и величественный зверь
+LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
+MadeUpInterrogationTactic: Несуществующая пытка
+NameOfWoman: Женское имя
+ParticularlySmellyAnimal: Особенно вонючее животное
+Pirate: Пират
+PirateOfYouCrew: Пират из вашей команды
+PreferredWeapon: Ваше любимое оружие
+ProfessionThatInvolvesTravel: Профессия, связанная с путешествиями
+PromtHistory: [%герой] имеет парочку пробелов в истории. Надо бы заполнить. %ShowValues
+PromtStart: Да в это приключение собралась еще та веселая компашка! Среди прочих были замечены: %ShowCrew
+ReallyHighAndCoolNumber: Большое и красивое число
 Seeker: Искатель
+SomeoneYouHoldDear: Некто, кого вы высоко цените
+SomethingFoul: Нечто гадкое
 Survivor: Недобиток
+TypeOfLocation: Тип ландшафта
+UglyFamily: Дурацкая фамилия
+VillainousName: Мужская злодейская фамилия
+WellRegardedProfession: Уважаемая профессия
+WhatAboutHistory: Так что там с иторией?

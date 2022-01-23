@@ -13,16 +13,13 @@ BSDATAD(variant)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(groupi) = {
-	BSREQ(id),
-	{}};
-BSDATAC(groupi, 256)
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(types), BSREQ(levelup), BSREQ(maximum),
+	BSREQ(exploration), BSREQ(brawl), BSREQ(hunting), BSREQ(aim), BSREQ(swagger), BSREQ(navigation),
 	{}};
 BSDATAC(classi, 64)
 BSMETA(menu) = {
@@ -37,11 +34,6 @@ BSDATAC(pirate, 4)
 BSMETA(speciali) = {
 	BSREQ(id),
 	{}};
-BSMETA(valuei) = {
-	BSREQ(id),
-	BSENM(type, groupi),
-	{}};
-BSDATAC(valuei, 512)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
 BSDATA(varianti) = {
@@ -50,7 +42,8 @@ BSDATA(varianti) = {
 	{"Class", VRSTD(classi)},
 	{"Gender", VRSTD(genderi)},
 	{"Group", VRSTD(groupi)},
+	{"Pirate", VRSTD(pirate)},
 	{"Special", VRSTD(speciali)},
-	{"Value", VRSTD(valuei)},
+	{"Value", VRSTD(groupvaluei)},
 };
 assert_enum(varianti, Value)

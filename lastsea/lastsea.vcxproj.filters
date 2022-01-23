@@ -27,9 +27,6 @@
     <ClCompile Include="historyable.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="group.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="special.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -55,10 +52,13 @@
     <Text Include="errors.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\History.txt">
+    <Text Include="locale\ru\PirateHistory.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\CharacterNames.txt">
+    <Text Include="locale\ru\PirateNames.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\PirateHistoryVariants.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

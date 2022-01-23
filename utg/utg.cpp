@@ -595,7 +595,7 @@ void draw::utg::tips() {
 
 void initialize_png();
 
-int draw::utg::run(fnevent proc, bool darkmode) {
+int draw::utg::run(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!pstatus)
 		pstatus = statusinfo;
@@ -605,8 +605,10 @@ int draw::utg::run(fnevent proc, bool darkmode) {
 		set_dark_theme();
 	else
 		set_light_theme();
-	initialize_translation("ru");
 	bsreq::read("rules/basic.txt");
+	initialize_translation("ru");
+	if(afterread)
+		afterread();
 	check_translation();
 	if(log::geterrors())
 		return -1;

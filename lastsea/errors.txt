@@ -1,1 +1,2 @@
-﻿
+﻿In file `Names.txt`:
+ Define translate for `LastNameFamilyYouAreAssassinate`

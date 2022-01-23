@@ -23,6 +23,10 @@ int logs::choose(const answers& source, const char* title, const char* cancel) {
 	return (int)source.choose(title, cancel, interactive, url, -1, header);
 }
 
+void* logs::choose(const answers& source, const char* title) {
+	return source.choose(title, 0, interactive, url, -1, header, sb_value);
+}
+
 int logs::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
 	recordset records;
 	for(auto i = 0; i < mask.getmaximum(); i++) {
@@ -68,9 +72,13 @@ void logs::chooseavatar(stringbuilder& result, const char* title, const char* ma
 }
 
 void logs::pause() {
+	pause(getnm("Continue"));
+}
+
+void logs::pause(const char* title) {
 	answers an;
-	an.add(0, getnm("Continue"));
-	an.choose(0, 0, true, logs::url, 1, logs::header, logs::sb.begin());
+	an.add(0, title);
+	choose(an, 0);
 }
 
 int logs::choosei::getmarked(int i) const {

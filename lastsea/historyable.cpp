@@ -1,24 +1,88 @@
 #include "main.h"
 #include "stringact.h"
 
+static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
+	for(auto& e : bsdata<pirate>()) {
+		sb.addn(padding);
+		if(hilite)
+			sb.add("[");
+		e.getname(sb);
+		if(hilite)
+			sb.add("]");
+		sb.adds("%-Pirate-%-1", getnm(e.getclass().id));
+		sb.add(separator);
+	}
+}
+
+static void addvalue(stringbuilder& sb, variant v) {
+	pirate* pr = v;
+	if(pr)
+		pr->getname(sb);
+	else {
+		groupvaluei* pv = v;
+		if(pv)
+			sb.adds(pv->name);
+		else
+			sb.adds(v.getname());
+	}
+}
+
 class historyable::string : public stringact {
 	const historyable& source;
-	void addvname(variant v) {
-		add(v.getname());
+	static void show_values(stringbuilder& sb, const historyable& source) {
+		auto index = 0;
+		auto& ei = source.getclass();
+		for(auto v : source.values) {
+			if(v) {
+				sb.addn("* ");
+				sb.add("%1 - ", ei.types[index].getname());
+				addvalue(sb, v);
+			}
+			index++;
+		}
+		sb.addsep('\n');
+	}
+	void addvname(variant v, int padeg = 0) {
+		if(!v)
+			return;
+		auto pv = (groupvaluei*)v;
+		if(pv) {
+			switch(padeg) {
+			case 1: addby(pv->name); break;
+			default: add(pv->name); break;
+			}
+		}
+		auto pr = (pirate*)v;
+		if(pr)
+			pr->getname(*this);
 	}
 	void addidentifier(const char* identifier) override {
 		if(equal(identifier, "Value1"))
 			addvname(source.values[0]);
+		else if(equal(identifier, "ByValue1"))
+			addvname(source.values[0], 1);
 		else if(equal(identifier, "Value2"))
 			addvname(source.values[1]);
+		else if(equal(identifier, "ByValue2"))
+			addvname(source.values[1], 1);
 		else if(equal(identifier, "Value3"))
 			addvname(source.values[2]);
+		else if(equal(identifier, "ByValue3"))
+			addvname(source.values[2], 1);
 		else if(equal(identifier, "Value4"))
 			addvname(source.values[3]);
+		else if(equal(identifier, "ByValue4"))
+			addvname(source.values[3], 1);
 		else if(equal(identifier, "Value5"))
 			addvname(source.values[4]);
+		else if(equal(identifier, "ByValue5"))
+			addvname(source.values[4], 1);
 		else if(equal(identifier, "герой"))
 			source.getname(*this);
+		else if(equal(identifier, "ShowCrew"))
+			show_crew(*this, "\n", "* ", true);
+		else if(equal(identifier, "ShowValues"))
+			show_values(*this, source);
 		else
 			stringact::addidentifier(identifier);
 	}
@@ -53,4 +117,43 @@ void historyable::chooseclass() {
 	stringbuilder sb(temp);
 	act(sb, getnm("ChooseClass"));
 	classid = (int)an.choose(temp, 0, logs::interactive, logs::url, -1, logs::header);
+}
+
+static variant choose_answer(const historyable* source, variant group) {
+	if(group.type == Group) {
+		if(group.value == 0 || group.value == 1)
+			return game.choosepirate(group.getname(), source);
+	}
+	return groupi::choose(group);
+}
+
+const messagei* find_message(variant type, int value) {
+	for(auto& e : bsdata<messagei>()) {
+		if(e.type == type && e.value == value)
+			return &e;
+	}
+	return 0;
+}
+
+void historyable::background() const {
+	auto pn = find_message(variant(Class, classid), 4);
+	if(!pn)
+		return;
+	logs::sb.clear();
+	//act(logs::sb, getnm("HereIsAHistory"));
+	act(logs::sb, pn->text);
+	logs::pause();
+}
+
+void historyable::choosehistory() {
+	auto index = 0;
+	for(auto v : getclass().types) {
+		logs::sb.clear();
+		act(logs::sb, getnm("PromtHistory"));
+		values[index++] = choose_answer(this, v);
+	}
+	logs::sb.clear();
+	act(logs::sb, getnm("PromtHistory"));
+	logs::pause(getnm("WhatAboutHistory"));
+	background();
 }

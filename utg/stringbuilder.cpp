@@ -710,8 +710,12 @@ void stringbuilder::addnounf(const char* s) {
 }
 
 void stringbuilder::addby(const char* s) {
-	static grammar map[] = {{"ая", "ой"},
-		{"ый", "ым"}, {"ое", "ым"}, {"ой", "ым"},
+	static grammar map[] = {
+		{"бой", "боем"},
+		{"ая", "ой"},
+		{"ый", "ым"},
+		{"ое", "ым"},
+		{"ой", "ым"},
 		{"би", "би"},
 		{"ий", "им"},
 		{"ец", "цем"},

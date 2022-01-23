@@ -39,7 +39,8 @@ static const char* read_string_v1(const char* p, char* ps, const char* pe) {
 			p++;
 		}
 		switch(sym) {
-		case 17: sym = '-'; break;
+		case -72: sym = 'å'; break;
+		case -105: case 17: sym = '-'; break;
 		}
 		if(ps < pe)
 			*ps++ = sym;
@@ -72,15 +73,9 @@ static void apply_value(array& source, const char* id, const char* name) {
 }
 
 static void readl(const char* url, array& source, bool required) {
-	auto p_alloc = (const char*)loadt(url);
-	if(!p_alloc) {
-		if(required) {
-			log::seturl(0);
-			log::error(0, "Can't find file `%1`", url);
-		}
+	auto p = log::read(url, required);
+	if(!p)
 		return;
-	}
-	auto p = p_alloc;
 	char name[128], value[8192];
 	auto records_read = 0;
 	while(*p) {
@@ -92,7 +87,7 @@ static void readl(const char* url, array& source, bool required) {
 		apply_value(source, name, value);
 		records_read++;
 	}
-	delete p_alloc;
+	log::close();
 	update_elements(source);
 }
 
@@ -156,6 +151,8 @@ void initialize_translation(const char* locale) {
 const char* getnm(const char* id) {
 	if(!id || id[0]==0)
 		return "";
+	if(isnum(id[0]))
+		return id;
 	translate key = {id, 0};
 	auto p = (translate*)bsearch(&key, source_name.data, source_name.getcount(), source_name.getsize(), compare);
 	if(!p) {

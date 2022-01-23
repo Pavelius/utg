@@ -1,6 +1,7 @@
 #include "avatarable.h"
 #include "charname.h"
 #include "gender.h"
+#include "group.h"
 #include "message.h"
 #include "utg.h"
 
@@ -17,7 +18,7 @@ enum special_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Class, Gender, Group, Special, Value
+	Ability, Class, Gender, Group, Pirate, Special, Value
 };
 
 typedef flagable<1> itemufa;
@@ -25,15 +26,6 @@ typedef char abilitya[Navigation + 1];
 
 struct abilityi {
 	const char*		id;
-};
-struct groupi {
-	const char*		id;
-	static variant	choose(short unsigned type);
-	static const groupi* find(const char* id);
-};
-struct valuei {
-	const char*		id;
-	short unsigned	type;
 };
 struct actioni {
 	const char*		id;
@@ -56,6 +48,7 @@ struct classi {
 	variant			types[5];
 	char			maximum[6];
 	char			levelup[5];
+	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
 };
 class historyable : public npcname {
 protected:
@@ -65,7 +58,9 @@ protected:
 public:
 	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* format_param) const;
+	void			background() const;
 	void			chooseclass();
+	void			choosehistory();
 	void			clear();
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }
 };
@@ -83,6 +78,9 @@ public:
 class gamei {
 	char			bolster;
 public:
+	static void		choosehistory();
+	pirate*			choosepirate(const char* title, const historyable* exclude) const;
+	static void		generate();
 	int				getbolster() const { return bolster; }
 	static bool		match(variant v);
 	void			usebolster() { bolster--; }
@@ -91,4 +89,6 @@ extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 int					rollv(int bonus);
 VKIND(gender_s, Gender)
+VKIND(pirate, Pirate)
 VKIND(special_s, Special)
+VKIND(groupvaluei, Value)

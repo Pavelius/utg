@@ -157,6 +157,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="front.cpp" />
+    <ClCompile Include="group.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="namenpc.cpp" />
     <ClCompile Include="quest.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
+    <ClInclude Include="group.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="crt.h" />

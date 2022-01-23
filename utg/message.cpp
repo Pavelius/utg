@@ -1,6 +1,8 @@
 #include "log.h"
 #include "message.h"
 
+using namespace log::parse;
+
 BSDATAC(messagei, 1024)
 
 void messagei::clear() {
@@ -63,7 +65,8 @@ static const char* read_string(const char* p, stringbuilder& result) {
 		else
 			sym = *p++;
 		switch(sym) {
-		case 17: sym = '-'; break;
+		case -72: sym = 'å'; break;
+		case -105: case 17: sym = '-'; break;
 		}
 		result.add(sym);
 	}
@@ -94,7 +97,7 @@ static const char* read_conditions(const char* p, stringbuilder& sb, messagei* p
 	while(true) {
 		if(isnum(p[0])) {
 			p = sb.read(p, ps->value);
-			p = skipsp(p);
+			p = skipws(p);
 		} else if(ischa(p[0])) {
 			p = read_identifier(p, sb);
 			auto pn = sb.begin();
@@ -109,7 +112,7 @@ static const char* read_conditions(const char* p, stringbuilder& sb, messagei* p
 				else if(!ps->add(v))
 					log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), sizeof(ps->conditions) / sizeof(ps->conditions[0]));
 			}
-			p = skipsp(p);
+			p = skipws(p);
 		} else
 			break;
 	}
@@ -120,15 +123,15 @@ static const char* read_part(const char* p, variant type, stringbuilder& sb, boo
 	while(allowrun && *p && *p != '#') {
 		auto pe = bsdata<messagei>::add(); pe->clear();
 		pe->type = type;
-		p = read_conditions(skipspcr(p), sb, pe);
+		p = read_conditions(skipwscr(p), sb, pe);
 		if(*p != ':') {
 			log::error(p, "Expected symbol `:`");
 			allowrun = false;
 			break;
 		}
-		p = read_string(skipsp(p + 1), sb);
+		p = read_string(skipws(p + 1), sb);
 		pe->text = getstring(sb);
-		p = skipspcr(p);
+		p = skipwscr(p);
 	}
 	return p;
 }
@@ -145,8 +148,8 @@ void messagei::read(const char* url) {
 			break;
 		}
 		variant type;
-		p = read_variant(skipsp(p + 1), sb, type);
-		p = skipsp(p);
+		p = read_variant(skipws(p + 1), sb, type);
+		p = skipws(p);
 		if(*p != 13 && *p != 10) {
 			log::error(p, "Expected symbol line feed");
 			break;
