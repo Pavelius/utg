@@ -10,7 +10,7 @@ struct translate {
 };
 }
 
-static const char* main_locale;
+static char main_locale[4];
 static array source_name(sizeof(translate));
 static array source_nameof(sizeof(translate));
 static array source_namepl(sizeof(translate));
@@ -138,10 +138,15 @@ void check_translation() {
 	check(source_name, main_locale, "Names.txt");
 }
 
+static void copy_locale(const char* locale) {
+	stringbuilder sb(main_locale);
+	sb.add(locale);
+}
+
 void initialize_translation(const char* locale) {
-	if(main_locale)
+	if(main_locale[0])
 		return;
-	main_locale = szdup(locale);
+	copy_locale(locale);
 	setfile(source_name, "Names", main_locale, false, true);
 	setfile(source_text, "Descriptions", main_locale, false, false);
 	setfile(source_nameof, "NamesOf", main_locale, false, false);

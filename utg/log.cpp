@@ -7,12 +7,52 @@ static int error_count;
 static const char* current_url;
 static const char* current_file;
 
+const char* log::parse::skipws(const char* p) {
+	while(true) {
+		if(*p == ' ' || *p == 9) {
+			p++;
+			continue;
+		}
+		if(p[0] == '\\' && (p[1] == 10 || p[1] == 13)) { // Trail symbol
+			p++;
+			while(*p == 10 || *p == 13)
+				p++;
+			continue;
+		}
+		if(p[0] == '/' && p[1] == '/') { // End line comment
+			p += 2;
+			while(*p && *p != 10 && *p != 13)
+				p++;
+		}
+		if(p[0] == '/' && p[1] == '*') { // Complex comment
+			p += 2;
+			while(*p && !(p[0]=='*' && p[1]=='/'))
+				p++;
+		}
+		break;
+	}
+	return p;
+}
+
+const char* log::parse::skipwscr(const char* p) {
+	while(true) {
+		p = skipws(p);
+		if(*p == 10 || *p == 13) {
+			while(*p == 10 || *p == 13)
+				p++;
+			continue;
+		}
+		break;
+	}
+	return p;
+}
+
 void log::setfile(const char* v) {
 	current_file = v;
 }
 
 void log::seturl(const char* v) {
-    current_url = v;
+	current_url = v;
 }
 
 const char* log::read(const char* url, bool error_if_not_exist) {
@@ -52,7 +92,7 @@ int getline(const char* pb, const char* pc) {
 }
 
 void log::errorv(const char* position, const char* format) {
-	static io::file file("errors.txt", StreamWrite|StreamText);
+	static io::file file("errors.txt", StreamWrite | StreamText);
 	if(!file)
 		return;
 	error_count++;
@@ -64,10 +104,10 @@ void log::errorv(const char* position, const char* format) {
 void log::error(const char* position, const char* format, ...) {
 	char temp[4096]; stringbuilder sb(temp);
 	if(current_url) {
-        sb.add("In file `%1`:", current_url);
-        current_url = 0;
-        errorv(0, temp);
-        sb.clear();
+		sb.add("In file `%1`:", current_url);
+		current_url = 0;
+		errorv(0, temp);
+		sb.clear();
 	}
 	sb.addv(format, xva_start(format));
 	errorv(position, temp);

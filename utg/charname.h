@@ -4,7 +4,7 @@
 #pragma once
 
 struct charname {
-	variant			conditions[4];
+	variant			conditions[3];
 	const char*		name;
 	bool			match(const slice<variant>& source) const;
 	bool			match(variant v) const;

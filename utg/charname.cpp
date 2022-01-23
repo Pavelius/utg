@@ -1,6 +1,8 @@
 #include "charname.h"
 #include "log.h"
 
+using namespace log::parse;
+
 static const unsigned max_size = 512;
 BSDATAC(charname, max_size)
 
@@ -97,9 +99,9 @@ static const char* read_line(const char* p, variant* conditions, stringbuilder& 
 		auto pe = bsdata<charname>::add();
 		memset(pe, 0, sizeof(*pe));
 		memcpy(pe->conditions, conditions, sizeof(pe->conditions));
-		p = read_name(skipsp(p), sb);
+		p = read_name(skipws(p), sb);
 		pe->name = getstring(sb);
-		p = skipsp(p);
+		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
 			break;
 		if(*p != ',') {
@@ -107,7 +109,7 @@ static const char* read_line(const char* p, variant* conditions, stringbuilder& 
 			allowrun = false;
 			break;
 		}
-		p = skipspcr(p + 1);
+		p = skipwscr(p + 1);
 	}
 	return p;
 }
@@ -123,7 +125,7 @@ static const char* read_conditions(const char* p, stringbuilder& sb, variant* pb
 			log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), count);
 		else
 			*pb++ = v;
-		p = skipsp(p);
+		p = skipws(p);
 	}
 	return p;
 }
@@ -140,13 +142,13 @@ void charname::read(const char* url) {
 			break;
 		}
 		variant conditions[4] = {};
-		p = read_conditions(skipsp(p + 1), sb, conditions, conditions + sizeof(conditions) / sizeof(conditions[0]));
+		p = read_conditions(skipws(p + 1), sb, conditions, conditions + sizeof(conditions) / sizeof(conditions[0]));
 		if(*p != 10 && *p != 13) {
 			log::error(p, "Expected line feed");
 			break;
 		}
-		p = read_line(skipspcr(p), conditions, sb, allowrun);
-		p = skipspcr(p);
+		p = read_line(skipwscr(p), conditions, sb, allowrun);
+		p = skipwscr(p);
 	}
 	log::close();
 }
