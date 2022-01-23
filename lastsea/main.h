@@ -30,6 +30,9 @@ struct abilityi {
 struct actioni {
 	const char*		id;
 };
+struct locationi {
+	variant			actions[7];
+};
 struct statable {
 	abilitya		abilities;
 };
@@ -76,14 +79,12 @@ public:
 	bool			match(variant v) const;
 };
 class gamei {
-	char			bolster;
+	short unsigned	location;
 public:
 	static void		choosehistory();
 	pirate*			choosepirate(const char* title, const historyable* exclude) const;
 	static void		generate();
-	int				getbolster() const { return bolster; }
 	static bool		match(variant v);
-	void			usebolster() { bolster--; }
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;

@@ -1,7 +1,7 @@
 #include "charname.h"
 #include "main.h"
 
-static void initialize_game() {
+static void generate_crew() {
 	auto push_header = logs::header;
 	logs::header = getnm("GenerateCrew");
 	game.generate();
@@ -9,6 +9,10 @@ static void initialize_game() {
 	logs::pause();
 	game.choosehistory();
 	logs::header = push_header;
+}
+
+static void initialize_game() {
+	generate_crew();
 }
 
 static void read_files() {

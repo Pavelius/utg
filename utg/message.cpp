@@ -65,6 +65,7 @@ static const char* read_string(const char* p, stringbuilder& result) {
 		else
 			sym = *p++;
 		switch(sym) {
+		case -85: case -69: sym = '\"'; break;
 		case -72: sym = 'å'; break;
 		case -105: case 17: sym = '-'; break;
 		}

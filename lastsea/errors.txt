@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `LastNameFamilyYouAreAssassinate`
+﻿In file `locale/ru/PirateHistory.txt`:
+ Line 0: Expected symbol `#`

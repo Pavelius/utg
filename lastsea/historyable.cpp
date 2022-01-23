@@ -136,6 +136,8 @@ const messagei* find_message(variant type, int value) {
 }
 
 void historyable::background() const {
+	if(!logs::interactive)
+		return;
 	auto pn = find_message(variant(Class, classid), 4);
 	if(!pn)
 		return;
