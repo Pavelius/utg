@@ -6,31 +6,22 @@ static void generate_crew(bool interactive) {
 	auto push_header = utg::header;
 	utg::interactive = interactive;
 	utg::header = getnm("GenerateCrew");
+	bsdata<quest>::source.clear();
+	game.clear();
 	game.generate();
-	game.act(utg::sb, getnm("PromtStart"));
-	utg::pause();
 	game.choosehistory();
+	game.createtreasure();
 	utg::header = push_header;
 	utg::interactive = push_interactive;
 }
 
-static void all_gaintreasure() {
-	game.gaintreasure();
-}
-
-static void generate_scenario() {
-	game.createtreasure();
-	bsdata<quest>::source.clear();
-	quest::read("scenario/BeyondTheOceanEdge.txt");
-	all_gaintreasure();
-}
-
 static void initialize_game() {
-	game.clear();
 	generate_crew(false);
-	generate_scenario();
+	quest::read("scenario/BeyondTheOceanEdge.txt");
+	game.gaintreasure();
 	quest::run(0, 0, utg::url, 0);
-	game.addaction("PortMarket");
+	game.chooselocation();
+	//game.addaction("PortMarket");
 	game.play();
 }
 

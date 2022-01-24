@@ -146,6 +146,7 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="historyable.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="npcname.cpp" />
     <ClCompile Include="pirate.cpp" />

@@ -30,7 +30,7 @@ BSMETA(classi) = {
 BSDATAC(classi, 64)
 BSMETA(locationi) = {
 	BSREQ(id),
-	BSREQ(actions),
+	BSREQ(actions), BSREQ(image),
 	{}};
 BSDATAC(locationi, 64)
 BSMETA(menu) = {
@@ -66,8 +66,8 @@ BSDATAC(treasurei, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
-	{"Action", VRSTD(actioni), 1},
-	{"Case", VRSTD(casei), 2},
+	{"Action", VRSTD(actioni), 1, 0, 0, actioni::sfgetinfo},
+	{"Case", VRSTD(casei), 2, 0, 0, casei::sfgetinfo},
 	{"Card", VRSTD(treasurei), 1},
 	{"Class", VRSTD(classi), 1},
 	{"Gender", VRSTD(genderi), 1},

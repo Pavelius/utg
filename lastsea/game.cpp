@@ -26,6 +26,7 @@ void gamei::generate() {
 
 void gamei::choosehistory() {
 	game.pirate::choosehistory();
+	utg::sb.clear();
 }
 
 static void fixerror(const char* id, ...) {

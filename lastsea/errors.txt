@@ -1,4 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `ConfirmRaiseAbility`
- Define translate for `No`
- Define translate for `Yes`
+﻿In file `rules/basic.txt`:
+ Line 83: Not found requisit `image`

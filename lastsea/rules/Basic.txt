@@ -80,11 +80,9 @@ GetCannon PortMarket outcome(Supply-2)
 
 #Location
 
-Port actions(PortMarket AbandonedHouses CaptainMission)
+Port actions(PortMarket AbandonedHouses CaptainMission) image(port)
 
 #Menu
 
 CharacterAbility
- elements Exploration Brawl Hunting Aim Swagger Navigation Separator Experience Stars
-General
- elements Hull Crew Supply
+ elements Exploration Brawl Hunting Aim Swagger Navigation Separator Reroll Misfortune Experience Stars Threat Separator Crew Discontent Hull Supply

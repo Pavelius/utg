@@ -25,6 +25,8 @@ int pirate::getnextstar(int value) const {
 void pirate::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	auto p = (pirate*)object;
 	int value;
+	if(p->classid == 0xFFFF)
+		return;
 	switch(v.type) {
 	case Ability:
 		switch(v.value) {
@@ -35,7 +37,7 @@ void pirate::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 			if(value)
 				sb.adds("(%1 %2i)", getnm("NextStar"), value);
 			break;
-		case Stars:
+		case Stars: case Misfortune: case Reroll:
 			value = p->get((ability_s)v.value);
 			if(value)
 				sb.add("%1i", value);
@@ -100,6 +102,12 @@ void pirate::information(const char* format, ...) {
 	utg::sb.add("]");
 }
 
+void pirate::warning(const char* format, ...) {
+	utg::sb.addn("[-");
+	actv(utg::sb, format, xva_start(format), false);
+	utg::sb.add("]");
+}
+
 const char* classi::getearn(ability_s v) const {
 	switch(v) {
 	case Exploration: return exploration;
@@ -145,7 +153,7 @@ void pirate::afterchange(ability_s v) {
 	}
 }
 
-void pirate::set(ability_s v, int i, bool interactive) {
+void pirate::set(ability_s v, int i) {
 	if(i < 0)
 		i = 0;
 	auto m = getmaximum(v);
@@ -159,12 +167,15 @@ void pirate::set(ability_s v, int i, bool interactive) {
 			break;
 		default:
 			if(v >= Exploration && v <= Navigation) {
-				if(!confirm(v))
+				if(!confirm(v, d))
 					return;
+				set(Supply, get(Supply) - d);
 			}
 			if(v >= 0 && v <= Infamy) {
-				if(interactive)
-					information("%1+%2i", getnm(bsdata<abilityi>::elements[v].id), d);
+				if(d > 0)
+					information("%1%+2i", getnm(bsdata<abilityi>::elements[v].id), d);
+				else
+					warning("%1%+2i", getnm(bsdata<abilityi>::elements[v].id), d);
 				abilities[v] = i;
 			}
 			break;
@@ -253,8 +264,36 @@ int pirate::getbonus(ability_s v) const {
 	return r;
 }
 
-bool pirate::confirm(ability_s v) const {
-	if(!get(Supply))
+bool pirate::confirm(ability_s v, int delta) const {
+	if(delta <= 0)
+		return true;
+	if(get(Supply) < delta)
 		return false;
-	return utg::yesno(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id));
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
+	answers an;
+	an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
+	an.add((void*)0, getnm("NothingToDo"));
+	return utg::choose(an, temp);
+}
+
+void pirate::chooselocation() {
+	struct piratechoose : utg::choosei {
+		void apply(int index, const void* object) override {
+		}
+		piratechoose(answers& an) : choosei(an) {}
+	};
+	auto& ei = game.getlocation();
+	utg::header = getnm(ei.id);
+	if(ei.image)
+		utg::url = ei.image;
+	answers an;
+	piratechoose san(an);
+	for(auto v : ei.actions) {
+		auto p = (actioni*)v;
+		if(!p)
+			continue;
+		an.add(p, getnm(p->id));
+	}
+	san.choose(getnm("WhatDoYouWantToVisit"), 4);
 }

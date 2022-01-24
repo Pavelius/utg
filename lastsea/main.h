@@ -43,6 +43,8 @@ struct actioni {
 	char			result[6];
 	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
 	void			choose(int count) const;
+	void			getinfo(stringbuilder& sb) const;
+	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((actioni*)v)->getinfo(sb); }
 	variants		getoutcome(int v) const;
 	int				getstage(int v) const;
 };
@@ -50,9 +52,12 @@ struct casei {
 	const char*		id;
 	variant			type;
 	variants		outcome;
+	void			getinfo(stringbuilder& sb) const;
+	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((casei*)v)->getinfo(sb); }
 };
 struct locationi {
 	const char*		id;
+	const char*		image;
 	variant			actions[7];
 };
 struct shipi {
@@ -128,9 +133,10 @@ class pirate : public historyable {
 	void			checkstars();
 public:
 	void			addaction(variant v);
+	void			chooselocation();
 	void			clear();
 	void			clearactions();
-	bool			confirm(ability_s v) const;
+	bool			confirm(ability_s v, int delta) const;
 	void			information(const char* format, ...);
 	void			gaintreasure(int count = 1);
 	void			gaintreasure(const treasurei* p);
@@ -143,8 +149,9 @@ public:
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	void			playround();
 	void			roll();
-	void			set(ability_s v, int i, bool interactive = true);
+	void			set(ability_s v, int i);
 	bool			match(variant v) const;
+	void			warning(const char* format, ...);
 };
 class gamei : public pirate, public shipi, public oceani {
 	char			scenario[32];
@@ -152,12 +159,13 @@ class gamei : public pirate, public shipi, public oceani {
 	adat<indext, 512> treasures;
 public:
 	static void		apply(variant v);
-	static bool		applyb(variant v) { apply(v); return true; }
 	static void		apply(const variants& source);
+	static bool		applyb(variant v) { apply(v); return true; }
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
+	static void		getstatus(stringbuilder& sb, const void* object);
 	static void		play();
 	const treasurei* picktreasure();
 	static void		generate();

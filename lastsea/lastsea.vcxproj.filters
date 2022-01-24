@@ -42,6 +42,9 @@
     <ClCompile Include="action.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
