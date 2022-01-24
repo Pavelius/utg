@@ -6,6 +6,7 @@
 static char			temp[512];
 static const char*	p;
 static bool			allow_continue;
+static int			last_bonus;
 
 namespace {
 struct valuei {
@@ -62,6 +63,28 @@ static void readid() {
 	next();
 }
 
+static const char* readbonus(const char* p) {
+	if(*p == '-')
+		p = stringbuilder::read(p, last_bonus);
+	else if(*p == '+')
+		p = stringbuilder::read(p + 1, last_bonus);
+	else
+		last_bonus = 0;
+	return p;
+}
+
+static void readidbonus() {
+	stringbuilder sb(temp); temp[0] = 0;
+	if(!ischa(*p)) {
+		log::error(p, "Expected identifier");
+		allow_continue = false;
+	} else {
+		p = sb.psidf(p);
+		p = readbonus(p);
+	}
+	next();
+}
+
 static bool isvalue() {
 	return (p[0] == '-' && isnum(p[1]))
 		|| (p[0] == '\"')
@@ -85,13 +108,14 @@ static void read_value(valuei& e, const bsreq* req) {
 		if(minus)
 			e.number = -e.number;
 	} else if(ischa(p[0])) {
-		readid();
+		readidbonus();
 		if(!req) {
 			// Nothing to do
 		} else if(req->is(KindText))
 			e.text = szdup(temp);
 		else if(req->type == bsmeta<variant>::meta) {
 			variant v1 = (const char*)temp;
+			v1.counter = last_bonus;
 			if(!v1)
 				log::error(p, "Can't find variant `%1`", temp);
 			e.number = v1.u;
@@ -275,12 +299,13 @@ static void* read_object(const bsreq* type, array* source, int key_count, int le
 		log::error(p, "Expected value");
 		allow_continue = false;
 	}
-	if(!key_count)
-		key_count = 1;
 	valuei keys[8] = {};
-	for(auto i = 0; i < key_count; i++)
-		read_value(keys[i], type + i);
-	auto object = find_object(source, type, keys, key_count);
+	void* object = 0;
+	if(key_count) {
+		for(auto i = 0; i < key_count; i++)
+			read_value(keys[i], type + i);
+		auto object = find_object(source, type, keys, key_count);
+	}
 	if(!object) {
 		object = source->add();
 		clear_object(object, type);
@@ -347,15 +372,10 @@ static void parse() {
 }
 
 void bsreq::read(const char* url) {
-	log::seturl(url);
-	auto pb = loadt(url);
-	if(!pb) {
-		log::error(0, "Not found file `%1`", url);
+	p = log::read(url);
+	if(!p)
 		return;
-	}
-	log::setfile(pb);
-	p = pb;
 	allow_continue = true;
 	parse();
-	delete pb;
+	log::close();
 }

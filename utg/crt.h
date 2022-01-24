@@ -64,7 +64,7 @@ template<class T> inline void		zcpy(T* p1, const T* p2, int max_count) { while(*
 template<class T> constexpr T*		zend(T* p) { while(*p) p++; return p; }
 template<class T> inline void		zcat(T* p1, const T e) { p1 = zend(p1); p1[0] = e; p1[1] = 0; }
 template<class T> inline void		zcat(T* p1, const T* p2) { zcpy(zend(p1), p2); }
-template<class T> constexpr int		zlen(T* p) { return zend(p) - p; }
+template<class T> constexpr size_t	zlen(T* p) { return zend(p) - p; }
 template<class T> inline void		zshuffle(T* p, int count) { for(int i = 0; i < count; i++) iswap(p[i], p[rand() % count]); }
 // Storge like vector
 template<class T, int count_max = 128>

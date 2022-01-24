@@ -95,9 +95,7 @@ const char* getvalues(const char* p, size_t& size, int& counter) {
 
 template<> variant::variant(const char* v) : u(0) {
 	if(v) {
-		size_t size;
-		int bonus;
-		getvalues(v, size, bonus);
+		auto size = zlen(v);
 		for(auto& e : bsdata<varianti>()) {
 			if(!e.source || !e.metadata)
 				continue;
@@ -105,7 +103,7 @@ template<> variant::variant(const char* v) : u(0) {
 			if(i != -1) {
 				value = i;
 				type = (variant_s)(&e - bsdata<varianti>::elements);
-				counter = bonus;
+				counter = 0;
 				break;
 			}
 		}

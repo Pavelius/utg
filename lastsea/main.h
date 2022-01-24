@@ -11,16 +11,15 @@ template<typename T> struct bsmeta;
 
 enum ability_s : unsigned char {
 	Exploration, Brawl, Hunting, Aim, Swagger, Navigation,
+	Reroll, Misfortune, Treasure,
 	Experience, Stars, Level, Infamy,
 };
 enum shipstat_s : unsigned char {
 	Crew, Discontent, Supply, Hull, Threat,
 };
 enum special_s : unsigned char {
-	Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine,
 	Name, Nickname, NicknameEnd,
-	Plus, Minus,
-	Choose, Roll,
+	Change, Choose, Page, Roll,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,
@@ -31,7 +30,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Class, Gender, Group, Location, Menu, Pirate, Ship, Special, Tag, Treasure, Value, Widget
+	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Pirate, Ship, Special, Tag, Value, Widget
 };
 
 typedef flagable<1> itemufa;
@@ -45,7 +44,14 @@ struct actioni {
 	const char*		id;
 	variants		script;
 	char			result[6];
-	void			play() const;
+	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
+	variants		getoutcome(int v) const;
+	int				getstage(int v) const;
+};
+struct casei {
+	variant			type;
+	variants		outcome;
+	const char*		name;
 };
 struct locationi {
 	const char*		id;
@@ -174,6 +180,7 @@ public:
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 extern ability_s	last_ability;
+extern actioni*		last_action;
 extern pirate*		last_pirate;
 int					rollv(int bonus);
 VKIND(actioni, Action)

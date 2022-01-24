@@ -57,7 +57,7 @@ union variant {
 	int					getindex(int t) const { return (type == t) ? value : 0; }
 	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
-	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; }
+	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; counter = 0; }
 };
 typedef sliceu<variant> variants;
 template<> variant::variant(const char* v);

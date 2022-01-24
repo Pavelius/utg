@@ -21,7 +21,7 @@
     <ClCompile Include="ability.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="roll10.cpp">
+    <ClCompile Include="roll12.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="historyable.cpp">
@@ -42,10 +42,10 @@
     <ClCompile Include="piratea.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="action.cpp">
+    <ClCompile Include="tag.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="tag.cpp">
+    <ClCompile Include="action.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>

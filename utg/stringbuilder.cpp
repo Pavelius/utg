@@ -496,13 +496,13 @@ void stringbuilder::change(const char* s1, const char* s2) {
 		if(*p == 0)
 			break;
 		if(*p == s1[0]) {
-			auto n = this->pe - p;
+			size_t n = this->pe - p;
 			if(n1 > n)
 				return;
 			if(memcmp(p, s1, n1) != 0)
 				continue;
 			auto c = n2;
-			if(c > (pe - this->p - 1))
+			if(c > size_t(pe - this->p - 1))
 				c = pe - this->p - 1;
 			if(c > n1)
 				memmove(p + c, p + n1, pe - p - c);

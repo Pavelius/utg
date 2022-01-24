@@ -16,6 +16,7 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSREQ(result), BSREQ(script),
+	BSREQ(outcome1), BSREQ(outcome2), BSREQ(outcome3), BSREQ(outcome4), BSREQ(outcome5), BSREQ(outcome6),
 	{}};
 BSDATAC(actioni, 128)
 BSMETA(genderi) = {
@@ -52,6 +53,10 @@ BSMETA(widget) = {
 BSMETA(shipstati) = {
 	BSREQ(id),
 	{}};
+BSMETA(casei) = {
+	BSREQ(type), BSREQ(name), BSREQ(outcome),
+	{}};
+BSDATAC(casei, 512)
 BSMETA(treasurei) = {
 	BSREQ(id),
 	BSREQ(abilities),
@@ -60,10 +65,13 @@ BSMETA(treasurei) = {
 BSDATAC(treasurei, 256)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
+#define VRREC(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 0
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi)},
 	{"Action", VRSTD(actioni)},
+	{"Case", VRREC(casei), FG(varianti::NotFoundByName)},
+	{"Card", VRSTD(treasurei)},
 	{"Class", VRSTD(classi)},
 	{"Gender", VRSTD(genderi)},
 	{"Group", VRSTD(groupi)},
@@ -73,7 +81,6 @@ BSDATA(varianti) = {
 	{"Ship", VRSTD(shipstati)},
 	{"Special", VRSTD(speciali)},
 	{"Tag", VRSTD(tagi)},
-	{"Treasure", VRSTD(treasurei)},
 	{"Value", VRSTD(groupvaluei)},
 	{"Widget", VRSTD(widget)},
 };

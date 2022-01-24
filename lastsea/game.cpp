@@ -4,6 +4,7 @@ gamei		game;
 int			last_count;
 ability_s	last_ability;
 pirate*		last_pirate;
+actioni*	last_action;
 
 bool gamei::match(variant v) {
 	for(auto& e : bsdata<pirate>()) {
@@ -65,25 +66,13 @@ static void fixerror(const char* id, ...) {
 	utg::sb.addn("]");
 }
 
-static void special_command(special_s v) {
+static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case Zero: case One: case Two: case Three: case Four: case Five:
-	case Six: case Seven: case Eight: case Nine:
-		last_count = v - Zero;
-		break;
-	case Plus:
+	case Change:
 		if(!last_count)
 			fixerror("NotDefinedLastValue", "count");
 		else if(last_pirate)
 			last_pirate->set(last_ability, last_pirate->get(last_ability) + last_count);
-		else
-			fixerror("NotDefinedLastValue", "pirate");
-		break;
-	case Minus:
-		if(!last_count)
-			fixerror("NotDefinedLastValue", "count");
-		else if(last_pirate)
-			last_pirate->set(last_ability, last_pirate->get(last_ability) - last_count);
 		else
 			fixerror("NotDefinedLastValue", "pirate");
 		break;
@@ -93,6 +82,8 @@ static void special_command(special_s v) {
 		else
 			fixerror("NotDefinedLastValue", "pirate");
 		break;
+	case Choose:
+		break;
 	}
 }
 
@@ -100,15 +91,15 @@ void gamei::apply(variant v) {
 	switch(v.type) {
 	case Ability:
 		last_ability = (ability_s)v.value;
+		last_count = v.counter;
 		break;
 	case Special:
-		special_command((special_s)v.value);
+		special_command((special_s)v.value, v.counter);
 		break;
 	}
 }
 
 void gamei::apply(const variants& source) {
-	last_count = 0;
 	for(auto v : source)
 		apply(v);
 }
@@ -138,14 +129,14 @@ void gamei::play() {
 	for(auto index = 0; index < sizeof(loc.actions) / sizeof(loc.actions[0]); index++) {
 		if(!loc.actions[index])
 			continue;
-		auto pa = (actioni*)loc.actions[index];
-		if(!pa)
+		last_action = (actioni*)loc.actions[index];
+		if(!last_action)
 			continue;
 		piratea source(index);
 		for(auto p : source) {
-			p->act(utg::sb, getdescription(pa->id));
+			p->act(utg::sb, getdescription(last_action->id));
 			last_pirate = p;
-			game.apply(pa->script);
+			game.apply(last_action->script);
 			utg::pause();
 		}
 	}

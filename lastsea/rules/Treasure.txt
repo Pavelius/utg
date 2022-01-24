@@ -1,4 +1,4 @@
-#Treasure
+#Card
 
 Magic19 abilities(0 0 0 1 1 0)
 

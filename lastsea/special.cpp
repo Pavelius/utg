@@ -1,22 +1,12 @@
 #include "main.h"
 
 BSDATA(speciali) = {
-	{"Zero"},
-	{"One"},
-	{"Two"},
-	{"Three"},
-	{"Four"},
-	{"Five"},
-	{"Six"},
-	{"Seven"},
-	{"Eight"},
-	{"Nine"},
 	{"Name"},
 	{"Nickname"},
 	{"NicknameEnd"},
-	{"Plus"},
-	{"Minus"},
+	{"Change"},
 	{"Choose"},
+	{"Page"},
 	{"Roll"},
 };
 assert_enum(speciali, Roll)

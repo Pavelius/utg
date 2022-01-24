@@ -34,6 +34,7 @@ MakeRoll: Выполнить бросок
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextStar: Следующая звезда
+NotDefinedLastValue: Не указано значение `%1`
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды

@@ -171,6 +171,10 @@ void pirate::roll() {
 	}
 	rollv(last_bonus);
 	sb.clear(); fixroll(sb); information(temp);
+	if(!last_action)
+		return;
+	auto stage = last_action->getstage(last_result);
+	game.apply(last_action->getoutcome(stage));
 }
 
 bool pirate::isuse(int v) const {
