@@ -6,7 +6,6 @@ static void generate_crew(bool interactive) {
 	auto push_header = utg::header;
 	utg::interactive = interactive;
 	utg::header = getnm("GenerateCrew");
-	bsdata<quest>::source.clear();
 	game.clear();
 	game.generate();
 	game.choosehistory();
@@ -17,9 +16,8 @@ static void generate_crew(bool interactive) {
 
 static void initialize_game() {
 	generate_crew(false);
-	quest::read("scenario/BeyondTheOceanEdge.txt");
 	game.gaintreasure();
-	quest::run(0, 0, utg::url, 0);
+	game.adventure(0);
 	//game.addaction("PortMarket");
 	game.play();
 }
@@ -29,6 +27,7 @@ static void read_files() {
 	charname::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
+	quest::read("scenario/BeyondTheOceanEdge.txt");
 }
 
 int main(int argc, char* argv[]) {

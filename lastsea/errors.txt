@@ -1,2 +1,3 @@
-﻿In file `rules/basic.txt`:
- Line 90: Expected line feed
+﻿In file `Names.txt`:
+ Define translate for `Treasure66`
+ Define translate for `Treasure82`

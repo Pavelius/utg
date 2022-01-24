@@ -73,6 +73,7 @@ Seeker: Искатель
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
 Stars: Звезды
+Story54: Радужная жемчужина
 Supply: Припасы
 Survivor: Недобиток
 Swagger: Важность
@@ -83,8 +84,11 @@ Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка
 Treasure47: Мастерский фонарь
 Treasure54: Золотой секстант
+Treasure66: Надежный тесак мамочки 
 Treasure73: Пышная рубаха
 Treasure74: Острейшее мачете 
+Treasure82: Чучело куницы
+Treasure84: Рыбалка 5000
 Treasure85: Идеальная цепь
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия

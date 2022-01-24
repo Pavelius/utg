@@ -213,6 +213,8 @@ void pirate::roll() {
 	auto stage = last_action->getstage(last_result);
 	last_choose = 0;
 	game.apply(last_action->getoutcome(stage));
+	if(last_page > 0)
+		adventure(last_page);
 	if(last_choose > 0)
 		last_action->choose(last_choose);
 }
@@ -318,4 +320,8 @@ void pirate::chooseactions() {
 	}
 	san.choose(getnm("WhatDoYouWantToVisit"), 4);
 	sortactions();
+}
+
+void pirate::adventure(int page) {
+	quest::run(page, 0, utg::url, 0);
 }

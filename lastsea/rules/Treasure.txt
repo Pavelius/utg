@@ -14,3 +14,8 @@ Treasure82 abilities(0 0 1 0 0 1)
 Treasure84 abilities(0 0 2 0 0 0)
 Treasure85 abilities(0 1 0 0 0 1)
 Treasure88 abilities(1 0 0 1 0 0)
+
+Story20
+Story23
+Story41
+Story54

@@ -37,12 +37,19 @@ static void fixerror(const char* id, ...) {
 
 static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case Roll:
-		game.roll();
-		break;
-	case Choose:
-		last_choose = bonus;
-		break;
+	case Roll: game.roll(); break;
+	case Choose: last_choose = bonus; break;
+	case Page000: last_page = bonus; break;
+	case Page100: last_page = 100 + bonus; break;
+	case Page200: last_page = 200 + bonus; break;
+	case Page300: last_page = 300 + bonus; break;
+	case Page400: last_page = 400 + bonus; break;
+	case Page500: last_page = 500 + bonus; break;
+	case Page600: last_page = 600 + bonus; break;
+	case Page700: last_page = 700 + bonus; break;
+	case Page800: last_page = 800 + bonus; break;
+	case Page900: last_page = 900 + bonus; break;
+	default: break;
 	}
 }
 
