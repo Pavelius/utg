@@ -7,7 +7,7 @@ static void generate_crew(bool interactive) {
 	utg::interactive = interactive;
 	utg::header = getnm("GenerateCrew");
 	game.generate();
-	bsdata<pirate>::get(0).act(utg::sb, getnm("PromtStart"));
+	game.act(utg::sb, getnm("PromtStart"));
 	utg::pause();
 	game.choosehistory();
 	utg::header = push_header;
@@ -15,9 +15,7 @@ static void generate_crew(bool interactive) {
 }
 
 static void all_gaintreasure() {
-	piratea source;
-	for(auto p : source)
-		p->gaintreasure();
+	game.gaintreasure();
 }
 
 static void generate_scenario() {
@@ -29,7 +27,7 @@ static void initialize_game() {
 	game.clear();
 	generate_crew(false);
 	generate_scenario();
-	game.getpirate(0)->setaction(0);
+	game.addaction("PortMarket");
 	game.play();
 }
 

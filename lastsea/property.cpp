@@ -74,7 +74,6 @@ BSDATA(varianti) = {
 	{"Group", VRSTD(groupi), 1},
 	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
-	{"Pirate", VRSTD(pirate), 1, 0, 0, 0, pirate::getpropertyst},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Value", VRSTD(groupvaluei), 1},

@@ -1,8 +1,7 @@
 #include "main.h"
 
 void pirate::clearactions() {
-	action = 0xFF;
-	action_additional = 0xFF;
+	memset(actions, 0, sizeof(actions));
 }
 
 void pirate::clear() {
@@ -69,7 +68,14 @@ bool pirate::match(variant v) const {
 	switch(v.type) {
 	case Class: return classid == v.value;
 	case Gender: return getgender() == v.value;
-	default: return false;
+	case Action:
+		for(auto e : actions) {
+			if(e == v)
+				return true;
+		}
+		return false;
+	default:
+		return false;
 	}
 }
 
@@ -188,12 +194,13 @@ void pirate::roll() {
 		last_action->choose(last_choose);
 }
 
-bool pirate::isuse(int v) const {
-	return action == v || action_additional == v;
-}
-
-void pirate::setaction(int i) {
-	action = i;
+void pirate::addaction(variant v) {
+	for(auto& e : actions) {
+		if(e)
+			continue;
+		e = v;
+		break;
+	}
 }
 
 void pirate::gaintreasure(const treasurei* pv) {
@@ -215,5 +222,16 @@ void pirate::gaintreasure(int count) {
 			continue;
 		information(getnm("GainTreasure"), getnm(pv->id));
 		gaintreasure(pv);
+	}
+}
+
+void pirate::playround() {
+	for(auto v : actions) {
+		last_action = v;
+		if(!last_action)
+			continue;
+		act(utg::sb, getdescription(last_action->id));
+		game.apply(last_action->script);
+		utg::pause();
 	}
 }

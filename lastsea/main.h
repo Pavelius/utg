@@ -28,7 +28,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Pirate, Special, Tag, Value, Widget
+	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Special, Tag, Value, Widget
 };
 
 typedef flagable<1> itemufa;
@@ -121,12 +121,13 @@ public:
 };
 class pirate : public historyable {
 	char			abilities[Infamy + 1];
-	unsigned char	action, action_additional;
+	variant			actions[6];
 	unsigned short	treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			checkstars();
 public:
+	void			addaction(variant v);
 	void			clear();
 	void			clearactions();
 	void			information(const char* format, ...);
@@ -138,46 +139,34 @@ public:
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
+	void			playround();
 	void			roll();
 	void			set(ability_s v, int i);
-	void			setaction(int i);
-	bool			isuse(int v) const;
 	bool			match(variant v) const;
 };
-struct piratea : adat<pirate*, 6> {
-	piratea();
-	piratea(int action);
-};
-class gamei : public shipi, public oceani {
+class gamei : public pirate, public shipi, public oceani {
 	char			scenario[32];
 	unsigned char	location;
 	adat<indext, 512> treasures;
 public:
-	adat<unsigned char, 8> pirates;
 	static void		apply(variant v);
 	static void		apply(const variants& source);
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
-	pirate*			choosepirate(const char* title, const historyable* exclude) const;
-	pirate*			getpirate(int order) const;
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
-	void			fillpirates();
 	static void		play();
 	const treasurei* picktreasure();
 	static void		generate();
 	locationi&		getlocation();
-	static bool		match(variant v);
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 extern int			last_choose;
 extern ability_s	last_ability;
 extern actioni*		last_action;
-extern pirate*		last_pirate;
 int					rollv(int bonus);
 VKIND(actioni, Action)
 VKIND(gender_s, Gender)
-VKIND(pirate, Pirate)
 VKIND(special_s, Special)
 VKIND(groupvaluei, Value)

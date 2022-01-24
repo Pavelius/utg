@@ -15,16 +15,11 @@ static void show_crew(stringbuilder& sb, const char* separator, const char* padd
 }
 
 static void addvalue(stringbuilder& sb, variant v) {
-	pirate* pr = v;
-	if(pr)
-		pr->getname(sb);
-	else {
-		groupvaluei* pv = v;
-		if(pv)
-			sb.adds(pv->name);
-		else
-			sb.adds(v.getname());
-	}
+	groupvaluei* pv = v;
+	if(pv)
+		sb.adds(pv->name);
+	else
+		sb.adds(v.getname());
 }
 
 class historyable::string : public stringact {
@@ -52,9 +47,6 @@ class historyable::string : public stringact {
 			default: add(pv->name); break;
 			}
 		}
-		auto pr = (pirate*)v;
-		if(pr)
-			pr->getname(*this);
 	}
 	void addidentifier(const char* identifier) override {
 		if(equal(identifier, "Value1"))
@@ -121,10 +113,6 @@ void historyable::chooseclass() {
 }
 
 static variant choose_answer(const historyable* source, variant group) {
-	if(group.type == Group) {
-		if(group.value == 0 || group.value == 1)
-			return game.choosepirate(group.getname(), source);
-	}
 	return groupi::choose(group);
 }
 

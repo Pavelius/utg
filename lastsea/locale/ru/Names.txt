@@ -33,6 +33,7 @@ HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
 Hull: Корпус
 Hunting: Охота
+Infamy: Слава
 LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
@@ -64,6 +65,7 @@ Treasure41: Отличная трубка
 Treasure47: Мастерский фонарь
 Treasure73: Пышная рубаха
 Treasure74: Острейшее мачете 
+Treasure85: Идеальная цепь
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
 VillainousName: Мужская злодейская фамилия

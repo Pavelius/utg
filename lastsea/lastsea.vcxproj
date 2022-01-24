@@ -149,7 +149,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="npcname.cpp" />
     <ClCompile Include="pirate.cpp" />
-    <ClCompile Include="piratea.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />
     <ClCompile Include="special.cpp" />
