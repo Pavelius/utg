@@ -152,7 +152,6 @@
     <ClCompile Include="piratea.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />
-    <ClCompile Include="shipstat.cpp" />
     <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>

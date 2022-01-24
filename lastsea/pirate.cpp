@@ -146,9 +146,17 @@ void pirate::set(ability_s v, int i) {
 	if(i > m)
 		i = m;
 	if(abilities[v] != i) {
-		if(abilities[v] < i)
-			information(getnm("AbilityGrow"), getnm(bsdata<abilityi>::elements[v].id), i - abilities[v]);
-		abilities[v] = i;
+		switch(v) {
+		case Treasure:
+			gaintreasure(i);
+			break;
+		default:
+			if(v <= Infamy) {
+				information("%1+%2i", getnm(bsdata<abilityi>::elements[v].id), i - abilities[v]);
+				abilities[v] = i;
+			}
+			break;
+		}
 		afterchange(v);
 	}
 }
@@ -174,7 +182,10 @@ void pirate::roll() {
 	if(!last_action)
 		return;
 	auto stage = last_action->getstage(last_result);
+	last_choose = 0;
 	game.apply(last_action->getoutcome(stage));
+	if(last_choose > 0)
+		last_action->choose(last_choose);
 }
 
 bool pirate::isuse(int v) const {
@@ -197,7 +208,12 @@ void pirate::gaintreasure(const treasurei* pv) {
 	}
 }
 
-void pirate::gaintreasure() {
-	auto pv = game.picktreasure();
-	gaintreasure(pv);
+void pirate::gaintreasure(int count) {
+	for(auto i = 0; i < count; i++) {
+		auto pv = game.picktreasure();
+		if(!pv)
+			continue;
+		information(getnm("GainTreasure"), getnm(pv->id));
+		gaintreasure(pv);
+	}
 }

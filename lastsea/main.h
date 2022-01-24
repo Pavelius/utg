@@ -12,14 +12,12 @@ template<typename T> struct bsmeta;
 enum ability_s : unsigned char {
 	Exploration, Brawl, Hunting, Aim, Swagger, Navigation,
 	Reroll, Misfortune, Treasure,
-	Experience, Stars, Level, Infamy,
-};
-enum shipstat_s : unsigned char {
 	Crew, Discontent, Supply, Hull, Threat,
+	Experience, Stars, Level, Infamy,
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Change, Choose, Page, Roll,
+	Choose, Page, Roll,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,
@@ -30,11 +28,10 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Pirate, Ship, Special, Tag, Value, Widget
+	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Pirate, Special, Tag, Value, Widget
 };
 
 typedef flagable<1> itemufa;
-typedef char shipstata[Threat + 1];
 typedef short unsigned indext;
 
 struct abilityi {
@@ -45,27 +42,22 @@ struct actioni {
 	variants		script;
 	char			result[6];
 	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
+	void			choose(int count) const;
 	variants		getoutcome(int v) const;
 	int				getstage(int v) const;
 };
 struct casei {
+	const char*		id;
 	variant			type;
 	variants		outcome;
-	const char*		name;
 };
 struct locationi {
 	const char*		id;
 	variant			actions[7];
 };
-struct shipstati {
-	const char*		id;
-};
 struct shipi {
-	shipstata		stats;
 	indext			index;
-	int				get(shipstat_s v) const { return stats[v]; }
 	indext			getposition() const { return index; }
-	void			set(shipstat_s v, int i) { stats[v] = i; }
 	void			setposition(indext v) { index = v; }
 };
 class oceani {
@@ -128,7 +120,7 @@ public:
 	operator const char*() const { return data; }
 };
 class pirate : public historyable {
-	char			abilities[Level + 1];
+	char			abilities[Infamy + 1];
 	unsigned char	action, action_additional;
 	unsigned short	treasures[4];
 	void			afterchange(ability_s v);
@@ -138,7 +130,7 @@ public:
 	void			clear();
 	void			clearactions();
 	void			information(const char* format, ...);
-	void			gaintreasure();
+	void			gaintreasure(int count = 1);
 	void			gaintreasure(const treasurei* p);
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
@@ -179,6 +171,7 @@ public:
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
+extern int			last_choose;
 extern ability_s	last_ability;
 extern actioni*		last_action;
 extern pirate*		last_pirate;

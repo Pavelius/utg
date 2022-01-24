@@ -24,3 +24,22 @@ variants actioni::getoutcome(int v) const {
 	default: return {};
 	}
 }
+
+void actioni::choose(int count) const {
+	struct actionchoose : utg::choosei {
+		answers	an;
+		actionchoose() : choosei(an) {}
+		void apply(int index, const void* object) {
+			auto p = (casei*)object;
+			game.apply(p->outcome);
+		}
+	};
+	actionchoose source;
+	variant parent = this;
+	for(auto& e : bsdata<casei>()) {
+		if(e.type != parent)
+			continue;
+		source.an.add(&e, getnm(e.id));
+	}
+	source.choose(0, count);
+}

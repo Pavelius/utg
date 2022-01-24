@@ -1,2 +1,6 @@
-﻿In file `rules/basic.txt`:
- Line 70: Can't find variant `Marketplace1`
+﻿In file `Names.txt`:
+ Define translate for `GatherNews`
+ Define translate for `GetCannon`
+ Define translate for `GetCoolHairCut`
+ Define translate for `GetSomethingNice`
+ Define translate for `GetSupplies`

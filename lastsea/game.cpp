@@ -2,6 +2,7 @@
 
 gamei		game;
 int			last_count;
+int			last_choose;
 ability_s	last_ability;
 pirate*		last_pirate;
 actioni*	last_action;
@@ -68,14 +69,6 @@ static void fixerror(const char* id, ...) {
 
 static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case Change:
-		if(!last_count)
-			fixerror("NotDefinedLastValue", "count");
-		else if(last_pirate)
-			last_pirate->set(last_ability, last_pirate->get(last_ability) + last_count);
-		else
-			fixerror("NotDefinedLastValue", "pirate");
-		break;
 	case Roll:
 		if(last_pirate)
 			last_pirate->roll();
@@ -83,6 +76,7 @@ static void special_command(special_s v, int bonus) {
 			fixerror("NotDefinedLastValue", "pirate");
 		break;
 	case Choose:
+		last_choose = bonus;
 		break;
 	}
 }
@@ -92,6 +86,12 @@ void gamei::apply(variant v) {
 	case Ability:
 		last_ability = (ability_s)v.value;
 		last_count = v.counter;
+		if(last_count) {
+			if(last_pirate)
+				last_pirate->set(last_ability, last_pirate->get(last_ability) + last_count);
+			else
+				fixerror("NotDefinedLastValue", "pirate");
+		}
 		break;
 	case Special:
 		special_command((special_s)v.value, v.counter);
@@ -159,12 +159,7 @@ const treasurei* gamei::picktreasure() {
 }
 
 void gamei::getpropertyst(const void* object, variant v, stringbuilder& sb) {
-	int value;
 	switch(v.type) {
-	case Ship:
-		value = game.get((shipstat_s)v.value);
-		sb.add("%1i", value);
-		break;
 	case Ability:
 		if(last_pirate)
 			pirate::getpropertyst(last_pirate, v, sb);

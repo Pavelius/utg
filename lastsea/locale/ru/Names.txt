@@ -10,6 +10,7 @@ Brawl: Сила
 CharacterAbility: Пират
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
+ChooseOptions: Выбирайте опции (осталось [%1i]):
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 Continue: Продолжить
@@ -19,8 +20,14 @@ Exploration: Исследование
 FamousMan: Известный человек
 FriendOrFamousPerson: Друг или известный человек
 From: Из
+GainTreasure: Добавлено [%1]
+GatherNews: Узнать местные новости
 General: Общие
 GenerateCrew: Создание команды
+GetCannon: Купить корабельные пушки
+GetCoolHairCut: Сделать крутую прическу
+GetSomethingNice: Купить что-то классненькое
+GetSupplies: Купить провизию для команды
 Grifter: Пройдоха
 HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
@@ -44,6 +51,7 @@ ProfessionThatInvolvesTravel: Профессия, связанная с путе
 PromtHistory: [%герой] имеет парочку пробелов в истории. Надо бы заполнить. %ShowValues
 PromtStart: Да, что ни говори, но в это приключение собралась еще та веселая компашка! Среди прочих пиратов команды корабля были замечены: %ShowCrew
 ReallyHighAndCoolNumber: Большое и красивое число
+Reroll: Перебросы
 Seeker: Искатель
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
@@ -51,6 +59,11 @@ Stars: Звезды
 Supply: Припасы
 Survivor: Недобиток
 Swagger: Важность
+Treasure37: Улучшенная кобура
+Treasure41: Отличная трубка
+Treasure47: Мастерский фонарь
+Treasure73: Пышная рубаха
+Treasure74: Острейшее мачете 
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
 VillainousName: Мужская злодейская фамилия

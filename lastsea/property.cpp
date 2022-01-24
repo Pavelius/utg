@@ -50,11 +50,9 @@ BSMETA(tagi) = {
 BSMETA(widget) = {
 	BSREQ(id),
 	{}};
-BSMETA(shipstati) = {
-	BSREQ(id),
-	{}};
 BSMETA(casei) = {
-	BSREQ(type), BSREQ(name), BSREQ(outcome),
+	BSREQ(id), BSREQ(type),
+	BSREQ(outcome),
 	{}};
 BSDATAC(casei, 512)
 BSMETA(treasurei) = {
@@ -64,24 +62,22 @@ BSMETA(treasurei) = {
 	{}};
 BSDATAC(treasurei, 256)
 
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
-#define VRREC(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 0
+#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VRSTD(abilityi)},
-	{"Action", VRSTD(actioni)},
-	{"Case", VRREC(casei), FG(varianti::NotFoundByName)},
-	{"Card", VRSTD(treasurei)},
-	{"Class", VRSTD(classi)},
-	{"Gender", VRSTD(genderi)},
-	{"Group", VRSTD(groupi)},
-	{"Location", VRSTD(locationi)},
-	{"Menu", VRSTD(menu)},
-	{"Pirate", VRSTD(pirate), 0, 0, 0, pirate::getpropertyst},
-	{"Ship", VRSTD(shipstati)},
-	{"Special", VRSTD(speciali)},
-	{"Tag", VRSTD(tagi)},
-	{"Value", VRSTD(groupvaluei)},
-	{"Widget", VRSTD(widget)},
+	{"Ability", VRSTD(abilityi), 1},
+	{"Action", VRSTD(actioni), 1},
+	{"Case", VRSTD(casei), 2},
+	{"Card", VRSTD(treasurei), 1},
+	{"Class", VRSTD(classi), 1},
+	{"Gender", VRSTD(genderi), 1},
+	{"Group", VRSTD(groupi), 1},
+	{"Location", VRSTD(locationi), 1},
+	{"Menu", VRSTD(menu), 1},
+	{"Pirate", VRSTD(pirate), 1, 0, 0, 0, pirate::getpropertyst},
+	{"Special", VRSTD(speciali), 1},
+	{"Tag", VRSTD(tagi), 1},
+	{"Value", VRSTD(groupvaluei), 1},
+	{"Widget", VRSTD(widget), 1},
 };
 assert_enum(varianti, Widget)

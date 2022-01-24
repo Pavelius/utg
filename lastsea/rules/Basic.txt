@@ -59,12 +59,12 @@ CaptainCabine
 CaptainMission
 DigTreasure
 
-Marketplace script(Swagger+1 Change Roll) result(1 7 11 16)
+PortMarket script(Swagger+1 Roll) result(1 7 11 16)
  outcome1 Choose+1
  outcome2 Choose+2
  outcome3 Choose+3
  outcome4 Page
-BecomingHouses script(Exploration+1 Change Roll) result(1 7 11 16)
+AbandonedHouses script(Exploration+1 Roll) result(1 7 11 16)
  outcome1 Reroll+1
  outcome2 Treasure+1
  outcome3 Treasure+2
@@ -72,20 +72,15 @@ BecomingHouses script(Exploration+1 Change Roll) result(1 7 11 16)
 
 #Case
 
-type(Marketplace) name("Купить припасы для команды")
- outcome Supply+2
-type(Marketplace) name("Узнать местные новости")
- outcome Reroll+1
-type(Marketplace) name("Купить что-то прикольненькое")
- outcome Supply-1 Treasure+1
-type(Marketplace) name("Сделать крутую прическу")
- outcome Supply-1 Infamy+2
-type(Marketplace) name("Купить корабельную пушку")
- outcome Supply-2
+GetSupplies PortMarket outcome(Supply+2)
+GatherNews PortMarket outcome(Reroll+1)
+GetSomethingNice PortMarket outcome(Supply-1 Treasure+1)
+GetCoolHairCut PortMarket outcome(Supply-1 Infamy+2)
+GetCannon PortMarket outcome(Supply-2)
 
 #Location
 
-Port actions(Marketplace BecomingHouses CaptainMission)
+Port actions(PortMarket AbandonedHouses CaptainMission)
 
 #Menu
 

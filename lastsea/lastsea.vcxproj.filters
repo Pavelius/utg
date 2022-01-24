@@ -36,9 +36,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="shipstat.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="piratea.cpp">
       <Filter>Логика</Filter>
     </ClCompile>

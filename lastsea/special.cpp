@@ -4,7 +4,6 @@ BSDATA(speciali) = {
 	{"Name"},
 	{"Nickname"},
 	{"NicknameEnd"},
-	{"Change"},
 	{"Choose"},
 	{"Page"},
 	{"Roll"},

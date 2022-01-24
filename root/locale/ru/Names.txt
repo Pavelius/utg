@@ -70,4 +70,3 @@ Warhammer: Молот
 Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да
-враг: 
