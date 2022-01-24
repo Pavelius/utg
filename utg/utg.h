@@ -71,4 +71,5 @@ int					choose(const array& source, const flaga& mask, const char* title, const 
 const char*			getchoose(const char* id);
 void				pause();
 void				pause(const char* title);
+bool				yesno(const char* title, ...);
 }

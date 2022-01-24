@@ -13,6 +13,7 @@ ChooseClass: Кто %такая [%герой]?
 ChooseOptions: Выбирайте опции (осталось [%1i]):
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
+ConfirmRaiseAbility: Повышение навыка %1 обойдется вам во столько же Припасов. Потратить припасы и повысить навык?
 Continue: Продолжить
 Crew: Команда
 Experience: Созвездие
@@ -42,6 +43,7 @@ MakeRoll: Выполнить бросок
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextStar: Следующая звезда
+No: Нет
 NotDefinedLastValue: Не указано значение `%1`
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
@@ -71,5 +73,6 @@ UglyFamily: Дурацкая фамилия
 VillainousName: Мужская злодейская фамилия
 WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
+Yes: Да
 YouRoll: Вы выбросили %2i%+3i=%1i.
 YouRollAbility: Тестировать %1. Бросаем кабик d12 с бонусом %+2i.

@@ -1,2 +1,4 @@
 ﻿In file `Names.txt`:
- Define translate for `Infamy`
+ Define translate for `ConfirmRaiseAbility`
+ Define translate for `No`
+ Define translate for `Yes`

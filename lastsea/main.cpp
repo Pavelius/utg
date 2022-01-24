@@ -20,6 +20,8 @@ static void all_gaintreasure() {
 
 static void generate_scenario() {
 	game.createtreasure();
+	bsdata<quest>::source.clear();
+	quest::read("scenario/BeyondTheOceanEdge.txt");
 	all_gaintreasure();
 }
 
@@ -27,6 +29,7 @@ static void initialize_game() {
 	game.clear();
 	generate_crew(false);
 	generate_scenario();
+	quest::run(0, 0, utg::url, 0);
 	game.addaction("PortMarket");
 	game.play();
 }
@@ -42,6 +45,7 @@ int main(int argc, char* argv[]) {
 	utg::url = "pirate_kingship";
 	utg::callback::getinfo = game.getpropertyst;
 	//srand(getcputime());
+	quest::apply = game.applyb;
 	return draw::utgx::run(initialize_game, true, read_files);
 }
 

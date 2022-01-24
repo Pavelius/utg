@@ -122,7 +122,7 @@ public:
 class pirate : public historyable {
 	char			abilities[Infamy + 1];
 	variant			actions[6];
-	unsigned short	treasures[4];
+	variant			treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			checkstars();
@@ -130,18 +130,20 @@ public:
 	void			addaction(variant v);
 	void			clear();
 	void			clearactions();
+	bool			confirm(ability_s v) const;
 	void			information(const char* format, ...);
 	void			gaintreasure(int count = 1);
 	void			gaintreasure(const treasurei* p);
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
+	int				getbonus(ability_s v) const;
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	void			playround();
 	void			roll();
-	void			set(ability_s v, int i);
+	void			set(ability_s v, int i, bool interactive = true);
 	bool			match(variant v) const;
 };
 class gamei : public pirate, public shipi, public oceani {
@@ -150,6 +152,7 @@ class gamei : public pirate, public shipi, public oceani {
 	adat<indext, 512> treasures;
 public:
 	static void		apply(variant v);
+	static bool		applyb(variant v) { apply(v); return true; }
 	static void		apply(const variants& source);
 	void			createtreasure();
 	void			clear();
@@ -169,4 +172,5 @@ int					rollv(int bonus);
 VKIND(actioni, Action)
 VKIND(gender_s, Gender)
 VKIND(special_s, Special)
+VKIND(treasurei, Card)
 VKIND(groupvaluei, Value)

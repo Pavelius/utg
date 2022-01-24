@@ -4,9 +4,7 @@
 
 BSDATAC(quest, 4096)
 
-// 1) One/Two on none events occurs in province of each player. Each player have same cards deck. About 30-40 cards.
-// 2) One event occurs in random province occuped by each player. This is separate deck and it is suppose to be bad.
-// 3) You can mix to some part of player deck (or neutral deck) additional cards.
+using namespace log::parse;
 
 static const char* skipnum(const char* p) {
 	while(isnum(*p))
@@ -28,18 +26,13 @@ static const char* read_string(const char* p, stringbuilder& result) {
 	if(p[0] == '#')
 		return p;
 	while(*p) {
-		char sym;
 		if(*p == '\n' || *p == '\r') {
-			p = skipspcr(p);
+			p = skipwscr(p);
 			if(p[0] == '#' || isanswer(p))
 				break;
-			sym = '\n';
+			result.addch('\n');
 		} else
-			sym = *p++;
-		switch(sym) {
-		case 17: sym = '-'; break;
-		}
-		result.add(sym);
+			result.addch(*p++);
 	}
 	return p;
 }
@@ -70,28 +63,42 @@ static const char* read_params(const char* p, stringbuilder& result, bool& allow
 		allow_continue = false;
 		return p;
 	}
-	p = read_identifier(skipsp(p + 1), result);
+	p = read_identifier(skipws(p + 1), result);
 	if(p[0] != ')') {
 		log::error(p, "Expected symbol `(`");
 		allow_continue = false;
 		return p;
 	}
-	p = skipsp(p + 1);
+	p = skipws(p + 1);
+	return p;
+}
+
+static const char* read_bonus(const char* p, int& bonus) {
+	if(*p == '-')
+		p = stringbuilder::read(p, bonus);
+	else if(*p == '+')
+		p = stringbuilder::read(p + 1, bonus);
+	else
+		bonus = 0;
 	return p;
 }
 
 static const char* read_variants(const char* p, stringbuilder& result, variants& source, bool& allow_continue, quest* pe) {
 	while(allow_continue && ischa(*p)) {
 		p = read_identifier(p, result);
-		p = skipsp(p);
+		p = skipws(p);
 		auto pn = result.begin();
 		if(equal(pn, "image")) {
 			p = read_params(p, result, allow_continue);
 			pe->image = getstring(result);
 		} else {
+			int bonus; p = read_bonus(p, bonus);
+			p = skipws(p);
 			variant v = (const char*)result.begin();
 			if(!v)
 				log::error(p, "Can't find variant `%1`", result.begin());
+			else
+				v.counter = bonus;
 			add(source, v);
 		}
 	}
@@ -100,7 +107,7 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 
 static const char* skipcr(const char* p, bool& allow_continue) {
 	if(p[0] == 10 || p[0] == 13)
-		p = skipspcr(p);
+		p = skipwscr(p);
 	else {
 		log::error(p, "Expected line feed");
 		allow_continue = false;
@@ -111,12 +118,12 @@ static const char* skipcr(const char* p, bool& allow_continue) {
 static const char* read_event(const char* p, short& parent, stringbuilder& sb, bool& allow_continue) {
 	if(!allow_continue)
 		return p;
-	p = stringbuilder::read(skipsp(p), parent);
+	p = stringbuilder::read(skipws(p), parent);
 	auto pe = bsdata<quest>::add(); pe->clear();
 	pe->index = parent;
 	pe->next = -1;
-	p = read_variants(skipsp(p), sb, pe->tags, allow_continue, pe);
-	p = read_string(skipspcr(p), sb);
+	p = read_variants(skipws(p), sb, pe->tags, allow_continue, pe);
+	p = read_string(skipwscr(p), sb);
 	pe->text = getstring(sb);
 	return p;
 }
@@ -126,12 +133,12 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 		auto pe = bsdata<quest>::add(); pe->clear();
 		pe->index = parent;
 		p = stringbuilder::read(p, pe->next);
-		p = read_variants(skipsp(p), sb, pe->tags, allow_continue, pe);
+		p = read_variants(skipws(p), sb, pe->tags, allow_continue, pe);
 		if(p[0]!=')') {
 			log::error(p, "Expected symbol `)` after a number");
 			break;
 		}
-		p = read_string(skipsp(p + 1), sb);
+		p = read_string(skipws(p + 1), sb);
 		pe->text = getstring(sb);
 	}
 	return p;
@@ -200,6 +207,8 @@ const quest* quest::choose(int id, const char* title, const char* resid, const c
 			continue;
 		an.add(&e, e.text);
 	}
+	if(!an)
+		an.add(0, getnm("Continue"));
 	return (quest*)an.choose(title, 0, true, resid, -1, header, text);
 }
 
@@ -213,6 +222,8 @@ void quest::run(int id, const char* title, const char* resid, const char* header
 		if(p->image)
 			resid = p->image;
 		p = p->choose(p->index, title, resid, header);
+		if(!p)
+			break;
 		for(auto v : p->tags)
 			apply(v);
 		id = p->next;

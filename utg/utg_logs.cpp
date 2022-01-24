@@ -82,6 +82,15 @@ void utg::pause(const char* title) {
 	choose(an, 0);
 }
 
+bool utg::yesno(const char* title, ...) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.addv(title, xva_start(title));
+	answers an;
+	an.add((void*)1, getnm("Yes"));
+	an.add((void*)0, getnm("No"));
+	return choose(an, temp);
+}
+
 int utg::choosei::getmarked(int i) const {
 	if(i >= sizeof(marked)/ sizeof(marked[0]))
 		return 0;

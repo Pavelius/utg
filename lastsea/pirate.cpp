@@ -145,20 +145,26 @@ void pirate::afterchange(ability_s v) {
 	}
 }
 
-void pirate::set(ability_s v, int i) {
+void pirate::set(ability_s v, int i, bool interactive) {
 	if(i < 0)
 		i = 0;
 	auto m = getmaximum(v);
 	if(i > m)
 		i = m;
 	if(abilities[v] != i) {
+		auto d = i - abilities[v];
 		switch(v) {
 		case Treasure:
 			gaintreasure(i);
 			break;
 		default:
-			if(v <= Infamy) {
-				information("%1+%2i", getnm(bsdata<abilityi>::elements[v].id), i - abilities[v]);
+			if(v >= Exploration && v <= Navigation) {
+				if(!confirm(v))
+					return;
+			}
+			if(v >= 0 && v <= Infamy) {
+				if(interactive)
+					information("%1+%2i", getnm(bsdata<abilityi>::elements[v].id), d);
 				abilities[v] = i;
 			}
 			break;
@@ -174,6 +180,7 @@ static void fixroll(stringbuilder& sb) {
 void pirate::roll() {
 	char temp[260]; stringbuilder sb(temp);
 	last_bonus = get(last_ability);
+	last_bonus += getbonus(last_ability);
 	while(true) {
 		sb.clear();
 		sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
@@ -204,13 +211,12 @@ void pirate::addaction(variant v) {
 }
 
 void pirate::gaintreasure(const treasurei* pv) {
-	auto index = bsdata<treasurei>::source.indexof(pv);
-	if(index == -1)
+	if(!pv)
 		return;
 	for(auto& e : treasures) {
-		if(e != 0xFFFF)
+		if(e)
 			continue;
-		e = index;
+		e = pv;
 		break;
 	}
 }
@@ -234,4 +240,21 @@ void pirate::playround() {
 		game.apply(last_action->script);
 		utg::pause();
 	}
+}
+
+int pirate::getbonus(ability_s v) const {
+	auto r = 0;
+	for(auto ev : treasures) {
+		treasurei* p = ev;
+		if(!p)
+			continue;
+		r += p->abilities[v - Exploration];
+	}
+	return r;
+}
+
+bool pirate::confirm(ability_s v) const {
+	if(!get(Supply))
+		return false;
+	return utg::yesno(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id));
 }
