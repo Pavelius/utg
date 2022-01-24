@@ -2,7 +2,7 @@
 
 gamei		game;
 int			last_count;
-int			last_choose;
+int			last_choose, last_page;
 ability_s	last_ability;
 actioni*	last_action;
 
@@ -61,6 +61,10 @@ void gamei::apply(variant v) {
 }
 
 void gamei::apply(const variants& source) {
+	last_ability = Infamy;
+	last_bonus = 0;
+	last_choose = 0;
+	last_page = 0;
 	for(auto v : source)
 		apply(v);
 }
@@ -71,11 +75,16 @@ locationi& gamei::getlocation() {
 
 void gamei::play() {
 	auto push_header = utg::header;
+	auto push_image = utg::url;
 	auto& loc = game.getlocation();
 	utg::header = getnm(loc.id);
+	if(loc.image)
+		utg::url = loc.image;
 	utg::sb.clear();
+	game.chooseactions();
 	game.playround();
 	utg::header = push_header;
+	utg::url = push_image;
 }
 
 void gamei::createtreasure() {

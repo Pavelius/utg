@@ -190,11 +190,16 @@ static void fixroll(stringbuilder& sb) {
 
 void pirate::roll() {
 	char temp[260]; stringbuilder sb(temp);
-	last_bonus = get(last_ability);
-	last_bonus += getbonus(last_ability);
+	if(last_ability >= Exploration && last_ability <= Navigation) {
+		last_bonus += get(last_ability);
+		last_bonus += getbonus(last_ability);
+	}
 	while(true) {
 		sb.clear();
-		sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
+		if(last_ability >= Exploration && last_ability <= Navigation)
+			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
+		else
+			sb.add(getnm("RollDice"), last_bonus);
 		answers an;
 		an.add(0, getnm("MakeRoll"));
 		auto pv = utg::choose(an, temp);
@@ -243,14 +248,19 @@ void pirate::gaintreasure(int count) {
 }
 
 void pirate::playround() {
+	char temp[260]; stringbuilder sb(temp);
+	auto push_header = utg::header;
+	utg::header = temp;
 	for(auto v : actions) {
 		last_action = v;
 		if(!last_action)
 			continue;
-		act(utg::sb, getdescription(last_action->id));
+		utg::sb.clear();
+		sb.clear(); sb.add("%1 - %2", push_header, getnm(last_action->id));
 		game.apply(last_action->script);
 		utg::pause();
 	}
+	utg::header = push_header;
 }
 
 int pirate::getbonus(ability_s v) const {
@@ -277,23 +287,35 @@ bool pirate::confirm(ability_s v, int delta) const {
 	return utg::choose(an, temp);
 }
 
-void pirate::chooselocation() {
-	struct piratechoose : utg::choosei {
-		void apply(int index, const void* object) override {
-		}
-		piratechoose(answers& an) : choosei(an) {}
-	};
+static int compare(const void* v1, const void* v2) {
+	auto e1 = *((variant*)v1);
+	auto e2 = *((variant*)v2);
 	auto& ei = game.getlocation();
-	utg::header = getnm(ei.id);
-	if(ei.image)
-		utg::url = ei.image;
+	auto p1 = ei.getpriority(e1);
+	auto p2 = ei.getpriority(e2);
+	return p1 - p2;
+}
+
+void pirate::sortactions() {
+	qsort(actions, sizeof(actions) / sizeof(actions[0]), sizeof(actions[0]), compare);
+}
+
+void pirate::chooseactions() {
 	answers an;
+	utg::sb.clear();
+	clearactions();
 	piratechoose san(an);
-	for(auto v : ei.actions) {
+	char temp[260]; stringbuilder sb(temp);
+	for(auto v : game.getlocation().actions) {
 		auto p = (actioni*)v;
 		if(!p)
 			continue;
-		an.add(p, getnm(p->id));
+		sb.clear();
+		sb.add("%1.", getnm(p->id));
+		if(p->is(VisitManyTimes))
+			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
+		an.add(p, temp);
 	}
 	san.choose(getnm("WhatDoYouWantToVisit"), 4);
+	sortactions();
 }

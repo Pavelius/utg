@@ -147,9 +147,11 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="historyable.cpp" />
     <ClCompile Include="information.cpp" />
+    <ClCompile Include="location.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="npcname.cpp" />
     <ClCompile Include="pirate.cpp" />
+    <ClCompile Include="piratechoose.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />
     <ClCompile Include="special.cpp" />

@@ -5,7 +5,21 @@ BSDATA(speciali) = {
 	{"Nickname"},
 	{"NicknameEnd"},
 	{"Choose"},
-	{"Page"},
 	{"Roll"},
+	{"Bury"},
+	{"Scout"},
+	{"Steal"},
+	{"VisitManyTimes"},
+	{"VisitRequired"},
+	{"Page000"},
+	{"Page100"},
+	{"Page200"},
+	{"Page300"},
+	{"Page400"},
+	{"Page500"},
+	{"Page600"},
+	{"Page700"},
+	{"Page800"},
+	{"Page900"},
 };
-assert_enum(speciali, Roll)
+assert_enum(speciali, Page900)

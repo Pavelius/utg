@@ -27,19 +27,27 @@ variants actioni::getoutcome(int v) const {
 
 void actioni::choose(int count) const {
 	struct actionchoose : utg::choosei {
-		answers	an;
-		actionchoose() : choosei(an) {}
+		actionchoose(answers& an) : choosei(an) {}
 		void apply(int index, const void* object) {
 			auto p = (casei*)object;
 			game.apply(p->outcome);
 		}
 	};
-	actionchoose source;
+	answers	an;
+	actionchoose source(an);
 	variant parent = this;
 	for(auto& e : bsdata<casei>()) {
 		if(e.type != parent)
 			continue;
-		source.an.add(&e, getnm(e.id));
+		an.add(&e, getnm(e.id));
 	}
 	source.choose(0, count);
+}
+
+bool actioni::is(special_s v) const {
+	for(auto e : script) {
+		if(e.type == Special && e.value == v)
+			return true;
+	}
+	return false;
 }

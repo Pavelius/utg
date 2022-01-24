@@ -1,6 +1,13 @@
 #include "main.h"
 
 static void print(stringbuilder& sb, variant v) {
+	switch(v.type) {
+	case Special:
+		if(v.value == VisitManyTimes)
+			return;
+		break;
+	default: break;
+	}
 	auto negative = v.counter < 0;
 	if(negative)
 		sb.add("[-");

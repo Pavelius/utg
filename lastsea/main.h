@@ -17,7 +17,8 @@ enum ability_s : unsigned char {
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Choose, Page, Roll,
+	Choose, Roll, Bury, Scout, Steal, VisitManyTimes, VisitRequired,
+	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,
@@ -44,9 +45,10 @@ struct actioni {
 	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
 	void			choose(int count) const;
 	void			getinfo(stringbuilder& sb) const;
-	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((actioni*)v)->getinfo(sb); }
+	bool			is(special_s v) const;
 	variants		getoutcome(int v) const;
 	int				getstage(int v) const;
+	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((actioni*)v)->getinfo(sb); }
 };
 struct casei {
 	const char*		id;
@@ -58,7 +60,8 @@ struct casei {
 struct locationi {
 	const char*		id;
 	const char*		image;
-	variant			actions[7];
+	variants		actions;
+	int				getpriority(variant v) const;
 };
 struct shipi {
 	indext			index;
@@ -124,6 +127,11 @@ public:
 	void operator=(const char* v) { stringbuilder sb(data); sb.add(v); }
 	operator const char*() const { return data; }
 };
+struct piratechoose : utg::choosei {
+	void			apply(int index, const void* object) override;
+	bool			isallow(int index, const void* object) const override;
+	piratechoose(answers& an) : choosei(an) {}
+};
 class pirate : public historyable {
 	char			abilities[Infamy + 1];
 	variant			actions[6];
@@ -131,9 +139,10 @@ class pirate : public historyable {
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			checkstars();
+	void			sortactions();
 public:
 	void			addaction(variant v);
-	void			chooselocation();
+	void			chooseactions();
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
@@ -173,7 +182,7 @@ public:
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
-extern int			last_choose;
+extern int			last_choose, last_page;
 extern ability_s	last_ability;
 extern actioni*		last_action;
 int					rollv(int bonus);

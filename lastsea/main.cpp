@@ -20,7 +20,6 @@ static void initialize_game() {
 	quest::read("scenario/BeyondTheOceanEdge.txt");
 	game.gaintreasure();
 	quest::run(0, 0, utg::url, 0);
-	game.chooselocation();
 	//game.addaction("PortMarket");
 	game.play();
 }

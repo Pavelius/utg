@@ -45,6 +45,12 @@
     <ClCompile Include="information.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="location.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="piratechoose.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

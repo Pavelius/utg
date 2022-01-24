@@ -1,2 +1,2 @@
 ﻿In file `rules/basic.txt`:
- Line 83: Not found requisit `image`
+ Line 90: Expected line feed
