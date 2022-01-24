@@ -45,10 +45,10 @@ template<> variant::variant(const void* v) : u(0) {
 	}
 }
 
-int varianti::found(const char* id) const {
+int varianti::found(const char* id, size_t size) const {
 	int i = -1;
 	if(isnamed())
-		i = source->find(id, 0);
+		i = source->findps(id, 0, size);
 	else if(is(varianti::FoundByIndex)) {
 		auto p = match(id, this->id);
 		if(p)
@@ -72,22 +72,40 @@ const varianti* varianti::getsource(const char* id) {
 const varianti* varianti::getmetadata(const void* object) {
 	if(object) {
 		for(auto& e : bsdata<varianti>()) {
-			if(e.source && e.source->indexof(object) != -1)
+			if(e.source && e.source->have(object))
 				return &e;
 		}
 	}
 	return 0;
 }
 
+const char* getvalues(const char* p, size_t& size, int& counter) {
+	auto pb = p;
+	while(ischa(*p) || isnum(*p) || *p == '_')
+		p++;
+	size = p - pb;
+	if(*p == '-')
+		stringbuilder::read(p, counter);
+	else if(*p == '+')
+		stringbuilder::read(p + 1, counter);
+	else
+		counter = 0;
+	return p;
+}
+
 template<> variant::variant(const char* v) : u(0) {
 	if(v) {
+		size_t size;
+		int bonus;
+		getvalues(v, size, bonus);
 		for(auto& e : bsdata<varianti>()) {
 			if(!e.source || !e.metadata)
 				continue;
-			int i = e.found(v);
+			int i = e.found(v, size);
 			if(i != -1) {
 				value = i;
 				type = (variant_s)(&e - bsdata<varianti>::elements);
+				counter = bonus;
 				break;
 			}
 		}

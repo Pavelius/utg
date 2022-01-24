@@ -326,13 +326,13 @@ void array::reserve(unsigned count) {
 		data = malloc(count_maximum * size);
 }
 
-int array::find(const char* value, unsigned offset) const {
+int array::findps(const char* value, unsigned offset, size_t size) const {
 	auto m = getcount();
 	for(unsigned i = 0; i < m; i++) {
 		auto p = (const char**)((char*)ptr(i) + offset);
 		if(!(*p))
 			continue;
-		if(strcmp(*p, value) == 0)
+		if(memcmp(*p, value, size) == 0)
 			return i;
 	}
 	return -1;

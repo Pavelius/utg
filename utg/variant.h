@@ -24,7 +24,7 @@ struct varianti {
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);
-	int					found(const char* id) const;
+	int					found(const char* id, size_t size) const;
 	constexpr bool		is(unsigned v) const { return (flags & FG(v)) != 0; }
 	constexpr bool		isnamed() const { return !is(NotFoundByName); }
 	void				set(void* object, const char* id, void* value) const;
@@ -35,11 +35,12 @@ union variant {
 	unsigned			u;
 	struct {
 		unsigned short	value;
-		unsigned char	counter;
+		char			counter;
 		variant_s		type;
 	};
 	constexpr variant() : u(0) {}
 	constexpr variant(variant_s t, unsigned short n) : value(n), counter(0), type(t) {}
+	constexpr variant(variant_s t, unsigned short n, char c) : value(n), counter(c), type(t) {}
 	constexpr variant(int u) : u(u) {}
 	template<class T> static constexpr variant_s kind();
 	template<class T> variant(T* v) : variant((const void*)v) {}
@@ -54,7 +55,6 @@ union variant {
 	const varianti&		geti() const { return bsdata<varianti>::elements[type]; }
 	const char*			getid() const;
 	int					getindex(int t) const { return (type == t) ? value : 0; }
-	void				getinfo(stringbuilder& sb) const;
 	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
 	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; }
