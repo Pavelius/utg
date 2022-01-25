@@ -29,7 +29,9 @@ bool				buttonfd(const char* title);
 void				label(const char* id, const char* value);
 void				label(const char* id, const char* value, const void* object);
 void				label(const void* object, const variants& elements, fngetinfo pget);
+void				hexagon();
 void				noavatar();
+void				sethexogonal(short unsigned i);
 void				texth2(const char* title);
 void				vertical(fnevent proc);
 namespace utgx {

@@ -480,6 +480,12 @@ void draw::noavatar() {
 	caret.x += width + metrics::padding + metrics::border * 2;
 }
 
+void draw::sethexogonal(short unsigned i) {
+}
+
+void draw::hexagon() {
+}
+
 static void hilite_paint() {
 	rectpush push;
 	caret.x = hot.hilite.x1;
