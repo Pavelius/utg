@@ -93,7 +93,9 @@ int	pirate::getmaximum(ability_s v) const {
 	case Navigation:
 		return getclass().maximum[v - Exploration];
 	case Experience: return 18;
-	case Stars: case Level: return 5;
+	case Stars: case Level:
+	case Mission: case Cabine: case Threat:
+		return 5;
 	default: return 10;
 	}
 }
@@ -152,6 +154,14 @@ void pirate::afterchange(ability_s v) {
 	case Experience:
 		checkstars();
 		break;
+	case Mission:
+		captainmission();
+	case Cabine:
+		captaincabine();
+		break;
+	case Threat:
+		makethreat();
+		break;
 	}
 }
 
@@ -166,6 +176,9 @@ void pirate::set(ability_s v, int i) {
 		switch(v) {
 		case Treasure:
 			gaintreasure(i);
+			break;
+		case Mission: case Cabine: case Threat:
+			abilities[v] = i;
 			break;
 		default:
 			if(v >= Exploration && v <= Navigation) {
@@ -338,20 +351,23 @@ void pirate::adventure(int page) {
 	afterapply();
 }
 
+static void start_adventure(int v, int* pages) {
+	v = v - 1;
+	if(v >= 0 && v < 5)
+		game.adventure(pages[v]);
+}
+
 void pirate::captaincabine() {
 	static int pages[] = {43, 44, 45, 46, 47};
-	if(abilities[Cabine] < 5)
-		adventure(pages[abilities[Cabine]++]);
+	start_adventure(abilities[Cabine], pages);
 }
 
 void pirate::captainmission() {
 	static int pages[] = {48, 49, 50, 51, 52};
-	if(abilities[Mission] < 5)
-		adventure(pages[abilities[Cabine]++]);
+	start_adventure(abilities[Mission], pages);
 }
 
 void pirate::makethreat() {
 	static int pages[] = {791, 792, 793, 794, 795};
-	if(abilities[Threat] < 5)
-		adventure(pages[abilities[Threat]++]);
+	start_adventure(abilities[Threat], pages);
 }

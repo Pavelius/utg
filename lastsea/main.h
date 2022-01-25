@@ -34,9 +34,6 @@ enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Special, Tag, Value, Widget
 };
-enum action_s : unsigned char {
-	CaptainMission, CaptainCabine,
-};
 
 typedef flagable<1> itemufa;
 typedef short unsigned indext;
@@ -51,7 +48,7 @@ struct actioni {
 	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
 	void			choose(int count) const;
 	void			getinfo(stringbuilder& sb) const;
-	bool			is(special_s v) const;
+	bool			is(variant v) const;
 	variants		getoutcome(int v) const;
 	int				getstage(int v) const;
 	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((actioni*)v)->getinfo(sb); }

@@ -44,7 +44,7 @@ void actioni::choose(int count) const {
 	source.choose(0, count);
 }
 
-bool actioni::is(special_s v) const {
+bool actioni::is(variant v) const {
 	for(auto e : script) {
 		if(e.type == Special && e.value == v)
 			return true;
