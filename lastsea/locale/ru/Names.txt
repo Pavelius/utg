@@ -47,6 +47,7 @@ MadeUpInterrogationTactic: Несуществующая пытка
 Magic19: Блюдо со странным запахом
 MakeRoll: Выполнить бросок
 Misfortune: Неудача
+Mission: 
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextStar: Следующая звезда

@@ -20,7 +20,7 @@ enum ability_s : unsigned char {
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, Bury, Scout, Steal, Skill,
-	VisitManyTimes, VisitRequired,
+	VisitManyTimes, VisitRequired, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
 enum tag_s : unsigned char {

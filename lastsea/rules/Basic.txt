@@ -55,8 +55,8 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
 
 #Action
 
-CaptainMission
-CaptainCabine
+CaptainMission script(Mission+1)
+CaptainCabine script(Cabine+1)
 BuryTreasure script(VisitManyTimes Bury+2)
 PortMarket script(Swagger+1 Roll) result(1 7 11 16)
  outcome1 Choose+1

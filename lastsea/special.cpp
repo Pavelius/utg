@@ -13,6 +13,8 @@ BSDATA(speciali) = {
 	{"Skill"},
 	{"VisitManyTimes"},
 	{"VisitRequired"},
+	{"LostGame"},
+	{"WinGame"},
 	{"Page000"},
 	{"Page100"},
 	{"Page200"},
