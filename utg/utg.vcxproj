@@ -196,6 +196,7 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
+    <ClInclude Include="counter.h" />
     <ClInclude Include="group.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />

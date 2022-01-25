@@ -1,4 +1,5 @@
 #include "charname.h"
+#include "counter.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
@@ -79,6 +80,10 @@ public:
 };
 struct tagi {
 	const char*		id;
+};
+struct goali {
+	const char*		id;
+	counter			success, fail;
 };
 class npcname {
 	short unsigned	nameid;

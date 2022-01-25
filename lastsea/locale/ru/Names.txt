@@ -20,6 +20,7 @@ CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
 Continue: Продолжить
 Crew: Команда
+Danger: Опасность
 Discontent: Недовольство
 Experience: Созвездие
 Exploration: Исследование
@@ -47,7 +48,7 @@ MadeUpInterrogationTactic: Несуществующая пытка
 Magic19: Блюдо со странным запахом
 MakeRoll: Выполнить бросок
 Misfortune: Неудача
-Mission: 
+Mission: Миссия
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextStar: Следующая звезда
@@ -81,7 +82,7 @@ Supply: Припасы
 Survivor: Недобиток
 Swagger: Важность
 TheTipsyTortoise: Выпившая черепаха
-Threat: Опасность
+Threat: Угроза
 Treasure: Сокровища
 Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка

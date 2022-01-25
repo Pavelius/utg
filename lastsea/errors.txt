@@ -1,2 +1,2 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 74: Can't find variant `Infam1y`
+﻿In file `Names.txt`:
+ Define translate for `Mission`

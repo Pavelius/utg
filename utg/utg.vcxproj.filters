@@ -254,5 +254,8 @@
     <ClInclude Include="group.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="counter.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
