@@ -155,6 +155,7 @@
     <ClCompile Include="crt_translate.cpp" />
     <ClCompile Include="dice.cpp" />
     <ClCompile Include="draw.cpp" />
+    <ClCompile Include="drawobject.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="front.cpp" />
     <ClCompile Include="group.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="counter.h" />
+    <ClInclude Include="drawobject.h" />
     <ClInclude Include="group.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />

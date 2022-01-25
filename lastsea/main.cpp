@@ -15,13 +15,7 @@ static void generate_crew(bool interactive) {
 }
 
 static void test_scene() {
-	struct seamap : draw::scenei {
-		void render() override {
-			background("navigation");
-		}
-	};
-	seamap wd;
-	wd.show();
+	bsdata<draw::object>::source.clear();
 }
 
 static void initialize_game() {

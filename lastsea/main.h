@@ -1,10 +1,10 @@
 #include "charname.h"
 #include "counter.h"
+#include "drawobject.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
 #include "quest.h"
-#include "scene.h"
 #include "utg.h"
 
 #pragma once
