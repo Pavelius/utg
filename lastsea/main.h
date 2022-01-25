@@ -12,12 +12,14 @@ template<typename T> struct bsmeta;
 enum ability_s : unsigned char {
 	Exploration, Brawl, Hunting, Aim, Swagger, Navigation,
 	Reroll, Misfortune, Treasure,
-	Crew, Discontent, Supply, Hull, Threat,
+	Crew, Discontent, Supply, Hull,
+	Danger, DangerMaximum,
+	Threat, Mission, Cabine,
 	Experience, Stars, Level, Infamy,
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, Bury, Scout, Steal, Learn,
+	Block, Choose, Roll, Bury, Scout, Steal, Skill,
 	VisitManyTimes, VisitRequired,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
@@ -31,6 +33,9 @@ enum event_s : unsigned char {
 enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Special, Tag, Value, Widget
+};
+enum action_s : unsigned char {
+	CaptainMission, CaptainCabine,
 };
 
 typedef flagable<1> itemufa;
@@ -137,6 +142,7 @@ class pirate : public historyable {
 	char			abilities[Infamy + 1];
 	variant			actions[6];
 	variant			treasures[4];
+	void			afterapply();
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			checkstars();
@@ -144,11 +150,14 @@ class pirate : public historyable {
 public:
 	void			adventure(int page);
 	void			addaction(variant v);
+	void			captaincabine();
+	void			captainmission();
 	void			chooseactions();
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
 	void			information(const char* format, ...);
+	void			makethreat();
 	void			gaintreasure(int count = 1);
 	void			gaintreasure(const treasurei* p);
 	void			generate();
@@ -157,11 +166,11 @@ public:
 	int				getbonus(ability_s v) const;
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
-	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
+	bool			match(variant v) const;
 	void			playround();
 	void			roll();
+	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
-	bool			match(variant v) const;
 	void			warning(const char* format, ...);
 };
 class gamei : public pirate, public shipi, public oceani {
@@ -175,12 +184,12 @@ public:
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
-	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
+	static void		generate();
+	locationi&		getlocation();
 	static void		getstatus(stringbuilder& sb, const void* object);
 	static void		play();
 	const treasurei* picktreasure();
-	static void		generate();
-	locationi&		getlocation();
+	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;

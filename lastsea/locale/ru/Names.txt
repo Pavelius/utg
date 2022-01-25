@@ -10,7 +10,7 @@ AttackMove: Название боевого приема
 Brawl: Сила
 BuryTreasure: Зарыть сокровища
 CaptainMission: Миссия капитана
-CharacterAbility: Пират
+CharacterAbility: Способности
 Choose: Выбирайте
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
@@ -70,6 +70,8 @@ Reroll: Перебросы
 Roll: Бросок
 RollDice: Бросаем d12.
 Seeker: Искатель
+ShipLog: Журнал
+ShowDiscontent: (%1i недовольных)
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
 Stars: Звезды

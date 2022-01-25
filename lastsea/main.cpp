@@ -32,7 +32,7 @@ static void read_files() {
 
 int main(int argc, char* argv[]) {
 	utg::url = "pirate_kingship";
-	utg::callback::getinfo = game.getpropertyst;
+	utg::callback::getinfo = game.sfgetproperty;
 	//srand(getcputime());
 	quest::apply = game.applyb;
 	return draw::utgx::run(initialize_game, true, read_files);

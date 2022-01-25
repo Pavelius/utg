@@ -1,3 +1,2 @@
 ﻿In file `Names.txt`:
- Define translate for `Treasure66`
- Define translate for `Treasure82`
+ Define translate for `ShipLog`

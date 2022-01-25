@@ -69,9 +69,6 @@ void gamei::apply(variant v) {
 
 void gamei::apply(const variants& source) {
 	last_ability = Infamy;
-	last_bonus = 0;
-	last_choose = 0;
-	last_page = 0;
 	for(auto v : source)
 		apply(v);
 }
@@ -109,10 +106,10 @@ const treasurei* gamei::picktreasure() {
 	return pv;
 }
 
-void gamei::getpropertyst(const void* object, variant v, stringbuilder& sb) {
+void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	switch(v.type) {
 	case Ability:
-		pirate::getpropertyst(static_cast<pirate*>(&game), v, sb);
+		pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
 		break;
 	}
 }

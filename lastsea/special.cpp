@@ -10,7 +10,7 @@ BSDATA(speciali) = {
 	{"Bury"},
 	{"Scout"},
 	{"Steal"},
-	{"Learn"},
+	{"Skill"},
 	{"VisitManyTimes"},
 	{"VisitRequired"},
 	{"Page000"},

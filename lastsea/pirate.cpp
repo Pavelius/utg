@@ -22,7 +22,7 @@ int pirate::getnextstar(int value) const {
 	return 0;
 }
 
-void pirate::getpropertyst(const void* object, variant v, stringbuilder& sb) {
+void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	auto p = (pirate*)object;
 	int value;
 	if(p->classid == 0xFFFF)
@@ -37,14 +37,16 @@ void pirate::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 			if(value)
 				sb.adds("(%1 %2i)", getnm("NextStar"), value);
 			break;
-		case Stars: case Misfortune: case Reroll:
+		case Crew:
 			value = p->get((ability_s)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->get(Discontent);
 			if(value)
-				sb.add("%1i", value);
+				sb.adds(getnm("ShowDiscontent"), value);
 			break;
 		default:
 			value = p->get((ability_s)v.value);
-			sb.add("%1i", value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
 			break;
 		}
 		break;
@@ -188,10 +190,23 @@ static void fixroll(stringbuilder& sb) {
 	sb.add(getnm("YouRoll"), last_result, last_roll, last_bonus);
 }
 
+void pirate::afterapply() {
+	if(last_page > 0) {
+		auto v = last_page;
+		last_page = 0;
+		adventure(v);
+	}
+	if(last_choose > 0) {
+		auto v = last_choose;
+		last_choose = 0;
+		last_action->choose(v);
+	}
+}
+
 void pirate::roll() {
 	char temp[260]; stringbuilder sb(temp);
 	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus += get(last_ability);
+		last_bonus = get(last_ability);
 		last_bonus += getbonus(last_ability);
 	}
 	while(true) {
@@ -211,12 +226,8 @@ void pirate::roll() {
 	if(!last_action)
 		return;
 	auto stage = last_action->getstage(last_result);
-	last_choose = 0;
 	game.apply(last_action->getoutcome(stage));
-	if(last_page > 0)
-		adventure(last_page);
-	if(last_choose > 0)
-		last_action->choose(last_choose);
+	afterapply();
 }
 
 void pirate::addaction(variant v) {
@@ -324,4 +335,23 @@ void pirate::chooseactions() {
 
 void pirate::adventure(int page) {
 	quest::run(page, 0, utg::url, 0);
+	afterapply();
+}
+
+void pirate::captaincabine() {
+	static int pages[] = {43, 44, 45, 46, 47};
+	if(abilities[Cabine] < 5)
+		adventure(pages[abilities[Cabine]++]);
+}
+
+void pirate::captainmission() {
+	static int pages[] = {48, 49, 50, 51, 52};
+	if(abilities[Mission] < 5)
+		adventure(pages[abilities[Cabine]++]);
+}
+
+void pirate::makethreat() {
+	static int pages[] = {791, 792, 793, 794, 795};
+	if(abilities[Threat] < 5)
+		adventure(pages[abilities[Threat]++]);
 }

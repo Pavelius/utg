@@ -55,8 +55,8 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
 
 #Action
 
-CaptainCabine
 CaptainMission
+CaptainCabine
 BuryTreasure script(VisitManyTimes Bury+2)
 PortMarket script(Swagger+1 Roll) result(1 7 11 16)
  outcome1 Choose+1
@@ -100,4 +100,6 @@ Port image(port)
 #Menu
 
 CharacterAbility
- elements Exploration Brawl Hunting Aim Swagger Navigation Separator Reroll Misfortune Experience Stars Threat Separator Crew Discontent Hull Supply
+ elements Exploration Brawl Hunting Aim Swagger Navigation Separator Reroll Misfortune Experience Threat Separator Crew Hull Supply
+ShipLog
+ elements PortMarket
