@@ -18,13 +18,13 @@ enum ability_s : unsigned char {
 	Danger, DangerMaximum,
 	Threat, Mission, Cabine,
 	CounterA, CounterB, CounterC, CounterD,
-	Experience, Stars, Level, Infamy,
+	Stars, Level, Infamy,
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene, Tile,
 	GunLoadOrHull,
-	VisitManyTimes, VisitRequired, CheckDanger, LostGame, WinGame,
+	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
 enum tag_s : unsigned char {
@@ -38,12 +38,16 @@ enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Special, Tag, Value, Widget
 };
+enum ability_type_s : unsigned char {
+	Positive, Negative,
+};
 
 typedef flagable<1> itemufa;
 typedef short unsigned indext;
 
 struct abilityi {
 	const char*		id;
+	ability_type_s	type;
 };
 struct actioni {
 	const char*		id;
@@ -67,7 +71,10 @@ struct casei {
 struct locationi {
 	const char*		id;
 	const char*		image;
+	short unsigned	scene;
 	variants		actions;
+	short unsigned	next;
+	static const locationi* find(short unsigned scene);
 	int				getpriority(variant v) const;
 };
 struct shipi {
@@ -150,7 +157,6 @@ class pirate : public historyable {
 	void			afterapply();
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
-	void			checkstars();
 	void			sortactions();
 public:
 	void			adventure(int page);

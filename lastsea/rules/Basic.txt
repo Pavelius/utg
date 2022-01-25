@@ -78,6 +78,20 @@ PsichycsShanty script(Roll) result(1 5 6 12)
  outcome3 Page300+4
  outcome4 Page300+5
 PortWorkTheShip script(Choose+2 VisitManyTimes)
+HungryCrew script(choose+1)
+ChartACourse script(Navigation+1 Roll) result(1 16)
+ outcome1 Tile+2
+ outcome2 Tile+3 Tresure+1
+Explore
+SpearFish script(Hunt+1 Roll) result(1 5 9 12 16)
+ outcome1 Crew-1 Supply+1 Infamy-2
+ outcome2 Supply+1
+ outcome3 Supply+2 Treasure+1
+ outcome4 Supply+3 Treasure+1
+ outcome4 Supply+3 Treasure+2 Infamy+3
+PrepareGuns script(Choose+2)
+TalkToCrew
+SailOn
 
 #Case
 
@@ -94,12 +108,17 @@ RummageThrounghtOtherBelongings PortWorkTheShip outcome(Steal+1)
 
 #Location
 
-Port image(port)
+OpenSea image(open_sea)
+ actions HungryCrew ChartACourse SpearFish PrepareGuns TalkToCrew CaptainCabine SailOn
+
+Port image(port) next(808)
  actions PortMarket AbandonedHouses TheTipsyTortoise PsichycsShanty PortWorkTheShip CaptainMission BuryTreasure
 
 #Menu
 
-CharacterAbility
- elements Exploration Brawl Hunting Aim Swagger Navigation Separator Reroll Misfortune Experience Threat Separator Crew Hull Supply
-ShipLog
+PagePirate
+ elements Exploration Brawl Hunting Aim Swagger Navigation Separator Reroll Misfortune Stars Threat
+PageShip
+ elements Crew Hull Supply
+PageShipLog
  elements PortMarket

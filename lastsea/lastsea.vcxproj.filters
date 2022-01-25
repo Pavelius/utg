@@ -7,6 +7,9 @@
     <Filter Include="Данные">
       <UniqueIdentifier>{eed5a1d7-90be-4af7-a910-497a2beebdcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Утилиты">
+      <UniqueIdentifier>{3336924e-0206-48c0-9443-c3ebc1c93798}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,10 +54,19 @@
     <ClCompile Include="piratechoose.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="sprite_util.cpp">
+      <Filter>Утилиты</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Утилиты</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite_util.h">
+      <Filter>Утилиты</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

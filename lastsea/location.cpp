@@ -9,3 +9,11 @@ int locationi::getpriority(variant v) const {
 	}
 	return i;
 }
+
+const locationi* locationi::find(short unsigned scene) {
+	for(auto& e : bsdata<locationi>()) {
+		if(e.scene == scene)
+			return &e;
+	}
+	return 0;
+}

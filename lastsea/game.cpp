@@ -84,9 +84,10 @@ void gamei::play() {
 	utg::header = getnm(loc.id);
 	if(loc.image)
 		utg::url = loc.image;
-	utg::sb.clear();
 	game.chooseactions();
 	game.playround();
+	if(loc.next)
+		game.adventure(loc.next);
 	utg::header = push_header;
 	utg::url = push_image;
 }

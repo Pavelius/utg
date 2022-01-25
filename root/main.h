@@ -57,7 +57,7 @@ typedef char choosea[StrongSuccess + 1];
 struct nameable {
 	const char*		id;
 	gender_s		gender = Male;
-	void			act(const char* format, ...) const { actv(logs::sb, format, xva_start(format)); }
+	void			act(const char* format, ...) const { actv(utg::sb, format, xva_start(format)); }
 	void			acts(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* param) const;
 	const char*		getname() const { return getnm(id); }

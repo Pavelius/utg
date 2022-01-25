@@ -51,7 +51,7 @@ void creature::choose_name() {
 	answers an;
 	for(auto v : slice<short unsigned>(temp, count))
 		an.add((void*)v, charname::getname(v));
-	setname(logs::choose(an, "Как вас зовут?", 0));
+	setname(utg::choose(an, "Как вас зовут?", 0));
 }
 
 static bool match_party(variant v) {
@@ -95,7 +95,7 @@ static bool set_value(void* object, const char* result, const void* value) {
 
 void creature::choose_avatar() {
 	stringbuilder sb(avatar);
-	logs::chooseavatar(sb, getnm("ChooseLook"), (last_gender == Female) ? "f*.*" : "m*.*");
+	utg::chooseavatar(sb, getnm("ChooseLook"), (last_gender == Female) ? "f*.*" : "m*.*");
 }
 
 void creature::generate() {
@@ -104,7 +104,7 @@ void creature::generate() {
 			continue;
 		e.apply(this, add_variant, set_value);
 	}
-	if(!logs::interactive)
+	if(!utg::interactive)
 		random_ability();
 	else
 		choose_abilities();

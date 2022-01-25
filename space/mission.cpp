@@ -24,7 +24,7 @@ static squad* newsquad(squad* source) {
 }
 
 void missioni::add(const char* id, bool enemy) {
-	auto i = bsdata<varianti>::elements[Squad].found(id);
+	auto i = bsdata<varianti>::elements[Squad].found(id, zlen(id));
 	if(i == -1)
 		return;
 	auto p = newsquad(enemy ? enemies : allies);

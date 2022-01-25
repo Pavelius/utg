@@ -149,16 +149,19 @@
     <ClCompile Include="information.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_util.cpp" />
     <ClCompile Include="npcname.cpp" />
     <ClCompile Include="pirate.cpp" />
     <ClCompile Include="piratechoose.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />
     <ClCompile Include="special.cpp" />
+    <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
+    <ClInclude Include="sprite_util.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

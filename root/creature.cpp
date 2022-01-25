@@ -2,7 +2,7 @@
 
 effectable game;
 
-class apply_move : public logs::choosei {
+class apply_move : public utg::choosei {
 	void apply(int index, const void* object) override {
 		auto p = (messagei*)object;
 		for(auto v : p->conditions) {
@@ -73,8 +73,8 @@ static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
 void creature::move(move_s v) {
 	auto& ei = bsdata<movei>::elements[v];
 	pbta_roll(get(ei.roll));
-	fix_roll(logs::sb);
-	fix_move(logs::sb, v, this);
+	fix_roll(utg::sb);
+	fix_move(utg::sb, v, this);
 	choose_options(v, get_choose_count(ei.mechanic));
 }
 
@@ -96,15 +96,15 @@ void creature::apply(const effectable& effect) {
 	act(getname());
 	if(ni) {
 		act("%-Inflict");
-		effect.inflict.fix(logs::sb, harms);
+		effect.inflict.fix(utg::sb, harms);
 	}
 	if(ns) {
 		if(ni)
-			logs::sb.add(", %-But");
+			utg::sb.add(", %-But");
 		act("%-Suffer");
-		effect.suffer.fix(logs::sb, harms);
+		effect.suffer.fix(utg::sb, harms);
 		for(auto v : harms)
 			add(v, effect.suffer.harm[v]);
 	}
-	logs::sb.add(".");
+	utg::sb.add(".");
 }

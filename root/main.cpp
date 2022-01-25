@@ -12,15 +12,15 @@ static void generate_character() {
 	player.abilities[Cunning] -= 1;
 	player.move(EngageMelee);
 	player.apply(game);
-	logs::pause();
+	utg::pause();
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::read("rules/Moves.txt");
 	messagei::read("rules/MoveMessages.txt");
-	logs::url = "northmen";
-	return draw::utg::run(generate_character, true);
+	utg::url = "northmen";
+	return draw::utgx::run(generate_character, true);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

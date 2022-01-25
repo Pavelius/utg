@@ -56,17 +56,17 @@ void squad::move(move_s action) {
 		tags.remove(Opportunity);
 	}
 	pbta_roll(b);
-	fix_roll(logs::sb);
+	fix_roll(utg::sb);
 	switch(last_roll) {
 	case Fail: game.apply(ei.fail); break;
 	default: game.apply(ei.success); break;
 	}
 	switch(ei.mechanic) {
 	case YouAndEnemy:
-		fix_result(logs::sb, this, action, last_result);
+		fix_result(utg::sb, this, action, last_result);
 		break;
 	default:
 		break;
 	}
-	logs::pause();
+	utg::pause();
 }

@@ -30,7 +30,7 @@ void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	switch(v.type) {
 	case Ability:
 		switch(v.value) {
-		case Experience:
+		case Stars:
 			value = p->get((ability_s)v.value);
 			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
 			value = p->getnextstar(value);
@@ -92,9 +92,8 @@ int	pirate::getmaximum(ability_s v) const {
 	case Swagger:
 	case Navigation:
 		return getclass().maximum[v - Exploration];
-	case Experience: return 18;
-	case Stars: case Level:
-	case Mission: case Cabine: case Threat:
+	case Stars: return 18;
+	case Level: case Mission: case Cabine: case Threat:
 		return 5;
 	default: return 10;
 	}
@@ -124,23 +123,12 @@ const char* classi::getearn(ability_s v) const {
 	}
 }
 
-void pirate::checkstars() {
-	auto pa = getclass().levelup;
-	auto cv = get(Experience);
-	for(unsigned i = 0; i < sizeof(classi::levelup) / sizeof(classi::levelup[0]); i++) {
-		if(cv == pa[i]) {
-			set(Stars, get(Stars) + 1);
-			break;
-		}
-	}
-}
-
 void pirate::checkexperience(ability_s v) {
 	auto pa = getclass().getearn(v);
 	auto cv = get(v);
 	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {
 		if(cv == pa[i]) {
-			set(Experience, get(Experience) + 1);
+			set(Stars, get(Stars) + 1);
 			break;
 		}
 	}
@@ -150,9 +138,6 @@ void pirate::afterchange(ability_s v) {
 	switch(v) {
 	case Exploration: case Brawl: case Hunting: case Aim: case Swagger: case Navigation:
 		checkexperience(v);
-		break;
-	case Experience:
-		checkstars();
 		break;
 	case Mission:
 		captainmission();
@@ -337,7 +322,7 @@ void pirate::chooseactions() {
 		if(!p)
 			continue;
 		sb.clear();
-		sb.add("%1.", getnm(p->id));
+		sb.add(getnm(p->id));
 		if(p->is(VisitManyTimes))
 			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
 		an.add(p, temp);

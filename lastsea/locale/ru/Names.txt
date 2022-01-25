@@ -9,8 +9,10 @@ Assassin: Убийца
 AttackMove: Название боевого приема
 Brawl: Сила
 BuryTreasure: Зарыть сокровища
+Cabine: 
+CaptainCabine: Каюта капитана
 CaptainMission: Миссия капитана
-CharacterAbility: Способности
+ChartACourse: Проложить курс
 Choose: Выбирайте
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
@@ -22,7 +24,6 @@ Continue: Продолжить
 Crew: Команда
 Danger: Опасность
 Discontent: Недовольство
-Experience: Созвездие
 Exploration: Исследование
 FamousMan: Известный человек
 FriendOrFamousPerson: Друг или известный человек
@@ -39,6 +40,7 @@ Grifter: Пройдоха
 HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
 Hull: Корпус
+HungryCrew: Команда голодная!
 Hunting: Охота
 Infamy: Слава
 LargeAnimal: Большое животное
@@ -55,6 +57,10 @@ NextStar: Следующая звезда
 No: Нет
 NotDefinedLastValue: Не указано значение `%1`
 NothingToDo: Ничего не делать.
+OpenSea: Открытое море
+PagePirate: Пираты
+PageShip: Корабль
+PageShipLog: Журнал
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды
@@ -62,6 +68,7 @@ Port: Порт
 PortMarket: Рынок
 PortWorkTheShip: Поработать на корабле
 PreferredWeapon: Ваше любимое оружие
+PrepareGuns: Подготовить пушки
 ProfessionThatInvolvesTravel: Профессия, связанная с путешествиями
 PromtHistory: [%герой] имеет парочку пробелов в истории. Надо бы заполнить. %ShowValues
 PromtStart: Да, что ни говори, но в это приключение собралась еще та веселая компашка! Среди прочих пиратов команды корабля были замечены: %ShowCrew
@@ -71,17 +78,20 @@ ReallyHighAndCoolNumber: Большое и красивое число
 Reroll: Перебросы
 Roll: Бросок
 RollDice: Бросаем d12.
+SailOn: Полный вперед!
 Seeker: Искатель
 ShipLog: Журнал
 ShowDiscontent: (%1i недовольных)
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
-Stars: Звезды
+SpearFish: Порыбачить копьем
+Stars: Созвездие
 Story54: Радужная жемчужина
 Story74: Черная повязка на глаз
 Supply: Припасы
 Survivor: Недобиток
 Swagger: Важность
+TalkToCrew: Пообщаться с командой
 TheTipsyTortoise: Выпившая черепаха
 Threat: Угроза
 Treasure: Сокровища

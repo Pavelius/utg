@@ -15,14 +15,23 @@ static void generate_crew(bool interactive) {
 }
 
 static void test_scene() {
-	bsdata<draw::object>::source.clear();
+	draw::object::initialize();
+	draw::clearobjects();
+	auto p1 = draw::addobject(10, 10);
+	p1->setcolorborder();
+	p1->string = "Text string 1";
+	p1->resource = draw::gres("small_seamap", "art/background", {});
+	auto p2 = draw::addobject(200, 200);
+	p2->border = figure::Circle;
+	p2->string = "Text string 2";
+	draw::chooseobject();
 }
 
 static void initialize_game() {
 	generate_crew(false);
 	game.gaintreasure();
-	test_scene();
 	game.adventure(0);
+	utg::pause();
 	//game.addaction("PortMarket");
 	game.play();
 }
