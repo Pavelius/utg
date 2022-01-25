@@ -2,9 +2,11 @@
 #include "log.h"
 #include "quest.h"
 
-BSDATAC(quest, 4096)
+BSDATAC(quest, 2048)
 
 using namespace log::parse;
+
+stringbuilder* quest::console;
 
 static const char* skipnum(const char* p) {
 	while(isnum(*p))
@@ -13,8 +15,7 @@ static const char* skipnum(const char* p) {
 }
 
 static bool isanswer(const char* p) {
-	auto p1 = skipnum(p);
-	return p1 != p && p1[0] == ')';
+	return isnum(*p);
 }
 
 static bool isevent(const char* p) {
@@ -134,8 +135,9 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 		pe->index = parent;
 		p = stringbuilder::read(p, pe->next);
 		p = read_variants(skipws(p), sb, pe->tags, allow_continue, pe);
-		if(p[0]!=')') {
+		if(p[0] != ')') {
 			log::error(p, "Expected symbol `)` after a number");
+			allow_continue = false;
 			break;
 		}
 		p = read_string(skipws(p + 1), sb);
@@ -143,9 +145,6 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 	}
 	return p;
 }
-
-quest::fnallow quest::allow;
-quest::fnallow quest::apply;
 
 void quest::clear() {
 	memset(this, 0, sizeof(*this));
@@ -174,13 +173,20 @@ void quest::read(const char* url) {
 }
 
 static bool isallow(const variants& source) {
-	if(!quest::allow)
+	if(!variant::sfapply)
 		return true;
 	for(auto v : source) {
-		if(!quest::allow(v))
+		if(!variant::sfapply(v, false))
 			return false;
 	}
 	return true;
+}
+
+static void apply(const variants& source) {
+	if(!variant::sfapply)
+		return;
+	for(auto v : source)
+		variant::sfapply(v, true);
 }
 
 const quest* quest::findprompt(short id) {
@@ -196,7 +202,15 @@ const quest* quest::findprompt(short id) {
 	return 0;
 }
 
-const quest* quest::choose(int id, const char* title, const char* resid, const char* header) const {
+const quest* quest::choose(int id, const char* resid, const char* header) const {
+	const char* promt_text = text;
+	if(console) {
+		console->clear();
+		console->add(text);
+		promt_text = console->begin();
+	}
+	auto need_add_continue = true;
+	apply(tags);
 	answers an;
 	for(auto& e : bsdata<quest>()) {
 		if(e.index != id)
@@ -207,25 +221,20 @@ const quest* quest::choose(int id, const char* title, const char* resid, const c
 			continue;
 		an.add(&e, e.text);
 	}
-	if(!an)
-		an.add(0, getnm("Continue"));
-	return (quest*)an.choose(title, 0, true, resid, -1, header, text);
+	return (quest*)an.choose(0, 0, true, resid, -1, header, promt_text);
 }
 
-void quest::run(int id, const char* title, const char* resid, const char* header) {
+void quest::run(int id, const char* resid, const char* header) {
 	while(true) {
 		auto p = findprompt(id);
 		if(!p)
 			return;
-		for(auto v : p->tags)
-			apply(v);
 		if(p->image)
 			resid = p->image;
-		p = p->choose(p->index, title, resid, header);
+		p = p->choose(p->index, resid, header);
 		if(!p)
 			break;
-		for(auto v : p->tags)
-			apply(v);
+		apply(p->tags);
 		id = p->next;
 	}
 }

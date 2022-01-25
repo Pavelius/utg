@@ -163,6 +163,7 @@
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="namenpc.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />
     <ClInclude Include="flagable.h" />

@@ -4,6 +4,7 @@
 #include "group.h"
 #include "message.h"
 #include "quest.h"
+#include "scene.h"
 #include "utg.h"
 
 #pragma once
@@ -16,12 +17,14 @@ enum ability_s : unsigned char {
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
 	Threat, Mission, Cabine,
+	CounterA, CounterB, CounterC, CounterD,
 	Experience, Stars, Level, Infamy,
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, Bury, Scout, Steal, Skill,
-	VisitManyTimes, VisitRequired, LostGame, WinGame,
+	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene, Tile,
+	GunLoadOrHull,
+	VisitManyTimes, VisitRequired, CheckDanger, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
 enum tag_s : unsigned char {
@@ -182,7 +185,6 @@ class gamei : public pirate, public shipi, public oceani {
 public:
 	static void		apply(variant v);
 	static void		apply(const variants& source);
-	static bool		applyb(variant v) { apply(v); return true; }
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
@@ -191,6 +193,7 @@ public:
 	static void		getstatus(stringbuilder& sb, const void* object);
 	static void		play();
 	const treasurei* picktreasure();
+	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 };
 extern gamei		game;

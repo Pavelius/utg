@@ -6,9 +6,10 @@
 #define VKIND(T, V) template<> constexpr variant_s variant::kind<T>() { return V; }
 
 struct bsreq;
-union variant;
 enum variant_s : unsigned char;
+union variant;
 
+typedef sliceu<variant> variants;
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
@@ -31,6 +32,7 @@ struct varianti {
 	void				set(void* object, const char* id, int value) const;
 };
 union variant {
+	typedef bool (*fnapply)(variant v, bool run);
 	unsigned char		uc[4];
 	unsigned			u;
 	struct {
@@ -51,14 +53,14 @@ union variant {
 	constexpr bool operator!=(const variant& v) const { return u != v.u; }
 	template<class T> operator T*() const { return (T*)((kind<T>() == type) ? getpointer() : 0); }
 	void				clear() { u = 0; }
+	constexpr bool		issame(const variant& v) const { return type == v.type && value == v.value; }
 	const char*			getdescription() const;
 	const varianti&		geti() const { return bsdata<varianti>::elements[type]; }
 	const char*			getid() const;
-	int					getindex(int t) const { return (type == t) ? value : 0; }
 	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
 	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; counter = 0; }
+	static fnapply		sfapply;
 };
-typedef sliceu<variant> variants;
 template<> variant::variant(const char* v);
 template<> variant::variant(const void* v);

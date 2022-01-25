@@ -147,6 +147,9 @@
     <ClCompile Include="group.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="counter.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

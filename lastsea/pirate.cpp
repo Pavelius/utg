@@ -347,7 +347,7 @@ void pirate::chooseactions() {
 }
 
 void pirate::adventure(int page) {
-	quest::run(page, 0, utg::url, utg::header);
+	quest::run(page, utg::url, utg::header);
 	afterapply();
 }
 

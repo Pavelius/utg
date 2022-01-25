@@ -14,9 +14,20 @@ static void generate_crew(bool interactive) {
 	utg::interactive = push_interactive;
 }
 
+static void test_scene() {
+	struct seamap : draw::scenei {
+		void render() override {
+			background("navigation");
+		}
+	};
+	seamap wd;
+	wd.show();
+}
+
 static void initialize_game() {
 	generate_crew(false);
 	game.gaintreasure();
+	test_scene();
 	game.adventure(0);
 	//game.addaction("PortMarket");
 	game.play();
@@ -34,7 +45,8 @@ int main(int argc, char* argv[]) {
 	utg::url = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;
 	//srand(getcputime());
-	quest::apply = game.applyb;
+	variant::sfapply = game.sfapply;
+	quest::console = &utg::sb;
 	return draw::utgx::run(initialize_game, true, read_files);
 }
 

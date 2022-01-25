@@ -78,6 +78,7 @@ SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
 Stars: Звезды
 Story54: Радужная жемчужина
+Story74: Черная повязка на глаз
 Supply: Припасы
 Survivor: Недобиток
 Swagger: Важность
@@ -94,6 +95,7 @@ Treasure74: Острейшее мачете
 Treasure82: Чучело куницы
 Treasure84: Рыбалка 5000
 Treasure85: Идеальная цепь
+Treasure88: Непромокаемые ботинки
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
 VillainousName: Мужская злодейская фамилия
