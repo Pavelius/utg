@@ -187,18 +187,22 @@ public:
 };
 class gamei : public pirate, public shipi, public oceani {
 	char			scenario[32];
-	unsigned char	location;
+	flagable<2>		blocked;
 	adat<indext, 512> treasures;
 public:
+	unsigned char	scene;
 	static void		apply(variant v);
 	static void		apply(const variants& source);
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
+	bool			isblocked(int i) const { return blocked.is(i); }
 	static void		generate();
 	locationi&		getlocation();
 	static void		getstatus(stringbuilder& sb, const void* object);
 	const treasurei* picktreasure();
+	static void		playscene();
+	void			setblocked(int i, bool v) { return blocked.set(i, v); }
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 };

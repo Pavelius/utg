@@ -175,8 +175,9 @@
     <Text Include="locale\ru\PirateNames.txt" />
     <Text Include="locale\ru\PirateHistory.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Treasure.txt" />
+    <Text Include="rules\Treasures.txt" />
     <Text Include="scenario\BeyondTheOceanEdge.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

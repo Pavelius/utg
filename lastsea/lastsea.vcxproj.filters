@@ -94,7 +94,10 @@
     <Text Include="locale\ru\Descriptions.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="rules\Treasure.txt">
+    <Text Include="rules\Treasures.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Actions.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

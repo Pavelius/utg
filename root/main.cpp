@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 	quest::read("rules/Moves.txt");
 	messagei::read("rules/MoveMessages.txt");
 	utg::url = "northmen";
-	return draw::utgx::run(generate_character, true);
+	return draw::start(generate_character, true);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

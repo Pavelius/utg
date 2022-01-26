@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 	draw::heroes_getavatar = creature::getavatarst;
 	utg::url = "plain_village";
 	srand(getcputime());
-	return draw::utgx::run(generate_character, true);
+	return draw::start(generate_character, true);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

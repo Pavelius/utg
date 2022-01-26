@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 	utg::url = "EliteTroops";
 	bsreq::read("rules/Basic.txt");
 	messagei::read("rules/Quest.txt");
-	return draw::utgx::run(test_game, true);
+	return draw::start(test_game, true);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

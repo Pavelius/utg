@@ -1,2 +1,2 @@
-﻿In file `locale/ru/PirateNames.txt`:
- Line 1: Expected symbol `#`
+﻿In file `rules/basic.txt`:
+ Line 63: Can't find variant `PortMarket`

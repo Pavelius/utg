@@ -32,7 +32,8 @@ static void initialize_game() {
 }
 
 static void read_files() {
-	bsreq::read("rules/Treasure.txt");
+	bsreq::read("rules/Treasures.txt");
+	bsreq::read("rules/Actions.txt");
 	charname::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	variant::sfapply = game.sfapply;
 	quest::console = &utg::sb;
-	return draw::utgx::run(initialize_game, true, read_files);
+	return draw::start(initialize_game, true, read_files);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

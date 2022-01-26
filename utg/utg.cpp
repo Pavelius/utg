@@ -579,7 +579,7 @@ BSDATA(widget) = {
 };
 BSDATAF(widget)
 
-void draw::utgx::beforemodal() {
+static void beforemodal() {
 	hilite_object = 0;
 	hilite_type = figure::Rect;
 	tips_caret.x = metrics::padding + metrics::border;
@@ -587,21 +587,21 @@ void draw::utgx::beforemodal() {
 	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
 }
 
-void draw::utgx::paint() {
+static void paint() {
 	fillform();
 	caret.y += metrics::padding + metrics::border * 2;
 	height -= metrics::padding + metrics::border * 2;
 	downbar();
 }
 
-void draw::utgx::tips() {
+static void tips() {
 	tooltips_paint();
 	statusbar_paint();
 }
 
 void initialize_png();
 
-int draw::utgx::run(fnevent proc, bool darkmode, fnevent afterread) {
+int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!pstatus)
 		pstatus = statusinfo;
@@ -611,7 +611,7 @@ int draw::utgx::run(fnevent proc, bool darkmode, fnevent afterread) {
 		set_dark_theme();
 	else
 		set_light_theme();
-	bsreq::read("rules/basic.txt");
+	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	if(afterread)
 		afterread();

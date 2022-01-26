@@ -1,8 +1,7 @@
 #include "main.h"
 
 gamei		game;
-int			last_count;
-int			last_choose, last_page;
+int			last_choose, last_page, last_scene;
 ability_s	last_ability;
 actioni*	last_action;
 
@@ -37,8 +36,12 @@ static void fixerror(const char* id, ...) {
 
 static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case Roll: game.roll(); break;
-	case Choose: last_choose = bonus; break;
+	case Roll:
+		game.roll();
+		break;
+	case Choose:
+		last_choose = bonus;
+		break;
 	case Page000: last_page = bonus; break;
 	case Page100: last_page = 100 + bonus; break;
 	case Page200: last_page = 200 + bonus; break;
@@ -49,7 +52,14 @@ static void special_command(special_s v, int bonus) {
 	case Page700: last_page = 700 + bonus; break;
 	case Page800: last_page = 800 + bonus; break;
 	case Page900: last_page = 900 + bonus; break;
-	default: break;
+	case Scene:
+		if(!bonus)
+			last_scene = game.scene;
+		else
+			last_scene = bonus;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -57,9 +67,8 @@ void gamei::apply(variant v) {
 	switch(v.type) {
 	case Ability:
 		last_ability = (ability_s)v.value;
-		last_count = v.counter;
-		if(last_count)
-			game.set(last_ability, game.get(last_ability) + last_count);
+		if(v.counter)
+			game.set(last_ability, game.get(last_ability) + v.counter);
 		break;
 	case Special:
 		special_command((special_s)v.value, v.counter);
@@ -74,7 +83,7 @@ void gamei::apply(const variants& source) {
 }
 
 locationi& gamei::getlocation() {
-	return bsdata<locationi>::elements[location];
+	return bsdata<locationi>::elements[scene];
 }
 
 void gamei::createtreasure() {
@@ -98,4 +107,8 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 		pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
 		break;
 	}
+}
+
+void gamei::playscene() {
+	game.getlocation().play();
 }

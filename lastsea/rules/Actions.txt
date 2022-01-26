@@ -1,0 +1,60 @@
+#Action
+
+CaptainMission script(Mission+1)
+CaptainCabine script(Cabine+1)
+BuryTreasure script(VisitManyTimes Bury+2)
+PortMarket script(Swagger+1 Roll) result(1 7 11 16)
+ outcome1 Choose+1
+ outcome2 Choose+2
+ outcome3 Choose+3
+ outcome4 Page200+97
+AbandonedHouses script(Exploration+1 Roll) result(1 7 11 16)
+ outcome1 Reroll+1
+ outcome2 Treasure+1
+ outcome3 Treasure+2
+ outcome4 Page200+98
+TheTipsyTortoise script(Crew+1 Brawl+1 Roll) result(1 7 14)
+ outcome1 Page200+99
+ outcome2 Page300
+ outcome3 Page300+1
+PsichycsShanty script(Roll) result(1 5 6 12)
+ outcome1 Page300+2
+ outcome2 Page300+3
+ outcome3 Page300+4
+ outcome4 Page300+5
+PortWorkTheShip script(Choose+2 VisitManyTimes)
+HungryCrew script(choose+1)
+ChartACourse script(Navigation+1 Roll) result(1 16)
+ outcome1 Tile+2
+ outcome2 Tile+3 Tresure+1
+Explore
+SpearFish script(Hunt+1 Roll) result(1 5 9 12 16)
+ outcome1 Crew-1 Supply+1 Infamy-2
+ outcome2 Supply+1
+ outcome3 Supply+2 Treasure+1
+ outcome4 Supply+3 Treasure+1
+ outcome4 Supply+3 Treasure+2 Infamy+3
+PrepareGuns script(Choose+2)
+TalkToCrew
+SailOn
+
+#Case
+
+GetSupplies PortMarket outcome(Supply+2)
+GatherNews PortMarket outcome(Reroll+1)
+GetSomethingNice PortMarket outcome(Supply-1 Treasure+1)
+GetCoolHairCut PortMarket outcome(Supply-1 Infamy+2)
+GetCannon PortMarket outcome(Supply-2)
+
+RepairTheHull PortWorkTheShip outcome(Hull+1)
+ScareOffPeskySeagulls PortWorkTheShip outcome(Supply+1 Infamy+3)
+ChartACourse PortWorkTheShip outcome(Scout+2 Navigation+1)
+RummageThrounghtOtherBelongings PortWorkTheShip outcome(Steal+1)
+
+#Location
+
+OpenSea image(open_sea)
+ actions HungryCrew ChartACourse SpearFish PrepareGuns TalkToCrew CaptainCabine SailOn
+
+Port image(port) next(808)
+ actions PortMarket AbandonedHouses TheTipsyTortoise PsichycsShanty PortWorkTheShip CaptainMission BuryTreasure

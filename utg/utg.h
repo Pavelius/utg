@@ -9,11 +9,13 @@
 
 #pragma once
 
+typedef flagable<4> flaga;
 struct widget {
 	const char*		id;
 	fnevent			proc;
 	explicit operator bool() const { return id != 0; }
 };
+
 namespace draw {
 extern array*		heroes;
 extern fngetname	heroes_getavatar;
@@ -31,16 +33,11 @@ void				label(const char* id, const char* value, const void* object);
 void				label(const void* object, const variants& elements, fngetinfo pget);
 void				noavatar();
 void				setcaret(int x, int y);
+void				setnext(fnevent v);
+int					start(fnevent proc, bool darkmode, fnevent afterread = 0);
 void				texth2(const char* title);
 void				vertical(fnevent proc);
-namespace utgx {
-void				beforemodal();
-void				paint();
-int					run(fnevent proc, bool darkmode, fnevent afterread = 0);
-void				tips();
 }
-}
-typedef flagable<4> flaga;
 namespace utg {
 namespace callback {
 extern fngetinfo	getinfo;

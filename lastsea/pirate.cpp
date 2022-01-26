@@ -194,10 +194,15 @@ void pirate::afterapply() {
 		last_page = 0;
 		adventure(v);
 	}
-	if(last_choose > 0) {
+	if(last_action && last_choose > 0) {
 		auto v = last_choose;
 		last_choose = 0;
 		last_action->choose(v);
+	}
+	if(last_scene) {
+		game.scene = last_scene;
+		last_scene = 0;
+		draw::setnext(game.playscene);
 	}
 }
 
