@@ -1,10 +1,21 @@
 #include "main.h"
 
 static void print(stringbuilder& sb, variant v) {
+	const char* format = "%+1i";
 	switch(v.type) {
 	case Special:
-		if(v.value == VisitManyTimes)
+		switch(v.value) {
+		case VisitManyTimes:
 			return;
+		case Steal:
+			format = "%1i";
+			break;
+		case ReloadGun:
+			format = getnm("UpToLevel");
+			break;
+		default:
+			break;
+		}
 		break;
 	default: break;
 	}
@@ -13,7 +24,7 @@ static void print(stringbuilder& sb, variant v) {
 		sb.add("[-");
 	sb.adds(v.getname());
 	if(v.counter)
-		sb.add("%+1i", v.counter);
+		sb.adds(format, v.counter);
 	if(negative)
 		sb.add("]");
 }
@@ -23,17 +34,18 @@ static void print(stringbuilder& sb, const variants& source) {
 		print(sb, v);
 }
 
-void actioni::getinfo(stringbuilder& sb) const {
-	print(sb, script);
-}
-
-void casei::getinfo(stringbuilder& sb) const {
-	print(sb, outcome);
+void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
+	if(bsdata<quest>::have(object)) {
+		auto p = (quest*)object;
+		if(p->next==0)
+			print(sb, p->tags);
+		else {
+			auto ph = quest::find(p->next);
+			if(ph)
+				print(sb, p->tags);
+		}
+	}
 }
 
 void gamei::getstatus(stringbuilder& sb, const void* object) {
-	if(bsdata<actioni>::have(object))
-		((actioni*)object)->getinfo(sb);
-	else if(bsdata<casei>::have(object))
-		((casei*)object)->getinfo(sb);
 }

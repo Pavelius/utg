@@ -72,12 +72,6 @@ bool pirate::match(variant v) const {
 	switch(v.type) {
 	case Class: return classid == v.value;
 	case Gender: return getgender() == v.value;
-	case Action:
-		for(auto e : actions) {
-			if(e == v)
-				return true;
-		}
-		return false;
 	default:
 		return false;
 	}
@@ -92,6 +86,8 @@ int	pirate::getmaximum(ability_s v) const {
 	case Swagger:
 	case Navigation:
 		return getclass().maximum[v - Exploration];
+	case Infamy:
+		return 3;
 	case Stars: return 18;
 	case Level: case Mission: case Cabine: case Threat:
 		return 5;
@@ -188,55 +184,7 @@ static void fixroll(stringbuilder& sb) {
 	sb.add(getnm("YouRoll"), last_result, last_roll, last_bonus);
 }
 
-void pirate::afterapply() {
-	if(last_page > 0) {
-		auto v = last_page;
-		last_page = 0;
-		adventure(v);
-	}
-	if(last_action && last_choose > 0) {
-		auto v = last_choose;
-		last_choose = 0;
-		last_action->choose(v);
-	}
-	if(last_scene) {
-		if(game.scene != last_scene) {
-			game.unlockall();
-			game.scene = last_scene;
-		}
-		last_scene = 0;
-		draw::setnext(game.playscene);
-	}
-}
-
-void pirate::roll() {
-	char temp[260]; stringbuilder sb(temp);
-	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus = get(last_ability);
-		last_bonus += getbonus(last_ability);
-	}
-	while(true) {
-		sb.clear();
-		if(last_ability >= Exploration && last_ability <= Navigation)
-			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
-		else
-			sb.add(getnm("RollDice"), last_bonus);
-		answers an;
-		an.add(0, getnm("MakeRoll"));
-		auto pv = utg::choose(an, temp);
-		if(!pv)
-			break;
-	}
-	rollv(last_bonus);
-	sb.clear(); fixroll(sb); information(temp);
-	if(!last_action)
-		return;
-	auto stage = last_action->getstage(last_result);
-	game.apply(last_action->getoutcome(stage));
-	afterapply();
-}
-
-void pirate::addaction(variant v) {
+void pirate::addaction(indext v) {
 	for(auto& e : actions) {
 		if(e)
 			continue;
@@ -266,22 +214,6 @@ void pirate::gaintreasure(int count) {
 	}
 }
 
-void pirate::playround() {
-	char temp[260]; stringbuilder sb(temp);
-	auto push_header = utg::header;
-	utg::header = temp;
-	for(auto v : actions) {
-		last_action = v;
-		if(!last_action)
-			continue;
-		utg::sb.clear();
-		sb.clear(); sb.add("%1 - %2", push_header, getnm(last_action->id));
-		game.apply(last_action->script);
-		utg::pause();
-	}
-	utg::header = push_header;
-}
-
 int pirate::getbonus(ability_s v) const {
 	auto r = 0;
 	for(auto ev : treasures) {
@@ -307,12 +239,10 @@ bool pirate::confirm(ability_s v, int delta) const {
 }
 
 static int compare(const void* v1, const void* v2) {
-	if(!last_location)
-		return 0;
-	auto e1 = *((variant*)v1);
-	auto e2 = *((variant*)v2);
-	auto p1 = last_location->getpriority(e1);
-	auto p2 = last_location->getpriority(e2);
+	auto e1 = *((indext*)v1);
+	auto e2 = *((indext*)v2);
+	auto p1 = (e1 == 0) ? 30000 : e1;
+	auto p2 = (e2 == 0) ? 30000 : e2;
 	return p1 - p2;
 }
 
@@ -320,31 +250,8 @@ void pirate::sortactions() {
 	qsort(actions, sizeof(actions) / sizeof(actions[0]), sizeof(actions[0]), compare);
 }
 
-void pirate::chooseactions() {
-	if(!last_location)
-		return;
-	answers an;
-	utg::sb.clear();
-	clearactions();
-	piratechoose san(an);
-	char temp[260]; stringbuilder sb(temp);
-	for(auto v : last_location->actions) {
-		auto p = (actioni*)v;
-		if(!p)
-			continue;
-		sb.clear();
-		sb.add(getnm(p->id));
-		if(p->is(VisitManyTimes))
-			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
-		an.add(p, temp);
-	}
-	san.choose(getnm("WhatDoYouWantToVisit"), 4);
-	sortactions();
-}
-
 void pirate::adventure(int page) {
 	quest::run(page, utg::url, utg::header);
-	afterapply();
 }
 
 static void start_adventure(int v, int* pages) {
@@ -366,4 +273,194 @@ void pirate::captainmission() {
 void pirate::makethreat() {
 	static int pages[] = {791, 792, 793, 794, 795};
 	start_adventure(abilities[Threat], pages);
+}
+
+static void start_page(const quest* ph) {
+	utg::sb.clear();
+	if(ph->header)
+		utg::header = ph->header;
+	if(ph->image)
+		utg::url = ph->image;
+	if(ph->text)
+		utg::sb.add(ph->text);
+}
+
+static const quest* find_page(int v) {
+	for(auto& e : bsdata<quest>()) {
+		if(e.index == v)
+			return &e;
+	}
+	return 0;
+}
+
+static const quest* find_next_action(const quest* p) {
+	if(p && p[1].index == p[0].index && p[1].next > 100)
+		return p + 1;
+	return 0;
+}
+
+void pirate::chooseactions(int scene) {
+	struct handler : utg::choosei {
+		void apply(int index, const void* object) override {
+			auto n = (quest*)object - bsdata<quest>::elements;
+			pr->addaction(n);
+		}
+		bool isallow(int index, const void* object) const override {
+			auto p = (quest*)object;
+			if(game.islocked(index))
+				return false;
+			if(p->is(VisitManyTimes))
+				return true;
+			if(ismarked(index))
+				return false;
+			return true;
+		}
+		pirate* pr;
+		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
+	};
+	auto ph = find_page(4000 + scene);
+	if(!ph)
+		return;
+	start_page(ph);
+	answers an;
+	clearactions();
+	handler san(an, this);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto p = find_next_action(ph); p; p = find_next_action(p)) {
+		sb.clear();
+		sb.add(p->text);
+		if(p->is(VisitManyTimes))
+			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
+		an.add(p, temp);
+	}
+	san.choose(getnm("WhatDoYouWantToVisit"), 4);
+	sortactions();
+}
+
+void pirate::playactions() {
+	for(auto v : actions) {
+		if(!v)
+			continue;
+		playaction(v);
+		utg::pause(getnm("NextAction"));
+	}
+}
+
+static const quest* last_action;
+
+void pirate::afterapply() {
+	while(last_page || last_choose || last_scene) {
+		if(last_page > 0) {
+			auto v = last_page;
+			last_page = 0;
+			adventure(v);
+			continue;
+		}
+		if(last_choose > 0) {
+			auto v = last_choose;
+			last_choose = 0;
+			playchoose(v);
+			continue;
+		}
+		if(last_scene) {
+			if(game.scene != last_scene) {
+				game.unlockall();
+				game.scene = last_scene;
+			}
+			last_scene = 0;
+			draw::setnext(game.playscene);
+			continue;
+		}
+	}
+}
+
+void pirate::playaction(int id) {
+	auto ph = bsdata<quest>::elements + id;
+	last_action = find_page(ph->next);
+	if(!last_action)
+		return;
+	start_page(last_action);
+	last_page = last_choose = last_scene = 0;
+	game.apply(last_action->tags);
+	afterapply();
+}
+
+static const quest* find_stage(const quest* ph, int stage) {
+	const quest* pr = 0;
+	for(auto p = ph + 1; p->index == ph->index && p->next && stage >= p->next; p++)
+		pr = p;
+	return pr;
+}
+
+void pirate::roll() {
+	char temp[260]; stringbuilder sb(temp);
+	if(last_ability >= Exploration && last_ability <= Navigation) {
+		last_bonus = get(last_ability);
+		last_bonus += getbonus(last_ability);
+	}
+	while(true) {
+		sb.clear();
+		if(last_ability >= Exploration && last_ability <= Navigation)
+			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
+		else
+			sb.add(getnm("RollDice"), last_bonus);
+		answers an;
+		an.add(0, getnm("MakeRoll"));
+		auto pv = utg::choose(an, temp);
+		if(!pv)
+			break;
+	}
+	rollv(last_bonus);
+	sb.clear(); fixroll(sb); information(temp);
+	if(!last_action)
+		return;
+	auto ps = find_stage(last_action, last_result);
+	if(ps) {
+		if(ps->text)
+			act(utg::sb, ps->text);
+		game.apply(ps->tags);
+	}
+}
+
+static const quest* find_action_choose(const quest* ph) {
+	if(!ph)
+		return 0;
+	const quest* p = ph + 1;
+	while(p->index == ph->index) {
+		if(p->next == 0)
+			return p;
+		p++;
+	}
+	return 0;
+}
+
+void pirate::playchoose(int count) {
+	struct handler : utg::choosei {
+		void apply(int index, const void* object) override {
+			auto p = (quest*)object;
+			if(p)
+				game.apply(p->tags);
+		}
+		bool isallow(int index, const void* object) const override {
+			auto p = (quest*)object;
+			if(p->is(VisitManyTimes))
+				return true;
+			if(ismarked(index))
+				return false;
+			return true;
+		}
+		pirate* pr;
+		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
+	};
+	if(!last_action)
+		return;
+	answers an; handler san(an, this);
+	for(auto p = find_action_choose(last_action); p && p->index==last_action->index && p->next == 0; p++)
+		an.add(p, p->text);
+	san.choose(0, count);
+}
+
+void pirate::playscene(int scene) {
+	chooseactions(scene);
+	playactions();
 }

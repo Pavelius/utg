@@ -24,7 +24,7 @@ static bool isevent(const char* p) {
 
 static const char* read_string(const char* p, stringbuilder& result) {
 	result.clear();
-	if(p[0] == '#')
+	if(p[0] == '#' || isnum(p[0]))
 		return p;
 	while(*p) {
 		if(*p == '\n' || *p == '\r') {
@@ -44,6 +44,18 @@ static void add(variants& e, variant v) {
 	auto p = (variant*)bsdata<variant>::source.add();
 	*p = v;
 	e.count++;
+}
+
+static const char* read_params(const char* p, short& v) {
+	if(!checksym(p, '('))
+		return p;
+	p = skipws(p + 1);
+	p = stringbuilder::read(p, v);
+	p = skipws(p);
+	if(!checksym(p, ')'))
+		return p;
+	p = skipws(p + 1);
+	return p;
 }
 
 static const char* read_params(const char* p, stringbuilder& result) {
@@ -72,7 +84,10 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 			pe->image = getstring(result);
 		} else if(equal(pn, "Header")) {
 			p = read_params(p, result);
-		} else {
+			pe->header = getstring(result);
+		} else if(equal(pn, "next"))
+			p = read_params(p, pe->next);
+		else {
 			int bonus; p = readbon(p, bonus);
 			p = skipws(p);
 			variant v = (const char*)result.begin();
@@ -142,6 +157,23 @@ static void apply(const variants& source) {
 		return;
 	for(auto v : source)
 		variant::sfapply(v, true);
+}
+
+bool quest::is(variant v) const {
+	for(auto e : tags) {
+		if(e.type == v.type && e.value == v.value)
+			return true;
+	}
+	return false;
+}
+
+const quest* quest::find(short id) {
+	for(auto& e : bsdata<quest>()) {
+		if(e.index != id)
+			continue;
+		return &e;
+	}
+	return 0;
 }
 
 const quest* quest::findprompt(short id) {

@@ -3,7 +3,6 @@
 gamei		game;
 int			last_choose, last_page, last_scene;
 ability_s	last_ability;
-actioni*	last_action;
 
 static void generate_classes() {
 	auto push_interactive = utg::interactive;
@@ -59,10 +58,12 @@ static void special_command(special_s v, int bonus) {
 			last_scene = bonus;
 		break;
 	case AddGun:
-		game.addgun(bonus, true, true);
+		if(game.addgun(bonus, true, true))
+			game.information(getnm("GunAdded"), bonus);
 		break;
 	case AddGunUnloaded:
-		game.addgun(bonus, false, true);
+		if(game.addgun(bonus, false, true))
+			game.information(getnm("GunAddedUnloaded"), bonus);
 		break;
 	case ReloadGun:
 		game.reloadgun(bonus, true);
@@ -121,17 +122,5 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 }
 
 void gamei::playscene() {
-	auto index = bsdata<locationi>::source.find(&game.scene, FO(locationi,scene), sizeof(game.scene));
-	if(index == -1)
-		return;
-	showlogs();
-	last_location = bsdata<locationi>::elements + index;
-	last_location->play();
-}
-
-void gamei::showlogs() {
-	if(!utg::sb)
-		return;
-	utg::pause();
-	utg::sb.clear();
+	game.pirate::playscene(game.scene);
 }

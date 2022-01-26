@@ -42,16 +42,7 @@
     <ClCompile Include="tag.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="action.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="information.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
-    <ClCompile Include="location.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
-    <ClCompile Include="piratechoose.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="sprite_util.cpp">
@@ -98,9 +89,6 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Treasures.txt">
-      <Filter>Данные</Filter>
-    </Text>
-    <Text Include="rules\Actions.txt">
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\QuestActions.txt">

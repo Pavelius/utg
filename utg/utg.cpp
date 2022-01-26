@@ -574,6 +574,7 @@ BSMETA(widget) = {
 	BSREQ(id),
 	{}};
 BSDATA(widget) = {
+	{"ListOfFronts", list_of_fronts},
 	{"RightAlignValue", right_align_value},
 	{"Separator", separator},
 };

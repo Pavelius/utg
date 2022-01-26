@@ -1,3 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `Loaded`
- Define translate for `Unloaded`
+﻿In file `locale/ru/QuestActions.txt`:
+ Line 6: Can't find variant `next`

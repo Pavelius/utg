@@ -31,6 +31,8 @@ const char* variant::getid() const {
 	auto& e = bsdata<varianti>::elements[type];
 	if(!e.source)
 		return "NoVariant";
+	if(!e.isnamed())
+		return "NoName";
 	return *((char**)getpointer());
 }
 
@@ -51,11 +53,6 @@ int varianti::found(const char* id, size_t size) const {
 	int i = -1;
 	if(isnamed())
 		i = source->findps(id, 0, size);
-	else if(is(varianti::FoundByIndex)) {
-		auto p = match(id, this->id);
-		if(p)
-			stringbuilder::read(p, i);
-	}
 	return i;
 }
 

@@ -38,7 +38,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Action, Card, Case, Class, Gender, Group, Location, Menu, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Group, Menu, Quest, Special, Tag, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
@@ -50,35 +50,6 @@ typedef short unsigned indext;
 struct abilityi {
 	const char*		id;
 	ability_type_s	type;
-};
-struct actioni {
-	const char*		id;
-	variants		script;
-	char			result[6];
-	variants		outcome1, outcome2, outcome3, outcome4, outcome5, outcome6;
-	void			choose(int count) const;
-	void			getinfo(stringbuilder& sb) const;
-	bool			is(variant v) const;
-	variants		getoutcome(int v) const;
-	int				getstage(int v) const;
-	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((actioni*)v)->getinfo(sb); }
-};
-struct casei {
-	const char*		id;
-	variant			type;
-	variants		outcome;
-	void			getinfo(stringbuilder& sb) const;
-	static void		sfgetinfo(const void* v, stringbuilder& sb) { ((casei*)v)->getinfo(sb); }
-};
-struct locationi {
-	const char*		id;
-	const char*		image;
-	short unsigned	scene;
-	variants		actions;
-	short unsigned	next;
-	static const locationi* find(short unsigned scene);
-	int				getpriority(variant v) const;
-	void			play() const;
 };
 struct shipi {
 	indext			index;
@@ -148,25 +119,23 @@ public:
 	void operator=(const char* v) { stringbuilder sb(data); sb.add(v); }
 	operator const char*() const { return data; }
 };
-struct piratechoose : utg::choosei {
-	void			apply(int index, const void* object) override;
-	bool			isallow(int index, const void* object) const override;
-	piratechoose(answers& an) : choosei(an) {}
-};
 class pirate : public historyable {
 	char			abilities[Infamy + 1];
-	variant			actions[6];
+	indext			actions[6];
 	variant			treasures[4];
-	void			afterapply();
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
+	void			chooseactions(int scene);
+	void			playactions();
+	void			playaction(int id);
+	void			playchoose(int id);
 	void			sortactions();
 public:
 	void			adventure(int page);
-	void			addaction(variant v);
+	void			addaction(indext v);
+	void			afterapply();
 	void			captaincabine();
 	void			captainmission();
-	void			chooseactions();
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
@@ -181,7 +150,7 @@ public:
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
-	void			playround();
+	void			playscene(int scene);
 	void			roll();
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
@@ -217,8 +186,8 @@ public:
 	const treasurei* picktreasure();
 	static void		playscene();
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
+	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
-	static void		showlogs();
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 };
@@ -226,10 +195,7 @@ extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 extern int			last_choose, last_page, last_scene;
 extern ability_s	last_ability;
-extern actioni*		last_action;
-extern locationi*	last_location;
 int					rollv(int bonus);
-VKIND(actioni, Action)
 VKIND(gender_s, Gender)
 VKIND(special_s, Special)
 VKIND(treasurei, Card)

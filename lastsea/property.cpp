@@ -13,12 +13,6 @@ BSDATAD(variant)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(actioni) = {
-	BSREQ(id),
-	BSREQ(result), BSREQ(script),
-	BSREQ(outcome1), BSREQ(outcome2), BSREQ(outcome3), BSREQ(outcome4), BSREQ(outcome5), BSREQ(outcome6),
-	{}};
-BSDATAC(actioni, 128)
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
@@ -28,11 +22,6 @@ BSMETA(classi) = {
 	BSREQ(exploration), BSREQ(brawl), BSREQ(hunting), BSREQ(aim), BSREQ(swagger), BSREQ(navigation),
 	{}};
 BSDATAC(classi, 64)
-BSMETA(locationi) = {
-	BSREQ(id),
-	BSREQ(actions), BSREQ(image), BSREQ(next), BSREQ(scene),
-	{}};
-BSDATAC(locationi, 64)
 BSMETA(pirate) = {
 	{}};
 BSDATAC(pirate, 4)
@@ -45,11 +34,10 @@ BSMETA(tagi) = {
 BSMETA(widget) = {
 	BSREQ(id),
 	{}};
-BSMETA(casei) = {
-	BSREQ(id), BSREQ(type),
-	BSREQ(outcome),
+BSMETA(quest) = {
+	BSREQ(text), BSREQ(image), BSREQ(header),
+	BSREQ(index), BSREQ(next),
 	{}};
-BSDATAC(casei, 512)
 BSMETA(treasurei) = {
 	BSREQ(id),
 	BSREQ(abilities),
@@ -61,14 +49,12 @@ BSDATAC(treasurei, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
-	{"Action", VRSTD(actioni), 1, 0, 0, actioni::sfgetinfo},
-	{"Case", VRSTD(casei), 2, 0, 0, casei::sfgetinfo},
 	{"Card", VRSTD(treasurei), 1},
 	{"Class", VRSTD(classi), 1},
 	{"Gender", VRSTD(genderi), 1},
 	{"Group", VRSTD(groupi), 1},
-	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
+	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Value", VRSTD(groupvaluei), 1},

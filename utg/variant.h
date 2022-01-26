@@ -13,12 +13,10 @@ typedef sliceu<variant> variants;
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
-	enum { NotFoundByName, FoundByIndex };
 	const char*			id;
 	const bsreq*		metadata;
 	array*				source;
 	int                 key_count;
-	unsigned			flags;
 	fngetname			pgetname;
 	fnstatus			pgetinfo;
 	fngetinfo			pgetproperty;
@@ -26,8 +24,7 @@ struct varianti {
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);
 	int					found(const char* id, size_t size) const;
-	constexpr bool		is(unsigned v) const { return (flags & FG(v)) != 0; }
-	constexpr bool		isnamed() const { return !is(NotFoundByName); }
+	constexpr bool		isnamed() const { return key_count==1; }
 	void				set(void* object, const char* id, void* value) const;
 	void				set(void* object, const char* id, int value) const;
 };
