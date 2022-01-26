@@ -37,6 +37,11 @@ GetCoolHairCut: Сделать крутую прическу
 GetSomethingNice: Купить что-то классненькое
 GetSupplies: Купить провизию для команды
 Grifter: Пройдоха
+Gun1: Левый борт
+Gun2: Правый борт
+Gun3: Кормовые пушки
+Gun4: Передние пушки
+GunStatus: Уровень [%1i] %-2
 HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
 Hull: Корпус
@@ -46,6 +51,7 @@ Infamy: Слава
 LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
+Loaded: Заряжены
 MadeUpInterrogationTactic: Несуществующая пытка
 Magic19: Блюдо со странным запахом
 MakeRoll: Выполнить бросок
@@ -108,6 +114,7 @@ Treasure85: Идеальная цепь
 Treasure88: Непромокаемые ботинки
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
+Unloaded: Не заряжены
 VillainousName: Мужская злодейская фамилия
 VisitManyTimes: Можно посещать несколько раз.
 WellRegardedProfession: Уважаемая профессия

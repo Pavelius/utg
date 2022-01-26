@@ -1,2 +1,3 @@
-﻿In file `rules/basic.txt`:
- Line 63: Can't find variant `PortMarket`
+﻿In file `Names.txt`:
+ Define translate for `Loaded`
+ Define translate for `Unloaded`

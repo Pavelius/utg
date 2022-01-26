@@ -60,6 +60,9 @@
     <ClCompile Include="main_util.cpp">
       <Filter>Утилиты</Filter>
     </ClCompile>
+    <ClCompile Include="cannoneer.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

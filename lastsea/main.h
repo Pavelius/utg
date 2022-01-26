@@ -19,11 +19,13 @@ enum ability_s : unsigned char {
 	Threat, Mission, Cabine,
 	CounterA, CounterB, CounterC, CounterD,
 	Stars, Level, Infamy,
+	Gun1, Gun2, Gun3, Gun4,
+	Tresure1, Tresure2, Tresure3, Tresure4,
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene, Tile,
-	GunLoadOrHull,
+	PaySupply, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
@@ -185,7 +187,19 @@ public:
 	void			set(ability_s v, int i);
 	void			warning(const char* format, ...);
 };
-class gamei : public pirate, public shipi, public oceani {
+class cannoneer {
+	unsigned char	guns[4];
+	int				getgun(int level, bool loaded) const { return 1 + (level - 1) * 2 + (loaded ? 1 : 0); }
+	int				getlevel(int v) const { return v ? 1 + (v - 1) / 2 : 0; }
+	bool			isloaded(int v) const { return (v % 2) == 0; }
+public:
+	bool			addgun(int level, bool loaded, bool run);
+	void			clearweapons() { memset(this, 0, sizeof(*this)); }
+	int				getgunlevel(int index) const;
+	bool			isgunloaded(int index) const;
+	bool			reloadgun(int level, bool run);
+};
+class gamei : public pirate, public shipi, public oceani, public cannoneer {
 	char			scenario[32];
 	flagable<2>		locked;
 	adat<indext, 512> treasures;

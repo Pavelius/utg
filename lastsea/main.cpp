@@ -37,6 +37,7 @@ static void read_files() {
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
 	quest::read("scenario/BeyondTheOceanEdge.txt");
+	quest::read("locale/ru/QuestActions.txt");
 }
 
 int main(int argc, char* argv[]) {

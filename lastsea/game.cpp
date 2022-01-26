@@ -58,6 +58,15 @@ static void special_command(special_s v, int bonus) {
 		else
 			last_scene = bonus;
 		break;
+	case AddGun:
+		game.addgun(bonus, true, true);
+		break;
+	case AddGunUnloaded:
+		game.addgun(bonus, false, true);
+		break;
+	case ReloadGun:
+		game.reloadgun(bonus, true);
+		break;
 	default:
 		break;
 	}
@@ -100,7 +109,13 @@ const treasurei* gamei::picktreasure() {
 void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	switch(v.type) {
 	case Ability:
-		pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
+		if(v.value >= Gun1 && v.value <= Gun4) {
+			auto level = game.getgunlevel(v.value - Gun1);
+			auto loaded = game.isgunloaded(v.value - Gun1);
+			if(level > 0)
+				sb.add(getnm("GunStatus"), level, getnm(loaded ? "Loaded" : "Unloaded"));
+		} else
+			pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
 		break;
 	}
 }

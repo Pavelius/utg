@@ -49,7 +49,13 @@ static void add(variants& e, variant v) {
 static const char* read_params(const char* p, stringbuilder& result) {
 	if(!checksym(p, '('))
 		return p;
-	p = readidn(skipws(p + 1), result);
+	p = skipws(p + 1);
+	if(p[0] == '\"') {
+		result.clear();
+		p = result.psstr(p + 1, p[0]);
+	} else
+		p = readidn(p, result);
+	p = skipws(p);
 	if(!checksym(p, ')'))
 		return p;
 	p = skipws(p + 1);
@@ -61,9 +67,11 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 		p = readidn(p, result);
 		p = skipws(p);
 		auto pn = result.begin();
-		if(equal(pn, "image")) {
+		if(equal(pn, "Image")) {
 			p = read_params(p, result);
 			pe->image = getstring(result);
+		} else if(equal(pn, "Header")) {
+			p = read_params(p, result);
 		} else {
 			int bonus; p = readbon(p, bonus);
 			p = skipws(p);

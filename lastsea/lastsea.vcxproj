@@ -158,6 +158,7 @@
     <ClCompile Include="special.cpp" />
     <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="cannoneer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
