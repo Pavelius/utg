@@ -82,10 +82,6 @@ void gamei::apply(const variants& source) {
 		apply(v);
 }
 
-locationi& gamei::getlocation() {
-	return bsdata<locationi>::elements[scene];
-}
-
 void gamei::createtreasure() {
 	auto m = bsdata<treasurei>::source.getcount();
 	for(unsigned i = 0; i < m; i++)
@@ -110,5 +106,17 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 }
 
 void gamei::playscene() {
-	game.getlocation().play();
+	auto index = bsdata<locationi>::source.find(&game.scene, FO(locationi,scene), sizeof(game.scene));
+	if(index == -1)
+		return;
+	showlogs();
+	last_location = bsdata<locationi>::elements + index;
+	last_location->play();
+}
+
+void gamei::showlogs() {
+	if(!utg::sb)
+		return;
+	utg::pause();
+	utg::sb.clear();
 }

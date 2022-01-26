@@ -1,5 +1,7 @@
 #include "main.h"
 
+locationi* last_location;
+
 int locationi::getpriority(variant v) const {
 	auto i = 0;
 	for(auto e : actions) {

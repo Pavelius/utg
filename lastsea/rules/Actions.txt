@@ -53,8 +53,8 @@ RummageThrounghtOtherBelongings PortWorkTheShip outcome(Steal+1)
 
 #Location
 
-OpenSea image(open_sea)
+OpenSea image(open_sea) scene(3)
  actions HungryCrew ChartACourse SpearFish PrepareGuns TalkToCrew CaptainCabine SailOn
 
-Port image(port) next(808)
+Port image(port) next(808) scene(19)
  actions PortMarket AbandonedHouses TheTipsyTortoise PsichycsShanty PortWorkTheShip CaptainMission BuryTreasure

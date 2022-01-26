@@ -30,7 +30,7 @@ BSMETA(classi) = {
 BSDATAC(classi, 64)
 BSMETA(locationi) = {
 	BSREQ(id),
-	BSREQ(actions), BSREQ(image), BSREQ(next),
+	BSREQ(actions), BSREQ(image), BSREQ(next), BSREQ(scene),
 	{}};
 BSDATAC(locationi, 64)
 BSMETA(pirate) = {

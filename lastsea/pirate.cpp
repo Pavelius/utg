@@ -200,7 +200,10 @@ void pirate::afterapply() {
 		last_action->choose(v);
 	}
 	if(last_scene) {
-		game.scene = last_scene;
+		if(game.scene != last_scene) {
+			game.unlockall();
+			game.scene = last_scene;
+		}
 		last_scene = 0;
 		draw::setnext(game.playscene);
 	}
@@ -304,11 +307,12 @@ bool pirate::confirm(ability_s v, int delta) const {
 }
 
 static int compare(const void* v1, const void* v2) {
+	if(!last_location)
+		return 0;
 	auto e1 = *((variant*)v1);
 	auto e2 = *((variant*)v2);
-	auto& ei = game.getlocation();
-	auto p1 = ei.getpriority(e1);
-	auto p2 = ei.getpriority(e2);
+	auto p1 = last_location->getpriority(e1);
+	auto p2 = last_location->getpriority(e2);
 	return p1 - p2;
 }
 
@@ -317,12 +321,14 @@ void pirate::sortactions() {
 }
 
 void pirate::chooseactions() {
+	if(!last_location)
+		return;
 	answers an;
 	utg::sb.clear();
 	clearactions();
 	piratechoose san(an);
 	char temp[260]; stringbuilder sb(temp);
-	for(auto v : game.getlocation().actions) {
+	for(auto v : last_location->actions) {
 		auto p = (actioni*)v;
 		if(!p)
 			continue;

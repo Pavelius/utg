@@ -187,30 +187,33 @@ public:
 };
 class gamei : public pirate, public shipi, public oceani {
 	char			scenario[32];
-	flagable<2>		blocked;
+	flagable<2>		locked;
 	adat<indext, 512> treasures;
 public:
-	unsigned char	scene;
+	unsigned short	scene;
 	static void		apply(variant v);
 	static void		apply(const variants& source);
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
-	bool			isblocked(int i) const { return blocked.is(i); }
+	bool			islocked(int i) const { return locked.is(i); }
+	void			lock(int i) { locked.set(i); }
 	static void		generate();
-	locationi&		getlocation();
 	static void		getstatus(stringbuilder& sb, const void* object);
 	const treasurei* picktreasure();
 	static void		playscene();
-	void			setblocked(int i, bool v) { return blocked.set(i, v); }
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
+	static void		showlogs();
+	void			unlockall() { locked.clear(); }
+	void			unlock(int i) { locked.remove(i); }
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 extern int			last_choose, last_page, last_scene;
 extern ability_s	last_ability;
 extern actioni*		last_action;
+extern locationi*	last_location;
 int					rollv(int bonus);
 VKIND(actioni, Action)
 VKIND(gender_s, Gender)

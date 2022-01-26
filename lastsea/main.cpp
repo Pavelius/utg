@@ -28,7 +28,6 @@ static void initialize_game() {
 	utg::interactive = true;
 	game.gaintreasure();
 	game.adventure(0);
-	utg::pause();
 }
 
 static void read_files() {
