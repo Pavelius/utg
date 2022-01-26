@@ -139,6 +139,7 @@ public:
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
+	void			endscene(int scene);
 	void			information(const char* format, ...);
 	void			makethreat();
 	void			gaintreasure(int count = 1);

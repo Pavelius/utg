@@ -460,7 +460,14 @@ void pirate::playchoose(int count) {
 	san.choose(0, count);
 }
 
+void pirate::endscene(int scene) {
+	auto ph = find_page(4000 + scene);
+	if(ph && ph->next)
+		adventure(ph->next);
+}
+
 void pirate::playscene(int scene) {
 	chooseactions(scene);
 	playactions();
+	endscene(scene);
 }
