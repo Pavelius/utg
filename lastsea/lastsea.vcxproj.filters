@@ -100,5 +100,8 @@
     <Text Include="rules\Actions.txt">
       <Filter>Данные</Filter>
     </Text>
+    <Text Include="locale\ru\QuestActions.txt">
+      <Filter>Данные</Filter>
+    </Text>
   </ItemGroup>
 </Project>
