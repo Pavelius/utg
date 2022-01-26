@@ -44,7 +44,7 @@ GetSupplies PortMarket outcome(Supply+2)
 GatherNews PortMarket outcome(Reroll+1)
 GetSomethingNice PortMarket outcome(Supply-1 Treasure+1)
 GetCoolHairCut PortMarket outcome(Supply-1 Infamy+2)
-GetCannon PortMarket outcome(Supply-2)
+GetCannon PortMarket outcome(Supply-2 ReloadGun+2)
 
 RepairTheHull PortWorkTheShip outcome(Hull+1)
 ScareOffPeskySeagulls PortWorkTheShip outcome(Supply+1 Infamy+3)
