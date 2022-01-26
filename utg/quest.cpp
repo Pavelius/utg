@@ -1,10 +1,10 @@
 #include "answers.h"
-#include "log.h"
+#include "logparse.h"
 #include "quest.h"
 
 BSDATAC(quest, 2048)
 
-using namespace log::parse;
+using namespace log;
 
 stringbuilder* quest::console;
 
@@ -46,54 +46,26 @@ static void add(variants& e, variant v) {
 	e.count++;
 }
 
-static const char* read_identifier(const char* p, stringbuilder& result) {
-	result.clear();
-	return result.psidf(p);
-}
-
-static const char* getstring(stringbuilder& sb) {
-	auto p = sb.begin();
-	if(!p[0])
-		return 0;
-	return szdup(p);
-}
-
-static const char* read_params(const char* p, stringbuilder& result, bool& allow_continue) {
-	if(p[0] != '(') {
-		log::error(p, "Expected symbol `(`");
-		allow_continue = false;
+static const char* read_params(const char* p, stringbuilder& result) {
+	if(!checksym(p, '('))
 		return p;
-	}
-	p = read_identifier(skipws(p + 1), result);
-	if(p[0] != ')') {
-		log::error(p, "Expected symbol `(`");
-		allow_continue = false;
+	p = readidn(skipws(p + 1), result);
+	if(!checksym(p, ')'))
 		return p;
-	}
 	p = skipws(p + 1);
 	return p;
 }
 
-static const char* read_bonus(const char* p, int& bonus) {
-	if(*p == '-')
-		p = stringbuilder::read(p, bonus);
-	else if(*p == '+')
-		p = stringbuilder::read(p + 1, bonus);
-	else
-		bonus = 0;
-	return p;
-}
-
-static const char* read_variants(const char* p, stringbuilder& result, variants& source, bool& allow_continue, quest* pe) {
-	while(allow_continue && ischa(*p)) {
-		p = read_identifier(p, result);
+static const char* read_variants(const char* p, stringbuilder& result, variants& source, quest* pe) {
+	while(allowparse && ischa(*p)) {
+		p = readidn(p, result);
 		p = skipws(p);
 		auto pn = result.begin();
 		if(equal(pn, "image")) {
-			p = read_params(p, result, allow_continue);
+			p = read_params(p, result);
 			pe->image = getstring(result);
 		} else {
-			int bonus; p = read_bonus(p, bonus);
+			int bonus; p = readbon(p, bonus);
 			p = skipws(p);
 			variant v = (const char*)result.begin();
 			if(!v)
@@ -106,40 +78,37 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 	return p;
 }
 
-static const char* skipcr(const char* p, bool& allow_continue) {
+static const char* skipcr(const char* p) {
 	if(p[0] == 10 || p[0] == 13)
 		p = skipwscr(p);
 	else {
 		log::error(p, "Expected line feed");
-		allow_continue = false;
+		allowparse = false;
 	}
 	return p;
 }
 
-static const char* read_event(const char* p, short& parent, stringbuilder& sb, bool& allow_continue) {
-	if(!allow_continue)
+static const char* read_event(const char* p, short& parent, stringbuilder& sb) {
+	if(!allowparse)
 		return p;
 	p = stringbuilder::read(skipws(p), parent);
 	auto pe = bsdata<quest>::add(); pe->clear();
 	pe->index = parent;
 	pe->next = -1;
-	p = read_variants(skipws(p), sb, pe->tags, allow_continue, pe);
+	p = read_variants(skipws(p), sb, pe->tags, pe);
 	p = read_string(skipwscr(p), sb);
 	pe->text = getstring(sb);
 	return p;
 }
 
-static const char* read_answers(const char* p, short parent, stringbuilder& sb, bool& allow_continue) {
-	while(allow_continue && isanswer(p)) {
+static const char* read_answers(const char* p, short parent, stringbuilder& sb) {
+	while(allowparse && isanswer(p)) {
 		auto pe = bsdata<quest>::add(); pe->clear();
 		pe->index = parent;
 		p = stringbuilder::read(p, pe->next);
-		p = read_variants(skipws(p), sb, pe->tags, allow_continue, pe);
-		if(p[0] != ')') {
-			log::error(p, "Expected symbol `)` after a number");
-			allow_continue = false;
+		p = read_variants(skipws(p), sb, pe->tags, pe);
+		if(!checksym(p, ')'))
 			break;
-		}
 		p = read_string(skipws(p + 1), sb);
 		pe->text = getstring(sb);
 	}
@@ -148,28 +117,6 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb, 
 
 void quest::clear() {
 	memset(this, 0, sizeof(*this));
-}
-
-void quest::read(const char* url) {
-	auto p_alloc = (const char*)loadt(url);
-	if(!p_alloc)
-		return;
-	log::seturl(url);
-	auto p = p_alloc;
-	log::setfile(p);
-	variants resolves;
-	char temp[4096]; stringbuilder sb(temp);
-	auto allow_continue = true;
-	while(allow_continue && p[0]) {
-		if(!isevent(p)) {
-			log::error(p, "Expected symbol `#` and followed event identifier");
-			break;
-		}
-		short event_parent = -1; sb.clear();
-		p = read_event(p + 1, event_parent, sb, allow_continue);
-		p = read_answers(p, event_parent, sb, allow_continue);
-	}
-	delete p_alloc;
 }
 
 static bool isallow(const variants& source) {
@@ -237,4 +184,22 @@ void quest::run(int id, const char* resid, const char* header) {
 		apply(p->tags);
 		id = p->next;
 	}
+}
+
+void quest::read(const char* url) {
+	auto p = log::read(url);
+	if(!p)
+		return;
+	char temp[4096]; stringbuilder sb(temp);
+	allowparse = true;
+	while(allowparse && *p) {
+		if(!isevent(p)) {
+			log::error(p, "Expected symbol `#` followed by event identifier");
+			break;
+		}
+		short event_parent = -1; sb.clear();
+		p = read_event(p + 1, event_parent, sb);
+		p = read_answers(p, event_parent, sb);
+	}
+	log::close();
 }

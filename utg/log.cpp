@@ -7,46 +7,6 @@ static int error_count;
 static const char* current_url;
 static const char* current_file;
 
-const char* log::parse::skipws(const char* p) {
-	while(true) {
-		if(*p == ' ' || *p == 9) {
-			p++;
-			continue;
-		}
-		if(p[0] == '\\' && (p[1] == 10 || p[1] == 13)) { // Trail symbol
-			p++;
-			while(*p == 10 || *p == 13)
-				p++;
-			continue;
-		}
-		if(p[0] == '/' && p[1] == '/') { // End line comment
-			p += 2;
-			while(*p && *p != 10 && *p != 13)
-				p++;
-		}
-		if(p[0] == '/' && p[1] == '*') { // Complex comment
-			p += 2;
-			while(*p && !(p[0]=='*' && p[1]=='/'))
-				p++;
-		}
-		break;
-	}
-	return p;
-}
-
-const char* log::parse::skipwscr(const char* p) {
-	while(true) {
-		p = skipws(p);
-		if(*p == 10 || *p == 13) {
-			while(*p == 10 || *p == 13)
-				p++;
-			continue;
-		}
-		break;
-	}
-	return p;
-}
-
 void log::setfile(const char* v) {
 	current_file = v;
 }

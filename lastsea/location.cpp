@@ -17,3 +17,13 @@ const locationi* locationi::find(short unsigned scene) {
 	}
 	return 0;
 }
+
+void locationi::play() const {
+	utg::header = getnm(id);
+	if(image)
+		utg::url = image;
+	game.chooseactions();
+	game.playround();
+	if(next)
+		game.adventure(next);
+}

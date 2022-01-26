@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "log.h"
+#include "logparse.h"
 #include "stringbuilder.h"
 #include "variant.h"
 
@@ -18,7 +18,7 @@ struct valuei {
 }
 
 static void next() {
-	p = log::parse::skipws(p);
+	p = log::skipws(p);
 }
 
 static void skipsymcr() {

@@ -1,7 +1,7 @@
 #include "charname.h"
-#include "log.h"
+#include "logparse.h"
 
-using namespace log::parse;
+using namespace log;
 
 static const unsigned max_size = 512;
 BSDATAC(charname, max_size)
@@ -49,44 +49,6 @@ short unsigned charname::random(const slice<variant>& source) {
 	return 0xFFFF;
 }
 
-static const char* read_name(const char* p, stringbuilder& result) {
-	result.clear();
-	while(*p) {
-		char sym;
-		if(*p == '\n' || *p == '\r' || *p == ',')
-			break;
-		else
-			sym = *p++;
-		switch(sym) {
-		case 17: sym = '-'; break;
-		case 0xA8: sym = 'Å'; break;
-		case 0xB8: sym = 'å'; break;
-		}
-		result.add(sym);
-	}
-	return p;
-}
-
-static const char* getstring(stringbuilder& sb) {
-	auto p = sb.begin();
-	if(!p[0])
-		return 0;
-	return szdup(p);
-}
-
-static const char* read_identifier(const char* p, stringbuilder& result) {
-	result.clear();
-	return result.psidf(p);
-}
-
-static const char* read_variant(const char* p, stringbuilder& sb, variant& result) {
-	p = read_identifier(p, sb);
-	result = (const char*)sb.begin();
-	if(!result)
-		log::error(p, "Can't find variant `%1`", sb.begin());
-	return p;
-}
-
 static bool ischax(unsigned char u) {
 	return (u >= 'A' && u <= 'Z')
 		|| (u >= 'a' && u <= 'z')
@@ -99,16 +61,13 @@ static const char* read_line(const char* p, variant* conditions, stringbuilder& 
 		auto pe = bsdata<charname>::add();
 		memset(pe, 0, sizeof(*pe));
 		memcpy(pe->conditions, conditions, sizeof(pe->conditions));
-		p = read_name(skipws(p), sb);
+		p = readname(skipws(p), sb);
 		pe->name = getstring(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
 			break;
-		if(*p != ',') {
-			log::error(p, "Expected symbol `,`");
-			allowrun = false;
+		if(!checksym(p, ','))
 			break;
-		}
 		p = skipwscr(p + 1);
 	}
 	return p;
@@ -117,7 +76,7 @@ static const char* read_line(const char* p, variant* conditions, stringbuilder& 
 static const char* read_conditions(const char* p, stringbuilder& sb, variant* pb, const variant* pe) {
 	auto count = pe - pb;
 	while(ischa(p[0])) {
-		p = read_identifier(p, sb);
+		p = readidn(p, sb);
 		variant v = (const char*)sb.begin();
 		if(!v)
 			log::error(p, "Can't find variant `%1`", sb.begin());
@@ -135,19 +94,15 @@ void charname::read(const char* url) {
 	if(!p)
 		return;
 	char temp[4096]; stringbuilder sb(temp);
-	auto allowrun = true;
-	while(allowrun && *p) {
-		if(*p != '#') {
-			log::error(p, "Expected symbol `#`");
+	allowparse = true;
+	while(allowparse && *p) {
+		if(!checksym(p, '#'))
 			break;
-		}
 		variant conditions[4] = {};
 		p = read_conditions(skipws(p + 1), sb, conditions, conditions + sizeof(conditions) / sizeof(conditions[0]));
-		if(*p != 10 && *p != 13) {
-			log::error(p, "Expected line feed");
+		if(!checksym(p, '\n'))
 			break;
-		}
-		p = read_line(skipwscr(p), conditions, sb, allowrun);
+		p = read_line(skipwscr(p), conditions, sb, allowparse);
 		p = skipwscr(p);
 	}
 	log::close();

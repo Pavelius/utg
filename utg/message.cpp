@@ -1,7 +1,7 @@
-#include "log.h"
+#include "logparse.h"
 #include "message.h"
 
-using namespace log::parse;
+using namespace log;
 
 BSDATAC(messagei, 1024)
 
@@ -56,38 +56,13 @@ const messagei* messagei::find(variants source) {
 	return 0;
 }
 
-static const char* read_string(const char* p, stringbuilder& result) {
-	result.clear();
-	return result.psstrlf(p);
-}
-
-static const char* getstring(stringbuilder& sb) {
-	auto p = sb.begin();
-	if(!p[0])
-		return 0;
-	return szdup(p);
-}
-
-static const char* read_identifier(const char* p, stringbuilder& result) {
-	result.clear();
-	return result.psidf(p);
-}
-
-static const char* read_variant(const char* p, stringbuilder& sb, variant& result) {
-	p = read_identifier(p, sb);
-	result = (const char*)sb.begin();
-	if(!result)
-		log::error(p, "Can't find variant `%1`", sb.begin());
-	return p;
-}
-
 static const char* read_conditions(const char* p, stringbuilder& sb, messagei* ps) {
 	while(true) {
 		if(isnum(p[0])) {
 			p = sb.read(p, ps->value);
 			p = skipws(p);
 		} else if(ischa(p[0])) {
-			p = read_identifier(p, sb);
+			p = readidn(p, sb);
 			auto pn = sb.begin();
 			if(equal(pn, "Random"))
 				ps->set(messagei::Random);
@@ -107,17 +82,14 @@ static const char* read_conditions(const char* p, stringbuilder& sb, messagei* p
 	return p;
 }
 
-static const char* read_part(const char* p, variant type, stringbuilder& sb, bool& allowrun) {
-	while(allowrun && *p && *p != '#') {
+static const char* read_part(const char* p, variant type, stringbuilder& sb) {
+	while(allowparse && *p && *p != '#') {
 		auto pe = bsdata<messagei>::add(); pe->clear();
 		pe->type = type;
 		p = read_conditions(skipwscr(p), sb, pe);
-		if(*p != ':') {
-			log::error(p, "Expected symbol `:`");
-			allowrun = false;
+		if(!checksym(p, ':'))
 			break;
-		}
-		p = read_string(skipws(p + 1), sb);
+		p = readstr(skipws(p + 1), sb);
 		pe->text = getstring(sb);
 		p = skipwscr(p);
 	}
@@ -129,20 +101,16 @@ void messagei::read(const char* url) {
 	if(!p)
 		return;
 	char temp[4096]; stringbuilder sb(temp);
-	auto allowrun = true;
-	while(allowrun && *p) {
-		if(*p != '#') {
-			log::error(p, "Expected symbol `#`");
+	allowparse = true;
+	while(allowparse && *p) {
+		if(!checksym(p, '#'))
 			break;
-		}
 		variant type;
-		p = read_variant(skipws(p + 1), sb, type);
+		p = readval(skipws(p + 1), sb, type);
 		p = skipws(p);
-		if(*p != 13 && *p != 10) {
-			log::error(p, "Expected symbol line feed");
+		if(!checksym(p, '\n'))
 			break;
-		}
-		p = read_part(p, type, sb, allowrun);
+		p = read_part(p, type, sb);
 	}
 	log::close();
 }

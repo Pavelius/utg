@@ -1,9 +1,9 @@
 #include "bsreq.h"
-#include "log.h"
+#include "logparse.h"
 #include "group.h"
 #include "utg.h"
 
-using namespace log::parse;
+using namespace log;
 
 BSDATAC(groupi, 256)
 BSDATAC(groupvaluei, 2048)
@@ -44,13 +44,6 @@ static const char* read_name(const char* p, stringbuilder& result) {
 		result.add(sym);
 	}
 	return p;
-}
-
-static const char* getstring(stringbuilder& sb) {
-	auto p = sb.begin();
-	if(!p[0])
-		return 0;
-	return szdup(p);
 }
 
 static const char* read_identifier(const char* p, stringbuilder& result) {

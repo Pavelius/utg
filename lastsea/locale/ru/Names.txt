@@ -9,7 +9,7 @@ Assassin: Убийца
 AttackMove: Название боевого приема
 Brawl: Сила
 BuryTreasure: Зарыть сокровища
-Cabine: 
+Cabine: Каюта
 CaptainCabine: Каюта капитана
 CaptainMission: Миссия капитана
 ChartACourse: Проложить курс

@@ -76,6 +76,7 @@ struct locationi {
 	short unsigned	next;
 	static const locationi* find(short unsigned scene);
 	int				getpriority(variant v) const;
+	void			play() const;
 };
 struct shipi {
 	indext			index;
@@ -197,14 +198,13 @@ public:
 	static void		generate();
 	locationi&		getlocation();
 	static void		getstatus(stringbuilder& sb, const void* object);
-	static void		play();
 	const treasurei* picktreasure();
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
-extern int			last_choose, last_page;
+extern int			last_choose, last_page, last_scene;
 extern ability_s	last_ability;
 extern actioni*		last_action;
 int					rollv(int bonus);

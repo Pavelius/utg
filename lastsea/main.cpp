@@ -1,17 +1,12 @@
 #include "bsreq.h"
 #include "main.h"
 
-static void generate_crew(bool interactive) {
-	auto push_interactive = utg::interactive;
-	auto push_header = utg::header;
-	utg::interactive = interactive;
+static void createcrew() {
 	utg::header = getnm("GenerateCrew");
 	game.clear();
 	game.generate();
 	game.choosehistory();
 	game.createtreasure();
-	utg::header = push_header;
-	utg::interactive = push_interactive;
 }
 
 static void test_scene() {
@@ -28,12 +23,12 @@ static void test_scene() {
 }
 
 static void initialize_game() {
-	generate_crew(false);
+	utg::interactive = false;
+	createcrew();
+	utg::interactive = true;
 	game.gaintreasure();
 	game.adventure(0);
 	utg::pause();
-	//game.addaction("PortMarket");
-	game.play();
 }
 
 static void read_files() {

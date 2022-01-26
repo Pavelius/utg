@@ -77,21 +77,6 @@ locationi& gamei::getlocation() {
 	return bsdata<locationi>::elements[location];
 }
 
-void gamei::play() {
-	auto push_header = utg::header;
-	auto push_image = utg::url;
-	auto& loc = game.getlocation();
-	utg::header = getnm(loc.id);
-	if(loc.image)
-		utg::url = loc.image;
-	game.chooseactions();
-	game.playround();
-	if(loc.next)
-		game.adventure(loc.next);
-	utg::header = push_header;
-	utg::url = push_image;
-}
-
 void gamei::createtreasure() {
 	auto m = bsdata<treasurei>::source.getcount();
 	for(unsigned i = 0; i < m; i++)

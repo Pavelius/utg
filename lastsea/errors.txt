@@ -1,7 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `CaptainCabine`
- Define translate for `ChartACourse`
- Define translate for `OpenSea`
- Define translate for `SailOn`
- Define translate for `SpearFish`
- Define translate for `TalkToCrew`
+﻿In file `locale/ru/PirateNames.txt`:
+ Line 1: Expected symbol `#`

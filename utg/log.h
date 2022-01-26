@@ -1,10 +1,6 @@
 #pragma once
 
 namespace log {
-namespace parse {
-const char*		skipws(const char* p);
-const char*		skipwscr(const char* p);
-}
 void			close();
 int				geterrors();
 void			error(const char* position, const char* format, ...);
