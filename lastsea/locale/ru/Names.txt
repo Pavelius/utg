@@ -129,5 +129,3 @@ Yes: Да
 YouRoll: Вы выбросили %2i%+3i=%1i.
 YouRollAbility: Тестируем %1, бросаем d12 с бонусом %+2i.
 YouVisitLocation: Перед вами %1.
-а: 
-герой: 

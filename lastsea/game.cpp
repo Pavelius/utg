@@ -71,6 +71,9 @@ static void special_command(special_s v, int bonus) {
 	case Bury:
 		game.bury(bonus);
 		break;
+	case Block:
+		game.lock(bonus);
+		break;
 	default:
 		break;
 	}

@@ -12,9 +12,9 @@
 typedef flagable<4> flaga;
 
 namespace draw {
+extern const void*	focus_object;
 extern array*		heroes;
 extern fngetname	heroes_getavatar;
-extern const void*	focus_object;
 extern const void*	hilite_object;
 extern figure		hilite_type;
 extern fnstatus		pstatus;
@@ -23,6 +23,7 @@ void				answerbt(int index, const void* id, const char* title);
 void				avatar(int index, const void* object, const char* id);
 void				avatarch(int index, const void* object, const char* id);
 bool				buttonfd(const char* title);
+bool				isnext();
 void				label(const char* id, const char* value);
 void				label(const char* id, const char* value, const void* object);
 void				label(const void* object, const variants& elements, fngetinfo pget);

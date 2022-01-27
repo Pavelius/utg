@@ -285,7 +285,7 @@ static void start_page(const quest* ph) {
 	if(ph->image)
 		utg::url = ph->image;
 	if(ph->text)
-		utg::sb.add(ph->text);
+		game.act(utg::sb, ph->text);
 }
 
 static const quest* find_page(int v) {
@@ -465,8 +465,10 @@ void pirate::playchoose(int count) {
 
 void pirate::endscene(int scene) {
 	auto ph = find_page(4000 + scene);
-	if(ph && ph->next)
+	if(ph && ph->next) {
 		adventure(ph->next);
+		afterapply();
+	}
 }
 
 void pirate::playscene(int scene) {
@@ -505,6 +507,7 @@ void pirate::remove(variant v) {
 void pirate::bury(int count) {
 	char temp[260]; stringbuilder sb(temp);
 	while(count--) {
+		sb.clear();
 		sb.add(getnm("WhatTreasureToBury"));
 		if(count > 1)
 			sb.adds(getnm("ChooseLeft"), count);
