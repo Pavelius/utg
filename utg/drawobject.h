@@ -6,6 +6,7 @@
 
 struct sprite;
 namespace draw {
+extern int			fsize;
 struct object : point {
 	void*			data;
 	const char*		string;
@@ -15,6 +16,7 @@ struct object : point {
 	unsigned short	frame, size;
 	unsigned char	alpha, priority;
 	unsigned		flags;
+	fnevent			proc;
 	object*			linked;
 	static object	def;
 	void			clear();
@@ -28,7 +30,7 @@ struct object : point {
 object*				addobject(int x, int y);
 void*				chooseobject();
 void				clearobjects();
-const sprite*		gres(const char* name, const char* folder, point size);
+const sprite*		getres(const char* name);
 void				initializeobjects();
 void				paintobjects();
 }

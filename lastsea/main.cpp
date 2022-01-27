@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "draw_hexagon.h"
 #include "main.h"
 #include "widget.h"
 
@@ -13,13 +14,22 @@ static void createcrew() {
 static void test_scene() {
 	draw::object::initialize();
 	draw::clearobjects();
-	auto p1 = draw::addobject(10, 10);
+	auto p1 = draw::addobject(420, 292);
 	p1->setcolorborder();
 	p1->string = "Text string 1";
-	p1->resource = draw::gres("small_seamap", "art/background", {});
+	p1->resource = draw::getres("small_seamap");
 	auto p2 = draw::addobject(200, 200);
 	p2->border = figure::Circle;
 	p2->string = "Text string 2";
+	point origin = {160, 60};
+	for(short x = 0; x < 7; x++) {
+		for(short y = 0; y < 6; y++) {
+			auto pt = draw::h2p({x, y}, draw::fsize) + origin;
+			auto p = draw::addobject(pt.x, pt.y);
+			p->proc = draw::hexagon;
+			p->setcolorborder();
+		}
+	}
 	draw::chooseobject();
 }
 
@@ -28,9 +38,10 @@ static void starting() {
 	createcrew();
 	utg::interactive = true;
 	game.gaintreasure();
-	game.adventure(0);
-	utg::pause();
-	game.afterapply();
+	test_scene();
+	//game.adventure(0);
+	//utg::pause();
+	//game.afterapply();
 }
 
 static void read_files() {

@@ -37,7 +37,7 @@ static unsigned char* rotate(unsigned char* src, int width, int height) {
 	return dst;
 }
 
-const sprite* draw::gres(const char* name, const char* folder, point maxsize) {
+const sprite* draw::gres(const char* name, const char* folder, point maxsize, int ox, int oy) {
 	if(!name)
 		return 0;
 	auto p = find(name, folder);
@@ -81,11 +81,12 @@ const sprite* draw::gres(const char* name, const char* folder, point maxsize) {
 					p->data = (sprite*)new char[size]; memset(p->data, 0, size);
 					p->data->width = rc.width();
 					p->data->height = rc.height();
-					p->data->frames[0].encode = sprite::RAW;
-					p->data->frames[0].sx = rc.width();
-					p->data->frames[0].sy = rc.height();
-					p->data->frames[0].offset = sizeof(sprite);
 					p->data->count = 1;
+					auto& ef = p->data->frames[0];
+					ef.encode = sprite::RAW;;
+					ef.sx = rc.width();
+					ef.sy = rc.height();
+					ef.offset = sizeof(sprite);
 					// Дешевый и простой алгоритм сжатия без прозрачности
 					auto pb = (unsigned char*)p->data->ptr(p->data->frames[0].offset);
 					auto pd = pb;
@@ -102,9 +103,15 @@ const sprite* draw::gres(const char* name, const char* folder, point maxsize) {
 						auto pn = rotate(pb, rc.width(), rc.height());
 						memcpy(pb, pn, rc.width() * rc.height() * 3);
 						iswap(p->data->width, p->data->height);
-						iswap(p->data->frames[0].sx, p->data->frames[0].sy);
+						iswap(ef.sx, ef.sy);
 						delete pn;
 					}
+					if(ox == -10000)
+						ox = ef.sx / 2;
+					if(oy == -10000)
+						oy = ef.sy / 2;
+					ef.ox = ox;
+					ef.oy = oy;
 					break;
 				}
 			}

@@ -35,6 +35,8 @@ void object::paintns() const {
 		field(border, size);
 	if(resource)
 		image(caret.x, caret.y, resource, frame, flags);
+	if(proc)
+		proc();
 	if(string)
 		textf(string);
 }
@@ -42,9 +44,12 @@ void object::paintns() const {
 void object::paint() const {
 	auto push_fore = draw::fore;
 	auto push_alpha = draw::alpha;
+	auto push_size = draw::fsize;
+	draw::fsize = size;
 	draw::fore = fore;
 	draw::alpha = alpha;
 	paintns();
+	draw::fsize = push_size;
 	draw::alpha = push_alpha;
 	draw::fore = push_fore;
 }
@@ -73,6 +78,10 @@ object*	draw::addobject(int x, int y) {
 
 void draw::clearobjects() {
 	bsdata<object>::source.clear();
+}
+
+const sprite* draw::getres(const char* name) {
+	return gres(name, "art/objects", {}, -10000, -10000);
 }
 
 BSDATAC(object, 128)

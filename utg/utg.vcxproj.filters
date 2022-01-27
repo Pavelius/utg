@@ -147,9 +147,6 @@
     <ClCompile Include="group.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="drawobject.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="draw_hexagon.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="widget.cpp">
       <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="drawobject.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -272,9 +272,6 @@
     <ClInclude Include="counter.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="drawobject.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="draw_hexagon.h">
       <Filter>Interface</Filter>
     </ClInclude>
@@ -283,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="widget.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="drawobject.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

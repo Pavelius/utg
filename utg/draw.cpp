@@ -32,6 +32,7 @@ unsigned char       draw::alpha = 255;
 color				draw::fore;
 color				draw::fore_stroke;
 int					draw::width, draw::height, draw::dialog_width = 500;
+extern int			draw::fsize = 32;
 bool				draw::text_clipped, draw::control_hilited;
 const sprite*		draw::font;
 double				draw::linw = 1.0;

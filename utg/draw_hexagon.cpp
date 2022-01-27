@@ -7,7 +7,6 @@ using namespace draw;
 const double sqrt_3 = 1.732050807568877;
 const double cos_30 = 0.86602540378;
 extern bool line_antialiasing;
-extern int fsize = 32;
 extern "C" double round(double v);
 
 namespace {

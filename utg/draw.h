@@ -159,7 +159,7 @@ extern fnevent			domodal;
 extern point			dragmouse, caret, camera, tips_caret, tips_size;
 extern color			fore, fore_stroke;
 extern unsigned char    alpha;
-extern int				width, height, dialog_width;
+extern int				width, height, fsize, dialog_width;
 extern bool				text_clipped, control_hilited;
 extern const sprite*	font; // Currently selected font
 extern double			linw;
@@ -197,7 +197,7 @@ void					getwindowpos(point& pos, point& size, unsigned* flags);
 void					glyph(int sym, unsigned flags);
 void					gradv(const color c1, const color c2, int skip = 0);
 void					gradh(const color c1, const color c2, int skip = 0);
-const sprite*			gres(const char* name, const char* folder = 0, point size = {});
+const sprite*			gres(const char* name, const char* folder = 0, point size = {}, int ox = 0, int oy = 0);
 int						hittest(int x, int test_x, const char* string, int lenght);
 int						hittest(rect rc, const char* string, unsigned state, point mouse);
 bool					ishilite(const rect& rc);
