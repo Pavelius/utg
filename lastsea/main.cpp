@@ -14,19 +14,14 @@ static void createcrew() {
 static void test_scene() {
 	draw::object::initialize();
 	draw::clearobjects();
-	auto p1 = draw::addobject(420, 292);
-	p1->setcolorborder();
-	p1->string = "Text string 1";
-	p1->resource = draw::getres("small_seamap");
-	auto p2 = draw::addobject(200, 200);
-	p2->border = figure::Circle;
-	p2->string = "Text string 2";
-	point origin = {160, 60};
+	const int size = 42;
+	draw::camera = {200, 100};
 	for(short x = 0; x < 7; x++) {
 		for(short y = 0; y < 6; y++) {
-			auto pt = draw::h2p({x, y}, draw::fsize) + origin;
+			auto pt = draw::fh2p({x, y}, size);
 			auto p = draw::addobject(pt.x, pt.y);
-			p->proc = draw::hexagon;
+			p->size = size;
+			p->proc = draw::fhexagon;
 			p->setcolorborder();
 		}
 	}

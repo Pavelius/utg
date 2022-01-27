@@ -30,6 +30,13 @@ void object::setcolorwindow() {
 	fore = colors::window;
 }
 
+static void textcn(const char* string) {
+	auto push_caret = caret;
+	caret.x -= textw(string) / 2;
+	text(string);
+	caret = push_caret;
+}
+
 void object::paintns() const {
 	if(border != figure::None)
 		field(border, size);
@@ -38,7 +45,7 @@ void object::paintns() const {
 	if(proc)
 		proc();
 	if(string)
-		textf(string);
+		textcn(string);
 }
 
 void object::paint() const {
@@ -54,12 +61,38 @@ void object::paint() const {
 	draw::fore = push_fore;
 }
 
+static size_t getobjects(object** pb, object** pe) {
+	auto ps = pb;
+	for(auto& e : bsdata<object>()) {
+		if(ps < pe)
+			*ps++ = &e;
+	}
+	return ps - pb;
+}
+
+static int compare(const void* v1, const void* v2) {
+	auto p1 = *((object**)v1);
+	auto p2 = *((object**)v2);
+	if(p1->priority!=p2->priority)
+		return p1->priority - p2->priority;
+	if(p1->y != p2->y)
+		return p1->y - p2->y;
+	return p1->x - p2->x;
+}
+
+static void sortobjects(object** pb, size_t count) {
+	qsort(pb, count, sizeof(pb[0]), compare);
+}
+
 void draw::paintobjects() {
 	auto push_clip = clipping;
 	setclip({caret.x, caret.y, caret.x + width, caret.y + height});
-	for(auto& e : bsdata<object>()) {
-		draw::caret = e;
-		e.paint();
+	object* source[128];
+	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
+	sortobjects(source, count);
+	for(size_t i = 0; i < count; i++) {
+		draw::caret = *source[i] + draw::camera;
+		source[i]->paint();
 	}
 	clipping = push_clip;
 }

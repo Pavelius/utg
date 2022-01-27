@@ -6,6 +6,7 @@
 
 struct sprite;
 namespace draw {
+extern point		camera;
 extern int			fsize;
 struct object : point {
 	void*			data;

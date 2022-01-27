@@ -60,6 +60,18 @@ static cube cube_round(cube c) {
 	return {(double)q, (double)r, (double)s};
 }
 
+//static point axial_to_oddq(point hex) {
+//	auto col = hex.x;
+//	auto row = hex.y + (hex.x - (hex.y & 1)) / 2;
+//	return {(short)col, (short)row};
+//}
+//
+//static point cube_to_axial(cube c) {
+//	short q = c.q;
+//	short r = c.z;
+//	return {q, r};
+//}
+
 static point cube_to_evenr(cube c) {
 	auto col = c.x + (c.z + ((int)c.z & 1)) / 2;
 	auto row = c.z;
@@ -80,10 +92,24 @@ static point getdirection(point hex, int direction) {
 	return hex + offset;
 }
 
+point draw::fh2p(point hex, int size) {
+	auto x = (short)(size * hex.x * 3 / 2);
+	auto y = (short)(sqrt_3 * size * (hex.y + 0.5 * (hex.x & 1)));
+	return {x, y};
+}
+
 point draw::h2p(point hex, int size) {
 	auto x = (short)(size * sqrt_3 * (hex.x - 0.5 * (hex.y & 1)));
 	auto y = (short)(size * 3 / 2 * hex.y);
 	return {x, y};
+}
+
+point draw::fp2h(point pt, int size) {
+	double x = pt.x;
+	double y = pt.y;
+	auto q = (2.0 * x / 3.0) / (double)size;
+	auto r = (-1.0 * x / 3.0 + sqrt_3 * y / 3.0) / (double)size;
+	return cube_to_evenr(cube_round({q, -q - r, r}));
 }
 
 point draw::p2h(point pt, int size) {
@@ -98,6 +124,23 @@ int draw::getdistance(point h1, point h2) {
 	auto a = axial_to_cube(h1);
 	auto b = axial_to_cube(h2);
 	return int(iabs(a.x - b.x) + iabs(a.y - b.y) + iabs(a.z - b.z)) / 2;
+}
+
+void draw::fhexagon() {
+	point points[6] = {
+		{(short)(caret.x + fsize), caret.y},
+		{(short)(caret.x + fsize / 2), (short)(caret.y + fsize * cos_30)},
+		{(short)(caret.x - fsize / 2), (short)(caret.y + fsize * cos_30)},
+		{(short)(caret.x - fsize), caret.y},
+		{(short)(caret.x - fsize / 2), (short)(caret.y - fsize * cos_30)},
+		{(short)(caret.x + fsize / 2), (short)(caret.y - fsize * cos_30)},
+	};
+	auto push_caret = caret;
+	caret = points[0];
+	for(auto i = 1; i < 6; i++)
+		line(points[i].x, points[i].y);
+	line(points[0].x, points[0].y);
+	caret = push_caret;
 }
 
 void draw::hexagon() {
