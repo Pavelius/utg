@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "main.h"
+#include "widget.h"
 
 static void createcrew() {
 	utg::header = getnm("GenerateCrew");
@@ -47,6 +48,7 @@ int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	variant::sfapply = game.sfapply;
 	quest::console = &utg::sb;
+	bsdata<widget>::elements[0].proc = pirate::painttreasure;
 	return draw::start(starting, true, read_files);
 }
 

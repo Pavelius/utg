@@ -3,6 +3,7 @@
 #include "draw.h"
 #include "log.h"
 #include "utg.h"
+#include "widget.h"
 
 using namespace draw;
 
@@ -574,6 +575,16 @@ BSMETA(widget) = {
 	BSREQ(id),
 	{}};
 BSDATA(widget) = {
+	{"CustomWindow0"},
+	{"CustomWindow1"},
+	{"CustomWindow2"},
+	{"CustomWindow3"},
+	{"CustomWindow4"},
+	{"CustomWindow5"},
+	{"CustomWindow6"},
+	{"CustomWindow7"},
+	{"CustomWindow8"},
+	{"CustomWindow9"},
 	{"ListOfFronts", list_of_fronts},
 	{"RightAlignValue", right_align_value},
 	{"Separator", separator},

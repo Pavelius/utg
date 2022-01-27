@@ -68,6 +68,9 @@ static void special_command(special_s v, int bonus) {
 	case ReloadGun:
 		game.reloadgun(bonus, true);
 		break;
+	case Bury:
+		game.bury(bonus);
+		break;
 	default:
 		break;
 	}
@@ -94,8 +97,13 @@ void gamei::apply(const variants& source) {
 
 void gamei::createtreasure() {
 	auto m = bsdata<treasurei>::source.getcount();
-	for(unsigned i = 0; i < m; i++)
-		treasures.add(i);
+	for(auto& e : bsdata<treasurei>()) {
+		if(e.ismagic())
+			continue;
+		if(e.isstory())
+			continue;
+		treasures.add(bsdata<treasurei>::source.indexof(&e));
+	}
 	zshuffle(treasures.data, treasures.count);
 }
 

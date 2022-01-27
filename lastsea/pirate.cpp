@@ -8,8 +8,6 @@ void pirate::clear() {
 	memset(this, 0, sizeof(*this));
 	historyable::clear();
 	clearactions();
-	for(auto& v : treasures)
-		v = 0xFFFF;
 }
 
 int pirate::getnextstar(int value) const {
@@ -43,6 +41,11 @@ void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 			value = p->get(Discontent);
 			if(value)
 				sb.adds(getnm("ShowDiscontent"), value);
+			break;
+		case Reroll: case Misfortune:
+			value = p->get((ability_s)v.value);
+			if(value)
+				sb.add("%1i", value);
 			break;
 		default:
 			value = p->get((ability_s)v.value);
@@ -470,4 +473,45 @@ void pirate::playscene(int scene) {
 	chooseactions(scene);
 	playactions();
 	endscene(scene);
+}
+
+const treasurei* pirate::choosetreasure(const char* title) const {
+	answers an;
+	for(auto v : treasures) {
+		if(!v)
+			continue;
+		an.add(v.getpointer(), v.getname());
+	}
+	an.add(0, getnm("StopBury"));
+	return (treasurei*)utg::choose(an, title);
+}
+
+void pirate::remove(variant v) {
+	if(v.type == Card) {
+		auto pb = treasures;
+		auto pe = treasures + sizeof(treasures) / sizeof(treasures[0]);
+		for(auto ps = pb; ps < pe; ps++) {
+			if(*ps == v)
+				continue;
+			*pb++ = *ps;
+		}
+		while(pb < pe) {
+			pb->clear();
+			pb++;
+		}
+	}
+}
+
+void pirate::bury(int count) {
+	char temp[260]; stringbuilder sb(temp);
+	while(count--) {
+		sb.add(getnm("WhatTreasureToBury"));
+		if(count > 1)
+			sb.adds(getnm("ChooseLeft"), count);
+		auto p = choosetreasure(temp);
+		if(!p)
+			break;
+		remove(p);
+		set(Stars, get(Stars) + 1);
+	}
 }

@@ -111,6 +111,9 @@ struct treasurei {
 	flaga			tags, conditions; // Special tags
 	variant			reduce, reduce_count; // reduce this
 	variant			gain, gain_count;
+	bool			ismagic() const { return szstart(id, "Magic"); }
+	bool			isstory() const { return szstart(id, "Story"); }
+	static void		sfgetinfo(const void* object, stringbuilder& sb);
 };
 class textable {
 	char			data[32];
@@ -134,8 +137,10 @@ public:
 	void			adventure(int page);
 	void			addaction(indext v);
 	void			afterapply();
+	void			bury(int count);
 	void			captaincabine();
 	void			captainmission();
+	const treasurei* choosetreasure(const char* title) const;
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
@@ -151,7 +156,9 @@ public:
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
+	static void		painttreasure();
 	void			playscene(int scene);
+	void			remove(variant v);
 	void			roll();
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);

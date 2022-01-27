@@ -1,2 +1,2 @@
-﻿In file `locale/ru/QuestActions.txt`:
- Line 6: Can't find variant `next`
+﻿In file `Names.txt`:
+ Define translate for `WhatTreasureToBury`

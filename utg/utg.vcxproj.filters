@@ -159,6 +159,9 @@
     <ClCompile Include="logparse.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
+    <ClCompile Include="widget.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="logparse.h">
       <Filter>Stream</Filter>
+    </ClInclude>
+    <ClInclude Include="widget.h">
+      <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

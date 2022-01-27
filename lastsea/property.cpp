@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "main.h"
+#include "widget.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
@@ -49,7 +50,7 @@ BSDATAC(treasurei, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
-	{"Card", VRSTD(treasurei), 1},
+	{"Card", VRSTD(treasurei), 1, 0, treasurei::sfgetinfo},
 	{"Class", VRSTD(classi), 1},
 	{"Gender", VRSTD(genderi), 1},
 	{"Group", VRSTD(groupi), 1},

@@ -10,11 +10,6 @@
 #pragma once
 
 typedef flagable<4> flaga;
-struct widget {
-	const char*		id;
-	fnevent			proc;
-	explicit operator bool() const { return id != 0; }
-};
 
 namespace draw {
 extern array*		heroes;

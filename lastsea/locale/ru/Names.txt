@@ -16,6 +16,7 @@ ChartACourse: Проложить курс
 Choose: Выбирайте
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
+ChooseLeft: (осталось [%1i])
 ChooseOptions: Выбирайте опции (осталось [%1i]):
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
@@ -93,6 +94,7 @@ SomethingFoul: Нечто гадкое
 SpearFish: Порыбачить копьем
 Stars: Созвездие
 Steal: Украсть
+StopBury: Хватит. Вы закопали уже достаточно.
 Story54: Радужная жемчужина
 Story74: Черная повязка на глаз
 Supply: Припасы
@@ -122,7 +124,10 @@ VisitManyTimes: Можно посещать несколько раз.
 WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
 WhatDoYouWantToVisit: Что вы хотите посетить?
+WhatTreasureToBury: Какие сокровища хотите закопать?
 Yes: Да
 YouRoll: Вы выбросили %2i%+3i=%1i.
 YouRollAbility: Тестируем %1, бросаем d12 с бонусом %+2i.
 YouVisitLocation: Перед вами %1.
+а: 
+герой: 
