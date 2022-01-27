@@ -1,6 +1,5 @@
 #include "charname.h"
 #include "counter.h"
-#include "drawobject.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
@@ -24,7 +23,8 @@ enum ability_s : unsigned char {
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene, Tile,
+	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene,
+	Tile000, Tile900, TileRock, AddTile, RemoveTile,
 	PaySupply, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
@@ -57,10 +57,19 @@ struct shipi {
 	void			setposition(indext v) { index = v; }
 };
 class oceani {
-	short unsigned	data[7 * 6];
+	static const indext	mx = 7;
+	static const indext	my = 6;
+	indext			data[mx * my];
+	indext			marker;
+	void			update() const;
 public:
-	short unsigned	getlocation(indext i) const { return data[i]; }
+	indext			choose(const char* title) const;
+	static indext	gi(int x, int y) { return y * mx + x; }
+	indext			getlocation(indext i) const { return data[i]; }
+	indext			getmarker() const { return marker; }
 	void			setlocation(indext i, int v) { data[i] = v; }
+	void			setmarker(indext v) { marker = v; }
+	static void		showindecies();
 };
 struct tagi {
 	const char*		id;

@@ -38,8 +38,8 @@ static void textcn(const char* string) {
 }
 
 void object::paintns() const {
-	if(border != figure::None)
-		field(border, size);
+	if(shape != figure::None)
+		field(shape, size);
 	if(resource)
 		image(caret.x, caret.y, resource, frame, flags);
 	if(proc)
@@ -55,6 +55,15 @@ void object::paint() const {
 	draw::fsize = size;
 	draw::fore = fore;
 	draw::alpha = alpha;
+	if(data) {
+		auto w = size;
+		if(shape == figure::Hexagon || shape == figure::FHexagon)
+			w = 2 * w / 3;
+		if(ishilite(w)) {
+			hilite_object = data;
+			hilite_type = figure::Circle;
+		}
+	}
 	paintns();
 	draw::fsize = push_size;
 	draw::alpha = push_alpha;

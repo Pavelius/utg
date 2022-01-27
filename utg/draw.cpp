@@ -39,6 +39,7 @@ double				draw::linw = 1.0;
 color*				draw::palt;
 rect				draw::clipping;
 hoti				draw::hot;
+const void*			draw::hilite_object;
 // Hot keys and menus
 rect				sys_static_area;
 // Locale draw variables
@@ -1205,6 +1206,42 @@ void draw::circle(int r) {
 	}
 }
 
+void draw::fhexagon() {
+	const double cos_30 = 0.86602540378;
+	point points[6] = {
+		{(short)(caret.x + fsize), caret.y},
+		{(short)(caret.x + fsize / 2), (short)(caret.y + fsize * cos_30)},
+		{(short)(caret.x - fsize / 2), (short)(caret.y + fsize * cos_30)},
+		{(short)(caret.x - fsize), caret.y},
+		{(short)(caret.x - fsize / 2), (short)(caret.y - fsize * cos_30)},
+		{(short)(caret.x + fsize / 2), (short)(caret.y - fsize * cos_30)},
+	};
+	auto push_caret = caret;
+	caret = points[0];
+	for(auto i = 1; i < 6; i++)
+		line(points[i].x, points[i].y);
+	line(points[0].x, points[0].y);
+	caret = push_caret;
+}
+
+void draw::hexagon() {
+	const double cos_30 = 0.86602540378;
+	point points[6] = {
+		{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
+		{(short)(caret.x + fsize * cos_30), (short)(caret.y + fsize / 2)},
+		{(short)caret.x, (short)(caret.y + fsize)},
+		{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
+		{(short)(caret.x - fsize * cos_30), (short)(caret.y - fsize / 2)},
+		{(short)caret.x, (short)(caret.y - fsize)},
+	};
+	auto push_caret = caret;
+	caret = points[0];
+	for(auto i = 1; i < 6; i++)
+		line(points[i].x, points[i].y);
+	line(points[0].x, points[0].y);
+	caret = push_caret;
+}
+
 void draw::setclip(rect rcn) {
 	rect rc = draw::clipping;
 	if(rc.x1 < rcn.x1)
@@ -2261,6 +2298,7 @@ static void beforemodal() {
 	caret = {0, 0};
 	width = getwidth();
 	height = getheight();
+	hilite_object = 0;
 	hot.cursor = cursor::Arrow;
 	hot.hilite.clear();
 	if(hot.key == InputNeedUpdate)

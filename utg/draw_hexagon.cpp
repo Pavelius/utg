@@ -4,12 +4,12 @@
 
 using namespace draw;
 
-const double sqrt_3 = 1.732050807568877;
-const double cos_30 = 0.86602540378;
 extern bool line_antialiasing;
 extern "C" double round(double v);
 
 namespace {
+const double sqrt_3 = 1.732050807568877;
+const double cos_30 = 0.86602540378;
 struct cube {
 	double x, y, z;
 };
@@ -126,44 +126,17 @@ int draw::getdistance(point h1, point h2) {
 	return int(iabs(a.x - b.x) + iabs(a.y - b.y) + iabs(a.z - b.z)) / 2;
 }
 
-void draw::fhexagon() {
-	point points[6] = {
-		{(short)(caret.x + fsize), caret.y},
-		{(short)(caret.x + fsize / 2), (short)(caret.y + fsize * cos_30)},
-		{(short)(caret.x - fsize / 2), (short)(caret.y + fsize * cos_30)},
-		{(short)(caret.x - fsize), caret.y},
-		{(short)(caret.x - fsize / 2), (short)(caret.y - fsize * cos_30)},
-		{(short)(caret.x + fsize / 2), (short)(caret.y - fsize * cos_30)},
-	};
-	auto push_caret = caret;
-	caret = points[0];
-	for(auto i = 1; i < 6; i++)
-		line(points[i].x, points[i].y);
-	line(points[0].x, points[0].y);
-	caret = push_caret;
+static void rectfsized() {
+	rectpush push;
+	short dy = (short)(fsize * cos_30);
+	short dx = fsize / 2;
+	caret.x -= dx;
+	caret.y -= dy;
+	height = dy * 2;
+	width = dx * 2;
+	rectf();
 }
 
-void draw::hexagon() {
-	point points[6] = {
-		{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
-		{(short)(caret.x + fsize * cos_30), (short)(caret.y + fsize / 2)},
-		{(short)caret.x, (short)(caret.y + fsize)},
-		{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
-		{(short)(caret.x - fsize * cos_30), (short)(caret.y - fsize / 2)},
-		{(short)caret.x, (short)(caret.y - fsize)},
-	};
-	auto push_caret = caret;
-	caret = points[0];
-	for(auto i = 1; i < 6; i++)
-		line(points[i].x, points[i].y);
-	line(points[0].x, points[0].y);
-	caret = push_caret;
-}
-
-void draw::hexagonf() {
-	auto p1 = point{(short)(caret.x - fsize * cos_30), (short)(caret.y - fsize / 2)}; //points[4];
-	auto p2 = point{(short)(caret.x + fsize * cos_30), (short)(caret.y + fsize / 2)}; //points[1];
-	//rectf({p1.x, p1.y + 1, p2.x + 1, p2.y});
-	triangle2({p2.x, p2.y}, {(short)caret.x, (short)(caret.y + fsize)});
-	triangle2({p2.x, p1.y}, {(short)caret.x, (short)(caret.y - fsize)});
+void draw::fhexagonf() {
+	rectfsized();
 }

@@ -4,21 +4,22 @@
 
 #pragma once
 
+typedef void(*fnevent)();
 struct sprite;
+
 namespace draw {
 extern point		camera;
 extern int			fsize;
 struct object : point {
 	void*			data;
 	const char*		string;
-	figure			border;
+	figure			shape;
 	color			fore;
 	const sprite*	resource;
 	unsigned short	frame, size;
 	unsigned char	alpha, priority;
 	unsigned		flags;
 	fnevent			proc;
-	object*			linked;
 	static object	def;
 	void			clear();
 	static void		initialize();
@@ -32,6 +33,5 @@ object*				addobject(int x, int y);
 void*				chooseobject();
 void				clearobjects();
 const sprite*		getres(const char* name);
-void				initializeobjects();
 void				paintobjects();
 }

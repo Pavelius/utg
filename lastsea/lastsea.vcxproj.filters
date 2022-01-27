@@ -54,6 +54,9 @@
     <ClCompile Include="cannoneer.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="ocean.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

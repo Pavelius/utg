@@ -9,9 +9,7 @@ using namespace draw;
 
 array*			draw::heroes;
 fngetname		draw::heroes_getavatar;
-const void*		draw::hilite_object;
 const void*		draw::focus_object;
-figure			draw::hilite_type;
 fnstatus		draw::pstatus;
 int				draw::title_width = 220;
 static void*	current_tab;
@@ -481,6 +479,20 @@ void draw::noavatar() {
 	caret.x += width + metrics::padding + metrics::border * 2;
 }
 
+static void circleactive() {
+	auto push_fore = fore;
+	auto push_caret = caret;
+	caret.x += width / 2;
+	caret.y += height / 2;
+	fore = colors::active;
+	auto w = width / 2;
+	if(hot.pressed)
+		w -= 2;
+	circle(w);
+	caret = push_caret;
+	fore = push_fore;
+}
+
 static void hilite_paint() {
 	rectpush push;
 	caret.x = hot.hilite.x1;
@@ -488,6 +500,7 @@ static void hilite_paint() {
 	width = hot.hilite.width();
 	height = hot.hilite.height();
 	switch(hilite_type) {
+	case figure::Circle: circleactive(); break;
 	case figure::Rect: strokeout(strokeactive); break;
 	case figure::RectFill: strokeout(stroke_active_fill, 2); break;
 	case figure::Rect3D: stroke_active_fill(); break;
@@ -592,7 +605,6 @@ BSDATA(widget) = {
 BSDATAF(widget)
 
 static void beforemodal() {
-	hilite_object = 0;
 	hilite_type = figure::Rect;
 	tips_caret.x = metrics::padding + metrics::border;
 	tips_caret.y = getheight() - (metrics::padding + metrics::border);

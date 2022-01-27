@@ -1,7 +1,7 @@
 #include "main.h"
 
 gamei		game;
-int			last_choose, last_page, last_scene;
+int			last_choose, last_page, last_scene, last_tile;
 ability_s	last_ability;
 
 static void generate_classes() {
@@ -40,6 +40,12 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case Choose:
 		last_choose = bonus;
+		break;
+	case Tile000: last_tile = bonus; break;
+	case Tile900: last_tile = 900 + bonus; break;
+	case TileRock: last_tile = 5000; break;
+	case AddTile:
+		game.setlocation(bonus, last_tile);
 		break;
 	case Page000: last_page = bonus; break;
 	case Page100: last_page = 100 + bonus; break;

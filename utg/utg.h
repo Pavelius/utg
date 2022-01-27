@@ -16,7 +16,6 @@ extern const void*	focus_object;
 extern array*		heroes;
 extern fngetname	heroes_getavatar;
 extern const void*	hilite_object;
-extern figure		hilite_type;
 extern fnstatus		pstatus;
 extern int			title_width;
 void				answerbt(int index, const void* id, const char* title);

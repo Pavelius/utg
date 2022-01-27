@@ -149,6 +149,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="npcname.cpp" />
+    <ClCompile Include="ocean.cpp" />
     <ClCompile Include="pirate.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />

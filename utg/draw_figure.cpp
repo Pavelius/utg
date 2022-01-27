@@ -1,8 +1,11 @@
 #include "draw.h"
 #include "draw_figure.h"
 
+figure	draw::hilite_type;
+
 void draw::field(figure type, int size) {
 	rectpush push;
+	int push_size;
 	switch(type) {
 	case figure::Check:
 		caret.x = push.caret.x - size;
@@ -58,6 +61,20 @@ void draw::field(figure type, int size) {
 		caret.x = push.caret.x + size;
 		caret.x = push.caret.y - size;
 		line(push.caret.x - size, push.caret.y + size);
+		break;
+	case figure::Hexagon:
+		push_size = fsize;
+		fsize = size;
+		hexagon();
+		fsize = push_size;
+		break;
+	case figure::FHexagon:
+		push_size = fsize;
+		fsize = size;
+		fhexagon();
+		fsize = push_size;
+		break;
+	case figure::HexagonFill:
 		break;
 	default:
 		break;
