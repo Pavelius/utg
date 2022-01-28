@@ -180,6 +180,9 @@
     <Text Include="rules\Treasures.txt" />
     <Text Include="scenario\BeyondTheOceanEdge.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="art\example\indecies.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

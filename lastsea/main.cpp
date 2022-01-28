@@ -3,6 +3,21 @@
 #include "main.h"
 #include "widget.h"
 
+static void test_direction() {
+	auto i0 = oceani::to(11, 0);
+	auto i1 = oceani::to(11, 1);
+	auto i2 = oceani::to(11, 2);
+	auto i3 = oceani::to(11, 3);
+	auto i4 = oceani::to(11, 4);
+	auto i5 = oceani::to(11, 5);
+	auto e0 = oceani::to(10, 0);
+	auto e1 = oceani::to(10, 1);
+	auto e2 = oceani::to(10, 2);
+	auto e3 = oceani::to(10, 3);
+	auto e4 = oceani::to(10, 4);
+	auto e5 = oceani::to(10, 5);
+}
+
 static void starting() {
 	utg::interactive = false;
 	utg::header = getnm("GenerateCrew");
@@ -12,6 +27,7 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	game.gaintreasure();
+	test_direction();
 	game.adventure(0);
 	utg::pause();
 	game.chartacourse(2);

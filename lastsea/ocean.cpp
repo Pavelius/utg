@@ -171,10 +171,10 @@ void oceani::initialize() {
 
 static point getdirection(point hex, int direction) {
 	static point directions[2][6] = {
-		{{1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {0, 1}},
-		{{1, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, 1}, {0, 1}},
+		{{1, 0}, {0, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}},
+		{{1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {0, -1}, {1, 0}},
 	};
-	auto parity = hex.y & 1;
+	auto parity = hex.x & 1;
 	auto offset = directions[parity][direction];
 	return hex + offset;
 }
