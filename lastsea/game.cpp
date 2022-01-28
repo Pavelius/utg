@@ -168,13 +168,16 @@ void gamei::chartacourse(int count) {
 	while(count > 0) {
 		char temp[260]; stringbuilder sb(temp);
 		sb.add(getnm("PlaceNavigationTile"), count);
-		paintcourse();
-		auto index = chooseindex(temp);
+		createobjects();
+		showsplash();
+		addpossiblecourse();
+		auto index = choose(temp);
 		auto tile = picktile();
 		if(!tile)
 			break;
 		setlocation(index, tile);
 		count--;
 	}
-	paintcourse();
+	createobjects();
+	showsplash();
 }

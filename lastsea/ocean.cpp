@@ -52,7 +52,28 @@ static void add_select(point pt, const void* data) {
 	p->set(object::Hilite);
 }
 
-void oceani::update() const {
+void oceani::showindecies() {
+	char temp[4096]; stringbuilder sb(temp);
+	clearobjects();
+	add_camera();
+	add_seamap();
+	for(short y = 0; y < my; y++) {
+		for(short x = 0; x < mx; x++) {
+			auto i = getindex(x, y);
+			auto pt = draw::fh2p({x, y}, size);
+			auto p = draw::addobject(pt.x, pt.y);
+			p->size = 2 * size / 3;
+			p->priority = 20;
+			p->string = sb.get();
+			sb.add("%1i", i);
+			sb.addsz();
+			p->setcolorborder();
+		}
+	}
+	chooseobject();
+}
+
+void oceani::createobjects() const {
 	auto tiles = getres("tiles");
 	clearobjects();
 	add_camera();
@@ -66,15 +87,12 @@ void oceani::update() const {
 				continue;
 			auto pt = draw::fh2p({x, y}, size);
 			auto fi = 0;
-			if(t == Blocked)
-				add_tile(pt, tiles, fi, 0);
-			else
-				add_tile(pt, tiles, fi, data + i);
+			add_tile(pt, tiles, fi, data + i);
 		}
 	}
 }
 
-void oceani::update(const slice<indext>& selectable) const {
+void oceani::createselections(const slice<indext>& selectable) const {
 	for(auto v : selectable) {
 		short x = getx(v);
 		short y = gety(v);
@@ -84,19 +102,9 @@ void oceani::update(const slice<indext>& selectable) const {
 }
 
 indext oceani::choose(const char* title) const {
-	update();
 	auto pv = chooseobject();
 	if(!pv)
-		return 0xFFFF;
-	return (indext*)pv - data;
-}
-
-indext oceani::choose(const char* title, const slice<indext>& selectable) const {
-	update();
-	update(selectable);
-	auto pv = chooseobject();
-	if(!pv)
-		return 0xFFFF;
+		return Blocked;
 	return (indext*)pv - data;
 }
 
@@ -121,7 +129,7 @@ void oceani::blockalltiles() const {
 	}
 }
 
-void oceani::paintcourse() const {
+void oceani::addpossiblecourse() const {
 	indext coodrinates[32];
 	clearpath();
 	blockwalls();
@@ -131,37 +139,11 @@ void oceani::paintcourse() const {
 	auto count = getindeciesat(coodrinates, lastof(coodrinates), 1);
 	if(!count)
 		return;
-	update();
-	update({coodrinates, count});
+	createselections({coodrinates, count});
+}
+
+void oceani::showsplash() {
 	splashscreen();
-}
-
-indext oceani::chooseindex(const char* title) const {
-	auto pv = chooseobject();
-	if(!pv)
-		return 0xFFFF;
-	return (indext*)pv - data;
-}
-
-void oceani::showindecies() {
-	char temp[4096]; stringbuilder sb(temp);
-	clearobjects();
-	add_camera();
-	add_seamap();
-	for(short y = 0; y < my; y++) {
-		for(short x = 0; x < mx; x++) {
-			auto i = getindex(x, y);
-			auto pt = draw::fh2p({x, y}, size);
-			auto p = draw::addobject(pt.x, pt.y);
-			p->size = 2 * size / 3;
-			p->priority = 20;
-			p->string = sb.get();
-			sb.add("%1i", i);
-			sb.addsz();
-			p->setcolorborder();
-		}
-	}
-	chooseobject();
 }
 
 void oceani::initialize() {

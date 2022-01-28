@@ -64,12 +64,11 @@ class oceani {
 	void			blockwalls() const;
 	void			blockopentiles() const;
 	void			blockalltiles() const;
-	indext			choose(const char* title, const slice<indext>& selectable) const;
-	void			update() const;
-	void			update(const slice<indext>& selectable) const;
+	void			createselections(const slice<indext>& selectable) const;
 public:
+	void			addpossiblecourse() const;
 	indext			choose(const char* title) const;
-	indext			chooseindex(const char* title) const;
+	void			createobjects() const;
 	indext			getindex(const void* p) const;
 	static indext	getindex(short x, short y) { return y * mx + x; }
 	indext			getlocation(indext i) const { return data[i]; }
@@ -79,10 +78,10 @@ public:
 	static void		initialize();
 	bool			isblocked(indext i) const { return ispassabletile(data[i]); }
 	static bool		ispassabletile(indext v) { return v != pathfind::Blocked; }
-	void			paintcourse() const;
 	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
+	void			showsplash();
 	static indext	to(indext i, int direction);
 };
 struct tagi {
