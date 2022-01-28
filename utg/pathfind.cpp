@@ -71,6 +71,18 @@ void pathfind::blockzero() {
 	}
 }
 
+void pathfind::blocknearest(indext index, indext cost) {
+	for(int d = 0; d < 6; d++) {
+		auto i1 = to(index, d);
+		auto c1 = movement_rate[i1];
+		if(i1 == Blocked || c1 == Blocked)
+			continue;
+		if(c1 && c1 < cost)
+			continue;
+		movement_rate[i1] = cost;
+	}
+}
+
 void pathfind::makewave(indext start_index) {
 	if(!isinitializated())
 		return;
@@ -86,9 +98,10 @@ void pathfind::makewave(indext start_index) {
 		auto cost = ((index == start_index) ? 0 : movement_rate[index]) + 1;
 		for(int d = 0; d < 6; d++) {
 			auto i1 = to(index, d);
-			if(i1 == Blocked || movement_rate[i1] == Blocked)
+			auto c1 = movement_rate[i1];
+			if(i1 == Blocked || c1 == Blocked)
 				continue;
-			if(movement_rate[i1] && movement_rate[i1] < cost)
+			if(c1 && c1 < cost)
 				continue;
 			movement_rate[i1] = cost;
 			*push_counter++ = i1;

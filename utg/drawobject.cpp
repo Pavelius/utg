@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "draw.h"
 #include "drawobject.h"
+#include "screenshoot.h"
 
 using namespace draw;
 
@@ -50,6 +51,40 @@ void object::paintns() const {
 		textcn(string);
 }
 
+static void raw_beforemodal() {
+	caret = {0, 0};
+	width = getwidth();
+	height = getheight();
+	hilite_object = 0;
+	hot.cursor = cursor::Arrow;
+	hot.hilite.clear();
+}
+
+static void blend(screenshoot& source, screenshoot& destination, unsigned milliseconds) {
+	if(!milliseconds)
+		return;
+	auto start = getcputime();
+	auto finish = start + milliseconds;
+	auto current = start;
+	while(ismodal() && current < finish) {
+		auto alpha = ((current - start) << 8) / milliseconds;
+		source.restore();
+		canvas->blend(destination, alpha);
+		doredraw();
+		waitcputime(1);
+		current = getcputime();
+	}
+}
+
+void draw::splashscreen() {
+	screenshoot push;
+	raw_beforemodal();
+	paintstart();
+	paintobjects();
+	screenshoot another;
+	blend(push, another, 1200);
+}
+
 void object::paint() const {
 	auto push_fore = draw::fore;
 	auto push_alpha = draw::alpha;
@@ -89,7 +124,7 @@ static size_t getobjects(object** pb, object** pe) {
 static int compare(const void* v1, const void* v2) {
 	auto p1 = *((object**)v1);
 	auto p2 = *((object**)v2);
-	if(p1->priority!=p2->priority)
+	if(p1->priority != p2->priority)
 		return p1->priority - p2->priority;
 	if(p1->y != p2->y)
 		return p1->y - p2->y;

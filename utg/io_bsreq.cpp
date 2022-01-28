@@ -3,9 +3,10 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
+using namespace log;
+
 static char			temp[512];
 static const char*	p;
-static bool			allow_continue;
 static int			last_bonus;
 
 namespace {
@@ -22,7 +23,7 @@ static void next() {
 }
 
 static void skipsymcr() {
-	if(!allow_continue)
+	if(!allowparse)
 		return;
 	next();
 	if(*p == 0)
@@ -33,11 +34,11 @@ static void skipsymcr() {
 		return;
 	}
 	log::error(p, "Expected line feed");
-	allow_continue = false;
+	allowparse = false;
 }
 
 static void skipsym(char sym) {
-	if(!allow_continue)
+	if(!allowparse)
 		return;
 	if(*p == sym) {
 		p = p + 1;
@@ -46,7 +47,7 @@ static void skipsym(char sym) {
 	}
 	char temp[2] = {sym, 0};
 	log::error(p, "Expected symbol `%1`", temp);
-	allow_continue = false;
+	allowparse = false;
 }
 
 static const bsreq* getkey(const bsreq* type) {
@@ -57,7 +58,7 @@ static void readid() {
 	stringbuilder sb(temp); temp[0] = 0;
 	if(!ischa(*p)) {
 		log::error(p, "Expected identifier");
-		allow_continue = false;
+		allowparse = false;
 	} else
 		p = sb.psidf(p);
 	next();
@@ -77,7 +78,7 @@ static void readidbonus() {
 	stringbuilder sb(temp); temp[0] = 0;
 	if(!ischa(*p)) {
 		log::error(p, "Expected identifier");
-		allow_continue = false;
+		allowparse = false;
 	} else {
 		p = sb.psidf(p);
 		p = readbonus(p);
@@ -217,7 +218,7 @@ static void* find_object(array* source, const bsreq* type, valuei* keys, int key
 
 static void read_dset(void* object, const bsreq* req) {
 	auto index = 0;
-	while(allow_continue && isvalue()) {
+	while(allowparse && isvalue()) {
 		valuei v;
 		readid();
 		index = req->source->find(temp, 0);
@@ -234,7 +235,7 @@ static void read_dset(void* object, const bsreq* req) {
 
 static void read_array(void* object, const bsreq* req) {
 	auto index = 0;
-	while(allow_continue && isvalue()) {
+	while(allowparse && isvalue()) {
 		valuei v;
 		read_value(v, req);
 		write_value(object, req, index++, v);
@@ -261,7 +262,7 @@ const bsreq* find_requisit(const bsreq* type, const char* id) {
 }
 
 static void read_dictionary(void* object, const bsreq* type, int level, bool need_linefeed = true) {
-	while(allow_continue && ischa(*p)) {
+	while(allowparse && ischa(*p)) {
 		readid();
 		auto req = find_requisit(type, temp);
 		skipsym('(');
@@ -270,12 +271,12 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 	}
 	if(need_linefeed) {
 		skipsymcr();
-		while(allow_continue && islevel(level + 1)) {
+		while(allowparse && islevel(level + 1)) {
 			readid();
 			auto req = type->find(temp);
 			if(!req) {
 				log::error(p, "Not found requisit `%1`", temp);
-				allow_continue = false;
+				allowparse = false;
 			} else if(req->is(KindDSet))
 				read_dset(object, req);
 			else if(req->is(KindScalar))
@@ -297,7 +298,7 @@ static void clear_object(void* object, const bsreq* type) {
 static void* read_object(const bsreq* type, array* source, int key_count, int level) {
 	if(!isvalue()) {
 		log::error(p, "Expected value");
-		allow_continue = false;
+		allowparse = false;
 	}
 	valuei keys[8] = {};
 	void* object = 0;
@@ -356,7 +357,7 @@ const array* varianti::getarray(const void* object, const char* id) {
 }
 
 static void parse() {
-	while(*p && allow_continue) {
+	while(*p && allowparse) {
 		skipsym('#');
 		readid();
 		auto pd = find_type(temp);
@@ -366,7 +367,7 @@ static void parse() {
 			return;
 		}
 		skipsymcr();
-		while(allow_continue && isvalue())
+		while(allowparse && isvalue())
 			read_object(pd->metadata, pd->source, pd->key_count, 0);
 	}
 }
@@ -375,7 +376,7 @@ void bsreq::read(const char* url) {
 	p = log::read(url);
 	if(!p)
 		return;
-	allow_continue = true;
+	allowparse = true;
 	parse();
 	log::close();
 }

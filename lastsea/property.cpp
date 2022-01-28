@@ -29,6 +29,10 @@ BSDATAC(pirate, 4)
 BSMETA(speciali) = {
 	BSREQ(id),
 	{}};
+BSMETA(tilei) = {
+	BSREQ(page), BSREQ(frame),
+	{}};
+BSDATAC(tilei, 128)
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -55,6 +59,7 @@ BSDATA(varianti) = {
 	{"Gender", VRSTD(genderi), 1},
 	{"Group", VRSTD(groupi), 1},
 	{"Menu", VRSTD(menu), 1},
+	{"NavigationTile", VRSTD(tilei), 2},
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},

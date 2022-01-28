@@ -5,6 +5,7 @@ typedef unsigned short indext;
 const indext Blocked = 0xFFFF;
 typedef indext(*fnto)(indext index, int direction);
 extern int		maxcount;
+void			blocknearest(indext index, indext cost);
 void			blockrange(int range);
 void			blockzero();
 void			clearpath();

@@ -144,6 +144,7 @@ struct surface {
 	~surface();
 	constexpr explicit operator bool() const { return bits != 0; }
 	static unsigned char* allocator(unsigned char* bits, unsigned size);
+	void				blend(const surface& source, int alpha);
 	void				clear() { resize(0, 0, 0, true); }
 	void				convert(int bpp, color* pallette);
 	void				flipv();

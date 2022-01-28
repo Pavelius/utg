@@ -40,4 +40,5 @@ void*				chooseobject();
 void				clearobjects();
 const sprite*		getres(const char* name);
 void				paintobjects();
+void				splashscreen();
 }

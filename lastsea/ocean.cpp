@@ -1,3 +1,4 @@
+#include "draw.h"
 #include "drawobject.h"
 #include "draw_hexagon.h"
 #include "main.h"
@@ -45,9 +46,10 @@ static void add_select(point pt, const void* data) {
 	auto p = draw::addobject(pt.x, pt.y);
 	p->size = 2 * size / 3;
 	p->priority = 30;
+	p->shape = figure::Circle;
 	p->data = (void*)data;
+	p->fore = colors::button;
 	p->set(object::Hilite);
-	p->setcolorborder();
 }
 
 void oceani::update() const {
@@ -64,7 +66,7 @@ void oceani::update() const {
 				continue;
 			auto pt = draw::fh2p({x, y}, size);
 			auto fi = 0;
-			if(t==Blocked)
+			if(t == Blocked)
 				add_tile(pt, tiles, fi, 0);
 			else
 				add_tile(pt, tiles, fi, data + i);
@@ -100,21 +102,41 @@ indext oceani::choose(const char* title, const slice<indext>& selectable) const 
 
 void oceani::blockwalls() const {
 	for(auto i = 0; i < mx * my; i++) {
+		if(data[i] == Blocked)
+			setmove(i, Blocked);
+	}
+}
+
+void oceani::blockopentiles() const {
+	for(auto i = 0; i < mx * my; i++) {
+		if(data[i] >= 1 && data[i] <= 30)
+			blocknearest(i, 1);
+	}
+}
+
+void oceani::blockalltiles() const {
+	for(auto i = 0; i < mx * my; i++) {
 		if(data[i])
 			setmove(i, Blocked);
 	}
 }
 
-indext oceani::choosecourse(const char* title) const {
+void oceani::paintcourse() const {
 	indext coodrinates[32];
 	clearpath();
 	blockwalls();
-	makewave(marker);
+	blockopentiles();
+	blocknearest(marker, 1);
+	blockalltiles();
 	auto count = getindeciesat(coodrinates, lastof(coodrinates), 1);
 	if(!count)
-		return Blocked;
+		return;
 	update();
 	update({coodrinates, count});
+	splashscreen();
+}
+
+indext oceani::chooseindex(const char* title) const {
 	auto pv = chooseobject();
 	if(!pv)
 		return 0xFFFF;
@@ -166,7 +188,7 @@ indext oceani::to(indext i, int direction) {
 }
 
 indext oceani::getindex(const void* p) const {
-	if(p>=data && p<((char*)data + sizeof(data)))
+	if(p >= data && p < ((char*)data + sizeof(data)))
 		return (indext*)p - data;
 	return Blocked;
 }

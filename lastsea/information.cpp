@@ -81,7 +81,7 @@ void pirate::painttreasure() {
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 	auto index = game.getindex(object);
 	if(index != pathfind::Blocked)
-		sb.add(getnm("Ocean"));
+		sb.add(getnm("CellInfo"), getnm("Ocean"), index);
 	else
 		utg::getstatus(object, sb);
 }

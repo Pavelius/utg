@@ -12,18 +12,12 @@ static const char* match(const char* text, const char* name) {
 
 const char* variant::getdescription() const {
 	auto& e = bsdata<varianti>::elements[type];
-	if(!e.source)
+	if(!e.source || !e.isnamed())
 		return 0;
 	return ::getdescription(getid());
 }
 
 const char* variant::getname() const {
-	auto& e = bsdata<varianti>::elements[type];
-	if(!e.source)
-		return "No name";
-	auto p = e.source->ptr(value);
-	if(e.pgetname)
-		return e.pgetname(p);
 	return getnm(getid());
 }
 

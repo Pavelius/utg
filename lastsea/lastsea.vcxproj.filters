@@ -57,6 +57,9 @@
     <ClCompile Include="ocean.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="tilei.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

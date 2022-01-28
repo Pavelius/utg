@@ -12,6 +12,7 @@ BuryTreasure: Зарыть сокровища
 Cabine: Каюта
 CaptainCabine: Каюта капитана
 CaptainMission: Миссия капитана
+CellInfo: %1 (ячейка карты %2i)
 ChartACourse: Проложить курс
 Choose: Выбирайте
 ChooseAnotherPirate: Пират из вашей команды
@@ -70,6 +71,7 @@ PageShipLog: Журнал
 ParticularlySmellyAnimal: Особенно вонючее животное
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды
+PlaceNavigationTile: Расследуете одну область (осталось еще [%1i])
 Port: Порт
 PortMarket: Рынок
 PortWorkTheShip: Поработать на корабле

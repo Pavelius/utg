@@ -42,6 +42,9 @@ static void special_command(special_s v, int bonus) {
 	case Choose:
 		last_choose = bonus;
 		break;
+	case Scout:
+		game.chartacourse(bonus);
+		break;
 	case SetShip:
 		game.setmarker(bonus);
 		break;
@@ -120,6 +123,21 @@ void gamei::createtreasure() {
 	zshuffle(treasures.data, treasures.count);
 }
 
+void gamei::createtiles() {
+	tiles.clear();
+	for(auto i = 1; i <= 30; i++)
+		tiles.add(i);
+	zshuffle(tiles.data, tiles.count);
+}
+
+indext gamei::picktile() {
+	if(!tiles)
+		return 0;
+	auto i = tiles.data[0];
+	tiles.remove(0);
+	return i;
+}
+
 const treasurei* gamei::picktreasure() {
 	if(!treasures.count)
 		return 0;
@@ -144,4 +162,19 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 
 void gamei::playscene() {
 	game.pirate::playscene(game.scene);
+}
+
+void gamei::chartacourse(int count) {
+	while(count > 0) {
+		char temp[260]; stringbuilder sb(temp);
+		sb.add(getnm("PlaceNavigationTile"), count);
+		paintcourse();
+		auto index = chooseindex(temp);
+		auto tile = picktile();
+		if(!tile)
+			break;
+		setlocation(index, tile);
+		count--;
+	}
+	paintcourse();
 }

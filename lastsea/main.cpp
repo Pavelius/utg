@@ -10,11 +10,11 @@ static void starting() {
 	game.choosehistory();
 	utg::interactive = true;
 	game.createtreasure();
+	game.createtiles();
 	game.gaintreasure();
-	//game.showindecies();
 	game.adventure(0);
 	utg::pause();
-	game.choosecourse(0);
+	game.chartacourse(2);
 	game.afterapply();
 }
 

@@ -165,6 +165,9 @@
     <ClCompile Include="pathfind.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="screenshoot.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -288,6 +291,9 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="pathfind.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="screenshoot.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

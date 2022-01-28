@@ -814,6 +814,25 @@ static void cpy(unsigned char* d, int d_scan, unsigned char* s, int s_scan, int 
 	} while(--height);
 }
 
+static void cpy32a(unsigned char* d, int d_scan,
+	const unsigned char* s, int s_scan,
+	int width, int height, unsigned char ap) {
+	if(height <= 0 || width <= 0)
+		return;
+	do {
+		auto sb = (color*)s;
+		auto pe = sb + width;
+		for(auto d2 = (color*)d; sb < pe; sb++) {
+			d2->r = (((int)d2->r * (255 - ap)) + ((sb->r) * (ap))) >> 8;
+			d2->g = (((int)d2->g * (255 - ap)) + ((sb->g) * (ap))) >> 8;
+			d2->b = (((int)d2->b * (255 - ap)) + ((sb->b) * (ap))) >> 8;
+			d2++;
+		}
+		s += s_scan;
+		d += d_scan;
+	} while(--height);
+}
+
 static void cpy32t(unsigned char* d, int d_scan, unsigned char* s, int s_scan, int width, int height) {
 	if(height <= 0 || width <= 0)
 		return;
@@ -2023,6 +2042,14 @@ void draw::imager(int xm, int ym, const sprite* e, int id, int r) {
 		if(r > x || err > y)
 			err += ++x * 2 + 1;
 	} while(x < 0);
+}
+
+void surface::blend(const surface& source, int alpha) {
+	if(bpp!=32 && bpp != source.bpp || height != source.height || width != source.width)
+		return;
+	cpy32a(ptr(0, 0), scanline,
+		const_cast<surface&>(source).ptr(0, 0), source.scanline,
+		width, height, alpha);
 }
 
 void draw::blit(surface& ds, int x1, int y1, int w, int h, unsigned flags, const surface& ss, int xs, int ys) {

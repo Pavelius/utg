@@ -39,7 +39,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Group, Menu, Quest, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
@@ -52,18 +52,24 @@ struct abilityi {
 	const char*		id;
 	ability_type_s	type;
 };
+struct tilei {
+	indext			page, frame;
+	static const tilei*	find(indext page);
+};
 class oceani {
 	static const indext	mx = 7;
 	static const indext	my = 6;
 	indext			data[mx * my];
 	indext			marker;
 	void			blockwalls() const;
+	void			blockopentiles() const;
+	void			blockalltiles() const;
 	indext			choose(const char* title, const slice<indext>& selectable) const;
 	void			update() const;
 	void			update(const slice<indext>& selectable) const;
 public:
 	indext			choose(const char* title) const;
-	indext			choosecourse(const char* title) const;
+	indext			chooseindex(const char* title) const;
 	indext			getindex(const void* p) const;
 	static indext	getindex(short x, short y) { return y * mx + x; }
 	indext			getlocation(indext i) const { return data[i]; }
@@ -73,6 +79,7 @@ public:
 	static void		initialize();
 	bool			isblocked(indext i) const { return ispassabletile(data[i]); }
 	static bool		ispassabletile(indext v) { return v != pathfind::Blocked; }
+	void			paintcourse() const;
 	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
@@ -196,17 +203,21 @@ class gamei : public pirate, public oceani, public cannoneer {
 	char			scenario[32];
 	flagable<2>		locked;
 	adat<indext, 512> treasures;
+	adat<indext, 64> tiles;
 public:
 	unsigned short	scene;
 	static void		apply(variant v);
 	static void		apply(const variants& source);
+	void			createtiles();
 	void			createtreasure();
 	void			clear();
 	static void		choosehistory();
+	void			chartacourse(int v);
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
 	static void		generate();
 	const treasurei* picktreasure();
+	indext			picktile();
 	static void		playscene();
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
