@@ -10,7 +10,6 @@ using namespace draw;
 array*			draw::heroes;
 fngetname		draw::heroes_getavatar;
 const void*		draw::focus_object;
-fnstatus		draw::pstatus;
 int				draw::title_width = 220;
 static void*	current_tab;
 static const menu* last_menu;
@@ -514,10 +513,10 @@ static void tooltips_paint() {
 }
 
 static void statusbar_paint() {
-	if(!hilite_object || !pstatus)
+	if(!hilite_object || !utg::callback::getstatus)
 		return;
 	char temp[512]; stringbuilder sb(temp); sb.clear();
-	pstatus(hilite_object, sb);
+	utg::callback::getstatus(hilite_object, sb);
 	if(!temp[0])
 		return;
 	rectpush push;
@@ -554,7 +553,7 @@ static void getinformation(const char* id, stringbuilder& sb) {
 	sb.add(p);
 }
 
-static void statusinfo(const void* object, stringbuilder& sb) {
+void utg::getstatus(const void* object, stringbuilder& sb) {
 	auto pm = varianti::getmetadata(object);
 	if(!pm)
 		return;
@@ -627,8 +626,8 @@ void initialize_png();
 
 int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
-	if(!pstatus)
-		pstatus = statusinfo;
+	if(!utg::callback::getstatus)
+		utg::callback::getstatus= utg::getstatus;
 	if(!proc)
 		return -1;
 	if(darkmode)

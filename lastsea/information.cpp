@@ -61,9 +61,6 @@ void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 	}
 }
 
-void gamei::getstatus(stringbuilder& sb, const void* object) {
-}
-
 void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 	auto p = (treasurei*)object;
 	printab(sb, p->abilities);
@@ -79,4 +76,12 @@ void pirate::painttreasure() {
 	}
 	//if(result)
 	//	widget::paint("Separator");
+}
+
+void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
+	auto index = game.getindex(object);
+	if(index != pathfind::Blocked)
+		sb.add(getnm("Ocean"));
+	else
+		utg::getstatus(object, sb);
 }

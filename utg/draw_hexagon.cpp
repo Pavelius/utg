@@ -15,33 +15,33 @@ struct cube {
 };
 }
 
-static void triangle2(point v1, point v2) {
-	float invslope1 = (float)(v2.x - v1.x) / (float)(v2.y - v1.y);
-	float curx1 = v1.x;
-	float curx2 = float(v1.x + (v2.x - v1.x) * 2);
-	auto push_line = line_antialiasing;
-	auto push_caret = caret;
-	line_antialiasing = false;
-	if(v1.y < v2.y) {
-		for(auto scanlineY = v1.y; scanlineY <= v2.y; scanlineY++) {
-			caret.x = (short)curx1;
-			caret.y = scanlineY;
-			line((int)curx2, scanlineY);
-			curx1 += invslope1;
-			curx2 -= invslope1;
-		}
-	} else {
-		for(auto scanlineY = v1.y; scanlineY >= v2.y; scanlineY--) {
-			caret.x = (short)curx1;
-			caret.y = scanlineY;
-			line((int)curx2, scanlineY);
-			curx1 -= invslope1;
-			curx2 += invslope1;
-		}
-	}
-	caret = push_caret;
-	line_antialiasing = push_line;
-}
+//static void triangle2(point v1, point v2) {
+//	float invslope1 = (float)(v2.x - v1.x) / (float)(v2.y - v1.y);
+//	float curx1 = v1.x;
+//	float curx2 = float(v1.x + (v2.x - v1.x) * 2);
+//	auto push_line = line_antialiasing;
+//	auto push_caret = caret;
+//	line_antialiasing = false;
+//	if(v1.y < v2.y) {
+//		for(auto scanlineY = v1.y; scanlineY <= v2.y; scanlineY++) {
+//			caret.x = (short)curx1;
+//			caret.y = scanlineY;
+//			line((int)curx2, scanlineY);
+//			curx1 += invslope1;
+//			curx2 -= invslope1;
+//		}
+//	} else {
+//		for(auto scanlineY = v1.y; scanlineY >= v2.y; scanlineY--) {
+//			caret.x = (short)curx1;
+//			caret.y = scanlineY;
+//			line((int)curx2, scanlineY);
+//			curx1 -= invslope1;
+//			curx2 += invslope1;
+//		}
+//	}
+//	caret = push_caret;
+//	line_antialiasing = push_line;
+//}
 
 static cube cube_round(cube c) {
 	int q = int(round(c.x));
@@ -80,16 +80,6 @@ static point cube_to_evenr(cube c) {
 
 static cube axial_to_cube(point pt) {
 	return {(double)pt.x, (double)(-pt.x - pt.y), (double)pt.y};
-}
-
-static point getdirection(point hex, int direction) {
-	static point evenr_directions[2][6] = {
-		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
-		{{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}},
-	};
-	auto parity = hex.y & 1;
-	auto offset = evenr_directions[parity][direction];
-	return hex + offset;
 }
 
 point draw::fh2p(point hex, int size) {

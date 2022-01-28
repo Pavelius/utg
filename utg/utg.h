@@ -16,7 +16,6 @@ extern const void*	focus_object;
 extern array*		heroes;
 extern fngetname	heroes_getavatar;
 extern const void*	hilite_object;
-extern fnstatus		pstatus;
 extern int			title_width;
 void				answerbt(int index, const void* id, const char* title);
 void				avatar(int index, const void* object, const char* id);
@@ -36,6 +35,7 @@ void				vertical(fnevent proc);
 namespace utg {
 namespace callback {
 extern fngetinfo	getinfo;
+extern fnstatus		getstatus;
 }
 class choosei {
 	answers&		source;
@@ -62,6 +62,7 @@ int					choose(const answers& source, const char* title, const char* cancel);
 int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 const char*			getchoose(const char* id);
+void				getstatus(const void* object, stringbuilder& sb);
 void				pause();
 void				pause(const char* title);
 bool				yesno(const char* title, ...);

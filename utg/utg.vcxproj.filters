@@ -162,6 +162,9 @@
     <ClCompile Include="drawobject.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="pathfind.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="drawobject.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="pathfind.h">
+      <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

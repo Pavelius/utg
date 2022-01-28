@@ -17,6 +17,7 @@ BSDATA(speciali) = {
 	{"TileRock"},
 	{"AddTile"},
 	{"RemoveTile"},
+	{"SetShip"},
 	{"PaySupply"},
 	{"GunLoadOrHull"},
 	{"ReloadGun"},

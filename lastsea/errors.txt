@@ -1,18 +1,1 @@
-﻿In file `Names.txt`:
- Define translate for `AllSeein`
- Define translate for `AppTitle`
- Define translate for `Assassin`
- Define translate for `ChooseClass`
- Define translate for `GainTreasure`
- Define translate for `GenerateCrew`
- Define translate for `Grifter`
- Define translate for `MadeUpInterrogationTactic`
- Define translate for `NameOfWoman`
- Define translate for `PromtHistory`
- Define translate for `Seeker`
- Define translate for `SomeoneYouHoldDear`
- Define translate for `SomethingFoul`
- Define translate for `Survivor`
- Define translate for `Treasure73`
- Define translate for `VillainousName`
- Define translate for `WhatAboutHistory`
+﻿Can't find file 'locale/ru/Names.txt'

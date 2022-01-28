@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pathfind.h"
 
 gamei		game;
 int			last_choose, last_page, last_scene, last_tile;
@@ -41,9 +42,12 @@ static void special_command(special_s v, int bonus) {
 	case Choose:
 		last_choose = bonus;
 		break;
+	case SetShip:
+		game.setmarker(bonus);
+		break;
 	case Tile000: last_tile = bonus; break;
 	case Tile900: last_tile = 900 + bonus; break;
-	case TileRock: last_tile = 5000; break;
+	case TileRock: last_tile = pathfind::Blocked; break;
 	case AddTile:
 		game.setlocation(bonus, last_tile);
 		break;

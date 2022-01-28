@@ -12,6 +12,8 @@ void object::initialize() {
 	def.priority = 64;
 	def.size = 32;
 	def.alpha = 255;
+	def.flags = 0;
+	def.set(Visible);
 }
 
 void object::clear() {
@@ -61,7 +63,12 @@ void object::paint() const {
 			w = 2 * w / 3;
 		if(ishilite(w)) {
 			hilite_object = data;
-			hilite_type = figure::Circle;
+			hilite_type = figure::None;
+			if(is(Hilite) && hilite_object) {
+				hilite_type = figure::Circle;
+				if(hot.key == MouseLeft && !hot.pressed)
+					execute(buttonparam, (long)hilite_object, 0, 0);
+			}
 		}
 	}
 	paintns();

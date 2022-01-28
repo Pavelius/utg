@@ -63,6 +63,7 @@ NextStar: Следующая звезда
 No: Нет
 NotDefinedLastValue: Не указано значение `%1`
 NothingToDo: Ничего не делать.
+Ocean: Океан
 PagePirate: Пираты
 PageShip: Корабль
 PageShipLog: Журнал

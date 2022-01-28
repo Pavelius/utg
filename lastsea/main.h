@@ -3,6 +3,7 @@
 #include "gender.h"
 #include "group.h"
 #include "message.h"
+#include "pathfind.h"
 #include "quest.h"
 #include "utg.h"
 
@@ -24,7 +25,7 @@ enum ability_s : unsigned char {
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene,
-	Tile000, Tile900, TileRock, AddTile, RemoveTile,
+	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	PaySupply, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
@@ -51,25 +52,31 @@ struct abilityi {
 	const char*		id;
 	ability_type_s	type;
 };
-struct shipi {
-	indext			index;
-	indext			getposition() const { return index; }
-	void			setposition(indext v) { index = v; }
-};
 class oceani {
 	static const indext	mx = 7;
 	static const indext	my = 6;
 	indext			data[mx * my];
 	indext			marker;
+	void			blockwalls() const;
+	indext			choose(const char* title, const slice<indext>& selectable) const;
 	void			update() const;
+	void			update(const slice<indext>& selectable) const;
 public:
 	indext			choose(const char* title) const;
-	static indext	gi(int x, int y) { return y * mx + x; }
+	indext			choosecourse(const char* title) const;
+	indext			getindex(const void* p) const;
+	static indext	getindex(short x, short y) { return y * mx + x; }
 	indext			getlocation(indext i) const { return data[i]; }
 	indext			getmarker() const { return marker; }
+	static short	getx(indext i) { return i % mx; }
+	static short	gety(indext i) { return i / mx; }
+	static void		initialize();
+	bool			isblocked(indext i) const { return ispassabletile(data[i]); }
+	static bool		ispassabletile(indext v) { return v != pathfind::Blocked; }
 	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
+	static indext	to(indext i, int direction);
 };
 struct tagi {
 	const char*		id;
@@ -185,7 +192,7 @@ public:
 	bool			isgunloaded(int index) const;
 	bool			reloadgun(int level, bool run);
 };
-class gamei : public pirate, public shipi, public oceani, public cannoneer {
+class gamei : public pirate, public oceani, public cannoneer {
 	char			scenario[32];
 	flagable<2>		locked;
 	adat<indext, 512> treasures;
@@ -199,11 +206,11 @@ public:
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
 	static void		generate();
-	static void		getstatus(stringbuilder& sb, const void* object);
 	const treasurei* picktreasure();
 	static void		playscene();
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
+	static void		sfgetstatus(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }

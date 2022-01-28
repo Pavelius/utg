@@ -3,6 +3,7 @@
 #include "utg.h"
 
 fngetinfo		utg::callback::getinfo;
+fnstatus		utg::callback::getstatus;
 const char*		utg::url;
 const char*		utg::url_avatars = "art/avatars";
 const char*		utg::header;

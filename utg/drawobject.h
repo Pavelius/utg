@@ -11,6 +11,9 @@ namespace draw {
 extern point		camera;
 extern int			fsize;
 struct object : point {
+	enum {
+		Visible, Hilite,
+	};
 	void*			data;
 	const char*		string;
 	figure			shape;
@@ -23,11 +26,14 @@ struct object : point {
 	static object	def;
 	void			clear();
 	static void		initialize();
+	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000)>>v)) != 0; }
 	void			paint() const;
 	void			paintns() const;
+	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
 	void			setcolorborder();
 	void			setcolorform();
 	void			setcolorwindow();
+	void			remove(unsigned v) { flags &= ~(((unsigned)0x80000000) >> v); }
 };
 object*				addobject(int x, int y);
 void*				chooseobject();

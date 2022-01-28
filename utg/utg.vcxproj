@@ -164,6 +164,7 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="namenpc.cpp" />
+    <ClCompile Include="pathfind.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="front.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="namenpc.h" />
+    <ClInclude Include="pathfind.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="tag.h" />
