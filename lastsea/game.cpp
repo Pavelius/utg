@@ -171,6 +171,7 @@ void gamei::chartacourse(int count) {
 		createobjects();
 		showsplash();
 		addpossiblecourse();
+		showsplash();
 		auto index = choose(temp);
 		auto tile = picktile();
 		if(!tile)

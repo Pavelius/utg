@@ -71,6 +71,7 @@ public:
 	void			createobjects() const;
 	indext			getindex(const void* p) const;
 	static indext	getindex(short x, short y) { return y * mx + x; }
+	static point	gethexsize();
 	indext			getlocation(indext i) const { return data[i]; }
 	indext			getmarker() const { return marker; }
 	static short	getx(indext i) { return i % mx; }

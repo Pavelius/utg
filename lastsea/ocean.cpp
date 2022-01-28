@@ -15,11 +15,11 @@ static point i2s(indext i) {
 }
 
 static void add_camera() {
-	draw::camera = {220, 102};
+	draw::camera = {220, 90};
 }
 
 static void add_seamap() {
-	auto p = draw::addobject(192, 198);
+	auto p = draw::addobject(192, 203);
 	p->resource = draw::getres("seamap");
 	p->priority = 10;
 }
@@ -28,7 +28,7 @@ static void add_you_ship() {
 	auto pt = i2s(game.getmarker());
 	auto p = draw::addobject(pt.x, pt.y);
 	p->resource = draw::getres("tiles");
-	p->frame = 1;
+	p->frame = 31;
 	p->priority = 29;
 }
 
@@ -86,8 +86,14 @@ void oceani::createobjects() const {
 			if(!t)
 				continue;
 			auto pt = draw::fh2p({x, y}, size);
-			auto fi = 0;
-			add_tile(pt, tiles, fi, data + i);
+			if(t == Blocked)
+				add_tile(pt, tiles, 0, data + i);
+			else if(t <= 30)
+				add_tile(pt, tiles, t, data + i);
+			else {
+				auto po = tilei::find(t);
+				add_tile(pt, tiles, po ? po->frame : 0, data + i);
+			}
 		}
 	}
 }
@@ -143,7 +149,7 @@ void oceani::addpossiblecourse() const {
 }
 
 void oceani::showsplash() {
-	splashscreen();
+	splashscreen(1000);
 }
 
 void oceani::initialize() {
@@ -173,4 +179,9 @@ indext oceani::getindex(const void* p) const {
 	if(p >= data && p < ((char*)data + sizeof(data)))
 		return (indext*)p - data;
 	return Blocked;
+}
+
+point oceani::gethexsize() {
+	const double cos_30 = 0.86602540378;
+	return {size * 2, (short)(2.0 * size * cos_30)};
 }

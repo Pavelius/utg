@@ -76,13 +76,13 @@ static void blend(screenshoot& source, screenshoot& destination, unsigned millis
 	}
 }
 
-void draw::splashscreen() {
+void draw::splashscreen(unsigned milliseconds) {
 	screenshoot push;
 	raw_beforemodal();
 	paintstart();
 	paintobjects();
 	screenshoot another;
-	blend(push, another, 1200);
+	blend(push, another, milliseconds);
 }
 
 void object::paint() const {

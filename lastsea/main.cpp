@@ -16,6 +16,7 @@ static void test_direction() {
 	auto e3 = oceani::to(10, 3);
 	auto e4 = oceani::to(10, 4);
 	auto e5 = oceani::to(10, 5);
+	auto pt = oceani::gethexsize(); // 84 x 72
 }
 
 static void starting() {

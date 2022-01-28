@@ -33,12 +33,11 @@ struct object : point {
 	void			setcolorborder();
 	void			setcolorform();
 	void			setcolorwindow();
-	void			remove(unsigned v) { flags &= ~(((unsigned)0x80000000) >> v); }
 };
 object*				addobject(int x, int y);
 void*				chooseobject();
 void				clearobjects();
 const sprite*		getres(const char* name);
 void				paintobjects();
-void				splashscreen();
+void				splashscreen(unsigned milliseconds);
 }
