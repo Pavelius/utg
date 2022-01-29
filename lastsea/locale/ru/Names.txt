@@ -1,11 +1,14 @@
 ﻿AbandonedHouses: Заброшенные дома
 AbilityGrow: Навык %1 растет на %+2i
-AddGun: Пушка [%1i] уровня или ниже
+AddBonus: С бонусом
+AddGun: Пушка [%1i] уровня
+AddMisfortune: Два раза, выбирая меньший результат
 Aim: Меткость
 AllSeein: Провидец
 Animal: Животное
 AnotherPirateOfYouCrew: Еще один пират из вашей команды
 AppTitle: Утраченные моря
+ApplyRoll: Применить результат броска
 Assassin: Убийца
 AttackMove: Название боевого приема
 Brawl: Сила
@@ -49,7 +52,8 @@ HereIsAHistory: [%герой] поведал%а свою историю.
 Hull: Корпус
 HungryCrew: Команда голодная!
 Hunting: Охота
-Infamy: Слава
+IncludeItems: С вещами
+Infamy: Репутация
 LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
@@ -62,7 +66,7 @@ Mission: Миссия
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextAction: Следующее действие
-NextStar: Следующая звезда
+NextStar: Развитие на
 No: Нет
 NotDefinedLastValue: Не указано значение `%1`
 NothingToDo: Ничего не делать.
@@ -88,7 +92,7 @@ ReallyHighAndCoolNumber: Большое и красивое число
 ReloadGun: Перезарядить пушку
 Reroll: Перебросы
 Roll: Бросок
-RollDice: Бросаем d12.
+RollDice: Бросаем d12
 SailOn: Полный вперед!
 Scout: Разведать
 Seeker: Искатель
@@ -123,7 +127,7 @@ Treasure88: Непромокаемые ботинки
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
 Unloaded: Не заряжены
-UpToLevel: до уровня %1i
+UseReroll: Использовать [переброс], чтобы перебросить кубик
 VillainousName: Мужская злодейская фамилия
 VisitManyTimes: Можно посещать несколько раз.
 WellRegardedProfession: Уважаемая профессия
@@ -131,6 +135,8 @@ WhatAboutHistory: Так что там с иторией?
 WhatDoYouWantToVisit: Что вы хотите посетить?
 WhatTreasureToBury: Какие сокровища хотите закопать?
 Yes: Да
+YouGainStars: Вы получили звезду и обнулили репутацию
 YouRoll: Вы выбросили %2i%+3i=%1i.
-YouRollAbility: Тестируем %1, бросаем d12 с бонусом %+2i.
+YouRollAbility: Тестируем %1.
+YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив больший кубик вышло %2i%+3i=%1i.
 YouVisitLocation: Перед вами %1.

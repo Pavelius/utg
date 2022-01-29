@@ -92,8 +92,8 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
 #Menu
 
 PagePirate
- elements Exploration Brawl Hunting Aim Swagger Navigation Separator Infamy Reroll Misfortune Stars Separator ListOfTreasures
+ elements Exploration Brawl Hunting Aim Swagger Navigation Separator Crew Hull Supply Separator Infamy Reroll Misfortune Stars Separator Danger Threat
 PageShip
- elements Crew Hull Supply Separator Danger Threat Separator Gun1 Gun2 Gun3 Gun4
+ elements Gun1 Gun2 Gun3 Gun4 Separator ListOfTreasures
 PageShipLog
  elements ListOfFronts

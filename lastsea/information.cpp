@@ -12,7 +12,9 @@ static void print(stringbuilder& sb, variant v) {
 			format = "%1i";
 			break;
 		case ReloadGun:
-			format = getnm("UpToLevel");
+		case AddGun:
+		case AddGunUnloaded:
+			format = 0;
 			break;
 		default:
 			break;
@@ -23,8 +25,8 @@ static void print(stringbuilder& sb, variant v) {
 	auto negative = v.counter < 0;
 	if(negative)
 		sb.add("[-");
-	sb.adds(v.getname());
-	if(v.counter)
+	sb.adds(v.getname(), v.counter);
+	if(v.counter && format)
 		sb.adds(format, v.counter);
 	if(negative)
 		sb.add("]");
@@ -74,8 +76,6 @@ void pirate::painttreasure() {
 		draw::label(v.getname(), 0, v.getpointer());
 		result++;
 	}
-	//if(result)
-	//	widget::paint("Separator");
 }
 
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {

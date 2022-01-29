@@ -88,7 +88,10 @@ static void special_command(special_s v, int bonus) {
 		game.bury(bonus);
 		break;
 	case Block:
-		game.lock(bonus);
+		if(bonus > 0)
+			game.lock(bonus - 1);
+		else if(bonus < 0)
+			game.unlock(bonus - 1);
 		break;
 	case PaySupply:
 		if(game.get(Supply) >= bonus)
@@ -100,7 +103,7 @@ static void special_command(special_s v, int bonus) {
 			game.set(Supply, game.get(Supply) - bonus);
 		break;
 	case ZeroSupplyOrDiscontent:
-		if(game.get(Supply)==0)
+		if(game.get(Supply) == 0)
 			game.set(Discontent, game.get(Discontent) + bonus);
 		else
 			game.set(Supply, 0);

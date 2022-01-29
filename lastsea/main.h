@@ -153,10 +153,13 @@ class pirate : public historyable {
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			chooseactions(int scene);
+	void			confirmroll();
+	void			makeroll();
 	void			playactions();
 	void			playaction(int id);
 	void			playchoose(int id);
 	void			sortactions();
+	void			rolldices();
 public:
 	void			adventure(int page);
 	void			addaction(indext v);

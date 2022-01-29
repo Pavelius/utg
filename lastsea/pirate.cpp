@@ -22,7 +22,7 @@ int pirate::getnextstar(int value) const {
 
 void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	auto p = (pirate*)object;
-	int value;
+	int value, value2;
 	if(p->classid == 0xFFFF)
 		return;
 	switch(v.type) {
@@ -50,6 +50,9 @@ void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 		default:
 			value = p->get((ability_s)v.value);
 			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value2 = p->getbonus((ability_s)v.value);
+			if(value2)
+				sb.adds("(%-IncludeItems %1i)", value + value2);
 			break;
 		}
 		break;
@@ -155,14 +158,14 @@ void pirate::set(ability_s v, int i) {
 		i = 0;
 	if(v == Stars) {
 		v = Infamy;
-		i = (i - abilities[Stars]) * 3;
+		i = abilities[Infamy] + (i - abilities[Stars]) * 3;
 		if(i < 0)
 			i = 0;
 	}
 	auto m = getmaximum(v);
 	if(i > m) {
 		if(v == Infamy) {
-			information("YouGainStars");
+			information(getnm("YouGainStars"));
 			abilities[Infamy] = 0;
 			if(abilities[Stars] < getmaximum(Stars))
 				abilities[Stars]++;
@@ -197,6 +200,8 @@ void pirate::set(ability_s v, int i) {
 		afterchange(v);
 	}
 }
+
+static int last_second_roll;
 
 static void fixroll(stringbuilder& sb) {
 	sb.add(getnm("YouRoll"), last_result, last_roll, last_bonus);
@@ -248,12 +253,14 @@ bool pirate::confirm(ability_s v, int delta) const {
 		return true;
 	if(get(Supply) < delta)
 		return false;
-	//char temp[260]; stringbuilder sb(temp);
-	//sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
-	//answers an;
-	//an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
-	//an.add((void*)0, getnm("NothingToDo"));
-	//return utg::choose(an, temp);
+	if(false) {
+		char temp[260]; stringbuilder sb(temp);
+		sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
+		answers an;
+		an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
+		an.add((void*)0, getnm("NothingToDo"));
+		return utg::choose(an, temp);
+	}
 	return true;
 }
 
@@ -422,26 +429,70 @@ static const quest* find_stage(const quest* ph, int stage) {
 	return pr;
 }
 
-void pirate::roll() {
+void pirate::rolldices() {
+	rollv(last_bonus);
+	if(get(Misfortune) > 0) {
+		abilities[Misfortune]--;
+		last_second_roll = 1 + rand() % 12;
+		if(last_roll > last_second_roll) {
+			iswap(last_second_roll, last_roll);
+			last_result = last_roll + last_bonus;
+		}
+		information(getnm("YouRollMisfortune"), last_result, last_roll, last_bonus, last_second_roll);
+	} else
+		information(getnm("YouRoll"), last_result, last_roll, last_bonus, last_second_roll);
+}
+
+void pirate::confirmroll() {
+	answers an;
+	auto push_text = utg::sb.get();
+	while(true) {
+		rolldices();
+		an.clear();
+		an.add(0, getnm("ApplyRoll"));
+		if(get(Reroll) > 0)
+			an.add(&bsdata<abilityi>::get(Reroll), getnm("UseReroll"));
+		auto pv = utg::choose(an, 0);
+		if(!pv)
+			break;
+		if(bsdata<abilityi>::have(pv)) {
+			switch(bsdata<abilityi>::source.indexof(pv)) {
+			case Reroll:abilities[Reroll]--; break;
+			default: break;
+			}
+		}
+		utg::sb.set(push_text);
+	}
+}
+
+void pirate::makeroll() {
 	char temp[260]; stringbuilder sb(temp);
 	if(last_ability >= Exploration && last_ability <= Navigation) {
 		last_bonus = get(last_ability);
 		last_bonus += getbonus(last_ability);
 	}
+	answers an;
 	while(true) {
 		sb.clear();
 		if(last_ability >= Exploration && last_ability <= Navigation)
-			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id), last_bonus);
-		else
-			sb.add(getnm("RollDice"), last_bonus);
-		answers an;
+			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id));
+		sb.adds(getnm("RollDice"));
+		if(get(Misfortune))
+			sb.adds("%-AddMisfortune");
+		if(last_bonus)
+			sb.adds("%-1 %+2i", getnm("AddBonus"), last_bonus);
+		sb.add(".");
+		an.clear();
 		an.add(0, getnm("MakeRoll"));
 		auto pv = utg::choose(an, temp);
 		if(!pv)
 			break;
 	}
-	rollv(last_bonus);
-	sb.clear(); fixroll(sb); information(temp);
+}
+
+void pirate::roll() {
+	makeroll();
+	confirmroll();
 	if(!last_action)
 		return;
 	auto ps = find_stage(last_action, last_result);
