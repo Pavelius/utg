@@ -28,10 +28,10 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	game.gaintreasure();
-	test_direction();
+	//test_direction();
 	game.adventure(0);
 	utg::pause();
-	game.chartacourse(2);
+	//game.chartacourse(2);
 	game.afterapply();
 }
 
@@ -54,9 +54,9 @@ int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	variant::sfapply = game.sfapply;
 	quest::console = &utg::sb;
-	bsdata<widget>::elements[0].proc = pirate::painttreasure;
 	draw::object::initialize();
 	oceani::initialize();
+	widget::add("ListOfTreasures", pirate::painttreasure);
 	return draw::start(starting, true, initializing);
 }
 

@@ -583,26 +583,6 @@ static void list_of_fronts() {
 	}
 }
 
-BSMETA(widget) = {
-	BSREQ(id),
-	{}};
-BSDATA(widget) = {
-	{"CustomWindow0"},
-	{"CustomWindow1"},
-	{"CustomWindow2"},
-	{"CustomWindow3"},
-	{"CustomWindow4"},
-	{"CustomWindow5"},
-	{"CustomWindow6"},
-	{"CustomWindow7"},
-	{"CustomWindow8"},
-	{"CustomWindow9"},
-	{"ListOfFronts", list_of_fronts},
-	{"RightAlignValue", right_align_value},
-	{"Separator", separator},
-};
-BSDATAF(widget)
-
 static void beforemodal() {
 	hilite_type = figure::Rect;
 	tips_caret.x = metrics::padding + metrics::border;
@@ -624,6 +604,12 @@ static void tips() {
 
 void initialize_png();
 
+static void initialize_widgets() {
+	widget::add("Separator", separator);
+	widget::add("RightAlignValue", right_align_value);
+	widget::add("ListOfFronts", list_of_fronts);
+}
+
 int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!utg::callback::getstatus)
@@ -634,6 +620,7 @@ int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 		set_dark_theme();
 	else
 		set_light_theme();
+	initialize_widgets();
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	if(afterread)

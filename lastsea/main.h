@@ -26,7 +26,8 @@ enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
-	PaySupply, PaySupplyEat, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
+	FullThrottle, TradeFriend,
+	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
@@ -163,6 +164,8 @@ public:
 	void			bury(int count);
 	void			captaincabine();
 	void			captainmission();
+	void			choosebonus(variant v1, variant v2);
+	ability_s		chooseskill(const char* title) const;
 	const treasurei* choosetreasure(const char* title) const;
 	void			clear();
 	void			clearactions();
@@ -182,9 +185,11 @@ public:
 	static void		painttreasure();
 	void			playscene(int scene);
 	void			remove(variant v);
+	void			raiseskills(int count);
 	void			roll();
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
+	void			tradefriend();
 	void			warning(const char* format, ...);
 };
 class cannoneer {
@@ -215,6 +220,7 @@ public:
 	void			chartacourse(int v);
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
+	void			fullthrottle(int level);
 	static void		generate();
 	const treasurei* picktreasure();
 	indext			picktile();

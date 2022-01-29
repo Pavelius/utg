@@ -90,7 +90,7 @@ int	pirate::getmaximum(ability_s v) const {
 	case Navigation:
 		return getclass().maximum[v - Exploration];
 	case Infamy:
-		return 3;
+		return 6;
 	case Stars: return 18;
 	case Level: case Mission: case Cabine: case Threat:
 		return 5;
@@ -153,9 +153,23 @@ void pirate::afterchange(ability_s v) {
 void pirate::set(ability_s v, int i) {
 	if(i < 0)
 		i = 0;
+	if(v == Stars) {
+		v = Infamy;
+		i = (i - abilities[Stars]) * 3;
+		if(i < 0)
+			i = 0;
+	}
 	auto m = getmaximum(v);
-	if(i > m)
-		i = m;
+	if(i > m) {
+		if(v == Infamy) {
+			information("YouGainStars");
+			abilities[Infamy] = 0;
+			if(abilities[Stars] < getmaximum(Stars))
+				abilities[Stars]++;
+			return;
+		} else
+			i = m;
+	}
 	if(abilities[v] != i) {
 		auto d = i - abilities[v];
 		switch(v) {
@@ -234,12 +248,13 @@ bool pirate::confirm(ability_s v, int delta) const {
 		return true;
 	if(get(Supply) < delta)
 		return false;
-	char temp[260]; stringbuilder sb(temp);
-	sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
-	answers an;
-	an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
-	an.add((void*)0, getnm("NothingToDo"));
-	return utg::choose(an, temp);
+	//char temp[260]; stringbuilder sb(temp);
+	//sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
+	//answers an;
+	//an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
+	//an.add((void*)0, getnm("NothingToDo"));
+	//return utg::choose(an, temp);
+	return true;
 }
 
 static int compare(const void* v1, const void* v2) {
@@ -256,6 +271,17 @@ void pirate::sortactions() {
 
 void pirate::adventure(int page) {
 	quest::run(page, utg::url, utg::header);
+}
+
+ability_s pirate::chooseskill(const char* title) const {
+	answers an;
+	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
+		if(get(i) >= getmaximum(i))
+			continue;
+		auto& ei = bsdata<abilityi>::elements[i];
+		an.add(&ei, getnm(ei.id));
+	}
+	return (ability_s)bsdata<abilityi>::source.indexof(utg::choose(an, title));
 }
 
 static void start_adventure(int v, int* pages) {
@@ -517,5 +543,29 @@ void pirate::bury(int count) {
 			break;
 		remove(p);
 		set(Stars, get(Stars) + 1);
+	}
+}
+
+void pirate::choosebonus(variant v1, variant v2) {
+	answers an;
+	an.add(&v1, "%Get %1%2i", getnm(bsdata<abilityi>::elements[v1.value].id), v1.counter);
+	an.add(&v2, "%Get %1%2i", getnm(bsdata<abilityi>::elements[v2.value].id), v2.counter);
+	auto pv = (variant*)utg::choose(an, 0);
+	if(pv)
+		game.apply(*pv);
+}
+
+void pirate::tradefriend() {
+}
+
+void pirate::raiseskills(int count) {
+	char temp[260]; stringbuilder sb(temp);
+	while(count > 0) {
+		sb.clear(); sb.add(getnm("ChooseSkillToRaise"));
+		if(count > 1)
+			sb.adds(getnm("ChooseLeft"), count);
+		auto v = chooseskill(temp);
+		set(v, get(v) + 1);
+		count--;
 	}
 }

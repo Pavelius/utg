@@ -42,6 +42,9 @@ static void special_command(special_s v, int bonus) {
 	case Choose:
 		last_choose = bonus;
 		break;
+	case Skill:
+		game.raiseskills(bonus);
+		break;
 	case Scout:
 		game.chartacourse(bonus);
 		break;
@@ -95,6 +98,18 @@ static void special_command(special_s v, int bonus) {
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
 			game.set(Supply, game.get(Supply) - bonus);
+		break;
+	case ZeroSupplyOrDiscontent:
+		if(game.get(Supply)==0)
+			game.set(Discontent, game.get(Discontent) + bonus);
+		else
+			game.set(Supply, 0);
+		break;
+	case FullThrottle:
+		game.fullthrottle(bonus);
+		break;
+	case TradeFriend:
+		game.tradefriend();
 		break;
 	default:
 		break;
@@ -171,6 +186,9 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 
 void gamei::playscene() {
 	game.pirate::playscene(game.scene);
+}
+
+void gamei::fullthrottle(int level) {
 }
 
 void gamei::chartacourse(int count) {

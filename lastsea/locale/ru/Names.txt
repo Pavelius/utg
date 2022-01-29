@@ -1,5 +1,6 @@
 ﻿AbandonedHouses: Заброшенные дома
 AbilityGrow: Навык %1 растет на %+2i
+AddGun: Пушка [%1i] уровня или ниже
 Aim: Меткость
 AllSeein: Провидец
 Animal: Животное
@@ -19,6 +20,7 @@ ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
 ChooseLeft: (осталось [%1i])
 ChooseOptions: Выбирайте опции (осталось [%1i]):
+ChooseSkillToRaise: Какой навык хотите повысить?
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
