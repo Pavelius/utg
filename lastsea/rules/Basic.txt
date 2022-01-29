@@ -1,3 +1,8 @@
+#Record
+
+CaptainHawk
+CaptainRazor
+
 #NavigationTile
 
 1 1
@@ -100,4 +105,4 @@ PagePirate
 PageShip
  elements Gun1 Gun2 Gun3 Gun4 Separator ListOfTreasures
 PageShipLog
- elements ListOfGoals ListOfFronts Separator MapOfTheSeas
+ elements ListOfGoals ListOfRecords Separator MapOfTheSeas

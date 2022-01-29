@@ -29,12 +29,13 @@ static void starting() {
 	game.createtiles();
 	game.gaintreasure();
 	//test_direction();
+	game.settag(1);
 	game.adventure(0);
 	utg::pause();
-	//game.afterapply();
+	game.afterapply();
 	//game.chartacourse(3);
 	//game.chooseroute(0);
-	game.endscene(19);
+	//game.endscene(19);
 }
 
 static void initializing() {
@@ -49,8 +50,9 @@ static void initializing() {
 void util_main();
 
 static void initialize_widgets() {
+	widget::add("ListOfGoals", shiplog::listofgoals);
+	widget::add("ListOfRecords", shiplog::listofrecords);
 	widget::add("ListOfTreasures", pirate::painttreasure);
-	widget::add("ListOfGoals", shiplog::paintgoals);
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
 

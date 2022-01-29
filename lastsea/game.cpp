@@ -145,6 +145,10 @@ void gamei::apply(variant v) {
 	case Goal:
 		game.setgoal((goali*)v.getpointer());
 		break;
+	case Record:
+		if(v.counter > 0)
+			game.settag(v.value);
+		break;
 	}
 }
 

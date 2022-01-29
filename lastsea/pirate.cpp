@@ -8,6 +8,8 @@ void pirate::clear() {
 	memset(this, 0, sizeof(*this));
 	historyable::clear();
 	clearactions();
+	abilities[MissionMaximum] = 5;
+	abilities[CabineMaximum] = 5;
 }
 
 int pirate::getnextstar(int value) const {
@@ -296,7 +298,7 @@ ability_s pirate::chooseskill(const char* title) const {
 static void start_adventure(int v, int* pages) {
 	v = v - 1;
 	if(v >= 0 && v < 5)
-		game.adventure(pages[v]);
+		last_page = pages[v];
 }
 
 void pirate::captaincabine() {

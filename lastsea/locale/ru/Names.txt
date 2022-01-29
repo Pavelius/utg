@@ -16,6 +16,7 @@ BuryTreasure: Зарыть сокровища
 Cabine: Каюта
 CaptainCabine: Каюта капитана
 CaptainMission: Миссия капитана
+CaptainRazor: Капитан Бритва
 CellInfo: %1 (ячейка карты %2i)
 ChartACourse: Проложить курс
 Choose: Выбирайте
@@ -28,6 +29,8 @@ CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
 Continue: Продолжить
+CounterA: Счетчик А
+CounterB: Счетчик Б
 Crew: Команда
 CurrentGoal: Текущая цель
 Danger: Опасность

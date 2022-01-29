@@ -1,2 +1,2 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 76: Can't find variant `Supplies`
+﻿In file `rules/Basic.txt`:
+ Line 108: Can't find variant `ListOfTags`

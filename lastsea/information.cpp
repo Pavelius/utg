@@ -76,16 +76,25 @@ void pirate::painttreasure() {
 	}
 }
 
+void shiplog::listofrecords() {
+	auto m = bsdata<recordi>::source.getcount();
+	for(unsigned i = 0; i < m; i++) {
+		if(!game.istag(i))
+			continue;
+		draw::label(getnm(bsdata<recordi>::elements[i].id), 0, bsdata<recordi>::elements + i);
+	}
+}
+
+void shiplog::listofgoals() {
+	auto p = game.getgoal();
+	if(p)
+		draw::label(getnm(p->id), 0, p);
+}
+
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 	auto index = game.getindex(object);
 	if(index != pathfind::Blocked)
 		sb.add(getnm("CellInfo"), getnm("Ocean"), index);
 	else
 		utg::getstatus(object, sb);
-}
-
-void shiplog::paintgoals() {
-	auto p = game.getgoal();
-	if(p)
-		draw::label(getnm(p->id), 0, p);
 }

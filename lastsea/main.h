@@ -5,6 +5,7 @@
 #include "message.h"
 #include "pathfind.h"
 #include "quest.h"
+#include "tag.h"
 #include "utg.h"
 
 #pragma once
@@ -16,7 +17,7 @@ enum ability_s : unsigned char {
 	Reroll, Misfortune, Treasure,
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
-	Threat, Mission, Cabine,
+	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
 	CounterA, CounterB, CounterC, CounterD,
 	Stars, Level, Infamy,
 	Gun1, Gun2, Gun3, Gun4,
@@ -41,13 +42,13 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Record, Special, Tag, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
 };
 
-typedef flagable<1> itemufa;
+typedef flagable<8> taga;
 typedef short unsigned indext;
 
 struct abilityi {
@@ -89,9 +90,6 @@ public:
 	void			showseamap();
 	void			showsplash();
 	static indext	to(indext i, int direction);
-};
-struct tagi {
-	const char*		id;
 };
 struct goali {
 	const char*		id;
@@ -200,15 +198,23 @@ public:
 struct counter {
 	short			current, maximum;
 };
+struct recordi {
+	const char*		id;
+};
 class shiplog {
 	short unsigned	goal_id;
 	bool			reach_location;
+	taga			tags;
 public:
 	void			checkgoal();
 	void			clear();
 	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
-	static void		paintgoals();
+	static void		listofgoals();
+	static void		listofrecords();
+	bool			istag(short unsigned v) const { return tags.is(v); }
 	void			setgoal(const goali* v) { goal_id = bsdata<goali>::source.indexof(v); }
+	void			settag(short unsigned v) { tags.set(v); }
+	void			removetag(short unsigned v) { tags.remove(v); }
 };
 class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
@@ -233,6 +239,7 @@ public:
 	void			fullthrottle(int level);
 	static void		generate();
 	static void		listofgoals();
+	static void		listoftags();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		playscene();

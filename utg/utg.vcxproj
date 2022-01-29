@@ -184,6 +184,7 @@
     <ClCompile Include="stringact.cpp" />
     <ClCompile Include="stringbuilder.cpp" />
     <ClCompile Include="szdup.cpp" />
+    <ClCompile Include="tag.cpp" />
     <ClCompile Include="utg_logs.cpp" />
     <ClCompile Include="variant.cpp" />
     <ClCompile Include="recordset.cpp" />

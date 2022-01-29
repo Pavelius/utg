@@ -85,7 +85,7 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 		} else if(equal(pn, "Header")) {
 			p = read_params(p, result);
 			pe->header = getstring(result);
-		} else if(equal(pn, "next"))
+		} else if(equal(pn, "Next"))
 			p = read_params(p, pe->next);
 		else {
 			int bonus; p = readbon(p, bonus);
@@ -234,7 +234,7 @@ void quest::read(const char* url) {
 	allowparse = true;
 	while(allowparse && *p) {
 		if(!isevent(p)) {
-			log::error(p, "Expected symbol `#` followed by event identifier");
+			log::error(p, "Expected symbol `#` followed by event number");
 			break;
 		}
 		short event_parent = -1; sb.clear();

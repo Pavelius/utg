@@ -168,6 +168,9 @@
     <ClCompile Include="screenshoot.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
