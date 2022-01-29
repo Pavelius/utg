@@ -32,6 +32,7 @@ enum special_s : unsigned char {
 	GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
+	IfResult, Else, EndIf
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,

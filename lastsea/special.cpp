@@ -46,5 +46,8 @@ BSDATA(speciali) = {
 	{"Page700"},
 	{"Page800"},
 	{"Page900"},
+	{"IfResult"},
+	{"Else"},
+	{"EndIf"},
 };
-assert_enum(speciali, Page900)
+assert_enum(speciali, EndIf)
