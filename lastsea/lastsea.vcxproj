@@ -153,6 +153,7 @@
     <ClCompile Include="pirate.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="roll12.cpp" />
+    <ClCompile Include="shiplog.cpp" />
     <ClCompile Include="special.cpp" />
     <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="tilei.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cannoneer.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="sprite_util.h" />
   </ItemGroup>

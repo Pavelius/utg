@@ -18,7 +18,6 @@ enum draw_event_s : unsigned {
 	F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
 	// support
 	CommandMask = 0x000000FF,
-	// misc events can be combination with previous
 	Ctrl = 0x00000100,
 	Alt = 0x00000200,
 	Shift = 0x00000400,
@@ -35,7 +34,7 @@ enum image_flag_s {
 	TextItalic = 0x0100,
 	TextBold = 0x0200,
 	TextUscope = 0x0400,
-	TextSingleLine = 0x0800, // Text would be showed as single line
+	TextSingleLine = 0x0800,
 	AlignLeft = 0x0000,
 	AlignCenter = 0x1000,
 	AlignRight = 0x2000,
@@ -48,7 +47,7 @@ enum image_flag_s {
 	AlignWidth = 0xE000,
 	AlignMask = 0xF000,
 };
-enum window_flags {
+enum window_flag_s {
 	WFResize = 0x0010,
 	WFMinmax = 0x0020,
 	WFMaximized = 0x0040,

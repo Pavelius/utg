@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `ChooseSkillToRaise`
+﻿In file `rules/Basic.txt`:
+ Line 94: Not found requisit `target_page`

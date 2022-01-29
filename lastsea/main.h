@@ -1,5 +1,5 @@
+#include "cannoneer.h"
 #include "charname.h"
-#include "counter.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
@@ -40,7 +40,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
@@ -65,11 +65,13 @@ class oceani {
 	void			blockwalls() const;
 	void			blockopentiles() const;
 	void			blockalltiles() const;
-	void			createselections(const slice<indext>& selectable) const;
 public:
 	void			addpossiblecourse() const;
+	void			addpossiblemove(int range) const;
 	indext			choose(const char* title) const;
+	indext			chooseroute(const char* title, int range = 1) const;
 	void			createobjects() const;
+	void			createselections(int from, int to) const;
 	indext			getindex(const void* p) const;
 	static indext	getindex(short x, short y) { return y * mx + x; }
 	static point	gethexsize();
@@ -83,6 +85,7 @@ public:
 	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
+	void			showseamap();
 	void			showsplash();
 	static indext	to(indext i, int direction);
 };
@@ -91,7 +94,8 @@ struct tagi {
 };
 struct goali {
 	const char*		id;
-	counter			success, fail;
+	int				danger;
+	short			reach_location;
 };
 class npcname {
 	short unsigned	nameid;
@@ -195,21 +199,23 @@ public:
 	void			tradefriend();
 	void			warning(const char* format, ...);
 };
-class cannoneer {
-	unsigned char	guns[4];
-	int				getgun(int level, bool loaded) const { return 1 + (level - 1) * 2 + (loaded ? 1 : 0); }
-	int				getlevel(int v) const { return v ? 1 + (v - 1) / 2 : 0; }
-	bool			isloaded(int v) const { return (v % 2) == 0; }
-public:
-	bool			addgun(int level, bool loaded, bool run);
-	void			clearweapons() { memset(this, 0, sizeof(*this)); }
-	int				getgunlevel(int index) const;
-	bool			isgunloaded(int index) const;
-	bool			reloadgun(int level, bool run);
+struct counter {
+	short			current, maximum;
 };
-class gamei : public pirate, public oceani, public cannoneer {
+class shiplog {
+	short unsigned	goal_id;
+	bool			reach_location;
+public:
+	void			checkgoal();
+	void			clear();
+	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
+	static void		paintgoals();
+	void			setgoal(const goali* v) { goal_id = bsdata<goali>::source.indexof(v); }
+};
+class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
+	npcname			pirates[3];
 	adat<indext, 512> treasures;
 	adat<indext, 64> tiles;
 public:
@@ -225,9 +231,12 @@ public:
 	void			lock(int i) { locked.set(i); }
 	void			fullthrottle(int level);
 	static void		generate();
+	static void		listofgoals();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		playscene();
+	static void		showseamap();
+	void			setgoal(const goali* v) { }
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);

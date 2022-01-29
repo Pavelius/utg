@@ -7,6 +7,7 @@ using namespace pathfind;
 using namespace draw;
 
 const int size = 42;
+const int appear_pause = 600;
 
 static point i2s(indext i) {
 	short x = oceani::getx(i);
@@ -39,7 +40,7 @@ static void add_tile(point pt, const sprite* resource, int frame, const void* da
 	p->size = 2 * size / 3;
 	p->priority = 20;
 	p->data = (void*)data;
-	p->setcolorborder();
+	p->fore = colors::border;
 }
 
 static void add_select(point pt, const void* data) {
@@ -50,6 +51,17 @@ static void add_select(point pt, const void* data) {
 	p->data = (void*)data;
 	p->fore = colors::button;
 	p->set(object::Hilite);
+}
+
+static void add_select(indext index, const void* data) {
+	auto x = oceani::getx(index);
+	auto y = oceani::gety(index);
+	add_select(fh2p({x, y}, size), data);
+}
+
+void oceani::showseamap() {
+	createobjects();
+	showobjects();
 }
 
 void oceani::showindecies() {
@@ -67,7 +79,7 @@ void oceani::showindecies() {
 			p->string = sb.get();
 			sb.add("%1i", i);
 			sb.addsz();
-			p->setcolorborder();
+			p->fore = colors::border;
 		}
 	}
 	chooseobject();
@@ -95,15 +107,6 @@ void oceani::createobjects() const {
 				add_tile(pt, tiles, po ? po->frame : 0, data + i);
 			}
 		}
-	}
-}
-
-void oceani::createselections(const slice<indext>& selectable) const {
-	for(auto v : selectable) {
-		short x = getx(v);
-		short y = gety(v);
-		auto pt = draw::fh2p({x, y}, size);
-		add_select(pt, data + v);
 	}
 }
 
@@ -135,21 +138,39 @@ void oceani::blockalltiles() const {
 	}
 }
 
+void oceani::createselections(int from, int to) const {
+	for(auto i = 0; i < maxcount; i++) {
+		auto m = getmove(i);
+		if(m >= from && m <= to)
+			add_select(i, data + i);
+	}
+}
+
 void oceani::addpossiblecourse() const {
-	indext coodrinates[32];
 	clearpath();
 	blockwalls();
 	blockopentiles();
 	blocknearest(marker, 1);
 	blockalltiles();
-	auto count = getindeciesat(coodrinates, lastof(coodrinates), 1);
-	if(!count)
-		return;
-	createselections({coodrinates, count});
+	createselections(1, 1);
+}
+
+void oceani::addpossiblemove(int range) const {
+	clearpath();
+	blockwalls();
+	makewave(marker);
+	createselections(1, range);
 }
 
 void oceani::showsplash() {
-	splashscreen(1000);
+	splashscreen(appear_pause);
+}
+
+indext oceani::chooseroute(const char* title, int range) const {
+	createobjects();
+	addpossiblemove(range);
+	splashscreen(appear_pause);
+	return choose(0);
 }
 
 void oceani::initialize() {

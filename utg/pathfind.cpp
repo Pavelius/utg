@@ -104,9 +104,11 @@ void pathfind::makewave(indext start_index) {
 			if(c1 && c1 < cost)
 				continue;
 			movement_rate[i1] = cost;
-			*push_counter++ = i1;
-			if(push_counter >= stack_end)
-				push_counter = stack;
+			if(c1 != StopMovementThrought) {
+				*push_counter++ = i1;
+				if(push_counter >= stack_end)
+					push_counter = stack;
+			}
 		}
 	}
 	blockzero();
@@ -124,15 +126,4 @@ void pathfind::blockrange(int range) {
 
 bool pathfind::isinitializated() {
 	return maxcount > 0 && to;
-}
-
-unsigned pathfind::getindeciesat(indext* pb, const indext* pe, int range) {
-	auto ps = pb;
-	for(auto i = 0; i < maxcount; i++) {
-		if(movement_rate[i] != range)
-			continue;
-		if(ps < pe)
-			*ps++ = i;
-	}
-	return ps - pb;
 }

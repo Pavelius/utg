@@ -170,7 +170,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
     <ClCompile Include="surface_serial.cpp" />
-    <ClCompile Include="utg.cpp" />
+    <ClCompile Include="draw_utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
     <ClCompile Include="draw_textf.cpp" />
     <ClCompile Include="draw_theme.cpp" />

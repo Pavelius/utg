@@ -84,6 +84,7 @@ bool pirate::match(variant v) const {
 }
 
 int	pirate::getmaximum(ability_s v) const {
+	const goali* p;
 	switch(v) {
 	case Exploration:
 	case Brawl:
@@ -97,6 +98,11 @@ int	pirate::getmaximum(ability_s v) const {
 	case Stars: return 18;
 	case Level: case Mission: case Cabine: case Threat:
 		return 5;
+	case Danger:
+		p = game.getgoal();
+		if(p)
+			return p->danger;
+		return 10;
 	case Eat: return (get(Crew) + 1) / 2;
 	default: return 10;
 	}

@@ -89,6 +89,10 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
  maximum 5 7 6 2 5 5
  levelup 4 7 12 15 18
 
+#Goal
+
+DecipherOldMap danger(2) reach_location(963)
+
 #Menu
 
 PagePirate
@@ -96,4 +100,4 @@ PagePirate
 PageShip
  elements Gun1 Gun2 Gun3 Gun4 Separator ListOfTreasures
 PageShipLog
- elements ListOfFronts
+ elements ListOfGoals ListOfFronts Separator MapOfTheSeas

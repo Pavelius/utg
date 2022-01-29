@@ -15,9 +15,14 @@ static void generate_classes() {
 
 void gamei::clear() {
 	memset(this, 0, sizeof(*this));
+	shiplog::clear();
 }
 
 void gamei::generate() {
+	for(auto& e : game.pirates) {
+		e.clear();
+		e.randomname();
+	}
 	game.pirate::clear();
 	game.pirate::randomname();
 	game.pirate::generate();
@@ -132,6 +137,9 @@ void gamei::apply(variant v) {
 	case Card:
 		game.gaintreasure((treasurei*)v.getpointer());
 		break;
+	case Goal:
+		game.setgoal((goali*)v.getpointer());
+		break;
 	}
 }
 
@@ -214,4 +222,8 @@ void gamei::chartacourse(int count) {
 	}
 	createobjects();
 	showsplash();
+}
+
+void gamei::showseamap() {
+	game.oceani::showseamap();
 }

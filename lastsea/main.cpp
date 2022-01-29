@@ -31,7 +31,8 @@ static void starting() {
 	//test_direction();
 	game.adventure(0);
 	utg::pause();
-	//game.chartacourse(2);
+	game.chartacourse(3);
+	game.chooseroute(0);
 	game.afterapply();
 }
 
@@ -46,6 +47,12 @@ static void initializing() {
 
 void util_main();
 
+static void initialize_widgets() {
+	widget::add("ListOfTreasures", pirate::painttreasure);
+	widget::add("ListOfGoals", shiplog::paintgoals);
+	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
+}
+
 int main(int argc, char* argv[]) {
 	util_main();
 	utg::url = "pirate_kingship";
@@ -56,7 +63,7 @@ int main(int argc, char* argv[]) {
 	quest::console = &utg::sb;
 	draw::object::initialize();
 	oceani::initialize();
-	widget::add("ListOfTreasures", pirate::painttreasure);
+	initialize_widgets();
 	return draw::start(starting, true, initializing);
 }
 

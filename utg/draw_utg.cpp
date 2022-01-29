@@ -11,8 +11,8 @@ array*			draw::heroes;
 fngetname		draw::heroes_getavatar;
 const void*		draw::focus_object;
 int				draw::title_width = 220;
+static point	hide_separator;
 static void*	current_tab;
-static const menu* last_menu;
 
 void set_dark_theme();
 void set_light_theme();
@@ -211,17 +211,17 @@ static void properties() {
 	if(!current_tab)
 		return;
 	if(bsdata<menu>::have(current_tab)) {
-		auto push_menu = last_menu;
+		auto push_menu = menu::last;
 		auto push_title = title_width;
 		title_width = 120;
-		last_menu = (menu*)current_tab;
-		if(last_menu->source) {
-			if(last_menu->source->pgetproperty)
-				label(focus_object, last_menu->elements, last_menu->source->pgetproperty);
+		menu::last = (menu*)current_tab;
+		if(menu::last->source) {
+			if(menu::last->source->pgetproperty)
+				label(focus_object, menu::last->elements, menu::last->source->pgetproperty);
 		} else if(utg::callback::getinfo)
-			label(last_menu, last_menu->elements, utg::callback::getinfo);
+			label(menu::last, menu::last->elements, utg::callback::getinfo);
 		title_width = push_title;
-		last_menu = push_menu;
+		menu::last = push_menu;
 	}
 }
 
@@ -281,6 +281,8 @@ void draw::label(const char* title, const char* value, const void* object) {
 }
 
 static void separator() {
+	if(hide_separator == caret)
+		return;
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::border;
@@ -290,19 +292,31 @@ static void separator() {
 	fore = push_fore;
 	caret = push_caret;
 	caret.y += texth();
+	hide_separator = caret;
 }
 
 static void right_align_value() {
 	title_width = 320 - textw('0') * 4 - metrics::padding * 2;
 }
 
+void widget::button() {
+	if(!last)
+		return;
+	if(!last->click)
+		return;
+	label(getnm(last->id), 0, last);
+	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
+		execute(last->click, 0, 0, last);
+}
+
 void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 	char temp[260]; stringbuilder sb(temp);
 	auto push_tab = draw::tab_pixels;
 	draw::tab_pixels = textw('0') * 6;
+	hide_separator = caret;
 	for(auto v : elements) {
 		if(v.geti().metadata == bsmeta<widget>::meta)
-			bsdata<widget>::elements[v.value].proc();
+			bsdata<widget>::elements[v.value].paint();
 		else {
 			auto id = v.getid();
 			sb.clear(); pget(object, v, sb);
@@ -613,7 +627,7 @@ static void initialize_widgets() {
 int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!utg::callback::getstatus)
-		utg::callback::getstatus= utg::getstatus;
+		utg::callback::getstatus = utg::getstatus;
 	if(!proc)
 		return -1;
 	if(darkmode)

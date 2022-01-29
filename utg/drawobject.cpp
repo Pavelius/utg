@@ -21,18 +21,6 @@ void object::clear() {
 	*this = def;
 }
 
-void object::setcolorborder() {
-	fore = colors::border;
-}
-
-void object::setcolorform() {
-	fore = colors::form;
-}
-
-void object::setcolorwindow() {
-	fore = colors::window;
-}
-
 static void textcn(const char* string) {
 	auto push_caret = caret;
 	caret.x -= textw(string) / 2;
@@ -151,6 +139,18 @@ void draw::paintobjects() {
 void* draw::chooseobject() {
 	draw::scene(paintobjects);
 	return (void*)getresult();
+}
+
+static void paintobjectsshowmode() {
+	paintobjects();
+	if(hot.key == KeyEscape)
+		execute(buttoncancel);
+	if(!hot.pressed && hot.key==MouseLeft)
+		execute(buttoncancel);
+}
+
+void draw::showobjects() {
+	draw::scene(paintobjectsshowmode);
 }
 
 object*	draw::addobject(int x, int y) {

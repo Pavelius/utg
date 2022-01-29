@@ -1,7 +1,7 @@
 #include "bsreq.h"
 #include "menu.h"
 
-int menu::last_index;
+const menu* menu::last;
 
 BSMETA(menu) = {
 	BSREQ(id), BSREQ(source),

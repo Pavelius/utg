@@ -7,6 +7,15 @@
 typedef void(*fnevent)();
 struct sprite;
 
+namespace colors {
+extern color		button, form, window;
+extern color		border, active;
+extern color		text, h1, h2, h3, special;
+namespace tips {
+extern color		back;
+extern color		text;
+}
+}
 namespace draw {
 extern point		camera;
 extern int			fsize;
@@ -30,9 +39,6 @@ struct object : point {
 	void			paint() const;
 	void			paintns() const;
 	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
-	void			setcolorborder();
-	void			setcolorform();
-	void			setcolorwindow();
 };
 object*				addobject(int x, int y);
 void*				chooseobject();
@@ -40,4 +46,5 @@ void				clearobjects();
 const sprite*		getres(const char* name);
 void				paintobjects();
 void				splashscreen(unsigned milliseconds);
+void				showobjects();
 }

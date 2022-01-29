@@ -45,7 +45,7 @@
     <ClCompile Include="draw.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="utg.cpp">
+    <ClCompile Include="draw_utg.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="draw_text.cpp">

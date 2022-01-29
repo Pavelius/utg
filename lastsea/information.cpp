@@ -69,12 +69,10 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 }
 
 void pirate::painttreasure() {
-	auto result = 0;
 	for(auto v : game.pirate::treasures) {
 		if(!v)
 			continue;
 		draw::label(v.getname(), 0, v.getpointer());
-		result++;
 	}
 }
 
@@ -84,4 +82,10 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		sb.add(getnm("CellInfo"), getnm("Ocean"), index);
 	else
 		utg::getstatus(object, sb);
+}
+
+void shiplog::paintgoals() {
+	auto p = game.getgoal();
+	if(p)
+		draw::label(getnm(p->id), 0, p);
 }

@@ -1,4 +1,5 @@
 #0 Supply+10 Crew+9 Hull+5 Scene+19 AddGun+1 AddGunUnloaded+1\
+DecipherOldMap\
 TileRock AddTile+15 AddTile+23 AddTile+24\
 Tile900+77 AddTile+0 AddTile+7 AddTile+14 AddTile+28 AddTile+35\
 Tile900+63 AddTile+21\

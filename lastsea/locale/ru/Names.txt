@@ -29,7 +29,9 @@ CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
 Continue: Продолжить
 Crew: Команда
+CurrentGoal: Текущая цель
 Danger: Опасность
+DecipherOldMap: Расшифровать старую карту
 Discontent: Недовольство
 Exploration: Исследование
 FamousMan: Известный человек
@@ -61,6 +63,7 @@ Loaded: Заряжены
 MadeUpInterrogationTactic: Несуществующая пытка
 Magic19: Блюдо со странным запахом
 MakeRoll: Выполнить бросок
+MapOfTheSeas: Показать карту океана
 Misfortune: Неудача
 Mission: Миссия
 NameOfWoman: Женское имя
@@ -117,6 +120,7 @@ Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка
 Treasure47: Мастерский фонарь
 Treasure54: Золотой секстант
+Treasure62: Довгополая куртка
 Treasure66: Надежный тесак мамочки 
 Treasure73: Пышная рубаха
 Treasure74: Острейшее мачете 
@@ -129,7 +133,7 @@ UglyFamily: Дурацкая фамилия
 Unloaded: Не заряжены
 UseReroll: Использовать [переброс], чтобы перебросить кубик
 VillainousName: Мужская злодейская фамилия
-VisitManyTimes: Можно посещать несколько раз.
+VisitManyTimes: [~Можно выбирать несколько раз.]
 WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
 WhatDoYouWantToVisit: Что вы хотите посетить?

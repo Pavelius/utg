@@ -60,6 +60,9 @@
     <ClCompile Include="tilei.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="shiplog.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="sprite_util.h">
       <Filter>Утилиты</Filter>
+    </ClInclude>
+    <ClInclude Include="cannoneer.h">
+      <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
