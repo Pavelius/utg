@@ -31,6 +31,7 @@ BSDATA(speciali) = {
 	{"VisitManyTimes"},
 	{"VisitRequired"},
 	{"CheckDanger"},
+	{"RemoveAllNavigation"},
 	{"PlayStars"},
 	{"Sail"},
 	{"LostGame"},

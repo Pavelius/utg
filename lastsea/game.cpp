@@ -3,7 +3,9 @@
 
 gamei		game;
 int			last_choose, last_page, last_scene, last_tile;
+static bool	need_sail;
 ability_s	last_ability;
+static fnevent next_round;
 
 static void generate_classes() {
 	auto push_interactive = utg::interactive;
@@ -119,6 +121,9 @@ static void special_command(special_s v, int bonus) {
 	case TradeFriend:
 		game.tradefriend();
 		break;
+	case Sail:
+		need_sail = true;
+		break;
 	default:
 		break;
 	}
@@ -198,8 +203,38 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	}
 }
 
+const quest* gamei::findpage(int v) {
+	for(auto& e : bsdata<quest>()) {
+		if(e.index == v)
+			return &e;
+	}
+	return 0;
+}
+
 void gamei::playscene() {
-	game.pirate::playscene(game.scene);
+	auto scene = game.scene;
+	game.chooseactions(scene);
+	game.playactions();
+	game.endscene(scene);
+}
+
+void gamei::playsail() {
+	auto index = game.oceani::chooseroute(0, 1);
+	if(index == pathfind::Blocked)
+		return;
+	game.setmarker(index);
+	auto tile_id = game.getlocation(index);
+	if(!tile_id) {
+		game.setlocation(index, game.picktile());
+		game.createobjects();
+		game.showsplash();
+	}
+	tile_id = game.getlocation(index);
+	if(!tile_id)
+		return;
+	game.adventure(tile_id);
+	utg::pause();
+	game.afterapply();
 }
 
 void gamei::fullthrottle(int level) {
@@ -226,4 +261,41 @@ void gamei::chartacourse(int count) {
 
 void gamei::showseamap() {
 	game.oceani::showseamap();
+}
+
+void gamei::endscene(int scene) {
+	last_scene = 0;
+	auto ph = findpage(4000 + scene);
+	if(ph && ph->next) {
+		game.adventure(ph->next);
+		game.afterapply();
+	}
+}
+
+void gamei::afterapply() {
+	while(last_page || last_choose) {
+		if(last_page > 0) {
+			auto v = last_page;
+			last_page = 0;
+			game.adventure(v);
+			continue;
+		}
+		if(last_choose > 0) {
+			auto v = last_choose;
+			last_choose = 0;
+			game.playchoose(v);
+			continue;
+		}
+	}
+	if(last_scene) {
+		if(game.scene != last_scene) {
+			game.unlockall();
+			game.scene = last_scene;
+		}
+		last_scene = 0;
+		draw::setnext(game.playscene);
+	} else if(need_sail) {
+		need_sail = false;
+		draw::setnext(game.playsail);
+	}
 }

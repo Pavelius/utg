@@ -31,9 +31,10 @@ static void starting() {
 	//test_direction();
 	game.adventure(0);
 	utg::pause();
-	game.chartacourse(3);
-	game.chooseroute(0);
-	game.afterapply();
+	//game.afterapply();
+	//game.chartacourse(3);
+	//game.chooseroute(0);
+	game.endscene(19);
 }
 
 static void initializing() {

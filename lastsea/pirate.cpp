@@ -324,13 +324,6 @@ static void start_page(const quest* ph) {
 		game.act(utg::sb, ph->text);
 }
 
-static const quest* find_page(int v) {
-	for(auto& e : bsdata<quest>()) {
-		if(e.index == v)
-			return &e;
-	}
-	return 0;
-}
 
 static const quest* find_next_action(const quest* p) {
 	if(p && p[1].index == p[0].index && p[1].next > 100)
@@ -357,7 +350,7 @@ void pirate::chooseactions(int scene) {
 		pirate* pr;
 		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
 	};
-	auto ph = find_page(4000 + scene);
+	auto ph = game.findpage(4000 + scene);
 	if(!ph)
 		return;
 	start_page(ph);
@@ -387,41 +380,15 @@ void pirate::playactions() {
 
 static const quest* last_action;
 
-void pirate::afterapply() {
-	while(last_page || last_choose || last_scene) {
-		if(last_page > 0) {
-			auto v = last_page;
-			last_page = 0;
-			adventure(v);
-			continue;
-		}
-		if(last_choose > 0) {
-			auto v = last_choose;
-			last_choose = 0;
-			playchoose(v);
-			continue;
-		}
-		if(last_scene) {
-			if(game.scene != last_scene) {
-				game.unlockall();
-				game.scene = last_scene;
-			}
-			last_scene = 0;
-			draw::setnext(game.playscene);
-			continue;
-		}
-	}
-}
-
 void pirate::playaction(int id) {
 	auto ph = bsdata<quest>::elements + id;
-	last_action = find_page(ph->next);
+	last_action = game.findpage(ph->next);
 	if(!last_action)
 		return;
 	start_page(last_action);
 	last_page = last_choose = last_scene = 0;
 	game.apply(last_action->tags);
-	afterapply();
+	game.afterapply();
 }
 
 static const quest* find_stage(const quest* ph, int stage) {
@@ -542,20 +509,6 @@ void pirate::playchoose(int count) {
 	for(auto p = find_action_choose(last_action); p && p->index == last_action->index && p->next == 0; p++)
 		an.add(p, p->text);
 	san.choose(0, count);
-}
-
-void pirate::endscene(int scene) {
-	auto ph = find_page(4000 + scene);
-	if(ph && ph->next) {
-		adventure(ph->next);
-		afterapply();
-	}
-}
-
-void pirate::playscene(int scene) {
-	chooseactions(scene);
-	playactions();
-	endscene(scene);
 }
 
 const treasurei* pirate::choosetreasure(const char* title) const {

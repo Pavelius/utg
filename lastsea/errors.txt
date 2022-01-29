@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 94: Not found requisit `target_page`
+﻿In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 76: Can't find variant `Supplies`

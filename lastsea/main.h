@@ -27,8 +27,9 @@ enum special_s : unsigned char {
 	Block, Choose, Roll, Bury, Scout, Steal, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
-	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
-	VisitManyTimes, VisitRequired, CheckDanger, PlayStars, Sail, LostGame, WinGame,
+	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,
+	GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
+	VisitManyTimes, VisitRequired, CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 };
 enum tag_s : unsigned char {
@@ -156,28 +157,24 @@ class pirate : public historyable {
 	variant			treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
-	void			chooseactions(int scene);
 	void			confirmroll();
 	void			makeroll();
-	void			playactions();
 	void			playaction(int id);
-	void			playchoose(int id);
 	void			sortactions();
 	void			rolldices();
 public:
 	void			adventure(int page);
 	void			addaction(indext v);
-	void			afterapply();
 	void			bury(int count);
 	void			captaincabine();
 	void			captainmission();
+	void			chooseactions(int scene);
 	void			choosebonus(variant v1, variant v2);
 	ability_s		chooseskill(const char* title) const;
 	const treasurei* choosetreasure(const char* title) const;
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
-	void			endscene(int scene);
 	void			information(const char* format, ...);
 	void			makethreat();
 	void			gaintreasure(int count = 1);
@@ -190,7 +187,8 @@ public:
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
 	static void		painttreasure();
-	void			playscene(int scene);
+	void			playactions();
+	void			playchoose(int id);
 	void			remove(variant v);
 	void			raiseskills(int count);
 	void			roll();
@@ -220,6 +218,7 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	adat<indext, 64> tiles;
 public:
 	unsigned short	scene;
+	static void		afterapply();
 	static void		apply(variant v);
 	static void		apply(const variants& source);
 	void			createtiles();
@@ -227,14 +226,17 @@ public:
 	void			clear();
 	static void		choosehistory();
 	void			chartacourse(int v);
+	static void		endscene(int scene);
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
+	static const quest*	findpage(int v);
 	void			fullthrottle(int level);
 	static void		generate();
 	static void		listofgoals();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		playscene();
+	static void		playsail();
 	static void		showseamap();
 	void			setgoal(const goali* v) { }
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }

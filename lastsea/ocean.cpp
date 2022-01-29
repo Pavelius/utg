@@ -9,6 +9,8 @@ using namespace draw;
 const int size = 42;
 const int appear_pause = 600;
 
+static object* marker_object;
+
 static point i2s(indext i) {
 	short x = oceani::getx(i);
 	short y = oceani::gety(i);
@@ -27,10 +29,10 @@ static void add_seamap() {
 
 static void add_you_ship() {
 	auto pt = i2s(game.getmarker());
-	auto p = draw::addobject(pt.x, pt.y);
-	p->resource = draw::getres("tiles");
-	p->frame = 31;
-	p->priority = 29;
+	marker_object = draw::addobject(pt.x, pt.y);
+	marker_object->resource = draw::getres("tiles");
+	marker_object->frame = 31;
+	marker_object->priority = 29;
 }
 
 static void add_tile(point pt, const sprite* resource, int frame, const void* data) {
@@ -87,6 +89,7 @@ void oceani::showindecies() {
 
 void oceani::createobjects() const {
 	auto tiles = getres("tiles");
+	marker_object = 0;
 	clearobjects();
 	add_camera();
 	add_you_ship();
@@ -170,7 +173,12 @@ indext oceani::chooseroute(const char* title, int range) const {
 	createobjects();
 	addpossiblemove(range);
 	splashscreen(appear_pause);
-	return choose(0);
+	auto result = choose(0);
+	if(result == Blocked)
+		return Blocked;
+	if(marker_object)
+		marker_object->move(i2s(result), 2);
+	return result;
 }
 
 void oceani::initialize() {

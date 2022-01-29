@@ -5,6 +5,7 @@
 
 using namespace draw;
 
+long distance(point from, point to);
 object object::def;
 
 void object::initialize() {
@@ -162,6 +163,29 @@ object*	draw::addobject(int x, int y) {
 
 void draw::clearobjects() {
 	bsdata<object>::source.clear();
+}
+
+static void moving(point& result, point goal, int step) {
+	auto start = result;
+	auto maxds = distance(start, goal);
+	auto curds = 0;
+	while(ismodal() && curds < maxds) {
+		result.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
+		result.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
+		if(pbackground)
+			pbackground();
+		paintobjects();
+		doredraw();
+		waitcputime(1);
+		curds += step;
+		if(curds > maxds)
+			curds = maxds;
+	}
+	result = goal;
+}
+
+void object::move(point goal, int speed) {
+	moving(*this, goal, speed);
 }
 
 const sprite* draw::getres(const char* name) {

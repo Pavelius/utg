@@ -131,7 +131,6 @@ void historyable::background() const {
 	if(!pn)
 		return;
 	utg::sb.clear();
-	//act(logs::sb, getnm("HereIsAHistory"));
 	act(utg::sb, pn->text);
 	utg::pause();
 }
