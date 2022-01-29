@@ -129,6 +129,9 @@ void gamei::apply(variant v) {
 	case Special:
 		special_command((special_s)v.value, v.counter);
 		break;
+	case Card:
+		game.gaintreasure((treasurei*)v.getpointer());
+		break;
 	}
 }
 

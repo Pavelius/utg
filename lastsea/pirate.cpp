@@ -203,10 +203,6 @@ void pirate::set(ability_s v, int i) {
 
 static int last_second_roll;
 
-static void fixroll(stringbuilder& sb) {
-	sb.add(getnm("YouRoll"), last_result, last_roll, last_bonus);
-}
-
 void pirate::addaction(indext v) {
 	for(auto& e : actions) {
 		if(e)
@@ -463,6 +459,7 @@ void pirate::confirmroll() {
 		}
 		utg::sb.set(push_text);
 	}
+	last_bonus = 0;
 }
 
 void pirate::makeroll() {
