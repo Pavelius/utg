@@ -19,6 +19,7 @@ BSDATA(speciali) = {
 	{"RemoveTile"},
 	{"SetShip"},
 	{"PaySupply"},
+	{"PaySupplyEat"},
 	{"GunLoadOrHull"},
 	{"ReloadGun"},
 	{"UpgradeGun"},

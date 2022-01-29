@@ -87,6 +87,15 @@ static void special_command(special_s v, int bonus) {
 	case Block:
 		game.lock(bonus);
 		break;
+	case PaySupply:
+		if(game.get(Supply) >= bonus)
+			game.set(Supply, game.get(Supply) - bonus);
+		break;
+	case PaySupplyEat:
+		bonus += game.getmaximum(Eat);
+		if(game.get(Supply) >= bonus)
+			game.set(Supply, game.get(Supply) - bonus);
+		break;
 	default:
 		break;
 	}

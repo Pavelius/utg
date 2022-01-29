@@ -94,6 +94,7 @@ int	pirate::getmaximum(ability_s v) const {
 	case Stars: return 18;
 	case Level: case Mission: case Cabine: case Threat:
 		return 5;
+	case Eat: return (get(Crew) + 1) / 2;
 	default: return 10;
 	}
 }
@@ -458,7 +459,7 @@ void pirate::playchoose(int count) {
 	if(!last_action)
 		return;
 	answers an; handler san(an, this);
-	for(auto p = find_action_choose(last_action); p && p->index==last_action->index && p->next == 0; p++)
+	for(auto p = find_action_choose(last_action); p && p->index == last_action->index && p->next == 0; p++)
 		an.add(p, p->text);
 	san.choose(0, count);
 }
