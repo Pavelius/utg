@@ -8,6 +8,8 @@ BSDATA(speciali) = {
 	{"Choose"},
 	{"Roll"},
 	{"RollGuns"},
+	{"RollSilent"},
+	{"Damage"},
 	{"Bury"},
 	{"Scout"},
 	{"Steal"},

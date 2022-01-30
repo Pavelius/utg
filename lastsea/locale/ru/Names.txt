@@ -41,6 +41,7 @@ CurrentGoal: Текущая цель
 Danger: Опасность
 DecipherOldMap: Расшифровать старую карту
 Discontent: Недовольство
+DistributeDamage: Распределите повреждения (осталось [%1i]):
 Exploration: Исследование
 FamousMan: Известный человек
 FriendOrFamousPerson: Друг или известный человек
@@ -107,6 +108,7 @@ ReloadGun: Перезарядить пушку
 Reroll: Перебросы
 Roll: Бросок
 RollDice: Бросаем d12
+SailAway: Уплыть отсюда ко всем чертям!
 SailOn: Полный вперед!
 Scout: Разведать
 Seeker: Искатель

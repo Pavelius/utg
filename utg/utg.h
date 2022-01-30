@@ -21,6 +21,7 @@ void				answerbt(int index, const void* id, const char* title);
 void				avatar(int index, const void* object, const char* id);
 void				avatarch(int index, const void* object, const char* id);
 bool				buttonfd(const char* title);
+bool				isnext();
 void				label(const char* id, const char* value);
 void				label(const char* id, const char* value, const void* object);
 void				label(const void* object, const variants& elements, fngetinfo pget);

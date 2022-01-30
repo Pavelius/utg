@@ -25,7 +25,7 @@ enum ability_s : unsigned char {
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, RollGuns, Bury, Scout, Steal, Skill, Scene,
+	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Steal, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
 	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,

@@ -207,6 +207,7 @@ static void play_actions() {
 }
 
 static void apply_sail();
+static void apply_scene();
 
 static void end_scene() {
 	if(!last_location || !last_location->next)
@@ -214,8 +215,10 @@ static void end_scene() {
 	apply_effect(quest::find(last_location->next));
 	if(need_sail) {
 		need_sail = false;
+		utg::pause(getnm("SailAway"));
 		draw::setnext(apply_sail);
-	}
+	} else
+		draw::setnext(apply_scene);
 }
 
 static void apply_scene() {
@@ -271,6 +274,26 @@ static void captain_mission() {
 static void global_threat() {
 	static int pages[] = {791, 792, 793, 794, 795};
 	special_mission(game.get(Threat), pages);
+}
+
+static void choose_damage(int count, const slice<ability_s>& source) {
+	answers an;
+	char temp[260]; stringbuilder sb(temp);
+	while(count > 0 && !draw::isnext()) {
+		an.clear();
+		for(auto v : source) {
+			if(game.get(v) > 0) {
+				auto p = bsdata<abilityi>::elements + v;
+				an.add(p, "%1%+2i", getnm(p->id), -1);
+			}
+		}
+		sb.clear();
+		sb.add(getnm("DistributeDamage"), count);
+		auto p = (abilityi*)utg::choose(an, temp);
+		auto v = (ability_s)(p - bsdata<abilityi>::elements);
+		game.set(v, game.get(v) - 1);
+		count--;
+	}
 }
 
 int gamei::getpage() {
@@ -434,11 +457,17 @@ void gamei::choosecounter() {
 	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
 }
 
+static ability_s standart_damage[] = {Hull, Crew, Supply};
+
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
 	case RollGuns:
 		game.roll(v);
+		break;
+	case RollSilent:
+		rollv(0);
+		apply_roll_result(last_quest, last_result);
 		break;
 	case Choose:
 		last_choose = bonus;
@@ -561,12 +590,17 @@ static void special_command(special_s v, int bonus) {
 		}
 		break;
 	case IfCounterZero:
-		if(variables.get(last_counter) == 0)
+		if(variables.get(last_counter) <= 0)
 			apply_condition(bonus);
 		break;
+	case Damage:
+		choose_damage(bonus, standart_damage);
+		break;
 	case CheckDanger:
+		// TODO
 		break;
 	case PlayStars:
+		// TODO
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
