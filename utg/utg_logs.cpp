@@ -81,6 +81,7 @@ void utg::pause(const char* title) {
 	answers an;
 	an.add(0, title);
 	choose(an, 0);
+	sb.clear();
 }
 
 bool utg::yesno(const char* title, ...) {

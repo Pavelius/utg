@@ -201,7 +201,7 @@ Name+0 CounterName+0 Name+1 CounterName+1
 0 Reroll+1 VisitManyTimes) ”величить [перебросы]
 
 #4555 Navigation+1 PenaltyB Roll
-1) Ќичего не вышло, корабль врага идет практически борт в борт.
+1)
 13 Sail+1 Infamy+3)
 
 #6000

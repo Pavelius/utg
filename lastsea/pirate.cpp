@@ -145,22 +145,6 @@ void pirate::checkexperience(ability_s v) {
 	}
 }
 
-void pirate::afterchange(ability_s v) {
-	switch(v) {
-	case Exploration: case Brawl: case Hunting: case Aim: case Swagger: case Navigation:
-		checkexperience(v);
-		break;
-	case Mission:
-		captainmission();
-	case Cabine:
-		captaincabine();
-		break;
-	case Threat:
-		makethreat();
-		break;
-	}
-}
-
 void pirate::set(ability_s v, int i) {
 	if(i < 0)
 		i = 0;
@@ -280,36 +264,6 @@ void pirate::sortactions() {
 	qsort(actions, sizeof(actions) / sizeof(actions[0]), sizeof(actions[0]), compare);
 }
 
-const quest* pirate::chooseanswers(const quest* ph) const {
-	answers an;
-	if(!ph)
-		return 0;
-	game.startpage(ph);
-	quest::apply(ph->tags);
-	auto index = ph->index;
-	auto pe = bsdata<quest>::end();
-	for(auto p = ph + 1; p < pe; p++) {
-		if(p->index != index)
-			continue;
-		if(!p->isanswer())
-			continue;
-		an.add(p, p->text);
-	}
-	return (quest*)utg::choose(an, 0);
-}
-
-void pirate::adventure(int id) {
-	utg::sb.clear();
-	while(true) {
-		auto p = quest::find(id);
-		p = chooseanswers(p);
-		if(!p)
-			break;
-		p->apply(p->tags);
-		id = p->next;
-	}
-}
-
 ability_s pirate::chooseskill(const char* title) const {
 	answers an;
 	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
@@ -321,99 +275,10 @@ ability_s pirate::chooseskill(const char* title) const {
 	return (ability_s)bsdata<abilityi>::source.indexof(utg::choose(an, title));
 }
 
-static void start_adventure(int v, int* pages) {
-	v = v - 1;
-	if(v >= 0 && v < 5)
-		last_page = pages[v];
-}
-
-void pirate::captaincabine() {
-	static int pages[] = {43, 44, 45, 46, 47};
-	start_adventure(abilities[Cabine], pages);
-}
-
-void pirate::captainmission() {
-	static int pages[] = {48, 49, 50, 51, 52};
-	start_adventure(abilities[Mission], pages);
-}
-
-void pirate::makethreat() {
-	static int pages[] = {791, 792, 793, 794, 795};
-	start_adventure(abilities[Threat], pages);
-}
-
 static const quest* find_next_action(const quest* p) {
 	if(p && p[1].index == p[0].index && p[1].next > 100)
 		return p + 1;
 	return 0;
-}
-
-void pirate::chooseactions(int scene) {
-	struct handler : utg::choosei {
-		void apply(int index, const void* object) override {
-			auto n = (quest*)object - bsdata<quest>::elements;
-			pr->addaction(n);
-		}
-		bool isallow(int index, const void* object) const override {
-			auto p = (quest*)object;
-			if(game.islocked(index))
-				return false;
-			if(p->is(VisitManyTimes))
-				return true;
-			if(ismarked(index))
-				return false;
-			return true;
-		}
-		pirate* pr;
-		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
-	};
-	auto ph = quest::find(4000 + scene);
-	if(!ph)
-		return;
-	game.startpage(ph);
-	game.apply(ph->tags);
-	answers an;
-	clearactions();
-	handler san(an, this);
-	char temp[260]; stringbuilder sb(temp);
-	for(auto p = find_next_action(ph); p; p = find_next_action(p)) {
-		sb.clear();
-		sb.add(p->text);
-		if(p->is(VisitManyTimes))
-			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
-		an.add(p, temp);
-	}
-	san.choose(getnm("WhatDoYouWantToVisit"), 4);
-	sortactions();
-}
-
-void pirate::playactions() {
-	for(auto v : actions) {
-		if(!v)
-			continue;
-		playaction(v);
-		utg::pause(getnm("NextAction"));
-	}
-}
-
-static const quest* last_action;
-
-void pirate::playaction(int id) {
-	auto ph = bsdata<quest>::elements + id;
-	last_action = quest::find(ph->next);
-	if(!last_action)
-		return;
-	last_page = last_choose = last_scene = 0;
-	game.startpage(last_action);
-	game.apply(last_action->tags);
-	game.afterapply();
-}
-
-static const quest* find_stage(const quest* ph, int stage) {
-	const quest* pr = 0;
-	for(auto p = ph + 1; p->index == ph->index && p->next && stage >= p->next; p++)
-		pr = p;
-	return pr;
 }
 
 void pirate::rolldices() {
@@ -425,9 +290,14 @@ void pirate::rolldices() {
 			iswap(last_second_roll, last_roll);
 			last_result = last_roll + last_bonus;
 		}
+		if(last_result < 1)
+			last_result = 1;
 		information(getnm("YouRollMisfortune"), last_result, last_roll, last_bonus, last_second_roll);
-	} else
+	} else {
+		if(last_result < 1)
+			last_result = 1;
 		information(getnm("YouRoll"), last_result, last_roll, last_bonus, last_second_roll);
+	}
 }
 
 void pirate::confirmroll() {
@@ -495,20 +365,6 @@ void pirate::makeroll(special_s type) {
 	}
 }
 
-void pirate::roll(special_s type) {
-	makeroll(type);
-	confirmroll();
-	last_bonus = 0;
-	if(!last_action)
-		return;
-	auto ps = find_stage(last_action, last_result);
-	if(ps) {
-		if(ps->text)
-			act(utg::sb, ps->text);
-		game.apply(ps->tags);
-	}
-}
-
 static const quest* find_action_choose(const quest* ph) {
 	if(!ph)
 		return 0;
@@ -519,38 +375,6 @@ static const quest* find_action_choose(const quest* ph) {
 		p++;
 	}
 	return 0;
-}
-
-void pirate::playchoose(int count) {
-	struct handler : utg::choosei {
-		void apply(int index, const void* object) override {
-			auto p = (quest*)object;
-			if(p)
-				game.apply(p->tags);
-		}
-		bool isallow(int index, const void* object) const override {
-			auto p = (quest*)object;
-			if(p->is(VisitManyTimes))
-				return true;
-			if(ismarked(index))
-				return false;
-			return true;
-		}
-		pirate* pr;
-		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
-	};
-	if(!last_action)
-		return;
-	answers an; handler san(an, this);
-	char temp[260]; stringbuilder sb(temp);
-	for(auto p = find_action_choose(last_action); p && p->index == last_action->index && p->next == 0; p++) {
-		sb.clear();
-		sb.add(p->text);
-		if(p->is(VisitManyTimes))
-			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
-		an.add(p, temp);
-	}
-	san.choose(0, count);
 }
 
 const treasurei* pirate::choosetreasure(const char* title) const {

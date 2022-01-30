@@ -34,7 +34,8 @@ enum special_s : unsigned char {
 	VisitManyTimes, VisitRequired, CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 	CounterA, CounterB, CounterC, CounterD, CounterX,
-	PenaltyA, PenaltyB, PenaltyC, PenaltyD
+	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
+	MarkEntry, IfCounterZero, IfExistEntry, IfSail,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,
@@ -45,7 +46,7 @@ enum event_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Record, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
@@ -125,6 +126,7 @@ protected:
 public:
 	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* format_param, bool add_space = true) const;
+	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
 	void			background() const;
 	void			chooseclass();
 	void			choosehistory();
@@ -154,23 +156,16 @@ public:
 };
 class pirate : public historyable {
 	char			abilities[Infamy + 1];
-	indext			actions[6];
 	variant			treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
-	const quest*	chooseanswers(const quest* ph) const;
 	void			confirmroll();
 	void			makeroll(special_s type);
-	void			playaction(int id);
-	void			sortactions();
 	void			rolldices();
 public:
-	void			adventure(int page);
+	indext			actions[6];
 	void			addaction(indext v);
 	void			bury(int count);
-	void			captaincabine();
-	void			captainmission();
-	void			chooseactions(int scene);
 	void			choosebonus(variant v1, variant v2);
 	ability_s		chooseskill(const char* title) const;
 	const treasurei* choosetreasure(const char* title) const;
@@ -178,7 +173,6 @@ public:
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
 	void			information(const char* format, ...);
-	void			makethreat();
 	void			gaintreasure(int count = 1);
 	void			gaintreasure(const treasurei* p);
 	void			generate();
@@ -189,21 +183,17 @@ public:
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
 	static void		painttreasure();
-	void			playactions();
-	void			playchoose(int id);
 	void			remove(variant v);
 	void			raiseskills(int count);
 	void			roll(special_s type);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
+	void			sortactions();
 	void			tradefriend();
 	void			warning(const char* format, ...);
 };
 struct counter {
 	short			current, maximum;
-};
-struct recordi {
-	const char*		id;
 };
 class shiplog {
 	short unsigned	goal_id;
@@ -212,12 +202,13 @@ class shiplog {
 public:
 	void			checkgoal();
 	void			clear();
+	static const char* getentryname(int v);
 	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
 	static void		listofgoals();
 	static void		listofrecords();
-	bool			istag(short unsigned v) const { return tags.is(v); }
+	bool			istag(int v) const;
 	void			setgoal(const goali* v) { goal_id = bsdata<goali>::source.indexof(v); }
-	void			settag(short unsigned v) { tags.set(v); }
+	void			settag(int v);
 	void			removetag(short unsigned v) { tags.remove(v); }
 };
 class gamei : public pirate, public oceani, public cannoneer, public shiplog {
@@ -227,18 +218,15 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	adat<indext, 512> treasures;
 	adat<indext, 64> tiles;
 public:
-	unsigned short	scene;
-	static void		afterapply();
 	static void		apply(variant v);
-	static void		apply(const variants& source);
 	void			createtiles();
 	void			createtreasure();
 	void			clear();
 	static void		choosecounter();
 	static void		choosehistory();
 	void			chartacourse(int v);
-	static void		endscene(int scene);
 	void			fullthrottle(int level);
+	static int		getpage();
 	static void		generate();
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
@@ -246,21 +234,20 @@ public:
 	static void		listofgoals();
 	const treasurei* picktreasure();
 	indext			picktile();
-	static void		playscene();
 	static void		playsail();
+	static void		script(int page);
 	static void		showseamap();
 	void			setgoal(const goali* v) { }
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
-	static void		startpage(const quest* ph);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
-extern int			last_choose, last_page, last_scene;
+extern int			last_choose;
 extern ability_s	last_ability;
 int					rollv(int bonus);
 VKIND(gender_s, Gender)

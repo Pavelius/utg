@@ -22,10 +22,6 @@ BSMETA(goali) = {
 	BSREQ(danger), BSREQ(reach_location),
 	{}};
 BSDATAC(goali, 64)
-BSMETA(recordi) = {
-	BSREQ(id),
-	{}};
-BSDATAC(recordi, 64)
 BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(types), BSREQ(levelup), BSREQ(maximum),
@@ -71,7 +67,6 @@ BSDATA(varianti) = {
 	{"Menu", VRSTD(menu), 1},
 	{"NavigationTile", VRSTD(tilei), 2},
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
-	{"Record", VRSTD(recordi), 1},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Value", VRSTD(groupvaluei), 1},

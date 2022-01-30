@@ -77,11 +77,10 @@ void pirate::painttreasure() {
 }
 
 void shiplog::listofrecords() {
-	auto m = bsdata<recordi>::source.getcount();
-	for(unsigned i = 0; i < m; i++) {
+	for(unsigned i = 0; i < 50; i++) {
 		if(!game.istag(i))
 			continue;
-		draw::label(getnm(bsdata<recordi>::elements[i].id), 0, bsdata<recordi>::elements + i);
+		draw::label(getentryname(i), 0);
 	}
 }
 

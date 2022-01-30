@@ -59,5 +59,9 @@ BSDATA(speciali) = {
 	{"PenaltyB"},
 	{"PenaltyC"},
 	{"PenaltyD"},
+	{"MarkEntry"},
+	{"IfCounterZero"},
+	{"IfExistEntry"},
+	{"IfSail"},
 };
-assert_enum(speciali, PenaltyD)
+assert_enum(speciali, IfSail)

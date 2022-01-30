@@ -133,21 +133,18 @@ const char* quest::getname(int id) {
 	return p->text;
 }
 
-static bool isallow(const variants& source) {
+static bool isallow(const variants& source, bool run) {
 	if(!variant::sfapply)
 		return true;
 	for(auto v : source) {
-		if(!variant::sfapply(v, false))
+		if(!variant::sfapply(v, run))
 			return false;
 	}
 	return true;
 }
 
 void quest::apply(const variants& source) {
-	if(!variant::sfapply)
-		return;
-	for(auto v : source)
-		variant::sfapply(v, true);
+	isallow(source, true);
 }
 
 bool quest::is(variant v) const {
@@ -172,7 +169,7 @@ const quest* quest::findprompt(short id) {
 			continue;
 		if(e.isanswer())
 			continue;
-		if(!isallow(e.tags))
+		if(!isallow(e.tags, false))
 			continue;
 		return &e;
 	}
@@ -193,7 +190,7 @@ const quest* quest::choose(int id, const char* resid, const char* header) const 
 			continue;
 		if(!e.isanswer())
 			continue;
-		if(!isallow(e.tags))
+		if(!isallow(e.tags, false))
 			continue;
 		an.add(&e, e.text);
 	}

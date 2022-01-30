@@ -3,12 +3,297 @@
 #include "pathfind.h"
 
 gamei		game;
-int			last_choose, last_page, last_scene;
+int			last_choose;
 static int	last_tile, last_counter, last_name;
 static bool	need_sail;
 ability_s	last_ability;
-static fnevent next_round;
+const quest* last_quest;
+const quest* last_location;
+const quest* next_quest;
 static counters variables;
+
+static void clear_message() {
+	utg::sb.clear();
+}
+
+static void add_header(const quest* ph) {
+	if(ph->header)
+		utg::header = ph->header;
+	if(ph->image)
+		utg::url = ph->image;
+}
+
+static void add_answer(answers& an, const quest* p) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(p->text);
+	if(p->is(VisitManyTimes))
+		sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
+	an.add(p, temp);
+}
+
+static void apply_effect(const variants& tags) {
+	last_ability = Infamy;
+	for(auto v : tags) {
+		if(next_quest)
+			break;
+		game.apply(v);
+	}
+}
+
+static void apply_answers(const quest* ph) {
+	if(!ph)
+		return;
+	answers an;
+	auto index = ph->index;
+	auto pe = bsdata<quest>::end();
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->index != index)
+			break;
+		if(p->next < 30)
+			continue;
+		add_answer(an, p);
+	}
+	if(an) {
+		auto p = (quest*)utg::choose(an, 0);
+		if(p && p->next > 0) {
+			clear_message();
+			next_quest = quest::find(p->next);
+		}
+	}
+}
+
+static void apply_choose(const quest* ph, int count);
+
+static void apply_effect() {
+	while(next_quest) {
+		last_quest = next_quest; next_quest = 0;
+		add_header(last_quest);
+		if(last_quest->text && last_quest->next)
+			game.actn(utg::sb, last_quest->text, 0);
+		apply_effect(last_quest->tags);
+		if(last_choose) {
+			auto n = last_choose; last_choose = 0;
+			apply_choose(last_quest, n);
+		}
+		if(!next_quest)
+			apply_answers(last_quest);
+	}
+}
+
+static void apply_effect(const quest* p) {
+	next_quest = p;
+	apply_effect();
+}
+
+static void apply_choose(const quest* ph, int count) {
+	struct handler : utg::choosei {
+		void apply(int index, const void* object) override {
+			apply_effect((quest*)object);
+		}
+		bool isallow(int index, const void* object) const override {
+			auto p = (quest*)object;
+			if(p->is(VisitManyTimes))
+				return true;
+			if(ismarked(index))
+				return false;
+			return true;
+		}
+		handler(answers& an) : choosei(an) {}
+	};
+	if(!ph || !count)
+		return;
+	answers an; handler san(an);
+	auto index = ph->index;
+	auto pe = bsdata<quest>::end();
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->index != index)
+			break;
+		if(p->next)
+			continue;
+		add_answer(an, p);
+	}
+	san.choose(0, count);
+}
+
+static const quest* find_condition(int bonus) {
+	auto pe = bsdata<quest>::end();
+	auto index = 1000 + bonus;
+	for(auto p = last_quest+1; p < pe; p++) {
+		if(p->next != -1)
+			continue;
+		if(p->index < 1000 || p->index >= 1100)
+			break;
+		if(p->index == index)
+			return p;
+	}
+	return 0;
+}
+
+static void apply_condition(int bonus) {
+	auto p = find_condition(bonus);
+	if(p)
+		next_quest = p;
+}
+
+static const quest* find_roll_result(const quest* ph, int result) {
+	const quest* pr = 0;
+	auto index = ph->index;
+	auto pe = bsdata<quest>::end();
+	if(result > 29)
+		result = 29;
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->index != index || p->next<1 || p->next > result)
+			break;
+		pr = p;
+	}
+	return pr;
+}
+
+static void apply_roll_result(const quest* ph, int value) {
+	apply_effect(find_roll_result(ph, value));
+}
+
+static void choose_actions() {
+	struct handler : utg::choosei {
+		void apply(int index, const void* object) override {
+			auto n = (quest*)object - bsdata<quest>::elements;
+			game.addaction(n);
+		}
+		bool isallow(int index, const void* object) const override {
+			auto p = (quest*)object;
+			if(game.islocked(index))
+				return false;
+			if(p->is(VisitManyTimes))
+				return true;
+			if(ismarked(index))
+				return false;
+			return true;
+		}
+		handler(answers& an) : choosei(an) {}
+	};
+	if(!last_location)
+		return;
+	clear_message();
+	last_quest = last_location; next_quest = 0;
+	add_header(last_quest);
+	if(last_quest->text)
+		game.actn(utg::sb, last_quest->text, 0);
+	apply_effect(last_quest->tags);
+	answers an;
+	game.clearactions();
+	handler san(an);
+	auto index = last_quest->index;
+	auto pe = bsdata<quest>::end();
+	for(auto p = last_quest + 1; p < pe; p++) {
+		if(p->index != index)
+			break;
+		add_answer(an, p);
+	}
+	san.choose(getnm("WhatDoYouWantToVisit"), 4);
+	game.sortactions();
+}
+
+static void play_actions() {
+	for(auto v : game.actions) {
+		if(!v)
+			continue;
+		auto p = bsdata<quest>::elements + v;
+		if(!p->next)
+			continue;
+		clear_message();
+		apply_effect(quest::find(p->next));
+		utg::pause(getnm("NextAction"));
+	}
+}
+
+static void apply_sail();
+
+static void end_scene() {
+	if(!last_location || !last_location->next)
+		return;
+	apply_effect(quest::find(last_location->next));
+	if(need_sail) {
+		need_sail = false;
+		draw::setnext(apply_sail);
+	}
+}
+
+static void apply_scene() {
+	choose_actions();
+	play_actions();
+	end_scene();
+}
+
+static void apply_sail() {
+	auto index = game.oceani::chooseroute(0, 1);
+	if(index == pathfind::Blocked)
+		return;
+	game.setmarker(index);
+	auto tile_id = game.getlocation(index);
+	if(!tile_id) {
+		game.setlocation(index, game.picktile());
+		game.createobjects();
+		game.showsplash();
+	}
+	tile_id = game.getlocation(index);
+	if(!tile_id)
+		return;
+	clear_message();
+	game.script(tile_id);
+}
+
+static void change_scene(int value) {
+	auto p = quest::find(4000 + value);
+	if(value && last_location != p) {
+		last_location = p;
+		game.unlockall();
+		utg::pause(getnm("NextScene"));
+	}
+	draw::setnext(apply_scene);
+}
+
+static void special_mission(int v, int* pages) {
+	v = v - 1;
+	if(v >= 0 && v < 5)
+		next_quest = quest::find(pages[v]);
+}
+
+static void captain_cabine() {
+	static int pages[] = {43, 44, 45, 46, 47};
+	special_mission(game.get(Cabine), pages);
+}
+
+static void captain_mission() {
+	static int pages[] = {48, 49, 50, 51, 52};
+	special_mission(game.get(Mission), pages);
+}
+
+static void global_threat() {
+	static int pages[] = {791, 792, 793, 794, 795};
+	special_mission(game.get(Threat), pages);
+}
+
+int gamei::getpage() {
+	if(!last_location)
+		return 0;
+	return last_location->index;
+}
+
+void pirate::afterchange(ability_s v) {
+	switch(v) {
+	case Exploration: case Brawl: case Hunting: case Aim: case Swagger: case Navigation:
+		checkexperience(v);
+		break;
+	case Mission:
+		captain_mission();
+	case Cabine:
+		captain_cabine();
+		break;
+	case Threat:
+		global_threat();
+		break;
+	}
+}
 
 static void generate_classes() {
 	auto push_interactive = utg::interactive;
@@ -16,6 +301,19 @@ static void generate_classes() {
 	for(auto& e : bsdata<pirate>())
 		e.generate();
 	utg::interactive = push_interactive;
+}
+
+void pirate::roll(special_s type) {
+	makeroll(type);
+	confirmroll();
+	last_bonus = 0;
+	apply_roll_result(last_quest, last_result);
+}
+
+void gamei::script(int page) {
+	auto p = quest::find(page);
+	if(p)
+		apply_effect(p);
 }
 
 void gamei::clear() {
@@ -35,7 +333,105 @@ void gamei::generate() {
 
 void gamei::choosehistory() {
 	game.pirate::choosehistory();
-	utg::sb.clear();
+	clear_message();
+}
+
+void gamei::createtreasure() {
+	auto m = bsdata<treasurei>::source.getcount();
+	for(auto& e : bsdata<treasurei>()) {
+		if(e.ismagic())
+			continue;
+		if(e.isstory())
+			continue;
+		treasures.add(bsdata<treasurei>::source.indexof(&e));
+	}
+	zshuffle(treasures.data, treasures.count);
+}
+
+void gamei::createtiles() {
+	tiles.clear();
+	for(auto i = 1; i <= 30; i++)
+		tiles.add(i);
+	zshuffle(tiles.data, tiles.count);
+}
+
+indext gamei::picktile() {
+	if(!tiles)
+		return 0;
+	auto i = tiles.data[0];
+	tiles.remove(0);
+	return i;
+}
+
+const treasurei* gamei::picktreasure() {
+	if(!treasures.count)
+		return 0;
+	auto pv = bsdata<treasurei>::elements + treasures.data[0];
+	treasures.remove(0);
+	return pv;
+}
+
+void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
+	switch(v.type) {
+	case Ability:
+		if(v.value >= Gun1 && v.value <= Gun4) {
+			auto level = game.getgunlevel(v.value - Gun1);
+			auto loaded = game.isgunloaded(v.value - Gun1);
+			if(level > 0)
+				sb.add(getnm("GunStatus"), level, getnm(loaded ? "Loaded" : "Unloaded"));
+		} else
+			pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
+		break;
+	}
+}
+
+void gamei::fullthrottle(int level) {
+}
+
+void gamei::chartacourse(int count) {
+	while(count > 0) {
+		char temp[260]; stringbuilder sb(temp);
+		sb.add(getnm("PlaceNavigationTile"), count);
+		createobjects();
+		showsplash();
+		addpossiblecourse();
+		showsplash();
+		auto index = choose(temp);
+		auto tile = picktile();
+		if(!tile)
+			break;
+		setlocation(index, tile);
+		count--;
+	}
+	createobjects();
+	showsplash();
+}
+
+void gamei::showseamap() {
+	game.oceani::showseamap();
+}
+
+void gamei::listofcounters() {
+	char temp[64]; stringbuilder sb(temp);
+	for(unsigned i = 0; i < 16; i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		auto v = variables.get(i);
+		sb.clear(); sb.add("%1i", v);
+		draw::label(pn, temp, 0);
+	}
+}
+
+void gamei::choosecounter() {
+	answers an;
+	for(auto i = 0; i < 16; i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		an.add((void*)i, pn);
+	}
+	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
 }
 
 static void special_command(special_s v, int bonus) {
@@ -62,21 +458,13 @@ static void special_command(special_s v, int bonus) {
 	case AddTile:
 		game.setlocation(bonus, last_tile);
 		break;
-	case Page000: last_page = bonus; break;
-	case Page100: last_page = 100 + bonus; break;
-	case Page200: last_page = 200 + bonus; break;
-	case Page300: last_page = 300 + bonus; break;
-	case Page400: last_page = 400 + bonus; break;
-	case Page500: last_page = 500 + bonus; break;
-	case Page600: last_page = 600 + bonus; break;
-	case Page700: last_page = 700 + bonus; break;
-	case Page800: last_page = 800 + bonus; break;
-	case Page900: last_page = 900 + bonus; break;
+	case Page000: case Page100: case Page200: case Page300: case Page400:
+	case Page500: case Page600: case Page700: case Page800: case Page900:
+		clear_message();
+		next_quest = quest::find((v - Page000) * 100 + bonus);
+		break;
 	case Scene:
-		if(!bonus)
-			last_scene = game.scene;
-		else
-			last_scene = bonus;
+		change_scene(bonus);
 		break;
 	case AddGun:
 		if(game.addgun(bonus, true, true))
@@ -160,6 +548,26 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case VisitManyTimes: case VisitRequired:
 		break;
+	case IfSail:
+		if(need_sail)
+			apply_condition(bonus);
+		break;
+	case IfExistEntry:
+		if(!last_name)
+			game.warning(getnm("NotDefinedName"));
+		else {
+			if(game.istag(last_name))
+				apply_condition(bonus);
+		}
+		break;
+	case IfCounterZero:
+		if(variables.get(last_counter) == 0)
+			apply_condition(bonus);
+		break;
+	case CheckDanger:
+		break;
+	case PlayStars:
+		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
 		break;
@@ -182,186 +590,5 @@ void gamei::apply(variant v) {
 	case Goal:
 		game.setgoal((goali*)v.getpointer());
 		break;
-	case Record:
-		if(v.counter > 0)
-			game.settag(v.value);
-		break;
 	}
-}
-
-void gamei::startpage(const quest* ph) {
-	utg::sb.clear();
-	if(ph->header)
-		utg::header = ph->header;
-	if(ph->image)
-		utg::url = ph->image;
-	if(ph->text)
-		game.act(utg::sb, ph->text);
-}
-
-void gamei::apply(const variants& source) {
-	last_ability = Infamy;
-	for(auto v : source)
-		apply(v);
-}
-
-void gamei::createtreasure() {
-	auto m = bsdata<treasurei>::source.getcount();
-	for(auto& e : bsdata<treasurei>()) {
-		if(e.ismagic())
-			continue;
-		if(e.isstory())
-			continue;
-		treasures.add(bsdata<treasurei>::source.indexof(&e));
-	}
-	zshuffle(treasures.data, treasures.count);
-}
-
-void gamei::createtiles() {
-	tiles.clear();
-	for(auto i = 1; i <= 30; i++)
-		tiles.add(i);
-	zshuffle(tiles.data, tiles.count);
-}
-
-indext gamei::picktile() {
-	if(!tiles)
-		return 0;
-	auto i = tiles.data[0];
-	tiles.remove(0);
-	return i;
-}
-
-const treasurei* gamei::picktreasure() {
-	if(!treasures.count)
-		return 0;
-	auto pv = bsdata<treasurei>::elements + treasures.data[0];
-	treasures.remove(0);
-	return pv;
-}
-
-void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
-	switch(v.type) {
-	case Ability:
-		if(v.value >= Gun1 && v.value <= Gun4) {
-			auto level = game.getgunlevel(v.value - Gun1);
-			auto loaded = game.isgunloaded(v.value - Gun1);
-			if(level > 0)
-				sb.add(getnm("GunStatus"), level, getnm(loaded ? "Loaded" : "Unloaded"));
-		} else
-			pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
-		break;
-	}
-}
-
-void gamei::playscene() {
-	auto scene = game.scene;
-	game.chooseactions(scene);
-	game.playactions();
-	game.endscene(scene);
-}
-
-void gamei::playsail() {
-	auto index = game.oceani::chooseroute(0, 1);
-	if(index == pathfind::Blocked)
-		return;
-	game.setmarker(index);
-	auto tile_id = game.getlocation(index);
-	if(!tile_id) {
-		game.setlocation(index, game.picktile());
-		game.createobjects();
-		game.showsplash();
-	}
-	tile_id = game.getlocation(index);
-	if(!tile_id)
-		return;
-	game.adventure(tile_id);
-	utg::pause();
-	game.afterapply();
-}
-
-void gamei::fullthrottle(int level) {
-}
-
-void gamei::chartacourse(int count) {
-	while(count > 0) {
-		char temp[260]; stringbuilder sb(temp);
-		sb.add(getnm("PlaceNavigationTile"), count);
-		createobjects();
-		showsplash();
-		addpossiblecourse();
-		showsplash();
-		auto index = choose(temp);
-		auto tile = picktile();
-		if(!tile)
-			break;
-		setlocation(index, tile);
-		count--;
-	}
-	createobjects();
-	showsplash();
-}
-
-void gamei::showseamap() {
-	game.oceani::showseamap();
-}
-
-void gamei::endscene(int scene) {
-	last_scene = 0;
-	auto ph = quest::find(4000 + scene);
-	if(ph && ph->next) {
-		game.adventure(ph->next);
-		game.afterapply();
-	}
-}
-
-void gamei::afterapply() {
-	while(last_page || last_choose) {
-		if(last_page > 0) {
-			auto v = last_page;
-			last_page = 0;
-			game.adventure(v);
-			continue;
-		}
-		if(last_choose > 0) {
-			auto v = last_choose;
-			last_choose = 0;
-			game.playchoose(v);
-			continue;
-		}
-	}
-	if(last_scene) {
-		if(game.scene != last_scene) {
-			game.unlockall();
-			game.scene = last_scene;
-		}
-		last_scene = 0;
-		draw::setnext(game.playscene);
-	} else if(need_sail) {
-		need_sail = false;
-		draw::setnext(game.playsail);
-	}
-}
-
-void gamei::listofcounters() {
-	char temp[64]; stringbuilder sb(temp);
-	for(unsigned i = 0; i < 16; i++) {
-		auto pn = variables.getname(i);
-		if(!pn)
-			continue;
-		auto v = variables.get(i);
-		sb.clear(); sb.add("%1i", v);
-		draw::label(pn, temp, 0);
-	}
-}
-
-void gamei::choosecounter() {
-	answers an;
-	for(auto i = 0; i < 16; i++) {
-		auto pn = variables.getname(i);
-		if(!pn)
-			continue;
-		an.add((void*)i, pn);
-	}
-	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
 }

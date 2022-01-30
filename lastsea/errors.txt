@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `UseGun`
+﻿In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 492: Can't find variant `IfSail`

@@ -99,6 +99,13 @@ void historyable::actv(stringbuilder& sbs, const char* format, const char* forma
 	sbs = sb;
 }
 
+void historyable::actn(stringbuilder& sbs, const char* format, const char* format_param) const {
+	string sb(*this, sbs);
+	sb.addsep('\n');
+	sb.addv(format, format_param);
+	sbs = sb;
+}
+
 void historyable::chooseclass() {
 	answers an;
 	for(auto& e : bsdata<classi>()) {

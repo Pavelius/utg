@@ -78,6 +78,7 @@ Mission: Миссия
 NameOfWoman: Женское имя
 Navigation: Навигация
 NextAction: Следующее действие
+NextScene: Перейти к следующей сцене
 NextStar: Развитие на
 No: Нет
 NotDefinedLastValue: Не указано значение `%1`
@@ -118,6 +119,7 @@ SpearFish: Порыбачить копьем
 Stars: Созвездие
 Steal: Украсть
 StopBury: Хватит. Вы закопали уже достаточно.
+Story23: Черная метка
 Story54: Радужная жемчужина
 Story74: Черная повязка на глаз
 Supply: Припасы
