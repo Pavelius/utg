@@ -22,6 +22,7 @@ ChartACourse: Проложить курс
 Choose: Выбирайте
 ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто %такая [%герой]?
+ChooseCounter: Выбирайте показатель
 ChooseLeft: (осталось [%1i])
 ChooseOptions: Выбирайте опции (осталось [%1i]):
 ChooseSkillToRaise: Какой навык хотите повысить?
@@ -29,8 +30,11 @@ CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
 Continue: Продолжить
-CounterA: Счетчик А
-CounterB: Счетчик Б
+CounterA: Показатель А
+CounterB: Показатель Б
+CounterC: Показатель В
+CounterD: Показатель Г
+CounterX: Показатель
 Crew: Команда
 CurrentGoal: Текущая цель
 Danger: Опасность
@@ -81,6 +85,7 @@ PagePirate: Пираты
 PageShip: Корабль
 PageShipLog: Журнал
 ParticularlySmellyAnimal: Особенно вонючее животное
+PaySupply: Припасы
 Pirate: Пират
 PirateOfYouCrew: Пират из вашей команды
 PlaceNavigationTile: Расследуете одну область (осталось еще [%1i])
@@ -104,6 +109,7 @@ Scout: Разведать
 Seeker: Искатель
 ShipLog: Журнал
 ShowDiscontent: (%1i недовольных)
+Skill: Любой навык
 SomeoneYouHoldDear: Некто, кого вы высоко цените
 SomethingFoul: Нечто гадкое
 SpearFish: Порыбачить копьем
@@ -139,7 +145,7 @@ VillainousName: Мужская злодейская фамилия
 VisitManyTimes: [~Можно выбирать несколько раз.]
 WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
-WhatDoYouWantToVisit: Что вы хотите посетить?
+WhatDoYouWantToVisit: Что вы хотите делать?
 WhatTreasureToBury: Какие сокровища хотите закопать?
 Yes: Да
 YouGainStars: Вы получили звезду и обнулили репутацию

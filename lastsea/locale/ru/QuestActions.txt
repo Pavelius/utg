@@ -160,3 +160,44 @@
 0 Supply+1 Infamy+3) Отогнать надоедливых чаек
 0 Scout+2 Navigation+1) Проложить курс
 0 Steal+1) Покопаться в чужих вещах
+
+#4055 Header("Фрегат") Image(fregate) Next(826)
+Огромный фрегат сравнялся в вашим кораблем на расстоянии выстрела.
+4155) Воодушевить команду.
+4255 VisitManyTimes) Зарядить пушки.
+4355 VisitManyTimes) Стрелять из пушек.
+4455) Собрать обломки.
+4555) Бежать.
+
+#4155 Swagger+1 Roll
+- Бей их! Убивай коллонизаторских прихвостней! За капитана! - заорал%а %герой.
+1 Choose+1)
+7 Choose+2)
+11 Choose+3)
+0 Reroll+1 VisitManyTimes) Помочь своим товарищам.
+0 Skill+1) Раздать **ценные** указания вашим морским волкам, подгоняя их громкими эпитетами.
+0 ChooseCounter CounterX-1) Собственным примером показать как надо.
+
+#4255 Choose+2
+%герой бросил%ась к корабельным пушкам. Пора показать им где раки зимуют.
+0 PaySupply-1 ReloadGun+1 VisitManyTimes) Засунуть ядра в пушки.
+0 Infamy+1 VisitManyTimes) Выглянуть из-за борта и показать врагу неприличный жест.
+0 Reroll+1 VisitManyTimes) Нацелить пушку на уязвимое место врага.
+
+#4355 ChooseCounter Aim+1 RollGuns
+1 Infamy-1)
+6 CounterX-1)
+13 CounterX-2 Infamy+1)
+18 CounterX-3 Infamy+3)
+
+#4455 Hunt+1 Roll
+1 Choose+1)
+7 Choose+2)
+11 Choose+3)
+0 Supply+1 VisitManyTimes) Увеличить [припасы]
+0 Treasure+1) Добыть [сокровища]
+0 Reroll+1 VisitManyTimes) Увеличить [перебросы]
+
+#4555 Navigation+1 PenaltyB Roll
+1) Ничего не вышло, корабль врага идет практически борт в борт.
+13 Sail+1 Infamy+3)

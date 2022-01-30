@@ -33,5 +33,6 @@ BSDATA(abilityi) = {
 	{"Gun3", Positive},
 	{"Gun4", Positive},
 	{"Eat", Negative},
+	{"CounterX"},
 };
-assert_enum(abilityi, Eat)
+assert_enum(abilityi, CounterX)

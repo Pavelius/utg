@@ -1,2 +1,2 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 261: Can't find variant `ConterA`
+﻿In file `Names.txt`:
+ Define translate for `PaySupply`

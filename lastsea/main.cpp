@@ -30,6 +30,9 @@ static void starting() {
 	game.adventure(0);
 	game.gaintreasure();
 	utg::pause();
+	game.chooseactions(55);
+	game.playactions();
+	game.endscene(55);
 	game.afterapply();
 	//game.chartacourse(3);
 	//game.chooseroute(0);

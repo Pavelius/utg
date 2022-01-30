@@ -523,8 +523,14 @@ void pirate::playchoose(int count) {
 	if(!last_action)
 		return;
 	answers an; handler san(an, this);
-	for(auto p = find_action_choose(last_action); p && p->index == last_action->index && p->next == 0; p++)
-		an.add(p, p->text);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto p = find_action_choose(last_action); p && p->index == last_action->index && p->next == 0; p++) {
+		sb.clear();
+		sb.add(p->text);
+		if(p->is(VisitManyTimes))
+			sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
+		an.add(p, temp);
+	}
 	san.choose(0, count);
 }
 
