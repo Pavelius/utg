@@ -1,7 +1,6 @@
 #include "cannoneer.h"
 
 bool cannoneer::addgun(int level, bool loaded, bool run) {
-	// First - we try add new gun
 	for(auto& e : guns) {
 		if(e)
 			continue;

@@ -2,7 +2,7 @@
 #include "pathfind.h"
 
 gamei		game;
-int			last_choose, last_page, last_scene, last_tile;
+int			last_choose, last_page, last_scene, last_tile, last_penalty;
 static bool	need_sail;
 ability_s	last_ability;
 static fnevent next_round;
@@ -44,6 +44,9 @@ static void fixerror(const char* id, ...) {
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
+		game.roll();
+		break;
+	case RollGuns:
 		game.roll();
 		break;
 	case Choose:
@@ -89,7 +92,7 @@ static void special_command(special_s v, int bonus) {
 			game.information(getnm("GunAddedUnloaded"), bonus);
 		break;
 	case ReloadGun:
-		game.reloadgun(bonus, true);
+		game.reloadgun(4, true);
 		break;
 	case Bury:
 		game.bury(bonus);

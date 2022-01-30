@@ -63,6 +63,9 @@
     <ClCompile Include="shiplog.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="counters.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -72,6 +75,9 @@
       <Filter>Утилиты</Filter>
     </ClInclude>
     <ClInclude Include="cannoneer.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="counters.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

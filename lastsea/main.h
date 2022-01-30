@@ -1,5 +1,6 @@
 #include "cannoneer.h"
 #include "charname.h"
+#include "counters.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
