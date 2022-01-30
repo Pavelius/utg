@@ -10,6 +10,7 @@ struct quest {
 	variants			tags;
 	static stringbuilder* console;
 	constexpr explicit operator bool() { return text != 0; }
+	static void			apply(const variants& source);
 	void				clear();
 	const quest*		choose(int id, const char* resid, const char* header) const;
 	bool				is(variant v) const;

@@ -27,10 +27,8 @@ static void starting() {
 	utg::interactive = true;
 	game.createtreasure();
 	game.createtiles();
-	game.gaintreasure();
-	//test_direction();
-	game.settag(1);
 	game.adventure(0);
+	game.gaintreasure();
 	utg::pause();
 	game.afterapply();
 	//game.chartacourse(3);

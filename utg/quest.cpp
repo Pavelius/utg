@@ -8,12 +8,6 @@ using namespace log;
 
 stringbuilder* quest::console;
 
-static const char* skipnum(const char* p) {
-	while(isnum(*p))
-		p++;
-	return p;
-}
-
 static bool isanswer(const char* p) {
 	return isnum(*p);
 }
@@ -101,16 +95,6 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 	return p;
 }
 
-static const char* skipcr(const char* p) {
-	if(p[0] == 10 || p[0] == 13)
-		p = skipwscr(p);
-	else {
-		log::error(p, "Expected line feed");
-		allowparse = false;
-	}
-	return p;
-}
-
 static const char* read_event(const char* p, short& parent, stringbuilder& sb) {
 	if(!allowparse)
 		return p;
@@ -152,7 +136,7 @@ static bool isallow(const variants& source) {
 	return true;
 }
 
-static void apply(const variants& source) {
+void quest::apply(const variants& source) {
 	if(!variant::sfapply)
 		return;
 	for(auto v : source)
@@ -169,9 +153,8 @@ bool quest::is(variant v) const {
 
 const quest* quest::find(short id) {
 	for(auto& e : bsdata<quest>()) {
-		if(e.index != id)
-			continue;
-		return &e;
+		if(e.index == id)
+			return &e;
 	}
 	return 0;
 }
@@ -196,7 +179,6 @@ const quest* quest::choose(int id, const char* resid, const char* header) const 
 		console->add(text);
 		promt_text = console->begin();
 	}
-	auto need_add_continue = true;
 	apply(tags);
 	answers an;
 	for(auto& e : bsdata<quest>()) {

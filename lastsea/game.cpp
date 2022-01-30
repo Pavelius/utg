@@ -152,6 +152,16 @@ void gamei::apply(variant v) {
 	}
 }
 
+void gamei::startpage(const quest* ph) {
+	utg::sb.clear();
+	if(ph->header)
+		utg::header = ph->header;
+	if(ph->image)
+		utg::url = ph->image;
+	if(ph->text)
+		game.act(utg::sb, ph->text);
+}
+
 void gamei::apply(const variants& source) {
 	last_ability = Infamy;
 	for(auto v : source)
@@ -205,14 +215,6 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 			pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
 		break;
 	}
-}
-
-const quest* gamei::findpage(int v) {
-	for(auto& e : bsdata<quest>()) {
-		if(e.index == v)
-			return &e;
-	}
-	return 0;
 }
 
 void gamei::playscene() {
@@ -269,7 +271,7 @@ void gamei::showseamap() {
 
 void gamei::endscene(int scene) {
 	last_scene = 0;
-	auto ph = findpage(4000 + scene);
+	auto ph = quest::find(4000 + scene);
 	if(ph && ph->next) {
 		game.adventure(ph->next);
 		game.afterapply();

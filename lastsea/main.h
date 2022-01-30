@@ -156,6 +156,7 @@ class pirate : public historyable {
 	variant			treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
+	const quest*	chooseanswers(const quest* ph) const;
 	void			confirmroll();
 	void			makeroll();
 	void			playaction(int id);
@@ -236,7 +237,6 @@ public:
 	static void		endscene(int scene);
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
-	static const quest*	findpage(int v);
 	void			fullthrottle(int level);
 	static void		generate();
 	static void		listofgoals();
@@ -251,6 +251,7 @@ public:
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
+	static void		startpage(const quest* ph);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 };

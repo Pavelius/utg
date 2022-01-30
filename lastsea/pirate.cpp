@@ -280,8 +280,34 @@ void pirate::sortactions() {
 	qsort(actions, sizeof(actions) / sizeof(actions[0]), sizeof(actions[0]), compare);
 }
 
-void pirate::adventure(int page) {
-	quest::run(page, utg::url, utg::header);
+const quest* pirate::chooseanswers(const quest* ph) const {
+	answers an;
+	if(!ph)
+		return 0;
+	game.startpage(ph);
+	quest::apply(ph->tags);
+	auto index = ph->index;
+	auto pe = bsdata<quest>::end();
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->index != index)
+			continue;
+		if(!p->isanswer())
+			continue;
+		an.add(p, p->text);
+	}
+	return (quest*)utg::choose(an, 0);
+}
+
+void pirate::adventure(int id) {
+	utg::sb.clear();
+	while(true) {
+		auto p = quest::find(id);
+		p = chooseanswers(p);
+		if(!p)
+			break;
+		p->apply(p->tags);
+		id = p->next;
+	}
 }
 
 ability_s pirate::chooseskill(const char* title) const {
@@ -316,17 +342,6 @@ void pirate::makethreat() {
 	start_adventure(abilities[Threat], pages);
 }
 
-static void start_page(const quest* ph) {
-	utg::sb.clear();
-	if(ph->header)
-		utg::header = ph->header;
-	if(ph->image)
-		utg::url = ph->image;
-	if(ph->text)
-		game.act(utg::sb, ph->text);
-}
-
-
 static const quest* find_next_action(const quest* p) {
 	if(p && p[1].index == p[0].index && p[1].next > 100)
 		return p + 1;
@@ -352,10 +367,10 @@ void pirate::chooseactions(int scene) {
 		pirate* pr;
 		handler(answers& an, pirate* pr) : choosei(an), pr(pr) {}
 	};
-	auto ph = game.findpage(4000 + scene);
+	auto ph = quest::find(4000 + scene);
 	if(!ph)
 		return;
-	start_page(ph);
+	game.startpage(ph);
 	answers an;
 	clearactions();
 	handler san(an, this);
@@ -384,11 +399,11 @@ static const quest* last_action;
 
 void pirate::playaction(int id) {
 	auto ph = bsdata<quest>::elements + id;
-	last_action = game.findpage(ph->next);
+	last_action = quest::find(ph->next);
 	if(!last_action)
 		return;
-	start_page(last_action);
 	last_page = last_choose = last_scene = 0;
+	game.startpage(last_action);
 	game.apply(last_action->tags);
 	game.afterapply();
 }
