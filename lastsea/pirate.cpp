@@ -371,6 +371,7 @@ void pirate::chooseactions(int scene) {
 	if(!ph)
 		return;
 	game.startpage(ph);
+	game.apply(ph->tags);
 	answers an;
 	clearactions();
 	handler san(an, this);
@@ -452,13 +453,16 @@ void pirate::confirmroll() {
 	last_bonus = 0;
 }
 
-void pirate::makeroll() {
+void pirate::makeroll(special_s type) {
 	char temp[260]; stringbuilder sb(temp);
 	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus = get(last_ability);
+		last_bonus += get(last_ability);
 		last_bonus += getbonus(last_ability);
 	}
+	const int GunBonus = 10;
+	static bool gun_used;
 	answers an;
+	gun_used = false;
 	while(true) {
 		sb.clear();
 		if(last_ability >= Exploration && last_ability <= Navigation)
@@ -471,15 +475,30 @@ void pirate::makeroll() {
 		sb.add(".");
 		an.clear();
 		an.add(0, getnm("MakeRoll"));
-		auto pv = utg::choose(an, temp);
-		if(!pv)
+		if(type == RollGuns && !gun_used) {
+			for(auto level = 1; level <= 4; level++) {
+				if(!game.cannoneer::is(level, true))
+					continue;
+				auto bonus = game.getgunbonus(level);
+				if(bonus)
+					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
+			}
+		}
+		auto ri = (int)utg::choose(an, temp);
+		if(!ri)
 			break;
+		if(ri >= GunBonus) {
+			auto level = ri - GunBonus;
+			last_bonus += game.getgunbonus(level);
+			gun_used = game.unloadgun(level, true);
+		}
 	}
 }
 
-void pirate::roll() {
-	makeroll();
+void pirate::roll(special_s type) {
+	makeroll(type);
 	confirmroll();
+	last_bonus = 0;
 	if(!last_action)
 		return;
 	auto ps = find_stage(last_action, last_result);

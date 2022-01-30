@@ -126,6 +126,13 @@ void quest::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
+const char* quest::getname(int id) {
+	auto p = find(id);
+	if(!p)
+		return 0;
+	return p->text;
+}
+
 static bool isallow(const variants& source) {
 	if(!variant::sfapply)
 		return true;

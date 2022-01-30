@@ -26,6 +26,7 @@ ChooseCounter: Выбирайте показатель
 ChooseLeft: (осталось [%1i])
 ChooseOptions: Выбирайте опции (осталось [%1i]):
 ChooseSkillToRaise: Какой навык хотите повысить?
+ChooseTarget: Выбирайте цель
 CollectorItem: Предмет коллекционирования
 CondimentSoupDessert: Приправа, суп или дессерт
 ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
@@ -55,6 +56,7 @@ Gun3: Кормовые пушки
 Gun4: Передние пушки
 GunAdded: Добавлена пушка уровень %1i
 GunAddedUnloaded: Добавлена пушка уровень %1i (разряженная)
+GunReloaded: Пушка заряжена
 GunStatus: Уровень [%1i] %-2
 HeavyObject: Тяжелый предмет
 HereIsAHistory: [%герой] поведал%а свою историю.
@@ -139,7 +141,9 @@ Treasure85: Идеальная цепь
 Treasure88: Непромокаемые ботинки
 TypeOfLocation: Тип ландшафта
 UglyFamily: Дурацкая фамилия
+UnknownCommand: Неизвестная команда %1i c бонусом %+2i
 Unloaded: Не заряжены
+UseGun: Разрядить пушку уровня [%1i] чтобы получить бонус +%2i к броску.
 UseReroll: Использовать [переброс], чтобы перебросить кубик
 VillainousName: Мужская злодейская фамилия
 VisitManyTimes: [~Можно выбирать несколько раз.]

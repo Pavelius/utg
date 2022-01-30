@@ -103,6 +103,6 @@ DecipherOldMap danger(2) reach_location(963)
 PagePirate
  elements Exploration Brawl Hunting Aim Swagger Navigation Separator Crew Hull Supply Separator Infamy Reroll Misfortune Stars Separator Danger Threat
 PageShip
- elements Gun1 Gun2 Gun3 Gun4 Separator ListOfTreasures
+ elements Gun1 Gun2 Gun3 Gun4 Separator ListOfCounters Separator ListOfTreasures
 PageShipLog
  elements ListOfGoals ListOfRecords Separator MapOfTheSeas

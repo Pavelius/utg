@@ -13,6 +13,7 @@ struct quest {
 	static void			apply(const variants& source);
 	void				clear();
 	const quest*		choose(int id, const char* resid, const char* header) const;
+	static const char*	getname(int id);
 	bool				is(variant v) const;
 	bool				isanswer() const { return next != -1; }
 	static const quest*	find(short id);

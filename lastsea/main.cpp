@@ -30,9 +30,7 @@ static void starting() {
 	game.adventure(0);
 	game.gaintreasure();
 	utg::pause();
-	game.chooseactions(55);
-	game.playactions();
-	game.endscene(55);
+	game.adventure(23);
 	game.afterapply();
 	//game.chartacourse(3);
 	//game.chooseroute(0);
@@ -54,6 +52,7 @@ static void initialize_widgets() {
 	widget::add("ListOfGoals", shiplog::listofgoals);
 	widget::add("ListOfRecords", shiplog::listofrecords);
 	widget::add("ListOfTreasures", pirate::painttreasure);
+	widget::add("ListOfCounters", gamei::listofcounters);
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
 

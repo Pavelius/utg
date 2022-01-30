@@ -10,7 +10,10 @@ class cannoneer {
 public:
 	bool			addgun(int level, bool loaded, bool run);
 	void			clearweapons() { memset(this, 0, sizeof(*this)); }
+	static int		getgunbonus(int level);
 	int				getgunlevel(int index) const;
+	bool			is(int level, bool loaded) const;
 	bool			isgunloaded(int index) const;
 	bool			reloadgun(int level, bool run);
+	bool			unloadgun(int level, bool run);
 };

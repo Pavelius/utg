@@ -19,10 +19,9 @@ enum ability_s : unsigned char {
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
 	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
-	CounterA, CounterB, CounterC, CounterD,
 	Stars, Level, Infamy,
 	Gun1, Gun2, Gun3, Gun4,
-	Eat, CounterX
+	Eat
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
@@ -30,11 +29,12 @@ enum special_s : unsigned char {
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
 	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,
-	ChooseCounter, GunLoadOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
+	ZeroCounters, CounterName, ChooseCounter,
+	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
-	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
-	IfResult, Else, EndIf
+	CounterA, CounterB, CounterC, CounterD, CounterX,
+	PenaltyA, PenaltyB, PenaltyC, PenaltyD
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Usable,
@@ -160,7 +160,7 @@ class pirate : public historyable {
 	void			checkexperience(ability_s v);
 	const quest*	chooseanswers(const quest* ph) const;
 	void			confirmroll();
-	void			makeroll();
+	void			makeroll(special_s type);
 	void			playaction(int id);
 	void			sortactions();
 	void			rolldices();
@@ -193,7 +193,7 @@ public:
 	void			playchoose(int id);
 	void			remove(variant v);
 	void			raiseskills(int count);
-	void			roll();
+	void			roll(special_s type);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
 	void			tradefriend();
@@ -234,15 +234,16 @@ public:
 	void			createtiles();
 	void			createtreasure();
 	void			clear();
+	static void		choosecounter();
 	static void		choosehistory();
 	void			chartacourse(int v);
 	static void		endscene(int scene);
-	bool			islocked(int i) const { return locked.is(i); }
-	void			lock(int i) { locked.set(i); }
 	void			fullthrottle(int level);
 	static void		generate();
+	bool			islocked(int i) const { return locked.is(i); }
+	void			lock(int i) { locked.set(i); }
+	static void		listofcounters();
 	static void		listofgoals();
-	static void		listoftags();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		playscene();

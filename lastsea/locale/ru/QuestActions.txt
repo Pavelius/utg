@@ -61,7 +61,7 @@
 0 Treasure+1) Поохотится за сокровищами.
 0 Aim+1) Поупражнятся в стрельбе.
 0 Page200+26) Обыскать затонувший корабль.
-0 Hunt Roll) Поставить ловушки.
+0 Hunting Roll) Поставить ловушки.
 1)
 10 Page200+25)
 
@@ -74,7 +74,7 @@
 
 #4507 Choose+2
 0 Reroll+1) Поторговать с приятелем.
-0 Hunt+1) Играть в прятки.
+0 Hunting+1) Играть в прятки.
 0 Infamy+2 Steal+1) Кинуть вызов другому пирату.
 
 #4009 Header("Зачарованное море") Image(magic_sea) Next(803)
@@ -92,7 +92,7 @@
 7 Scout+3)
 16 Scout+3 Treasure+1)
 
-#4309 Hunt+1 Roll
+#4309 Hunting+1 Roll
 1 Crew-1 Choose+1)
 6 Choose+2)
 11 Choose+3)
@@ -161,7 +161,8 @@
 0 Scout+2 Navigation+1) Проложить курс
 0 Steal+1) Покопаться в чужих вещах
 
-#4055 Header("Фрегат") Image(fregate) Next(826)
+#4055 Header("Фрегат") Image(fregate) Next(826)\
+Name+0 CounterName+0 Name+1 CounterName+1
 Огромный фрегат сравнялся в вашим кораблем на расстоянии выстрела.
 4155) Воодушевить команду.
 4255 VisitManyTimes) Зарядить пушки.
@@ -174,23 +175,24 @@
 1 Choose+1)
 7 Choose+2)
 11 Choose+3)
-0 Reroll+1 VisitManyTimes) Помочь своим товарищам.
+0 Reroll+1 VisitManyTimes) Воодушевить морских волков.
 0 Skill+1) Раздать **ценные** указания вашим морским волкам, подгоняя их громкими эпитетами.
 0 ChooseCounter CounterX-1) Собственным примером показать как надо.
 
 #4255 Choose+2
-%герой бросил%ась к корабельным пушкам. Пора показать им где раки зимуют.
+%герой пытается перезарядить корабельные пушки.
 0 PaySupply-1 ReloadGun+1 VisitManyTimes) Засунуть ядра в пушки.
 0 Infamy+1 VisitManyTimes) Выглянуть из-за борта и показать врагу неприличный жест.
-0 Reroll+1 VisitManyTimes) Нацелить пушку на уязвимое место врага.
+0 Reroll+1 VisitManyTimes) Прочистить дуло шомполом.
 
 #4355 ChooseCounter Aim+1 RollGuns
+%герой стал%а за одну из корабельных пушек.
 1 Infamy-1)
 6 CounterX-1)
 13 CounterX-2 Infamy+1)
 18 CounterX-3 Infamy+3)
 
-#4455 Hunt+1 Roll
+#4455 Hunting+1 Roll
 1 Choose+1)
 7 Choose+2)
 11 Choose+3)
@@ -201,3 +203,8 @@
 #4555 Navigation+1 PenaltyB Roll
 1) Ничего не вышло, корабль врага идет практически борт в борт.
 13 Sail+1 Infamy+3)
+
+#6000
+Корпус врага
+#6001
+Паруса врага

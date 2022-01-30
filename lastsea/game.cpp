@@ -1,11 +1,14 @@
+#include "counters.h"
 #include "main.h"
 #include "pathfind.h"
 
 gamei		game;
-int			last_choose, last_page, last_scene, last_tile, last_penalty;
+int			last_choose, last_page, last_scene;
+static int	last_tile, last_counter, last_name;
 static bool	need_sail;
 ability_s	last_ability;
 static fnevent next_round;
+static counters variables;
 
 static void generate_classes() {
 	auto push_interactive = utg::interactive;
@@ -35,19 +38,11 @@ void gamei::choosehistory() {
 	utg::sb.clear();
 }
 
-static void fixerror(const char* id, ...) {
-	utg::sb.addn("[-");
-	utg::sb.addv(getnm(id), xva_start(id));
-	utg::sb.addn("]");
-}
-
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
-		game.roll();
-		break;
 	case RollGuns:
-		game.roll();
+		game.roll(v);
 		break;
 	case Choose:
 		last_choose = bonus;
@@ -92,7 +87,18 @@ static void special_command(special_s v, int bonus) {
 			game.information(getnm("GunAddedUnloaded"), bonus);
 		break;
 	case ReloadGun:
-		game.reloadgun(4, true);
+	case ReloadGunOrHull:
+		if(bonus >= 0) {
+			if(game.reloadgun(4, true))
+				game.information(getnm("GunReloaded"));
+			else if(v == ReloadGunOrHull)
+				game.set(Hull, game.get(Hull) + 1);
+		} else {
+			if(game.unloadgun(4, true))
+				game.warning(getnm("GunUnloaded"));
+			else if(v == ReloadGunOrHull)
+				game.set(Hull, game.get(Hull) - 1);
+		}
 		break;
 	case Bury:
 		game.bury(bonus);
@@ -105,12 +111,12 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case PaySupply:
 		if(game.get(Supply) >= bonus)
-			game.set(Supply, game.get(Supply) - bonus);
+			game.set(Supply, game.get(Supply) + bonus);
 		break;
 	case PaySupplyEat:
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
-			game.set(Supply, game.get(Supply) - bonus);
+			game.set(Supply, game.get(Supply) + bonus);
 		break;
 	case ZeroSupplyOrDiscontent:
 		if(game.get(Supply) == 0)
@@ -127,7 +133,35 @@ static void special_command(special_s v, int bonus) {
 	case Sail:
 		need_sail = true;
 		break;
+	case ZeroCounters:
+		variables.clear();
+		break;
+	case PenaltyA: case PenaltyB: case PenaltyC: case PenaltyD:
+		last_bonus -= variables.get(v - PenaltyA);
+		break;
+	case CounterA: case CounterB: case CounterC: case CounterD: case CounterX:
+		if(v != CounterX)
+			last_counter = v - CounterA;
+		if(bonus > 0 || bonus < 0) {
+			auto pn = variables.getname(last_counter);
+			if(pn)
+				game.information("%1%+2i", pn, bonus);
+			variables.add(last_counter, bonus);
+		}
+		break;
+	case Name:
+		last_name = 6000 + bonus;
+		break;
+	case CounterName:
+		variables.setname(bonus, quest::getname(last_name));
+		break;
+	case ChooseCounter:
+		game.choosecounter();
+		break;
+	case VisitManyTimes: case VisitRequired:
+		break;
 	default:
+		game.warning(getnm("UnknownCommand"), v, bonus);
 		break;
 	}
 }
@@ -307,4 +341,27 @@ void gamei::afterapply() {
 		need_sail = false;
 		draw::setnext(game.playsail);
 	}
+}
+
+void gamei::listofcounters() {
+	char temp[64]; stringbuilder sb(temp);
+	for(unsigned i = 0; i < 16; i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		auto v = variables.get(i);
+		sb.clear(); sb.add("%1i", v);
+		draw::label(pn, temp, 0);
+	}
+}
+
+void gamei::choosecounter() {
+	answers an;
+	for(auto i = 0; i < 16; i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		an.add((void*)i, pn);
+	}
+	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
 }
