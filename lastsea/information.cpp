@@ -76,10 +76,10 @@ void gamei::listoftreasures() {
 }
 
 void shiplog::listofrecords() {
-	for(unsigned i = 0; i < 50; i++) {
+	for(unsigned i = AnswerEntry; i < AnswerEntry + 50; i++) {
 		if(!game.istag(i))
 			continue;
-		draw::label(getentryname(i), 0);
+		draw::label(getentryname(i), 0, 0);
 	}
 }
 

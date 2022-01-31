@@ -134,6 +134,7 @@ Threat: Угроза
 Treasure: Сокровища
 Treasure29: Бочка дегтя
 Treasure33: Идеальный прицел
+Treasure34: Цветастая ткань
 Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка
 Treasure47: Мастерский фонарь

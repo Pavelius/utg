@@ -1,8 +1,5 @@
 #include "main.h"
 
-static const int StartEntry = 6050;
-static const int LastEntry = 6099;
-
 void shiplog::clear() {
 	memset(this, 0, sizeof(*this));
 	goal_id = 0xFFFF;
@@ -17,7 +14,7 @@ void shiplog::checkgoal() {
 }
 
 const char* shiplog::getentryname(int v) {
-	if(v > sizeof(tags) * 8 || v < 0)
+	if(v > AnswerEntry + sizeof(tags) * 8 || v < AnswerEntry)
 		return "Not valid entry number";
 	auto p = quest::find(v);
 	if(!p)
@@ -28,12 +25,12 @@ const char* shiplog::getentryname(int v) {
 }
 
 bool shiplog::istag(int v) const {
-	if(v >= StartEntry && v <= LastEntry)
-		return tags.is(v - StartEntry);
+	if(v >= AnswerEntry && v < AnswerEntry + 100)
+		return tags.is(v - AnswerEntry);
 	return false;
 }
 
 void shiplog::settag(int v) {
-	if(v >= StartEntry && v <= LastEntry)
-		tags.set(v - StartEntry);
+	if(v >= AnswerEntry && v < AnswerEntry + 100)
+		tags.set(v - AnswerEntry);
 }

@@ -2,13 +2,12 @@
 #include "main.h"
 #include "pathfind.h"
 
-gamei		game;
-static int	last_tile, last_counter, last_name, last_choose;
+gamei game;
+static int last_tile, last_counter, last_name;
 static bool	need_sail, need_stop, need_stop_actions;
 static ability_s last_ability;
 const quest* last_quest;
 const quest* last_location;
-const quest* next_quest;
 static counters variables;
 
 static void clear_message() {
@@ -34,8 +33,6 @@ static void apply_effect(const variants& tags) {
 	auto push_stop = need_stop;
 	need_stop = false;
 	for(auto v : tags) {
-		if(next_quest)
-			break;
 		if(need_stop)
 			break;
 		game.apply(v);
@@ -43,52 +40,40 @@ static void apply_effect(const variants& tags) {
 	need_stop = push_stop;
 }
 
-static void apply_answers(const quest* ph) {
+static const quest* apply_answers(const quest* ph) {
 	if(!ph)
-		return;
+		return 0;
 	answers an;
 	auto index = ph->index;
 	auto pe = bsdata<quest>::end();
 	for(auto p = ph + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
-		if(p->next < 30)
+		if(p->next < AnswerPage)
 			continue;
 		add_answer(an, p);
 	}
-	if(an) {
-		auto p = (quest*)utg::choose(an, 0);
-		if(p && p->next > 0) {
-			next_quest = quest::find(p->next);
-			if(next_quest && next_quest->text)
-				clear_message();
-		}
-	}
+	if(!an)
+		return 0;
+	auto p = (const quest*)utg::choose(an, 0);
+	if(p && p->next > 0)
+		return quest::find(p->next);
+	return 0;
 }
 
 static void apply_choose(const quest* ph, const char* title, int count);
 
-static void apply_effect() {
-	while(next_quest) {
-		last_quest = next_quest; next_quest = 0;
-		add_header(last_quest);
-		if(last_quest->text && last_quest->next) {
-			clear_message();
-			game.actn(utg::sb, last_quest->text, 0);
-		}
-		apply_effect(last_quest->tags);
-		if(last_choose) {
-			auto n = last_choose; last_choose = 0;
-			apply_choose(last_quest, 0, n);
-		}
-		if(!next_quest)
-			apply_answers(last_quest);
-	}
-}
-
 static void apply_effect(const quest* p) {
-	next_quest = p;
-	apply_effect();
+	while(p) {
+		last_quest = p;
+		add_header(p);
+		if(p->text && p->next != AnswerChoose) {
+			clear_message();
+			game.actn(utg::sb, p->text, 0);
+		}
+		apply_effect(p->tags);
+		p = apply_answers(p);
+	}
 }
 
 static bool allow_choose(ability_s v, int bonus) {
@@ -154,7 +139,7 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 	for(auto p = ph + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
-		if(p->next)
+		if(p->next != AnswerChoose)
 			continue;
 		add_answer(an, p);
 	}
@@ -169,7 +154,7 @@ static void apply_choose(int page, int count) {
 
 static const quest* find_condition(int bonus) {
 	auto pe = bsdata<quest>::end();
-	auto index = 1000 + bonus;
+	auto index = bonus;
 	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->next != -1)
 			continue;
@@ -181,10 +166,12 @@ static const quest* find_condition(int bonus) {
 	return 0;
 }
 
-static void apply_condition(int bonus) {
-	auto p = find_condition(bonus);
-	if(p)
-		next_quest = p;
+static void apply_else() {
+	auto p = find_condition(AnswerElse);
+	if(p) {
+		apply_effect(p);
+		need_stop = true;
+	}
 }
 
 static const quest* find_roll_result(const quest* ph, int result) {
@@ -266,7 +253,7 @@ static void choose_actions(int count) {
 	if(!last_location)
 		return;
 	clear_message();
-	last_quest = last_location; next_quest = 0;
+	last_quest = last_location;
 	add_header(last_quest);
 	if(last_quest->text)
 		game.actn(utg::sb, last_quest->text, 0);
@@ -299,7 +286,7 @@ static void play_actions() {
 		if(!p->next)
 			continue;
 		clear_message();
-		apply_effect(quest::find(p->next));
+		game.script(p->next);
 		if(need_stop_actions)
 			break;
 		utg::pause(getnm("NextAction"));
@@ -312,7 +299,7 @@ static void apply_scene();
 static void end_scene() {
 	if(!last_location || !last_location->next)
 		return;
-	apply_effect(quest::find(last_location->next));
+	game.script(last_location->next);
 	if(need_sail) {
 		need_sail = false;
 		utg::pause(getnm("SailAway"));
@@ -360,7 +347,7 @@ static void change_scene(int value) {
 static void special_mission(int v, int* pages) {
 	v = v - 1;
 	if(v >= 0 && v < 5)
-		next_quest = quest::find(pages[v]);
+		game.script(pages[v]);
 }
 
 static void captain_cabine() {
@@ -486,9 +473,7 @@ void pirate::roll(special_s type) {
 }
 
 void gamei::script(int page) {
-	auto p = quest::find(page);
-	if(p)
-		apply_effect(p);
+	apply_effect(quest::find(page));
 }
 
 void gamei::clear() {
@@ -628,7 +613,7 @@ static void special_command(special_s v, int bonus) {
 		apply_roll_result(last_quest, last_result);
 		break;
 	case Choose:
-		last_choose = bonus;
+		apply_choose(last_quest, 0, bonus);
 		break;
 	case Skill:
 		game.raiseskills(bonus);
@@ -647,9 +632,7 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case Page000: case Page100: case Page200: case Page300: case Page400:
 	case Page500: case Page600: case Page700: case Page800: case Page900:
-		next_quest = quest::find((v - Page000) * 100 + bonus);
-		if(next_quest && next_quest->text)
-			clear_message();
+		game.script((v - Page000) * 100 + bonus);
 		break;
 	case Scene:
 		change_scene(bonus);
@@ -722,7 +705,7 @@ static void special_command(special_s v, int bonus) {
 		}
 		break;
 	case Name:
-		last_name = 6000 + bonus;
+		last_name = AnswerName + bonus;
 		break;
 	case CounterName:
 		variables.setname(bonus, quest::getname(last_name));
@@ -733,20 +716,16 @@ static void special_command(special_s v, int bonus) {
 	case VisitManyTimes: case VisitRequired:
 		break;
 	case IfSail:
-		if(need_sail)
-			apply_condition(bonus);
+		if(!need_sail)
+			apply_else();
 		break;
 	case IfExistEntry:
-		if(!last_name)
-			game.warning(getnm("NotDefinedName"));
-		else {
-			if(game.istag(last_name))
-				apply_condition(bonus);
-		}
+		if(!game.istag(AnswerEntry + bonus))
+			apply_else();
 		break;
 	case IfCounterZero:
-		if(variables.get(last_counter) <= 0)
-			apply_condition(bonus);
+		if(variables.get(last_counter))
+			apply_else();
 		break;
 	case IfChoosedAction:
 		if(bonus > 0) {
@@ -771,6 +750,12 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case PlayStars:
 		// TODO
+		break;
+	case MarkEntry:
+		if(bonus >= 0)
+			game.settag(AnswerEntry + bonus);
+		else
+			game.removetag(AnswerEntry - bonus);
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
