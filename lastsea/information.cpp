@@ -27,7 +27,7 @@ static void print(stringbuilder& sb, variant v) {
 		sb.add("[-");
 	sb.adds(v.getname(), v.counter);
 	if(v.counter && format)
-		sb.adds(format, v.counter);
+		sb.add(format, v.counter);
 	if(negative)
 		sb.add("]");
 }

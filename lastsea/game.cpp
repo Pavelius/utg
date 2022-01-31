@@ -85,6 +85,39 @@ static void apply_effect(const quest* p) {
 	apply_effect();
 }
 
+static bool allow_choose(ability_s v, int bonus) {
+	return (game.get(v) + bonus) >= 0;
+}
+
+static bool allow_choose(special_s v, int bonus) {
+	switch(v) {
+	case ReloadGun:
+		if(bonus >= 0)
+			return game.reloadgun(4, false);
+		else
+			return game.unloadgun(4, false);
+		break;
+	case AddGun: return game.addgun(bonus, true, false);
+	default: return true;
+	}
+}
+
+static bool allow_choose(variant v) {
+	switch(v.type) {
+	case Ability: return allow_choose((ability_s)v.value, v.counter);
+	case Special: return allow_choose((special_s)v.value, v.counter);
+	default: return true;
+	}
+}
+
+static bool allow_choose(const quest* p) {
+	for(auto v : p->tags) {
+		if(!allow_choose(v))
+			return false;
+	}
+	return true;
+}
+
 static void apply_choose(const quest* ph, int count) {
 	struct handler : utg::choosei {
 		void apply(int index, const void* object) override {
@@ -92,6 +125,8 @@ static void apply_choose(const quest* ph, int count) {
 		}
 		bool isallow(int index, const void* object) const override {
 			auto p = (quest*)object;
+			if(!allow_choose(p))
+				return false;
 			if(p->is(VisitManyTimes))
 				return true;
 			if(ismarked(index))
@@ -118,7 +153,7 @@ static void apply_choose(const quest* ph, int count) {
 static const quest* find_condition(int bonus) {
 	auto pe = bsdata<quest>::end();
 	auto index = 1000 + bonus;
-	for(auto p = last_quest+1; p < pe; p++) {
+	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->next != -1)
 			continue;
 		if(p->index < 1000 || p->index >= 1100)
