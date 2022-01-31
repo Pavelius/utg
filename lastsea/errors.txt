@@ -1,2 +1,4 @@
-﻿In file `Names.txt`:
- Define translate for `Treasure29`
+﻿In file `locale/ru/QuestActions.txt`:
+ Line 229: Can't find variant `IfChoosedAction`
+ Line 236: Can't find variant `IfChoosedAction`
+ Line 243: Can't find variant `IfChoosedAction`

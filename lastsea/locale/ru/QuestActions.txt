@@ -226,20 +226,21 @@ Name+2 CounterName+0
 11 CounterA-2 Infamy+2)
 16 CounterA-3 Treasure+1 Infamy+4)
 
-#4353 Hunting+1 Roll
+#4353 Hunting+1 IfChoosedAction-2 Roll
 %герой прин€л%ась шаритьс€ по закромам вражеского корабл€.
 1 Treasure+1)
 7 Treasure+1 Infamy+2)
 11 Treasure+2)
 16 Page500+7)
 
-#4453 Swagger+1 Roll
+#4453 Swagger+1 IfChoosedAction-2 Roll
+- —давайтесь, кому жизнь дорога! - закричал%а %герой обраща€сь к вражеской команде.
 1 Crew+1)
 6 Crew+2)
 11 Crew+2 Infamy+2)
 16 Crew+2 Treasure+1 Infamy+4)
 
-#4553 Aim+1 Choose+2
+#4553 Aim+1 IfChoosedAction-2 Choose+2
 0 Supply+1) ”красть порох
 0 UpgradeGun) ”красть детали дл€ пушки
 0 AddGun+1) ”красть маленькую пушку

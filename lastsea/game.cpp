@@ -211,7 +211,7 @@ static const quest* find_action(int n) {
 	auto parent_index = last_location->index;
 	auto pe = bsdata<quest>::end();
 	auto index = 0;
-	for(auto p = last_quest + 1; p < pe; p++) {
+	for(auto p = last_location + 1; p < pe; p++) {
 		if(p->index != parent_index)
 			break;
 		if(index++ == n)
@@ -317,8 +317,10 @@ static void end_scene() {
 		need_sail = false;
 		utg::pause(getnm("SailAway"));
 		draw::setnext(apply_sail);
-	} else
+	} else {
+		utg::pause();
 		draw::setnext(apply_scene);
+	}
 }
 
 static void apply_scene() {
@@ -748,10 +750,10 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case IfChoosedAction:
 		if(bonus > 0) {
-			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
+			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus - 1))))
 				need_stop = true;
 		} else if(bonus < 0) {
-			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
+			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
 				need_stop = true;
 		}
 		break;
