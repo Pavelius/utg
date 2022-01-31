@@ -1,5 +1,2 @@
 ﻿In file `locale/ru/QuestActions.txt`:
- Line 42: Can't find variant `Steal`
- Line 78: Can't find variant `Steal`
- Line 113: Can't find variant `Steal`
- Line 162: Can't find variant `Steal`
+ Line 220: Can't find variant `Brwal`

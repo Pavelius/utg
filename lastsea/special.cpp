@@ -35,6 +35,8 @@ BSDATA(speciali) = {
 	{"AddGunUnloaded"},
 	{"VisitManyTimes"},
 	{"VisitRequired"},
+	{"IfChooseAction"},
+	{"StopActions"},
 	{"CheckDanger"},
 	{"RemoveAllNavigation"},
 	{"PlayStars"},

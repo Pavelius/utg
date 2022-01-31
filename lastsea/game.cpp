@@ -5,7 +5,7 @@
 gamei		game;
 int			last_choose;
 static int	last_tile, last_counter, last_name;
-static bool	need_sail;
+static bool	need_sail, need_stop, need_stop_actions;
 ability_s	last_ability;
 const quest* last_quest;
 const quest* last_location;
@@ -32,12 +32,17 @@ static void add_answer(answers& an, const quest* p) {
 }
 
 static void apply_effect(const variants& tags) {
+	auto push_stop = need_stop;
 	last_ability = Infamy;
+	need_stop = false;
 	for(auto v : tags) {
 		if(next_quest)
 			break;
+		if(need_stop)
+			break;
 		game.apply(v);
 	}
+	need_stop = push_stop;
 }
 
 static void apply_answers(const quest* ph) {
@@ -56,8 +61,9 @@ static void apply_answers(const quest* ph) {
 	if(an) {
 		auto p = (quest*)utg::choose(an, 0);
 		if(p && p->next > 0) {
-			clear_message();
 			next_quest = quest::find(p->next);
+			if(next_quest && next_quest->text)
+				clear_message();
 		}
 	}
 }
@@ -191,6 +197,21 @@ static void apply_roll_result(const quest* ph, int value) {
 	apply_effect(find_roll_result(ph, value));
 }
 
+static const quest* find_action(int n) {
+	if(!last_location)
+		return 0;
+	auto parent_index = last_location->index;
+	auto pe = bsdata<quest>::end();
+	auto index = 0;
+	for(auto p = last_quest + 1; p < pe; p++) {
+		if(p->index != parent_index)
+			break;
+		if(index++ == n)
+			return p;
+	}
+	return 0;
+}
+
 static void choose_actions(int count) {
 	struct handler : utg::choosei {
 		void apply(int index, const void* object) override {
@@ -225,7 +246,7 @@ static void choose_actions(int count) {
 	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
-		if(p->is(VisitRequired) && count>0) {
+		if(p->is(VisitRequired) && count > 0) {
 			count--;
 			san.apply(0, p);
 			continue;
@@ -237,6 +258,7 @@ static void choose_actions(int count) {
 }
 
 static void play_actions() {
+	need_stop_actions = false;
 	for(auto v : game.actions) {
 		if(!v)
 			continue;
@@ -245,6 +267,8 @@ static void play_actions() {
 			continue;
 		clear_message();
 		apply_effect(quest::find(p->next));
+		if(need_stop_actions)
+			break;
 		utg::pause(getnm("NextAction"));
 	}
 }
@@ -500,6 +524,14 @@ void gamei::choosecounter() {
 	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
 }
 
+bool gamei::ischoosed(int i) const {
+	for(auto v : actions) {
+		if(v == i)
+			return true;
+	}
+	return false;
+}
+
 static ability_s standart_damage[] = {Hull, Crew, Supply};
 
 static void special_command(special_s v, int bonus) {
@@ -532,8 +564,9 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case Page000: case Page100: case Page200: case Page300: case Page400:
 	case Page500: case Page600: case Page700: case Page800: case Page900:
-		clear_message();
 		next_quest = quest::find((v - Page000) * 100 + bonus);
+		if(next_quest && next_quest->text)
+			clear_message();
 		break;
 	case Scene:
 		change_scene(bonus);
@@ -635,6 +668,19 @@ static void special_command(special_s v, int bonus) {
 	case IfCounterZero:
 		if(variables.get(last_counter) <= 0)
 			apply_condition(bonus);
+		break;
+	case IfChoosedAction:
+		if(bonus > 0) {
+			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
+				need_stop = true;
+		}
+		else if(bonus < 0) {
+			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
+				need_stop = true;
+		}
+		break;
+	case StopActions:
+		need_stop_actions = true;
 		break;
 	case Damage:
 		choose_damage(bonus, standart_damage);

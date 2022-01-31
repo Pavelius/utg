@@ -31,7 +31,8 @@ enum special_s : unsigned char {
 	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,
 	ZeroCounters, CounterName, ChooseCounter,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
-	VisitManyTimes, VisitRequired, CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
+	VisitManyTimes, VisitRequired, IfChoosedAction, StopActions,
+	CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
 	CounterA, CounterB, CounterC, CounterD, CounterX,
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
@@ -229,6 +230,7 @@ public:
 	void			fullthrottle(int level);
 	static int		getpage();
 	static void		generate();
+	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
 	static void		listofcounters();
