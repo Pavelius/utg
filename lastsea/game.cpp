@@ -74,8 +74,10 @@ static void apply_effect() {
 	while(next_quest) {
 		last_quest = next_quest; next_quest = 0;
 		add_header(last_quest);
-		if(last_quest->text && last_quest->next)
+		if(last_quest->text && last_quest->next) {
+			clear_message();
 			game.actn(utg::sb, last_quest->text, 0);
+		}
 		apply_effect(last_quest->tags);
 		if(last_choose) {
 			auto n = last_choose; last_choose = 0;
@@ -212,6 +214,29 @@ static const quest* find_action(int n) {
 	return 0;
 }
 
+static bool allow_action(ability_s v, int bonus) {
+	switch(v) {
+	case Mission: case Cabine:
+		return (game.get(v) + bonus) <= game.getmaximum(v);
+	default: return true;
+	}
+}
+
+static bool allow_action(variant v) {
+	switch(v.type) {
+	case Ability: return allow_action((ability_s)v.value, v.counter);
+	default: return true;
+	}
+}
+
+static bool allow_action(const quest* p) {
+	for(auto v : p->tags) {
+		if(!allow_action(v))
+			return false;
+	}
+	return true;
+}
+
 static void choose_actions(int count) {
 	struct handler : utg::choosei {
 		void apply(int index, const void* object) override {
@@ -220,6 +245,8 @@ static void choose_actions(int count) {
 		}
 		bool isallow(int index, const void* object) const override {
 			auto p = (quest*)object;
+			if(!allow_action(p))
+				return false;
 			if(game.islocked(index))
 				return false;
 			if(p->is(VisitManyTimes))
@@ -317,8 +344,8 @@ static void change_scene(int value) {
 	if(value && last_location != p) {
 		last_location = p;
 		game.unlockall();
-		utg::pause(getnm("NextScene"));
 	}
+	utg::pause(getnm("NextScene"));
 	draw::setnext(apply_scene);
 }
 
@@ -704,14 +731,8 @@ void gamei::apply(variant v) {
 		if(v.counter)
 			game.set(last_ability, game.get(last_ability) + v.counter);
 		break;
-	case Special:
-		special_command((special_s)v.value, v.counter);
-		break;
-	case Card:
-		game.gaintreasure((treasurei*)v.getpointer());
-		break;
-	case Goal:
-		game.setgoal((goali*)v.getpointer());
-		break;
+	case Special: special_command((special_s)v.value, v.counter); break;
+	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
+	case Goal: game.setgoal((goali*)v.getpointer()); break;
 	}
 }

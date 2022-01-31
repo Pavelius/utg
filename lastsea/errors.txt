@@ -1,2 +1,3 @@
-﻿In file `locale/ru/QuestActions.txt`:
- Line 220: Can't find variant `Brwal`
+﻿In file `Names.txt`:
+ Define translate for `Page500`
+ Define translate for `UpgradeGun`

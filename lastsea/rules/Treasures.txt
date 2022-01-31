@@ -18,5 +18,6 @@ Treasure88 abilities(1 0 0 1 0 0)
 Story20
 Story23
 Story41
+Story51
 Story54
 Story74

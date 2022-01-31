@@ -1,6 +1,6 @@
 #5000 Bury+2
 Выбрав укромное и незаметное место %герой выкопал%а глубокую яму, готовясь закопать инвестиции в землю в прямом смысле этого слова.
-Каждое сокровище, которое будет закопано принесет [%Infamy]+3. Недурно.
+Каждое закопанное сокровище даст [%Infamy]+3. Недурно.
 
 #5001 Mission+1
 
@@ -9,6 +9,8 @@
 0 PaySupplyEat Infamy+1 Discontent-1) Накормить голодную команду.
 0 Discontent+2 Swagger+1 Infamy-1) Попросить их немножко поголодать.
 0 ZeroSupplyOrDiscontent+2 Infamy+4) Позволить команде наесться досыта.
+
+#5003 Cabine+1
 
 #4003 Header("Открытое море") Image(open_sea) Next(800)
 Корабль медленно плыл по спокойной морской глади.
@@ -223,6 +225,25 @@ Name+2 CounterName+0
 7 CounterA-1 Reroll+1)
 11 CounterA-2 Infamy+2)
 16 CounterA-3 Treasure+1 Infamy+4)
+
+#4353 Hunting+1 Roll
+%герой принял%ась шариться по закромам вражеского корабля.
+1 Treasure+1)
+7 Treasure+1 Infamy+2)
+11 Treasure+2)
+16 Page500+7)
+
+#4453 Swagger+1 Roll
+1 Crew+1)
+6 Crew+2)
+11 Crew+2 Infamy+2)
+16 Crew+2 Treasure+1 Infamy+4)
+
+#4553 Aim+1 Choose+2
+0 Supply+1) Украсть порох
+0 UpgradeGun) Украсть детали для пушки
+0 AddGun+1) Украсть маленькую пушку
+0 Page500+9) Украсть большую пушку
 
 #6000
 Корпус врага
