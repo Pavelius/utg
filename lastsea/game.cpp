@@ -191,7 +191,7 @@ static void apply_roll_result(const quest* ph, int value) {
 	apply_effect(find_roll_result(ph, value));
 }
 
-static void choose_actions() {
+static void choose_actions(int count) {
 	struct handler : utg::choosei {
 		void apply(int index, const void* object) override {
 			auto n = (quest*)object - bsdata<quest>::elements;
@@ -225,9 +225,14 @@ static void choose_actions() {
 	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
+		if(p->is(VisitRequired) && count>0) {
+			count--;
+			san.apply(0, p);
+			continue;
+		}
 		add_answer(an, p);
 	}
-	san.choose(getnm("WhatDoYouWantToVisit"), 4);
+	san.choose(getnm("WhatDoYouWantToVisit"), count);
 	game.sortactions();
 }
 
@@ -260,7 +265,7 @@ static void end_scene() {
 }
 
 static void apply_scene() {
-	choose_actions();
+	choose_actions(player_count);
 	play_actions();
 	end_scene();
 }

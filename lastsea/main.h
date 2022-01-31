@@ -54,6 +54,7 @@ enum ability_type_s : unsigned char {
 
 typedef flagable<8> taga;
 typedef short unsigned indext;
+const int player_count = 4;
 
 struct abilityi {
 	const char*		id;
