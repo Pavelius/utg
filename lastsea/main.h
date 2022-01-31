@@ -25,7 +25,7 @@ enum ability_s : unsigned char {
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Steal, Skill, Scene,
+	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
 	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,
@@ -168,7 +168,7 @@ public:
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
 	ability_s		chooseskill(const char* title) const;
-	const treasurei* choosetreasure(const char* title) const;
+	const treasurei* choosetreasure(const char* title, bool allow_stopbury) const;
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;

@@ -86,7 +86,10 @@ static void apply_effect(const quest* p) {
 }
 
 static bool allow_choose(ability_s v, int bonus) {
-	return (game.get(v) + bonus) >= 0;
+	switch(v) {
+	case Infamy: return true;
+	default: return (game.get(v) + bonus) >= 0;
+	}
 }
 
 static bool allow_choose(special_s v, int bonus) {

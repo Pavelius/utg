@@ -377,14 +377,15 @@ static const quest* find_action_choose(const quest* ph) {
 	return 0;
 }
 
-const treasurei* pirate::choosetreasure(const char* title) const {
+const treasurei* pirate::choosetreasure(const char* title, bool allow_stopbury) const {
 	answers an;
 	for(auto v : treasures) {
 		if(!v)
 			continue;
 		an.add(v.getpointer(), v.getname());
 	}
-	an.add(0, getnm("StopBury"));
+	if(allow_stopbury)
+		an.add(0, getnm("StopBury"));
 	return (treasurei*)utg::choose(an, title);
 }
 
@@ -411,7 +412,7 @@ void pirate::bury(int count) {
 		sb.add(getnm("WhatTreasureToBury"));
 		if(count > 1)
 			sb.adds(getnm("ChooseLeft"), count);
-		auto p = choosetreasure(temp);
+		auto p = choosetreasure(temp, true);
 		if(!p)
 			break;
 		remove(p);
@@ -429,6 +430,13 @@ void pirate::choosebonus(variant v1, variant v2) {
 }
 
 void pirate::tradefriend() {
+	auto p = choosetreasure(getnm("TradeTreasure"), false);
+	if(!p)
+		set(Reroll, get(Reroll) + 1);
+	else {
+		remove(p);
+		gaintreasure(game.picktreasure());
+	}
 }
 
 void pirate::raiseskills(int count) {

@@ -8,9 +8,6 @@ static void print(stringbuilder& sb, variant v) {
 		switch(v.value) {
 		case VisitManyTimes:
 			return;
-		case Steal:
-			format = "%1i";
-			break;
 		case ReloadGun:
 		case AddGun:
 		case AddGunUnloaded:

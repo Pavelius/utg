@@ -12,7 +12,6 @@ BSDATA(speciali) = {
 	{"Damage"},
 	{"Bury"},
 	{"Scout"},
-	{"Steal"},
 	{"Skill"},
 	{"Scene"},
 	{"Tile000"},
