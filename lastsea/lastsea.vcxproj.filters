@@ -72,6 +72,9 @@
     <ClCompile Include="treasure.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="trigger.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

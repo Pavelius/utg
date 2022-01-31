@@ -1,7 +1,7 @@
 #pragma once
 
 class counters {
-	static const unsigned maxcount = 8;
+	static const unsigned maxcount = 5;
 	struct element {
 		const char*		name;
 		char			value, maximum;

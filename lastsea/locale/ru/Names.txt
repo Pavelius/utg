@@ -132,6 +132,7 @@ TalkToCrew: Пообщаться с командой
 TheTipsyTortoise: Выпившая черепаха
 Threat: Угроза
 Treasure: Сокровища
+Treasure29: Бочка дегтя
 Treasure33: Идеальный прицел
 Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка

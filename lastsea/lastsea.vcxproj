@@ -162,6 +162,7 @@
     <ClCompile Include="cannoneer.cpp" />
     <ClCompile Include="tilei.cpp" />
     <ClCompile Include="treasure.cpp" />
+    <ClCompile Include="trigger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cannoneer.h" />

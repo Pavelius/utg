@@ -193,8 +193,6 @@ void pirate::set(ability_s v, int i) {
 	}
 }
 
-static int last_second_roll;
-
 void pirate::addaction(indext v) {
 	for(auto& e : actions) {
 		if(e)
@@ -260,6 +258,7 @@ static const quest* find_next_action(const quest* p) {
 
 void pirate::rolldices() {
 	rollv(last_bonus);
+	int last_second_roll = 0;
 	if(get(Misfortune) > 0) {
 		abilities[Misfortune]--;
 		last_second_roll = 1 + rand() % 12;
@@ -298,48 +297,6 @@ void pirate::confirmroll() {
 		utg::sb.set(push_text);
 	}
 	last_bonus = 0;
-}
-
-void pirate::makeroll(special_s type) {
-	char temp[260]; stringbuilder sb(temp);
-	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus += get(last_ability);
-		last_bonus += getbonus(last_ability);
-	}
-	const int GunBonus = 10;
-	static bool gun_used;
-	answers an;
-	gun_used = false;
-	while(true) {
-		sb.clear();
-		if(last_ability >= Exploration && last_ability <= Navigation)
-			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id));
-		sb.adds(getnm("RollDice"));
-		if(get(Misfortune))
-			sb.adds("%-AddMisfortune");
-		if(last_bonus)
-			sb.adds("%-1 %+2i", getnm("AddBonus"), last_bonus);
-		sb.add(".");
-		an.clear();
-		an.add(0, getnm("MakeRoll"));
-		if(type == RollGuns && !gun_used) {
-			for(auto level = 1; level <= 4; level++) {
-				if(!game.cannoneer::is(level, true))
-					continue;
-				auto bonus = game.getgunbonus(level);
-				if(bonus)
-					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
-			}
-		}
-		auto ri = (int)utg::choose(an, temp);
-		if(!ri)
-			break;
-		if(ri >= GunBonus) {
-			auto level = ri - GunBonus;
-			last_bonus += game.getgunbonus(level);
-			gun_used = game.unloadgun(level, true);
-		}
-	}
 }
 
 static const quest* find_action_choose(const quest* ph) {

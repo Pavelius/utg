@@ -39,15 +39,16 @@ enum special_s : unsigned char {
 	MarkEntry, IfCounterZero, IfExistEntry, IfSail,
 };
 enum tag_s : unsigned char {
-	NoDigging, NoSteal, Usable,
+	NoDigging, NoSteal,
 };
-enum event_s : unsigned char {
-	WhenRoll, WhenRollOther, WhenDigging,
-	WhenStartActingPhase, WhenActing, WhenUseReroll,
+enum trigger_s : unsigned char {
+	NoTrigger,
+	WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased, WhenDiscard,
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile, Quest, Special, Tag, Value, Widget
+	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile,
+	Quest, Special, Tag, Trigger, Value, Widget
 };
 enum ability_type_s : unsigned char {
 	Positive, Negative,
@@ -138,10 +139,15 @@ public:
 struct speciali {
 	const char*		id;
 };
+struct triggeri {
+	const char*		id;
+};
 struct treasurei {
 	const char*		id;
 	char			abilities[6]; // Bonus to abilities
-	short unsigned	index;
+	trigger_s		trigger;
+	ability_s		ability;
+	char			bonus;
 	flaga			tags;
 	variants		gain, loss, use;
 	static const treasurei* find(const char* id);
@@ -250,10 +256,9 @@ public:
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
-extern int			last_choose;
-extern ability_s	last_ability;
 int					rollv(int bonus);
 VKIND(gender_s, Gender)
 VKIND(special_s, Special)
 VKIND(treasurei, Card)
+VKIND(trigger_s, Trigger)
 VKIND(groupvaluei, Value)

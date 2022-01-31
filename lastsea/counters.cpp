@@ -9,5 +9,7 @@ void counters::clear() {
 void counters::set(int v, int i) {
 	if(v >= maxcount)
 		return;
+	if(i < 0)
+		i = 0;
 	elements[v].value = i;
 }

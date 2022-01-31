@@ -3,10 +3,9 @@
 #include "pathfind.h"
 
 gamei		game;
-int			last_choose;
-static int	last_tile, last_counter, last_name;
+static int	last_tile, last_counter, last_name, last_choose;
 static bool	need_sail, need_stop, need_stop_actions;
-ability_s	last_ability;
+static ability_s last_ability;
 const quest* last_quest;
 const quest* last_location;
 const quest* next_quest;
@@ -33,7 +32,6 @@ static void add_answer(answers& an, const quest* p) {
 
 static void apply_effect(const variants& tags) {
 	auto push_stop = need_stop;
-	last_ability = Infamy;
 	need_stop = false;
 	for(auto v : tags) {
 		if(next_quest)
@@ -108,8 +106,10 @@ static bool allow_choose(special_s v, int bonus) {
 		else
 			return game.unloadgun(4, false);
 		break;
-	case AddGun: return game.addgun(bonus, true, false);
-	default: return true;
+	case AddGun:
+		return game.addgun(bonus, true, false);
+	default:
+		return true;
 	}
 }
 
@@ -432,6 +432,48 @@ static void generate_classes() {
 	for(auto& e : bsdata<pirate>())
 		e.generate();
 	utg::interactive = push_interactive;
+}
+
+void pirate::makeroll(special_s type) {
+	char temp[260]; stringbuilder sb(temp);
+	if(last_ability >= Exploration && last_ability <= Navigation) {
+		last_bonus += get(last_ability);
+		last_bonus += getbonus(last_ability);
+	}
+	const int GunBonus = 10;
+	static bool gun_used;
+	answers an;
+	gun_used = false;
+	while(true) {
+		sb.clear();
+		if(last_ability >= Exploration && last_ability <= Navigation)
+			sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id));
+		sb.adds(getnm("RollDice"));
+		if(get(Misfortune))
+			sb.adds("%-AddMisfortune");
+		if(last_bonus)
+			sb.adds("%-1 %+2i", getnm("AddBonus"), last_bonus);
+		sb.add(".");
+		an.clear();
+		an.add(0, getnm("MakeRoll"));
+		if(type == RollGuns && !gun_used) {
+			for(auto level = 1; level <= 4; level++) {
+				if(!game.cannoneer::is(level, true))
+					continue;
+				auto bonus = game.getgunbonus(level);
+				if(bonus)
+					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
+			}
+		}
+		auto ri = (int)utg::choose(an, temp);
+		if(!ri)
+			break;
+		if(ri >= GunBonus) {
+			auto level = ri - GunBonus;
+			last_bonus += game.getgunbonus(level);
+			gun_used = game.unloadgun(level, true);
+		}
+	}
 }
 
 void pirate::roll(special_s type) {

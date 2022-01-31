@@ -6,6 +6,7 @@
 template<> struct bsdata<V> : bsdata<T> {};
 
 LNK(ability_s, abilityi)
+LNK(trigger_s, triggeri)
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
@@ -48,11 +49,15 @@ BSMETA(quest) = {
 	BSREQ(text), BSREQ(image), BSREQ(header),
 	BSREQ(index), BSREQ(next),
 	{}};
+BSMETA(triggeri) = {
+	BSREQ(id),
+	{}};
 BSMETA(treasurei) = {
 	BSREQ(id),
 	BSREQ(abilities),
 	BSFLG(tags, tagi),
 	BSREQ(use), BSREQ(gain), BSREQ(loss),
+	BSREQ(trigger), BSREQ(ability), BSREQ(bonus),
 	{}};
 BSDATAC(treasurei, 256)
 
@@ -70,6 +75,7 @@ BSDATA(varianti) = {
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
+	{"Trigger", VRSTD(triggeri), 1},
 	{"Value", VRSTD(groupvaluei), 1},
 	{"Widget", VRSTD(widget), 1},
 };
