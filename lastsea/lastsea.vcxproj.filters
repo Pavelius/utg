@@ -66,6 +66,12 @@
     <ClCompile Include="counters.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="chest.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="treasure.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

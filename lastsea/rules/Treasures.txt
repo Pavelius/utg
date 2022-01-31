@@ -2,11 +2,35 @@
 
 Magic19 abilities(0 0 0 1 1 0)
 
+Treasure24 abilities(0 0 2 0 0 0)
+ tags NoDigging
+Treasure27
+ use Infamy+2 Discontent-1
+Treasure28
+ use Infamy+1 Discontent-2
+Treasure29
+ use Hull+2
+Treasure31
+ tags NoDigging
+ use Supply+2
+Treasure32
+ use Supply+3
+Treasure33 abilities(0 0 0 2 0 0)
+Treasure34
+ use SupplyOrHull+2
 Treasure37 abilities(0 0 1 1 0 0)
+Treasure38
+ gain Discontent+1
+ loss Discontent-1
 Treasure41 abilities(0 0 0 0 2 0)
 Treasure47 abilities(1 0 0 0 0 0)
+Treasure50
+ gain Infamy+5
 Treasure54 abilities(0 0 0 0 0 2)
 Treasure62 abilities(1 0 0 0 1 0)
+Treasure65 abilities(0 0 0 0 2 0)
+ gain Infamy+4
+ loss Infamy-4
 Treasure66 abilities(0 2 0 0 0 0)
 Treasure73 abilities(0 0 0 0 2 1)
 Treasure74 abilities(1 1 0 0 0 0)

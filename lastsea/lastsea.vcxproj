@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="historyable.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="cannoneer.cpp" />
     <ClCompile Include="tilei.cpp" />
+    <ClCompile Include="treasure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cannoneer.h" />

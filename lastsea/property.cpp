@@ -52,6 +52,7 @@ BSMETA(treasurei) = {
 	BSREQ(id),
 	BSREQ(abilities),
 	BSFLG(tags, tagi),
+	BSREQ(use), BSREQ(gain), BSREQ(loss),
 	{}};
 BSDATAC(treasurei, 256)
 

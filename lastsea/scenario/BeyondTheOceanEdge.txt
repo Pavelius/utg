@@ -5,7 +5,7 @@ Tile900+77 AddTile+0 AddTile+7 AddTile+14 AddTile+28 AddTile+35\
 Tile900+63 AddTile+21\
 Tile900+57 AddTile+31\
 Tile900+53 AddTile+4\
-Treasure+1\
+Treasure65\
 SetShip+4\
 Scene+19
 CounterA+3 Scene+53

@@ -6,7 +6,8 @@ static void print(stringbuilder& sb, variant v) {
 	switch(v.type) {
 	case Special:
 		switch(v.value) {
-		case VisitManyTimes:
+		case VisitManyTimes: case VisitRequired:
+		case IfChoosedAction: case IfExistEntry:
 			return;
 		case ReloadGun:
 		case AddGun:
@@ -20,9 +21,10 @@ static void print(stringbuilder& sb, variant v) {
 	default: break;
 	}
 	auto negative = v.counter < 0;
+	sb.addsep(' ');
 	if(negative)
 		sb.add("[-");
-	sb.adds(v.getname(), v.counter);
+	sb.add(v.getname(), v.counter);
 	if(v.counter && format)
 		sb.add(format, v.counter);
 	if(negative)
@@ -34,16 +36,11 @@ static void print(stringbuilder& sb, const variants& source) {
 		print(sb, v);
 }
 
-static void print(stringbuilder& sb, const char* name, int bonus, const char* format = "%1%+2i") {
-	sb.adds(format, name, bonus);
-}
-
 static void printab(stringbuilder& sb, char* ability) {
 	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
 		auto v = ability[i - Exploration];
-		if(!v)
-			continue;
-		print(sb, getnm(bsdata<abilityi>::elements[i].id), v);
+		if(v)
+			print(sb, variant(Ability, i, v));
 	}
 }
 
@@ -65,12 +62,16 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 	printab(sb, p->abilities);
 }
 
-void pirate::painttreasure() {
-	for(auto v : game.pirate::treasures) {
-		if(!v)
+void chest::listoftreasures() {
+	for(auto id : *this) {
+		auto p = getobject(id);
+		if(!p)
 			continue;
-		draw::label(v.getname(), 0, v.getpointer());
+		draw::label(getnm(p->id), 0, p);
 	}
+}
+
+void gamei::listoftreasures() {
 }
 
 void shiplog::listofrecords() {

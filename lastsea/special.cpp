@@ -22,7 +22,7 @@ BSDATA(speciali) = {
 	{"SetShip"},
 	{"FullThrottle"},
 	{"TradeFriend"},
-	{"PaySupply"},
+	{"SupplyOrHull"},
 	{"PaySupplyEat"},
 	{"ZeroSupplyOrDiscontent"},
 	{"ZeroCounters"},

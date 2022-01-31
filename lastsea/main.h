@@ -28,7 +28,7 @@ enum special_s : unsigned char {
 	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
-	PaySupply, PaySupplyEat, ZeroSupplyOrDiscontent,
+	SupplyOrHull, PaySupplyEat, ZeroSupplyOrDiscontent,
 	ZeroCounters, CounterName, ChooseCounter,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, IfChoosedAction, StopActions,
@@ -142,23 +142,27 @@ struct treasurei {
 	const char*		id;
 	char			abilities[6]; // Bonus to abilities
 	short unsigned	index;
-	flaga			tags, conditions; // Special tags
-	variant			reduce, reduce_count; // reduce this
-	variant			gain, gain_count;
+	flaga			tags;
+	variants		gain, loss, use;
+	static const treasurei* find(const char* id);
+	void			gaining() const;
 	bool			ismagic() const { return szstart(id, "Magic"); }
 	bool			isstory() const { return szstart(id, "Story"); }
+	void			lossing() const;
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 };
-class textable {
-	char			data[32];
+class chest : private adat<indext, 20> {
+	static indext	getid(const treasurei* pv);
+	static const treasurei* getobject(indext v);
 public:
-	constexpr textable() : data{} {}
-	void operator=(const char* v) { stringbuilder sb(data); sb.add(v); }
-	operator const char*() const { return data; }
+	const treasurei* choosetreasure(const char* title, const char* cancel) const;
+	int				getbonus(ability_s v) const;
+	void			gaintreasure(const treasurei* pv);
+	void			listoftreasures();
+	void			losstreasure(const treasurei* pv);
 };
-class pirate : public historyable {
+class pirate : public historyable, public chest {
 	char			abilities[Infamy + 1];
-	variant			treasures[4];
 	void			afterchange(ability_s v);
 	void			checkexperience(ability_s v);
 	void			confirmroll();
@@ -170,22 +174,17 @@ public:
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
 	ability_s		chooseskill(const char* title) const;
-	const treasurei* choosetreasure(const char* title, bool allow_stopbury) const;
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
 	void			information(const char* format, ...);
-	void			gaintreasure(int count = 1);
-	void			gaintreasure(const treasurei* p);
+	void			gaintreasures(int count = 1);
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
-	int				getbonus(ability_s v) const;
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
-	static void		painttreasure();
-	void			remove(variant v);
 	void			raiseskills(int count);
 	void			roll(special_s type);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
@@ -235,6 +234,7 @@ public:
 	void			lock(int i) { locked.set(i); }
 	static void		listofcounters();
 	static void		listofgoals();
+	static void		listoftreasures();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		playsail();

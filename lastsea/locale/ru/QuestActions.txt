@@ -34,7 +34,7 @@
 16 Supply+3 Treasure+2 Infamy+3)
 
 #4403 Choose+2
-0 PaySupply-1 ReloadGun+4 VisitManyTimes) Зарядить пишки.
+0 Supply-1 ReloadGun+4 VisitManyTimes) Зарядить пишки.
 0 Reroll+1) Затюнинговать стрелковый механизм.
 0 Aim+1) Поупражнятся в стрельбе.
 
@@ -183,7 +183,7 @@ Name+0 CounterName+0 Name+1 CounterName+1
 
 #4255 Choose+2
 %герой пытается перезарядить корабельные пушки.
-0 PaySupply-1 ReloadGun+1 VisitManyTimes) Засунуть ядра в пушки.
+0 Supply-1 ReloadGun+1 VisitManyTimes) Засунуть ядра в пушки.
 0 Infamy+1 VisitManyTimes) Выглянуть из-за борта и показать врагу неприличный жест.
 0 Reroll+1 VisitManyTimes) Прочистить дуло шомполом.
 
@@ -251,3 +251,13 @@ Name+2 CounterName+0
 Паруса врага
 #6002
 Команда врага
+
+#6200
+Распределите урон
+0 Hull-1) Попадание в корпус
+0 Crew-1) Гибнет команда
+0 Supply-1) Попадание в ящики с припасами
+
+#6201
+0 Supply+1) Получить припасы
+0 Hull+1) Отремонтировать корпус

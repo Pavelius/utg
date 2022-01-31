@@ -68,7 +68,7 @@ static void apply_answers(const quest* ph) {
 	}
 }
 
-static void apply_choose(const quest* ph, int count);
+static void apply_choose(const quest* ph, const char* title, int count);
 
 static void apply_effect() {
 	while(next_quest) {
@@ -81,7 +81,7 @@ static void apply_effect() {
 		apply_effect(last_quest->tags);
 		if(last_choose) {
 			auto n = last_choose; last_choose = 0;
-			apply_choose(last_quest, n);
+			apply_choose(last_quest, 0, n);
 		}
 		if(!next_quest)
 			apply_answers(last_quest);
@@ -129,7 +129,7 @@ static bool allow_choose(const quest* p) {
 	return true;
 }
 
-static void apply_choose(const quest* ph, int count) {
+static void apply_choose(const quest* ph, const char* title, int count) {
 	struct handler : utg::choosei {
 		void apply(int index, const void* object) override {
 			apply_effect((quest*)object);
@@ -158,7 +158,13 @@ static void apply_choose(const quest* ph, int count) {
 			continue;
 		add_answer(an, p);
 	}
-	san.choose(0, count);
+	san.choose(title, count);
+}
+
+static void apply_choose(int page, int count) {
+	auto p = quest::find(page);
+	if(p)
+		apply_choose(p, p->text, count);
 }
 
 static const quest* find_condition(int bonus) {
@@ -370,7 +376,7 @@ static void global_threat() {
 	special_mission(game.get(Threat), pages);
 }
 
-static void choose_damage(int count, const slice<ability_s>& source) {
+static void choose_damage(const char* title, int count, const slice<ability_s>& source) {
 	answers an;
 	char temp[260]; stringbuilder sb(temp);
 	while(count > 0 && !draw::isnext()) {
@@ -382,7 +388,7 @@ static void choose_damage(int count, const slice<ability_s>& source) {
 			}
 		}
 		sb.clear();
-		sb.add(getnm("DistributeDamage"), count);
+		sb.add(title, count);
 		auto p = (abilityi*)utg::choose(an, temp);
 		auto v = (ability_s)(p - bsdata<abilityi>::elements);
 		game.set(v, game.get(v) - 1);
@@ -394,6 +400,14 @@ int gamei::getpage() {
 	if(!last_location)
 		return 0;
 	return last_location->index;
+}
+
+void treasurei::gaining() const {
+	apply_effect(gain);
+}
+
+void treasurei::lossing() const {
+	apply_effect(loss);
 }
 
 void pirate::afterchange(ability_s v) {
@@ -559,8 +573,6 @@ bool gamei::ischoosed(int i) const {
 	return false;
 }
 
-static ability_s standart_damage[] = {Hull, Crew, Supply};
-
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
@@ -628,10 +640,6 @@ static void special_command(special_s v, int bonus) {
 			game.lock(bonus - 1);
 		else if(bonus < 0)
 			game.unlock(bonus - 1);
-		break;
-	case PaySupply:
-		if(game.get(Supply) >= bonus)
-			game.set(Supply, game.get(Supply) + bonus);
 		break;
 	case PaySupplyEat:
 		bonus += game.getmaximum(Eat);
@@ -710,7 +718,10 @@ static void special_command(special_s v, int bonus) {
 		need_stop_actions = true;
 		break;
 	case Damage:
-		choose_damage(bonus, standart_damage);
+		apply_choose(6200, bonus);
+		break;
+	case SupplyOrHull:
+		apply_choose(6201, bonus);
 		break;
 	case CheckDanger:
 		// TODO

@@ -169,7 +169,7 @@ void pirate::set(ability_s v, int i) {
 		auto d = i - abilities[v];
 		switch(v) {
 		case Treasure:
-			gaintreasure(i);
+			gaintreasures(i);
 			break;
 		case Mission: case Cabine: case Threat:
 			abilities[v] = i;
@@ -204,36 +204,13 @@ void pirate::addaction(indext v) {
 	}
 }
 
-void pirate::gaintreasure(const treasurei* pv) {
-	if(!pv)
-		return;
-	for(auto& e : treasures) {
-		if(e)
-			continue;
-		e = pv;
-		break;
-	}
-}
-
-void pirate::gaintreasure(int count) {
+void pirate::gaintreasures(int count) {
 	for(auto i = 0; i < count; i++) {
 		auto pv = game.picktreasure();
 		if(!pv)
 			continue;
-		information(getnm("GainTreasure"), getnm(pv->id));
 		gaintreasure(pv);
 	}
-}
-
-int pirate::getbonus(ability_s v) const {
-	auto r = 0;
-	for(auto ev : treasures) {
-		treasurei* p = ev;
-		if(!p)
-			continue;
-		r += p->abilities[v - Exploration];
-	}
-	return r;
 }
 
 bool pirate::confirm(ability_s v, int delta) const {
@@ -377,34 +354,6 @@ static const quest* find_action_choose(const quest* ph) {
 	return 0;
 }
 
-const treasurei* pirate::choosetreasure(const char* title, bool allow_stopbury) const {
-	answers an;
-	for(auto v : treasures) {
-		if(!v)
-			continue;
-		an.add(v.getpointer(), v.getname());
-	}
-	if(allow_stopbury)
-		an.add(0, getnm("StopBury"));
-	return (treasurei*)utg::choose(an, title);
-}
-
-void pirate::remove(variant v) {
-	if(v.type == Card) {
-		auto pb = treasures;
-		auto pe = treasures + sizeof(treasures) / sizeof(treasures[0]);
-		for(auto ps = pb; ps < pe; ps++) {
-			if(*ps == v)
-				continue;
-			*pb++ = *ps;
-		}
-		while(pb < pe) {
-			pb->clear();
-			pb++;
-		}
-	}
-}
-
 void pirate::bury(int count) {
 	char temp[260]; stringbuilder sb(temp);
 	while(count--) {
@@ -412,10 +361,10 @@ void pirate::bury(int count) {
 		sb.add(getnm("WhatTreasureToBury"));
 		if(count > 1)
 			sb.adds(getnm("ChooseLeft"), count);
-		auto p = choosetreasure(temp, true);
+		auto p = choosetreasure(temp, getnm("StopBury"));
 		if(!p)
 			break;
-		remove(p);
+		losstreasure(p);
 		set(Stars, get(Stars) + 1);
 	}
 }
@@ -430,11 +379,11 @@ void pirate::choosebonus(variant v1, variant v2) {
 }
 
 void pirate::tradefriend() {
-	auto p = choosetreasure(getnm("TradeTreasure"), false);
+	auto p = choosetreasure(getnm("TradeTreasure"), getnm("Cancel"));
 	if(!p)
 		set(Reroll, get(Reroll) + 1);
 	else {
-		remove(p);
+		losstreasure(p);
 		gaintreasure(game.picktreasure());
 	}
 }

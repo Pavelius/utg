@@ -45,7 +45,7 @@ void util_main();
 static void initialize_widgets() {
 	widget::add("ListOfGoals", shiplog::listofgoals);
 	widget::add("ListOfRecords", shiplog::listofrecords);
-	widget::add("ListOfTreasures", pirate::painttreasure);
+	widget::add("ListOfTreasures", gamei::listoftreasures);
 	widget::add("ListOfCounters", gamei::listofcounters);
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }

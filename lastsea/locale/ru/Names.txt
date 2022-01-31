@@ -132,11 +132,13 @@ TalkToCrew: Пообщаться с командой
 TheTipsyTortoise: Выпившая черепаха
 Threat: Угроза
 Treasure: Сокровища
+Treasure33: Идеальный прицел
 Treasure37: Улучшенная кобура
 Treasure41: Отличная трубка
 Treasure47: Мастерский фонарь
 Treasure54: Золотой секстант
 Treasure62: Довгополая куртка
+Treasure65: Королевский парик
 Treasure66: Надежный тесак мамочки 
 Treasure73: Пышная рубаха
 Treasure74: Острейшее мачете 
