@@ -708,8 +708,7 @@ static void special_command(special_s v, int bonus) {
 		if(bonus > 0) {
 			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
 				need_stop = true;
-		}
-		else if(bonus < 0) {
+		} else if(bonus < 0) {
 			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus + 1))))
 				need_stop = true;
 		}
@@ -720,8 +719,8 @@ static void special_command(special_s v, int bonus) {
 	case Damage:
 		apply_choose(6200, bonus);
 		break;
-	case SupplyOrHull:
-		apply_choose(6201, bonus);
+	case ChooseCustom:
+		apply_choose(6200 + bonus, 1);
 		break;
 	case CheckDanger:
 		// TODO

@@ -40,8 +40,8 @@ void chest::losstreasure(const treasurei* p) {
 
 int chest::getbonus(ability_s v) const {
 	auto r = 0;
-	for(auto v : *this) {
-		auto p = getobject(v);
+	for(auto pi : *this) {
+		auto p = getobject(pi);
 		if(!p)
 			continue;
 		r += p->abilities[v - Exploration];

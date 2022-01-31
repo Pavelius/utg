@@ -1,1 +1,7 @@
-﻿
+﻿In file `rules/Treasures.txt`:
+ Line 47: Not found requisit `gai1n`
+In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 20: Can't find variant `Story74`
+ Line 416: Can't find variant `Story41`
+ Line 459: Can't find variant `Story54`
+ Line 525: Can't find variant `Story51`

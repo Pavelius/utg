@@ -72,6 +72,7 @@ void chest::listoftreasures() {
 }
 
 void gamei::listoftreasures() {
+	game.chest::listoftreasures();
 }
 
 void shiplog::listofrecords() {

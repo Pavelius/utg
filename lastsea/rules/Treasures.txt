@@ -34,6 +34,8 @@ Treasure65 abilities(0 0 0 0 2 0)
 Treasure66 abilities(0 2 0 0 0 0)
 Treasure73 abilities(0 0 0 0 2 1)
 Treasure74 abilities(1 1 0 0 0 0)
+Treasure75
+ use ChooseCustom+2
 Treasure82 abilities(0 0 1 0 0 1)
 Treasure84 abilities(0 0 2 0 0 0)
 Treasure85 abilities(0 1 0 0 0 1)
@@ -41,6 +43,9 @@ Treasure88 abilities(1 0 0 1 0 0)
 
 Story20
 Story23
+Story24 abilities(0 0 0 0 1 0)
+ gain Misfortune+3 Infamy+6
+Story30 abilities(1 0 0 0 3 0)
 Story41
 Story51
 Story54
