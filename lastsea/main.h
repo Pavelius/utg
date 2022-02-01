@@ -57,7 +57,8 @@ enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,
 	AnswerForward = 1000,
 	AnswerName = 6000,
-	AnswerEntry = 6100
+	AnswerEntry = 6100,
+	AnswerCustom = 6200,
 };
 
 typedef flagable<8> taga;
@@ -238,7 +239,6 @@ public:
 	static void		choosecounter();
 	static void		choosehistory();
 	void			chartacourse(int v);
-	void			fullthrottle(int level);
 	static int		getpage();
 	static void		generate();
 	bool			ischoosed(int i) const;
@@ -249,7 +249,6 @@ public:
 	static void		listoftreasures();
 	const treasurei* picktreasure();
 	indext			picktile();
-	static void		playsail();
 	static void		script(int page);
 	static void		showseamap();
 	void			setgoal(const goali* v) { }

@@ -111,7 +111,7 @@
     <ClCompile Include="surface_serial.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="utg_logs.cpp">
+    <ClCompile Include="utg.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="avatarable.cpp">

@@ -348,6 +348,11 @@ static void play_actions() {
 static void apply_sail();
 static void apply_scene();
 
+static void enter_tile() {
+	clear_message();
+	game.script(last_tile);
+}
+
 static void end_scene() {
 	if(!last_location || !last_location->next)
 		return;
@@ -355,7 +360,7 @@ static void end_scene() {
 	if(need_sail) {
 		need_sail = false;
 		utg::pause(getnm("SailAway"));
-		draw::setnext(apply_sail);
+		draw::setnext(enter_tile);
 	} else {
 		utg::pause();
 		draw::setnext(apply_scene);
@@ -368,10 +373,10 @@ static void apply_scene() {
 	end_scene();
 }
 
-static void apply_sail() {
+static int sail_next_hexagon() {
 	auto index = game.oceani::chooseroute(0, 1);
 	if(index == pathfind::Blocked)
-		return;
+		return 0;
 	game.setmarker(index);
 	auto tile_id = game.getlocation(index);
 	if(!tile_id) {
@@ -379,11 +384,26 @@ static void apply_sail() {
 		game.createobjects();
 		game.showsplash();
 	}
-	tile_id = game.getlocation(index);
-	if(!tile_id)
-		return;
-	clear_message();
-	game.script(tile_id);
+	need_sail = true;
+	return game.getlocation(index);
+}
+
+static void sail_ship(int bonus) {
+	while(!draw::isnext()) {
+		if(!utg::yesno(getnm("DoYouWantToMoveShip")))
+			return;
+		if(bonus == 0) {
+			apply_choose(AnswerCustom + 3, 3);
+			last_tile = sail_next_hexagon();
+			break;
+		} else if(bonus == 1) {
+			apply_choose(AnswerCustom + 3, 2);
+			last_tile = sail_next_hexagon();
+		} else {
+			apply_choose(AnswerCustom + 4, 1);
+			last_tile = sail_next_hexagon();
+		}
+	}
 }
 
 static void change_scene(int value) {
@@ -598,9 +618,6 @@ void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	}
 }
 
-void gamei::fullthrottle(int level) {
-}
-
 void gamei::chartacourse(int count) {
 	while(count > 0) {
 		char temp[260]; stringbuilder sb(temp);
@@ -744,13 +761,13 @@ static void special_command(special_s v, int bonus) {
 			game.set(Supply, 0);
 		break;
 	case FullThrottle:
-		game.fullthrottle(bonus);
+		sail_ship(bonus);
 		break;
 	case TradeFriend:
 		game.tradefriend();
 		break;
 	case Sail:
-		need_sail = true;
+		last_tile = sail_next_hexagon();
 		break;
 	case ZeroCounters:
 		variables.clear();
@@ -820,7 +837,7 @@ static void special_command(special_s v, int bonus) {
 		apply_choose(6200, bonus);
 		break;
 	case ChooseCustom:
-		apply_choose(6200 + bonus, 1);
+		apply_choose(AnswerCustom + bonus, 1);
 		break;
 	case CheckDanger:
 		// TODO
@@ -828,16 +845,25 @@ static void special_command(special_s v, int bonus) {
 	case PlayStars:
 		// TODO
 		break;
-	case MarkEntry:
-		if(bonus >= 0)
-			game.settag(AnswerEntry + bonus);
-		else
-			game.removetag(AnswerEntry - bonus);
-		break;
 	case MarkVisit:
 		if(!bonus)
 			bonus = 1;
 		category::set(last_quest->index, category::get(last_quest->index) + bonus);
+		break;
+	case MarkEntry:
+		if(bonus >= 0) {
+			auto i = AnswerEntry + bonus;
+			auto pn = game.getentryname(i);
+			if(pn)
+				game.information(getnm("AddEntry"), pn);
+			game.settag(AnswerEntry + bonus);
+		} else {
+			auto i = AnswerEntry + bonus;
+			auto pn = game.getentryname(i);
+			if(pn)
+				game.information(getnm("RemoveEntry"), pn);
+			game.removetag(AnswerEntry - bonus);
+		}
 		break;
 	case SetVisit:
 		if(!bonus)
