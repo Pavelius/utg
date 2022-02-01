@@ -680,6 +680,15 @@ static void test_last_action() {
 		need_stop = true;
 }
 
+static void check_danger() {
+	auto m = game.getmaximum(Danger);
+	auto v = game.get(Danger);
+	if(v >= m) {
+		game.set(Danger, 0);
+		game.set(Threat, game.get(Threat) + 1);
+	}
+}
+
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
@@ -840,7 +849,7 @@ static void special_command(special_s v, int bonus) {
 		apply_choose(AnswerCustom + bonus, 1);
 		break;
 	case CheckDanger:
-		// TODO
+		check_danger();
 		break;
 	case PlayStars:
 		// TODO
