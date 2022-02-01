@@ -4,7 +4,7 @@
 #include "pathfind.h"
 
 gamei game;
-static int last_tile, last_counter, last_value;
+static int last_tile, last_counter, last_value, last_action;
 static bool	need_sail, need_stop, need_stop_actions;
 static ability_s last_ability;
 const quest* last_quest;
@@ -329,7 +329,9 @@ static void choose_actions(int count) {
 
 static void play_actions() {
 	need_stop_actions = false;
+	last_action = 0;
 	for(auto v : game.actions) {
+		last_action++;
 		if(!v)
 			continue;
 		auto p = bsdata<quest>::elements + v;
@@ -653,6 +655,14 @@ bool gamei::ischoosed(int i) const {
 	return false;
 }
 
+static void test_last_action() {
+	const auto m = sizeof(game.actions) / sizeof(game.actions[0]);
+	if(last_action >= m - 1)
+		return;
+	if(game.actions[last_action] == game.actions[last_action + 1])
+		need_stop = true;
+}
+
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
@@ -834,6 +844,9 @@ static void special_command(special_s v, int bonus) {
 			category::remove(last_quest->index);
 		else
 			category::set(last_quest->index, bonus);
+		break;
+	case IfLast:
+		test_last_action();
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
