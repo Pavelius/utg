@@ -805,6 +805,8 @@ static void special_command(special_s v, int bonus) {
 		need_stop_actions = true;
 		break;
 	case Damage:
+		if(!bonus)
+			bonus = last_value;
 		apply_choose(6200, bonus);
 		break;
 	case ChooseCustom:
