@@ -115,13 +115,17 @@ static void apply_effect(const quest* p) {
 
 static bool allow_choose(ability_s v, int bonus) {
 	switch(v) {
-	case Infamy: return true;
-	default: return (game.get(v) + bonus) >= 0;
+	case Infamy: case Discontent: case Danger:
+		return true;
+	default:
+		return (game.get(v) + bonus) >= 0;
 	}
 }
 
 static bool allow_choose(special_s v, int bonus) {
 	switch(v) {
+	case EatSupply:
+		return allow_choose(Supply, -game.getmaximum(Eat));
 	case ReloadGun:
 		if(bonus >= 0)
 			return game.reloadgun(4, false);
@@ -718,14 +722,14 @@ static void special_command(special_s v, int bonus) {
 		else if(bonus < 0)
 			game.unlock(bonus - 1);
 		break;
-	case PaySupplyEat:
+	case EatSupply:
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
-			game.set(Supply, game.get(Supply) + bonus);
+			game.set(Supply, game.get(Supply) - bonus);
 		break;
-	case ZeroSupplyOrDiscontent:
-		if(game.get(Supply) == 0)
-			game.set(Discontent, game.get(Discontent) + bonus);
+	case ZeroSupplyIfNot:
+		if(!game.get(Supply))
+			need_stop = true;
 		else
 			game.set(Supply, 0);
 		break;
@@ -835,13 +839,15 @@ static void special_command(special_s v, int bonus) {
 	}
 }
 
+static void ability_command(ability_s v, int bonus) {
+	last_ability = v;
+	if(bonus)
+		game.set(last_ability, game.get(last_ability) + bonus);
+}
+
 void gamei::apply(variant v) {
 	switch(v.type) {
-	case Ability:
-		last_ability = (ability_s)v.value;
-		if(v.counter)
-			game.set(last_ability, game.get(last_ability) + v.counter);
-		break;
+	case Ability: ability_command((ability_s)v.value, v.counter); break;
 	case Special: special_command((special_s)v.value, v.counter); break;
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
 	case Goal: game.setgoal((goali*)v.getpointer()); break;

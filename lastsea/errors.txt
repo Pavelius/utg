@@ -1,2 +1,2 @@
 ﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 503: Can't find variant `IfSail`
+ Line 506: Can't find variant `DamageX`
