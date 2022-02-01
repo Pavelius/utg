@@ -87,7 +87,6 @@ No: Нет
 NotDefinedLastValue: Не указано значение `%1`
 NothingToDo: Ничего не делать.
 Ocean: Океан
-Page300: 
 PagePirate: Пираты
 PageShip: Корабль
 PageShipLog: Журнал

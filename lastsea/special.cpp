@@ -72,5 +72,6 @@ BSDATA(speciali) = {
 	{"IfNonZeroForward"},
 	{"IfNotSail"},
 	{"IfVisit"},
+	{"IfLast"},
 };
-assert_enum(speciali, IfVisit)
+assert_enum(speciali, IfLast)

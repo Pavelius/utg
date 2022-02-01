@@ -3,7 +3,12 @@
 
 static void print(stringbuilder& sb, variant v) {
 	const char* format = "%+1i";
+	auto negative = v.counter < 0;
 	switch(v.type) {
+	case Ability:
+		if(bsdata<abilityi>::elements[v.value].type == Negative)
+			negative = !negative;
+		break;
 	case Special:
 		switch(v.value) {
 		case VisitManyTimes: case VisitRequired:
@@ -15,12 +20,13 @@ static void print(stringbuilder& sb, variant v) {
 			format = 0;
 			break;
 		default:
+			if(v.value >= Page000 && v.value <= Page900)
+				return;
 			break;
 		}
 		break;
 	default: break;
 	}
-	auto negative = v.counter < 0;
 	sb.addsep(' ');
 	if(negative)
 		sb.add("[-");
