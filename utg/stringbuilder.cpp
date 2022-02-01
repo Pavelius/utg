@@ -614,6 +614,7 @@ void stringbuilder::addch(char sym) {
 	case -85: case -69: add('\"'); break;
 	case -72: add('å'); break;
 	case -105: case 17: add('-'); break;
+	case -123: add("..."); break;
 	default: add(sym);
 	}
 }

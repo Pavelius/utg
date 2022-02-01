@@ -53,6 +53,7 @@ BSDATA(speciali) = {
 	{"Page700"},
 	{"Page800"},
 	{"Page900"},
+	{"PageForward"},
 	{"CounterA"},
 	{"CounterB"},
 	{"CounterC"},
@@ -62,9 +63,14 @@ BSDATA(speciali) = {
 	{"PenaltyB"},
 	{"PenaltyC"},
 	{"PenaltyD"},
+	{"Entry"},
 	{"MarkEntry"},
-	{"IfCounterZero"},
-	{"IfExistEntry"},
+	{"MarkVisit"},
+	{"SetVisit"},
+	{"IfEqual"},
+	{"IfZeroForward"},
+	{"IfNonZeroForward"},
 	{"IfSail"},
+	{"IfVisit"},
 };
-assert_enum(speciali, IfSail)
+assert_enum(speciali, IfVisit)

@@ -13,6 +13,7 @@ public:
 	void				add(int v) { add(v, 1); }
 	void				add(int v, int i) { set(v, get(v) + i); }
 	int					get(int v) const { return elements[v].value; }
+	int					getcount() const { return maxcount; }
 	const char*			getname(int v) const { return elements[v].name; }
 	element*			getpointer(int v) { return elements + v; }
 	void				set(int v, int i);

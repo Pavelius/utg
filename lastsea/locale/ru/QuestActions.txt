@@ -226,21 +226,22 @@ Name+2 CounterName+0
 11 CounterA-2 Infamy+2)
 16 CounterA-3 Treasure+1 Infamy+4)
 
-#4353 Hunting+1 IfChoosedAction-2 Roll
+#4353 Hunting+1 IfChoosedAction+2 Roll
 %герой принял%ась шариться по закромам вражеского корабля.
 1 Treasure+1)
 7 Treasure+1 Infamy+2)
 11 Treasure+2)
 16 Page500+7)
 
-#4453 Swagger+1 IfChoosedAction-2 Roll
+#4453 Swagger+1 IfChoosedAction+2 Roll
 - Сдавайтесь, кому жизнь дорога! - закричал%а %герой обращаясь к вражеской команде.
 1 Crew+1)
 6 Crew+2)
 11 Crew+2 Infamy+2)
 16 Crew+2 Treasure+1 Infamy+4)
 
-#4553 Aim+1 IfChoosedAction-2 Choose+2
+#4553 Aim+1 IfChoosedAction+2 Choose+2
+%герой в окружении нескольких ребят оказал%ась в оружейном трюме корабля врага.
 0 Supply+1) Украсть порох
 0 UpgradeGun) Украсть детали для пушки
 0 AddGun+1) Украсть маленькую пушку
@@ -254,15 +255,16 @@ Name+2 CounterName+0
 Команда врага
 
 #6200
-Распределите урон
-0 Hull-1) Попадание в корпус
-0 Crew-1) Гибнет команда
-0 Supply-1) Попадание в ящики с припасами
+Куда распределите урон?
+0 Hull-1 VisitManyTimes) Попадание в корпус
+0 Crew-1 VisitManyTimes) Гибнет команда
+0 Supply-1 VisitManyTimes) Попадание в ящики с припасами
 
 #6201
 0 Supply+1) Получить припасы
 0 Hull+1) Отремонтировать корпус
 
-#6202 Что будем делать с мехком пороха?
+#6202
+Что будем делать с мешком пороха?
 0 Aim+1) Потренироваться в стрельбе из пушек.
 0 Supply+2) Докинуть его в пороховой трюм.

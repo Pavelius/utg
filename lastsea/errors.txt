@@ -1,2 +1,2 @@
 ﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 10: Can't find variant `Page`
+ Line 0: Expected symbol `#` followed by event number

@@ -1,6 +1,5 @@
 #include "cannoneer.h"
 #include "charname.h"
-#include "counters.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
@@ -33,10 +32,11 @@ enum special_s : unsigned char {
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, IfChoosedAction, StopActions,
 	CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
-	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
+	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900, PageForward,
 	CounterA, CounterB, CounterC, CounterD, CounterX,
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
-	MarkEntry, IfCounterZero, IfExistEntry, IfSail,
+	Entry, MarkEntry, MarkVisit, SetVisit,
+	IfEqual, IfZeroForward, IfNonZeroForward, IfSail, IfVisit
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal,
@@ -53,15 +53,16 @@ enum variant_s : unsigned char {
 enum ability_type_s : unsigned char {
 	Positive, Negative,
 };
+enum answer_s {
+	AnswerChoose = 0, AnswerPage = 30,
+	AnswerForward = 1000,
+	AnswerName = 6000,
+	AnswerEntry = 6100
+};
 
 typedef flagable<8> taga;
 typedef short unsigned indext;
 const int player_count = 4;
-const int AnswerChoose = 0;
-const int AnswerPage = 30;
-const int AnswerElse = 1000;
-const int AnswerName = 6000;
-const int AnswerEntry = 6100;
 
 struct abilityi {
 	const char*		id;

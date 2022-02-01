@@ -1,9 +1,10 @@
+#include "category.h"
 #include "counters.h"
 #include "main.h"
 #include "pathfind.h"
 
 gamei game;
-static int last_tile, last_counter, last_name;
+static int last_tile, last_counter, last_value;
 static bool	need_sail, need_stop, need_stop_actions;
 static ability_s last_ability;
 const quest* last_quest;
@@ -40,6 +41,42 @@ static void apply_effect(const variants& tags) {
 	need_stop = push_stop;
 }
 
+static bool allow_promt(const quest& e) {
+	for(auto v : e.tags) {
+		if(v.type != Special)
+			continue;
+		switch(v.value) {
+		case IfVisit: return category::get(e.index) == v.counter;
+		default: break;
+		}
+	}
+	return true;
+}
+
+static const quest* find_promt(int index) {
+	for(auto& e : bsdata<quest>()) {
+		if(e.next != -1)
+			continue;
+		if(e.index != index)
+			continue;
+		if(!allow_promt(e))
+			continue;
+		return &e;
+	}
+	return 0;
+}
+
+static const quest* find_scene(int index) {
+	for(auto& e : bsdata<quest>()) {
+		if(e.index != index)
+			continue;
+		if(!allow_promt(e))
+			continue;
+		return &e;
+	}
+	return 0;
+}
+
 static const quest* apply_answers(const quest* ph) {
 	if(!ph)
 		return 0;
@@ -57,7 +94,7 @@ static const quest* apply_answers(const quest* ph) {
 		return 0;
 	auto p = (const quest*)utg::choose(an, 0);
 	if(p && p->next > 0)
-		return quest::find(p->next);
+		return find_promt(p->next);
 	return 0;
 }
 
@@ -131,6 +168,12 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 		}
 		handler(answers& an) : choosei(an) {}
 	};
+	if(!count)
+		count = last_value;
+	if(count > 10)
+		count = 10;
+	else if(count < 0)
+		count = 0;
 	if(!ph || !count)
 		return;
 	answers an; handler san(an);
@@ -147,18 +190,21 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 }
 
 static void apply_choose(int page, int count) {
-	auto p = quest::find(page);
-	if(p)
+	auto p = find_promt(page);
+	if(p) {
+		auto push_last = last_quest;
 		apply_choose(p, p->text, count);
+		last_quest = push_last;
+	}
 }
 
-static const quest* find_condition(int bonus) {
+static const quest* find_forward(int bonus) {
 	auto pe = bsdata<quest>::end();
-	auto index = bonus;
+	auto index = AnswerForward + bonus;
 	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->next != -1)
 			continue;
-		if(p->index < 1000 || p->index >= 1100)
+		if(p->index < AnswerForward || p->index >= AnswerForward + 100)
 			break;
 		if(p->index == index)
 			return p;
@@ -166,8 +212,8 @@ static const quest* find_condition(int bonus) {
 	return 0;
 }
 
-static void apply_else() {
-	auto p = find_condition(AnswerElse);
+static void apply_forward(int bonus) {
+	auto p = find_forward(bonus);
 	if(p) {
 		apply_effect(p);
 		need_stop = true;
@@ -335,10 +381,11 @@ static void apply_sail() {
 }
 
 static void change_scene(int value) {
-	auto p = quest::find(4000 + value);
+	auto p = find_scene(4000 + value);
 	if(value && last_location != p) {
 		last_location = p;
 		game.unlockall();
+		variables.clear();
 	}
 	utg::pause(getnm("NextScene"));
 	draw::setnext(apply_scene);
@@ -473,7 +520,7 @@ void pirate::roll(special_s type) {
 }
 
 void gamei::script(int page) {
-	apply_effect(quest::find(page));
+	apply_effect(find_promt(page));
 }
 
 void gamei::clear() {
@@ -573,7 +620,7 @@ void gamei::showseamap() {
 
 void gamei::listofcounters() {
 	char temp[64]; stringbuilder sb(temp);
-	for(unsigned i = 0; i < 16; i++) {
+	for(auto i = 0; i < variables.getcount(); i++) {
 		auto pn = variables.getname(i);
 		if(!pn)
 			continue;
@@ -585,7 +632,7 @@ void gamei::listofcounters() {
 
 void gamei::choosecounter() {
 	answers an;
-	for(auto i = 0; i < 16; i++) {
+	for(auto i = 0; i < variables.getcount(); i++) {
 		auto pn = variables.getname(i);
 		if(!pn)
 			continue;
@@ -633,6 +680,9 @@ static void special_command(special_s v, int bonus) {
 	case Page000: case Page100: case Page200: case Page300: case Page400:
 	case Page500: case Page600: case Page700: case Page800: case Page900:
 		game.script((v - Page000) * 100 + bonus);
+		break;
+	case PageForward:
+		apply_effect(find_forward(bonus));
 		break;
 	case Scene:
 		change_scene(bonus);
@@ -703,12 +753,16 @@ static void special_command(special_s v, int bonus) {
 				game.information("%1%+2i", pn, bonus);
 			variables.add(last_counter, bonus);
 		}
+		last_value = variables.get(last_counter);
 		break;
 	case Name:
-		last_name = AnswerName + bonus;
+		last_value = AnswerName + bonus;
+		break;
+	case Entry:
+		last_value = game.istag(AnswerEntry + bonus) ? 1 : 0;
 		break;
 	case CounterName:
-		variables.setname(bonus, quest::getname(last_name));
+		variables.setname(bonus, quest::getname(last_value));
 		break;
 	case ChooseCounter:
 		game.choosecounter();
@@ -716,23 +770,35 @@ static void special_command(special_s v, int bonus) {
 	case VisitManyTimes: case VisitRequired:
 		break;
 	case IfSail:
-		if(!need_sail)
-			apply_else();
+		if(bonus < 0) {
+			if(need_sail)
+				need_stop = true;
+		} else {
+			if(!need_sail)
+				need_stop = true;
+		}
 		break;
-	case IfExistEntry:
-		if(!game.istag(AnswerEntry + bonus))
-			apply_else();
+	case IfVisit:
+		// Nothing, this operatior just condition
 		break;
-	case IfCounterZero:
-		if(variables.get(last_counter))
-			apply_else();
+	case IfEqual:
+		if(last_value != bonus)
+			need_stop = true;
+		break;
+	case IfZeroForward:
+		if(!last_value)
+			apply_forward(bonus);
+		break;
+	case IfNonZeroForward:
+		if(!last_value)
+			apply_forward(bonus);
 		break;
 	case IfChoosedAction:
 		if(bonus > 0) {
-			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus - 1))))
+			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus - 1))))
 				need_stop = true;
 		} else if(bonus < 0) {
-			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
+			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
 				need_stop = true;
 		}
 		break;
@@ -756,6 +822,17 @@ static void special_command(special_s v, int bonus) {
 			game.settag(AnswerEntry + bonus);
 		else
 			game.removetag(AnswerEntry - bonus);
+		break;
+	case MarkVisit:
+		if(!bonus)
+			bonus = 1;
+		category::set(last_quest->index, category::get(last_quest->index) + bonus);
+		break;
+	case SetVisit:
+		if(!bonus)
+			category::remove(last_quest->index);
+		else
+			category::set(last_quest->index, bonus);
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);

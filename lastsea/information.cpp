@@ -7,7 +7,7 @@ static void print(stringbuilder& sb, variant v) {
 	case Special:
 		switch(v.value) {
 		case VisitManyTimes: case VisitRequired:
-		case IfChoosedAction: case IfExistEntry:
+		case IfChoosedAction: case IfEqual: case IfNonZeroForward: case IfZeroForward:
 			return;
 		case ReloadGun:
 		case AddGun:
