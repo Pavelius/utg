@@ -1,2 +1,2 @@
 ﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 0: Expected symbol `#` followed by event number
+ Line 503: Can't find variant `IfSail`

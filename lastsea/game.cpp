@@ -769,14 +769,9 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case VisitManyTimes: case VisitRequired:
 		break;
-	case IfSail:
-		if(bonus < 0) {
-			if(need_sail)
-				need_stop = true;
-		} else {
-			if(!need_sail)
-				need_stop = true;
-		}
+	case IfNotSail:
+		if(need_sail)
+			need_stop = true;
 		break;
 	case IfVisit:
 		// Nothing, this operatior just condition

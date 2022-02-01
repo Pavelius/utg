@@ -70,7 +70,7 @@ BSDATA(speciali) = {
 	{"IfEqual"},
 	{"IfZeroForward"},
 	{"IfNonZeroForward"},
-	{"IfSail"},
+	{"IfNotSail"},
 	{"IfVisit"},
 };
 assert_enum(speciali, IfVisit)
