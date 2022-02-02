@@ -42,6 +42,10 @@ static void print(stringbuilder& sb, const variants& source) {
 		print(sb, v);
 }
 
+static void print(stringbuilder& sb, const char* format) {
+	sb.addv(format, 0);
+}
+
 static void printab(stringbuilder& sb, char* ability) {
 	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
 		auto v = ability[i - Exploration];
@@ -53,7 +57,9 @@ static void printab(stringbuilder& sb, char* ability) {
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 	if(bsdata<quest>::have(object)) {
 		auto p = (quest*)object;
-		if(p->next == 0)
+		if(p->index>=AnswerEntry && p->index < AnswerEntry+100)
+			print(sb, p->text);
+		else if(p->next == 0)
 			print(sb, p->tags);
 		else {
 			auto ph = quest::find(p->next);
@@ -85,7 +91,7 @@ void shiplog::listofrecords() {
 	for(unsigned i = AnswerEntry; i < AnswerEntry + 50; i++) {
 		if(!game.istag(i))
 			continue;
-		draw::label(getentryname(i), 0, 0);
+		draw::label(getentryname(i), 0, getentry(i));
 	}
 }
 
@@ -99,6 +105,8 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 	auto index = game.getindex(object);
 	if(index != pathfind::Blocked)
 		sb.add(getnm("CellInfo"), getnm("Ocean"), index);
+	else if(bsdata<quest>::have(object))
+		sfgetinfo(object, sb);
 	else
 		utg::getstatus(object, sb);
 }

@@ -219,7 +219,9 @@ class shiplog {
 public:
 	void			checkgoal();
 	void			clear();
+	static const quest* getentry(int v);
 	static const char* getentryname(int v);
+	static const char* getentrytext(int v);
 	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
 	static void		listofgoals();
 	static void		listofrecords();

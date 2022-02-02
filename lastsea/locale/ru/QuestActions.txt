@@ -29,10 +29,12 @@
 5004 VisitRequired) Полный вперед!
 
 #4203 Exploration+1 Roll
+Взобравшись на мачту %герой принял%ась осматривать окресные воды.
 1 Scout+2)
 16 Scout+3 Treasure+1)
 
 #4303 Hunting+1 Roll
+Взяв с собой пару ребят %герой спустил%а лодку на воду и наперевес с гарпуном решила порыбачить недалеко от корабля.
 1 Crew-1 Supply+1 Infamy-2)
 5 Supply+1)
 9 Supply+2 Treasure+1)
@@ -40,6 +42,7 @@
 16 Supply+3 Treasure+2 Infamy+3)
 
 #4403 Choose+2
+%герой начал%а внимательный осмотр пушек корабля.
 0 Supply-1 ReloadGun+4 VisitManyTimes) Зарядить пишки.
 0 Reroll+1) Затюнинговать стрелковый механизм.
 0 Aim+1) Поупражнятся в стрельбе.
@@ -60,6 +63,7 @@
 5004 VisitRequired) Полный вперед!
 
 #4207 Exploration+1 Roll
+Взобравшись на мачту %герой принял%ась осматривать окресные воды.
 1 Scout+2 Infamy-2)
 7 Scout+3)
 16 Scout+3 Treasure+1)
@@ -96,6 +100,7 @@
 5004 VisitRequired) Полный вперед!
 
 #4209 Exploration+1 Roll
+Достав подзорную трубу %герой принял%ась осматривать окресные воды.
 1 Scout+2 Infamy-1)
 7 Scout+3)
 16 Scout+3 Treasure+1)

@@ -19,9 +19,22 @@ const char* shiplog::getentryname(int v) {
 	auto p = quest::find(v);
 	if(!p)
 		return "Not found entry";
-	if(!p->text)
+	if(!p->header)
 		return "Entry exist but text empthy";
+	return p->header;
+}
+
+const char* shiplog::getentrytext(int v) {
+	auto p = getentry(v);
+	if(!p)
+		return 0;
 	return p->text;
+}
+
+const quest* shiplog::getentry(int v) {
+	if(v >= AnswerEntry && v < AnswerEntry + sizeof(tags) * 8)
+		return quest::find(v);
+	return 0;
 }
 
 bool shiplog::istag(int v) const {
