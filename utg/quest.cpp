@@ -6,8 +6,6 @@ BSDATAC(quest, 2048)
 
 using namespace log;
 
-stringbuilder* quest::console;
-
 static bool isanswer(const char* p) {
 	return isnum(*p);
 }
@@ -176,12 +174,10 @@ const quest* quest::findprompt(short id) {
 	return 0;
 }
 
-const quest* quest::choose(int id, const char* resid, const char* header) const {
-	const char* promt_text = text;
-	if(console) {
-		console->clear();
-		console->add(text);
-		promt_text = console->begin();
+const quest* quest::choose(int id) const {
+	if(answers::console) {
+		answers::console->clear();
+		answers::console->add(text);
 	}
 	apply(tags);
 	answers an;
@@ -194,17 +190,19 @@ const quest* quest::choose(int id, const char* resid, const char* header) const 
 			continue;
 		an.add(&e, e.text);
 	}
-	return (quest*)an.choose(0, 0, true, resid, -1, header, promt_text);
+	return (quest*)an.choose(0, 0);
 }
 
-void quest::run(int id, const char* resid, const char* header) {
+void quest::run(int id) {
 	while(true) {
 		auto p = findprompt(id);
 		if(!p)
 			return;
+		if(p->header)
+			answers::header = p->header;
 		if(p->image)
-			resid = p->image;
-		p = p->choose(p->index, resid, header);
+			answers::resid = p->image;
+		p = p->choose(p->index);
 		if(!p)
 			break;
 		apply(p->tags);

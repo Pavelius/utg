@@ -25,9 +25,9 @@ static void clear_message() {
 
 static void add_header(const quest* ph) {
 	if(ph->header)
-		utg::header = ph->header;
+		answers::header = ph->header;
 	if(ph->image)
-		utg::url = ph->image;
+		answers::resid = ph->image;
 }
 
 static void add_answer(answers& an, const quest* p) {
@@ -100,7 +100,7 @@ static const quest* apply_answers(const quest* ph) {
 	}
 	if(!an)
 		return 0;
-	auto p = (const quest*)utg::choose(an, 0);
+	auto p = (const quest*)an.choose(0);
 	if(p && p->next > 0)
 		return find_promt(p->next);
 	return 0;
@@ -462,7 +462,7 @@ static void choose_damage(const char* title, int count, const slice<ability_s>& 
 		}
 		sb.clear();
 		sb.add(title, count);
-		auto p = (abilityi*)utg::choose(an, temp);
+		auto p = (abilityi*)an.choose(temp);
 		auto v = (ability_s)(p - bsdata<abilityi>::elements);
 		game.set(v, game.get(v) - 1);
 		count--;
@@ -487,19 +487,6 @@ void treasurei::apply() const {
 	apply_effect(use);
 }
 
-void pirate::usetreasure(trigger_s type, ability_s v) {
-	for(auto i = 0; i < 32; i++) {
-		auto p = gettreasure(i);
-		if(!p)
-			continue;
-		if(p->trigger != type)
-			continue;
-		if(p->ability != v)
-			continue;
-		p->apply();
-	}
-}
-
 void pirate::afterchange(ability_s v, int b) {
 	switch(v) {
 	case Exploration: case Brawl: case Hunting: case Aim: case Swagger: case Navigation:
@@ -515,17 +502,17 @@ void pirate::afterchange(ability_s v, int b) {
 		break;
 	}
 	if(b > 0)
-		usetreasure(WhenAbilityIncreased, v);
+		apply(WhenAbilityIncreased, v);
 	else if(b < 0)
-		usetreasure(WhenAbilityDecreased, v);
+		apply(WhenAbilityDecreased, v);
 }
 
 static void generate_classes() {
-	auto push_interactive = utg::interactive;
-	utg::interactive = false;
+	auto push_interactive = answers::interactive;
+	answers::interactive = false;
 	for(auto& e : bsdata<pirate>())
 		e.generate();
-	utg::interactive = push_interactive;
+	answers::interactive = push_interactive;
 }
 
 void pirate::makeroll(special_s type) {
@@ -559,7 +546,7 @@ void pirate::makeroll(special_s type) {
 					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
 			}
 		}
-		auto ri = (int)utg::choose(an, temp);
+		auto ri = (int)an.choose(temp);
 		if(!ri)
 			break;
 		if(ri >= GunBonus) {
@@ -671,7 +658,7 @@ void gamei::choosecounter() {
 			continue;
 		an.add((void*)i, pn);
 	}
-	last_counter = (int)utg::choose(an, getnm("ChooseTarget"));
+	last_counter = (int)an.choose(getnm("ChooseTarget"));
 }
 
 bool gamei::ischoosed(int i) const {

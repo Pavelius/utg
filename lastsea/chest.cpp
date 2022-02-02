@@ -17,32 +17,29 @@ void chest::gaintreasure(const treasurei* p) {
 	auto i = getid(p);
 	if(i == 0xFFFF)
 		return;
+	p->gaining();
 	add(i);
 	game.information(getnm("GainTreasure"), getnm(p->id));
-	p->gaining();
 }
 
 void chest::losstreasure(const treasurei* p) {
 	auto i = getid(p);
 	if(i == 0xFFFF)
 		return;
+	auto need_lossing = false;
 	auto pe = end();
 	auto ps = data;
 	for(auto pb = data; pb < pe; pb++) {
 		if(*pb == i) {
-			p->lossing();
 			game.warning(getnm("LoseTreasure"), getnm(p->id));
+			need_lossing = true;
 			continue;
 		}
 		*ps++ = *pb;
 	}
 	count = ps - data;
-}
-
-const treasurei* chest::gettreasure(int v) const {
-	if((size_t)v >= count)
-		return 0;
-	return getobject(data[v]);
+	if(need_lossing)
+		p->lossing();
 }
 
 int chest::getbonus(ability_s v) const {
@@ -56,5 +53,15 @@ const treasurei* chest::choosetreasure(const char* title, const char* cancel) co
 	answers an;
 	for(auto p : gettreasures())
 		an.add(p, getnm(p->id));
-	return (treasurei*)an.choose(title, cancel, utg::interactive, utg::url, -1, utg::header, utg::sb.begin());
+	return (treasurei*)an.choose(title, cancel);
+}
+
+void chest::apply(trigger_s type, ability_s v) {
+	for(auto p : gettreasures()) {
+		if(p->trigger != type)
+			continue;
+		if(p->ability != v)
+			continue;
+		p->apply();
+	}
 }

@@ -20,11 +20,11 @@ static void test_direction() {
 }
 
 static void starting() {
-	utg::interactive = false;
-	utg::header = getnm("GenerateCrew");
+	answers::interactive = false;
+	answers::header = getnm("GenerateCrew");
 	game.generate();
 	game.choosehistory();
-	utg::interactive = true;
+	answers::interactive = true;
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
@@ -60,12 +60,12 @@ void util_main();
 int main(int argc, char* argv[]) {
 	util_main();
 	test_handlers();
-	utg::url = "pirate_kingship";
+	answers::resid = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;
 	utg::callback::getstatus = game.sfgetstatus;
 	//srand(getcputime());
 	variant::sfapply = game.sfapply;
-	quest::console = &utg::sb;
+	answers::console = &utg::sb;
 	draw::object::initialize();
 	oceani::initialize();
 	initialize_widgets();

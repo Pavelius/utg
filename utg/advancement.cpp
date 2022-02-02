@@ -30,7 +30,7 @@ void* advancement::choose(const void* object, fnadd padd) const {
 		for(auto p = ps->begin(); p < pe; p += ps->size)
 			padd(an, object, p);
 	}
-	return an.choose(getnm(id), 0, utg::interactive, utg::url, 1, utg::header);
+	return an.choose(getnm(id), 0);
 }
 
 void advancement::apply(void* object, fnadd padd, fnset pset) const {

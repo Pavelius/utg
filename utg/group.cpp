@@ -25,7 +25,7 @@ variant groupi::choose(variant group) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(group.getname());
 	sb.add("?");
-	return utg::choose(an, temp);
+	return an.choose(temp);
 }
 
 static const char* read_name(const char* p, stringbuilder& result) {

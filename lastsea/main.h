@@ -41,11 +41,12 @@ enum special_s : unsigned char {
 	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfLast,
 };
 enum tag_s : unsigned char {
-	NoDigging, NoSteal,
+	NoDigging, NoSteal, Valuable,
 };
 enum trigger_s : unsigned char {
 	NoTrigger,
-	WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased, WhenDiscard,
+	WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased,
+	WhenDiscard,
 };
 enum variant_s : unsigned char {
 	NoVariant,
@@ -172,11 +173,11 @@ struct treasurei {
 };
 class chest : private adat<indext, 20> {
 public:
+	void			apply(trigger_s type, ability_s v);
 	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
 	const treasurei* choosetreasure(const char* title, const char* cancel) const;
 	void			gaintreasure(const treasurei* pv);
 	int				getbonus(ability_s v) const;
-	const treasurei* gettreasure(int v) const;
 	void			losstreasure(const treasurei* pv);
 };
 class pirate : public historyable, public chest {
@@ -186,7 +187,6 @@ class pirate : public historyable, public chest {
 	void			confirmroll();
 	void			makeroll(special_s type);
 	void			rolldices();
-	void			usetreasure(trigger_s type, ability_s v);
 public:
 	indext			actions[6];
 	void			addaction(indext v);

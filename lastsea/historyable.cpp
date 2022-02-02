@@ -108,7 +108,7 @@ void historyable::chooseclass() {
 	char temp[260]; temp[0] = 0;
 	stringbuilder sb(temp);
 	act(sb, getnm("ChooseClass"));
-	classid = (int)an.choose(temp, 0, utg::interactive, utg::url, -1, utg::header);
+	classid = (int)an.choose(temp);
 }
 
 static variant choose_answer(const historyable* source, variant group) {
@@ -124,7 +124,7 @@ const messagei* find_message(variant type, int value) {
 }
 
 void historyable::background() const {
-	if(!utg::interactive)
+	if(!answers::interactive)
 		return;
 	auto pn = find_message(variant(Class, classid), 4);
 	if(!pn)

@@ -1,48 +1,74 @@
 #Card
 
-Magic19 abilities(0 0 0 1 1 0)
+Treasure19 abilities(0 0 0 1 1 0)
+ tags Valuable
 
 Treasure24 abilities(0 0 2 0 0 0)
- tags NoDigging
+ tags NoDigging Valuable
 Treasure27 trigger(WhenDiscard)
  use Infamy+2 Discontent-1
+ tags Valuable
 Treasure28 trigger(WhenDiscard)
  use Infamy+1 Discontent-2
+ tags Valuable
 Treasure29 trigger(WhenDiscard)
  use Hull+2
+ tags Valuable
 Treasure31 trigger(WhenDiscard)
- tags NoDigging
+ tags NoDigging Valuable
  use Supply+2
 Treasure32 trigger(WhenDiscard)
+ tags Valuable
  use Supply+3
 Treasure33 abilities(0 0 0 2 0 0)
+ tags Valuable
 Treasure34 trigger(WhenDiscard)
+ tags Valuable
  use ChooseCustom+1
 Treasure37 abilities(0 0 1 1 0 0)
+ tags Valuable
 Treasure38
+ tags Valuable
  gain Discontent+1
  loss Discontent-1
 Treasure41 abilities(0 0 0 0 2 0)
+ tags Valuable
+ tags Valuable
 Treasure47 abilities(1 0 0 0 0 0)
+ tags Valuable
+ tags Valuable
 Treasure46 trigger(WhenAbilityIncreased) ability(Swagger)
+ tags Valuable
  use Infamy+1
 Treasure50
+ tags Valuable
  gain Infamy+5
 Treasure54 abilities(0 0 0 0 0 2)
+ tags Valuable
 Treasure62 abilities(1 0 0 0 1 0)
+ tags Valuable
 Treasure65 abilities(0 0 0 0 2 0)
+ tags Valuable
  gain Infamy+4
  loss Infamy-4
 Treasure66 abilities(0 2 0 0 0 0)
+ tags Valuable
 Treasure73 abilities(0 0 0 0 2 1)
+ tags Valuable
 Treasure74 abilities(1 1 0 0 0 0)
  gain Misfortune+2 Infamy+3
+ tags Valuable
 Treasure75 trigger(WhenDiscard)
+ tags Valuable
  use ChooseCustom+2
 Treasure82 abilities(0 0 1 0 0 1)
+ tags Valuable
 Treasure84 abilities(0 0 2 0 0 0)
+ tags Valuable
 Treasure85 abilities(0 1 0 0 0 1)
+ tags Valuable
 Treasure88 abilities(1 0 0 1 0 0)
+ tags Valuable
 
 Story20
 Story23

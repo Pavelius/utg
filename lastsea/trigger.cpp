@@ -6,6 +6,6 @@ BSDATA(triggeri) = {
 	{"WhenThreat"},
 	{"WhenAbilityIncreased"},
 	{"WhenAbilityDecreased"},
-	{"WhenDiscard"},
+	{"WhenDiscard"},	
 };
 assert_enum(triggeri, WhenDiscard)

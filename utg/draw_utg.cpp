@@ -375,7 +375,7 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void* answers::choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int columns, const char* header, const char* promt) const {
+void* answers::choose(const char* title, const char* cancel_text) const {
 	if(!interactive)
 		return random();
 	if(!elements)
@@ -384,6 +384,7 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		paintcell = answerbt;
 	auto push_caret = caret;
 	auto push_width = width;
+	auto columns = column_count;
 	if(columns == -1)
 		columns = getcolumns(*this);
 	while(ismodal()) {
@@ -409,8 +410,8 @@ void* answers::choose(const char* title, const char* cancel_text, bool interacti
 		caret.x += metrics::padding; width -= metrics::padding;
 		caret.y += metrics::padding; height -= metrics::padding;
 		texth2(header);
-		if(promt && promt[0]) {
-			textf(promt);
+		if(console && *console) {
+			textf(console->begin());
 			caret.y += metrics::padding;
 		}
 		if(title) {

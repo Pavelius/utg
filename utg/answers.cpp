@@ -1,9 +1,14 @@
 #include "answers.h"
 
+const char* answers::header;
+const char* answers::resid;
+bool answers::show_tips = true;
+bool answers::interactive = true;
+int answers::column_count = 1;
+stringbuilder* answers::console;
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;
 answers::fnpaint answers::paintcell;
-bool answers::show_tips = true;
 
 int answers::compare(const void* v1, const void* v2) {
 	return strcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
@@ -22,7 +27,7 @@ void answers::sort() {
 }
 
 void answers::modal(const char* title, const char* cancel) const {
-	auto proc = (fnevent)choose(title, cancel, true, 0, 1);
+	auto proc = (fnevent)choose(title, cancel);
 	if(proc)
 		proc();
 }

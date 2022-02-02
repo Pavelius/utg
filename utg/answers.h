@@ -16,6 +16,11 @@ public:
 	static fnevent		afterpaint;
 	static fnevent		beforepaint;
 	static fnpaint		paintcell;
+	static bool			interactive;
+	static int			column_count;
+	static stringbuilder* console;
+	static const char*	header;
+	static const char*	resid;
 	static bool			show_tips;
 	answers() : sc(buffer) {}
 	constexpr operator bool() const { return elements.count != 0; }
@@ -23,7 +28,7 @@ public:
 	void				addv(const void* value, const char* name, const char* format);
 	const element*		begin() const { return elements.data; }
 	element*			begin() { return elements.data; }
-	void*				choose(const char* title, const char* cancel_text, bool interactive, const char* resid, int column_count = -1, const char* header = 0, const char* prompt = 0) const;
+	void*				choose(const char* title = 0, const char* cancel_text = 0) const;
 	void				clear();
 	static int			compare(const void* v1, const void* v2);
 	const element*		end() const { return elements.end(); }

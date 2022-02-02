@@ -51,14 +51,9 @@ public:
 	bool			ismarked(int index) const { return getmarked(index) != 0; }
 };
 extern stringbuilder sb;
-extern const char*	url;
 extern const char*	url_avatars;
-extern const char*	header;
-extern bool			interactive;
 const char*			chooseavatar(answers& an, const char* title);
 void				chooseavatar(stringbuilder& result, const char* title, const char* mask = 0);
-void*				choose(const answers& source, const char* title);
-int					choose(const answers& source, const char* title, const char* cancel);
 int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 const char*			getchoose(const char* id);

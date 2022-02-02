@@ -4,10 +4,7 @@
 
 fngetinfo		utg::callback::getinfo;
 fnstatus		utg::callback::getstatus;
-const char*		utg::url;
 const char*		utg::url_avatars = "art/avatars";
-const char*		utg::header;
-bool			utg::interactive = true;
 static char		sb_value[4096];
 stringbuilder	utg::sb(sb_value);
 
@@ -17,27 +14,19 @@ const char* utg::getchoose(const char* id) {
 	return getnm(temp);
 }
 
-int utg::choose(const array& source, const char* title, const char* cancel) {
-	return source.indexof(recordset::choose(source, title, cancel, interactive, url, header));
-}
+//int utg::choose(const array& source, const char* title, const char* cancel) {
+//	return source.indexof(recordset::choose(source, title, cancel));
+//}
 
-int utg::choose(const answers& source, const char* title, const char* cancel) {
-	return (int)source.choose(title, cancel, interactive, url, -1, header);
-}
-
-void* utg::choose(const answers& source, const char* title) {
-	return source.choose(title, 0, interactive, url, -1, header, sb_value);
-}
-
-int utg::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
-	recordset records;
-	for(auto i = 0; i < mask.getmaximum(); i++) {
-		if(!mask.is(i))
-			continue;
-		records.add(source.ptr(i));
-	}
-	return source.indexof(records.choose(title, cancel, interactive, url, header));
-}
+//int utg::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
+//	recordset records;
+//	for(auto i = 0; i < mask.getmaximum(); i++) {
+//		if(!mask.is(i))
+//			continue;
+//		records.add(source.ptr(i));
+//	}
+//	return source.indexof(records.choose(title, cancel, interactive, url, header));
+//}
 
 static int get_answer_index(const answers& source, const void* pv) {
 	for(auto& e : source) {
@@ -50,7 +39,7 @@ static int get_answer_index(const answers& source, const void* pv) {
 const char* utg::chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
 	answers::paintcell = draw::avatarch;
-	auto p = (const char*)an.choose(title, 0, interactive, utg::url, 1, utg::header, 0);
+	auto p = (const char*)an.choose(title);
 	answers::paintcell = push_paint;
 	return p;
 }
@@ -80,7 +69,7 @@ void utg::pause() {
 void utg::pause(const char* title) {
 	answers an;
 	an.add(0, title);
-	choose(an, 0);
+	an.choose(0);
 	sb.clear();
 }
 
@@ -90,7 +79,7 @@ bool utg::yesno(const char* title, ...) {
 	answers an;
 	an.add((void*)1, getnm("Yes"));
 	an.add((void*)0, getnm("No"));
-	return choose(an, temp);
+	return an.choose(temp);
 }
 
 int utg::choosei::getmarked(int i) const {
@@ -129,7 +118,7 @@ void utg::choosei::choose(const char* title, int count) {
 				continue;
 			an.add(e.value, e.text);
 		}
-		auto result = an.choose(temp, 0, interactive, url, -1, header, sb_value);
+		auto result = an.choose(temp);
 		auto result_index = get_answer_index(source, result);
 		apply(result_index, result);
 		if(result_index != -1)

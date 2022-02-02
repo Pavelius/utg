@@ -214,14 +214,6 @@ bool pirate::confirm(ability_s v, int delta) const {
 		return true;
 	if(get(Supply) < delta)
 		return false;
-	if(false) {
-		char temp[260]; stringbuilder sb(temp);
-		sb.add(getnm("ConfirmRaiseAbility"), getnm(bsdata<abilityi>::elements[v].id), delta);
-		answers an;
-		an.add((void*)1, getnm("RaiseAbilityAndLoseSuppy"), getnm(bsdata<abilityi>::elements[v].id), delta);
-		an.add((void*)0, getnm("NothingToDo"));
-		return utg::choose(an, temp);
-	}
 	return true;
 }
 
@@ -245,7 +237,7 @@ ability_s pirate::chooseskill(const char* title) const {
 		auto& ei = bsdata<abilityi>::elements[i];
 		an.add(&ei, getnm(ei.id));
 	}
-	return (ability_s)bsdata<abilityi>::source.indexof(utg::choose(an, title));
+	return (ability_s)bsdata<abilityi>::source.indexof(an.choose(title));
 }
 
 static const quest* find_next_action(const quest* p) {
@@ -283,7 +275,7 @@ void pirate::confirmroll() {
 		an.add(0, getnm("ApplyRoll"));
 		if(get(Reroll) > 0)
 			an.add(&bsdata<abilityi>::get(Reroll), getnm("UseReroll"));
-		auto pv = utg::choose(an, 0);
+		auto pv = an.choose(0);
 		if(!pv)
 			break;
 		if(bsdata<abilityi>::have(pv)) {
@@ -328,7 +320,7 @@ void pirate::choosebonus(variant v1, variant v2) {
 	answers an;
 	an.add(&v1, "%Get %1%2i", getnm(bsdata<abilityi>::elements[v1.value].id), v1.counter);
 	an.add(&v2, "%Get %1%2i", getnm(bsdata<abilityi>::elements[v2.value].id), v2.counter);
-	auto pv = (variant*)utg::choose(an, 0);
+	auto pv = (variant*)an.choose();
 	if(pv)
 		game.apply(*pv);
 }

@@ -22,7 +22,7 @@ void recordset::select(const array& source, fnvisible proc) {
 	}
 }
 
-void* recordset::choose(const char* title, const char* cancel, bool interactive, const char* resid, const char* header) const {
+void* recordset::choose(const char* title, const char* cancel) const {
 	if(!count)
 		return 0;
 	else if(count == 1)
@@ -31,26 +31,26 @@ void* recordset::choose(const char* title, const char* cancel, bool interactive,
 	for(auto v : *this)
 		an.add(v, getnm(getid(v)));
 	an.sort();
-	return (void*)an.choose(title, cancel, interactive, resid, -1, header);
+	return (void*)an.choose(title, cancel);
 }
 
 void* recordset::choosedef(const char* title) const {
 	if(count==1)
         return data[0];
-    return choose(title, 0, true, 0, 0);
+    return choose(title, 0);
 }
 
-void* recordset::choose(const char* id, const char* title, const char* cancel, bool interactive, const char* resid, const char* header) {
+void* recordset::choose(const char* id, const char* title, const char* cancel) {
 	auto p = varianti::getsource(id);
 	if(!p || !p->source)
 		return 0;
-	return choose(*p->source, title, cancel, interactive, resid, header);
+	return choose(*p->source, title, cancel);
 }
 
-void* recordset::choose(const array& source, const char* title, const char* cancel, bool interactive, const char* resid, const char* header) {
+void* recordset::choose(const array& source, const char* title, const char* cancel) {
 	recordset records;
 	records.select(source);
-	return records.choose(title, cancel, interactive, resid, header);
+	return records.choose(title, cancel);
 }
 
 static int compare_addr(const void* p1, const void* p2) {

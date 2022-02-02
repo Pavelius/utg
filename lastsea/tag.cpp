@@ -3,5 +3,6 @@
 BSDATA(tagi) = {
 	{"NoDigging"},
 	{"NoSteal"},
+	{"Valuable"},
 };
-assert_enum(tagi, NoSteal)
+assert_enum(tagi, Valuable)
