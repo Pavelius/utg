@@ -1,6 +1,5 @@
 #include "crt.h"
 #include "counters.h"
-#include "stringbuilder.h"
 
 void counters::clear() {
 	memset(this, 0, sizeof(*this));

@@ -40,18 +40,26 @@ static void initializing() {
 	quest::read("locale/ru/QuestActions.txt");
 }
 
-void util_main();
-
 static void initialize_widgets() {
-	widget::add("ListOfGoals", shiplog::listofgoals);
-	widget::add("ListOfRecords", shiplog::listofrecords);
-	widget::add("ListOfTreasures", gamei::listoftreasures);
-	widget::add("ListOfCounters", gamei::listofcounters);
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
 
+static void test_handlers() {
+	indext test[20] = {2, 4, 5};
+	adat<indext, 32> source;
+	source.add(2);
+	source.add(4);
+	source.add(5);
+	for(auto p : iterator<abilityi>(source))
+		game.information(p->id);
+}
+
+void initialize_information_widgets();
+void util_main();
+
 int main(int argc, char* argv[]) {
 	util_main();
+	test_handlers();
 	utg::url = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;
 	utg::callback::getstatus = game.sfgetstatus;
@@ -61,6 +69,7 @@ int main(int argc, char* argv[]) {
 	draw::object::initialize();
 	oceani::initialize();
 	initialize_widgets();
+	initialize_information_widgets();
 	return draw::start(starting, true, initializing);
 }
 

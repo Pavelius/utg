@@ -305,5 +305,8 @@
     <ClInclude Include="category.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="iterator.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

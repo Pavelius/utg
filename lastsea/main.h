@@ -1,5 +1,7 @@
 #include "cannoneer.h"
 #include "charname.h"
+#include "counters.h"
+#include "iterator.h"
 #include "gender.h"
 #include "group.h"
 #include "message.h"
@@ -169,14 +171,12 @@ struct treasurei {
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 };
 class chest : private adat<indext, 20> {
-	static indext	getid(const treasurei* pv);
-	static const treasurei* getobject(indext v);
 public:
+	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
 	const treasurei* choosetreasure(const char* title, const char* cancel) const;
 	void			gaintreasure(const treasurei* pv);
 	int				getbonus(ability_s v) const;
 	const treasurei* gettreasure(int v) const;
-	void			listoftreasures();
 	void			losstreasure(const treasurei* pv);
 };
 class pirate : public historyable, public chest {
@@ -224,8 +224,6 @@ public:
 	static const char* getentryname(int v);
 	static const char* getentrytext(int v);
 	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
-	static void		listofgoals();
-	static void		listofrecords();
 	bool			istag(int v) const;
 	void			setgoal(const goali* v) { goal_id = bsdata<goali>::source.indexof(v); }
 	void			settag(int v);
@@ -260,9 +258,6 @@ public:
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
-	static void		listofcounters();
-	static void		listofgoals();
-	static void		listoftreasures();
 	const treasurei* picktreasure();
 	indext			picktile();
 	static void		script(int page);
@@ -278,6 +273,7 @@ public:
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
+extern counters		variables;
 int					rollv(int bonus);
 VKIND(gender_s, Gender)
 VKIND(special_s, Special)

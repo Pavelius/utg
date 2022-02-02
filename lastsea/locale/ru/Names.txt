@@ -75,6 +75,7 @@ LargeAnimal: Большое животное
 LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
 Loaded: Заряжены
+LoseTreasure: Потеряно [%1]
 MadeUpInterrogationTactic: Несуществующая пытка
 Magic19: Блюдо со странным запахом
 MakeRoll: Выполнить бросок

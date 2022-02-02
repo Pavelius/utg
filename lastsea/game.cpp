@@ -10,7 +10,7 @@ static ability_s last_ability;
 static npcname* active_npc;
 const quest* last_quest;
 const quest* last_location;
-static counters variables;
+counters variables;
 
 void gamei::act(const char* format) {
 	if(active_npc)
@@ -663,18 +663,6 @@ void gamei::showseamap() {
 	game.oceani::showseamap();
 }
 
-void gamei::listofcounters() {
-	char temp[64]; stringbuilder sb(temp);
-	for(auto i = 0; i < variables.getcount(); i++) {
-		auto pn = variables.getname(i);
-		if(!pn)
-			continue;
-		auto v = variables.get(i);
-		sb.clear(); sb.add("%1i", v);
-		draw::label(pn, temp, 0);
-	}
-}
-
 void gamei::choosecounter() {
 	answers an;
 	for(auto i = 0; i < variables.getcount(); i++) {
@@ -784,6 +772,8 @@ static void special_command(special_s v, int bonus) {
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
 			game.set(Supply, game.get(Supply) - bonus);
+		else
+			need_stop = true;
 		break;
 	case ZeroSupplyIfNot:
 		if(!game.get(Supply))

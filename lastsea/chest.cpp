@@ -1,13 +1,13 @@
 #include "main.h"
 
-indext chest::getid(const treasurei* pv) {
+static indext getid(const treasurei* pv) {
 	auto i = bsdata<treasurei>::source.indexof(pv);
 	if(i == -1)
 		return 0xFFFF;
 	return i;
 }
 
-const treasurei* chest::getobject(indext v) {
+static const treasurei* getobject(indext v) {
 	if(v == 0xFFFF)
 		return 0;
 	return bsdata<treasurei>::elements + v;
@@ -47,22 +47,14 @@ const treasurei* chest::gettreasure(int v) const {
 
 int chest::getbonus(ability_s v) const {
 	auto r = 0;
-	for(auto pi : *this) {
-		auto p = getobject(pi);
-		if(!p)
-			continue;
+	for(auto p : gettreasures())
 		r += p->abilities[v - Exploration];
-	}
 	return r;
 }
 
 const treasurei* chest::choosetreasure(const char* title, const char* cancel) const {
 	answers an;
-	for(auto v : *this) {
-		auto p = getobject(v);
-		if(!p)
-			continue;
+	for(auto p : gettreasures())
 		an.add(p, getnm(p->id));
-	}
 	return (treasurei*)an.choose(title, cancel, utg::interactive, utg::url, -1, utg::header, utg::sb.begin());
 }

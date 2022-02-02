@@ -624,6 +624,9 @@ static void initialize_widgets() {
 	widget::add("ListOfFronts", list_of_fronts);
 }
 
+void check_translation();
+void initialize_translation(const char* locale);
+
 int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	initialize_png();
 	if(!utg::callback::getstatus)

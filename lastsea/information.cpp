@@ -25,7 +25,15 @@ static void print(stringbuilder& sb, special_s v, int count) {
 	if(v >= IfEqual)
 		return;
 	sb.addsep(' ');
-	sb.add(getnm(ei.id), count);
+	const char* name = getnm(ei.id);
+	switch(v) {
+	case EatSupply:
+		sb.add("[-%Supply%+1i]", -game.getmaximum(Eat));
+		break;
+	default:
+		sb.add(name, count);
+		break;
+	}
 }
 
 static void print(stringbuilder& sb, variant v) {
@@ -96,33 +104,6 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 	printab(sb, p->abilities);
 }
 
-void chest::listoftreasures() {
-	for(auto id : *this) {
-		auto p = getobject(id);
-		if(!p)
-			continue;
-		draw::label(getnm(p->id), 0, p);
-	}
-}
-
-void gamei::listoftreasures() {
-	game.chest::listoftreasures();
-}
-
-void shiplog::listofrecords() {
-	for(unsigned i = AnswerEntry; i < AnswerEntry + 50; i++) {
-		if(!game.istag(i))
-			continue;
-		draw::label(getentryname(i), 0, getentry(i));
-	}
-}
-
-void shiplog::listofgoals() {
-	auto p = game.getgoal();
-	if(p)
-		draw::label(getnm(p->id), 0, p);
-}
-
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 	auto index = game.getindex(object);
 	if(index != pathfind::Blocked)
@@ -131,4 +112,42 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		sfgetinfo(object, sb);
 	else
 		utg::getstatus(object, sb);
+}
+
+static void listoftreasures() {
+	for(auto p : game.gettreasures())
+		draw::label(getnm(p->id), 0, p);
+}
+
+static void listofrecords() {
+	for(unsigned i = AnswerEntry; i < AnswerEntry + 50; i++) {
+		if(!game.istag(i))
+			continue;
+		draw::label(game.getentryname(i), 0, game.getentry(i));
+	}
+}
+
+static void listofgoals() {
+	auto p = game.getgoal();
+	if(p)
+		draw::label(getnm(p->id), 0, p);
+}
+
+static void listofcounters() {
+	char temp[64]; stringbuilder sb(temp);
+	for(auto i = 0; i < variables.getcount(); i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		auto v = variables.get(i);
+		sb.clear(); sb.add("%1i", v);
+		draw::label(pn, temp, 0);
+	}
+}
+
+void initialize_information_widgets() {
+	widget::add("ListOfGoals", listofgoals);
+	widget::add("ListOfRecords", listofrecords);
+	widget::add("ListOfTreasures", listoftreasures);
+	widget::add("ListOfCounters", listofcounters);
 }
