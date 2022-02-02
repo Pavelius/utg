@@ -57,7 +57,7 @@
     <ClCompile Include="ocean.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="tilei.cpp">
+    <ClCompile Include="tile.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="shiplog.cpp">

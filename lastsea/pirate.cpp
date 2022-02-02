@@ -110,18 +110,6 @@ int	pirate::getmaximum(ability_s v) const {
 	}
 }
 
-void pirate::information(const char* format, ...) {
-	utg::sb.addn("[+");
-	actv(utg::sb, format, xva_start(format), false);
-	utg::sb.add("]");
-}
-
-void pirate::warning(const char* format, ...) {
-	utg::sb.addn("[-");
-	actv(utg::sb, format, xva_start(format), false);
-	utg::sb.add("]");
-}
-
 const char* classi::getearn(ability_s v) const {
 	switch(v) {
 	case Exploration: return exploration;
@@ -146,6 +134,10 @@ void pirate::checkexperience(ability_s v) {
 }
 
 void pirate::set(ability_s v, int i) {
+	if(v == Treasure) {
+		gaintreasures(i);
+		return;
+	}
 	if(i < 0)
 		i = 0;
 	if(v == Stars) {
@@ -157,7 +149,7 @@ void pirate::set(ability_s v, int i) {
 	auto m = getmaximum(v);
 	if(i > m) {
 		if(v == Infamy) {
-			information(getnm("YouGainStars"));
+			game.information(getnm("YouGainStars"));
 			abilities[Infamy] = 0;
 			if(abilities[Stars] < getmaximum(Stars))
 				abilities[Stars]++;
@@ -181,10 +173,7 @@ void pirate::set(ability_s v, int i) {
 				set(Supply, get(Supply) - d);
 			}
 			if(v >= 0 && v <= Infamy) {
-				if(d > 0)
-					information("%1%+2i", getnm(bsdata<abilityi>::elements[v].id), d);
-				else
-					warning("%1%+2i", getnm(bsdata<abilityi>::elements[v].id), d);
+				game.information(v, d);
 				abilities[v] = i;
 			}
 			break;
@@ -203,11 +192,20 @@ void pirate::addaction(indext v) {
 }
 
 void pirate::gaintreasures(int count) {
-	for(auto i = 0; i < count; i++) {
-		auto pv = game.picktreasure();
-		if(!pv)
-			continue;
-		gaintreasure(pv);
+	if(count > 0) {
+		for(auto i = 0; i < count; i++) {
+			auto pv = game.picktreasure();
+			if(!pv)
+				continue;
+			gaintreasure(pv);
+		}
+	} else {
+		count = -count;
+		for(auto i = 0; i < count; i++) {
+			auto pv = choosetreasure(0, 0);
+			if(pv)
+				losstreasure(pv);
+		}
 	}
 }
 
@@ -268,11 +266,11 @@ void pirate::rolldices() {
 		}
 		if(last_result < 1)
 			last_result = 1;
-		information(getnm("YouRollMisfortune"), last_result, last_roll, last_bonus, last_second_roll);
+		game.information(getnm("YouRollMisfortune"), last_result, last_roll, last_bonus, last_second_roll);
 	} else {
 		if(last_result < 1)
 			last_result = 1;
-		information(getnm("YouRoll"), last_result, last_roll, last_bonus, last_second_roll);
+		game.information(getnm("YouRoll"), last_result, last_roll, last_bonus, last_second_roll);
 	}
 }
 

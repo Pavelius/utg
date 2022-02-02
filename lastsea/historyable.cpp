@@ -91,14 +91,6 @@ void historyable::clear() {
 	npcname::clear();
 }
 
-void historyable::actv(stringbuilder& sbs, const char* format, const char* format_param, bool add_space) const {
-	string sb(*this, sbs);
-	if(add_space)
-		sb.addsep(' ');
-	sb.addv(format, format_param);
-	sbs = sb;
-}
-
 void historyable::actn(stringbuilder& sbs, const char* format, const char* format_param) const {
 	string sb(*this, sbs);
 	sb.addsep('\n');

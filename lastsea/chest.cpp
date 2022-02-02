@@ -31,6 +31,7 @@ void chest::losstreasure(const treasurei* p) {
 	for(auto pb = data; pb < pe; pb++) {
 		if(*pb == i) {
 			p->lossing();
+			game.warning(getnm("LoseTreasure"), getnm(p->id));
 			continue;
 		}
 		*ps++ = *pb;

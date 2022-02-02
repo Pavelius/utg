@@ -1,40 +1,39 @@
 #include "main.h"
 #include "widget.h"
 
-static void print(stringbuilder& sb, variant v) {
-	const char* format = "%+1i";
-	auto negative = v.counter < 0;
-	switch(v.type) {
-	case Ability:
-		if(bsdata<abilityi>::elements[v.value].type == Negative)
-			negative = !negative;
-		break;
-	case Special:
-		switch(v.value) {
-		case VisitManyTimes: case VisitRequired:
-		case IfChoosedAction: case IfEqual: case IfNonZeroForward: case IfZeroForward:
-			return;
-		case ReloadGun:
-		case AddGun:
-		case AddGunUnloaded:
-			format = 0;
-			break;
-		default:
-			if(v.value >= Page000 && v.value <= Page900)
-				return;
-			break;
-		}
-		break;
-	default: break;
-	}
+static void print(stringbuilder& sb, ability_s v, int count) {
+	auto& ei = bsdata<abilityi>::elements[v];
+	auto negative = count < 0;
+	if(ei.is(Negative))
+		negative = !negative;
 	sb.addsep(' ');
 	if(negative)
 		sb.add("[-");
-	sb.add(v.getname(), v.counter);
-	if(v.counter && format)
-		sb.add(format, v.counter);
+	sb.add("%1%+2i", getnm(ei.id), count);
 	if(negative)
 		sb.add("]");
+}
+
+static void print(stringbuilder& sb, special_s v, int count) {
+	auto& ei = bsdata<speciali>::elements[v];
+	if(v == VisitManyTimes || v == VisitRequired)
+		return;
+	if(v >= Page000 && v <= Page900)
+		return;
+	if(v >= Tile000 && v <= Tile900)
+		return;
+	if(v >= IfEqual)
+		return;
+	sb.addsep(' ');
+	sb.add(getnm(ei.id), count);
+}
+
+static void print(stringbuilder& sb, variant v) {
+	switch(v.type) {
+	case Ability: print(sb, (ability_s)v.value, v.counter); break;
+	case Special: print(sb, (special_s)v.value, v.counter); break;
+	default: break;
+	}
 }
 
 static void print(stringbuilder& sb, const variants& source) {
@@ -52,6 +51,29 @@ static void printab(stringbuilder& sb, char* ability) {
 		if(v)
 			print(sb, variant(Ability, i, v));
 	}
+}
+
+void gamei::information(const char* format, ...) {
+	utg::sb.addn("[+");
+	utg::sb.addv(format, xva_start(format));
+	utg::sb.add("]");
+}
+
+void gamei::warning(const char* format, ...) {
+	utg::sb.addn("[-");
+	utg::sb.addv(format, xva_start(format));
+	utg::sb.add("]");
+}
+
+void gamei::information(ability_s v, int count) {
+	auto& ei = bsdata<abilityi>::elements[v];
+	auto negative = count < 0;
+	if(ei.is(Negative))
+		negative = !negative;
+	if(negative)
+		warning("%1%+2i", getnm(ei.id), count);
+	else
+		information("%1%+2i", getnm(ei.id), count);
 }
 
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {

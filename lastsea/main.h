@@ -50,8 +50,8 @@ enum variant_s : unsigned char {
 	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile,
 	Quest, Special, Tag, Trigger, Value, Widget
 };
-enum ability_type_s : unsigned char {
-	Positive, Negative,
+enum abilityf_s : unsigned char {
+	Negative,
 };
 enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,
@@ -67,7 +67,8 @@ const int player_count = 4;
 
 struct abilityi {
 	const char*		id;
-	ability_type_s	type;
+	unsigned		flags;
+	constexpr bool	is(abilityf_s v) const { return (flags & FG(v)) != 0; }
 };
 struct tilei {
 	indext			page, frame;
@@ -137,8 +138,8 @@ protected:
 	variant			values[5];
 	class string;
 public:
-	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
-	void			actv(stringbuilder& sb, const char* format, const char* format_param, bool add_space = true) const;
+	void			act(stringbuilder& sb, const char* format, ...) const { actn(sb, format, xva_start(format)); }
+	//void			actv(stringbuilder& sb, const char* format, const char* format_param, bool add_space = true) const;
 	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
 	void			background() const;
 	void			chooseclass();
@@ -193,7 +194,6 @@ public:
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
-	void			information(const char* format, ...);
 	void			gaintreasures(int count = 1);
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
@@ -207,7 +207,6 @@ public:
 	void			set(ability_s v, int i);
 	void			sortactions();
 	void			tradefriend();
-	void			warning(const char* format, ...);
 };
 struct counter {
 	short			current, maximum;
@@ -254,6 +253,8 @@ public:
 	static void		choosehistory();
 	void			chartacourse(int v);
 	static int		getpage();
+	void			information(const char* format, ...);
+	void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
@@ -271,6 +272,7 @@ public:
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
+	void			warning(const char* format, ...);
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
