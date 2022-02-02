@@ -1,6 +1,9 @@
 #include "main.h"
 #include "widget.h"
 
+const quest* find_promt(int index);
+static void print(stringbuilder& sb, const variants& source);
+
 static void print(stringbuilder& sb, ability_s v, int count) {
 	auto& ei = bsdata<abilityi>::elements[v];
 	auto negative = count < 0;
@@ -14,6 +17,25 @@ static void print(stringbuilder& sb, ability_s v, int count) {
 		sb.add("]");
 }
 
+static void print_choose(stringbuilder& sb, const quest* ph) {
+	if(!ph)
+		return;
+	auto pe = bsdata<quest>::end();
+	auto promt = "";
+	auto separator = getnm("Or");
+	for(auto p = ph + 1; p < pe && !p->next; p++) {
+		if(!p->tags)
+			continue;
+		if(promt) {
+			if(promt[0])
+				sb.adds(promt);
+			promt = 0;
+		} else if(separator)
+			sb.adds(separator);
+		print(sb, p->tags);
+	}
+}
+
 static void print(stringbuilder& sb, special_s v, int count) {
 	auto& ei = bsdata<speciali>::elements[v];
 	if(v == VisitManyTimes || v == VisitRequired)
@@ -25,13 +47,15 @@ static void print(stringbuilder& sb, special_s v, int count) {
 	if(v >= IfEqual)
 		return;
 	sb.addsep(' ');
-	const char* name = getnm(ei.id);
 	switch(v) {
 	case EatSupply:
 		sb.add("[-%Supply%+1i]", -game.getmaximum(Eat));
 		break;
+	case ChooseCustom:
+		print_choose(sb, find_promt(AnswerChoose + count));
+		break;
 	default:
-		sb.add(name, count);
+		sb.add(getnm(ei.id), count);
 		break;
 	}
 }
@@ -53,11 +77,16 @@ static void print(stringbuilder& sb, const char* format) {
 	sb.addv(format, 0);
 }
 
-static void printab(stringbuilder& sb, char* ability) {
+static void printab(stringbuilder& sb, char* ability, const char* promt = 0) {
 	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
 		auto v = ability[i - Exploration];
-		if(v)
+		if(v) {
+			if(promt) {
+				sb.adds(promt);
+				promt = 0;
+			}
 			print(sb, variant(Ability, i, v));
+		}
 	}
 }
 
@@ -87,7 +116,7 @@ void gamei::information(ability_s v, int count) {
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 	if(bsdata<quest>::have(object)) {
 		auto p = (quest*)object;
-		if(p->index>=AnswerEntry && p->index < AnswerEntry+100)
+		if(p->index >= AnswerEntry && p->index < AnswerEntry + 100)
 			print(sb, p->text);
 		else if(p->next == 0)
 			print(sb, p->tags);
@@ -101,7 +130,22 @@ void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 
 void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 	auto p = (treasurei*)object;
-	printab(sb, p->abilities);
+	auto pn = getdescription(p->id);
+	if(pn)
+		sb.adds(pn);
+	switch(p->trigger) {
+	case WhenUse:
+		sb.adds(getnm("DiscardToGain"));
+		print(sb, p->use);
+		break;
+	case WhenRoll:
+		sb.adds(getnm("BeforeAbilityRoll"), getnm(bsdata<abilityi>::elements[p->ability].id));
+		print(sb, p->use);
+		sb.adds(getnm("To"));
+		sb.adds(getnm("GainBonusToRollResult"), p->bonus);
+		break;
+	}
+	printab(sb, p->abilities, getnm("Skills"));
 }
 
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {

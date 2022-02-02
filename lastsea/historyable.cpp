@@ -131,7 +131,7 @@ void historyable::background() const {
 		return;
 	utg::sb.clear();
 	act(utg::sb, pn->text);
-	utg::pause();
+	draw::pause();
 }
 
 void historyable::choosehistory() {
@@ -143,6 +143,6 @@ void historyable::choosehistory() {
 	}
 	utg::sb.clear();
 	act(utg::sb, getnm("PromtHistory"));
-	utg::pause(getnm("WhatAboutHistory"));
+	draw::pause(getnm("WhatAboutHistory"));
 	background();
 }

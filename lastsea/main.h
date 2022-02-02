@@ -1,5 +1,6 @@
 #include "cannoneer.h"
 #include "charname.h"
+#include "chooselist.h"
 #include "counters.h"
 #include "iterator.h"
 #include "gender.h"
@@ -32,12 +33,13 @@ enum special_s : unsigned char {
 	EatSupply, ZeroSupplyIfNot,
 	ZeroCounters, CounterName, ChooseCounter, ChooseCustom,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
-	VisitManyTimes, VisitRequired, IfChoosedAction, StopActions,
+	VisitManyTimes, VisitRequired, NotUseAction, IfChoosedAction, StopActions,
 	CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
 	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900, PageForward,
 	CounterA, CounterB, CounterC, CounterD, CounterX,
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
 	Entry, MarkEntry, MarkVisit, SetVisit,
+	BonusToAll,
 	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfLast,
 };
 enum tag_s : unsigned char {
@@ -46,7 +48,7 @@ enum tag_s : unsigned char {
 enum trigger_s : unsigned char {
 	NoTrigger,
 	WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased,
-	WhenDiscard,
+	WhenUse,
 };
 enum variant_s : unsigned char {
 	NoVariant,
@@ -166,10 +168,12 @@ struct treasurei {
 	static const treasurei* find(const char* id);
 	void			apply() const;
 	void			gaining() const;
+	bool			isdiscardable() const;
 	bool			ismagic() const { return szstart(id, "Magic"); }
-	bool			isstory() const { return szstart(id, "Story"); }
+	bool			isstory() const { return !tags.is(Valuable); }
 	void			lossing() const;
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
+	void			triggered();
 };
 class chest : private adat<indext, 20> {
 public:

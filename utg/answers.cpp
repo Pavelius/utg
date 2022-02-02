@@ -50,3 +50,24 @@ void answers::clear() {
 	elements.clear();
 	sc.clear();
 }
+
+void draw::pause() {
+	pause(getnm("Continue"));
+}
+
+void draw::pause(const char* title, ...) {
+	answers an;
+	an.addv(0, title, xva_start(title));
+	an.choose(0);
+	if(answers::console)
+		answers::console->clear();
+}
+
+bool draw::yesno(const char* title, ...) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.addv(title, xva_start(title));
+	answers an;
+	an.add((void*)1, getnm("Yes"));
+	an.add((void*)0, getnm("No"));
+	return an.choose(temp);
+}

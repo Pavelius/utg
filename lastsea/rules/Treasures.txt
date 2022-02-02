@@ -5,26 +5,39 @@ Treasure19 abilities(0 0 0 1 1 0)
 
 Treasure24 abilities(0 0 2 0 0 0)
  tags NoDigging Valuable
-Treasure27 trigger(WhenDiscard)
+Treasure25 abilities(0 0 1 0 1 0)
+ tags Valuable
+Treasure26 trigger(WhenUse)
+ tags Valuable
+ use BonusToAll+3
+Treasure27 trigger(WhenUse)
  use Infamy+2 Discontent-1
  tags Valuable
-Treasure28 trigger(WhenDiscard)
+Treasure28 trigger(WhenUse)
  use Infamy+1 Discontent-2
  tags Valuable
-Treasure29 trigger(WhenDiscard)
+Treasure29 trigger(WhenUse)
  use Hull+2
  tags Valuable
-Treasure31 trigger(WhenDiscard)
+Treasure30 trigger(WhenRoll) ability(Brawl) bonus(4)
+ use Supply-1
+ tags Valuable
+Treasure31 trigger(WhenUse)
  tags NoDigging Valuable
  use Supply+2
-Treasure32 trigger(WhenDiscard)
+Treasure32 trigger(WhenUse)
  tags Valuable
  use Supply+3
 Treasure33 abilities(0 0 0 2 0 0)
  tags Valuable
-Treasure34 trigger(WhenDiscard)
+Treasure34 trigger(WhenUse)
  tags Valuable
  use ChooseCustom+1
+Treasure35
+ tags Valuable
+Treasure36 trigger(WhenUse)
+ tags Valuable
+ use Supply+2
 Treasure37 abilities(0 0 1 1 0 0)
  tags Valuable
 Treasure38
@@ -58,7 +71,7 @@ Treasure73 abilities(0 0 0 0 2 1)
 Treasure74 abilities(1 1 0 0 0 0)
  gain Misfortune+2 Infamy+3
  tags Valuable
-Treasure75 trigger(WhenDiscard)
+Treasure75 trigger(WhenUse)
  tags Valuable
  use ChooseCustom+2
 Treasure82 abilities(0 0 1 0 0 1)

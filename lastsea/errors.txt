@@ -1,8 +1,2 @@
-﻿In file `rules/Treasures.txt`:
- Line 8: Not found identifier `WhenDiscard`
- Line 11: Not found identifier `WhenDiscard`
- Line 14: Not found identifier `WhenDiscard`
- Line 17: Not found identifier `WhenDiscard`
- Line 20: Not found identifier `WhenDiscard`
- Line 25: Not found identifier `WhenDiscard`
- Line 61: Not found identifier `WhenDiscard`
+﻿In file `Names.txt`:
+ Define translate for `Treasure31`

@@ -5,11 +5,13 @@
 
 gamei game;
 static int last_tile, last_counter, last_value, last_action;
+static int round_skill_bonus;
 static bool	need_sail, need_stop, need_stop_actions;
 static ability_s last_ability;
 static npcname* active_npc;
 const quest* last_quest;
 const quest* last_location;
+static const quest* new_location;
 counters variables;
 
 void gamei::act(const char* format) {
@@ -41,6 +43,7 @@ static void add_answer(answers& an, const quest* p) {
 static void apply_effect(const variants& tags) {
 	auto push_stop = need_stop;
 	need_stop = false;
+	last_value = 0;
 	for(auto v : tags) {
 		if(need_stop)
 			break;
@@ -61,7 +64,7 @@ static bool allow_promt(const quest& e) {
 	return true;
 }
 
-static const quest* find_promt(int index) {
+const quest* find_promt(int index) {
 	for(auto& e : bsdata<quest>()) {
 		if(e.next != -1)
 			continue;
@@ -164,7 +167,7 @@ static bool allow_choose(const quest* p) {
 }
 
 static void apply_choose(const quest* ph, const char* title, int count) {
-	struct handler : utg::choosei {
+	struct handler : chooselist {
 		void apply(int index, const void* object) override {
 			apply_effect((quest*)object);
 		}
@@ -178,7 +181,6 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 				return false;
 			return true;
 		}
-		handler(answers& an) : choosei(an) {}
 	};
 	if(!count)
 		count = last_value;
@@ -188,7 +190,7 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 		count = 0;
 	if(!ph || !count)
 		return;
-	answers an; handler san(an);
+	handler san;
 	auto index = ph->index;
 	auto pe = bsdata<quest>::end();
 	for(auto p = ph + 1; p < pe; p++) {
@@ -196,7 +198,7 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 			break;
 		if(p->next != AnswerChoose)
 			continue;
-		add_answer(an, p);
+		add_answer(san, p);
 	}
 	san.choose(title, count);
 }
@@ -289,7 +291,7 @@ static bool allow_action(const quest* p) {
 }
 
 static void choose_actions(int count) {
-	struct handler : utg::choosei {
+	struct handler : chooselist {
 		void apply(int index, const void* object) override {
 			auto n = (quest*)object - bsdata<quest>::elements;
 			game.addaction(n);
@@ -306,7 +308,6 @@ static void choose_actions(int count) {
 				return false;
 			return true;
 		}
-		handler(answers& an) : choosei(an) {}
 	};
 	if(!last_location)
 		return;
@@ -316,23 +317,68 @@ static void choose_actions(int count) {
 	if(last_quest->text)
 		game.act(last_quest->text);
 	apply_effect(last_quest->tags);
-	answers an;
 	game.clearactions();
-	handler san(an);
+	handler san;
 	auto index = last_quest->index;
 	auto pe = bsdata<quest>::end();
 	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
 		if(p->is(VisitRequired) && count > 0) {
-			count--;
+			if(!p->is(NotUseAction))
+				count--;
 			san.apply(0, p);
 			continue;
 		}
-		add_answer(an, p);
+		add_answer(san, p);
 	}
 	san.choose(getnm("WhatDoYouWantToVisit"), count);
 	game.sortactions();
+}
+
+static void add_treasure(answers& an, trigger_s trigger) {
+	for(auto p : game.gettreasures()) {
+		if(p->trigger != trigger)
+			continue;
+		an.add(p, "%Use [%1].", getnm(p->id));
+	}
+}
+
+static void add_treasure(answers& an, trigger_s trigger, ability_s ability) {
+	for(auto p : game.gettreasures()) {
+		if(p->trigger != trigger)
+			continue;
+		if(p->ability != ability)
+			continue;
+		an.add(p, getnm("UseTreasureToGainBonus"), getnm(p->id), p->bonus);
+	}
+}
+
+static void use_treasure(void* object) {
+	if(bsdata<treasurei>::have(object))
+		((treasurei*)object)->triggered();
+}
+
+static void summary_action(const char* id, trigger_s trigger) {
+	while(!draw::isnext()) {
+		answers an;
+		an.add(0, getnm(id));
+		add_treasure(an, trigger);
+		auto p = an.choose();
+		if(!p)
+			break;
+		use_treasure(p);
+	}
+}
+
+static void change_scene(int value) {
+	auto p = find_scene(4000 + value);
+	if(value && last_location != p) {
+		new_location = p;
+		game.unlockall();
+		variables.clear();
+	}
+	summary_action("NextScene", WhenUse);
 }
 
 static void play_actions() {
@@ -352,13 +398,13 @@ static void play_actions() {
 		game.script(p->next);
 		if(need_stop_actions)
 			break;
-		utg::pause(getnm("NextAction"));
+		summary_action("NextAction", WhenUse);
 		parcipant_index++;
 	}
 	active_npc = 0;
 }
 
-static void apply_scene();
+void apply_scene();
 
 static void enter_tile() {
 	clear_message();
@@ -372,13 +418,14 @@ static void end_scene() {
 	if(need_sail) {
 		need_sail = false;
 		draw::setnext(enter_tile);
-	} else {
-		utg::pause();
+	} else if(new_location)
 		draw::setnext(apply_scene);
-	}
 }
 
-static void apply_scene() {
+void apply_scene() {
+	last_location = new_location;
+	new_location = 0;
+	round_skill_bonus = 0;
 	choose_actions(player_count);
 	play_actions();
 	end_scene();
@@ -401,7 +448,7 @@ static int sail_next_hexagon() {
 
 static void sail_ship(int bonus) {
 	while(!draw::isnext()) {
-		if(!utg::yesno(getnm("DoYouWantToMoveShip")))
+		if(!draw::yesno(getnm("DoYouWantToMoveShip")))
 			return;
 		if(bonus == 0) {
 			apply_choose(AnswerCustom + 3, 3);
@@ -415,17 +462,6 @@ static void sail_ship(int bonus) {
 			last_tile = sail_next_hexagon();
 		}
 	}
-}
-
-static void change_scene(int value) {
-	auto p = find_scene(4000 + value);
-	if(value && last_location != p) {
-		last_location = p;
-		game.unlockall();
-		variables.clear();
-	}
-	utg::pause(getnm("NextScene"));
-	draw::setnext(apply_scene);
 }
 
 static void special_mission(int v, int* pages) {
@@ -517,8 +553,10 @@ static void generate_classes() {
 
 void pirate::makeroll(special_s type) {
 	char temp[260]; stringbuilder sb(temp);
+	last_bonus = 0;
 	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus += get(last_ability);
+		last_bonus += round_skill_bonus;
+		last_bonus += last_value;
 		last_bonus += getbonus(last_ability);
 	}
 	const int GunBonus = 10;
@@ -546,21 +584,22 @@ void pirate::makeroll(special_s type) {
 					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
 			}
 		}
-		auto ri = (int)an.choose(temp);
-		if(!ri)
+		add_treasure(an, WhenRoll, last_ability);
+		auto pv = an.choose(temp);
+		if(!pv)
 			break;
-		if(ri >= GunBonus) {
-			auto level = ri - GunBonus;
+		else if((int)pv >= GunBonus && (int)pv <= GunBonus + 4) {
+			auto level = (int)pv - GunBonus;
 			last_bonus += game.getgunbonus(level);
 			gun_used = game.unloadgun(level, true);
 		}
+		use_treasure(pv);
 	}
 }
 
 void pirate::roll(special_s type) {
 	makeroll(type);
 	confirmroll();
-	last_bonus = 0;
 	apply_roll_result(last_quest, last_result);
 }
 
@@ -782,7 +821,7 @@ static void special_command(special_s v, int bonus) {
 		variables.clear();
 		break;
 	case PenaltyA: case PenaltyB: case PenaltyC: case PenaltyD:
-		last_bonus -= variables.get(v - PenaltyA);
+		last_value -= variables.get(v - PenaltyA);
 		break;
 	case CounterA: case CounterB: case CounterC: case CounterD: case CounterX:
 		if(v != CounterX)
@@ -840,6 +879,9 @@ static void special_command(special_s v, int bonus) {
 	case StopActions:
 		need_stop_actions = true;
 		break;
+	case BonusToAll:
+		round_skill_bonus += bonus;
+		break;
 	case Damage:
 		if(!bonus)
 			bonus = last_value;
@@ -891,8 +933,10 @@ static void special_command(special_s v, int bonus) {
 
 static void ability_command(ability_s v, int bonus) {
 	last_ability = v;
-	if(bonus)
+	if(bonus) {
 		game.set(last_ability, game.get(last_ability) + bonus);
+		last_value = game.get(last_ability);
+	}
 }
 
 void gamei::apply(variant v) {

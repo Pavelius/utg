@@ -150,6 +150,7 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="category.cpp" />
     <ClCompile Include="charname.cpp" />
+    <ClCompile Include="chooselist.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_file.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="bstream.h" />
     <ClInclude Include="category.h" />
     <ClInclude Include="charname.h" />
+    <ClInclude Include="chooselist.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="drawobject.h" />
     <ClInclude Include="draw_hexagon.h" />

@@ -37,19 +37,6 @@ namespace callback {
 extern fngetinfo	getinfo;
 extern fnstatus		getstatus;
 }
-class choosei {
-	answers&		source;
-	char			marked[32];
-public:
-	choosei(answers& e) : source(e), marked() {}
-	virtual void	apply(int index, const void* object) { }
-	void			addmarked(int index);
-	void			choose(const char* title, int count);
-	int				getmarked(int v) const;
-	int				getindex(const void* row) { return source.indexof(row); }
-	virtual bool	isallow(int index, const void* object) const;
-	bool			ismarked(int index) const { return getmarked(index) != 0; }
-};
 extern stringbuilder sb;
 extern const char*	url_avatars;
 const char*			chooseavatar(answers& an, const char* title);
@@ -58,7 +45,4 @@ int					choose(const array& source, const char* title, const char* cancel);
 int					choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 const char*			getchoose(const char* id);
 void				getstatus(const void* object, stringbuilder& sb);
-void				pause();
-void				pause(const char* title);
-bool				yesno(const char* title, ...);
 }

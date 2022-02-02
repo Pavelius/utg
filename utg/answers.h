@@ -39,3 +39,8 @@ public:
 	void*				random() const;
 	void				sort();
 };
+namespace draw {
+void					pause();
+void					pause(const char* title, ...);
+bool					yesno(const char* title, ...);
+}

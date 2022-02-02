@@ -19,6 +19,8 @@ static void test_direction() {
 	auto pt = oceani::gethexsize(); // 84 x 72
 }
 
+void apply_scene();
+
 static void starting() {
 	answers::interactive = false;
 	answers::header = getnm("GenerateCrew");
@@ -28,6 +30,7 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
+	draw::setnext(apply_scene);
 	//game.script(826);
 }
 
