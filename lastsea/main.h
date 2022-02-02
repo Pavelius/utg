@@ -139,7 +139,6 @@ protected:
 	class string;
 public:
 	void			act(stringbuilder& sb, const char* format, ...) const { actn(sb, format, xva_start(format)); }
-	//void			actv(stringbuilder& sb, const char* format, const char* format_param, bool add_space = true) const;
 	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
 	void			background() const;
 	void			chooseclass();
@@ -162,6 +161,7 @@ struct treasurei {
 	flaga			tags;
 	variants		gain, loss, use;
 	static const treasurei* find(const char* id);
+	void			apply() const;
 	void			gaining() const;
 	bool			ismagic() const { return szstart(id, "Magic"); }
 	bool			isstory() const { return szstart(id, "Story"); }
@@ -173,18 +173,20 @@ class chest : private adat<indext, 20> {
 	static const treasurei* getobject(indext v);
 public:
 	const treasurei* choosetreasure(const char* title, const char* cancel) const;
-	int				getbonus(ability_s v) const;
 	void			gaintreasure(const treasurei* pv);
+	int				getbonus(ability_s v) const;
+	const treasurei* gettreasure(int v) const;
 	void			listoftreasures();
 	void			losstreasure(const treasurei* pv);
 };
 class pirate : public historyable, public chest {
 	char			abilities[Infamy + 1];
-	void			afterchange(ability_s v);
+	void			afterchange(ability_s v, int b);
 	void			checkexperience(ability_s v);
 	void			confirmroll();
 	void			makeroll(special_s type);
 	void			rolldices();
+	void			usetreasure(trigger_s type, ability_s v);
 public:
 	indext			actions[6];
 	void			addaction(indext v);

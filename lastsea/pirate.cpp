@@ -178,7 +178,7 @@ void pirate::set(ability_s v, int i) {
 			}
 			break;
 		}
-		afterchange(v);
+		afterchange(v, d);
 	}
 }
 

@@ -39,6 +39,12 @@ void chest::losstreasure(const treasurei* p) {
 	count = ps - data;
 }
 
+const treasurei* chest::gettreasure(int v) const {
+	if((size_t)v >= count)
+		return 0;
+	return getobject(data[v]);
+}
+
 int chest::getbonus(ability_s v) const {
 	auto r = 0;
 	for(auto pi : *this) {
@@ -58,7 +64,5 @@ const treasurei* chest::choosetreasure(const char* title, const char* cancel) co
 			continue;
 		an.add(p, getnm(p->id));
 	}
-	//if(allow_stopbury)
-	//	an.add(0, getnm("StopBury"));
 	return (treasurei*)an.choose(title, cancel, utg::interactive, utg::url, -1, utg::header, utg::sb.begin());
 }

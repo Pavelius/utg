@@ -483,7 +483,24 @@ void treasurei::lossing() const {
 	apply_effect(loss);
 }
 
-void pirate::afterchange(ability_s v) {
+void treasurei::apply() const {
+	apply_effect(use);
+}
+
+void pirate::usetreasure(trigger_s type, ability_s v) {
+	for(auto i = 0; i < 32; i++) {
+		auto p = gettreasure(i);
+		if(!p)
+			continue;
+		if(p->trigger != type)
+			continue;
+		if(p->ability != v)
+			continue;
+		p->apply();
+	}
+}
+
+void pirate::afterchange(ability_s v, int b) {
 	switch(v) {
 	case Exploration: case Brawl: case Hunting: case Aim: case Swagger: case Navigation:
 		checkexperience(v);
@@ -497,6 +514,10 @@ void pirate::afterchange(ability_s v) {
 		global_threat();
 		break;
 	}
+	if(b > 0)
+		usetreasure(WhenAbilityIncreased, v);
+	else if(b < 0)
+		usetreasure(WhenAbilityDecreased, v);
 }
 
 static void generate_classes() {
