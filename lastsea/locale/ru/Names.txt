@@ -15,7 +15,7 @@ AttackMove: Название боевого приема
 Brawl: Сила
 BuryTreasure: Зарыть сокровища
 Cabine: Каюта
-Cancel: 
+Cancel: Отмена
 CaptainCabine: Каюта капитана
 CaptainMission: Миссия капитана
 CaptainRazor: Капитан Бритва
@@ -137,8 +137,8 @@ Swagger: Важность
 TalkToCrew: Пообщаться с командой
 TheTipsyTortoise: Выпившая черепаха
 Threat: Угроза
-TradeFriend: 
-TradeTreasure: 
+TradeFriend: Поторговать с дружками
+TradeTreasure: Какое сокровище хотите поменять не глядя?
 Treasure: Сокровища
 Treasure29: Бочка дегтя
 Treasure33: Идеальный прицел

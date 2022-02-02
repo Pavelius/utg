@@ -1,5 +1,21 @@
 #include "charname.h"
 #include "main.h"
+#include "stringact.h"
+
+class npcname::string : public stringact {
+	const npcname& source;
+	void addidentifier(const char* identifier) override {
+		if(equal(identifier, "герой"))
+			source.getname(*this);
+		else
+			stringact::addidentifier(identifier);
+	}
+public:
+	string(const npcname& source, const stringbuilder& sb) :
+		source(source),
+		stringact(sb, source.getname(), source.getgender()) {
+	}
+};
 
 void npcname::clear() {
 	nameid = 0xFFFF;
@@ -46,4 +62,11 @@ void npcname::getname(stringbuilder& sb) const {
 	sb.adds(e1.name);
 	if(!first)
 		sb.adds(e2.name);
+}
+
+void npcname::actn(stringbuilder& sbs, const char* format, const char* format_param) const {
+	string sb(*this, sbs);
+	sb.addsep('\n');
+	sb.addv(format, format_param);
+	sbs = sb;
 }

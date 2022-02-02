@@ -7,9 +7,17 @@ gamei game;
 static int last_tile, last_counter, last_value, last_action;
 static bool	need_sail, need_stop, need_stop_actions;
 static ability_s last_ability;
+static npcname* active_npc;
 const quest* last_quest;
 const quest* last_location;
 static counters variables;
+
+void gamei::act(const char* format) {
+	if(active_npc)
+		active_npc->actn(utg::sb, format, 0);
+	else
+		game.npcname::actn(utg::sb, format, 0);
+}
 
 static void clear_message() {
 	utg::sb.clear();
@@ -106,7 +114,7 @@ static void apply_effect(const quest* p) {
 		add_header(p);
 		if(p->text && p->next != AnswerChoose) {
 			clear_message();
-			game.actn(utg::sb, p->text, 0);
+			game.act(p->text);
 		}
 		apply_effect(p->tags);
 		p = apply_answers(p);
@@ -306,7 +314,7 @@ static void choose_actions(int count) {
 	last_quest = last_location;
 	add_header(last_quest);
 	if(last_quest->text)
-		game.actn(utg::sb, last_quest->text, 0);
+		game.act(last_quest->text);
 	apply_effect(last_quest->tags);
 	answers an;
 	game.clearactions();
@@ -330,6 +338,8 @@ static void choose_actions(int count) {
 static void play_actions() {
 	need_stop_actions = false;
 	last_action = 0;
+	game.shuffleparcipant();
+	auto parcipant_index = 0;
 	for(auto v : game.actions) {
 		last_action++;
 		if(!v)
@@ -337,15 +347,17 @@ static void play_actions() {
 		auto p = bsdata<quest>::elements + v;
 		if(!p->next)
 			continue;
+		active_npc = &game.getactor(parcipant_index);
 		clear_message();
 		game.script(p->next);
 		if(need_stop_actions)
 			break;
 		utg::pause(getnm("NextAction"));
+		parcipant_index++;
 	}
+	active_npc = 0;
 }
 
-static void apply_sail();
 static void apply_scene();
 
 static void enter_tile() {
@@ -359,7 +371,6 @@ static void end_scene() {
 	game.script(last_location->next);
 	if(need_sail) {
 		need_sail = false;
-		utg::pause(getnm("SailAway"));
 		draw::setnext(enter_tile);
 	} else {
 		utg::pause();
@@ -552,16 +563,6 @@ void gamei::script(int page) {
 void gamei::clear() {
 	memset(this, 0, sizeof(*this));
 	shiplog::clear();
-}
-
-void gamei::generate() {
-	for(auto& e : game.pirates) {
-		e.clear();
-		e.randomname();
-	}
-	game.pirate::clear();
-	game.pirate::randomname();
-	game.pirate::generate();
 }
 
 void gamei::choosehistory() {
@@ -777,6 +778,7 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case Sail:
 		last_tile = sail_next_hexagon();
+		clear_message();
 		break;
 	case ZeroCounters:
 		variables.clear();

@@ -1,2 +1,4 @@
 ﻿In file `Names.txt`:
- Define translate for `DoYouWantToMoveShip`
+ Define translate for `Cancel`
+ Define translate for `TradeFriend`
+ Define translate for `TradeTreasure`

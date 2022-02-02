@@ -113,7 +113,10 @@ struct goali {
 class npcname {
 	short unsigned	nameid;
 	short unsigned	nicknameid;
+	class string;
 public:
+	void			act(stringbuilder& sb, const char* format, ...) const { actn(sb, format, xva_start(format)); }
+	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
 	void			clear();
 	const char*		getname() const;
 	void			getname(stringbuilder& sb) const;
@@ -225,13 +228,22 @@ public:
 	void			settag(int v);
 	void			removetag(short unsigned v) { tags.remove(v); }
 };
-class gamei : public pirate, public oceani, public cannoneer, public shiplog {
+class party : public pirate {
+	static const unsigned maxcount = 4;
+	npcname			pirates[maxcount - 1];
+	unsigned char	data[maxcount];
+public:
+	void			generate();
+	npcname&		getactor(int v);
+	void			shuffleparcipant();
+};
+class gamei : public party, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
-	npcname			pirates[3];
 	adat<indext, 512> treasures;
 	adat<indext, 64> tiles;
 public:
+	static void		act(const char* format);
 	static void		apply(variant v);
 	void			createtiles();
 	void			createtreasure();
@@ -240,7 +252,6 @@ public:
 	static void		choosehistory();
 	void			chartacourse(int v);
 	static int		getpage();
-	static void		generate();
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
@@ -251,7 +262,7 @@ public:
 	indext			picktile();
 	static void		script(int page);
 	static void		showseamap();
-	void			setgoal(const goali* v) { }
+	void			setgoal(const goali* v) {}
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);
