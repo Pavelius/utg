@@ -19,7 +19,7 @@ static void test_direction() {
 	auto pt = oceani::gethexsize(); // 84 x 72
 }
 
-void apply_scene();
+void start_scene();
 
 static void starting() {
 	answers::interactive = false;
@@ -30,7 +30,7 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
-	draw::setnext(apply_scene);
+	draw::setnext(start_scene);
 	//game.script(826);
 }
 

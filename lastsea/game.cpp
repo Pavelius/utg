@@ -438,31 +438,22 @@ static void play_actions() {
 	active_npc = 0;
 }
 
-void apply_scene();
-
-static void enter_tile() {
-	clear_message();
-	game.script(last_tile);
-}
-
-static void end_scene() {
-	if(!last_location || !last_location->next)
-		return;
-	game.script(last_location->next);
+void start_scene() {
 	if(need_sail) {
 		need_sail = false;
-		draw::setnext(enter_tile);
-	} else if(new_location)
-		draw::setnext(apply_scene);
-}
-
-void apply_scene() {
-	last_location = new_location;
-	new_location = 0;
-	round_skill_bonus = 0;
-	choose_actions(player_count);
-	play_actions();
-	end_scene();
+		clear_message();
+		game.script(last_tile);
+		draw::setnext(start_scene);
+	} else if(new_location) {
+		last_location = new_location;
+		new_location = 0;
+		round_skill_bonus = 0;
+		choose_actions(player_count);
+		play_actions();
+		if(last_location && last_location->next)
+			game.script(last_location->next);
+		draw::setnext(start_scene);
+	}
 }
 
 static int sail_next_hexagon() {

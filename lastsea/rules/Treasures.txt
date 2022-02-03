@@ -47,8 +47,15 @@ Treasure38
 Treasure39 trigger(WhenChooseSpecial) bonus(2) abilities(1 1 0 0 0 0)
  tags Valuable Discard
  use Discontent-1
+Treasure40 trigger(WhenAbilityIncreased) ability(Stars)
+ tags Valuable
+ use Reroll IfEqual+0 Reroll+1 
 Treasure41 abilities(0 0 0 0 2 0)
  tags Valuable
+Treasure42 trigger(WhenAbilityDecreased) ability(Crew)
+ tags Valuable Discard
+ use Crew+1 
+Treasure43 abilities(0 0 0 0 1 1)
  tags Valuable
 Treasure47 abilities(1 0 0 0 0 0)
  tags Valuable
