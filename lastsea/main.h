@@ -67,7 +67,7 @@ enum answer_s {
 };
 
 typedef flagable<8> taga;
-typedef short unsigned indext;
+typedef adat<const void*, 32> useda;
 const int player_count = 4;
 
 struct abilityi {

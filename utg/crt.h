@@ -85,11 +85,11 @@ struct adat {
 	T*								end() { return data + count; }
 	const T*						end() const { return data + count; }
 	const T*						endof() const { return data + count_max; }
+	int								find(const T t) const { for(auto& e : *this) if(e == t) return &e - data; return -1; }
 	int								getcount() const { return count; }
 	int								getmaximum() const { return count_max; }
 	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
-	int								indexof(const T t) const { for(auto& e : *this) if(e == t) return &e - data; return -1; }
-	bool							is(const T t) const { return indexof(t) != -1; }
+	bool							is(const T t) const { for(auto& e : *this) if(e == t) return true; return false; }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }
 	void							remove(const T t) { remove(indexof(t), 1); }
 };
@@ -222,6 +222,7 @@ typedef const char*(*fngetname)(const void* object);
 typedef void(*fncommand)(void* object);
 // Common functions
 bool								equal(const char* s1, const char* s2);
+template<typename T> int			getbsi(const T* v) { return bsdata<T>::source.indexof(v); }
 const char*							getdescription(const char* id);
 int									getdigitscount(unsigned number); // Get digits count of number. For example if number=100, result be 3.
 const char*							getnm(const char* id);

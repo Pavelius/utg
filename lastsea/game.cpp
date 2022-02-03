@@ -344,22 +344,27 @@ static void add_treasure(answers& an, trigger_s trigger) {
 	}
 }
 
-static void add_treasure(answers& an, trigger_s trigger, ability_s ability) {
+static void add_treasure(answers& an, trigger_s trigger, ability_s ability, useda& used) {
 	for(auto p : game.gettreasures()) {
 		if(p->trigger != trigger)
 			continue;
 		if(p->ability != ability)
 			continue;
+		if(used.is(p))
+			continue;
 		an.add(p, getnm("UseTreasureToGainBonus"), getnm(p->id), p->bonus);
 	}
 }
 
-static void use_treasure(void* object) {
-	if(bsdata<treasurei>::have(object))
+static void use_treasure(void* object, useda& used) {
+	if(bsdata<treasurei>::have(object)) {
+		used.add(object);
 		((treasurei*)object)->triggered();
+	}
 }
 
 static void summary_action(const char* id, trigger_s trigger) {
+	useda used;
 	while(!draw::isnext()) {
 		answers an;
 		an.add(0, getnm(id));
@@ -367,7 +372,7 @@ static void summary_action(const char* id, trigger_s trigger) {
 		auto p = an.choose();
 		if(!p)
 			break;
-		use_treasure(p);
+		use_treasure(p, used);
 	}
 }
 
@@ -561,7 +566,7 @@ void pirate::makeroll(special_s type) {
 	}
 	const int GunBonus = 10;
 	static bool gun_used;
-	answers an;
+	answers an; useda used;
 	gun_used = false;
 	while(true) {
 		sb.clear();
@@ -584,7 +589,7 @@ void pirate::makeroll(special_s type) {
 					an.add((void*)(GunBonus + level), getnm("UseGun"), level, bonus);
 			}
 		}
-		add_treasure(an, WhenRoll, last_ability);
+		add_treasure(an, WhenRoll, last_ability, used);
 		auto pv = an.choose(temp);
 		if(!pv)
 			break;
@@ -593,7 +598,7 @@ void pirate::makeroll(special_s type) {
 			last_bonus += game.getgunbonus(level);
 			gun_used = game.unloadgun(level, true);
 		}
-		use_treasure(pv);
+		use_treasure(pv, used);
 	}
 }
 

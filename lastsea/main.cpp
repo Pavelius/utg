@@ -48,13 +48,6 @@ static void initialize_widgets() {
 }
 
 static void test_handlers() {
-	indext test[20] = {2, 4, 5};
-	adat<indext, 32> source;
-	source.add(2);
-	source.add(4);
-	source.add(5);
-	for(auto p : iterator<abilityi>(source))
-		game.information(p->id);
 }
 
 void initialize_information_widgets();
