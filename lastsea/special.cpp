@@ -24,6 +24,7 @@ BSDATA(speciali) = {
 	{"TradeFriend"},
 	{"EatSupply"},
 	{"ZeroSupplyIfNot"},
+	{"ZeroRerollIfNot"},
 	{"ZeroCounters"},
 	{"CounterName"},
 	{"ChooseCounter"},

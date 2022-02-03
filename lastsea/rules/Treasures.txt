@@ -88,6 +88,7 @@ Story23
 Story24 abilities(0 0 0 0 1 0)
  gain Misfortune+3 Infamy+6
 Story30 abilities(1 0 0 0 3 0)
+Story36
 Story39 abilities(0 2 0 0 2 0)
 Story40 abilities(0 1 0 0 0 0)
  gain Misfortune+2

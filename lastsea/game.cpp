@@ -807,6 +807,12 @@ static void special_command(special_s v, int bonus) {
 		else
 			game.set(Supply, 0);
 		break;
+	case ZeroRerollIfNot:
+		if(!game.get(Supply))
+			need_stop = true;
+		else
+			game.set(Reroll, 0);
+		break;
 	case FullThrottle:
 		sail_ship(bonus);
 		break;

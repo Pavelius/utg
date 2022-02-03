@@ -30,7 +30,7 @@ enum special_s : unsigned char {
 	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
-	EatSupply, ZeroSupplyIfNot,
+	EatSupply, ZeroSupplyIfNot, ZeroRerollIfNot,
 	ZeroCounters, CounterName, ChooseCounter, ChooseCustom,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, NotUseAction, IfChoosedAction, StopActions,
