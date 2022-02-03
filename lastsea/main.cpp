@@ -22,11 +22,11 @@ static void test_direction() {
 void start_scene();
 
 static void starting() {
-	//answers::interactive = false;
+	answers::interactive = false;
 	answers::header = getnm("GenerateCrew");
 	game.generate();
 	game.choosehistory();
-	//answers::interactive = true;
+	answers::interactive = true;
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 	answers::resid = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;
 	utg::callback::getstatus = game.sfgetstatus;
-	//srand(getcputime());
+	srand(getcputime());
 	variant::sfapply = game.sfapply;
 	answers::console = &utg::sb;
 	draw::object::initialize();

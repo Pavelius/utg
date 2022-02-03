@@ -16,7 +16,8 @@ typedef decltype(sizeof(0)) size_t;
 
 #define FG(V) (1<<V)
 #define	FO(T,R) ((size_t)&((T*)0)->R)
-#define	lastof(C) C+sizeof(C)/sizeof(C[0])
+#define	lenghtof(C) (sizeof(C)/sizeof(C[0]))
+#define	lastof(C) C+lenghtof(C)
 #define maptbl(t, id) (t[imax((unsigned long)0, imin((unsigned long)id, (unsigned long)(sizeof(t)/sizeof(t[0])-1)))])
 #define maprnd(t) t[rand()%(sizeof(t)/sizeof(t[0]))]
 #define BSDATA(e) BSDATATMPL e bsdata<e>::elements[]

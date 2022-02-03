@@ -6,7 +6,6 @@ void pirate::clearactions() {
 
 void pirate::clear() {
 	memset(this, 0, sizeof(*this));
-	historyable::clear();
 	clearactions();
 	abilities[MissionMaximum] = 5;
 	abilities[CabineMaximum] = 5;
@@ -25,8 +24,8 @@ int pirate::getnextstar(int value) const {
 void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	auto p = (pirate*)object;
 	int value, value2;
-	if(p->classid == 0xFFFF)
-		return;
+	//if(p->classid == 0xFFFF)
+	//	return;
 	switch(v.type) {
 	case Ability:
 		switch(v.value) {
@@ -72,13 +71,8 @@ const char* pirate::getavatarst(const void* object) {
 	return temp;
 }
 
-void pirate::generate() {
-	chooseclass();
-}
-
 bool pirate::match(variant v) const {
 	switch(v.type) {
-	case Class: return classid == v.value;
 	case Gender: return getgender() == v.value;
 	default:
 		return false;

@@ -120,11 +120,7 @@ struct goali {
 class npcname {
 	short unsigned	nameid;
 	short unsigned	nicknameid;
-	class string;
 public:
-	void			act(stringbuilder& sb, const char* format, ...) const { actn(sb, format, xva_start(format)); }
-	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
-	void			clear();
 	const char*		getname() const;
 	void			getname(stringbuilder& sb) const;
 	gender_s		getgender() const;
@@ -138,19 +134,27 @@ struct classi {
 	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
 	const char*		getearn(ability_s v) const;
 };
-class historyable : public npcname {
-protected:
+class player : public npcname {
+	static const int maxcount = 4;
+	short unsigned	active;
 	short unsigned	classid;
 	variant			values[5];
+	npcname			friends[maxcount - 1];
+	unsigned char	order[maxcount];
 	class string;
 public:
-	void			act(stringbuilder& sb, const char* format, ...) const { actn(sb, format, xva_start(format)); }
+	void			act(const char* format, ...) const { actn(utg::sb, format, xva_start(format)); }
 	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
 	void			background() const;
 	void			chooseclass();
 	void			choosehistory();
-	void			clear();
+	void			generate();
+	const npcname&	getactive() const { return active ? friends[(active - 1) % (maxcount - 1)] : *this; }
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }
+	variant			getvalue(int v) { return values[v % lenghtof(friends)]; }
+	void			setorder(int v) { setplayer(order[v % maxcount]); }
+	void			setplayer(int v) { active = v % maxcount; }
+	void			shuffleparcipant();
 };
 struct speciali {
 	const char*		id;
@@ -185,7 +189,7 @@ public:
 	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
 	void			losstreasure(const treasurei* pv);
 };
-class pirate : public historyable, public chest {
+class pirate : public player, public chest {
 	static const int max_treasures = 4;
 	char			abilities[Infamy + 1];
 	void			afterchange(ability_s v, int b);
@@ -203,7 +207,6 @@ public:
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
 	void			gaintreasures(int count = 1);
-	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
 	int				getmaximum(ability_s v) const;
@@ -235,28 +238,17 @@ public:
 	void			settag(int v);
 	void			removetag(short unsigned v) { tags.remove(v); }
 };
-class party : public pirate {
-	static const unsigned maxcount = 4;
-	npcname			pirates[maxcount - 1];
-	unsigned char	data[maxcount];
-public:
-	void			generate();
-	npcname&		getactor(int v);
-	void			shuffleparcipant();
-};
-class gamei : public party, public oceani, public cannoneer, public shiplog {
+class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
 	adat<indext, 256> treasures;
 	adat<indext, 64> tiles;
 public:
-	static void		act(const char* format);
 	static void		apply(variant v);
 	void			createtiles();
 	void			createtreasure();
 	void			clear();
 	static void		choosecounter();
-	static void		choosehistory();
 	void			chartacourse(int v);
 	static int		getpage();
 	void			information(const char* format, ...);

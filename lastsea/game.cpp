@@ -9,20 +9,12 @@ static int round_skill_bonus;
 static bool	need_sail, need_stop, need_stop_actions;
 static special_s game_result;
 static ability_s last_ability;
-static npcname* active_npc;
 const quest* last_quest;
 const quest* last_location;
 static const quest* new_location;
 counters variables;
 
 void print(stringbuilder& sb, const variants& source);
-
-void gamei::act(const char* format) {
-	if(active_npc)
-		active_npc->actn(utg::sb, format, 0);
-	else
-		game.npcname::actn(utg::sb, format, 0);
-}
 
 static void clear_message() {
 	utg::sb.clear();
@@ -428,7 +420,7 @@ static void play_actions() {
 		auto p = bsdata<quest>::elements + v;
 		if(!p->next)
 			continue;
-		active_npc = &game.getactor(parcipant_index);
+		game.setorder(parcipant_index);
 		clear_message();
 		game.script(p->next);
 		if(need_stop_actions)
@@ -436,7 +428,6 @@ static void play_actions() {
 		summary_action("NextAction", WhenUse);
 		parcipant_index++;
 	}
-	active_npc = 0;
 }
 
 void start_scene() {
@@ -640,11 +631,6 @@ void gamei::script(int page) {
 void gamei::clear() {
 	memset(this, 0, sizeof(*this));
 	shiplog::clear();
-}
-
-void gamei::choosehistory() {
-	game.pirate::choosehistory();
-	clear_message();
 }
 
 void gamei::createtreasure() {

@@ -27,9 +27,6 @@
     <ClCompile Include="roll12.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="historyable.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="special.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -75,7 +72,7 @@
     <ClCompile Include="trigger.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="party.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>
