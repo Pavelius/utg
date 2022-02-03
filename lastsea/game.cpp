@@ -7,6 +7,7 @@ gamei game;
 static int last_tile, last_counter, last_value, last_action;
 static int round_skill_bonus;
 static bool	need_sail, need_stop, need_stop_actions;
+static special_s game_result;
 static ability_s last_ability;
 static npcname* active_npc;
 const quest* last_quest;
@@ -439,12 +440,9 @@ static void play_actions() {
 }
 
 void start_scene() {
-	if(need_sail) {
-		need_sail = false;
-		clear_message();
-		game.script(last_tile);
-		draw::setnext(start_scene);
-	} else if(new_location) {
+	auto need_continue = false;
+	if(new_location) {
+		need_continue = true;
 		last_location = new_location;
 		new_location = 0;
 		round_skill_bonus = 0;
@@ -452,8 +450,15 @@ void start_scene() {
 		play_actions();
 		if(last_location && last_location->next)
 			game.script(last_location->next);
-		draw::setnext(start_scene);
 	}
+	if(need_sail && last_tile) {
+		need_continue = true;
+		need_sail = false;
+		clear_message();
+		game.script(last_tile);
+	}
+	if(need_continue)
+		draw::setnext(start_scene);
 }
 
 static int sail_next_hexagon() {
@@ -644,10 +649,9 @@ void gamei::choosehistory() {
 
 void gamei::createtreasure() {
 	auto m = bsdata<treasurei>::source.getcount();
+	treasures.clear();
 	for(auto& e : bsdata<treasurei>()) {
-		if(e.ismagic())
-			continue;
-		if(e.isstory())
+		if(!e.is(Valuable))
 			continue;
 		treasures.add(bsdata<treasurei>::source.indexof(&e));
 	}
@@ -783,6 +787,10 @@ static void special_command(special_s v, int bonus) {
 		game.script((v - Page000) * 100 + bonus);
 		break;
 	case PageForward:
+		apply_effect(find_forward(bonus));
+		break;
+	case PageNext:
+		draw::pause();
 		apply_effect(find_forward(bonus));
 		break;
 	case Scene:
@@ -955,6 +963,13 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case IfLast:
 		test_last_action();
+		break;
+	case ZeroDanger:
+		game.set(Danger, 0);
+		break;
+	case WinGame:
+	case LostGame:
+		game_result = v;
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);

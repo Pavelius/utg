@@ -159,8 +159,15 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 }
 
 static void listoftreasures() {
-	for(auto p : game.gettreasures())
-		draw::label(getnm(p->id), 0, p);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto p : game.gettreasures()) {
+		if(p->is(Valuable)) {
+			sb.clear();
+			sb.add("[%1]", getnm(p->id));
+			draw::label(temp, 0, p);
+		} else
+			draw::label(getnm(p->id), 0, p);
+	}
 }
 
 static void listofrecords() {

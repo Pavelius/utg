@@ -49,6 +49,15 @@ int chest::getbonus(ability_s v) const {
 	return r;
 }
 
+int chest::gettreasurecount(tag_s v) const {
+	auto r = 0;
+	for(auto p : gettreasures()) {
+		if(p->is(v))
+			r++;
+	}
+	return r;
+}
+
 const treasurei* chest::choosetreasure(const char* title, const char* cancel) const {
 	answers an;
 	for(auto p : gettreasures())

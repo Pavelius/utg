@@ -31,11 +31,12 @@ enum special_s : unsigned char {
 	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
 	FullThrottle, TradeFriend,
 	EatSupply, ZeroSupplyIfNot, ZeroRerollIfNot,
-	ZeroCounters, CounterName, ChooseCounter, ChooseCustom,
+	ZeroCounters, ZeroDanger, CounterName, ChooseCounter, ChooseCustom,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
 	VisitManyTimes, VisitRequired, NotUseAction, IfChoosedAction, StopActions,
 	CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
-	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900, PageForward,
+	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
+	PageForward, PageNext,
 	CounterA, CounterB, CounterC, CounterD, CounterX,
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
 	Entry, MarkEntry, MarkVisit, SetVisit,
@@ -168,23 +169,24 @@ struct treasurei {
 	static const treasurei* find(const char* id);
 	void			apply() const;
 	void			gaining() const;
+	bool			is(tag_s v) const { return tags.is(v); }
 	bool			isdiscardable() const;
-	bool			ismagic() const { return szstart(id, "Magic"); }
-	bool			isstory() const { return !tags.is(Valuable); }
 	void			lossing() const;
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	void			triggered();
 };
-class chest : private adat<indext, 20> {
+class chest : private adat<indext, 32> {
 public:
 	void			apply(trigger_s type, ability_s v);
-	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
 	const treasurei* choosetreasure(const char* title, const char* cancel) const;
 	void			gaintreasure(const treasurei* pv);
 	int				getbonus(ability_s v) const;
+	int				gettreasurecount(tag_s v) const;
+	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
 	void			losstreasure(const treasurei* pv);
 };
 class pirate : public historyable, public chest {
+	static const int max_treasures = 4;
 	char			abilities[Infamy + 1];
 	void			afterchange(ability_s v, int b);
 	void			checkexperience(ability_s v);
@@ -245,7 +247,7 @@ public:
 class gamei : public party, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
-	adat<indext, 512> treasures;
+	adat<indext, 256> treasures;
 	adat<indext, 64> tiles;
 public:
 	static void		act(const char* format);

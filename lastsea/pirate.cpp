@@ -194,6 +194,10 @@ void pirate::addaction(indext v) {
 void pirate::gaintreasures(int count) {
 	if(count > 0) {
 		for(auto i = 0; i < count; i++) {
+			if(gettreasurecount(Valuable) >= max_treasures) {
+				set(Supply, get(Supply) + (count - i));
+				return;
+			}
 			auto pv = game.picktreasure();
 			if(!pv)
 				continue;
