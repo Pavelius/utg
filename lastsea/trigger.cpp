@@ -2,6 +2,7 @@
 
 BSDATA(triggeri) = {
 	{"NoTrigger"},
+	{"WhenChooseSpecial"},
 	{"WhenRoll"},
 	{"WhenThreat"},
 	{"WhenAbilityIncreased"},

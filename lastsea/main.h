@@ -43,11 +43,11 @@ enum special_s : unsigned char {
 	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfLast,
 };
 enum tag_s : unsigned char {
-	NoDigging, NoSteal, Valuable,
+	NoDigging, NoSteal, Valuable, Discard,
 };
 enum trigger_s : unsigned char {
 	NoTrigger,
-	WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased,
+	WhenChooseSpecial, WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased,
 	WhenUse,
 };
 enum variant_s : unsigned char {

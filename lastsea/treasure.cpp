@@ -9,18 +9,13 @@ const treasurei* treasurei::find(const char* id) {
 }
 
 bool treasurei::isdiscardable() const {
-	switch(trigger) {
-	case WhenUse: return true;
-	case WhenRoll:
-		return use.count==0;
-	default:
-		return false;
-	}
+	return tags.is(Discard);
 }
 
 void treasurei::triggered() {
 	switch(trigger) {
 	case WhenUse:
+	case WhenChooseSpecial:
 		apply();
 		break;
 	case WhenRoll:

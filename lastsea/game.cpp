@@ -14,6 +14,8 @@ const quest* last_location;
 static const quest* new_location;
 counters variables;
 
+void print(stringbuilder& sb, const variants& source);
+
 void gamei::act(const char* format) {
 	if(active_npc)
 		active_npc->actn(utg::sb, format, 0);
@@ -166,10 +168,30 @@ static bool allow_choose(const quest* p) {
 	return true;
 }
 
+static void add_treasure(answers& an, const treasurei* p, const variants& use) {
+	char temp[260]; stringbuilder sb(temp);
+	print(sb, use);
+	an.add(p, getnm("UseTreasureToGain"), getnm(p->id), temp);
+}
+
+static void use_treasure(const void* object) {
+	if(bsdata<treasurei>::have(object))
+		((treasurei*)object)->triggered();
+}
+
+static void use_treasure(void* object, useda& used) {
+	if(bsdata<treasurei>::have(object)) {
+		used.add(object);
+		((treasurei*)object)->triggered();
+	}
+}
+
 static void apply_choose(const quest* ph, const char* title, int count) {
 	struct handler : chooselist {
 		void apply(int index, const void* object) override {
-			apply_effect((quest*)object);
+			use_treasure(object);
+			if(bsdata<quest>::have(object))
+				apply_effect((quest*)object);
 		}
 		bool isallow(int index, const void* object) const override {
 			auto p = (quest*)object;
@@ -199,6 +221,16 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 		if(p->next != AnswerChoose)
 			continue;
 		add_answer(san, p);
+	}
+	if(index >= 5000) {
+		auto need_bonus = index - 5000;
+		for(auto p : game.gettreasures()) {
+			if(p->trigger != WhenChooseSpecial)
+				continue;
+			if(p->bonus != need_bonus)
+				continue;
+			add_treasure(san, p, p->use);
+		}
 	}
 	san.choose(title, count);
 }
@@ -336,11 +368,15 @@ static void choose_actions(int count) {
 	game.sortactions();
 }
 
+static void add_treasure(answers& an, const treasurei* p) {
+	an.add(p, "%Use [%1].", getnm(p->id));
+}
+
 static void add_treasure(answers& an, trigger_s trigger) {
 	for(auto p : game.gettreasures()) {
 		if(p->trigger != trigger)
 			continue;
-		an.add(p, "%Use [%1].", getnm(p->id));
+		add_treasure(an, p);
 	}
 }
 
@@ -353,13 +389,6 @@ static void add_treasure(answers& an, trigger_s trigger, ability_s ability, used
 		if(used.is(p))
 			continue;
 		an.add(p, getnm("UseTreasureToGainBonus"), getnm(p->id), p->bonus);
-	}
-}
-
-static void use_treasure(void* object, useda& used) {
-	if(bsdata<treasurei>::have(object)) {
-		used.add(object);
-		((treasurei*)object)->triggered();
 	}
 }
 

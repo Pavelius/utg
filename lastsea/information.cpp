@@ -2,7 +2,7 @@
 #include "widget.h"
 
 const quest* find_promt(int index);
-static void print(stringbuilder& sb, const variants& source);
+void print(stringbuilder& sb, const variants& source);
 
 static void print(stringbuilder& sb, ability_s v, int count) {
 	auto& ei = bsdata<abilityi>::elements[v];
@@ -68,7 +68,7 @@ static void print(stringbuilder& sb, variant v) {
 	}
 }
 
-static void print(stringbuilder& sb, const variants& source) {
+void print(stringbuilder& sb, const variants& source) {
 	for(auto v : source)
 		print(sb, v);
 }
