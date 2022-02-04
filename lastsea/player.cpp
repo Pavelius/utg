@@ -118,6 +118,7 @@ void player::generate() {
 		e.randomname();
 	game.script(AnswerStartGame);
 	chooseclass();
+	choosehistory();
 }
 
 static variant choose_answer(const player* source, variant group) {

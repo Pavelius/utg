@@ -536,7 +536,7 @@ static void statusbar_paint() {
 		return;
 	rectpush push;
 	caret.x = metrics::padding + metrics::border;
-	caret.y = getheight() - texth() - metrics::border;
+	caret.y = getheight() - texth() - metrics::border - 1;
 	width = getwidth() - caret.x * 2;
 	auto push_width = width;
 	textfs(temp);

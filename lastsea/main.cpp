@@ -22,11 +22,8 @@ static void test_direction() {
 void start_scene();
 
 static void starting() {
-	//answers::interactive = false;
 	answers::header = getnm("GenerateCrew");
 	game.generate();
-	game.choosehistory();
-	//answers::interactive = true;
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
