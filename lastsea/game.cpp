@@ -474,6 +474,8 @@ void start_scene() {
 		play_actions();
 		if(last_location && last_location->next)
 			game.script(last_location->next);
+		if(!new_location)
+			new_location = last_location;
 	}
 	if(need_sail && last_tile) {
 		need_continue = true;
@@ -776,6 +778,8 @@ static void check_danger() {
 static void stop_and_clear(const char* format) {
 	if(!utg::sb)
 		return;
+	if(!format)
+		format = getnm("Continue");
 	draw::pause(format);
 	clear_message();
 }
@@ -801,6 +805,14 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case SetShip:
 		game.setmarker(bonus);
+		break;
+	case MoveToPlayer:
+		stop_and_clear(0);
+		last_value = game.findindex(last_tile);
+		game.moveto(last_value, game.getmarker(), bonus);
+		last_value = game.findindex(last_tile);
+		if(last_value == game.getmarker())
+			game.script(last_tile);
 		break;
 	case Tile000: last_tile = bonus; break;
 	case Tile900: last_tile = 900 + bonus; break;
@@ -999,6 +1011,7 @@ static void special_command(special_s v, int bonus) {
 	case WinGame:
 	case LostGame:
 		game_result = v;
+		draw::pause();
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);

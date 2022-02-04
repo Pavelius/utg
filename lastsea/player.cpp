@@ -34,14 +34,13 @@ class player::string : public stringact {
 		sb.addsep('\n');
 	}
 	static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
-		for(auto& e : bsdata<pirate>()) {
+		for(auto& e : game.getfriends()) {
 			sb.addn(padding);
 			if(hilite)
 				sb.add("[");
 			e.getname(sb);
 			if(hilite)
 				sb.add("]");
-			sb.adds("%-Pirate-%-1", getnm(e.getclass().id));
 			sb.add(separator);
 		}
 	}
@@ -84,16 +83,31 @@ public:
 	}
 };
 
-void player::chooseclass() {
-	answers an;
-	for(auto& e : bsdata<classi>())
-		an.add(&e, getnm(e.id));
-	classid = (classi*)an.choose(getnm("ChooseClass")) - bsdata<classi>::elements;
+static void* ask(answers& an, const char* id) {
+	if(!id)
+		return an.choose(0);
+	char temp[260]; stringbuilder sb(temp);
+	game.actn(sb, getnm(id), 0, false);
+	return an.choose(temp);
 }
 
-void player::actn(stringbuilder& sbs, const char* format, const char* format_param) const {
+static int choose(array& source, const char* id) {
+	answers an;
+	auto pe = source.end();
+	auto sz = source.getsize();
+	for(auto p = source.begin(); p < source.end(); p += sz)
+		an.add(p, getnm(*(const char**)p));
+	return source.indexof(ask(an, id));
+}
+
+void player::chooseclass() {
+	classid = choose(bsdata<classi>::source, 0);
+}
+
+void player::actn(stringbuilder& sbs, const char* format, const char* format_param, bool add_sep) const {
 	string sb(*this, sbs);
-	sb.addsep('\n');
+	if(add_sep)
+		sb.addsep('\n');
 	sb.addv(format, format_param);
 	sbs = sb;
 }
@@ -102,17 +116,31 @@ void player::generate() {
 	randomname();
 	for(auto& e : friends)
 		e.randomname();
+	game.script(AnswerStartGame);
 	chooseclass();
+}
+
+static variant choose_answer(const player* source, variant group) {
+	return groupi::choose(group);
+}
+
+void player::choosehistory() {
+	auto index = 0;
+	for(auto v : getclass().types) {
+		utg::sb.clear();
+		game.script(AnswerStartGame + 1);
+		values[index++] = choose_answer(this, v);
+	}
+	utg::sb.clear();
+	game.script(AnswerStartGame + 1);
+	draw::pause(getnm("WhatAboutHistory"));
+	background();
 }
 
 void player::shuffleparcipant() {
 	for(unsigned i = 0; i < maxcount; i++)
 		order[i] = i;
 	zshuffle(order, maxcount);
-}
-
-static variant choose_answer(const player* source, variant group) {
-	return groupi::choose(group);
 }
 
 const messagei* find_message(variant type, int value) {
@@ -130,19 +158,6 @@ void player::background() const {
 	if(!pn)
 		return;
 	utg::sb.clear();
-	act(utg::sb, pn->text);
+	act(pn->text);
 	draw::pause();
-}
-
-void player::choosehistory() {
-	auto index = 0;
-	for(auto v : getclass().types) {
-		utg::sb.clear();
-		act(utg::sb, getnm("PromtHistory"));
-		values[index++] = choose_answer(this, v);
-	}
-	utg::sb.clear();
-	act(utg::sb, getnm("PromtHistory"));
-	draw::pause(getnm("WhatAboutHistory"));
-	background();
 }

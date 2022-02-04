@@ -150,8 +150,17 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 	auto index = game.getindex(object);
-	if(index != pathfind::Blocked)
-		sb.add(getnm("CellInfo"), getnm("Ocean"), index);
+	if(index != pathfind::Blocked) {
+		auto i = game.getlocation(index);
+		auto pt = tilei::find(i);
+		if(!pt)
+			return;
+		auto pq = quest::find(pt->param);
+		if(!pq)
+			return;
+		if(pq->header)
+			sb.add(pq->header);
+	}
 	else if(bsdata<quest>::have(object))
 		sfgetinfo(object, sb);
 	else
@@ -196,8 +205,25 @@ static void listofcounters() {
 	}
 }
 
+static void showlabel(npcname& e, const char* format) {
+	char temp[260]; stringbuilder sb(temp);
+	e.getname(sb);
+	if(format) {
+		sb.add(" - ");
+		sb.add(format);
+	}
+	draw::label(temp, 0, &e);
+}
+
+static void listofcharacters() {
+	showlabel(game, getnm("YourPirate"));
+	for(auto& e : game.getfriends())
+		showlabel(e, 0);
+}
+
 void initialize_information_widgets() {
 	widget::add("ListOfGoals", listofgoals);
+	widget::add("ListOfCharacters", listofcharacters);
 	widget::add("ListOfRecords", listofrecords);
 	widget::add("ListOfTreasures", listoftreasures);
 	widget::add("ListOfCounters", listofcounters);

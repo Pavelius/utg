@@ -233,6 +233,24 @@ bool oceani::stepto(indext start, indext goal) {
 	return true;
 }
 
+bool oceani::moveto(indext start, indext goal, int bonus) {
+	indext path[mx * my];
+	clearpath();
+	blockwalls();
+	makewave(start);
+	auto count = getpath(start, goal, path, sizeof(path) / sizeof(path[0]));
+	if(!count)
+		return false;
+	createobjects();
+	auto p = findobject(data + start);
+	if(!p)
+		return false;
+	splashscreen(appear_pause);
+	while(count-- > 0 && bonus-- > 0)
+		p->move(i2s(path[count]), appear_pause);
+	return true;
+}
+
 point oceani::gethexsize() {
 	const double cos_30 = 0.86602540378;
 	return {size * 2, (short)(2.0 * size * cos_30)};

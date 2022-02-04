@@ -193,7 +193,7 @@ static void moving(point& result, point goal, int step) {
 }
 
 void object::move(point goal, int speed) {
-	moving(*this, goal, speed);
+	moving(*this, goal, 1);
 }
 
 const sprite* draw::getres(const char* name) {

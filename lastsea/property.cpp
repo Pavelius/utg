@@ -36,7 +36,7 @@ BSMETA(speciali) = {
 	BSREQ(id),
 	{}};
 BSMETA(tilei) = {
-	BSREQ(page), BSREQ(frame),
+	BSREQ(param), BSREQ(frame),
 	{}};
 BSDATAC(tilei, 128)
 BSMETA(tagi) = {

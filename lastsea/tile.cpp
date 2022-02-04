@@ -1,8 +1,9 @@
-#include "main.h"
+#include "crt.h"
+#include "tile.h"
 
-const tilei* tilei::find(indext page) {
+const tilei* tilei::find(int param) {
 	for(auto& e : bsdata<tilei>()) {
-		if(e.page == page)
+		if(e.param == param)
 			return &e;
 	}
 	return 0;

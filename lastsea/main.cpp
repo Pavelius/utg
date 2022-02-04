@@ -22,11 +22,11 @@ static void test_direction() {
 void start_scene();
 
 static void starting() {
-	answers::interactive = false;
+	//answers::interactive = false;
 	answers::header = getnm("GenerateCrew");
 	game.generate();
 	game.choosehistory();
-	answers::interactive = true;
+	//answers::interactive = true;
 	game.createtreasure();
 	game.createtiles();
 	game.script(0);
@@ -47,15 +47,19 @@ static void initialize_widgets() {
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
 
+void initialize_information_widgets();
+
+#ifdef _DEBUG
 static void test_handlers() {
 }
-
-void initialize_information_widgets();
 void util_main();
+#endif // _DEBUG
 
 int main(int argc, char* argv[]) {
+#ifdef _DEBUG
 	util_main();
 	test_handlers();
+#endif // _DEBUG
 	answers::resid = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;
 	utg::callback::getstatus = game.sfgetstatus;

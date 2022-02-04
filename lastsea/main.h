@@ -9,6 +9,7 @@
 #include "pathfind.h"
 #include "quest.h"
 #include "tag.h"
+#include "tile.h"
 #include "utg.h"
 
 #pragma once
@@ -28,7 +29,7 @@ enum ability_s : unsigned char {
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
-	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip,
+	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip, MoveToPlayer,
 	FullThrottle, TradeFriend,
 	EatSupply, ZeroSupplyIfNot, ZeroRerollIfNot,
 	ZeroCounters, ZeroDanger, CounterName, ChooseCounter, ChooseCustom,
@@ -65,6 +66,7 @@ enum answer_s {
 	AnswerName = 6000,
 	AnswerEntry = 6100,
 	AnswerCustom = 6200,
+	AnswerStartGame = 6500,
 };
 
 typedef flagable<8> taga;
@@ -75,10 +77,6 @@ struct abilityi {
 	const char*		id;
 	unsigned		flags;
 	constexpr bool	is(abilityf_s v) const { return (flags & FG(v)) != 0; }
-};
-struct tilei {
-	indext			page, frame;
-	static const tilei*	find(indext page);
 };
 class oceani {
 	static const indext	mx = 7;
@@ -106,6 +104,7 @@ public:
 	static void		initialize();
 	bool			isblocked(indext i) const { return ispassabletile(data[i]); }
 	static bool		ispassabletile(indext v) { return v != pathfind::Blocked; }
+	bool			moveto(indext start, indext goal, int count);
 	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
@@ -146,13 +145,14 @@ class player : public npcname {
 	class string;
 public:
 	void			act(const char* format, ...) const { actn(utg::sb, format, xva_start(format)); }
-	void			actn(stringbuilder& sb, const char* format, const char* format_param) const;
+	void			actn(stringbuilder& sb, const char* format, const char* format_param, bool add_sep = true) const;
 	void			background() const;
 	void			chooseclass();
 	void			choosehistory();
 	void			generate();
 	const npcname&	getactive() const { return active ? friends[(active - 1) % (maxcount - 1)] : *this; }
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }
+	slice<npcname>	getfriends() { return slice<npcname>(friends); }
 	variant			getvalue(int v) { return values[v % lenghtof(friends)]; }
 	void			setorder(int v) { setplayer(order[v % maxcount]); }
 	void			setplayer(int v) { active = v % maxcount; }

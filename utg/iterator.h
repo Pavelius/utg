@@ -24,3 +24,15 @@ public:
 	iterable<T, V> begin() const { return data; }
 	iterable<T, V> end() const { return data + count; }
 };
+//void aindex_remove(indext* data, size_t count, int i);
+//bool aindex_is(indext* data, size_t count, int i);
+//template<typename T, int N>
+//class aindex : adat<indext, N> {
+//	int getindex(const void* p) { return bsdata<T>::source.indexof(p); }
+//public:
+//	void add(const T* p) { auto i = getindex(p); if(i != -1) adat<indext, N>::add(i); }
+//	bool is(const T* p) const { return aindex_is(p); }
+//	void remove(const T* p) { aindex_remove(adat<indext, N>::data, adat<indext, N>::count, getindex(p)); }
+//	constexpr iterable<T, indext> begin() const { return adat<indext, N>::data; }
+//	constexpr iterable<T, indext> end() const { return adat<indext, N>::data + adat<indext, N>::count; }
+//};

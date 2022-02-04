@@ -39,6 +39,8 @@
 
 PirateOfYouCrew
 AnotherPirateOfYouCrew
+MaleCharacter
+FemaleCharacter
 
 AttackMove
 Animal
@@ -101,4 +103,4 @@ PagePirate
 PageShip
  elements Danger Threat Stars Separator Gun1 Gun2 Gun3 Gun4 Separator Separator ListOfTreasures
 PageShipLog
- elements ListOfGoals ListOfRecords Separator MapOfTheSeas
+ elements ListOfCharacters Separator ListOfGoals ListOfRecords MapOfTheSeas

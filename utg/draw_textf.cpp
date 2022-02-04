@@ -140,7 +140,7 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 				break;
 			case '!':
 				p++;
-				fore = colors::yellow;
+				fore = colors::h3;
 				break;
 			case '#':
 				p++;

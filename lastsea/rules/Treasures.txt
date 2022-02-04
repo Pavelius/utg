@@ -82,10 +82,10 @@ Treasure74 abilities(1 1 0 0 0 0)
  gain Misfortune+2 Infamy+3
  tags Valuable
 Treasure75 trigger(WhenUse)
- tags Valuable
+ tags Valuable Discard
  use ChooseCustom+2
 Treasure76 trigger(WhenUse)
- tags Valuable
+ tags Valuable Discard
  use ChooseCustom+4
 Treasure82 abilities(0 0 1 0 0 1)
  tags Valuable

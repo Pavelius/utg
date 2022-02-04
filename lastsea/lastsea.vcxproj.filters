@@ -89,6 +89,9 @@
     <ClInclude Include="counters.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="tile.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">
@@ -119,6 +122,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\QuestActions.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\PirateCharacter.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

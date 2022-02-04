@@ -177,6 +177,9 @@
     <ClCompile Include="chooselist.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="iterator.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

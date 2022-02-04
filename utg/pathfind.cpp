@@ -86,8 +86,13 @@ unsigned pathfind::getpath(indext start, indext goal, indext* result, unsigned m
 			next = i1;
 			cost = c1;
 		}
-		if(next == curr || next==start)
+		if(next == curr || next == start)
 			break;
+		if(curr == goal) {
+			*pb++ = goal;
+			if(pb >= pe)
+				break;
+		}
 		*pb++ = next;
 		curr = next;
 	}
