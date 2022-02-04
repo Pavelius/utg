@@ -52,7 +52,7 @@ static void print(stringbuilder& sb, special_s v, int count) {
 		sb.add("[-%Supply%+1i]", -game.getmaximum(Eat));
 		break;
 	case ChooseCustom:
-		print_choose(sb, find_promt(AnswerChoose + count));
+		print_choose(sb, find_promt(AnswerCustom + count));
 		break;
 	default:
 		sb.add(getnm(ei.id), count);

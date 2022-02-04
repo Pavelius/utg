@@ -84,6 +84,9 @@ Treasure74 abilities(1 1 0 0 0 0)
 Treasure75 trigger(WhenUse)
  tags Valuable
  use ChooseCustom+2
+Treasure76 trigger(WhenUse)
+ tags Valuable
+ use ChooseCustom+4
 Treasure82 abilities(0 0 1 0 0 1)
  tags Valuable
 Treasure84 abilities(0 0 2 0 0 0)

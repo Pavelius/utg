@@ -5,6 +5,7 @@ TileRock AddTile+15 AddTile+23 AddTile+24\
 Tile900+77 AddTile+0 AddTile+7 AddTile+14 AddTile+28 AddTile+35\
 Tile900+63 AddTile+21\
 Tile900+57 AddTile+31\
+Tile900+62 AddTile+27\
 Tile900+53 AddTile+4\
 SetShip+4\
 Treasure+1\
