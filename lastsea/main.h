@@ -95,6 +95,7 @@ public:
 	indext			chooseroute(const char* title, int range = 1) const;
 	void			createobjects() const;
 	void			createselections(int from, int to) const;
+	indext			findindex(indext v);
 	indext			getindex(const void* p) const;
 	static indext	getindex(short x, short y) { return y * mx + x; }
 	static point	gethexsize();
@@ -110,6 +111,7 @@ public:
 	static void		showindecies();
 	void			showseamap();
 	void			showsplash();
+	bool			stepto(indext start, indext goal);
 	static indext	to(indext i, int direction);
 };
 struct goali {

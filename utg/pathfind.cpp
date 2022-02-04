@@ -7,6 +7,7 @@ static indext stack[256 * 256];
 static indext movement_rate[64 * 64];
 
 int	pathfind::maxcount = 64 * 64;
+int pathfind::maxdir = 6;
 fnto pathfind::to;
 
 void pathfind::clearpath() {
@@ -64,6 +65,35 @@ indext pathfind::getnearest(const indext* source) {
 	return ni;
 }
 
+unsigned pathfind::getpath(indext start, indext goal, indext* result, unsigned maximum) {
+	auto pb = result;
+	auto pe = result + maximum;
+	auto curr = goal;
+	auto cost = Blocked;
+	while(pb < pe && curr != start) {
+		auto next = curr;
+		for(auto i = 0; i < maxdir; i++) {
+			auto i1 = to(curr, i);
+			if(i1 == Blocked)
+				continue;
+			if(i1 == start) {
+				next = i1;
+				break;
+			}
+			auto c1 = movement_rate[i1];
+			if(c1 >= cost)
+				continue;
+			next = i1;
+			cost = c1;
+		}
+		if(next == curr || next==start)
+			break;
+		*pb++ = next;
+		curr = next;
+	}
+	return pb - result;
+}
+
 void pathfind::blockzero() {
 	for(indext i = 0; i < maxcount; i++) {
 		if(!movement_rate[i])
@@ -72,7 +102,7 @@ void pathfind::blockzero() {
 }
 
 void pathfind::blocknearest(indext index, indext cost) {
-	for(int d = 0; d < 6; d++) {
+	for(int d = 0; d < maxdir; d++) {
 		auto i1 = to(index, d);
 		auto c1 = movement_rate[i1];
 		if(i1 == Blocked || c1 == Blocked)

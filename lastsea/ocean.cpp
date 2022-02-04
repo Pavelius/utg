@@ -210,6 +210,29 @@ indext oceani::getindex(const void* p) const {
 	return Blocked;
 }
 
+indext oceani::findindex(indext v) {
+	for(auto& e : data) {
+		if(e == v)
+			return &e - data;
+	}
+	return Blocked;
+}
+
+bool oceani::stepto(indext start, indext goal) {
+	auto p = findobject(data + start);
+	if(!p)
+		return false;
+	indext path[mx * my];
+	clearpath();
+	blockwalls();
+	makewave(start);
+	auto count = getpath(start, goal, path, sizeof(path) / sizeof(path[0]));
+	if(!count)
+		return false;
+	p->move(i2s(path[count - 1]), appear_pause);
+	return true;
+}
+
 point oceani::gethexsize() {
 	const double cos_30 = 0.86602540378;
 	return {size * 2, (short)(2.0 * size * cos_30)};

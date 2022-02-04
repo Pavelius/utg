@@ -44,6 +44,7 @@ struct object : point {
 object*				addobject(int x, int y);
 void*				chooseobject();
 void				clearobjects();
+object*				findobject(const void* p);
 const sprite*		getres(const char* name);
 void				paintobjects();
 void				splashscreen(unsigned milliseconds);

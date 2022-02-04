@@ -161,6 +161,14 @@ object*	draw::addobject(int x, int y) {
 	return p;
 }
 
+object* draw::findobject(const void* p) {
+	for(auto& e : bsdata<object>()) {
+		if(e.data == p)
+			return &e;
+	}
+	return 0;
+}
+
 void draw::clearobjects() {
 	bsdata<object>::source.clear();
 }
