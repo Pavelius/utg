@@ -106,14 +106,47 @@ static const quest* apply_answers(const quest* ph) {
 
 static void apply_choose(const quest* ph, const char* title, int count);
 
+static const char* find_separator(const char* pb) {
+	auto p = pb;
+	while(*p) {
+		if(*p == '-' && p[1] == '-' && p[2] == '-' && (p[3] == 10 || p[3] == 13) && p > pb && (p[-1] == 10 || p[-1] == 13))
+			return p;
+		p++;
+	}
+	return 0;
+}
+
+static void add_message(const char* format) {
+	if(!format)
+		return;
+	clear_message();
+	while(true) {
+		auto p = find_separator(format);
+		if(!p)
+			break;
+		auto pn = skipspcr(p + 3);
+		while(p < format && (p[-1] == 10 || p[-1] == 13))
+			p--;
+		char temp[4096];
+		auto count = p - format;
+		if(count > sizeof(temp) / sizeof(temp[0]) - 1)
+			count = sizeof(temp) / sizeof(temp[0]) - 1;
+		memcpy(temp, format, count);
+		temp[count] = 0;
+		game.act(temp);
+		draw::pause();
+		clear_message();
+		format = pn;
+	}
+	game.act(format);
+}
+
 static void apply_effect(const quest* p) {
 	while(p) {
 		last_quest = p;
 		add_header(p);
-		if(p->text && p->next != AnswerChoose) {
-			clear_message();
-			game.act(p->text);
-		}
+		if(p->text && p->next != AnswerChoose)
+			add_message(p->text);
 		apply_effect(p->tags);
 		p = apply_answers(p);
 	}
