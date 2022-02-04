@@ -773,6 +773,13 @@ static void check_danger() {
 	}
 }
 
+static void stop_and_clear(const char* format) {
+	if(!utg::sb)
+		return;
+	draw::pause(format);
+	clear_message();
+}
+
 static void special_command(special_s v, int bonus) {
 	switch(v) {
 	case Roll:
@@ -873,7 +880,7 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case Sail:
 		last_tile = sail_next_hexagon();
-		clear_message();
+		stop_and_clear(getnm("SailAway"));
 		break;
 	case ZeroCounters:
 		variables.clear();
@@ -943,7 +950,10 @@ static void special_command(special_s v, int bonus) {
 	case Damage:
 		if(!bonus)
 			bonus = last_value;
-		apply_choose(6200, bonus);
+		if(bonus)
+			apply_choose(6200, bonus);
+		else
+			draw::pause();
 		break;
 	case ChooseCustom:
 		apply_choose(AnswerCustom + bonus, 1);

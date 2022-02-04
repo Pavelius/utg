@@ -1,2 +1,2 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 0: Expected symbol `#` followed by event number
+﻿In file `Names.txt`:
+ Define translate for `Treasure38`
