@@ -713,7 +713,7 @@ static void discard_unused_tiles(int from, int to) {
 	}
 }
 
-static void remove_navigation_tiles(int from, int to) {
+static void remove_active_tiles(int from, int to) {
 	for(auto& e : bsdata<tilei>()) {
 		if(e.isactive() && e.param >= from && e.param <= to)
 			e.index = 0xFFFF;
@@ -932,6 +932,8 @@ static void special_command(special_s v, int bonus) {
 		game.tradefriend();
 		break;
 	case Sail:
+		if(bonus > 0)
+			clear_message();
 		last_tile = sail_next_hexagon();
 		stop_and_clear(getnm("SailAway"));
 		break;
@@ -1057,6 +1059,9 @@ static void special_command(special_s v, int bonus) {
 		game_result = v;
 		draw::pause(getnm(bsdata<speciali>::elements[v].id));
 		draw::setnext(main_menu);
+		break;
+	case RemoveAllNavigation:
+		remove_active_tiles(1, 30);
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
