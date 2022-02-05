@@ -58,13 +58,21 @@ static void apply_effect(const variants& tags) {
 	need_stop = push_stop;
 }
 
+static bool treasuer_active(const treasurei* p) {
+	if(!p)
+		return false;
+	return p->isactive() && !p->isdiscarded();
+}
+
 static bool allow_promt(const quest& e) {
 	for(auto v : e.tags) {
 		if(v.type != Special)
 			continue;
 		switch(v.value) {
-		case IfVisit: return category::get(e.index) == v.counter;
 		case IfEntry: return game.istag(AnswerEntry + v.counter);
+		case IfStory: return treasuer_active(treasurei::pickstory(v.counter));
+		case IfTreasure: return treasuer_active(treasurei::pickvaluable(v.counter));
+		case IfVisit: return category::get(e.index) == v.counter;
 		default: break;
 		}
 	}

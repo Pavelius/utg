@@ -66,3 +66,9 @@ treasurei* treasurei::pickstory(int number) {
 	sb.add("Story%1i", number);
 	return find(temp);
 }
+
+treasurei* treasurei::pickvaluable(int number) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add("Treasure%1i", number);
+	return find(temp);
+}

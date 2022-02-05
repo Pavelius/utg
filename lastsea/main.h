@@ -42,7 +42,7 @@ enum special_s : unsigned char {
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
 	Entry, MarkEntry, MarkVisit, SetVisit,
 	BonusToAll,
-	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfEntry, IfLast,
+	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfEntry, IfStory, IfTreasure, IfLast,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -193,6 +193,7 @@ struct treasurei {
 	bool			isdiscarded() const { return is(Discarded); }
 	void			lossing() const;
 	static treasurei* pickvaluable();
+	static treasurei* pickvaluable(int number);
 	static treasurei* pickstory(int number);
 	static void		prepare();
 	void			setowner(const void* object);

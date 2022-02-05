@@ -80,6 +80,8 @@ BSDATA(speciali) = {
 	{"IfNotSail"},
 	{"IfVisit"},
 	{"IfEntry"},
+	{"IfStory"},
+	{"IfTreasure"},
 	{"IfLast"},
 };
 assert_enum(speciali, IfLast)
