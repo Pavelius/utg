@@ -27,12 +27,12 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	answers::interactive = false;
+	//answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
-	answers::interactive = true;
-	game.epilog(3);
+	//answers::interactive = true;
+	game.epilog(2);
 	//game.script(0);
 	//if(!draw::isnext())
 	//	draw::setnext(start_scene);

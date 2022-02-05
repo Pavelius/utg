@@ -1,2 +1,2 @@
-﻿In file `locale/ru/PirateHistory.txt`:
- Line 45: Unknown variant identifier `Surviver`
+﻿In file `locale/ru/PirateHistoryVariants.txt`:
+ Line 73: Can't find variant `NameOfAWoman`

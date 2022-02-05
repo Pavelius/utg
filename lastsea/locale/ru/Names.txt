@@ -28,6 +28,7 @@ ChooseAnotherPirate: Пират из вашей команды
 ChooseClass: Кто вы?
 ChooseCounter: Выбирайте показатель
 ChooseLeft: (осталось [%1i])
+ChooseName: Как вас зовут?
 ChooseOptions: Выбирайте опции (осталось [%1i]):
 ChooseSkillToRaise: Какой навык хотите повысить?
 ChooseTarget: Выбирайте цель

@@ -112,7 +112,24 @@ static int choose(array& source, const char* id) {
 }
 
 void player::chooseclass() {
-	classid = choose(bsdata<classi>::source, 0);
+	classid = choose(bsdata<classi>::source, "ChooseClass");
+}
+
+static void copy(npcname& e1, npcname& e2) {
+	e1 = e2;
+}
+
+void player::choosename() {
+	npcname names[4];
+	answers an;
+	char temp[260]; stringbuilder sb(temp);
+	for(auto& e : names) {
+		e.randomname();
+		sb.clear(); e.getname(sb);
+		an.add(&e, temp);
+	}
+	auto p = (npcname*)an.choose(getnm("ChooseName"));
+	copy(*this, *p);
 }
 
 void player::actn(stringbuilder& sbs, const char* format, const char* format_param, bool add_sep) const {
@@ -128,6 +145,7 @@ void player::generate() {
 	for(auto& e : friends)
 		e.randomname();
 	game.script(AnswerStartGame);
+	choosename();
 	chooseclass();
 	choosehistory();
 }

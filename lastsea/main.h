@@ -160,6 +160,7 @@ public:
 	void			actn(stringbuilder& sb, const char* format, const char* format_param, bool add_sep = true) const;
 	void			background() const;
 	void			chooseclass();
+	void			choosename();
 	void			choosehistory();
 	void			epilog(int level);
 	void			generate();
