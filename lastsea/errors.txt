@@ -1,1 +1,2 @@
-﻿
+﻿In file `locale/ru/PirateHistory.txt`:
+ Line 45: Unknown variant identifier `Surviver`

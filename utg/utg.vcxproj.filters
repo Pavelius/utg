@@ -183,6 +183,12 @@
     <ClCompile Include="dataset.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="condition.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="variable.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -321,6 +327,12 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="dataset.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="condition.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="variable.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

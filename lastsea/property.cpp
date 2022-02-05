@@ -26,6 +26,7 @@ BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(types), BSREQ(levelup), BSREQ(maximum),
 	BSREQ(exploration), BSREQ(brawl), BSREQ(hunting), BSREQ(aim), BSREQ(swagger), BSREQ(navigation),
+	BSREQ(event1), BSREQ(event2), BSREQ(event3), BSREQ(event4), BSREQ(event5),
 	{}};
 BSDATAC(classi, 64)
 BSMETA(pirate) = {

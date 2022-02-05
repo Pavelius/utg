@@ -157,6 +157,7 @@
     <ClCompile Include="category.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
+    <ClCompile Include="condition.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_file.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="szdup.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="utg.cpp" />
+    <ClCompile Include="variable.cpp" />
     <ClCompile Include="variant.cpp" />
     <ClCompile Include="recordset.cpp" />
     <ClCompile Include="widget.cpp" />
@@ -216,6 +218,7 @@
     <ClInclude Include="category.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
+    <ClInclude Include="condition.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="dataset.h" />
     <ClInclude Include="drawobject.h" />
@@ -247,6 +250,7 @@
     <ClInclude Include="rect.h" />
     <ClInclude Include="stringact.h" />
     <ClInclude Include="stringbuilder.h" />
+    <ClInclude Include="variable.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="recordset.h" />
     <ClInclude Include="widget.h" />

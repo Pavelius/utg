@@ -705,6 +705,7 @@ const char* stringbuilder::psstr(const char* pb, char end_symbol) {
 
 void stringbuilder::addof(const char* s) {
 	static grammar map[] = {
+		{"сел", "сла"},
 		{"ый", "ого"},
 		{"ий", "ого"},
 		{"ое", "ого"},

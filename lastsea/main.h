@@ -144,6 +144,7 @@ struct classi {
 	char			maximum[6];
 	char			levelup[5];
 	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
+	variants		event1, event2, event3, event4, event5;
 	const char*		getearn(ability_s v) const;
 };
 class player : public npcname {
@@ -160,6 +161,7 @@ public:
 	void			background() const;
 	void			chooseclass();
 	void			choosehistory();
+	void			epilog(int level);
 	void			generate();
 	const npcname&	getactive() const { return active ? friends[(active - 1) % (maxcount - 1)] : *this; }
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }

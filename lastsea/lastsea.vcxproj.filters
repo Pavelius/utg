@@ -124,9 +124,6 @@
     <Text Include="locale\ru\QuestActions.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\PirateCharacter.txt">
-      <Filter>Данные</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="art\example\indecies.png">

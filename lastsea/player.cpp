@@ -10,6 +10,7 @@ class player::string : public stringact {
 		if(pv) {
 			switch(padeg) {
 			case 1: sb.addby(pv->name); break;
+			case 2: sb.addof(pv->name); break;
 			default: sb.add(pv->name); break;
 			}
 		}
@@ -51,22 +52,32 @@ class player::string : public stringact {
 			addvname(*this, source.values[0]);
 		else if(equal(identifier, "ByValue1"))
 			addvname(*this, source.values[0], 1);
+		else if(equal(identifier, "OfValue1"))
+			addvname(*this, source.values[0], 2);
 		else if(equal(identifier, "Value2"))
 			addvname(*this, source.values[1]);
 		else if(equal(identifier, "ByValue2"))
 			addvname(*this, source.values[1], 1);
+		else if(equal(identifier, "OfValue2"))
+			addvname(*this, source.values[1], 2);
 		else if(equal(identifier, "Value3"))
 			addvname(*this, source.values[2]);
 		else if(equal(identifier, "ByValue3"))
 			addvname(*this, source.values[2], 1);
+		else if(equal(identifier, "OfValue3"))
+			addvname(*this, source.values[2], 2);
 		else if(equal(identifier, "Value4"))
 			addvname(*this, source.values[3]);
 		else if(equal(identifier, "ByValue4"))
 			addvname(*this, source.values[3], 1);
+		else if(equal(identifier, "OfValue4"))
+			addvname(*this, source.values[3], 2);
 		else if(equal(identifier, "Value5"))
 			addvname(*this, source.values[4]);
 		else if(equal(identifier, "ByValue5"))
 			addvname(*this, source.values[4], 1);
+		else if(equal(identifier, "OfValue5"))
+			addvname(*this, source.values[4], 2);
 		else if(equal(identifier, "Class"))
 			add(getnm(source.getclass().id));
 		else if(equal(identifier, "ShowCrew"))
@@ -159,6 +170,15 @@ void player::background() const {
 	if(!pn)
 		return;
 	utg::sb.clear();
+	act(pn->text);
+	draw::pause();
+}
+
+void player::epilog(int level) {
+	auto pn = find_message(variant(Class, classid), level);
+	if(!pn)
+		return;
+	auto& ei = getclass();
 	act(pn->text);
 	draw::pause();
 }

@@ -32,9 +32,10 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	answers::interactive = true;
-	game.script(0);
-	if(!draw::isnext())
-		draw::setnext(start_scene);
+	game.epilog(3);
+	//game.script(0);
+	//if(!draw::isnext())
+	//	draw::setnext(start_scene);
 }
 
 static void initializing() {
