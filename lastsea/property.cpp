@@ -37,6 +37,7 @@ BSMETA(speciali) = {
 	{}};
 BSMETA(tilei) = {
 	BSREQ(param), BSREQ(frame),
+	BSFLG(tags, tagi),
 	{}};
 BSDATAC(tilei, 128)
 BSMETA(tagi) = {
@@ -71,7 +72,7 @@ BSDATA(varianti) = {
 	{"Goal", VRSTD(goali), 1},
 	{"Group", VRSTD(groupi), 1},
 	{"Menu", VRSTD(menu), 1},
-	{"NavigationTile", VRSTD(tilei), 2},
+	{"NavigationTile", VRSTD(tilei), 0},
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},

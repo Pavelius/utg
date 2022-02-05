@@ -21,6 +21,7 @@ BSDATA(speciali) = {
 	{"RemoveTile"},
 	{"SetShip"},
 	{"MoveToPlayer"},
+	{"ShowMap"},
 	{"FullThrottle"},
 	{"TradeFriend"},
 	{"EatSupply"},

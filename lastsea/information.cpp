@@ -149,12 +149,8 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 }
 
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
-	auto index = game.getindex(object);
-	if(index != pathfind::Blocked) {
-		auto i = game.getlocation(index);
-		auto pt = tilei::find(i);
-		if(!pt)
-			return;
+	if(bsdata<tilei>::have(object)) {
+		auto pt = (tilei*)object;
 		auto pq = quest::find(pt->param);
 		if(!pq)
 			return;

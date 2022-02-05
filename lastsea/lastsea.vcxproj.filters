@@ -75,6 +75,9 @@
     <ClCompile Include="player.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="tilea.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -87,9 +90,6 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="counters.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="tile.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

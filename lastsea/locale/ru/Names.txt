@@ -59,6 +59,7 @@ GainTreasure: Добавлено [%1]
 GatherNews: Узнать местные новости
 General: Общие
 GenerateCrew: Создание команды
+GloablThreat: А в это время произошло кое-что очень плохое ...
 Grifter: Пройдоха
 Gun1: Левый борт
 Gun2: Правый борт
@@ -81,6 +82,7 @@ LargeBeast: Большой и величественный зверь
 LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
 Loaded: Заряжены
 LoseTreasure: Потеряно [%1]
+LostGame: Это конец. Вы проиграли.
 MadeUpInterrogationTactic: Несуществующая пытка
 MakeRoll: Выполнить бросок
 MapOfTheSeas: Показать карту океана
@@ -201,6 +203,7 @@ WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
 WhatDoYouWantToVisit: Что вы хотите делать?
 WhatTreasureToBury: Какие сокровища хотите закопать?
+WinGame: Мои поздравления, вы только что выиграли игру!
 Yes: Да
 YouGainStars: Вы получили звезду и обнулили репутацию
 YouRoll: Вы выбросили %2i%+3i=%1i.

@@ -21,14 +21,19 @@ static void test_direction() {
 
 void start_scene();
 
+void main_menu() {
+}
+
 static void starting() {
-	answers::header = getnm("GenerateCrew");
+	game.setmarker(0xFFFF);
+	answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
+	answers::interactive = true;
 	game.script(0);
-	draw::setnext(start_scene);
-	//game.script(826);
+	if(!draw::isnext())
+		draw::setnext(start_scene);
 }
 
 static void initializing() {

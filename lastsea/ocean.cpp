@@ -28,7 +28,10 @@ static void add_seamap() {
 }
 
 static void add_you_ship() {
-	auto pt = i2s(game.getmarker());
+	auto index = game.getmarker();
+	if(index == Blocked)
+		return;
+	auto pt = i2s(index);
 	marker_object = draw::addobject(pt.x, pt.y);
 	marker_object->resource = draw::getres("tiles");
 	marker_object->frame = 31;
@@ -45,7 +48,7 @@ static void add_tile(point pt, const sprite* resource, int frame, const void* da
 	p->fore = colors::border;
 }
 
-static void add_select(point pt, const void* data) {
+static void add_select(point pt, indext data) {
 	auto p = draw::addobject(pt.x, pt.y);
 	p->size = 2 * size / 3;
 	p->priority = 30;
@@ -55,10 +58,10 @@ static void add_select(point pt, const void* data) {
 	p->set(object::Hilite);
 }
 
-static void add_select(indext index, const void* data) {
+static void add_select(indext index) {
 	auto x = oceani::getx(index);
 	auto y = oceani::gety(index);
-	add_select(fh2p({x, y}, size), data);
+	add_select(fh2p({x, y}, size), index+1);
 }
 
 void oceani::showseamap() {
@@ -71,8 +74,8 @@ void oceani::showindecies() {
 	clearobjects();
 	add_camera();
 	add_seamap();
-	for(short y = 0; y < my; y++) {
-		for(short x = 0; x < mx; x++) {
+	for(short y = 0; y < map_y; y++) {
+		for(short x = 0; x < map_x; x++) {
 			auto i = getindex(x, y);
 			auto pt = draw::fh2p({x, y}, size);
 			auto p = draw::addobject(pt.x, pt.y);
@@ -87,57 +90,49 @@ void oceani::showindecies() {
 	chooseobject();
 }
 
-void oceani::createobjects() const {
-	auto tiles = getres("tiles");
+void oceani::createobjects() {
 	marker_object = 0;
 	clearobjects();
 	add_camera();
 	add_you_ship();
 	add_seamap();
-	for(short y = 0; y < my; y++) {
-		for(short x = 0; x < mx; x++) {
-			auto i = getindex(x, y);
-			auto t = getlocation(i);
-			if(!t)
-				continue;
-			auto pt = draw::fh2p({x, y}, size);
-			if(t == Blocked)
-				add_tile(pt, tiles, 0, data + i);
-			else if(t <= 30)
-				add_tile(pt, tiles, t, data + i);
-			else {
-				auto po = tilei::find(t);
-				add_tile(pt, tiles, po ? po->frame : 0, data + i);
-			}
-		}
+	auto tiles = getres("tiles");
+	for(auto& e : bsdata<tilei>()) {
+		if(e.is(Discarded))
+			continue;
+		if(e.index == Blocked)
+			continue;
+		auto x = getx(e.index);
+		auto y = gety(e.index);
+		add_tile(draw::fh2p({x, y}, size), tiles, e.frame, &e);
 	}
 }
 
 indext oceani::choose(const char* title) const {
-	auto pv = chooseobject();
+	int pv = (int)chooseobject();
 	if(!pv)
 		return Blocked;
-	return (indext*)pv - data;
+	return pv-1;
 }
 
-void oceani::blockwalls() const {
-	for(auto i = 0; i < mx * my; i++) {
-		if(data[i] == Blocked)
-			setmove(i, Blocked);
+static void blockwalls() {
+	for(auto& e : bsdata<tilei>()) {
+		if(e.isactive() && e.isblocked())
+			setmove(e.index, Blocked);
 	}
 }
 
-void oceani::blockopentiles() const {
-	for(auto i = 0; i < mx * my; i++) {
-		if(data[i] >= 1 && data[i] <= 30)
-			blocknearest(i, 1);
+static void blockopentiles() {
+	for(auto& e : bsdata<tilei>()) {
+		if(e.isactive() && e.isnavigation())
+			blocknearest(e.index, 1);
 	}
 }
 
-void oceani::blockalltiles() const {
-	for(auto i = 0; i < mx * my; i++) {
-		if(data[i])
-			setmove(i, Blocked);
+static void blockalltiles() {
+	for(auto& e : bsdata<tilei>()) {
+		if(e.isactive())
+			setmove(e.index, Blocked);
 	}
 }
 
@@ -145,7 +140,7 @@ void oceani::createselections(int from, int to) const {
 	for(auto i = 0; i < maxcount; i++) {
 		auto m = getmove(i);
 		if(m >= from && m <= to)
-			add_select(i, data + i);
+			add_select(i);
 	}
 }
 
@@ -182,7 +177,7 @@ indext oceani::chooseroute(const char* title, int range) const {
 }
 
 void oceani::initialize() {
-	pathfind::maxcount = mx * my;
+	pathfind::maxcount = map_x * map_y;
 	pathfind::to = to;
 }
 
@@ -199,55 +194,28 @@ static point getdirection(point hex, int direction) {
 indext oceani::to(indext i, int direction) {
 	auto x = getx(i), y = gety(i);
 	auto pt = getdirection({x, y}, direction);
-	if(pt.x < 0 || pt.y < 0 || pt.x >= mx || pt.y >= my)
+	if(pt.x < 0 || pt.y < 0 || pt.x >= map_x || pt.y >= map_y)
 		return Blocked;
 	return getindex(pt.x, pt.y);
 }
 
-indext oceani::getindex(const void* p) const {
-	if(p >= data && p < ((char*)data + sizeof(data)))
-		return (indext*)p - data;
-	return Blocked;
-}
-
-indext oceani::findindex(indext v) {
-	for(auto& e : data) {
-		if(e == v)
-			return &e - data;
-	}
-	return Blocked;
-}
-
-bool oceani::stepto(indext start, indext goal) {
-	auto p = findobject(data + start);
-	if(!p)
-		return false;
-	indext path[mx * my];
+bool tilei::moveto(indext goal, int bonus) {
 	clearpath();
 	blockwalls();
-	makewave(start);
-	auto count = getpath(start, goal, path, sizeof(path) / sizeof(path[0]));
+	makewave(index);
+	indext path[map_x * map_y];
+	auto count = getpath(index, goal, path, sizeof(path) / sizeof(path[0]));
 	if(!count)
 		return false;
-	p->move(i2s(path[count - 1]), appear_pause);
-	return true;
-}
-
-bool oceani::moveto(indext start, indext goal, int bonus) {
-	indext path[mx * my];
-	clearpath();
-	blockwalls();
-	makewave(start);
-	auto count = getpath(start, goal, path, sizeof(path) / sizeof(path[0]));
-	if(!count)
-		return false;
-	createobjects();
-	auto p = findobject(data + start);
+	oceani::createobjects();
+	auto p = findobject(this);
 	if(!p)
 		return false;
 	splashscreen(appear_pause);
-	while(count-- > 0 && bonus-- > 0)
-		p->move(i2s(path[count]), appear_pause);
+	while(count-- > 0 && bonus-- > 0) {
+		index = path[count];
+		p->move(i2s(index), appear_pause);
+	}
 	return true;
 }
 

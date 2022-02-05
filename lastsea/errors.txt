@@ -1,2 +1,32 @@
-﻿In file `Names.txt`:
- Define translate for `Treasure24`
+﻿In file `rules/Basic.txt`:
+ Line 3: Invalid source array where read identifier `param`
+ Line 3: Expected line feed
+In file `locale/ru/PirateHistory.txt`:
+ Line 1: Unknown variant identifier `Seeker`
+ Line 12: Unknown variant identifier `Assassin`
+ Line 23: Unknown variant identifier `AllSeein`
+ Line 34: Unknown variant identifier `Grifter`
+In file `locale/ru/PirateHistoryVariants.txt`:
+ Line 1: Can't find variant `Animal`
+ Line 4: Can't find variant `AnotherPirateOfYouCrew`
+ Line 7: Can't find variant `AttackMove`
+ Line 10: Can't find variant `CollectorItem`
+ Line 13: Can't find variant `FamousMan`
+ Line 16: Can't find variant `FriendOrFamousPerson`
+ Line 19: Can't find variant `CondimentSoupDessert`
+ Line 22: Can't find variant `FriendOrFamousPerson`
+ Line 25: Can't find variant `LargeBeast`
+ Line 28: Can't find variant `LargeAnimal`
+ Line 31: Can't find variant `LastNameFamilyYouAreAssassinate`
+ Line 34: Can't find variant `HeavyObject`
+ Line 37: Can't find variant `ParticularlySmellyAnimal`
+ Line 40: Can't find variant `PirateOfYouCrew`
+ Line 43: Can't find variant `PreferredWeapon`
+ Line 46: Can't find variant `ProfessionThatInvolvesTravel`
+ Line 49: Can't find variant `ReallyHighAndCoolNumber`
+ Line 52: Can't find variant `SomethingFoul`
+ Line 55: Can't find variant `TypeOfLocation`
+ Line 58: Can't find variant `UglyFamily`
+ Line 61: Can't find variant `WellRegardedProfession`
+In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 3: Can't find variant `DecipherOldMap`

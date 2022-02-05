@@ -223,7 +223,7 @@ typedef const char*(*fngetname)(const void* object);
 typedef void(*fncommand)(void* object);
 // Common functions
 bool								equal(const char* s1, const char* s2);
-template<typename T> int			getbsi(const T* v) { return bsdata<T>::source.indexof(v); }
+template<typename T> short unsigned getbsi(const T* v) { return bsdata<T>::source.indexof(v); }
 const char*							getdescription(const char* id);
 int									getdigitscount(unsigned number); // Get digits count of number. For example if number=100, result be 3.
 const char*							getnm(const char* id);
@@ -266,9 +266,10 @@ template<class T> struct meta_decoy { typedef T value; };
 template<> struct meta_decoy<const char*> { typedef const char* value; };
 template<class T> struct meta_decoy<T*> : meta_decoy<T> {};
 template<class T> struct meta_decoy<const T*> : meta_decoy<T> {};
-template<class T, unsigned N> struct meta_decoy<T[N]> : meta_decoy<T> {};
+template<class T, size_t N> struct meta_decoy<T[N]> : meta_decoy<T> {};
 template<class T> struct meta_decoy<T[]> : meta_decoy<T> {};
 template<class T> struct meta_decoy<const T> : meta_decoy<T> {};
 template<class T> struct meta_decoy<vector<T>> : meta_decoy<T> {};
 template<class T> struct meta_decoy<sliceu<T>> : meta_decoy<T> {};
-template<class T, unsigned N> struct meta_decoy<adat<T, N>> : meta_decoy<T> {};
+template<class T> struct meta_decoy<slice<T>> : meta_decoy<T> {};
+template<class T, size_t N> struct meta_decoy<adat<T, N>> : meta_decoy<T> {};

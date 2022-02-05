@@ -168,6 +168,7 @@
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="cannoneer.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="tilea.cpp" />
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="trigger.cpp" />
   </ItemGroup>
@@ -176,7 +177,6 @@
     <ClInclude Include="counters.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="sprite_util.h" />
-    <ClInclude Include="tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

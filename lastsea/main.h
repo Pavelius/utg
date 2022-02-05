@@ -9,7 +9,6 @@
 #include "pathfind.h"
 #include "quest.h"
 #include "tag.h"
-#include "tile.h"
 #include "utg.h"
 
 #pragma once
@@ -29,7 +28,7 @@ enum ability_s : unsigned char {
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
 	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
-	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip, MoveToPlayer,
+	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip, MoveToPlayer, ShowMap,
 	FullThrottle, TradeFriend,
 	EatSupply, ZeroSupplyIfNot, ZeroRerollIfNot,
 	ZeroCounters, ZeroDanger, CounterName, ChooseCounter, ChooseCustom,
@@ -46,6 +45,7 @@ enum special_s : unsigned char {
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
+	Discarded,
 };
 enum trigger_s : unsigned char {
 	NoTrigger,
@@ -72,44 +72,54 @@ enum answer_s {
 typedef flagable<8> taga;
 typedef adat<const void*, 32> useda;
 const int player_count = 4;
+const indext map_x = 7;
+const indext map_y = 6;
 
 struct abilityi {
 	const char*		id;
 	unsigned		flags;
 	constexpr bool	is(abilityf_s v) const { return (flags & FG(v)) != 0; }
 };
+struct tilei {
+	short unsigned	frame;
+	int				param;
+	short unsigned	index;
+	flagable<4>		tags;
+	void			discard();
+	static tilei*	findindex(indext v);
+	static tilei*	find(int param);
+	constexpr bool	is(tag_s v) const { return tags.is(v); }
+	constexpr bool	isactive() const { return index!=0xFFFF; }
+	constexpr bool	isblocked() const { return param== 0xFFFF; }
+	constexpr bool	isnavigation() const { return param >= 1 && param <= 30; }
+	bool			moveto(indext goal, int bonus);
+	static tilei*	pick(int param);
+	static tilei*	pick();
+	void			setindex(indext v) { index = v; }
+};
+class tilea : public adat<tilei*, 128> {
+public:
+	void			select(int from, int to);
+};
 class oceani {
-	static const indext	mx = 7;
-	static const indext	my = 6;
-	indext			data[mx * my];
 	indext			marker;
-	void			blockwalls() const;
-	void			blockopentiles() const;
-	void			blockalltiles() const;
 public:
 	void			addpossiblecourse() const;
 	void			addpossiblemove(int range) const;
 	indext			choose(const char* title) const;
 	indext			chooseroute(const char* title, int range = 1) const;
-	void			createobjects() const;
+	static void		createobjects();
 	void			createselections(int from, int to) const;
-	indext			findindex(indext v);
-	indext			getindex(const void* p) const;
-	static indext	getindex(short x, short y) { return y * mx + x; }
+	static indext	getindex(short x, short y) { return y * map_x + x; }
 	static point	gethexsize();
-	indext			getlocation(indext i) const { return data[i]; }
 	indext			getmarker() const { return marker; }
-	static short	getx(indext i) { return i % mx; }
-	static short	gety(indext i) { return i / mx; }
+	static short	getx(indext i) { return i % map_x; }
+	static short	gety(indext i) { return i / map_x; }
 	static void		initialize();
-	bool			isblocked(indext i) const { return ispassabletile(data[i]); }
-	static bool		ispassabletile(indext v) { return v != pathfind::Blocked; }
-	bool			moveto(indext start, indext goal, int count);
-	void			setlocation(indext i, int v) { data[i] = v; }
 	void			setmarker(indext v) { marker = v; }
 	static void		showindecies();
 	void			showseamap();
-	void			showsplash();
+	static void		showsplash();
 	bool			stepto(indext start, indext goal);
 	static indext	to(indext i, int direction);
 };
@@ -244,10 +254,9 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
 	adat<indext, 256> treasures;
-	adat<indext, 64> tiles;
 public:
 	static void		apply(variant v);
-	void			createtiles();
+	static void		createtiles();
 	void			createtreasure();
 	void			clear();
 	static void		choosecounter();
@@ -259,7 +268,6 @@ public:
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
 	const treasurei* picktreasure();
-	indext			picktile();
 	static void		script(int page);
 	static void		showseamap();
 	void			setgoal(const goali* v) {}

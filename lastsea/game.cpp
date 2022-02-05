@@ -4,9 +4,10 @@
 #include "pathfind.h"
 
 gamei game;
-static int last_tile, last_counter, last_value, last_action;
+static int last_counter, last_value, last_action;
 static int round_skill_bonus;
 static bool	need_sail, need_stop, need_stop_actions;
+static tilei* last_tile;
 static special_s game_result;
 static ability_s last_ability;
 const quest* last_quest;
@@ -15,9 +16,19 @@ static const quest* new_location;
 counters variables;
 
 void print(stringbuilder& sb, const variants& source);
+void main_menu();
 
 static void clear_message() {
 	utg::sb.clear();
+}
+
+static void stop_and_clear(const char* format) {
+	if(!utg::sb)
+		return;
+	if(!format)
+		format = getnm("Continue");
+	draw::pause(format);
+	clear_message();
 }
 
 static void add_header(const quest* ph) {
@@ -481,25 +492,30 @@ void start_scene() {
 		need_continue = true;
 		need_sail = false;
 		clear_message();
-		game.script(last_tile);
+		game.script(last_tile->param);
 	}
-	if(need_continue)
-		draw::setnext(start_scene);
+	if(need_continue) {
+		if(!draw::isnext())
+			draw::setnext(start_scene);
+	}
 }
 
-static int sail_next_hexagon() {
+static tilei* sail_next_hexagon() {
 	auto index = game.oceani::chooseroute(0, 1);
 	if(index == pathfind::Blocked)
 		return 0;
 	game.setmarker(index);
-	auto tile_id = game.getlocation(index);
-	if(!tile_id) {
-		game.setlocation(index, game.picktile());
+	auto p = tilei::findindex(index);
+	if(!p) {
+		p = tilei::pick();
+		if(!p)
+			return 0;
+		p->setindex(index);
 		game.createobjects();
 		game.showsplash();
 	}
 	need_sail = true;
-	return game.getlocation(index);
+	return p;
 }
 
 static void sail_ship(int bonus) {
@@ -538,6 +554,7 @@ static void captain_mission() {
 
 static void global_threat() {
 	static int pages[] = {791, 792, 793, 794, 795};
+	stop_and_clear(getnm("GloablThreat"));
 	special_mission(game.get(Threat), pages);
 }
 
@@ -679,19 +696,32 @@ void gamei::createtreasure() {
 	zshuffle(treasures.data, treasures.count);
 }
 
-void gamei::createtiles() {
-	tiles.clear();
-	for(auto i = 1; i <= 30; i++)
-		tiles.add(i);
-	zshuffle(tiles.data, tiles.count);
+static void return_all_tiles() {
+	for(auto& e : bsdata<tilei>()) {
+		e.tags.remove(Discarded);
+		e.index = 0xFFFF;
+	}
 }
 
-indext gamei::picktile() {
-	if(!tiles)
-		return 0;
-	auto i = tiles.data[0];
-	tiles.remove(0);
-	return i;
+static void discard_unused_tiles(int from, int to) {
+	for(auto& e : bsdata<tilei>()) {
+		if(e.param >= from && e.param <= to)
+			continue;
+		if(e.isactive())
+			continue;
+		e.tags.set(Discarded);
+	}
+}
+
+static void remove_navigation_tiles(int from, int to) {
+	for(auto& e : bsdata<tilei>()) {
+		if(e.isactive() && e.param >= from && e.param <= to)
+			e.index = 0xFFFF;
+	}
+}
+
+void gamei::createtiles() {
+	return_all_tiles();
 }
 
 const treasurei* gamei::picktreasure() {
@@ -725,10 +755,10 @@ void gamei::chartacourse(int count) {
 		addpossiblecourse();
 		showsplash();
 		auto index = choose(temp);
-		auto tile = picktile();
-		if(!tile)
+		auto p = tilei::pick();
+		if(!p)
 			break;
-		setlocation(index, tile);
+		p->setindex(index);
 		count--;
 	}
 	createobjects();
@@ -775,13 +805,21 @@ static void check_danger() {
 	}
 }
 
-static void stop_and_clear(const char* format) {
-	if(!utg::sb)
-		return;
-	if(!format)
-		format = getnm("Continue");
-	draw::pause(format);
-	clear_message();
+static void apply_tile(int base, int bonus) {
+	if(bonus > 0)
+		last_value = base + bonus;
+	else {
+		last_value = base - bonus;
+		for(auto& e : bsdata<tilei>()) {
+			if(e.isactive() && e.param == last_value)
+				e.discard();
+		}
+	}
+}
+
+static void show_map() {
+	oceani::createobjects();
+	oceani::showsplash();
 }
 
 static void special_command(special_s v, int bonus) {
@@ -807,18 +845,21 @@ static void special_command(special_s v, int bonus) {
 		game.setmarker(bonus);
 		break;
 	case MoveToPlayer:
+		last_tile = tilei::find(last_value);
+		if(!last_tile)
+			break;
 		stop_and_clear(0);
-		last_value = game.findindex(last_tile);
-		game.moveto(last_value, game.getmarker(), bonus);
-		last_value = game.findindex(last_tile);
-		if(last_value == game.getmarker())
-			game.script(last_tile);
+		last_tile->moveto(game.getmarker(), bonus);
+		if(last_tile->index == game.getmarker())
+			game.script(last_tile->param);
 		break;
-	case Tile000: last_tile = bonus; break;
-	case Tile900: last_tile = 900 + bonus; break;
-	case TileRock: last_tile = pathfind::Blocked; break;
+	case Tile000: apply_tile(0, bonus); break;
+	case Tile900: apply_tile(900, bonus); break;
+	case TileRock: last_value = 65535; break;
 	case AddTile:
-		game.setlocation(bonus, last_tile);
+		last_tile = tilei::pick(last_value);
+		if(last_tile)
+			last_tile->index = bonus;
 		break;
 	case Page000: case Page100: case Page200: case Page300: case Page400:
 	case Page500: case Page600: case Page700: case Page800: case Page900:
@@ -893,6 +934,9 @@ static void special_command(special_s v, int bonus) {
 	case Sail:
 		last_tile = sail_next_hexagon();
 		stop_and_clear(getnm("SailAway"));
+		break;
+	case ShowMap:
+		show_map();
 		break;
 	case ZeroCounters:
 		variables.clear();
@@ -1011,7 +1055,8 @@ static void special_command(special_s v, int bonus) {
 	case WinGame:
 	case LostGame:
 		game_result = v;
-		draw::pause();
+		draw::pause(getnm(bsdata<speciali>::elements[v].id));
+		draw::setnext(main_menu);
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
