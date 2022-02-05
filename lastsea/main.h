@@ -8,6 +8,7 @@
 #include "message.h"
 #include "pathfind.h"
 #include "quest.h"
+#include "recordset.h"
 #include "tag.h"
 #include "utg.h"
 
@@ -183,26 +184,29 @@ struct treasurei {
 	flaga			tags;
 	variants		gain, loss, use;
 	short unsigned	owner;
-	static const treasurei* find(const char* id);
 	void			apply() const;
+	static treasurei* find(const char* id);
 	void			gaining() const;
 	bool			is(tag_s v) const { return tags.is(v); }
 	bool			isactive() const { return owner != 0xFFFF; }
 	bool			isdiscardable() const;
+	bool			isdiscarded() const { return is(Discarded); }
 	void			lossing() const;
+	static treasurei* pickvaluable();
+	static treasurei* pickstory(int number);
 	static void		prepare();
+	void			setowner(const void* object);
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	void			triggered();
 };
-class chest : private adat<indext, 32> {
+class chest {
 public:
 	void			apply(trigger_s type, ability_s v);
-	const treasurei* choosetreasure(const char* title, const char* cancel) const;
-	void			gaintreasure(const treasurei* pv);
+	treasurei*		choosetreasure(const char* title, const char* cancel) const;
+	void			gaintreasure(treasurei* pv);
 	int				getbonus(ability_s v) const;
 	int				gettreasurecount(tag_s v) const;
-	iterator<treasurei> gettreasures() const { return iterator<treasurei>(*this); }
-	void			losstreasure(const treasurei* pv);
+	void			losstreasure(treasurei* pv);
 };
 class pirate : public player, public chest {
 	static const int max_treasures = 4;
@@ -256,7 +260,6 @@ public:
 class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	char			scenario[32];
 	flagable<2>		locked;
-	adat<indext, 256> treasures;
 public:
 	static void		apply(variant v);
 	static void		createtiles();
@@ -270,7 +273,6 @@ public:
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
-	const treasurei* picktreasure();
 	static void		script(int page);
 	static void		showseamap();
 	void			setgoal(const goali* v) {}

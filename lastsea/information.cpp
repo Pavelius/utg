@@ -165,13 +165,15 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 
 static void listoftreasures() {
 	char temp[260]; stringbuilder sb(temp);
-	for(auto p : game.gettreasures()) {
-		if(p->is(Valuable)) {
+	for(auto& e : bsdata<treasurei>()) {
+		if(!e.isactive() || e.isdiscarded())
+			continue;
+		if(e.is(Valuable)) {
 			sb.clear();
-			sb.add("[%1]", getnm(p->id));
-			draw::label(temp, 0, p);
+			sb.add("[%1]", getnm(e.id));
+			draw::label(temp, 0, &e);
 		} else
-			draw::label(getnm(p->id), 0, p);
+			draw::label(getnm(e.id), 0, &e);
 	}
 }
 

@@ -192,10 +192,9 @@ void pirate::gaintreasures(int count) {
 				set(Supply, get(Supply) + (count - i));
 				return;
 			}
-			auto pv = game.picktreasure();
-			if(!pv)
-				continue;
-			gaintreasure(pv);
+			auto pv = treasurei::pickvaluable();
+			if(pv)
+				gaintreasure(pv);
 		}
 	} else {
 		count = -count;
@@ -329,7 +328,7 @@ void pirate::tradefriend() {
 		set(Reroll, get(Reroll) + 1);
 	else {
 		losstreasure(p);
-		gaintreasure(game.picktreasure());
+		gaintreasure(treasurei::pickvaluable());
 	}
 }
 

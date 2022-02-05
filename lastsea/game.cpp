@@ -262,12 +262,14 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 	}
 	if(index >= 5000) {
 		auto need_bonus = index - 5000;
-		for(auto p : game.gettreasures()) {
-			if(p->trigger != WhenChooseSpecial)
+		for(auto& e : bsdata<treasurei>()) {
+			if(!e.isactive() || e.isdiscarded())
 				continue;
-			if(p->bonus != need_bonus)
+			if(e.trigger != WhenChooseSpecial)
 				continue;
-			add_treasure(san, p, p->use);
+			if(e.bonus != need_bonus)
+				continue;
+			add_treasure(san, &e, e.use);
 		}
 	}
 	san.choose(title, count);
@@ -411,22 +413,26 @@ static void add_treasure(answers& an, const treasurei* p) {
 }
 
 static void add_treasure(answers& an, trigger_s trigger) {
-	for(auto p : game.gettreasures()) {
-		if(p->trigger != trigger)
+	for(auto& e : bsdata<treasurei>()) {
+		if(!e.isactive() || e.isdiscarded())
 			continue;
-		add_treasure(an, p);
+		if(e.trigger != trigger)
+			continue;
+		add_treasure(an, &e);
 	}
 }
 
 static void add_treasure(answers& an, trigger_s trigger, ability_s ability, useda& used) {
-	for(auto p : game.gettreasures()) {
-		if(p->trigger != trigger)
+	for(auto& e : bsdata<treasurei>()) {
+		if(!e.isactive() || e.isdiscarded())
 			continue;
-		if(p->ability != ability)
+		if(e.trigger != trigger)
 			continue;
-		if(used.is(p))
+		if(e.ability != ability)
 			continue;
-		an.add(p, getnm("UseTreasureToGainBonus"), getnm(p->id), p->bonus);
+		if(used.is(&e))
+			continue;
+		an.add(&e, getnm("UseTreasureToGainBonus"), getnm(e.id), e.bonus);
 	}
 }
 
@@ -687,14 +693,7 @@ void gamei::clear() {
 }
 
 void gamei::createtreasure() {
-	auto m = bsdata<treasurei>::source.getcount();
-	treasures.clear();
-	for(auto& e : bsdata<treasurei>()) {
-		if(!e.is(Valuable))
-			continue;
-		treasures.add(bsdata<treasurei>::source.indexof(&e));
-	}
-	zshuffle(treasures.data, treasures.count);
+	treasurei::prepare();
 }
 
 static void return_all_tiles() {
@@ -723,14 +722,6 @@ static void remove_active_tiles(int from, int to) {
 
 void gamei::createtiles() {
 	return_all_tiles();
-}
-
-const treasurei* gamei::picktreasure() {
-	if(!treasures.count)
-		return 0;
-	auto pv = bsdata<treasurei>::elements + treasures.data[0];
-	treasures.remove(0);
-	return pv;
 }
 
 void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {

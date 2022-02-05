@@ -74,3 +74,9 @@ void recordset::distinct() {
 void recordset::shuffle() {
 	zshuffle(data, count);
 }
+
+void* recordset::random() const {
+	if(!count)
+		return 0;
+	return data[rand() % count];
+}
