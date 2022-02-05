@@ -139,9 +139,9 @@ public:
 	int								findps(const char* value, unsigned offset, size_t size) const;
 	const void*						findu(const void* value, size_t size) const;
 	const char*						findus(const char* value, size_t size) const;
-	unsigned						getmaximum() const { return count_maximum & 0x7FFFFFFF; }
-	unsigned						getcount() const { return count; }
-	unsigned						getsize() const { return size; }
+	size_t							getmaximum() const { return count_maximum & 0x7FFFFFFF; }
+	size_t							getcount() const { return count; }
+	size_t							getsize() const { return size; }
 	constexpr bool					have(const void* element) const { return element >= data && element < ((char*)data + size * count); }
 	int								indexof(const void* element) const;
 	void*							insert(int index, const void* element);

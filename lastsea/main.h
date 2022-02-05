@@ -182,12 +182,15 @@ struct treasurei {
 	char			bonus;
 	flaga			tags;
 	variants		gain, loss, use;
+	short unsigned	owner;
 	static const treasurei* find(const char* id);
 	void			apply() const;
 	void			gaining() const;
 	bool			is(tag_s v) const { return tags.is(v); }
+	bool			isactive() const { return owner != 0xFFFF; }
 	bool			isdiscardable() const;
 	void			lossing() const;
+	static void		prepare();
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	void			triggered();
 };

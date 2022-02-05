@@ -1,2 +1,1 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 581: Can't find variant `Support`
+﻿

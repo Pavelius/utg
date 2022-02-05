@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "bonus.h"
+#include "chooselist.h"
 #include "gender.h"
 #include "message.h"
 #include "menu.h"

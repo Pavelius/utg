@@ -9,6 +9,7 @@ struct recordset : public adat<void*> {
 	void* choosedef(const char* title) const;
 	void distinct();
 	static const char* getid(const void* v) { return *((const char**)v); }
+	template<typename T> slice<T*> getrecords() const { return slice<T*>((T**)data, count); }
 	void select(const array& source);
 	void select(const array& source, fnvisible proc);
 	void shuffle();

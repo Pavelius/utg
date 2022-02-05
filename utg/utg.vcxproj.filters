@@ -180,6 +180,9 @@
     <ClCompile Include="iterator.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="dataset.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -315,6 +318,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="chooselist.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="dataset.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

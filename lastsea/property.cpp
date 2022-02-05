@@ -1,6 +1,5 @@
 #include "bsreq.h"
 #include "main.h"
-#include "widget.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
@@ -41,9 +40,6 @@ BSMETA(tilei) = {
 	{}};
 BSDATAC(tilei, 128)
 BSMETA(tagi) = {
-	BSREQ(id),
-	{}};
-BSMETA(widget) = {
 	BSREQ(id),
 	{}};
 BSMETA(quest) = {

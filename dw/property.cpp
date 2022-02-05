@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "main.h"
+#include "widget.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
@@ -66,26 +67,24 @@ BSMETA(itemi) = {
 	{}};
 BSDATAC(itemi, 256)
 
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
-#define VRSTX(T) bsmeta<T>::meta, bsdata<T>::source_ptr, 1
-#define VRSTN(T, N) bsmeta<T>::meta, bsdata<T>::source_ptr, N, FG(varianti::NotFoundByName)
+#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VRSTD(abilityi)},
-	{"Action", VRSTD(actioni)},
-	{"Advancement", VRSTN(advancement, 2)},
-	{"Alignment", VRSTD(alignmenti)},
-	{"Class", VRSTD(classi)},
-	{"Creature", VRSTD(creature), FG(varianti::NotFoundByName), 0, creature::getinfost, creature::getpropertyst},
-	{"Diety", VRSTD(dietyi)},
-	{"Front", VRSTD(front)},
-	{"Gender", VRSTD(genderi)},
-	{"Item", VRSTD(itemi)},
-	{"Menu", VRSTD(menu)},
-	{"Move", VRSTD(movei)},
-	{"Pack", VRSTD(packi)},
-	{"Race", VRSTD(racei)},
-	{"Tag", VRSTD(tagi)},
-	{"Widget", VRSTD(widget)},
+	{"Ability", VRSTD(abilityi), 1},
+	{"Action", VRSTD(actioni), 1},
+	{"Advancement", VRSTD(advancement), 2},
+	{"Alignment", VRSTD(alignmenti), 1},
+	{"Class", VRSTD(classi), 1},
+	{"Creature", VRSTD(creature)},
+	{"Diety", VRSTD(dietyi), 1},
+	{"Front", VRSTD(front), 1},
+	{"Gender", VRSTD(genderi), 1},
+	{"Item", VRSTD(itemi), 1},
+	{"Menu", VRSTD(menu), 1},
+	{"Move", VRSTD(movei), 1},
+	{"Pack", VRSTD(packi), 1},
+	{"Race", VRSTD(racei), 1},
+	{"Tag", VRSTD(tagi), 1},
+	{"Widget", VRSTD(widget), 1},
 };
 assert_enum(varianti, Widget)

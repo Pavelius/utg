@@ -2,7 +2,7 @@
 
 effectable game;
 
-class apply_move : public utg::choosei {
+class apply_move : public chooselist {
 	void apply(int index, const void* object) override {
 		auto p = (messagei*)object;
 		for(auto v : p->conditions) {
@@ -10,14 +10,12 @@ class apply_move : public utg::choosei {
 				game.apply(v);
 		}
 	}
-public:
-	apply_move(answers& an) : choosei(an) {}
 };
 
 static void choose_options(variant v, int choose_count) {
 	if(!choose_count)
 		return;
-	answers an;
+	apply_move an;
 	for(auto& e : bsdata<messagei>()) {
 		if(e.type != v)
 			continue;
@@ -25,8 +23,7 @@ static void choose_options(variant v, int choose_count) {
 			continue;
 		an.add(&e, e.text);
 	}
-	apply_move source(an);
-	source.choose(0, choose_count);
+	an.choose(0, choose_count);
 }
 
 void creature::roll(move_s v) {

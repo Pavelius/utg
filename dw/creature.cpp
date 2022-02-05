@@ -51,7 +51,7 @@ void creature::choose_name() {
 	answers an;
 	for(auto v : slice<short unsigned>(temp, count))
 		an.add((void*)v, charname::getname(v));
-	setname(utg::choose(an, "Как вас зовут?", 0));
+	setname((int)an.choose("Как вас зовут?", 0));
 }
 
 static bool match_party(variant v) {
@@ -104,7 +104,7 @@ void creature::generate() {
 			continue;
 		e.apply(this, add_variant, set_value);
 	}
-	if(!utg::interactive)
+	if(!answers::interactive)
 		random_ability();
 	else
 		choose_abilities();

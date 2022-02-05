@@ -68,5 +68,5 @@ void squad::move(move_s action) {
 	default:
 		break;
 	}
-	utg::pause();
+	draw::pause();
 }

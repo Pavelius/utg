@@ -13,5 +13,5 @@ void statable::apply_ability(int v) {
 	}
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(getnm("ApplyAbility"), v);
-	abilities[utg::choose(an, temp, 0)] = v;
+	abilities[(int)an.choose(temp, 0)] = v;
 }

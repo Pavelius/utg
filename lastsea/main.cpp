@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "drawobject.h"
 #include "main.h"
+#include "recordset.h"
 #include "widget.h"
 
 static void test_direction() {
@@ -52,9 +53,18 @@ static void initialize_widgets() {
 void initialize_information_widgets();
 
 #ifdef _DEBUG
-static void test_handlers() {
-}
+
 void util_main();
+
+static void test_handlers() {
+	recordset source;
+	source.select(bsdata<abilityi>::source);
+	for(auto p : source.getrecords<abilityi>()) {
+		if(!p->id)
+			break;
+	}
+}
+
 #endif // _DEBUG
 
 int main(int argc, char* argv[]) {

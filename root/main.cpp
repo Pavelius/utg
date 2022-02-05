@@ -12,14 +12,14 @@ static void generate_character() {
 	player.abilities[Cunning] -= 1;
 	player.move(EngageMelee);
 	player.apply(game);
-	utg::pause();
+	draw::pause();
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::read("rules/Moves.txt");
 	messagei::read("rules/MoveMessages.txt");
-	utg::url = "northmen";
+	answers::resid = "northmen";
 	return draw::start(generate_character, true);
 }
 

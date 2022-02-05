@@ -1,7 +1,11 @@
+#include "bsreq.h"
 #include "crt.h"
 #include "widget.h"
 
 BSDATAC(widget, 128)
+BSMETA(widget) = {
+	BSREQ(id),
+	{}};
 
 const widget* widget::last;
 

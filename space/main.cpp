@@ -15,7 +15,7 @@ static void test_game() {
 }
 
 int main(int argc, char* argv[]) {
-	utg::url = "EliteTroops";
+	answers::resid = "EliteTroops";
 	bsreq::read("rules/Basic.txt");
 	messagei::read("rules/Quest.txt");
 	return draw::start(test_game, true);

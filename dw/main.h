@@ -5,6 +5,7 @@
 #include "crt.h"
 #include "dice.h"
 #include "flagable.h"
+#include "front.h"
 #include "gender.h"
 #include "namenpc.h"
 #include "quest.h"

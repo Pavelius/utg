@@ -25,3 +25,9 @@ void treasurei::triggered() {
 	if(isdiscardable())
 		game.losstreasure(this);
 }
+
+void treasurei::prepare() {
+	for(auto& e : bsdata<treasurei>()) {
+		e.owner = 0xFFFF;
+	}
+}

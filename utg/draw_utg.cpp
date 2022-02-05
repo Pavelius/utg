@@ -315,8 +315,9 @@ void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 	draw::tab_pixels = textw('0') * 6;
 	hide_separator = caret;
 	for(auto v : elements) {
-		if(v.geti().metadata == bsmeta<widget>::meta)
-			bsdata<widget>::elements[v.value].paint();
+		auto object = v.getpointer();
+		if(bsdata<widget>::have(object))
+			((widget*)object)->paint();
 		else {
 			auto id = v.getid();
 			sb.clear(); pget(object, v, sb);
@@ -584,20 +585,6 @@ void utg::getstatus(const void* object, stringbuilder& sb) {
 	}
 }
 
-static void list_of_fronts() {
-	char temp[260]; stringbuilder sb(temp);
-	for(auto& e : bsdata<front>()) {
-		if(!e)
-			continue;
-		auto pr = e.present;
-		if(!pr)
-			pr = "%1";
-		auto pn = getnm(e.id);
-		sb.clear(); sb.add(pr, pn, e.current, e.maximum);
-		label(temp, 0, &e);
-	}
-}
-
 static void beforemodal() {
 	hilite_type = figure::Rect;
 	tips_caret.x = metrics::padding + metrics::border;
@@ -622,7 +609,6 @@ void initialize_png();
 static void initialize_widgets() {
 	widget::add("Separator", separator);
 	widget::add("RightAlignValue", right_align_value);
-	widget::add("ListOfFronts", list_of_fronts);
 }
 
 void check_translation();
