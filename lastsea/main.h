@@ -41,7 +41,7 @@ enum special_s : unsigned char {
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
 	Entry, MarkEntry, MarkVisit, SetVisit,
 	BonusToAll,
-	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfLast,
+	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfEntry, IfLast,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,

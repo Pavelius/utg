@@ -64,6 +64,7 @@ static bool allow_promt(const quest& e) {
 			continue;
 		switch(v.value) {
 		case IfVisit: return category::get(e.index) == v.counter;
+		case IfEntry: return game.istag(AnswerEntry + v.counter);
 		default: break;
 		}
 	}
