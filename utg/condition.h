@@ -6,5 +6,4 @@ struct conditioni {
 	int					param;
 	fnproc				proc;
 	static conditioni*	add(const char* id, fnproc proc, int param = 0);
-	static void			initialize();
 };

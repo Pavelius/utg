@@ -70,6 +70,16 @@ int getnumber(propertyi::indext object, propertyi::indext type) {
 	return 0;
 }
 
+void addnumber(propertyi::indext object, propertyi::indext type, int value) {
+	addproperty(object, type, getnumber(object, type) + value);
+}
+
+void removenumber(propertyi::indext object, propertyi::indext type) {
+	auto p = findv(object, type, bsdata<propertyi::value<int>>::source);
+	if(p)
+		p->type = 0;
+}
+
 const char* getstring(propertyi::indext object, propertyi::indext type) {
 	if(!type)
 		return 0;

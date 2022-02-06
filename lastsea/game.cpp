@@ -1,4 +1,3 @@
-#include "category.h"
 #include "counters.h"
 #include "main.h"
 #include "pathfind.h"
@@ -10,7 +9,7 @@ static bool	need_sail, need_stop, need_stop_actions;
 static tilei* last_tile;
 static special_s game_result;
 static ability_s last_ability;
-static propertyi::indext prop_end_scene;
+static propertyi::indext prop_end_scene, prop_visit;
 const quest* last_quest;
 const quest* last_location;
 static const quest* new_location;
@@ -67,6 +66,10 @@ static bool treasuer_active(const treasurei* p) {
 	return p->isactive() && !p->isdiscarded();
 }
 
+static bool is_tag(int counter, int param) {
+	return game.istag(param + counter);
+}
+
 static bool allow_promt(const quest& e) {
 	for(auto v : e.tags) {
 		if(v.type != Special)
@@ -75,7 +78,7 @@ static bool allow_promt(const quest& e) {
 		case IfEntry: return game.istag(AnswerEntry + v.counter);
 		case IfStory: return treasuer_active(treasurei::pickstory(v.counter));
 		case IfTreasure: return treasuer_active(treasurei::pickvaluable(v.counter));
-		case IfVisit: return category::get(e.index) == v.counter;
+		case IfVisit: return getnumber(e.index, prop_visit) == v.counter;
 		default: break;
 		}
 	}
@@ -1029,7 +1032,7 @@ static void special_command(special_s v, int bonus) {
 	case MarkVisit:
 		if(!bonus)
 			bonus = 1;
-		category::set(last_quest->index, category::get(last_quest->index) + bonus);
+		addnumber(last_quest->index, prop_visit, bonus);
 		break;
 	case MarkEntry:
 		if(bonus >= 0) {
@@ -1048,9 +1051,9 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case SetVisit:
 		if(!bonus)
-			category::remove(last_quest->index);
+			removenumber(last_quest->index, prop_visit);
 		else
-			category::set(last_quest->index, bonus);
+			addproperty(last_quest->index, prop_visit, bonus);
 		break;
 	case IfLast:
 		test_last_action();
@@ -1092,4 +1095,5 @@ void gamei::apply(variant v) {
 
 void gamei::initialize() {
 	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
+	prop_visit = propertyi::add("Visit", propertyi::Number);
 }

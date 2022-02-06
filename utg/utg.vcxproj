@@ -154,7 +154,6 @@
     <ClCompile Include="avatarable.cpp" />
     <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="bstream.cpp" />
-    <ClCompile Include="category.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
     <ClCompile Include="condition.cpp" />
@@ -215,7 +214,6 @@
     <ClInclude Include="bonus.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
-    <ClInclude Include="category.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="condition.h" />

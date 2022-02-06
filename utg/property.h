@@ -25,6 +25,8 @@ struct propertyi {
 	static void		initialize();
 	static const char* read(const char* p, indext object);
 };
+void addnumber(propertyi::indext object, propertyi::indext type, int value);
+template<typename T> void addproperty(propertyi::indext object, propertyi::indext type, T value);
 int getnumber(propertyi::indext object, propertyi::indext type);
 const char* getstring(propertyi::indext object, propertyi::indext type);
-template<typename T> void addproperty(propertyi::indext object, propertyi::indext type, T value);
+void removenumber(propertyi::indext object, propertyi::indext type);

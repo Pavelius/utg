@@ -171,9 +171,6 @@
     <ClCompile Include="tag.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="category.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="chooselist.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -315,9 +312,6 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="screenshoot.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="category.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="iterator.h">
