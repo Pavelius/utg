@@ -1,11 +1,2 @@
-﻿In file `locale/ru/QuestActions.txt`:
- Line 33: Unknown property name `Next`
- Line 61: Unknown property name `Next`
- Line 98: Unknown property name `Next`
- Line 134: Unknown property name `Next`
- Line 170: Unknown property name `Next`
- Line 200: Unknown property name `Next`
- Line 249: Unknown property name `Next`
- Line 282: Unknown property name `Next`
- Line 317: Unknown property name `Next`
- Line 358: Unknown property name `Next`
+﻿In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 676: Can't find variant `Story`
