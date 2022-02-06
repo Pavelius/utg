@@ -2,7 +2,6 @@
 
 Treasure19 abilities(0 0 0 1 1 0)
  tags Valuable
-
 Treasure24 abilities(0 0 2 0 0 0)
  tags NoDigging Valuable
 Treasure25 abilities(0 0 1 0 1 0)
@@ -96,6 +95,12 @@ Treasure85 abilities(0 1 0 0 0 1)
 Treasure88 abilities(1 0 0 1 0 0)
  tags Valuable
 
+Story1
+Story2
+Story3
+Story4
+Story5
+Story6
 Story20
 Story23
 Story24 abilities(0 0 0 0 1 0)
