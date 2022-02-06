@@ -176,6 +176,7 @@
     <ClCompile Include="message.cpp" />
     <ClCompile Include="namenpc.cpp" />
     <ClCompile Include="pathfind.cpp" />
+    <ClCompile Include="property.cpp" />
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
@@ -197,7 +198,6 @@
     <ClCompile Include="szdup.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="utg.cpp" />
-    <ClCompile Include="variable.cpp" />
     <ClCompile Include="variant.cpp" />
     <ClCompile Include="recordset.cpp" />
     <ClCompile Include="widget.cpp" />
@@ -236,6 +236,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="namenpc.h" />
     <ClInclude Include="pathfind.h" />
+    <ClInclude Include="property.h" />
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />
@@ -250,7 +251,6 @@
     <ClInclude Include="rect.h" />
     <ClInclude Include="stringact.h" />
     <ClInclude Include="stringbuilder.h" />
-    <ClInclude Include="variable.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="recordset.h" />
     <ClInclude Include="widget.h" />

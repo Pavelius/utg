@@ -19,9 +19,10 @@ const char* shiplog::getentryname(int v) {
 	auto p = quest::find(v);
 	if(!p)
 		return "Not found entry";
-	if(!p->header)
+	auto pv = p->getheader();
+	if(!pv)
 		return "Entry exist but text empthy";
-	return p->header;
+	return pv;
 }
 
 const char* shiplog::getentrytext(int v) {

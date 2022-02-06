@@ -27,5 +27,18 @@ struct archive {
 	template<class T> void set(T& value) {
 		set(&value, sizeof(value));
 	}
+	template<class T> void setc(array& v) {
+		if(writemode) {
+			set(v.count);
+		} else {
+			size_t size;
+			set(size);
+			v.reserve(size);
+			v.setcount(size);
+		}
+		auto pe = v.end();
+		for(auto p = v.begin(); p < pe; p += v.size)
+			set(*((T*)p));
+	}
 };
 template<> void archive::set<array>(array& v);

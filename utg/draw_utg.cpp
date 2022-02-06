@@ -280,6 +280,12 @@ void draw::label(const char* title, const char* value, const void* object) {
 	height = push_height;
 }
 
+void draw::label(const char* title, const char* value, const void* object, fnevent click) {
+	label(title, value, object);
+	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
+		execute(click, 0, 0, object);
+}
+
 static void separator() {
 	if(hide_separator == caret)
 		return;
@@ -302,11 +308,8 @@ static void right_align_value() {
 void widget::button() {
 	if(!last)
 		return;
-	if(!last->click)
-		return;
-	label(getnm(last->id), 0, last);
-	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
-		execute(last->click, 0, 0, last);
+	if(last->click)
+		label(getnm(last->id), 0, last, last->click);
 }
 
 void draw::label(const void* object, const variants& elements, fngetinfo pget) {

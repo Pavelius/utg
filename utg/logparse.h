@@ -4,8 +4,16 @@
 #pragma once
 
 namespace log {
+struct valuei {
+	const char*	text;
+	long		number;
+	void*		data;
+	variant		identifier;
+	void clear() { memset(this, 0, sizeof(*this)); }
+	const char* read(const char* p, stringbuilder& sb);
+};
 extern bool allowparse;
-bool		checksym(const char* p, char sym);
+bool checksym(const char* p, char sym);
 const char* getstring(stringbuilder& sb);
 const char* readbon(const char* p, int& bonus);
 const char* readidn(const char* p, stringbuilder& result);

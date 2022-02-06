@@ -4,6 +4,10 @@
 #include "recordset.h"
 #include "widget.h"
 
+#ifdef _DEBUG
+
+void util_main();
+
 static void test_direction() {
 	auto i0 = oceani::to(11, 0);
 	auto i1 = oceani::to(11, 1);
@@ -20,6 +24,17 @@ static void test_direction() {
 	auto pt = oceani::gethexsize(); // 84 x 72
 }
 
+static void test_handlers() {
+	recordset source;
+	source.select(bsdata<abilityi>::source);
+	for(auto p : source.getrecords<abilityi>()) {
+		if(!p->id)
+			break;
+	}
+}
+
+#endif // _DEBUG
+
 void start_scene();
 
 void main_menu() {
@@ -27,15 +42,16 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	//answers::interactive = false;
+	answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
-	//answers::interactive = true;
-	game.epilog(2);
-	//game.script(0);
-	//if(!draw::isnext())
-	//	draw::setnext(start_scene);
+	answers::interactive = true;
+	game.write("test.sav");
+	//game.epilog(2);
+	game.script(0);
+	if(!draw::isnext())
+		draw::setnext(start_scene);
 }
 
 static void initializing() {
@@ -47,26 +63,11 @@ static void initializing() {
 	quest::read("locale/ru/QuestActions.txt");
 }
 
+void initialize_information_widgets();
+
 static void initialize_widgets() {
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
-
-void initialize_information_widgets();
-
-#ifdef _DEBUG
-
-void util_main();
-
-static void test_handlers() {
-	recordset source;
-	source.select(bsdata<abilityi>::source);
-	for(auto p : source.getrecords<abilityi>()) {
-		if(!p->id)
-			break;
-	}
-}
-
-#endif // _DEBUG
 
 int main(int argc, char* argv[]) {
 #ifdef _DEBUG
@@ -81,6 +82,8 @@ int main(int argc, char* argv[]) {
 	answers::console = &utg::sb;
 	draw::object::initialize();
 	oceani::initialize();
+	quest::initialize();
+	gamei::initialize();
 	initialize_widgets();
 	initialize_information_widgets();
 	return draw::start(starting, true, initializing);

@@ -9,15 +9,6 @@ static char			temp[512];
 static const char*	p;
 static int			last_bonus;
 
-namespace {
-struct valuei {
-	const char*		text;
-	long			number;
-	void*			data;
-	void clear() { memset(this, 0, sizeof(*this)); }
-};
-}
-
 static void next() {
 	p = log::skipws(p);
 }

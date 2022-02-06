@@ -272,6 +272,7 @@ public:
 	static void		choosecounter();
 	void			chartacourse(int v);
 	static int		getpage();
+	static void		initialize();
 	void			information(const char* format, ...);
 	void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;
@@ -287,6 +288,7 @@ public:
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 	void			warning(const char* format, ...);
+	void			write(const char* url);
 };
 extern gamei		game;
 extern int			last_result, last_roll, last_bonus;

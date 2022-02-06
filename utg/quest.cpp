@@ -4,6 +4,9 @@
 
 BSDATAC(quest, 2048)
 
+propertyi::indext quest::prop_image;
+propertyi::indext quest::prop_header;
+
 using namespace log;
 
 static bool isanswer(const char* p) {
@@ -71,24 +74,14 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 		p = readidn(p, result);
 		p = skipws(p);
 		auto pn = result.begin();
-		if(equal(pn, "Image")) {
-			p = read_params(p, result);
-			pe->image = getstring(result);
-		} else if(equal(pn, "Header")) {
-			p = read_params(p, result);
-			pe->header = getstring(result);
-		} else if(equal(pn, "Next"))
-			p = read_params(p, pe->next);
-		else {
-			int bonus; p = readbon(p, bonus);
-			p = skipws(p);
-			variant v = (const char*)result.begin();
-			if(!v)
-				log::error(p, "Can't find variant `%1`", result.begin());
-			else
-				v.counter = bonus;
-			add(source, v);
-		}
+		int bonus; p = readbon(p, bonus);
+		p = skipws(p);
+		variant v = (const char*)result.begin();
+		if(!v)
+			log::error(p, "Can't find variant `%1`", result.begin());
+		else
+			v.counter = bonus;
+		add(source, v);
 	}
 	return p;
 }
@@ -100,6 +93,7 @@ static const char* read_event(const char* p, short& parent, stringbuilder& sb) {
 	auto pe = bsdata<quest>::add(); pe->clear();
 	pe->index = parent;
 	pe->next = -1;
+	p = propertyi::read(skipws(p), getbsi(pe));
 	p = read_variants(skipws(p), sb, pe->tags, pe);
 	p = read_string(skipwscr(p), sb);
 	pe->text = getstring(sb);
@@ -198,10 +192,12 @@ void quest::run(int id) {
 		auto p = findprompt(id);
 		if(!p)
 			return;
-		if(p->header)
-			answers::header = p->header;
-		if(p->image)
-			answers::resid = p->image;
+		auto pv = p->getheader();
+		if(pv)
+			answers::header = pv;
+		pv = p->getimage();
+		if(pv)
+			answers::resid = pv;
 		p = p->choose(p->index);
 		if(!p)
 			break;
@@ -226,4 +222,10 @@ void quest::read(const char* url) {
 		p = read_answers(p, event_parent, sb);
 	}
 	log::close();
+}
+
+void quest::initialize() {
+	propertyi::initialize();
+	prop_header = propertyi::add("Header", propertyi::Text);
+	prop_image = propertyi::add("Image", propertyi::Text);
 }

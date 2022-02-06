@@ -24,6 +24,7 @@ bool buttonfd(const char* title);
 bool isnext();
 void label(const char* id, const char* value);
 void label(const char* id, const char* value, const void* object);
+void label(const char* id, const char* value, const void* object, fnevent proc);
 void label(const void* object, const variants& elements, fngetinfo pget);
 void noavatar();
 void setcaret(int x, int y);

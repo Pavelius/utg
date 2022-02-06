@@ -49,7 +49,7 @@ public:
 	char*				get() const { return p; }
 	static const char*	getbycount(const char* id, int count);
 	static int			getnum(const char* v);
-	unsigned			getlenght() const { return pb - p; }
+	unsigned			getlenght() const { return p - pb; }
 	unsigned			getmaximum() const { return pe - pb - 1; }
 	bool				isempthy() const { return !pb || pb[0] == 0; }
 	static bool			ischa(unsigned char sym) { return (sym >= 'A' && sym <= 'Z') || (sym >= 'a' && sym <= 'z') || sym >= 0xC0; }

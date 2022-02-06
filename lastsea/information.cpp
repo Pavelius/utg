@@ -154,8 +154,9 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		auto pq = quest::find(pt->param);
 		if(!pq)
 			return;
-		if(pq->header)
-			sb.add(pq->header);
+		auto pv = pq->getheader();
+		if(pv)
+			sb.add(pv);
 	}
 	else if(bsdata<quest>::have(object))
 		sfgetinfo(object, sb);

@@ -10,6 +10,7 @@ static bool	need_sail, need_stop, need_stop_actions;
 static tilei* last_tile;
 static special_s game_result;
 static ability_s last_ability;
+static propertyi::indext prop_end_scene;
 const quest* last_quest;
 const quest* last_location;
 static const quest* new_location;
@@ -32,10 +33,12 @@ static void stop_and_clear(const char* format) {
 }
 
 static void add_header(const quest* ph) {
-	if(ph->header)
-		answers::header = ph->header;
-	if(ph->image)
-		answers::resid = ph->image;
+	auto pv = ph->getheader();
+	if(pv)
+		answers::header = pv;
+	pv = ph->getimage();
+	if(pv)
+		answers::resid = pv;
 }
 
 static void add_answer(answers& an, const quest* p) {
@@ -498,8 +501,9 @@ void start_scene() {
 		round_skill_bonus = 0;
 		choose_actions(player_count);
 		play_actions();
-		if(last_location && last_location->next)
-			game.script(last_location->next);
+		auto pn = getnumber(getbsi(last_location), prop_end_scene);
+		if(pn)
+			game.script(pn);
 		if(!new_location)
 			new_location = last_location;
 	}
@@ -1084,4 +1088,8 @@ void gamei::apply(variant v) {
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
 	case Goal: game.setgoal((goali*)v.getpointer()); break;
 	}
+}
+
+void gamei::initialize() {
+	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
 }

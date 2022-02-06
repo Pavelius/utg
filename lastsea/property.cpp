@@ -44,7 +44,7 @@ BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(quest) = {
-	BSREQ(text), BSREQ(image), BSREQ(header),
+	BSREQ(text),
 	BSREQ(index), BSREQ(next),
 	{}};
 BSMETA(triggeri) = {

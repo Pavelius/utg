@@ -291,6 +291,15 @@ void* array::add(const void* element) {
 	return p;
 }
 
+void* array::addfind(const char* id) {
+	auto i = find(id, 0);
+	if(i!=-1)
+		return ptr(i);
+	auto p = add();
+	*((const char**)p) = id;
+	return p;
+}
+
 array::~array() {
 	clear();
 }

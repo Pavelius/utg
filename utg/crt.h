@@ -127,6 +127,7 @@ public:
 	void*							add();
 	void*							addz() { auto p = add(); memset(p, 0, size); return p; }
 	void*							add(const void* element);
+	void*							addfind(const char* id);
 	void*							addu(const void* element, unsigned count);
 	const char*						addus(const char* element, unsigned count);
 	char*							begin() const { return (char*)data; }

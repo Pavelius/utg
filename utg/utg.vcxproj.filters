@@ -186,7 +186,7 @@
     <ClCompile Include="condition.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="variable.cpp">
+    <ClCompile Include="property.cpp">
       <Filter>Support</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,7 +332,7 @@
     <ClInclude Include="condition.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="variable.h">
+    <ClInclude Include="property.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
