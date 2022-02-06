@@ -42,7 +42,7 @@ enum special_s : unsigned char {
 	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
 	Entry, MarkEntry, MarkVisit, SetVisit,
 	BonusToAll,
-	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfVisit, IfEntry, IfStory, IfTreasure, IfLast,
+	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfLast,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -55,7 +55,7 @@ enum trigger_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Gender, Goal, Group, Menu, NavigationTile,
+	Ability, Card, Class, Condition, Gender, Goal, Group, Menu, NavigationTile,
 	Quest, Special, Tag, Trigger, Value, Widget
 };
 enum abilityf_s : unsigned char {
@@ -241,9 +241,6 @@ public:
 	void			set(ability_s v, int i);
 	void			sortactions();
 	void			tradefriend();
-};
-struct counter {
-	short			current, maximum;
 };
 class shiplog {
 	short unsigned	goal_id;

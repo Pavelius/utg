@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "condition.h"
 #include "main.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
@@ -65,6 +66,7 @@ BSDATA(varianti) = {
 	{"Ability", VRSTD(abilityi), 1},
 	{"Card", VRSTD(treasurei), 1, 0, treasurei::sfgetinfo},
 	{"Class", VRSTD(classi), 1},
+	{"Condition", VRSTD(conditioni), 1},
 	{"Gender", VRSTD(genderi), 1},
 	{"Goal", VRSTD(goali), 1},
 	{"Group", VRSTD(groupi), 1},

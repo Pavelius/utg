@@ -160,8 +160,9 @@
     <ClCompile Include="ocean.cpp" />
     <ClCompile Include="pirate.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="property.cpp" />
+    <ClCompile Include="metadata.cpp" />
     <ClCompile Include="roll12.cpp" />
+    <ClCompile Include="script.cpp" />
     <ClCompile Include="serial.cpp" />
     <ClCompile Include="shiplog.cpp" />
     <ClCompile Include="special.cpp" />

@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "condition.h"
 #include "logparse.h"
 #include "quest.h"
 
@@ -6,6 +7,7 @@ BSDATAC(quest, 2048)
 
 propertyi::indext quest::prop_image;
 propertyi::indext quest::prop_header;
+const quest* quest::last;
 
 using namespace log;
 
@@ -125,20 +127,6 @@ const char* quest::getname(int id) {
 	return p->text;
 }
 
-static bool isallow(const variants& source, bool run) {
-	if(!variant::sfapply)
-		return true;
-	for(auto v : source) {
-		if(!variant::sfapply(v, run))
-			return false;
-	}
-	return true;
-}
-
-void quest::apply(const variants& source) {
-	isallow(source, true);
-}
-
 bool quest::is(variant v) const {
 	for(auto e : tags) {
 		if(e.type == v.type && e.value == v.value)
@@ -161,7 +149,7 @@ const quest* quest::findprompt(short id) {
 			continue;
 		if(e.isanswer())
 			continue;
-		if(!isallow(e.tags, false))
+		if(!e.allow())
 			continue;
 		return &e;
 	}
@@ -180,7 +168,7 @@ const quest* quest::choose(int id) const {
 			continue;
 		if(!e.isanswer())
 			continue;
-		if(!isallow(e.tags, false))
+		if(!e.allow())
 			continue;
 		an.add(&e, e.text);
 	}
@@ -222,6 +210,20 @@ void quest::read(const char* url) {
 		p = read_answers(p, event_parent, sb);
 	}
 	log::close();
+}
+
+bool quest::allow(const variants& tags) const {
+	auto push_last = last;
+	last = this;
+	for(auto v : tags) {
+		conditioni* pc = v;
+		if(!pc)
+			break;
+		if(!pc->proc(v.counter, pc->param))
+			return false;
+	}
+	last = push_last;
+	return true;
 }
 
 void quest::initialize() {

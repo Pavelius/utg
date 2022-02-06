@@ -65,6 +65,8 @@ static void initializing() {
 
 void initialize_information_widgets();
 
+void initialize_script();
+
 static void initialize_widgets() {
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
 }
@@ -84,6 +86,7 @@ int main(int argc, char* argv[]) {
 	oceani::initialize();
 	quest::initialize();
 	gamei::initialize();
+	initialize_script();
 	initialize_widgets();
 	initialize_information_widgets();
 	return draw::start(starting, true, initializing);

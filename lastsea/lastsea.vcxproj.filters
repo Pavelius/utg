@@ -18,7 +18,7 @@
     <ClCompile Include="pirate.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="property.cpp">
+    <ClCompile Include="metadata.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="ability.cpp">
@@ -79,6 +79,9 @@
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="serial.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="script.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>

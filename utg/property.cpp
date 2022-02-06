@@ -71,7 +71,7 @@ int getnumber(propertyi::indext object, propertyi::indext type) {
 }
 
 void addnumber(propertyi::indext object, propertyi::indext type, int value) {
-	addproperty(object, type, getnumber(object, type) + value);
+	setproperty(object, type, getnumber(object, type) + value);
 }
 
 void removenumber(propertyi::indext object, propertyi::indext type) {
@@ -90,7 +90,7 @@ const char* getstring(propertyi::indext object, propertyi::indext type) {
 }
 
 template<typename T>
-void addproperty(propertyi::indext object, propertyi::indext type, T value) {
+void setproperty(propertyi::indext object, propertyi::indext type, T value) {
 	addv(object, type, bsdata<propertyi::value<T>>::source, &value);
 }
 
@@ -114,10 +114,10 @@ const char* propertyi::read(const char* p, indext object) {
 			continue;
 		switch(bsdata<propertyi>::get(pi).type) {
 		case Text:
-			addproperty(object, pi, value.text);
+			setproperty(object, pi, value.text);
 			break;
 		case Number:
-			addproperty(object, pi, (int)value.number);
+			setproperty(object, pi, (int)value.number);
 			break;
 		}
 	}
