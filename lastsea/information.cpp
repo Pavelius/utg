@@ -204,18 +204,18 @@ static void listofcounters() {
 	}
 }
 
-static void showlabel(npcname& e, const char* format) {
+static void showlabel(npcname& e, const char* format, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	e.getname(sb);
 	if(format) {
 		sb.add(" - ");
-		sb.add(format);
+		sb.addv(format, xva_start(format));
 	}
 	draw::label(temp, 0, &e);
 }
 
 static void listofcharacters() {
-	showlabel(game, getnm("YourPirate"));
+	showlabel(game, getnm("YourPirate"), getnm(game.getclass().id));
 	for(auto& e : game.getfriends())
 		showlabel(e, 0);
 }

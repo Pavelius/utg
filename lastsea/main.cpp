@@ -50,6 +50,7 @@ static void starting() {
 	game.write("test.sav");
 	//game.epilog(2);
 	game.script(0);
+	menu::current_mode = "Game";
 	if(!draw::isnext())
 		draw::setnext(start_scene);
 }

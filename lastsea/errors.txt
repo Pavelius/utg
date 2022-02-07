@@ -1,7 +1,2 @@
-﻿In file `locale/ru/QuestActions.txt`:
- Line 507: Can't find variant `Story1`
- Line 508: Can't find variant `Story2`
- Line 509: Can't find variant `Story3`
- Line 510: Can't find variant `Story4`
- Line 511: Can't find variant `Story5`
- Line 512: Can't find variant `Story6`
+﻿In file `Names.txt`:
+ Define translate for `Story1`

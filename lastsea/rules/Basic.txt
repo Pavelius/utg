@@ -143,9 +143,9 @@ DecipherOldMap danger(2) reach_location(963)
 
 #Menu
 
-PagePirate
+PagePirate mode(Game)
  elements Exploration Brawl Hunting Aim Swagger Navigation Separator Crew Hull Supply Infamy Reroll Misfortune ListOfCounters
-PageShip
+PageShip mode(Game)
  elements Danger Threat Stars Separator Gun1 Gun2 Gun3 Gun4 Separator Separator ListOfTreasures
-PageShipLog
+PageShipLog mode(Game)
  elements ListOfCharacters Separator ListOfGoals ListOfRecords MapOfTheSeas

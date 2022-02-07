@@ -137,7 +137,7 @@ SpearFish: Порыбачить копьем
 Stars: Созвездие
 Steal: Украсть
 StopBury: Хватит. Вы закопали уже достаточно.
-Story1: 
+Story1: Вялая обезьяна
 Story20: Крутая шляпа
 Story23: Черная метка
 Story24: Кривой нож
@@ -218,5 +218,5 @@ YouRoll: Вы выбросили %2i%+3i=%1i.
 YouRollAbility: Тестируем %1.
 YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив больший кубик вышло %2i%+3i=%1i.
 YouVisitLocation: Перед вами %1.
-YourPirate: [это вы]
+YourPirate: пират [%-1]
 ZeroSupplyIfNot: Обнулить припасы или

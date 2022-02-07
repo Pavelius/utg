@@ -180,12 +180,16 @@ static unsigned choose_pages_by_focus(void** ps, void** pe) {
 		for(auto& e : bsdata<menu>()) {
 			if(e.source != pm)
 				continue;
+			if(!e.isvisible())
+				continue;
 			if(ps < pe)
 				*ps++ = &e;
 		}
 	}
 	for(auto& e : bsdata<menu>()) {
 		if(e.source != 0)
+			continue;
+		if(!e.isvisible())
 			continue;
 		if(ps < pe)
 			*ps++ = &e;
