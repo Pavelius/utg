@@ -170,14 +170,6 @@ static bool allow_choose(special_s v, int bonus) {
 	switch(v) {
 	case EatSupply:
 		return allow_choose(Supply, -game.getmaximum(Eat));
-	case ReloadGun:
-		if(bonus >= 0)
-			return game.reloadgun(4, false);
-		else
-			return game.unloadgun(4, false);
-		break;
-	case AddGun:
-		return game.addgun(bonus, true, false);
 	default:
 		return true;
 	}
@@ -512,26 +504,6 @@ static tilei* sail_next_hexagon() {
 	return p;
 }
 
-static void sail_ship(int bonus) {
-	auto cancel = getnm("StopMoveShip");
-	while(!draw::isnext()) {
-		if(bonus == 0) {
-			if(!apply_choose(AnswerCustom + 3, 3, cancel))
-				return;
-			last_tile = sail_next_hexagon();
-			break;
-		} else if(bonus == 1) {
-			if(!apply_choose(AnswerCustom + 3, 2, cancel))
-				return;
-			last_tile = sail_next_hexagon();
-		} else {
-			if(!apply_choose(AnswerCustom + 6, 1, cancel))
-				return;
-			last_tile = sail_next_hexagon();
-		}
-	}
-}
-
 static void special_mission(int v, int* pages) {
 	v = v - 1;
 	if(v >= 0 && v < 5)
@@ -778,103 +750,14 @@ static void test_last_action() {
 		need_stop = true;
 }
 
-static void show_map() {
-	oceani::createobjects();
-	oceani::showsplash();
-}
-
 static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case PageForward:
-		apply_effect(find_forward(bonus));
-		break;
-	case PageNext:
-		draw::pause();
-		apply_effect(find_forward(bonus));
-		break;
-	case AddGun:
-		if(game.addgun(bonus, true, true))
-			game.information(getnm("GunAdded"), bonus);
-		break;
-	case AddGunUnloaded:
-		if(game.addgun(bonus, false, true))
-			game.information(getnm("GunAddedUnloaded"), bonus);
-		break;
-	case ReloadGun:
-	case ReloadGunOrHull:
-		if(bonus >= 0) {
-			if(game.reloadgun(4, true))
-				game.information(getnm("GunReloaded"));
-			else if(v == ReloadGunOrHull)
-				game.set(Hull, game.get(Hull) + 1);
-		} else {
-			if(game.unloadgun(4, true))
-				game.warning(getnm("GunUnloaded"));
-			else if(v == ReloadGunOrHull)
-				game.set(Hull, game.get(Hull) - 1);
-		}
-		break;
 	case EatSupply:
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
 			game.set(Supply, game.get(Supply) - bonus);
 		else
 			need_stop = true;
-		break;
-	case FullThrottle:
-		sail_ship(bonus);
-		break;
-	case TradeFriend:
-		game.tradefriend();
-		break;
-	case Sail:
-		if(bonus > 0)
-			clear_message();
-		last_tile = sail_next_hexagon();
-		stop_and_clear(getnm("SailAway"));
-		break;
-	case ShowMap:
-		show_map();
-		break;
-	case ZeroCounters:
-		variables.clear();
-		break;
-	case Name:
-		last_value = AnswerName + bonus;
-		break;
-	case Entry:
-		last_value = game.istag(AnswerEntry + bonus) ? 1 : 0;
-		break;
-	case CounterName:
-		variables.setname(bonus, quest::getname(last_value));
-		break;
-	case ChooseCounter:
-		game.choosecounter();
-		break;
-	case VisitManyTimes: case VisitRequired:
-		break;
-	case StopActions:
-		need_stop_actions = true;
-		break;
-	case ChooseCustom:
-		apply_choose(AnswerCustom + bonus, 1);
-		break;
-	case MarkVisit:
-		if(!bonus)
-			bonus = 1;
-		addnumber(quest::last->index, prop_visit, bonus);
-		break;
-	case SetVisit:
-		if(!bonus)
-			removenumber(quest::last->index, prop_visit);
-		else
-			setproperty(quest::last->index, prop_visit, bonus);
-		break;
-	case IfLast:
-		test_last_action();
-		break;
-	case RemoveAllNavigation:
-		remove_active_tiles(1, 30);
 		break;
 	default:
 		game.warning(getnm("UnknownCommand"), v, bonus);
@@ -1134,6 +1017,118 @@ static void tile_move_to_player(int bonus, int param) {
 		game.script(last_tile->param);
 }
 
+static void show_map(int bonus, int param) {
+	oceani::createobjects();
+	oceani::showsplash();
+}
+
+static void sail_away(int bonus, int param) {
+	if(bonus > 0)
+		clear_message();
+	last_tile = sail_next_hexagon();
+	stop_and_clear(getnm("SailAway"));
+}
+
+static void zero_counters(int bonus, int param) {
+	variables.clear();
+}
+
+static void page_forward(int bonus, int param) {
+	if(param)
+		draw::pause();
+	apply_effect(find_forward(bonus));
+}
+
+static bool choose_add_gun(int bonus, int param) {
+	return game.addgun(bonus, true, false);
+}
+
+static void add_gun(int bonus, int param) {
+	if(game.addgun(bonus, param, true))
+		game.information(getnm(param ? "GunAdded" : "GunAddedUnloaded"), bonus);
+}
+
+static bool choose_reload_gun(int bonus, int param) {
+	if(bonus >= 0)
+		return game.reloadgun(4, false);
+	else
+		return game.unloadgun(4, false);
+}
+
+static void reload_gun_or_add(int bonus, int param) {
+	if(bonus >= 0) {
+		if(game.reloadgun(4, true))
+			game.information(getnm("GunReloaded"));
+		else if(param)
+			game.set((ability_s)param, game.get((ability_s)param) + 1);
+	} else {
+		if(game.unloadgun(4, true))
+			game.warning(getnm("GunUnloaded"));
+		else if(param)
+			game.set((ability_s)param, game.get((ability_s)param) - 1);
+	}
+}
+
+static void full_throttle(int bonus, int param) {
+	auto cancel = getnm("StopMoveShip");
+	while(!draw::isnext()) {
+		if(bonus == 0) {
+			if(!apply_choose(AnswerCustom + 3, 3, cancel))
+				return;
+			last_tile = sail_next_hexagon();
+			break;
+		} else if(bonus == 1) {
+			if(!apply_choose(AnswerCustom + 3, 2, cancel))
+				return;
+			last_tile = sail_next_hexagon();
+		} else {
+			if(!apply_choose(AnswerCustom + 6, 1, cancel))
+				return;
+			last_tile = sail_next_hexagon();
+		}
+	}
+}
+
+static void trade_friend(int bonus, int param) {
+	game.tradefriend();
+}
+
+static void play_stars(int bonus, int param) {
+}
+
+//case Entry:
+//	last_value = game.istag(AnswerEntry + bonus) ? 1 : 0;
+//	break;
+//case CounterName:
+//	variables.setname(bonus, quest::getname(last_value));
+//	break;
+//case ChooseCounter:
+//	game.choosecounter();
+//	break;
+//case StopActions:
+//	need_stop_actions = true;
+//	break;
+//case ChooseCustom:
+//	apply_choose(AnswerCustom + bonus, 1);
+//	break;
+//case MarkVisit:
+//	if(!bonus)
+//		bonus = 1;
+//	addnumber(quest::last->index, prop_visit, bonus);
+//	break;
+//case SetVisit:
+//	if(!bonus)
+//		removenumber(quest::last->index, prop_visit);
+//	else
+//		setproperty(quest::last->index, prop_visit, bonus);
+//	break;
+//case IfLast:
+//	test_last_action();
+//	break;
+//case RemoveAllNavigation:
+//	remove_active_tiles(1, 30);
+//	break;
+
 void initialize_script() {
 	// Properties
 	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
@@ -1147,6 +1142,8 @@ void initialize_script() {
 }
 
 BSDATA(scripti) = {
+	{"AddGun", add_gun, 1, choose_add_gun},
+	{"AddGunUnloaded", add_gun, 0, choose_add_gun},
 	{"AddTile", add_tile},
 	{"Block", block_action},
 	{"BonusToAll", add_round_bonus, -1},
@@ -1161,6 +1158,7 @@ BSDATA(scripti) = {
 	{"CounterE", set_counter, 4},
 	{"CounterX", set_counter, -1},
 	{"Damage", damage},
+	{"FullThrottle", full_throttle},
 	{"IfChoosedAction", if_choosed_action},
 	{"IfEqual", if_equal, 0},
 	{"IfNonZeroForward", if_non_zero_forward},
@@ -1169,6 +1167,7 @@ BSDATA(scripti) = {
 	{"LostGame", end_game, 0},
 	{"MarkEntry", mark_entry, AnswerEntry},
 	{"MoveToPlayer", tile_move_to_player},
+	{"Name", set_value, AnswerName},
 	{"Page000", run_script, 0},
 	{"Page100", run_script, 100},
 	{"Page200", run_script, 200},
@@ -1179,22 +1178,31 @@ BSDATA(scripti) = {
 	{"Page700", run_script, 700},
 	{"Page800", run_script, 800},
 	{"Page900", run_script, 900},
+	{"PageForward", page_forward, 0},
+	{"PageNext", page_forward, 1},
 	{"PenaltyA", minus_counter, 0},
 	{"PenaltyB", minus_counter, 1},
 	{"PenaltyC", minus_counter, 2},
 	{"PenaltyD", minus_counter, 3},
 	{"PenaltyE", minus_counter, 4},
+	{"PlayStars", play_stars},
+	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun},
+	{"ReloadGunOrHull", reload_gun_or_add, Hull},
 	{"Roll", make_roll},
 	{"RollGuns", make_roll, 1},
 	{"RollSilent", make_roll_silent},
+	{"Sail", sail_away},
 	{"Scene", change_scene},
 	{"Scout", scout_area},
 	{"SetShip", set_ship},
+	{"ShowMap", show_map},
 	{"Skill", add_skill},
 	{"Tile000", apply_tile, 0},
 	{"Tile900", apply_tile, 900},
 	{"TileRock", apply_tile, 65535},
+	{"TradeFriend", trade_friend},
 	{"WinGame", end_game, 1},
+	{"ZeroCounters", zero_counters},
 	{"ZeroDanger", set_ability, Danger},
 	{"ZeroRerollIfNot", set_ability_if_not, Reroll},
 	{"ZeroSupplyIfNot", set_ability_if_not, Supply},

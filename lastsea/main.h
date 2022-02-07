@@ -27,15 +27,13 @@ enum ability_s : unsigned char {
 	Eat
 };
 enum special_s : unsigned char {
-	Name, Nickname, NicknameEnd,
-	RemoveTile, ShowMap,
-	FullThrottle, TradeFriend,
+	Nickname, NicknameEnd,
+	RemoveTile,
 	EatSupply,
-	ZeroCounters, CounterName, ChooseCounter, ChooseCustom,
-	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
+	CounterName, ChooseCounter, ChooseCustom,
+	UpgradeGun,
 	VisitManyTimes, VisitRequired, NotUseAction, StopActions,
-	RemoveAllNavigation, PlayStars, Sail,
-	PageForward, PageNext,
+	RemoveAllNavigation, PlayStars,
 	Entry, MarkVisit, SetVisit,
 	IfLast,
 };
