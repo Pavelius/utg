@@ -113,6 +113,71 @@ void gamei::information(ability_s v, int count) {
 		information("%1%+2i", getnm(ei.id), count);
 }
 
+static const messagei* find_message(variant type, int value) {
+	for(auto& e : bsdata<messagei>()) {
+		if(e.type == type && e.value == value)
+			return &e;
+	}
+	return 0;
+}
+
+static void print_message(const char* format) {
+	auto push_prompt = answers::prompt;
+	char temp[4096]; stringbuilder sb(temp);
+	answers::prompt = temp;
+	game.actn(sb, format, 0);
+	draw::pause();
+	answers::prompt = push_prompt;
+}
+
+static void add_events(answers& an, variant type, int level) {
+	char temp[32]; stringbuilder sb(temp);
+	for(auto i = 0; i < level; i++) {
+		auto pn = find_message(type, 5 + i);
+		if(!pn)
+			continue;
+		sb.clear(); sb.add("Event%1i", i + 1);
+		an.add(pn->text, getnm(temp));
+	}
+}
+
+void player::background() const {
+	if(!answers::interactive)
+		return;
+	auto type = variant(Class, classid);
+	auto pn = find_message(type, 4);
+	if(!pn)
+		return;
+	auto push_prompt = answers::prompt;
+	char name[260]; stringbuilder sn(name);
+	getname(sn);
+	sn.add(" - ");
+	sn.add(getnm("YourPirate"), getnm(getclass().id));
+	auto push_header = answers::header;
+	answers::header = name;
+	char temp[4096]; stringbuilder sb(temp);
+	actn(sb, pn->text, 0);
+	answers::prompt = temp;
+	while(!draw::isnext()) {
+		answers an; add_events(an, type, 5);
+		auto p = (const char*)an.choose(0, getnm("CloseHistory"));
+		if(!p)
+			break;
+		print_message(p);
+	}
+	answers::header = push_header;
+	answers::prompt = push_prompt;
+}
+
+void player::epilog(int level) {
+	auto pn = find_message(variant(Class, classid), level);
+	if(!pn)
+		return;
+	auto& ei = getclass();
+	act(pn->text);
+	draw::pause();
+}
+
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 	if(bsdata<quest>::have(object)) {
 		auto p = (quest*)object;

@@ -418,8 +418,8 @@ void* answers::choose(const char* title, const char* cancel_text) const {
 		caret.x += metrics::padding; width -= metrics::padding;
 		caret.y += metrics::padding; height -= metrics::padding;
 		texth2(header);
-		if(console && *console) {
-			textf(console->begin());
+		if(prompt && *prompt) {
+			textf(prompt);
 			caret.y += metrics::padding;
 		}
 		if(title) {

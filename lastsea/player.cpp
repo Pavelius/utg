@@ -172,31 +172,3 @@ void player::shuffleparcipant() {
 		order[i] = i;
 	zshuffle(order, maxcount);
 }
-
-const messagei* find_message(variant type, int value) {
-	for(auto& e : bsdata<messagei>()) {
-		if(e.type == type && e.value == value)
-			return &e;
-	}
-	return 0;
-}
-
-void player::background() const {
-	if(!answers::interactive)
-		return;
-	auto pn = find_message(variant(Class, classid), 4);
-	if(!pn)
-		return;
-	utg::sb.clear();
-	act(pn->text);
-	draw::pause();
-}
-
-void player::epilog(int level) {
-	auto pn = find_message(variant(Class, classid), level);
-	if(!pn)
-		return;
-	auto& ei = getclass();
-	act(pn->text);
-	draw::pause();
-}

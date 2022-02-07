@@ -42,7 +42,7 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	answers::interactive = false;
+	//answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
@@ -83,6 +83,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	variant::sfapply = game.sfapply;
 	answers::console = &utg::sb;
+	answers::prompt = utg::sb.begin();
 	draw::object::initialize();
 	oceani::initialize();
 	quest::initialize();

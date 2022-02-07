@@ -20,6 +20,7 @@ public:
 	static int			column_count;
 	static stringbuilder* console;
 	static const char*	header;
+	static const char*	prompt;
 	static const char*	resid;
 	static bool			show_tips;
 	answers() : sc(buffer) {}
