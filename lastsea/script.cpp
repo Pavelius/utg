@@ -2,15 +2,16 @@
 #include "counters.h"
 #include "main.h"
 #include "pathfind.h"
+#include "script.h"
 
 gamei game;
 static int last_counter, last_value, last_action;
-static int round_skill_bonus;
+static char round_skills_bonus[Navigation + 1];
 static bool	need_sail, need_stop, need_stop_actions;
 static tilei* last_tile;
-static special_s game_result;
+static int game_result;
 static ability_s last_ability;
-static int prop_end_scene, prop_visit;
+static int prop_end_scene, prop_visit, prop_maximum_danger;
 static const quest* last_location;
 static const quest* new_location;
 counters variables;
@@ -252,8 +253,8 @@ static bool apply_choose(const quest* ph, const char* title, int count, const ch
 			continue;
 		add_answer(san, p);
 	}
-	if(index >= 5000) {
-		auto need_bonus = index - 5000;
+	if(index >= AnswerStandartActions) {
+		auto need_bonus = index - AnswerStandartActions;
 		for(auto& e : bsdata<treasurei>()) {
 			if(!e.isactive() || e.isdiscarded())
 				continue;
@@ -299,14 +300,6 @@ static const quest* find_forward(int bonus) {
 			return p;
 	}
 	return 0;
-}
-
-static void apply_forward(int bonus) {
-	auto p = find_forward(bonus);
-	if(p) {
-		apply_effect(p);
-		need_stop = true;
-	}
 }
 
 static const quest* find_roll_result(const quest* ph, int result) {
@@ -452,16 +445,6 @@ static void summary_action(const char* id, trigger_s trigger) {
 	}
 }
 
-static void change_scene(int value) {
-	auto p = find_promt(4000 + value);
-	if(value && last_location != p) {
-		new_location = p;
-		game.unlockall();
-		variables.clear();
-	}
-	summary_action("NextScene", WhenUse);
-}
-
 static void play_actions() {
 	need_stop_actions = false;
 	last_action = 0;
@@ -490,7 +473,7 @@ void start_scene() {
 		need_continue = true;
 		last_location = new_location;
 		new_location = 0;
-		round_skill_bonus = 0;
+		memset(round_skills_bonus, 0, sizeof(round_skills_bonus));
 		choose_actions(player_count);
 		play_actions();
 		auto pn = getnumber(getbsi(last_location), prop_end_scene);
@@ -638,11 +621,11 @@ static void generate_classes() {
 	answers::interactive = push_interactive;
 }
 
-void pirate::makeroll(special_s type) {
+void pirate::makeroll(int mode) {
 	char temp[260]; stringbuilder sb(temp);
 	last_bonus = 0;
 	if(last_ability >= Exploration && last_ability <= Navigation) {
-		last_bonus += round_skill_bonus;
+		last_bonus += round_skills_bonus[last_ability];
 		last_bonus += last_value;
 		last_bonus += getbonus(last_ability);
 	}
@@ -662,7 +645,7 @@ void pirate::makeroll(special_s type) {
 		sb.add(".");
 		an.clear();
 		an.add(0, getnm("MakeRoll"));
-		if(type == RollGuns && !gun_used) {
+		if(mode == 1 && !gun_used) {
 			for(auto level = 1; level <= 4; level++) {
 				if(!game.cannoneer::is(level, true))
 					continue;
@@ -684,8 +667,8 @@ void pirate::makeroll(special_s type) {
 	}
 }
 
-void pirate::roll(special_s type) {
-	makeroll(type);
+void pirate::roll(int mode) {
+	makeroll(mode);
 	confirmroll();
 	apply_roll_result(quest::last, last_result);
 }
@@ -795,27 +778,6 @@ static void test_last_action() {
 		need_stop = true;
 }
 
-static void check_danger() {
-	auto m = game.getmaximum(Danger);
-	auto v = game.get(Danger);
-	if(v >= m) {
-		game.set(Danger, 0);
-		game.set(Threat, game.get(Threat) + 1);
-	}
-}
-
-static void apply_tile(int base, int bonus) {
-	if(bonus > 0)
-		last_value = base + bonus;
-	else {
-		last_value = base - bonus;
-		for(auto& e : bsdata<tilei>()) {
-			if(e.isactive() && e.param == last_value)
-				e.discard();
-		}
-	}
-}
-
 static void show_map() {
 	oceani::createobjects();
 	oceani::showsplash();
@@ -823,56 +785,12 @@ static void show_map() {
 
 static void special_command(special_s v, int bonus) {
 	switch(v) {
-	case Roll:
-	case RollGuns:
-		game.roll(v);
-		break;
-	case RollSilent:
-		rollv(0);
-		apply_roll_result(quest::last, last_result);
-		break;
-	case Choose:
-		apply_choose(quest::last, 0, bonus);
-		break;
-	case Skill:
-		game.raiseskills(bonus);
-		break;
-	case Scout:
-		game.chartacourse(bonus);
-		break;
-	case SetShip:
-		game.setmarker(bonus);
-		break;
-	case MoveToPlayer:
-		last_tile = tilei::find(last_value);
-		if(!last_tile)
-			break;
-		stop_and_clear(0);
-		last_tile->moveto(game.getmarker(), bonus);
-		if(last_tile->index == game.getmarker())
-			game.script(last_tile->param);
-		break;
-	case Tile000: apply_tile(0, bonus); break;
-	case Tile900: apply_tile(900, bonus); break;
-	case TileRock: last_value = 65535; break;
-	case AddTile:
-		last_tile = tilei::pick(last_value);
-		if(last_tile)
-			last_tile->index = bonus;
-		break;
-	case Page000: case Page100: case Page200: case Page300: case Page400:
-	case Page500: case Page600: case Page700: case Page800: case Page900:
-		game.script((v - Page000) * 100 + bonus);
-		break;
 	case PageForward:
 		apply_effect(find_forward(bonus));
 		break;
 	case PageNext:
 		draw::pause();
 		apply_effect(find_forward(bonus));
-		break;
-	case Scene:
-		change_scene(bonus);
 		break;
 	case AddGun:
 		if(game.addgun(bonus, true, true))
@@ -896,33 +814,12 @@ static void special_command(special_s v, int bonus) {
 				game.set(Hull, game.get(Hull) - 1);
 		}
 		break;
-	case Bury:
-		game.bury(bonus);
-		break;
-	case Block:
-		if(bonus > 0)
-			game.lock(bonus - 1);
-		else if(bonus < 0)
-			game.unlock(bonus - 1);
-		break;
 	case EatSupply:
 		bonus += game.getmaximum(Eat);
 		if(game.get(Supply) >= bonus)
 			game.set(Supply, game.get(Supply) - bonus);
 		else
 			need_stop = true;
-		break;
-	case ZeroSupplyIfNot:
-		if(!game.get(Supply))
-			need_stop = true;
-		else
-			game.set(Supply, 0);
-		break;
-	case ZeroRerollIfNot:
-		if(!game.get(Supply))
-			need_stop = true;
-		else
-			game.set(Reroll, 0);
 		break;
 	case FullThrottle:
 		sail_ship(bonus);
@@ -942,20 +839,6 @@ static void special_command(special_s v, int bonus) {
 	case ZeroCounters:
 		variables.clear();
 		break;
-	case PenaltyA: case PenaltyB: case PenaltyC: case PenaltyD:
-		last_value -= variables.get(v - PenaltyA);
-		break;
-	case CounterA: case CounterB: case CounterC: case CounterD: case CounterX:
-		if(v != CounterX)
-			last_counter = v - CounterA;
-		if(bonus > 0 || bonus < 0) {
-			auto pn = variables.getname(last_counter);
-			if(pn)
-				game.information("%1%+2i", pn, bonus);
-			variables.add(last_counter, bonus);
-		}
-		last_value = variables.get(last_counter);
-		break;
 	case Name:
 		last_value = AnswerName + bonus;
 		break;
@@ -970,73 +853,16 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case VisitManyTimes: case VisitRequired:
 		break;
-	case IfNotSail:
-		if(need_sail)
-			need_stop = true;
-		break;
-	case IfEqual:
-		if(last_value != bonus)
-			need_stop = true;
-		break;
-	case IfZeroForward:
-		if(!last_value)
-			apply_forward(bonus);
-		break;
-	case IfNonZeroForward:
-		if(!last_value)
-			apply_forward(bonus);
-		break;
-	case IfChoosedAction:
-		if(bonus > 0) {
-			if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus - 1))))
-				need_stop = true;
-		} else if(bonus < 0) {
-			if(game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
-				need_stop = true;
-		}
-		break;
 	case StopActions:
 		need_stop_actions = true;
 		break;
-	case BonusToAll:
-		round_skill_bonus += bonus;
-		break;
-	case Damage:
-		if(!bonus)
-			bonus = last_value;
-		if(bonus)
-			apply_choose(6200, bonus);
-		else
-			draw::pause();
-		break;
 	case ChooseCustom:
 		apply_choose(AnswerCustom + bonus, 1);
-		break;
-	case CheckDanger:
-		check_danger();
-		break;
-	case PlayStars:
-		// TODO
 		break;
 	case MarkVisit:
 		if(!bonus)
 			bonus = 1;
 		addnumber(quest::last->index, prop_visit, bonus);
-		break;
-	case MarkEntry:
-		if(bonus >= 0) {
-			auto i = AnswerEntry + bonus;
-			auto pn = game.getentryname(i);
-			if(pn)
-				game.information(getnm("AddEntry"), pn);
-			game.settag(AnswerEntry + bonus);
-		} else {
-			auto i = AnswerEntry + bonus;
-			auto pn = game.getentryname(i);
-			if(pn)
-				game.information(getnm("RemoveEntry"), pn);
-			game.removetag(AnswerEntry - bonus);
-		}
 		break;
 	case SetVisit:
 		if(!bonus)
@@ -1046,15 +872,6 @@ static void special_command(special_s v, int bonus) {
 		break;
 	case IfLast:
 		test_last_action();
-		break;
-	case ZeroDanger:
-		game.set(Danger, 0);
-		break;
-	case WinGame:
-	case LostGame:
-		game_result = v;
-		draw::pause(getnm(bsdata<speciali>::elements[v].id));
-		draw::setnext(main_menu);
 		break;
 	case RemoveAllNavigation:
 		remove_active_tiles(1, 30);
@@ -1073,12 +890,18 @@ static void ability_command(ability_s v, int bonus) {
 	}
 }
 
+static void script_command(int type, int bonus) {
+	auto& ei = bsdata<scripti>::elements[type];
+	ei.proc(bonus, ei.param);
+}
+
 void gamei::apply(variant v) {
 	switch(v.type) {
 	case Ability: ability_command((ability_s)v.value, v.counter); break;
 	case Special: special_command((special_s)v.value, v.counter); break;
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
 	case Goal: game.setgoal((goali*)v.getpointer()); break;
+	case Script: script_command(v.value, v.counter); break;
 	}
 }
 
@@ -1102,11 +925,278 @@ static bool if_visit(int counter, int param) {
 	return quest::last && (getnumber(quest::last->index, prop_visit) == counter);
 }
 
+static void bury(int bonus, int param) {
+	game.bury(bonus);
+}
+
+static void end_game(int bonus, int param) {
+	game_result = param;
+	draw::pause(getnm(param > 0 ? "WinGame" : "LostGame"));
+	draw::setnext(main_menu);
+}
+
+static void run_script(int bonus, int param) {
+	game.script(param + bonus);
+}
+
+static void set_value(int bonus, int param) {
+	if(bonus >= 0)
+		last_value = param + bonus;
+}
+
+static void set_ability(int bonus, int param) {
+	last_value = bonus;
+	game.set((ability_s)param, bonus);
+}
+
+static void change_scene(int bonus, int param) {
+	auto p = find_promt(4000 + bonus);
+	if(bonus && last_location != p) {
+		new_location = p;
+		game.unlockall();
+		variables.clear();
+	}
+	summary_action("NextScene", WhenUse);
+}
+
+static void mark_entry(int bonus, int param) {
+	if(bonus >= 0) {
+		auto i = param + bonus;
+		auto pn = game.getentryname(i);
+		if(pn)
+			game.information(getnm("AddEntry"), pn);
+		game.settag(i);
+	} else {
+		auto i = param - bonus;
+		auto pn = game.getentryname(i);
+		if(pn)
+			game.information(getnm("RemoveEntry"), pn);
+		game.removetag(i);
+	}
+}
+
+static void apply_tile(int bonus, int param) {
+	set_value(bonus, param);
+	if(bonus < 0) {
+		for(auto& e : bsdata<tilei>()) {
+			if(e.isactive() && e.param == last_value)
+				e.discard();
+		}
+	}
+}
+
+static void block_action(int bonus, int param) {
+	if(bonus > 0)
+		game.lock(bonus - 1);
+	else if(bonus < 0)
+		game.unlock(bonus - 1);
+}
+
+static void choose_case(int bonus, int param) {
+	apply_choose(quest::last, 0, bonus);
+}
+
+static void make_roll(int bonus, int param) {
+	game.roll(bonus);
+}
+
+static void make_roll_silent(int bonus, int param) {
+	rollv(bonus);
+	apply_roll_result(quest::last, last_result);
+}
+
+static void damage(int bonus, int param) {
+	if(!bonus)
+		bonus = last_value;
+	if(bonus)
+		apply_choose(6200, bonus);
+	else
+		draw::pause();
+}
+
+static void add_round_bonus(int bonus, int param) {
+	if(param == -1) {
+		for(auto& e : round_skills_bonus)
+			e += bonus;
+	} else if((unsigned)param < sizeof(round_skills_bonus) / sizeof(round_skills_bonus[0]))
+		round_skills_bonus[param] += bonus;
+}
+
+static void add_skill(int bonus, int param) {
+	game.raiseskills(bonus);
+}
+
+static void scout_area(int bonus, int param) {
+	game.chartacourse(bonus);
+}
+
+static void set_ability_if_not(int bonus, int param) {
+	if(game.get((ability_s)param) > bonus) {
+		game.set((ability_s)param, bonus);
+		need_stop = true;
+	}
+}
+
+static void check_danger(int bonus, int param) {
+	auto m = game.getmaximum(Danger);
+	auto v = game.get(Danger);
+	if(v >= m) {
+		game.set(Danger, 0);
+		game.set(Threat, game.get(Threat) + 1);
+	}
+}
+
+static void correct(int value, int& bonus, int min, int max) {
+	if(value + bonus > max) {
+		bonus = max + bonus - value;
+		if(bonus < 0)
+			bonus = 0;
+	} else if(value + bonus < min) {
+		bonus = min + bonus - value;
+		if(bonus > 0)
+			bonus = 0;
+	}
+}
+
+static void minus_counter(int bonus, int param) {
+	last_value -= variables.get(param);
+}
+
+static void set_counter(int bonus, int param) {
+	if(param != -1)
+		last_counter = param;
+	last_value = variables.get(last_counter);
+	correct(last_value, bonus, 0, 14);
+	if(bonus) {
+		last_value += bonus;
+		auto pn = variables.getname(last_counter);
+		if(pn)
+			game.information("%1%+2i", pn, bonus);
+		variables.set(last_counter, bonus);
+	}
+}
+
+static void if_equal(int bonus, int param) {
+	if(last_value != bonus)
+		need_stop = true;
+}
+
+static void apply_forward(int bonus) {
+	auto p = find_forward(bonus);
+	if(p) {
+		apply_effect(p);
+		need_stop = true;
+	}
+}
+
+static void if_zero_forward(int bonus, int param) {
+	if(last_value == 0)
+		apply_forward(bonus);
+}
+
+static void if_non_zero_forward(int bonus, int param) {
+	if(last_value != 0)
+		apply_forward(bonus);
+}
+
+static void if_not_sail(int bonus, int param) {
+	if(need_sail)
+		need_stop = true;
+}
+
+static void if_choosed_action(int bonus, int param) {
+	if(bonus > 0) {
+		if(!game.ischoosed(bsdata<quest>::source.indexof(find_action(bonus - 1))))
+			need_stop = true;
+	} else if(bonus < 0) {
+		if(game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
+			need_stop = true;
+	}
+}
+
+static void set_ship(int bonus, int param) {
+	game.setmarker(bonus);
+}
+
+static void add_tile(int bonus, int param) {
+	last_tile = tilei::pick(last_value);
+	if(last_tile)
+		last_tile->index = bonus;
+}
+
+static void tile_move_to_player(int bonus, int param) {
+	last_tile = tilei::find(last_value);
+	if(!last_tile)
+		return;
+	stop_and_clear(0);
+	last_tile->moveto(game.getmarker(), bonus);
+	if(last_tile->index == game.getmarker())
+		game.script(last_tile->param);
+}
+
 void initialize_script() {
+	// Properties
 	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
 	prop_visit = propertyi::add("Visit", propertyi::Number);
+	prop_maximum_danger = propertyi::add("MaximumDanger", propertyi::Number);
+	// Prompt conditions for quest
 	conditioni::add("IfEntry", if_tag, AnswerEntry);
 	conditioni::add("IfStory", if_story);
 	conditioni::add("IfTreasure", if_treasure);
 	conditioni::add("IfVisit", if_visit);
 }
+
+BSDATA(scripti) = {
+	{"AddTile", add_tile},
+	{"Block", block_action},
+	{"BonusToAll", add_round_bonus, -1},
+	{"BonusToExploration", add_round_bonus, Exploration},
+	{"Bury", bury},
+	{"CheckDanger", check_danger},
+	{"Choose", choose_case},
+	{"CounterA", set_counter, 0},
+	{"CounterB", set_counter, 1},
+	{"CounterC", set_counter, 2},
+	{"CounterD", set_counter, 3},
+	{"CounterE", set_counter, 4},
+	{"CounterX", set_counter, -1},
+	{"Damage", damage},
+	{"IfChoosedAction", if_choosed_action},
+	{"IfEqual", if_equal, 0},
+	{"IfNonZeroForward", if_non_zero_forward},
+	{"IfNotSail", if_not_sail},
+	{"IfZeroForward", if_zero_forward},
+	{"LostGame", end_game, 0},
+	{"MarkEntry", mark_entry, AnswerEntry},
+	{"MoveToPlayer", tile_move_to_player},
+	{"Page000", run_script, 0},
+	{"Page100", run_script, 100},
+	{"Page200", run_script, 200},
+	{"Page300", run_script, 300},
+	{"Page400", run_script, 400},
+	{"Page500", run_script, 500},
+	{"Page600", run_script, 600},
+	{"Page700", run_script, 700},
+	{"Page800", run_script, 800},
+	{"Page900", run_script, 900},
+	{"PenaltyA", minus_counter, 0},
+	{"PenaltyB", minus_counter, 1},
+	{"PenaltyC", minus_counter, 2},
+	{"PenaltyD", minus_counter, 3},
+	{"PenaltyE", minus_counter, 4},
+	{"Roll", make_roll},
+	{"RollGuns", make_roll, 1},
+	{"RollSilent", make_roll_silent},
+	{"Scene", change_scene},
+	{"Scout", scout_area},
+	{"SetShip", set_ship},
+	{"Skill", add_skill},
+	{"Tile000", apply_tile, 0},
+	{"Tile900", apply_tile, 900},
+	{"TileRock", apply_tile, 65535},
+	{"WinGame", end_game, 1},
+	{"ZeroDanger", set_ability, Danger},
+	{"ZeroRerollIfNot", set_ability_if_not, Reroll},
+	{"ZeroSupplyIfNot", set_ability_if_not, Supply},
+};
+BSDATAF(scripti)

@@ -28,21 +28,16 @@ enum ability_s : unsigned char {
 };
 enum special_s : unsigned char {
 	Name, Nickname, NicknameEnd,
-	Block, Choose, Roll, RollGuns, RollSilent, Damage, Bury, Scout, Skill, Scene,
-	Tile000, Tile900, TileRock, AddTile, RemoveTile, SetShip, MoveToPlayer, ShowMap,
+	RemoveTile, ShowMap,
 	FullThrottle, TradeFriend,
-	EatSupply, ZeroSupplyIfNot, ZeroRerollIfNot,
-	ZeroCounters, ZeroDanger, CounterName, ChooseCounter, ChooseCustom,
+	EatSupply,
+	ZeroCounters, CounterName, ChooseCounter, ChooseCustom,
 	ReloadGunOrHull, ReloadGun, UpgradeGun, AddGun, AddGunUnloaded,
-	VisitManyTimes, VisitRequired, NotUseAction, IfChoosedAction, StopActions,
-	CheckDanger, RemoveAllNavigation, PlayStars, Sail, LostGame, WinGame,
-	Page000, Page100, Page200, Page300, Page400, Page500, Page600, Page700, Page800, Page900,
+	VisitManyTimes, VisitRequired, NotUseAction, StopActions,
+	RemoveAllNavigation, PlayStars, Sail,
 	PageForward, PageNext,
-	CounterA, CounterB, CounterC, CounterD, CounterX,
-	PenaltyA, PenaltyB, PenaltyC, PenaltyD,
-	Entry, MarkEntry, MarkVisit, SetVisit,
-	BonusToAll,
-	IfEqual, IfZeroForward, IfNonZeroForward, IfNotSail, IfLast,
+	Entry, MarkVisit, SetVisit,
+	IfLast,
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -56,7 +51,7 @@ enum trigger_s : unsigned char {
 enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Card, Class, Condition, Gender, Goal, Group, Menu, NavigationTile,
-	Quest, Special, Tag, Trigger, Value, Widget
+	Quest, Script, Special, Tag, Trigger, Value, Widget
 };
 enum abilityf_s : unsigned char {
 	Negative,
@@ -64,6 +59,7 @@ enum abilityf_s : unsigned char {
 enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,
 	AnswerForward = 1000,
+	AnswerStandartActions = 5000,
 	AnswerName = 6000,
 	AnswerEntry = 6100,
 	AnswerCustom = 6200,
@@ -218,7 +214,7 @@ class pirate : public player, public chest {
 	void			afterchange(ability_s v, int b);
 	void			checkexperience(ability_s v);
 	void			confirmroll();
-	void			makeroll(special_s type);
+	void			makeroll(int mode);
 	void			rolldices();
 public:
 	indext			actions[6];
@@ -236,7 +232,7 @@ public:
 	int				getnextstar(int value) const;
 	bool			match(variant v) const;
 	void			raiseskills(int count);
-	void			roll(special_s type);
+	void			roll(int mode);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	void			set(ability_s v, int i);
 	void			sortactions();

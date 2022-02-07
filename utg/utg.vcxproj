@@ -177,11 +177,9 @@
     <ClCompile Include="pathfind.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="quest.cpp" />
-    <ClCompile Include="quest_script.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
-    <ClCompile Include="script.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="draw_utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
@@ -240,7 +238,6 @@
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />
-    <ClInclude Include="script.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />
     <ClInclude Include="flagable.h" />

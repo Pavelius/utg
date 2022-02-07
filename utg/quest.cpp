@@ -154,42 +154,6 @@ const quest* quest::findprompt(short id) {
 	return 0;
 }
 
-const quest* quest::choose(int id) const {
-	if(answers::console) {
-		answers::console->clear();
-		answers::console->add(text);
-	}
-	apply(tags);
-	answers an;
-	for(auto& e : bsdata<quest>()) {
-		if(e.index != id)
-			continue;
-		if(!e.isanswer())
-			continue;
-		an.add(&e, e.text);
-	}
-	return (quest*)an.choose(0, 0);
-}
-
-void quest::run(int id) {
-	while(true) {
-		auto p = findprompt(id);
-		if(!p)
-			return;
-		auto pv = p->getheader();
-		if(pv)
-			answers::header = pv;
-		pv = p->getimage();
-		if(pv)
-			answers::resid = pv;
-		p = p->choose(p->index);
-		if(!p)
-			break;
-		apply(p->tags);
-		id = p->next;
-	}
-}
-
 void quest::read(const char* url) {
 	auto p = log::read(url);
 	if(!p)

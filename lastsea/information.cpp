@@ -40,12 +40,6 @@ static void print(stringbuilder& sb, special_s v, int count) {
 	auto& ei = bsdata<speciali>::elements[v];
 	if(v == VisitManyTimes || v == VisitRequired)
 		return;
-	if(v >= Page000 && v <= Page900)
-		return;
-	if(v >= Tile000 && v <= Tile900)
-		return;
-	if(v >= IfEqual)
-		return;
 	sb.addsep(' ');
 	switch(v) {
 	case EatSupply:

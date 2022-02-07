@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "condition.h"
 #include "main.h"
+#include "script.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
@@ -59,6 +60,9 @@ BSMETA(treasurei) = {
 	BSREQ(trigger), BSREQ(ability), BSREQ(bonus),
 	{}};
 BSDATAC(treasurei, 256)
+BSMETA(scripti) = {
+	BSREQ(id), BSREQ(param),
+	{}};
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
@@ -73,6 +77,7 @@ BSDATA(varianti) = {
 	{"Menu", VRSTD(menu), 1},
 	{"NavigationTile", VRSTD(tilei), 0},
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
+	{"Script", VRSTD(scripti), 1},
 	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Trigger", VRSTD(triggeri), 1},
