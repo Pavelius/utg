@@ -42,7 +42,7 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	//answers::interactive = false;
+	answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
@@ -87,7 +87,6 @@ int main(int argc, char* argv[]) {
 	draw::object::initialize();
 	oceani::initialize();
 	quest::initialize();
-	gamei::initialize();
 	initialize_script();
 	initialize_widgets();
 	initialize_information_widgets();

@@ -25,7 +25,7 @@ int chooselist::getvalueindex(const void* pv) const {
 	return -1;
 }
 
-void chooselist::choose(const char* title, int count) {
+bool chooselist::choose(const char* title, int count, const char* cancel) {
 	if(count > getcount())
 		count = getcount();
 	answers an;
@@ -44,11 +44,17 @@ void chooselist::choose(const char* title, int count) {
 				continue;
 			an.add(e.value, e.text);
 		}
+		if(cancel)
+			an.add(0, cancel);
 		auto result = an.choose(temp);
+		if(!cancel)
+			return false;
 		auto result_index = getvalueindex(result);
 		apply(result_index, result);
 		if(result_index != -1)
 			addmarked(result_index);
 		count--;
+		cancel = 0;
 	}
+	return true;
 }

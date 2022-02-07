@@ -286,7 +286,7 @@ void draw::label(const char* title, const char* value, const void* object) {
 
 void draw::label(const char* title, const char* value, const void* object, fnevent click) {
 	label(title, value, object);
-	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
+	if(click && control_hilited && hot.key == MouseLeft && !hot.pressed)
 		execute(click, 0, 0, object);
 }
 

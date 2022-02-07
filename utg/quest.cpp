@@ -149,8 +149,6 @@ const quest* quest::findprompt(short id) {
 			continue;
 		if(e.isanswer())
 			continue;
-		if(!e.allow())
-			continue;
 		return &e;
 	}
 	return 0;
@@ -167,8 +165,6 @@ const quest* quest::choose(int id) const {
 		if(e.index != id)
 			continue;
 		if(!e.isanswer())
-			continue;
-		if(!e.allow())
 			continue;
 		an.add(&e, e.text);
 	}
@@ -210,20 +206,6 @@ void quest::read(const char* url) {
 		p = read_answers(p, event_parent, sb);
 	}
 	log::close();
-}
-
-bool quest::allow(const variants& tags) const {
-	auto push_last = last;
-	last = this;
-	for(auto v : tags) {
-		conditioni* pc = v;
-		if(!pc)
-			break;
-		if(!pc->proc(v.counter, pc->param))
-			return false;
-	}
-	last = push_last;
-	return true;
 }
 
 void quest::initialize() {

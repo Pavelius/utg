@@ -169,6 +169,12 @@ void player::background() const {
 	answers::prompt = push_prompt;
 }
 
+void gamei::background() {
+	if(answers::prompt != utg::sb.begin())
+		return;
+	game.player::background();
+}
+
 void player::epilog(int level) {
 	auto pn = find_message(variant(Class, classid), level);
 	if(!pn)
@@ -269,20 +275,20 @@ static void listofcounters() {
 	}
 }
 
-static void showlabel(npcname& e, const char* format, ...) {
+static void showlabel(npcname& e, fnevent proc, const char* format, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	e.getname(sb);
 	if(format) {
 		sb.add(" - ");
 		sb.addv(format, xva_start(format));
 	}
-	draw::label(temp, 0, &e);
+	draw::label(temp, 0, &e, proc);
 }
 
 static void listofcharacters() {
-	showlabel(game, getnm("YourPirate"), getnm(game.getclass().id));
+	showlabel(game, game.background, getnm("YourPirate"), getnm(game.getclass().id));
 	for(auto& e : game.getfriends())
-		showlabel(e, 0);
+		showlabel(e, 0, 0);
 }
 
 void initialize_information_widgets() {

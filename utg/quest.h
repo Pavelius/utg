@@ -10,8 +10,6 @@ struct quest {
 	constexpr explicit operator bool() { return text != 0; }
 	static const quest* last;
 	static propertyi::indext prop_image, prop_header;
-	bool				allow() const { return allow(tags); }
-	bool				allow(const variants& tags) const;
 	static void			apply(const variants& tags);
 	void				clear();
 	const quest*		choose(int id) const;

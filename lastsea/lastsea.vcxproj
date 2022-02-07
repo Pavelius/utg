@@ -152,7 +152,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="script.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />
@@ -162,7 +162,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="roll12.cpp" />
-    <ClCompile Include="script.cpp" />
     <ClCompile Include="serial.cpp" />
     <ClCompile Include="shiplog.cpp" />
     <ClCompile Include="special.cpp" />

@@ -263,13 +263,13 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog {
 	flagable<2>		locked;
 public:
 	static void		apply(variant v);
+	static void		background();
 	static void		createtiles();
 	void			createtreasure();
 	void			clear();
 	static void		choosecounter();
 	void			chartacourse(int v);
 	static int		getpage();
-	static void		initialize();
 	void			information(const char* format, ...);
 	void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;
