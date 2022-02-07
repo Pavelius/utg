@@ -44,10 +44,8 @@ bool chooselist::choose(const char* title, int count, const char* cancel) {
 				continue;
 			an.add(e.value, e.text);
 		}
-		if(cancel)
-			an.add(0, cancel);
-		auto result = an.choose(temp);
-		if(!cancel)
+		auto result = an.choose(temp, cancel);
+		if(!result)
 			return false;
 		auto result_index = getvalueindex(result);
 		apply(result_index, result);

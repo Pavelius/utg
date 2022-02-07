@@ -108,7 +108,7 @@ static const quest* apply_answers(const quest* ph) {
 	return 0;
 }
 
-static void apply_choose(const quest* ph, const char* title, int count);
+static bool apply_choose(const quest* ph, const char* title, int count, const char* cancel);
 
 static const char* find_separator(const char* pb) {
 	auto p = pb;
@@ -216,7 +216,7 @@ static void use_treasure(void* object, useda& used) {
 	}
 }
 
-static void apply_choose(const quest* ph, const char* title, int count) {
+static bool apply_choose(const quest* ph, const char* title, int count, const char* cancel = 0) {
 	struct handler : chooselist {
 		void apply(int index, const void* object) override {
 			use_treasure(object);
@@ -241,7 +241,7 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 	else if(count < 0)
 		count = 0;
 	if(!ph || !count)
-		return;
+		return false;
 	handler san;
 	auto index = ph->index;
 	auto pe = bsdata<quest>::end();
@@ -264,7 +264,7 @@ static void apply_choose(const quest* ph, const char* title, int count) {
 			add_treasure(san, &e, e.use);
 		}
 	}
-	san.choose(title, count);
+	return san.choose(title, count, cancel);
 }
 
 static void apply_choose(int page, int count) {
@@ -274,6 +274,17 @@ static void apply_choose(int page, int count) {
 		apply_choose(p, p->text, count);
 		quest::last = push_last;
 	}
+}
+
+static bool apply_choose(int page, int count, const char* cancel) {
+	auto r = false;
+	auto p = find_promt(page);
+	if(p) {
+		auto push_last = quest::last;
+		r = apply_choose(p, p->text, count, cancel);
+		quest::last = push_last;
+	}
+	return r;
 }
 
 static const quest* find_forward(int bonus) {
@@ -519,18 +530,20 @@ static tilei* sail_next_hexagon() {
 }
 
 static void sail_ship(int bonus) {
+	auto cancel = getnm("StopMoveShip");
 	while(!draw::isnext()) {
-		if(!draw::yesno(getnm("DoYouWantToMoveShip")))
-			return;
 		if(bonus == 0) {
-			apply_choose(AnswerCustom + 3, 3);
+			if(!apply_choose(AnswerCustom + 3, 3, cancel))
+				return;
 			last_tile = sail_next_hexagon();
 			break;
 		} else if(bonus == 1) {
-			apply_choose(AnswerCustom + 3, 2);
+			if(!apply_choose(AnswerCustom + 3, 2, cancel))
+				return;
 			last_tile = sail_next_hexagon();
 		} else {
-			apply_choose(AnswerCustom + 4, 1);
+			if(!apply_choose(AnswerCustom + 6, 1, cancel))
+				return;
 			last_tile = sail_next_hexagon();
 		}
 	}
