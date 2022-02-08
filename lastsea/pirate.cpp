@@ -97,7 +97,6 @@ int	pirate::getmaximum(ability_s v) const {
 		if(p)
 			return p->danger;
 		return 10;
-	case Eat: return (get(Crew) + 1) / 2;
 	default: return 10;
 	}
 }

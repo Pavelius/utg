@@ -23,8 +23,7 @@ enum ability_s : unsigned char {
 	Danger, DangerMaximum,
 	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
 	Stars, Level, Infamy,
-	Gun1, Gun2, Gun3, Gun4,
-	Eat
+	Gun1, Gun2, Gun3, Gun4
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -262,6 +261,7 @@ public:
 	static void		choosecounter();
 	void			chartacourse(int v);
 	static int		getpage();
+	int				getmaximumeat() const;
 	void			information(const char* format, ...);
 	void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;

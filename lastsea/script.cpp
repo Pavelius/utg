@@ -544,6 +544,10 @@ static void choose_damage(const char* title, int count, const slice<ability_s>& 
 	}
 }
 
+int	gamei::getmaximumeat() const {
+	return (get(Crew) + 1) / 2;
+}
+
 int gamei::getpage() {
 	if(!last_location)
 		return 0;
@@ -756,7 +760,7 @@ static bool treasure_active(const treasurei* p) {
 }
 
 static bool if_eat_supply(int counter, int param) {
-	return game.get((ability_s)param) >= game.getmaximum(Eat);
+	return game.get((ability_s)param) >= game.getmaximumeat();
 }
 
 static bool if_tag(int counter, int param) {
@@ -1125,7 +1129,7 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximum(Eat) + bonus));
+	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximumeat() + bonus));
 }
 
 #ifdef _DEBUG
