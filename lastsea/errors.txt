@@ -1,2 +1,3 @@
-﻿In file `Names.txt`:
- Define translate for `BonusToExploration`
+﻿In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 831: Can't find variant `Story58`
+ Line 833: Can't find variant `Story15`

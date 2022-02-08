@@ -1,5 +1,4 @@
 #include "main.h"
-#include "script.h"
 #include "widget.h"
 
 const quest* find_promt(int index);

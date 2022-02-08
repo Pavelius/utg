@@ -176,7 +176,6 @@
     <ClInclude Include="cannoneer.h" />
     <ClInclude Include="counters.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="script.h" />
     <ClInclude Include="sprite_util.h" />
   </ItemGroup>
   <ItemGroup>

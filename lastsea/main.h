@@ -41,8 +41,8 @@ enum variant_s : unsigned char {
 	Ability, Card, Class, Condition, Gender, Goal, Group, Menu, NavigationTile,
 	Quest, Script, Tag, Trigger, Value, Widget
 };
-enum abilityf_s : unsigned char {
-	Negative,
+enum commonf_s : unsigned char {
+	Negative, TipsInfo,
 };
 enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,
@@ -63,7 +63,18 @@ const indext map_y = 6;
 struct abilityi {
 	const char*		id;
 	unsigned		flags;
-	constexpr bool	is(abilityf_s v) const { return (flags & FG(v)) != 0; }
+	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
+};
+struct scripti {
+	typedef void (*fnevent)(int counter, int param);
+	typedef bool (*fntest)(int counter, int param);
+	const char*		id;
+	fnevent			proc;
+	int				param;
+	fntest			choose;
+	unsigned		flags;
+	void			getinfo(stringbuilder& sb, int bonus) const;
+	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
 };
 struct tilei {
 	short unsigned	frame;

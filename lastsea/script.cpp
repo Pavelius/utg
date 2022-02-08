@@ -2,7 +2,6 @@
 #include "counters.h"
 #include "main.h"
 #include "pathfind.h"
-#include "script.h"
 
 gamei game;
 static int last_counter, last_value, last_action;
@@ -756,6 +755,10 @@ static bool treasure_active(const treasurei* p) {
 	return p && p->isactive() && !p->isdiscarded();
 }
 
+static bool if_eat_supply(int counter, int param) {
+	return game.get((ability_s)param) >= game.getmaximum(Eat);
+}
+
 static bool if_tag(int counter, int param) {
 	return game.istag(param + counter);
 }
@@ -1118,11 +1121,7 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	bonus += game.getmaximum(Eat);
-	if(game.get(Supply) >= bonus)
-		game.set(Supply, game.get(Supply) - bonus);
-	else
-		game.set(Supply, 0);
+	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximum(Eat)+bonus));
 }
 
 #ifdef _DEBUG
@@ -1144,6 +1143,7 @@ void initialize_script() {
 	prop_visit = propertyi::add("Visit", propertyi::Number);
 	prop_maximum_danger = propertyi::add("MaximumDanger", propertyi::Number);
 	// Prompt conditions for quest
+	conditioni::add("IfEatSupply", if_eat_supply, Supply);
 	conditioni::add("IfEntry", if_tag, AnswerEntry);
 	conditioni::add("IfStory", if_story);
 	conditioni::add("IfTreasure", if_treasure);
@@ -1157,9 +1157,9 @@ BSDATA(scripti) = {
 	{"AddGunUnloaded", add_gun, 0, choose_add_gun},
 	{"AddTile", add_tile},
 	{"Block", block_action},
-	{"BonusToAll", add_round_bonus, -1, 0, FG(scripti::TipsInfo)},
-	{"BonusToExploration", add_round_bonus, Exploration, 0, FG(scripti::TipsInfo)},
-	{"Bury", bury, 0, 0, FG(scripti::TipsInfo)},
+	{"BonusToAll", add_round_bonus, -1, 0, FG(TipsInfo)},
+	{"BonusToExploration", add_round_bonus, Exploration, 0, FG(TipsInfo)},
+	{"Bury", bury, 0, 0, FG(TipsInfo)},
 	{"CheckDanger", check_danger},
 	{"Choose", choose_case},
 	{"ChooseCounter", choose_counter},
@@ -1172,7 +1172,7 @@ BSDATA(scripti) = {
 	{"CounterName", counter_name},
 	{"CounterX", set_counter, -1},
 	{"Damage", damage},
-	{"EatSupply", eat_supply},
+	{"EatSupply", eat_supply, Supply},
 	{"Entry", entry},
 	{"FullThrottle", full_throttle},
 	{"IfChoosedAction", if_choosed_action},
@@ -1204,8 +1204,8 @@ BSDATA(scripti) = {
 	{"PenaltyD", minus_counter, 3},
 	{"PenaltyE", minus_counter, 4},
 	{"PlayStars", play_stars},
-	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun, FG(scripti::TipsInfo)},
-	{"ReloadGunOrHull", reload_gun_or_add, Hull, 0, FG(scripti::TipsInfo)},
+	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun, FG(TipsInfo)},
+	{"ReloadGunOrHull", reload_gun_or_add, Hull, 0, FG(TipsInfo)},
 	{"RemoveAllNavigation", remove_all_navigation},
 	{"RemoveTile", remove_tile},
 	{"Roll", make_roll},

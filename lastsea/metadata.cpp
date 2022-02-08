@@ -1,7 +1,6 @@
 #include "bsreq.h"
 #include "condition.h"
 #include "main.h"
-#include "script.h"
 
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};

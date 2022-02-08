@@ -6,7 +6,7 @@
 
 #5002 Choose+1
 %герой и голодна€ команда недовольно смотр€т др€г на друга.
-0 EatSupply Infamy+1 Discontent-1) Ќакормить голодную команду.
+0 IfEatSupply EatSupply Infamy+1 Discontent-1) Ќакормить голодную команду.
 0 Discontent+2 Swagger+1 Infamy-1) ѕопросить их немножко поголодать.
 0 Infamy+4 ZeroSupplyIfNot Discontent+2) ѕозволить команде наестьс€ досыта.
 
