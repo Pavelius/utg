@@ -49,10 +49,7 @@ void abilityi::getinfo(stringbuilder& sb, int bonus) const {
 	if(!is(TipsInfo))
 		return;
 	sb.addsep(' ');
-	if(is(TipsInfoBonus))
-		print(sb, getnm(id), bonus, flags);
-	else
-		sb.add(getnm(id), bonus);
+	print(sb, getnm(id), bonus, flags);
 }
 
 static void print(stringbuilder& sb, variant v) {

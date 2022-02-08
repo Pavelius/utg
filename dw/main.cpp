@@ -13,11 +13,10 @@ static void generate_character() {
 	quest::read("rules/Quest.txt");
 	charname::read("locale/ru/CharacterNames.txt");
 	answers::header = getnm("CharacterGeneration");
-	create_hero(false);
-	create_hero(false);
-	create_hero(false);
-	create_hero(false);
-	quest::run(1);
+	create_hero(true);
+	create_hero(true);
+	create_hero(true);
+	create_hero(true);
 }
 
 int main(int argc, char* argv[]) {

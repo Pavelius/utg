@@ -11,7 +11,6 @@ struct quest {
 	static const quest* last;
 	static propertyi::indext prop_image, prop_header;
 	void				clear();
-	const quest*		choose(int id) const;
 	const char*			getheader() const { return getstring(getbsi(this), prop_header); }
 	const char*			getimage() const { return getstring(getbsi(this), prop_image); }
 	static const char*	getname(int id);
@@ -21,5 +20,4 @@ struct quest {
 	static const quest*	find(short id);
 	static const quest*	findprompt(short id);
 	static void			read(const char* url);
-	static void			run(int id);
 };
