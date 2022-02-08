@@ -1,4 +1,5 @@
 #include "main.h"
+#include "script.h"
 #include "widget.h"
 
 const quest* find_promt(int index);
@@ -36,28 +37,16 @@ static void print_choose(stringbuilder& sb, const quest* ph) {
 	}
 }
 
-static void print(stringbuilder& sb, special_s v, int count) {
-	auto& ei = bsdata<speciali>::elements[v];
-	if(v == VisitManyTimes || v == VisitRequired)
-		return;
+static void print_script(stringbuilder& sb, int v, int count) {
+	auto& ei = bsdata<scripti>::elements[v];
 	sb.addsep(' ');
-	switch(v) {
-	case EatSupply:
-		sb.add("[-%Supply%+1i]", -game.getmaximum(Eat));
-		break;
-	case ChooseCustom:
-		print_choose(sb, find_promt(AnswerCustom + count));
-		break;
-	default:
-		sb.add(getnm(ei.id), count);
-		break;
-	}
+	sb.add(getnm(ei.id), count);
 }
 
 static void print(stringbuilder& sb, variant v) {
 	switch(v.type) {
 	case Ability: print(sb, (ability_s)v.value, v.counter); break;
-	case Special: print(sb, (special_s)v.value, v.counter); break;
+	case Script: print_script(sb, v.value, v.counter); break;
 	default: break;
 	}
 }

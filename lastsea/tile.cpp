@@ -26,7 +26,7 @@ tilei* tilei::pick(int param) {
 
 tilei* tilei::find(int param) {
 	for(auto& e : bsdata<tilei>()) {
-		if(e.param == param)
+		if(e.param == param && e.isactive() && !e.is(Discarded))
 			return &e;
 	}
 	return 0;

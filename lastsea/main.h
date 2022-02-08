@@ -26,19 +26,9 @@ enum ability_s : unsigned char {
 	Gun1, Gun2, Gun3, Gun4,
 	Eat
 };
-enum special_s : unsigned char {
-	Nickname, NicknameEnd,
-	RemoveTile,
-	EatSupply,
-	CounterName, ChooseCounter, ChooseCustom,
-	UpgradeGun,
-	VisitManyTimes, VisitRequired, NotUseAction, StopActions,
-	RemoveAllNavigation, PlayStars,
-	Entry, MarkVisit, SetVisit,
-	IfLast,
-};
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
+	VisitManyTimes, VisitRequired, NotUseAction,
 	Discarded,
 };
 enum trigger_s : unsigned char {
@@ -49,7 +39,7 @@ enum trigger_s : unsigned char {
 enum variant_s : unsigned char {
 	NoVariant,
 	Ability, Card, Class, Condition, Gender, Goal, Group, Menu, NavigationTile,
-	Quest, Script, Special, Tag, Trigger, Value, Widget
+	Quest, Script, Tag, Trigger, Value, Widget
 };
 enum abilityf_s : unsigned char {
 	Negative,
@@ -165,9 +155,6 @@ public:
 	void			setorder(int v) { setplayer(order[v % maxcount]); }
 	void			setplayer(int v) { active = v % maxcount; }
 	void			shuffleparcipant();
-};
-struct speciali {
-	const char*		id;
 };
 struct triggeri {
 	const char*		id;
@@ -286,7 +273,7 @@ extern int			last_result, last_roll, last_bonus;
 extern counters		variables;
 int					rollv(int bonus);
 VKIND(gender_s, Gender)
-VKIND(special_s, Special)
+VKIND(tag_s, Tag)
 VKIND(treasurei, Card)
 VKIND(trigger_s, Trigger)
 VKIND(groupvaluei, Value)

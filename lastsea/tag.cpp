@@ -5,6 +5,9 @@ BSDATA(tagi) = {
 	{"NoSteal"},
 	{"Valuable"},
 	{"Discard"},
+	{"VisitManyTimes"},
+	{"VisitRequired"},
+	{"NotUseAction"},
 	{"Discarded"},
 };
 assert_enum(tagi, Discarded)

@@ -45,7 +45,7 @@ static void add_answer(answers& an, const quest* p) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(p->text);
 	if(p->is(VisitManyTimes))
-		sb.adds(getnm(bsdata<speciali>::elements[VisitManyTimes].id));
+		sb.adds(getnm(bsdata<tagi>::elements[VisitManyTimes].id));
 	an.add(p, temp);
 }
 
@@ -166,19 +166,9 @@ static bool allow_choose(ability_s v, int bonus) {
 	}
 }
 
-static bool allow_choose(special_s v, int bonus) {
-	switch(v) {
-	case EatSupply:
-		return allow_choose(Supply, -game.getmaximum(Eat));
-	default:
-		return true;
-	}
-}
-
 static bool allow_choose(variant v) {
 	switch(v.type) {
 	case Ability: return allow_choose((ability_s)v.value, v.counter);
-	case Special: return allow_choose((special_s)v.value, v.counter);
 	default: return true;
 	}
 }
@@ -723,46 +713,12 @@ void gamei::showseamap() {
 	game.oceani::showseamap();
 }
 
-void gamei::choosecounter() {
-	answers an;
-	for(auto i = 0; i < variables.getcount(); i++) {
-		auto pn = variables.getname(i);
-		if(!pn)
-			continue;
-		an.add((void*)i, pn);
-	}
-	last_counter = (int)an.choose(getnm("ChooseTarget"));
-}
-
 bool gamei::ischoosed(int i) const {
 	for(auto v : actions) {
 		if(v == i)
 			return true;
 	}
 	return false;
-}
-
-static void test_last_action() {
-	const auto m = sizeof(game.actions) / sizeof(game.actions[0]);
-	if(last_action >= m - 1)
-		return;
-	if(game.actions[last_action] == game.actions[last_action + 1])
-		need_stop = true;
-}
-
-static void special_command(special_s v, int bonus) {
-	switch(v) {
-	case EatSupply:
-		bonus += game.getmaximum(Eat);
-		if(game.get(Supply) >= bonus)
-			game.set(Supply, game.get(Supply) - bonus);
-		else
-			need_stop = true;
-		break;
-	default:
-		game.warning(getnm("UnknownCommand"), v, bonus);
-		break;
-	}
 }
 
 static void ability_command(ability_s v, int bonus) {
@@ -781,7 +737,6 @@ static void script_command(int type, int bonus) {
 void gamei::apply(variant v) {
 	switch(v.type) {
 	case Ability: ability_command((ability_s)v.value, v.counter); break;
-	case Special: special_command((special_s)v.value, v.counter); break;
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
 	case Goal: game.setgoal((goali*)v.getpointer()); break;
 	case Script: script_command(v.value, v.counter); break;
@@ -1007,6 +962,12 @@ static void add_tile(int bonus, int param) {
 		last_tile->index = bonus;
 }
 
+static void remove_tile(int bonus, int param) {
+	last_tile = tilei::find(last_value);
+	if(last_tile)
+		last_tile->index = 0xFFFF;
+}
+
 static void tile_move_to_player(int bonus, int param) {
 	last_tile = tilei::find(last_value);
 	if(!last_tile)
@@ -1046,6 +1007,9 @@ static bool choose_add_gun(int bonus, int param) {
 static void add_gun(int bonus, int param) {
 	if(game.addgun(bonus, param, true))
 		game.information(getnm(param ? "GunAdded" : "GunAddedUnloaded"), bonus);
+}
+
+static void upgrade_gun(int bonus, int param) {
 }
 
 static bool choose_reload_gun(int bonus, int param) {
@@ -1096,38 +1060,65 @@ static void trade_friend(int bonus, int param) {
 static void play_stars(int bonus, int param) {
 }
 
-//case Entry:
-//	last_value = game.istag(AnswerEntry + bonus) ? 1 : 0;
-//	break;
-//case CounterName:
-//	variables.setname(bonus, quest::getname(last_value));
-//	break;
-//case ChooseCounter:
-//	game.choosecounter();
-//	break;
-//case StopActions:
-//	need_stop_actions = true;
-//	break;
-//case ChooseCustom:
-//	apply_choose(AnswerCustom + bonus, 1);
-//	break;
-//case MarkVisit:
-//	if(!bonus)
-//		bonus = 1;
-//	addnumber(quest::last->index, prop_visit, bonus);
-//	break;
-//case SetVisit:
-//	if(!bonus)
-//		removenumber(quest::last->index, prop_visit);
-//	else
-//		setproperty(quest::last->index, prop_visit, bonus);
-//	break;
-//case IfLast:
-//	test_last_action();
-//	break;
-//case RemoveAllNavigation:
-//	remove_active_tiles(1, 30);
-//	break;
+static void entry(int bonus, int param) {
+	last_value = game.istag(param + bonus) ? 1 : 0;
+}
+
+static void counter_name(int bonus, int param) {
+	variables.setname(bonus, quest::getname(last_value));
+}
+
+static void choose_counter(int bonus, int param) {
+	answers an;
+	for(auto i = 0; i < variables.getcount(); i++) {
+		auto pn = variables.getname(i);
+		if(!pn)
+			continue;
+		an.add((void*)i, pn);
+	}
+	last_counter = (int)an.choose(getnm("ChooseTarget"));
+}
+
+static void stop_actions(int bonus, int param) {
+	need_stop_actions = true;
+}
+
+static void choose_custom(int bonus, int param) {
+	apply_choose(param + bonus, 1);
+}
+
+static void mark_visit(int bonus, int param) {
+	if(!bonus)
+		bonus = 1;
+	addnumber(quest::last->index, prop_visit, bonus);
+}
+
+static void set_visit(int bonus, int param) {
+	if(!bonus)
+		removenumber(quest::last->index, prop_visit);
+	else
+		setproperty(quest::last->index, prop_visit, bonus);
+}
+
+static void if_last(int bonus, int param) {
+	const auto m = sizeof(game.actions) / sizeof(game.actions[0]);
+	if(last_action >= m - 1)
+		return;
+	if(game.actions[last_action] == game.actions[last_action + 1])
+		need_stop = true;
+}
+
+static void remove_all_navigation(int bonus, int param) {
+	remove_active_tiles(1, 30);
+}
+
+static void eat_supply(int bonus, int param) {
+	bonus += game.getmaximum(Eat);
+	if(game.get(Supply) >= bonus)
+		game.set(Supply, game.get(Supply) - bonus);
+	else
+		game.set(Supply, 0);
+}
 
 void initialize_script() {
 	// Properties
@@ -1142,6 +1133,8 @@ void initialize_script() {
 }
 
 BSDATA(scripti) = {
+	{"Nickname", set_value}, // Value - 0
+	{"NicknameEnd", set_value}, // Value - 1
 	{"AddGun", add_gun, 1, choose_add_gun},
 	{"AddGunUnloaded", add_gun, 0, choose_add_gun},
 	{"AddTile", add_tile},
@@ -1151,21 +1144,28 @@ BSDATA(scripti) = {
 	{"Bury", bury},
 	{"CheckDanger", check_danger},
 	{"Choose", choose_case},
+	{"ChooseCounter", choose_counter},
+	{"ChooseCustom", choose_custom, AnswerCustom},
 	{"CounterA", set_counter, 0},
 	{"CounterB", set_counter, 1},
 	{"CounterC", set_counter, 2},
 	{"CounterD", set_counter, 3},
 	{"CounterE", set_counter, 4},
+	{"CounterName", counter_name},
 	{"CounterX", set_counter, -1},
 	{"Damage", damage},
+	{"EatSupply", eat_supply},
+	{"Entry", entry},
 	{"FullThrottle", full_throttle},
 	{"IfChoosedAction", if_choosed_action},
 	{"IfEqual", if_equal, 0},
+	{"IfLast", if_last},
 	{"IfNonZeroForward", if_non_zero_forward},
 	{"IfNotSail", if_not_sail},
 	{"IfZeroForward", if_zero_forward},
 	{"LostGame", end_game, 0},
 	{"MarkEntry", mark_entry, AnswerEntry},
+	{"MarkVisit", mark_visit},
 	{"MoveToPlayer", tile_move_to_player},
 	{"Name", set_value, AnswerName},
 	{"Page000", run_script, 0},
@@ -1188,6 +1188,8 @@ BSDATA(scripti) = {
 	{"PlayStars", play_stars},
 	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun},
 	{"ReloadGunOrHull", reload_gun_or_add, Hull},
+	{"RemoveAllNavigation", remove_all_navigation},
+	{"RemoveTile", remove_tile},
 	{"Roll", make_roll},
 	{"RollGuns", make_roll, 1},
 	{"RollSilent", make_roll_silent},
@@ -1195,12 +1197,15 @@ BSDATA(scripti) = {
 	{"Scene", change_scene},
 	{"Scout", scout_area},
 	{"SetShip", set_ship},
+	{"SetVisit", set_visit},
 	{"ShowMap", show_map},
 	{"Skill", add_skill},
+	{"StopActions", stop_actions},
 	{"Tile000", apply_tile, 0},
 	{"Tile900", apply_tile, 900},
 	{"TileRock", apply_tile, 65535},
 	{"TradeFriend", trade_friend},
+	{"UpgradeGun", upgrade_gun},
 	{"WinGame", end_game, 1},
 	{"ZeroCounters", zero_counters},
 	{"ZeroDanger", set_ability, Danger},

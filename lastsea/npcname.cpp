@@ -17,16 +17,16 @@ void npcname::randomname() {
 		conditions[0] = Male;
 	nameid = charname::random(conditions);
 	if(rollv(0) <= 2)
-		conditions[0] = NicknameEnd;
+		conditions[0] = "NicknameEnd";
 	else
-		conditions[0] = Nickname;
+		conditions[0] = "Nickname";
 	nicknameid = charname::random(conditions);
 }
 
 void npcname::getname(stringbuilder& sb) const {
 	auto& e1 = bsdata<charname>::elements[nameid];
 	auto& e2 = bsdata<charname>::elements[nicknameid];
-	auto first = (e2.conditions[0].type == Special && e2.conditions[0].value == Nickname);
+	auto first = (e2.conditions[0].type == Script && e2.conditions[0].value == 0);
 	auto female = (getgender()==Female);
 	if(first) {
 		if(female)

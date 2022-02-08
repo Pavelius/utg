@@ -164,7 +164,6 @@
     <ClCompile Include="roll12.cpp" />
     <ClCompile Include="serial.cpp" />
     <ClCompile Include="shiplog.cpp" />
-    <ClCompile Include="special.cpp" />
     <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="cannoneer.cpp" />

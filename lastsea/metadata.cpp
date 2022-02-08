@@ -34,9 +34,6 @@ BSDATAC(classi, 64)
 BSMETA(pirate) = {
 	{}};
 BSDATAC(pirate, 4)
-BSMETA(speciali) = {
-	BSREQ(id),
-	{}};
 BSMETA(tilei) = {
 	BSREQ(param), BSREQ(frame),
 	BSFLG(tags, tagi),
@@ -78,7 +75,6 @@ BSDATA(varianti) = {
 	{"NavigationTile", VRSTD(tilei), 0},
 	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
 	{"Script", VRSTD(scripti), 1},
-	{"Special", VRSTD(speciali), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Trigger", VRSTD(triggeri), 1},
 	{"Value", VRSTD(groupvaluei), 1},

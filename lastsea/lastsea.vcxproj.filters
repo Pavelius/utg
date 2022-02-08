@@ -27,9 +27,6 @@
     <ClCompile Include="roll12.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="special.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="npcname.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
