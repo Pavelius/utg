@@ -4,6 +4,7 @@
 #include "counters.h"
 #include "iterator.h"
 #include "gender.h"
+#include "goal.h"
 #include "group.h"
 #include "message.h"
 #include "pathfind.h"
@@ -36,7 +37,7 @@ enum trigger_s : unsigned char {
 };
 enum variant_s : unsigned char {
 	NoVariant,
-	Ability, Card, Class, Condition, Gender, Goal, Group, Menu, NavigationTile,
+	Ability, Card, Class, Condition, Gender, Group, Menu, NavigationTile,
 	Quest, Script, Tag, Trigger, Value, Widget
 };
 enum commonf_s : unsigned char {
@@ -120,11 +121,6 @@ public:
 	static void		showsplash();
 	bool			stepto(indext start, indext goal);
 	static indext	to(indext i, int direction);
-};
-struct goali {
-	const char*		id;
-	int				danger;
-	short			reach_location;
 };
 class npcname {
 	short unsigned	nameid;
@@ -236,22 +232,18 @@ public:
 	void			tradefriend();
 };
 class shiplog {
-	short unsigned	goal_id;
 	bool			reach_location;
 	taga			tags;
 public:
-	void			checkgoal();
 	void			clear();
 	static const quest* getentry(int v);
 	static const char* getentryname(int v);
 	static const char* getentrytext(int v);
-	const goali*	getgoal() const { return goal_id == 0xFFFF ? 0 : bsdata<goali>::elements + goal_id; }
 	bool			istag(int v) const;
-	void			setgoal(const goali* v) { goal_id = bsdata<goali>::source.indexof(v); }
 	void			settag(int v);
 	void			removetag(short unsigned v) { tags.remove(v); }
 };
-class gamei : public pirate, public oceani, public cannoneer, public shiplog {
+class gamei : public pirate, public oceani, public cannoneer, public shiplog, public goal {
 	char			scenario[32];
 	flagable<2>		locked;
 public:
@@ -264,14 +256,13 @@ public:
 	void			chartacourse(int v);
 	static int		getpage();
 	int				getmaximumeat() const;
-	void			information(const char* format, ...);
-	void			information(ability_s v, int count);
+	static void		information(const char* format, ...);
+	//void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
 	static void		script(int page);
 	static void		showseamap();
-	void			setgoal(const goali* v) {}
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
@@ -279,7 +270,7 @@ public:
 	static void		threat(int bonus, int param);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
-	void			warning(const char* format, ...);
+	static void		warning(const char* format, ...);
 	void			write(const char* url);
 };
 extern gamei		game;

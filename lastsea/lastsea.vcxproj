@@ -152,6 +152,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
+    <ClCompile Include="goal.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="cannoneer.h" />
     <ClInclude Include="counters.h" />
+    <ClInclude Include="goal.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="sprite_util.h" />
   </ItemGroup>

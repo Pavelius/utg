@@ -14,6 +14,7 @@ struct quest {
 	const char*			getheader() const { return getstring(getbsi(this), prop_header); }
 	const char*			getimage() const { return getstring(getbsi(this), prop_image); }
 	static const char*	getname(int id);
+	int					getvalue(int prop) const { return getnumber(getbsi(this), prop); }
 	static void			initialize();
 	bool				is(variant v) const;
 	bool				isanswer() const { return next != -1; }

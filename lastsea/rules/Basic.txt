@@ -137,10 +137,6 @@ Survivor types(SomethingFoul VillainousName MadeUpInterrogationTactic SomeoneYou
  event4 Reroll+1
  event5 Treasure+2
 
-#Goal
-
-DecipherOldMap danger(2) reach_location(963)
-
 #Menu
 
 PagePirate mode(Game)

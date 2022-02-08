@@ -678,7 +678,6 @@ void gamei::apply(variant v) {
 	switch(v.type) {
 	case Ability: ability_command((ability_s)v.value, v.counter); break;
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
-	case Goal: game.setgoal((goali*)v.getpointer()); break;
 	case Script: script_command(v.value, v.counter); break;
 	}
 }
@@ -1052,6 +1051,10 @@ static void eat_supply(int bonus, int param) {
 	game.add((ability_s)param, - (game.getmaximumeat() + bonus));
 }
 
+static void set_goal(int bonus, int param) {
+	game.setgoal(bonus);
+}
+
 #ifdef _DEBUG
 static void test_correction() {
 	int bonus;
@@ -1103,6 +1106,7 @@ BSDATA(scripti) = {
 	{"EatSupply", eat_supply, Supply},
 	{"Entry", entry},
 	{"FullThrottle", full_throttle},
+	{"Goal", set_goal},
 	{"IfChoosedAction", if_choosed_action},
 	{"IfEqual", if_equal, 0},
 	{"IfLast", if_last},

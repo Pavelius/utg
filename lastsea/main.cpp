@@ -87,6 +87,8 @@ int main(int argc, char* argv[]) {
 	draw::object::initialize();
 	oceani::initialize();
 	quest::initialize();
+	goal::initialize();
+	goal::info = game.information;
 	initialize_script();
 	initialize_widgets();
 	initialize_information_widgets();

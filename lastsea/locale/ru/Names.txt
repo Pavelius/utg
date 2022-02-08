@@ -2,6 +2,7 @@
 AbilityGrow: Навык %1 растет на %+2i
 AddBonus: С бонусом
 AddEntry: Добавлена заметка `%1`
+AddGoal: Новая цель `%1`
 AddGun: Пушка [%1i] уровня
 AddMisfortune: Два раза, выбирая меньший результат
 Aim: Меткость
@@ -233,5 +234,3 @@ YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив боль
 YouVisitLocation: Перед вами %1.
 YourPirate: пират %-1
 ZeroSupplyIfNot: Обнулить припасы или
-Навигация: 
-Сила: 

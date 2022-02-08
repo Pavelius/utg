@@ -94,17 +94,6 @@ void gamei::warning(const char* format, ...) {
 	utg::sb.add("]");
 }
 
-void gamei::information(ability_s v, int count) {
-	auto& ei = bsdata<abilityi>::elements[v];
-	auto negative = count < 0;
-	if(ei.is(Negative))
-		negative = !negative;
-	if(negative)
-		warning("%1%+2i", getnm(ei.id), count);
-	else
-		information("%1%+2i", getnm(ei.id), count);
-}
-
 static const messagei* find_message(variant type, int value) {
 	for(auto& e : bsdata<messagei>()) {
 		if(e.type == type && e.value == value)
@@ -218,7 +207,12 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 }
 
 void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
-	if(bsdata<tilei>::have(object)) {
+	auto pg = static_cast<goal*>(&game);
+	if(pg == object) {
+		auto pn = pg->getgoaltext();
+		if(pn)
+			sb.add(pn);
+	} else if(bsdata<tilei>::have(object)) {
 		auto pt = (tilei*)object;
 		auto pq = quest::find(pt->param);
 		if(!pq)
@@ -296,9 +290,9 @@ static void listofrecords() {
 }
 
 static void listofgoals() {
-	auto p = game.getgoal();
-	if(p)
-		draw::label(getnm(p->id), 0, p);
+	auto pn = game.getgoalname();
+	if(pn)
+		draw::label(pn, 0, static_cast<goal*>(&game));
 }
 
 static void listofcounters() {

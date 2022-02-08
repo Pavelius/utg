@@ -22,7 +22,6 @@ int pirate::getnextstar(int value) const {
 }
 
 int	pirate::getmaximum(ability_s v) const {
-	const goali* p;
 	switch(v) {
 	case Exploration:
 	case Brawl:
@@ -37,10 +36,7 @@ int	pirate::getmaximum(ability_s v) const {
 	case History: case Mission: case Cabine: case Threat:
 		return 5;
 	case Danger:
-		p = game.getgoal();
-		if(p)
-			return p->danger;
-		return 10;
+		return game.getgoalmaximum();
 	default: return 10;
 	}
 }

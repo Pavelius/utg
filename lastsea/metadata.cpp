@@ -18,11 +18,6 @@ BSMETA(abilityi) = {
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
-BSMETA(goali) = {
-	BSREQ(id),
-	BSREQ(danger), BSREQ(reach_location),
-	{}};
-BSDATAC(goali, 64)
 BSMETA(classi) = {
 	BSREQ(id),
 	BSREQ(types), BSREQ(levelup), BSREQ(maximum),
@@ -68,7 +63,6 @@ BSDATA(varianti) = {
 	{"Class", VRSTD(classi), 1},
 	{"Condition", VRSTD(conditioni), 1},
 	{"Gender", VRSTD(genderi), 1},
-	{"Goal", VRSTD(goali), 1},
 	{"Group", VRSTD(groupi), 1},
 	{"Menu", VRSTD(menu), 1},
 	{"NavigationTile", VRSTD(tilei), 0},

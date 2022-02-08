@@ -78,6 +78,9 @@
     <ClCompile Include="serial.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="goal.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -90,6 +93,9 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="counters.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="goal.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

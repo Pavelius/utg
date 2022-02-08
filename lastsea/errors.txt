@@ -1,2 +1,2 @@
 ﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 1005: Can't find variant `LoseGame`
+ Line 1061: Unknown property name `DangerMaximum`
