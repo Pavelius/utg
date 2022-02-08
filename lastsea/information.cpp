@@ -37,16 +37,17 @@ static void print_choose(stringbuilder& sb, const quest* ph) {
 	}
 }
 
-static void print_script(stringbuilder& sb, int v, int count) {
-	auto& ei = bsdata<scripti>::elements[v];
+void scripti::getinfo(stringbuilder& sb, int bonus) const {
+	if(!is(TipsInfo))
+		return;
 	sb.addsep(' ');
-	sb.add(getnm(ei.id), count);
+	sb.add(getnm(id), bonus);
 }
 
 static void print(stringbuilder& sb, variant v) {
 	switch(v.type) {
 	case Ability: print(sb, (ability_s)v.value, v.counter); break;
-	case Script: print_script(sb, v.value, v.counter); break;
+	case Script: bsdata<scripti>::elements[v.value].getinfo(sb, v.counter); break;
 	default: break;
 	}
 }

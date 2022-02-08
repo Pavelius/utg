@@ -66,10 +66,12 @@ static bool allow_promt(const quest* p, const variants& tags) {
 	quest::last = p;
 	for(auto v : tags) {
 		conditioni* pc = v;
-		if(!pc)
-			break;
-		if(!pc->proc(v.counter, pc->param))
-			return false;
+		if(pc) {
+			if(!pc->proc(v.counter, pc->param))
+				return false;
+			continue;
+		}
+		break;
 	}
 	quest::last = push_last;
 	return true;
@@ -166,9 +168,16 @@ static bool allow_choose(ability_s v, int bonus) {
 	}
 }
 
+static bool allow_choose_script(const scripti& e, int counter) {
+	if(e.choose)
+		return e.choose(counter, e.param);
+	return true;
+}
+
 static bool allow_choose(variant v) {
 	switch(v.type) {
 	case Ability: return allow_choose((ability_s)v.value, v.counter);
+	case Script: return allow_choose_script(bsdata<scripti>::get(v.value), v.counter);
 	default: return true;
 	}
 }
@@ -885,15 +894,11 @@ static void check_danger(int bonus, int param) {
 }
 
 static void correct(int value, int& bonus, int min, int max) {
-	if(value + bonus > max) {
-		bonus = max + bonus - value;
-		if(bonus < 0)
-			bonus = 0;
-	} else if(value + bonus < min) {
-		bonus = min + bonus - value;
-		if(bonus > 0)
-			bonus = 0;
-	}
+	value += bonus;
+	if(value < min)
+		bonus -= (value - min);
+	else if(value > max)
+		bonus -= (value - max);
 }
 
 static void minus_counter(int bonus, int param) {
@@ -950,6 +955,14 @@ static void if_choosed_action(int bonus, int param) {
 		if(game.ischoosed(bsdata<quest>::source.indexof(find_action(-bonus - 1))))
 			need_stop = true;
 	}
+}
+
+static void if_last(int bonus, int param) {
+	const auto m = sizeof(game.actions) / sizeof(game.actions[0]);
+	if(last_action >= m - 1)
+		return;
+	if(game.actions[last_action] == game.actions[last_action + 1])
+		need_stop = true;
 }
 
 static void set_ship(int bonus, int param) {
@@ -1100,14 +1113,6 @@ static void set_visit(int bonus, int param) {
 		setproperty(quest::last->index, prop_visit, bonus);
 }
 
-static void if_last(int bonus, int param) {
-	const auto m = sizeof(game.actions) / sizeof(game.actions[0]);
-	if(last_action >= m - 1)
-		return;
-	if(game.actions[last_action] == game.actions[last_action + 1])
-		need_stop = true;
-}
-
 static void remove_all_navigation(int bonus, int param) {
 	remove_active_tiles(1, 30);
 }
@@ -1120,7 +1125,20 @@ static void eat_supply(int bonus, int param) {
 		game.set(Supply, 0);
 }
 
+#ifdef _DEBUG
+static void test_correction() {
+	int bonus;
+	bonus = -2; correct(1, bonus, 0, 10);
+	bonus = -4; correct(1, bonus, 0, 10);
+	bonus = -2; correct(4, bonus, 0, 10);
+	bonus = 3; correct(9, bonus, 0, 10);
+}
+#endif // _DEBUG
+
 void initialize_script() {
+#ifdef _DEBUG
+	test_correction();
+#endif // _DEBUG
 	// Properties
 	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
 	prop_visit = propertyi::add("Visit", propertyi::Number);
@@ -1139,9 +1157,9 @@ BSDATA(scripti) = {
 	{"AddGunUnloaded", add_gun, 0, choose_add_gun},
 	{"AddTile", add_tile},
 	{"Block", block_action},
-	{"BonusToAll", add_round_bonus, -1},
-	{"BonusToExploration", add_round_bonus, Exploration},
-	{"Bury", bury},
+	{"BonusToAll", add_round_bonus, -1, 0, FG(scripti::TipsInfo)},
+	{"BonusToExploration", add_round_bonus, Exploration, 0, FG(scripti::TipsInfo)},
+	{"Bury", bury, 0, 0, FG(scripti::TipsInfo)},
 	{"CheckDanger", check_danger},
 	{"Choose", choose_case},
 	{"ChooseCounter", choose_counter},
@@ -1186,8 +1204,8 @@ BSDATA(scripti) = {
 	{"PenaltyD", minus_counter, 3},
 	{"PenaltyE", minus_counter, 4},
 	{"PlayStars", play_stars},
-	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun},
-	{"ReloadGunOrHull", reload_gun_or_add, Hull},
+	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun, FG(scripti::TipsInfo)},
+	{"ReloadGunOrHull", reload_gun_or_add, Hull, 0, FG(scripti::TipsInfo)},
 	{"RemoveAllNavigation", remove_all_navigation},
 	{"RemoveTile", remove_tile},
 	{"Roll", make_roll},
