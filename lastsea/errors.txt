@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `Story2`
+﻿In file `scenario/BeyondTheOceanEdge.txt`:
+ Line 1005: Can't find variant `LoseGame`

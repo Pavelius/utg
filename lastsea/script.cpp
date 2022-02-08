@@ -524,26 +524,6 @@ static void global_threat() {
 	special_mission(game.get(Threat), pages);
 }
 
-static void choose_damage(const char* title, int count, const slice<ability_s>& source) {
-	answers an;
-	char temp[260]; stringbuilder sb(temp);
-	while(count > 0 && !draw::isnext()) {
-		an.clear();
-		for(auto v : source) {
-			if(game.get(v) > 0) {
-				auto p = bsdata<abilityi>::elements + v;
-				an.add(p, "%1%+2i", getnm(p->id), -1);
-			}
-		}
-		sb.clear();
-		sb.add(title, count);
-		auto p = (abilityi*)an.choose(temp);
-		auto v = (ability_s)(p - bsdata<abilityi>::elements);
-		game.set(v, game.get(v) - 1);
-		count--;
-	}
-}
-
 int	gamei::getmaximumeat() const {
 	return (get(Crew) + 1) / 2;
 }
@@ -688,20 +668,6 @@ void gamei::createtiles() {
 	return_all_tiles();
 }
 
-void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
-	switch(v.type) {
-	case Ability:
-		if(v.value >= Gun1 && v.value <= Gun4) {
-			auto level = game.getgunlevel(v.value - Gun1);
-			auto loaded = game.isgunloaded(v.value - Gun1);
-			if(level > 0)
-				sb.add(getnm("GunStatus"), level, getnm(loaded ? "Loaded" : "Unloaded"));
-		} else
-			pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
-		break;
-	}
-}
-
 void gamei::chartacourse(int count) {
 	while(count > 0) {
 		char temp[260]; stringbuilder sb(temp);
@@ -736,7 +702,7 @@ bool gamei::ischoosed(int i) const {
 static void ability_command(ability_s v, int bonus) {
 	last_ability = v;
 	if(bonus) {
-		game.set(last_ability, game.get(last_ability) + bonus);
+		game.add(last_ability, bonus);
 		last_value = game.get(last_ability);
 	}
 }
@@ -895,17 +861,9 @@ static void check_danger(int bonus, int param) {
 	auto m = game.getmaximum(Danger);
 	auto v = game.get(Danger);
 	if(v >= m) {
-		game.set(Danger, 0);
-		game.set(Threat, game.get(Threat) + 1);
+		game.add(Danger, -100);
+		game.add(Threat, 1);
 	}
-}
-
-static void correct(int value, int& bonus, int min, int max) {
-	value += bonus;
-	if(value < min)
-		bonus -= (value - min);
-	else if(value > max)
-		bonus -= (value - max);
 }
 
 static void minus_counter(int bonus, int param) {
@@ -916,7 +874,7 @@ static void set_counter(int bonus, int param) {
 	if(param != -1)
 		last_counter = param;
 	last_value = variables.get(last_counter);
-	correct(last_value, bonus, 0, 14);
+	abilityi::correct(last_value, bonus, 0, 14);
 	if(bonus) {
 		last_value += bonus;
 		auto pn = variables.getname(last_counter);
@@ -1048,12 +1006,12 @@ static void reload_gun_or_add(int bonus, int param) {
 		if(game.reloadgun(4, true))
 			game.information(getnm("GunReloaded"));
 		else if(param)
-			game.set((ability_s)param, game.get((ability_s)param) + 1);
+			game.add((ability_s)param, 1);
 	} else {
 		if(game.unloadgun(4, true))
 			game.warning(getnm("GunUnloaded"));
 		else if(param)
-			game.set((ability_s)param, game.get((ability_s)param) - 1);
+			game.add((ability_s)param, -1);
 	}
 }
 
@@ -1129,16 +1087,16 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximumeat() + bonus));
+	game.add((ability_s)param, - (game.getmaximumeat() + bonus));
 }
 
 #ifdef _DEBUG
 static void test_correction() {
 	int bonus;
-	bonus = -2; correct(1, bonus, 0, 10);
-	bonus = -4; correct(1, bonus, 0, 10);
-	bonus = -2; correct(4, bonus, 0, 10);
-	bonus = 3; correct(9, bonus, 0, 10);
+	bonus = -2; abilityi::correct(1, bonus, 0, 10);
+	bonus = -4; abilityi::correct(1, bonus, 0, 10);
+	bonus = -2; abilityi::correct(4, bonus, 0, 10);
+	bonus = 3; abilityi::correct(9, bonus, 0, 10);
 }
 #endif // _DEBUG
 

@@ -21,43 +21,6 @@ int pirate::getnextstar(int value) const {
 	return 0;
 }
 
-void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
-	auto p = (pirate*)object;
-	int value, value2;
-	switch(v.type) {
-	case Ability:
-		switch(v.value) {
-		case Stars:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
-			value = p->getnextstar(value);
-			if(value)
-				sb.adds("(%1 %2i)", getnm("NextStar"), value);
-			break;
-		case Crew:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
-			value = p->get(Discontent);
-			if(value)
-				sb.adds(getnm("ShowDiscontent"), value);
-			break;
-		case Reroll: case Misfortune:
-			value = p->get((ability_s)v.value);
-			if(value)
-				sb.add("%1i", value);
-			break;
-		default:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
-			value2 = p->getbonus((ability_s)v.value);
-			if(value2)
-				sb.adds("(%-IncludeItems %1i)", value + value2);
-			break;
-		}
-		break;
-	}
-}
-
 const char* pirate::getavatarst(const void* object) {
 	auto p = (pirate*)object;
 	auto i = bsdata<pirate>::source.indexof(p);
@@ -118,52 +81,61 @@ void pirate::checkexperience(ability_s v) {
 	auto cv = get(v);
 	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {
 		if(cv == pa[i]) {
-			set(Stars, get(Stars) + 1);
+			add(Stars, 1);
 			break;
 		}
 	}
 }
 
-void pirate::set(ability_s v, int i) {
-	if(i < 0)
-		i = 0;
+void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep);
+
+void pirate::add(ability_s v, int i) {
+	// RULE: Solo mode increase Infamy whe raise stars
 	if(v == Stars) {
 		v = Infamy;
-		i = abilities[Infamy] + (i - abilities[Stars]) * 3;
-		if(i < 0)
-			i = 0;
+		i *= 3;
 	}
-	auto m = getmaximum(v);
-	if(i > m) {
-		if(v == Infamy) {
+	auto value = get(v);
+	auto maximum = getmaximum(v);
+	auto minimum = 0;
+	abilityi::correct(value, i, minimum, maximum);
+	if(i == 0)
+		return;
+	abilityi& ei = bsdata<abilityi>::get(v);
+	if(ei.is(UseSupplyToAdd) && i > 0) {
+		if(abilities[Supply] < i)
+			return;
+		add(Supply, -i);
+	}
+	if(ei.is(TipsLog)) {
+		auto negative = i < 0;
+		if(ei.is(Negative))
+			negative = !negative;
+		if(negative)
+			game.warning("%1%+2i", getnm(ei.id), i);
+		else
+			game.information("%1%+2i", getnm(ei.id), i);
+	}
+	abilities[v] += i;
+	if(abilities[v] == minimum && ei.script_minimum)
+		game.script(ei.script_minimum);
+	else if(abilities[v] == maximum) {
+		if(ei.script_maximum)
+			game.script(ei.script_maximum);
+		switch(v) {
+		case Infamy:
 			game.information(getnm("YouGainStars"));
 			abilities[Infamy] = 0;
 			if(abilities[Stars] < getmaximum(Stars))
 				abilities[Stars]++;
-			return;
-		} else
-			i = m;
-	}
-	if(abilities[v] != i) {
-		auto d = i - abilities[v];
-		switch(v) {
-		case Mission: case Cabine: case Threat:
-			abilities[v] = i;
-			break;
-		default:
-			if(v >= Exploration && v <= Navigation) {
-				if(!confirm(v, d))
-					return;
-				set(Supply, get(Supply) - d);
-			}
-			if(v >= 0 && v <= Infamy) {
-				game.information(v, d);
-				abilities[v] = i;
-			}
 			break;
 		}
-		afterchange(v, d);
 	}
+	afterchange(v, i);
+}
+
+void pirate::set(ability_s v, int i) {
+	add(v, i - get(v));
 }
 
 void pirate::addaction(indext v) {
@@ -179,7 +151,7 @@ void pirate::gaintreasures(int count) {
 	if(count > 0) {
 		for(auto i = 0; i < count; i++) {
 			if(gettreasurecount(Valuable) >= max_treasures) {
-				set(Supply, get(Supply) + (count - i));
+				add(Supply, count - i);
 				return;
 			}
 			auto pv = treasurei::pickvaluable();
@@ -299,7 +271,7 @@ void pirate::bury(int count) {
 		if(!p)
 			break;
 		losstreasure(p);
-		set(Stars, get(Stars) + 1);
+		add(Stars, 1);
 	}
 }
 
@@ -315,7 +287,7 @@ void pirate::choosebonus(variant v1, variant v2) {
 void pirate::tradefriend() {
 	auto p = choosetreasure(getnm("TradeTreasure"), getnm("Cancel"));
 	if(!p)
-		set(Reroll, get(Reroll) + 1);
+		add(Reroll, 1);
 	else {
 		losstreasure(p);
 		gaintreasure(treasurei::pickvaluable());
@@ -329,7 +301,7 @@ void pirate::raiseskills(int count) {
 		if(count > 1)
 			sb.adds(getnm("ChooseLeft"), count);
 		auto v = chooseskill(temp);
-		set(v, get(v) + 1);
+		add(v, 1);
 		count--;
 	}
 }

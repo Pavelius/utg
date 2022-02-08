@@ -14,6 +14,7 @@ BSDATAD(variant)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
+	BSREQ(script_minimum), BSREQ(script_maximum),
 	{}};
 BSMETA(genderi) = {
 	BSREQ(id),

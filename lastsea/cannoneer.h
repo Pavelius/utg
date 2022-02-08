@@ -12,6 +12,7 @@ public:
 	void			clearweapons() { memset(this, 0, sizeof(*this)); }
 	static int		getgunbonus(int level);
 	int				getgunlevel(int index) const;
+	static const char* getgunname(int index);
 	bool			is(int level, bool loaded) const;
 	bool			isgunloaded(int index) const;
 	bool			reloadgun(int level, bool run);

@@ -22,8 +22,7 @@ enum ability_s : unsigned char {
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
 	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
-	Stars, Level, Infamy,
-	Gun1, Gun2, Gun3, Gun4
+	Stars, Level, Infamy
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -41,7 +40,8 @@ enum variant_s : unsigned char {
 	Quest, Script, Tag, Trigger, Value, Widget
 };
 enum commonf_s : unsigned char {
-	Negative, TipsInfo, TipsInfoBonus,
+	Negative, TipsInfo, TipsInfoBonus, TipsLog,
+	UseSupplyToAdd
 };
 enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,
@@ -62,6 +62,9 @@ const indext map_y = 6;
 struct abilityi {
 	const char*		id;
 	unsigned		flags;
+	int				script_minimum, script_maximum;
+	static void		correct(int value, int& bonus, int min, int max);
+	void			getinfo(stringbuilder& sb, int bonus) const;
 	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
 };
 struct scripti {
@@ -213,6 +216,7 @@ class pirate : public player, public chest {
 	void			rolldices();
 public:
 	indext			actions[6];
+	void			add(ability_s v, int bonus);
 	void			addaction(indext v);
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
@@ -272,8 +276,8 @@ public:
 	void			setgoal(const goali* v) {}
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
-	static void		sfgetstatus(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
+	static void		sfgetstatus(const void* object, stringbuilder& sb);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 	void			warning(const char* format, ...);

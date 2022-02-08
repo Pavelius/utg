@@ -4,11 +4,11 @@
 const quest* find_promt(int index);
 void print(stringbuilder& sb, const variants& source);
 
-static void print(stringbuilder& sb, const char* id, int count, unsigned flags) {
+void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep = ' ') {
 	auto negative = count < 0;
 	if((flags & FG(Negative)) != 0)
 		negative = !negative;
-	sb.addsep(' ');
+	sb.addsep(sep);
 	if(negative)
 		sb.add("[-");
 	sb.add("%1%+2i", getnm(id), count);
@@ -45,9 +45,19 @@ void scripti::getinfo(stringbuilder& sb, int bonus) const {
 		sb.add(getnm(id), bonus);
 }
 
+void abilityi::getinfo(stringbuilder& sb, int bonus) const {
+	if(!is(TipsInfo))
+		return;
+	sb.addsep(' ');
+	if(is(TipsInfoBonus))
+		print(sb, getnm(id), bonus, flags);
+	else
+		sb.add(getnm(id), bonus);
+}
+
 static void print(stringbuilder& sb, variant v) {
 	switch(v.type) {
-	case Ability: print(sb, bsdata<abilityi>::get(v.value).id, v.counter, bsdata<abilityi>::get(v.value).flags); break;
+	case Ability: bsdata<abilityi>::elements[v.value].getinfo(sb, v.counter); break;
 	case Script: bsdata<scripti>::elements[v.value].getinfo(sb, v.counter); break;
 	default: break;
 	}
@@ -219,6 +229,47 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		utg::getstatus(object, sb);
 }
 
+void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
+	auto p = (pirate*)object;
+	int value, value2;
+	switch(v.type) {
+	case Ability:
+		switch(v.value) {
+		case Stars:
+			value = p->get((ability_s)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->getnextstar(value);
+			if(value)
+				sb.adds("(%1 %2i)", getnm("NextStar"), value);
+			break;
+		case Crew:
+			value = p->get((ability_s)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->get(Discontent);
+			if(value)
+				sb.adds(getnm("ShowDiscontent"), value);
+			break;
+		case Reroll: case Misfortune:
+			value = p->get((ability_s)v.value);
+			if(value)
+				sb.add("%1i", value);
+			break;
+		default:
+			value = p->get((ability_s)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value2 = p->getbonus((ability_s)v.value);
+			if(value2)
+				sb.adds("(%-IncludeItems %1i)", value + value2);
+			break;
+		}
+		break;
+	}
+}
+
+void gamei::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
+	pirate::sfgetproperty(static_cast<pirate*>(&game), v, sb);
+}
+
 static void listoftreasures() {
 	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : bsdata<treasurei>()) {
@@ -275,8 +326,21 @@ static void listofcharacters() {
 		showlabel(e, 0, 0);
 }
 
+static void listofguns() {
+	char temp[260]; stringbuilder sb(temp);
+	for(auto i = 0; i < 4; i++) {
+		auto level = game.getgunlevel(i);
+		auto loaded = game.isgunloaded(i);
+		if(level > 0) {
+			sb.clear(); sb.add(getnm("GunStatus"), level, getnm(loaded ? "Loaded" : "Unloaded"));
+			draw::label(getnm(game.getgunname(i)), temp, 0);
+		}
+	}
+}
+
 void initialize_information_widgets() {
 	widget::add("ListOfGoals", listofgoals);
+	widget::add("ListOfGuns", listofguns);
 	widget::add("ListOfCharacters", listofcharacters);
 	widget::add("ListOfRecords", listofrecords);
 	widget::add("ListOfTreasures", listoftreasures);

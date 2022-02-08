@@ -46,6 +46,11 @@ int cannoneer::getgunbonus(int level) {
 	return maptbl(bonus, level);
 }
 
+const char* cannoneer::getgunname(int index) {
+	static const char* names[] = {"Gun1", "Gun2", "Gun3", "Gun4"};
+	return maptbl(names, index);
+}
+
 int	cannoneer::getgunlevel(int n) const {
 	if(n < 0 || n >= sizeof(guns) / sizeof(guns[0]))
 		return 0;
