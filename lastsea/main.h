@@ -59,14 +59,6 @@ const int player_count = 4;
 const indext map_x = 7;
 const indext map_y = 6;
 
-struct abilityi {
-	const char*		id;
-	unsigned		flags;
-	int				script_minimum, script_maximum;
-	static void		correct(int value, int& bonus, int min, int max);
-	void			getinfo(stringbuilder& sb, int bonus) const;
-	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
-};
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
 	typedef bool (*fntest)(int counter, int param);
@@ -75,6 +67,14 @@ struct scripti {
 	int				param;
 	fntest			choose;
 	unsigned		flags;
+	void			getinfo(stringbuilder& sb, int bonus) const;
+	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
+};
+struct abilityi {
+	const char*		id;
+	unsigned		flags;
+	scripti::fnevent change;
+	static void		correct(int value, int& bonus, int min, int max);
 	void			getinfo(stringbuilder& sb, int bonus) const;
 	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
 };
@@ -209,8 +209,6 @@ public:
 class pirate : public player, public chest {
 	static const int max_treasures = 4;
 	char			abilities[Infamy + 1];
-	void			afterchange(ability_s v, int b);
-	void			checkexperience(ability_s v);
 	void			confirmroll();
 	void			makeroll(int mode);
 	void			rolldices();
@@ -220,16 +218,16 @@ public:
 	void			addaction(indext v);
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
+	static void		checkexperience(int bonus, int param);
 	ability_s		chooseskill(const char* title) const;
 	void			clear();
 	void			clearactions();
 	bool			confirm(ability_s v, int delta) const;
 	void			gaintreasures(int count = 1);
 	int				get(ability_s v) const { return abilities[v]; }
-	static const char* getavatarst(const void* object);
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
-	bool			match(variant v) const;
+	static void		infamymaximum(int bonus, int param);
 	void			raiseskills(int count);
 	void			roll(int mode);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
@@ -278,6 +276,7 @@ public:
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);
+	static void		threat(int bonus, int param);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 	void			warning(const char* format, ...);

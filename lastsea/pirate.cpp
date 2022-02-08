@@ -21,25 +21,6 @@ int pirate::getnextstar(int value) const {
 	return 0;
 }
 
-const char* pirate::getavatarst(const void* object) {
-	auto p = (pirate*)object;
-	auto i = bsdata<pirate>::source.indexof(p);
-	if(i == -1)
-		return 0;
-	static char temp[260];
-	stringbuilder sb(temp);
-	sb.add("pirate%1i", i + 1);
-	return temp;
-}
-
-bool pirate::match(variant v) const {
-	switch(v.type) {
-	case Gender: return getgender() == v.value;
-	default:
-		return false;
-	}
-}
-
 int	pirate::getmaximum(ability_s v) const {
 	const goali* p;
 	switch(v) {
@@ -76,18 +57,27 @@ const char* classi::getearn(ability_s v) const {
 	}
 }
 
-void pirate::checkexperience(ability_s v) {
-	auto pa = getclass().getearn(v);
-	auto cv = get(v);
+void pirate::checkexperience(int bonus, int param) {
+	if(bonus <= 0)
+		return;
+	auto pa = game.getclass().getearn((ability_s)param);
+	auto cv = game.get((ability_s)param);
 	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {
 		if(cv == pa[i]) {
-			add(Stars, 1);
+			game.add(Stars, 1);
 			break;
 		}
 	}
 }
 
 void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep);
+
+void pirate::infamymaximum(int bonus, int param) {
+	game.information(getnm("YouGainStars"));
+	game.abilities[Infamy] = 0;
+	if(game.abilities[Stars] < game.getmaximum(Stars))
+		game.abilities[Stars]++;
+}
 
 void pirate::add(ability_s v, int i) {
 	// RULE: Solo mode increase Infamy whe raise stars
@@ -117,21 +107,12 @@ void pirate::add(ability_s v, int i) {
 			game.information("%1%+2i", getnm(ei.id), i);
 	}
 	abilities[v] += i;
-	if(abilities[v] == minimum && ei.script_minimum)
-		game.script(ei.script_minimum);
-	else if(abilities[v] == maximum) {
-		if(ei.script_maximum)
-			game.script(ei.script_maximum);
-		switch(v) {
-		case Infamy:
-			game.information(getnm("YouGainStars"));
-			abilities[Infamy] = 0;
-			if(abilities[Stars] < getmaximum(Stars))
-				abilities[Stars]++;
-			break;
-		}
-	}
-	afterchange(v, i);
+	if(ei.change)
+		ei.change(i, v);
+	if(i > 0)
+		apply(WhenAbilityIncreased, v);
+	else if(i < 0)
+		apply(WhenAbilityDecreased, v);
 }
 
 void pirate::set(ability_s v, int i) {

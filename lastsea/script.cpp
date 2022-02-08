@@ -502,26 +502,9 @@ static tilei* sail_next_hexagon() {
 	return p;
 }
 
-static void special_mission(int v, int* pages) {
-	v = v - 1;
-	if(v >= 0 && v < 5)
-		game.script(pages[v]);
-}
-
-static void captain_cabine() {
-	static int pages[] = {43, 44, 45, 46, 47};
-	special_mission(game.get(Cabine), pages);
-}
-
-static void captain_mission() {
-	static int pages[] = {48, 49, 50, 51, 52};
-	special_mission(game.get(Mission), pages);
-}
-
-static void global_threat() {
-	static int pages[] = {791, 792, 793, 794, 795};
+void gamei::threat(int bonus, int param) {
 	stop_and_clear(getnm("GloablThreat"));
-	special_mission(game.get(Threat), pages);
+	game.script(791 + game.get(Threat) - 1);
 }
 
 int	gamei::getmaximumeat() const {
@@ -544,27 +527,6 @@ void treasurei::lossing() const {
 
 void treasurei::apply() const {
 	apply_effect(use);
-}
-
-void pirate::afterchange(ability_s v, int b) {
-	switch(v) {
-	case Exploration: case Brawl: case Hunting:
-	case Aim: case Swagger: case Navigation:
-		checkexperience(v);
-		break;
-	case Mission:
-		captain_mission();
-	case Cabine:
-		captain_cabine();
-		break;
-	case Threat:
-		global_threat();
-		break;
-	}
-	if(b > 0)
-		apply(WhenAbilityIncreased, v);
-	else if(b < 0)
-		apply(WhenAbilityDecreased, v);
 }
 
 static void generate_classes() {
