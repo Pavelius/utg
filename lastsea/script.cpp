@@ -1025,6 +1025,10 @@ static void add_gun(int bonus, int param) {
 		game.information(getnm(param ? "GunAdded" : "GunAddedUnloaded"), bonus);
 }
 
+static void add_treasure(int bonus, int param) {
+	game.gaintreasures(bonus);
+}
+
 static void upgrade_gun(int bonus, int param) {
 }
 
@@ -1121,7 +1125,7 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximum(Eat)+bonus));
+	game.set((ability_s)param, game.get((ability_s)param) - (game.getmaximum(Eat) + bonus));
 }
 
 #ifdef _DEBUG
@@ -1223,6 +1227,7 @@ BSDATA(scripti) = {
 	{"Tile900", apply_tile, 900},
 	{"TileRock", apply_tile, 65535},
 	{"TradeFriend", trade_friend},
+	{"Treasure", add_treasure, 0, 0, FG(TipsInfo) | FG(TipsInfoBonus)},
 	{"UpgradeGun", upgrade_gun},
 	{"WinGame", end_game, 1},
 	{"ZeroCounters", zero_counters},

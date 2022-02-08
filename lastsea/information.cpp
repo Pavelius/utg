@@ -4,15 +4,14 @@
 const quest* find_promt(int index);
 void print(stringbuilder& sb, const variants& source);
 
-static void print(stringbuilder& sb, ability_s v, int count) {
-	auto& ei = bsdata<abilityi>::elements[v];
+static void print(stringbuilder& sb, const char* id, int count, unsigned flags) {
 	auto negative = count < 0;
-	if(ei.is(Negative))
+	if((flags & FG(Negative)) != 0)
 		negative = !negative;
 	sb.addsep(' ');
 	if(negative)
 		sb.add("[-");
-	sb.add("%1%+2i", getnm(ei.id), count);
+	sb.add("%1%+2i", getnm(id), count);
 	if(negative)
 		sb.add("]");
 }
@@ -40,12 +39,15 @@ void scripti::getinfo(stringbuilder& sb, int bonus) const {
 	if(!is(TipsInfo))
 		return;
 	sb.addsep(' ');
-	sb.add(getnm(id), bonus);
+	if(is(TipsInfoBonus))
+		print(sb, getnm(id), bonus, flags);
+	else
+		sb.add(getnm(id), bonus);
 }
 
 static void print(stringbuilder& sb, variant v) {
 	switch(v.type) {
-	case Ability: print(sb, (ability_s)v.value, v.counter); break;
+	case Ability: print(sb, bsdata<abilityi>::get(v.value).id, v.counter, bsdata<abilityi>::get(v.value).flags); break;
 	case Script: bsdata<scripti>::elements[v.value].getinfo(sb, v.counter); break;
 	default: break;
 	}
@@ -211,8 +213,7 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		auto pv = pq->getheader();
 		if(pv)
 			sb.add(pv);
-	}
-	else if(bsdata<quest>::have(object))
+	} else if(bsdata<quest>::have(object))
 		sfgetinfo(object, sb);
 	else
 		utg::getstatus(object, sb);

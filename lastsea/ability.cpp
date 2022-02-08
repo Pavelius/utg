@@ -9,7 +9,6 @@ BSDATA(abilityi) = {
 	{"Navigation"},
 	{"Reroll"},
 	{"Misfortune", FG(Negative)},
-	{"Treasure"},
 	{"Crew"},
 	{"Discontent", FG(Negative)},
 	{"Supply"},

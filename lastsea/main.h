@@ -18,7 +18,7 @@ template<typename T> struct bsmeta;
 
 enum ability_s : unsigned char {
 	Exploration, Brawl, Hunting, Aim, Swagger, Navigation,
-	Reroll, Misfortune, Treasure,
+	Reroll, Misfortune,
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
 	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
@@ -42,7 +42,7 @@ enum variant_s : unsigned char {
 	Quest, Script, Tag, Trigger, Value, Widget
 };
 enum commonf_s : unsigned char {
-	Negative, TipsInfo,
+	Negative, TipsInfo, TipsInfoBonus,
 };
 enum answer_s {
 	AnswerChoose = 0, AnswerPage = 30,

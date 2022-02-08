@@ -115,4 +115,5 @@ Story41 abilities(0 0 1 1 0 0)
  gain Misfortune+2
 Story51
 Story54
+Story58
 Story74

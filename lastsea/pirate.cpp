@@ -24,8 +24,6 @@ int pirate::getnextstar(int value) const {
 void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	auto p = (pirate*)object;
 	int value, value2;
-	//if(p->classid == 0xFFFF)
-	//	return;
 	switch(v.type) {
 	case Ability:
 		switch(v.value) {
@@ -128,10 +126,6 @@ void pirate::checkexperience(ability_s v) {
 }
 
 void pirate::set(ability_s v, int i) {
-	if(v == Treasure) {
-		gaintreasures(i);
-		return;
-	}
 	if(i < 0)
 		i = 0;
 	if(v == Stars) {
@@ -154,9 +148,6 @@ void pirate::set(ability_s v, int i) {
 	if(abilities[v] != i) {
 		auto d = i - abilities[v];
 		switch(v) {
-		case Treasure:
-			gaintreasures(i);
-			break;
 		case Mission: case Cabine: case Threat:
 			abilities[v] = i;
 			break;
