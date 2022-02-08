@@ -43,7 +43,7 @@ BSDATA(abilityi) = {
 	{"CabineMaximum"},
 	{"Stars", FG(TipsInfo)},
 	{"History"},
-	{"Infamy", FG(TipsInfo) | FG(TipsLog)},
+	{"Infamy", FG(TipsInfo) | FG(TipsLog), pirate::infamychange},
 };
 assert_enum(abilityi, Infamy)
 

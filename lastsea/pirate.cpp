@@ -34,7 +34,7 @@ int	pirate::getmaximum(ability_s v) const {
 	case Infamy:
 		return 6;
 	case Stars: return 18;
-	case Level: case Mission: case Cabine: case Threat:
+	case History: case Mission: case Cabine: case Threat:
 		return 5;
 	case Danger:
 		p = game.getgoal();
@@ -72,7 +72,11 @@ void pirate::checkexperience(int bonus, int param) {
 
 void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep);
 
-void pirate::infamymaximum(int bonus, int param) {
+void pirate::infamychange(int bonus, int param) {
+	auto value = game.get(Infamy);
+	auto maximum = game.getmaximum(Infamy);
+	if(value < maximum)
+		return;
 	game.information(getnm("YouGainStars"));
 	game.abilities[Infamy] = 0;
 	if(game.abilities[Stars] < game.getmaximum(Stars))

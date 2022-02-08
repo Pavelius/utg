@@ -113,12 +113,18 @@ static const messagei* find_message(variant type, int value) {
 	return 0;
 }
 
+static void pause_story() {
+	answers an;
+	an.addv(0, getnm("CloseHistory"), 0);
+	an.choose(0);
+}
+
 static void print_message(const char* format) {
 	auto push_prompt = answers::prompt;
 	char temp[4096]; stringbuilder sb(temp);
 	answers::prompt = temp;
 	game.actn(sb, format, 0);
-	draw::pause();
+	pause_story();
 	answers::prompt = push_prompt;
 }
 

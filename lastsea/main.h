@@ -22,7 +22,7 @@ enum ability_s : unsigned char {
 	Crew, Discontent, Supply, Hull,
 	Danger, DangerMaximum,
 	Threat, Mission, MissionMaximum, Cabine, CabineMaximum,
-	Stars, Level, Infamy
+	Stars, History, Infamy
 };
 enum tag_s : unsigned char {
 	NoDigging, NoSteal, Valuable, Discard,
@@ -227,7 +227,7 @@ public:
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
-	static void		infamymaximum(int bonus, int param);
+	static void		infamychange(int bonus, int param);
 	void			raiseskills(int count);
 	void			roll(int mode);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
