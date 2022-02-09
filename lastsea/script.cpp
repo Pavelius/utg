@@ -18,16 +18,12 @@ counters variables;
 void print(stringbuilder& sb, const variants& source);
 void main_menu();
 
-static void clear_message() {
-	utg::sb.clear();
-}
-
 static void stop_and_clear(const char* format) {
 	if(!utg::sb)
 		return;
 	if(!format)
 		format = getnm("Continue");
-	draw::pause(format, true);
+	draw::pause(format);
 }
 
 static void add_header(const quest* ph) {
@@ -138,9 +134,22 @@ static const char* find_separator(const char* pb) {
 	return 0;
 }
 
+void gamei::information(const char* format, ...) {
+	utg::sb.addn("[+");
+	utg::sb.addv(format, xva_start(format));
+	utg::sb.add("]");
+}
+
+void gamei::warning(const char* format, ...) {
+	utg::sb.addn("[-");
+	utg::sb.addv(format, xva_start(format));
+	utg::sb.add("]");
+}
+
 static void add_message(const char* format) {
 	if(!format)
 		return;
+	utg::sb.clear();
 	while(true) {
 		auto p = find_separator(format);
 		if(!p)
@@ -156,7 +165,7 @@ static void add_message(const char* format) {
 		temp[count] = 0;
 		game.act(temp);
 		draw::pause();
-		clear_message();
+		utg::sb.clear();
 		format = pn;
 	}
 	game.act(format);
@@ -370,11 +379,10 @@ static void choose_actions(int count) {
 	};
 	if(!last_location)
 		return;
-	clear_message();
 	quest::last = last_location;
 	add_header(quest::last);
 	if(quest::last->text)
-		game.act(quest::last->text);
+		add_message(quest::last->text);
 	apply_effect(quest::last->tags);
 	game.clearactions();
 	handler san;
@@ -449,7 +457,6 @@ static void play_actions() {
 		if(!p->next)
 			continue;
 		game.setorder(parcipant_index);
-		clear_message();
 		game.script(p->next);
 		if(need_stop_actions)
 			break;
@@ -476,7 +483,6 @@ void start_scene() {
 	if(need_sail && last_tile) {
 		need_continue = true;
 		need_sail = false;
-		clear_message();
 		game.script(last_tile->param);
 	}
 	if(need_continue) {
@@ -605,7 +611,7 @@ void gamei::createtreasure() {
 
 void pirate::addhistory() {
 	game.information(getnm("YouGetHistory"));
-	draw::pause(getnm("GloablEvent"));
+	draw::pausenc(getnm("GloablEvent"), game.getname());
 	epilog(4 + get(History));
 }
 
@@ -930,10 +936,10 @@ static void show_map(int bonus, int param) {
 }
 
 static void sail_away(int bonus, int param) {
-	if(bonus > 0)
-		clear_message();
-	last_tile = sail_next_hexagon();
+	if(bonus)
+		utg::sb.clear();
 	stop_and_clear(getnm("SailAway"));
+	last_tile = sail_next_hexagon();
 }
 
 static void zero_counters(int bonus, int param) {

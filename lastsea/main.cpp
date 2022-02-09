@@ -42,13 +42,13 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	answers::interactive = true;
+	answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
 	answers::interactive = true;
 	//game.write("test.sav");
-	game.epilog(2);
+	//game.epilog(2);
 	game.script(0);
 	menu::current_mode = "Game";
 	if(!draw::isnext())

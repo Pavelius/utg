@@ -13,6 +13,7 @@ static void generate_character() {
 	quest::read("rules/Quest.txt");
 	charname::read("locale/ru/CharacterNames.txt");
 	answers::header = getnm("CharacterGeneration");
+	answers::resid = "meet";
 	create_hero(true);
 	create_hero(true);
 	create_hero(true);

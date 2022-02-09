@@ -56,12 +56,18 @@ void draw::pause() {
 	pause(getnm("Continue"));
 }
 
-void draw::pause(const char* title, bool clear_console) {
+void draw::pause(const char* title, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	answers an; sb.addv(title, xva_start(title));
 	an.choose(0, temp, true);
-	if(clear_console && answers::console)
+	if(answers::console)
 		answers::console->clear();
+}
+
+void draw::pausenc(const char* title, ...) {
+	char temp[260]; stringbuilder sb(temp);
+	answers an; sb.addv(title, xva_start(title));
+	an.choose(0, temp, true);
 }
 
 bool draw::yesno(const char* title, ...) {

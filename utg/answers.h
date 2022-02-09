@@ -42,6 +42,7 @@ public:
 };
 namespace draw {
 void					pause();
-void					pause(const char* title, bool clear_console = true);
+void					pause(const char* title, ...);
+void					pausenc(const char* title, ...);
 bool					yesno(const char* title, ...);
 }

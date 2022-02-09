@@ -154,7 +154,7 @@ class player : public npcname {
 public:
 	void			act(const char* format, ...) const { actn(utg::sb, format, xva_start(format)); }
 	void			actn(stringbuilder& sb, const char* format, const char* format_param, bool add_sep = true) const;
-	void			background() const;
+	static void		background();
 	void			chooseclass();
 	void			choosename();
 	void			choosehistory();
@@ -254,7 +254,6 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog, pu
 	flagable<2>		locked;
 public:
 	static void		apply(variant v);
-	static void		background();
 	static void		createtiles();
 	void			createtreasure();
 	void			clear();
