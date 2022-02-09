@@ -490,6 +490,51 @@ Name+0 CounterName+0 Name+1 CounterName+1
 1)
 13 Sail+1 Infamy+3)
 
+#4057 Header("Военный корабль") Image(war_ship) EndScene(826)\
+Name+0 CounterName+0 Name+1 CounterName+1
+Огромный военный корабль сравнялся в вашим кораблем на расстоянии выстрела.
+4157) Воодушевить команду.
+4257 VisitManyTimes) Зарядить пушки.
+4357 VisitManyTimes) Стрелять из пушек.
+4457) Собрать обломки.
+4557) Столкнуться бортами.
+525 VisitRequired) Защищать капитана.
+
+#4157 Swagger+1 Roll
+- Бей их! Отступать некуда! Либо мы, либо они! За капитана! - заорал%а %герой.
+1 Choose+1)
+7 Choose+2)
+11 Choose+3)
+0 Reroll+1 VisitManyTimes) Воодушевить морских волков.
+0 Skill+1) Раздать **ценные** указания вашим морским волкам, подгоняя их громкими эпитетами.
+0 ChooseCounter CounterX-1) Собственным примером показать как надо.
+
+#4257 Choose+2
+%герой пытается перезарядить корабельные пушки.
+0 Supply-1 ReloadGun+1 VisitManyTimes) Засунуть ядра в пушки.
+0 Infamy+1 VisitManyTimes) Выглянуть из-за борта и показать врагу неприличный жест.
+0 Reroll+1 VisitManyTimes) Прочистить дуло шомполом.
+
+#4357 ChooseCounter Aim+1 RollGuns
+%герой стал%а за одну из корабельных пушек.
+1 Infamy-1)
+6 CounterX-1)
+13 CounterX-2 Infamy+1)
+18 CounterX-3 Infamy+3)
+
+#4457 Hunting+1 Roll
+1 Choose+1)
+7 Choose+2)
+11 Choose+3)
+0 Supply+1 VisitManyTimes) Увеличить [припасы]
+0 Treasure+1) Добыть [сокровища]
+0 Reroll+1 VisitManyTimes) Увеличить [перебросы]
+
+#4557 Navigation+1 PenaltyB Roll
+1 Hull-1 CounterA-1)
+7 Hull-1 CounterA-2 Infamy+1)
+13 Hull-1 CounterA-3 Infamy+3)
+
 #6000
 Корпус врага
 #6001

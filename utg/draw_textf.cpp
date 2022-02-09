@@ -281,13 +281,6 @@ static void execute_command(const char* id) {
 		execute_center();
 	else if(equal(id, "tab"))
 		execute_tab();
-	//else if(text_formats) {
-	//	auto p = text_formats->find(id);
-	//	if(p) {
-	//		assert(p->proc);
-	//		p->proc();
-	//	}
-	//}
 }
 
 static const char* parse_command(const char* p, int x1, int x2) {

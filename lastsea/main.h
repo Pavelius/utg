@@ -62,12 +62,14 @@ const indext map_y = 6;
 
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
+	typedef void (*fninfo)(stringbuilder& sb, const scripti& e, int counter);
 	typedef bool (*fntest)(int counter, int param);
 	const char*		id;
 	fnevent			proc;
 	int				param;
 	fntest			choose;
 	unsigned		flags;
+	fninfo			info;
 	void			getinfo(stringbuilder& sb, int bonus) const;
 	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
 };
@@ -160,6 +162,7 @@ public:
 	const npcname&	getactive() const { return active ? friends[(active - 1) % (maxcount - 1)] : *this; }
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }
 	slice<npcname>	getfriends() { return slice<npcname>(friends); }
+	const npcname*	getplayer(int i) const;
 	variant			getvalue(int v) { return values[v % lenghtof(friends)]; }
 	void			setorder(int v) { setplayer(order[v % maxcount]); }
 	void			setplayer(int v) { active = v % maxcount; }

@@ -119,8 +119,18 @@ static void copy(npcname& e1, npcname& e2) {
 	e1 = e2;
 }
 
+const npcname* player::getplayer(int i) const {
+	switch(i) {
+	case 0: return this;
+	case 1: return friends + 0;
+	case 2: return friends + 1;
+	case 3: return friends + 2;
+	default: return 0;
+	}
+}
+
 void player::choosename() {
-	npcname names[4];
+	npcname names[8];
 	answers an;
 	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : names) {

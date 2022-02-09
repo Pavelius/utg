@@ -1,2 +1,3 @@
 ﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 1061: Unknown property name `DangerMaximum`
+ Line 13: Can't find variant `Page`
+ Line 919: Can't find variant `Story12`

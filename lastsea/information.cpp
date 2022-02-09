@@ -39,6 +39,8 @@ void scripti::getinfo(stringbuilder& sb, int bonus) const {
 	if(!is(TipsInfo))
 		return;
 	sb.addsep(' ');
+	if(info)
+		info(sb, *this, bonus);
 	if(is(TipsInfoBonus))
 		print(sb, getnm(id), bonus, flags);
 	else
@@ -212,6 +214,8 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		auto pn = pg->getgoaltext();
 		if(pn)
 			sb.add(pn);
+	} else if(game.getplayer(0)==object) {
+		sb.add(getdescription("YourPirate"), getnm(game.getclass().id));
 	} else if(bsdata<tilei>::have(object)) {
 		auto pt = (tilei*)object;
 		auto pq = quest::find(pt->param);

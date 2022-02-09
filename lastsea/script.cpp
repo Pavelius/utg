@@ -89,6 +89,20 @@ const quest* find_promt(int index) {
 	return 0;
 }
 
+static const quest* find_forward(int bonus) {
+	auto pe = bsdata<quest>::end();
+	auto index = AnswerForward + bonus;
+	for(auto p = quest::last + 1; p < pe; p++) {
+		if(p->next != -1)
+			continue;
+		if(p->index < AnswerForward || p->index >= AnswerForward + 100)
+			break;
+		if(p->index == index)
+			return p;
+	}
+	return 0;
+}
+
 static const quest* apply_answers(const quest* ph) {
 	if(!ph)
 		return 0;
@@ -105,8 +119,11 @@ static const quest* apply_answers(const quest* ph) {
 	if(!an)
 		return 0;
 	auto p = (const quest*)an.choose(0);
-	if(p && p->next > 0)
+	if(p && p->next > 0) {
+		if(p->next >= AnswerForward && p->next < AnswerForward + 1000)
+			return find_forward(p->next - AnswerForward);
 		return find_promt(p->next);
+	}
 	return 0;
 }
 
@@ -276,20 +293,6 @@ static bool apply_choose(int page, int count, const char* cancel) {
 		quest::last = push_last;
 	}
 	return r;
-}
-
-static const quest* find_forward(int bonus) {
-	auto pe = bsdata<quest>::end();
-	auto index = AnswerForward + bonus;
-	for(auto p = quest::last + 1; p < pe; p++) {
-		if(p->next != -1)
-			continue;
-		if(p->index < AnswerForward || p->index >= AnswerForward + 100)
-			break;
-		if(p->index == index)
-			return p;
-	}
-	return 0;
 }
 
 static const quest* find_roll_result(const quest* ph, int result) {
@@ -943,6 +946,9 @@ static bool choose_add_gun(int bonus, int param) {
 	return game.addgun(bonus, true, false);
 }
 
+static void remove_gun(int bonus, int param) {
+}
+
 static void add_gun(int bonus, int param) {
 	if(game.addgun(bonus, param, true))
 		game.information(getnm(param ? "GunAdded" : "GunAddedUnloaded"), bonus);
@@ -1139,6 +1145,7 @@ BSDATA(scripti) = {
 	{"ReloadGun", reload_gun_or_add, 0, choose_reload_gun, FG(TipsInfo)},
 	{"ReloadGunOrHull", reload_gun_or_add, Hull, 0, FG(TipsInfo)},
 	{"RemoveAllNavigation", remove_all_navigation},
+	{"RemoveGun", remove_gun},
 	{"RemoveTile", remove_tile},
 	{"Roll", make_roll},
 	{"RollGuns", make_roll, 1},
