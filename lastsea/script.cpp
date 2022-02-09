@@ -27,8 +27,7 @@ static void stop_and_clear(const char* format) {
 		return;
 	if(!format)
 		format = getnm("Continue");
-	draw::pause(format);
-	clear_message();
+	draw::pause(format, true);
 }
 
 static void add_header(const quest* ph) {
@@ -142,7 +141,6 @@ static const char* find_separator(const char* pb) {
 static void add_message(const char* format) {
 	if(!format)
 		return;
-	clear_message();
 	while(true) {
 		auto p = find_separator(format);
 		if(!p)
@@ -607,7 +605,7 @@ void gamei::createtreasure() {
 
 void pirate::addhistory() {
 	game.information(getnm("YouGetHistory"));
-	draw::pause(getnm("GloablEvent"), getname());
+	draw::pause(getnm("GloablEvent"));
 	epilog(4 + get(History));
 }
 

@@ -47,8 +47,8 @@ static void starting() {
 	game.createtreasure();
 	game.createtiles();
 	answers::interactive = true;
-	game.write("test.sav");
-	//game.epilog(2);
+	//game.write("test.sav");
+	game.epilog(2);
 	game.script(0);
 	menu::current_mode = "Game";
 	if(!draw::isnext())

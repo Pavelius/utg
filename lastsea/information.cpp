@@ -167,7 +167,6 @@ void player::epilog(int level) {
 	auto pn = find_message(variant(Class, classid), level);
 	if(!pn)
 		return;
-	auto& ei = getclass();
 	auto push_header = answers::header;
 	char name[260]; stringbuilder sn(name); getname(sn);
 	sn.add(" - "); sn.add(getnm("YourPirate"), getnm(getclass().id));
