@@ -21,6 +21,10 @@ static void check_crew(int bonus, int param) {
 		game.script(951);
 }
 
+static void add_history(int bonus, int param) {
+	game.addhistory();
+}
+
 BSDATA(abilityi) = {
 	{"Exploration", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
 	{"Brawl", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
@@ -42,7 +46,7 @@ BSDATA(abilityi) = {
 	{"Cabine", 0, captain_cabine},
 	{"CabineMaximum"},
 	{"Stars", FG(TipsInfo)},
-	{"History"},
+	{"History", 0, add_history},
 	{"Infamy", FG(TipsInfo) | FG(TipsLog), pirate::infamychange},
 };
 assert_enum(abilityi, Infamy)

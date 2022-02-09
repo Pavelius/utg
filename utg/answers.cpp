@@ -57,9 +57,9 @@ void draw::pause() {
 }
 
 void draw::pause(const char* title, ...) {
-	answers an;
-	an.addv(0, title, xva_start(title));
-	an.choose(0);
+	char temp[260]; stringbuilder sb(temp);
+	answers an; sb.addv(title, xva_start(title));
+	an.choose(0, temp, true);
 	if(answers::console)
 		answers::console->clear();
 }

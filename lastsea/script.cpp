@@ -605,6 +605,12 @@ void gamei::createtreasure() {
 	treasurei::prepare();
 }
 
+void pirate::addhistory() {
+	game.information(getnm("YouGetHistory"));
+	draw::pause(getnm("GloablEvent"), getname());
+	epilog(4 + get(History));
+}
+
 static void return_all_tiles() {
 	for(auto& e : bsdata<tilei>()) {
 		e.tags.remove(Discarded);
@@ -781,7 +787,7 @@ static void choose_case(int bonus, int param) {
 }
 
 static void make_roll(int bonus, int param) {
-	game.roll(bonus);
+	game.roll(param);
 }
 
 static void make_roll_silent(int bonus, int param) {
@@ -844,7 +850,7 @@ static void set_counter(int bonus, int param) {
 		auto pn = variables.getname(last_counter);
 		if(pn)
 			game.information("%1%+2i", pn, bonus);
-		variables.set(last_counter, bonus);
+		variables.set(last_counter, last_value);
 	}
 }
 
@@ -1007,6 +1013,7 @@ static void trade_friend(int bonus, int param) {
 }
 
 static void play_stars(int bonus, int param) {
+	game.levelup();
 }
 
 static void entry(int bonus, int param) {
@@ -1017,9 +1024,19 @@ static void counter_name(int bonus, int param) {
 	variables.setname(bonus, quest::getname(last_value));
 }
 
+static bool is_enemy_counter(int i) {
+	switch(i) {
+	case 0: case 1: case 4: return true;
+	default: return false;
+	}
+}
+
 static void choose_counter(int bonus, int param) {
 	answers an;
 	for(auto i = 0; i < variables.getcount(); i++) {
+		auto enemy = is_enemy_counter(i) ? 1 : 0;
+		if(enemy != param)
+			continue;
 		auto pn = variables.getname(i);
 		if(!pn)
 			continue;
@@ -1099,7 +1116,7 @@ BSDATA(scripti) = {
 	{"Bury", bury, 0, 0, FG(TipsInfo)},
 	{"CheckDanger", check_danger},
 	{"Choose", choose_case},
-	{"ChooseCounter", choose_counter},
+	{"ChooseCounter", choose_counter, 1},
 	{"ChooseCustom", choose_custom, AnswerCustom},
 	{"CounterA", set_counter, 0},
 	{"CounterB", set_counter, 1},

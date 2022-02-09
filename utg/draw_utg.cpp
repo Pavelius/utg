@@ -383,11 +383,13 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void* answers::choose(const char* title, const char* cancel_text) const {
+void* answers::choose(const char* title, const char* cancel_text, bool show_only_cancel) const {
 	if(!interactive)
 		return random();
-	if(!elements)
-		return 0;
+	if(!elements) {
+		if(!show_only_cancel || (show_only_cancel && cancel_text==0))
+			return 0;
+	}
 	if(!paintcell)
 		paintcell = answerbt;
 	auto push_caret = caret;

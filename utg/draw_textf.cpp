@@ -20,7 +20,7 @@ static bool match(const char** string, const char* name) {
 
 static const char* glink(const char* p, char* result, unsigned result_maximum) {
 	result[0] = 0;
-	if(p[0] == '(' && p[1]=='{') {
+	if(p[0] == '(' && p[1] == '{') {
 		p = skipspcr(p + 2);
 		auto ps = result;
 		auto pe = ps + result_maximum;
@@ -77,6 +77,12 @@ static const char* textspc(const char* p, int x1) {
 	return p;
 }
 
+static const char* wholeline(const char* p) {
+	while(*p && *p != 10 && *p != 13)
+		p++;
+	return p;
+}
+
 static const char* word(const char* text) {
 	if(text[0] == ':')
 		return text + 1;
@@ -92,6 +98,29 @@ static void apply_line_feed(int x1, int dy) {
 	caret.y += dy;
 	if(maxcaret.y < caret.y)
 		maxcaret.y = caret.y;
+}
+
+static const char* citate(const char* p, int x1, int x2, color new_fore, const sprite* new_font) {
+	auto push_fore = draw::fore;
+	auto push_font = draw::font;
+	draw::fore = new_fore;
+	draw::font = new_font;
+	caret.x = x1;
+	while(p[0]) {
+		if(p[0] == '-' && p[1] == '#' && p[2] == '-' && (p[3] == 13 || p[3] == 10 || p[3]==0)) {
+			p = skipspcr(p + 3);
+			break;
+		}
+		auto p2 = skipspcr(wholeline(p));
+		auto w = textw(p, p2 - p);
+		text(p, p2 - p);
+		p = p2;
+		apply_line_feed(x1, texth());
+	}
+	apply_line_feed(caret.x, 0);
+	draw::fore = push_fore;
+	draw::font = push_font;
+	return p;
 }
 
 static const char* textfln(const char* p, int x1, int x2, color new_fore, const sprite* new_font) {
@@ -178,7 +207,7 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 			text(p, p2 - p, flags);
 			p = p2;
 		}
-		if(temp[0] && ishilite({caret.x, caret.y, caret.x + w, caret.y+texth()})) {
+		if(temp[0] && ishilite({caret.x, caret.y, caret.x + w, caret.y + texth()})) {
 			if(!tips_sb)
 				tips_sb.addv(temp, 0);
 		}
@@ -211,7 +240,7 @@ static const char* parse_parameters(const char* p, const char*& id, unsigned& al
 			is_text = true;
 			value = (long)sb.get();
 			if(p[0] == '$' && p[1] == '{')
-				p = sb.psline(skipspcr(p+2));
+				p = sb.psline(skipspcr(p + 2));
 			else if(p[0] == '\"' || p[0] == '\'')
 				p = sb.psstr(p + 1, p[0]);
 			else
@@ -351,6 +380,8 @@ static const char* text_block(const char* p, int x1, int x2) {
 			p = textfln(skipsp(p), x1, x2, colors::h2, metrics::h2);
 		else if(match(&p, "#")) // Header 1
 			p = textfln(skipsp(p), x1, x2, colors::h1, metrics::h1);
+		else if(match(&p, "-#-")) // Citate
+			p = citate(skipspcr(p), x1 + metrics::padding * 2, x2, colors::special.mix(colors::window, 192), metrics::font);
 		else if(match(&p, "---")) { // Line
 			p = skipspcr(p);
 			auto push_x = caret.x;

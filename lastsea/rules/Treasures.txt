@@ -102,6 +102,7 @@ Story4
 Story5
 Story6
 Story12
+ tags Discard
 Story15
 Story20
 Story23

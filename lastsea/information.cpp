@@ -104,18 +104,17 @@ static const messagei* find_message(variant type, int value) {
 	return 0;
 }
 
-static void pause_story() {
+static void pause_story(const char* format) {
 	answers an;
-	an.addv(0, getnm("CloseHistory"), 0);
-	an.choose(0);
+	an.choose(0, format, true);
 }
 
-static void print_message(const char* format) {
+static void print_message(const char* format, const char* button) {
 	auto push_prompt = answers::prompt;
 	char temp[4096]; stringbuilder sb(temp);
 	answers::prompt = temp;
 	game.actn(sb, format, 0);
-	pause_story();
+	pause_story(button);
 	answers::prompt = push_prompt;
 }
 
@@ -148,11 +147,11 @@ void player::background() const {
 	actn(sb, pn->text, 0);
 	answers::prompt = temp;
 	while(!draw::isnext()) {
-		answers an; add_events(an, type, 5);
-		auto p = (const char*)an.choose(0, getnm("CloseHistory"));
+		answers an; add_events(an, type, game.get(History));
+		auto p = (const char*)an.choose(0, getnm("CloseHistory"), true);
 		if(!p)
 			break;
-		print_message(p);
+		print_message(p, getnm("CloseHistory"));
 	}
 	answers::header = push_header;
 	answers::prompt = push_prompt;
@@ -169,8 +168,12 @@ void player::epilog(int level) {
 	if(!pn)
 		return;
 	auto& ei = getclass();
-	act(pn->text);
-	draw::pause();
+	auto push_header = answers::header;
+	char name[260]; stringbuilder sn(name); getname(sn);
+	sn.add(" - "); sn.add(getnm("YourPirate"), getnm(getclass().id));
+	answers::header = name;
+	print_message(pn->text, getnm("CloseHistory"));
+	answers::header = push_header;
 }
 
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {

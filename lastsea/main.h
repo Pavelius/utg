@@ -141,6 +141,7 @@ struct classi {
 	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
 	variants		event1, event2, event3, event4, event5;
 	const char*		getearn(ability_s v) const;
+	int				getlevel(int stars) const;
 };
 class player : public npcname {
 	static const int maxcount = 4;
@@ -215,6 +216,7 @@ public:
 	indext			actions[6];
 	void			add(ability_s v, int bonus);
 	void			addaction(indext v);
+	void			addhistory();
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
 	static void		checkexperience(int bonus, int param);
@@ -227,6 +229,7 @@ public:
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
 	static void		infamychange(int bonus, int param);
+	void			levelup();
 	void			raiseskills(int count);
 	void			roll(int mode);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);

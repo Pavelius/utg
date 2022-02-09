@@ -42,7 +42,7 @@ void main_menu() {
 
 static void starting() {
 	game.setmarker(0xFFFF);
-	answers::interactive = false;
+	answers::interactive = true;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();

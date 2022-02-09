@@ -490,7 +490,7 @@ Name+0 CounterName+0 Name+1 CounterName+1
 1)
 13 Sail+1 Infamy+3)
 
-#4057 Header("Военный корабль") Image(war_ship) EndScene(826)\
+#4057 Header("Военный корабль") Image(war_ship) EndScene(827)\
 Name+0 CounterName+0 Name+1 CounterName+1
 Огромный военный корабль сравнялся в вашим кораблем на расстоянии выстрела.
 4157) Воодушевить команду.

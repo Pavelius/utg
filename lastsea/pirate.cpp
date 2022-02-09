@@ -53,6 +53,15 @@ const char* classi::getearn(ability_s v) const {
 	}
 }
 
+int classi::getlevel(int stars) const {
+	auto r = 0;
+	for(auto i = 0; i < sizeof(levelup) / sizeof(levelup[0]); i++) {
+		if(levelup[i] <= stars)
+			r = i + 1;
+	}
+	return r;
+}
+
 void pirate::checkexperience(int bonus, int param) {
 	if(bonus <= 0)
 		return;
@@ -285,4 +294,10 @@ void pirate::raiseskills(int count) {
 		add(v, 1);
 		count--;
 	}
+}
+
+void pirate::levelup() {
+	auto need_level = getclass().getlevel(get(Stars));
+	while(get(History) < need_level)
+		add(History, 1);
 }
