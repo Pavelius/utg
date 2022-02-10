@@ -725,7 +725,18 @@ static void bury(int bonus, int param) {
 
 static void end_game(int bonus, int param) {
 	game_result = param;
-	draw::pause(getnm(param > 0 ? "WinGame" : "LostGame"));
+	if(!param)
+		draw::pause(getnm("LostGame"));
+	else {
+		draw::pause(getnm("WinGame"));
+		auto history = game.get(History);
+		if(history >= 5)
+			game.epilog(3);
+		else if(history >= 4)
+			game.epilog(2);
+		else
+			game.epilog(1);
+	}
 	draw::setnext(main_menu);
 }
 
@@ -1075,7 +1086,7 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	game.add((ability_s)param, - (game.getmaximumeat() + bonus));
+	game.add((ability_s)param, -(game.getmaximumeat() + bonus));
 }
 
 static void set_goal(int bonus, int param) {

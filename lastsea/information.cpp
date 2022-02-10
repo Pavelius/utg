@@ -1,6 +1,11 @@
 #include "main.h"
 #include "widget.h"
 
+static const char* history_source[] = {
+	"NoHistory",
+	"Epilogue", "Epilogue", "Epilogue", "Prologue",
+	"Event1", "Event2", "Event3", "Event4", "Event5"
+};
 const quest* find_promt(int index);
 void print(stringbuilder& sb, const variants& source);
 
@@ -138,6 +143,7 @@ void player::background() {
 	auto push_header = answers::header;
 	char name[260]; stringbuilder sn(name);
 	set_pirate_header(sn);
+	answers::header = name;
 	char temp[4096]; stringbuilder sb(temp);
 	game.actn(sb, pn->text, 0);
 	answers::prompt = temp;
@@ -156,7 +162,13 @@ void player::epilog(int level) {
 	auto pn = find_message(variant(Class, classid), level);
 	if(!pn)
 		return;
-	print_message_header(pn->text, getnm("CloseHistory"));
+	auto push_header = answers::header;
+	answers::header = getnm(maptbl(history_source, level));
+	const char* cancel = "CloseHistory";
+	if(level <= 2)
+		cancel = "EndAdventure";
+	print_message(pn->text, getnm(cancel));
+	answers::header = push_header;
 }
 
 void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
