@@ -177,3 +177,23 @@ void quest::initialize() {
 	prop_header = propertyi::add("Header", propertyi::Text);
 	prop_image = propertyi::add("Image", propertyi::Text);
 }
+
+void quest::manual() const {
+	while(true) {
+		answers an;
+		auto pe = bsdata<quest>::end();
+		auto index = this->index;
+		for(auto p = this + 1; p < pe; p++) {
+			if(p->index != index)
+				continue;
+			an.add(p, p->text);
+		}
+		auto p = (const quest*)an.choose(text, getnm("Back"), 1);
+		if(!p)
+			break;
+		p = p->findprompt(p->next);
+		if(!p)
+			break;
+		p->manual();
+	}
+}

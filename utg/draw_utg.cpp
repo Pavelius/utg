@@ -383,11 +383,11 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void* answers::choose(const char* title, const char* cancel_text, bool show_only_cancel) const {
+void* answers::choose(const char* title, const char* cancel_text, int cancel_mode) const {
 	if(!interactive)
 		return random();
 	if(!elements) {
-		if(!show_only_cancel || (show_only_cancel && cancel_text==0))
+		if(!cancel_mode || (cancel_mode && cancel_text==0))
 			return 0;
 	}
 	if(!paintcell)

@@ -11,6 +11,8 @@ struct quest {
 	static const quest* last;
 	static propertyi::indext prop_image, prop_header;
 	void				clear();
+	static const quest*	find(short id);
+	static const quest*	findprompt(short id);
 	const char*			getheader() const { return getstring(getbsi(this), prop_header); }
 	const char*			getimage() const { return getstring(getbsi(this), prop_image); }
 	static const char*	getname(int id);
@@ -18,7 +20,6 @@ struct quest {
 	static void			initialize();
 	bool				is(variant v) const;
 	bool				isanswer() const { return next != -1; }
-	static const quest*	find(short id);
-	static const quest*	findprompt(short id);
+	void				manual() const;
 	static void			read(const char* url);
 };
