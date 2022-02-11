@@ -20,6 +20,6 @@ struct quest {
 	static void			initialize();
 	bool				is(variant v) const;
 	bool				isanswer() const { return next != -1; }
-	void				manual() const;
+	static void			manual(short page);
 	static void			read(const char* url);
 };

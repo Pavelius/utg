@@ -1,37 +1,67 @@
 #include "main.h"
 
-static void captain_cabine(int bonus, int param) {
+static void captain_cabine(const abilityi& e, int bonus) {
 	game.script(43 + game.get(Cabine) - 1);
 }
 
-static void captain_mission(int bonus, int param) {
+static void captain_mission(const abilityi& e, int bonus) {
 	game.script(48 + game.get(Mission) - 1);
 }
 
-static void check_hull(int bonus, int param) {
+static void check_hull(const abilityi& e, int bonus) {
 	auto value = game.get(Hull);
 	if(value == 0)
 		game.script(952);
 }
 
-static void check_crew(int bonus, int param) {
+static void check_crew(const abilityi& e, int bonus) {
 	auto value = game.get(Crew);
 	auto minimum = game.get(Discontent);
 	if(value <= minimum)
 		game.script(951);
 }
 
-static void add_history(int bonus, int param) {
+static void add_history(const abilityi& e, int bonus) {
 	game.addhistory();
 }
 
+static void check_skill(const abilityi& e, int bonus) {
+	if(bonus <= 0)
+		return;
+	auto a = (ability_s)(&e - bsdata<abilityi>::elements);
+	auto pa = game.getclass().getearn(a);
+	auto cv = game.get(a);
+	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {
+		if(cv == pa[i]) {
+			game.add(Stars, 1);
+			break;
+		}
+	}
+}
+
+static void check_threat(const abilityi& e, int bonus) {
+	game.stop(getnm("GloablThreat"));
+	game.script(791 + game.get(Threat) - 1);
+}
+
+static void check_infamy(const abilityi& e, int bonus) {
+	auto value = game.get(Infamy);
+	auto maximum = game.getmaximum(Infamy);
+	if(value < maximum)
+		return;
+	game.information(getnm("YouGainStars"));
+	game.abilities[Infamy] = 0;
+	if(game.abilities[Stars] < game.getmaximum(Stars))
+		game.abilities[Stars]++;
+}
+
 BSDATA(abilityi) = {
-	{"Exploration", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
-	{"Brawl", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
-	{"Hunting", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
-	{"Aim", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
-	{"Swagger", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
-	{"Navigation", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), pirate::checkexperience},
+	{"Exploration", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
+	{"Brawl", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
+	{"Hunting", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
+	{"Aim", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
+	{"Swagger", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
+	{"Navigation", FG(TipsInfo) | FG(TipsLog) | FG(UseSupplyToAdd), check_skill},
 	{"Reroll", FG(TipsInfo) | FG(TipsLog)},
 	{"Misfortune", FG(TipsInfo) | FG(TipsLog) | FG(Negative)},
 	{"Crew", FG(TipsInfo) | FG(TipsLog), check_crew},
@@ -40,14 +70,14 @@ BSDATA(abilityi) = {
 	{"Hull", FG(TipsInfo) | FG(TipsLog), check_hull},
 	{"Danger", FG(TipsInfo) | FG(Negative) | FG(TipsLog)},
 	{"DangerMaximum"},
-	{"Threat", FG(Negative), gamei::threat},
+	{"Threat", FG(Negative), check_threat},
 	{"Mission", 0, captain_mission},
 	{"MissionMaximum"},
 	{"Cabine", 0, captain_cabine},
 	{"CabineMaximum"},
 	{"Stars", FG(TipsInfo)},
 	{"History", 0, add_history},
-	{"Infamy", FG(TipsInfo) | FG(TipsLog), pirate::infamychange},
+	{"Infamy", FG(TipsInfo) | FG(TipsLog), check_infamy},
 };
 assert_enum(abilityi, Infamy)
 

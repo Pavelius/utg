@@ -38,10 +38,10 @@ static void test_handlers() {
 void start_scene();
 
 void main_menu() {
+	quest::manual(6600);
 }
 
 static void starting() {
-	game.setmarker(0xFFFF);
 	answers::interactive = true;
 	game.generate();
 	game.createtreasure();

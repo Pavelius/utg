@@ -1,2 +1,2 @@
-﻿In file `scenario/BeyondTheOceanEdge.txt`:
- Line 1119: Can't find variant `SetCounter`
+﻿In file `Names.txt`:
+ Define translate for `Back`

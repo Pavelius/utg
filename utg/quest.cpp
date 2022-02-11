@@ -178,22 +178,24 @@ void quest::initialize() {
 	prop_image = propertyi::add("Image", propertyi::Text);
 }
 
-void quest::manual() const {
-	while(true) {
+void quest::manual(short page) {
+	if(!answers::console)
+		return;
+	auto p = findprompt(page);
+	while(p) {
+		answers::console->clear();
+		answers::console->add(p->text);
 		answers an;
+		auto index = p->index;
 		auto pe = bsdata<quest>::end();
-		auto index = this->index;
-		for(auto p = this + 1; p < pe; p++) {
-			if(p->index != index)
+		for(auto pa = p + 1; pa < pe; pa++) {
+			if(pa->index != index)
 				continue;
-			an.add(p, p->text);
+			an.add(pa, pa->text);
 		}
-		auto p = (const quest*)an.choose(text, getnm("Back"), 1);
-		if(!p)
+		auto pn = (quest*)an.choose(0, getnm("Back"), 1);
+		if(!pn)
 			break;
-		p = p->findprompt(p->next);
-		if(!p)
-			break;
-		p->manual();
+		manual(pn->next);
 	}
 }

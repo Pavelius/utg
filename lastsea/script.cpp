@@ -18,7 +18,7 @@ counters variables;
 void print(stringbuilder& sb, const variants& source);
 void main_menu();
 
-static void stop_and_clear(const char* format) {
+void gamei::stop(const char* format) {
 	if(!utg::sb)
 		return;
 	if(!format)
@@ -509,11 +509,6 @@ static tilei* sail_next_hexagon() {
 	return p;
 }
 
-void gamei::threat(int bonus, int param) {
-	stop_and_clear(getnm("GloablThreat"));
-	game.script(791 + game.get(Threat) - 1);
-}
-
 int	gamei::getmaximumeat() const {
 	return (get(Crew) + 1) / 2;
 }
@@ -935,7 +930,7 @@ static void tile_move_to_player(int bonus, int param) {
 	last_tile = tilei::find(last_value);
 	if(!last_tile)
 		return;
-	stop_and_clear(0);
+	game.stop(0);
 	last_tile->moveto(game.getmarker(), bonus);
 	if(last_tile->index == game.getmarker())
 		game.script(last_tile->param);
@@ -949,7 +944,7 @@ static void show_map(int bonus, int param) {
 static void sail_away(int bonus, int param) {
 	if(bonus)
 		utg::sb.clear();
-	stop_and_clear(getnm("SailAway"));
+	game.stop(getnm("SailAway"));
 	last_tile = sail_next_hexagon();
 }
 

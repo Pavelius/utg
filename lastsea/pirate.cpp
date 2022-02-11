@@ -62,31 +62,7 @@ int classi::getlevel(int stars) const {
 	return r;
 }
 
-void pirate::checkexperience(int bonus, int param) {
-	if(bonus <= 0)
-		return;
-	auto pa = game.getclass().getearn((ability_s)param);
-	auto cv = game.get((ability_s)param);
-	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {
-		if(cv == pa[i]) {
-			game.add(Stars, 1);
-			break;
-		}
-	}
-}
-
 void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep);
-
-void pirate::infamychange(int bonus, int param) {
-	auto value = game.get(Infamy);
-	auto maximum = game.getmaximum(Infamy);
-	if(value < maximum)
-		return;
-	game.information(getnm("YouGainStars"));
-	game.abilities[Infamy] = 0;
-	if(game.abilities[Stars] < game.getmaximum(Stars))
-		game.abilities[Stars]++;
-}
 
 void pirate::add(ability_s v, int i) {
 	// RULE: Solo mode increase Infamy whe raise stars
@@ -117,7 +93,7 @@ void pirate::add(ability_s v, int i) {
 	}
 	abilities[v] += i;
 	if(ei.change)
-		ei.change(i, v);
+		ei.change(ei, i);
 	if(i > 0)
 		apply(WhenAbilityIncreased, v);
 	else if(i < 0)

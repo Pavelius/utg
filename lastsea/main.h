@@ -74,9 +74,10 @@ struct scripti {
 	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
 };
 struct abilityi {
+	typedef void(*fnevent)(const abilityi& e, int bonus);
 	const char*		id;
 	unsigned		flags;
-	scripti::fnevent change;
+	fnevent			change;
 	static void		correct(int value, int& bonus, int min, int max);
 	void			getinfo(stringbuilder& sb, int bonus) const;
 	constexpr bool	is(commonf_s v) const { return (flags & FG(v)) != 0; }
@@ -208,18 +209,17 @@ public:
 };
 class pirate : public player, public chest {
 	static const int max_treasures = 4;
-	char			abilities[Infamy + 1];
 	void			confirmroll();
 	void			makeroll(int mode);
 	void			rolldices();
 public:
+	char			abilities[Infamy + 1];
 	indext			actions[6];
 	void			add(ability_s v, int bonus);
 	void			addaction(indext v);
 	void			addhistory();
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
-	static void		checkexperience(int bonus, int param);
 	ability_s		chooseskill(const char* title) const;
 	void			clear();
 	void			clearactions();
@@ -228,7 +228,6 @@ public:
 	int				get(ability_s v) const { return abilities[v]; }
 	int				getmaximum(ability_s v) const;
 	int				getnextstar(int value) const;
-	static void		infamychange(int bonus, int param);
 	void			levelup();
 	void			raiseskills(int count);
 	void			roll(int mode);
@@ -262,7 +261,6 @@ public:
 	static int		getpage();
 	int				getmaximumeat() const;
 	static void		information(const char* format, ...);
-	//void			information(ability_s v, int count);
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
@@ -272,7 +270,7 @@ public:
 	static void		sfgetinfo(const void* object, stringbuilder& sb);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
 	static void		sfgetstatus(const void* object, stringbuilder& sb);
-	static void		threat(int bonus, int param);
+	static void		stop(const char* format);
 	void			unlockall() { locked.clear(); }
 	void			unlock(int i) { locked.remove(i); }
 	static void		warning(const char* format, ...);
