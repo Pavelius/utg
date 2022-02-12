@@ -812,6 +812,10 @@ static void scout_area(int bonus, int param) {
 	game.chartacourse(bonus);
 }
 
+static void set_ability_if_not_info(stringbuilder& sb, const scripti& e, int bonus) {
+	sb.add(getnm("SetAbilityIfNot"), getnm(bsdata<abilityi>::get(e.param).id), bonus);
+}
+
 static void set_ability_if_not(int bonus, int param) {
 	if(game.get((ability_s)param) > bonus) {
 		game.set((ability_s)param, bonus);
@@ -1066,6 +1070,12 @@ static void eat_supply(int bonus, int param) {
 	game.add((ability_s)param, -(game.getmaximumeat() + bonus));
 }
 
+void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep = ' ');
+
+static void eat_supply_info(stringbuilder& sb, const scripti& e, int bonus) {
+	print(sb, getnm(bsdata<abilityi>::elements[e.param].id), -(game.getmaximumeat() + bonus), e.flags);
+}
+
 static void set_goal(int bonus, int param) {
 	game.setgoal(bonus);
 }
@@ -1118,7 +1128,7 @@ BSDATA(scripti) = {
 	{"CounterName", counter_name},
 	{"CounterX", set_counter, -1},
 	{"Damage", damage},
-	{"EatSupply", eat_supply, Supply},
+	{"EatSupply", eat_supply, Supply, 0, FG(TipsInfo), eat_supply_info},
 	{"Entry", entry},
 	{"FullThrottle", full_throttle},
 	{"Goal", set_goal},
@@ -1177,6 +1187,6 @@ BSDATA(scripti) = {
 	{"ZeroCounters", zero_counters},
 	{"ZeroDanger", set_ability, Danger},
 	{"ZeroRerollIfNot", set_ability_if_not, Reroll},
-	{"ZeroSupplyIfNot", set_ability_if_not, Supply},
+	{"ZeroSupplyIfNot", set_ability_if_not, Supply, 0, FG(TipsInfo), set_ability_if_not_info},
 };
 BSDATAF(scripti)

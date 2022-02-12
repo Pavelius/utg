@@ -42,15 +42,15 @@ void main_menu() {
 }
 
 static void starting() {
-	answers::interactive = true;
+	answers::interactive = false;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();
-	answers::interactive = true;
-	//game.write("test.sav");
-	//game.epilog(2);
 	game.script(0);
+	answers::interactive = true;
 	menu::current_mode = "Game";
+	game.script(5002);
+	draw::pause();
 	if(!draw::isnext())
 		draw::setnext(start_scene);
 }

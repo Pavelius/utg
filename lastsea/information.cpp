@@ -46,7 +46,7 @@ void scripti::getinfo(stringbuilder& sb, int bonus) const {
 	sb.addsep(' ');
 	if(info)
 		info(sb, *this, bonus);
-	if(is(TipsInfoBonus))
+	else if(is(TipsInfoBonus))
 		print(sb, getnm(id), bonus, flags);
 	else
 		sb.add(getnm(id), bonus);
