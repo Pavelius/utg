@@ -21,8 +21,10 @@ static void check_crew(const abilityi& e, int bonus) {
 		game.script(951);
 }
 
-static void add_history(const abilityi& e, int bonus) {
-	game.addhistory();
+static void check_history(const abilityi& e, int bonus) {
+	game.information(getnm("YouGetHistory"));
+	draw::pausenc(getnm("GloablEvent"), game.getname());
+	game.epilog(4 + game.get(History), true);
 }
 
 static void check_skill(const abilityi& e, int bonus) {
@@ -76,7 +78,7 @@ BSDATA(abilityi) = {
 	{"Cabine", 0, captain_cabine},
 	{"CabineMaximum"},
 	{"Stars", FG(TipsInfo)},
-	{"History", 0, add_history},
+	{"History", 0, check_history},
 	{"Infamy", FG(TipsInfo) | FG(TipsLog), check_infamy},
 };
 assert_enum(abilityi, Infamy)

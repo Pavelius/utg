@@ -142,6 +142,7 @@ struct classi {
 	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
 	variants		event1, event2, event3, event4, event5;
 	const char*		getearn(ability_s v) const;
+	const variants&	getevent(int level) const;
 	int				getlevel(int stars) const;
 };
 class player : public npcname {
@@ -159,7 +160,7 @@ public:
 	void			chooseclass();
 	void			choosename();
 	void			choosehistory();
-	void			epilog(int level);
+	void			epilog(int level, bool apply_tags = false);
 	void			generate();
 	const npcname&	getactive() const { return active ? friends[(active - 1) % (maxcount - 1)] : *this; }
 	const classi&	getclass() const { return bsdata<classi>::elements[classid]; }
@@ -217,7 +218,6 @@ public:
 	indext			actions[6];
 	void			add(ability_s v, int bonus);
 	void			addaction(indext v);
-	void			addhistory();
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
 	ability_s		chooseskill(const char* title) const;
@@ -253,6 +253,7 @@ class gamei : public pirate, public oceani, public cannoneer, public shiplog, pu
 	flagable<2>		locked;
 public:
 	static void		apply(variant v);
+	static void		apply(const variants& v);
 	static void		createtiles();
 	void			createtreasure();
 	void			clear();

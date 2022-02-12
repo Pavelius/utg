@@ -1,7 +1,7 @@
 #include "goal.h"
 #include "quest.h"
 
-static propertyi::indext prop_danger_maximum;
+static int prop_danger_maximum;
 
 goal::fninfo goal::info;
 

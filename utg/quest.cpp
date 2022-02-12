@@ -5,8 +5,8 @@
 
 BSDATAC(quest, 2048)
 
-propertyi::indext quest::prop_image;
-propertyi::indext quest::prop_header;
+int quest::prop_image;
+int quest::prop_header;
 const quest* quest::last;
 
 using namespace log;

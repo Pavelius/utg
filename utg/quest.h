@@ -9,7 +9,7 @@ struct quest {
 	variants			tags;
 	constexpr explicit operator bool() { return text != 0; }
 	static const quest* last;
-	static propertyi::indext prop_image, prop_header;
+	static int			prop_image, prop_header;
 	void				clear();
 	static const quest*	find(short id);
 	static const quest*	findprompt(short id);

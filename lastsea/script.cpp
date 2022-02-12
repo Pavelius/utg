@@ -43,7 +43,7 @@ static void add_answer(answers& an, const quest* p) {
 	an.add(p, temp);
 }
 
-static void apply_effect(const variants& tags) {
+void gamei::apply(const variants& tags) {
 	auto push_stop = need_stop;
 	need_stop = false;
 	last_value = 0;
@@ -177,7 +177,7 @@ static void apply_effect(const quest* p) {
 		add_header(p);
 		if(p->text && p->next != AnswerChoose)
 			add_message(p->text);
-		apply_effect(p->tags);
+		game.apply(p->tags);
 		p = apply_answers(p);
 	}
 }
@@ -383,7 +383,7 @@ static void choose_actions(int count) {
 	add_header(quest::last);
 	if(quest::last->text)
 		add_message(quest::last->text);
-	apply_effect(quest::last->tags);
+	game.apply(quest::last->tags);
 	game.clearactions();
 	handler san;
 	auto index = quest::last->index;
@@ -519,18 +519,6 @@ int gamei::getpage() {
 	return last_location->index;
 }
 
-void treasurei::gaining() const {
-	apply_effect(gain);
-}
-
-void treasurei::lossing() const {
-	apply_effect(loss);
-}
-
-void treasurei::apply() const {
-	apply_effect(use);
-}
-
 static void generate_classes() {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
@@ -602,12 +590,6 @@ void gamei::clear() {
 
 void gamei::createtreasure() {
 	treasurei::prepare();
-}
-
-void pirate::addhistory() {
-	game.information(getnm("YouGetHistory"));
-	draw::pausenc(getnm("GloablEvent"), game.getname());
-	epilog(4 + get(History));
 }
 
 static void return_all_tiles() {

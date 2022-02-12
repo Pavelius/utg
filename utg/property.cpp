@@ -8,7 +8,7 @@ BSDATAC(propertyi::value<const char*>, 256 * 8)
 BSDATAC(propertyi, 256 * 2)
 BSDATAC(propertyi::typei, 16)
 
-static propertyi::key* findv(propertyi::indext object, propertyi::indext type, array& source) {
+static propertyi::key* findv(int object, int type, array& source) {
 	auto pe = source.end();
 	auto sz = source.getsize();
 	for(auto p = source.begin(); p < pe; p += sz) {
@@ -29,7 +29,7 @@ static propertyi::key* addnew(array& source) {
 	return (propertyi::key*)source.add();
 }
 
-static void addv(propertyi::indext object, propertyi::indext type, array& source, const void* v) {
+static void addv(int object, int type, array& source, const void* v) {
 	auto p = findv(object, type, source);
 	if(!p) {
 		p = addnew(source);
@@ -47,7 +47,7 @@ void propertyi::typei::add(const char* id, array* source) {
 	p->source = source;
 }
 
-propertyi::indext propertyi::add(const char* id, int type) {
+int propertyi::add(const char* id, int type) {
 	if(!id)
 		return 0;
 	auto p = (propertyi*)bsdata<propertyi>::source.addfind(id);
@@ -61,7 +61,7 @@ void propertyi::initialize() {
 	add("NoProperty", Number);
 }
 
-int getnumber(propertyi::indext object, propertyi::indext type) {
+int getnumber(int object, int type) {
 	if(!type)
 		return 0;
 	auto p = (propertyi::value<int>*)findv(object, type, bsdata<propertyi::value<int>>::source);
@@ -70,17 +70,17 @@ int getnumber(propertyi::indext object, propertyi::indext type) {
 	return 0;
 }
 
-void addnumber(propertyi::indext object, propertyi::indext type, int value) {
+void addnumber(int object, int type, int value) {
 	setproperty(object, type, getnumber(object, type) + value);
 }
 
-void removenumber(propertyi::indext object, propertyi::indext type) {
+void removenumber(int object, int type) {
 	auto p = findv(object, type, bsdata<propertyi::value<int>>::source);
 	if(p)
 		p->type = 0;
 }
 
-const char* getstring(propertyi::indext object, propertyi::indext type) {
+const char* getstring(int object, int type) {
 	if(!type)
 		return 0;
 	auto p = (propertyi::value<const char*>*)findv(object, type, bsdata<propertyi::value<const char*>>::source);
@@ -90,13 +90,13 @@ const char* getstring(propertyi::indext object, propertyi::indext type) {
 }
 
 template<typename T>
-void setproperty(propertyi::indext object, propertyi::indext type, T value) {
+void setproperty(int object, int type, T value) {
 	addv(object, type, bsdata<propertyi::value<T>>::source, &value);
 }
 
 using namespace log;
 
-const char* propertyi::read(const char* p, indext object) {
+const char* propertyi::read(const char* p, int object) {
 	char temp[512]; stringbuilder sb(temp);
 	while(allowparse) {
 		auto p1 = readidn(p, sb);

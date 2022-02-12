@@ -53,6 +53,16 @@ const char* classi::getearn(ability_s v) const {
 	}
 }
 
+const variants&	classi::getevent(int level) const {
+	switch(level) {
+	case 2: return event2;
+	case 3: return event3;
+	case 4: return event4;
+	case 5: return event5;
+	default: return event1;
+	}
+}
+
 int classi::getlevel(int stars) const {
 	auto r = 0;
 	for(auto i = 0; i < sizeof(levelup) / sizeof(levelup[0]); i++) {

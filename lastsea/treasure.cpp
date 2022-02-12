@@ -72,3 +72,15 @@ treasurei* treasurei::pickvaluable(int number) {
 	sb.add("Treasure%1i", number);
 	return find(temp);
 }
+
+void treasurei::gaining() const {
+	game.apply(gain);
+}
+
+void treasurei::lossing() const {
+	game.apply(loss);
+}
+
+void treasurei::apply() const {
+	game.apply(use);
+}

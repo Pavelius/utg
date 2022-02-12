@@ -115,11 +115,13 @@ static void set_pirate_header(stringbuilder& sb) {
 	answers::header = sb.begin();
 }
 
-static void print_message(const char* format, const char* button) {
+static void print_message(const char* format, const char* button, const variants* tags = 0) {
 	auto push_prompt = answers::prompt;
 	char temp[4096]; stringbuilder sb(temp);
 	answers::prompt = temp;
 	game.actn(sb, format, 0);
+	if(tags)
+		game.apply(*tags);
 	draw::pausenc(button, game.getname());
 	answers::prompt = push_prompt;
 }
@@ -158,7 +160,7 @@ void player::background() {
 	answers::prompt = push_prompt;
 }
 
-void player::epilog(int level) {
+void player::epilog(int level, bool apply_tags) {
 	auto pn = find_message(variant(Class, classid), level);
 	if(!pn)
 		return;
@@ -167,7 +169,10 @@ void player::epilog(int level) {
 	const char* cancel = "CloseHistory";
 	if(level <= 2)
 		cancel = "EndAdventure";
-	print_message(pn->text, getnm(cancel));
+	const variants* tags = 0;
+	if(apply_tags)
+		tags = &getclass().getevent(level);
+	print_message(pn->text, getnm(cancel), tags);
 	answers::header = push_header;
 }
 
