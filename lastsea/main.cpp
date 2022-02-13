@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "drawobject.h"
 #include "main.h"
+#include "log.h"
 #include "recordset.h"
 #include "widget.h"
 
@@ -41,6 +42,17 @@ void main_menu() {
 	quest::manual(6600);
 }
 
+static bool load_quest() {
+	quest::read("scenario/BeyondTheOceanEdge.txt");
+	if(log::geterrors() != 0)
+		return false;
+	game.script(0);
+	menu::current_mode = "Game";
+	if(!draw::isnext())
+		draw::setnext(start_scene);
+	return true;
+}
+
 static void starting() {
 	answers::interactive = false;
 	game.generate();
@@ -48,11 +60,7 @@ static void starting() {
 	game.createtiles();
 	game.script(0);
 	answers::interactive = true;
-	menu::current_mode = "Game";
-	game.script(5002);
-	draw::pause();
-	if(!draw::isnext())
-		draw::setnext(start_scene);
+	load_quest();
 }
 
 static void initializing() {
@@ -60,7 +68,6 @@ static void initializing() {
 	charname::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
-	quest::read("scenario/BeyondTheOceanEdge.txt");
 	quest::read("locale/ru/QuestActions.txt");
 }
 

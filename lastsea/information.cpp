@@ -116,14 +116,11 @@ static void set_pirate_header(stringbuilder& sb) {
 }
 
 static void print_message(const char* format, const char* button, const variants* tags = 0) {
-	auto push_prompt = answers::prompt;
-	char temp[4096]; stringbuilder sb(temp);
-	answers::prompt = temp;
-	game.actn(sb, format, 0);
+	utg::sb.clear();
+	game.actn(utg::sb, format, 0);
 	if(tags)
 		game.apply(*tags);
 	draw::pausenc(button, game.getname());
-	answers::prompt = push_prompt;
 }
 
 static void print_message_header(const char* format, const char* button) {

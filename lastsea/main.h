@@ -265,6 +265,7 @@ public:
 	bool			ischoosed(int i) const;
 	bool			islocked(int i) const { return locked.is(i); }
 	void			lock(int i) { locked.set(i); }
+	void			message(const char* format, const char* button, const variants* tags = 0);
 	static void		script(int page);
 	static void		showseamap();
 	static bool		sfapply(variant v, bool run) { if(run) apply(v); return true; }
