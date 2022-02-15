@@ -82,7 +82,6 @@ struct squad : harmable {
 struct missioni {
 	squad			allies[8];
 	squad			enemies[8];
-	harmable		inflict, suffer;
 	unsigned char	enemy, ally;
 	char			multiplier, danger, luck, supply, throphy;
 	void			add(const char* id, bool enemy = false);

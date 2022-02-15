@@ -16,7 +16,7 @@
     <ClCompile Include="move.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="effectable.cpp">
+    <ClCompile Include="script.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="bonus.cpp">
@@ -34,7 +34,7 @@
     <ClCompile Include="creature.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="name.cpp">
+    <ClCompile Include="nameable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="harmable.cpp">
@@ -54,6 +54,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="harmable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="nameable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="script.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

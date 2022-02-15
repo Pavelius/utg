@@ -22,6 +22,7 @@ void avatar(int index, const void* object, const char* id);
 void avatarch(int index, const void* object, const char* id);
 bool buttonfd(const char* title);
 bool isnext();
+void information(const char* format, ...);
 void label(const char* id, const char* value);
 void label(const char* id, const char* value, const void* object);
 void label(const char* id, const char* value, const void* object, fnevent proc);
@@ -32,6 +33,7 @@ void setnext(fnevent v);
 int	start(fnevent proc, bool darkmode, fnevent afterread = 0);
 void texth2(const char* title);
 void vertical(fnevent proc);
+void warning(const char* format, ...);
 }
 namespace utg {
 namespace callback {
@@ -41,9 +43,9 @@ extern fnstatus	getstatus;
 extern stringbuilder sb;
 extern const char*	url_avatars;
 const char*	chooseavatar(answers& an, const char* title);
-void chooseavatar(stringbuilder& result, const char* title, const char* mask = 0);
-int choose(const array& source, const char* title, const char* cancel);
-int	choose(const array& source, const flaga& mask, const char* title, const char* cancel);
+void		chooseavatar(stringbuilder& result, const char* title, const char* mask = 0);
+int			choose(const array& source, const char* title, const char* cancel);
+int			choose(const array& source, const flaga& mask, const char* title, const char* cancel);
 const char* getchoose(const char* id);
-void getstatus(const void* object, stringbuilder& sb);
+void		getstatus(const void* object, stringbuilder& sb);
 }

@@ -150,12 +150,12 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="bonus.cpp" />
     <ClCompile Include="creature.cpp" />
-    <ClCompile Include="effectable.cpp" />
+    <ClCompile Include="script.cpp" />
     <ClCompile Include="harm.cpp" />
     <ClCompile Include="harmable.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="name.cpp" />
+    <ClCompile Include="nameable.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="risk.cpp" />
     <ClCompile Include="special.cpp" />
@@ -163,7 +163,10 @@
     <ClCompile Include="move.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="harmable.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="nameable.h" />
+    <ClInclude Include="script.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />

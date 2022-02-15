@@ -49,8 +49,10 @@ union variant {
 	constexpr bool operator==(const variant& v) const { return u == v.u; }
 	constexpr bool operator!=(const variant& v) const { return u != v.u; }
 	template<class T> operator T*() const { return (T*)((bsdata<varianti>::elements[type].source == bsdata<T>::source_ptr) ? getpointer() : 0); }
+	void				apply() const;
 	void				clear() { u = 0; }
 	constexpr bool		issame(const variant& v) const { return type == v.type && value == v.value; }
+	template<class T> constexpr bool iskind() const { return bsdata<varianti>::elements[type].source==bsdata<T>::source_ptr; }
 	const char*			getdescription() const;
 	const varianti&		geti() const { return bsdata<varianti>::elements[type]; }
 	const char*			getid() const;

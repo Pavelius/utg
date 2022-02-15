@@ -78,3 +78,19 @@ bool draw::yesno(const char* title, ...) {
 	an.add((void*)0, getnm("No"));
 	return an.choose(temp);
 }
+
+void draw::information(const char* format, ...) {
+	if(!answers::console)
+		return;
+	answers::console->addn("[+");
+	answers::console->addv(format, xva_start(format));
+	answers::console->add("]");
+}
+
+void draw::warning(const char* format, ...) {
+	if(!answers::console)
+		return;
+	answers::console->addn("[-");
+	answers::console->addv(format, xva_start(format));
+	answers::console->add("]");
+}

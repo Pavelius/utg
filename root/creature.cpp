@@ -1,13 +1,11 @@
 #include "main.h"
 
-effectable game;
-
 class apply_move : public chooselist {
 	void apply(int index, const void* object) override {
 		auto p = (messagei*)object;
 		for(auto v : p->conditions) {
-			if(v)
-				game.apply(v);
+			//if(v)
+			//	game.apply(v);
 		}
 	}
 };
@@ -64,7 +62,7 @@ static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
 	if(!p)
 		return;
 	sb.addsep(' ');
-	pc->acts(sb, p->text);
+	pc->actv(sb, p->text, 0);
 }
 
 void creature::move(move_s v) {
@@ -84,24 +82,24 @@ void rangeable::addrange(int v) {
 	range = (tag_s)i;
 }
 
-void creature::apply(const effectable& effect) {
-	static harm_s harms[] = {Injury, Exhaustion, Wear, Morale, Depletion};
-	auto ni = effect.inflict.getdistinct();
-	auto ns = effect.suffer.getdistinct();
-	if(ni == 0 && ns == 0)
-		return;
-	act(getname());
-	if(ni) {
-		act("%-Inflict");
-		effect.inflict.fix(utg::sb, harms);
-	}
-	if(ns) {
-		if(ni)
-			utg::sb.add(", %-But");
-		act("%-Suffer");
-		effect.suffer.fix(utg::sb, harms);
-		for(auto v : harms)
-			add(v, effect.suffer.harm[v]);
-	}
-	utg::sb.add(".");
-}
+//void creature::apply(const effectable& effect) {
+//	static harm_s harms[] = {Injury, Exhaustion, Wear, Morale, Depletion};
+//	auto ni = effect.inflict.getdistinct();
+//	auto ns = effect.suffer.getdistinct();
+//	if(ni == 0 && ns == 0)
+//		return;
+//	actv(utg::sb, getname(), 0);
+//	if(ni) {
+//		actv(utg::sb, "%-Inflict", 0);
+//		effect.inflict.getinfo(utg::sb, harms);
+//	}
+//	if(ns) {
+//		if(ni)
+//			utg::sb.add(", %-But");
+//		actv(utg::sb, "%-Suffer", 0);
+//		effect.suffer.getinfo(utg::sb, harms);
+//		for(auto v : harms)
+//			add(v, effect.suffer.harm[v]);
+//	}
+//	utg::sb.add(".");
+//}

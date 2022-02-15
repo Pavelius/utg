@@ -1,4 +1,4 @@
-#include "main.h"
+#include "harmable.h"
 
 void harmable::clear() {
 	memset(this, 0, sizeof(*this));
@@ -22,7 +22,7 @@ int harmable::getdistinct(harma source) const {
 	return n;
 }
 
-void harmable::fix(stringbuilder& sb, harma source) const {
+void harmable::getinfo(stringbuilder& sb, harma source) const {
 	auto n = getdistinct(source);
 	auto pb = sb.get(); pb[0] = 0;
 	for(auto vi : source) {

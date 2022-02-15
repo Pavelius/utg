@@ -5,6 +5,11 @@
 #include "recordset.h"
 #include "widget.h"
 
+// TODO: Сделать тайлы с остановкой
+// TODO: Ошибка - нельзя зайти в пестрые пещеры
+// TODO: Ошибка при загрузке буквы Йо.
+// TODO: Сделать сохранение.
+
 #ifdef _DEBUG
 
 void util_main();
@@ -54,7 +59,7 @@ static bool load_quest() {
 }
 
 static void starting() {
-	answers::interactive = false;
+	answers::interactive = true;
 	game.generate();
 	game.createtreasure();
 	game.createtiles();

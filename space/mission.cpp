@@ -57,8 +57,6 @@ bool missioni::lucky() {
 }
 
 void missioni::beforemove() {
-	inflict.clear();
-	suffer.clear();
 }
 
 void missioni::apply(variantsl source) {
@@ -73,15 +71,6 @@ void missioni::apply(variant v) {
 		case Plus: multiplier = 1; break;
 		case Minus: multiplier = -1; break;
 		default: break;
-		}
-		break;
-	case Effect:
-		switch(v.value) {
-		case SufferHarm: suffer.clear(); getenemy().getharm(suffer); break;
-		case InflictHarm: inflict.clear(); getally().getharm(suffer); break;
-		case Injury: case Exhause: case Morale: case Gear:
-			suffer.set((effect_s)v.value, suffer.get((effect_s)v.value) + multiplier);
-			break;
 		}
 		break;
 	default:

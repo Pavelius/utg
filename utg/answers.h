@@ -41,8 +41,10 @@ public:
 	void				sort();
 };
 namespace draw {
-void					pause();
-void					pause(const char* title, ...);
-void					pausenc(const char* title, ...);
-bool					yesno(const char* title, ...);
+void information(const char* format, ...);
+void pause();
+void pause(const char* title, ...);
+void pausenc(const char* title, ...);
+bool yesno(const char* title, ...);
+void warning(const char* format, ...);
 }
