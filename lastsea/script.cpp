@@ -724,6 +724,8 @@ static void run_script(int bonus, int param) {
 static void set_value(int bonus, int param) {
 	if(bonus >= 0)
 		last_value = param + bonus;
+	else
+		last_value = param - bonus;
 }
 
 static void set_ability(int bonus, int param) {
