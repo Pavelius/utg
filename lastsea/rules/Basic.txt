@@ -3,29 +3,43 @@
 param(1) frame(1)
 param(2) frame(2)
 param(3) frame(3)
+ tags StopMovement
 param(4) frame(4)
+ tags StopMovement
 param(5) frame(5)
 param(6) frame(6)
 param(7) frame(7)
+ tags StopMovement
 param(8) frame(8)
 param(9) frame(9)
+ tags StopMovement
 param(10) frame(10)
+ tags StopMovement
 param(11) frame(11)
+ tags StopMovement
 param(12) frame(12)
+ tags StopMovement
 param(13) frame(13)
+ tags StopMovement
 param(14) frame(14)
 param(15) frame(15)
+ tags StopMovement
 param(16) frame(16)
 param(17) frame(17)
 param(18) frame(18)
+ tags StopMovement
 param(19) frame(19)
 param(20) frame(20)
+ tags StopMovement
 param(21) frame(21)
 param(22) frame(22)
+ tags StopMovement
 param(23) frame(23)
 param(24) frame(24)
+ tags StopMovement
 param(25) frame(25)
 param(26) frame(26)
+ tags StopMovement
 param(27) frame(27)
 param(28) frame(28)
 param(29) frame(29)

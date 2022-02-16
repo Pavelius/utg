@@ -1001,6 +1001,8 @@ static void full_throttle(int bonus, int param) {
 				return;
 			last_tile = sail_next_hexagon();
 		}
+		if(last_tile->is(StopMovement))
+			break;
 	}
 }
 

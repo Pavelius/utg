@@ -27,6 +27,13 @@ static void add_seamap() {
 	p->priority = 10;
 }
 
+static void add_warning(point pt) {
+	auto p = draw::addobject(pt.x - 16, pt.y + 12);
+	p->resource = draw::getres("tiles");
+	p->priority = 21;
+	p->frame = 36;
+}
+
 static void add_you_ship() {
 	auto index = game.getmarker();
 	if(index == Blocked)
@@ -61,7 +68,7 @@ static void add_select(point pt, indext data) {
 static void add_select(indext index) {
 	auto x = oceani::getx(index);
 	auto y = oceani::gety(index);
-	add_select(fh2p({x, y}, size), index+1);
+	add_select(fh2p({x, y}, size), index + 1);
 }
 
 void oceani::showseamap() {
@@ -104,7 +111,10 @@ void oceani::createobjects() {
 			continue;
 		auto x = getx(e.index);
 		auto y = gety(e.index);
-		add_tile(draw::fh2p({x, y}, size), tiles, e.frame, &e);
+		auto pt = draw::fh2p({x, y}, size);
+		add_tile(pt, tiles, e.frame, &e);
+		if(e.is(StopMovement))
+			add_warning(pt);
 	}
 }
 
@@ -112,7 +122,7 @@ indext oceani::choose(const char* title) const {
 	int pv = (int)chooseobject();
 	if(!pv)
 		return Blocked;
-	return pv-1;
+	return pv - 1;
 }
 
 static void blockwalls() {

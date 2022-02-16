@@ -3,6 +3,7 @@
 BSDATA(tagi) = {
 	{"NoDigging"},
 	{"NoSteal"},
+	{"StopMovement"},
 	{"Valuable"},
 	{"Discard"},
 	{"VisitManyTimes"},

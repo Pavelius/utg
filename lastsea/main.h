@@ -26,7 +26,7 @@ enum ability_s : unsigned char {
 	Stars, History, Infamy
 };
 enum tag_s : unsigned char {
-	NoDigging, NoSteal, Valuable, Discard,
+	NoDigging, NoSteal, StopMovement, Valuable, Discard,
 	VisitManyTimes, VisitRequired, NotUseAction,
 	Discarded,
 };
