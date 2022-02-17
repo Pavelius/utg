@@ -6,6 +6,10 @@ class player::string : public stringact {
 	static void addvname(stringbuilder& sb, variant v, int padeg = 0) {
 		if(!v)
 			return;
+		if(v.type == Group && v.value <= 1) {
+			game.friends[v.value].getname(sb);
+			return;
+		}
 		auto pv = (groupvaluei*)v;
 		if(pv) {
 			switch(padeg) {
@@ -15,20 +19,14 @@ class player::string : public stringact {
 			}
 		}
 	}
-	static void addvalue(stringbuilder& sb, variant v) {
-		groupvaluei* pv = v;
-		if(pv)
-			sb.adds(pv->name);
-		else
-			sb.adds(v.getname());
-	}
 	static void show_values(stringbuilder& sb, const player& source) {
 		auto index = 0;
 		for(auto v : source.values) {
 			if(v) {
 				sb.addn("* ");
-				sb.add("%1", game.getclass().types[index].getname());
-				addvalue(sb, v);
+				sb.add(game.getclass().types[index].getname());
+				sb.add(": ");
+				addvname(sb, v);
 			}
 			index++;
 		}
@@ -161,6 +159,8 @@ void player::generate() {
 }
 
 static variant choose_answer(const player* source, variant group) {
+	if(group.type == Group && group.value <= 1)
+		return group;
 	return groupi::choose(group);
 }
 
