@@ -22,4 +22,5 @@ struct quest {
 	bool				isanswer() const { return next != -1; }
 	static void			manual(short page);
 	static void			read(const char* url);
+	static void			run(int index);
 };

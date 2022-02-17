@@ -1,7 +1,5 @@
 ﻿#Squad
 
 Marines
- tags Regular Close
 Raiders
- tags Close Intimate
 Scientists

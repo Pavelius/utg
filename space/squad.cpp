@@ -15,25 +15,5 @@ void squad::clear() {
 	type = 0xFF;
 }
 
-void squad::create(int kind) {
-	type = kind;
-	tags = geti().tags;
-	injury = getmaximum(Injury);
-	gear = getmaximum(Gear);
-	morale = getmaximum(Morale);
-	exhause = getmaximum(Exhause);
-}
-
 void squad::getinfo(stringbuilder& sb) const {
-}
-
-bool squad::isallow(move_s v) const {
-	switch(v) {
-	case EngageMelee:
-		return distance == Close && is(Close);
-	case TargetSomeone:
-		return distance == Far && is(Far);
-	default:
-		return true;
-	}
 }

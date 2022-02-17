@@ -10,12 +10,6 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
-BSMETA(effecti) = {
-	BSREQ(id),
-	{}};
-BSMETA(movei) = {
-	BSREQ(id),
-	{}};
 BSMETA(resulti) = {
 	BSREQ(id),
 	{}};
@@ -31,8 +25,6 @@ BSMETA(tagi) = {
 #define VRNOV() 0, 0, 0
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Effect", VRSTD(effecti, 1)},
-	{"Move", VRSTD(movei, 1)},
 	{"Prefix", VRNOV()},
 	{"Result", VRSTD(resulti, 1)},
 	{"Squad", VRSTD(squadi, 1)},

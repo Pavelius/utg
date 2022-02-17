@@ -2,23 +2,27 @@
 #include "draw.h"
 #include "log.h"
 #include "main.h"
+#include "quest.h"
+#include "script.h"
 
 static void start_mission() {
 }
 
 static void test_game() {
-	game.clear();
-	game.add("Marines");
-	game.add("Marines");
-	game.add("Raiders", true);
-	game.getally().move(EngageMelee);
+	quest::run(1);
+}
+
+static void reading() {
+	bsreq::read("rules/Basic.txt");
+	quest::read("rules/Quest.txt");
 }
 
 int main(int argc, char* argv[]) {
+	answers::prompt = utg::sb.begin();
+	answers::console = &utg::sb;
 	answers::resid = "EliteTroops";
-	bsreq::read("rules/Basic.txt");
-	messagei::read("rules/Quest.txt");
-	return draw::start(test_game, true);
+	quest::initialize();
+	return draw::start(test_game, true, reading);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

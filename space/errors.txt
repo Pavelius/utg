@@ -1,2 +1,3 @@
-﻿In file `Names.txt`:
- Define translate for `Continue`
+﻿In file `rules/Quest.txt`:
+ Line 1: Unknown property name `Header`
+ Line 1: Unknown property name `Image`

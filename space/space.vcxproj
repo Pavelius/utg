@@ -143,18 +143,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="action.cpp" />
-    <ClCompile Include="effect.cpp" />
+    <ClCompile Include="harm.cpp" />
     <ClCompile Include="harmable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
-    <ClCompile Include="move.cpp" />
     <ClCompile Include="properties.cpp" />
+    <ClCompile Include="script.cpp" />
     <ClCompile Include="squad.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="harmable.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="script.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

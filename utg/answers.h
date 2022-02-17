@@ -5,12 +5,12 @@
 
 class answers {
 	struct element {
-		const void*		value;
-		const char*		text;
+		const void* value;
+		const char* text;
 	};
-	char				buffer[2048];
-	stringbuilder		sc;
-	adat<element, 32>	elements;
+	char buffer[2048];
+	stringbuilder sc;
+	adat<element, 32> elements;
 public:
 	typedef void(*fnpaint)(int index, const void* value, const char* text);
 	static fnevent		afterpaint;

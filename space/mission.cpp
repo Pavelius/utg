@@ -31,9 +31,6 @@ void missioni::add(const char* id, bool enemy) {
 	if(!p)
 		return;
 	p->clear();
-	p->create(i);
-	if(ally == 0xFF && !enemy)
-		ally = 0;
 }
 
 bool missioni::dangerous() {
@@ -76,4 +73,8 @@ void missioni::apply(variant v) {
 	default:
 		break;
 	}
+}
+
+void actv(stringbuilder& sb, const char* format, const char* format_param, char add_sep = '\n') {
+	sb.addv(format, format_param);
 }
