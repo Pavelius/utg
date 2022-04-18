@@ -1,6 +1,7 @@
 #include "color.h"
 #include "crt.h"
 #include "draw.h"
+#include "kering.h"
 
 #ifndef __GNUC__
 #pragma optimize("t", on)
@@ -1451,6 +1452,22 @@ int draw::texth(const char* string, int width) {
 	return y1;
 }
 
+int kering::compare(const void* v1, const void* v2) {
+	return ((kering*)v1)->u - ((kering*)v2)->u;
+}
+
+static int add_kering(const pma* pk, int s1, int s2) {
+	if(!s1 || !s2)
+		return 0;
+	kering e;
+	e.c1 = s1;
+	e.c2 = s2;
+	auto pr = (kering*)bsearch(&e, (char*)pk + sizeof(pma), pk->count, sizeof(kering), kering::compare);
+	if(pr)
+		return pr->offset;
+	return 0;
+}
+
 void draw::text(const char* string, int count, unsigned flags) {
 	if(!font)
 		return;
@@ -1459,14 +1476,20 @@ void draw::text(const char* string, int count, unsigned flags) {
 		return;
 	if(count == -1)
 		count = zlen(string);
+	auto pk = font->getheader("KRN");
 	const char *s1 = string;
 	const char *s2 = string + count;
 	auto push_caret = caret;
+	int s0 = 0;
 	while(s1 < s2) {
 		int sm = szget(&s1);
 		if(sm >= 0x21)
 			glyph(sm, flags);
-		caret.x += textw(sm);
+		if(pk) {
+			caret.x += textw(sm) + add_kering(pk, s0, sm);
+			s0 = sm;
+		} else
+			caret.x += textw(sm);
 	}
 	caret = push_caret;
 }

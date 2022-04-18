@@ -186,6 +186,12 @@
     <ClCompile Include="property.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="draw_strategy.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="kering.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -328,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="property.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="strategy.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="kering.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

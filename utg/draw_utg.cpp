@@ -613,13 +613,12 @@ static void tips() {
 	statusbar_paint();
 }
 
-void initialize_png();
-
 static void initialize_widgets() {
 	widget::add("Separator", separator);
 	widget::add("RightAlignValue", right_align_value);
 }
 
+void initialize_png();
 void check_translation();
 void initialize_translation(const char* locale);
 

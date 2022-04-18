@@ -1,6 +1,6 @@
 #pragma once
 
-struct abilityi {
+struct resourcei {
 	const char*		id;
 	const char*		format;
 };

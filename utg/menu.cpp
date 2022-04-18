@@ -6,7 +6,7 @@ const char* menu::current_mode = "General";
 
 BSMETA(menu) = {
 	BSREQ(id), BSREQ(source),
-	BSREQ(elements), BSREQ(mode),
+	BSREQ(elements), BSREQ(mode), BSREQ(format),
 	{}};
 BSDATAC(menu, 128)
 

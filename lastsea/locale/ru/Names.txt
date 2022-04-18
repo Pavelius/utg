@@ -242,4 +242,3 @@ YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив боль
 YouVisitLocation: Перед вами %1.
 YourPirate: пират %-1
 ZeroSupplyIfNot: Обнулить припасы или
-Охота: 

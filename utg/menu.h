@@ -5,6 +5,7 @@
 struct menu {
 	const char*		id;
 	const char*		mode;
+	const char*		format;
 	const varianti*	source;
 	variants		elements;
 	bool			isvisible() const;
