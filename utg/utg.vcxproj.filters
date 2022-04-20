@@ -189,9 +189,6 @@
     <ClCompile Include="draw_strategy.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="kering.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

@@ -152,6 +152,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
+    <ClCompile Include="font_util.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="information.cpp" />

@@ -1374,23 +1374,6 @@ int draw::alignedh(const rect& rc, const char* string, unsigned state) {
 	}
 }
 
-int draw::textw(const char* string, int count) {
-	if(!font)
-		return 0;
-	int x1 = 0;
-	if(count == -1) {
-		const char *s1 = string;
-		while(*s1)
-			x1 += textw(szget(&s1));
-	} else {
-		const char *s1 = string;
-		const char *s2 = string + count;
-		while(s1 < s2)
-			x1 += textw(szget(&s1));
-	}
-	return x1;
-}
-
 const char* draw::skiptr(const char* string) {
 	// skiping trail symbols
 	for(; *string && *string == 0x20; string++);
@@ -1468,6 +1451,41 @@ static int add_kering(const pma* pk, int s1, int s2) {
 	return 0;
 }
 
+int draw::textw(const char* string, int count) {
+	if(!font)
+		return 0;
+	int x1 = 0;
+	auto pk = font->getheader("KRN");
+	unsigned char s0 = 0x0;
+	if(count == -1) {
+		const char *s1 = string;
+		if(pk) {
+			while(*s1) {
+				unsigned char sr = *((unsigned char*)s1);
+				x1 += textw(szget(&s1)) + add_kering(pk, s0, sr);
+				s0 = sr;
+			}
+		} else {
+			while(*s1)
+				x1 += textw(szget(&s1));
+		}
+	} else {
+		const char *s1 = string;
+		const char *s2 = string + count;
+		if(pk) {
+			while(s1 < s2) {
+				unsigned char sr = *((unsigned char*)s1);
+				x1 += textw(szget(&s1)) + add_kering(pk, s0, sr);
+				s0 = sr;
+			}
+		} else {
+			while(s1 < s2)
+				x1 += textw(szget(&s1));
+		}
+	}
+	return x1;
+}
+
 void draw::text(const char* string, int count, unsigned flags) {
 	if(!font)
 		return;
@@ -1480,14 +1498,15 @@ void draw::text(const char* string, int count, unsigned flags) {
 	const char *s1 = string;
 	const char *s2 = string + count;
 	auto push_caret = caret;
-	int s0 = 0;
+	unsigned char s0 = 0x0;
 	while(s1 < s2) {
+		unsigned char sr = *((unsigned char*)s1);
 		int sm = szget(&s1);
 		if(sm >= 0x21)
 			glyph(sm, flags);
 		if(pk) {
-			caret.x += textw(sm) + add_kering(pk, s0, sm);
-			s0 = sm;
+			caret.x += textw(sm) + add_kering(pk, s0, sr);
+			s0 = sr;
 		} else
 			caret.x += textw(sm);
 	}

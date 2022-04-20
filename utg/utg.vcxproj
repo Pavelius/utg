@@ -171,7 +171,6 @@
     <ClCompile Include="front.cpp" />
     <ClCompile Include="group.cpp" />
     <ClCompile Include="iterator.cpp" />
-    <ClCompile Include="kering.cpp" />
     <ClCompile Include="logparse.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="message.cpp" />
