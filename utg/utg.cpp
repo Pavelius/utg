@@ -14,20 +14,6 @@ const char* utg::getchoose(const char* id) {
 	return getnm(temp);
 }
 
-//int utg::choose(const array& source, const char* title, const char* cancel) {
-//	return source.indexof(recordset::choose(source, title, cancel));
-//}
-
-//int utg::choose(const array& source, const flaga& mask, const char* title, const char* cancel) {
-//	recordset records;
-//	for(auto i = 0; i < mask.getmaximum(); i++) {
-//		if(!mask.is(i))
-//			continue;
-//		records.add(source.ptr(i));
-//	}
-//	return source.indexof(records.choose(title, cancel, interactive, url, header));
-//}
-
 const char* utg::chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
 	answers::paintcell = draw::avatarch;

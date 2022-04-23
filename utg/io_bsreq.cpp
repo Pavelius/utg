@@ -286,7 +286,7 @@ static void clear_object(void* object, const bsreq* type) {
 	}
 }
 
-static void* read_object(const bsreq* type, array* source, int key_count, int level) {
+static void* read_object(const bsreq* type, array* source, int key_count, int level, const char* common_initialize) {
 	if(!isvalue()) {
 		log::error(p, "Expected value");
 		allowparse = false;
@@ -302,6 +302,12 @@ static void* read_object(const bsreq* type, array* source, int key_count, int le
 		object = source->add();
 		clear_object(object, type);
 		fill(object, type, keys, key_count);
+		if(common_initialize) {
+			auto push_p = p;
+			p = common_initialize;
+			read_dictionary(object, type + key_count, level);
+			p = push_p;
+		}
 	}
 	read_dictionary(object, type + key_count, level);
 	return object;
@@ -357,9 +363,12 @@ static void parse() {
 				log::error(p, "Not find data type for `%1`", temp);
 			return;
 		}
+		auto common_initialize = p;
+		while(*p && *p != 10 && *p != 13)
+			p++;
 		skipsymcr();
 		while(allowparse && isvalue())
-			read_object(pd->metadata, pd->source, pd->key_count, 0);
+			read_object(pd->metadata, pd->source, pd->key_count, 0, common_initialize);
 	}
 }
 

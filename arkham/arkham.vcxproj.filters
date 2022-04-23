@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="ability.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="indicator.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="script.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="cardtype.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="trigger.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{bc2d15cc-8017-419b-89d8-babbe781eb92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{968189f7-b5c0-4519-98cf-ca8103e78aec}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Locations.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Items.txt">
+      <Filter>Data</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

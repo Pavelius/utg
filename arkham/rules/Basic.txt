@@ -1,0 +1,4 @@
+#Menu
+
+AbilityPage mode(Game)
+ elements Speed Sneak Fight Will Lore Luck
