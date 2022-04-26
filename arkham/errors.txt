@@ -1,2 +1,2 @@
 ﻿In file `rules/Items.txt`:
- Line 6: Not found requisit `trigger`
+ Line 1: Not find data type for `Item`

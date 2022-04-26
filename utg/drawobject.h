@@ -19,17 +19,20 @@ extern color		text;
 namespace draw {
 extern point		camera;
 extern int			fsize;
-struct object : point {
+struct drawable : point {
+	unsigned char	alpha;
+	color			fore;
+};
+struct object : drawable {
 	enum {
 		Visible, Hilite,
 	};
 	void*			data;
 	const char*		string;
 	figure			shape;
-	color			fore;
 	const sprite*	resource;
 	unsigned short	frame, size;
-	unsigned char	alpha, priority;
+	unsigned char	priority;
 	unsigned		flags;
 	fnevent			proc;
 	static object	def;

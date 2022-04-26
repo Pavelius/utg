@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "crt.h"
+#include "drawobject.h"
 #include "stringbuilder.h"
 #include "tag.h"
 #include "variant.h"
@@ -54,7 +55,12 @@ struct cardtypei {
 struct triggeri {
 	const char*		id;
 };
-struct itemi : nameablei, abilitya {
+struct mythi : nameablei, abilitya {
+	variant			gate, clue;
+	short unsigned	white, black;
+	variants		effect;
+};
+struct cardi : nameablei, abilitya {
 	cardtype_s		type;
 	trigger_s		trigger;
 	char			hands, difficult, cost, count, pay, bonus;

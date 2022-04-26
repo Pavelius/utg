@@ -7,7 +7,7 @@
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
-BSDATAC(itemi, 256)
+BSDATAC(cardi, 256)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSMETA(abilityi) = {
@@ -22,7 +22,7 @@ BSMETA(genderi) = {
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
-BSMETA(itemi) = {
+BSMETA(cardi) = {
 	BSREQ(id),
 	BSENM(type, cardtypei),
 	BSREQ(hands), BSREQ(cost), BSREQ(count), BSREQ(difficult), BSREQ(bonus), BSREQ(pay),
@@ -34,8 +34,8 @@ BSMETA(itemi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
+	{"Card", VRSTD(cardi), 1},
 	{"CardType", VRSTD(cardtypei), 1},
-	{"Item", VRSTD(itemi), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Menu", VRSTD(menu), 1},
 };

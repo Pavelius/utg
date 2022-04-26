@@ -18,7 +18,6 @@ static void beforemodal() {
 }
 
 static void linedown() {
-	caret.y += metrics::padding;
 	auto push_caret = caret;
 	line(caret.x + width, caret.y);
 	caret = push_caret;
@@ -29,7 +28,6 @@ void status_info();
 
 static void statusbar() {
 	status_info();
-	caret.y += metrics::padding;
 	caret.y += texth() + metrics::padding;
 	linedown();
 }

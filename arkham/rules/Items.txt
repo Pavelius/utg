@@ -1,4 +1,4 @@
-#Item type(CommonItem) count(2)
+#Card type(CommonItem) count(2)
 
 Axe cost(3) hands(1) bonus(2) tags(Versatile)
 Derringer18c cost(3) bonus(2) hands(1) tags(NoSteal)
@@ -6,6 +6,6 @@ Revolver38c cost(4) bonus(3) hands(1)
 Revolver45c cost(5) bonus(4) hands(1)
 OldTome cost(4) difficult(-1) pay(2)
 
-#Item type(UniqueItem)
+#Card type(UniqueItem)
 
 MagicBlade count(2) cost(6) bonus(4) hands(1)
