@@ -143,8 +143,10 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="cardtype.cpp" />
     <ClCompile Include="indicator.cpp" />
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="realm.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="trigger.cpp" />
@@ -160,8 +162,10 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Locations.txt" />
+    <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
+    <Text Include="rules\Monsters.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

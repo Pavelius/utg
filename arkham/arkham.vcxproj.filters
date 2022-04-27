@@ -25,6 +25,12 @@
     <ClCompile Include="trigger.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="realm.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -50,6 +56,12 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Items.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Monsters.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

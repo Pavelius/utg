@@ -1,0 +1,4 @@
+#Monster
+
+Cultist count(3) realm(Hexagon) alertness(-3) toughness(1) horror_modifier(0) horror_damage(1) combat_modifier(-1) combat_damage(1)
+Ghoul count(3) realm(Hexagon) alertness(-3) toughness(1) horror_modifier(0) horror_damage(1) combat_modifier(-1) combat_damage(1)

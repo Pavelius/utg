@@ -1,2 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 1: Not find data type for `Item`
+﻿In file `rules/Monsters.txt`:
+ Line 3: Not found requisit `count`

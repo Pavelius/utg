@@ -1,12 +1,15 @@
 #include "ability.h"
 #include "crt.h"
-#include "drawobject.h"
+#include "flagable.h"
 #include "stringbuilder.h"
 #include "tag.h"
 #include "variant.h"
 
 #pragma once
 
+enum realm_s : unsigned char {
+	Slash, Triangle, Hexagon, Circle, Star, Romb, Quad,
+};
 enum ability_s : unsigned char {
 	Speed, Sneak, Fight, Will, Lore, Luck,
 	Horror, Escape,
@@ -27,6 +30,8 @@ enum cardtype_s : unsigned char {
 	Ally, CommonItem, Spell, UniqueItem,
 };
 
+struct taga : flagable<8> {
+};
 struct abilitya {
 	char			abilities[Escape + 1];
 	void			add(const abilitya& e);
@@ -43,8 +48,11 @@ struct scripti {
 	fninfo			info;
 	void			getinfo(stringbuilder& sb, int bonus) const;
 };
+struct realmi {
+	const char*		id;
+};
 struct indicatori {
-	const char*		name;
+	const char*		id;
 };
 struct nameablei {
 	const char*		id;
@@ -65,7 +73,14 @@ struct cardi : nameablei, abilitya {
 	trigger_s		trigger;
 	char			hands, difficult, cost, count, pay, bonus;
 	variants		effect;
-	unsigned		tags;
+	taga			tags;
+};
+struct monsteri : nameablei {
+	realm_s			realm;
+	char			count;
+	char			toughness, alertness;
+	char			horror_modifier, horror_damage, combat_modifier, combat_damage;
+	taga			tags;
 };
 struct character : public abilitya {
 };

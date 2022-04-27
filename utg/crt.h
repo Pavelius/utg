@@ -188,6 +188,7 @@ template<typename T> struct bsdata {
 	static T*						addz() { for(auto& e : bsdata<T>()) if(!e) return &e; return add(); }
 	static constexpr bool			have(const void* p) { return source.have(p); }
 	static constexpr T&				get(int i) { return begin()[i]; }
+	static constexpr T*				get(const void* p) { return have(p) ? (T*)p : 0; }
 	static constexpr T*				begin() { return (T*)source.data; }
 	static constexpr T*				end() { return (T*)source.data + source.getcount(); }
 };
