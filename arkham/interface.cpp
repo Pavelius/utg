@@ -3,6 +3,11 @@
 
 using namespace draw;
 
+static void add_worldmap() {
+	auto p = addobject(0, 0);
+	p->resource = getres("worldmap");
+}
+
 static void add_monsters() {
 }
 
@@ -17,6 +22,7 @@ static void add_clues() {
 
 static void create_figures() {
 	clearobjects();
+	add_worldmap();
 	add_monsters();
 	add_investigators();
 	add_gates();
