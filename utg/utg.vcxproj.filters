@@ -16,6 +16,9 @@
     <Filter Include="Formats">
       <UniqueIdentifier>{2b73057d-832f-4ced-84ce-1ee5df6b2109}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{5476dc3f-a87e-46f5-8e5e-9359e405a300}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="answers.cpp">
@@ -189,6 +192,12 @@
     <ClCompile Include="draw_strategy.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="font_util.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite_util.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -337,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="kering.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite_util.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

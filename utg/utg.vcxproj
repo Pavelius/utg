@@ -168,6 +168,7 @@
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="draw_hexagon.cpp" />
     <ClCompile Include="draw_strategy.cpp" />
+    <ClCompile Include="font_util.cpp" />
     <ClCompile Include="front.cpp" />
     <ClCompile Include="group.cpp" />
     <ClCompile Include="iterator.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
+    <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="draw_utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
@@ -240,6 +242,7 @@
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />
+    <ClInclude Include="sprite_util.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />

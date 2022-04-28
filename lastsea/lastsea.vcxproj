@@ -152,7 +152,6 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
-    <ClCompile Include="font_util.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="information.cpp" />
@@ -166,7 +165,6 @@
     <ClCompile Include="roll12.cpp" />
     <ClCompile Include="serial.cpp" />
     <ClCompile Include="shiplog.cpp" />
-    <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="cannoneer.cpp" />
     <ClCompile Include="tile.cpp" />
@@ -179,7 +177,6 @@
     <ClInclude Include="counters.h" />
     <ClInclude Include="goal.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="sprite_util.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

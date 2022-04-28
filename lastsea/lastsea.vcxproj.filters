@@ -39,9 +39,6 @@
     <ClCompile Include="information.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="sprite_util.cpp">
-      <Filter>Утилиты</Filter>
-    </ClCompile>
     <ClCompile Include="main_util.cpp">
       <Filter>Утилиты</Filter>
     </ClCompile>
@@ -81,16 +78,10 @@
     <ClCompile Include="goal.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="font_util.cpp">
-      <Filter>Утилиты</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite_util.h">
-      <Filter>Утилиты</Filter>
     </ClInclude>
     <ClInclude Include="cannoneer.h">
       <Filter>Логика</Filter>

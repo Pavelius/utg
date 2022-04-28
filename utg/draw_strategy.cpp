@@ -21,24 +21,27 @@ static void beforemodal() {
 
 static void linedown() {
 	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::border;
 	line(caret.x + width, caret.y);
+	fore = push_fore;
 	caret = push_caret;
-	caret.y += metrics::padding;
+	auto dy = 2;
+	caret.y += dy; height -= dy;
 }
 
 void status_info();
 
 static void statusbar() {
 	status_info();
-	caret.y += texth() + metrics::padding;
+	auto dy = texth() + metrics::padding;
+	caret.y += dy; height -= dy;
 	linedown();
 }
 
 static void paint() {
 	fillform();
 	statusbar();
-	caret.y += metrics::padding + metrics::border * 2;
-	height -= metrics::padding + metrics::border * 2;
 }
 
 static void tips() {
