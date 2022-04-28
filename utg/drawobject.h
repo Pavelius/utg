@@ -49,6 +49,7 @@ void*				chooseobject();
 void				clearobjects();
 object*				findobject(const void* p);
 const sprite*		getres(const char* name);
+const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();
 void				splashscreen(unsigned milliseconds);
 void				showobjects();

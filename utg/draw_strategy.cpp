@@ -5,6 +5,8 @@
 
 using namespace draw;
 
+static point	camera_drag;
+
 void set_dark_theme();
 void set_light_theme();
 void initialize_png();
@@ -42,6 +44,35 @@ static void paint() {
 static void tips() {
 }
 
+static void camera_finish() {
+	const int step = 32;
+	switch(hot.key) {
+	case KeyLeft: execute(cbsetsht, camera.x - step, 0, &camera.x); break;
+	case KeyRight: execute(cbsetsht, camera.x + step, 0, &camera.x); break;
+	case KeyUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseLeft:
+		if(hot.pressed && !hot.hilite) {
+			dragbegin(&camera);
+			camera_drag = camera;
+		}
+		break;
+	default:
+		if(dragactive(&camera)) {
+			hot.cursor = cursor::All;
+			if(hot.mouse.x >= 0 && hot.mouse.y >= 0)
+				camera = camera_drag + (dragmouse - hot.mouse);
+		}
+		break;
+	}
+}
+
+static void finish() {
+	camera_finish();
+}
+
 int draw::strategy(fnevent proc, fnevent afterread) {
 	initialize_png();
 	if(!proc)
@@ -57,7 +88,8 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	pbeforemodal = beforemodal;
 	pbackground = paint;
 	ptips = tips;
-	awindow.flags = 0;
+	pfinish = finish;
+	awindow.flags = WFResize|WFMinmax;
 	metrics::border = 4;
 	metrics::padding = 4;
 	initialize(getnm("AppTitle"));

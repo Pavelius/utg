@@ -168,7 +168,7 @@ extern stringbuilder	tips_sb;
 extern long				text_params[16];
 extern color*			palt;
 extern int				tab_pixels;
-extern fnevent          pbackground, ptips, pwindow, pinput;
+extern fnevent          pbackground, ptips, pwindow, pfinish, pinput;
 extern fnevent          pbeforemodal, pleavemodal, psetfocus;
 struct rectpush {
 	point				caret;

@@ -131,7 +131,7 @@ void draw::paintobjects() {
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
 	for(size_t i = 0; i < count; i++) {
-		draw::caret = *source[i] + draw::camera;
+		draw::caret = *source[i] - draw::camera;
 		source[i]->paint();
 	}
 	clipping = push_clip;
@@ -200,4 +200,8 @@ const sprite* draw::getres(const char* name) {
 	return gres(name, "art/objects", {}, -10000, -10000);
 }
 
-BSDATAC(object, 128)
+const sprite* draw::getres(const char* name, const char* folder) {
+	return gres(name, folder, {}, -10000, -10000);
+}
+
+BSDATAC(object, 256)

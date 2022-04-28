@@ -27,7 +27,7 @@ color				colors::special;
 color				colors::tips::text;
 color				colors::tips::back;
 // Color context and font context
-fnevent				draw::domodal, draw::pbackground, draw::pwindow, draw::ptips;
+fnevent				draw::domodal, draw::pbackground, draw::pwindow, draw::pfinish, draw::ptips;
 fnevent				draw::pbeforemodal, draw::pleavemodal, draw::psetfocus;
 unsigned char       draw::alpha = 255;
 color				draw::fore;
@@ -2371,8 +2371,10 @@ static void standart_domodal() {
 	if(draw::ptips)
 		draw::ptips();
 	draw::hot.key = draw::rawinput();
+#ifdef _DEBUG
 	if(hot.key == (Ctrl + 'K'))
 		use_kering = !use_kering;
+#endif
 	if(!draw::hot.key)
 		exit(0);
 }
@@ -2542,6 +2544,8 @@ void* draw::scene(fnevent proc) {
 		paintstart();
 		if(proc)
 			proc();
+		if(pfinish)
+			pfinish();
 		domodal();
 	}
 	return (void*)getresult();

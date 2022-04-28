@@ -166,6 +166,7 @@
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
+    <Text Include="rules\Worldmap.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,6 +29,9 @@ static void create_figures() {
 	add_clues();
 }
 
+void status_info() {
+}
+
 void main_menu() {
 	create_figures();
 	draw::chooseobject();
