@@ -20,6 +20,7 @@ static void add_investigators() {
 	auto p = addobject(398, 128);
 	p->resource = getres("characters");
 	p->frame = 1;
+	p->data = &bsdata<character>::get(0);
 	p->priority = 100;
 }
 

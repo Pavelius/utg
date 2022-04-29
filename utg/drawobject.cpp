@@ -195,7 +195,7 @@ static void moving(point& result, point goal, int step) {
 }
 
 void object::move(point goal, int speed) {
-	moving(*this, goal, 1);
+	moving(*this, goal, speed);
 }
 
 const sprite* draw::getbackground(const char* name) {

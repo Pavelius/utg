@@ -17,7 +17,11 @@ void main_menu() {
 	an.header = "Перемещение";
 	for(auto& e : bsdata<locationi>())
 		an.add(&e, getnm(e.id));
-	an.chooseui("Укажите куда вы хотите переместиться", "Отмена");
+	auto p1 = (locationi*)an.chooseui("Укажите куда вы хотите переместиться", "Отмена");
+	if(p1) {
+		auto p2 = draw::findobject(&bsdata<character>::get(0));
+		p2->move(p1->position, 4);
+	}
 }
 
 static void initialization() {
