@@ -9,9 +9,14 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 BSDATAC(cardi, 256)
 BSDATAC(monsteri, 128)
+BSDATAC(locationi, 128)
+NOBSDATA(point)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
+BSMETA(point) = {
+	BSREQ(x), BSREQ(y),
+	{}};
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
@@ -26,6 +31,11 @@ BSMETA(genderi) = {
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
+	{}};
+BSMETA(locationi) = {
+	BSREQ(id),
+	BSREQ(position),
+	BSREQ(neightboard),
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),
@@ -49,6 +59,7 @@ BSDATA(varianti) = {
 	{"Ability", VRSTD(abilityi), 1},
 	{"Card", VRSTD(cardi), 1},
 	{"CardType", VRSTD(cardtypei), 1},
+	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
 	{"Monster", VRSTD(monsteri), 1},
 	{"Realm", VRSTD(realmi), 1},

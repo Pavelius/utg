@@ -1,2 +1,2 @@
-﻿In file `rules/Monsters.txt`:
- Line 3: Not found requisit `count`
+﻿In file `Names.txt`:
+ Define translate for `Newspaper`

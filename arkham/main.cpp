@@ -1,17 +1,38 @@
 #include "bsreq.h"
+#include "drawobject.h"
 #include "main.h"
 #include "strategy.h"
 
-void main_menu();
+#ifdef _DEBUG
+
+void util_main();
+
+#endif // _DEBUG
+
+void update_board();
+
+void main_menu() {
+	update_board();
+	answers an;
+	an.header = "Перемещение";
+	for(auto& e : bsdata<locationi>())
+		an.add(&e, getnm(e.id));
+	an.chooseui("Укажите куда вы хотите переместиться", "Отмена");
+}
 
 static void initialization() {
+	bsreq::read("rules/Worldmap.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	return draw::strategy(main_menu, 0);
+#ifdef _DEBUG
+	util_main();
+#endif // _DEBUG
+	draw::object::initialize();
+	return draw::strategy(main_menu, initialization);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

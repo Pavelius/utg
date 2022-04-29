@@ -1,5 +1,7 @@
 #include "ability.h"
+#include "answers.h"
 #include "crt.h"
+#include "draw.h"
 #include "flagable.h"
 #include "stringbuilder.h"
 #include "tag.h"
@@ -36,6 +38,13 @@ struct abilitya {
 	char			abilities[Escape + 1];
 	void			add(const abilitya& e);
 };
+struct nameablei {
+	const char*		id;
+};
+struct locationi : nameablei {
+	point			position;
+	locationi*		neightboard[4];
+};
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
 	typedef void (*fninfo)(stringbuilder& sb, const scripti& e, int counter);
@@ -52,9 +61,6 @@ struct realmi {
 	const char*		id;
 };
 struct indicatori {
-	const char*		id;
-};
-struct nameablei {
 	const char*		id;
 };
 struct cardtypei {

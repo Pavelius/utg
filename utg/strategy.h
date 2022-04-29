@@ -2,6 +2,12 @@
 
 #pragma once
 
+namespace metrics {
+extern unsigned char opacity;
+}
 namespace draw {
-int strategy(fnevent start, fnevent afterread);
+bool			ishilite(int size, const void* object);
+int				strategy(fnevent start, fnevent afterread);
+bool			swindow(bool hilight);
+void			texth2w(const char* string);
 }

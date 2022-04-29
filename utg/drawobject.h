@@ -48,6 +48,7 @@ object*				addobject(int x, int y);
 void*				chooseobject();
 void				clearobjects();
 object*				findobject(const void* p);
+const sprite*		getbackground(const char* name);
 const sprite*		getres(const char* name);
 const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();

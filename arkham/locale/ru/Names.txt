@@ -1,4 +1,11 @@
 ﻿AppTitle: Ужас Аркхема
+ArkhamAsylum: Лечебница Аркхэма
 Back: Назад
+BankOfArkham: Банк Аркхэма
 Cancel: Отмена
 Choose: Выбирайте
+Downtown: Нижний город
+IndependenceSquare: Площадь Независимости
+Newspaper: Офис газеты
+Northside: Северный район
+TrainStation: Вокзал

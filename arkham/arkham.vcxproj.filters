@@ -31,6 +31,9 @@
     <ClCompile Include="realm.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

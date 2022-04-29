@@ -125,6 +125,7 @@ static void sortobjects(object** pb, size_t count) {
 }
 
 void draw::paintobjects() {
+	auto push_caret = caret;
 	auto push_clip = clipping;
 	setclip({caret.x, caret.y, caret.x + width, caret.y + height});
 	object* source[128];
@@ -135,6 +136,7 @@ void draw::paintobjects() {
 		source[i]->paint();
 	}
 	clipping = push_clip;
+	caret = push_caret;
 }
 
 void* draw::chooseobject() {
@@ -194,6 +196,10 @@ static void moving(point& result, point goal, int step) {
 
 void object::move(point goal, int speed) {
 	moving(*this, goal, 1);
+}
+
+const sprite* draw::getbackground(const char* name) {
+	return gres(name, "art/objects", {}, 0, 0);
 }
 
 const sprite* draw::getres(const char* name) {

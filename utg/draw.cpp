@@ -27,7 +27,7 @@ color				colors::special;
 color				colors::tips::text;
 color				colors::tips::back;
 // Color context and font context
-fnevent				draw::domodal, draw::pbackground, draw::pwindow, draw::pfinish, draw::ptips;
+fnevent				draw::domodal, draw::pbackground, draw::pfinish, draw::ptips;
 fnevent				draw::pbeforemodal, draw::pleavemodal, draw::psetfocus;
 unsigned char       draw::alpha = 255;
 color				draw::fore;
@@ -2535,8 +2535,11 @@ void draw::initialize(const char* title) {
 void draw::paintstart() {
 	if(pbackground)
 		pbackground();
-	if(pwindow)
-		pwindow();
+}
+
+void draw::paintfinish() {
+	if(pfinish)
+		pfinish();
 }
 
 void* draw::scene(fnevent proc) {
@@ -2544,8 +2547,7 @@ void* draw::scene(fnevent proc) {
 		paintstart();
 		if(proc)
 			proc();
-		if(pfinish)
-			pfinish();
+		paintfinish();
 		domodal();
 	}
 	return (void*)getresult();

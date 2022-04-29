@@ -296,7 +296,7 @@ static void* read_object(const bsreq* type, array* source, int key_count, int le
 	if(key_count) {
 		for(auto i = 0; i < key_count; i++)
 			read_value(keys[i], type + i);
-		auto object = find_object(source, type, keys, key_count);
+		object = find_object(source, type, keys, key_count);
 	}
 	if(!object) {
 		object = source->add();

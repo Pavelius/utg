@@ -392,21 +392,18 @@ void* answers::choose(const char* title, const char* cancel_text, int cancel_mod
 	}
 	if(!paintcell)
 		paintcell = answerbt;
-	auto push_caret = caret;
-	auto push_width = width;
 	auto columns = column_count;
 	if(columns == -1)
 		columns = getcolumns(*this);
+	auto push_caret = caret;
+	auto push_width = width;
 	while(ismodal()) {
 		auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
 		auto column_width = standart_width - metrics::padding * 2;
 		if(columns > 1)
 			column_width = column_width / columns - metrics::border;
-		if(pbackground)
-			pbackground();
+		paintstart();
 		auto push_height = height;
-		if(pwindow)
-			pwindow();
 		setposru();
 		imagev(resid);
 		panelv();
@@ -463,6 +460,7 @@ void* answers::choose(const char* title, const char* cancel_text, int cancel_mod
 		if(afterpaint)
 			afterpaint();
 		caret = push_caret;
+		paintfinish();
 		domodal();
 	}
 	return (void*)getresult();

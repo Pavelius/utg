@@ -30,6 +30,7 @@ public:
 	const element*		begin() const { return elements.data; }
 	element*			begin() { return elements.data; }
 	void*				choose(const char* title = 0, const char* cancel_text = 0, int cancel_mode = 0) const;
+	void*				chooseui(const char* title, const char* cancel_text = 0, int cancel_mode = 0) const;
 	void				clear();
 	static int			compare(const void* v1, const void* v2);
 	const element*		end() const { return elements.end(); }
@@ -37,6 +38,7 @@ public:
 	const char*			getname(void* v);
 	int					indexof(const void* v) const { return elements.indexof(v); }
 	void				modal(const char* title, const char* cancel) const;
+	void				paintanswers(int columns, int columns_width, const char* cancel_text) const;
 	void*				random() const;
 	void				sort();
 };

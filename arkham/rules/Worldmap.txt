@@ -1,5 +1,7 @@
 #Location
 
+Newspaper position(168 420)
+Newspaper position(168 420)
 TrainStation position(398 128)
 BankOfArkham position(764 128)
 ArkhamAsylum position(1124 128)
@@ -9,3 +11,4 @@ Northside position(595 675)
 Downtown position(1095 675)
 
 TrainStation neightboard(Northside)
+Northside neightboard(TrainStation)

@@ -165,6 +165,7 @@
     <ClCompile Include="dice.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="drawobject.cpp" />
+    <ClCompile Include="draw_answers.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="draw_hexagon.cpp" />
     <ClCompile Include="draw_strategy.cpp" />

@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "drawobject.h"
 #include "main.h"
 
@@ -5,22 +6,34 @@ using namespace draw;
 
 static void add_worldmap() {
 	auto p = addobject(0, 0);
-	p->resource = getres("worldmap");
+	p->resource = getbackground("worldmap");
+	p->priority = 1;
 }
 
 static void add_monsters() {
+	auto p = addobject(764, 128);
+	p->resource = getres("byakhee");
+	p->priority = 90;
 }
 
 static void add_investigators() {
+	auto p = addobject(398, 128);
+	p->resource = getres("characters");
+	p->frame = 1;
+	p->priority = 100;
 }
 
 static void add_gates() {
+	auto p = addobject(764, 108);
+	p->resource = getres("gates");
+	p->frame = 1;
+	p->priority = 10;
 }
 
 static void add_clues() {
 }
 
-static void create_figures() {
+void update_board() {
 	clearobjects();
 	add_worldmap();
 	add_monsters();
@@ -30,9 +43,4 @@ static void create_figures() {
 }
 
 void status_info() {
-}
-
-void main_menu() {
-	create_figures();
-	draw::chooseobject();
 }

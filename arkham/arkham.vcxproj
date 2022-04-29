@@ -145,6 +145,7 @@
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_util.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="realm.cpp" />
     <ClCompile Include="script.cpp" />
