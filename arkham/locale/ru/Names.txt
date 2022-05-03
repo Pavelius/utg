@@ -1,4 +1,5 @@
 ﻿AppTitle: Ужас Аркхема
+ApplyRollResult: Применить результат броска
 ArkhamAsylum: Лечебница Аркхэма
 Back: Назад
 BankOfArkham: Банк Аркхэма
@@ -7,5 +8,8 @@ Choose: Выбирайте
 Downtown: Нижний город
 IndependenceSquare: Площадь Независимости
 Newspaper: Офис газеты
+NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район
+Roll: Бросок
+Sneak: Скрытность
 TrainStation: Вокзал

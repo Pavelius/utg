@@ -162,7 +162,7 @@
     <ClCompile Include="widget.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="drawobject.cpp">
+    <ClCompile Include="draw_object.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="pathfind.cpp">
@@ -320,7 +320,7 @@
     <ClInclude Include="widget.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="drawobject.h">
+    <ClInclude Include="draw_object.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="pathfind.h">

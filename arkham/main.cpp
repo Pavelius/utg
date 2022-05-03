@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "main.h"
 #include "strategy.h"
 
@@ -7,12 +7,7 @@
 
 void util_main();
 
-#endif // _DEBUG
-
-void update_board();
-
-void main_menu() {
-	update_board();
+static void test_movement() {
 	answers an;
 	an.header = "Перемещение";
 	for(auto& e : bsdata<locationi>())
@@ -22,6 +17,16 @@ void main_menu() {
 		auto p2 = draw::findobject(&bsdata<character>::get(0));
 		p2->move(p1->position, 4);
 	}
+}
+
+#endif // _DEBUG
+
+void update_board();
+
+void main_menu() {
+	update_board();
+	character c1;
+	c1.roll(Sneak, 4);
 }
 
 static void initialization() {

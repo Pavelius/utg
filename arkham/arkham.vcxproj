@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="cardtype.cpp" />
+    <ClCompile Include="character.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />

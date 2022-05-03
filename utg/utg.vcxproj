@@ -164,7 +164,7 @@
     <ClCompile Include="dataset.cpp" />
     <ClCompile Include="dice.cpp" />
     <ClCompile Include="draw.cpp" />
-    <ClCompile Include="drawobject.cpp" />
+    <ClCompile Include="draw_object.cpp" />
     <ClCompile Include="draw_answers.cpp" />
     <ClCompile Include="draw_figure.cpp" />
     <ClCompile Include="draw_hexagon.cpp" />
@@ -223,7 +223,7 @@
     <ClInclude Include="condition.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="dataset.h" />
-    <ClInclude Include="drawobject.h" />
+    <ClInclude Include="draw_object.h" />
     <ClInclude Include="draw_hexagon.h" />
     <ClInclude Include="group.h" />
     <ClInclude Include="iterator.h" />

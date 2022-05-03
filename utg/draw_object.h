@@ -19,9 +19,17 @@ extern color		text;
 namespace draw {
 extern point		camera;
 extern int			fsize;
+struct object;
 struct drawable : point {
 	unsigned char	alpha;
 	color			fore;
+};
+struct draworder : drawable {
+	object*			parent;
+	drawable		start;
+	unsigned long	tick;
+	void			clear();
+	void			update();
 };
 struct object : drawable {
 	enum {
@@ -36,6 +44,7 @@ struct object : drawable {
 	unsigned		flags;
 	fnevent			proc;
 	static object	def;
+	draworder*		addorder();
 	void			clear();
 	static void		initialize();
 	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000)>>v)) != 0; }

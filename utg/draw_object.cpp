@@ -1,12 +1,31 @@
 #include "crt.h"
 #include "draw.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "screenshoot.h"
 
 using namespace draw;
 
+BSDATAC(object, 256)
+BSDATAC(draworder, 256)
+
 long distance(point from, point to);
 object object::def;
+
+void draworder::clear() {
+	memset(this, 0, sizeof(*this));
+}
+
+static void copy(drawable& e1, drawable& e2) {
+	e1 = e2;
+}
+
+draworder* object::addorder() {
+	auto p = bsdata<draworder>::addz();
+	copy(*p, *this);
+	copy(p->start, *this);
+	p->parent = this;
+	return p;
+}
 
 void object::initialize() {
 	def.fore = colors::text;
@@ -209,5 +228,3 @@ const sprite* draw::getres(const char* name) {
 const sprite* draw::getres(const char* name, const char* folder) {
 	return gres(name, folder, {}, -10000, -10000);
 }
-
-BSDATAC(object, 256)

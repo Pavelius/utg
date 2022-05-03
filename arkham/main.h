@@ -89,6 +89,8 @@ struct monsteri : nameablei {
 	taga			tags;
 };
 struct character : public abilitya {
+	int				getsuccess() const;
+	int				roll(ability_s v, int m);
 };
 struct gamei : abilitya {
 };

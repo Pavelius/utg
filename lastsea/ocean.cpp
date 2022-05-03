@@ -1,5 +1,5 @@
 #include "draw.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "draw_hexagon.h"
 #include "main.h"
 
@@ -18,7 +18,7 @@ static point i2s(indext i) {
 }
 
 static void add_camera() {
-	draw::camera = {220, 90};
+	draw::camera = {-220, -90};
 }
 
 static void add_seamap() {

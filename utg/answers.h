@@ -21,6 +21,7 @@ public:
 	static stringbuilder* console;
 	static const char*	header;
 	static const char*	prompt;
+	static const char*	prompt_ask;
 	static const char*	resid;
 	static bool			show_tips;
 	answers() : sc(buffer) {}

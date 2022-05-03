@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "main.h"
 #include "log.h"
 #include "recordset.h"

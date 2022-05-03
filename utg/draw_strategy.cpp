@@ -1,7 +1,7 @@
 #include "answers.h"
 #include "bsreq.h"
 #include "draw.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "log.h"
 #include "strategy.h"
 
@@ -228,8 +228,8 @@ static void answers_beforepaint() {
 	caret.x = getwidth() - width - metrics::padding - metrics::border;
 	if(answers::header)
 		texth2w(answers::header);
-	if(answers::prompt && *answers::prompt) {
-		textf(answers::prompt);
+	if(answers::prompt_ask || answers::resid) {
+		window(false, answers::prompt_ask, answers::resid);
 		caret.y += metrics::padding;
 	}
 }
