@@ -3,6 +3,8 @@
 BSDATA(cardtypei) = {
 	{"Ally"},
 	{"CommonItem"},
+	{"Monster"},
+	{"Myth"},
 	{"Spell"},
 	{"UniqueItem"},
 };

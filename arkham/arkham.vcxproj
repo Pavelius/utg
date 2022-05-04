@@ -141,8 +141,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="cardpool.cpp" />
     <ClCompile Include="cardtype.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="deck.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />

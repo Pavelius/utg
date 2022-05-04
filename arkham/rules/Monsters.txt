@@ -1,4 +1,6 @@
-#Monster
+#Card type(Monster)
 
-Cultist count(3) realm(Hexagon) alertness(-3) toughness(1) horror_modifier(0) horror_damage(1) combat_modifier(-1) combat_damage(1)
-Ghoul count(3) realm(Hexagon) alertness(-3) toughness(1) horror_modifier(0) horror_damage(1) combat_modifier(-1) combat_damage(1)
+Cultist count(3) realms(Hexagon)
+ abilities Sneak(-3) Toughness(1) Horror(0) HorrorDamage(1) Combat(-1) CombatDamage(1)
+Ghoul count(3) realms(Hexagon)
+ abilities Sneak(-3) Toughness(1) Horror(0) HorrorDamage(1) Combat(-1) CombatDamage(1)

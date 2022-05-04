@@ -1,2 +1,12 @@
-﻿In file `Names.txt`:
- Define translate for `NoDicesForRoll`
+﻿In file `locale/ru/Locations.txt`:
+ Line 12: Can't find variant `Skill`
+ Line 12: Can't find variant `Wait`
+ Line 17: Can't find variant `LeaveStreet`
+ Line 19: Can't find variant `Deamland`
+ Line 19: Can't find variant `Encounter`
+ Line 28: Can't find variant `Woods`
+ Line 28: Can't find variant `Encounter`
+ Line 32: Can't find variant `BlackCave`
+ Line 32: Can't find variant `Encounter`
+ Line 36: Can't find variant `Curse`
+ Line 36: Can't find variant `LeaveStreet`

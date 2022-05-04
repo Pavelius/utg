@@ -10,6 +10,7 @@ enum variant_s : unsigned char;
 union variant;
 
 typedef sliceu<variant> variants;
+typedef void (*fnscript)(int index, int bonus);
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
@@ -20,6 +21,7 @@ struct varianti {
 	fngetname			pgetname;
 	fnstatus			pgetinfo;
 	fngetinfo			pgetproperty;
+	fnscript			pgscript;
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);

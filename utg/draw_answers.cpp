@@ -46,7 +46,7 @@ void answers::paintanswers(int columns, int column_width, const char* cancel_tex
 	}
 }
 
-void* answers::chooseui(const char* title, const char* cancel_text, int cancel_mode) const {
+void* answers::open(const char* cancel_text, int cancel_mode) const {
 	if(!interactive)
 		return random();
 	if(!elements) {
@@ -63,7 +63,6 @@ void* answers::chooseui(const char* title, const char* cancel_text, int cancel_m
 		auto column_width = 320;
 		if(columns > 1)
 			column_width = column_width / columns - metrics::border;
-		prompt_ask = title;
 		paintstart();
 		if(beforepaint)
 			beforepaint();

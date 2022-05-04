@@ -7,8 +7,7 @@
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
-BSDATAC(cardi, 256)
-BSDATAC(monsteri, 128)
+BSDATAC(cardprotoi, 256)
 BSDATAC(locationi, 128)
 BSDATAC(character, 1)
 NOBSDATA(point)
@@ -30,6 +29,9 @@ BSMETA(cardtypei) = {
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
+BSMETA(scripti) = {
+	BSREQ(id),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -38,32 +40,25 @@ BSMETA(locationi) = {
 	BSREQ(position),
 	BSREQ(neightboard),
 	{}};
-BSMETA(monsteri) = {
-	BSREQ(id),
-	BSENM(realm, realmi),
-	BSREQ(count),
-	BSREQ(toughness), BSREQ(alertness),
-	BSREQ(horror_modifier), BSREQ(horror_damage),
-	BSREQ(combat_modifier), BSREQ(combat_damage),
-	{}};
-BSMETA(cardi) = {
+BSMETA(cardprotoi) = {
 	BSREQ(id),
 	BSENM(type, cardtypei),
+	BSDST(abilities, abilityi),
 	BSREQ(hands), BSREQ(cost), BSREQ(count), BSREQ(difficult), BSREQ(bonus), BSREQ(pay),
 	BSREQ(effect),
-	BSREQ(abilities),
 	BSFLG(tags, tagi),
+	BSFLG(realms, realmi),
 	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
-	{"Card", VRSTD(cardi), 1},
+	{"Card", VRSTD(cardprotoi), 1},
 	{"CardType", VRSTD(cardtypei), 1},
 	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
-	{"Monster", VRSTD(monsteri), 1},
 	{"Realm", VRSTD(realmi), 1},
+	{"Script", VRSTD(scripti), 1},
 	{"Tag", VRSTD(tagi), 1},
 };
 BSDATAF(varianti)

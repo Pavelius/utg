@@ -8,8 +8,18 @@ BSDATA(abilityi) = {
 	{"Will"},
 	{"Lore"},
 	{"Luck"},
+	{"Horror"},
+	{"Combat"},
+	{"Escape"},
+	{"HorrorDamage"},
+	{"CombatDamage"},
+	{"Toughness"},
+	{"Health"},
+	{"Sanity"},
+	{"Clue"},
+	{"Focus"},
 };
-BSDATAF(abilityi);
+assert_enum(abilityi, Focus)
 
 void abilitya::add(const abilitya& e) {
 	for(unsigned i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++)

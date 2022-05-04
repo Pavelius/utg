@@ -1,6 +1,7 @@
 #include "main.h"
 
-static adat<char, 32> roll_result;
+static		adat<char, 32> roll_result;
+character*	character::last;
 
 static int compare(const void* p1, const void* p2) {
 	return *((char*)p2) - *((char*)p1);
@@ -26,8 +27,18 @@ static int roll_success(int sv) {
 	return result;
 }
 
+void character::clear() {
+	memset(this, 0, sizeof(*this));
+}
+
 int character::getsuccess() const {
 	return 5;
+}
+
+static void add_clue() {
+	auto p = character::last;
+	p->add(Clue, -1);
+	add_dices(1);
 }
 
 int character::roll(ability_s v, int m) {
@@ -39,6 +50,8 @@ int character::roll(ability_s v, int m) {
 	roll_dices(m);
 	while(true) {
 		auto sv = getsuccess();
+		an.clear();
+		sb.clear();
 		if(roll_result) {
 			sb.add("%Roll: ");
 			for(auto i = 0; i < roll_result.getcount(); i++) {
@@ -53,9 +66,13 @@ int character::roll(ability_s v, int m) {
 		} else
 			sb.add(getnm("NoDicesForRoll"));
 		an.add(0, getnm("ApplyRollResult"));
-		auto p = (fnevent)an.chooseui(temp);
+		if(get(Clue))
+			an.add(add_clue, getnm("UseClueToAddDice"), 1);
+		answers::prompt_ask = temp;
+		auto p = (fnevent)an.open();
 		if(!p)
 			break;
+		last = this;
 		p();
 	}
 	return roll_success(getsuccess());

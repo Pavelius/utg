@@ -3,18 +3,23 @@
 #include "crt.h"
 #include "draw.h"
 #include "flagable.h"
+#include "quest.h"
 #include "stringbuilder.h"
 #include "tag.h"
 #include "variant.h"
 
 #pragma once
 
+typedef short unsigned cardt;
+
 enum realm_s : unsigned char {
 	Slash, Triangle, Hexagon, Circle, Star, Romb, Quad,
 };
 enum ability_s : unsigned char {
 	Speed, Sneak, Fight, Will, Lore, Luck,
-	Horror, Escape,
+	Horror, Combat, Escape, HorrorDamage, CombatDamage, Toughness,
+	Health, Sanity, Clue,
+	Focus,
 };
 enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
@@ -29,14 +34,27 @@ enum trigger_s : unsigned char {
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
 enum cardtype_s : unsigned char {
-	Ally, CommonItem, Spell, UniqueItem,
+	Ally, CommonItem, Monster, Myth, Spell, UniqueItem,
+};
+enum variant_s : unsigned char {
+
 };
 
+struct realma : flagable<1> {
+};
 struct taga : flagable<8> {
 };
+struct abilityf : flagable<1> {
+};
 struct abilitya {
-	char			abilities[Escape + 1];
+	char			abilities[Focus + 1];
+	abilityf		rerollall, doubleclue;
+	void			add(ability_s v) { abilities[v] += 1; }
+	void			add(ability_s v, int i) { abilities[v] += i; }
 	void			add(const abilitya& e);
+	constexpr int	get(ability_s v) const { return abilities[v]; }
+	bool			isdoubleclue(ability_s v) const { return doubleclue.is(v); }
+	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
 };
 struct nameablei {
 	const char*		id;
@@ -63,34 +81,50 @@ struct realmi {
 struct indicatori {
 	const char*		id;
 };
+class deck : adat<short unsigned> {
+public:
+	void			create(cardtype_s type);
+	void			shuffle();
+};
 struct cardtypei {
 	const char*		id;
+	deck			cards;
 };
 struct triggeri {
 	const char*		id;
 };
-struct mythi : nameablei, abilitya {
-	variant			gate, clue;
-	short unsigned	white, black;
-	variants		effect;
-};
-struct cardi : nameablei, abilitya {
+struct cardprotoi : nameablei, abilitya {
 	cardtype_s		type;
 	trigger_s		trigger;
 	char			hands, difficult, cost, count, pay, bonus;
 	variants		effect;
+	realma			realms;
 	taga			tags;
 };
-struct monsteri : nameablei {
-	realm_s			realm;
-	char			count;
-	char			toughness, alertness;
-	char			horror_modifier, horror_damage, combat_modifier, combat_damage;
-	taga			tags;
+struct cardi {
+	short unsigned	type;
+	unsigned char	exhaused : 1;
+	unsigned char	uses : 3;
+	cardprotoi&		geti() const { return bsdata<cardprotoi>::elements[type]; }
+	bool			isactive() const { return !exhaused; }
 };
-struct character : public abilitya {
+class cardpool {
+	adat<cardi, 32>	source;
+public:
+	void			drop(cardt card);
+	bool			isdoubleclue(ability_s v) const;
+	bool			isrerollall(ability_s v) const;
+	void			pick();
+};
+struct character : abilitya, cardpool {
+	static character* last;
+	void			clear();
+	bool			isallowreroll(ability_s v) const;
 	int				getsuccess() const;
 	int				roll(ability_s v, int m);
 };
-struct gamei : abilitya {
+struct gamei : public character {
+	void			encounter(int number);
 };
+extern gamei		game;
+extern answers		an;

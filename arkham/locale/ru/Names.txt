@@ -13,3 +13,4 @@ Northside: Северный район
 Roll: Бросок
 Sneak: Скрытность
 TrainStation: Вокзал
+UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
