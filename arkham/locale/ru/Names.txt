@@ -6,6 +6,7 @@ BankOfArkham: Банк Аркхэма
 BlackCave: Темная пещера
 Cancel: Отмена
 Choose: Выбирайте
+ChooseEncounter: Какое событие должно произойти?
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Continue: Продолжить
 DoNotPay: Не платить

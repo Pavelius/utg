@@ -1,6 +1,6 @@
 #1000 YesNo
 Билл Вашингтон грузит последние чемоданы с тележки в машину и предлагает вас подвезти.
-#1 ChooseStreetOrLocation Movement Encounter
+#1 ChooseStreetOrLocation Movement Encounter+2
 
 #1000 Luck-1 Roll
 Человек в тюрбане, сошедший с бостонского поезда, направляется к вам.

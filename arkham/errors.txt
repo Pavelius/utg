@@ -1,3 +1,2 @@
 ﻿In file `Names.txt`:
- Define translate for `DoNotPay`
- Define translate for `PayMoney`
+ Define translate for `ChooseEncounter`

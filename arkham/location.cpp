@@ -23,7 +23,10 @@ const quest* locationi::choose(int count) const {
 	else if(count == 1)
 		return source.data[0];
 	answers an;
-	for(auto p : source)
+	for(auto p : source) {
+		if(count-- == 0)
+			break;
 		an.add(p, p->text);
+	}
 	return (quest*)an.choose(getnm("ChooseEncounter"));
 }

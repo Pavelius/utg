@@ -71,6 +71,7 @@ static void play(int n) {
 }
 
 static void apply_result(int r) {
+	an.clear();
 	quest::last = find_roll_result(quest::last, r);
 	if(quest::last)
 		play();
@@ -112,29 +113,33 @@ static void movement(int bonus, int param) {
 }
 
 static void leave_street(int bonus, int param) {
+	game.leavestreet();
 }
 
 static void encounter(int bonus, int param) {
+	game.location->encounter(bonus);
 }
 
 static void wait_turn(int bonus, int param) {
 }
 
 static void choose_street_or_location(int bonus, int param) {
-	an.clear();
 	for(auto& e : bsdata<locationi>()) {
 		if(e.type == Street || e.type == Arkham)
 			an.add(&e, getnm(e.id));
 	}
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
 	m_value = 0;
+	an.clear();
 }
 
 static void curse(int bonus, int param) {
 }
 
-void locationi::encounter() const {
-	quest::last = choose(1);
+void locationi::encounter(int count) const {
+	if(!count)
+		count = 1;
+	quest::last = choose(count);
 	answers::header = getnm(id);
 	play();
 }

@@ -63,7 +63,7 @@ struct locationi : nameablei {
 	locationi*		neightboard[4];
 	quests			encounters;
 	const quest*	choose(int count = 1) const;
-	void			encounter() const;
+	void			encounter(int count = 1) const;
 	static locationi* find(const char* id);
 };
 struct scripti {
@@ -126,6 +126,7 @@ struct character : abilitya, cardpool {
 	void			encounter();
 	int				getsuccess() const;
 	bool			isallowreroll(ability_s v) const;
+	void			leavestreet();
 	void			movement(locationi* pv);
 	int				roll(ability_s v, int m);
 };

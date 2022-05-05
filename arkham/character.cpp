@@ -84,6 +84,13 @@ void character::encounter() {
 	location->encounter();
 }
 
+void character::leavestreet() {
+	if(location->type != Arkham)
+		return;
+	if(location->neightboard[0])
+		movement(location->neightboard[0]);
+}
+
 void character::movement(locationi* pv) {
 	auto ps = draw::findobject(this);
 	if(ps) {
