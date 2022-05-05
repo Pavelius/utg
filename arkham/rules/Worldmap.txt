@@ -1,14 +1,17 @@
 #Location
 
-Newspaper position(168 420)
+ArkhamAsylum position(1124 128)
+BankOfArkham position(764 128)
+BlackCave position(1856 1674)
+IndependenceSquare position(1485 128)
 Newspaper position(168 420)
 TrainStation position(398 128)
-BankOfArkham position(764 128)
-ArkhamAsylum position(1124 128)
-IndependenceSquare position(1485 128)
+Woods position(894 3294)
 
 Northside position(595 675)
 Downtown position(1095 675)
+
+Deamland position(2328 1316)
 
 TrainStation neightboard(Northside)
 Northside neightboard(TrainStation)

@@ -8,9 +8,9 @@ static locationi*	m_location;
 static int			m_value;
 answers				an;
 
-static void apply_text() {
+static void show_text() {
 	if(answers::prompt_ask) {
-		an.open(getnm("Continue"));
+		an.open(getnm("Continue"), 1);
 		answers::prompt_ask = 0;
 	}
 }
@@ -30,7 +30,7 @@ static const quest* find_roll_result(const quest* ph, int result) {
 }
 
 static void apply_text(const quest* p) {
-	apply_text();
+	show_text();
 	if(p->text)
 		answers::prompt_ask = p->text;
 }
@@ -61,10 +61,17 @@ static void play(const variants& source) {
 static void play(const quest* p) {
 	apply_text(p);
 	play(p->tags);
+	show_text();
+}
+
+static void play(int n) {
+	auto p = quest::findprompt(n);
+	if(p)
+		play(p);
 }
 
 static void make_roll(int bonus, int param) {
-	apply_text();
+	show_text();
 	auto r = game.roll(m_ability, m_value);
 	auto p = find_roll_result(quest::last, r);
 	if(p)
@@ -86,19 +93,36 @@ static void lost_in_time_and_space(int bonus, int param) {
 static void movement(int bonus, int param) {
 }
 
-void gamei::encounter(int number) {
-	auto p = quest::findprompt(number);
-	if(!p)
-		return;
-	play(p);
+static void leave_street(int bonus, int param) {
+}
+
+static void encounter(int bonus, int param) {
+}
+
+static void wait_turn(int bonus, int param) {
+}
+
+static void curse(int bonus, int param) {
+}
+
+void locationi::encounter() const {
+}
+
+void gamei::encounter(int n) {
+	answers::header = "Вокзал";
+	play(1000);
 }
 
 BSDATA(scripti) = {
 	{"Buy", make_buy},
+	{"Curse", curse},
+	{"Encounter", encounter},
+	{"LeaveStreet", leave_street},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"Movement", movement},
 	{"Pay", make_pay},
 	{"Roll", make_roll},
 	{"YesNo", ask_agree},
+	{"Wait", wait_turn},
 };
 BSDATAF(scripti)

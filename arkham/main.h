@@ -34,7 +34,7 @@ enum trigger_s : unsigned char {
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
 enum cardtype_s : unsigned char {
-	Ally, CommonItem, Monster, Myth, Spell, UniqueItem,
+	Ally, CommonItem, Monster, Myth, Spell, Skill, UniqueItem,
 };
 enum variant_s : unsigned char {
 
@@ -62,6 +62,7 @@ struct nameablei {
 struct locationi : nameablei {
 	point			position;
 	locationi*		neightboard[4];
+	void			encounter() const;
 };
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
@@ -118,6 +119,7 @@ public:
 };
 struct character : abilitya, cardpool {
 	static character* last;
+	locationi*		location;
 	void			clear();
 	bool			isallowreroll(ability_s v) const;
 	int				getsuccess() const;

@@ -43,7 +43,7 @@ static void initialization() {
 	bsreq::read("rules/Worldmap.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
-	quest::read("locale/ru/Locations.txt");
+	quest::read("locale/ru/Encounters.txt");
 }
 
 int main(int argc, char* argv[]) {

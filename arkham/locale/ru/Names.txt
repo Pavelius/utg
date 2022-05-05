@@ -5,6 +5,7 @@ Back: Назад
 BankOfArkham: Банк Аркхэма
 Cancel: Отмена
 Choose: Выбирайте
+Continue: Продолжить
 Downtown: Нижний город
 IndependenceSquare: Площадь Независимости
 Newspaper: Офис газеты

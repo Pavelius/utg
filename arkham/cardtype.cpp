@@ -6,6 +6,7 @@ BSDATA(cardtypei) = {
 	{"Monster"},
 	{"Myth"},
 	{"Spell"},
+	{"Skill"},
 	{"UniqueItem"},
 };
 assert_enum(cardtypei, UniqueItem)

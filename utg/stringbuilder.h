@@ -27,6 +27,7 @@ public:
 	virtual void		addidentifier(const char* identifier);
 	void				addicon(const char* id, int value);
 	void				addint(int value, int precision, const int radix);
+	void				addlocalefile(const char* name, const char* ext = 0);
 	void				addn(const char* format, ...) { addx('\n', format, xva_start(format)); }
 	void				addnounf(const char* s);
 	void				addnz(const char* format, unsigned count);
@@ -65,6 +66,7 @@ public:
 	static const char*	read(const char* p, int& result);
 	static const char*	read(const char* p, short& result);
 	void				set(char* v) { p = v; p[0] = 0; }
+	static void			setlocale(const char* id);
 	static unsigned char upper(unsigned char sym);
 	void				upper();
 };

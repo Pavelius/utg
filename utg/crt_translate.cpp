@@ -108,7 +108,7 @@ static void savel(const char* url, array& source) {
 
 static void setfile(array& source, const char* id, const char* locale, bool write_mode, bool required) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.clear(); sb.add("locale/%1/%2.txt", locale, id);
+	sb.clear(); sb.addlocalefile(id);
 	if(write_mode)
 		savel(temp, source);
 	else

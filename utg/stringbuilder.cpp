@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "stringbuilder.h"
 
+static char current_locale[4] = {"ru"};
 static const char spaces[] = " \n\t\r.,!?;:";
 
 static const char* psnum16(const char* p, long& value) {
@@ -120,71 +121,6 @@ const char* skipcr(const char* p) {
 	return p;
 }
 
-// Parse string to string (from c/json format)
-//const char* psstr(const char* p, char* r, char end_symbol) {
-//	r[0] = 0;
-//	if(!p)
-//		return 0;
-//	while(*p) {
-//		if(*p == end_symbol) {
-//			*r++ = 0;
-//			return p + 1;
-//		} else if(*p != '\\') {
-//			*r++ = *p++;
-//			continue;
-//		}
-//		p++;
-//		long value;
-//		switch(*p) {
-//		case 'n':
-//			*r++ = '\n';
-//			p++;
-//			break;
-//		case 'r':
-//			*r++ = '\r';
-//			p++;
-//			break;
-//		case 't':
-//			*r++ = '\t';
-//			p++;
-//			break;
-//		case 'b':
-//			*r++ = '\b';
-//			p++;
-//			break;
-//		case 'f':
-//			*r++ = '\f';
-//			p++;
-//			break;
-//		case 'v':
-//			*r++ = '\v';
-//			p++;
-//			break;
-//			// Число в кодировке UNICODE
-//		case '0': case '1': case '2': case '3': case '4':
-//		case '5': case '6': case '7': case '8': case '9':
-//			p = psnum10(p, value);
-//			r = szput(r, value);
-//			break;
-//			// Число в кодировке UNICODE (16-ричная система)
-//		case 'x': case 'u':
-//			p = psnum16(p + 1, value);
-//			r = szput(r, value);
-//			break;
-//		case '\n': case '\r':
-//			// Перевод строки в конце
-//			while(*p == '\n' || *p == '\r')
-//				p = skipcr(p);
-//			break;
-//		default:
-//			// Любой символ, который будет экранирован ( \', \", \\)
-//			*r++ = *p++;
-//			break;
-//		}
-//	}
-//	return p;
-//}
-
 bool szstart(const char* text, const char* name) {
 	while(*name) {
 		if(*name++ != *text++)
@@ -243,6 +179,19 @@ bool szpmatch(const char* text, const char* pattern) {
 			return false;
 		p = skipsp(p2 + 1);
 	}
+}
+
+void stringbuilder::setlocale(const char* id) {
+	if(!id || !id[0])
+		return;
+	stringbuilder sb(current_locale);
+	sb.add(id);
+}
+
+void stringbuilder::addlocalefile(const char* name, const char* ext) {
+	if(!ext)
+		ext = "txt";
+	add("locale/%1/%2.%3", current_locale, name, ext);
 }
 
 const char* stringbuilder::getbycount(const char* id, int count) {

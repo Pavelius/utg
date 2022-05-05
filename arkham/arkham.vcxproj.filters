@@ -67,7 +67,7 @@
     <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Locations.txt">
+    <Text Include="locale\ru\Encounters.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Items.txt">
