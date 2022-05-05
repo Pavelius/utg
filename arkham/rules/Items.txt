@@ -1,3 +1,7 @@
+#Card
+
+NoCard
+
 #Card type(CommonItem) count(2)
 
 Axe cost(3) hands(1) bonus(2) tags(Versatile)

@@ -19,3 +19,38 @@ bool cardpool::isrerollall(ability_s v) const {
 	}
 	return false;
 }
+
+void cardpool::discard() {
+	for(auto& e : source) {
+		if(e)
+			e.discard();
+	}
+}
+
+void cardi::clear() {
+	memset(this, 0, sizeof(*this));
+}
+
+void cardi::discard() {
+	bsdata<cardtypei>::elements[geti().type].cards.drop(type);
+	clear();
+}
+
+int	cardprotoi::getcost(int discount) const {
+	int v = cost + discount;
+	if(v < 0)
+		v = 0;
+	return v;
+}
+
+void cardpool::addcards(cardtype_s type, int count) {
+	while(count > 0) {
+		auto i = bsdata<cardtypei>::elements[type].cards.pick();
+		if(i) {
+			auto p = source.add();
+			p->clear();
+			p->type = i;
+		}
+		count--;
+	}
+}

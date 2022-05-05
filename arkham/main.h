@@ -85,9 +85,10 @@ struct realmi {
 struct indicatori {
 	const char*		id;
 };
-class deck : adat<short unsigned> {
-public:
+struct deck : adat<cardt> {
 	void			create(cardtype_s type);
+	void			drop(cardt v);
+	cardt			pick();
 	void			shuffle();
 };
 struct cardtypei {
@@ -104,21 +105,24 @@ struct cardprotoi : nameablei, abilitya {
 	variants		effect;
 	realma			realms;
 	taga			tags;
+	int				getcost(int discount) const;
 };
 struct cardi {
 	short unsigned	type;
 	unsigned char	exhaused : 1;
 	unsigned char	uses : 3;
+	constexpr explicit operator bool() const { return type != 0; }
+	void			clear();
+	void			discard();
 	cardprotoi&		geti() const { return bsdata<cardprotoi>::elements[type]; }
 	bool			isactive() const { return !exhaused; }
 };
-class cardpool {
-	adat<cardi, 32>	source;
-public:
-	void			drop(cardt card);
+struct cardpool {
+	adat<cardi, 32> source;
+	void			addcards(cardtype_s type, int count);
+	void			discard();
 	bool			isdoubleclue(ability_s v) const;
 	bool			isrerollall(ability_s v) const;
-	void			pick();
 };
 struct character : abilitya, cardpool {
 	static character* last;

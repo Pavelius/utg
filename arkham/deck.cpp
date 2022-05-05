@@ -16,3 +16,15 @@ void deck::create(cardtype_s type) {
 void deck::shuffle() {
 	zshuffle(data, count);
 }
+
+void deck::drop(cardt v) {
+	add(v);
+}
+
+cardt deck::pick() {
+	if(!count)
+		return 0;
+	auto r = data[0];
+	remove(0, 1);
+	return r;
+}

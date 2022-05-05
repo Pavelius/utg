@@ -7,6 +7,35 @@ static ability_s	m_ability;
 static locationi*	m_location;
 static int			m_value;
 answers				an;
+cardpool			pool;
+
+static void trade_pool(int count, int discount, const char* cancel) {
+	while(count > 0) {
+		an.clear();
+		for(auto& e : pool.source) {
+			if(!e)
+				continue;
+			auto& ei = e.geti();
+			auto cost = ei.getcost(discount);
+			if(!cost)
+				an.add(&e, getnm("TakeCard"), getnm(ei.id));
+			else
+				an.add(&e, getnm((cost <= game.get(Money)) ? "BuyCard" : "BuyCardNoMoney"), getnm(ei.id), cost);
+		}
+		auto p = (cardi*)an.choose(0, cancel, 1);
+		if(!p)
+			break;
+		auto cost = p->geti().getcost(discount);
+		if(game.get(Money) >= cost) {
+			game.source.add(*p);
+			game.set(Money, game.get(Money) - cost);
+			p->clear();
+			count--;
+		}
+	}
+	answers::prompt = 0;
+	pool.discard();
+}
 
 static void show_text() {
 	if(answers::prompt) {
@@ -137,6 +166,14 @@ static void choose_street_or_location(int bonus, int param) {
 static void curse(int bonus, int param) {
 }
 
+static void pick_pool(int bonus, int param) {
+	pool.addcards((cardtype_s)param, bonus);
+}
+
+static void trade(int bonus, int param) {
+	trade_pool(1, bonus, getnm("ThatEnought"));
+}
+
 static void arrested(int bonus, int param) {
 	show_text();
 	game.movement(locationi::find("Prison"));
@@ -163,7 +200,9 @@ BSDATA(scripti) = {
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"Movement", movement},
 	{"Pay", make_pay},
+	{"PickCommonItem", pick_pool, CommonItem},
 	{"Roll", make_roll},
+	{"Trade", trade},
 	{"YesNo", ask_agree},
 };
 BSDATAF(scripti)

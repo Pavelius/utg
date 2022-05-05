@@ -26,6 +26,7 @@ static void create_deck() {
 }
 
 void main_menu() {
+	create_deck();
 	update_board();
 	test_encounter();
 }
