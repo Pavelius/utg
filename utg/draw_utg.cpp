@@ -383,87 +383,30 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void* answers::choose(const char* title, const char* cancel_text, int cancel_mode) const {
-	if(!interactive)
-		return random();
-	if(!elements) {
-		if(!cancel_mode || (cancel_mode && cancel_text==0))
-			return 0;
+static void answers_beforepaint() {
+	auto push_height = height;
+	setposru();
+	imagev(answers::resid);
+	panelv();
+	setposlu();
+	width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
+	height = push_height - metrics::padding - metrics::border * 2;
+	strokeout(fillwindow);
+	strokeout(strokeborder);
+	caret.x += metrics::padding; width -= metrics::padding;
+	caret.y += metrics::padding; height -= metrics::padding;
+	texth2(answers::header);
+	if(answers::prompt && *answers::prompt) {
+		textf(answers::prompt);
+		caret.y += metrics::padding;
 	}
-	if(!paintcell)
-		paintcell = answerbt;
-	auto columns = column_count;
-	if(columns == -1)
-		columns = getcolumns(*this);
-	auto push_caret = caret;
-	auto push_width = width;
-	while(ismodal()) {
-		auto standart_width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
-		auto column_width = standart_width - metrics::padding * 2;
-		if(columns > 1)
-			column_width = column_width / columns - metrics::border;
-		paintstart();
-		auto push_height = height;
-		setposru();
-		imagev(resid);
-		panelv();
-		if(beforepaint)
-			beforepaint();
-		setposlu();
-		width = standart_width;
-		height = push_height - metrics::padding - metrics::border * 2;
-		strokeout(fillwindow);
-		strokeout(strokeborder);
-		caret.x += metrics::padding; width -= metrics::padding;
-		caret.y += metrics::padding; height -= metrics::padding;
-		texth2(header);
-		if(prompt && *prompt) {
-			textf(prompt);
-			caret.y += metrics::padding;
-		}
-		if(title) {
-			auto push_fore = fore;
-			fore = colors::h3;
-			textf(title);
-			fore = push_fore;
-			caret.y += metrics::padding;
-		}
-		auto next_column = (elements.getcount() + columns - 1) / columns;
-		auto index = 0;
-		auto y1 = caret.y, x1 = caret.x;
-		auto y2 = caret.y;
-		auto push_width_normal = width;
-		width = column_width;
-		for(auto& e : elements) {
-			paintcell(index, e.value, e.text);
-			if(caret.x > x1 + column_width - 64) {
-				caret.x = x1;
-				caret.y += height + metrics::padding + metrics::border * 2;
-			}
-			if(caret.y > y2)
-				y2 = caret.y;
-			if((index % next_column) == next_column - 1) {
-				caret.y = y1;
-				caret.x += column_width + metrics::border * 2;
-			}
-			index++;
-		}
-		caret.x = x1; caret.y = y2;
-		width = push_width_normal;
-		if(cancel_text) {
-			auto push_fore = fore;
-			fore = fore.mix(colors::h3, 128);
-			answerbt(elements.getcount(), 0, cancel_text);
-			fore = push_fore;
-		}
-		width = push_width;
-		if(afterpaint)
-			afterpaint();
-		caret = push_caret;
-		paintfinish();
-		domodal();
+	if(answers::prompa) {
+		auto push_fore = fore;
+		fore = colors::h3;
+		textf(answers::prompa);
+		fore = push_fore;
+		caret.y += metrics::padding;
 	}
-	return (void*)getresult();
 }
 
 static void focusing_choose(const void* object) {
@@ -644,6 +587,8 @@ int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	awindow.flags = 0;
 	metrics::border = 1;
 	metrics::padding = 4;
+	answers::paintcell = answerbt;
+	answers::beforepaint = answers_beforepaint;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();

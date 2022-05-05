@@ -21,7 +21,7 @@ public:
 	static stringbuilder* console;
 	static const char*	header;
 	static const char*	prompt;
-	static const char*	prompt_ask;
+	static const char*	prompa;
 	static const char*	resid;
 	static bool			show_tips;
 	answers() : sc(buffer) {}
@@ -38,8 +38,7 @@ public:
 	const char*			getname(void* v);
 	int					indexof(const void* v) const { return elements.indexof(v); }
 	void				modal(const char* title, const char* cancel) const;
-	void*				open(const char* cancel_text = 0, int cancel_mode = 0) const;
-	void				paintanswers(int columns, int columns_width, const char* cancel_text) const;
+	void				paintanswers(int columns, const char* cancel_text) const;
 	void*				random() const;
 	void				sort();
 };

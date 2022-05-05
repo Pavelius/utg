@@ -15,7 +15,10 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
-void answers::paintanswers(int columns, int column_width, const char* cancel_text) const {
+void answers::paintanswers(int columns, const char* cancel_text) const {
+	auto column_width = draw::width;
+	if(columns > 1)
+		column_width = column_width / columns - metrics::border;
 	auto next_column = (elements.getcount() + columns - 1) / columns;
 	auto index = 0;
 	auto y1 = caret.y, x1 = caret.x;
@@ -46,7 +49,7 @@ void answers::paintanswers(int columns, int column_width, const char* cancel_tex
 	}
 }
 
-void* answers::open(const char* cancel_text, int cancel_mode) const {
+void* answers::choose(const char* title, const char* cancel_text, int cancel_mode) const {
 	if(!interactive)
 		return random();
 	if(!elements) {
@@ -56,17 +59,16 @@ void* answers::open(const char* cancel_text, int cancel_mode) const {
 	auto columns = column_count;
 	if(columns == -1)
 		columns = getcolumns(*this);
+	auto push_title = prompa;
 	auto push_caret = caret;
 	auto push_width = width;
 	auto push_height = height;
+	prompa = title;
 	while(ismodal()) {
-		auto column_width = 320;
-		if(columns > 1)
-			column_width = column_width / columns - metrics::border;
 		paintstart();
 		if(beforepaint)
 			beforepaint();
-		paintanswers(columns, column_width, cancel_text);
+		paintanswers(columns, cancel_text);
 		if(afterpaint)
 			afterpaint();
 		width = push_width;
@@ -74,5 +76,6 @@ void* answers::open(const char* cancel_text, int cancel_mode) const {
 		paintfinish();
 		domodal();
 	}
+	prompa = push_title;
 	return (void*)getresult();
 }

@@ -45,11 +45,9 @@ int character::roll(ability_s v, int m) {
 	char header[128]; stringbuilder sh(header);
 	sh.add("%Roll %1%+2i", getnm(bsdata<abilityi>::get(v).id), m);
 	auto push_header = answers::header;
-	auto push_promt = answers::prompt_ask;
 	answers::header = header;
 	answers an;
 	char temp[512]; stringbuilder sb(temp);
-	answers::prompt_ask = temp;
 	roll_dices(get(v) + m);
 	while(true) {
 		auto sv = getsuccess();
@@ -71,13 +69,12 @@ int character::roll(ability_s v, int m) {
 		an.add(0, getnm("ApplyRollResult"));
 		if(get(Clue))
 			an.add(add_clue, getnm("UseClueToAddDice"), 1);
-		auto p = (fnevent)an.open();
+		auto p = (fnevent)an.choose(temp);
 		if(!p)
 			break;
 		last = this;
 		p();
 	}
-	answers::prompt_ask = push_promt;
 	answers::header = push_header;
 	return roll_success(getsuccess());
 }

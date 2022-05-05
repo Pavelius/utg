@@ -7,18 +7,6 @@
 
 void util_main();
 
-static void test_movement() {
-	answers an;
-	an.header = "Перемещение";
-	for(auto& e : bsdata<locationi>())
-		an.add(&e, getnm(e.id));
-	auto p1 = (locationi*)an.open("Отмена");
-	if(p1) {
-		auto p2 = draw::findobject(&bsdata<character>::get(0));
-		p2->move(p1->position, 4);
-	}
-}
-
 static void test_encounter() {
 	game.add(Luck, 4);
 	game.add(Clue, 3);

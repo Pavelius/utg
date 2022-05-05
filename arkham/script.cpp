@@ -9,9 +9,9 @@ static int			m_value;
 answers				an;
 
 static void show_text() {
-	if(answers::prompt_ask) {
-		an.open(getnm("Continue"), 1);
-		answers::prompt_ask = 0;
+	if(answers::prompt) {
+		an.choose(0, getnm("Continue"), 1);
+		answers::prompt = 0;
 	}
 }
 
@@ -32,7 +32,7 @@ static const quest* find_roll_result(const quest* ph, int result) {
 static void apply_text(const quest* p) {
 	show_text();
 	if(p->text)
-		answers::prompt_ask = p->text;
+		answers::prompt = p->text;
 }
 
 static void run_script(int value, int counter) {
@@ -70,21 +70,38 @@ static void play(int n) {
 		play();
 }
 
-static void make_roll(int bonus, int param) {
-	show_text();
-	auto r = game.roll(m_ability, m_value);
+static void apply_result(int r) {
 	quest::last = find_roll_result(quest::last, r);
 	if(quest::last)
 		play();
 }
 
+static void apply_result(const char* title) {
+	auto r = (int)an.choose(title);
+	answers::prompt = 0;
+	apply_result(r);
+}
+
+static void make_roll(int bonus, int param) {
+	show_text();
+	apply_result(game.roll(m_ability, m_value));
+}
+
 static void make_pay(int bonus, int param) {
+	an.clear();
+	an.add((void*)1, getnm("PayMoney"), bonus);
+	an.add((void*)0, getnm("DoNotPay"));
+	apply_result(0);
 }
 
 static void make_buy(int bonus, int param) {
 }
 
 static void ask_agree(int bonus, int param) {
+	an.clear();
+	an.add((void*)1, getnm("Yes"));
+	an.add((void*)0, getnm("No"));
+	apply_result(getnm("DoYouAgree"));
 }
 
 static void lost_in_time_and_space(int bonus, int param) {
@@ -102,6 +119,16 @@ static void encounter(int bonus, int param) {
 static void wait_turn(int bonus, int param) {
 }
 
+static void choose_street_or_location(int bonus, int param) {
+	an.clear();
+	for(auto& e : bsdata<locationi>()) {
+		if(e.type == Street || e.type == Arkham)
+			an.add(&e, getnm(e.id));
+	}
+	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
+	m_value = 0;
+}
+
 static void curse(int bonus, int param) {
 }
 
@@ -113,6 +140,7 @@ void locationi::encounter() const {
 
 BSDATA(scripti) = {
 	{"Buy", make_buy},
+	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
 	{"Encounter", encounter},
 	{"LeaveStreet", leave_street},

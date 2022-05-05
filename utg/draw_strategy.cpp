@@ -107,8 +107,8 @@ bool draw::ishilite(int size, const void* object) {
 	return true;
 }
 
-static bool window(bool hilite, const char* string, const char* resid) {
-	if((!string || string[0] == 0) && !resid)
+static bool window(bool hilite, const char* string, const char* resid, const char* prompt) {
+	if((!string || string[0] == 0) && !resid && (!prompt || prompt[0]==0))
 		return false;
 	auto text_height = 0;
 	auto image_height = 0;
@@ -117,7 +117,13 @@ static bool window(bool hilite, const char* string, const char* resid) {
 		auto push_width = width;
 		textfs(string);
 		width = push_width;
-		text_height = height;
+		text_height += height;
+	}
+	if(prompt) {
+		auto push_width = width;
+		textfs(prompt);
+		width = push_width;
+		text_height += height;
 	}
 	if(resid) {
 		image_surface = gres(resid, "art/images");
@@ -137,6 +143,8 @@ static bool window(bool hilite, const char* string, const char* resid) {
 	height = push_height;
 	if(string)
 		textf(string);
+	if(prompt)
+		textf(prompt);
 	caret.y += metrics::border * 2;
 	return rs;
 }
@@ -228,8 +236,8 @@ static void answers_beforepaint() {
 	caret.x = getwidth() - width - metrics::padding - metrics::border;
 	if(answers::header)
 		texth2w(answers::header);
-	if(answers::prompt_ask || answers::resid) {
-		window(false, answers::prompt_ask, answers::resid);
+	if(answers::prompt || answers::prompa || answers::resid) {
+		window(false, answers::prompt, answers::resid, answers::prompa);
 		caret.y += metrics::padding;
 	}
 }

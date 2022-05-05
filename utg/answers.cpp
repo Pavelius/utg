@@ -2,7 +2,7 @@
 
 const char* answers::header;
 const char* answers::prompt;
-const char* answers::prompt_ask;
+const char* answers::prompa;
 const char* answers::resid;
 bool answers::show_tips = true;
 bool answers::interactive = true;
