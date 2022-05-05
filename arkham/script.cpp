@@ -108,6 +108,7 @@ static void lost_in_time_and_space(int bonus, int param) {
 }
 
 static void movement(int bonus, int param) {
+	game.movement(m_location);
 }
 
 static void leave_street(int bonus, int param) {

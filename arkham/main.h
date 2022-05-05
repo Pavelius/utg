@@ -124,8 +124,9 @@ struct character : abilitya, cardpool {
 	locationi*		location;
 	void			clear();
 	void			encounter();
-	bool			isallowreroll(ability_s v) const;
 	int				getsuccess() const;
+	bool			isallowreroll(ability_s v) const;
+	void			movement(locationi* pv);
 	int				roll(ability_s v, int m);
 };
 struct gamei : public character {

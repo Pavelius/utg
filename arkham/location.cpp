@@ -21,7 +21,7 @@ const quest* locationi::choose(int count) const {
 	if(count < 0)
 		return 0;
 	else if(count == 1)
-		return source.data[1];
+		return source.data[0];
 	answers an;
 	for(auto p : source)
 		an.add(p, p->text);

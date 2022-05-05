@@ -57,6 +57,9 @@
     <Filter Include="Data">
       <UniqueIdentifier>{968189f7-b5c0-4519-98cf-ca8103e78aec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Encounters">
+      <UniqueIdentifier>{9437800f-bcb9-4340-a258-4e20f8d29b1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -86,7 +89,7 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="locale\ru\TrainStation.txt">
-      <Filter>Data</Filter>
+      <Filter>Encounters</Filter>
     </Text>
   </ItemGroup>
 </Project>

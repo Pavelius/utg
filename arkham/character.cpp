@@ -1,3 +1,4 @@
+#include "draw_object.h"
 #include "main.h"
 
 static		adat<char, 32> roll_result;
@@ -81,4 +82,15 @@ int character::roll(ability_s v, int m) {
 
 void character::encounter() {
 	location->encounter();
+}
+
+void character::movement(locationi* pv) {
+	auto ps = draw::findobject(this);
+	if(ps) {
+		auto order = ps->priority;
+		ps->priority = 250;
+		ps->move(pv->position, 16);
+		ps->priority = order;
+	}
+	location = pv;
 }
