@@ -55,10 +55,14 @@ static const quest* find_roll_result(const quest* ph, int result) {
 	auto pe = bsdata<quest>::end();
 	if(result > 29)
 		result = 29;
+	auto prev = -1;
 	for(auto p = ph + 1; p < pe; p++) {
-		if(p->index<0 || p->index>result)
+		if(p->next != -1)
+			continue;
+		if(p->index<0 || p->index>result || p->index <= prev)
 			break;
 		pr = p;
+		prev = p->index;
 	}
 	return pr;
 }
@@ -89,7 +93,7 @@ static void apply_indicator(ability_s v, int bonus) {
 	const char* format = "YouGain";
 	if(bonus < 0)
 		format = "YouLose";
-	show_info(getnm(format), getnm(bsdata<abilityi>::elements[v].id, bonus), iabs(bonus));
+	show_info(getnm(format), getnm(bsdata<abilityi>::elements[v].id, iabs(bonus)), iabs(bonus));
 	game.add(v, bonus);
 }
 
@@ -167,6 +171,7 @@ static void movement(int bonus, int param) {
 }
 
 static void leave_street(int bonus, int param) {
+	show_text();
 	game.leavestreet();
 }
 
@@ -175,6 +180,7 @@ static void encounter(int bonus, int param) {
 }
 
 static void delayed(int bonus, int param) {
+	show_info(getnm("YouDelayed"));
 	game.delayed();
 }
 
@@ -199,6 +205,9 @@ static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
+static void choose(int bonus, int param) {
+}
+
 static void arrested(int bonus, int param) {
 	show_text();
 	game.movement(locationi::find("Prison"));
@@ -217,6 +226,7 @@ void locationi::encounter(int count) const {
 BSDATA(scripti) = {
 	{"Arrested", arrested},
 	{"Buy", make_buy},
+	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
 	{"Delayed", delayed},

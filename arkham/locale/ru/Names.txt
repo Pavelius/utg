@@ -17,6 +17,7 @@ Derringer18c: Дерингер 18 калибра
 DoNotPay: Не платить
 DoYouAgree: Вы согласны?
 Downtown: Нижний город
+Fight: Сражение
 IndependenceSquare: Площадь Независимости
 Lore: Знания
 Luck: Удача
@@ -34,7 +35,9 @@ Speed: Скорость
 ThatEnought: Достаточно. Ничего больше не надо.
 TrainStation: Вокзал
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
+Will: Воля
 Woods: Леса
 Yes: Да
+YouDelayed: Вы [-задержаны] здесь.
 YouGain: Вы получили [+%2i] %-1.
 YouLose: Вы потеряли [-%2i] %-1.

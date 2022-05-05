@@ -23,5 +23,8 @@ Prison position(1660 1104)
 
 #Location
 
-TrainStation neightboard(Northside)
+ArkhamAsylum neightboard(Downtown)
+Downtown neightboard(ArkhamAsylum)
+
 Northside neightboard(TrainStation)
+TrainStation neightboard(Northside)
