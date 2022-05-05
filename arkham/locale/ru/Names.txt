@@ -8,6 +8,7 @@ Choose: Выбирайте
 Continue: Продолжить
 Downtown: Нижний город
 IndependenceSquare: Площадь Независимости
+Luck: Удача
 Newspaper: Офис газеты
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район

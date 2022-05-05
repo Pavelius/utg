@@ -22,7 +22,7 @@ static const quest* find_roll_result(const quest* ph, int result) {
 	if(result > 29)
 		result = 29;
 	for(auto p = ph + 1; p < pe; p++) {
-		if(p->index != index || p->next<0 || p->next>result)
+		if(p->index<0 || p->index>result)
 			break;
 		pr = p;
 	}
@@ -58,24 +58,24 @@ static void play(const variants& source) {
 		apply_value(v);
 }
 
-static void play(const quest* p) {
-	apply_text(p);
-	play(p->tags);
+static void play() {
+	apply_text(quest::last);
+	play(quest::last->tags);
 	show_text();
 }
 
 static void play(int n) {
-	auto p = quest::findprompt(n);
-	if(p)
-		play(p);
+	quest::last = quest::findprompt(n);
+	if(quest::last)
+		play();
 }
 
 static void make_roll(int bonus, int param) {
 	show_text();
 	auto r = game.roll(m_ability, m_value);
-	auto p = find_roll_result(quest::last, r);
-	if(p)
-		play(p);
+	quest::last = find_roll_result(quest::last, r);
+	if(quest::last)
+		play();
 }
 
 static void make_pay(int bonus, int param) {
@@ -106,11 +106,9 @@ static void curse(int bonus, int param) {
 }
 
 void locationi::encounter() const {
-}
-
-void gamei::encounter(int n) {
-	answers::header = "Вокзал";
-	play(1000);
+	quest::last = choose(1);
+	answers::header = getnm(id);
+	play();
 }
 
 BSDATA(scripti) = {

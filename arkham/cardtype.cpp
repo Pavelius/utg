@@ -2,11 +2,14 @@
 
 BSDATA(cardtypei) = {
 	{"Ally"},
+	{"Arkham"},
 	{"CommonItem"},
 	{"Monster"},
 	{"Myth"},
-	{"Spell"},
+	{"OtherWorld"},
 	{"Skill"},
+	{"Spell"},
+	{"Street"},
 	{"UniqueItem"},
 };
 assert_enum(cardtypei, UniqueItem)

@@ -37,6 +37,7 @@ BSMETA(tagi) = {
 	{}};
 BSMETA(locationi) = {
 	BSREQ(id),
+	BSENM(type, cardtypei),
 	BSREQ(position),
 	BSREQ(neightboard),
 	{}};

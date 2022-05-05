@@ -46,6 +46,9 @@
     <ClCompile Include="game.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="location.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -80,6 +83,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Worldmap.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\TrainStation.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#Location
+#Location type(Arkham)
 
 ArkhamAsylum position(1124 128)
 BankOfArkham position(764 128)
@@ -8,10 +8,16 @@ Newspaper position(168 420)
 TrainStation position(398 128)
 Woods position(894 3294)
 
+#Location type(Street)
+
 Northside position(595 675)
 Downtown position(1095 675)
 
-Deamland position(2328 1316)
+#Location type(OtherWorld)
+
+Dreamland position(2328 1316)
+
+#Location
 
 TrainStation neightboard(Northside)
 Northside neightboard(TrainStation)

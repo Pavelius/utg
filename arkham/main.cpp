@@ -20,7 +20,10 @@ static void test_movement() {
 }
 
 static void test_encounter() {
-	game.encounter(1000);
+	game.add(Luck, 4);
+	game.add(Clue, 3);
+	game.location = locationi::find("TrainStation");
+	game.encounter();
 }
 
 #endif // _DEBUG
@@ -39,11 +42,24 @@ void main_menu() {
 	test_encounter();
 }
 
+static void read_quests() {
+	for(auto& e : bsdata<locationi>()) {
+		if(e.type == Street)
+			continue;
+		auto pb = bsdata<quest>::end();
+		char temp[260]; stringbuilder sb(temp);
+		sb.addlocalefile(e.id);
+		quest::read(temp, false);
+		auto pe = bsdata<quest>::end();
+		e.encounters = quests(pb, pe - pb);
+	}
+}
+
 static void initialization() {
 	bsreq::read("rules/Worldmap.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
-	quest::read("locale/ru/Encounters.txt");
+	read_quests();
 }
 
 int main(int argc, char* argv[]) {

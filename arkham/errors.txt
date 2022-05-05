@@ -1,2 +1,8 @@
-﻿In file `Names.txt`:
- Define translate for `Continue`
+﻿Can't find file 'locale/ru/ArkhamAsylum.txt'
+Can't find file 'locale/ru/BankOfArkham.txt'
+Can't find file 'locale/ru/BlackCave.txt'
+Can't find file 'locale/ru/IndependenceSquare.txt'
+Can't find file 'locale/ru/Newspaper.txt'
+Can't find file 'locale/ru/TrainStation.txt'
+Can't find file 'locale/ru/Woods.txt'
+Can't find file 'locale/ru/Dreamland.txt'

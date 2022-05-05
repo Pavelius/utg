@@ -154,8 +154,8 @@ const quest* quest::findprompt(short id) {
 	return 0;
 }
 
-void quest::read(const char* url) {
-	auto p = log::read(url);
+void quest::read(const char* url, bool required) {
+	auto p = log::read(url, required);
 	if(!p)
 		return;
 	char temp[4096]; stringbuilder sb(temp);

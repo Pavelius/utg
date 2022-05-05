@@ -21,6 +21,6 @@ struct quest {
 	bool				is(variant v) const;
 	bool				isanswer() const { return next != -1; }
 	static void			manual(short page);
-	static void			read(const char* url);
+	static void			read(const char* url, bool required = true);
 	static void			run(int index);
 };

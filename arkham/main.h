@@ -34,12 +34,10 @@ enum trigger_s : unsigned char {
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
 enum cardtype_s : unsigned char {
-	Ally, CommonItem, Monster, Myth, Spell, Skill, UniqueItem,
+	Ally, Arkham, CommonItem, Monster, Myth, OtherWorld, Skill, Spell, Street, UniqueItem,
 };
-enum variant_s : unsigned char {
-
-};
-
+typedef adat<quest*> questa;
+typedef slice<quest> quests;
 struct realma : flagable<1> {
 };
 struct taga : flagable<8> {
@@ -60,9 +58,13 @@ struct nameablei {
 	const char*		id;
 };
 struct locationi : nameablei {
+	cardtype_s		type;
 	point			position;
 	locationi*		neightboard[4];
+	quests			encounters;
+	const quest*	choose(int count = 1) const;
 	void			encounter() const;
+	static locationi* find(const char* id);
 };
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
@@ -121,12 +123,12 @@ struct character : abilitya, cardpool {
 	static character* last;
 	locationi*		location;
 	void			clear();
+	void			encounter();
 	bool			isallowreroll(ability_s v) const;
 	int				getsuccess() const;
 	int				roll(ability_s v, int m);
 };
 struct gamei : public character {
-	void			encounter(int number);
 };
 extern gamei		game;
 extern answers		an;

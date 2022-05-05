@@ -44,10 +44,13 @@ static void add_clue() {
 int character::roll(ability_s v, int m) {
 	char header[128]; stringbuilder sh(header);
 	sh.add("%Roll %1%+2i", getnm(bsdata<abilityi>::get(v).id), m);
+	auto push_header = answers::header;
+	auto push_promt = answers::prompt_ask;
 	answers::header = header;
 	answers an;
 	char temp[512]; stringbuilder sb(temp);
-	roll_dices(m);
+	answers::prompt_ask = temp;
+	roll_dices(get(v) + m);
 	while(true) {
 		auto sv = getsuccess();
 		an.clear();
@@ -68,12 +71,17 @@ int character::roll(ability_s v, int m) {
 		an.add(0, getnm("ApplyRollResult"));
 		if(get(Clue))
 			an.add(add_clue, getnm("UseClueToAddDice"), 1);
-		answers::prompt_ask = temp;
 		auto p = (fnevent)an.open();
 		if(!p)
 			break;
 		last = this;
 		p();
 	}
+	answers::prompt_ask = push_promt;
+	answers::header = push_header;
 	return roll_success(getsuccess());
+}
+
+void character::encounter() {
+	location->encounter();
 }
