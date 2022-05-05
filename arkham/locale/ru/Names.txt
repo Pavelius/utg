@@ -10,6 +10,7 @@ BuyCardNoMoney: Купить %1 за %2i$ (нет денег)
 Cancel: Отмена
 Choose: Выбирайте
 ChooseEncounter: Какое событие должно произойти?
+ChooseOption: Выбирайте вариант 
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Clue: Улика
 Continue: Продолжить
@@ -18,9 +19,11 @@ DoNotPay: Не платить
 DoYouAgree: Вы согласны?
 Downtown: Нижний город
 Fight: Сражение
+Health: Здоровье
 IndependenceSquare: Площадь Независимости
 Lore: Знания
 Luck: Удача
+Money: Долларов
 Newspaper: Офис газеты
 No: Нет
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.

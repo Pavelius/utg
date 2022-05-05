@@ -1,3 +1,4 @@
 ﻿Clue: Улики
 Health: Здоровья
+Money: Долларов
 Sanity: Рассудка

@@ -117,6 +117,8 @@ static void play(const variants& source) {
 }
 
 static void play() {
+	if(!quest::last)
+		return;
 	apply_text(quest::last);
 	play(quest::last->tags);
 	show_text();
@@ -124,15 +126,13 @@ static void play() {
 
 static void play(int n) {
 	quest::last = quest::findprompt(n);
-	if(quest::last)
-		play();
+	play();
 }
 
 static void apply_result(int r) {
 	an.clear();
 	quest::last = find_roll_result(quest::last, r);
-	if(quest::last)
-		play();
+	play();
 }
 
 static void apply_result(const char* title) {
@@ -205,7 +205,21 @@ static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
+static const quest* choose_option() {
+	auto ph = quest::last;
+	auto pe = bsdata<quest>::end();
+	an.clear();
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->next == -1)
+			break;
+		an.add(p, p->text);
+	}
+	return (quest*)an.choose(0, 0);
+}
+
 static void choose(int bonus, int param) {
+	quest::last = choose_option();
+	play();
 }
 
 static void arrested(int bonus, int param) {
