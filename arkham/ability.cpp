@@ -2,22 +2,22 @@
 #include "main.h"
 
 BSDATA(abilityi) = {
-	{"Speed"},
-	{"Sneak"},
-	{"Fight"},
-	{"Will"},
-	{"Lore"},
-	{"Luck"},
+	{"Speed", FG(abilityi::Stat)},
+	{"Sneak", FG(abilityi::Stat)},
+	{"Fight", FG(abilityi::Stat)},
+	{"Will", FG(abilityi::Stat)},
+	{"Lore", FG(abilityi::Stat)},
+	{"Luck", FG(abilityi::Stat)},
 	{"Horror"},
 	{"Combat"},
 	{"Escape"},
 	{"HorrorDamage"},
 	{"CombatDamage"},
 	{"Toughness"},
-	{"Health"},
-	{"Sanity"},
-	{"Clue"},
-	{"Money"},
+	{"Health", FG(abilityi::Indicator)},
+	{"Sanity", FG(abilityi::Indicator)},
+	{"Clue", FG(abilityi::Indicator)},
+	{"Money", FG(abilityi::Indicator)},
 	{"Focus"},
 };
 assert_enum(abilityi, Focus)

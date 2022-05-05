@@ -199,3 +199,9 @@ const char* getdescription(const char* id) {
 		return 0;
 	return p->name;
 }
+
+const char* getnm(const char* id, int count) {
+	if(count==1)
+		return getnm(id);
+	return getnmof(id);
+}

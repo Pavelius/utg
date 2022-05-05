@@ -6,6 +6,7 @@
 static ability_s	m_ability;
 static locationi*	m_location;
 static int			m_value;
+static bool			shown_info;
 answers				an;
 cardpool			pool;
 
@@ -38,6 +39,10 @@ static void trade_pool(int count, int discount, const char* cancel) {
 }
 
 static void show_text() {
+	if(shown_info) {
+		answers::prompt = 0;
+		shown_info = false;
+	}
 	if(answers::prompt) {
 		an.choose(0, getnm("Continue"), 1);
 		answers::prompt = 0;
@@ -70,6 +75,24 @@ static void run_script(int value, int counter) {
 		e.proc(counter, e.param);
 }
 
+static void show_info(const char* format, ...) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.addv(format, xva_start(format));
+	an.clear();
+	an.choose(temp, getnm("Continue"), 1);
+	shown_info = true;
+}
+
+static void apply_indicator(ability_s v, int bonus) {
+	if(!bonus)
+		return;
+	const char* format = "YouGain";
+	if(bonus < 0)
+		format = "YouLose";
+	show_info(getnm(format), getnm(bsdata<abilityi>::elements[v].id, bonus), iabs(bonus));
+	game.add(v, bonus);
+}
+
 void apply_value(variant v) {
 	if(v.iskind<scripti>())
 		run_script(v.value, v.counter);
@@ -79,6 +102,8 @@ void apply_value(variant v) {
 	} else if(v.iskind<abilityi>()) {
 		m_ability = (ability_s)v.value;
 		m_value = v.counter;
+		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
+			apply_indicator(m_ability, m_value);
 	}
 }
 
@@ -155,7 +180,7 @@ static void delayed(int bonus, int param) {
 
 static void choose_street_or_location(int bonus, int param) {
 	for(auto& e : bsdata<locationi>()) {
-		if((e.type == Street || e.type == Arkham) && &e!=game.location)
+		if((e.type == Street || e.type == Arkham) && &e != game.location)
 			an.add(&e, getnm(e.id));
 	}
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));

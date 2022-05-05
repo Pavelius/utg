@@ -52,6 +52,7 @@ struct object : drawable {
 	void			paint() const;
 	void			paintns() const;
 	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
+	void			set(point v) { x = v.x; y = v.y; }
 };
 object*				addobject(int x, int y);
 void*				chooseobject();

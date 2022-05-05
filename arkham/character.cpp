@@ -97,10 +97,13 @@ void character::leavestreet() {
 void character::movement(locationi* pv) {
 	auto ps = draw::findobject(this);
 	if(ps) {
-		auto order = ps->priority;
-		ps->priority = 250;
-		ps->move(pv->position, 16);
-		ps->priority = order;
+		if(location) {
+			auto order = ps->priority;
+			ps->priority = 250;
+			ps->move(pv->position, 16);
+			ps->priority = order;
+		} else
+			ps->set(pv->position);
 	}
 	location = pv;
 }

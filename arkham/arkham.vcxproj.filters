@@ -94,5 +94,14 @@
     <Text Include="locale\ru\Newspaper.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\ArkhamAsylum.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesOf.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesPl.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

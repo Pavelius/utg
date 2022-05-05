@@ -229,6 +229,7 @@ template<typename T> short unsigned getbsi(const T* v) { return bsdata<T>::sourc
 const char*							getdescription(const char* id);
 int									getdigitscount(unsigned number); // Get digits count of number. For example if number=100, result be 3.
 const char*							getnm(const char* id);
+const char*							getnm(const char* id, int count);
 const char*							getnmof(const char* id);
 const char*							getnmpl(const char* id);
 bool								ischa(unsigned u); // is alphabetical character?

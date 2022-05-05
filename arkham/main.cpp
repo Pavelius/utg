@@ -8,9 +8,15 @@
 void util_main();
 
 static void test_encounter() {
-	game.add(Luck, 4);
+	game.add(Speed, 3);
+	game.add(Sneak, 3);
+	game.add(Fight, 5);
+	game.add(Will, 2);
+	game.add(Lore, 3);
+	game.add(Luck, 0);
+	//
 	game.add(Clue, 3);
-	game.location = locationi::find("TrainStation");
+	game.movement(locationi::find("ArkhamAsylum"));
 	game.encounter();
 }
 
