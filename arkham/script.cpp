@@ -120,12 +120,13 @@ static void encounter(int bonus, int param) {
 	game.location->encounter(bonus);
 }
 
-static void wait_turn(int bonus, int param) {
+static void delayed(int bonus, int param) {
+	game.delayed();
 }
 
 static void choose_street_or_location(int bonus, int param) {
 	for(auto& e : bsdata<locationi>()) {
-		if(e.type == Street || e.type == Arkham)
+		if((e.type == Street || e.type == Arkham) && &e!=game.location)
 			an.add(&e, getnm(e.id));
 	}
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
@@ -134,6 +135,13 @@ static void choose_street_or_location(int bonus, int param) {
 }
 
 static void curse(int bonus, int param) {
+}
+
+static void arrested(int bonus, int param) {
+	show_text();
+	game.movement(locationi::find("Prison"));
+	game.losehalf(Money);
+	game.delayed();
 }
 
 void locationi::encounter(int count) const {
@@ -145,9 +153,11 @@ void locationi::encounter(int count) const {
 }
 
 BSDATA(scripti) = {
+	{"Arrested", arrested},
 	{"Buy", make_buy},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
+	{"Delayed", delayed},
 	{"Encounter", encounter},
 	{"LeaveStreet", leave_street},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
@@ -155,6 +165,5 @@ BSDATA(scripti) = {
 	{"Pay", make_pay},
 	{"Roll", make_roll},
 	{"YesNo", ask_agree},
-	{"Wait", wait_turn},
 };
 BSDATAF(scripti)

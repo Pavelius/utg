@@ -18,7 +18,7 @@ enum realm_s : unsigned char {
 enum ability_s : unsigned char {
 	Speed, Sneak, Fight, Will, Lore, Luck,
 	Horror, Combat, Escape, HorrorDamage, CombatDamage, Toughness,
-	Health, Sanity, Clue,
+	Health, Sanity, Clue, Money,
 	Focus,
 };
 enum tag_s : unsigned char {
@@ -34,7 +34,7 @@ enum trigger_s : unsigned char {
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
 enum cardtype_s : unsigned char {
-	Ally, Arkham, CommonItem, Monster, Myth, OtherWorld, Skill, Spell, Street, UniqueItem,
+	Ally, Arkham, CommonItem, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
 };
 typedef adat<quest*> questa;
 typedef slice<quest> quests;
@@ -53,6 +53,7 @@ struct abilitya {
 	constexpr int	get(ability_s v) const { return abilities[v]; }
 	bool			isdoubleclue(ability_s v) const { return doubleclue.is(v); }
 	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
+	void			set(ability_s v, int i) { abilities[v] = i; }
 };
 struct nameablei {
 	const char*		id;
@@ -124,9 +125,12 @@ struct character : abilitya, cardpool {
 	locationi*		location;
 	void			clear();
 	void			encounter();
+	void			delayed();
 	int				getsuccess() const;
 	bool			isallowreroll(ability_s v) const;
 	void			leavestreet();
+	void			losehalf(ability_s m);
+	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv);
 	int				roll(ability_s v, int m);
 };

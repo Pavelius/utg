@@ -589,6 +589,7 @@ int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
 	metrics::padding = 4;
 	answers::paintcell = answerbt;
 	answers::beforepaint = answers_beforepaint;
+	answers::column_count = 1;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();

@@ -9,3 +9,7 @@ OldTome cost(4) difficult(-1) pay(2)
 #Card type(UniqueItem)
 
 MagicBlade count(2) cost(6) bonus(4) hands(1)
+
+#Card type(Special)
+
+Retainer

@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `ChooseEncounter`
+﻿In file `locale/ru/TrainStation.txt`:
+ Line 3: Can't find variant `Arrested`

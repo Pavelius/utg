@@ -84,6 +84,9 @@ void character::encounter() {
 	location->encounter();
 }
 
+static void appearobjects() {
+}
+
 void character::leavestreet() {
 	if(location->type != Arkham)
 		return;
@@ -100,4 +103,19 @@ void character::movement(locationi* pv) {
 		ps->priority = order;
 	}
 	location = pv;
+}
+
+void character::delayed() {
+	auto ps = draw::findobject(this);
+	if(ps) {
+		ps->alpha = 128;
+		appearobjects();
+	}
+}
+
+void character::losehalf(ability_s id) {
+	set(id, get(id)/2);
+}
+
+void character::losehalf(cardtype_s id) {
 }

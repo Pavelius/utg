@@ -8,6 +8,7 @@ BSDATA(cardtypei) = {
 	{"Myth"},
 	{"OtherWorld"},
 	{"Skill"},
+	{"Special"},
 	{"Spell"},
 	{"Street"},
 	{"UniqueItem"},

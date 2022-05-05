@@ -17,6 +17,10 @@ Downtown position(1095 675)
 
 Dreamland position(2328 1316)
 
+#Location type(Special)
+
+Prison position(1660 1104)
+
 #Location
 
 TrainStation neightboard(Northside)

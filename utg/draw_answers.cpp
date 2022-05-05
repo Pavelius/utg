@@ -5,7 +5,8 @@ using namespace draw;
 
 static int getcolumns(const answers& an) {
 	auto divider = an.getcount() % 2;
-	if(an.getcount() <= 14)
+	auto count = an.getcount();
+	if(count <= 8 && count != 2)
 		return 1;
 	for(auto& e : an) {
 		auto len = zlen(e.text);
