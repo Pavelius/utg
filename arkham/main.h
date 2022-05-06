@@ -67,7 +67,6 @@ struct locationi : nameablei {
 	quests			encounters;
 	const quest*	choose(int count = 1) const;
 	void			encounter(int count = 1) const;
-	static locationi* find(const char* id);
 };
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
@@ -136,21 +135,26 @@ struct investigator : nameablei, abilitya {
 	locationi*		location;
 	explicit operator bool() const { return location != 0; }
 };
-struct character : abilitya, cardpool {
-	static character* last;
+struct player : abilitya, cardpool {
+	abilitya		maximum;
+	static player*	last;
 	locationi*		location;
+	investigator*	prototype;
+	void			create(const char* id);
 	void			clear();
 	void			encounter();
 	void			delayed();
 	int				getsuccess() const;
+	int				getmaximal(ability_s v) const;
+	int				getminimal(ability_s v) const;
 	bool			isallowreroll(ability_s v) const;
 	void			leavestreet();
-	void			losehalf(ability_s m);
 	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv);
 	int				roll(ability_s v, int m);
+	void			update();
 };
-struct gamei : public character {
+struct gamei : public player {
 };
 extern gamei		game;
 extern answers		an;

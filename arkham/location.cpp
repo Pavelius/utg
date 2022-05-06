@@ -7,14 +7,6 @@ static void select(questa& destination, const quests& source) {
 	}
 }
 
-locationi* locationi::find(const char* id) {
-	for(auto& e : bsdata<locationi>()) {
-		if(equal(e.id, id))
-			return &e;
-	}
-	return 0;
-}
-
 const quest* locationi::choose(int count) const {
 	questa source; select(source, encounters);
 	// zshuffle(source.data, source.count);

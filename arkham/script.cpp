@@ -14,6 +14,12 @@ static int d6() {
 	return 1 + rand() % 6;
 }
 
+static void clear_text_manual() {
+	answers::prompt = 0;
+	shown_info = false;
+	an.clear();
+}
+
 static void trade_pool(int count, int discount, const char* cancel) {
 	while(count > 0) {
 		an.clear();
@@ -42,6 +48,25 @@ static void trade_pool(int count, int discount, const char* cancel) {
 	pool.discard();
 }
 
+static void take_pool(int count) {
+	while(count > 0) {
+		an.clear();
+		for(auto& e : pool.source) {
+			if(!e)
+				continue;
+			an.add(&e, getnm(e.geti().id));
+		}
+		auto p = (cardi*)an.choose(0);
+		if(!p)
+			break;
+		game.source.add(*p);
+		p->clear();
+		count--;
+	}
+	pool.discard();
+	clear_text_manual();
+}
+
 static void show_text() {
 	if(shown_info) {
 		answers::prompt = 0;
@@ -51,12 +76,6 @@ static void show_text() {
 		an.choose(0, getnm("Continue"), 1);
 		answers::prompt = 0;
 	}
-}
-
-static void clear_text_manual() {
-	answers::prompt = 0;
-	shown_info = false;
-	an.clear();
 }
 
 static const quest* find_entry(const quest* ph, int result) {
@@ -125,6 +144,11 @@ static void apply_indicator(ability_s v, int bonus) {
 
 static void play_result(int n);
 
+static void apply_card_type(cardtype_s type, int bonus) {
+	pool.pick(type, bonus);
+	take_pool(bonus);
+}
+
 static void apply_value(variant v) {
 	if(v.iskind<scripti>())
 		run_script(v.value, v.counter);
@@ -145,7 +169,9 @@ static void apply_value(variant v) {
 	} else if(v.iskind<abilityi>()) {
 		m_ability = (ability_s)v.value;
 		m_value = v.counter;
-		if(m_value == -100)
+		if(m_value == 100)
+			m_value = d6();
+		else if(m_value == -100)
 			m_value = -d6();
 		else if(m_value == -101)
 			m_value = -game.get(m_ability) / 2;
@@ -153,7 +179,8 @@ static void apply_value(variant v) {
 			m_value = -game.get(m_ability);
 		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
 			apply_indicator(m_ability, m_value);
-	}
+	} else if(v.iskind<cardtypei>())
+		apply_card_type((cardtype_s)v.value, v.counter);
 }
 
 static void play(const variants& source) {
@@ -177,7 +204,16 @@ static void play_result(int n) {
 static bool test_value(variant v) {
 	if(v.iskind<cardprotoi>())
 		return !game.havecard(v.value);
-	else
+	else if(v.iskind<abilityi>()) {
+		auto nv = game.get((ability_s)v.value) + v.counter;
+		if(!v.counter)
+			return false;
+		else if(v.counter < 0) {
+			auto minimum = game.getminimal((ability_s)v.value);
+			return nv >= minimum;
+		} else
+			return true;
+	} else
 		return true;
 }
 
@@ -202,7 +238,7 @@ static void apply_result(int r) {
 
 static void apply_result_title(const char* title) {
 	auto r = (int)an.choose(title);
-	answers::prompt = 0;
+	clear_text_manual();
 	apply_result(r);
 }
 
@@ -213,12 +249,14 @@ static void make_roll(int bonus, int param) {
 
 static void make_pay(int bonus, int param) {
 	an.clear();
-	an.add((void*)1, getnm("PayMoney"), bonus);
+	if(game.get(Money) >= bonus)
+		an.add((void*)1, getnm("PayMoney"), bonus);
 	an.add((void*)0, getnm("DoNotPay"));
-	apply_result_title(0);
-}
-
-static void make_buy(int bonus, int param) {
+	auto r = (int)an.choose(0);
+	clear_text_manual();
+	if(r == 1)
+		game.add(Money, -bonus);
+	apply_result(r);
 }
 
 static void ask_agree(int bonus, int param) {
@@ -299,17 +337,15 @@ static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
-static const quest* choose_option(bool test_condition = false) {
+static const quest* choose_option() {
 	auto ph = quest::last;
 	auto pe = bsdata<quest>::end();
 	an.clear();
 	for(auto p = ph + 1; p < pe; p++) {
 		if(p->next == -1)
 			break;
-		if(test_condition) {
-			if(!test_values(p->tags))
-				continue;
-		}
+		if(!test_values(p->tags))
+			continue;
 		an.add(p, p->text);
 	}
 	return (quest*)an.choose(0, 0);
@@ -334,16 +370,36 @@ static void remove_sanity_and_gain(int bonus, int param) {
 
 static void arrested(int bonus, int param) {
 	show_text();
-	game.movement(locationi::find("Prison"));
-	game.losehalf(Money);
+	game.movement(bsdata<locationi>::find("Prison"));
+	game.add(Money, game.get(Money) / 2);
 	game.delayed();
 }
 
 static void lose_half_items(int bonus, int param) {
 }
 
+static void buy_ability(int count, int cost, const char* cancel, const slice<ability_s>& source) {
+	while(count--) {
+		an.clear();
+		for(auto v : source) {
+			if(game.get(Money)>=cost)
+				an.add((void*)v, getnm("PayAbility"), getnm(bsdata<abilityi>::elements[v].id), cost);
+		}
+		auto v = (ability_s)(int)an.choose(0, cancel);
+		if(!v)
+			break;
+		game.add(Money, -cost);
+		game.add(v, 1);
+	}
+}
+
+static void heal(int bonus, int param) {
+	static ability_s source[] = {Health, Sanity};
+	buy_ability(bonus, param, getnm("ThatEnought"), source);
+}
+
 static void myth_location(int bonus, int param) {
-	m_location = locationi::find("TheWitchHouse");
+	m_location = bsdata<locationi>::find("TheWitchHouse");
 	m_value = 0;
 }
 
@@ -358,12 +414,12 @@ void locationi::encounter(int count) const {
 BSDATA(scripti) = {
 	{"Arrested", arrested},
 	{"Bless", bless},
-	//{"Buy", make_buy},
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
 	{"Delayed", delayed},
 	{"Encounter", encounter},
+	{"Heal", heal, 1},
 	{"LeaveStreet", leave_street},
 	{"LoseHalfItems", lose_half_items},
 	{"LostInTimeAndSpace", lost_in_time_and_space},

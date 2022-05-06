@@ -143,7 +143,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="cardpool.cpp" />
     <ClCompile Include="cardtype.cpp" />
-    <ClCompile Include="character.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
@@ -177,6 +177,7 @@
     <Text Include="locale\ru\Newspaper.txt" />
     <Text Include="locale\ru\TheWitchHouse.txt" />
     <Text Include="locale\ru\TrainStation.txt" />
+    <Text Include="locale\ru\VelmasDiner.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Investigators.txt" />
     <Text Include="rules\Items.txt" />

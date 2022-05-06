@@ -355,6 +355,15 @@ int array::findps(const char* value, unsigned offset, size_t size) const {
 	return -1;
 }
 
+void* array::findv(const char* id, unsigned offset) const {
+	if(!id)
+		return 0;
+	auto i = findps(id, offset, zlen(id));
+	if(i == -1)
+		return 0;
+	return ptr(i);
+}
+
 int array::find(int i1, int i2, void* value, unsigned offset, size_t size) const {
 	if(i2 == -1)
 		i2 = getcount() - 1;

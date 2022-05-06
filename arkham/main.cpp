@@ -17,7 +17,8 @@ static void test_encounter() {
 	//
 	game.pick(Gate);
 	game.add(Clue, 3);
-	game.movement(locationi::find("BankOfArkham"));
+	game.add(Money, 5);
+	game.movement(bsdata<locationi>::find("VelmasDiner"));
 	game.encounter();
 }
 

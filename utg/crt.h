@@ -140,6 +140,7 @@ public:
 	int								findps(const char* value, unsigned offset, size_t size) const;
 	const void*						findu(const void* value, size_t size) const;
 	const char*						findus(const char* value, size_t size) const;
+	void*							findv(const char* value, unsigned offset) const;
 	size_t							getmaximum() const { return count_maximum & 0x7FFFFFFF; }
 	size_t							getcount() const { return count; }
 	size_t							getsize() const { return size; }
@@ -187,6 +188,7 @@ template<typename T> struct bsdata {
 	static T*						add() { return (T*)source.add(); }
 	static T*						addz() { for(auto& e : bsdata<T>()) if(!e) return &e; return add(); }
 	static constexpr bool			have(const void* p) { return source.have(p); }
+	static T*						find(const char* id) { return (T*)source.findv(id, 0); }
 	static constexpr T&				get(int i) { return begin()[i]; }
 	static constexpr T*				get(const void* p) { return have(p) ? (T*)p : 0; }
 	static constexpr T*				begin() { return (T*)source.data; }

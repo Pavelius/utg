@@ -22,6 +22,7 @@ DoYouAgree: Вы согласны?
 Downtown: Нижний город
 Dynamite: Динамит
 Fight: Сражение
+Food: Еда
 GateAnotherDimention: Врата в другое измерение
 Health: Здоровье
 HistoricalSociety: Историческое общество
@@ -34,6 +35,7 @@ Newspaper: Офис газеты
 No: Нет
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район
+PayAbility: Повысить %-1 за %2i$
 PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
 ProfessorArmitage: Профессор Армитэйдж
@@ -48,6 +50,7 @@ TheWitchHouse: Дом Ведьмы
 ThomasFMalone: Томас Френсис Мэлоун
 TrainStation: Вокзал
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
+VelmasDiner: Закусочная "У Велмы"
 Will: Воля
 Woods: Леса
 Yes: Да

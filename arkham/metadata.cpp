@@ -10,7 +10,6 @@ BSDATAD(variant)
 BSDATAC(cardprotoi, 256)
 BSDATAC(investigator, 32)
 BSDATAC(locationi, 128)
-BSDATAC(character, 1)
 NOBSDATA(point)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr

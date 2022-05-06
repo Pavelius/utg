@@ -1,8 +1,8 @@
 #include "draw_object.h"
 #include "main.h"
 
-static		adat<char, 32> roll_result;
-character*	character::last;
+static adat<char, 32> roll_result;
+player*	player::last;
 
 static int compare(const void* p1, const void* p2) {
 	return *((char*)p2) - *((char*)p1);
@@ -28,21 +28,21 @@ static int roll_success(int sv) {
 	return result;
 }
 
-void character::clear() {
+void player::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-int character::getsuccess() const {
+int player::getsuccess() const {
 	return 5;
 }
 
 static void add_clue() {
-	auto p = character::last;
+	auto p = player::last;
 	p->add(Clue, -1);
 	add_dices(1);
 }
 
-int character::roll(ability_s v, int m) {
+int player::roll(ability_s v, int m) {
 	char header[128]; stringbuilder sh(header);
 	sh.add("%Roll %1%+2i", getnm(bsdata<abilityi>::get(v).id), m);
 	auto push_header = answers::header;
@@ -80,21 +80,21 @@ int character::roll(ability_s v, int m) {
 	return roll_success(getsuccess());
 }
 
-void character::encounter() {
+void player::encounter() {
 	location->encounter();
 }
 
 static void appearobjects() {
 }
 
-void character::leavestreet() {
+void player::leavestreet() {
 	if(location->type != Arkham)
 		return;
 	if(location->neightboard[0])
 		movement(location->neightboard[0]);
 }
 
-void character::movement(locationi* pv) {
+void player::movement(locationi* pv) {
 	auto ps = draw::findobject(this);
 	if(ps) {
 		if(location) {
@@ -108,7 +108,7 @@ void character::movement(locationi* pv) {
 	location = pv;
 }
 
-void character::delayed() {
+void player::delayed() {
 	auto ps = draw::findobject(this);
 	if(ps) {
 		ps->alpha = 128;
@@ -116,9 +116,16 @@ void character::delayed() {
 	}
 }
 
-void character::losehalf(ability_s id) {
-	set(id, get(id)/2);
+void player::losehalf(cardtype_s id) {
 }
 
-void character::losehalf(cardtype_s id) {
+int player::getminimal(ability_s v) const {
+	switch(v) {
+	case Sanity: case Health: return 1;
+	default: return 0;
+	}
+}
+
+int player::getmaximal(ability_s v) const {
+	return 0;
 }

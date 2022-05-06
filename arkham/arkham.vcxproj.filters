@@ -34,7 +34,7 @@
     <ClCompile Include="main_util.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="character.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="deck.cpp">
@@ -113,6 +113,9 @@
       <Filter>Encounters</Filter>
     </Text>
     <Text Include="locale\ru\BankOfArkham.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\VelmasDiner.txt">
       <Filter>Encounters</Filter>
     </Text>
   </ItemGroup>
