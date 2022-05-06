@@ -59,11 +59,13 @@ bool cardpool::havecard(cardt v) const {
 	return false;
 }
 
-void cardpool::addcards(cardtype_s type, int count) {
-	while(count > 0) {
-		auto i = bsdata<cardtypei>::elements[type].cards.pick();
-		if(i)
-			addcard(i);
-		count--;
-	}
+void cardpool::pick(cardtype_s type, int count) {
+	while(count-- > 0)
+		pick(type);
+}
+
+void cardpool::pick(cardtype_s type) {
+	auto i = bsdata<cardtypei>::elements[type].cards.pick();
+	if(i)
+		addcard(i);
 }

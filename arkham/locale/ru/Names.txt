@@ -19,6 +19,7 @@ DoNotPay: Не платить
 DoYouAgree: Вы согласны?
 Downtown: Нижний город
 Fight: Сражение
+GateAnotherDimention: Врата в другое измерение
 Health: Здоровье
 HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
@@ -30,6 +31,8 @@ No: Нет
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район
 PayMoney: Заплатить %1i$
+PayTrophy: Отдать %1
+ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
 Roll: Бросок
@@ -37,6 +40,8 @@ Sanity: Рассудок
 Sneak: Скрытность
 Speed: Скорость
 ThatEnought: Достаточно. Ничего больше не надо.
+TheWitchHouse: Дом Ведьмы
+ThomasFMalone: Томас Френсис Мэлоун
 TrainStation: Вокзал
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 Will: Воля
@@ -44,6 +49,6 @@ Woods: Леса
 Yes: Да
 YouDelayed: Вы [-задержаны] здесь.
 YouGain: Вы получили [+%2i] %-1.
-YouGainAlly: [%1] присоединился в вам.
+YouGainAlly: [%1] присоединился к вам.
 YouGainCard: Вы получили [%1].
 YouLose: Вы потеряли [-%2i] %-1.

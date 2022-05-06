@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `DonNotPay`
+﻿In file `locale/ru/TheWitchHouse.txt`:
+ Line 12: Can't find variant `RemoveSanityAndGainClue`

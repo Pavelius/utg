@@ -106,5 +106,8 @@
     <Text Include="rules\Investigators.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\TheWitchHouse.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

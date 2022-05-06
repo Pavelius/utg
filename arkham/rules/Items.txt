@@ -22,6 +22,10 @@ MagicBlade count(2) cost(6) bonus(4) hands(1)
 Shrivelling count(5) difficult(-1) pay(1) bonus(6) hands(1)
 Wither count(6) difficult(0) pay(0) bonus(3) hands(1)
 
+#Card type(Gate) count(2)
+
+GateAnotherDimention
+
 #Card type(Ally)
 
 AnnaKaslow

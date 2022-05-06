@@ -54,6 +54,22 @@ static void clear_text_manual() {
 	shown_info = false;
 }
 
+static const quest* find_entry(const quest* ph, int result) {
+	auto index = ph->index;
+	auto pe = bsdata<quest>::end();
+	auto prev = -1;
+	for(auto p = ph + 1; p < pe; p++) {
+		if(p->next != -1)
+			continue;
+		if(p->index == 1000 || prev >= p->index)
+			break;
+		if(p->index == result)
+			return p;
+		prev = p->index;
+	}
+	return 0;
+}
+
 static const quest* find_roll_result(const quest* ph, int result) {
 	const quest* pr = 0;
 	auto index = ph->index;
@@ -102,24 +118,49 @@ static void apply_indicator(ability_s v, int bonus) {
 	game.add(v, bonus);
 }
 
-void apply_value(variant v) {
+static void play_result(int n);
+
+static void apply_value(variant v) {
 	if(v.iskind<scripti>())
 		run_script(v.value, v.counter);
 	else if(v.iskind<locationi>()) {
 		m_location = bsdata<locationi>::elements + v.value;
 		m_value = v.counter;
 	} else if(v.iskind<cardprotoi>()) {
-		if(bsdata<cardprotoi>::elements[v.value].type == Ally)
-			show_info(getnm("YouGainAlly"), v.getname());
-		else
+		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
+			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
+				show_info(getnm("YouGainAlly"), v.getname());
+				game.addcard(v.value);
+			} else
+				play_result(10);
+		} else {
 			show_info(getnm("YouGainCard"), v.getname());
-		game.addcard(v.value);
+			game.addcard(v.value);
+		}
 	} else if(v.iskind<abilityi>()) {
 		m_ability = (ability_s)v.value;
 		m_value = v.counter;
 		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
 			apply_indicator(m_ability, m_value);
 	}
+}
+
+static void play(const variants& source) {
+	for(auto v : source)
+		apply_value(v);
+}
+
+static void play() {
+	if(!quest::last)
+		return;
+	apply_text(quest::last);
+	play(quest::last->tags);
+	show_text();
+}
+
+static void play_result(int n) {
+	quest::last = find_entry(quest::last, n);
+	play();
 }
 
 static bool test_value(variant v) {
@@ -135,19 +176,6 @@ static bool test_values(const variants& source) {
 			return false;
 	}
 	return true;
-}
-
-static void play(const variants& source) {
-	for(auto v : source)
-		apply_value(v);
-}
-
-static void play() {
-	if(!quest::last)
-		return;
-	apply_text(quest::last);
-	play(quest::last->tags);
-	show_text();
 }
 
 static void play(int n) {
@@ -231,13 +259,14 @@ static void curse(int bonus, int param) {
 }
 
 static void pick_pool(int bonus, int param) {
-	pool.addcards((cardtype_s)param, bonus);
+	pool.pick((cardtype_s)param, bonus);
 }
 
 static cardi* choose_trophy(int count) {
 	for(auto& e : game.source) {
-		if(e.type == Gate)
-			an.add(&e, getnm("PayTrophy"), getnm(e.geti().id));
+		auto& ei = e.geti();
+		if(ei.type == Gate)
+			an.add(&e, getnm("PayTrophy"), getnm(ei.id));
 	}
 	return (cardi*)an.choose(0, getnm("DoNotPay"), 1);
 }
@@ -245,6 +274,11 @@ static cardi* choose_trophy(int count) {
 static void pay_gate(int bonus, int param) {
 	auto p = choose_trophy(1);
 	clear_text_manual();
+	if(p) {
+		p->discard();
+		play_result(1);
+	} else
+		play_result(0);
 }
 
 static void trade(int bonus, int param) {
@@ -272,9 +306,20 @@ static void choose(int bonus, int param) {
 	play();
 }
 
-static void choose_case(int bonus, int param) {
-	quest::last = choose_option(true);
-	play();
+static void gate_appear(int bonus, int param) {
+}
+
+static void monster_appear(int bonus, int param) {
+}
+
+static int d6() {
+	return 1 + rand() % 6;
+}
+
+static void remove_sanity_and_gain(int bonus, int param) {
+	auto n = d6();
+	apply_indicator(Sanity, -n);
+	apply_indicator((ability_s)param, n);
 }
 
 static void arrested(int bonus, int param) {
@@ -282,6 +327,9 @@ static void arrested(int bonus, int param) {
 	game.movement(locationi::find("Prison"));
 	game.losehalf(Money);
 	game.delayed();
+}
+
+static void lose_half_items(int bonus, int param) {
 }
 
 void locationi::encounter(int count) const {
@@ -296,18 +344,21 @@ BSDATA(scripti) = {
 	{"Arrested", arrested},
 	{"Buy", make_buy},
 	{"Choose", choose},
-	{"ChooseCase", choose_case},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
 	{"Delayed", delayed},
 	{"Encounter", encounter},
 	{"LeaveStreet", leave_street},
+	{"LoseHalfItems", lose_half_items},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
+	{"MonsterAppear", monster_appear},
 	{"Movement", movement},
 	{"MovementEncounterAndBack", movement_encounter_and_back},
+	{"GateAppear", gate_appear},
 	{"Pay", make_pay},
 	{"PayGate", pay_gate},
 	{"PickCommonItem", pick_pool, CommonItem},
+	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"Roll", make_roll},
 	{"Trade", trade},
 	{"YesNo", ask_agree},

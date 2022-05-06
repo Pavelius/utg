@@ -90,7 +90,9 @@ struct indicatori {
 struct deck : adat<cardt> {
 	void			create(cardtype_s type);
 	void			drop(cardt v);
+	bool			havecard(cardt v) const;
 	cardt			pick();
+	bool			pick(cardt v);
 	void			shuffle();
 };
 struct cardtypei {
@@ -122,11 +124,12 @@ struct cardi {
 struct cardpool {
 	adat<cardi, 32> source;
 	void			addcard(cardt v);
-	void			addcards(cardtype_s type, int count);
 	void			discard();
 	bool			havecard(cardt v) const;
 	bool			isdoubleclue(ability_s v) const;
 	bool			isrerollall(ability_s v) const;
+	void			pick(cardtype_s type);
+	void			pick(cardtype_s type, int count);
 };
 struct investigator : nameablei, abilitya {
 	variants		extra;

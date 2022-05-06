@@ -28,3 +28,15 @@ cardt deck::pick() {
 	remove(0, 1);
 	return r;
 }
+
+bool deck::havecard(cardt v) const {
+	return find(v) != -1;
+}
+
+bool deck::pick(cardt v) {
+	auto i = find(v);
+	if(i == -1)
+		return false;
+	remove(i, 1);
+	return true;
+}

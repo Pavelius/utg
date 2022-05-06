@@ -15,8 +15,9 @@ static void test_encounter() {
 	game.add(Lore, 3);
 	game.add(Luck, 0);
 	//
+	game.pick(Gate);
 	game.add(Clue, 3);
-	game.movement(locationi::find("HistoricalSociety"));
+	game.movement(locationi::find("TheWitchHouse"));
 	game.encounter();
 }
 

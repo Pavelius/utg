@@ -173,6 +173,7 @@
     <Text Include="locale\ru\NamesOf.txt" />
     <Text Include="locale\ru\NamesPl.txt" />
     <Text Include="locale\ru\Newspaper.txt" />
+    <Text Include="locale\ru\TheWitchHouse.txt" />
     <Text Include="locale\ru\TrainStation.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Investigators.txt" />
