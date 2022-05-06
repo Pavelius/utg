@@ -109,5 +109,8 @@
     <Text Include="locale\ru\TheWitchHouse.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\CuriositieShoppe.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

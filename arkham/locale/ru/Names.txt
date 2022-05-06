@@ -1,4 +1,5 @@
-﻿AppTitle: Ужас Аркхема
+﻿Abyss: Преисподня
+AppTitle: Ужас Аркхема
 ApplyRollResult: Применить результат броска
 ArkhamAsylum: Лечебница Аркхэма
 Axe: Топор
@@ -14,6 +15,7 @@ ChooseOption: Выбирайте вариант
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Clue: Улика
 Continue: Продолжить
+CuriositieShoppe: Лавка Древностей
 Derringer18c: Дерингер 18 калибра
 DoNotPay: Не платить
 DoYouAgree: Вы согласны?
@@ -25,6 +27,7 @@ HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
 Lore: Знания
 Luck: Удача
+MagicBlade: Магический меч
 Money: Долларов
 Newspaper: Офис газеты
 No: Нет

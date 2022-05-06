@@ -332,6 +332,11 @@ static void arrested(int bonus, int param) {
 static void lose_half_items(int bonus, int param) {
 }
 
+static void myth_location(int bonus, int param) {
+	m_location = locationi::find("TheWitchHouse");
+	m_value = 0;
+}
+
 void locationi::encounter(int count) const {
 	if(!count)
 		count = 1;
@@ -354,10 +359,12 @@ BSDATA(scripti) = {
 	{"MonsterAppear", monster_appear},
 	{"Movement", movement},
 	{"MovementEncounterAndBack", movement_encounter_and_back},
+	{"MythLocation", myth_location},
 	{"GateAppear", gate_appear},
 	{"Pay", make_pay},
 	{"PayGate", pay_gate},
 	{"PickCommonItem", pick_pool, CommonItem},
+	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"Roll", make_roll},
 	{"Trade", trade},

@@ -3,6 +3,7 @@
 ArkhamAsylum position(1124 128)
 BankOfArkham position(764 128)
 BlackCave position(1856 1674)
+CuriositieShoppe position(168 735)
 IndependenceSquare position(1485 128)
 Newspaper position(168 420)
 TheWitchHouse position(1856 2150)
@@ -17,6 +18,7 @@ Downtown position(1095 675)
 
 #Location type(OtherWorld)
 
+Abyss position(2328 3240)
 Dreamland position(2328 1316)
 
 #Location type(Special)

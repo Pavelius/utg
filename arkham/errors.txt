@@ -1,2 +1,2 @@
-﻿In file `locale/ru/TheWitchHouse.txt`:
- Line 12: Can't find variant `RemoveSanityAndGainClue`
+﻿In file `locale/ru/CuriositieShoppe.txt`:
+ Line 3: Can't find variant `Cursed`
