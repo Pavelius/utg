@@ -274,6 +274,7 @@ static void lost_in_time_and_space(int bonus, int param) {
 }
 
 static void movement(int bonus, int param) {
+	show_text();
 	game.movement(m_location);
 }
 

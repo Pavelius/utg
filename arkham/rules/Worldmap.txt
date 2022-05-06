@@ -8,6 +8,7 @@ Southside position(1354 2818)
 
 #Location type(Arkham)
 
+AdministrationBuilding position(375 2374)
 ArkhamAsylum position(1124 128) neightboard(Downtown)
 BankOfArkham position(764 128) neightboard(Downtown)
 BlackCave position(1856 1674)

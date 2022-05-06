@@ -1,4 +1,5 @@
 ﻿Abyss: Преисподня
+AdministrationBuilding: Здание администрации
 AppTitle: Ужас Аркхема
 ApplyRollResult: Применить результат броска
 ArkhamAsylum: Лечебница Аркхэма
