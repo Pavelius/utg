@@ -1,2 +1,2 @@
-﻿In file `locale/ru/CuriositieShoppe.txt`:
- Line 3: Can't find variant `Cursed`
+﻿In file `Names.txt`:
+ Define translate for `Dynamite`

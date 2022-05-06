@@ -1,3 +1,8 @@
+#1000 Luck-1 Roll
+Вы роетесь в грудах хлама, пытаясь найти что-нибудь полезное.
+#0 PickCommonItem+1 Trade
+#1 PickCommonItem+1 PickUniqueItem+1 Trade
+
 #1000 Luck-2 Roll
 Вы рассматриваете непристойную статую.
 #0 Curse+1

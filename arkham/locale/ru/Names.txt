@@ -20,6 +20,7 @@ Derringer18c: Дерингер 18 калибра
 DoNotPay: Не платить
 DoYouAgree: Вы согласны?
 Downtown: Нижний город
+Dynamite: Динамит
 Fight: Сражение
 GateAnotherDimention: Врата в другое измерение
 Health: Здоровье
