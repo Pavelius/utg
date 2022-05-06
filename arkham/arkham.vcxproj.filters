@@ -121,5 +121,8 @@
     <Text Include="locale\ru\MasBoardingHouse.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\SilverTwilightLodge.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

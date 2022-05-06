@@ -2,6 +2,7 @@
 
 Downtown position(1095 675)
 Easttown position(1338 1053)
+FrenchHill position(1311 2063)
 Northside position(595 675)
 Southside position(1354 2818)
 
@@ -14,9 +15,9 @@ CuriositieShoppe position(168 735) neightboard(Northside)
 IndependenceSquare position(1485 128) neightboard(Downtown)
 MasBoardingHouse position(1856 2694) neightboard(Southside)
 Newspaper position(168 420) neightboard(Northside)
-TheWitchHouse position(1856 2150)
+TheWitchHouse position(1856 2150) neightboard(FrenchHill)
 TrainStation position(398 128) neightboard(Northside)
-SilverTwilightLodge position(1527 2326)
+SilverTwilightLodge position(1527 2326) neightboard(FrenchHill)
 HistoricalSociety position(1310 3294)
 VelmasDiner position(1856 528) neightboard(Easttown)
 Woods position(894 3294)
@@ -25,6 +26,7 @@ Woods position(894 3294)
 
 Downtown neightboard(ArkhamAsylum)
 Northside neightboard(TrainStation CuriositieShoppe Newspaper Downtown) 
+FrenchHill neightboard(Southside SilverTwilightLodge TheWitchHouse) 
 
 #Location type(OtherWorld)
 

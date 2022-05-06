@@ -28,6 +28,11 @@ static int roll_success(int sv) {
 	return result;
 }
 
+int player::rolld6(int count) const {
+	roll_dices(count);
+	return roll_success(getsuccess());
+}
+
 void player::clear() {
 	memset(this, 0, sizeof(*this));
 }

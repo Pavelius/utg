@@ -46,8 +46,9 @@ ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
 Roll: Бросок
+RubyStandish: Руби Стэндиш
 Sanity: Рассудок
-SilverTwilightLodge: 
+SilverTwilightLodge: Ложа серебрянных сумерок
 Sneak: Скрытность
 Speed: Скорость
 ThatEnought: Достаточно. Ничего больше не надо.
@@ -58,6 +59,7 @@ TrainStation: Вокзал
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 VelmasDiner: Закусочная "У Велмы"
 Will: Воля
+Wither: Лишение силы
 Woods: Леса
 Yes: Да
 YouDelayed: Вы [-задержаны] здесь.

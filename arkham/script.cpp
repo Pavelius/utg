@@ -33,6 +33,7 @@ static void trade_pool(int count, int discount, const char* cancel) {
 			else
 				an.add(&e, getnm((cost <= game.get(Money)) ? "BuyCard" : "BuyCardNoMoney"), getnm(ei.id), cost);
 		}
+		
 		auto p = (cardi*)an.choose(0, cancel, 1);
 		if(!p)
 			break;
@@ -56,7 +57,10 @@ static void take_pool(int count) {
 				continue;
 			an.add(&e, getnm(e.geti().id));
 		}
+		auto push_count = answers::column_count;
+		answers::column_count = 1;
 		auto p = (cardi*)an.choose(0);
+		answers::column_count = push_count;
 		if(!p)
 			break;
 		game.source.add(*p);
@@ -337,6 +341,10 @@ static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
+static void take(int bonus, int param) {
+	take_pool(bonus);
+}
+
 static const quest* choose_option(const char* title) {
 	auto ph = quest::last;
 	auto pe = bsdata<quest>::end();
@@ -419,6 +427,21 @@ static void myth_location(int bonus, int param) {
 	m_value = 0;
 }
 
+static void play_block(int bonus, int param) {
+	auto p = find_entry(quest::last, bonus);
+	if(p) {
+		quest::last = p;
+		play();
+	}
+}
+
+static void success_unique_fail_common(int bonus, int param) {
+	auto successed = game.rolld6(bonus);
+	pool.pick(CommonItem, bonus - successed);
+	pool.pick(UniqueItem, successed);
+	take_pool(bonus);
+}
+
 void locationi::encounter(int count) const {
 	if(!count)
 		count = 1;
@@ -447,9 +470,13 @@ BSDATA(scripti) = {
 	{"Pay", make_pay},
 	{"PayGate", pay_gate},
 	{"PickCommonItem", pick_pool, CommonItem},
+	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
+	{"Play", play_block},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"Roll", make_roll},
+	{"SuccessUniqueFailCommon", success_unique_fail_common},
+	{"Take", take},
 	{"Trade", trade},
 	{"YesNo", ask_agree},
 };

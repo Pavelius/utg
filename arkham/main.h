@@ -25,6 +25,7 @@ enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
+	SilverTwilightMembership, Blessed, Cursed,
 	BonusVsUndead, Exhause, NoSteal, Discard, Versatile,
 };
 enum trigger_s : unsigned char {
@@ -152,6 +153,7 @@ struct player : abilitya, cardpool {
 	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv);
 	int				roll(ability_s v, int m);
+	int				rolld6(int count) const;
 	void			update();
 };
 struct gamei : public player {
