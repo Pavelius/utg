@@ -1,33 +1,36 @@
 #Location type(Street)
 
-Northside position(595 675)
 Downtown position(1095 675)
 Easttown position(1338 1053)
+Northside position(595 675)
+Southside position(1354 2818)
 
 #Location type(Arkham)
 
 ArkhamAsylum position(1124 128) neightboard(Downtown)
 BankOfArkham position(764 128) neightboard(Downtown)
 BlackCave position(1856 1674)
-CuriositieShoppe position(168 735)
-IndependenceSquare position(1485 128)
-Newspaper position(168 420)
+CuriositieShoppe position(168 735) neightboard(Northside)
+IndependenceSquare position(1485 128) neightboard(Downtown)
+MasBoardingHouse position(1856 2694) neightboard(Southside)
+Newspaper position(168 420) neightboard(Northside)
 TheWitchHouse position(1856 2150)
 TrainStation position(398 128) neightboard(Northside)
+SilverTwilightLodge position(1527 2326)
 HistoricalSociety position(1310 3294)
 VelmasDiner position(1856 528) neightboard(Easttown)
 Woods position(894 3294)
 
+#Location
+
+Downtown neightboard(ArkhamAsylum)
+Northside neightboard(TrainStation CuriositieShoppe Newspaper Downtown) 
+
 #Location type(OtherWorld)
 
 Abyss position(2328 3240)
-Dreamland position(2328 1316)
+TheDreamlands position(2328 1316)
 
 #Location type(Special)
 
 Prison position(1660 1104)
-
-#Location
-
-Downtown neightboard(ArkhamAsylum)
-Northside neightboard(TrainStation) 

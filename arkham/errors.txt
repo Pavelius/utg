@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `PayAbility`
+﻿In file `locale/ru/HistoricalSociety.txt`:
+ Line 18: Can't find variant `Dreamland`

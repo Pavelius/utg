@@ -337,7 +337,7 @@ static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
-static const quest* choose_option() {
+static const quest* choose_option(const char* title) {
 	auto ph = quest::last;
 	auto pe = bsdata<quest>::end();
 	an.clear();
@@ -348,12 +348,28 @@ static const quest* choose_option() {
 			continue;
 		an.add(p, p->text);
 	}
-	return (quest*)an.choose(0, 0);
+	auto push_count = answers::column_count;
+	answers::column_count = 1;
+	auto p = (quest*)an.choose(title, 0);
+	answers::column_count = push_count;
+	return p;
 }
 
 static void choose(int bonus, int param) {
-	quest::last = choose_option();
-	play();
+	auto push_last = quest::last;
+	char temp[128]; stringbuilder sb(temp);
+	while(bonus > 0) {
+		quest::last = push_last;
+		sb.clear();
+		sb.add(getnm("ChooseLeft"), bonus);
+		auto ph = choose_option(temp);
+		clear_text_manual();
+		quest::last = find_entry(ph, ph->next);
+		if(!quest::last)
+			break;
+		play();
+		bonus--;
+	}
 }
 
 static void gate_appear(int bonus, int param) {
@@ -382,7 +398,7 @@ static void buy_ability(int count, int cost, const char* cancel, const slice<abi
 	while(count--) {
 		an.clear();
 		for(auto v : source) {
-			if(game.get(Money)>=cost)
+			if(game.get(Money) >= cost)
 				an.add((void*)v, getnm("PayAbility"), getnm(bsdata<abilityi>::elements[v].id), cost);
 		}
 		auto v = (ability_s)(int)an.choose(0, cancel);

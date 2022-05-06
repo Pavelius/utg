@@ -15,7 +15,7 @@
 Вы хотите получить доступ в частную библиотеку?
 #0 LeaveStreet
 #1 Luck-1 Roll
-#0 Dreamland MovementEncounterAndBack+1
+#0 TheDreamlands MovementEncounterAndBack+1
 Вы ощутили жуткое желание выспаться.
 #1 Spell+1
 

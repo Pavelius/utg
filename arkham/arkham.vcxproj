@@ -171,6 +171,7 @@
     <Text Include="locale\ru\BankOfArkham.txt" />
     <Text Include="locale\ru\CuriositieShoppe.txt" />
     <Text Include="locale\ru\HistoricalSociety.txt" />
+    <Text Include="locale\ru\MasBoardingHouse.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesOf.txt" />
     <Text Include="locale\ru\NamesPl.txt" />
