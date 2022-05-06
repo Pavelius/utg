@@ -168,6 +168,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\ArkhamAsylum.txt" />
+    <Text Include="locale\ru\BankOfArkham.txt" />
     <Text Include="locale\ru\CuriositieShoppe.txt" />
     <Text Include="locale\ru\HistoricalSociety.txt" />
     <Text Include="locale\ru\Names.txt" />

@@ -10,6 +10,10 @@ static bool			shown_info;
 answers				an;
 cardpool			pool;
 
+static int d6() {
+	return 1 + rand() % 6;
+}
+
 static void trade_pool(int count, int discount, const char* cancel) {
 	while(count > 0) {
 		an.clear();
@@ -52,6 +56,7 @@ static void show_text() {
 static void clear_text_manual() {
 	answers::prompt = 0;
 	shown_info = false;
+	an.clear();
 }
 
 static const quest* find_entry(const quest* ph, int result) {
@@ -140,6 +145,12 @@ static void apply_value(variant v) {
 	} else if(v.iskind<abilityi>()) {
 		m_ability = (ability_s)v.value;
 		m_value = v.counter;
+		if(m_value == -100)
+			m_value = -d6();
+		else if(m_value == -101)
+			m_value = -game.get(m_ability) / 2;
+		else if(m_value == -102)
+			m_value = -game.get(m_ability);
 		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
 			apply_indicator(m_ability, m_value);
 	}
@@ -189,7 +200,7 @@ static void apply_result(int r) {
 	play();
 }
 
-static void apply_result(const char* title) {
+static void apply_result_title(const char* title) {
 	auto r = (int)an.choose(title);
 	answers::prompt = 0;
 	apply_result(r);
@@ -204,7 +215,7 @@ static void make_pay(int bonus, int param) {
 	an.clear();
 	an.add((void*)1, getnm("PayMoney"), bonus);
 	an.add((void*)0, getnm("DoNotPay"));
-	apply_result(0);
+	apply_result_title(0);
 }
 
 static void make_buy(int bonus, int param) {
@@ -214,7 +225,7 @@ static void ask_agree(int bonus, int param) {
 	an.clear();
 	an.add((void*)1, getnm("Yes"));
 	an.add((void*)0, getnm("No"));
-	apply_result(getnm("DoYouAgree"));
+	apply_result_title(getnm("DoYouAgree"));
 }
 
 static void lost_in_time_and_space(int bonus, int param) {
@@ -252,7 +263,10 @@ static void choose_street_or_location(int bonus, int param) {
 	}
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
 	m_value = 0;
-	an.clear();
+	clear_text_manual();
+}
+
+static void bless(int bonus, int param) {
 }
 
 static void curse(int bonus, int param) {
@@ -312,10 +326,6 @@ static void gate_appear(int bonus, int param) {
 static void monster_appear(int bonus, int param) {
 }
 
-static int d6() {
-	return 1 + rand() % 6;
-}
-
 static void remove_sanity_and_gain(int bonus, int param) {
 	auto n = d6();
 	apply_indicator(Sanity, -n);
@@ -347,7 +357,8 @@ void locationi::encounter(int count) const {
 
 BSDATA(scripti) = {
 	{"Arrested", arrested},
-	{"Buy", make_buy},
+	{"Bless", bless},
+	//{"Buy", make_buy},
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
