@@ -8,6 +8,7 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 BSDATAC(cardprotoi, 256)
+BSDATAC(investigator, 32)
 BSDATAC(locationi, 128)
 BSDATAC(character, 1)
 NOBSDATA(point)
@@ -50,12 +51,25 @@ BSMETA(cardprotoi) = {
 	BSFLG(tags, tagi),
 	BSFLG(realms, realmi),
 	{}};
+BSMETA(investigator) = {
+	BSREQ(id),
+	BSDST(abilities, abilityi),
+	BSFLG(rerollall, abilityi),
+	BSFLG(doubleclue, abilityi),
+	BSFLG(tought, abilityi),
+	BSFLG(restore, abilityi),
+	BSFLG(pickextra, cardtypei),
+	BSFLG(scavenge, cardtypei),
+	BSREQ(extra),
+	BSREQ(location),
+	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
 	{"Card", VRSTD(cardprotoi), 1},
 	{"CardType", VRSTD(cardtypei), 1},
+	{"Investigator", VRSTD(investigator), 1},
 	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
 	{"Realm", VRSTD(realmi), 1},

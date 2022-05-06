@@ -49,6 +49,11 @@ static void show_text() {
 	}
 }
 
+static void clear_text_manual() {
+	answers::prompt = 0;
+	shown_info = false;
+}
+
 static const quest* find_roll_result(const quest* ph, int result) {
 	const quest* pr = 0;
 	auto index = ph->index;
@@ -103,12 +108,33 @@ void apply_value(variant v) {
 	else if(v.iskind<locationi>()) {
 		m_location = bsdata<locationi>::elements + v.value;
 		m_value = v.counter;
+	} else if(v.iskind<cardprotoi>()) {
+		if(bsdata<cardprotoi>::elements[v.value].type == Ally)
+			show_info(getnm("YouGainAlly"), v.getname());
+		else
+			show_info(getnm("YouGainCard"), v.getname());
+		game.addcard(v.value);
 	} else if(v.iskind<abilityi>()) {
 		m_ability = (ability_s)v.value;
 		m_value = v.counter;
 		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
 			apply_indicator(m_ability, m_value);
 	}
+}
+
+static bool test_value(variant v) {
+	if(v.iskind<cardprotoi>())
+		return !game.havecard(v.value);
+	else
+		return true;
+}
+
+static bool test_values(const variants& source) {
+	for(auto v : source) {
+		if(!test_value(v))
+			return false;
+	}
+	return true;
 }
 
 static void play(const variants& source) {
@@ -170,6 +196,13 @@ static void movement(int bonus, int param) {
 	game.movement(m_location);
 }
 
+static void movement_encounter_and_back(int bonus, int param) {
+	auto push_location = game.location;
+	game.movement(m_location);
+	game.encounter();
+	game.movement(push_location);
+}
+
 static void leave_street(int bonus, int param) {
 	show_text();
 	game.leavestreet();
@@ -201,17 +234,34 @@ static void pick_pool(int bonus, int param) {
 	pool.addcards((cardtype_s)param, bonus);
 }
 
+static cardi* choose_trophy(int count) {
+	for(auto& e : game.source) {
+		if(e.type == Gate)
+			an.add(&e, getnm("PayTrophy"), getnm(e.geti().id));
+	}
+	return (cardi*)an.choose(0, getnm("DoNotPay"), 1);
+}
+
+static void pay_gate(int bonus, int param) {
+	auto p = choose_trophy(1);
+	clear_text_manual();
+}
+
 static void trade(int bonus, int param) {
 	trade_pool(1, bonus, getnm("ThatEnought"));
 }
 
-static const quest* choose_option() {
+static const quest* choose_option(bool test_condition = false) {
 	auto ph = quest::last;
 	auto pe = bsdata<quest>::end();
 	an.clear();
 	for(auto p = ph + 1; p < pe; p++) {
 		if(p->next == -1)
 			break;
+		if(test_condition) {
+			if(!test_values(p->tags))
+				continue;
+		}
 		an.add(p, p->text);
 	}
 	return (quest*)an.choose(0, 0);
@@ -219,6 +269,11 @@ static const quest* choose_option() {
 
 static void choose(int bonus, int param) {
 	quest::last = choose_option();
+	play();
+}
+
+static void choose_case(int bonus, int param) {
+	quest::last = choose_option(true);
 	play();
 }
 
@@ -241,6 +296,7 @@ BSDATA(scripti) = {
 	{"Arrested", arrested},
 	{"Buy", make_buy},
 	{"Choose", choose},
+	{"ChooseCase", choose_case},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"Curse", curse},
 	{"Delayed", delayed},
@@ -248,7 +304,9 @@ BSDATA(scripti) = {
 	{"LeaveStreet", leave_street},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"Movement", movement},
+	{"MovementEncounterAndBack", movement_encounter_and_back},
 	{"Pay", make_pay},
+	{"PayGate", pay_gate},
 	{"PickCommonItem", pick_pool, CommonItem},
 	{"Roll", make_roll},
 	{"Trade", trade},

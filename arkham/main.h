@@ -25,7 +25,7 @@ enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
-	BonusVsUndead, ExhauseUse, NoSteal, SingleUse, Versatile,
+	BonusVsUndead, Exhause, NoSteal, Discard, Versatile,
 };
 enum trigger_s : unsigned char {
 	NoTrigger, PhysicalWeapon, MagicalWeapon, Book,
@@ -34,25 +34,27 @@ enum trigger_s : unsigned char {
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
 enum cardtype_s : unsigned char {
-	Ally, Arkham, CommonItem, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
+	Ally, Arkham, CommonItem, Gate, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
 };
 typedef adat<quest*> questa;
 typedef slice<quest> quests;
-struct realma : flagable<1> {
-};
-struct taga : flagable<8> {
-};
-struct abilityf : flagable<1> {
-};
+typedef flagable<1> realma;
+typedef flagable<8> taga;
+typedef flagable<1> abilityf;
+typedef flagable<2> cardf;
 struct abilitya {
 	char			abilities[Focus + 1];
-	abilityf		rerollall, doubleclue;
+	abilityf		rerollall, doubleclue, tought, restore;
+	cardf			pickextra, scavenge;
 	void			add(ability_s v) { abilities[v] += 1; }
 	void			add(ability_s v, int i) { abilities[v] += i; }
 	void			add(const abilitya& e);
 	constexpr int	get(ability_s v) const { return abilities[v]; }
 	bool			isdoubleclue(ability_s v) const { return doubleclue.is(v); }
+	bool			ispickextra(cardtype_s v) const { return pickextra.is(v); }
+	bool			isrestore(ability_s v) const { return restore.is(v); }
 	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
+	bool			istought(ability_s v) const { return tought.is(v); }
 	void			set(ability_s v, int i) { abilities[v] = i; }
 };
 struct nameablei {
@@ -119,10 +121,17 @@ struct cardi {
 };
 struct cardpool {
 	adat<cardi, 32> source;
+	void			addcard(cardt v);
 	void			addcards(cardtype_s type, int count);
 	void			discard();
+	bool			havecard(cardt v) const;
 	bool			isdoubleclue(ability_s v) const;
 	bool			isrerollall(ability_s v) const;
+};
+struct investigator : nameablei, abilitya {
+	variants		extra;
+	locationi*		location;
+	explicit operator bool() const { return location != 0; }
 };
 struct character : abilitya, cardpool {
 	static character* last;

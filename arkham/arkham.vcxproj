@@ -168,13 +168,14 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\ArkhamAsylum.txt" />
-    <Text Include="locale\ru\Encounters.txt" />
+    <Text Include="locale\ru\HistoricalSociety.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesOf.txt" />
     <Text Include="locale\ru\NamesPl.txt" />
     <Text Include="locale\ru\Newspaper.txt" />
     <Text Include="locale\ru\TrainStation.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Investigators.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
     <Text Include="rules\Worldmap.txt" />

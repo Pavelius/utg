@@ -1,0 +1,57 @@
+#Investigator
+
+AmandaSharpe
+ abilities Speed(4) Sneak(1) Fight(4) Will(1) Lore(4) Luck(1) Sanity(5) Health(5) Money(1) Clue(1) Focus(3)
+ pickextra Skill
+ extra CommonItem+1 UniqueItem+1 Spell+1 Skill+2
+AshcanPete
+ abilities Speed(3) Sneak(3) Fight(5) Will(2) Lore(3) Luck(0) Sanity(4) Health(6) Money(1) Clue(3) Focus(1)
+ scavenge Spell CommonItem UniqueItem
+ extra CommonItem+1 UniqueItem+1 Skill+1
+BobJenkins
+ abilities Speed(5) Sneak(0) Fight(4) Will(3) Lore(3) Luck(1) Sanity(6) Health(4) Money(9) Focus(1)
+ pickextra CommonItem
+ extra CommonItem+2 UniqueItem+2 Skill+1
+CarolynFern
+ abilities Speed(3) Sneak(0) Fight(4) Will(1) Lore(5) Luck(2) Sanity(6) Health(4) Money(7) Clue(1) Focus(2)
+ restore Sanity
+ extra CommonItem+2 UniqueItem+2 Skill+1
+ location ArkhamAsylum
+DarrellSimmons
+ abilities Speed(5) Sneak(0) Fight(5) Will(1) Lore(3) Luck(1) Sanity(4) Health(6) Money(4) Clue(1) Focus(2)
+ pickextra Arkham
+ extra CommonItem+1 UniqueItem+2 Skill+1 Retainer
+ location Newspaper
+DexterDrake
+ abilities Speed(5) Sneak(1) Fight(4) Will(0) Lore(5) Luck(0) Sanity(5) Health(5) Money(5) Focus(2)
+ pickextra Spell
+ extra CommonItem+1 UniqueItem+1 Spell+2 Skill+1 Shrivelling
+GloriaGoldberg
+ abilities Speed(4) Sneak(0) Fight(3) Will(2) Lore(4) Luck(2) Sanity(6) Health(4) Money(7) Clue(2) Focus(2)
+ pickextra OtherWorld
+ extra CommonItem+2 Spell+2 Skill+1
+HarveyWalters
+ abilities Speed(3) Sneak(2) Fight(3) Will(0) Lore(6) Luck(1) Sanity(7) Health(3) Money(5) Clue(1) Focus(2)
+ tought Sanity
+ extra UniqueItem+2 Spell+2 Skill+1
+JennyBarnes
+ abilities Speed(3) Sneak(1) Fight(4) Will(2) Lore(4) Luck(2) Sanity(6) Health(4) Money(10) Focus(1)
+ restore Money
+ extra CommonItem+2 Spell+1 UniqueItem+1 Skill+1
+ location TrainStation
+JoeDiamond
+KateWinthrop
+MandyThompson
+MichaelMcGlen
+ abilities Speed(5) Sneak(1) Fight(6) Will(1) Lore(3) Luck(0) Sanity(3) Health(7) Money(8) Focus(1)
+ tought Health
+ extra UniqueItem+1 Skill+1 Dynamite TommyGun
+MontereyJack
+ abilities Speed(4) Sneak(0) Fight(5) Will(0) Lore(4) Luck(2) Sanity(3) Health(7) Money(7) Clue(1) Focus(2)
+ pickextra UniqueItem
+ extra UniqueItem+2 Skill+1 Revolver38c Bullwhip
+SisterMary
+VincentLee
+ abilities Speed(3) Sneak(2) Fight(3) Will(1) Lore(5) Luck(1) Sanity(5) Health(5) Money(9) Clue(1) Focus(2)
+ restore Health
+ extra CommonItem+2 Spell+2 Skill+1

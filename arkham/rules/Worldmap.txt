@@ -6,6 +6,7 @@ BlackCave position(1856 1674)
 IndependenceSquare position(1485 128)
 Newspaper position(168 420)
 TrainStation position(398 128)
+HistoricalSociety position(1310 3294)
 Woods position(894 3294)
 
 #Location type(Street)

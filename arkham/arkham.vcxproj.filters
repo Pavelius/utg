@@ -73,9 +73,6 @@
     <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Encounters.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Items.txt">
       <Filter>Data</Filter>
     </Text>
@@ -101,6 +98,12 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="locale\ru\NamesPl.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\HistoricalSociety.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="rules\Investigators.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

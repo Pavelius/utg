@@ -13,9 +13,9 @@ BSDATA(tagi) = {
 	{"OverwhelmingI"},
 	{"OverwhelmingII"},
 	{"BonusToUndead"},
-	{"ExhauseUse"},
+	{"Exhause"},
 	{"NoSteal"},
-	{"SingleUse"},
+	{"Discard"},
 	{"Versatile"},
 };
 assert_enum(tagi, Versatile)

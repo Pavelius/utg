@@ -20,6 +20,7 @@ DoYouAgree: Вы согласны?
 Downtown: Нижний город
 Fight: Сражение
 Health: Здоровье
+HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
 Lore: Знания
 Luck: Удача
@@ -43,4 +44,6 @@ Woods: Леса
 Yes: Да
 YouDelayed: Вы [-задержаны] здесь.
 YouGain: Вы получили [+%2i] %-1.
+YouGainAlly: [%1] присоединился в вам.
+YouGainCard: Вы получили [%1].
 YouLose: Вы потеряли [-%2i] %-1.

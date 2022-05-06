@@ -16,7 +16,7 @@ static void test_encounter() {
 	game.add(Luck, 0);
 	//
 	game.add(Clue, 3);
-	game.movement(locationi::find("ArkhamAsylum"));
+	game.movement(locationi::find("HistoricalSociety"));
 	game.encounter();
 }
 
@@ -54,6 +54,7 @@ static void initialization() {
 	bsreq::read("rules/Worldmap.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
+	bsreq::read("rules/Investigators.txt");
 	read_quests();
 }
 

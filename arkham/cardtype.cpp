@@ -4,6 +4,7 @@ BSDATA(cardtypei) = {
 	{"Ally"},
 	{"Arkham"},
 	{"CommonItem"},
+	{"Gate"},
 	{"Monster"},
 	{"Myth"},
 	{"OtherWorld"},
