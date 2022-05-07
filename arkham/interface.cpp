@@ -47,7 +47,7 @@ static void add_label(const char* label) {
 static void add_info(const char* label, const char* value) {
 	add_label(label);
 	text(value);
-	caret.x += textw(value) + textw('  ');
+	caret.x += textw(value) + textw(' ') * 2;
 }
 
 static void add_info(const char* label, int value) {
@@ -58,6 +58,7 @@ static void add_info(const char* label, int value) {
 
 void status_info() {
 	auto push_caret = caret;
+	caret.x += textw(' ');
 	for(auto& e : bsdata<abilityi>()) {
 		auto v = ability_s(&e - bsdata<abilityi>::elements);
 		if(e.is(abilityi::Stat) || e.is(abilityi::Indicator))

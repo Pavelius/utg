@@ -21,11 +21,13 @@ enum ability_s : unsigned char {
 	Health, Sanity, Clue, Money,
 	Focus,
 };
+enum gamef_s : unsigned char {
+	Bless, Curse, BankLoan, BankLoanNotAllowed, Retainer, SilverTwilightLodgeMembership,
+};
 enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
-	SilverTwilightMembership, Blessed, Cursed,
 	BonusVsUndead, Exhause, NoSteal, Discard, Versatile,
 };
 enum trigger_s : unsigned char {
@@ -43,6 +45,9 @@ typedef flagable<1> realma;
 typedef flagable<8> taga;
 typedef flagable<1> abilityf;
 typedef flagable<2> cardf;
+struct gamefi {
+	const char*		id;
+};
 struct abilitya {
 	char			abilities[Focus + 1];
 	abilityf		rerollall, doubleclue, tought, restore;
@@ -140,6 +145,7 @@ struct player : abilitya, cardpool {
 	static player*	last;
 	abilitya		original;
 	locationi*		location;
+	flagable<2>		flags;
 	unsigned char	investigator_index;
 	char			m_health, m_sanity;
 	char			focus[3];
@@ -152,6 +158,7 @@ struct player : abilitya, cardpool {
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
+	bool			is(gamef_s v) const { return flags.is(v); }
 	bool			isallowreroll(ability_s v) const;
 	void			introduction() const;
 	void			leavestreet();
@@ -160,11 +167,12 @@ struct player : abilitya, cardpool {
 	void			movement(int speed);
 	int				roll(ability_s v, int m);
 	int				rolld6(int count) const;
+	void			setflag(gamef_s v, bool activate = true);
 	void			update();
 };
 struct gamei : public player {
 	static quests	quest_other;
-	void			message(const char* format);
+	static void		information(const char* format, ...);
 };
 extern gamei		game;
 extern answers		an;

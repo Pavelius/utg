@@ -76,3 +76,4 @@ YouGain: Вы получили [+%2i] %-1.
 YouGainAlly: [%1] присоединился к вам.
 YouGainCard: Вы получили [%1].
 YouLose: Вы потеряли [-%2i] %-1.
+YouLoseCard: Вы потеряли [%1].

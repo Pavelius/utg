@@ -128,7 +128,7 @@ static void run_script(int value, int counter) {
 		e.proc(counter, e.param);
 }
 
-static void show_info(const char* format, ...) {
+void gamei::information(const char* format, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.addv(format, xva_start(format));
 	an.clear();
@@ -142,7 +142,7 @@ static void apply_indicator(ability_s v, int bonus) {
 	const char* format = "YouGain";
 	if(bonus < 0)
 		format = "YouLose";
-	show_info(getnm(format), getnm(bsdata<abilityi>::elements[v].id, iabs(bonus)), iabs(bonus));
+	game.information(getnm(format), getnm(bsdata<abilityi>::elements[v].id, iabs(bonus)), iabs(bonus));
 	game.add(v, bonus);
 }
 
@@ -161,15 +161,18 @@ static void apply_value(variant v) {
 	else if(v.iskind<locationi>()) {
 		m_location = bsdata<locationi>::elements + v.value;
 		m_value = v.counter;
+	} else if(v.iskind<tagi>()) {
+		game.information(getnm("YouGainCard"), v.getname());
+		game.setflag((gamef_s)v.value);
 	} else if(v.iskind<cardprotoi>()) {
 		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
 			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
-				show_info(getnm("YouGainAlly"), v.getname());
+				game.information(getnm("YouGainAlly"), v.getname());
 				game.addcard(v.value);
 			} else
 				play_result(10);
 		} else {
-			show_info(getnm("YouGainCard"), v.getname());
+			game.information(getnm("YouGainCard"), v.getname());
 			game.addcard(v.value);
 		}
 	} else if(v.iskind<abilityi>()) {
@@ -297,12 +300,12 @@ static void encounter(int bonus, int param) {
 }
 
 static void delayed(int bonus, int param) {
-	show_info(getnm("YouDelayed"));
+	game.information(getnm("YouDelayed"));
 	game.delayed();
 }
 
 static void nomove(int bonus, int param) {
-	show_info(getnm("YouNoMove"));
+	game.information(getnm("YouNoMove"));
 }
 
 static void choose_street_or_location(int bonus, int param) {
@@ -482,11 +485,9 @@ void locationi::encounter(int count) const {
 
 BSDATA(scripti) = {
 	{"Arrested", arrested},
-	{"Bless", bless},
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"CommonWeapon", common_weapon},
-	{"Curse", curse},
 	{"Delayed", delayed},
 	{"Encounter", encounter},
 	{"GateAppear", gate_appear},

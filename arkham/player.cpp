@@ -165,6 +165,8 @@ void player::create(const char* id) {
 	auto p = bsdata<investigator>::find(id);
 	if(!p)
 		return;
+	auto push_interactive = answers::interactive;
+	answers::interactive = false;
 	investigator_index = bsdata<investigator>::source.indexof(p);
 	original.loadability(*p);
 	original.abilities[Health] = p->abilities[Health];
@@ -176,6 +178,7 @@ void player::create(const char* id) {
 	abilities[Money] += p->abilities[Money];
 	abilities[Health] = getmaximal(Health);
 	abilities[Sanity] = getmaximal(Sanity);
+	answers::interactive = push_interactive;
 	game.movement(p->location);
 }
 
@@ -246,4 +249,33 @@ void player::movement(int speed) {
 		answers::header = getnm(p->id);
 		speed--;
 	}
+}
+
+void player::setflag(gamef_s v, bool activate) {
+	if(activate) {
+		switch(v) {
+		case Bless:
+			if(is(Curse)) {
+				activate = false;
+				v = Curse;
+			}
+			break;
+		case Curse:
+			if(is(Bless)) {
+				activate = false;
+				v = Bless;
+			}
+			break;
+		}
+	}
+	if(answers::interactive) {
+		if(activate)
+			game.information(getnm("YouGainCard"), getnm(bsdata<gamefi>::elements[v].id));
+		else
+			game.information(getnm("YouLoseCard"), getnm(bsdata<gamefi>::elements[v].id));
+	}
+	if(activate)
+		flags.set(v);
+	else
+		flags.remove(v);
 }

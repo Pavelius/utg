@@ -1,2 +1,18 @@
-﻿In file `Names.txt`:
- Define translate for `Easttown`
+﻿In file `locale/ru/AdministrationBuilding.txt`:
+ Line 7: Can't find variant `Curse`
+In file `locale/ru/BankOfArkham.txt`:
+ Line 8: Can't find variant `Curse`
+ Line 10: Can't find variant `Bless`
+In file `locale/ru/CuriositieShoppe.txt`:
+ Line 8: Can't find variant `Curse`
+In file `locale/ru/IndependenceSquare.txt`:
+ Line 25: Can't find variant `Curse`
+In file `locale/ru/SilverTwilightLodge.txt`:
+ Line 32: Can't find variant `Curse`
+In file `locale/ru/HistoricalSociety.txt`:
+ Line 35: Can't find variant `Curse`
+In file `locale/ru/UnvisitedIsle.txt`:
+ Line 13: Can't find variant `Curse`
+In file `locale/ru/VelmasDiner.txt`:
+ Line 22: Can't find variant `Curse`
+ Line 24: Can't find variant `Bless`

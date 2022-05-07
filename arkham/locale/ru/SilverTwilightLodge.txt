@@ -29,13 +29,13 @@
 
 #1000 Luck-1 Roll
 Дотронувшись до странного предмета в холле, вы словно покрылись гусиной кожей.
-#0 Cursed+1
+#0 Curse
 #1
 
 #1000 Pay+3
 "Хотите вступить в Орден?" - спрашивает вас Карл Сэнфорд.
 #0 Play+10
-#1 SilverTwilightMembership
+#1 SilverTwilightLodgeMembership
 "Хорошо. Заходите к нам снова. Теперь вы член ордена."
 #10 Will-1 Roll
 #0 Health-3 LeaveStreet
@@ -45,7 +45,7 @@
 #1000 Pay+3
 "Хотите вступить в Орден?" - спрашивает вас Карл Сэнфорд.
 #0 Play+10
-#1 SilverTwilightMembership
+#1 SilverTwilightLodgeMembership
 "Хорошо. Заходите к нам снова. Теперь вы член ордена."
 #10 Will-1 Roll
 #0 Health-3 LeaveStreet

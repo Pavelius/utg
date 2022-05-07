@@ -60,7 +60,3 @@ ThomasFMalone
 TomMountainMurphy
  abilities Fight(2)
  tags OverwhelmingI
-
-#Card type(Special)
-
-Retainer

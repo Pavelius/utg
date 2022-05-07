@@ -49,6 +49,9 @@
     <ClCompile Include="location.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="gamef.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

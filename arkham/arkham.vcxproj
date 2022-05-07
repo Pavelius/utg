@@ -143,6 +143,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="cardpool.cpp" />
     <ClCompile Include="cardtype.cpp" />
+    <ClCompile Include="gamef.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="game.cpp" />

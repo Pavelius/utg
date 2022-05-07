@@ -32,6 +32,9 @@ BSMETA(genderi) = {
 BSMETA(scripti) = {
 	BSREQ(id),
 	{}};
+BSMETA(gamefi) = {
+	BSREQ(id),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -68,6 +71,7 @@ BSDATA(varianti) = {
 	{"Ability", VRSTD(abilityi), 1},
 	{"Card", VRSTD(cardprotoi), 1},
 	{"CardType", VRSTD(cardtypei), 1},
+	{"GameFlag", VRSTD(gamefi), 1},
 	{"Investigator", VRSTD(investigator), 1},
 	{"Location", VRSTD(locationi), 1},
 	{"Menu", VRSTD(menu), 1},
