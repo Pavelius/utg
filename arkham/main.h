@@ -64,7 +64,7 @@ struct nameablei {
 struct locationi : nameablei {
 	cardtype_s		type;
 	point			position;
-	locationi*		neightboard[4];
+	locationi*		neightboard[8];
 	quests			encounters;
 	const quest*	choose(int count = 1) const;
 	void			encounter(int count = 1) const;
@@ -157,6 +157,7 @@ struct player : abilitya, cardpool {
 	void			leavestreet();
 	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv);
+	void			movement(int speed);
 	int				roll(ability_s v, int m);
 	int				rolld6(int count) const;
 	void			update();

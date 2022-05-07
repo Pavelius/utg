@@ -22,8 +22,9 @@ CuriositieShoppe: Лавка Древностей
 Derringer18c: Дерингер 18 калибра
 DoNotPay: Не платить
 DoYouAgree: Вы согласны?
-Downtown: Нижний город
+Downtown: Даунтаун
 Dynamite: Динамит
+Easttown: Исттаун
 Fight: Сражение
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
@@ -51,9 +52,13 @@ Revolver45c: Магнум 45 калибра
 Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
+Shrivelling: Увядание
 SilverTwilightLodge: Ложа серебрянных сумерок
+Skill: Навык
 Sneak: Скрытность
 Speed: Скорость
+Spell: Заклинание
+StopMoving: Закончить движение
 ThatEnought: Достаточно. Ничего больше не надо.
 TheWitchHouse: Дом Ведьмы
 ThomasFMalone: Томас Френсис Мэлоун
@@ -61,6 +66,7 @@ TommyGun: Автомат
 TrainStation: Вокзал
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 VelmasDiner: Закусочная "У Велмы"
+WhereYouWhantToMove: Куда хотите пройти (осталось [%1i])?
 Will: Воля
 Wither: Лишение силы
 Woods: Леса

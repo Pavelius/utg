@@ -11,6 +11,7 @@ static void test_encounter() {
 	game.create("CarolynFern");
 	game.introduction();
 	game.encounter();
+	game.movement(game.get(Speed));
 }
 
 #endif // _DEBUG

@@ -174,6 +174,8 @@ void player::create(const char* id) {
 	update();
 	abilities[Clue] += p->abilities[Clue];
 	abilities[Money] += p->abilities[Money];
+	abilities[Health] = getmaximal(Health);
+	abilities[Sanity] = getmaximal(Sanity);
 	game.movement(p->location);
 }
 
@@ -223,5 +225,25 @@ void player::introduction() const {
 		auto push_header = answers::header;
 		answers::header = getnm("Introduction");
 		answers::message(p);
+	}
+}
+
+void player::movement(int speed) {
+	char temp[260]; stringbuilder sb(temp);
+	while(speed > 0) {
+		sb.clear();
+		sb.add(getnm("WhereYouWhantToMove"), speed);
+		an.clear();
+		for(auto p : location->neightboard) {
+			if(!p)
+				break;
+			an.add(p, getnm(p->id));
+		}
+		auto p = (locationi*)an.choose(temp, getnm("StopMoving"));
+		if(!p)
+			break;
+		movement(p);
+		answers::header = getnm(p->id);
+		speed--;
 	}
 }
