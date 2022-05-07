@@ -20,6 +20,7 @@ TheWitchHouse position(1856 2150) neightboard(FrenchHill)
 TrainStation position(398 128) neightboard(Northside)
 SilverTwilightLodge position(1527 2326) neightboard(FrenchHill)
 HistoricalSociety position(1310 3294)
+UnvisitedIsle position(168 1210)
 VelmasDiner position(1856 528) neightboard(Easttown)
 Woods position(894 3294)
 

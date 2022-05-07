@@ -181,6 +181,7 @@
     <Text Include="locale\ru\SilverTwilightLodge.txt" />
     <Text Include="locale\ru\TheWitchHouse.txt" />
     <Text Include="locale\ru\TrainStation.txt" />
+    <Text Include="locale\ru\UnvisitedIsle.txt" />
     <Text Include="locale\ru\VelmasDiner.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Investigators.txt" />
