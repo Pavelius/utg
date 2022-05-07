@@ -58,6 +58,7 @@ static void add_info(const char* label, int value) {
 
 void status_info() {
 	auto push_caret = caret;
+	caret.y += metrics::border;
 	caret.x += textw(' ');
 	for(auto& e : bsdata<abilityi>()) {
 		auto v = ability_s(&e - bsdata<abilityi>::elements);

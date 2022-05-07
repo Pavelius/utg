@@ -160,7 +160,6 @@ struct player : abilitya, cardpool {
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
-	int				getthrophy() const;
 	bool			is(gamef_s v) const { return flags.is(v); }
 	bool			isallowreroll(ability_s v) const;
 	void			introduction() const;
@@ -168,6 +167,7 @@ struct player : abilitya, cardpool {
 	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
+	bool			paythrophy(int count, bool run, bool gates, bool monsters);
 	int				roll(ability_s v, int m);
 	int				rolld6(int count) const;
 	void			setflag(gamef_s v, bool activate = true);

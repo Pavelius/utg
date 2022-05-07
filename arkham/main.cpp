@@ -10,7 +10,9 @@ void util_main();
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	game.movement(bsdata<locationi>::find("HibbsRoadhouse"), false);
+	game.pick(Gate, 1);
+	game.pick(Monster, 6);
+	game.movement(bsdata<locationi>::find("Graveyard"), false);
 	game.encounter();
 	//game.movement(game.get(Speed));
 }

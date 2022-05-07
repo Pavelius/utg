@@ -9,7 +9,7 @@ static void select(questa& destination, const quests& source) {
 
 const quest* locationi::choose(int count) const {
 	questa source; select(source, encounters);
-	zshuffle(source.data, source.count);
+	//zshuffle(source.data, source.count);
 	if(count < 0)
 		return 0;
 	else if(count == 1)

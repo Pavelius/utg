@@ -18,6 +18,7 @@ ChooseOption: Выбирайте вариант
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Clue: Улика
 Continue: Продолжить
+Cultist: Культист
 CuriositieShoppe: Лавка Древностей
 Derringer18c: Дерингер 18 калибра
 DoNotPay: Не платить
@@ -28,6 +29,8 @@ Easttown: Исттаун
 Fight: Сражение
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
+Ghoul: Упырь
+Graveyard: Кладбище
 Health: Здоровье
 HibbsRoadhouse: Забегаловка Гиббса
 HistoricalSociety: Историческое общество
@@ -42,17 +45,20 @@ MiskatonicUniversity: Университет Мискатоник
 Money: Долларов
 Newspaper: Офис газеты
 No: Нет
+NoCard: Нет карты
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район
 OldTome: Старый дневник
 PayAbility: Повысить %-1 за %2i$
+PayLeft: Осталось заплатить [%1i] единиц
 PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
-PayTrophyNumber: Отдать [%1i] трофеев монстров
+PayTrophyNumber: Отдать %1i единиц трофеев
 PickCard: Возьмите %1
 ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
+RichardUptonPickman: Ричард Аптон Пикмэн
 Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
@@ -72,6 +78,7 @@ TheWitchHouse: Дом Ведьмы
 ThomasFMalone: Томас Френсис Мэлоун
 TommyGun: Автомат
 TrainStation: Вокзал
+UniqueItem: Уникальный предмет
 Uptown: Аптаун
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 VelmasDiner: Закусочная "У Велмы"

@@ -1,6 +1,6 @@
 #Card type(Monster)
 
-Cultist count(3) realms(Hexagon)
- abilities Sneak(-3) Toughness(1) Horror(0) HorrorDamage(1) Combat(-1) CombatDamage(1)
+Cultist count(6) realms(Star)
+ abilities Sneak(-3) Toughness(1) Horror(0) HorrorDamage(0) Combat(1) CombatDamage(1)
 Ghoul count(3) realms(Hexagon)
  abilities Sneak(-3) Toughness(1) Horror(0) HorrorDamage(1) Combat(-1) CombatDamage(1)

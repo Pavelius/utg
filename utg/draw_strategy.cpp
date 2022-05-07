@@ -37,7 +37,7 @@ void status_info();
 
 static void statusbar() {
 	status_info();
-	auto dy = texth() + metrics::padding;
+	auto dy = texth() + metrics::padding + metrics::border*2;
 	caret.y += dy; height -= dy;
 	linedown();
 }

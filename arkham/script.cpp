@@ -350,16 +350,14 @@ static void pay_clue(int bonus, int param) {
 
 static void pay_trophy(int bonus, int param) {
 	an.clear();
-	if(game.getthrophy() >= bonus)
-		an.add((void*)1, getnm("PayThrophyNumber"), bonus);
+	if(game.paythrophy(bonus, false, false, true))
+		an.add((void*)1, getnm("PayTrophyNumber"), bonus);
 	an.add((void*)0, getnm("DoNotPay"));
 	auto r = (int)an.choose(0);
 	clear_text_manual();
-	if(r == 1) {
-
-	}
+	if(r == 1)
+		game.paythrophy(bonus, true, false, true);
 	apply_result(r);
-
 }
 
 static void pay_gate(int bonus, int param) {

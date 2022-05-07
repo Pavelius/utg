@@ -92,7 +92,6 @@ struct adat {
 	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
 	bool							is(const T t) const { for(auto& e : *this) if(e == t) return true; return false; }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }
-	void							remove(const T t) { remove(indexof(t), 1); }
 };
 // Simple slice object
 template<class T>

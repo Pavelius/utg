@@ -1,2 +1,2 @@
-﻿In file `locale/ru/Graveyard.txt`:
- Line 31: Can't find variant `PayTrophy`
+﻿In file `Names.txt`:
+ Define translate for `NoCard`

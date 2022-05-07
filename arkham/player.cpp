@@ -298,8 +298,37 @@ int	player::getbonus(ability_s v, int b) const {
 	return b;
 }
 
-int player::getthrophy() const {
+bool player::paythrophy(int count, bool run, bool gates, bool monsters) {
+	answers an;
 	cardquerry querry;
-	querry.add(*const_cast<player*>(this), Monster);
-	return querry.get(Toughness);
+	if(monsters)
+		querry.add(*this, Monster);
+	if(gates)
+		querry.add(*this, Gate);
+	auto total_cost = 0;
+	for(auto p : querry) {
+		if(p->geti().type == Gate)
+			total_cost += 5;
+		else
+			total_cost += p->geti().get(Toughness);
+	}
+	if(total_cost < count)
+		return false;
+	if(run) {
+		char temp[128]; stringbuilder sb(temp);
+		while(count > 0) {
+			an.clear();
+			for(auto p : querry)
+				an.add(p, getnm(p->geti().id));
+			sb.clear(); sb.add(getnm("PayLeft"), count);
+			auto p = (cardi*)an.choose(temp);
+			if(p->geti().type == Gate)
+				count -= 5;
+			else
+				count -= p->geti().get(Toughness);
+			p->discard();
+			querry.remove(querry.find(p), 1);
+		}
+	}
+	return true;
 }
