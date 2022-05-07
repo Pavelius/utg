@@ -99,8 +99,28 @@ void player::leavestreet() {
 		movement(location->neightboard[0]);
 }
 
+static draw::object* getobject(const void* pv) {
+	auto ps = draw::findobject(pv);
+	if(ps)
+		return ps;
+	if(pv == static_cast<player*>(&game)) {
+		auto p = (player*)pv;
+		auto n = p->location;
+		if(!n)
+			n = bsdata<investigator>::elements[p->investigator_index].location;
+		if(!n)
+			return 0;
+		ps = draw::addobject(n->position.x, n->position.y);
+		ps->resource = draw::getres("characters");
+		ps->frame = p->investigator_index;
+		ps->data = p;
+		ps->priority = 100;
+	}
+	return ps;
+}
+
 void player::movement(locationi* pv) {
-	auto ps = draw::findobject(this);
+	auto ps = getobject(this);
 	if(ps) {
 		if(location) {
 			auto order = ps->priority;
@@ -114,7 +134,7 @@ void player::movement(locationi* pv) {
 }
 
 void player::delayed() {
-	auto ps = draw::findobject(this);
+	auto ps = getobject(this);
 	if(ps) {
 		ps->alpha = 128;
 		appearobjects();
@@ -132,5 +152,62 @@ int player::getminimal(ability_s v) const {
 }
 
 int player::getmaximal(ability_s v) const {
-	return 0;
+	switch(v) {
+	case Sanity: return m_sanity;
+	case Health: return m_health;
+	default: return 0;
+	}
+}
+
+void player::create(const char* id) {
+	clear();
+	auto p = bsdata<investigator>::find(id);
+	if(!p)
+		return;
+	investigator_index = bsdata<investigator>::source.indexof(p);
+	original.loadability(*p);
+	original.abilities[Health] = p->abilities[Health];
+	original.abilities[Sanity] = p->abilities[Sanity];
+	for(auto v : p->extra)
+		apply(v);
+	update();
+	abilities[Clue] += p->abilities[Clue];
+	abilities[Money] += p->abilities[Money];
+	game.movement(p->location);
+}
+
+void player::apply(variant v) {
+	if(v.iskind<cardprotoi>()) {
+		auto& ei = bsdata<cardprotoi>::elements[v.value];
+		if(bsdata<cardtypei>::elements[ei.type].cards.pick(v.value))
+			addcard(v.value);
+	} else if(v.iskind<cardtypei>()) {
+		for(auto i = 0; i < v.counter; i++) {
+			auto card = bsdata<cardtypei>::elements[v.value].cards.pick();
+			if(card)
+				addcard(card);
+		}
+	} else if(v.iskind<abilityi>())
+		abilities[v.value] += v.counter;
+}
+
+void player::update() {
+	loadability(original);
+	m_health = original.abilities[Health];
+	m_sanity = original.abilities[Sanity];
+	for(auto& e : source) {
+		if(!e)
+			continue;
+		auto& ei = e.geti();
+		switch(ei.type) {
+		case Ally:
+			addabilities(ei);
+			m_health += ei.abilities[Health];
+			m_sanity += ei.abilities[Sanity];
+			break;
+		default:
+			addabilities(ei);
+			break;
+		}
+	}
 }

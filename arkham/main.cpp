@@ -8,17 +8,7 @@
 void util_main();
 
 static void test_encounter() {
-	game.add(Speed, 3);
-	game.add(Sneak, 3);
-	game.add(Fight, 5);
-	game.add(Will, 2);
-	game.add(Lore, 3);
-	game.add(Luck, 0);
-	//
-	game.pick(Gate);
-	game.add(Clue, 3);
-	game.add(Money, 5);
-	game.movement(bsdata<locationi>::find("AdministrationBuilding"));
+	game.create("CarolynFern");
 	game.encounter();
 }
 

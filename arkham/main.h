@@ -47,15 +47,15 @@ struct abilitya {
 	char			abilities[Focus + 1];
 	abilityf		rerollall, doubleclue, tought, restore;
 	cardf			pickextra, scavenge;
-	void			add(ability_s v) { abilities[v] += 1; }
 	void			add(ability_s v, int i) { abilities[v] += i; }
-	void			add(const abilitya& e);
+	void			addabilities(const abilitya& e);
 	constexpr int	get(ability_s v) const { return abilities[v]; }
 	bool			isdoubleclue(ability_s v) const { return doubleclue.is(v); }
 	bool			ispickextra(cardtype_s v) const { return pickextra.is(v); }
 	bool			isrestore(ability_s v) const { return restore.is(v); }
 	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
 	bool			istought(ability_s v) const { return tought.is(v); }
+	void			loadability(const abilitya& source);
 	void			set(ability_s v, int i) { abilities[v] = i; }
 };
 struct nameablei {
@@ -137,10 +137,13 @@ struct investigator : nameablei, abilitya {
 	explicit operator bool() const { return location != 0; }
 };
 struct player : abilitya, cardpool {
-	abilitya		maximum;
 	static player*	last;
+	abilitya		original;
 	locationi*		location;
-	investigator*	prototype;
+	unsigned char	investigator_index;
+	char			m_health, m_sanity;
+	char			focus[3];
+	void			apply(variant v);
 	void			create(const char* id);
 	void			clear();
 	void			encounter();

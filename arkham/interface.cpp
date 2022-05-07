@@ -16,14 +16,6 @@ static void add_monsters() {
 	p->priority = 90;
 }
 
-static void add_investigators() {
-	auto p = addobject(398, 128);
-	p->resource = getres("characters");
-	p->frame = 1;
-	p->data = &game;
-	p->priority = 100;
-}
-
 static void add_gates() {
 	auto p = addobject(764, 108);
 	p->resource = getres("gates");
@@ -38,7 +30,6 @@ void update_board() {
 	clearobjects();
 	add_worldmap();
 	add_monsters();
-	add_investigators();
 	add_gates();
 	add_clues();
 }
