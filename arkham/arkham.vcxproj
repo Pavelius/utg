@@ -175,6 +175,7 @@
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\HistoricalSociety.txt" />
     <Text Include="locale\ru\IndependenceSquare.txt" />
+    <Text Include="locale\ru\Library.txt" />
     <Text Include="locale\ru\MasBoardingHouse.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesOf.txt" />

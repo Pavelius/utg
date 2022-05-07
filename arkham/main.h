@@ -163,7 +163,7 @@ struct player : abilitya, cardpool {
 	void			introduction() const;
 	void			leavestreet();
 	void			losehalf(cardtype_s m);
-	void			movement(locationi* pv);
+	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	int				roll(ability_s v, int m);
 	int				rolld6(int count) const;

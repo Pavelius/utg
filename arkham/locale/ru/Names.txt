@@ -32,10 +32,12 @@ Health: Здоровье
 HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
 Introduction: Введение
+Library: Библиотека
 Lore: Знания
 Luck: Удача
 MagicBlade: Магический меч
 MasBoardingHouse: Меблированные комнаты Ма
+MiskatonicUniversity: Университет Мискатоник
 Money: Долларов
 Newspaper: Офис газеты
 No: Нет

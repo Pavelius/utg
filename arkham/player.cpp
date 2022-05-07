@@ -120,10 +120,10 @@ static draw::object* getobject(const void* pv) {
 	return ps;
 }
 
-void player::movement(locationi* pv) {
+void player::movement(locationi* pv, bool animation) {
 	auto ps = getobject(this);
 	if(ps) {
-		if(location) {
+		if(location && animation) {
 			auto order = ps->priority;
 			ps->priority = 250;
 			ps->move(pv->position, 16);

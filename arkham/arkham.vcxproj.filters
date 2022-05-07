@@ -142,5 +142,8 @@
     <Text Include="locale\ru\Descriptions.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\Library.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

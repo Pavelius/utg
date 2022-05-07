@@ -320,6 +320,9 @@ static void choose_street_or_location(int bonus, int param) {
 static void monster_trophy(int bonus, int param) {
 }
 
+static void unique_tome(int bonus, int param) {
+}
+
 static void common_weapon(int bonus, int param) {
 }
 
@@ -514,6 +517,7 @@ BSDATA(scripti) = {
 	{"SuccessUniqueFailCommon", success_unique_fail_common},
 	{"Take", take},
 	{"Trade", trade},
+	{"UniqueTome", unique_tome},
 	{"YesNo", ask_agree},
 };
 BSDATAF(scripti)
