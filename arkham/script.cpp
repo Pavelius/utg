@@ -413,6 +413,9 @@ static void arrested(int bonus, int param) {
 	game.delayed();
 }
 
+static void lose_item(int bonus, int param) {
+}
+
 static void lose_half_items(int bonus, int param) {
 }
 
@@ -488,6 +491,7 @@ BSDATA(scripti) = {
 	{"HealthRollClue", health_roll, Clue},
 	{"LeaveStreet", leave_street},
 	{"LoseHalfItems", lose_half_items},
+	{"LoseItem", lose_item},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"MonsterAppear", monster_appear},
 	{"MonsterTrophy", monster_trophy},

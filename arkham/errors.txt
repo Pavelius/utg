@@ -1,2 +1,2 @@
-﻿In file `locale/ru/Other.txt`:
- Line 188: Can't find variant `MonsterThrophy`
+﻿In file `locale/ru/IndependenceSquare.txt`:
+ Line 31: Can't find variant `LoseItem`

@@ -133,5 +133,8 @@
     <Text Include="locale\ru\UnvisitedIsle.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\IndependenceSquare.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

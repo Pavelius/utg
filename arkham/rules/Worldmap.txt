@@ -26,7 +26,7 @@ Woods position(894 3294)
 
 #Location
 
-Downtown neightboard(ArkhamAsylum)
+Downtown neightboard(ArkhamAsylum BankOfArkham IndependenceSquare Easttown Northside)
 Northside neightboard(TrainStation CuriositieShoppe Newspaper Downtown) 
 FrenchHill neightboard(Southside SilverTwilightLodge TheWitchHouse) 
 
