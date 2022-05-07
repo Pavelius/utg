@@ -30,6 +30,7 @@ GateAnotherDimention: Врата в другое измерение
 Health: Здоровье
 HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
+Introduction: Введение
 Lore: Знания
 Luck: Удача
 MagicBlade: Магический меч
@@ -43,6 +44,7 @@ OldTome: Старый дневник
 PayAbility: Повысить %-1 за %2i$
 PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
+PickCard: Возьмите %1
 ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра

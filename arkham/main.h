@@ -148,10 +148,12 @@ struct player : abilitya, cardpool {
 	void			clear();
 	void			encounter();
 	void			delayed();
+	const investigator&	geti() const;
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
 	bool			isallowreroll(ability_s v) const;
+	void			introduction() const;
 	void			leavestreet();
 	void			losehalf(cardtype_s m);
 	void			movement(locationi* pv);
@@ -161,6 +163,7 @@ struct player : abilitya, cardpool {
 };
 struct gamei : public player {
 	static quests	quest_other;
+	void			message(const char* format);
 };
 extern gamei		game;
 extern answers		an;

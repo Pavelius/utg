@@ -212,3 +212,16 @@ void player::update() {
 		}
 	}
 }
+
+const investigator&	player::geti() const {
+	return bsdata<investigator>::elements[investigator_index];
+}
+
+void player::introduction() const {
+	auto p = getdescription(geti().id);
+	if(p) {
+		auto push_header = answers::header;
+		answers::header = getnm("Introduction");
+		answers::message(p);
+	}
+}

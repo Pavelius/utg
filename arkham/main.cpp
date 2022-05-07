@@ -9,6 +9,7 @@ void util_main();
 
 static void test_encounter() {
 	game.create("CarolynFern");
+	game.introduction();
 	game.encounter();
 }
 

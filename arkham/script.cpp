@@ -49,7 +49,7 @@ static void trade_pool(int count, int discount, const char* cancel) {
 	pool.discard();
 }
 
-static void take_pool(int count) {
+static void take_pool(int count, const char* title) {
 	while(count > 0) {
 		an.clear();
 		for(auto& e : pool.source) {
@@ -59,7 +59,7 @@ static void take_pool(int count) {
 		}
 		auto push_count = answers::column_count;
 		answers::column_count = 1;
-		auto p = (cardi*)an.choose(0);
+		auto p = (cardi*)an.choose(title);
 		answers::column_count = push_count;
 		if(!p)
 			break;
@@ -149,8 +149,10 @@ static void apply_indicator(ability_s v, int bonus) {
 static void play_result(int n);
 
 static void apply_card_type(cardtype_s type, int bonus) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(getnm("PickCard"), getnm(bsdata<cardtypei>::elements[type].id));
 	pool.pick(type, bonus);
-	take_pool(bonus);
+	take_pool(bonus, temp);
 }
 
 static void apply_value(variant v) {
@@ -353,7 +355,7 @@ static void trade(int bonus, int param) {
 }
 
 static void take(int bonus, int param) {
-	take_pool(bonus);
+	take_pool(bonus, 0);
 }
 
 static const quest* choose_option(const char* title) {
@@ -465,7 +467,9 @@ static void success_unique_fail_common(int bonus, int param) {
 	auto successed = game.rolld6(bonus);
 	pool.pick(CommonItem, bonus - successed);
 	pool.pick(UniqueItem, successed);
-	take_pool(bonus);
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(getnm("PickCard"), getnm("Item"));
+	take_pool(bonus, temp);
 }
 
 void locationi::encounter(int count) const {
