@@ -459,6 +459,12 @@ static void myth_location(int bonus, int param) {
 	m_location = bsdata<locationi>::find("TheWitchHouse");
 }
 
+static void raise_ability(int bonus, int param) {
+	auto r = d6() + bonus;
+	if(r > 0)
+		game.add((ability_s)param, r);
+}
+
 static void play_block(int bonus, int param) {
 	auto p = find_entry(quest::last, bonus);
 	if(p) {
@@ -511,6 +517,7 @@ BSDATA(scripti) = {
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"Play", play_block},
+	{"RaiseHealth", raise_ability, Health},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"ReturnArkham", return_arkham},
 	{"SanityRollClue", sanity_roll, Clue},

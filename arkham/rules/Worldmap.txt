@@ -6,6 +6,7 @@ FrenchHill position(1311 2063)
 MiskatonicUniversity position(783 1990)
 Northside position(595 675)
 Southside position(1354 2818)
+Uptown position(862 2818)
 
 #Location type(Arkham)
 
@@ -21,16 +22,20 @@ Newspaper position(168 420) neightboard(Northside)
 TheWitchHouse position(1856 2150) neightboard(FrenchHill)
 TrainStation position(398 128) neightboard(Northside)
 SilverTwilightLodge position(1527 2326) neightboard(FrenchHill)
-HistoricalSociety position(1310 3294)
+StMarysHospital position(168 2794) neightboard(Uptown)
+HistoricalSociety position(1310 3294) neightboard(Southside)
 UnvisitedIsle position(168 1210)
 VelmasDiner position(1856 528) neightboard(Easttown)
-Woods position(894 3294)
+Woods position(894 3294) neightboard(Uptown)
+YeOldeMagickShoppe position(432 3204) neightboard(Uptown)
 
 #Location
 
 Downtown neightboard(ArkhamAsylum BankOfArkham IndependenceSquare Easttown Northside)
+MiskatonicUniversity neightboard(Library AdministrationBuilding Uptown FrenchHill)
 Northside neightboard(TrainStation CuriositieShoppe Newspaper Downtown) 
 FrenchHill neightboard(Southside SilverTwilightLodge TheWitchHouse) 
+Uptown neightboard(StMarysHospital Woods YeOldeMagickShoppe Southside MiskatonicUniversity)
 
 #Location type(OtherWorld)
 

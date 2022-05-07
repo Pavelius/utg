@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
- Define translate for `MiskatonicUniversity`
+ Define translate for `Southside`
+ Define translate for `YeOldeMagickShoppe`

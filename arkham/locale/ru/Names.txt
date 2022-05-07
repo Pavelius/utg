@@ -58,24 +58,28 @@ Shrivelling: Увядание
 SilverTwilightLodge: Ложа серебрянных сумерок
 Skill: Навык
 Sneak: Скрытность
+Southside: Саутсайд
 Speed: Скорость
 Spell: Заклинание
+StMarysHospital: Больница Святой Марии
 StopMoving: Закончить движение
 ThatEnought: Достаточно. Ничего больше не надо.
 TheWitchHouse: Дом Ведьмы
 ThomasFMalone: Томас Френсис Мэлоун
 TommyGun: Автомат
 TrainStation: Вокзал
+Uptown: Аптаун
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 VelmasDiner: Закусочная "У Велмы"
 WhereYouWhantToMove: Куда хотите пройти (осталось [%1i])?
 Will: Воля
 Wither: Лишение силы
 Woods: Леса
+YeOldeMagickShoppe: Старинная лавка магических товаров
 Yes: Да
 YouDelayed: Вы [-задержаны] здесь.
-YouGain: Вы получили [+%2i] %-1.
+YouGain: Получите [+%2i] %-1.
 YouGainAlly: [%1] присоединился к вам.
-YouGainCard: Вы получили [%1].
-YouLose: Вы потеряли [-%2i] %-1.
-YouLoseCard: Вы потеряли [%1].
+YouGainCard: Получите [%1].
+YouLose: Потеряйте [-%2i] %-1.
+YouLoseCard: Потеряйте [%1].

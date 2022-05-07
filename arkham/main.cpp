@@ -10,7 +10,7 @@ void util_main();
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	game.movement(bsdata<locationi>::find("Library"), false);
+	game.movement(bsdata<locationi>::find("StMarysHospital"), false);
 	game.encounter();
 	game.movement(game.get(Speed));
 }

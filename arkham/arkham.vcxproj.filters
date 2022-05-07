@@ -145,5 +145,8 @@
     <Text Include="locale\ru\Library.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\StMarysHospital.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>
