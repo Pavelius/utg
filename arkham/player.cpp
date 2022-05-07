@@ -110,6 +110,7 @@ static draw::object* getobject(const void* pv) {
 			n = bsdata<investigator>::elements[p->investigator_index].location;
 		if(!n)
 			return 0;
+		draw::setcamera(n->position);
 		ps = draw::addobject(n->position.x, n->position.y);
 		ps->resource = draw::getres("characters");
 		ps->frame = p->investigator_index;

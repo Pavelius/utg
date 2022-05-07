@@ -8,6 +8,7 @@ using namespace draw;
 BSDATAC(object, 256)
 BSDATAC(draworder, 256)
 
+static rect last_screen;
 long distance(point from, point to);
 object object::def;
 
@@ -146,7 +147,8 @@ static void sortobjects(object** pb, size_t count) {
 void draw::paintobjects() {
 	auto push_caret = caret;
 	auto push_clip = clipping;
-	setclip({caret.x, caret.y, caret.x + width, caret.y + height});
+	last_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
+	setclip(last_screen);
 	object* source[128];
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
@@ -227,4 +229,15 @@ const sprite* draw::getres(const char* name) {
 
 const sprite* draw::getres(const char* name, const char* folder) {
 	return gres(name, folder, {}, -10000, -10000);
+}
+
+void draw::setcamera(point v) {
+	auto w = last_screen.width();
+	if(!w)
+		w = getwidth();
+	auto h = last_screen.height();
+	if(!h)
+		h = getheight();
+	camera.x = v.x - w/2;
+	camera.y = v.y - h/2;
 }

@@ -62,6 +62,7 @@ const sprite*		getbackground(const char* name);
 const sprite*		getres(const char* name);
 const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();
+void				setcamera(point v);
 void				splashscreen(unsigned milliseconds);
 void				showobjects();
 }
