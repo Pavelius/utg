@@ -3,9 +3,7 @@
 #include "quest.h"
 #include "pathfind.h"
 
-static ability_s	m_ability;
 static locationi*	m_location;
-static int			m_value;
 static bool			shown_info;
 answers				an;
 cardpool			pool;
@@ -146,50 +144,13 @@ static void apply_indicator(ability_s v, int bonus) {
 	game.add(v, bonus);
 }
 
-static void play_result(int n);
+static void apply_value(variant v);
 
 static void apply_card_type(cardtype_s type, int bonus) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(getnm("PickCard"), getnm(bsdata<cardtypei>::elements[type].id));
 	pool.pick(type, bonus);
 	take_pool(bonus, temp);
-}
-
-static void apply_value(variant v) {
-	if(v.iskind<scripti>())
-		run_script(v.value, v.counter);
-	else if(v.iskind<locationi>()) {
-		m_location = bsdata<locationi>::elements + v.value;
-		m_value = v.counter;
-	} else if(v.iskind<tagi>()) {
-		game.information(getnm("YouGainCard"), v.getname());
-		game.setflag((gamef_s)v.value);
-	} else if(v.iskind<cardprotoi>()) {
-		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
-			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
-				game.information(getnm("YouGainAlly"), v.getname());
-				game.addcard(v.value);
-			} else
-				play_result(10);
-		} else {
-			game.information(getnm("YouGainCard"), v.getname());
-			game.addcard(v.value);
-		}
-	} else if(v.iskind<abilityi>()) {
-		m_ability = (ability_s)v.value;
-		m_value = v.counter;
-		if(m_value == 100)
-			m_value = d6();
-		else if(m_value == -100)
-			m_value = -d6();
-		else if(m_value == -101)
-			m_value = -game.get(m_ability) / 2;
-		else if(m_value == -102)
-			m_value = -game.get(m_ability);
-		if(bsdata<abilityi>::elements[m_ability].is(abilityi::Indicator))
-			apply_indicator(m_ability, m_value);
-	} else if(v.iskind<cardtypei>())
-		apply_card_type((cardtype_s)v.value, v.counter);
 }
 
 static void play(const variants& source) {
@@ -245,15 +206,54 @@ static void apply_result(int r) {
 	play();
 }
 
+static void apply_value(variant v) {
+	if(v.iskind<scripti>())
+		run_script(v.value, v.counter);
+	else if(v.iskind<locationi>())
+		m_location = bsdata<locationi>::elements + v.value;
+	else if(v.iskind<tagi>()) {
+		game.information(getnm("YouGainCard"), v.getname());
+		game.setflag((gamef_s)v.value);
+	} else if(v.iskind<cardprotoi>()) {
+		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
+			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
+				game.information(getnm("YouGainAlly"), v.getname());
+				game.addcard(v.value);
+			} else
+				play_result(10);
+		} else {
+			game.information(getnm("YouGainCard"), v.getname());
+			game.addcard(v.value);
+		}
+	} else if(v.iskind<abilityi>()) {
+		auto i = (ability_s)v.value;
+		auto n = v.counter;
+		if(n == 100)
+			n = d6();
+		else if(n == 101)
+			n = game.get(i) / 2;
+		else if(n == 102)
+			n = game.get(i);
+		else if(n == -100)
+			n = -d6();
+		else if(n == -101)
+			n = -game.get(i) / 2;
+		else if(n == -102)
+			n = -game.get(i);
+		if(bsdata<abilityi>::elements[i].is(abilityi::Indicator))
+			apply_indicator(i, n);
+		else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
+			show_text();
+			apply_result(game.roll(i, n));
+		}
+	} else if(v.iskind<cardtypei>())
+		apply_card_type((cardtype_s)v.value, v.counter);
+}
+
 static void apply_result_title(const char* title) {
 	auto r = (int)an.choose(title);
 	clear_text_manual();
 	apply_result(r);
-}
-
-static void make_roll(int bonus, int param) {
-	show_text();
-	apply_result(game.roll(m_ability, m_value));
 }
 
 static void make_pay(int bonus, int param) {
@@ -314,7 +314,6 @@ static void choose_street_or_location(int bonus, int param) {
 			an.add(&e, getnm(e.id));
 	}
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
-	m_value = 0;
 	clear_text_manual();
 }
 
@@ -455,7 +454,6 @@ static void health_roll(int bonus, int param) {
 
 static void myth_location(int bonus, int param) {
 	m_location = bsdata<locationi>::find("TheWitchHouse");
-	m_value = 0;
 }
 
 static void play_block(int bonus, int param) {
@@ -512,7 +510,6 @@ BSDATA(scripti) = {
 	{"Play", play_block},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"ReturnArkham", return_arkham},
-	{"Roll", make_roll},
 	{"SanityRollClue", sanity_roll, Clue},
 	{"SuccessUniqueFailCommon", success_unique_fail_common},
 	{"Take", take},
