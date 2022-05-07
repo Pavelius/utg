@@ -82,9 +82,6 @@ struct scripti {
 	fnevent			proc;
 	int				param;
 	fntest			choose;
-	unsigned		flags;
-	fninfo			info;
-	void			getinfo(stringbuilder& sb, int bonus) const;
 };
 struct realmi {
 	const char*		id;
@@ -155,6 +152,7 @@ struct player : abilitya, cardpool {
 	void			encounter();
 	void			delayed();
 	const investigator&	geti() const;
+	int				getbonus(ability_s v, int bonus) const;
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
@@ -172,6 +170,7 @@ struct player : abilitya, cardpool {
 };
 struct gamei : public player {
 	static quests	quest_other;
+	static int		d6();
 	static void		information(const char* format, ...);
 };
 extern gamei		game;

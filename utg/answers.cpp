@@ -6,7 +6,7 @@ const char* answers::prompa;
 const char* answers::resid;
 bool answers::show_tips = true;
 bool answers::interactive = true;
-int answers::column_count = -1;
+int answers::column_count = 1;
 stringbuilder* answers::console;
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;

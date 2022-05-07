@@ -75,6 +75,7 @@ Uptown: Аптаун
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
 VelmasDiner: Закусочная "У Велмы"
 WhereYouWhantToMove: Куда хотите пройти (осталось [%1i])?
+Whiskey: Виски
 Will: Воля
 Wither: Лишение силы
 Woods: Леса

@@ -10,10 +10,6 @@ static bool			shown_info;
 answers				an;
 cardpool			pool;
 
-static int d6() {
-	return 1 + rand() % 6;
-}
-
 static void clear_text_manual() {
 	answers::prompt = 0;
 	shown_info = false;
@@ -57,10 +53,7 @@ static void take_pool(int count, const char* title) {
 				continue;
 			an.add(&e, getnm(e.geti().id));
 		}
-		auto push_count = answers::column_count;
-		answers::column_count = 1;
 		auto p = (cardi*)an.choose(title);
-		answers::column_count = push_count;
 		if(!p)
 			break;
 		game.source.add(*p);
@@ -234,19 +227,7 @@ static void apply_value(variant v) {
 		}
 	} else if(v.iskind<abilityi>()) {
 		auto i = (ability_s)v.value;
-		auto n = v.counter;
-		if(n == 100)
-			n = d6();
-		else if(n == 101)
-			n = game.get(i) / 2;
-		else if(n == 102)
-			n = game.get(i);
-		else if(n == -100)
-			n = -d6();
-		else if(n == -101)
-			n = -game.get(i) / 2;
-		else if(n == -102)
-			n = -game.get(i);
+		auto n = game.getbonus(i, v.counter);
 		if(bsdata<abilityi>::elements[i].is(abilityi::Indicator))
 			apply_indicator(i, n);
 		else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
@@ -257,21 +238,30 @@ static void apply_value(variant v) {
 		apply_card_type((cardtype_s)v.value, v.counter);
 }
 
-static void apply_result_title(const char* title) {
+static void apply_result_title(const char* title, int columns = -1) {
+	auto push_count = answers::column_count;
+	if(columns!=-1)
+		answers::column_count = columns;
 	auto r = (int)an.choose(title);
+	answers::column_count = push_count;
 	clear_text_manual();
 	apply_result(r);
 }
 
 static void make_pay(int bonus, int param) {
+	auto v = (ability_s)param;
 	an.clear();
-	if(game.get(Money) >= bonus)
-		an.add((void*)1, getnm("PayMoney"), bonus);
+	if(game.get(v) >= bonus) {
+		if(v==Money)
+			an.add((void*)1, getnm("PayMoney"), bonus);
+		else
+			an.add((void*)1, "%Pay %1i %2", bonus, getnm(bsdata<abilityi>::elements[v].id));
+	}
 	an.add((void*)0, getnm("DoNotPay"));
 	auto r = (int)an.choose(0);
 	clear_text_manual();
 	if(r == 1)
-		game.add(Money, -bonus);
+		game.add(v, -bonus);
 	apply_result(r);
 }
 
@@ -279,7 +269,7 @@ static void ask_agree(int bonus, int param) {
 	an.clear();
 	an.add((void*)1, getnm("Yes"));
 	an.add((void*)0, getnm("No"));
-	apply_result_title(getnm("DoYouAgree"));
+	apply_result_title(getnm("DoYouAgree"), 2);
 }
 
 static void lost_in_time_and_space(int bonus, int param) {
@@ -387,10 +377,7 @@ static const quest* choose_option(const char* title) {
 			continue;
 		an.add(p, p->text);
 	}
-	auto push_count = answers::column_count;
-	answers::column_count = 1;
 	auto p = (quest*)an.choose(title, 0);
-	answers::column_count = push_count;
 	return p;
 }
 
@@ -424,7 +411,7 @@ static void monster_appear(int bonus, int param) {
 }
 
 static void remove_sanity_and_gain(int bonus, int param) {
-	auto n = d6();
+	auto n = game.d6();
 	apply_indicator(Sanity, -n);
 	apply_indicator((ability_s)param, n);
 }
@@ -482,7 +469,7 @@ static void raise_health_sanity(int bonus, int param) {
 }
 
 static void raise_ability(int bonus, int param) {
-	auto r = d6() + bonus;
+	auto r = game.d6() + bonus;
 	if(r > 0)
 		game.add((ability_s)param, r);
 }
@@ -539,9 +526,9 @@ BSDATA(scripti) = {
 	{"MovementEncounterAndBack", movement_encounter_and_back},
 	{"MythLocation", myth_location},
 	{"NoMove", nomove},
-	{"Pay", make_pay},
+	{"Pay", make_pay, Money},
 	{"PayGate", pay_gate},
-	{"PayClue", pay_clue},
+	{"PayClue", make_pay, Clue},
 	{"PickCommonItem", pick_pool, CommonItem},
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
