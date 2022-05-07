@@ -332,6 +332,9 @@ static void bless(int bonus, int param) {
 static void curse(int bonus, int param) {
 }
 
+static void cards_lesser(int bonus, int param) {
+}
+
 static void pick_pool(int bonus, int param) {
 	pool.pick((cardtype_s)param, bonus);
 }
@@ -401,6 +404,9 @@ static void choose(int bonus, int param) {
 static void gate_appear(int bonus, int param) {
 }
 
+static void gate_close_roll(int bonus, int param) {
+}
+
 static void gate_close(int bonus, int param) {
 }
 
@@ -411,6 +417,9 @@ static void remove_sanity_and_gain(int bonus, int param) {
 	auto n = d6();
 	apply_indicator(Sanity, -n);
 	apply_indicator((ability_s)param, n);
+}
+
+static void change_investigator(int bonus, int param) {
 }
 
 static void arrested(int bonus, int param) {
@@ -459,6 +468,9 @@ static void myth_location(int bonus, int param) {
 	m_location = bsdata<locationi>::find("TheWitchHouse");
 }
 
+static void raise_health_sanity(int bonus, int param) {
+}
+
 static void raise_ability(int bonus, int param) {
 	auto r = d6() + bonus;
 	if(r > 0)
@@ -492,6 +504,7 @@ void locationi::encounter(int count) const {
 
 BSDATA(scripti) = {
 	{"Arrested", arrested},
+	{"ChangeInvestigator", change_investigator}, 
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"CommonWeapon", common_weapon},
@@ -499,6 +512,7 @@ BSDATA(scripti) = {
 	{"Encounter", encounter},
 	{"GateAppear", gate_appear},
 	{"GateClose", gate_close},
+	{"GateCloseRoll", gate_close_roll},
 	{"Heal", heal, 1},
 	{"HealthRollClue", health_roll, Clue},
 	{"LeaveStreet", leave_street},
@@ -518,9 +532,11 @@ BSDATA(scripti) = {
 	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"Play", play_block},
 	{"RaiseHealth", raise_ability, Health},
+	{"RaiseHealthSanity", raise_health_sanity},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"ReturnArkham", return_arkham},
 	{"SanityRollClue", sanity_roll, Clue},
+	{"SpellLesser", cards_lesser, Spell},
 	{"SuccessUniqueFailCommon", success_unique_fail_common},
 	{"Take", take},
 	{"Trade", trade},

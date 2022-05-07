@@ -182,6 +182,7 @@
     <Text Include="locale\ru\NamesPl.txt" />
     <Text Include="locale\ru\Newspaper.txt" />
     <Text Include="locale\ru\Other.txt" />
+    <Text Include="locale\ru\ScienceBuilding.txt" />
     <Text Include="locale\ru\SilverTwilightLodge.txt" />
     <Text Include="locale\ru\StMarysHospital.txt" />
     <Text Include="locale\ru\TheWitchHouse.txt" />
