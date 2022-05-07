@@ -48,6 +48,7 @@ OldTome: Старый дневник
 PayAbility: Повысить %-1 за %2i$
 PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
+PayTrophyNumber: Отдать [%1i] трофеев монстров
 PickCard: Возьмите %1
 ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра

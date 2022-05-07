@@ -297,3 +297,9 @@ int	player::getbonus(ability_s v, int b) const {
 	}
 	return b;
 }
+
+int player::getthrophy() const {
+	cardquerry querry;
+	querry.add(*const_cast<player*>(this), Monster);
+	return querry.get(Toughness);
+}

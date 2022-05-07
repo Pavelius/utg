@@ -29,7 +29,7 @@ static void trade_pool(int count, int discount, const char* cancel) {
 			else
 				an.add(&e, getnm((cost <= game.get(Money)) ? "BuyCard" : "BuyCardNoMoney"), getnm(ei.id), cost);
 		}
-		
+
 		auto p = (cardi*)an.choose(0, cancel, 1);
 		if(!p)
 			break;
@@ -240,7 +240,7 @@ static void apply_value(variant v) {
 
 static void apply_result_title(const char* title, int columns = -1) {
 	auto push_count = answers::column_count;
-	if(columns!=-1)
+	if(columns != -1)
 		answers::column_count = columns;
 	auto r = (int)an.choose(title);
 	answers::column_count = push_count;
@@ -252,7 +252,7 @@ static void make_pay(int bonus, int param) {
 	auto v = (ability_s)param;
 	an.clear();
 	if(game.get(v) >= bonus) {
-		if(v==Money)
+		if(v == Money)
 			an.add((void*)1, getnm("PayMoney"), bonus);
 		else
 			an.add((void*)1, "%Pay %1i %2", bonus, getnm(bsdata<abilityi>::elements[v].id));
@@ -346,6 +346,20 @@ static cardi* choose_trophy(int count) {
 }
 
 static void pay_clue(int bonus, int param) {
+}
+
+static void pay_trophy(int bonus, int param) {
+	an.clear();
+	if(game.getthrophy() >= bonus)
+		an.add((void*)1, getnm("PayThrophyNumber"), bonus);
+	an.add((void*)0, getnm("DoNotPay"));
+	auto r = (int)an.choose(0);
+	clear_text_manual();
+	if(r == 1) {
+
+	}
+	apply_result(r);
+
 }
 
 static void pay_gate(int bonus, int param) {
@@ -504,7 +518,7 @@ void locationi::encounter(int count) const {
 
 BSDATA(scripti) = {
 	{"Arrested", arrested},
-	{"ChangeInvestigator", change_investigator}, 
+	{"ChangeInvestigator", change_investigator},
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"CommonWeapon", common_weapon},
@@ -529,6 +543,7 @@ BSDATA(scripti) = {
 	{"Pay", make_pay, Money},
 	{"PayGate", pay_gate},
 	{"PayClue", make_pay, Clue},
+	{"PayTrophy", pay_trophy},
 	{"PickCommonItem", pick_pool, CommonItem},
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},

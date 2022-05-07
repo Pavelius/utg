@@ -52,6 +52,9 @@
     <ClCompile Include="gamef.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="cardquerry.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -152,6 +155,9 @@
       <Filter>Encounters</Filter>
     </Text>
     <Text Include="locale\ru\HibbsRoadhouse.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\Graveyard.txt">
       <Filter>Encounters</Filter>
     </Text>
   </ItemGroup>

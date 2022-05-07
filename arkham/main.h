@@ -133,6 +133,10 @@ struct cardpool {
 	void			pick(cardtype_s type);
 	void			pick(cardtype_s type, int count);
 };
+struct cardquerry : adat<cardi*, 32> {
+	void			add(cardpool& source, cardtype_s type);
+	int				get(ability_s v) const;
+};
 struct investigator : nameablei, abilitya {
 	variants		extra;
 	locationi*		location;
@@ -156,6 +160,7 @@ struct player : abilitya, cardpool {
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
+	int				getthrophy() const;
 	bool			is(gamef_s v) const { return flags.is(v); }
 	bool			isallowreroll(ability_s v) const;
 	void			introduction() const;
