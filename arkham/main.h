@@ -157,6 +157,7 @@ struct player : abilitya, cardpool {
 	void			update();
 };
 struct gamei : public player {
+	static quests	quest_other;
 };
 extern gamei		game;
 extern answers		an;

@@ -299,6 +299,10 @@ static void delayed(int bonus, int param) {
 	game.delayed();
 }
 
+static void nomove(int bonus, int param) {
+	show_info(getnm("YouNoMove"));
+}
+
 static void choose_street_or_location(int bonus, int param) {
 	for(auto& e : bsdata<locationi>()) {
 		if((e.type == Street || e.type == Arkham) && &e != game.location)
@@ -307,6 +311,12 @@ static void choose_street_or_location(int bonus, int param) {
 	m_location = (locationi*)an.choose(getnm("ChooseStreetOrLocation"));
 	m_value = 0;
 	clear_text_manual();
+}
+
+static void monster_trophy(int bonus, int param) {
+}
+
+static void common_weapon(int bonus, int param) {
 }
 
 static void bless(int bonus, int param) {
@@ -384,6 +394,9 @@ static void choose(int bonus, int param) {
 static void gate_appear(int bonus, int param) {
 }
 
+static void gate_close(int bonus, int param) {
+}
+
 static void monster_appear(int bonus, int param) {
 }
 
@@ -423,6 +436,15 @@ static void heal(int bonus, int param) {
 	buy_ability(bonus, param, getnm("ThatEnought"), source);
 }
 
+static void return_arkham(int bonus, int param) {
+}
+
+static void sanity_roll(int bonus, int param) {
+}
+
+static void health_roll(int bonus, int param) {
+}
+
 static void myth_location(int bonus, int param) {
 	m_location = bsdata<locationi>::find("TheWitchHouse");
 	m_value = 0;
@@ -456,18 +478,23 @@ BSDATA(scripti) = {
 	{"Bless", bless},
 	{"Choose", choose},
 	{"ChooseStreetOrLocation", choose_street_or_location},
+	{"CommonWeapon", common_weapon},
 	{"Curse", curse},
 	{"Delayed", delayed},
 	{"Encounter", encounter},
+	{"GateAppear", gate_appear},
+	{"GateClose", gate_close},
 	{"Heal", heal, 1},
+	{"HealthRollClue", health_roll, Clue},
 	{"LeaveStreet", leave_street},
 	{"LoseHalfItems", lose_half_items},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"MonsterAppear", monster_appear},
+	{"MonsterTrophy", monster_trophy},
 	{"Movement", movement},
 	{"MovementEncounterAndBack", movement_encounter_and_back},
 	{"MythLocation", myth_location},
-	{"GateAppear", gate_appear},
+	{"NoMove", nomove},
 	{"Pay", make_pay},
 	{"PayGate", pay_gate},
 	{"PickCommonItem", pick_pool, CommonItem},
@@ -475,7 +502,9 @@ BSDATA(scripti) = {
 	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"Play", play_block},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
+	{"ReturnArkham", return_arkham},
 	{"Roll", make_roll},
+	{"SanityRollClue", sanity_roll, Clue},
 	{"SuccessUniqueFailCommon", success_unique_fail_common},
 	{"Take", take},
 	{"Trade", trade},

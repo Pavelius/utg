@@ -40,16 +40,21 @@ void main_menu() {
 }
 
 static void read_quests() {
+	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : bsdata<locationi>()) {
 		if(e.type == Street)
 			continue;
 		auto pb = bsdata<quest>::end();
-		char temp[260]; stringbuilder sb(temp);
-		sb.addlocalefile(e.id);
+		sb.clear(); sb.addlocalefile(e.id);
 		quest::read(temp, false);
 		auto pe = bsdata<quest>::end();
 		e.encounters = quests(pb, pe - pb);
 	}
+	auto pb = bsdata<quest>::end();
+	sb.clear(); sb.addlocalefile("Other");
+	quest::read(temp);
+	auto pe = bsdata<quest>::end();
+	game.quest_other = quests(pb, pe - pb);
 }
 
 static void initialization() {

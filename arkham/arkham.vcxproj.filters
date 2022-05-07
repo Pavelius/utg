@@ -127,5 +127,8 @@
     <Text Include="locale\ru\AdministrationBuilding.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\Other.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>
