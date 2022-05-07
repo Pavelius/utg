@@ -12,11 +12,12 @@ Uptown position(862 2818)
 
 #Location type(Arkham)
 
-AdministrationBuilding position(375 2374)
+AdministrationBuilding position(375 2374) neightboard(MiskatonicUniversity)
 ArkhamAsylum position(1124 128) neightboard(Downtown)
 BankOfArkham position(764 128) neightboard(Downtown)
 BlackCave position(1856 1674)
 CuriositieShoppe position(168 735) neightboard(Northside)
+HibbsRoadhouse position(1490 536)
 IndependenceSquare position(1485 128) neightboard(Downtown)
 Library position(697 2263) neightboard(MiskatonicUniversity)
 MasBoardingHouse position(1856 2694) neightboard(Southside)

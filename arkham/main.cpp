@@ -10,9 +10,9 @@ void util_main();
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	game.movement(bsdata<locationi>::find("StMarysHospital"), false);
+	game.movement(bsdata<locationi>::find("HibbsRoadhouse"), false);
 	game.encounter();
-	game.movement(game.get(Speed));
+	//game.movement(game.get(Speed));
 }
 
 #endif // _DEBUG

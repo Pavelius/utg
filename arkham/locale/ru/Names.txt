@@ -29,6 +29,7 @@ Fight: Сражение
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
 Health: Здоровье
+HibbsRoadhouse: Забегаловка Гиббса
 HistoricalSociety: Историческое общество
 IndependenceSquare: Площадь Независимости
 Introduction: Введение
@@ -54,8 +55,10 @@ Revolver45c: Магнум 45 калибра
 Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
+ScienceBuilding: Дом науки
 Shrivelling: Увядание
 SilverTwilightLodge: Ложа серебрянных сумерок
+SirWilliamBrinton: Сэр Уильям Брайтон
 Skill: Навык
 Sneak: Скрытность
 Southside: Саутсайд

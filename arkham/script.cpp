@@ -4,6 +4,8 @@
 #include "pathfind.h"
 
 static locationi*	m_location;
+static int			m_jump;
+static bool			need_stop;
 static bool			shown_info;
 answers				an;
 cardpool			pool;
@@ -154,8 +156,13 @@ static void apply_card_type(cardtype_s type, int bonus) {
 }
 
 static void play(const variants& source) {
-	for(auto v : source)
+	m_jump = 10;
+	need_stop = false;
+	for(auto v : source) {
 		apply_value(v);
+		if(need_stop)
+			break;
+	}
 }
 
 static void play() {
@@ -348,6 +355,9 @@ static cardi* choose_trophy(int count) {
 	return (cardi*)an.choose(0, getnm("DoNotPay"), 1);
 }
 
+static void pay_clue(int bonus, int param) {
+}
+
 static void pay_gate(int bonus, int param) {
 	auto p = choose_trophy(1);
 	clear_text_manual();
@@ -494,6 +504,9 @@ static void success_unique_fail_common(int bonus, int param) {
 	take_pool(bonus, temp);
 }
 
+static void ability_lesser(int bonus, int param) {
+}
+
 void locationi::encounter(int count) const {
 	if(!count)
 		count = 1;
@@ -519,6 +532,7 @@ BSDATA(scripti) = {
 	{"LoseHalfItems", lose_half_items},
 	{"LoseItem", lose_item},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
+	{"MoneyLesser", ability_lesser, Money},
 	{"MonsterAppear", monster_appear},
 	{"MonsterTrophy", monster_trophy},
 	{"Movement", movement},
@@ -527,6 +541,7 @@ BSDATA(scripti) = {
 	{"NoMove", nomove},
 	{"Pay", make_pay},
 	{"PayGate", pay_gate},
+	{"PayClue", pay_clue},
 	{"PickCommonItem", pick_pool, CommonItem},
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},

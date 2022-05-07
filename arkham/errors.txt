@@ -1,2 +1,2 @@
-﻿In file `locale/ru/ScienceBuilding.txt`:
- Line 17: Can't find variant `SpellLesser`
+﻿In file `Names.txt`:
+ Define translate for `HibbsRoadhouse`

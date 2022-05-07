@@ -173,6 +173,7 @@
     <Text Include="locale\ru\BankOfArkham.txt" />
     <Text Include="locale\ru\CuriositieShoppe.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
+    <Text Include="locale\ru\HibbsRoadhouse.txt" />
     <Text Include="locale\ru\HistoricalSociety.txt" />
     <Text Include="locale\ru\IndependenceSquare.txt" />
     <Text Include="locale\ru\Library.txt" />
