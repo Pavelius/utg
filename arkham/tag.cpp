@@ -14,6 +14,7 @@ BSDATA(tagi) = {
 	{"OverwhelmingII"},
 	{"BonusVsUndead"},
 	{"Exhause"},
+	{"ExhauseToRerollCombatDie"},
 	{"NoSteal"},
 	{"Discard"},
 	{"Versatile"},

@@ -19,6 +19,7 @@ ChooseOption: Выбирайте вариант
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Clue: Улика
 Continue: Продолжить
+Cross: Крест
 Cultist: Культист
 CuriositieShoppe: Лавка Древностей
 Derringer18c: Дерингер 18 калибра

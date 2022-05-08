@@ -1,2 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 11: Not found identifier `BonusVsUndead`
+﻿In file `Names.txt`:
+ Define translate for `Cross`

@@ -7,5 +7,6 @@ BSDATA(gamefi) = {
 	{"BankLoanNotAllowed"},
 	{"Retainer"},
 	{"SilverTwilightLodgeMembership"},
+	{"ExtraClueDice"},
 };
-assert_enum(gamefi, SilverTwilightLodgeMembership)
+assert_enum(gamefi, ExtraClueDice)

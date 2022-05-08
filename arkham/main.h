@@ -23,6 +23,7 @@ enum ability_s : unsigned char {
 };
 enum gamef_s : unsigned char {
 	Bless, Curse, BankLoan, BankLoanNotAllowed, Retainer, SilverTwilightLodgeMembership,
+	ExtraClueDice,
 };
 enum special_s : unsigned char {
 	NoSpecial,
@@ -32,7 +33,7 @@ enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
-	BonusVsUndead, Exhause, NoSteal, Discard, Versatile,
+	BonusVsUndead, Exhause, ExhauseToRerollDie, NoSteal, Discard, Versatile,
 };
 enum location_s : unsigned char {
 	PlayerArea,
@@ -124,6 +125,7 @@ struct cardi {
 	unsigned char	uses : 3;
 	location_s		area;
 	constexpr explicit operator bool() const { return type != 0; }
+	bool			afterroll(ability_s v, int m, special_s special, bool run);
 	void			clear();
 	void			discard();
 	cardprotoi&		geti() const { return bsdata<cardprotoi>::elements[type]; }
@@ -175,6 +177,7 @@ struct player : abilitya {
 	int				getcombat() const;
 	int				getevade() const;
 	int				getfreehands() const;
+	int				gethorror() const;
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
@@ -189,7 +192,7 @@ struct player : abilitya {
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	bool			paythrophy(int count, bool run, bool gates, bool monsters);
-	int				roll(ability_s v, int m);
+	int				roll(ability_s v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;
 	void			setflag(gamef_s v, bool activate = true);
 	void			unequip(cardi* p);

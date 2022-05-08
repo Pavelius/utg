@@ -10,7 +10,7 @@ static int compare(const void* p1, const void* p2) {
 
 static void add_dices(int count) {
 	for(auto i = 0; i < count; i++)
-		roll_result.add(1 + rand() % 6);
+		roll_result.add(game.d6());
 	qsort(roll_result.data, roll_result.count, sizeof(roll_result.data[0]), compare);
 }
 
@@ -68,12 +68,55 @@ static void add_clue() {
 	auto p = player::last;
 	p->add(Clue, -1);
 	add_dices(1);
+	if(p->is(ExtraClueDice))
+		add_dices(1);
 }
 
-int player::roll(ability_s v, int m) {
+static void add_clue2() {
+	add_clue();
+	add_dices(1);
+}
+
+bool cardi::afterroll(ability_s v, int m, special_s special, bool run) {
+	auto& ei = geti();
+	auto have_failed_dices = roll_result
+		&& roll_result.data[roll_result.count - 1] >= player::last->getsuccess();
+	if(have_failed_dices
+		&& ei.is(ExhauseToRerollDie)
+		&& !exhaused) {
+		if(run) {
+			exhaused = 1;
+			roll_result.data[roll_result.count - 1] = game.d6();
+		}
+	} else if(have_failed_dices
+		&& ei.rerollall.is(v)) {
+		if(run) {
+			exhaused = 1;
+			for(auto& v : roll_result) {
+				if(v < player::last->getsuccess())
+					v = game.d6();
+			}
+		}
+	} else
+		return false;
+	return true;
+}
+
+static void use_items(ability_s v, int m, special_s special, answers& an) {
+	for(auto& e : cards) {
+		if(!e || e.area != PlayerArea)
+			continue;
+		if(e.afterroll(v, m, special, false))
+			an.add(&e, getnm("UseItem"), getnm(e.geti().id));
+	}
+}
+
+int player::roll(ability_s v, int m, special_s special) {
+	auto push_header = answers::header;
+	auto push_player = player::last;
 	char header[128]; stringbuilder sh(header);
 	sh.add("%Roll %1%+2i", getnm(bsdata<abilityi>::get(v).id), m);
-	auto push_header = answers::header;
+	last = this;
 	answers::header = header;
 	answers an;
 	char temp[512]; stringbuilder sb(temp);
@@ -96,14 +139,22 @@ int player::roll(ability_s v, int m) {
 		} else
 			sb.add(getnm("NoDicesForRoll"));
 		an.add(0, getnm("ApplyRollResult"));
-		if(get(Clue))
-			an.add(add_clue, getnm("UseClueToAddDice"), 1);
-		auto p = (fnevent)an.choose(temp);
-		if(!p)
+		if(get(Clue)) {
+			if(doubleclue.is(v))
+				an.add(add_clue2, getnm("UseClueToAddDice"), 2);
+			else
+				an.add(add_clue, getnm("UseClueToAddDice"), 1);
+		}
+		use_items(v, m, special, an);
+		auto result = an.choose(temp);
+		if(!result)
 			break;
-		last = this;
-		p();
+		if(cards.indexof(result) != -1)
+			((cardi*)result)->afterroll(v, m, special, true);
+		else
+			((fnevent)result)();
 	}
+	player::last = push_player;
 	answers::header = push_header;
 	return roll_success(getsuccess());
 }
@@ -367,7 +418,7 @@ void player::equip(cardi* p) {
 
 void player::unequip(cardi* p) {
 	for(auto& e : hands) {
-		if(e==p)
+		if(e == p)
 			e = 0;
 	}
 }

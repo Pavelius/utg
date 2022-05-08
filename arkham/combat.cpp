@@ -33,6 +33,10 @@ int player::getevade() const {
 	return get(Sneak) + get(Escape) + enemy.get(Escape);
 }
 
+int player::gethorror() const {
+	return get(Will) + get(Horror) + enemy.get(Horror);
+}
+
 int	player::getfreehands() const {
 	auto used = 0;
 	for(auto p : hands) {
@@ -73,7 +77,8 @@ static void try_fight() {
 static void horror_check() {
 	if(!enemy.get(HorrorDamage))
 		return;
-	if(player::last->roll(Will, enemy.get(Horror)) <= 0)
+	auto bonus = player::last->gethorror();
+	if(player::last->roll(Will, bonus) <= 0)
 		player::last->damage(Sanity, enemy.get(HorrorDamage));
 }
 

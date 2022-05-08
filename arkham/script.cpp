@@ -207,9 +207,11 @@ static void apply_result(int r) {
 
 void player::modify(ability_s i, int bonus) {
 	auto n = game.getbonus(i, bonus);
-	if(bsdata<abilityi>::elements[i].is(abilityi::Indicator))
+	if(bsdata<abilityi>::elements[i].is(abilityi::Indicator)) {
+		if(n < 0 && tought.is(i))
+			n++;
 		apply_indicator(i, n);
-	else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
+	} else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
 		show_text();
 		apply_result(game.roll(i, n));
 	}
