@@ -434,3 +434,8 @@ void player::usehands() {
 			p->use();
 	}
 }
+
+void player::refreshcards() {
+	for(auto& e : cards)
+		e.exhaused = 0;
+}

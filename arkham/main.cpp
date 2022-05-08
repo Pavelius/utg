@@ -17,11 +17,11 @@ static void test_fight() {
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	test_fight();
-	//cards.pick(Gate, 1);
-	//cards.pick(Monster, 6);
-	//game.movement(bsdata<locationi>::find("Graveyard"), false);
-	//game.encounter();
+	//test_fight();
+	cards.pick(Gate, 1);
+	cards.pick(Monster, 6);
+	game.movement(bsdata<locationi>::find("Woods"), false);
+	game.encounter();
 	//game.movement(game.get(Speed));
 }
 
