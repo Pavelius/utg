@@ -10,8 +10,8 @@ void util_main();
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	game.pick(Gate, 1);
-	game.pick(Monster, 6);
+	cards.pick(Gate, 1);
+	cards.pick(Monster, 6);
 	game.movement(bsdata<locationi>::find("Graveyard"), false);
 	game.encounter();
 	//game.movement(game.get(Speed));

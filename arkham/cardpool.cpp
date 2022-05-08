@@ -1,27 +1,7 @@
 #include "main.h"
 
-bool cardpool::isdoubleclue(ability_s v) const {
-	for(auto& e : source) {
-		if(!e.isactive())
-			continue;
-		if(e.geti().isdoubleclue(v))
-			return true;
-	}
-	return false;
-}
-
-bool cardpool::isrerollall(ability_s v) const {
-	for(auto& e : source) {
-		if(!e.isactive())
-			continue;
-		if(e.geti().isrerollall(v))
-			return true;
-	}
-	return false;
-}
-
 void cardpool::discard() {
-	for(auto& e : source) {
+	for(auto& e : *this) {
 		if(e)
 			e.discard();
 	}
@@ -43,14 +23,15 @@ int	cardprotoi::getcost(int discount) const {
 	return v;
 }
 
-void cardpool::addcard(cardt v) {
-	auto p = source.add();
+void cardpool::add(cardt v, location_s a) {
+	auto p = adat<cardi>::add();
 	p->clear();
 	p->type = v;
+	p->area = a;
 }
 
-bool cardpool::havecard(cardt v) const {
-	for(auto& e : source) {
+bool cardpool::have(cardt v) const {
+	for(auto& e : *this) {
 		if(!e)
 			continue;
 		if(e.type == v)
@@ -67,5 +48,5 @@ void cardpool::pick(cardtype_s type, int count) {
 void cardpool::pick(cardtype_s type) {
 	auto i = bsdata<cardtypei>::elements[type].cards.pick();
 	if(i)
-		addcard(i);
+		add(i);
 }

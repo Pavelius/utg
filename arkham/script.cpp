@@ -19,7 +19,7 @@ static void clear_text_manual() {
 static void trade_pool(int count, int discount, const char* cancel) {
 	while(count > 0) {
 		an.clear();
-		for(auto& e : pool.source) {
+		for(auto& e : pool) {
 			if(!e)
 				continue;
 			auto& ei = e.geti();
@@ -35,7 +35,7 @@ static void trade_pool(int count, int discount, const char* cancel) {
 			break;
 		auto cost = p->geti().getcost(discount);
 		if(game.get(Money) >= cost) {
-			game.source.add(*p);
+			cards.add(p->type);
 			game.set(Money, game.get(Money) - cost);
 			p->clear();
 			count--;
@@ -48,7 +48,7 @@ static void trade_pool(int count, int discount, const char* cancel) {
 static void take_pool(int count, const char* title) {
 	while(count > 0) {
 		an.clear();
-		for(auto& e : pool.source) {
+		for(auto& e : pool) {
 			if(!e)
 				continue;
 			an.add(&e, getnm(e.geti().id));
@@ -56,7 +56,7 @@ static void take_pool(int count, const char* title) {
 		auto p = (cardi*)an.choose(title);
 		if(!p)
 			break;
-		game.source.add(*p);
+		cards.add(p->type);
 		p->clear();
 		count--;
 	}
@@ -173,7 +173,7 @@ static void play_result(int n) {
 
 static bool test_value(variant v) {
 	if(v.iskind<cardprotoi>())
-		return !game.havecard(v.value);
+		return !cards.have(v.value);
 	else if(v.iskind<abilityi>()) {
 		auto nv = game.get((ability_s)v.value) + v.counter;
 		if(!v.counter)
@@ -218,12 +218,12 @@ static void apply_value(variant v) {
 		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
 			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
 				game.information(getnm("YouGainAlly"), v.getname());
-				game.addcard(v.value);
+				cards.add(v.value);
 			} else
 				play_result(10);
 		} else {
 			game.information(getnm("YouGainCard"), v.getname());
-			game.addcard(v.value);
+			cards.add(v.value);
 		}
 	} else if(v.iskind<abilityi>()) {
 		auto i = (ability_s)v.value;
@@ -337,7 +337,9 @@ static void pick_pool(int bonus, int param) {
 }
 
 static cardi* choose_trophy(int count) {
-	for(auto& e : game.source) {
+	for(auto& e : cards) {
+		if(!e || !e.is(PlayerArea))
+			continue;
 		auto& ei = e.geti();
 		if(ei.type == Gate)
 			an.add(&e, getnm("PayTrophy"), getnm(ei.id));

@@ -186,12 +186,12 @@ void player::apply(variant v) {
 	if(v.iskind<cardprotoi>()) {
 		auto& ei = bsdata<cardprotoi>::elements[v.value];
 		if(bsdata<cardtypei>::elements[ei.type].cards.pick(v.value))
-			addcard(v.value);
+			cards.add(v.value);
 	} else if(v.iskind<cardtypei>()) {
 		for(auto i = 0; i < v.counter; i++) {
 			auto card = bsdata<cardtypei>::elements[v.value].cards.pick();
 			if(card)
-				addcard(card);
+				cards.add(card);
 		}
 	} else if(v.iskind<abilityi>())
 		abilities[v.value] += v.counter;
@@ -201,8 +201,8 @@ void player::update() {
 	loadability(original);
 	m_health = original.abilities[Health];
 	m_sanity = original.abilities[Sanity];
-	for(auto& e : source) {
-		if(!e)
+	for(auto& e : cards) {
+		if(!e || !e.is(PlayerArea))
 			continue;
 		auto& ei = e.geti();
 		switch(ei.type) {
@@ -302,9 +302,9 @@ bool player::paythrophy(int count, bool run, bool gates, bool monsters) {
 	answers an;
 	cardquerry querry;
 	if(monsters)
-		querry.add(*this, Monster);
+		querry.add(cards, Monster);
 	if(gates)
-		querry.add(*this, Gate);
+		querry.add(cards, Gate);
 	auto total_cost = 0;
 	for(auto p : querry) {
 		if(p->geti().type == Gate)

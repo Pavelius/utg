@@ -36,6 +36,10 @@ enum trigger_s : unsigned char {
 	MovementPhase,
 	HealthLose, SanityLose, HealthOrSanityLose,
 };
+enum location_s : unsigned char {
+	PlayerArea,
+	LostInTimeAndSpaceArea, Outskirts, Sky,
+};
 enum cardtype_s : unsigned char {
 	Ally, Arkham, CommonItem, Gate, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
 };
@@ -117,17 +121,19 @@ struct cardi {
 	short unsigned	type;
 	unsigned char	exhaused : 1;
 	unsigned char	uses : 3;
+	location_s		area;
 	constexpr explicit operator bool() const { return type != 0; }
 	void			clear();
 	void			discard();
 	cardprotoi&		geti() const { return bsdata<cardprotoi>::elements[type]; }
+	locationi*		getlocation() const { return bsdata<locationi>::elements + area; }
+	bool			is(location_s a) const { return area == a; }
 	bool			isactive() const { return !exhaused; }
 };
-struct cardpool {
-	adat<cardi, 32> source;
-	void			addcard(cardt v);
+struct cardpool : public adat<cardi> {
+	void			add(cardt v, location_s a = PlayerArea);
 	void			discard();
-	bool			havecard(cardt v) const;
+	bool			have(cardt v) const;
 	bool			isdoubleclue(ability_s v) const;
 	bool			isrerollall(ability_s v) const;
 	void			pick(cardtype_s type);
@@ -142,7 +148,7 @@ struct investigator : nameablei, abilitya {
 	locationi*		location;
 	explicit operator bool() const { return location != 0; }
 };
-struct player : abilitya, cardpool {
+struct player : abilitya {
 	static player*	last;
 	abilitya		original;
 	locationi*		location;
@@ -178,5 +184,6 @@ struct gamei : public player {
 	static int		d6();
 	static void		information(const char* format, ...);
 };
+extern cardpool		cards;
 extern gamei		game;
 extern answers		an;
