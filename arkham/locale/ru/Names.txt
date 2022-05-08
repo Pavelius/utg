@@ -1,5 +1,6 @@
 ﻿Abyss: Преисподня
 AdministrationBuilding: Здание администрации
+And: и
 AppTitle: Ужас Аркхема
 ApplyRollResult: Применить результат броска
 ArkhamAsylum: Лечебница Аркхэма
@@ -26,6 +27,7 @@ DoYouAgree: Вы согласны?
 Downtown: Даунтаун
 Dynamite: Динамит
 Easttown: Исттаун
+EquipItem: Достать %1
 Fight: Сражение
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
@@ -83,6 +85,7 @@ TrainStation: Вокзал
 TryEscape: Попытаться отступить, выполнив бросок Скрытность%+1i.
 TryEvade: Попытаться уйти, выполнив бросок Скрытность%+1i.
 TryFight: Попытаться убить, выполнив бросок Сражения%+1i с %2i успехами.
+UnequipItem: Спрятать %1
 UniqueItem: Уникальный предмет
 Uptown: Аптаун
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
@@ -100,3 +103,4 @@ YouGainAlly: [%1] присоединился к вам.
 YouGainCard: Получите [%1].
 YouLose: Потеряйте [-%2i] %-1.
 YouLoseCard: Потеряйте [%1].
+YouWear: У вас в руках

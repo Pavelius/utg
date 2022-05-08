@@ -10,7 +10,7 @@ void util_main();
 static void test_fight() {
 	cardi card;
 	card.clear();
-	card.type = bsdata<cardprotoi>::source.find("Cultist", 0);
+	card.type = bsdata<cardprotoi>::source.find("Ghoul", 0);
 	game.fight(card);
 }
 

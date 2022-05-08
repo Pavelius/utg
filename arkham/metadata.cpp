@@ -23,6 +23,9 @@ BSMETA(abilityi) = {
 BSMETA(realmi) = {
 	BSREQ(id),
 	{}};
+BSMETA(speciali) = {
+	BSREQ(id),
+	{}};
 BSMETA(cardtypei) = {
 	BSREQ(id),
 	{}};
@@ -49,6 +52,7 @@ BSMETA(cardprotoi) = {
 	BSENM(type, cardtypei),
 	BSDST(abilities, abilityi),
 	BSREQ(hands), BSREQ(cost), BSREQ(count), BSREQ(difficult), BSREQ(bonus), BSREQ(pay),
+	BSENM(special, speciali),
 	BSREQ(effect),
 	BSFLG(tags, tagi),
 	BSFLG(realms, realmi),

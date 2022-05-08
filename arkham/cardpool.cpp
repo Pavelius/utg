@@ -8,6 +8,7 @@ void cardpool::discard() {
 }
 
 void cardi::clear() {
+	game.unequip(this);
 	memset(this, 0, sizeof(*this));
 }
 
@@ -16,11 +17,12 @@ void cardi::discard() {
 	clear();
 }
 
-int	cardprotoi::getcost(int discount) const {
-	int v = cost + discount;
-	if(v < 0)
-		v = 0;
-	return v;
+void cardi::use() {
+	auto& ei = geti();
+	if(ei.is(Exhause))
+		exhaused = 1;
+	else if(ei.is(Discard))
+		discard();
 }
 
 void cardpool::add(cardt v, location_s a) {

@@ -24,6 +24,10 @@ enum ability_s : unsigned char {
 enum gamef_s : unsigned char {
 	Bless, Curse, BankLoan, BankLoanNotAllowed, Retainer, SilverTwilightLodgeMembership,
 };
+enum special_s : unsigned char {
+	NoSpecial,
+	Tome, PhysicalWeapon, MagicalWeapon, MovementBonus,
+};
 enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
@@ -100,16 +104,19 @@ struct cardtypei {
 	const char*		id;
 	deck			cards;
 };
-struct triggeri {
+struct speciali {
 	const char*		id;
 };
 struct cardprotoi : nameablei, abilitya {
 	cardtype_s		type;
+	special_s		special;
 	char			hands, difficult, cost, count, pay, bonus;
 	variants		effect;
 	realma			realms;
 	taga			tags;
+	int				getcombat(const cardprotoi& enemy) const;
 	int				getcost(int discount) const;
+	bool			is(tag_s v) const { return tags.is(v); }
 };
 struct cardi {
 	short unsigned	type;
@@ -123,6 +130,7 @@ struct cardi {
 	locationi*		getlocation() const { return bsdata<locationi>::elements + area; }
 	bool			is(location_s a) const { return area == a; }
 	bool			isactive() const { return !exhaused; }
+	void			use();
 };
 struct cardpool : public adat<cardi> {
 	void			add(cardt v, location_s a = PlayerArea);
@@ -150,6 +158,7 @@ struct player : abilitya {
 	unsigned char	investigator_index;
 	char			m_health, m_sanity;
 	char			focus[3];
+	cardi*			hands[4];
 	void			apply(variant v);
 	bool			combat(cardprotoi& source);
 	void			create(const char* id);
@@ -157,15 +166,21 @@ struct player : abilitya {
 	void			damage(ability_s v, int count) { modify(v, -count); }
 	void			delayed();
 	void			encounter();
+	void			equip(cardi* p);
+	void			equipment(stringbuilder& sb) const;
 	bool			evade(cardprotoi& enemy);
 	bool			fight(cardi& source);
 	const investigator&	geti() const;
 	int				getbonus(ability_s v, int bonus) const;
+	int				getcombat() const;
+	int				getevade() const;
+	int				getfreehands() const;
 	int				getsuccess() const;
 	int				getmaximal(ability_s v) const;
 	int				getminimal(ability_s v) const;
 	bool			is(gamef_s v) const { return flags.is(v); }
 	bool			isallowreroll(ability_s v) const;
+	bool			isequiped(const cardi* e) const;
 	bool			isready() const { return get(Health) > 0 && get(Sanity) > 0; }
 	void			introduction() const;
 	void			leavestreet();
@@ -177,7 +192,10 @@ struct player : abilitya {
 	int				roll(ability_s v, int m);
 	int				rolld6(int count) const;
 	void			setflag(gamef_s v, bool activate = true);
+	void			unequip(cardi* p);
 	void			update();
+	void			updatecombat();
+	void			usehands();
 };
 struct gamei : public player {
 	static quests	quest_other;

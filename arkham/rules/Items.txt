@@ -4,20 +4,20 @@ NoCard
 
 #Card type(CommonItem) count(2)
 
-Axe cost(3) hands(1) bonus(2) tags(Versatile)
-Bullwhip cost(2) bonus(1) hands(1)
-Derringer18c cost(3) bonus(2) hands(1) tags(NoSteal)
-Dynamite cost(4) bonus(8) hands(2) tags(Discard)
+Axe special(PhysicalWeapon) cost(3) hands(1) bonus(2) tags(Versatile)
+Bullwhip special(PhysicalWeapon) cost(2) bonus(1) hands(1)
+Derringer18c special(PhysicalWeapon) cost(3) bonus(2) hands(1) tags(NoSteal)
+Dynamite special(PhysicalWeapon) cost(4) bonus(8) hands(2) tags(Discard)
 Food cost(1) tags(Discard)
 OldTome cost(4) difficult(-1) pay(2)
-Revolver38c cost(4) bonus(3) hands(1)
-Revolver45c cost(5) bonus(4) hands(1)
-TommyGun cost(7) bonus(6) hands(2)
+Revolver38c special(PhysicalWeapon) cost(4) bonus(3) hands(1)
+Revolver45c special(PhysicalWeapon) cost(5) bonus(4) hands(1)
+TommyGun special(PhysicalWeapon) cost(7) bonus(6) hands(2)
 Whiskey cost(1)
 
 #Card type(UniqueItem)
 
-MagicBlade count(2) cost(6) bonus(4) hands(1)
+MagicBlade special(MagicalWeapon) count(2) cost(6) bonus(4) hands(1)
 
 #Card type(Spell)
 

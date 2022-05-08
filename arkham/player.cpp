@@ -28,6 +28,29 @@ static int roll_success(int sv) {
 	return result;
 }
 
+bool player::isequiped(const cardi* e) const {
+	for(auto p : hands) {
+		if(p == e)
+			return true;
+	}
+	return false;
+}
+
+void player::equipment(stringbuilder& sb) const {
+	auto pb = sb.get();
+	for(auto p : hands) {
+		if(!p)
+			continue;
+		if(sb.get() != pb)
+			sb.adds(getnm("And"));
+		else
+			sb.addn(getnm("YouWear"));
+		sb.adds("%-1", getnm(p->geti().id));
+	}
+	if(sb.get() != pb)
+		sb.add(".");
+}
+
 int player::rolld6(int count) const {
 	roll_dices(count);
 	return roll_success(getsuccess());
@@ -331,4 +354,27 @@ bool player::paythrophy(int count, bool run, bool gates, bool monsters) {
 		}
 	}
 	return true;
+}
+
+void player::equip(cardi* p) {
+	for(auto& e : hands) {
+		if(!e) {
+			e = p;
+			break;
+		}
+	}
+}
+
+void player::unequip(cardi* p) {
+	for(auto& e : hands) {
+		if(e==p)
+			e = 0;
+	}
+}
+
+void player::usehands() {
+	for(auto p : hands) {
+		if(p)
+			p->use();
+	}
 }

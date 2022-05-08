@@ -158,6 +158,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="realm.cpp" />
     <ClCompile Include="script.cpp" />
+    <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
