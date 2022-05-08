@@ -72,12 +72,17 @@ Southside: Саутсайд
 Speed: Скорость
 Spell: Заклинание
 StMarysHospital: Больница Святой Марии
+StartCombat: Ужасное созданье преграждает вам путь.
+StartFight: Начать битву
 StopMoving: Закончить движение
 ThatEnought: Достаточно. Ничего больше не надо.
 TheWitchHouse: Дом Ведьмы
 ThomasFMalone: Томас Френсис Мэлоун
 TommyGun: Автомат
 TrainStation: Вокзал
+TryEscape: Попытаться отступить, выполнив бросок Скрытность%+1i.
+TryEvade: Попытаться уйти, выполнив бросок Скрытность%+1i.
+TryFight: Попытаться убить, выполнив бросок Сражения%+1i с %2i успехами.
 UniqueItem: Уникальный предмет
 Uptown: Аптаун
 UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков

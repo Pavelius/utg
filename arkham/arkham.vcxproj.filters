@@ -22,9 +22,6 @@
     <ClCompile Include="cardtype.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="trigger.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="interface.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="cardquerry.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="combat.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

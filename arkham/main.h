@@ -30,15 +30,9 @@ enum tag_s : unsigned char {
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
 	BonusVsUndead, Exhause, NoSteal, Discard, Versatile,
 };
-enum trigger_s : unsigned char {
-	NoTrigger, PhysicalWeapon, MagicalWeapon, Book,
-	CombatCheck, EvadeCheck, HorrorCheck, SpellCheck,
-	MovementPhase,
-	HealthLose, SanityLose, HealthOrSanityLose,
-};
 enum location_s : unsigned char {
 	PlayerArea,
-	LostInTimeAndSpaceArea, Outskirts, Sky,
+	LostInTimeAndSpaceArea, Outskirts, Sky, Prison,
 };
 enum cardtype_s : unsigned char {
 	Ally, Arkham, CommonItem, Gate, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
@@ -77,6 +71,7 @@ struct locationi : nameablei {
 	quests			encounters;
 	const quest*	choose(int count = 1) const;
 	void			encounter(int count = 1) const;
+	location_s		getindex() const { return (location_s)(this - bsdata<locationi>::elements); }
 };
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
@@ -110,7 +105,6 @@ struct triggeri {
 };
 struct cardprotoi : nameablei, abilitya {
 	cardtype_s		type;
-	trigger_s		trigger;
 	char			hands, difficult, cost, count, pay, bonus;
 	variants		effect;
 	realma			realms;
@@ -157,10 +151,14 @@ struct player : abilitya {
 	char			m_health, m_sanity;
 	char			focus[3];
 	void			apply(variant v);
+	bool			combat(cardprotoi& source);
 	void			create(const char* id);
 	void			clear();
-	void			encounter();
+	void			damage(ability_s v, int count) { modify(v, -count); }
 	void			delayed();
+	void			encounter();
+	bool			evade(cardprotoi& enemy);
+	bool			fight(cardi& source);
 	const investigator&	geti() const;
 	int				getbonus(ability_s v, int bonus) const;
 	int				getsuccess() const;
@@ -168,9 +166,11 @@ struct player : abilitya {
 	int				getminimal(ability_s v) const;
 	bool			is(gamef_s v) const { return flags.is(v); }
 	bool			isallowreroll(ability_s v) const;
+	bool			isready() const { return get(Health) > 0 && get(Sanity) > 0; }
 	void			introduction() const;
 	void			leavestreet();
 	void			losehalf(cardtype_s m);
+	void			modify(ability_s v, int bonus);
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	bool			paythrophy(int count, bool run, bool gates, bool monsters);
@@ -184,6 +184,6 @@ struct gamei : public player {
 	static int		d6();
 	static void		information(const char* format, ...);
 };
-extern cardpool		cards;
-extern gamei		game;
-extern answers		an;
+extern cardpool			cards;
+extern gamei			game;
+extern answers			an;

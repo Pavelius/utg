@@ -145,6 +145,7 @@
     <ClCompile Include="cardpool.cpp" />
     <ClCompile Include="cardquerry.cpp" />
     <ClCompile Include="cardtype.cpp" />
+    <ClCompile Include="combat.cpp" />
     <ClCompile Include="gamef.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="deck.cpp" />
@@ -158,7 +159,6 @@
     <ClCompile Include="realm.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="tag.cpp" />
-    <ClCompile Include="trigger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />

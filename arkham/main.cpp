@@ -7,13 +7,21 @@
 
 void util_main();
 
+static void test_fight() {
+	cardi card;
+	card.clear();
+	card.type = bsdata<cardprotoi>::source.find("Cultist", 0);
+	game.fight(card);
+}
+
 static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
-	cards.pick(Gate, 1);
-	cards.pick(Monster, 6);
-	game.movement(bsdata<locationi>::find("Graveyard"), false);
-	game.encounter();
+	test_fight();
+	//cards.pick(Gate, 1);
+	//cards.pick(Monster, 6);
+	//game.movement(bsdata<locationi>::find("Graveyard"), false);
+	//game.encounter();
 	//game.movement(game.get(Speed));
 }
 

@@ -1,3 +1,11 @@
+#Location type(Special)
+
+PlayerArea
+LostInTimeAndSpaceArea
+Outskirts
+Sky
+Prison position(1660 1104)
+
 #Location type(Street)
 
 Downtown position(1095 675)
@@ -48,7 +56,3 @@ Uptown neightboard(StMarysHospital Woods YeOldeMagickShoppe Southside Miskatonic
 
 Abyss position(2328 3240)
 TheDreamlands position(2328 1316)
-
-#Location type(Special)
-
-Prison position(1660 1104)

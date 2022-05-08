@@ -1,8 +1,8 @@
 #include "draw_object.h"
 #include "main.h"
 
-static adat<char, 32> roll_result;
-player*	player::last;
+static adat<char, 32>	roll_result;
+player*					player::last;
 
 static int compare(const void* p1, const void* p2) {
 	return *((char*)p2) - *((char*)p1);

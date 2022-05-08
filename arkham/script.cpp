@@ -175,16 +175,15 @@ static bool test_value(variant v) {
 	if(v.iskind<cardprotoi>())
 		return !cards.have(v.value);
 	else if(v.iskind<abilityi>()) {
-		auto nv = game.get((ability_s)v.value) + v.counter;
-		if(!v.counter)
+		auto a = (ability_s)v.value;
+		auto b = game.getbonus(a, v.counter);
+		auto n = game.get(a) + b;
+		if(!b)
 			return false;
-		else if(v.counter < 0) {
-			auto minimum = game.getminimal((ability_s)v.value);
-			return nv >= minimum;
-		} else
-			return true;
-	} else
-		return true;
+		else if(b < 0)
+			return n >= 0;
+	}
+	return true;
 }
 
 static bool test_values(const variants& source) {
@@ -206,6 +205,16 @@ static void apply_result(int r) {
 	play();
 }
 
+void player::modify(ability_s i, int bonus) {
+	auto n = game.getbonus(i, bonus);
+	if(bsdata<abilityi>::elements[i].is(abilityi::Indicator))
+		apply_indicator(i, n);
+	else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
+		show_text();
+		apply_result(game.roll(i, n));
+	}
+}
+
 static void apply_value(variant v) {
 	if(v.iskind<scripti>())
 		run_script(v.value, v.counter);
@@ -225,16 +234,9 @@ static void apply_value(variant v) {
 			game.information(getnm("YouGainCard"), v.getname());
 			cards.add(v.value);
 		}
-	} else if(v.iskind<abilityi>()) {
-		auto i = (ability_s)v.value;
-		auto n = game.getbonus(i, v.counter);
-		if(bsdata<abilityi>::elements[i].is(abilityi::Indicator))
-			apply_indicator(i, n);
-		else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
-			show_text();
-			apply_result(game.roll(i, n));
-		}
-	} else if(v.iskind<cardtypei>())
+	} else if(v.iskind<abilityi>())
+		game.modify((ability_s)v.value, v.counter);
+	else if(v.iskind<cardtypei>())
 		apply_card_type((cardtype_s)v.value, v.counter);
 }
 
@@ -315,6 +317,7 @@ static void choose_street_or_location(int bonus, int param) {
 }
 
 static void monster_trophy(int bonus, int param) {
+	cards.pick(Monster, 1);
 }
 
 static void unique_tome(int bonus, int param) {
