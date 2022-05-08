@@ -3,6 +3,7 @@
 
 static adat<char, 32>	roll_result;
 player*					player::last;
+static ability_s		m_ability;
 
 static int compare(const void* p1, const void* p2) {
 	return *((char*)p2) - *((char*)p1);
@@ -64,17 +65,24 @@ int player::getsuccess() const {
 	return 5;
 }
 
+int player::getcluedices(ability_s v) const {
+	auto r = 1;
+	if(is(ExtraClueDice))
+		r++;
+	for(auto& e : cards) {
+		if(!e || e.area != PlayerArea)
+			continue;
+		auto& ei = e.geti();
+		if(ei.type == Skill)
+			r += ei.abilities[v];
+	}
+	return r;
+}
+
 static void add_clue() {
 	auto p = player::last;
 	p->add(Clue, -1);
-	add_dices(1);
-	if(p->is(ExtraClueDice))
-		add_dices(1);
-}
-
-static void add_clue2() {
-	add_clue();
-	add_dices(1);
+	add_dices(p->getcluedices(m_ability));
 }
 
 bool cardi::afterroll(ability_s v, int m, special_s special, bool run) {
@@ -121,6 +129,7 @@ int player::roll(ability_s v, int m, special_s special) {
 	answers an;
 	char temp[512]; stringbuilder sb(temp);
 	roll_dices(get(v) + m);
+	m_ability = v;
 	while(true) {
 		auto sv = getsuccess();
 		an.clear();
@@ -139,12 +148,8 @@ int player::roll(ability_s v, int m, special_s special) {
 		} else
 			sb.add(getnm("NoDicesForRoll"));
 		an.add(0, getnm("ApplyRollResult"));
-		if(get(Clue)) {
-			if(doubleclue.is(v))
-				an.add(add_clue2, getnm("UseClueToAddDice"), 2);
-			else
-				an.add(add_clue, getnm("UseClueToAddDice"), 1);
-		}
+		if(get(Clue))
+			an.add(add_clue, getnm("UseClueToAddDice"), getcluedices(m_ability));
 		use_items(v, m, special, an);
 		auto result = an.choose(temp);
 		if(!result)

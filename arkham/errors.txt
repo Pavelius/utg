@@ -1,2 +1,13 @@
-﻿In file `Names.txt`:
- Define translate for `Cross`
+﻿In file `rules/Items.txt`:
+ Line 42: Not found identifier `skill`
+ Line 43: Not found requisit `doubleclue`
+ Line 42: Not found identifier `skill`
+ Line 45: Not found requisit `doubleclue`
+ Line 42: Not found identifier `skill`
+ Line 47: Not found requisit `doubleclue`
+ Line 42: Not found identifier `skill`
+ Line 49: Not found requisit `doubleclue`
+ Line 42: Not found identifier `skill`
+ Line 51: Not found requisit `doubleclue`
+ Line 42: Not found identifier `skill`
+ Line 53: Not found requisit `doubleclue`

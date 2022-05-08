@@ -53,12 +53,11 @@ struct gamefi {
 };
 struct abilitya {
 	char			abilities[Focus + 1];
-	abilityf		rerollall, doubleclue, tought, restore;
+	abilityf		rerollall, tought, restore;
 	cardf			pickextra, scavenge;
 	void			add(ability_s v, int i) { abilities[v] += i; }
 	void			addabilities(const abilitya& e);
 	constexpr int	get(ability_s v) const { return abilities[v]; }
-	bool			isdoubleclue(ability_s v) const { return doubleclue.is(v); }
 	bool			ispickextra(cardtype_s v) const { return pickextra.is(v); }
 	bool			isrestore(ability_s v) const { return restore.is(v); }
 	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
@@ -174,6 +173,7 @@ struct player : abilitya {
 	bool			fight(cardi& source);
 	const investigator&	geti() const;
 	int				getbonus(ability_s v, int bonus) const;
+	int				getcluedices(ability_s v) const;
 	int				getcombat() const;
 	int				getevade() const;
 	int				getfreehands() const;

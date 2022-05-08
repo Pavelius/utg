@@ -28,7 +28,6 @@ void abilitya::addabilities(const abilitya& source) {
 			abilities[i] += source.abilities[i];
 	}
 	rerollall.add(source.rerollall);
-	doubleclue.add(source.doubleclue);
 	tought.add(source.tought);
 	restore.add(source.restore);
 	pickextra.add(source.pickextra);
@@ -41,7 +40,6 @@ void abilitya::loadability(const abilitya& source) {
 			abilities[i] = source.abilities[i];
 	}
 	rerollall = source.rerollall;
-	doubleclue = source.doubleclue;
 	tought = source.tought;
 	restore = source.restore;
 	pickextra = source.pickextra;

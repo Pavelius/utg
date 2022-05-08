@@ -62,6 +62,7 @@ ProfessorArmitage: Профессор Армитэйдж
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
 RichardUptonPickman: Ричард Аптон Пикмэн
+Rifle: Ружье
 Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок

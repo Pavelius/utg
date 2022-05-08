@@ -61,7 +61,6 @@ BSMETA(investigator) = {
 	BSREQ(id),
 	BSDST(abilities, abilityi),
 	BSFLG(rerollall, abilityi),
-	BSFLG(doubleclue, abilityi),
 	BSFLG(tought, abilityi),
 	BSFLG(restore, abilityi),
 	BSFLG(pickextra, cardtypei),

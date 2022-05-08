@@ -6,7 +6,7 @@ NoCard
 
 AncientTome cost(4) difficult(-1) pay(2)
 Axe special(PhysicalWeapon) cost(3) hands(1) bonus(2) tags(Versatile)
-Bullwhip special(PhysicalWeapon) cost(2) bonus(1) hands(1)
+Bullwhip special(PhysicalWeapon) cost(2) bonus(1) hands(1) tags(ExhauseToRerollDie)
 CavalrySaber special(PhysicalWeapon) cost(3) bonus(2) hands(1)
 Cross special(MagicalWeapon) cost(3) bonus(0) hands(1) tags(BonusVsUndead)
  abilities Horror(1)
@@ -38,6 +38,21 @@ MagicBlade special(MagicalWeapon) count(2) cost(6) bonus(4) hands(1)
 
 Shrivelling count(5) difficult(-1) pay(1) bonus(6) hands(1)
 Wither count(6) difficult(0) pay(0) bonus(3) hands(1)
+
+#Card type(Skill) count(2)
+
+FightSkill
+ abilities Fight(1)
+LoreSkill
+ abilities Lore(1)
+LuckSkill
+ abilities Luck(1)
+SneakSkill
+ abilities Sneak(1)
+SpeedSkill
+ abilities Speed(1)
+WillSkill
+ abilities Speed(1)
 
 #Card type(Gate) count(2)
 
