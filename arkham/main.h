@@ -28,6 +28,7 @@ enum gamef_s : unsigned char {
 enum special_s : unsigned char {
 	NoSpecial,
 	Tome, PhysicalWeapon, MagicalWeapon, MovementBonus,
+	CombatCheck, EscapeCheck, HorrorCheck, SpellCheck,
 };
 enum tag_s : unsigned char {
 	Ambush, Endless, Undead,

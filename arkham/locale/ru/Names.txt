@@ -12,6 +12,7 @@ Bullwhip: Кнут
 BuyCard: Купить %1 за %2i$
 BuyCardNoMoney: Купить %1 за %2i$ (нет денег)
 Cancel: Отмена
+CavalrySaber: Кавалерийская Сабля
 Choose: Выбирайте
 ChooseEncounter: Какое событие должно произойти?
 ChooseLeft: Выбирайте возможный вариант (осталось [%1i])
@@ -28,6 +29,8 @@ DoYouAgree: Вы согласны?
 Downtown: Даунтаун
 Dynamite: Динамит
 Easttown: Исттаун
+EnchantedBlade: Волшебный клинок
+EnchantedKnife: Волшебный кинжал
 EquipItem: Достать %1
 Fight: Сражение
 Food: Еда
@@ -37,12 +40,14 @@ Graveyard: Кладбище
 Health: Здоровье
 HibbsRoadhouse: Забегаловка Гиббса
 HistoricalSociety: Историческое общество
+HolyWater: Святая вода
 IndependenceSquare: Площадь Независимости
 Introduction: Введение
+Knife: Нож
+LampOfAlhazred: Лампа Аль-Хазреда
 Library: Библиотека
 Lore: Знания
 Luck: Удача
-MagicBlade: Магический меч
 MasBoardingHouse: Меблированные комнаты Ма
 MiskatonicUniversity: Университет Мискатоник
 Money: Долларов

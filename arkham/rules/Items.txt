@@ -32,7 +32,10 @@ Whiskey cost(1)
 
 #Card type(UniqueItem)
 
-MagicBlade special(MagicalWeapon) count(2) cost(6) bonus(4) hands(1)
+EnchantedBlade special(MagicalWeapon) count(2) cost(6) bonus(4) hands(1)
+EnchantedKnife special(MagicalWeapon) count(2) cost(5) bonus(3) hands(1)
+HolyWater special(MagicalWeapon) count(4) cost(4) bonus(6) hands(2) tags(Discard)
+LampOfAlhazred special(MagicalWeapon) count(1) cost(7) bonus(5) hands(2)
 
 #Card type(Spell)
 

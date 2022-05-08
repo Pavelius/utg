@@ -6,5 +6,9 @@ BSDATA(speciali) = {
 	{"PhysicalWeapon"},
 	{"MagicalWeapon"},
 	{"MovementBonus"},
+	{"CombatCheck"},
+	{"EscapeCheck"},
+	{"HorrorCheck"},
+	{"SpellCheck"},
 };
-assert_enum(speciali, MovementBonus)
+assert_enum(speciali, SpellCheck)
