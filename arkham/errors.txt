@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `YouWear`
+﻿In file `rules/Items.txt`:
+ Line 11: Not found identifier `BonusVsUndead`

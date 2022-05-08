@@ -65,6 +65,7 @@ Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
 ScienceBuilding: Дом науки
+Shotgun: Дробовик
 Shrivelling: Увядание
 SilverTwilightLodge: Ложа серебрянных сумерок
 SirWilliamBrinton: Сэр Уильям Брайтон

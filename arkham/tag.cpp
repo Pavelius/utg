@@ -12,7 +12,7 @@ BSDATA(tagi) = {
 	{"NightmarishII"},
 	{"OverwhelmingI"},
 	{"OverwhelmingII"},
-	{"BonusToUndead"},
+	{"BonusVsUndead"},
 	{"Exhause"},
 	{"NoSteal"},
 	{"Discard"},
