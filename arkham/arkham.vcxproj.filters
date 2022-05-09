@@ -4,9 +4,6 @@
     <ClCompile Include="ability.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="indicator.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Logic</Filter>
     </ClCompile>

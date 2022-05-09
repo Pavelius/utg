@@ -6,6 +6,7 @@ BSDATA(speciali) = {
 	{"PhysicalWeapon"},
 	{"MagicalWeapon"},
 	{"MovementBonus"},
+	{"RefreshAction"},
 	{"CombatCheck"},
 	{"EscapeCheck"},
 	{"HorrorCheck"},

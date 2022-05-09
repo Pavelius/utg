@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `UnvisitedIsle`
+﻿In file `rules/Items.txt`:
+ Line 4: Not found identifier `RefreshAction`

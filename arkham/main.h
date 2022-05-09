@@ -27,14 +27,14 @@ enum gamef_s : unsigned char {
 };
 enum special_s : unsigned char {
 	NoSpecial,
-	Tome, PhysicalWeapon, MagicalWeapon, MovementBonus,
+	Tome, PhysicalWeapon, MagicalWeapon, MovementBonus, RefreshAction,
 	CombatCheck, EscapeCheck, HorrorCheck, SpellCheck,
 };
 enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
-	BonusVsUndead, Exhause, ExhauseToRerollDie, NoSteal, Discard, Versatile,
+	BonusVsUndead, Exhause, ExhauseToRerollDie, NoSteal, Discard, DiscardOn1, Versatile,
 };
 enum location_s : unsigned char {
 	PlayerArea,
@@ -94,9 +94,6 @@ struct scripti {
 	fntest			choose;
 };
 struct realmi {
-	const char*		id;
-};
-struct indicatori {
 	const char*		id;
 };
 struct deck : adat<cardt> {
@@ -204,8 +201,9 @@ struct player : abilitya {
 	void			phase_encounter_arkham();
 	void			phase_encounter_other();
 	void			phase_movement();
-	void			refocus();
-	void			refreshcards();
+	void			phase_refresh_actions();
+	void			phase_refresh_focus();
+	void			phase_refresh_update();
 	int				roll(ability_s v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;
 	void			showcards();

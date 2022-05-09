@@ -22,6 +22,9 @@ void gamei::applyresult(void* result) {
 }
 
 void gamei::turn() {
+	game.phase_refresh_update();
+	game.phase_refresh_actions();
+	game.phase_refresh_focus();
 	game.phase_movement();
 	game.phase_encounter_arkham();
 	game.phase_encounter_other();

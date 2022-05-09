@@ -150,7 +150,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="indicator.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="location.cpp" />
     <ClCompile Include="main.cpp" />

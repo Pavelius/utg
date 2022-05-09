@@ -293,6 +293,8 @@ void player::update() {
 			m_health += ei.abilities[Health];
 			m_sanity += ei.abilities[Sanity];
 			break;
+		case RefreshAction:
+			break;
 		default:
 			addabilities(ei);
 			break;
@@ -438,12 +440,12 @@ void player::usehands() {
 	}
 }
 
-void player::refreshcards() {
+void player::phase_refresh_update() {
 	for(auto& e : cards)
 		e.exhaused = 0;
 }
 
-void player::refocus() {
+void player::phase_refresh_focus() {
 	union charpvoid {
 		char	c[4];
 		void*	v;
@@ -528,5 +530,25 @@ void player::phase_encounter_other() {
 		auto push_last = last; last = this;
 		location->phase_encounter();
 		last = push_last;
+	}
+}
+
+void player::phase_refresh_actions() {
+	for(auto& e : cards) {
+		if(!e || !e.is(PlayerArea))
+			continue;
+		auto& ei = e.geti();
+		if(ei.special != RefreshAction)
+			continue;
+		for(auto& ea : bsdata<abilityi>()) {
+			if(!ea.is(abilityi::Indicator))
+				continue;
+			auto i = (ability_s)(&ea - bsdata<abilityi>::elements);
+			modify(i, ei.abilities[i]);
+		}
+		if(ei.tags.is(DiscardOn1)) {
+			if(game.d6() <= 1)
+				e.discard();
+		}
 	}
 }
