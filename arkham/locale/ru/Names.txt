@@ -21,6 +21,7 @@ ChooseLeft: Выбирайте возможный вариант (осталос
 ChooseOption: Выбирайте возможный вариант
 ChooseStreetOrLocation: Выбирайте улицу или локацию
 Clue: Улика
+CommonItem: Обычный предмет
 Continue: Продолжить
 Cross: Крест
 Cultist: Культист
@@ -40,6 +41,7 @@ FightSkill: Навык сражения
 Focus: Собранность
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
+GeneralStore: Магазин
 Ghoul: Упырь
 Graveyard: Кладбище
 Health: Здоровье
@@ -67,6 +69,7 @@ No: Нет
 NoCard: Нет карты
 NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
 Northside: Северный район
+OldJournal: Старый дневник
 OldTome: Старый дневник
 PayAbility: Повысить %-1 за %2i$
 PayLeft: Осталось заплатить [%1i] единиц
@@ -84,6 +87,7 @@ Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
 ScienceBuilding: Дом науки
+SellItem: Продать %1 за %2i$
 Shotgun: Дробовик
 Shrivelling: Увядание
 SilverTwilightLodge: Ложа серебрянных сумерок

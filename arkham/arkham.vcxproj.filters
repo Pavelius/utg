@@ -166,5 +166,8 @@
     <Text Include="locale\ru\Woods.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\GeneralStore.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ assert_enum(cardtypei, UniqueItem)
 
 int	cardprotoi::getcost(int discount) const {
 	int v = cost + discount;
+	if(discount == 100)
+		v = cost * 2;
 	if(v < 0)
 		v = 0;
 	if(cost > 0 && v == 0)

@@ -5,10 +5,12 @@
 
 static locationi*	m_location;
 static int			m_jump;
+static int			m_trade_count;
 static bool			need_stop;
 static bool			shown_info;
 answers				an;
-cardpool			pool;
+static cardpool		pool;
+static cardquerry	querry;
 
 static void clear_text_manual() {
 	answers::prompt = 0;
@@ -150,6 +152,7 @@ static void apply_card_type(cardtype_s type, int bonus) {
 
 static void play(const variants& source) {
 	m_jump = 10;
+	m_trade_count = 1;
 	need_stop = false;
 	for(auto v : source) {
 		apply_value(v);
@@ -335,6 +338,24 @@ static void curse(int bonus, int param) {
 }
 
 static void cards_lesser(int bonus, int param) {
+}
+
+static void pick_querry(int bonus, int param) {
+	querry.add(cards, (cardtype_s)param);
+}
+
+static void sell(int bonus, int param) {
+	while(m_trade_count > 0) {
+		an.clear();
+		for(auto p : querry)
+			an.add(p, getnm("SellItem"), getnm(p->geti().id), p->geti().getcost(bonus));
+		auto p = (cardi*)an.choose();
+		if(!p)
+			break;
+		game.modify(Money, p->geti().getcost(bonus));
+		p->discard();
+		m_trade_count--;
+	}
 }
 
 static void pick_pool(int bonus, int param) {
@@ -562,12 +583,14 @@ BSDATA(scripti) = {
 	{"PickCommonItem", pick_pool, CommonItem},
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
+	{"PickYouCommonItem", pick_querry, CommonItem},
 	{"Play", play_block},
 	{"RaiseHealth", raise_ability, Health},
 	{"RaiseHealthSanity", raise_health_sanity},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
 	{"ReturnArkham", return_arkham},
 	{"SanityRollClue", sanity_roll, Clue},
+	{"Sell", sell},
 	{"SpellLesser", cards_lesser, Spell},
 	{"SuccessUniqueFailCommon", success_unique_fail_common},
 	{"Take", take},
