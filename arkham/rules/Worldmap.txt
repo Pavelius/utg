@@ -32,6 +32,7 @@ IndependenceSquare position(1485 128) neightboard(Downtown)
 Library position(697 2263) neightboard(MiskatonicUniversity)
 MasBoardingHouse position(1856 2694) neightboard(Southside)
 Newspaper position(168 420) neightboard(Northside)
+PoliceStation position(1856 862) neightboard(Easttown)
 TheUnnamable position(527 1666) neightboard(MerchantDistrict)
 TheWitchHouse position(1856 2150) neightboard(FrenchHill)
 TrainStation position(398 128) neightboard(Northside)
@@ -46,7 +47,9 @@ YeOldeMagickShoppe position(432 3204) neightboard(Uptown)
 
 #Location
 
+Prison neightboard(PoliceStation)
 Downtown neightboard(ArkhamAsylum BankOfArkham IndependenceSquare Easttown Northside MerchantDistrict)
+Easttown neightboard(PoliceStation HibbsRoadhouse VelmasDiner Downtown Rivertown)
 FrenchHill neightboard(Southside SilverTwilightLodge TheWitchHouse) 
 MerchantDistrict neightboard(UnvisitedIsle TheUnnamable Northside Downtown MiskatonicUniversity Rivertown)
 MiskatonicUniversity neightboard(Library AdministrationBuilding ScienceBuilding MerchantDistrict Uptown FrenchHill)

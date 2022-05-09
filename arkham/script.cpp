@@ -303,6 +303,11 @@ static void encounter(int bonus, int param) {
 	game.location->encounter(bonus);
 }
 
+static void discard_cards(int bonus, int param) {
+	for(auto p : querry)
+		p->discard();
+}
+
 static void delayed(int bonus, int param) {
 	game.information(getnm("YouDelayed"));
 	game.delayed();
@@ -338,6 +343,10 @@ static void curse(int bonus, int param) {
 }
 
 static void cards_lesser(int bonus, int param) {
+}
+
+static void pick_querry_special(int bonus, int param) {
+	querry.add(cards, (special_s)param);
 }
 
 static void pick_querry(int bonus, int param) {
@@ -559,6 +568,7 @@ BSDATA(scripti) = {
 	{"ChooseStreetOrLocation", choose_street_or_location},
 	{"CommonWeapon", common_weapon},
 	{"Delayed", delayed},
+	{"DiscardCards", discard_cards},
 	{"Encounter", encounter},
 	{"GateAppear", gate_appear},
 	{"GateClose", gate_close},
@@ -584,6 +594,8 @@ BSDATA(scripti) = {
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"PickYouCommonItem", pick_querry, CommonItem},
+	{"PickYouMagicalWeapon", pick_querry_special, MagicalWeapon},
+	{"PickYouPhysicalWeapon", pick_querry_special, PhysicalWeapon},
 	{"Play", play_block},
 	{"RaiseHealth", raise_ability, Health},
 	{"RaiseHealthSanity", raise_health_sanity},

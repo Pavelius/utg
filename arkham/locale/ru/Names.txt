@@ -78,6 +78,7 @@ PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
 PayTrophyNumber: Отдать %1i единиц трофеев
 PickCard: Возьмите %1
+PoliceStation: Полицейский участок
 ProfessorArmitage: Профессор Армитэйдж
 ResearchMaterial: Материалы следствия
 Revolver38c: Револьвер 38 калибра

@@ -172,5 +172,8 @@
     <Text Include="locale\ru\TheUnnamable.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\PoliceStation.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

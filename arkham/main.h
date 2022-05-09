@@ -145,6 +145,7 @@ struct cardpool : public adat<cardi> {
 };
 struct cardquerry : adat<cardi*, 32> {
 	void			add(cardpool& source, cardtype_s type);
+	void			add(cardpool& source, special_s type);
 	int				get(ability_s v) const;
 };
 struct investigator : nameablei, abilitya {
