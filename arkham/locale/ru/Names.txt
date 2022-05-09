@@ -77,7 +77,7 @@ PayLeft: Осталось заплатить [%1i] единиц
 PayMoney: Заплатить %1i$
 PayTrophy: Отдать %1
 PayTrophyNumber: Отдать %1i единиц трофеев
-PickCard: Возьмите %1
+PickCard: Возьмите %-1:
 PoliceStation: Полицейский участок
 ProfessorArmitage: Профессор Армитэйдж
 ResearchMaterial: Материалы следствия
@@ -85,6 +85,7 @@ Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
 RichardUptonPickman: Ричард Аптон Пикмэн
 Rifle: Ружье
+RiverDocks: Речной порт
 Roll: Бросок
 RubyStandish: Руби Стэндиш
 Sanity: Рассудок
