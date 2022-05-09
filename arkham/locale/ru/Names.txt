@@ -13,6 +13,7 @@ BuyCard: Купить %1 за %2i$
 BuyCardNoMoney: Купить %1 за %2i$ (нет денег)
 Cancel: Отмена
 CavalrySaber: Кавалерийская Сабля
+ChangeFocus: Если хотите можете поменять некоторые ваши характеристики. Ваша собранность позволяет сделать это еще [%1i] раз.
 Choose: Выбирайте
 ChooseEncounter: Какое событие должно произойти?
 ChooseLeft: Выбирайте возможный вариант (осталось [%1i])
@@ -24,6 +25,7 @@ Cross: Крест
 Cultist: Культист
 CuriositieShoppe: Лавка Древностей
 Derringer18c: Дерингер 18 калибра
+DoNotChangeStats: Хватит. Больше не менять.
 DoNotPay: Не платить
 DoYouAgree: Вы согласны?
 Downtown: Даунтаун
@@ -33,6 +35,7 @@ EnchantedBlade: Волшебный клинок
 EnchantedKnife: Волшебный кинжал
 EquipItem: Достать %1
 Fight: Сражение
+Focus: Собранность
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
 Ghoul: Упырь

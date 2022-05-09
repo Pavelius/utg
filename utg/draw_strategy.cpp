@@ -218,8 +218,8 @@ static void menubt(int i, const void* pv, const char* title) {
 	if(button(title, answer_hotkeys[i], proc))
 		execute(buttonparam, (long)pv);
 	if(control_hilited) {
-		//if(answers::show_tips)
-		//	hilite_object = pv;
+		if(answers::show_tips)
+			hilite_object = pv;
 	} else if(hilite_object) {
 		if(pv == hilite_object) {
 			hot.cursor = cursor::Hand;

@@ -193,6 +193,7 @@ struct player : abilitya {
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	bool			paythrophy(int count, bool run, bool gates, bool monsters);
+	void			refocus();
 	void			refreshcards();
 	int				roll(ability_s v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;

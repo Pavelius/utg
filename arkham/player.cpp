@@ -278,6 +278,9 @@ void player::apply(variant v) {
 
 void player::update() {
 	loadability(original);
+	abilities[Speed] -= focus[0]; abilities[Sneak] += focus[0];
+	abilities[Fight] -= focus[1]; abilities[Will] += focus[1];
+	abilities[Lore] -= focus[2]; abilities[Luck] += focus[2];
 	m_health = original.abilities[Health];
 	m_sanity = original.abilities[Sanity];
 	for(auto& e : cards) {
@@ -438,4 +441,51 @@ void player::usehands() {
 void player::refreshcards() {
 	for(auto& e : cards)
 		e.exhaused = 0;
+}
+
+void player::refocus() {
+	union charpvoid {
+		char	c[4];
+		void*	v;
+	};
+	auto push_header = answers::header;
+	answers::header = getnm("Focus");
+	char temp[260]; stringbuilder sb(temp);
+	charpvoid m;
+	auto count = get(Focus);
+	while(count > 0) {
+		an.clear();
+		if(focus[0]) {
+			m.v = 0; m.c[0] = 0; m.c[1] = -1;
+			an.add(m.v, "%Speed+1, %Sneak-1");
+		}
+		if(focus[0] < 3) {
+			m.v = 0; m.c[0] = 0; m.c[1] = 1;
+			an.add(m.v, "%Speed-1, %Sneak+1");
+		}
+		if(focus[1]) {
+			m.v = 0; m.c[0] = 1; m.c[1] = -1;
+			an.add(m.v, "%Fight+1, %Will-1");
+		}
+		if(focus[1] < 3) {
+			m.v = 0; m.c[0] = 1; m.c[1] = 1;
+			an.add(m.v, "%Fight-1, %Will+1");
+		}
+		if(focus[2]) {
+			m.v = 0; m.c[0] = 2; m.c[1] = -1;
+			an.add(m.v, "%Lore+1, %Luck-1");
+		}
+		if(focus[2] < 3) {
+			m.v = 0; m.c[0] = 2; m.c[1] = 1;
+			an.add(m.v, "%Lore-1, %Luck+1");
+		}
+		sb.clear(); sb.add(getnm("ChangeFocus"), count);
+		m.v = an.choose(temp, getnm("DoNotChangeStats"));
+		if(!m.v)
+			break;
+		focus[m.c[0]] += m.c[1];
+		update();
+		count--;
+	}
+	answers::header = push_header;
 }

@@ -18,6 +18,7 @@ static void test_encounter() {
 	game.create("CarolynFern");
 	//game.introduction();
 	//test_fight();
+	game.refocus();
 	cards.pick(Gate, 1);
 	cards.pick(Monster, 6);
 	game.movement(bsdata<locationi>::find("Woods"), false);

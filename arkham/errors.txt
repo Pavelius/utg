@@ -1,2 +1,2 @@
-﻿In file `locale/ru/Woods.txt`:
- Line 31: Can't find variant `Shootgun`
+﻿In file `Names.txt`:
+ Define translate for `ChangeFocus`
