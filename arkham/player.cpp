@@ -510,3 +510,23 @@ int player::getcount(cardtype_s v) const {
 	}
 	return r;
 }
+
+void player::phase_movement() {
+	movement(get(Speed));
+}
+
+void player::phase_encounter_arkham() {
+	if(location && (location->type == Arkham || location->type == Street)) {
+		auto push_last = last; last = this;
+		location->phase_encounter();
+		last = push_last;
+	}
+}
+
+void player::phase_encounter_other() {
+	if(location && location->type == OtherWorld) {
+		auto push_last = last; last = this;
+		location->phase_encounter();
+		last = push_last;
+	}
+}

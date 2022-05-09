@@ -150,7 +150,7 @@ static void apply_card_type(cardtype_s type, int bonus) {
 	take_pool(bonus, temp);
 }
 
-static void play(const variants& source) {
+void gamei::apply(const variants& source) {
 	m_jump = 10;
 	m_trade_count = 1;
 	need_stop = false;
@@ -165,7 +165,7 @@ static void play() {
 	if(!quest::last)
 		return;
 	apply_text(quest::last);
-	play(quest::last->tags);
+	game.apply(quest::last->tags);
 	show_text();
 }
 
@@ -189,7 +189,7 @@ static bool test_value(variant v) {
 	return true;
 }
 
-static bool test_values(const variants& source) {
+bool gamei::isallow(const variants& source) {
 	for(auto v : source) {
 		if(!test_value(v))
 			return false;
@@ -422,7 +422,7 @@ static const quest* choose_option(const char* title) {
 	for(auto p = ph + 1; p < pe; p++) {
 		if(p->next == -1)
 			break;
-		if(!test_values(p->tags))
+		if(!game.isallow(p->tags))
 			continue;
 		an.add(p, p->text);
 	}
@@ -444,7 +444,7 @@ static void choose(int bonus, int param) {
 		auto ph = choose_option(temp);
 		clear_text_manual();
 		if(ph->tags)
-			play(ph->tags);
+			game.apply(ph->tags);
 		if(!ph->next)
 			break;
 		ph = find_entry(ph, ph->next);

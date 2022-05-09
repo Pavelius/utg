@@ -16,14 +16,15 @@ static void test_fight() {
 
 static void test_encounter() {
 	game.create("CarolynFern");
+	game.add(Sanity, -1);
 	//game.introduction();
 	//test_fight();
 	//game.showcards();
 	//game.refocus();
 	cards.pick(Gate, 1);
 	cards.pick(Monster, 6);
-	game.movement(bsdata<locationi>::find("SouthChurch"), false);
-	game.encounter();
+	//game.movement(bsdata<locationi>::find("SouthChurch"), false);
+	game.play();
 	//game.movement(game.get(Speed));
 }
 

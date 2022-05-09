@@ -74,9 +74,15 @@ struct locationi : nameablei {
 	point			position;
 	locationi*		neightboard[8];
 	quests			encounters;
+	bool			sealed;
+	char			clues;
 	const quest*	choose(int count = 1) const;
+	void			chooseoptions(answers& an) const;
 	void			encounter(int count = 1) const;
+	int				getclues() const { return clues; }
 	location_s		getindex() const { return (location_s)(this - bsdata<locationi>::elements); }
+	bool			issealed() const { return sealed; }
+	void			phase_encounter();
 };
 struct scripti {
 	typedef void (*fnevent)(int counter, int param);
@@ -195,6 +201,9 @@ struct player : abilitya {
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	bool			paythrophy(int count, bool run, bool gates, bool monsters);
+	void			phase_encounter_arkham();
+	void			phase_encounter_other();
+	void			phase_movement();
 	void			refocus();
 	void			refreshcards();
 	int				roll(ability_s v, int m, special_s special = NoSpecial);
@@ -209,7 +218,12 @@ struct player : abilitya {
 struct gamei : public player {
 	static quests	quest_other;
 	static int		d6();
+	static void		apply(const variants& source);
+	static void		applyresult(void* result);
 	static void		information(const char* format, ...);
+	static bool		isallow(const variants& source);
+	static void		play();
+	static void		turn();
 };
 extern cardpool			cards;
 extern gamei			game;
