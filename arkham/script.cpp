@@ -403,18 +403,28 @@ static const quest* choose_option(const char* title) {
 static void choose(int bonus, int param) {
 	auto push_last = quest::last;
 	char temp[128]; stringbuilder sb(temp);
-	while(bonus > 0) {
+	auto count = bonus;
+	while(!bonus || count > 0) {
 		quest::last = push_last;
 		sb.clear();
-		sb.add(getnm("ChooseLeft"), bonus);
+		if(bonus)
+			sb.add(getnm("ChooseLeft"), count);
+		else if(!answers::prompt)
+			sb.add(getnm("ChooseOption"), count);
 		auto ph = choose_option(temp);
 		clear_text_manual();
-		quest::last = find_entry(ph, ph->next);
-		if(!quest::last)
+		if(ph->tags)
+			play(ph->tags);
+		if(!ph->next)
 			break;
-		play();
-		bonus--;
+		ph = find_entry(ph, ph->next);
+		if(ph) {
+			quest::last = ph;
+			play();
+		}
+		count--;
 	}
+	quest::last = push_last;
 }
 
 static void gate_appear(int bonus, int param) {

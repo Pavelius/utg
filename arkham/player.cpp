@@ -492,7 +492,21 @@ void player::refocus() {
 
 void player::showcards() {
 	an.clear();
-	for(auto& e : cards)
+	for(auto& e : cards) {
+		if(!e && e.area != PlayerArea)
+			continue;
 		an.add(&e, getnm(e.geti().id));
-	an.choose(0, getnm("Cancel"));
+	}
+	an.choose(0, getnm("Cancel"), 1);
+}
+
+int player::getcount(cardtype_s v) const {
+	int r = 0;
+	for(auto& e : cards) {
+		if(!e && e.area != PlayerArea)
+			continue;
+		if(e.geti().type == v)
+			r++;
+	}
+	return r;
 }

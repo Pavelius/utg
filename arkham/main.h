@@ -176,6 +176,7 @@ struct player : abilitya {
 	int				getbonus(ability_s v, int bonus) const;
 	int				getcluedices(ability_s v) const;
 	int				getcombat() const;
+	int				getcount(cardtype_s v) const;
 	int				getevade() const;
 	int				getfreehands() const;
 	int				gethorror() const;

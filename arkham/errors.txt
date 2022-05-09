@@ -1,2 +1,9 @@
-﻿In file `Names.txt`:
- Define translate for `AncientTome`
+﻿In file `locale/ru/ArkhamAsylum.txt`:
+ Line 18: Can't find variant `Choose`
+In file `locale/ru/HibbsRoadhouse.txt`:
+ Line 24: Can't find variant `Choose`
+In file `locale/ru/MasBoardingHouse.txt`:
+ Line 15: Can't find variant `Choose`
+ Line 26: Can't find variant `Choose`
+In file `locale/ru/Woods.txt`:
+ Line 6: Can't find variant `Choose`
