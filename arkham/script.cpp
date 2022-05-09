@@ -514,6 +514,9 @@ static void heal(int bonus, int param) {
 static void return_arkham(int bonus, int param) {
 }
 
+static void remove_doom_roll(int bonus, int param) {
+}
+
 static void sanity_roll(int bonus, int param) {
 }
 
@@ -600,6 +603,7 @@ BSDATA(scripti) = {
 	{"RaiseHealth", raise_ability, Health},
 	{"RaiseHealthSanity", raise_health_sanity},
 	{"RemoveSanityAndGainClue", remove_sanity_and_gain, Clue},
+	{"RemoveDoomRoll", remove_doom_roll},
 	{"ReturnArkham", return_arkham},
 	{"SanityRollClue", sanity_roll, Clue},
 	{"Sell", sell},

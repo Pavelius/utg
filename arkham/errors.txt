@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `RiverDocks`
+﻿In file `locale/ru/SouthChurch.txt`:
+ Line 31: Can't find variant `RemoveDoomRoll`

@@ -365,12 +365,12 @@ void player::setflag(gamef_s v, bool activate) {
 int	player::getbonus(ability_s v, int b) const {
 	auto m = getmaximal(v);
 	switch(b) {
-	case 100: b = game.d6();
-	case 101: b = get(v) / 2;
-	case 102: b = get(v);
-	case -100: b = -game.d6();
-	case -101: b = -get(v) / 2;;
-	case -102: b = -get(v);
+	case 100: b = game.d6(); break;
+	case 101: b = get(v) / 2; break;
+	case 102: b = get(v); break;
+	case -100: b = -game.d6(); break;
+	case -101: b = -get(v) / 2; break;
+	case -102: b = -get(v); break;
 	}
 	if(m && b > 0) {
 		auto nv = get(v) + b;

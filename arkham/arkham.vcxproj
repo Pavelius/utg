@@ -193,6 +193,7 @@
     <Text Include="locale\ru\RiverDocks.txt" />
     <Text Include="locale\ru\ScienceBuilding.txt" />
     <Text Include="locale\ru\SilverTwilightLodge.txt" />
+    <Text Include="locale\ru\SouthChurch.txt" />
     <Text Include="locale\ru\StMarysHospital.txt" />
     <Text Include="locale\ru\TheUnnamable.txt" />
     <Text Include="locale\ru\TheWitchHouse.txt" />

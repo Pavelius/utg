@@ -181,5 +181,8 @@
     <Text Include="locale\ru\BlackCave.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\SouthChurch.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ static void test_encounter() {
 	//game.refocus();
 	cards.pick(Gate, 1);
 	cards.pick(Monster, 6);
-	game.movement(bsdata<locationi>::find("RiverDocks"), false);
+	game.movement(bsdata<locationi>::find("SouthChurch"), false);
 	game.encounter();
 	//game.movement(game.get(Speed));
 }

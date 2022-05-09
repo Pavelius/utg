@@ -98,6 +98,7 @@ SirWilliamBrinton: Сэр Уильям Брайтон
 Skill: Навык
 Sneak: Скрытность
 SneakSkill: Навык скрытности
+SouthChurch: Южный приход
 Southside: Саутсайд
 Speed: Скорость
 Spell: Заклинание
