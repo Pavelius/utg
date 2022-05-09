@@ -197,6 +197,7 @@ struct player : abilitya {
 	void			refreshcards();
 	int				roll(ability_s v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;
+	void			showcards();
 	void			setflag(gamef_s v, bool activate = true);
 	void			unequip(cardi* p);
 	void			update();

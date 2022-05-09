@@ -489,3 +489,10 @@ void player::refocus() {
 	}
 	answers::header = push_header;
 }
+
+void player::showcards() {
+	an.clear();
+	for(auto& e : cards)
+		an.add(&e, getnm(e.geti().id));
+	an.choose(0, getnm("Cancel"));
+}

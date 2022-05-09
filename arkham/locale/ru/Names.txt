@@ -1,5 +1,6 @@
 ﻿Abyss: Преисподня
 AdministrationBuilding: Здание администрации
+AncientTome: Древний фолиант
 And: и
 AppTitle: Ужас Аркхема
 ApplyRollResult: Применить результат броска
@@ -35,6 +36,7 @@ EnchantedBlade: Волшебный клинок
 EnchantedKnife: Волшебный кинжал
 EquipItem: Достать %1
 Fight: Сражение
+FightSkill: Навык сражения
 Focus: Собранность
 Food: Еда
 GateAnotherDimention: Врата в другое измерение
@@ -48,12 +50,18 @@ IndependenceSquare: Площадь Независимости
 Introduction: Введение
 Knife: Нож
 LampOfAlhazred: Лампа Аль-Хазреда
+Lantern: 
 Library: Библиотека
 Lore: Знания
+LoreSkill: Навык знаний
 Luck: Удача
+LuckSkill: Навык удачи
+LuckyCigaretteCase: Счастливый Портсигар
+MapOfArkham: Карта Аркхэма
 MasBoardingHouse: Меблированные комнаты Ма
 MiskatonicUniversity: Университет Мискатоник
 Money: Долларов
+Motorcycle: Мотоцикл
 Newspaper: Офис газеты
 No: Нет
 NoCard: Нет карты
@@ -67,6 +75,7 @@ PayTrophy: Отдать %1
 PayTrophyNumber: Отдать %1i единиц трофеев
 PickCard: Возьмите %1
 ProfessorArmitage: Профессор Армитэйдж
+ResearchMaterial: Материалы следствия
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра
 RichardUptonPickman: Ричард Аптон Пикмэн
@@ -81,6 +90,7 @@ SilverTwilightLodge: Ложа серебрянных сумерок
 SirWilliamBrinton: Сэр Уильям Брайтон
 Skill: Навык
 Sneak: Скрытность
+SneakSkill: Навык скрытности
 Southside: Саутсайд
 Speed: Скорость
 Spell: Заклинание
@@ -104,6 +114,7 @@ VelmasDiner: Закусочная "У Велмы"
 WhereYouWhantToMove: Куда хотите пройти (осталось [%1i])?
 Whiskey: Виски
 Will: Воля
+WillSkill: Навык воли
 Wither: Лишение силы
 Woods: Леса
 YeOldeMagickShoppe: Старинная лавка магических товаров
