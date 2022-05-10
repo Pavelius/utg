@@ -1,7 +1,2 @@
-﻿In file `rules/Investigators.txt`:
- Line 23: Can't find variant `Retainer`
-In file `locale/ru/AdministrationBuilding.txt`:
- Line 35: Can't find variant `Retainer`
-In file `locale/ru/Newspaper.txt`:
- Line 4: Can't find variant `Retainer`
- Line 7: Can't find variant `Retainer`
+﻿In file `locale/ru/TheWitchHouse.txt`:
+ Line 17: Can't find variant `LoseItems`

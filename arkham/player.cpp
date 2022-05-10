@@ -540,9 +540,19 @@ void player::loseitems(int count) {
 	querry.add(cards, UniqueItem);
 	querry.add(cards, Spell);
 	switch(count) {
-	case -100: count = game.d6(); break;
-	case -101: count = querry.getcount() / 2; break;
-	case -102: count = querry.getcount(); break;
+	case -100:
+		count = game.d6();
+		break;
+	case -101:
+		count = querry.getcount() / 2;
+		break;
+	case -102:
+		// Automatic remove all
+		for(auto p : querry) {
+			if(!p->geti().is(NoSteal))
+				p->discard();
+		}
+		return;
 	default: count = -count; break;
 	}
 	char temp[260]; stringbuilder sb(temp);
@@ -553,7 +563,10 @@ void player::loseitems(int count) {
 				an.add(p, getnm(p->geti().id));
 		}
 		sb.clear(); sb.add(getnm("ChooseLoseCard"), count);
-		auto p = (cardi*)an.choose(temp);
+		const char* cancel_text = 0;
+		if(querry.isonly(NoSteal))
+			cancel_text = getnm("ThatEnought");
+		auto p = (cardi*)an.choose(temp, cancel_text);
 		if(!p)
 			break;
 		p->discard();

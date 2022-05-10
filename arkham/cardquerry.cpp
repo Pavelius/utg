@@ -34,3 +34,14 @@ int	cardquerry::get(ability_s v) const {
 		r += p->geti().abilities[v];
 	return r;
 }
+
+bool cardquerry::isonly(tag_s v) const {
+	if(!count)
+		return false;
+	for(auto p : *this) {
+		if(*p && !p->geti().is(v))
+			return false;
+			
+	}
+	return true;
+}

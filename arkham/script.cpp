@@ -481,6 +481,7 @@ static void arrested(int bonus, int param) {
 }
 
 static void lose_item(int bonus, int param) {
+	game.loseitems(bonus);
 }
 
 static void lose_half_items(int bonus, int param) {
@@ -574,7 +575,6 @@ BSDATA(scripti) = {
 	{"Heal", heal, 1},
 	{"HealthRollClue", health_roll, Clue},
 	{"LeaveStreet", leave_street},
-	{"LoseHalfItems", lose_half_items},
 	{"LoseItem", lose_item},
 	{"LostInTimeAndSpace", lost_in_time_and_space},
 	{"MoneyLesser", ability_lesser, Money},
