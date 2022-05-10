@@ -87,6 +87,7 @@ PickCard: Возьмите %-1:
 PickEncounter: Вступить в контакт
 PoliceStation: Полицейский участок
 ProfessorArmitage: Профессор Армитэйдж
+ReadTome: Вы начали читать %1.
 ResearchMaterial: Материалы следствия
 Revolver38c: Револьвер 38 калибра
 Revolver45c: Магнум 45 калибра

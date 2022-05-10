@@ -312,13 +312,11 @@ void player::introduction() const {
 	}
 }
 
-void player::additems(answers& an, special_s type, const char* format, int param, fnallow allow) {
+void player::additems(answers& an, const char* format, fnallow allow, int param) {
 	for(auto& e : cards) {
 		if(!e.isactive() || e.area!=PlayerArea)
 			continue;
 		auto& ei = e.geti();
-		if(ei.special != type)
-			continue;
 		if(allow && !allow(&e, param))
 			continue;
 		if(format)
@@ -330,7 +328,13 @@ void player::additems(answers& an, special_s type, const char* format, int param
 
 static bool allow_movement(const void* pv, int param) {
 	auto p = (cardi*)pv;
-	return p->geti().bonus <= param;
+	auto& ei = p->geti();
+	if(ei.special == MovementBonus)
+		return true;
+	else if(ei.special == Tome)
+		return ei.pay <= param;
+	else
+		return false;
 }
 
 void player::movement(int speed) {
@@ -339,7 +343,7 @@ void player::movement(int speed) {
 		sb.clear();
 		sb.add(getnm("WhereYouWhantToMove"), speed);
 		an.clear();
-		additems(an, MovementBonus, "UseItem", speed, allow_movement);
+		additems(an, "UseItem", allow_movement, speed);
 		for(auto p : location->neightboard) {
 			if(!p)
 				break;
@@ -350,8 +354,24 @@ void player::movement(int speed) {
 			break;
 		if(cards.indexof(p)!=-1) {
 			auto pc = (cardi*)p;
-			speed += pc->geti().bonus;
-			pc->use();
+			auto& ei = pc->geti();
+			if(ei.special == MovementBonus) {
+				speed += ei.bonus;
+				pc->use();
+			} else if(ei.special ==Tome) {
+				speed -= ei.pay;
+				if(ei.is(Exhause))
+					pc->exhaused = 1;
+				game.information(getnm("ReadTome"), getnm(ei.id));
+				if(roll(Lore, ei.difficult)) {
+					pc->apply(ei.effect);
+					if(ei.is(Discard))
+						pc->discard();
+				} else {
+					if(ei.is(DiscardIfFail))
+						pc->discard();
+				}
+			}
 		} else {
 			movement(p);
 			answers::header = getnm(p->id);

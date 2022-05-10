@@ -18,6 +18,7 @@ BSDATA(tagi) = {
 	{"NoSteal"},
 	{"Discard"},
 	{"DiscardOn1"},
+	{"DiscardIfFail"},
 	{"Versatile"},
 };
 assert_enum(tagi, Versatile)

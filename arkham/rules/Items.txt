@@ -4,7 +4,8 @@ NoCard
 
 #Card type(CommonItem) count(2)
 
-AncientTome special(Tome) cost(4) difficult(-1) pay(2)
+AncientTome special(Tome) cost(4) difficult(-1) pay(2) tags(Discard)
+ effect Spell+1
 Axe special(PhysicalWeapon) cost(3) hands(1) bonus(2) tags(Versatile)
 Bullwhip special(PhysicalWeapon) cost(2) bonus(1) hands(1) tags(ExhauseToRerollDie)
 CavalrySaber special(PhysicalWeapon) cost(3) bonus(2) hands(1)
@@ -21,7 +22,8 @@ Lantern cost(3)
 LuckyCigaretteCase cost(1) tags(Discard)
 MapOfArkham special(MovementBonus) cost(2) bonus(1) tags(Exhause)
 Motorcycle special(MovementBonus) cost(4) bonus(2) tags(Exhause)
-OldJournal special(Tome) cost(1) difficult(-1) pay(1)
+OldJournal special(Tome) cost(1) difficult(-1) pay(1) tags(Discard)
+ effect Clue+3
 ResearchMaterial cost(1)
 Revolver38c special(PhysicalWeapon) cost(4) bonus(3) hands(1)
 Revolver45c special(PhysicalWeapon) cost(5) bonus(4) hands(1)

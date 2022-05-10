@@ -34,7 +34,7 @@ enum tag_s : unsigned char {
 	Ambush, Endless, Undead,
 	PhysicalResistance, PhysicalImmunity, MagicalResistance, MagicalImmunity,
 	NightmarishI, NightmarishII, OverwhelmingI, OverwhelmingII,
-	BonusVsUndead, Exhause, ExhauseToRerollDie, NoSteal, Discard, DiscardOn1, Versatile,
+	BonusVsUndead, Exhause, ExhauseToRerollDie, NoSteal, Discard, DiscardOn1, DiscardIfFail, Versatile,
 };
 enum location_s : unsigned char {
 	PlayerArea,
@@ -115,7 +115,7 @@ struct cardprotoi : nameablei, abilitya {
 	cardtype_s		type;
 	special_s		special;
 	char			hands, difficult, cost, count, pay, bonus;
-	variants		effect;
+	variants		effect, fail;
 	realma			realms;
 	taga			tags;
 	int				getcombat(const cardprotoi& enemy) const;
@@ -127,7 +127,9 @@ struct cardi {
 	unsigned char	exhaused : 1;
 	unsigned char	uses : 3;
 	location_s		area;
+	static cardi*	last;
 	constexpr explicit operator bool() const { return type != 0; }
+	void			apply(variants effect);
 	bool			afterroll(ability_s v, int m, special_s special, bool run);
 	void			clear();
 	void			discard();
@@ -166,7 +168,7 @@ struct player : abilitya {
 	char			m_health, m_sanity;
 	char			focus[3];
 	cardi*			hands[4];
-	void			additems(answers& an, special_s type, const char* format, int param, fnallow allow);
+	void			additems(answers& an, const char* format, fnallow allow, int param);
 	void			apply(variant v);
 	bool			cast(cardi& e);
 	bool			combat(cardprotoi& source);

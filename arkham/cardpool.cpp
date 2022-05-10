@@ -1,5 +1,7 @@
 #include "main.h"
 
+cardi* cardi::last;
+
 void cardpool::discard() {
 	for(auto& e : *this) {
 		if(e)
@@ -19,6 +21,11 @@ void cardi::discard() {
 	}
 	bsdata<cardtypei>::elements[geti().type].cards.drop(type);
 	clear();
+}
+
+void cardi::apply(variants source) {
+	last = this;
+	game.apply(source);
 }
 
 void cardi::use() {
