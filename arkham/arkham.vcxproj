@@ -200,6 +200,7 @@
     <Text Include="locale\ru\UnvisitedIsle.txt" />
     <Text Include="locale\ru\VelmasDiner.txt" />
     <Text Include="locale\ru\Woods.txt" />
+    <Text Include="locale\ru\YeOldeMagickShoppe.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Investigators.txt" />
     <Text Include="rules\Items.txt" />

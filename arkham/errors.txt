@@ -1,2 +1,2 @@
-﻿In file `locale/ru/TheWitchHouse.txt`:
- Line 17: Can't find variant `LoseItems`
+﻿In file `locale/ru/YeOldeMagickShoppe.txt`:
+ Line 20: Can't find variant `P1ay`

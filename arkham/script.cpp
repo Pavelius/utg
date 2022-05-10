@@ -589,6 +589,7 @@ BSDATA(scripti) = {
 	{"PayClue", make_pay, Clue},
 	{"PayTrophy", pay_trophy},
 	{"PickCommonItem", pick_pool, CommonItem},
+	{"PickSkill", pick_pool, Skill},
 	{"PickSpell", pick_pool, Spell},
 	{"PickUniqueItem", pick_pool, UniqueItem},
 	{"PickYouCommonItem", pick_querry, CommonItem},
