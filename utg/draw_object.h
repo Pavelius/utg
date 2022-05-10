@@ -48,7 +48,7 @@ struct object : drawable {
 	void			clear();
 	static void		initialize();
 	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000)>>v)) != 0; }
-	void			move(point goal, int speed);
+	void			move(point goal, int speed, int correct = 0);
 	void			paint() const;
 	void			paintns() const;
 	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }

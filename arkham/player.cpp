@@ -205,7 +205,7 @@ void player::movement(locationi* pv, bool animation) {
 		if(location && animation) {
 			auto order = ps->priority;
 			ps->priority = 250;
-			ps->move(pv->position, 16);
+			ps->move(pv->position, 16, 32);
 			ps->priority = order;
 		} else
 			ps->set(pv->position);

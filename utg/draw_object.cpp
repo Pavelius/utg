@@ -196,13 +196,31 @@ void draw::clearobjects() {
 	bsdata<object>::source.clear();
 }
 
-static void moving(point& result, point goal, int step) {
+static void correct_camera(point result, int offs) {
+	if(last_screen) {
+		rect area = {camera.x + offs, camera.y + offs, camera.x + last_screen.width() - offs, camera.y + last_screen.height() - offs};
+		if(!result.in(area)) {
+			if(result.x < area.x1)
+				camera.x -= area.x1 - result.x;
+			if(result.y < area.y1)
+				camera.y -= area.y1 - result.y;
+			if(result.x > area.x2)
+				camera.x += result.x - area.x2;
+			if(result.y > area.y2)
+				camera.y += result.y - area.y2;
+		}
+	}
+}
+
+static void moving(point& result, point goal, int step, int corrent) {
 	auto start = result;
 	auto maxds = distance(start, goal);
 	auto curds = 0;
 	while(ismodal() && curds < maxds) {
 		result.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
 		result.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
+		if(corrent)
+			correct_camera(result, corrent);
 		if(pbackground)
 			pbackground();
 		paintobjects();
@@ -215,8 +233,8 @@ static void moving(point& result, point goal, int step) {
 	result = goal;
 }
 
-void object::move(point goal, int speed) {
-	moving(*this, goal, speed);
+void object::move(point goal, int speed, int correct) {
+	moving(*this, goal, speed, correct);
 }
 
 const sprite* draw::getbackground(const char* name) {
