@@ -22,7 +22,7 @@ enum ability_s : unsigned char {
 	Focus,
 };
 enum gamef_s : unsigned char {
-	Bless, Curse, BankLoan, BankLoanNotAllowed, SilverTwilightLodgeMembership,
+	Bless, Curse, BankLoan, BankLoanNotAllowed, DeputyOfArkham, Retainer, SilverTwilightLodgeMembership,
 	ExtraClueDice,
 };
 enum special_s : unsigned char {

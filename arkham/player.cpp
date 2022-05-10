@@ -592,6 +592,13 @@ void player::phase_refresh_actions() {
 				e.discard();
 		}
 	}
+	if(is(DeputyOfArkham))
+		modify(Money, 1);
+	if(is(Retainer)) {
+		modify(Money, 2);
+		if(game.d6() <= 1)
+			modify(Retainer, false);
+	}
 	if(is(Bless) && game.d6() <= 1)
 		modify(Bless, false);
 	if(is(Curse) && game.d6() <= 1)

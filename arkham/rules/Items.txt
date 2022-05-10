@@ -1,8 +1,6 @@
 #Card
 
 NoCard
-Retainer type(Special) special(RefreshAction) count(10) tags(DiscardOn1)
- abilities Money(2)
 
 #Card type(CommonItem) count(2)
 

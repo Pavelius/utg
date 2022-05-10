@@ -5,6 +5,8 @@ BSDATA(gamefi) = {
 	{"Curse"},
 	{"BankLoan"},
 	{"BankLoanNotAllowed"},
+	{"DeputyOfArkham"},
+	{"Retainer"},
 	{"SilverTwilightLodgeMembership"},
 	{"ExtraClueDice"},
 };
