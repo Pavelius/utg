@@ -1,2 +1,7 @@
-﻿In file `rules/Items.txt`:
- Line 4: Not found identifier `RefreshAction`
+﻿In file `rules/Investigators.txt`:
+ Line 23: Can't find variant `Retainer`
+In file `locale/ru/AdministrationBuilding.txt`:
+ Line 35: Can't find variant `Retainer`
+In file `locale/ru/Newspaper.txt`:
+ Line 4: Can't find variant `Retainer`
+ Line 7: Can't find variant `Retainer`

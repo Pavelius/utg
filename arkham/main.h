@@ -22,7 +22,7 @@ enum ability_s : unsigned char {
 	Focus,
 };
 enum gamef_s : unsigned char {
-	Bless, Curse, BankLoan, BankLoanNotAllowed, Retainer, SilverTwilightLodgeMembership,
+	Bless, Curse, BankLoan, BankLoanNotAllowed, SilverTwilightLodgeMembership,
 	ExtraClueDice,
 };
 enum special_s : unsigned char {
@@ -166,6 +166,7 @@ struct player : abilitya {
 	char			focus[3];
 	cardi*			hands[4];
 	void			apply(variant v);
+	bool			cast(cardi& e);
 	bool			combat(cardprotoi& source);
 	void			create(const char* id);
 	void			clear();
@@ -193,8 +194,9 @@ struct player : abilitya {
 	bool			isready() const { return get(Health) > 0 && get(Sanity) > 0; }
 	void			introduction() const;
 	void			leavestreet();
-	void			losehalf(cardtype_s m);
-	void			modify(ability_s v, int bonus);
+	void			loseitems(int count);
+	void			modify(ability_s v, int bonus, bool payment = false);
+	void			modify(gamef_s v, bool activate = true);
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
 	bool			paythrophy(int count, bool run, bool gates, bool monsters);
@@ -207,7 +209,6 @@ struct player : abilitya {
 	int				roll(ability_s v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;
 	void			showcards();
-	void			setflag(gamef_s v, bool activate = true);
 	void			unequip(cardi* p);
 	void			update();
 	void			updatecombat();

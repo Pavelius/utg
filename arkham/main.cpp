@@ -16,7 +16,7 @@ static void test_fight() {
 
 static void test_encounter() {
 	game.create("CarolynFern");
-	game.add(Sanity, -1);
+	game.loseitems(-101);
 	//game.introduction();
 	//test_fight();
 	//game.showcards();

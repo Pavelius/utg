@@ -221,9 +221,6 @@ void player::delayed() {
 	}
 }
 
-void player::losehalf(cardtype_s id) {
-}
-
 int player::getminimal(ability_s v) const {
 	switch(v) {
 	case Sanity: case Health: return 1;
@@ -335,7 +332,7 @@ void player::movement(int speed) {
 	}
 }
 
-void player::setflag(gamef_s v, bool activate) {
+void player::modify(gamef_s v, bool activate) {
 	if(activate) {
 		switch(v) {
 		case Bless:
@@ -352,11 +349,13 @@ void player::setflag(gamef_s v, bool activate) {
 			break;
 		}
 	}
+	if(is(v) == activate)
+		return;
 	if(answers::interactive) {
 		if(activate)
 			game.information(getnm("YouGainCard"), getnm(bsdata<gamefi>::elements[v].id));
 		else
-			game.information(getnm("YouLoseCard"), getnm(bsdata<gamefi>::elements[v].id));
+			game.information(getnm("LostCard"), getnm(bsdata<gamefi>::elements[v].id));
 	}
 	if(activate)
 		flags.set(v);
@@ -533,6 +532,35 @@ void player::phase_encounter_other() {
 	}
 }
 
+void player::loseitems(int count) {
+	if(count >= 0)
+		return;
+	cardquerry querry;
+	querry.add(cards, CommonItem);
+	querry.add(cards, UniqueItem);
+	querry.add(cards, Spell);
+	switch(count) {
+	case -100: count = game.d6(); break;
+	case -101: count = querry.getcount() / 2; break;
+	case -102: count = querry.getcount(); break;
+	default: count = -count; break;
+	}
+	char temp[260]; stringbuilder sb(temp);
+	while(count > 0) {
+		an.clear();
+		for(auto p : querry) {
+			if(*p)
+				an.add(p, getnm(p->geti().id));
+		}
+		sb.clear(); sb.add(getnm("ChooseLoseCard"), count);
+		auto p = (cardi*)an.choose(temp);
+		if(!p)
+			break;
+		p->discard();
+		count--;
+	}
+}
+
 void player::phase_refresh_actions() {
 	for(auto& e : cards) {
 		if(!e || !e.is(PlayerArea))
@@ -551,4 +579,24 @@ void player::phase_refresh_actions() {
 				e.discard();
 		}
 	}
+	if(is(Bless) && game.d6() <= 1)
+		modify(Bless, false);
+	if(is(Curse) && game.d6() <= 1)
+		modify(Curse, false);
+	if(is(BankLoan) && game.d6() <= 3) {
+		if(get(Money) > 0)
+			modify(Money, -1);
+		else {
+			modify(BankLoan, false);
+			modify(BankLoanNotAllowed, true);
+			loseitems(-101);
+		}
+	}
+}
+
+bool player::cast(cardi& e) {
+	auto& ei = e.geti();
+	modify(Sanity, ei.pay, true);
+	e.exhaused = 1;
+	return roll(Lore, ei.difficult, SpellCheck) >= 0;
 }

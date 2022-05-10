@@ -13,6 +13,10 @@ void cardi::clear() {
 }
 
 void cardi::discard() {
+	if(answers::interactive) {
+		if(area==PlayerArea)
+			game.information(getnm("LostCard"), getnm(geti().id));
+	}
 	bsdata<cardtypei>::elements[geti().type].cards.drop(type);
 	clear();
 }

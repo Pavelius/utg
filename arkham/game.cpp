@@ -14,7 +14,10 @@ void gamei::applyresult(void* result) {
 	an.clear();
 	if(!result)
 		return;
-	else if(bsdata<quest>::have(result)) {
+	else if(cards.indexof(result) != -1) {
+		auto p = (cardi*)result;
+		p->use();
+	} else if(bsdata<quest>::have(result)) {
 		auto p = (quest*)result;
 		game.apply(p->tags);
 	} else

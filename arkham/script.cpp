@@ -131,16 +131,6 @@ void gamei::information(const char* format, ...) {
 	shown_info = true;
 }
 
-static void apply_indicator(ability_s v, int bonus) {
-	if(!bonus)
-		return;
-	const char* format = "YouGain";
-	if(bonus < 0)
-		format = "YouLose";
-	game.information(getnm(format), getnm(bsdata<abilityi>::elements[v].id, iabs(bonus)), iabs(bonus));
-	game.add(v, bonus);
-}
-
 static void apply_value(variant v);
 
 static void apply_card_type(cardtype_s type, int bonus) {
@@ -208,12 +198,18 @@ static void apply_result(int r) {
 	play();
 }
 
-void player::modify(ability_s i, int bonus) {
+void player::modify(ability_s i, int bonus, bool payment) {
 	auto n = game.getbonus(i, bonus);
 	if(bsdata<abilityi>::elements[i].is(abilityi::Indicator)) {
 		if(n < 0 && tought.is(i))
 			n++;
-		apply_indicator(i, n);
+		if(!n)
+			return;
+		const char* format = "YouGain";
+		if(bonus < 0)
+			format = "YouLose";
+		game.information(getnm(format), getnm(bsdata<abilityi>::elements[i].id, iabs(n)), iabs(n));
+		game.add(i, n);
 	} else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
 		show_text();
 		apply_result(game.roll(i, n));
@@ -225,10 +221,9 @@ static void apply_value(variant v) {
 		run_script(v.value, v.counter);
 	else if(v.iskind<locationi>())
 		m_location = bsdata<locationi>::elements + v.value;
-	else if(v.iskind<tagi>()) {
-		game.information(getnm("YouGainCard"), v.getname());
-		game.setflag((gamef_s)v.value);
-	} else if(v.iskind<cardprotoi>()) {
+	else if(v.iskind<tagi>())
+		game.modify((gamef_s)v.value);
+	else if(v.iskind<cardprotoi>()) {
 		if(bsdata<cardprotoi>::elements[v.value].type == Ally) {
 			if(bsdata<cardtypei>::elements[Ally].cards.pick(v.value)) {
 				game.information(getnm("YouGainAlly"), v.getname());
@@ -471,8 +466,8 @@ static void monster_appear(int bonus, int param) {
 
 static void remove_sanity_and_gain(int bonus, int param) {
 	auto n = game.d6();
-	apply_indicator(Sanity, -n);
-	apply_indicator((ability_s)param, n);
+	game.modify(Sanity, -n);
+	game.modify((ability_s)param, n);
 }
 
 static void change_investigator(int bonus, int param) {
