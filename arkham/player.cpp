@@ -312,12 +312,34 @@ void player::introduction() const {
 	}
 }
 
+void player::additems(answers& an, special_s type, const char* format, int param, fnallow allow) {
+	for(auto& e : cards) {
+		if(!e.isactive() || e.area!=PlayerArea)
+			continue;
+		auto& ei = e.geti();
+		if(ei.special != type)
+			continue;
+		if(allow && !allow(&e, param))
+			continue;
+		if(format)
+			an.add(&e, getnm(format), getnm(ei.id));
+		else
+			an.add(&e, getnm(ei.id));
+	}
+}
+
+static bool allow_movement(const void* pv, int param) {
+	auto p = (cardi*)pv;
+	return p->geti().bonus <= param;
+}
+
 void player::movement(int speed) {
 	char temp[260]; stringbuilder sb(temp);
 	while(speed > 0) {
 		sb.clear();
 		sb.add(getnm("WhereYouWhantToMove"), speed);
 		an.clear();
+		additems(an, MovementBonus, "UseItem", speed, allow_movement);
 		for(auto p : location->neightboard) {
 			if(!p)
 				break;
@@ -326,9 +348,15 @@ void player::movement(int speed) {
 		auto p = (locationi*)an.choose(temp, getnm("StopMoving"));
 		if(!p)
 			break;
-		movement(p);
-		answers::header = getnm(p->id);
-		speed--;
+		if(cards.indexof(p)!=-1) {
+			auto pc = (cardi*)p;
+			speed += pc->geti().bonus;
+			pc->use();
+		} else {
+			movement(p);
+			answers::header = getnm(p->id);
+			speed--;
+		}
 	}
 }
 

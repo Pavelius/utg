@@ -24,6 +24,8 @@ static void test_encounter() {
 	cards.pick(Gate, 1);
 	cards.pick(Monster, 6);
 	//game.movement(bsdata<locationi>::find("SouthChurch"), false);
+	auto card = (cardt)bsdata<cardprotoi>::source.find("Motorcycle", 0);
+	cards.add(card);
 	game.play();
 	//game.movement(game.get(Speed));
 }

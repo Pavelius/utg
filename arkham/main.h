@@ -166,6 +166,7 @@ struct player : abilitya {
 	char			m_health, m_sanity;
 	char			focus[3];
 	cardi*			hands[4];
+	void			additems(answers& an, special_s type, const char* format, int param, fnallow allow);
 	void			apply(variant v);
 	bool			cast(cardi& e);
 	bool			combat(cardprotoi& source);
