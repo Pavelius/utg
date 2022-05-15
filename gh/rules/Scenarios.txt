@@ -5,7 +5,7 @@ BlackBarrows
   type(L1a) position(2 8) inverse(true)
   type(G1b) position(7 10)
   type(I1b) position(8 4)
-
-TestAnother
- tiles
-  type(I1b) position(2 8) inverse(true)
+  type(StoneDoorV) position(7 11)
+  type(StoneDoorH) position(11 9)
+  type(SpikedTrap) position(10 10)
+  type(SpikedTrap) position(11 10)

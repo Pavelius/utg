@@ -1,2 +1,3 @@
 ﻿In file `rules/Scenarios.txt`:
- Line 11: Not found requisit `id`
+ Line 10: Not found identifier `SpikedTrap`
+ Line 11: Not found identifier `SpikedTrap`
