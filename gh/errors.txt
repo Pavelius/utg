@@ -1,0 +1,2 @@
+﻿In file `rules/Scenarios.txt`:
+ Line 11: Not found requisit `id`

@@ -1,0 +1,96 @@
+#Player
+
+Brute gender(Male) health(10 12 14 16 18 20 22 24 26)
+Tinkerer gender(Male) health(8 9 11 12 14 15 17 18 20)
+
+#Summon
+
+Decoy hits(6) move(2)
+
+#PlayerCard
+
+StandartAttackAction
+ upper Attack+2
+StandartMoveAction
+ lower Move+2
+
+#PlayerCard owner(Brute)
+
+WardingStrenght level(1) initiative(32)
+ upper Attack+3 Push+2
+ lower Use+6 Shield+1 Discard
+EyeForAnEye level(1) initiative(18)
+ upper Round Retaliate+2 Push+2
+ lower Heal+2 Range+1 Earth
+ProvokingRoar level(1) initiative(10)
+ upper Attack+2 Opponent Disarmed
+ lower Round EnemyAttackYouInsteadNearestAlly
+GrabAndGo level(1) initiative(87)
+ upper Loot+1
+ lower Move+4
+Trample level(1) initiative(72)
+ upper Attack+3 Pierce+2
+ lower Move+4 Jump Attack+2 TargetEnemyMoveThrought Experience+2
+ShieldBash level(1) initiative(15)
+ upper Attack+4 Stun Experience+2 Discard
+ lower Round Shield+1
+SweepingBlow level(1) initiative(64)
+ upper Attack+2 Slash+3
+ lower Move+3 Push+1 Circle
+LeapingCleave level(1) initiative(54)
+ upper Attack+3 Slash+2 Experience+1
+ lower Move+3 Jump Air
+OverwhelmingAssault level(1) initiative(61)
+ upper Attack+6 Experience+2 Discard
+ lower Move+3 Push+2
+SpareDagger level(1) initiative(27)
+ upper Attack+3 Range+3 Experience+1
+ lower Attack+2
+Skewer level(0) initiative(35)
+ upper Attack+3 IfAir Attack+1 Pierce+1 Ray+2 Experience+1
+ lower Move+6 Experience+1 Discard
+BalancedMeasure level(0) initiative(77)
+ upper Attack+100 Experience+1
+ lower Move+101
+WallOfDoom level(0) initiative(20)
+ upper Round Retaliate+2 Shield+2 Experience+2 Discard
+ lower Round Attack+1
+
+#PlayerCard owner(Tinkerer)
+
+StunShoot level(1) initiative(20)
+ upper Attack+1 Range+3 Opponent Stun
+ lower Move+4
+ToxicBolt level(1) initiative(18)
+ upper Attack+2 Range+3 Opponent Poison Earth
+ lower Attack+5 Range+2 Experience+2 Discard
+PotentPotables level(1) initiative(46)
+ upper Use+4 Heal+2 Discard
+ lower Move+3
+ReinvigoratingElexir level(1) initiative(37)
+ upper Heal+3 Range+3
+ lower RecoverDiscarded+100 Range+1 Experience+2 Discard
+HarmlessContraption level(1) initiative(74)
+ upper Decoy Experience+2 Discard
+ lower Heal+2 Range+3
+VolatileConcoction level(1) initiative(76)
+ upper TrapPoisonDamage+2 Range+1
+ lower RecoverDiscarded+1 Range+2 IfIce RecoverDiscarded+1
+RevivingShock level(1) initiative(34)
+ upper Attack+2 Range+3 Target+2
+ lower Heal+5 Range+2 Experience+2 Discard
+ProximityMine level(1) initiative(62)
+ upper TrapDamage+6 Discard
+ lower Move+4
+HookGun level(1) initiative(72)
+ upper Attack+2 Range+3 Pull+2
+ lower Loot+2 Experience+1 Discard
+InkBomb level(0) initiative(75)
+ upper Attack+4 Range+3 Splash+3 GainExpForTarget Dark Discard
+ lower Move+4
+EnchancementField level(0) initiative(75)
+ upper Attack+3 Range+3
+ lower Round Attack+1 Range+1
+RestorativeMist level(0) initiative(75)
+ upper Heal+3 Range+3
+ lower Round Attack+1 Range+1

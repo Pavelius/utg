@@ -5,6 +5,4 @@ enum gender_s : unsigned char {
 };
 struct genderi {
 	const char*			id;
-	const char*			name;
-	const char*			text;
 };

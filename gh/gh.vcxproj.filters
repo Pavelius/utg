@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Логика">
+      <UniqueIdentifier>{a5d8a216-7eb4-49c5-b692-8b8757f32be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Данные">
+      <UniqueIdentifier>{1b69a448-c4a9-4091-8bfd-3fa11abb998c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Поддержка">
+      <UniqueIdentifier>{2e939b6e-656a-4556-bda4-a0a38bca9ba0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="deck.h">
+      <Filter>Поддержка</Filter>
+    </ClInclude>
+    <ClInclude Include="script.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="action.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="deck.cpp">
+      <Filter>Поддержка</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="duration.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="element.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="special.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="script.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="area.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="tile.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Scenarios.txt">
+      <Filter>Данные</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

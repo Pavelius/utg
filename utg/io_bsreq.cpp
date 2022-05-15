@@ -84,13 +84,28 @@ static bool isvalue() {
 		|| ischa(p[0]);
 }
 
+static bool isequal(const char* pn) {
+	auto i = 0;
+	while(pn[i]) {
+		if(pn[i] != p[i])
+			return false;
+		i++;
+	}
+	p += i;
+	return true;
+}
+
 static void read_value(valuei& e, const bsreq* req) {
 	e.clear();
 	if(*p == '\"') {
 		stringbuilder sb(temp);
 		p = sb.psstr(p + 1, *p);
 		e.text = szdup(temp);
-	} else if(*p == '-' || isnum(*p)) {
+	} else if(isequal("true"))
+		e.number = 1;
+	else if(isequal("false"))
+		e.number = 0;
+	else if(*p == '-' || isnum(*p)) {
 		auto minus = false;
 		if(*p == '-') {
 			minus = true;
@@ -252,6 +267,23 @@ const bsreq* find_requisit(const bsreq* type, const char* id) {
 	return req;
 }
 
+static bool iscrlevel(int n) {
+	if(p[0] == 10 || p[0] == 13) {
+		auto pn = skipcr(p);
+		auto pe = pn + n;
+		while(pn<pe) {
+			if(*pn!= 0x20)
+				return false;
+			pn++;
+		}
+		p = pn;
+		return true;
+	}
+	return false;
+}
+
+static void read_scalar(void* object, const bsreq* req, int level);
+
 static void read_dictionary(void* object, const bsreq* type, int level, bool need_linefeed = true) {
 	while(allowparse && ischa(*p)) {
 		readid();
@@ -270,13 +302,19 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 				allowparse = false;
 			} else if(req->is(KindDSet))
 				read_dset(object, req);
-			else if(req->is(KindScalar))
-				read_dictionary(req->ptr(object), req->type, level + 1, false);
+			else if(req->is(KindScalar) && req->count > 0)
+				read_scalar(object, req, level+1);
 			else
 				read_array(object, req);
 			skipsymcr();
 		}
 	}
+}
+
+static void read_scalar(void* object, const bsreq* req, int level) {
+	auto index = 0;
+	while(allowparse && iscrlevel(level + 1))
+		read_dictionary(req->ptr(object, index++), req->type, level + 1, false);
 }
 
 static void clear_object(void* object, const bsreq* type) {
