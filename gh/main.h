@@ -28,6 +28,7 @@ enum modifier_s : unsigned char {
 	Experience, Pierce, Range, Target,
 };
 enum action_s : unsigned char {
+	Apply,
 	Shield, Retaliate,
 	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot,
 	Bless, Curse,
@@ -73,9 +74,9 @@ struct playeri {
 };
 struct playercardi {
 	const char*			id;
+	int					initiative;
 	char				level;
 	playeri*			owner;
-	int					initiative;
 	variants			upper, lower;
 	void				getinfo(stringbuilder& sb) const;
 };
@@ -168,7 +169,22 @@ struct scenarioi {
 	point				starts[8];
 	void				prepare(int stage) const;
 };
+struct action {
+	action_s			type;
+	char				bonus;
+	char				modifiers[Target + 1];
+	statef				you, opponent;
+	elementf			gather, consume;
+	area_s				area;
+	char				area_size;
+	void				clear();
+	int					get(modifier_s v) const { return modifiers[v]; }
+	bool				is(element_s v) const;
+	const variant*		parse_condition(const variant* p, const variant* pe);
+	const variant*		parse_modifier(const variant* p, const variant* pe);
+};
 struct gamei {
+	int					parse(variants source, action* pb);
 	static void			setcamera(point pt);
 };
 extern gamei			game;

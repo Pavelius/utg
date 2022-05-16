@@ -1,2 +1,4 @@
-﻿In file `rules/Scenarios.txt`:
- Line 3: Unknown type in requisit ``
+﻿In file `rules/Basic.txt`:
+ Line 99: Not found identifier `Scoundlrel`
+ Line 99: Not found identifier `Scoundlrel`
+ Line 99: Not found identifier `Scoundlrel`

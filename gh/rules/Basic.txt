@@ -1,6 +1,7 @@
 #Player
 
 Brute gender(Male) health(10 12 14 16 18 20 22 24 26)
+Scoundrel gender(Female) health(10 12 14 16 18 20 22 24 26)
 Tinkerer gender(Male) health(8 9 11 12 14 15 17 18 20)
 
 #Summon
@@ -94,3 +95,15 @@ EnchancementField level(0) initiative(75)
 RestorativeMist level(0) initiative(75)
  upper Heal+3 Range+3
  lower Round Attack+1 Range+1
+
+#PlayerCard owner(Scoundlrel)
+
+SingleOut level(1) initiative(86)
+ upper Attack+3 IfTargetAdjancedAlly Attack+2 Experience+1
+ lower Use+4 IfTargetNotAdjancedHisAlly Attack+2 Discard
+FlankingStrike level(1) initiative(04)
+ upper Attack+3 IfTargetAdjancedAlly Attack+2 Experience+1
+ lower Move+5
+SmokeBomb level(1) initiative(12)
+ upper Invisibility Dark IfInvisibility AttackDouble Experience+2 Discard
+ lower Move+5
