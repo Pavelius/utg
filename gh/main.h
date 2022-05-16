@@ -17,7 +17,7 @@ enum area_s : unsigned char {
 	NoArea, Slash, Circle, Ray, Splash, Spray,
 };
 enum special_s : unsigned char {
-	EnemyAttackYouInsteadNearestAlly, GainExpForRetaliate, GainExpForTarget,
+	AttackOneTarget, EnemyAttackYouInsteadNearestAlly, GainExpForRetaliate, GainExpForTarget,
 	TargetEnemyMoveThrought,
 };
 enum statistic_s : unsigned char {
@@ -85,6 +85,7 @@ struct monstercardi {
 	const char*			id;
 	int					initiative;
 	variants			abilities;
+	bool				shuffle;
 	void				getinfo(stringbuilder& sb) const;
 };
 struct combatcardi {
@@ -120,15 +121,8 @@ struct summoni {
 	char				hits, move, attack, range;
 	variants			feats;
 };
-struct monsteri {
-	const char*			id;
-	const char*			abilities;
-	deck				abilities_deck;
-	abilityi			normal[8], elite[8];
-	void				buildcombatdeck();
-	const abilityi&		get(int level, bool tought) const;
-	int					getinitiative() const;
-	void				getinfo(stringbuilder& sb) const;
+struct monsteri : summoni {
+	char				level, elite;
 };
 struct nameable {
 	variant				kind;
@@ -193,9 +187,36 @@ struct activecardi {
 	static activecardi*	add(playeri* player, playercardi* card, variants effect);
 	void				clear();
 };
+class posable {
+	point				value;
+public:
+	point				getposition() const { return value; }
+	void				setposition(point v) { value = v; }
+};
+class creaturei : public posable {
+	const void*			parent;
+	char				level, hits;
+	statef				state;
+public:
+	explicit operator bool() const { return parent != 0; }
+	static creaturei*	add(const char* id, point position, bool elite = false);
+	void				clear();
+	void				damage(int v);
+	const char*			getid() const;
+	int					gethp() const { return hits; }
+	int					getmaximumhp() const;
+	const summoni*		getmonster() const;
+	const playeri*		getplayer() const;
+	bool				is(state_s v) const { return state.is(v); }
+	void				kill();
+	void				updateui() const;
+};
 struct gamei {
+	int					dungeon_level;
 	static duration_s	getduration(variants source);
-	int					parse(variants source, action* pb);
+	static int			getrounds(variants source);
+	static int			parse(variants source, action* pb);
 	static void			setcamera(point pt);
+	static void			updateui(void* parent, point position);
 };
 extern gamei			game;

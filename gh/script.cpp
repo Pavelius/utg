@@ -34,8 +34,12 @@ static void opponent(int bonus, int param) {
 static void double_attack(int bonus, int param) {
 }
 
+static void suffer_damage(int bonus, int param) {
+}
+
 BSDATA(scripti) = {
-	{"AttackDouble", double_attack},
+	{"AttackDouble", double_attack},	
 	{"Opponent", opponent},
+	{"SufferDamage", suffer_damage},
 };
 BSDATAF(scripti)

@@ -20,8 +20,8 @@ activecardi* activecardi::add(playeri* player, playercardi* card, variants effec
 	p->effect = effect;
 	p->type = game.getduration(p->effect);
 	if(p->type == Use) {
-		p->uses = 3;
-		p->uses_experience = 3;
+		p->uses = game.getrounds(p->effect);
+		p->uses_experience = p->uses;
 	}
 	return p;
 }

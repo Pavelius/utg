@@ -1,6 +1,7 @@
 #include "main.h"
 
 BSDATA(speciali) = {
+	{"AttackOneTarget"},
 	{"EnemyAttackYouInsteadNearestAlly"},
 	{"GainExpForRetaliate"},
 	{"GainExpForTarget"},

@@ -1,4 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 99: Not found identifier `Scoundlrel`
- Line 99: Not found identifier `Scoundlrel`
- Line 99: Not found identifier `Scoundlrel`
+﻿In file `rules/Monsters.txt`:
+ Line 40: Can't find variant `Pois1on`

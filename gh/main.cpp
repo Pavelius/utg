@@ -17,9 +17,12 @@ static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
 	p->prepare(0);
 	game.setcamera(p->starts[0]);
+	creaturei::add("Tinkerer", p->starts[0]);
+	creaturei::add("Brute", p->starts[1]);
 }
 
 static void initialization() {
+	bsreq::read("rules/Monsters.txt");
 	bsreq::read("rules/Scenarios.txt");
 	test_scenario();
 }

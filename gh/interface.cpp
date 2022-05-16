@@ -33,3 +33,14 @@ void scenariotilei::updateui() const {
 void gamei::setcamera(point pt) {
 	draw::setcamera(h2p(pt));
 }
+
+void creaturei::updateui() const {
+	auto p = draw::findobject(this);
+	if(!p) {
+		auto pt = h2p(getposition());
+		p = draw::addobject(pt.x, pt.y);
+		p->data = this;
+		p->resource = draw::getres(getid(), "art/creatures");
+		p->priority = 4;
+	}
+}

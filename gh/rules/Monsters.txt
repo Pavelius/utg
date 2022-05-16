@@ -1,0 +1,59 @@
+#Monster
+
+id(LivingBones) level(0) elite(0) hits(5) move(2) attack(1) range(0) feats(Target+2)
+id(LivingBones) level(1) elite(0) hits(5) move(3) attack(1) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(2) elite(0) hits(5) move(3) attack(2) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(3) elite(0) hits(7) move(3) attack(2) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(4) elite(0) hits(7) move(3) attack(3) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(5) elite(0) hits(9) move(3) attack(3) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(6) elite(0) hits(10) move(4) attack(3) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(7) elite(0) hits(13) move(4) attack(3) range(0) feats(Target+2 Shield+1)
+id(LivingBones) level(0) elite(1) hits(6) move(4) attack(2) range(0) feats(Target+2)
+id(LivingBones) level(1) elite(1) hits(6) move(4) attack(2) range(0) feats(Target+3 Shield+1)
+id(LivingBones) level(2) elite(1) hits(7) move(4) attack(3) range(0) feats(Target+3 Shield+1)
+id(LivingBones) level(3) elite(1) hits(10) move(4) attack(3) range(0) feats(Target+3 Shield+1)
+id(LivingBones) level(4) elite(1) hits(11) move(4) attack(4) range(0) feats(Target+3 Shield+1)
+id(LivingBones) level(5) elite(1) hits(11) move(4) attack(4) range(0) feats(Target+3 Shield+2)
+id(LivingBones) level(6) elite(1) hits(11) move(6) attack(4) range(0) feats(Target+3 Shield+2)
+id(LivingBones) level(7) elite(1) hits(14) move(6) attack(4) range(0) feats(Target+3 Shield+2)
+
+#MonsterCard
+
+id(LivingBones) initiative(12) abilities(Shield+1 Heal+2) shuffle(true)
+id(LivingBones) initiative(20) abilities(Move-2 Attack+0 Heal+2) shuffle(true)
+id(LivingBones) initiative(25) abilities(Move+1 Attack-1)
+id(LivingBones) initiative(45) abilities(Move Attack)
+id(LivingBones) initiative(45) abilities(Move Attack)
+id(LivingBones) initiative(64) abilities(Move-1 Attack+1)
+id(LivingBones) initiative(74) abilities(Move Attack AttackOneTarget)
+id(LivingBones) initiative(81) abilities(Attack+2)
+
+#Monster
+
+id(LivingCorpse) level(0) elite(0) hits(5) move(1) attack(3) range(0)
+id(LivingCorpse) level(1) elite(0) hits(7) move(1) attack(3) range(0)
+id(LivingCorpse) level(2) elite(0) hits(9) move(1) attack(3) range(0)
+id(LivingCorpse) level(3) elite(0) hits(10) move(1) attack(4) range(0)
+id(LivingCorpse) level(4) elite(0) hits(11) move(2) attack(4) range(0)
+id(LivingCorpse) level(5) elite(0) hits(13) move(2) attack(4) range(0)
+id(LivingCorpse) level(6) elite(0) hits(14) move(2) attack(4) range(0) feats(Poison)
+id(LivingCorpse) level(6) elite(0) hits(15) move(2) attack(5) range(0) feats(Poison)
+id(LivingCorpse) level(0) elite(1) hits(10) move(1) attack(3) range(0)
+id(LivingCorpse) level(1) elite(1) hits(10) move(1) attack(4) range(0)
+id(LivingCorpse) level(2) elite(1) hits(13) move(1) attack(4) range(0)
+id(LivingCorpse) level(3) elite(1) hits(13) move(2) attack(5) range(0)
+id(LivingCorpse) level(4) elite(1) hits(15) move(2) attack(5) range(0) feats(Poison)
+id(LivingCorpse) level(5) elite(1) hits(17) move(2) attack(6) range(0) feats(Poison)
+id(LivingCorpse) level(6) elite(1) hits(21) move(2) attack(6) range(0) feats(Poison)
+id(LivingCorpse) level(7) elite(1) hits(25) move(2) attack(6) range(0) feats(Poison)
+
+#MonsterCard
+
+id(LivingCorpse) initiative(21) abilities(Move+1 Muddle Immobilize)
+id(LivingCorpse) initiative(32) abilities(Attack+2 Push+1 SufferDamage+1)
+id(LivingCorpse) initiative(47) abilities(Move+1 Attack-1)
+id(LivingCorpse) initiative(66) abilities(Move Attack) shuffle(true)
+id(LivingCorpse) initiative(66) abilities(Move Attack) shuffle(true)
+id(LivingCorpse) initiative(71) abilities(Move+0 Attack+1 Poison Circle+1)
+id(LivingCorpse) initiative(82) abilities(Move-1 Attack+1)
+id(LivingCorpse) initiative(91) abilities(Move+1 SufferDamage+1)

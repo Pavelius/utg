@@ -9,6 +9,8 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 BSDATAC(activecardi, 32)
 BSDATAC(summoni, 64)
+BSDATAC(monsteri, 256)
+BSDATAC(monstercardi, 256)
 BSDATAC(playeri, 24)
 BSDATAC(playercardi, 512)
 BSDATAC(scenarioi, 128)
@@ -73,6 +75,17 @@ BSMETA(summoni) = {
 	BSREQ(id),
 	BSREQ(hits), BSREQ(move), BSREQ(attack), BSREQ(range),
 	{}};
+BSMETA(monsteri) = {
+	BSREQ(id),
+	BSREQ(hits), BSREQ(move), BSREQ(attack), BSREQ(range),
+	BSREQ(level), BSREQ(elite),
+	BSREQ(feats),
+	{}};
+BSMETA(monstercardi) = {
+	BSREQ(id),
+	BSREQ(initiative), BSREQ(shuffle),
+	BSREQ(abilities),
+	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -83,6 +96,8 @@ BSDATA(varianti) = {
 	{"Element", VRSTD(elementi), 1},
 	{"Gender", VRSTD(genderi), 1},
 	{"Modifier", VRSTD(modifieri), 1},
+	{"Monster", VRSTD(monsteri), 0},
+	{"MonsterCard", VRSTD(monstercardi), 0},
 	{"Player", VRSTD(playeri), 1},
 	{"PlayerCard", VRSTD(playercardi), 1},
 	{"Scenario", VRSTD(scenarioi), 1},

@@ -10,3 +10,12 @@ duration_s gamei::getduration(variants source) {
 	}
 	return Instant;
 }
+
+int gamei::getrounds(variants source) {
+	if(source) {
+		auto v = source.begin();
+		if(v->iskind<durationi>() && v->value==Use)
+			return v->counter;
+	}
+	return 0;
+}
