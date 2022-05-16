@@ -150,9 +150,12 @@
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="duration.cpp" />
     <ClCompile Include="element.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="scenario.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="special.cpp" />
     <ClCompile Include="state.cpp" />

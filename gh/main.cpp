@@ -1,17 +1,22 @@
 #include "bsreq.h"
+#include "draw_object.h"
 #include "strategy.h"
 #include "main.h"
 
 void initialize_conditions();
 
 static void main_menu() {
+	draw::camera.x = 0;
+	draw::camera.y = 0;
+	answers an;
+	an.add(main_menu, "Test");
+	an.choose("Test");
 }
 
 static void test_scenario() {
-	for(auto& e : bsdata<scenarioi>()) {
-		if(!e.tiles[1].type)
-			break;
-	}
+	auto p = bsdata<scenarioi>::find("BlackBarrows");
+	p->prepare(0);
+	game.setcamera(p->starts[0]);
 }
 
 static void initialization() {

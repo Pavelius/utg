@@ -1,3 +1,2 @@
 ﻿In file `rules/Scenarios.txt`:
- Line 10: Not found identifier `SpikedTrap`
- Line 11: Not found identifier `SpikedTrap`
+ Line 3: Unknown type in requisit ``

@@ -66,7 +66,7 @@ BSMETA(scenariotilei) = {
 	{}};
 BSMETA(scenarioi) = {
 	BSREQ(id),
-	BSREQ(tiles),
+	BSREQ(tiles), BSREQ(starts),
 	{}};
 BSMETA(summoni) = {
 	BSREQ(id),

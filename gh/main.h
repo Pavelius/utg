@@ -151,7 +151,7 @@ struct eventi {
 	const char*			text;
 	const char*			case1;
 	const char*			case2;
-	action				actions[6];
+	action				actions[8];
 	void				clear();
 	static bool			read(const char* url, array& source);
 };
@@ -159,8 +159,16 @@ struct scenariotilei {
 	const tilei*		type;
 	point				position;
 	bool				inverse;
+	explicit operator bool() const { return type != 0; }
+	void				updateui() const;
 };
 struct scenarioi {
 	const char*			id;
-	scenariotilei		tiles[16];
+	scenariotilei		tiles[32];
+	point				starts[8];
+	void				prepare(int stage) const;
 };
+struct gamei {
+	static void			setcamera(point pt);
+};
+extern gamei			game;

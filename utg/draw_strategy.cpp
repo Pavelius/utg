@@ -247,6 +247,7 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	if(!proc)
 		return -1;
 	set_dark_theme();
+	draw::object::initialize();
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	if(afterread)

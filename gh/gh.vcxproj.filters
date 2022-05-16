@@ -59,6 +59,15 @@
     <ClCompile Include="tile.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="scenario.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

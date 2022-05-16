@@ -35,7 +35,7 @@ struct object : drawable {
 	enum {
 		Visible, Hilite,
 	};
-	void*			data;
+	const void*		data;
 	const char*		string;
 	figure			shape;
 	const sprite*	resource;
