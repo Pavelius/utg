@@ -30,7 +30,7 @@ enum modifier_s : unsigned char {
 enum action_s : unsigned char {
 	Apply,
 	Shield, Retaliate,
-	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot,
+	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot, Kill,
 	Bless, Curse,
 	RecoverDiscarded,
 	TrapDamage, TrapPoisonDamage,
@@ -78,6 +78,7 @@ struct playercardi {
 	char				level;
 	playeri*			owner;
 	variants			upper, lower;
+	variants			getabilities(int n) const { return n ? lower : upper; }
 	void				getinfo(stringbuilder& sb) const;
 };
 struct monstercardi {
@@ -183,7 +184,17 @@ struct action {
 	const variant*		parse_condition(const variant* p, const variant* pe);
 	const variant*		parse_modifier(const variant* p, const variant* pe);
 };
+struct activecardi {
+	duration_s			type;
+	playercardi*		card;
+	playeri*			player;
+	variants			effect;
+	char				uses, uses_experience;
+	static activecardi*	add(playeri* player, playercardi* card, variants effect);
+	void				clear();
+};
 struct gamei {
+	static duration_s	getduration(variants source);
 	int					parse(variants source, action* pb);
 	static void			setcamera(point pt);
 };

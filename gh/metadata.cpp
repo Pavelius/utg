@@ -7,6 +7,7 @@ NOBSDATA(scenariotilei)
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
+BSDATAC(activecardi, 32)
 BSDATAC(summoni, 64)
 BSDATAC(playeri, 24)
 BSDATAC(playercardi, 512)

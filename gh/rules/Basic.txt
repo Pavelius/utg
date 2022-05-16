@@ -96,7 +96,7 @@ RestorativeMist level(0) initiative(75)
  upper Heal+3 Range+3
  lower Round Attack+1 Range+1
 
-#PlayerCard owner(Scoundlrel)
+#PlayerCard owner(Scoundrel)
 
 SingleOut level(1) initiative(86)
  upper Attack+3 IfTargetAdjancedAlly Attack+2 Experience+1

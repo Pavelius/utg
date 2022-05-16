@@ -11,6 +11,7 @@ BSDATA(actioni) = {
 	{"Heal"},
 	{"DisarmTrap"},
 	{"Loot"},
+	{"Kill"},
 	{"Bless"},
 	{"Curse"},
 	{"RecoverDiscarded"},
@@ -51,4 +52,5 @@ int gamei::parse(variants source, action* pb) {
 			p->you.set(v.value);
 		}
 	}
+	return p - pb;
 }

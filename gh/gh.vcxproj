@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="activecard.cpp" />
     <ClCompile Include="area.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="duration.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="playercard.cpp" />
     <ClCompile Include="scenario.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="special.cpp" />

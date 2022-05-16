@@ -68,6 +68,12 @@
     <ClCompile Include="game.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="activecard.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="playercard.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
