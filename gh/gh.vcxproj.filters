@@ -77,6 +77,9 @@
     <ClCompile Include="creature.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="combatdeck.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -89,6 +92,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Monsters.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\CombatCards.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

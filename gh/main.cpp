@@ -16,12 +16,20 @@ static void main_menu() {
 static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
 	p->prepare(0);
+	auto p1 = bsdata<playeri>::find("Tinkerer");
+	auto p2 = bsdata<playeri>::find("Brute");
+	p1->combat.initialize();
+	p2->combat.initialize();
+	game.combat.initialize();
 	game.setcamera(p->starts[0]);
-	creaturei::add("Tinkerer", p->starts[0]);
-	creaturei::add("Brute", p->starts[1]);
+	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
+	auto c2 = creaturei::add("Brute", p->starts[1]);
+	c1->attack(*c2, 3);
+	c2->attack(*c1, 2);
 }
 
 static void initialization() {
+	bsreq::read("rules/CombatCards.txt");
 	bsreq::read("rules/Monsters.txt");
 	bsreq::read("rules/Scenarios.txt");
 	test_scenario();

@@ -149,6 +149,7 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="activecard.cpp" />
     <ClCompile Include="area.cpp" />
+    <ClCompile Include="combatdeck.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="duration.cpp" />
@@ -173,6 +174,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\CombatCards.txt" />
     <Text Include="rules\Monsters.txt" />
     <Text Include="rules\Scenarios.txt" />
   </ItemGroup>

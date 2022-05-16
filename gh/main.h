@@ -64,13 +64,26 @@ struct modifieri {
 struct speciali {
 	const char*			id;
 };
+struct combatcardi {
+	const char*			id;
+	char				bonus, next, shuffle;
+	variants			feats;
+	int					getbonus(int bonus) const;
+};
+struct combatdeck : deck {
+	void				add(const char* id);
+	void				discard(combatcardi* p) { deck::discard(p - bsdata<combatcardi>::elements); }
+	void				initialize();
+	combatcardi*		take() { return bsdata<combatcardi>::elements + deck::take(); }
+};
 struct playeri {
 	const char*			id;
 	gender_s			gender;
 	char				level, exp, coins;
 	variant				cards[2];
 	short				health[10];
-	deck				combat, hand, discard, lost;
+	deck				hand, discard, lost;
+	combatdeck			combat;
 };
 struct playercardi {
 	const char*			id;
@@ -87,12 +100,6 @@ struct monstercardi {
 	variants			abilities;
 	bool				shuffle;
 	void				getinfo(stringbuilder& sb) const;
-};
-struct combatcardi {
-	const char*			id;
-	variant				owner;
-	char				count, bonus;
-	variants			feats;
 };
 struct cardtypei {
 	const char*			id;
@@ -200,18 +207,22 @@ class creaturei : public posable {
 public:
 	explicit operator bool() const { return parent != 0; }
 	static creaturei*	add(const char* id, point position, bool elite = false);
+	void				attack(creaturei& enemy, int bonus);
 	void				clear();
 	void				damage(int v);
+	combatdeck&			getcombatdeck() const;
 	const char*			getid() const;
 	int					gethp() const { return hits; }
 	int					getmaximumhp() const;
 	const summoni*		getmonster() const;
 	const playeri*		getplayer() const;
 	bool				is(state_s v) const { return state.is(v); }
+	bool				isplayer() const;
 	void				kill();
 	void				updateui() const;
 };
 struct gamei {
+	combatdeck			combat;
 	int					dungeon_level;
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);

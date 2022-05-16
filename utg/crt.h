@@ -69,7 +69,7 @@ template<class T> inline void		zcat(T* p1, const T* p2) { zcpy(zend(p1), p2); }
 template<class T> constexpr size_t	zlen(T* p) { return zend(p) - p; }
 template<class T> inline void		zshuffle(T* p, int count) { for(int i = 0; i < count; i++) iswap(p[i], p[rand() % count]); }
 // Storge like vector
-template<class T, int count_max = 128>
+template<class T, size_t count_max = 128>
 struct adat {
 	size_t							count;
 	T								data[count_max];
@@ -88,7 +88,7 @@ struct adat {
 	const T*						endof() const { return data + count_max; }
 	int								find(const T t) const { for(auto& e : *this) if(e == t) return &e - data; return -1; }
 	int								getcount() const { return count; }
-	int								getmaximum() const { return count_max; }
+	size_t							getmaximum() const { return count_max; }
 	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
 	bool							is(const T t) const { for(auto& e : *this) if(e == t) return true; return false; }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }

@@ -8,12 +8,13 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 BSDATAC(activecardi, 32)
-BSDATAC(summoni, 64)
+BSDATAC(combatcardi, 512)
 BSDATAC(monsteri, 256)
 BSDATAC(monstercardi, 256)
 BSDATAC(playeri, 24)
 BSDATAC(playercardi, 512)
 BSDATAC(scenarioi, 128)
+BSDATAC(summoni, 64)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
@@ -86,12 +87,18 @@ BSMETA(monstercardi) = {
 	BSREQ(initiative), BSREQ(shuffle),
 	BSREQ(abilities),
 	{}};
+BSMETA(combatcardi) = {
+	BSREQ(id),
+	BSREQ(bonus), BSREQ(shuffle),
+	BSREQ(feats),
+	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Action", VRSTD(actioni), 1},
 	{"Area", VRSTD(areai), 1},
 	{"Condition", VRSTD(conditioni), 1},
+	{"CombatCard", VRSTD(combatcardi), 0},
 	{"Duration", VRSTD(durationi), 1},
 	{"Element", VRSTD(elementi), 1},
 	{"Gender", VRSTD(genderi), 1},

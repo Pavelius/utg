@@ -74,7 +74,6 @@ int creaturei::getmaximumhp() const {
 }
 
 void creaturei::kill() {
-	auto push_position = getposition();
 	clear();
 }
 
@@ -86,6 +85,37 @@ void creaturei::damage(int v) {
 		hits = 0;
 		kill();
 	}
+}
+
+void creaturei::attack(creaturei& enemy, int bonus) {
+	auto& deck = getcombatdeck();
+	auto next = 1;
+	auto need_shuffle = false;
+	while(next--) {
+		auto p = deck.take();
+		if(p->bonus == -100)
+			return; // Miss
+		else if(p->bonus == 100)
+			bonus *= 2;
+		else
+			bonus += p->bonus;
+		if(p->shuffle)
+			need_shuffle = true;
+		deck.discard(p);
+	}
+	if(need_shuffle)
+		deck.shuffle();
+	enemy.damage(bonus);
+}
+
+combatdeck&	creaturei::getcombatdeck() const {
+	if(isplayer())
+		return ((playeri*)parent)->combat;
+	return game.combat;
+}
+
+bool creaturei::isplayer() const {
+	return bsdata<playeri>::have(parent);
 }
 
 const char* creaturei::getid() const {
