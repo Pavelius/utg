@@ -8,6 +8,7 @@ using namespace draw;
 BSDATAC(object, 256)
 BSDATAC(draworder, 256)
 
+fnevent	draw::object::afterpaintall;
 static rect last_screen;
 static unsigned long timestamp;
 static unsigned long timestamp_last;
@@ -238,6 +239,8 @@ void draw::paintobjects() {
 		draw::caret = *source[i] - draw::camera;
 		source[i]->paint();
 	}
+	if(object::afterpaintall)
+		object::afterpaintall();
 	clipping = push_clip;
 	caret = push_caret;
 }

@@ -9,8 +9,17 @@ void initialize_conditions();
 void util_main();
 #endif // _DEBUG
 
-void ordermove(void* object, point pt, int time, bool depended);
-void floatstring(const char* format);
+static void play_turn() {
+	for(auto& e : bsdata<creaturei>()) {
+		if(e.isplayer())
+			e.move(3);
+	}
+}
+
+static void play_game() {
+	while(true)
+		play_turn();
+}
 
 static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
@@ -19,13 +28,13 @@ static void test_scenario() {
 	auto p2 = bsdata<playeri>::find("Brute");
 	p1->combat.initialize();
 	p2->combat.initialize();
+	p1->hand.addcards(p1->id, 1);
+	p2->hand.addcards(p2->id, 1);
 	game.combat.initialize();
 	game.setcamera(p->starts[0]);
 	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
 	auto c2 = creaturei::add("Brute", p->starts[1]);
-	c1->attack(*c2, 3); draw::waitall();
-	c1->attack(*c2, 3); draw::waitall();
-	c1->move(3);
+	play_game();
 }
 
 static void main_menu() {

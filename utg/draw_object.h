@@ -55,6 +55,7 @@ struct object : drawable {
 	unsigned		flags;
 	fnevent			proc;
 	static object	def;
+	static fnevent	afterpaintall;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	static void		initialize();

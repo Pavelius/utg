@@ -48,6 +48,12 @@ static void pathfind_initialize() {
 	to = getdirection;
 }
 
+void location::setwalls() {
+	for(auto i = 0; i < hms * hms; i++)
+		game.setwall(i);
+}
+
 void gamei::initialize() {
 	pathfind_initialize();
+	game.setwalls();
 }

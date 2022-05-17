@@ -92,6 +92,7 @@ struct playercardi {
 	void				getinfo(stringbuilder& sb) const;
 };
 struct playerdeck : deck {
+	void				addcards(const char* id, int level);
 	void				discard(playercardi* p) { deck::discard(p - bsdata<playercardi>::elements); }
 	playercardi*		take() { return bsdata<playercardi>::elements + deck::take(); }
 };
@@ -99,10 +100,11 @@ struct playeri {
 	const char*			id;
 	gender_s			gender;
 	char				level, exp, coins;
-	variant				cards[2];
+	playercardi*		cards[2];
 	short				health[10];
 	playerdeck			hand, discard, lost;
 	combatdeck			combat;
+	static playeri*		last;
 };
 struct monstercardi {
 	const char*			id;
@@ -210,8 +212,10 @@ struct activecardi {
 class location {
 	flagable<hms*hms>	walls;
 public:
+	bool				iswall(pathfind::indext i) const { return walls.is(i); }
 	void				setpass(pathfind::indext i) { walls.remove(i); }
 	void				setwall(pathfind::indext i) { walls.set(i); }
+	void				setwalls();
 };
 class indexable {
 	point				value;
@@ -224,6 +228,7 @@ public:
 	pathfind::indext	getindex() const { return h2i(value); }
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
+	void				setposition(pathfind::indext v) { value = i2h(v); }
 };
 class creaturei : public indexable {
 	const void*			parent;
@@ -237,6 +242,7 @@ public:
 	void				damage(int v);
 	combatdeck&			getcombatdeck() const;
 	const char*			getid() const;
+	int					getinitiative() const;
 	int					gethp() const { return hits; }
 	int					getmaximumhp() const;
 	const summoni*		getmonster() const;

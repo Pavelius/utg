@@ -168,6 +168,10 @@ const char* creaturei::getid() const {
 }
 
 static void blockwalls() {
+	for(auto i = 0; i < hms * hms; i++) {
+		if(game.iswall(i))
+			setmove(i, Blocked);
+	}
 }
 
 static void block(indext i) {
@@ -214,9 +218,22 @@ static void calculate_shootmap(indext start) {
 
 void creaturei::move(int bonus) {
 	while(bonus > 0) {
-		calculate_movemap(getindex(), bonus, false, false, false);
+		calculate_movemap(getindex(), bonus, is(Hostile), is(Jump), is(Fly));
 		auto new_index = choosemove();
 		if(new_index == Blocked)
 			break;
+		setposition(new_index);
+		bonus -= getmove(new_index);
+		fixmove(i2h(new_index));
 	}
+}
+
+int	creaturei::getinitiative() const {
+	auto p = getplayer();
+	if(p) {
+		if(!p->cards[0])
+			return 99;
+		return p->cards[0]->initiative;
+	} else
+		return 99;
 }

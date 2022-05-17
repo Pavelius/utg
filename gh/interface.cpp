@@ -4,9 +4,10 @@
 #include "main.h"
 
 using namespace draw;
+using namespace pathfind;
 
 const int size = 50;
-static pathfind::indext current_index;
+static indext current_index;
 static bool show_movement_cost, show_hex_grid, show_hex_coor;
 
 static point h2p(point v) {
@@ -85,7 +86,7 @@ void indexable::fixattack(indexable& enemy) const {
 		return;
 	auto dx = p2->x - p1->x;
 	auto dy = p2->y - p1->y;
-	auto dz = isqrt(dx*dx + dy*dy);
+	auto dz = isqrt(dx * dx + dy * dy);
 	if(!dz)
 		return;
 	draworder* po;
@@ -126,9 +127,82 @@ void indexable::fixmove(point hex) const {
 	po->wait();
 }
 
-pathfind::indext indexable::choosemove() {
+static void paint_grid() {
+	rect rc = clipping; rc.offset(-32);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto i = 0; i < hms * hms; i++) {
+		auto hp = i2h(i); auto pt = h2p(hp) - camera;
+		if(!pt.in(rc))
+			continue;
+		if(getmove(i) == Blocked)
+			continue;
+		sb.clear(); sb.add("%1i, %2i", hp.x, hp.y);
+		caret.x = pt.x - textw(temp) / 2;
+		caret.y = pt.y - texth() / 2;
+		text(temp);
+	}
+}
+
+static void circlefa(int size) {
+	auto push_alpha = alpha;
+	draw::alpha = 96;
+	circlef(size);
+	alpha = push_alpha;
+}
+
+static void textvalue(int value) {
+	auto push_caret = caret;
+	char temp[32]; stringbuilder sb(temp);
+	sb.add("%1i", value);
+	caret.x -= (textw(temp) + 1) / 2;
+	caret.y -= (texth() + 1) / 2;
+	text(temp);
+	caret = push_caret;
+}
+
+static void movemarker(indext index, int value) {
+	auto push_fore = fore;
+	auto radius = size * 4 / 10;
+	fore = colors::button;
+	if(ishilite(radius)) {
+		fore = fore.mix(colors::white);
+		if(hot.key == MouseLeft) {
+			if(hot.pressed)
+				fore = fore.mix(colors::white);
+			else
+				execute(buttonparam, index);
+		}
+	}
+	circlefa(radius);
+	fore = colors::button;
+	circle(radius);
+	fore = colors::text;
+	textvalue(value);
+	fore = push_fore;
+}
+
+static void paint_moverange() {
+	auto push_caret = caret;
+	rect rc = clipping; rc.offset(-32);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto i = 0; i < hms * hms; i++) {
+		auto hp = i2h(i); caret = h2p(hp) - camera;
+		if(!caret.in(rc))
+			continue;
+		if(getmove(i) == Blocked)
+			continue;
+		movemarker(i, getmove(i));
+	}
+	caret = push_caret;
+}
+
+indext indexable::choosemove() {
 	answers an;
-	an.add((void*)pathfind::Blocked, getnm("EndMove"));
+	an.add((void*)Blocked, getnm("EndMove"));
+	auto push_event = object::afterpaintall;
+	object::afterpaintall = paint_moverange;
+	splashscreen(500);
 	auto result = an.choose();
-	return (pathfind::indext)(int)result;
+	object::afterpaintall = push_event;
+	return (indext)(int)result;
 }
