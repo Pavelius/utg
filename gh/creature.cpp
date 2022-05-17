@@ -87,7 +87,13 @@ void creaturei::damage(int v) {
 	}
 }
 
+int creaturei::getongoing(action_s v) const {
+	return 0;
+}
+
 void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
+	if(enemy.is(Poison))
+		bonus += 1;
 	auto& deck = getcombatdeck();
 	auto next = 1;
 	auto need_shuffle = false;
@@ -107,6 +113,10 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	}
 	if(need_shuffle)
 		deck.shuffle();
+	auto shield = enemy.getongoing(Shield) - pierce;
+	if(shield < 0)
+		shield = 0;
+	bonus -= shield;
 	enemy.damage(bonus);
 }
 

@@ -194,13 +194,13 @@ struct activecardi {
 	static activecardi*	add(playeri* player, playercardi* card, variants effect);
 	void				clear();
 };
-class posable {
+class indexable {
 	point				value;
 public:
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
 };
-class creaturei : public posable {
+class creaturei : public indexable {
 	const void*			parent;
 	char				level, hits;
 	statef				state;
@@ -215,6 +215,7 @@ public:
 	int					gethp() const { return hits; }
 	int					getmaximumhp() const;
 	const summoni*		getmonster() const;
+	int					getongoing(action_s v) const;
 	const playeri*		getplayer() const;
 	bool				is(state_s v) const { return state.is(v); }
 	bool				isplayer() const;
