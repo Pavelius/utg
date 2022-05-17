@@ -18,15 +18,15 @@ static void apply_rect(point position, point size, bool inverse) {
 	auto x2 = position.x + size.x;
 	auto y2 = position.y + size.y;
 	for(short x = position.x; x < x2; x++) {
-	//	for(short y = position.y; y < y2; y++)
-	//		game.setpass(h2i({x, y}));
+		for(short y = position.y; y < y2; y++)
+			game.setpass(h2i({x, y}));
 	}
 }
 
 void tilei::creating(point position, bool inverse) const {
 	apply_rect(position, size, inverse);
 	for(auto pt : blocks) {
-		//auto i = h2i(pt + position);
-		//game.setwall(i);
+		auto i = h2i(pt + position);
+		game.setwall(i);
 	}
 }

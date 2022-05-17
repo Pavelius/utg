@@ -36,6 +36,7 @@ static void main_menu() {
 }
 
 static void initialization() {
+	game.initialize();
 	bsreq::read("rules/CombatCards.txt");
 	bsreq::read("rules/Monsters.txt");
 	bsreq::read("rules/Scenarios.txt");

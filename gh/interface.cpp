@@ -6,7 +6,7 @@
 using namespace draw;
 
 const int size = 50;
-static indext current_index;
+static pathfind::indext current_index;
 static bool show_movement_cost, show_hex_grid, show_hex_coor;
 
 static point h2p(point v) {

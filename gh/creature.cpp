@@ -1,5 +1,7 @@
 #include "main.h"
 
+using namespace pathfind;
+
 BSDATAC(creaturei, 128)
 
 static creaturei* addnew() {
@@ -165,6 +167,32 @@ const char* creaturei::getid() const {
 	return 0;
 }
 
-void creaturei::move(int bonus) {
+static void blockwalls() {
+}
 
+static void calculate_movemap(indext start, int range, bool you_is_hostile, bool jump, bool fly) {
+	clearpath();
+	blockwalls();
+	if(jump || fly)
+		makewave(start);
+	else {
+		//obstacles.selectalive();
+		//obstacles.match(Hostile, !you_is_hostile);
+		//game.block(obstacles);
+		makewave(start);
+	}
+	//obstacles.clear();
+	//obstacles.selectalive();
+	//game.block(obstacles);
+	blockrange(range);
+}
+
+static void calculate_shootmap(indext start) {
+	clearpath();
+	blockwalls();
+	makewave(start);
+}
+
+void creaturei::move(int bonus) {
+	calculate_movemap(getindex(), bonus, false, false, false);
 }

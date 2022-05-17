@@ -1,4 +1,7 @@
+#include "draw_hexagon.h"
 #include "main.h"
+
+using namespace pathfind;
 
 gamei game;
 
@@ -18,4 +21,33 @@ int gamei::getrounds(variants source) {
 			return v->counter;
 	}
 	return 0;
+}
+
+static point getdirection(point hex, int direction) {
+	static point evenr_directions[2][6] = {
+		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
+		{{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}},
+	};
+	auto parity = hex.y & 1;
+	auto offset = evenr_directions[parity][direction];
+	return hex + offset;
+}
+
+static indext getdirection(indext index, int direction) {
+	if(index == Blocked)
+		return Blocked;
+	auto hex = getdirection(i2h(index), direction);
+	if(hex.x < 0 || hex.y < 0 || hex.x >= hms || hex.y >= hms)
+		return Blocked;
+	return h2i(hex);
+}
+
+static void pathfind_initialize() {
+	maxcount = hms * hms;
+	maxdir = 6;
+	to = getdirection;
+}
+
+void gamei::initialize() {
+	pathfind_initialize();
 }

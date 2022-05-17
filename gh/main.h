@@ -6,6 +6,7 @@
 #include "flagable.h"
 #include "gender.h"
 #include "menu.h"
+#include "pathfind.h"
 #include "point.h"
 #include "script.h"
 #include "variant.h"
@@ -46,12 +47,14 @@ enum state_s : unsigned char {
 enum element_s : unsigned char {
 	Fire, Ice, Air, Earth, Light, Dark, AnyElement,
 };
-typedef short unsigned indext;
+//typedef short unsigned indext;
 typedef flagable<2> statef;
 typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
 typedef flagable<1> elementf;
 typedef flagable<4>	playerf;
-const indext Blocked = 0xFFFF;
+const int				hms = 32;
+inline point			i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
+inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 struct playeri;
 struct actioni {
 	const char*			id;
@@ -204,6 +207,12 @@ struct activecardi {
 	void				discard();
 	void				use();
 };
+class location {
+	flagable<hms*hms>	walls;
+public:
+	void				setpass(pathfind::indext i) { walls.remove(i); }
+	void				setwall(pathfind::indext i) { walls.set(i); }
+};
 class indexable {
 	point				value;
 public:
@@ -211,6 +220,7 @@ public:
 	void				fixdamage(int damage) const;
 	void				fixkill() const;
 	void				fixmove(point hex) const;
+	pathfind::indext	getindex() const { return h2i(value); }
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
 };
@@ -240,9 +250,10 @@ public:
 namespace draw {
 void					waitall();
 }
-struct gamei {
+struct gamei : public location {
 	combatdeck			combat;
 	int					dungeon_level;
+	static void			initialize();
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);
 	static int			parse(variants source, action* pb);
