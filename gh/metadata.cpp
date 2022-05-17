@@ -89,7 +89,7 @@ BSMETA(monstercardi) = {
 	{}};
 BSMETA(combatcardi) = {
 	BSREQ(id),
-	BSREQ(bonus), BSREQ(shuffle),
+	BSREQ(bonus), BSREQ(shuffle), BSREQ(next), BSREQ(count),
 	BSREQ(feats),
 	{}};
 
@@ -98,7 +98,7 @@ BSDATA(varianti) = {
 	{"Action", VRSTD(actioni), 1},
 	{"Area", VRSTD(areai), 1},
 	{"Condition", VRSTD(conditioni), 1},
-	{"CombatCard", VRSTD(combatcardi), 0},
+	{"CombatCard", VRSTD(combatcardi), 1},
 	{"Duration", VRSTD(durationi), 1},
 	{"Element", VRSTD(elementi), 1},
 	{"Gender", VRSTD(genderi), 1},

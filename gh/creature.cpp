@@ -87,18 +87,20 @@ void creaturei::damage(int v) {
 	}
 }
 
-void creaturei::attack(creaturei& enemy, int bonus) {
+void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	auto& deck = getcombatdeck();
 	auto next = 1;
 	auto need_shuffle = false;
-	while(next--) {
+	while(next-- > 0) {
 		auto p = deck.take();
-		if(p->bonus == -100)
-			return; // Miss
-		else if(p->bonus == 100)
+		if(p->bonus == -100) {
+			bonus = -100;
+			break; // Miss
+		} else if(p->bonus == 100)
 			bonus *= 2;
 		else
 			bonus += p->bonus;
+		next += p->next;
 		if(p->shuffle)
 			need_shuffle = true;
 		deck.discard(p);

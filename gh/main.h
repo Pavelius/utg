@@ -66,7 +66,7 @@ struct speciali {
 };
 struct combatcardi {
 	const char*			id;
-	char				bonus, next, shuffle;
+	char				bonus, count, next, shuffle;
 	variants			feats;
 	int					getbonus(int bonus) const;
 };
@@ -207,7 +207,7 @@ class creaturei : public posable {
 public:
 	explicit operator bool() const { return parent != 0; }
 	static creaturei*	add(const char* id, point position, bool elite = false);
-	void				attack(creaturei& enemy, int bonus);
+	void				attack(creaturei& enemy, int bonus, int pierce = 0);
 	void				clear();
 	void				damage(int v);
 	combatdeck&			getcombatdeck() const;

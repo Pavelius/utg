@@ -1,15 +1,24 @@
 #include "main.h"
 
 void combatdeck::add(const char* id) {
-	id = szdup(id);
-	for(auto& e : bsdata<combatcardi>()) {
-		if(e.id == id)
-			adat::add(&e - bsdata<combatcardi>::elements);
-	}
+	auto p = bsdata<combatcardi>::find(id);
+	if(!p)
+		return;
+	auto count = p->count;
+	if(!count)
+		count = 1;
+	while(count--)
+		adat::add(p - bsdata<combatcardi>::elements);
 }
 
 void combatdeck::initialize() {
 	clear();
-	add("StandartCombatCard");
+	add("CombatCardB0");
+	add("CombatCardB1");
+	add("CombatCardP1");
+	add("CombatCardB2");
+	add("CombatCardP2");
+	add("CombatCardX2");
+	add("CombatCardMiss");
 	shuffle();
 }
