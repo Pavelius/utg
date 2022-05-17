@@ -52,6 +52,7 @@ typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
 typedef flagable<1> elementf;
 typedef flagable<4>	playerf;
 const indext Blocked = 0xFFFF;
+struct playeri;
 struct actioni {
 	const char*			id;
 };
@@ -78,15 +79,6 @@ struct combatdeck : deck {
 	combatcardi*		takebad(int count);
 	combatcardi*		takegood(int count);
 };
-struct playeri {
-	const char*			id;
-	gender_s			gender;
-	char				level, exp, coins;
-	variant				cards[2];
-	short				health[10];
-	deck				hand, discard, lost;
-	combatdeck			combat;
-};
 struct playercardi {
 	const char*			id;
 	int					initiative;
@@ -95,6 +87,19 @@ struct playercardi {
 	variants			upper, lower;
 	variants			getabilities(int n) const { return n ? lower : upper; }
 	void				getinfo(stringbuilder& sb) const;
+};
+struct playerdeck : deck {
+	void				discard(playercardi* p) { deck::discard(p - bsdata<playercardi>::elements); }
+	playercardi*		take() { return bsdata<playercardi>::elements + deck::take(); }
+};
+struct playeri {
+	const char*			id;
+	gender_s			gender;
+	char				level, exp, coins;
+	variant				cards[2];
+	short				health[10];
+	playerdeck			hand, discard, lost;
+	combatdeck			combat;
 };
 struct monstercardi {
 	const char*			id;
@@ -193,19 +198,17 @@ struct activecardi {
 	playeri*			player;
 	variants			effect;
 	char				uses, uses_experience;
+	constexpr explicit operator bool() const { return type != Instant; }
 	static activecardi*	add(playeri* player, playercardi* card, variants effect);
 	void				clear();
+	void				discard();
+	void				use();
 };
 class indexable {
 	point				value;
 public:
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
-};
-struct activecarda {
-	char				actions[Discard + 1];
-	void				add(variant v);
-	void				apply(variants source);
 };
 class creaturei : public indexable {
 	const void*			parent;

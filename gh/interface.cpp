@@ -42,5 +42,6 @@ void creaturei::updateui() const {
 		p->data = this;
 		p->resource = draw::getres(getid(), "art/creatures");
 		p->priority = 4;
+		splashscreen(500);
 	}
 }

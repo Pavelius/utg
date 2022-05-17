@@ -87,8 +87,24 @@ void creaturei::damage(int v) {
 	}
 }
 
-int creaturei::getongoing(action_s v) const {
-	return 0;
+int creaturei::getongoing(action_s id) const {
+	auto result = 0;
+	for(auto& e : bsdata<activecardi>()) {
+		if(!e)
+			continue;
+		auto used = false;
+		for(auto v : e.effect) {
+			if(!v.iskind<actioni>())
+				continue;
+			if(v.value != id)
+				continue;
+			result += v.counter;
+			used = true;
+		}
+		if(used)
+			e.use();
+	}
+	return result;
 }
 
 void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
@@ -119,6 +135,8 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	}
 	if(need_shuffle)
 		deck.shuffle();
+	if(!bonus)
+		return;
 	auto shield = enemy.getongoing(Shield) - pierce;
 	if(shield < 0)
 		shield = 0;

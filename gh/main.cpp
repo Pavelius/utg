@@ -5,14 +5,6 @@
 
 void initialize_conditions();
 
-static void main_menu() {
-	draw::camera.x = 0;
-	draw::camera.y = 0;
-	answers an;
-	an.add(main_menu, "Test");
-	an.choose("Test");
-}
-
 static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
 	p->prepare(0);
@@ -28,11 +20,17 @@ static void test_scenario() {
 	c2->attack(*c1, 2);
 }
 
+static void main_menu() {
+	test_scenario();
+	answers an;
+	an.add(main_menu, "Test");
+	an.choose("Test");
+}
+
 static void initialization() {
 	bsreq::read("rules/CombatCards.txt");
 	bsreq::read("rules/Monsters.txt");
 	bsreq::read("rules/Scenarios.txt");
-	test_scenario();
 }
 
 void status_info(void) {
