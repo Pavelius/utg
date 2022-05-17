@@ -3,7 +3,7 @@
 
 cardt deck::take() {
 	if(count)
-		return data[count--];
+		return data[--count];
 	return 0;
 }
 

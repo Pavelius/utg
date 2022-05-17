@@ -103,5 +103,8 @@
     <Text Include="rules\CombatCards.txt">
       <Filter>Данные</Filter>
     </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Данные</Filter>
+    </Text>
   </ItemGroup>
 </Project>

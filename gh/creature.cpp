@@ -74,12 +74,14 @@ int creaturei::getmaximumhp() const {
 }
 
 void creaturei::kill() {
+	fixkill();
 	clear();
 }
 
 void creaturei::damage(int v) {
 	if(v <= 0)
 		return;
+	fixdamage(v);
 	hits -= v;
 	if(hits <= 0) {
 		hits = 0;
@@ -135,12 +137,13 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	}
 	if(need_shuffle)
 		deck.shuffle();
-	if(!bonus)
-		return;
-	auto shield = enemy.getongoing(Shield) - pierce;
-	if(shield < 0)
-		shield = 0;
-	bonus -= shield;
+	if(bonus > 0) {
+		auto shield = enemy.getongoing(Shield) - pierce;
+		if(shield < 0)
+			shield = 0;
+		bonus -= shield;
+	}
+	fixattack(enemy);
 	enemy.damage(bonus);
 }
 

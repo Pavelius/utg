@@ -9,6 +9,9 @@ void initialize_conditions();
 void util_main();
 #endif // _DEBUG
 
+void ordermove(void* object, point pt, int time, bool depended);
+void floatstring(const char* format);
+
 static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
 	p->prepare(0);
@@ -20,8 +23,10 @@ static void test_scenario() {
 	game.setcamera(p->starts[0]);
 	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
 	auto c2 = creaturei::add("Brute", p->starts[1]);
-	c1->attack(*c2, 3);
-	c2->attack(*c1, 2);
+	c1->attack(*c2, 3); draw::waitall();
+	c1->attack(*c2, 3); draw::waitall();
+	c1->attack(*c2, 3); draw::waitall();
+	c1->attack(*c2, 3); draw::waitall();
 }
 
 static void main_menu() {

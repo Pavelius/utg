@@ -25,11 +25,22 @@ struct drawable : point {
 	color			fore;
 };
 struct draworder : drawable {
+	enum {
+		AutoClear,
+	};
 	object*			parent;
 	drawable		start;
-	unsigned long	tick;
+	draworder*		depend;
+	unsigned long	tick_start, tick_stop;
+	unsigned		flags;
+	explicit operator bool() const { return parent != 0; }
+	static int		calculate(int v1, int v2, int n, int m);
 	void			clear();
+	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000) >> v)) != 0; }
+	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
+	void			setduration(int v) { tick_stop = tick_start + v; }
 	void			update();
+	void			wait();
 };
 struct object : drawable {
 	enum {
@@ -39,12 +50,13 @@ struct object : drawable {
 	const char*		string;
 	figure			shape;
 	const sprite*	resource;
+	const sprite*	font;
 	unsigned short	frame, size;
 	unsigned char	priority;
 	unsigned		flags;
 	fnevent			proc;
 	static object	def;
-	draworder*		addorder();
+	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	static void		initialize();
 	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000)>>v)) != 0; }
@@ -66,4 +78,5 @@ void				setcamera(point v);
 void				slidecamera(point v, int step = 8);
 void				splashscreen(unsigned milliseconds);
 void				showobjects();
+void				waitall();
 }

@@ -45,3 +45,72 @@ void creaturei::updateui() const {
 		splashscreen(500);
 	}
 }
+
+static draworder* last_order;
+
+void ordermove(void* object, point hp, int time, bool depended) {
+	auto p = draw::findobject(object);
+	if(!p)
+		return;
+	auto pt = h2p(hp);
+	auto po = p->addorder(time, depended ? last_order : 0);
+	po->x = pt.x;
+	po->y = pt.y;
+	last_order = po;
+}
+
+static draworder* floatstring(point pt, color fc, const char* format) {
+	auto pb = draw::addobject(pt.x, pt.y);
+	pb->string = szdup(format);
+	pb->font = metrics::h1;
+	pb->fore = fc;
+	pb->alpha = 0;
+	pb->priority = 101;
+	auto po = pb->addorder(500);
+	po->y -= size;
+	po->start.alpha = 255;
+	po->alpha = 255;
+	po->set(draworder::AutoClear);
+	return po;
+}
+
+static int calculate(int v1, int n, int m) {
+	return v1 * n / m;
+}
+
+void indexable::fixattack(indexable& enemy) const {
+	auto p1 = findobject(this);
+	auto p2 = findobject(&enemy);
+	if(!p1 || !p2)
+		return;
+	auto dx = p2->x - p1->x;
+	auto dy = p2->y - p1->y;
+	auto dz = isqrt(dx*dx + dy*dy);
+	if(!dz)
+		return;
+	draworder* po;
+	auto push_position = *p1;
+	// Move enemy
+	po = p1->addorder(150);
+	po->x += calculate(size / 3, dx, dz);
+	po->y += calculate(size / 3, dy, dz);
+	po->wait();
+	// Move back from enemy
+	po = p1->addorder(250);
+	po->x = push_position.x;
+	po->y = push_position.y;
+}
+
+void indexable::fixdamage(int value) const {
+	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
+	floatstring(h2p(getposition()), colors::red, temp);
+}
+
+void indexable::fixkill() const {
+	auto p1 = findobject(this);
+	if(!p1)
+		return;
+	auto po = p1->addorder(350);
+	po->alpha = 0;
+	po->set(draworder::AutoClear);
+}

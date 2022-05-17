@@ -9,22 +9,99 @@ BSDATAC(object, 256)
 BSDATAC(draworder, 256)
 
 static rect last_screen;
+static unsigned long timestamp;
+static unsigned long timestamp_last;
 long distance(point from, point to);
 object object::def;
 
-void draworder::clear() {
-	memset(this, 0, sizeof(*this));
+static void remove_depends(const draworder* p) {
+	for(auto& e : bsdata<draworder>()) {
+		if(e.depend == p)
+			e.depend = 0;
+	}
 }
 
-static void copy(drawable& e1, drawable& e2) {
+void draworder::clear() {
+	memset(this, 0, sizeof(*this));
+	remove_depends(this);
+}
+
+inline void copy(drawable& e1, drawable& e2) {
 	e1 = e2;
 }
 
-draworder* object::addorder() {
+static void remove_orders() {
+	auto pb = bsdata<draworder>::begin();
+	auto pe = bsdata<draworder>::end();
+	while(pe > pb) {
+		pe--;
+		if(*pe)
+			break;
+		bsdata<draworder>::source.count--;
+	}
+}
+
+static void start_timer() {
+	timestamp_last = getcputime();
+}
+
+static void update_timestamp() {
+	auto c = getcputime();
+	if(!timestamp_last || c < timestamp_last)
+		timestamp_last = c;
+	timestamp += c - timestamp_last;
+	timestamp_last = c;
+}
+
+static void update_all_orders() {
+	for(auto& e : bsdata<draworder>()) {
+		if(e)
+			e.update();
+	}
+}
+
+int draworder::calculate(int v1, int v2, int n, int m) {
+	return v1 + (v2 - v1) * n / m;
+}
+
+void draworder::update() {
+	if(depend || tick_start > timestamp)
+		return;
+	int m = tick_stop - tick_start;
+	if(!m) {
+		clear();
+		return;
+	}
+	int n = timestamp - tick_start;
+	if(n >= m)
+		n = m;
+	parent->x = (short)calculate(start.x, x, n, m);
+	parent->y = (short)calculate(start.y, y, n, m);
+	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
+	parent->fore.r = (unsigned char)calculate(start.fore.r, fore.r, n, m);
+	parent->fore.g = (unsigned char)calculate(start.fore.g, fore.g, n, m);
+	parent->fore.b = (unsigned char)calculate(start.fore.b, fore.b, n, m);
+	if(n == m) {
+		if(is(AutoClear))
+			parent->clear();
+		clear();
+	}
+}
+
+draworder* object::addorder(int milliseconds, draworder* depend) {
 	auto p = bsdata<draworder>::addz();
-	copy(*p, *this);
-	copy(p->start, *this);
+	if(depend) {
+		copy(*p, *depend);
+		copy(p->start, *depend);
+		p->tick_start = depend->tick_stop;
+		p->depend = depend;
+	} else {
+		copy(*p, *this);
+		copy(p->start, *this);
+		p->tick_start = timestamp;
+	}
 	p->parent = this;
+	p->tick_stop = p->tick_start + milliseconds;
 	return p;
 }
 
@@ -56,8 +133,13 @@ void object::paintns() const {
 		image(caret.x, caret.y, resource, frame, flags);
 	if(proc)
 		proc();
-	if(string)
+	if(string) {
+		auto push_font = draw::font;
+		if(font)
+			draw::font = font;
 		textcn(string);
+		draw::font = push_font;
+	}
 }
 
 static void raw_beforemodal() {
@@ -169,7 +251,7 @@ static void paintobjectsshowmode() {
 	paintobjects();
 	if(hot.key == KeyEscape)
 		execute(buttoncancel);
-	if(!hot.pressed && hot.key==MouseLeft)
+	if(!hot.pressed && hot.key == MouseLeft)
 		execute(buttoncancel);
 }
 
@@ -216,13 +298,12 @@ static void moving(point& result, point goal, int step, int corrent) {
 	auto start = result;
 	auto maxds = distance(start, goal);
 	auto curds = 0;
-	while(ismodal() && curds < maxds) {
+	while(curds < maxds && ismodal()) {
 		result.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
 		result.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
 		if(corrent)
 			correct_camera(result, corrent);
-		if(pbackground)
-			pbackground();
+		paintstart();
 		paintobjects();
 		doredraw();
 		waitcputime(1);
@@ -274,16 +355,43 @@ void draw::slidecamera(point goal, int step) {
 	auto start = camera;
 	auto maxds = distance(start, goal);
 	auto curds = 0;
-	while(ismodal() && curds < maxds) {
+	while(curds < maxds && ismodal()) {
 		curds += step;
 		if(curds > maxds)
 			curds = maxds;
 		camera.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
 		camera.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
-		if(pbackground)
-			pbackground();
+		paintstart();
 		paintobjects();
 		doredraw();
 		waitcputime(1);
+	}
+}
+
+void draw::waitall() {
+	start_timer();
+	while(bsdata<draworder>::source.count > 0 && ismodal()) {
+		update_timestamp();
+		update_all_orders();
+		paintstart();
+		paintobjects();
+		doredraw();
+		waitcputime(1);
+		remove_orders();
+	}
+}
+
+void draw::draworder::wait() {
+	if(!(*this))
+		return;
+	start_timer();
+	while((*this) && bsdata<draworder>::source.count > 0 && ismodal()) {
+		update_timestamp();
+		update_all_orders();
+		paintstart();
+		paintobjects();
+		doredraw();
+		waitcputime(1);
+		remove_orders();
 	}
 }

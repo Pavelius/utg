@@ -207,6 +207,9 @@ struct activecardi {
 class indexable {
 	point				value;
 public:
+	void				fixattack(indexable& enemy) const;
+	void				fixdamage(int damage) const;
+	void				fixkill() const;
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
 };
@@ -232,6 +235,9 @@ public:
 	void				kill();
 	void				updateui() const;
 };
+namespace draw {
+void					waitall();
+}
 struct gamei {
 	combatdeck			combat;
 	int					dungeon_level;
