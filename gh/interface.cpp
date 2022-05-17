@@ -31,7 +31,7 @@ void scenariotilei::updateui() const {
 }
 
 void gamei::setcamera(point pt) {
-	draw::slidecamera(h2p(pt), 16);
+	draw::focusing(h2p(pt));
 }
 
 void creaturei::updateui() const {
@@ -113,4 +113,15 @@ void indexable::fixkill() const {
 	auto po = p1->addorder(350);
 	po->alpha = 0;
 	po->set(draworder::AutoClear);
+}
+
+void indexable::fixmove(point hex) const {
+	auto p1 = findobject(this);
+	if(!p1)
+		return;
+	auto pt = h2p(hex); focusing(pt);
+	auto po = p1->addorder(400);
+	po->x = pt.x;
+	po->y = pt.y;
+	po->wait();
 }

@@ -210,6 +210,7 @@ public:
 	void				fixattack(indexable& enemy) const;
 	void				fixdamage(int damage) const;
 	void				fixkill() const;
+	void				fixmove(point hex) const;
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
 };
@@ -233,6 +234,7 @@ public:
 	bool				is(state_s v) const { return state.is(v); }
 	bool				isplayer() const;
 	void				kill();
+	void				move(int bonus);
 	void				updateui() const;
 };
 namespace draw {

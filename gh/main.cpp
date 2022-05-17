@@ -25,8 +25,7 @@ static void test_scenario() {
 	auto c2 = creaturei::add("Brute", p->starts[1]);
 	c1->attack(*c2, 3); draw::waitall();
 	c1->attack(*c2, 3); draw::waitall();
-	c1->attack(*c2, 3); draw::waitall();
-	c1->attack(*c2, 3); draw::waitall();
+	c1->fixmove({5, 10});
 }
 
 static void main_menu() {

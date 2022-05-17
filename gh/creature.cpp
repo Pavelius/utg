@@ -164,3 +164,7 @@ const char* creaturei::getid() const {
 		return ((playeri*)parent)->id;
 	return 0;
 }
+
+void creaturei::move(int bonus) {
+
+}

@@ -34,7 +34,6 @@ struct draworder : drawable {
 	unsigned long	tick_start, tick_stop;
 	unsigned		flags;
 	explicit operator bool() const { return parent != 0; }
-	static int		calculate(int v1, int v2, int n, int m);
 	void			clear();
 	bool			is(unsigned v) const { return (flags & (((unsigned)0x80000000) >> v)) != 0; }
 	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
@@ -67,15 +66,17 @@ struct object : drawable {
 	void			set(point v) { x = v.x; y = v.y; }
 };
 object*				addobject(int x, int y);
+bool				cameravisible(point goal, int border = 48);
 void*				chooseobject();
 void				clearobjects();
+void				focusing(point goal);
 object*				findobject(const void* p);
 const sprite*		getbackground(const char* name);
 const sprite*		getres(const char* name);
 const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();
 void				setcamera(point v);
-void				slidecamera(point v, int step = 8);
+void				slidecamera(point v, int step = 16);
 void				splashscreen(unsigned milliseconds);
 void				showobjects();
 void				waitall();

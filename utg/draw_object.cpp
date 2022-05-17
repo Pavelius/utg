@@ -60,7 +60,7 @@ static void update_all_orders() {
 	}
 }
 
-int draworder::calculate(int v1, int v2, int n, int m) {
+static int calculate(int v1, int v2, int n, int m) {
 	return v1 + (v2 - v1) * n / m;
 }
 
@@ -346,14 +346,18 @@ void draw::setcamera(point v) {
 	camera = getcameraorigin(v);
 }
 
-void draw::slidecamera(point goal, int step) {
+bool draw::cameravisible(point goal, int border) {
 	rect rc = {camera.x, camera.y, camera.x + last_screen.width(), camera.y + last_screen.height()};
-	rc.offset(-32);
-	if(goal.in(rc))
-		return;
+	rc.offset(-border);
+	return goal.in(rc);
+}
+
+void draw::slidecamera(point goal, int step) {
 	goal = getcameraorigin(goal);
 	auto start = camera;
 	auto maxds = distance(start, goal);
+	if(!maxds)
+		return;
 	auto curds = 0;
 	while(curds < maxds && ismodal()) {
 		curds += step;
@@ -366,6 +370,11 @@ void draw::slidecamera(point goal, int step) {
 		doredraw();
 		waitcputime(1);
 	}
+}
+
+void draw::focusing(point goal) {
+	if(!cameravisible(goal))
+		slidecamera(goal);
 }
 
 void draw::waitall() {
