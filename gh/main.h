@@ -216,6 +216,7 @@ public:
 class indexable {
 	point				value;
 public:
+	static pathfind::indext	choosemove();
 	void				fixattack(indexable& enemy) const;
 	void				fixdamage(int damage) const;
 	void				fixkill() const;

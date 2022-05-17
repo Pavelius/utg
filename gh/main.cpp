@@ -25,14 +25,11 @@ static void test_scenario() {
 	auto c2 = creaturei::add("Brute", p->starts[1]);
 	c1->attack(*c2, 3); draw::waitall();
 	c1->attack(*c2, 3); draw::waitall();
-	c1->fixmove({5, 10});
+	c1->move(3);
 }
 
 static void main_menu() {
 	test_scenario();
-	answers an;
-	an.add(main_menu, "Test");
-	an.choose("Test");
 }
 
 static void initialization() {

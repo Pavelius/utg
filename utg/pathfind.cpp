@@ -133,8 +133,10 @@ void pathfind::makewave(indext start_index) {
 		auto cost = ((index == start_index) ? 0 : movement_rate[index]) + 1;
 		for(int d = 0; d < 6; d++) {
 			auto i1 = to(index, d);
+			if(i1 == Blocked)
+				continue;
 			auto c1 = movement_rate[i1];
-			if(i1 == Blocked || c1 == Blocked)
+			if(c1 == Blocked)
 				continue;
 			if(c1 && c1 < cost)
 				continue;

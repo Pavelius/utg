@@ -125,3 +125,10 @@ void indexable::fixmove(point hex) const {
 	po->y = pt.y;
 	po->wait();
 }
+
+pathfind::indext indexable::choosemove() {
+	answers an;
+	an.add((void*)pathfind::Blocked, getnm("EndMove"));
+	auto result = an.choose();
+	return (pathfind::indext)(int)result;
+}

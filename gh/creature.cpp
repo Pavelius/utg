@@ -170,20 +170,39 @@ const char* creaturei::getid() const {
 static void blockwalls() {
 }
 
+static void block(indext i) {
+	if(i != Blocked)
+		setmove(i, Blocked);
+}
+
+static void blockcreatures() {
+	for(auto& e : bsdata<creaturei>()) {
+		if(!e)
+			continue;
+		block(e.getindex());
+	}
+}
+
+static void blockcreatures(bool you_is_hostile) {
+	for(auto& e : bsdata<creaturei>()) {
+		if(!e)
+			continue;
+		if(e.is(Hostile) == you_is_hostile)
+			continue;
+		block(e.getindex());
+	}
+}
+
 static void calculate_movemap(indext start, int range, bool you_is_hostile, bool jump, bool fly) {
 	clearpath();
 	blockwalls();
 	if(jump || fly)
 		makewave(start);
 	else {
-		//obstacles.selectalive();
-		//obstacles.match(Hostile, !you_is_hostile);
-		//game.block(obstacles);
+		blockcreatures(you_is_hostile);
 		makewave(start);
 	}
-	//obstacles.clear();
-	//obstacles.selectalive();
-	//game.block(obstacles);
+	blockcreatures();
 	blockrange(range);
 }
 
@@ -194,5 +213,10 @@ static void calculate_shootmap(indext start) {
 }
 
 void creaturei::move(int bonus) {
-	calculate_movemap(getindex(), bonus, false, false, false);
+	while(bonus > 0) {
+		calculate_movemap(getindex(), bonus, false, false, false);
+		auto new_index = choosemove();
+		if(new_index == Blocked)
+			break;
+	}
 }
