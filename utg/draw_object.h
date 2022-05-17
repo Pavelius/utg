@@ -63,6 +63,7 @@ const sprite*		getres(const char* name);
 const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();
 void				setcamera(point v);
+void				slidecamera(point v, int step = 8);
 void				splashscreen(unsigned milliseconds);
 void				showobjects();
 }

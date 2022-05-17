@@ -249,13 +249,41 @@ const sprite* draw::getres(const char* name, const char* folder) {
 	return gres(name, folder, {}, -10000, -10000);
 }
 
-void draw::setcamera(point v) {
+static point getcameraorigin(point v) {
 	auto w = last_screen.width();
 	if(!w)
 		w = getwidth();
 	auto h = last_screen.height();
 	if(!h)
 		h = getheight();
-	camera.x = v.x - w/2;
-	camera.y = v.y - h/2;
+	v.x -= w / 2;
+	v.y -= h / 2;
+	return v;
+}
+
+void draw::setcamera(point v) {
+	camera = getcameraorigin(v);
+}
+
+void draw::slidecamera(point goal, int step) {
+	rect rc = {camera.x, camera.y, camera.x + last_screen.width(), camera.y + last_screen.height()};
+	rc.offset(-32);
+	if(goal.in(rc))
+		return;
+	goal = getcameraorigin(goal);
+	auto start = camera;
+	auto maxds = distance(start, goal);
+	auto curds = 0;
+	while(ismodal() && curds < maxds) {
+		curds += step;
+		if(curds > maxds)
+			curds = maxds;
+		camera.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
+		camera.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
+		if(pbackground)
+			pbackground();
+		paintobjects();
+		doredraw();
+		waitcputime(1);
+	}
 }

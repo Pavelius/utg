@@ -31,7 +31,7 @@ void scenariotilei::updateui() const {
 }
 
 void gamei::setcamera(point pt) {
-	draw::setcamera(h2p(pt));
+	draw::slidecamera(h2p(pt), 16);
 }
 
 void creaturei::updateui() const {
