@@ -98,7 +98,13 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	auto next = 1;
 	auto need_shuffle = false;
 	while(next-- > 0) {
-		auto p = deck.take();
+		combatcardi* p;
+		if(is(Strenght))
+			p = deck.takegood(2);
+		else if(is(Muddle))
+			p = deck.takebad(2);
+		else
+			p = deck.take();
 		if(p->bonus == -100) {
 			bonus = -100;
 			break; // Miss

@@ -68,13 +68,15 @@ struct combatcardi {
 	const char*			id;
 	char				bonus, count, next, shuffle;
 	variants			feats;
-	int					getbonus(int bonus) const;
+	bool				better(const combatcardi& e) const { return bonus > e.bonus; }
 };
 struct combatdeck : deck {
 	void				add(const char* id);
 	void				discard(combatcardi* p) { deck::discard(p - bsdata<combatcardi>::elements); }
 	void				initialize();
 	combatcardi*		take() { return bsdata<combatcardi>::elements + deck::take(); }
+	combatcardi*		takebad(int count);
+	combatcardi*		takegood(int count);
 };
 struct playeri {
 	const char*			id;
@@ -199,6 +201,11 @@ class indexable {
 public:
 	point				getposition() const { return value; }
 	void				setposition(point v) { value = v; }
+};
+struct activecarda {
+	char				actions[Discard + 1];
+	void				add(variant v);
+	void				apply(variants source);
 };
 class creaturei : public indexable {
 	const void*			parent;

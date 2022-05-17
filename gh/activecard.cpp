@@ -25,3 +25,10 @@ activecardi* activecardi::add(playeri* player, playercardi* card, variants effec
 	}
 	return p;
 }
+
+void activecarda::apply(variants source) {
+	for(auto v : source) {
+		if(v.iskind<actioni>())
+			actions[v.value] += v.counter;
+	}
+}
