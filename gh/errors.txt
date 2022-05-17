@@ -1,3 +1,2 @@
-﻿In file `rules/CombatCards.txt`:
- Line 21: Not found requisit `shuffle`
- Line 22: Not found requisit `shuffle`
+﻿In file `rules/Monsters.txt`:
+ Line 91: Can't find variant `Strenghted`

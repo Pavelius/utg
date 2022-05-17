@@ -10,6 +10,9 @@
     <Filter Include="Поддержка">
       <UniqueIdentifier>{2e939b6e-656a-4556-bda4-a0a38bca9ba0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Утилиты">
+      <UniqueIdentifier>{0e43fa4e-0562-433e-93d3-c77360e333ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="combatdeck.cpp">
       <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Утилиты</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

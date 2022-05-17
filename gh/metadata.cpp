@@ -77,9 +77,8 @@ BSMETA(summoni) = {
 	BSREQ(hits), BSREQ(move), BSREQ(attack), BSREQ(range),
 	{}};
 BSMETA(monsteri) = {
-	BSREQ(id),
+	BSREQ(id), BSREQ(level), BSREQ(elite),
 	BSREQ(hits), BSREQ(move), BSREQ(attack), BSREQ(range),
-	BSREQ(level), BSREQ(elite),
 	BSREQ(feats),
 	{}};
 BSMETA(monstercardi) = {
@@ -103,7 +102,7 @@ BSDATA(varianti) = {
 	{"Element", VRSTD(elementi), 1},
 	{"Gender", VRSTD(genderi), 1},
 	{"Modifier", VRSTD(modifieri), 1},
-	{"Monster", VRSTD(monsteri), 0},
+	{"Monster", VRSTD(monsteri), 3},
 	{"MonsterCard", VRSTD(monstercardi), 0},
 	{"Player", VRSTD(playeri), 1},
 	{"PlayerCard", VRSTD(playercardi), 1},

@@ -5,6 +5,10 @@
 
 void initialize_conditions();
 
+#ifdef _DEBUG
+void util_main();
+#endif // _DEBUG
+
 static void test_scenario() {
 	auto p = bsdata<scenarioi>::find("BlackBarrows");
 	p->prepare(0);
@@ -37,6 +41,9 @@ void status_info(void) {
 }
 
 int main(int argc, char* argv[]) {
+#ifdef _DEBUG
+	util_main();
+#endif // _DEBUG
 	srand(getcputime());
 	initialize_conditions();
 	return draw::strategy(main_menu, initialization);
