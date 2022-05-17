@@ -57,3 +57,30 @@ void gamei::initialize() {
 	pathfind_initialize();
 	game.setwalls();
 }
+
+void gamei::choosecards() {
+	for(auto& e : bsdata<creaturei>()) {
+		if(!e || !e.isplayer())
+			continue;
+		e.choosecards();
+	}
+}
+
+void gamei::playmoves() {
+	creaturea source;
+	source.select();
+	for(auto p : source) {
+		if(!(*p))
+			continue;
+		p->play();
+	}
+}
+
+void gamei::checkinitiative() {
+}
+
+void gamei::playround() {
+	choosecards();
+	checkinitiative();
+	playmoves();
+}

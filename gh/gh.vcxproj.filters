@@ -86,6 +86,9 @@
     <ClCompile Include="main_util.cpp">
       <Filter>Утилиты</Filter>
     </ClCompile>
+    <ClCompile Include="creaturea.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

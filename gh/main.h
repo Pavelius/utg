@@ -93,6 +93,7 @@ struct playercardi {
 };
 struct playerdeck : deck {
 	void				addcards(const char* id, int level);
+	playercardi*		choose(const char* title, bool needremove, fnevent proc = 0);
 	void				discard(playercardi* p) { deck::discard(p - bsdata<playercardi>::elements); }
 	playercardi*		take() { return bsdata<playercardi>::elements + deck::take(); }
 };
@@ -238,21 +239,27 @@ public:
 	explicit operator bool() const { return parent != 0; }
 	static creaturei*	add(const char* id, point position, bool elite = false);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0);
+	void				choosecards();
 	void				clear();
 	void				damage(int v);
 	combatdeck&			getcombatdeck() const;
 	const char*			getid() const;
-	int					getinitiative() const;
+	int					getinitiative(int index = 0) const;
 	int					gethp() const { return hits; }
 	int					getmaximumhp() const;
 	const summoni*		getmonster() const;
 	int					getongoing(action_s v) const;
-	const playeri*		getplayer() const;
+	playeri*			getplayer() const;
 	bool				is(state_s v) const { return state.is(v); }
 	bool				isplayer() const;
 	void				kill();
 	void				move(int bonus);
+	void				play();
 	void				updateui() const;
+};
+struct creaturea : adat<creaturei*> {
+	void				select();
+	void				sort();
 };
 namespace draw {
 void					waitall();
@@ -260,10 +267,14 @@ void					waitall();
 struct gamei : public location {
 	combatdeck			combat;
 	int					dungeon_level;
+	static void			checkinitiative();
+	static void			choosecards();
 	static void			initialize();
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);
 	static int			parse(variants source, action* pb);
+	static void			playmoves();
+	static void			playround();
 	static void			setcamera(point pt);
 	static void			updateui(void* parent, point position);
 };

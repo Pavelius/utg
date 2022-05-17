@@ -206,3 +206,38 @@ indext indexable::choosemove() {
 	object::afterpaintall = push_event;
 	return (indext)(int)result;
 }
+
+static void paint_ability_card() {
+	auto pi = gres("cards", "art/objects");
+	image(pi, 0, 0);
+}
+
+static void paint_statistic() {
+	auto push_stroke = fore_stroke;
+	auto push_font = font;
+	auto push_width = width; width = 320;
+	font = metrics::h1;
+	caret.y += texth() / 3;
+	fore_stroke = colors::active;
+	texta(getnm("Attack"), AlignCenter | TextStroke);
+	width = push_width;
+	font = push_font;
+	fore_stroke = push_stroke;
+}
+
+static void paint_cards() {
+	auto push_caret = caret;
+	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
+	caret.y = 35;
+	paint_ability_card();
+	paint_statistic();
+	caret = push_caret;
+}
+
+playercardi* playerdeck::choose(const char* title, bool need_remove, fnevent proc) {
+	auto push_event = object::afterpaintall;
+	object::afterpaintall = paint_cards;
+	auto v = (int)deck::choose(title, bsdata<playercardi>::source, need_remove);
+	object::afterpaintall = push_event;
+	return bsdata<playercardi>::elements + v;
+}

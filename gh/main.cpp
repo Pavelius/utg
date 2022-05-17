@@ -9,16 +9,9 @@ void initialize_conditions();
 void util_main();
 #endif // _DEBUG
 
-static void play_turn() {
-	for(auto& e : bsdata<creaturei>()) {
-		if(e.isplayer())
-			e.move(3);
-	}
-}
-
 static void play_game() {
 	while(true)
-		play_turn();
+		game.playround();
 }
 
 static void test_scenario() {

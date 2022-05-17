@@ -55,7 +55,7 @@ void creaturei::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-const playeri* creaturei::getplayer() const {
+playeri* creaturei::getplayer() const {
 	return bsdata<playeri>::have(parent) ? (playeri*)parent : 0;
 }
 
@@ -228,12 +228,21 @@ void creaturei::move(int bonus) {
 	}
 }
 
-int	creaturei::getinitiative() const {
+int	creaturei::getinitiative(int index) const {
 	auto p = getplayer();
-	if(p) {
-		if(!p->cards[0])
-			return 99;
-		return p->cards[0]->initiative;
-	} else
-		return 99;
+	if(p && p->cards[index])
+		return p->cards[index]->initiative;
+	return 99;
+}
+
+void creaturei::play() {
+	move(3);
+}
+
+void creaturei::choosecards() {
+	auto p = getplayer();
+	if(!p)
+		return;
+	p->cards[0] = p->hand.choose(0, true);
+	p->cards[1] = p->hand.choose(0, true);
 }

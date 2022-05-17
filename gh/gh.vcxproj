@@ -151,6 +151,7 @@
     <ClCompile Include="area.cpp" />
     <ClCompile Include="combatdeck.cpp" />
     <ClCompile Include="creature.cpp" />
+    <ClCompile Include="creaturea.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="duration.cpp" />
     <ClCompile Include="element.cpp" />

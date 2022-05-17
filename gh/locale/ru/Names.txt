@@ -1,2 +1,104 @@
-﻿AppTitle: Мрачная гавань
+﻿Air: Воздух
+AppTitle: Мрачная гавань
+Attack: Атака
+BalancedMeasure: Взвешенный подход
+BanditGuard: Бандит-охранник
+Bonus: Бонус
+Brute: Дикарь
+Cancel: Отмена
+CharacterSheet: Лист пресонажа
+ChooseAbility: Выбирайте способности
+ChooseBackground: Выбирайте прошлое
+ChooseClass: Выбирайте класс
+ChooseGender: Выберите пол вашего персонажа
+Close: Закрыть
+Dark: Тьма
+Decoy: Приманка
+Disarm: Обезоружить
+Discard: Сбросить
+Earth: Земля
+EnchancementField: Силовое поле
 EndMove: Закончить движение
+EnemyAttackYouInsteadNearestAlly: Враг атакует вас вместо союзника, если вы находитесь рядом с союзником
+Exit: Выход
+Experience: Опыт
+EyeForAnEye: Око за око
+Female: Женщина
+GainExpForRetaliate: Опыт 1 за каждое отражение
+GainExpForTarget: Опыт 1 за каждую цель
+GrabAndGo: Бери и беги
+HarmlessContraption: Безобидное приспособление
+Heal: Лечение
+Hits: Хиты
+HookGun: Крюкомет
+HotKey: Горячая клавиша
+Human: Человек
+Ice: Холод
+Initiative: Инициатива
+InkBomb: Чернильная бомба
+Jump: Прыжек
+LeapingCleave: Рассечение
+Level: Уровень
+LoadGame: Загрузить игру
+Loot: Добыча
+LowerCardPart: Нижняя часть карты
+Male: Мужчина
+Move: Движение
+NewCharacter: Создать персонажа
+NewGame: Новая игра
+Next: Далее
+NextAction: Следующее действие
+NoGender: Безполый
+NoItem: Нет предмета
+OverwhelmingAssault: Подавление
+PerUse: На %1i раз
+PickCharacter: Выбрать персонажа
+Pierce: Пробой
+Poison: Яд
+PotentPotables: Крепкие снадобья
+ProvokingRoar: Угрожающий рык
+ProximityMine: Безконтактная мина
+Pull: Притянуть
+Push: Оттолкнуть
+Range: Дистанция
+Ray: Луч
+RecoverDiscarded: Восстановить из сброса
+ReinvigoratingElexir: Оживляющий элексир
+RestorativeMist: Бодрящая пыль
+Retaliate: Ответный удар
+RevivingShock: Импульсная стимуляция
+Round: На раунд
+Rules: Правила
+Settings: Настройки
+Shield: Щит
+ShieldBash: Удар щитом
+Shuffle: Перетасовать
+Skewer: Вертел
+Skills: Навыки
+Slash: Полукруг
+Sound: Звук
+SpareDagger: Припасенный кинжал
+SpikedTrap: Ловушка с шипами
+Splash: Взрыв
+StandartAttackAction: Стандартная атака
+StandartMoveAction: Стандартная движение
+Strenght: Сила
+Stun: Оглушение
+StunShoot: Шокер
+Summon: Призвать
+SweepingBlow: Сметающий удар
+Target: Цели
+TargetAllAdjancedEnemies: Цель все враги вокруг
+TargetAllAlly: Цель все союзники вокруг
+TargetEnemyMoveThrought: Цель каждый враг на пути движения
+Thinkerer: Изобретатель
+ToxicBolt: Отравленная стрела
+Trample: Топот
+TrapDamage6: Повреждающая ловушка (урон 6)
+TrapPoisonDamage2: Ядовитая ловушка (урон 2)
+UpperCardPart: Верхняя часть карты
+Use: Использований
+Video: Видео
+VolatileConcoction: Летучая смесь
+WallOfDoom: Стена рока
+WardingStrenght: Мастерство отражения
