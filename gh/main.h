@@ -90,6 +90,8 @@ struct playercardi {
 	variants			upper, lower;
 	variants			getabilities(int n) const { return n ? lower : upper; }
 	void				getinfo(stringbuilder& sb) const;
+	void				paint() const;
+	void				paint_statistic() const;
 };
 struct playerdeck : deck {
 	void				addcards(const char* id, int level);

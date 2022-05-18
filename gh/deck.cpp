@@ -20,12 +20,15 @@ cardt deck::choose(const char* title, const array& source, bool need_remove) {
 		const char* id;
 	};
 	answers an;
-	for(auto& v : *this) 
-		an.add(&v, getnm(((element*)source.ptr(v))->id));
+	for(auto& v : *this) {
+		auto p = (element*)source.ptr(v);
+		an.add(p, getnm(p->id));
+	}
 	an.sort();
-	auto p = an.choose(title);
-	auto i = indexof(p);
-	if(need_remove)
+	auto p = (element*)an.choose(title);
+	auto v = (cardt)source.indexof(p);
+	auto i = find(v);
+	if(i!=-1 && need_remove)
 		remove(i, 1);
-	return *((cardt*)p);
+	return v;
 }

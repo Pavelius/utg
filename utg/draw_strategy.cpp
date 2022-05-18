@@ -47,9 +47,6 @@ static void paint() {
 	statusbar();
 }
 
-static void tips() {
-}
-
 static void camera_finish() {
 	const int step = 32;
 	switch(hot.key) {
@@ -259,7 +256,7 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	pbackground = paint;
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
-	ptips = tips;
+	//ptips = tips;
 	pfinish = finish;
 	awindow.flags = WFResize|WFMinmax;
 	metrics::border = 6;

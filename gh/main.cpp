@@ -30,7 +30,10 @@ static void test_scenario() {
 	play_game();
 }
 
+void ui_initialize();
+
 static void main_menu() {
+	ui_initialize();
 	test_scenario();
 }
 

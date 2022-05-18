@@ -150,14 +150,31 @@ static void circlefa(int size) {
 	alpha = push_alpha;
 }
 
-static void textvalue(int value) {
+static void textvalue(const char* value, unsigned flags = TextStroke) {
 	auto push_caret = caret;
+	caret.x -= (textw(value) + 1) / 2;
+	caret.y -= (texth() + 1) / 2;
+	text(value, -1, flags);
+	caret = push_caret;
+}
+
+static void textvalueng(const char* value, unsigned flags) {
+	auto push_fore = fore;
+	fore = colors::black;
+	textvalue(value, flags);
+	fore = push_fore;
+}
+
+static void textvalue(int value) {
 	char temp[32]; stringbuilder sb(temp);
 	sb.add("%1i", value);
-	caret.x -= (textw(temp) + 1) / 2;
-	caret.y -= (texth() + 1) / 2;
-	text(temp);
-	caret = push_caret;
+	textvalue(temp);
+}
+
+static void textvalueng(int value) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add("%1i", value);
+	textvalueng(temp, 0);
 }
 
 static void movemarker(indext index, int value) {
@@ -212,32 +229,54 @@ static void paint_ability_card() {
 	image(pi, 0, 0);
 }
 
-static void paint_statistic() {
+void playercardi::paint_statistic() const {
+	auto push_caret = caret;
 	auto push_stroke = fore_stroke;
 	auto push_font = font;
 	auto push_width = width; width = 320;
-	font = metrics::h1;
-	caret.y += texth() / 3;
+	font = metrics::h2;
+	caret.x += 160;
+	// Name
+	caret.y = push_caret.y + 25;
 	fore_stroke = colors::active;
-	texta(getnm("Attack"), AlignCenter | TextStroke);
+	textvalue(getnm(id));
+	// Level
+	caret.y = push_caret.y + 60;
+	if(level == 0)
+		textvalueng("X", 0);
+	else
+		textvalueng(level);
+	// Initiative
+	caret.y = push_caret.y + 232;
+	font = metrics::h1;
+	textvalue(initiative);
 	width = push_width;
 	font = push_font;
 	fore_stroke = push_stroke;
-}
-
-static void paint_cards() {
-	auto push_caret = caret;
-	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
-	caret.y = 35;
-	paint_ability_card();
-	paint_statistic();
 	caret = push_caret;
 }
 
 playercardi* playerdeck::choose(const char* title, bool need_remove, fnevent proc) {
-	auto push_event = object::afterpaintall;
-	object::afterpaintall = paint_cards;
 	auto v = (int)deck::choose(title, bsdata<playercardi>::source, need_remove);
-	object::afterpaintall = push_event;
 	return bsdata<playercardi>::elements + v;
+}
+
+void playercardi::paint() const {
+	paint_ability_card();
+	paint_statistic();
+}
+
+static void tips() {
+	if(!hilite_object)
+		return;
+	auto push_caret = caret;
+	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
+	caret.y = 35;
+	if(bsdata<playercardi>::have(hilite_object))
+		((playercardi*)hilite_object)->paint();
+	caret = push_caret;
+}
+
+void ui_initialize() {
+	draw::ptips = tips;
 }
