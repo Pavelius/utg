@@ -59,42 +59,51 @@ WallOfDoom level(0) initiative(20)
 
 #PlayerCard owner(Tinkerer)
 
+Flamethrower level(1) initiative(47)
+ upper Attack+3 Wound Experience+2 Fire Spray Discard
+ lower Round Shield+1
 StunShoot level(1) initiative(20)
  upper Attack+1 Range+3 Opponent Stun
  lower Move+4
 ToxicBolt level(1) initiative(18)
  upper Attack+2 Range+3 Opponent Poison Earth
  lower Attack+5 Range+2 Experience+2 Discard
-PotentPotables level(1) initiative(46)
- upper Use+4 Heal+2 Discard
- lower Move+3
 ReinvigoratingElexir level(1) initiative(37)
  upper Heal+3 Range+3
  lower RecoverDiscarded+100 Range+1 Experience+2 Discard
 HarmlessContraption level(1) initiative(74)
  upper Decoy Experience+2 Discard
  lower Heal+2 Range+3
-VolatileConcoction level(1) initiative(76)
- upper TrapPoisonDamage+2 Range+1
- lower RecoverDiscarded+1 Range+2 IfIce RecoverDiscarded+1
-RevivingShock level(1) initiative(34)
- upper Attack+2 Range+3 Target+2
- lower Heal+5 Range+2 Experience+2 Discard
+EnchancementField level(1) initiative(75)
+ upper Attack+3 Range+3
+ lower Round Attack+1 Range+1
+EnergizingTonic level(1) initiative(16)
+ upper Heal+5 Range+2 Experience+2 Discard
+ lower Move+6 Experience+1 Discard
 ProximityMine level(1) initiative(62)
  upper TrapDamage+6 Discard
  lower Move+4
 HookGun level(1) initiative(72)
  upper Attack+2 Range+3 Pull+2
  lower Loot+2 Experience+1 Discard
-InkBomb level(0) initiative(75)
+InkBomb level(1) initiative(75)
  upper Attack+4 Range+3 Splash+3 GainExpForTarget Dark Discard
  lower Move+4
-EnchancementField level(0) initiative(75)
- upper Attack+3 Range+3
- lower Round Attack+1 Range+1
-RestorativeMist level(0) initiative(75)
+NetShooter level(1) initiative(19)
+ upper Attack+3 Range+3 Immobilize Discard
+ lower Immobilize Range+1 Move+2
+RestorativeMist level(1) initiative(75)
  upper Heal+3 Range+3
  lower Round Attack+1 Range+1
+RevivingShock level(0) initiative(34)
+ upper Attack+2 Range+3 Target+2
+ lower Heal+5 Range+2 Experience+2 Discard
+VolatileConcoction level(0) initiative(76)
+ upper TrapPoisonDamage+2 Range+1
+ lower RecoverDiscarded+1 Range+2 IfIce RecoverDiscarded+1
+PotentPotables level(0) initiative(46)
+ upper Use+4 Heal+2 Discard
+ lower Move+3
 
 #PlayerCard owner(Scoundrel)
 

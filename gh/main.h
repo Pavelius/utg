@@ -241,6 +241,7 @@ public:
 	static creaturei*	add(const char* id, point position, bool elite = false);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0);
 	void				choosecards();
+	void				chooseinitiative();
 	void				clear();
 	void				damage(int v);
 	combatdeck&			getcombatdeck() const;

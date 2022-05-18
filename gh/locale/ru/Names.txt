@@ -11,7 +11,8 @@ ChooseAbility: Выбирайте способности
 ChooseBackground: Выбирайте прошлое
 ChooseClass: Выбирайте класс
 ChooseGender: Выберите пол вашего персонажа
-Circle: 
+ChooseInitiative: С какой инициативой вы бедете действовать?
+Circle: Круг
 Close: Закрыть
 Dark: Тьма
 Decoy: Приманка
@@ -21,10 +22,13 @@ Earth: Земля
 EnchancementField: Силовое поле
 EndMove: Закончить движение
 EnemyAttackYouInsteadNearestAlly: Враг атакует вас вместо союзника, если вы находитесь рядом с союзником
+EnergizingTonic: Тонизирующий напиток
 Exit: Выход
 Experience: Опыт
 EyeForAnEye: Око за око
 Female: Женщина
+Fire: Огонь
+Flamethrower: Огнемет
 GainExpForRetaliate: Опыт 1 за каждое отражение
 GainExpForTarget: Опыт 1 за каждую цель
 GrabAndGo: Бери и беги
@@ -36,7 +40,9 @@ HotKey: Горячая клавиша
 Human: Человек
 Ice: Холод
 IfIce: Если есть Лед
+Immobilize: Обездвижен
 Initiative: Инициатива
+InitiativeOrder: Инициатива %1i
 InkBomb: Чернильная бомба
 Jump: Прыжек
 LeapingCleave: Рассечение
@@ -46,6 +52,7 @@ Loot: Добыча
 LowerCardPart: Нижняя часть карты
 Male: Мужчина
 Move: Движение
+NetShooter: Сетемет
 NewCharacter: Создать персонажа
 NewGame: Новая игра
 Next: Далее
@@ -65,7 +72,7 @@ Pull: Притянуть
 Push: Оттолкнуть
 Range: Дистанция
 Ray: Луч
-RecoverDiscarded: Восстановить из сброса
+RecoverDiscarded: Восстановить %1i карт из сброса
 ReinvigoratingElexir: Оживляющий элексир
 RestorativeMist: Бодрящая пыль
 Retaliate: Ответный удар
@@ -83,6 +90,7 @@ Sound: Звук
 SpareDagger: Припасенный кинжал
 SpikedTrap: Ловушка с шипами
 Splash: Взрыв
+Spray: Распыление
 StandartAttackAction: Стандартная атака
 StandartMoveAction: Стандартная движение
 Strenght: Сила
@@ -107,3 +115,4 @@ Video: Видео
 VolatileConcoction: Летучая смесь
 WallOfDoom: Стена рока
 WardingStrenght: Мастерство отражения
+Wound: Ранение

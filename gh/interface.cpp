@@ -235,11 +235,11 @@ static void paint_effect(variants effect) {
 	for(auto v : effect) {
 		sb.clear();
 		auto pn = v.getname();
-		if(szfind(pn, "%1i"))
+		if(szfind(pn, "%1i") || v.iskind<summoni>() || v.iskind<conditioni>() || v.iskind<statei>() || v.iskind<elementi>())
 			sb.add(pn, v.counter);
 		else
-			sb.add("%1%+2i", v.getname(), v.counter);
-		if(v.iskind<actioni>())
+			sb.add("%1% %2i", v.getname(), v.counter);
+		if(v.iskind<actioni>() || v.iskind<summoni>())
 			font = metrics::h2;
 		else
 			font = metrics::font;

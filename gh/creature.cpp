@@ -245,4 +245,18 @@ void creaturei::choosecards() {
 		return;
 	p->cards[0] = p->hand.choose(0, true);
 	p->cards[1] = p->hand.choose(0, true);
+	chooseinitiative();
+}
+
+void creaturei::chooseinitiative() {
+	auto p = getplayer();
+	if(!p || !p->cards[0] || !p->cards[1])
+		return;
+	const char* format = getnm("InitiativeOrder");
+	answers an;
+	an.add((void*)0, format, p->cards[0]->initiative);
+	an.add((void*)1, format, p->cards[1]->initiative);
+	auto result = an.choose(getnm("ChooseInitiative"));
+	if(result)
+		iswap(p->cards[0], p->cards[1]);
 }
