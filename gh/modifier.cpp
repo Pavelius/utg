@@ -1,6 +1,7 @@
 #include "main.h"
 
 BSDATA(modifieri) {
+	{"Bonus"},
 	{"Experience"},
 	{"Pierce"},
 	{"Range"},

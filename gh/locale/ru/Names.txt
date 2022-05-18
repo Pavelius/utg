@@ -16,7 +16,7 @@ Circle: Круг
 Close: Закрыть
 Dark: Тьма
 Decoy: Приманка
-Disarm: Обезоружить
+Disarmed: Обезоружeн
 Discard: Сбросить
 Earth: Земля
 EnchancementField: Силовое поле
@@ -102,7 +102,7 @@ Target: Цели
 TargetAllAdjancedEnemies: Цель все враги вокруг
 TargetAllAlly: Цель все союзники вокруг
 TargetEnemyMoveThrought: Цель каждый враг на пути движения
-Thinkerer: Изобретатель
+Tinkerer: Изобретатель
 ToxicBolt: Отравленная стрела
 Trample: Топот
 TrapDamage: Повреждающая ловушка (урон %1i)

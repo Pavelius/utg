@@ -12,6 +12,17 @@ void creaturea::select() {
 	count = ps - data;
 }
 
+void creaturea::match(state_s v, bool keep) {
+	auto ps = data;
+	auto pe = end();
+	for(auto p : *this) {
+		if(p->is(v) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 static int compare(const void* v1, const void* v2) {
 	auto p1 = *((creaturei**)v1);
 	auto p2 = *((creaturei**)v2);
@@ -28,4 +39,11 @@ static int compare(const void* v1, const void* v2) {
 
 void creaturea::sort() {
 	qsort(data, count, sizeof(data[0]), compare);
+}
+
+creaturei* creaturea::choose(const char* title) const {
+	answers an;
+	for(auto p : *this)
+		an.add(p, getnm(p->getid()));
+	return (creaturei*)an.choose(title);
 }

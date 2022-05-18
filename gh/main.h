@@ -26,10 +26,9 @@ enum statistic_s : unsigned char {
 	MonstersKilled, ItemsUsed,
 };
 enum modifier_s : unsigned char {
-	Experience, Pierce, Range, Target,
+	Bonus, Experience, Pierce, Range, Target,
 };
 enum action_s : unsigned char {
-	Apply,
 	Shield, Retaliate,
 	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot, Kill,
 	Bless, Curse,
@@ -189,14 +188,8 @@ struct action {
 	action_s			type;
 	char				bonus;
 	char				modifiers[Target + 1];
-	statef				you, opponent;
-	elementf			gather, consume;
-	area_s				area;
-	char				area_size;
 	void				clear();
 	int					get(modifier_s v) const { return modifiers[v]; }
-	bool				is(element_s v) const;
-	const variant*		parse_condition(const variant* p, const variant* pe);
 	const variant*		parse_modifier(const variant* p, const variant* pe);
 };
 struct activecardi {
@@ -225,6 +218,7 @@ public:
 	static pathfind::indext	choosemove();
 	void				fixattack(indexable& enemy) const;
 	void				fixdamage(int damage) const;
+	void				fixexperience(int value) const;
 	void				fixkill() const;
 	void				fixmove(point hex) const;
 	pathfind::indext	getindex() const { return h2i(value); }
@@ -237,11 +231,16 @@ class creaturei : public indexable {
 	char				level, hits;
 	statef				state;
 public:
+	static creaturei*	active;
 	explicit operator bool() const { return parent != 0; }
 	static creaturei*	add(const char* id, point position, bool elite = false);
+	void				apply(variants source);
+	void				apply(action_s type);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0);
 	void				choosecards();
+	creaturei*			chooseenemy() const;
 	void				chooseinitiative();
+	creaturei*			choosenearest(bool hostile) const;
 	void				clear();
 	void				damage(int v);
 	combatdeck&			getcombatdeck() const;
@@ -257,9 +256,12 @@ public:
 	void				kill();
 	void				move(int bonus);
 	void				play();
+	void				set(state_s v) { return state.set(v); }
 	void				updateui() const;
 };
 struct creaturea : adat<creaturei*> {
+	creaturei*			choose(const char* title) const;
+	void				match(state_s v, bool keep);
 	void				select();
 	void				sort();
 };

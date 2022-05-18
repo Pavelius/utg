@@ -3,6 +3,46 @@
 using namespace pathfind;
 
 BSDATAC(creaturei, 128)
+static char			modifiers[Target + 1];
+static statef		states;
+static creaturea	targets;
+
+static void clear_modifiers() {
+	memset(modifiers, 0, sizeof(modifiers));
+	memset(&states, 0, sizeof(states));
+	modifiers[Target] = 1;
+	targets.clear();
+}
+
+static variant* skip_modifiers(variant* p, variant* pe) {
+	while(p < pe) {
+		if(p->iskind<modifieri>()) {
+			p++;
+			continue;
+		} else
+			break;
+	}
+	return p;
+}
+
+static variant* add_modifier(variant* p, variant* pe, bool add_states) {
+	while(p < pe) {
+		if(p->iskind<conditioni>()) {
+			auto pc = bsdata<conditioni>::elements + p->value;
+			if(pc->proc(p->counter, pc->param))
+				p = add_modifier(p, pe, true);
+			else
+				p = skip_modifiers(p, pe);
+		} else if(p->iskind<modifieri>()) {
+			modifiers[p->value] += p->counter;
+			p++;
+		} else if(add_states && p->iskind<statei>())
+			states.set(p->value);
+		else
+			break;
+	}
+	return p;
+}
 
 static creaturei* addnew() {
 	for(auto& e : bsdata<creaturei>()) {
@@ -236,7 +276,36 @@ int	creaturei::getinitiative(int index) const {
 }
 
 void creaturei::play() {
-	move(3);
+	auto p = getplayer();
+	if(!p)
+		return;
+	bool use_card_1 = false;
+	bool use_card_2 = false;
+	bool use_upper = false;
+	bool use_lower = false;
+	for(auto i = 0; i < 2; i++) {
+		answers an;
+		if(!use_card_1)
+			an.add(p->cards[0], getnm(p->cards[0]->id));
+		if(!use_card_2)
+			an.add(p->cards[1], getnm(p->cards[1]->id));
+		auto pc = (playercardi*)an.choose(0, 0, 1);
+		if(pc == p->cards[0])
+			use_card_1 = true;
+		if(pc == p->cards[1])
+			use_card_2 = true;
+		an.clear();
+		if(!use_upper)
+			an.add(&pc->upper, getnm("UpperCardPart"));
+		if(!use_lower)
+			an.add(&pc->lower, getnm("LowerCardPart"));
+		auto pv = (variants*)an.choose(0, 0, 1);
+		if(pv == &pc->upper)
+			use_upper = true;
+		if(pv == &pc->lower)
+			use_lower = true;
+		apply(*pv);
+	}
 }
 
 void creaturei::choosecards() {
@@ -259,4 +328,61 @@ void creaturei::chooseinitiative() {
 	auto result = an.choose(getnm("ChooseInitiative"));
 	if(result)
 		iswap(p->cards[0], p->cards[1]);
+}
+
+void creaturei::apply(variants source) {
+	auto p = source.begin();
+	auto pe = source.end();
+	while(p < pe) {
+		if(p->iskind<actioni>()) {
+			clear_modifiers();
+			auto type = (action_s)p->value;
+			modifiers[Bonus] += p->counter;
+			p = add_modifier(p + 1, pe, false);
+			apply(type);
+		} else if(p->iskind<statei>()) {
+			clear_modifiers();
+			auto type = (state_s)p->value;
+			p = add_modifier(p + 1, pe, false);
+			auto pe = choosenearest(is(Hostile));
+			pe->set(type);
+		} else
+			break;
+	}
+}
+
+creaturei* creaturei::chooseenemy() const {
+	return choosenearest(!is(Hostile));
+}
+
+creaturei* creaturei::choosenearest(bool hostile) const {
+	creaturea targets;
+	targets.select();
+	targets.match(Hostile, hostile);
+	return targets.choose(0);
+}
+
+void creaturei::apply(action_s type) {
+	switch(type) {
+	case Attack:
+		for(auto i = 0; i < modifiers[Target]; i++) {
+			auto enemy = chooseenemy();
+			if(!enemy)
+				break;
+			attack(*enemy, modifiers[Bonus], modifiers[Pierce]);
+		}
+		break;
+	case Move:
+		move(modifiers[Bonus]);
+		break;
+	case Pull:
+		break;
+	case Push:
+		break;
+	}
+	auto p = getplayer();
+	if(p && modifiers[Experience]) {
+		fixexperience(modifiers[Experience]);
+		p->exp += modifiers[Experience];
+	}
 }

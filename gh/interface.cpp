@@ -127,6 +127,12 @@ void indexable::fixmove(point hex) const {
 	po->wait();
 }
 
+void indexable::fixexperience(int value) const {
+	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
+	floatstring(h2p(getposition()), colors::yellow, temp);
+	waitall();
+}
+
 static void paint_grid() {
 	rect rc = clipping; rc.offset(-32);
 	char temp[260]; stringbuilder sb(temp);
@@ -233,6 +239,12 @@ static void paint_effect(variants effect) {
 	char temp[260]; stringbuilder sb(temp);
 	auto push_font = font;
 	for(auto v : effect) {
+		if(v.iskind<actioni>() && v.value == Discard) {
+			auto pi = gres("cards", "art/objects");
+			image(pi, 2, 0);
+			caret.y += 32;
+			continue;
+		}
 		sb.clear();
 		auto pn = v.getname();
 		if(szfind(pn, "%1i") || v.iskind<summoni>() || v.iskind<conditioni>() || v.iskind<statei>() || v.iskind<elementi>())
@@ -318,8 +330,9 @@ static void tips() {
 	auto push_caret = caret;
 	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
 	caret.y = 35;
-	if(bsdata<playercardi>::have(hilite_object))
-		((playercardi*)hilite_object)->paint();
+	auto i = bsdata<playercardi>::source.indexof(hilite_object);
+	if(i != -1)
+		((playercardi*)bsdata<playercardi>::source.ptr(i))->paint();
 	caret = push_caret;
 }
 
