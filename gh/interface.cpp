@@ -229,6 +229,45 @@ static void paint_ability_card() {
 	image(pi, 0, 0);
 }
 
+static void paint_effect(variants effect) {
+	char temp[260]; stringbuilder sb(temp);
+	auto push_font = font;
+	for(auto v : effect) {
+		sb.clear();
+		auto pn = v.getname();
+		if(szfind(pn, "%1i"))
+			sb.add(pn, v.counter);
+		else
+			sb.add("%1%+2i", v.getname(), v.counter);
+		if(v.iskind<actioni>())
+			font = metrics::h2;
+		else
+			font = metrics::font;
+		auto push_caret = caret;
+		caret.x -= (textw(temp) + 1) / 2;
+		text(temp, -1);
+		caret = push_caret;
+		caret.y += texth();
+	}
+	font = push_font;
+}
+
+static int get_height(variants effect) {
+	auto push_clip = clipping; clipping.clear();
+	auto push_caret = caret;
+	paint_effect(effect);
+	auto need_height = caret.y - push_caret.y;
+	caret = push_caret;
+	clipping = push_clip;
+	return need_height;
+}
+
+static void paint_effect(variants effect, int height) {
+	auto need_height = get_height(effect);
+	caret.y += (height - need_height) / 2;
+	paint_effect(effect);
+}
+
 void playercardi::paint_statistic() const {
 	auto push_caret = caret;
 	auto push_stroke = fore_stroke;
@@ -250,6 +289,13 @@ void playercardi::paint_statistic() const {
 	caret.y = push_caret.y + 232;
 	font = metrics::h1;
 	textvalue(initiative);
+	// Upper
+	caret.y = push_caret.y + 80;
+	paint_effect(upper, 120);
+	// Lower
+	caret.y = push_caret.y + 250;
+	paint_effect(lower, 120);
+	//
 	width = push_width;
 	font = push_font;
 	fore_stroke = push_stroke;

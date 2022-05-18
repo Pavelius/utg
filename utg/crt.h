@@ -251,6 +251,7 @@ int									szcmpi(const char* p1, const char* p2);
 int									szcmpi(const char* p1, const char* p2, int count);
 const char*							szdup(const char* text);
 const char*							szext(const char* path);
+const char*							szfind(const char* text, const char* name);
 const char*							szfname(const char* text); // Get file name from string (no fail, always return valid value)
 char*								szfnamewe(char* result, const char* name); // get file name without extension (no fail)
 const char*							szfurl(const char* url); // get full absolute url

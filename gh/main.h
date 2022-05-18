@@ -47,7 +47,6 @@ enum state_s : unsigned char {
 enum element_s : unsigned char {
 	Fire, Ice, Air, Earth, Light, Dark, AnyElement,
 };
-//typedef short unsigned indext;
 typedef flagable<2> statef;
 typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
 typedef flagable<1> elementf;

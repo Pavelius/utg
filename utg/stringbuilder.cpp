@@ -436,6 +436,17 @@ void stringbuilder::copy(const char* v) {
 	p[0] = 0;
 }
 
+const char*	szfind(const char* source, const char* value) {
+	if(!value || !source)
+		return 0;
+	auto s = value[0];
+	for(auto p = source; *p; p++) {
+		if(*p == s && szstart(p, value))
+			return p;
+	}
+	return 0;
+}
+
 void stringbuilder::change(const char* s1, const char* s2) {
 	if(!s1 || s1[0] == 0)
 		return;

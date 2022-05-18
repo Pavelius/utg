@@ -11,6 +11,7 @@ ChooseAbility: Выбирайте способности
 ChooseBackground: Выбирайте прошлое
 ChooseClass: Выбирайте класс
 ChooseGender: Выберите пол вашего персонажа
+Circle: 
 Close: Закрыть
 Dark: Тьма
 Decoy: Приманка
@@ -34,6 +35,7 @@ HookGun: Крюкомет
 HotKey: Горячая клавиша
 Human: Человек
 Ice: Холод
+IfIce: Если есть Лед
 Initiative: Инициатива
 InkBomb: Чернильная бомба
 Jump: Прыжек
@@ -50,6 +52,7 @@ Next: Далее
 NextAction: Следующее действие
 NoGender: Безполый
 NoItem: Нет предмета
+Opponent: Оппонент
 OverwhelmingAssault: Подавление
 PerUse: На %1i раз
 PickCharacter: Выбрать персонажа
@@ -94,7 +97,9 @@ TargetEnemyMoveThrought: Цель каждый враг на пути движе
 Thinkerer: Изобретатель
 ToxicBolt: Отравленная стрела
 Trample: Топот
+TrapDamage: Повреждающая ловушка (урон %1i)
 TrapDamage6: Повреждающая ловушка (урон 6)
+TrapPoisonDamage: Ядовитая ловушка (урон %1i)
 TrapPoisonDamage2: Ядовитая ловушка (урон 2)
 UpperCardPart: Верхняя часть карты
 Use: Использований
