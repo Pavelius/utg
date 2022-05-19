@@ -1,12 +1,17 @@
 #Player
 
-Brute gender(Male) health(10 12 14 16 18 20 22 24 26)
-Scoundrel gender(Female) health(10 12 14 16 18 20 22 24 26)
-Tinkerer gender(Male) health(8 9 11 12 14 15 17 18 20)
+Brute gender(Male) health(10 12 14 16 18 20 22 24 26) fore(0 0 255)
+Scoundrel gender(Female) health(10 12 14 16 18 20 22 24 26) fore(0 255 0)
+Tinkerer gender(Male) health(8 9 11 12 14 15 17 18 20) fore(200 100 0)
 
 #Summon
 
 Decoy hits(6) move(2)
+
+#Trap
+
+TrapDamage damage(6)
+TrapPoisonDamage damage(2)
 
 #PlayerCard
 

@@ -5,13 +5,14 @@ using namespace pathfind;
 BSDATAC(creaturei, 128)
 static char			modifiers[Target + 1];
 static statef		states;
-static creaturea	targets;
+static special_s	special;
+static creaturea	last_targets;
 
 static void clear_modifiers() {
 	memset(modifiers, 0, sizeof(modifiers));
 	memset(&states, 0, sizeof(states));
 	modifiers[Target] = 1;
-	targets.clear();
+	last_targets.clear();
 }
 
 static variant* skip_modifiers(variant* p, variant* pe) {
@@ -134,19 +135,10 @@ void creaturei::damage(int v) {
 int creaturei::getongoing(action_s id) const {
 	auto result = 0;
 	for(auto& e : bsdata<activecardi>()) {
-		if(!e)
+		if(!e || e.type!=id || e.target!=this)
 			continue;
-		auto used = false;
-		for(auto v : e.effect) {
-			if(!v.iskind<actioni>())
-				continue;
-			if(v.value != id)
-				continue;
-			result += v.counter;
-			used = true;
-		}
-		if(used)
-			e.use();
+		result += e.bonus;
+		e.use();
 	}
 	return result;
 }
@@ -334,7 +326,13 @@ void creaturei::apply(variants source) {
 	auto p = source.begin();
 	auto pe = source.end();
 	while(p < pe) {
-		if(p->iskind<actioni>()) {
+		if(p->iskind<durationi>()) {
+			p++;
+			clear_modifiers();
+			auto pb = p;
+			while(p < pe && p->iskind<actioni>())
+				p = add_modifier(p + 1, pe, false);
+		} else if(p->iskind<actioni>()) {
 			clear_modifiers();
 			auto type = (action_s)p->value;
 			modifiers[Bonus] += p->counter;
@@ -369,6 +367,7 @@ void creaturei::apply(action_s type) {
 			auto enemy = chooseenemy();
 			if(!enemy)
 				break;
+			last_targets.add(enemy);
 			attack(*enemy, modifiers[Bonus], modifiers[Pierce]);
 		}
 		break;
@@ -379,10 +378,28 @@ void creaturei::apply(action_s type) {
 		break;
 	case Push:
 		break;
+	case Heal:
+		break;
+	case DisarmTrap:
+		break;
+	case Loot:
+		break;
+	case Kill:
+		break;
+	case Bless:
+		break;
+	case Curse:
+		break;
+	case RecoverDiscarded:
+		break;
+	case Discard:
+		break;
 	}
 	auto p = getplayer();
-	if(p && modifiers[Experience]) {
-		fixexperience(modifiers[Experience]);
-		p->exp += modifiers[Experience];
+	if(p) {
+		if(modifiers[Experience]) {
+			fixexperience(modifiers[Experience]);
+			p->exp += modifiers[Experience];
+		}
 	}
 }

@@ -12,17 +12,15 @@ void activecardi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-activecardi* activecardi::add(playeri* player, playercardi* card, variants effect) {
+activecardi* activecardi::add(creaturei* target, playercardi* card, action_s type, int bonus, duration_s duration, char uses) {
 	auto p = addnew();
 	p->clear();
-	p->player = player;
+	p->duration = duration;
+	p->target = target;
 	p->card = card;
-	p->effect = effect;
-	p->type = game.getduration(p->effect);
-	if(p->type == Use) {
-		p->uses = game.getrounds(p->effect);
-		p->uses_experience = p->uses;
-	}
+	p->type = type;
+	p->bonus = bonus;
+	p->uses = uses;
 	return p;
 }
 

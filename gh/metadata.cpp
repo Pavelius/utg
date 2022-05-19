@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "main.h"
 
+NOBSDATA(color)
 NOBSDATA(point)
 NOBSDATA(scenariotilei)
 
@@ -15,11 +16,15 @@ BSDATAC(playeri, 24)
 BSDATAC(playercardi, 512)
 BSDATAC(scenarioi, 128)
 BSDATAC(summoni, 64)
+BSDATAC(trapi, 128)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
+	{}};
+BSMETA(color) = {
+	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
 BSMETA(actioni) = {
 	BSREQ(id),
@@ -43,6 +48,7 @@ BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(health),
 	BSENM(gender, genderi),
+	BSREQ(fore),
 	{}};
 BSMETA(playercardi) = {
 	BSREQ(id),
@@ -91,6 +97,10 @@ BSMETA(combatcardi) = {
 	BSREQ(bonus), BSREQ(shuffle), BSREQ(next), BSREQ(count),
 	BSREQ(feats),
 	{}};
+BSMETA(trapi) = {
+	BSREQ(id),
+	BSREQ(damage),
+	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -111,5 +121,6 @@ BSDATA(varianti) = {
 	{"Special", VRSTD(speciali), 1},
 	{"State", VRSTD(statei), 1},
 	{"Summon", VRSTD(summoni), 1},
+	{"Trap", VRSTD(trapi), 1},
 };
 BSDATAF(varianti)

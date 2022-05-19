@@ -128,6 +128,8 @@ void indexable::fixmove(point hex) const {
 }
 
 void indexable::fixexperience(int value) const {
+	if(!value)
+		return;
 	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
 	floatstring(h2p(getposition()), colors::yellow, temp);
 	waitall();
@@ -230,24 +232,40 @@ indext indexable::choosemove() {
 	return (indext)(int)result;
 }
 
-static void paint_ability_card() {
+static void paint_ability_card(color card_color) {
+	auto push_fore = fore;
+	auto push_width = width;
+	auto push_height = height;
+	auto push_alpha = alpha;
+	width = 320; height = 436;
+	fore = card_color;
+	rectf();
 	auto pi = gres("cards", "art/objects");
+	alpha = 216;
 	image(pi, 0, 0);
+	alpha = push_alpha;
+	width = push_width;
+	height = push_height;
+	fore = push_fore;
 }
 
-static void paint_effect(variants effect) {
+static void fix_fiscard(point origin) {
+	auto pi = gres("cards", "art/objects");
+	image(origin.x + 82, origin.y + 92, pi, 2, 0);
+}
+
+static void paint_effect(variants effect, point origin) {
 	char temp[260]; stringbuilder sb(temp);
 	auto push_font = font;
 	for(auto v : effect) {
 		if(v.iskind<actioni>() && v.value == Discard) {
-			auto pi = gres("cards", "art/objects");
-			image(pi, 2, 0);
-			caret.y += 32;
+			fix_fiscard(origin);
 			continue;
 		}
 		sb.clear();
 		auto pn = v.getname();
-		if(szfind(pn, "%1i") || v.iskind<summoni>() || v.iskind<conditioni>() || v.iskind<statei>() || v.iskind<elementi>())
+		if(szfind(pn, "%1i")
+			|| v.iskind<summoni>() || v.iskind<conditioni>() || v.iskind<statei>() || v.iskind<elementi>() || v.iskind<durationi>())
 			sb.add(pn, v.counter);
 		else
 			sb.add("%1% %2i", v.getname(), v.counter);
@@ -267,7 +285,7 @@ static void paint_effect(variants effect) {
 static int get_height(variants effect) {
 	auto push_clip = clipping; clipping.clear();
 	auto push_caret = caret;
-	paint_effect(effect);
+	paint_effect(effect, {});
 	auto need_height = caret.y - push_caret.y;
 	caret = push_caret;
 	clipping = push_clip;
@@ -276,8 +294,9 @@ static int get_height(variants effect) {
 
 static void paint_effect(variants effect, int height) {
 	auto need_height = get_height(effect);
+	auto push_caret = caret;
 	caret.y += (height - need_height) / 2;
-	paint_effect(effect);
+	paint_effect(effect, push_caret);
 }
 
 void playercardi::paint_statistic() const {
@@ -320,7 +339,9 @@ playercardi* playerdeck::choose(const char* title, bool need_remove, fnevent pro
 }
 
 void playercardi::paint() const {
-	paint_ability_card();
+	if(!owner)
+		return;
+	paint_ability_card(owner->fore);
 	paint_statistic();
 }
 

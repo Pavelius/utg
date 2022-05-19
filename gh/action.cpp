@@ -14,8 +14,6 @@ BSDATA(actioni) = {
 	{"Bless"},
 	{"Curse"},
 	{"RecoverDiscarded"},
-	{"TrapDamage"},
-	{"TrapPoisonDamage"},
 	{"Discard"},	
 };
 assert_enum(actioni, Discard)

@@ -77,7 +77,7 @@ ReinvigoratingElexir: Оживляющий элексир
 RestorativeMist: Бодрящая пыль
 Retaliate: Ответный удар
 RevivingShock: Импульсная стимуляция
-Round: На раунд
+Round: До конца раунда
 Rules: Правила
 Settings: Настройки
 Shield: Щит

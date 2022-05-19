@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "answers.h"
+#include "color.h"
 #include "condition.h"
 #include "crt.h"
 #include "deck.h"
@@ -21,10 +22,6 @@ enum special_s : unsigned char {
 	AttackOneTarget, EnemyAttackYouInsteadNearestAlly, GainExpForRetaliate, GainExpForTarget,
 	TargetEnemyMoveThrought,
 };
-enum statistic_s : unsigned char {
-	Moved, Attacked, Looted,
-	MonstersKilled, ItemsUsed,
-};
 enum modifier_s : unsigned char {
 	Bonus, Experience, Pierce, Range, Target,
 };
@@ -33,7 +30,6 @@ enum action_s : unsigned char {
 	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot, Kill,
 	Bless, Curse,
 	RecoverDiscarded,
-	TrapDamage, TrapPoisonDamage,
 	Discard
 };
 enum game_propery_s : unsigned char {
@@ -41,7 +37,7 @@ enum game_propery_s : unsigned char {
 };
 enum state_s : unsigned char {
 	Disarmed, Immobilize, Wound, Muddle, Poison, Invisibility, Stun, Strenght,
-	Jump, Fly, Mirrored, Hostile, UseUpper, UseLower, Elite,
+	Jump, Fly, Mirrored, Hostile, Elite,
 };
 enum element_s : unsigned char {
 	Fire, Ice, Air, Earth, Light, Dark, AnyElement,
@@ -54,6 +50,7 @@ const int				hms = 32;
 inline point			i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 struct playeri;
+class creaturei;
 struct actioni {
 	const char*			id;
 };
@@ -105,6 +102,7 @@ struct playeri {
 	short				health[10];
 	playerdeck			hand, discard, lost;
 	combatdeck			combat;
+	color				fore;
 	static playeri*		last;
 };
 struct monstercardi {
@@ -193,13 +191,14 @@ struct action {
 	const variant*		parse_modifier(const variant* p, const variant* pe);
 };
 struct activecardi {
-	duration_s			type;
+	duration_s			duration;
+	creaturei*			target;
 	playercardi*		card;
-	playeri*			player;
-	variants			effect;
-	char				uses, uses_experience;
+	action_s			type;
+	char				bonus;
+	char				uses;
 	constexpr explicit operator bool() const { return type != Instant; }
-	static activecardi*	add(playeri* player, playercardi* card, variants effect);
+	static activecardi*	add(creaturei* target, playercardi* card, action_s type, int bonus, duration_s duration, char uses);
 	void				clear();
 	void				discard();
 	void				use();

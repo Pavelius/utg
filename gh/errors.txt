@@ -1,2 +1,4 @@
-﻿In file `Names.txt`:
- Define translate for `Tinkerer`
+﻿In file `rules/Basic.txt`:
+ Line 3: Not found requisit `for`
+ Line 4: Not found requisit `for`
+ Line 5: Not found requisit `for`
