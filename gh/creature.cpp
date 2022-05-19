@@ -390,7 +390,9 @@ void creaturei::apply(action_s type) {
 		break;
 	case Curse:
 		break;
-	case RecoverDiscarded:
+	case RecoverDiscard:
+		break;
+	case RecoverLost:
 		break;
 	case Discard:
 		break;

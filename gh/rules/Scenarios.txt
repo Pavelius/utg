@@ -17,3 +17,6 @@ BlackBarrows
   type(StoneDoorH) position(11 9)
   type(SpikedTrap) position(10 10)
   type(SpikedTrap) position(11 10)
+  type(BanditGuard) position(6 10)
+  type(BanditGuard) position(6 11)
+  type(BanditGuard) position(6 12)

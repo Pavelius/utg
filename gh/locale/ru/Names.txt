@@ -72,7 +72,8 @@ Pull: Притянуть
 Push: Оттолкнуть
 Range: Дистанция
 Ray: Луч
-RecoverDiscarded: Восстановить %1i карт из сброса
+RecoverDiscard: Восстановить %1i карт из сброса
+RecoverLost: Восстановить %1i карт из потерь
 ReinvigoratingElexir: Оживляющий элексир
 RestorativeMist: Бодрящая пыль
 Retaliate: Ответный удар

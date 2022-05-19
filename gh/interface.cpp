@@ -20,14 +20,24 @@ static point p2h(point v) {
 
 void scenariotilei::updateui() const {
 	auto p = draw::findobject(this);
-	if(!p) {
-		auto pt = h2p(position) - type->offset;
+	if(p)
+		return;
+	auto ps = bsdata<tilei>::find(type);
+	if(ps) {
+		ps->creating(position, inverse);
+		auto pt = h2p(position) - ps->offset;
 		p = draw::addobject(pt.x, pt.y);
 		p->data = this;
-		p->resource = draw::getres(type->id, "art/tiles");
-		p->priority = type->priority;
+		p->resource = draw::getres(type, "art/tiles");
+		p->priority = ps->priority;
 		if(inverse)
 			p->flags = ImageMirrorH | ImageMirrorV;
+	}
+	auto pm = bsdata<monsteri>::find(type);
+	if(pm) {
+		auto p = creaturei::add(type, position, false);
+		p->set(Hostile);
+		p->updateui();
 	}
 }
 
@@ -39,6 +49,7 @@ void creaturei::updateui() const {
 	auto p = draw::findobject(this);
 	if(!p) {
 		auto pt = h2p(getposition());
+		focusing(pt);
 		p = draw::addobject(pt.x, pt.y);
 		p->data = this;
 		p->resource = draw::getres(getid(), "art/creatures");

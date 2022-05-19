@@ -29,7 +29,7 @@ enum action_s : unsigned char {
 	Shield, Retaliate,
 	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot, Kill,
 	Bless, Curse,
-	RecoverDiscarded,
+	RecoverDiscard, RecoverLost,
 	Discard
 };
 enum game_propery_s : unsigned char {
@@ -170,7 +170,7 @@ struct eventi {
 	static bool			read(const char* url, array& source);
 };
 struct scenariotilei {
-	const tilei*		type;
+	const char*			type;
 	point				position;
 	bool				inverse;
 	explicit operator bool() const { return type != 0; }

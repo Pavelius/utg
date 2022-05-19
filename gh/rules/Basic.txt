@@ -75,7 +75,7 @@ ToxicBolt level(1) initiative(18)
  lower Attack+5 Range+2 Experience+2 Discard
 ReinvigoratingElexir level(1) initiative(37)
  upper Heal+3 Range+3
- lower RecoverDiscarded+100 Range+1 Experience+2 Discard
+ lower RecoverDiscard+100 Range+1 Experience+2 Discard
 HarmlessContraption level(1) initiative(74)
  upper Decoy Experience+2 Discard
  lower Heal+2 Range+3
