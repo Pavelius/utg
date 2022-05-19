@@ -22,6 +22,9 @@ enum special_s : unsigned char {
 	AttackOneTarget, EnemyAttackYouInsteadNearestAlly, GainExpForRetaliate, GainExpForTarget,
 	TargetEnemyMoveThrought,
 };
+enum target_s : unsigned char {
+	TargetEnemy, TargetSelf, TargetAlly, TargetEnemyAround, TargetAllyAround, TargetAllyEnemyAround,
+};
 enum modifier_s : unsigned char {
 	Bonus, Experience, Pierce, Range, Target,
 };
@@ -56,6 +59,7 @@ struct actioni {
 };
 struct areai {
 	const char*			id;
+	point				points[16];
 };
 struct modifieri {
 	const char*			id;
@@ -83,6 +87,7 @@ struct playercardi {
 	char				level;
 	playeri*			owner;
 	variants			upper, lower;
+	static playercardi*	last;
 	variants			getabilities(int n) const { return n ? lower : upper; }
 	void				getinfo(stringbuilder& sb) const;
 	void				paint() const;
@@ -182,23 +187,14 @@ struct scenarioi {
 	point				starts[8];
 	void				prepare(int stage) const;
 };
-struct action {
-	action_s			type;
-	char				bonus;
-	char				modifiers[Target + 1];
-	void				clear();
-	int					get(modifier_s v) const { return modifiers[v]; }
-	const variant*		parse_modifier(const variant* p, const variant* pe);
-};
 struct activecardi {
 	duration_s			duration;
 	creaturei*			target;
 	playercardi*		card;
-	action_s			type;
-	char				bonus;
 	char				uses;
-	constexpr explicit operator bool() const { return type != Instant; }
-	static activecardi*	add(creaturei* target, playercardi* card, action_s type, int bonus, duration_s duration, char uses);
+	slice<variant>		source;
+	constexpr explicit operator bool() const { return duration != Instant; }
+	static activecardi*	add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source);
 	void				clear();
 	void				discard();
 	void				use();
@@ -235,6 +231,8 @@ public:
 	static creaturei*	add(const char* id, point position, bool elite = false);
 	void				apply(variants source);
 	void				apply(action_s type);
+	void				apply(state_s type);
+	void				apply(target_s type);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0);
 	void				choosecards();
 	creaturei*			chooseenemy() const;
@@ -268,6 +266,7 @@ namespace draw {
 void					waitall();
 }
 struct gamei : public location {
+	elementf			elements;
 	combatdeck			combat;
 	int					dungeon_level;
 	static void			checkinitiative();
@@ -275,9 +274,9 @@ struct gamei : public location {
 	static void			initialize();
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);
-	static int			parse(variants source, action* pb);
 	static void			playmoves();
 	static void			playround();
+	void				set(element_s v) { elements.set(v); }
 	static void			setcamera(point pt);
 	static void			updateui(void* parent, point position);
 };

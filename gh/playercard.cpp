@@ -2,6 +2,8 @@
 
 playeri* playeri::last;
 
+playercardi* playercardi::last;
+
 void playerdeck::addcards(const char* id, int level) {
 	for(auto& e : bsdata<playercardi>()) {
 		if(!e.owner)

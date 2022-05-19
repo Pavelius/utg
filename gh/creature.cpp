@@ -4,15 +4,13 @@ using namespace pathfind;
 
 BSDATAC(creaturei, 128)
 static char			modifiers[Target + 1];
-static statef		states;
 static special_s	special;
-static creaturea	last_targets;
+static target_s		target;
+static creaturea	targets;
 
 static void clear_modifiers() {
 	memset(modifiers, 0, sizeof(modifiers));
-	memset(&states, 0, sizeof(states));
 	modifiers[Target] = 1;
-	last_targets.clear();
 }
 
 static variant* skip_modifiers(variant* p, variant* pe) {
@@ -37,9 +35,7 @@ static variant* add_modifier(variant* p, variant* pe, bool add_states) {
 		} else if(p->iskind<modifieri>()) {
 			modifiers[p->value] += p->counter;
 			p++;
-		} else if(add_states && p->iskind<statei>())
-			states.set(p->value);
-		else
+		} else
 			break;
 	}
 	return p;
@@ -135,9 +131,8 @@ void creaturei::damage(int v) {
 int creaturei::getongoing(action_s id) const {
 	auto result = 0;
 	for(auto& e : bsdata<activecardi>()) {
-		if(!e || e.type!=id || e.target!=this)
+		if(!e || e.target != this)
 			continue;
-		result += e.bonus;
 		e.use();
 	}
 	return result;
@@ -296,6 +291,7 @@ void creaturei::play() {
 			use_upper = true;
 		if(pv == &pc->lower)
 			use_lower = true;
+		playercardi::last = pc;
 		apply(*pv);
 	}
 }
@@ -322,33 +318,6 @@ void creaturei::chooseinitiative() {
 		iswap(p->cards[0], p->cards[1]);
 }
 
-void creaturei::apply(variants source) {
-	auto p = source.begin();
-	auto pe = source.end();
-	while(p < pe) {
-		if(p->iskind<durationi>()) {
-			p++;
-			clear_modifiers();
-			auto pb = p;
-			while(p < pe && p->iskind<actioni>())
-				p = add_modifier(p + 1, pe, false);
-		} else if(p->iskind<actioni>()) {
-			clear_modifiers();
-			auto type = (action_s)p->value;
-			modifiers[Bonus] += p->counter;
-			p = add_modifier(p + 1, pe, false);
-			apply(type);
-		} else if(p->iskind<statei>()) {
-			clear_modifiers();
-			auto type = (state_s)p->value;
-			p = add_modifier(p + 1, pe, false);
-			auto pe = choosenearest(is(Hostile));
-			pe->set(type);
-		} else
-			break;
-	}
-}
-
 creaturei* creaturei::chooseenemy() const {
 	return choosenearest(!is(Hostile));
 }
@@ -360,16 +329,38 @@ creaturei* creaturei::choosenearest(bool hostile) const {
 	return targets.choose(0);
 }
 
+void creaturei::apply(target_s type) {
+	switch(type) {
+	case TargetAllyAround:
+	case TargetAlly:
+		targets.select();
+		targets.match(Hostile, is(Hostile));
+		break;
+	case TargetEnemyAround:
+		targets.select();
+		targets.match(Hostile, !is(Hostile));
+		break;
+	case TargetSelf:
+		targets.clear();
+		targets.add(this);
+		break;
+	default:
+		break;
+	}
+}
+
 void creaturei::apply(action_s type) {
 	switch(type) {
 	case Attack:
+		targets.clear();
 		for(auto i = 0; i < modifiers[Target]; i++) {
 			auto enemy = chooseenemy();
 			if(!enemy)
 				break;
-			last_targets.add(enemy);
+			targets.add(enemy);
 			attack(*enemy, modifiers[Bonus], modifiers[Pierce]);
 		}
+		target = TargetEnemy;
 		break;
 	case Move:
 		move(modifiers[Bonus]);
@@ -403,5 +394,29 @@ void creaturei::apply(action_s type) {
 			fixexperience(modifiers[Experience]);
 			p->exp += modifiers[Experience];
 		}
+	}
+}
+
+void creaturei::apply(variants source) {
+	auto p = source.begin();
+	auto pe = source.end();
+	while(p < pe) {
+		if(p->iskind<durationi>()) {
+			activecardi::add(this, playercardi::last, (duration_s)p->value, p->counter, {p + 1, pe});
+			break;
+		} else if(p->iskind<actioni>()) {
+			clear_modifiers();
+			auto type = (action_s)p->value;
+			modifiers[Bonus] += p->counter;
+			p = add_modifier(p + 1, pe, false);
+			apply(type);
+		} else if(p->iskind<elementi>())
+			game.set((element_s)p->value);
+		else if(p->iskind<statei>()) {
+			auto i = (state_s)p->value;
+			for(auto p : targets)
+				set(i);
+		} else
+			break;
 	}
 }

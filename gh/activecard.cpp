@@ -12,20 +12,19 @@ void activecardi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-activecardi* activecardi::add(creaturei* target, playercardi* card, action_s type, int bonus, duration_s duration, char uses) {
+activecardi* activecardi::add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source) {
 	auto p = addnew();
 	p->clear();
 	p->duration = duration;
 	p->target = target;
 	p->card = card;
-	p->type = type;
-	p->bonus = bonus;
 	p->uses = uses;
+	p->source = source;
 	return p;
 }
 
 void activecardi::use() {
-	if(type != Use)
+	if(duration != Use)
 		return;
 	if(uses > 0)
 		uses--;
