@@ -388,13 +388,16 @@ void creaturei::apply(action_s type) {
 	case Discard:
 		break;
 	}
+}
+
+void creaturei::addexperience(int value) {
+	if(value <= 0)
+		return;
 	auto p = getplayer();
-	if(p) {
-		if(modifiers[Experience]) {
-			fixexperience(modifiers[Experience]);
-			p->exp += modifiers[Experience];
-		}
-	}
+	if(!p)
+		return;
+	fixexperience(value);
+	p->exp += value;
 }
 
 void creaturei::apply(variants source) {
@@ -410,6 +413,7 @@ void creaturei::apply(variants source) {
 			modifiers[Bonus] += p->counter;
 			p = add_modifier(p + 1, pe, false);
 			apply(type);
+			addexperience(modifiers[Experience]);
 		} else if(p->iskind<elementi>())
 			game.set((element_s)p->value);
 		else if(p->iskind<statei>()) {
@@ -419,4 +423,8 @@ void creaturei::apply(variants source) {
 		} else
 			break;
 	}
+}
+
+void creaturei::activate() {
+	game.focusing(getposition());
 }

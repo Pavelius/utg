@@ -228,7 +228,9 @@ class creaturei : public indexable {
 public:
 	static creaturei*	active;
 	explicit operator bool() const { return parent != 0; }
+	void				activate();
 	static creaturei*	add(const char* id, point position, bool elite = false);
+	void				addexperience(int value);
 	void				apply(variants source);
 	void				apply(action_s type);
 	void				apply(state_s type);
@@ -271,13 +273,13 @@ struct gamei : public location {
 	int					dungeon_level;
 	static void			checkinitiative();
 	static void			choosecards();
+	static void			focusing(point pt);
 	static void			initialize();
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);
 	static void			playmoves();
 	static void			playround();
 	void				set(element_s v) { elements.set(v); }
-	static void			setcamera(point pt);
 	static void			updateui(void* parent, point position);
 };
 extern gamei			game;

@@ -41,7 +41,7 @@ void scenariotilei::updateui() const {
 	}
 }
 
-void gamei::setcamera(point pt) {
+void gamei::focusing(point pt) {
 	draw::focusing(h2p(pt));
 }
 
