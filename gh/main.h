@@ -55,7 +55,9 @@ inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 struct playeri;
 class creaturei;
 struct actioni {
+	typedef void (*fnevent)(int bonus);
 	const char*			id;
+	fnevent				proc;
 };
 struct areai {
 	const char*			id;
