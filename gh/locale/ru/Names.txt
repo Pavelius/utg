@@ -111,7 +111,7 @@ TrapDamage6: Повреждающая ловушка (урон 6)
 TrapPoisonDamage: Ядовитая ловушка (урон %1i)
 TrapPoisonDamage2: Ядовитая ловушка (урон 2)
 UpperCardPart: Верхняя часть карты
-Use: Использований
+Use: В следующих %1i применениях
 Video: Видео
 VolatileConcoction: Летучая смесь
 WallOfDoom: Стена рока

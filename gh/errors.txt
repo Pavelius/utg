@@ -1,3 +1,4 @@
-﻿In file `rules/Scenarios.txt`:
- Line 23: Not found requisit `BanditGuard`
- Line 23: Expected symbol `(`
+﻿In file `rules/Basic.txt`:
+ Line 32: Can't find variant `Opponent`
+ Line 71: Can't find variant `Opponent`
+ Line 74: Can't find variant `Opponent`

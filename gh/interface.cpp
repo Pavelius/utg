@@ -146,12 +146,10 @@ void indexable::fixmove(point hex) const {
 
 void indexable::fixexperience(int value) const {
 	fixvalue(getposition(), value, colors::yellow);
-	waitall();
 }
 
 void indexable::fixheal(int value) const {
 	fixvalue(getposition(), value, colors::green);
-	waitall();
 }
 
 static void paint_grid() {
@@ -268,17 +266,22 @@ static void paint_ability_card(color card_color) {
 	fore = push_fore;
 }
 
-static void fix_fiscard(point origin) {
+static void fix_fiscard(point origin, int mode) {
 	auto pi = gres("cards", "art/objects");
-	image(origin.x + 82, origin.y + 92, pi, 2, 0);
+	auto pt = origin; pt.x += 78; pt.y += 104;
+	if(!mode) {
+		pt.x += 18;
+		pt.y -= 2;
+	}
+	image(pt.x, pt.y, pi, 2, 0);
 }
 
-static void paint_effect(variants effect, point origin) {
+static void paint_effect(variants effect, point origin, int mode) {
 	char temp[260]; stringbuilder sb(temp);
 	auto push_font = font;
 	for(auto v : effect) {
 		if(v.iskind<actioni>() && v.value == Discard) {
-			fix_fiscard(origin);
+			fix_fiscard(origin, mode);
 			continue;
 		}
 		sb.clear();
@@ -288,7 +291,7 @@ static void paint_effect(variants effect, point origin) {
 			sb.add(pn, v.counter);
 		else
 			sb.add("%1% %2i", v.getname(), v.counter);
-		if(v.iskind<actioni>() || v.iskind<summoni>())
+		if(v.iskind<actioni>() || v.iskind<summoni>() || v.iskind<trapi>() || v.iskind<statei>())
 			font = metrics::h2;
 		else
 			font = metrics::font;
@@ -304,18 +307,18 @@ static void paint_effect(variants effect, point origin) {
 static int get_height(variants effect) {
 	auto push_clip = clipping; clipping.clear();
 	auto push_caret = caret;
-	paint_effect(effect, {});
+	paint_effect(effect, {}, 0);
 	auto need_height = caret.y - push_caret.y;
 	caret = push_caret;
 	clipping = push_clip;
 	return need_height;
 }
 
-static void paint_effect(variants effect, int height) {
+static void paint_effect(variants effect, int height, int mode) {
 	auto need_height = get_height(effect);
 	auto push_caret = caret;
 	caret.y += (height - need_height) / 2;
-	paint_effect(effect, push_caret);
+	paint_effect(effect, push_caret, mode);
 }
 
 void playercardi::paint_statistic() const {
@@ -341,10 +344,10 @@ void playercardi::paint_statistic() const {
 	textvalue(initiative);
 	// Upper
 	caret.y = push_caret.y + 80;
-	paint_effect(upper, 120);
+	paint_effect(upper, 120, 0);
 	// Lower
 	caret.y = push_caret.y + 250;
-	paint_effect(lower, 120);
+	paint_effect(lower, 120, 1);
 	//
 	width = push_width;
 	font = push_font;

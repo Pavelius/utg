@@ -24,8 +24,8 @@ static void test_scenario() {
 	p1->hand.addcards(p1->id, 1);
 	p2->hand.addcards(p2->id, 1);
 	game.combat.initialize();
-	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
 	auto c2 = creaturei::add("Brute", p->starts[1]);
+	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
 	play_game();
 }
 

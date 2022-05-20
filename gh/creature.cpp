@@ -112,7 +112,7 @@ int creaturei::getongoing(action_s id) const {
 	return result;
 }
 
-void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
+void creaturei::attack(creaturei& enemy, int bonus, int pierce, int advantage) {
 	if(enemy.is(Poison))
 		bonus += 1;
 	auto& deck = getcombatdeck();
@@ -120,9 +120,9 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce) {
 	auto need_shuffle = false;
 	while(next-- > 0) {
 		combatcardi* p;
-		if(is(Strenght))
+		if(advantage > 0)
 			p = deck.takegood(2);
-		else if(is(Muddle))
+		else if(advantage < 0)
 			p = deck.takebad(2);
 		else
 			p = deck.take();
@@ -295,13 +295,23 @@ void creaturei::chooseinitiative() {
 }
 
 creaturei* creaturei::chooseenemy() const {
-	return choosenearest(!is(Hostile));
+	auto range = get(Range);
+	auto melee_attack = false;
+	if(!range) {
+		range = 1;
+		melee_attack = true;
+	}
+	return choosenearest(!is(Hostile), range);
 }
 
-creaturei* creaturei::choosenearest(bool hostile) const {
+creaturei* creaturei::choosenearest(bool hostile, int range) const {
 	creaturea targets;
 	targets.select();
 	targets.match(Hostile, hostile);
+	if(range) {
+		calculate_shootmap(getindex());
+		targets.range(range);
+	}
 	return targets.choose(0);
 }
 

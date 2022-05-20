@@ -39,7 +39,6 @@ static void suffer_damage(int bonus, int param) {
 
 BSDATA(scripti) = {
 	{"AttackDouble", double_attack},	
-	{"Opponent", opponent},
 	{"SufferDamage", suffer_damage},
 };
 BSDATAF(scripti)

@@ -19,7 +19,7 @@ BSDATA(actioni) = {
 };
 assert_enum(actioni, Discard)
 
-static char			modifiers[Target + 1];
+static modifiera	modifiers;
 static special_s	special;
 static target_s		target;
 static creaturea	targets;
@@ -38,21 +38,38 @@ static variant* skip_condition(variant* p, variant* pe) {
 	return p;
 }
 
-static variant* add_modifier(variant* p, variant* pe, bool add_states) {
+variant* creaturei::getmodifiers(variant* p, variant* pe, char* modifiers) {
 	while(p < pe) {
 		if(p->iskind<conditioni>()) {
 			auto pc = bsdata<conditioni>::elements + p->value;
 			if(pc->proc(p->counter, pc->param))
-				p = add_modifier(p, pe, true);
+				p = getmodifiers(p, pe, modifiers);
 			else
 				p = skip_condition(p, pe);
 		} else if(p->iskind<modifieri>()) {
-			modifiers[p->value] += p->counter;
+			if(modifiers)
+				modifiers[p->value] += p->counter;
 			p++;
 		} else
 			break;
 	}
 	return p;
+}
+
+void creaturei::getmodifiers(stringbuilder& sb) {
+	auto i = 0;
+	auto pb = sb.get();
+	for(auto& e : bsdata<modifieri>()) {
+		if(!modifiers[i])
+			continue;
+		if(pb[0])
+			sb.add(", ");
+		sb.add("%1 %2i", getnm(e.id), modifiers[i]);
+	}
+}
+
+int creaturei::get(modifier_s i) {
+	return modifiers[i];
 }
 
 void creaturei::apply(target_s type) {
@@ -128,13 +145,16 @@ void creaturei::apply(variants source) {
 			clear_modifiers();
 			auto type = (action_s)p->value;
 			modifiers[Bonus] += p->counter;
-			p = add_modifier(p + 1, pe, false);
+			p = getmodifiers(p + 1, pe, modifiers);
 			apply(type);
 			addexperience(modifiers[Experience]);
-		} else if(p->iskind<elementi>())
+			draw::waitall();
+		} else if(p->iskind<elementi>()) {
 			game.set((element_s)p->value);
-		else if(p->iskind<statei>()) {
+			p = getmodifiers(p + 1, pe, modifiers);
+		} else if(p->iskind<statei>()) {
 			auto i = (state_s)p->value;
+			p = getmodifiers(p + 1, pe, modifiers);
 			for(auto p : targets)
 				set(i);
 		} else

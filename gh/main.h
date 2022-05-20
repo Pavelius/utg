@@ -49,6 +49,7 @@ typedef flagable<2> statef;
 typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
 typedef flagable<1> elementf;
 typedef flagable<4>	playerf;
+typedef char modifiera[Target + 1];
 const int				hms = 32;
 inline point			i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
@@ -238,18 +239,21 @@ public:
 	void				apply(action_s type);
 	void				apply(state_s type);
 	void				apply(target_s type);
-	void				attack(creaturei& enemy, int bonus, int pierce = 0);
+	void				attack(creaturei& enemy, int bonus, int pierce = 0, int advantage = 0);
 	void				choosecards();
 	creaturei*			chooseenemy() const;
 	void				chooseinitiative();
-	creaturei*			choosenearest(bool hostile) const;
+	creaturei*			choosenearest(bool hostile, int range) const;
 	void				clear();
 	void				damage(int v);
+	static int			get(modifier_s i);
 	combatdeck&			getcombatdeck() const;
 	const char*			getid() const;
 	int					getinitiative(int index = 0) const;
 	int					gethp() const { return hits; }
 	int					getmaximumhp() const;
+	static variant*		getmodifiers(variant* p, variant* pe, char* modifiers);
+	static void			getmodifiers(stringbuilder& sb);
 	const summoni*		getmonster() const;
 	int					getongoing(action_s v) const;
 	playeri*			getplayer() const;
@@ -266,6 +270,7 @@ public:
 struct creaturea : adat<creaturei*> {
 	creaturei*			choose(const char* title) const;
 	void				match(state_s v, bool keep);
+	void				range(int v);
 	void				select();
 	void				sort();
 };

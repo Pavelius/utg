@@ -47,3 +47,14 @@ creaturei* creaturea::choose(const char* title) const {
 		an.add(p, getnm(p->getid()));
 	return (creaturei*)an.choose(title);
 }
+
+void creaturea::range(int v) {
+	auto ps = data;
+	auto pe = end();
+	for(auto p : *this) {
+		if(pathfind::getmove(p->getindex()) > v)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
