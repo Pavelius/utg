@@ -1,5 +1,7 @@
 #include "main.h"
 
+const creaturea* creaturea::last;
+
 void creaturea::select() {
 	auto ps = data;
 	auto pe = endof();
@@ -39,13 +41,6 @@ static int compare(const void* v1, const void* v2) {
 
 void creaturea::sort() {
 	qsort(data, count, sizeof(data[0]), compare);
-}
-
-creaturei* creaturea::choose(const char* title) const {
-	answers an;
-	for(auto p : *this)
-		an.add(p, getnm(p->getid()));
-	return (creaturei*)an.choose(title);
 }
 
 void creaturea::range(int v) {

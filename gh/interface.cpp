@@ -223,6 +223,25 @@ static void movemarker(indext index, int value) {
 	fore = push_fore;
 }
 
+static void targetmarker(const void* param, color v) {
+	auto push_fore = fore;
+	auto radius = size * 4 / 10;
+	fore = v;
+	if(ishilite(radius)) {
+		fore = fore.mix(colors::white);
+		if(hot.key == MouseLeft) {
+			if(hot.pressed)
+				fore = fore.mix(colors::white);
+			else
+				execute(buttonparam, (long)param);
+		}
+	}
+	circlefa(radius);
+	fore = v;
+	circle(radius);
+	fore = push_fore;
+}
+
 static void paint_moverange() {
 	auto push_caret = caret;
 	rect rc = clipping; rc.offset(-32);
@@ -247,6 +266,28 @@ indext indexable::choosemove() {
 	auto result = an.choose();
 	object::afterpaintall = push_event;
 	return (indext)(int)result;
+}
+
+static void paint_targets() {
+	auto push_caret = caret;
+	for(auto p : *creaturea::last) {
+		if(!(*p))
+			continue;
+		auto hp = i2h(p->getindex()); caret = h2p(hp) - camera;
+		targetmarker(p, colors::red);
+	}
+	caret = push_caret;
+}
+
+creaturei* creaturea::choose(const char* title) const {
+	last = this;
+	answers an;
+	auto push_event = object::afterpaintall;
+	object::afterpaintall = paint_targets;
+	splashscreen(500);
+	auto result = (creaturei*)an.choose(title, getnm("Cancel"), 1);
+	object::afterpaintall = push_event;
+	return result;
 }
 
 static void paint_ability_card(color card_color) {

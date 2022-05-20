@@ -268,6 +268,7 @@ public:
 	void				updateui() const;
 };
 struct creaturea : adat<creaturei*> {
+	static const creaturea* last;
 	creaturei*			choose(const char* title) const;
 	void				match(state_s v, bool keep);
 	void				range(int v);
@@ -280,6 +281,7 @@ void					waitall();
 struct gamei : public location {
 	elementf			elements;
 	combatdeck			combat;
+	creaturea			targets;
 	int					dungeon_level;
 	static void			checkinitiative();
 	static void			choosecards();
