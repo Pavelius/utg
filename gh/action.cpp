@@ -29,13 +29,11 @@ static void clear_modifiers() {
 	modifiers[Target] = 1;
 }
 
-static variant* skip_modifiers(variant* p, variant* pe) {
+static variant* skip_condition(variant* p, variant* pe) {
 	while(p < pe) {
-		if(p->iskind<modifieri>()) {
-			p++;
-			continue;
-		} else
+		if(p->iskind<conditioni>())
 			break;
+		p++;
 	}
 	return p;
 }
@@ -47,7 +45,7 @@ static variant* add_modifier(variant* p, variant* pe, bool add_states) {
 			if(pc->proc(p->counter, pc->param))
 				p = add_modifier(p, pe, true);
 			else
-				p = skip_modifiers(p, pe);
+				p = skip_condition(p, pe);
 		} else if(p->iskind<modifieri>()) {
 			modifiers[p->value] += p->counter;
 			p++;

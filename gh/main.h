@@ -256,6 +256,7 @@ public:
 	bool				isplayer() const;
 	void				kill();
 	void				move(int bonus);
+	void				paint() const;
 	void				play();
 	void				set(state_s v) { return state.set(v); }
 	void				updateui() const;

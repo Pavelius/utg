@@ -8,12 +8,14 @@ using namespace draw;
 BSDATAC(object, 256)
 BSDATAC(draworder, 256)
 
-fnevent	draw::object::afterpaintall;
-static rect last_screen;
+fnevent				draw::object::afterpaintall;
+object::fnpaint		draw::object::afterpaint;
+static rect			last_screen;
 static unsigned long timestamp;
 static unsigned long timestamp_last;
+object				object::def;
+
 long distance(point from, point to);
-object object::def;
 
 static void remove_depends(const draworder* p) {
 	for(auto& e : bsdata<draworder>()) {
@@ -132,8 +134,8 @@ void object::paintns() const {
 		field(shape, size);
 	if(resource)
 		image(caret.x, caret.y, resource, frame, flags);
-	if(proc)
-		proc();
+	if(afterpaint)
+		afterpaint(this);
 	if(string) {
 		auto push_font = draw::font;
 		if(font)

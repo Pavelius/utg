@@ -356,6 +356,55 @@ void playercardi::paint() const {
 	paint_statistic();
 }
 
+static void active_hexagon() {
+	auto push_fore = fore;
+	auto push_fsize = fsize;
+	fore = colors::active;
+	fsize = size - 1;
+	hexagon();
+	fsize = size - 2;
+	hexagon();
+	fore = push_fore;
+	fsize = push_fsize;
+}
+
+static void hexagon(color v) {
+	auto push_fore = fore;
+	auto push_fsize = fsize;
+	fore = v;
+	fsize = size;
+	hexagon();
+	fore = push_fore;
+	fsize = push_fsize;
+}
+
+static void hitpoints(int value) {
+	auto push_caret = caret;
+	auto push_font = font;
+	caret.y += 2 * size / 3;
+	font = metrics::h2;
+	textvalue(value);
+	caret = push_caret;
+	font = push_font;
+}
+
+void creaturei::paint() const {
+	if(isplayer())
+		hexagon(colors::green);
+	else if(is(Elite))
+		hexagon(colors::yellow);
+	else
+		hexagon(colors::white);
+	hitpoints(gethp());
+	if(active == this)
+		active_hexagon();
+}
+
+static void object_afterpaint(const object* ps) {
+	if(bsdata<creaturei>::have(ps->data))
+		((creaturei*)ps->data)->paint();
+}
+
 static void tips() {
 	if(!hilite_object)
 		return;
@@ -370,4 +419,5 @@ static void tips() {
 
 void ui_initialize() {
 	draw::ptips = tips;
+	draw::object::afterpaint = object_afterpaint;
 }

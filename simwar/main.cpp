@@ -1,5 +1,5 @@
 #include "draw.h"
-#include "drawobject.h"
+#include "draw_object.h"
 #include "strategy.h"
 
 using namespace draw;

@@ -4,6 +4,8 @@ using namespace pathfind;
 
 BSDATAC(creaturei, 128)
 
+creaturei* creaturei::active;
+
 static creaturei* addnew() {
 	for(auto& e : bsdata<creaturei>()) {
 		if(!e)
@@ -226,6 +228,7 @@ int	creaturei::getinitiative(int index) const {
 }
 
 void creaturei::play() {
+	activate();
 	auto p = getplayer();
 	if(!p)
 		return;
@@ -263,6 +266,7 @@ void creaturei::choosecards() {
 	auto p = getplayer();
 	if(!p)
 		return;
+	activate();
 	p->cards[0] = p->hand.choose(0, true);
 	p->cards[1] = p->hand.choose(0, true);
 	chooseinitiative();
@@ -303,5 +307,8 @@ void creaturei::addexperience(int value) {
 }
 
 void creaturei::activate() {
-	game.focusing(getposition());
+	if(active != this) {
+		game.focusing(getposition());
+		active = this;
+	}
 }

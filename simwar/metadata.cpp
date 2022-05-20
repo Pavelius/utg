@@ -12,7 +12,6 @@ BSDATAD(variant)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
-	BSREQ(format),
 	{}};
 BSDATAC(abilityi, 32)
 BSMETA(resourcei) = {

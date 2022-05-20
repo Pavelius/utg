@@ -45,6 +45,7 @@ struct object : drawable {
 	enum {
 		Visible, Hilite,
 	};
+	typedef void(*fnpaint)(const object* pointer);
 	const void*		data;
 	const char*		string;
 	figure			shape;
@@ -53,9 +54,9 @@ struct object : drawable {
 	unsigned short	frame, size;
 	unsigned char	priority;
 	unsigned		flags;
-	fnevent			proc;
 	static object	def;
 	static fnevent	afterpaintall;
+	static fnpaint	afterpaint;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	static void		initialize();
