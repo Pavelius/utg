@@ -93,6 +93,15 @@ void creaturei::damage(int v) {
 	}
 }
 
+void creaturei::heal(int v) {
+	if(v <= 0)
+		return;
+	fixheal(v);
+	hits += v;
+	if(hits > getmaximumhp())
+		hits = getmaximumhp();
+}
+
 int creaturei::getongoing(action_s id) const {
 	auto result = 0;
 	for(auto& e : bsdata<activecardi>()) {

@@ -216,6 +216,7 @@ public:
 	void				fixattack(indexable& enemy) const;
 	void				fixdamage(int damage) const;
 	void				fixexperience(int value) const;
+	void				fixheal(int value) const;
 	void				fixkill() const;
 	void				fixmove(point hex) const;
 	pathfind::indext	getindex() const { return h2i(value); }
@@ -252,6 +253,7 @@ public:
 	const summoni*		getmonster() const;
 	int					getongoing(action_s v) const;
 	playeri*			getplayer() const;
+	void				heal(int v);
 	bool				is(state_s v) const { return state.is(v); }
 	bool				isplayer() const;
 	void				kill();

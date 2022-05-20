@@ -113,9 +113,15 @@ void indexable::fixattack(indexable& enemy) const {
 	po->y = push_position.y;
 }
 
-void indexable::fixdamage(int value) const {
+static void fixvalue(point hex, int value, color fore) {
+	if(!value)
+		return;
 	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
-	floatstring(h2p(getposition()), colors::red, temp);
+	floatstring(h2p(hex), fore, temp);
+}
+
+void indexable::fixdamage(int value) const {
+	fixvalue(getposition(), value, colors::red);
 }
 
 void indexable::fixkill() const {
@@ -139,10 +145,12 @@ void indexable::fixmove(point hex) const {
 }
 
 void indexable::fixexperience(int value) const {
-	if(!value)
-		return;
-	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
-	floatstring(h2p(getposition()), colors::yellow, temp);
+	fixvalue(getposition(), value, colors::yellow);
+	waitall();
+}
+
+void indexable::fixheal(int value) const {
+	fixvalue(getposition(), value, colors::green);
 	waitall();
 }
 

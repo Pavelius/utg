@@ -96,6 +96,7 @@ void creaturei::apply(action_s type) {
 	case Push:
 		break;
 	case Heal:
+		heal(modifiers[Bonus]);
 		break;
 	case DisarmTrap:
 		break;
