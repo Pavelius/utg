@@ -85,7 +85,7 @@ BSMETA(summoni) = {
 BSMETA(monsteri) = {
 	BSREQ(id), BSREQ(level), BSREQ(elite),
 	BSREQ(hits), BSREQ(move), BSREQ(attack), BSREQ(range),
-	BSREQ(feats),
+	BSREQ(feats), BSREQ(deck),
 	{}};
 BSMETA(monstercardi) = {
 	BSREQ(id),

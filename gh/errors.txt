@@ -1,4 +1,17 @@
-﻿In file `rules/Basic.txt`:
- Line 32: Can't find variant `Opponent`
- Line 71: Can't find variant `Opponent`
- Line 74: Can't find variant `Opponent`
+﻿In file `rules/Monsters.txt`:
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`
+ Line 63: Not found requisit `deck`

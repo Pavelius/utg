@@ -55,6 +55,9 @@ inline point			i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / h
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 struct playeri;
 class creaturei;
+struct nameable {
+	const char*			id;
+};
 struct actioni {
 	typedef void (*fnevent)(int bonus);
 	const char*			id;
@@ -118,7 +121,10 @@ struct monstercardi {
 	int					initiative;
 	variants			abilities;
 	bool				shuffle;
-	void				getinfo(stringbuilder& sb) const;
+};
+struct monsterdeck : nameable, deck {
+	static monsterdeck&	get(const char* id);
+	const monstercardi* current() { return count ? bsdata<monstercardi>::elements + data[0] : 0; }
 };
 struct cardtypei {
 	const char*			id;
@@ -146,15 +152,13 @@ struct summoni {
 	const char*			id;
 	char				hits, move, attack, range;
 	variants			feats;
+	int					get(action_s v) const;
+	int					get(modifier_s v) const;
 };
 struct monsteri : summoni {
 	char				level, elite;
-};
-struct nameable {
-	variant				kind;
-	void                act(const char* format, ...) const;
-	gender_s			getgender() const;
-	const char*         getname() const { return kind.getname(); }
+	const char*			deck;
+	const char*			getdeck() const { return deck ? deck : id; }
 };
 struct tilei {
 	const char*			id;
@@ -259,6 +263,7 @@ public:
 	playeri*			getplayer() const;
 	void				heal(int v);
 	bool				is(state_s v) const { return state.is(v); }
+	bool				iscomputer() const;
 	bool				isplayer() const;
 	void				kill();
 	void				move(int bonus);
@@ -274,6 +279,7 @@ struct creaturea : adat<creaturei*> {
 	void				range(int v);
 	void				select();
 	void				sort();
+	void				sortbymove();
 };
 namespace draw {
 void					waitall();

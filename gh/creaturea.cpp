@@ -43,6 +43,20 @@ void creaturea::sort() {
 	qsort(data, count, sizeof(data[0]), compare);
 }
 
+static int compare_nearest(const void* v1, const void* v2) {
+	auto p1 = *((creaturei**)v1);
+	auto p2 = *((creaturei**)v2);
+	auto d1 = pathfind::getmove(p1->getindex());
+	auto d2 = pathfind::getmove(p1->getindex());
+	if(d1 != d2)
+		return d1 - d2;
+	return compare(v1, v2);
+}
+
+void creaturea::sortbymove() {
+	qsort(data, count, sizeof(data[0]), compare_nearest);
+}
+
 void creaturea::range(int v) {
 	auto ps = data;
 	auto pe = end();

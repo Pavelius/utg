@@ -144,6 +144,12 @@ void creaturei::apply(variants source) {
 		} else if(p->iskind<actioni>()) {
 			clear_modifiers();
 			auto type = (action_s)p->value;
+			auto pm = getmonster();
+			if(pm) {
+				if(type == Attack || type == Move)
+					modifiers[Bonus] += pm->get(type);
+				modifiers[Range] += pm->get(Range);
+			}
 			modifiers[Bonus] += p->counter;
 			p = getmodifiers(p + 1, pe, modifiers);
 			apply(type);

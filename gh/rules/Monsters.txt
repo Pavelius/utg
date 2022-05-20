@@ -60,7 +60,7 @@ id(LivingCorpse) initiative(71) abilities(Move+0 Attack+1 Poison Circle+1)
 id(LivingCorpse) initiative(82) abilities(Move-1 Attack+1)
 id(LivingCorpse) initiative(91) abilities(Move+1 SufferDamage+1)
 
-#Monster
+#Monster deck(Guard)
 
 BanditGuard 0 0 hits(5) move(2) attack(2) range(0)
 BanditGuard 1 0 hits(6) move(3) attack(2) range(0)
@@ -82,11 +82,11 @@ BanditGuard 7 1 hits(14) move(3) attack(5) range(0) feats(Shield+2 Muddle)
 
 #MonsterCard
 
-id(BanditGuard) initiative(15) abilities(Shield+1 Retaliate+2) shuffle(true)
-id(BanditGuard) initiative(15) abilities(Shield+1 Attack+0 Poison) shuffle(true)
-id(BanditGuard) initiative(30) abilities(Move+1 Attack-1)
-id(BanditGuard) initiative(35) abilities(Move-1 Attack+0 Range+2)
-id(BanditGuard) initiative(50) abilities(Move Attack)
-id(BanditGuard) initiative(50) abilities(Move Attack)
-id(BanditGuard) initiative(55) abilities(Move-1 Attack+0 Strenght)
-id(BanditGuard) initiative(91) abilities(Move-1 Attack+1)
+id(Guard) initiative(15) abilities(Shield+1 Retaliate+2) shuffle(true)
+id(Guard) initiative(15) abilities(Shield+1 Attack+0 Poison) shuffle(true)
+id(Guard) initiative(30) abilities(Move+1 Attack-1)
+id(Guard) initiative(35) abilities(Move-1 Attack+0 Range+2)
+id(Guard) initiative(50) abilities(Move Attack)
+id(Guard) initiative(50) abilities(Move Attack)
+id(Guard) initiative(55) abilities(Move-1 Attack+0 Strenght)
+id(Guard) initiative(91) abilities(Move-1 Attack+1)

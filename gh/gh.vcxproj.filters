@@ -89,6 +89,12 @@
     <ClCompile Include="creaturea.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="monsterdeck.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="summon.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

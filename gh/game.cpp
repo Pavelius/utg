@@ -69,6 +69,7 @@ void gamei::choosecards() {
 void gamei::playmoves() {
 	creaturea source;
 	source.select();
+	source.sort();
 	for(auto p : source) {
 		if(!(*p))
 			continue;

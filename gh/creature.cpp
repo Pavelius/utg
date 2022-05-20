@@ -233,41 +233,51 @@ int	creaturei::getinitiative(int index) const {
 	auto p = getplayer();
 	if(p && p->cards[index])
 		return p->cards[index]->initiative;
+	if(bsdata<monsteri>::have(parent)) {
+		auto pc = monsterdeck::get(((monsteri*)parent)->getdeck()).current();
+		if(pc)
+			return pc->initiative;
+	}
 	return 99;
 }
 
 void creaturei::play() {
 	activate();
-	auto p = getplayer();
-	if(!p)
-		return;
-	bool use_card_1 = false;
-	bool use_card_2 = false;
-	bool use_upper = false;
-	bool use_lower = false;
-	for(auto i = 0; i < 2; i++) {
-		answers an;
-		if(!use_card_1)
-			an.add(p->cards[0], getnm(p->cards[0]->id));
-		if(!use_card_2)
-			an.add(p->cards[1], getnm(p->cards[1]->id));
-		auto pc = (playercardi*)an.choose(0, 0, 1);
-		if(pc == p->cards[0])
-			use_card_1 = true;
-		if(pc == p->cards[1])
-			use_card_2 = true;
-		an.clear();
-		if(!use_upper)
-			an.add(&pc->upper, getnm("UpperCardPart"));
-		if(!use_lower)
-			an.add(&pc->lower, getnm("LowerCardPart"));
-		auto pv = (variants*)an.choose(0, 0, 1);
-		if(pv == &pc->upper)
-			use_upper = true;
-		if(pv == &pc->lower)
-			use_lower = true;
-		playercardi::last = pc;
-		apply(*pv);
+	if(getplayer()) {
+		auto p = getplayer();
+		bool use_card_1 = false;
+		bool use_card_2 = false;
+		bool use_upper = false;
+		bool use_lower = false;
+		for(auto i = 0; i < 2; i++) {
+			answers an;
+			if(!use_card_1)
+				an.add(p->cards[0], getnm(p->cards[0]->id));
+			if(!use_card_2)
+				an.add(p->cards[1], getnm(p->cards[1]->id));
+			auto pc = (playercardi*)an.choose(0, 0, 1);
+			if(pc == p->cards[0])
+				use_card_1 = true;
+			if(pc == p->cards[1])
+				use_card_2 = true;
+			an.clear();
+			if(!use_upper)
+				an.add(&pc->upper, getnm("UpperCardPart"));
+			if(!use_lower)
+				an.add(&pc->lower, getnm("LowerCardPart"));
+			auto pv = (variants*)an.choose(0, 0, 1);
+			if(pv == &pc->upper)
+				use_upper = true;
+			if(pv == &pc->lower)
+				use_lower = true;
+			playercardi::last = pc;
+			apply(*pv);
+		}
+	} else if(bsdata<monsteri>::have(parent)) {
+		auto p = (monsteri*)parent;
+		auto pc = monsterdeck::get(p->getdeck()).current();
+		if(pc)
+			apply(pc->abilities);
 	}
 }
 
@@ -308,9 +318,14 @@ creaturei* creaturei::choosenearest(bool hostile, int range) const {
 	creaturea targets;
 	targets.select();
 	targets.match(Hostile, hostile);
-	if(range) {
-		calculate_shootmap(getindex());
+	calculate_shootmap(getindex());
+	if(range)
 		targets.range(range);
+	if(!targets)
+		return 0;
+	if(iscomputer()) {
+		targets.sortbymove();
+		return targets.data[0];
 	}
 	return targets.choose(0);
 }
@@ -330,4 +345,8 @@ void creaturei::activate() {
 		game.focusing(getposition());
 		active = this;
 	}
+}
+
+bool creaturei::iscomputer() const {
+	return bsdata<monsteri>::have(parent);
 }
