@@ -47,7 +47,7 @@ static int compare_nearest(const void* v1, const void* v2) {
 	auto p1 = *((creaturei**)v1);
 	auto p2 = *((creaturei**)v2);
 	auto d1 = pathfind::getmove(p1->getindex());
-	auto d2 = pathfind::getmove(p1->getindex());
+	auto d2 = pathfind::getmove(p2->getindex());
 	if(d1 != d2)
 		return d1 - d2;
 	return compare(v1, v2);

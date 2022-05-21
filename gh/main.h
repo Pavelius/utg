@@ -259,6 +259,8 @@ public:
 	static variant*		getmodifiers(variant* p, variant* pe, char* modifiers);
 	static void			getmodifiers(stringbuilder& sb);
 	const summoni*		getmonster() const;
+	pathfind::indext	getmovetarget() const;
+	creaturei*			getnearestenemy() const;
 	int					getongoing(action_s v) const;
 	playeri*			getplayer() const;
 	void				heal(int v);
@@ -267,6 +269,7 @@ public:
 	bool				isplayer() const;
 	void				kill();
 	void				move(int bonus);
+	bool				moveto(pathfind::indext index, int bonus);
 	void				paint() const;
 	void				play();
 	void				set(state_s v) { return state.set(v); }

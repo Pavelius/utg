@@ -4,6 +4,7 @@ using namespace pathfind;
 
 BSDATAC(creaturei, 128)
 
+static indext path[hms * hms];
 creaturei* creaturei::active;
 
 static creaturei* addnew() {
@@ -218,14 +219,21 @@ static void calculate_shootmap(indext start) {
 }
 
 void creaturei::move(int bonus) {
-	while(bonus > 0) {
-		calculate_movemap(getindex(), bonus, is(Hostile), is(Jump), is(Fly));
-		auto new_index = choosemove();
-		if(new_index == Blocked)
-			break;
-		setposition(new_index);
-		bonus -= getmove(new_index);
-		fixmove(i2h(new_index));
+	if(iscomputer()) {
+		auto enemy = getnearestenemy();
+		if(!enemy)
+			return;
+		moveto(enemy->getindex(), bonus);
+	} else {
+		while(bonus > 0) {
+			calculate_movemap(getindex(), bonus, is(Hostile), is(Jump), is(Fly));
+			auto new_index = choosemove();
+			if(new_index == Blocked)
+				break;
+			setposition(new_index);
+			bonus -= getmove(new_index);
+			fixmove(i2h(new_index));
+		}
 	}
 }
 
@@ -349,4 +357,43 @@ void creaturei::activate() {
 
 bool creaturei::iscomputer() const {
 	return bsdata<monsteri>::have(parent);
+}
+
+creaturei* creaturei::getnearestenemy() const {
+	creaturea enemies;
+	enemies.select();
+	enemies.match(Hostile, !is(Hostile));
+	if(!enemies)
+		return 0;
+	auto index = getindex();
+	clearpath();
+	blockwalls();
+	makewave(index);
+	enemies.sortbymove();
+	return enemies[0];
+}
+
+bool creaturei::moveto(indext index, int bonus) {
+	auto start = getindex();
+	clearpath();
+	blockwalls();
+	makewave(index);
+	if(getmove(start) == Blocked)
+		return false;
+	int count = getpath(index, start, path, sizeof(path) / sizeof(path[0]));
+	blockcreatures();
+	auto result = Blocked;
+	for(auto i = 0; i < count; i++) {
+		auto in = path[i];
+		auto pt = i2h(in);
+		if(getmove(in) == Blocked)
+			continue;
+		result = in;
+	}
+	if(result == Blocked)
+		return false;
+	setposition(result);
+	auto pt = i2h(result);
+	fixmove(pt);
+	return true;
 }
