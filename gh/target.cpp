@@ -5,7 +5,7 @@ BSDATA(targeti) = {
 	{"TargetSelf"},
 	{"TargetAlly"},
 	{"TargetEnemiesAround"},
-	{"TargetAllyAround"},
-	{"TargetAllyEnemyAround"},
+	{"TargetAlliesAround"},
+	{"TargetCreaturesAround"},
 };
-assert_enum(targeti, TargetAllyEnemyAround)
+assert_enum(targeti, TargetCreaturesAround)

@@ -77,7 +77,14 @@ int creaturei::get(modifier_s i) {
 
 void creaturei::apply(target_s type) {
 	switch(type) {
-	case TargetAllyAround:
+	case TargetAlliesAround:
+		targets.select();
+		targets.match(Hostile, !is(Hostile));
+		pathfind::clearpath();
+		pathfind::blockwalls();
+		pathfind::makewave(getindex());
+		targets.range(1);
+		break;
 	case TargetAlly:
 		targets.select();
 		targets.match(Hostile, is(Hostile));

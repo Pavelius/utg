@@ -23,7 +23,7 @@ enum special_s : unsigned char {
 	TargetEnemyMoveThrought,
 };
 enum target_s : unsigned char {
-	TargetAttack, TargetSelf, TargetAlly, TargetEnemiesAround, TargetAllyAround, TargetAllyEnemyAround,
+	TargetAttack, TargetSelf, TargetAlly, TargetEnemiesAround, TargetAlliesAround, TargetCreaturesAround,
 };
 enum modifier_s : unsigned char {
 	Bonus, Experience, Pierce, Range, Target,
@@ -44,6 +44,9 @@ enum state_s : unsigned char {
 };
 enum element_s : unsigned char {
 	Fire, Ice, Air, Earth, Light, Dark, AnyElement,
+};
+enum tile_s : unsigned char {
+	Corridor, Coin,
 };
 typedef flagable<2> statef;
 typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
@@ -170,6 +173,7 @@ struct tilei {
 	point				offset; // offset to upper left tile
 	slice<point>		blocks; // blocked squares
 	void				creating(point position, bool inverse) const;
+	void				updateui();
 };
 struct eventi {
 	struct action {
@@ -218,7 +222,7 @@ public:
 	void				setwalls();
 };
 class indexable {
-	point				value;
+	pathfind::indext	value;
 public:
 	static pathfind::indext	choosemove();
 	void				fixattack(indexable& enemy) const;
@@ -227,10 +231,10 @@ public:
 	void				fixheal(int value) const;
 	void				fixkill() const;
 	void				fixmove(point hex) const;
-	pathfind::indext	getindex() const { return h2i(value); }
-	point				getposition() const { return value; }
-	void				setposition(point v) { value = v; }
-	void				setposition(pathfind::indext v) { value = i2h(v); }
+	pathfind::indext	getindex() const { return value; }
+	point				getposition() const { return i2h(value); }
+	void				setposition(point v) { value = h2i(v); }
+	void				setposition(pathfind::indext v) { value = v; }
 };
 class creaturei : public indexable {
 	const void*			parent;
@@ -299,6 +303,7 @@ struct gamei : public location {
 	int					dungeon_level;
 	static void			checkinitiative();
 	static void			choosecards();
+	static void			dropcoin(point hex);
 	static void			focusing(point pt);
 	static void			initialize();
 	static duration_s	getduration(variants source);

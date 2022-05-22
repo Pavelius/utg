@@ -85,3 +85,6 @@ void gamei::playround() {
 	checkinitiative();
 	playmoves();
 }
+
+void gamei::dropcoin(point hex) {
+}

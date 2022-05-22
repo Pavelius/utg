@@ -79,6 +79,7 @@ int creaturei::getmaximumhp() const {
 }
 
 void creaturei::kill() {
+	game.dropcoin(getposition());
 	fixkill();
 	clear();
 }
