@@ -23,7 +23,7 @@ enum special_s : unsigned char {
 	TargetEnemyMoveThrought,
 };
 enum target_s : unsigned char {
-	TargetEnemy, TargetSelf, TargetAlly, TargetEnemyAround, TargetAllyAround, TargetAllyEnemyAround,
+	TargetAttack, TargetSelf, TargetAlly, TargetEnemiesAround, TargetAllyAround, TargetAllyEnemyAround,
 };
 enum modifier_s : unsigned char {
 	Bonus, Experience, Pierce, Range, Target,
@@ -141,6 +141,9 @@ struct feati {
 struct statei {
 	const char*			id;
 	bool				hostile;
+};
+struct targeti {
+	const char*			id;
 };
 struct trapi {
 	const char*			id;
@@ -269,9 +272,10 @@ public:
 	bool				isplayer() const;
 	void				kill();
 	void				move(int bonus);
-	bool				moveto(pathfind::indext index, int bonus);
+	bool				moveto(pathfind::indext index, int bonus, int range);
 	void				paint() const;
 	void				play();
+	bool				push(pathfind::indext from, int bonus);
 	void				set(state_s v) { return state.set(v); }
 	void				updateui() const;
 };
@@ -303,4 +307,7 @@ struct gamei : public location {
 	void				set(element_s v) { elements.set(v); }
 	static void			updateui(void* parent, point position);
 };
+namespace pathfind {
+void					blockwalls();
+}
 extern gamei			game;

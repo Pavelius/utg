@@ -34,7 +34,6 @@ struct bsreq {
 	bstype_s				subtype; // metadata subtype
 	array*					source; // data source for enumerators
 	constexpr explicit operator bool() const { return id != 0; }
-	void*					dereference(const void* data, const bsreq** result) const;
 	bool					equal(const void* v1, const void* v2) const;
 	const bsreq*			find(const char* name) const;
 	const bsreq*			find(const char* name, unsigned count) const;
@@ -44,16 +43,13 @@ struct bsreq {
 	const char*				get(const void* p, char* result, const char* result_max) const;
 	const char*				gets(const void* p) const;
 	const bsreq*			getname() const;
-	const char*				getmetaname() const; // Extern function
 	bool					is(bstype_s v) const { return subtype == v; }
 	bool					issimple() const { return is(KindNumber) || is(KindText); }
 	bool					match(const void* p, const char* name) const;
 	char*					ptr(const void* data) const { return (char*)data + offset; }
 	char*					ptr(const void* data, int index) const { return (char*)data + offset + index * size; }
-	void*					ptr(const void* data, const char* url, const bsreq** result) const;
 	static void				read(const char* url);
 	void					set(const void* p, long value) const;
-	bool					write(const char* url, void* object) const;
 };
 NOBSDATA(bsreq)
 // Abstract metadata class

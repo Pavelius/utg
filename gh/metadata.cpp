@@ -97,6 +97,9 @@ BSMETA(combatcardi) = {
 	BSREQ(bonus), BSREQ(shuffle), BSREQ(next), BSREQ(count),
 	BSREQ(feats),
 	{}};
+BSMETA(targeti) = {
+	BSREQ(id),
+	{}};
 BSMETA(trapi) = {
 	BSREQ(id),
 	BSREQ(damage),
@@ -121,6 +124,7 @@ BSDATA(varianti) = {
 	{"Special", VRSTD(speciali), 1},
 	{"State", VRSTD(statei), 1},
 	{"Summon", VRSTD(summoni), 1},
+	{"Target", VRSTD(targeti), 1},
 	{"Trap", VRSTD(trapi), 1},
 };
 BSDATAF(varianti)

@@ -48,7 +48,7 @@ LeapingCleave level(1) initiative(54)
  lower Move+3 Jump Air
 OverwhelmingAssault level(1) initiative(61)
  upper Attack+6 Experience+2 Discard
- lower Move+3 Push+2
+ lower Move+3 Push+2 TargetEnemiesAround
 SpareDagger level(1) initiative(27)
  upper Attack+3 Range+3 Experience+1
  lower Attack+2

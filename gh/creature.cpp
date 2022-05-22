@@ -4,7 +4,7 @@ using namespace pathfind;
 
 BSDATAC(creaturei, 128)
 
-static indext path[hms * hms];
+static indext moves[hms * hms];
 creaturei* creaturei::active;
 
 static creaturei* addnew() {
@@ -169,7 +169,7 @@ const char* creaturei::getid() const {
 	return 0;
 }
 
-static void blockwalls() {
+void pathfind::blockwalls() {
 	for(auto i = 0; i < hms * hms; i++) {
 		if(game.iswall(i))
 			setmove(i, Blocked);
@@ -223,7 +223,7 @@ void creaturei::move(int bonus) {
 		auto enemy = getnearestenemy();
 		if(!enemy)
 			return;
-		moveto(enemy->getindex(), bonus);
+		moveto(enemy->getindex(), bonus, 1);
 	} else {
 		while(bonus > 0) {
 			calculate_movemap(getindex(), bonus, is(Hostile), is(Jump), is(Fly));
@@ -373,23 +373,66 @@ creaturei* creaturei::getnearestenemy() const {
 	return enemies[0];
 }
 
-bool creaturei::moveto(indext index, int bonus) {
+static indext get_minimal_path() {
+	indext m_index = 0xFFFF;
+	indext result = 0xFFFF;
+	for(auto i = 0; i < hms * hms; i++) {
+		auto s1 = moves[i];
+		if(s1 == Blocked)
+			continue;
+		auto i1 = getmove(i);
+		if(i1 == Blocked)
+			continue;
+		if(i1 < m_index) {
+			m_index = i1;
+			result = i;
+		}
+	}
+	return result;
+}
+
+static indext get_maximal_path() {
+	indext m_index = 0;
+	indext result = 0xFFFF;
+	for(auto i = 0; i < hms * hms; i++) {
+		auto s1 = moves[i];
+		if(s1 == Blocked)
+			continue;
+		auto i1 = getmove(i);
+		if(i1 == Blocked)
+			continue;
+		if(i1 > m_index) {
+			m_index = i1;
+			result = i;
+		}
+	}
+	return result;
+}
+
+bool creaturei::moveto(indext index, int bonus, int range) {
 	auto start = getindex();
+	calculate_movemap(start, bonus, is(Hostile), is(Jump), is(Fly));
+	getmove(moves);
 	clearpath();
 	blockwalls();
 	makewave(index);
-	if(getmove(start) == Blocked)
+	auto result = get_minimal_path();
+	if(result == Blocked)
 		return false;
-	int count = getpath(index, start, path, sizeof(path) / sizeof(path[0]));
-	blockcreatures();
-	auto result = Blocked;
-	for(auto i = 0; i < count; i++) {
-		auto in = path[i];
-		auto pt = i2h(in);
-		if(getmove(in) == Blocked)
-			continue;
-		result = in;
-	}
+	setposition(result);
+	auto pt = i2h(result);
+	fixmove(pt);
+	return true;
+}
+
+bool creaturei::push(indext from, int bonus) {
+	auto start = getindex();
+	calculate_movemap(start, bonus, is(Hostile), false, is(Fly));
+	getmove(moves);
+	clearpath();
+	blockwalls();
+	makewave(from);
+	auto result = get_maximal_path();
 	if(result == Blocked)
 		return false;
 	setposition(result);

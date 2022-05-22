@@ -102,6 +102,7 @@ SweepingBlow: Сметающий удар
 Target: Цели
 TargetAllAdjancedEnemies: Цель все враги вокруг
 TargetAllAlly: Цель все союзники вокруг
+TargetEnemiesAround: Цель все враги вокруг
 TargetEnemyMoveThrought: Цель каждый враг на пути движения
 Tinkerer: Изобретатель
 ToxicBolt: Отравленная стрела

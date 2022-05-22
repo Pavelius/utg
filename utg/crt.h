@@ -45,9 +45,9 @@ unsigned long						getcputime();
 unsigned                            randomseed();
 void								waitcputime(unsigned v);
 
-enum class codepages { No, W1251, UTF8, U16BE, U16LE };
+enum class codepage { No, W1251, UTF8, U16BE, U16LE };
 namespace metrics {
-const codepages						code = codepages::W1251;
+const codepage						code = codepage::W1251;
 }
 // Common used templates
 inline int							ifloor(double n) { return (int)n; }
@@ -246,8 +246,8 @@ inline const char*					skipsp(const char* p) { if(p) while(*p == ' ' || *p == '\
 inline const char*					skipspcr(const char* p) { if(p) while(*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') p++; return p; }
 const char*							skipcr(const char* p);
 void								szchange(char* p, char s1, char s2);
-void								szencode(char* output, int output_count, codepages output_code, const char* input, int input_count, codepages input_code);
-unsigned							szget(const char** input, codepages page = metrics::code);
+void								szencode(char* output, int output_count, codepage output_code, const char* input, int input_count, codepage input_code);
+unsigned							szget(const char** input, codepage page = metrics::code);
 int									szcmpi(const char* p1, const char* p2);
 int									szcmpi(const char* p1, const char* p2, int count);
 const char*							szdup(const char* text);
@@ -260,8 +260,8 @@ unsigned							szlower(unsigned u); // to lower reg
 void								szlower(char* p); // to lower reg
 bool								szmatch(const char* text, const char* name); //
 bool								szpmatch(const char* text, const char* pattern);
-void								szput(char** output, unsigned u, codepages page = metrics::code);
-char*								szput(char* output, unsigned u, codepages page = metrics::code); // Fast symbol put function. Return 'output'.
+void								szput(char** output, unsigned u, codepage page = metrics::code);
+char*								szput(char* output, unsigned u, codepage page = metrics::code); // Fast symbol put function. Return 'output'.
 bool								szstart(const char* text, const char* name);
 unsigned							szupper(unsigned u);
 void								szupper(char* p); // to upper reg

@@ -21,7 +21,6 @@ assert_enum(actioni, Discard)
 
 static modifiera	modifiers;
 static special_s	special;
-static target_s		target;
 static creaturea	targets;
 
 static void clear_modifiers() {
@@ -46,6 +45,10 @@ variant* creaturei::getmodifiers(variant* p, variant* pe, char* modifiers) {
 				p = getmodifiers(p, pe, modifiers);
 			else
 				p = skip_condition(p, pe);
+		} else if(p->iskind<targeti>()) {
+			if(active)
+				active->apply((target_s)p->value);
+			p++;
 		} else if(p->iskind<modifieri>()) {
 			if(modifiers)
 				modifiers[p->value] += p->counter;
@@ -79,9 +82,13 @@ void creaturei::apply(target_s type) {
 		targets.select();
 		targets.match(Hostile, is(Hostile));
 		break;
-	case TargetEnemyAround:
+	case TargetEnemiesAround:
 		targets.select();
 		targets.match(Hostile, !is(Hostile));
+		pathfind::clearpath();
+		pathfind::blockwalls();
+		pathfind::makewave(getindex());
+		targets.range(1);
 		break;
 	case TargetSelf:
 		targets.clear();
@@ -103,7 +110,6 @@ void creaturei::apply(action_s type) {
 			targets.add(enemy);
 			attack(*enemy, modifiers[Bonus], modifiers[Pierce]);
 		}
-		target = TargetEnemy;
 		break;
 	case Move:
 		move(modifiers[Bonus]);
@@ -111,6 +117,8 @@ void creaturei::apply(action_s type) {
 	case Pull:
 		break;
 	case Push:
+		for(auto p : targets)
+			p->push(getindex(), modifiers[Bonus]);
 		break;
 	case Heal:
 		heal(modifiers[Bonus]);
@@ -158,7 +166,9 @@ void creaturei::apply(variants source) {
 		} else if(p->iskind<elementi>()) {
 			game.set((element_s)p->value);
 			p = getmodifiers(p + 1, pe, modifiers);
-		} else if(p->iskind<statei>()) {
+		} else if(p->iskind<targeti>())
+			apply((target_s)p->value);
+		else if(p->iskind<statei>()) {
 			auto i = (state_s)p->value;
 			p = getmodifiers(p + 1, pe, modifiers);
 			for(auto p : targets)

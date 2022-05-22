@@ -327,8 +327,7 @@ static void paint_effect(variants effect, point origin, int mode) {
 		}
 		sb.clear();
 		auto pn = v.getname();
-		if(szfind(pn, "%1i")
-			|| v.iskind<summoni>() || v.iskind<conditioni>() || v.iskind<statei>() || v.iskind<elementi>() || v.iskind<durationi>())
+		if(szfind(pn, "%1i") || (!v.iskind<actioni>() && !v.iskind<modifieri>()))
 			sb.add(pn, v.counter);
 		else
 			sb.add("%1% %2i", v.getname(), v.counter);

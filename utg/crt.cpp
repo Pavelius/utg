@@ -176,11 +176,11 @@ int getdigitscount(unsigned number) {
 	return 9;
 }
 
-unsigned szget(const char** input, codepages code) {
+unsigned szget(const char** input, codepage code) {
 	const unsigned char* p;
 	unsigned result;
 	switch(code) {
-	case codepages::UTF8:
+	case codepage::UTF8:
 		p = (unsigned char*)*input;
 		result = *p++;
 		if(result >= 192 && result <= 223)
@@ -191,12 +191,12 @@ unsigned szget(const char** input, codepages code) {
 		}
 		*input = (const char*)p;
 		return result;
-	case codepages::U16LE:
+	case codepage::U16LE:
 		p = (unsigned char*)*input;
 		result = p[0] | (p[1] << 8);
 		*input = (const char*)(p + 2);
 		return result;
-	case codepages::W1251:
+	case codepage::W1251:
 		result = (unsigned char)*(*input)++;
 		if(((unsigned char)result >= 0xC0))
 			return result - 0xC0 + 0x410;
@@ -212,10 +212,10 @@ unsigned szget(const char** input, codepages code) {
 	}
 }
 
-void szput(char** output, unsigned value, codepages code) {
+void szput(char** output, unsigned value, codepage code) {
 	char* p;
 	switch(code) {
-	case codepages::UTF8:
+	case codepage::UTF8:
 		p = *output;
 		if(((unsigned short)value) < 128)
 			*p++ = (unsigned char)value;
@@ -229,7 +229,7 @@ void szput(char** output, unsigned value, codepages code) {
 		}
 		*output = p;
 		break;
-	case codepages::W1251:
+	case codepage::W1251:
 		if(value >= 0x410 && value <= 0x44F)
 			value = value - 0x410 + 0xC0;
 		else switch(value) {
@@ -240,11 +240,11 @@ void szput(char** output, unsigned value, codepages code) {
 		}
 		*(*output)++ = (unsigned char)value;
 		break;
-	case codepages::U16LE:
+	case codepage::U16LE:
 		*(*output)++ = (unsigned char)(value & 0xFF);
 		*(*output)++ = (unsigned char)(((unsigned)value >> 8));
 		break;
-	case codepages::U16BE:
+	case codepage::U16BE:
 		*(*output)++ = (unsigned char)(((unsigned)value >> 8));
 		*(*output)++ = (unsigned char)(value & 0xFF);
 		break;
@@ -254,14 +254,14 @@ void szput(char** output, unsigned value, codepages code) {
 	}
 }
 
-char* szput(char* result, unsigned sym, codepages page) {
+char* szput(char* result, unsigned sym, codepage page) {
 	char* p = result;
 	szput(&p, sym, page);
 	*p = 0;
 	return result;
 }
 
-void szencode(char* output, int output_count, codepages output_code, const char* input, int input_count, codepages input_code) {
+void szencode(char* output, int output_count, codepage output_code, const char* input, int input_count, codepage input_code) {
 	char* s1 = output;
 	char* s2 = s1 + output_count;
 	const char* p1 = input;
@@ -270,7 +270,7 @@ void szencode(char* output, int output_count, codepages output_code, const char*
 		szput(&s1, szget(&p1, input_code), output_code);
 	if(s1 < s2) {
 		s1[0] = 0;
-		if((output_code == codepages::U16BE || output_code == codepages::U16LE) && (s1 + 1) < s2)
+		if((output_code == codepage::U16BE || output_code == codepage::U16LE) && (s1 + 1) < s2)
 			s1[1] = 0;
 	}
 }
