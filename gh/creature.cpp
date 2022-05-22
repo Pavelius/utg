@@ -440,3 +440,19 @@ bool creaturei::push(indext from, int bonus) {
 	fixmove(pt);
 	return true;
 }
+
+bool creaturei::pull(pathfind::indext from, int bonus) {
+	auto start = getindex();
+	calculate_movemap(start, bonus, is(Hostile), false, is(Fly));
+	getmove(moves);
+	clearpath();
+	blockwalls();
+	makewave(from);
+	auto result = get_minimal_path();
+	if(result == Blocked)
+		return false;
+	setposition(result);
+	auto pt = i2h(result);
+	fixmove(pt);
+	return true;
+}

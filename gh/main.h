@@ -275,6 +275,7 @@ public:
 	bool				moveto(pathfind::indext index, int bonus, int range);
 	void				paint() const;
 	void				play();
+	bool				pull(pathfind::indext from, int bonus);
 	bool				push(pathfind::indext from, int bonus);
 	void				set(state_s v) { return state.set(v); }
 	void				updateui() const;

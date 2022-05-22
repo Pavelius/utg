@@ -115,13 +115,16 @@ void creaturei::apply(action_s type) {
 		move(modifiers[Bonus]);
 		break;
 	case Pull:
+		for(auto p : targets)
+			p->pull(getindex(), modifiers[Bonus]);
 		break;
 	case Push:
 		for(auto p : targets)
 			p->push(getindex(), modifiers[Bonus]);
 		break;
 	case Heal:
-		heal(modifiers[Bonus]);
+		for(auto p : targets)
+			p->heal(modifiers[Bonus]);
 		break;
 	case DisarmTrap:
 		break;
