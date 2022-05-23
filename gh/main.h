@@ -276,6 +276,8 @@ public:
 	void				clear();
 	void				damage(int v);
 	static int			get(modifier_s i);
+	int					getactive(action_s id) const;
+	int					getactive(action_s id, variant* p, variant* pe) const;
 	int					getcoins() const;
 	combatdeck&			getcombatdeck() const;
 	void				getdefence(int& attack, int& retaliate);

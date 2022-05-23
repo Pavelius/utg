@@ -157,6 +157,9 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce, int advantage) {
 	if(bonus > 0) {
 		auto pierced_bonus = bonus + pierce;
 		useshield(pierced_bonus);
+		pierced_bonus -= getactive(Shield);
+		if(pierced_bonus < 0)
+			pierced_bonus = 0;
 		if(pierced_bonus < bonus)
 			bonus = pierced_bonus;
 	}
