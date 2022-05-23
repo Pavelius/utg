@@ -10,6 +10,7 @@ BlackBarrows
   x(3) y(9)
   x(3) y(13)
  tiles
+  type(Coin) position(5 9)
   type(L1a) position(2 8) inverse(true)
   type(G1b) position(7 10)
   type(I1b) position(8 4) inverse(true)

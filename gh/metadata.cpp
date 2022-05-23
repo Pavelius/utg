@@ -16,6 +16,7 @@ BSDATAC(playeri, 24)
 BSDATAC(playercardi, 512)
 BSDATAC(scenarioi, 128)
 BSDATAC(summoni, 64)
+BSDATAC(decoration, 128)
 BSDATAC(trapi, 128)
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr

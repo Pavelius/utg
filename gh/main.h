@@ -173,6 +173,7 @@ struct tilei {
 	point				offset; // offset to upper left tile
 	slice<point>		blocks; // blocked squares
 	void				creating(point position, bool inverse) const;
+	bool				isdecoration() const { return priority >= 4; }
 	void				updateui();
 };
 struct eventi {
@@ -235,6 +236,13 @@ public:
 	point				getposition() const { return i2h(value); }
 	void				setposition(point v) { value = h2i(v); }
 	void				setposition(pathfind::indext v) { value = v; }
+};
+class decoration : public indexable {
+	const tilei*		parent;
+public:
+	explicit operator bool() const { return parent != 0; }
+	static decoration*	add(const char* id, point position);
+	void				updateui() const;
 };
 class creaturei : public indexable {
 	const void*			parent;

@@ -42,10 +42,10 @@ struct draworder : drawable {
 	void			wait();
 };
 struct object : drawable {
+	typedef void(*fnpaint)(const object* pointer);
 	enum {
 		Visible, Hilite,
 	};
-	typedef void(*fnpaint)(const object* pointer);
 	const void*		data;
 	const char*		string;
 	figure			shape;

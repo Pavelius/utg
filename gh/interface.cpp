@@ -24,14 +24,19 @@ void scenariotilei::updateui() const {
 		return;
 	auto ps = bsdata<tilei>::find(type);
 	if(ps) {
-		ps->creating(position, inverse);
-		auto pt = h2p(position) - ps->offset;
-		p = draw::addobject(pt.x, pt.y);
-		p->data = this;
-		p->resource = draw::getres(type, "art/tiles");
-		p->priority = ps->priority;
-		if(inverse)
-			p->flags = ImageMirrorH | ImageMirrorV;
+		if(ps->isdecoration()) {
+			auto pd = decoration::add(type, position);
+			pd->updateui();
+		} else {
+			ps->creating(position, inverse);
+			auto pt = h2p(position) - ps->offset;
+			p = draw::addobject(pt.x, pt.y);
+			p->data = this;
+			p->resource = draw::getres(type, "art/tiles");
+			p->priority = ps->priority;
+			if(inverse)
+				p->flags = ImageMirrorH | ImageMirrorV;
+		}
 	}
 	auto pm = bsdata<monsteri>::find(type);
 	if(pm) {
@@ -55,6 +60,18 @@ void creaturei::updateui() const {
 		p->resource = draw::getres(getid(), "art/creatures");
 		p->priority = 4;
 		splashscreen(500);
+	}
+}
+
+void decoration::updateui() const {
+	auto p = draw::findobject(this);
+	if(!p) {
+		auto pt = h2p(getposition());
+		focusing(pt);
+		p = draw::addobject(pt.x, pt.y);
+		p->data = this;
+		p->resource = draw::getres(parent->id, "art/tiles");
+		p->priority = 4;
 	}
 }
 

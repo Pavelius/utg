@@ -87,4 +87,5 @@ void gamei::playround() {
 }
 
 void gamei::dropcoin(point hex) {
+	decoration::add("Coin", hex);
 }
