@@ -162,7 +162,7 @@ void indexable::fixmove(point hex) const {
 }
 
 void indexable::fixexperience(int value) const {
-	fixvalue(getposition(), value, colors::yellow);
+	fixvalue(getposition(), value, colors::blue);
 }
 
 void indexable::fixgood(const char* format, ...) const {
@@ -478,6 +478,34 @@ static void textvalue(int value, int dx, int dy, color v) {
 	font = push_font;
 }
 
+static void paint_elements() {
+	for(auto i = Fire; i <= Dark; i = (element_s)(i + 1)) {
+		circle(14);
+		if(game.elements[i]) {
+			auto push_alpha = alpha;
+			if(game.elements[i] == 1)
+				alpha = 128;
+			else
+				alpha = 255;
+			image(getres("elements32"), i, 0);
+			alpha = push_alpha;
+		}
+		caret.x += 32 + 3;
+	}
+}
+
+void status_info(void) {
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::border;
+	caret.x += 17;
+	caret.y += 17;
+	paint_elements();
+	fore = push_fore;
+	caret = push_caret;
+	caret.y += 4;
+}
+
 void creaturei::paint() const {
 	if(isplayer())
 		hexagon(colors::green);
@@ -485,9 +513,9 @@ void creaturei::paint() const {
 		hexagon(colors::yellow);
 	else
 		hexagon(colors::white);
-	textvalue(gethp(), 0, 2 * size / 3, colors::green);
-	textvalue(getexperience(), -size / 3, -size / 3, colors::white);
-	textvalue(getcoins(), size / 3, -size / 3, colors::yellow);
+	textvalue(gethp(), 0, 2 * size / 3, colors::red);
+	textvalue(getexperience(), -2 * size / 3, -size / 3, colors::blue);
+	textvalue(getcoins(), 2 * size / 3, -size / 3, colors::yellow);
 	if(active == this)
 		active_hexagon();
 }
@@ -502,7 +530,7 @@ static void tips() {
 		return;
 	auto push_caret = caret;
 	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
-	caret.y = 35;
+	caret.y = 39;
 	auto i = bsdata<playercardi>::source.indexof(hilite_object);
 	if(i != -1)
 		((playercardi*)bsdata<playercardi>::source.ptr(i))->paint();

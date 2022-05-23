@@ -30,6 +30,7 @@ struct color {
 };
 namespace colors {
 extern color				black;
+extern color				blue;
 extern color				gray;
 extern color				green;
 extern color				red;

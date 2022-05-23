@@ -24,6 +24,9 @@ static void test_scenario() {
 	p1->hand.addcards(p1->id, 1);
 	p2->hand.addcards(p2->id, 1);
 	game.combat.initialize();
+	game.elements[Fire] = 2;
+	game.elements[Light] = 1;
+	game.elements[Dark] = 1;
 	auto c2 = creaturei::add("Brute", p->starts[1]);
 	auto c1 = creaturei::add("Tinkerer", p->starts[0]);
 	play_game();
@@ -41,9 +44,6 @@ static void initialization() {
 	bsreq::read("rules/CombatCards.txt");
 	bsreq::read("rules/Monsters.txt");
 	bsreq::read("rules/Scenarios.txt");
-}
-
-void status_info(void) {
 }
 
 int main(int argc, char* argv[]) {
