@@ -22,6 +22,10 @@ static void beforemodal() {
 	tips_size.x = getwidth() - (metrics::padding + metrics::border) * 2;
 }
 
+static void movedown(int dy) {
+	caret.y += dy; height -= dy;
+}
+
 static void linedown() {
 	auto push_caret = caret;
 	auto push_fore = fore;
@@ -29,22 +33,14 @@ static void linedown() {
 	line(caret.x + width, caret.y);
 	fore = push_fore;
 	caret = push_caret;
-	auto dy = 2;
-	caret.y += dy; height -= dy;
 }
 
 void status_info();
 
 static void statusbar() {
 	status_info();
-	auto dy = texth() + metrics::padding + metrics::border*2;
-	caret.y += dy; height -= dy;
 	linedown();
-}
-
-static void paint() {
-	fillform();
-	statusbar();
+	movedown(1);
 }
 
 static void camera_finish() {
@@ -70,10 +66,6 @@ static void camera_finish() {
 		}
 		break;
 	}
-}
-
-static void finish() {
-	camera_finish();
 }
 
 bool draw::swindow(bool hilight) {
@@ -105,7 +97,7 @@ bool draw::ishilite(int size, const void* object) {
 }
 
 static bool window(bool hilite, const char* string, const char* resid, const char* prompt) {
-	if((!string || string[0] == 0) && !resid && (!prompt || prompt[0]==0))
+	if((!string || string[0] == 0) && !resid && (!prompt || prompt[0] == 0))
 		return false;
 	auto text_height = 0;
 	auto image_height = 0;
@@ -232,13 +224,22 @@ static void answers_beforepaint() {
 	paintobjects();
 	width = 320;
 	caret.y += metrics::padding + metrics::border;
-	caret.x = getwidth() - width - metrics::padding - metrics::border;
+	caret.x = getwidth() - width - (metrics::padding + metrics::border);
 	if(answers::header)
 		texth2w(answers::header);
 	if(answers::prompt || answers::prompa || answers::resid) {
 		window(false, answers::prompt, answers::resid, answers::prompa);
 		caret.y += metrics::padding;
 	}
+}
+
+static void paint() {
+	fillform();
+	statusbar();
+}
+
+static void finish() {
+	camera_finish();
 }
 
 int draw::strategy(fnevent proc, fnevent afterread) {
@@ -259,7 +260,7 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
 	pfinish = finish;
-	awindow.flags = WFResize|WFMinmax;
+	awindow.flags = WFResize | WFMinmax;
 	metrics::border = 6;
 	metrics::padding = 2;
 	initialize(getnm("AppTitle"));

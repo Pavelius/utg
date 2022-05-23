@@ -514,7 +514,7 @@ void status_info(void) {
 	paint_elements();
 	fore = push_fore;
 	caret = push_caret;
-	caret.y += 4;
+	caret.y += 36;
 }
 
 void creaturei::paint() const {
@@ -550,8 +550,8 @@ static void tips() {
 
 static void overlaped_window() {
 	auto push_caret = caret;
+	caret.y = 37 + metrics::padding + metrics::border;
 	caret.x = metrics::padding + metrics::border;
-	caret.y = 36 + metrics::padding + metrics::border;
 	paint_actives();
 	caret = push_caret;
 }
