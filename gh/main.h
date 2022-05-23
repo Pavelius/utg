@@ -226,11 +226,12 @@ class indexable {
 	pathfind::indext	value;
 public:
 	static pathfind::indext	choosemove();
+	void				disappear() const;
 	void				fixattack(indexable& enemy) const;
 	void				fixdamage(int damage) const;
+	void				fixgood(const char* format, ...) const;
 	void				fixexperience(int value) const;
 	void				fixheal(int value) const;
-	void				fixkill() const;
 	void				fixmove(point hex) const;
 	pathfind::indext	getindex() const { return value; }
 	point				getposition() const { return i2h(value); }
@@ -242,7 +243,12 @@ class decoration : public indexable {
 public:
 	explicit operator bool() const { return parent != 0; }
 	static decoration*	add(const char* id, point position);
+	bool				is(tile_s v) const { return (parent - bsdata<tilei>::elements) == v; }
 	void				updateui() const;
+};
+struct decorationa : adat<decoration*> {
+	void				range(int v);
+	void				select();
 };
 class creaturei : public indexable {
 	const void*			parent;
@@ -253,6 +259,7 @@ public:
 	explicit operator bool() const { return parent != 0; }
 	void				activate();
 	static creaturei*	add(const char* id, point position, bool elite = false);
+	void				addcoins(int value);
 	void				addexperience(int value);
 	void				apply(variants source);
 	void				apply(action_s type);
@@ -266,7 +273,9 @@ public:
 	void				clear();
 	void				damage(int v);
 	static int			get(modifier_s i);
+	int					getcoins() const;
 	combatdeck&			getcombatdeck() const;
+	int					getexperience() const;
 	const char*			getid() const;
 	int					getinitiative(int index = 0) const;
 	int					gethp() const { return hits; }
@@ -283,6 +292,7 @@ public:
 	bool				iscomputer() const;
 	bool				isplayer() const;
 	void				kill();
+	void				loot(int bonus);
 	void				move(int bonus);
 	bool				moveto(pathfind::indext index, int bonus, int range);
 	void				paint() const;
@@ -305,7 +315,7 @@ namespace draw {
 void					waitall();
 }
 struct gamei : public location {
-	elementf			elements;
+	char				elements[Dark + 1];
 	combatdeck			combat;
 	creaturea			targets;
 	int					dungeon_level;
@@ -318,7 +328,7 @@ struct gamei : public location {
 	static int			getrounds(variants source);
 	static void			playmoves();
 	static void			playround();
-	void				set(element_s v) { elements.set(v); }
+	void				set(element_s v) { elements[v] = 2; }
 	static void			updateui(void* parent, point position);
 };
 namespace pathfind {

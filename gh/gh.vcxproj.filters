@@ -101,6 +101,9 @@
     <ClCompile Include="decoration.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="decorationa.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

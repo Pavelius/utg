@@ -141,7 +141,7 @@ void indexable::fixdamage(int value) const {
 	fixvalue(getposition(), value, colors::red);
 }
 
-void indexable::fixkill() const {
+void indexable::disappear() const {
 	auto p1 = findobject(this);
 	if(!p1)
 		return;
@@ -163,6 +163,12 @@ void indexable::fixmove(point hex) const {
 
 void indexable::fixexperience(int value) const {
 	fixvalue(getposition(), value, colors::yellow);
+}
+
+void indexable::fixgood(const char* format, ...) const {
+	char temp[260]; stringbuilder sb(temp);
+	sb.addv(format, xva_start(format));
+	floatstring(h2p(getposition()), colors::text, temp);
 }
 
 void indexable::fixheal(int value) const {
@@ -428,9 +434,9 @@ static void active_hexagon() {
 	auto push_fore = fore;
 	auto push_fsize = fsize;
 	fore = colors::active;
-	fsize = size - 1;
-	hexagon();
 	fsize = size - 2;
+	hexagon();
+	fsize = size - 3;
 	hexagon();
 	fore = push_fore;
 	fsize = push_fsize;
@@ -456,6 +462,22 @@ static void hitpoints(int value) {
 	font = push_font;
 }
 
+static void textvalue(int value, int dx, int dy, color v) {
+	if(value <= 0)
+		return;
+	auto push_caret = caret;
+	auto push_font = font;
+	auto push_fore = fore;
+	fore = v;
+	caret.y += dy;
+	caret.x += dx;
+	font = metrics::h2;
+	textvalue(value);
+	fore = push_fore;
+	caret = push_caret;
+	font = push_font;
+}
+
 void creaturei::paint() const {
 	if(isplayer())
 		hexagon(colors::green);
@@ -463,7 +485,9 @@ void creaturei::paint() const {
 		hexagon(colors::yellow);
 	else
 		hexagon(colors::white);
-	hitpoints(gethp());
+	textvalue(gethp(), 0, 2 * size / 3, colors::green);
+	textvalue(getexperience(), -size / 3, -size / 3, colors::white);
+	textvalue(getcoins(), size / 3, -size / 3, colors::yellow);
 	if(active == this)
 		active_hexagon();
 }

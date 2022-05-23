@@ -154,6 +154,7 @@
     <ClCompile Include="creaturea.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="decoration.cpp" />
+    <ClCompile Include="decorationa.cpp" />
     <ClCompile Include="duration.cpp" />
     <ClCompile Include="element.cpp" />
     <ClCompile Include="game.cpp" />

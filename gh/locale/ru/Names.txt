@@ -29,6 +29,7 @@ EyeForAnEye: Око за око
 Female: Женщина
 Fire: Огонь
 Flamethrower: Огнемет
+GainCoins: %1i монет
 GainExpForRetaliate: Опыт 1 за каждое отражение
 GainExpForTarget: Опыт 1 за каждую цель
 GrabAndGo: Бери и беги

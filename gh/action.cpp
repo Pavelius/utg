@@ -136,6 +136,7 @@ void creaturei::apply(action_s type) {
 	case DisarmTrap:
 		break;
 	case Loot:
+		loot(modifiers[Bonus]);
 		break;
 	case Kill:
 		break;

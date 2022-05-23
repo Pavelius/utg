@@ -80,7 +80,7 @@ int creaturei::getmaximumhp() const {
 
 void creaturei::kill() {
 	game.dropcoin(getposition());
-	fixkill();
+	disappear();
 	clear();
 }
 
@@ -456,4 +456,43 @@ bool creaturei::pull(pathfind::indext from, int bonus) {
 	auto pt = i2h(result);
 	fixmove(pt);
 	return true;
+}
+
+int	creaturei::getexperience() const {
+	auto p = getplayer();
+	if(!p)
+		return 0;
+	return p->exp;
+}
+
+int	creaturei::getcoins() const {
+	auto p = getplayer();
+	if(!p)
+		return 0;
+	return p->coins;
+}
+
+void creaturei::loot(int bonus) {
+	decorationa source;
+	source.select();
+	calculate_shootmap(getindex());
+	source.range(bonus);
+	auto result = 0;
+	for(auto p : source) {
+		if(!(*p))
+			continue;
+		result++;
+		p->disappear();
+	}
+	addcoins(result);
+}
+
+void creaturei::addcoins(int value) {
+	if(value <= 0)
+		return;
+	auto p = getplayer();
+	if(!p)
+		return;
+	p->coins += value;
+	fixgood(getnm("GainCoins"), value);
 }
