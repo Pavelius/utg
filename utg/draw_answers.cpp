@@ -27,7 +27,7 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 	auto push_width_normal = width;
 	width = column_width;
 	for(auto& e : elements) {
-		paintcell(index, e.value, e.text);
+		paintcell(index, e.value, e.text, buttonparam);
 		if(caret.x > x1 + column_width - 64) {
 			caret.x = x1;
 			caret.y += height + metrics::padding + metrics::border * 2;
@@ -45,7 +45,7 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 	if(cancel_text) {
 		auto push_fore = fore;
 		fore = fore.mix(colors::h3, 128);
-		paintcell(elements.getcount(), 0, cancel_text);
+		paintcell(elements.getcount(), 0, cancel_text, buttonparam);
 		fore = push_fore;
 	}
 }

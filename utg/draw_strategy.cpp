@@ -203,7 +203,7 @@ void draw::texth2w(const char* string) {
 	font = push_font;
 }
 
-static void menubt(int i, const void* pv, const char* title) {
+static void menubt(int i, const void* pv, const char* title, fnevent press_event) {
 	static char answer_hotkeys[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
 	if(i >= (int)(sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0])))
 		i = sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0]) - 1;
@@ -212,16 +212,18 @@ static void menubt(int i, const void* pv, const char* title) {
 		title++;
 		proc = menuft;
 	}
-	if(button(title, answer_hotkeys[i], proc))
-		execute(buttonparam, (long)pv);
+	if(button(title, answer_hotkeys[i], proc)) {
+		if(press_event)
+			execute(press_event, (long)pv);
+	}
 	if(control_hilited) {
 		if(answers::show_tips)
 			hilite_object = pv;
 	} else if(hilite_object) {
 		if(pv == hilite_object) {
 			hot.cursor = cursor::Hand;
-			if(hot.key == MouseLeft && !hot.pressed)
-				execute(buttonparam, (long)pv);
+			if(press_event)
+				execute(press_event, (long)pv);
 		}
 	}
 }
@@ -256,7 +258,6 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	pbackground = paint;
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
-	//ptips = tips;
 	pfinish = finish;
 	awindow.flags = WFResize|WFMinmax;
 	metrics::border = 6;

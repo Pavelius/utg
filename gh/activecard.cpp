@@ -12,6 +12,22 @@ void activecardi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
+void activecardi::addsource(variant* p, variant* pe) {
+	while(p < pe) {
+		if(p->iskind<actioni>()) {
+			if(p->type == Discard)
+				discard_action = (action_s)p->type;
+			else {
+				type = (action_s)p->type;
+				modifiera modifiers = {};
+				p = creaturei::getmodifiers(p + 1, pe, modifiers);
+				bonus = modifiers[Bonus];
+			}
+		} else
+			break;
+	}
+}
+
 activecardi* activecardi::add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source) {
 	auto p = addnew();
 	p->clear();
@@ -19,7 +35,7 @@ activecardi* activecardi::add(creaturei* target, playercardi* card, duration_s d
 	p->target = target;
 	p->card = card;
 	p->uses = uses;
-	p->source = source;
+	p->addsource(source.begin(), source.end());
 	return p;
 }
 
@@ -33,7 +49,12 @@ void activecardi::use() {
 }
 
 void activecardi::discard() {
-	if(card && card->owner)
-		card->owner->lost.discard(card);
+	if(card && card->owner) {
+		switch(discard_action) {
+		case Discard:
+			card->owner->lost.discard(card);
+			break;
+		}
+	}
 	clear();
 }

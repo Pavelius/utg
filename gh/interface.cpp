@@ -478,13 +478,24 @@ static void textvalue(int value, int dx, int dy, color v) {
 	font = push_font;
 }
 
+static void paint_actives() {
+	auto push_width = width;
+	width = 320;
+	for(auto& e : bsdata<activecardi>()) {
+		if(!e)
+			continue;
+		answers::paintcell(-1, &e, getnm(e.card->id), 0);
+	}
+	width = push_width;
+}
+
 static void paint_elements() {
 	for(auto i = Fire; i <= Dark; i = (element_s)(i + 1)) {
 		circle(14);
 		if(game.elements[i]) {
 			auto push_alpha = alpha;
 			if(game.elements[i] == 1)
-				alpha = 128;
+				alpha = 96;
 			else
 				alpha = 255;
 			image(getres("elements32"), i, 0);
@@ -537,7 +548,16 @@ static void tips() {
 	caret = push_caret;
 }
 
+static void overlaped_window() {
+	auto push_caret = caret;
+	caret.x = metrics::padding + metrics::border;
+	caret.y = 36 + metrics::padding + metrics::border;
+	paint_actives();
+	caret = push_caret;
+}
+
 void ui_initialize() {
 	draw::ptips = tips;
 	draw::object::afterpaint = object_afterpaint;
+	draw::object::afterpaintall = overlaped_window;
 }

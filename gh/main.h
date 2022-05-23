@@ -207,9 +207,12 @@ struct activecardi {
 	creaturei*			target;
 	playercardi*		card;
 	char				uses;
-	slice<variant>		source;
+	action_s			type;
+	char				bonus;
+	action_s			discard_action;
 	constexpr explicit operator bool() const { return duration != Instant; }
 	static activecardi*	add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source);
+	void				addsource(variant* p, variant* pe);
 	void				clear();
 	void				discard();
 	void				use();
@@ -275,6 +278,7 @@ public:
 	static int			get(modifier_s i);
 	int					getcoins() const;
 	combatdeck&			getcombatdeck() const;
+	void				getdefence(int& attack, int& retaliate);
 	int					getexperience() const;
 	const char*			getid() const;
 	int					getinitiative(int index = 0) const;
@@ -301,6 +305,7 @@ public:
 	bool				push(pathfind::indext from, int bonus);
 	void				set(state_s v) { return state.set(v); }
 	void				updateui() const;
+	void				useshield(int& attack);
 };
 struct creaturea : adat<creaturei*> {
 	static const creaturea* last;

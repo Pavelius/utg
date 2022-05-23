@@ -335,7 +335,7 @@ void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 	draw::tab_pixels = push_tab;
 }
 
-void draw::answerbt(int i, const void* pv, const char* title) {
+static void answerbt(int i, const void* pv, const char* title, fnevent press_event) {
 	static char answer_hotkeys[] = {
 		'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
 		'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'
@@ -433,7 +433,7 @@ void draw::avatar(int index, const void* object, const char* id) {
 	avatar_common(index, object, id, focusing);
 }
 
-void draw::avatarch(int index, const void* object, const char* id) {
+static void avatarch(int index, const void* object, const char* id, fnevent press_event) {
 	avatar_common(index, object, id, focusing_choose);
 }
 

@@ -107,11 +107,23 @@ void creaturei::heal(int v) {
 int creaturei::getongoing(action_s id) const {
 	auto result = 0;
 	for(auto& e : bsdata<activecardi>()) {
-		if(!e || e.target != this)
+		if(!e || e.target != this || e.type!=id)
 			continue;
+		result += e.bonus;
 		e.use();
 	}
 	return result;
+}
+
+void creaturei::useshield(int& attack) {
+	for(auto& e : bsdata<activecardi>()) {
+		if(!e || e.target != this || e.type != Shield)
+			continue;
+		if(attack <= 0)
+			break;
+		attack -= e.bonus;
+		e.use();
+	}
 }
 
 void creaturei::attack(creaturei& enemy, int bonus, int pierce, int advantage) {
@@ -143,10 +155,10 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce, int advantage) {
 	if(need_shuffle)
 		deck.shuffle();
 	if(bonus > 0) {
-		auto shield = enemy.getongoing(Shield) - pierce;
-		if(shield < 0)
-			shield = 0;
-		bonus -= shield;
+		auto pierced_bonus = bonus + pierce;
+		useshield(pierced_bonus);
+		if(pierced_bonus < bonus)
+			bonus = pierced_bonus;
 	}
 	fixattack(enemy);
 	enemy.damage(bonus);
@@ -495,4 +507,8 @@ void creaturei::addcoins(int value) {
 		return;
 	p->coins += value;
 	fixgood(getnm("GainCoins"), value);
+}
+
+void creaturei::getdefence(int& attack, int& retaliate) {
+	int retaliate_range = 0;
 }
