@@ -10,17 +10,17 @@ Treasure26 trigger(WhenUse)
  tags Valuable Discard
  use BonusToAll+3
 Treasure27 trigger(WhenUse)
+ tags Valuable Discard
  use Infamy+2 Discontent-1
- tags Valuable Discard
 Treasure28 trigger(WhenUse)
+ tags Valuable Discard
  use Infamy+1 Discontent-2
- tags Valuable Discard
 Treasure29 trigger(WhenUse)
- use Hull+2
  tags Valuable Discard
+ use Hull+2
 Treasure30 trigger(WhenRoll) ability(Brawl) bonus(4)
- use Supply-1
  tags Valuable
+ use Supply-1
 Treasure31 trigger(WhenUse)
  tags NoDigging Valuable Discard
  use Supply+2
@@ -33,7 +33,7 @@ Treasure34 trigger(WhenUse)
  tags Valuable Discard
  use ChooseCustom+1
 Treasure35
- tags Valuable
+ tags Valuable NoDigging
 Treasure36 trigger(WhenUse)
  tags Valuable Discard
  use Supply+2
@@ -41,8 +41,8 @@ Treasure37 abilities(0 0 1 1 0 0)
  tags Valuable
 Treasure38
  tags Valuable
- gain Discontent+1
- loss Discontent-1
+ gain Discontent-1
+ loss Discontent+1
 Treasure39 trigger(WhenChooseSpecial) bonus(2) abilities(1 1 0 0 0 0)
  tags Valuable Discard
  use Discontent-1

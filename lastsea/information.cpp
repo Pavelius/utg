@@ -198,6 +198,11 @@ void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 		sb.adds(getnm("DiscardToGain"));
 		print(sb, p->use);
 		break;
+	case WhenAbilityIncreased:
+	case WhenAbilityDecreased:
+		sb.adds(getnm(bsdata<triggeri>::elements[p->trigger].id), getnm(bsdata<abilityi>::elements[p->ability].id));
+		print(sb, p->use);
+		break;
 	case WhenRoll:
 		sb.adds(getnm("BeforeAbilityRoll"), getnm(bsdata<abilityi>::elements[p->ability].id));
 		print(sb, p->use);

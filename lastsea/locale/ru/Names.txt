@@ -232,6 +232,8 @@ WellRegardedProfession: Уважаемая профессия
 WhatAboutHistory: Так что там с иторией?
 WhatDoYouWantToVisit: Что вы хотите делать?
 WhatTreasureToBury: Какие сокровища хотите закопать?
+WhenAbilityDecreased: При понижении [%1] получите
+WhenAbilityIncreased: При повышении [%1] получите
 WinGame: Мои поздравления, вы только что выиграли игру!
 Yes: Да
 YouGainStars: Вы получили звезду и обнулили репутацию
@@ -242,4 +244,10 @@ YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив боль
 YouVisitLocation: Перед вами %1.
 YourPirate: пират %-1
 ZeroSupplyIfNot: Обнулить припасы или
+Навигация: 
+Недовольство: 
+Перебросы: 
 Припасы: 
+Репутация: 
+Сила: 
+Сокровища: 
