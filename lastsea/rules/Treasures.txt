@@ -53,15 +53,23 @@ Treasure41 abilities(0 0 0 0 2 0)
  tags Valuable
 Treasure42 trigger(WhenAbilityDecreased) ability(Crew)
  tags Valuable Discard
- use Crew+1 
+ use Crew+1
 Treasure43 abilities(0 0 0 0 1 1)
  tags Valuable
-Treasure47 abilities(1 0 0 0 0 0)
+Treasure44 trigger(WhenUse)
+ tags Valuable Discard
+ use Reroll+2 Misfortune-100
+Treasure45 trigger(WhenAbilityIncreased) ability(Aim)
  tags Valuable
- tags Valuable
+ use Treasure+1 Discontent+1
 Treasure46 trigger(WhenAbilityIncreased) ability(Swagger)
  tags Valuable
  use Infamy+1
+Treasure47
+ tags Valuable
+Treasure48 trigger(WhenAbilityIncreased) ability(Infamy)
+ tags Valuable
+ use Treasure+1 Discontent+1
 Treasure50
  tags Valuable
  gain Infamy+5

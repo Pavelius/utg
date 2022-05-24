@@ -132,6 +132,7 @@ PsichycsShanty: Хижина ясновидицы
 RaiseAbilityAndLoseSuppy: [%1]+%2i, но [%Supply]-%2i.
 ReallyHighAndCoolNumber: Большое и красивое число
 ReloadGun: Перезарядить пушку
+RemoveAll: Потерять всю %1
 RemoveEntry: Удалена заметка `%1`
 Reroll: Перебросы
 Roll: Бросок
@@ -201,8 +202,11 @@ Treasure40: Вульгарные морские песни
 Treasure41: Отличная трубка
 Treasure42: Дорогая веревка
 Treasure43: Чудесные карты
+Treasure44: Накладная борода
+Treasure45: Фальшивый пистолет
 Treasure46: Модное чернильное приспособление
 Treasure47: Мастерский фонарь
+Treasure48: Модный шарф
 Treasure50: Блестящие драгоценности
 Treasure54: Золотой секстант
 Treasure62: Довгополая куртка
@@ -244,10 +248,3 @@ YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив боль
 YouVisitLocation: Перед вами %1.
 YourPirate: пират %-1
 ZeroSupplyIfNot: Обнулить припасы или
-Навигация: 
-Недовольство: 
-Перебросы: 
-Припасы: 
-Репутация: 
-Сила: 
-Сокровища: 

@@ -16,7 +16,10 @@ void print(stringbuilder& sb, const char* id, int count, unsigned flags, char se
 	sb.addsep(sep);
 	if(negative)
 		sb.add("[-");
-	sb.add("%1%+2i", getnm(id), count);
+	if(count==-100)
+		sb.add(getnm("RemoveAll"), getnm(id));
+	else
+		sb.add("%1%+2i", getnm(id), count);
 	if(negative)
 		sb.add("]");
 }
