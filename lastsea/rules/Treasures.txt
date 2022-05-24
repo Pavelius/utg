@@ -73,7 +73,17 @@ Treasure48 trigger(WhenAbilityIncreased) ability(Infamy)
 Treasure50
  tags Valuable
  gain Infamy+5
+Treasure51 trigger(WhenRoll) ability(Brawl) bonus(4)
+ tags Valuable Discard
 Treasure54 abilities(0 0 0 0 0 2)
+ tags Valuable
+Treasure56 trigger(WhenRollSuccess) ability(Hunting) abilities(0 0 1 0 0 0)
+ tags Valuable
+ use Aim+1
+Treasure58 trigger(WhenRoll) ability(Brawl) bonus(6)
+ tags Valuable Discard
+ use Crew-1
+Treasure59 abilities(1 0 1 0 0 0)
  tags Valuable
 Treasure62 abilities(1 0 0 0 1 0)
  tags Valuable

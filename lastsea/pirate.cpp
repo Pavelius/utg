@@ -215,7 +215,7 @@ void pirate::confirmroll() {
 			break;
 		if(bsdata<abilityi>::have(pv)) {
 			switch(bsdata<abilityi>::source.indexof(pv)) {
-			case Reroll:abilities[Reroll]--; break;
+			case Reroll: abilities[Reroll]--; break;
 			default: break;
 			}
 		}

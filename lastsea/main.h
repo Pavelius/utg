@@ -32,7 +32,8 @@ enum tag_s : unsigned char {
 };
 enum trigger_s : unsigned char {
 	NoTrigger,
-	WhenChooseSpecial, WhenRoll, WhenThread, WhenAbilityIncreased, WhenAbilityDecreased,
+	WhenChooseSpecial, WhenRoll, WhenRollSuccess, WhenThread,
+	WhenAbilityIncreased, WhenAbilityDecreased,
 	WhenUse,
 };
 enum variant_s : unsigned char {

@@ -407,6 +407,16 @@ static void add_treasure(answers& an, const treasurei* p) {
 	an.add(p, "%Use [%1].", getnm(p->id));
 }
 
+static void apply_treasure(trigger_s trigger, ability_s ability) {
+	for(auto& e : bsdata<treasurei>()) {
+		if(!e.isactive() || e.isdiscarded())
+			continue;
+		if(e.trigger != trigger || e.ability!=ability)
+			continue;
+		e.apply();
+	}
+}
+
 static void add_treasure(answers& an, trigger_s trigger) {
 	for(auto& e : bsdata<treasurei>()) {
 		if(!e.isactive() || e.isdiscarded())
@@ -539,6 +549,7 @@ void pirate::makeroll(int mode) {
 	static bool gun_used;
 	answers an; useda used;
 	gun_used = false;
+	auto rolled_ability = (ability_s)last_ability;
 	while(true) {
 		sb.clear();
 		if(last_ability >= Exploration && last_ability <= Navigation)
@@ -571,6 +582,7 @@ void pirate::makeroll(int mode) {
 		}
 		use_treasure(pv, used);
 	}
+	apply_treasure(WhenRollSuccess, rolled_ability);
 }
 
 void pirate::roll(int mode) {
