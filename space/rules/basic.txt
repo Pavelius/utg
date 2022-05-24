@@ -1,5 +1,1 @@
-﻿#Squad
-
-Marines
-Raiders
-Scientists
+﻿

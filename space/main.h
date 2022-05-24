@@ -1,62 +1,45 @@
-#include "bonus.h"
+#include "ability.h"
+#include "answers.h"
 #include "gender.h"
-#include "harmable.h"
 #include "message.h"
-#include "result.h"
 #include "tag.h"
 #include "utg.h"
 
 #pragma once
 
-enum condition_s : unsigned char {
-	GoodState, MiddleState, BadState
-};
-enum prefix_s : unsigned char {
-	Plus, Minus,
-};
-enum variant_s : unsigned char {
-	NoVariant,
-	Prefix, Result, Squad,
-};
 enum tag_s : unsigned char {
 	Intimate, Close, Far,
 };
-typedef slice<variant> variantsl;
+enum ability_s : unsigned char {
+	Assault, Comunication, Exploration, Medicine, Hunting, Research,
+};
+enum state_s : unsigned char {
+	Crew, Discontent, Supply, Machinery,
+	Reroll, Problem, Success, Advantage,
+};
 typedef flagable<8> taga;
-struct effecti {
+struct statei {
 	const char*		id;
 };
-struct squadi {
-	const char*		id;
-	taga			tags;
+class abilitya {
+	char			abilities[Research + 1];
+	char			states[Advantage + 1];
+public:
+	void			add(state_s v, int i) { states[v] += i; }
+	int				get(ability_s v) const { return abilities[v]; }
+	int				get(state_s v) const { return states[v]; }
+	void			roll(ability_s v);
+	void			set(ability_s v, int i) { abilities[v] = i; }
+	void			set(state_s v, int i) { states[v] = i; }
 };
-struct squad : harmable {
-	unsigned char	type;
-	tag_s			distance = Far;
-	constexpr explicit operator bool() const { return type != 0xFF; }
-	void			actv(stringbuilder& sb, const char* format, const char* format_param);
-	void			acts(stringbuilder& sb, const char* format, ...) { actv(sb, format, xva_start(format)); }
-	void			clear();
-	const squadi&	geti() const { return bsdata<squadi>::elements[type]; }
-	void			getinfo(stringbuilder& sb) const;
-	gender_s		getgender() const { return NoGender; }
-	const char*		getname() const { return getnm(geti().id); }
-};
-struct missioni {
-	squad			allies[8];
-	squad			enemies[8];
-	unsigned char	enemy, ally;
-	char			multiplier, danger, luck, supply, throphy;
-	void			add(const char* id, bool enemy = false);
+struct missioni : abilitya {
 	void			apply(variant v);
-	void			apply(variantsl source);
+	void			apply(variants source);
 	void			beforemove();
 	void			clear();
-	bool			dangerous();
-	squad&			getally() { return allies[ally]; }
-	squad&			getenemy() { return enemies[enemy]; }
-	bool			isenemyspoted() const { return enemy != 0xFF; }
-	bool			lucky();
 };
 extern missioni		game;
-VKIND(result_s, Result)
+extern ability_s	last_ability;
+void				actv(const char* format, const char* format_param);
+inline void			act(const char* format, ...) { actv(format, xva_start(format)); }
+void				information(const char* format, ...);

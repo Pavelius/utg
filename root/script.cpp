@@ -10,29 +10,29 @@ static harmable inflict, suffer, inflict_group;
 static bool need_stop;
 
 static void apply_effect(const variants& tags) {
-	need_stop = false;
-	last_harm = &inflict;
-	last_value = 0;
-	for(auto v : tags) {
-		if(need_stop)
-			break;
-		v.apply();
-	}
+	//need_stop = false;
+	//last_harm = &inflict;
+	//last_value = 0;
+	//for(auto v : tags) {
+	//	if(need_stop)
+	//		break;
+	//	v.apply();
+	//}
 }
 
-void variant::apply() const {
-	if(iskind<harmi>()) {
-		last_index = value;
-		last_value = counter;
-		if(last_harm) {
-			if((size_t)last_index < sizeof(last_harm->harm) / sizeof(last_harm->harm[0])) {
-				last_value += last_harm->harm[last_index];
-				last_harm->harm[last_index] = last_value;
-			}
-		}
-	} else if(iskind<scripti>())
-		bsdata<scripti>::elements[value].apply(counter);
-}
+//void variant::apply() const {
+//	if(iskind<harmi>()) {
+//		last_index = value;
+//		last_value = counter;
+//		if(last_harm) {
+//			if((size_t)last_index < sizeof(last_harm->harm) / sizeof(last_harm->harm[0])) {
+//				last_value += last_harm->harm[last_index];
+//				last_harm->harm[last_index] = last_value;
+//			}
+//		}
+//	} else if(iskind<scripti>())
+//		bsdata<scripti>::elements[value].apply(counter);
+//}
 
 static void if_equal(int bonus, int param) {
 	if(last_value != bonus)

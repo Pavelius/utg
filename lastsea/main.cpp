@@ -92,7 +92,6 @@ int main(int argc, char* argv[]) {
 	utg::callback::getinfo = game.sfgetproperty;
 	utg::callback::getstatus = game.sfgetstatus;
 	srand(getcputime());
-	variant::sfapply = game.sfapply;
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	draw::object::initialize();

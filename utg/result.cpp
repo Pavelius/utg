@@ -1,4 +1,4 @@
-#include "bsreq.h"
+#include "crt.h"
 #include "result.h"
 
 BSDATA(resulti) = {
@@ -8,8 +8,8 @@ BSDATA(resulti) = {
 };
 assert_enum(resulti, StrongSuccess)
 
-int last_roll, last_roll_result, last_roll_bonus;
-result_s last_result;
+int			last_roll, last_roll_result, last_roll_bonus;
+result_s	last_result;
 
 result_s pbta_roll(int b) {
 	last_roll_bonus = b;

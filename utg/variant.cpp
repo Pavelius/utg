@@ -1,7 +1,5 @@
 #include "variant.h"
 
-variant::fnapply variant::sfapply;
-
 static const char* match(const char* text, const char* name) {
 	while(*name) {
 		if(*name++ != *text++)

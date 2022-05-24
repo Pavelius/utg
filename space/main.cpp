@@ -9,7 +9,7 @@ static void start_mission() {
 }
 
 static void test_game() {
-	quest::run(1);
+	quest::run(1000);
 }
 
 static void reading() {

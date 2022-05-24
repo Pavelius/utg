@@ -51,7 +51,6 @@ union variant {
 	constexpr bool operator==(const variant& v) const { return u == v.u; }
 	constexpr bool operator!=(const variant& v) const { return u != v.u; }
 	template<class T> operator T*() const { return (T*)((bsdata<varianti>::elements[type].source == bsdata<T>::source_ptr) ? getpointer() : 0); }
-	void				apply() const;
 	void				clear() { u = 0; }
 	constexpr bool		issame(const variant& v) const { return type == v.type && value == v.value; }
 	template<class T> constexpr bool iskind() const { return bsdata<varianti>::elements[type].source==bsdata<T>::source_ptr; }
@@ -61,7 +60,6 @@ union variant {
 	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
 	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; counter = 0; }
-	static fnapply		sfapply;
 };
 template<> variant::variant(const char* v);
 template<> variant::variant(const void* v);

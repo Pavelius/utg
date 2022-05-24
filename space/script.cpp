@@ -1,34 +1,28 @@
-#include "answers.h"
 #include "condition.h"
-#include "harmable.h"
+#include "main.h"
 #include "quest.h"
 #include "script.h"
-#include "tag.h"
-#include "variant.h"
 
-static int bad_moves, good_moves, bonus_forward;
-static int last_value, last_index;
+// Roll results
+// 1-5 Fail
+// 6-9 Partial Success
+// 10-12 Sure 
+// 13 Critical
+
+ability_s	last_ability;
+int			last_result, last_roll, last_bonus;
+static int	last_value;
+static bool	need_stop;
 static const char* need_prompt;
-static harmable* last_harm;
-static harmable inflict, suffer;
-static bool need_stop;
-
-static void apply_effect(const variants& tags) {
-	need_stop = false;
-	last_harm = &inflict;
-	last_value = 0;
-	for(auto v : tags) {
-		if(need_stop)
-			break;
-		v.apply();
-	}
-}
 
 static bool allow_prompt(const variants& tags) {
 	for(auto v : tags) {
 		conditioni* pc = v;
-		if(pc && !pc->proc(v.counter, pc->param))
-			return false;
+		if(pc) {
+			if(!pc->proc(v.counter, pc->param))
+				return false;
+		} else
+			break;
 	}
 	return true;
 }
@@ -121,24 +115,6 @@ void quest::run(int index) {
 	}
 }
 
-void variant::apply() const {
-	if(iskind<harmi>()) {
-		last_index = value;
-		last_value = counter;
-		if(last_harm) {
-			if((size_t)last_index < sizeof(last_harm->harm) / sizeof(last_harm->harm[0])) {
-				last_value += last_harm->harm[last_index];
-				last_harm->harm[last_index] = last_value;
-			}
-		}
-	} else if(iskind<scripti>())
-		bsdata<scripti>::elements[value].apply(counter);
-	else if(iskind<tagi>()) {
-		// TODO: add tag or may be nothing?
-	} else
-		draw::warning(getnm("NotSupportType"), bsdata<varianti>::elements[type].id, value);
-}
-
 static void if_equal(int bonus, int param) {
 	if(last_value != bonus)
 		need_stop = true;
@@ -149,32 +125,106 @@ static void if_not_equal(int bonus, int param) {
 		need_stop = true;
 }
 
-static void set_harm(int bonus, int param) {
-	switch(param) {
-	case 1: last_harm = &suffer; break;
-	default: last_harm = &inflict; break;
+static void rolldices() {
+	last_roll = 1 + rand() % 10;
+	last_result = last_roll + last_bonus;
+	int last_second_roll = 0;
+	if(game.get(Problem) > 0) {
+		game.add(Problem, -1);
+		last_second_roll = 1 + rand() % 10;
+		if(last_roll > last_second_roll) {
+			iswap(last_second_roll, last_roll);
+			last_result = last_roll + last_bonus;
+		}
+	}
+	if(last_result < 1)
+		last_result = 1;
+	draw::information(getnm(last_second_roll ? "YouRollMisfortune" : "YouRoll"),
+		last_result, last_roll, last_bonus, last_second_roll);
+}
+
+static void promptroll() {
+	char temp[260]; stringbuilder sb(temp);
+	game.set(Success, 0);
+	last_bonus = game.get(Advantage);
+	last_bonus += last_value;
+	answers an;
+	while(true) {
+		sb.clear();
+		sb.add(getnm("YouRollAbility"), getnm(bsdata<abilityi>::elements[last_ability].id));
+		sb.adds(getnm("RollDice"));
+		if(game.get(Problem))
+			sb.adds("%-AddProblem");
+		if(last_bonus)
+			sb.adds("%-1 %+2i", getnm("AddBonus"), last_bonus);
+		sb.add(".");
+		an.clear();
+		an.add(0, getnm("MakeRoll"));
+		auto pv = an.choose(temp);
+		if(!pv)
+			break;
+	}
+	game.set(Advantage, 0);
+}
+
+static void confirmroll() {
+	answers an;
+	auto push_text = utg::sb.get();
+	while(true) {
+		rolldices();
+		an.clear();
+		an.add(0, getnm("ApplyRoll"));
+		if(game.get(Reroll) > 0)
+			an.add(&bsdata<statei>::get(Reroll), getnm("UseReroll"));
+		auto pv = an.choose(0);
+		if(!pv)
+			break;
+		if(bsdata<statei>::have(pv)) {
+			switch(bsdata<statei>::source.indexof(pv)) {
+			case Reroll: game.add(Reroll, -1); break;
+			default: break;
+			}
+		}
+		utg::sb.set(push_text);
+	}
+	last_bonus = 0;
+}
+
+static void roll(int bonus, int param) {
+	promptroll();
+	confirmroll();
+}
+
+static void apply(variant v) {
+	if(v.iskind<scripti>())
+		bsdata<scripti>::elements[v.value].apply(v.counter);
+	else if(v.iskind<abilityi>()) {
+		last_value = game.get((ability_s)v.value);
+		last_ability = (ability_s)v.value;
+	} else if(v.iskind<tagi>()) {
+		// TODO: add tag or may be nothing?
+	} else
+		draw::warning(getnm("NotSupportType"), bsdata<varianti>::elements[v.type].id, v.value);
+}
+
+static void apply_effect(const variants& tags) {
+	last_value = 0;
+	need_stop = false;
+	for(auto v : tags) {
+		if(need_stop)
+			break;
+		apply(v);
 	}
 }
-
-static void you_inflict(int bonus, int param) {
-	set_harm(0, 0);
-}
-
-static void apply_harm(int bonus, int param) {
-	set_harm(0, 0);
-}
-
-BSDATA(scripti) = {
-	{"IfEqual", if_equal},
-	{"IfNotEqual", if_not_equal},
-	{"Inflict", set_harm, 0},
-	{"InflictHarm", apply_harm, 0},
-	{"Suffer", set_harm, 1},
-	{"SufferHarm", apply_harm, 1},
-};
-BSDATAF(scripti)
 
 void scripti::apply(int bonus) const {
 	if(proc)
 		proc(bonus, param);
 }
+
+BSDATA(scripti) = {
+	{"IfEqual", if_equal},
+	{"IfNotEqual", if_not_equal},
+	{"Roll", roll},
+};
+BSDATAF(scripti)

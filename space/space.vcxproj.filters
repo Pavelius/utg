@@ -7,9 +7,6 @@
     <ClCompile Include="properties.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="squad.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="mission.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -19,10 +16,10 @@
     <ClCompile Include="script.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="harm.cpp">
+    <ClCompile Include="abilitya.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="harmable.cpp">
+    <ClCompile Include="state.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,9 +36,6 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="script.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="harmable.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

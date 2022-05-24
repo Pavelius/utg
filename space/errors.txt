@@ -1,3 +1,4 @@
-﻿In file `rules/Quest.txt`:
- Line 1: Unknown property name `Header`
- Line 1: Unknown property name `Image`
+﻿In file `rules/Basic.txt`:
+ Line 1: Not find data type for `Squad`
+In file `rules/Basic.txt`:
+ Line 1: Not find data type for `Squad`
