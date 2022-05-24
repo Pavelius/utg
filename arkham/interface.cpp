@@ -66,4 +66,5 @@ void status_info() {
 			add_info(getnm(e.id), game.get(v));
 	}
 	caret = push_caret;
+	caret.y += texth() + metrics::border*2 + metrics::padding;
 }

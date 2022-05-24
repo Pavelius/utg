@@ -433,7 +433,7 @@ void draw::avatar(int index, const void* object, const char* id) {
 	avatar_common(index, object, id, focusing);
 }
 
-static void avatarch(int index, const void* object, const char* id, fnevent press_event) {
+void draw::avatarch(int index, const void* object, const char* id, fnevent press_event) {
 	avatar_common(index, object, id, focusing_choose);
 }
 
