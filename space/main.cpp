@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "code_rule.h"
 #include "draw.h"
 #include "log.h"
 #include "main.h"
@@ -8,12 +9,14 @@
 static void start_mission() {
 }
 
+void test_parser();
+
 static void test_game() {
+	test_parser();
 	quest::run(1000);
 }
 
 static void reading() {
-	bsreq::read("rules/Basic.txt");
 	quest::read("rules/Quest.txt");
 }
 

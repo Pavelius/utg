@@ -1,4 +1,7 @@
 ﻿AppTitle: Космические миссии
 Continue: Продолжить
+ErrorParse: Ошибка при разборе
+ExpectedSymbol: Ожидается символ '%1'
 Marines: Морпехи
+OperationsEmpthy: Пустой стэк операций
 Squad: Отряд

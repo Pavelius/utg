@@ -156,6 +156,9 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
+    <ClCompile Include="code_operation.cpp" />
+    <ClCompile Include="code_rule.cpp" />
+    <ClCompile Include="code_token.cpp" />
     <ClCompile Include="condition.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="crt.cpp" />
@@ -220,6 +223,8 @@
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
+    <ClInclude Include="code_evalue.h" />
+    <ClInclude Include="code_token.h" />
     <ClInclude Include="condition.h" />
     <ClInclude Include="counter.h" />
     <ClInclude Include="dataset.h" />
@@ -238,6 +243,7 @@
     <ClInclude Include="front.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="namenpc.h" />
+    <ClInclude Include="code_rule.h" />
     <ClInclude Include="pathfind.h" />
     <ClInclude Include="property.h" />
     <ClInclude Include="quest.h" />
@@ -245,6 +251,7 @@
     <ClInclude Include="screenshoot.h" />
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="strvar.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />
     <ClInclude Include="flagable.h" />

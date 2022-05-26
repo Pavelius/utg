@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="abilitya.cpp" />
+    <ClCompile Include="code.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="properties.cpp" />
@@ -164,6 +165,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\basic.txt" />
+    <Text Include="rules\Grammar.txt" />
     <Text Include="rules\Quest.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

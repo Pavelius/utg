@@ -19,6 +19,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{5476dc3f-a87e-46f5-8e5e-9359e405a300}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Code">
+      <UniqueIdentifier>{770f1060-921d-4cc9-af9e-169795a63941}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="answers.cpp">
@@ -201,6 +204,15 @@
     <ClCompile Include="draw_answers.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="code_rule.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="code_token.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
+    <ClCompile Include="code_operation.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -352,6 +364,18 @@
     </ClInclude>
     <ClInclude Include="sprite_util.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="strvar.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="code_evalue.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="code_rule.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="code_token.h">
+      <Filter>Code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

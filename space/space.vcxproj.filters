@@ -22,6 +22,9 @@
     <ClCompile Include="state.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="code.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -50,6 +53,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Quest.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Grammar.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>
