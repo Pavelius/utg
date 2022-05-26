@@ -28,7 +28,6 @@ public:
 	void			add(state_s v, int i) { states[v] += i; }
 	int				get(ability_s v) const { return abilities[v]; }
 	int				get(state_s v) const { return states[v]; }
-	void			roll(ability_s v);
 	void			set(ability_s v, int i) { abilities[v] = i; }
 	void			set(state_s v, int i) { states[v] = i; }
 };

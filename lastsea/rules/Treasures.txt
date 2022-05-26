@@ -1,7 +1,17 @@
 #Card
 
+Treasure14 abilities(0 1 0 0 0 0) trigger(WhenAbilityIncreased) ability(Brawl)
+ tags Valuable
+ use Reroll+1
+Treasure17 abilities(0 1 0 0 1 0)
+ tags Valuable NoDigging 
+ gain Infamy+3
 Treasure19 abilities(0 0 0 1 1 0)
  tags Valuable
+Treasure21
+ tags Valuable
+ gain Misfortune+3 Stars+1
+
 Treasure24 abilities(0 0 2 0 0 0)
  tags NoDigging Valuable
 Treasure25 abilities(0 0 1 0 1 0)
@@ -48,7 +58,7 @@ Treasure39 trigger(WhenChooseSpecial) bonus(2) abilities(1 1 0 0 0 0)
  use Discontent-1
 Treasure40 trigger(WhenAbilityIncreased) ability(Stars)
  tags Valuable
- use Reroll IfEqual+0 Reroll+1 
+ use Reroll IfEqual+0 Reroll+1
 Treasure41 abilities(0 0 0 0 2 0)
  tags Valuable
 Treasure42 trigger(WhenAbilityDecreased) ability(Crew)

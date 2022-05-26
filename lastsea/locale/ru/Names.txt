@@ -181,7 +181,10 @@ To: чтобы
 TradeFriend: Поторговать с дружками
 TradeTreasure: Какое сокровище хотите поменять не глядя?
 Treasure: Сокровища
+Treasure14: Рог Нарвалла
+Treasure17: Умеющий считать петух
 Treasure19: Блюдо со странным запахом
+Treasure21: Трижды проклятое кольцо
 Treasure24: Трехлапый кот
 Treasure25: Чепчик крутой девицы
 Treasure26: Новый пиратский флаг
@@ -252,5 +255,3 @@ YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив боль
 YouVisitLocation: Перед вами %1.
 YourPirate: пират %-1
 ZeroSupplyIfNot: Обнулить припасы или
-Припасы: 
-Репутация: 
