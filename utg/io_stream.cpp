@@ -42,6 +42,33 @@ unsigned io::stream::getLE32() {
 	return (u4 << 24) | (u3 << 16) | (u2 << 8) | u1;
 }
 
+bool io::stream::version(const char* signature, int major, int minor, bool write_mode) {
+	char temp[4];
+	if(write_mode) {
+		temp[0] = signature[0];
+		temp[1] = signature[1];
+		temp[2] = signature[2];
+		temp[3] = 0;
+		write(temp, sizeof(temp));
+		temp[0] = '0' + major;
+		temp[1] = '.';
+		temp[2] = '0' + minor;
+		write(temp, sizeof(temp));
+	} else {
+		read(temp, sizeof(temp));
+		for(auto i = 0; i < 4; i++) {
+			if(temp[i] != signature[i])
+				return false;
+		}
+		read(temp, sizeof(temp));
+		if(temp[0] - '0' != major)
+			return false;
+		if(temp[2] - '0' > minor)
+			return false;
+	}
+	return true;
+}
+
 void* loadb(const char* url, int* size, int additional) {
 	void* p = 0;
 	if(size)

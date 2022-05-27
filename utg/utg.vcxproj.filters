@@ -210,6 +210,12 @@
     <ClCompile Include="code_token.cpp">
       <Filter>Code</Filter>
     </ClCompile>
+    <ClCompile Include="stringa.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="code_package.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -365,13 +371,16 @@
     <ClInclude Include="strvar.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="code_evalue.h">
-      <Filter>Code</Filter>
-    </ClInclude>
     <ClInclude Include="code_rule.h">
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="code_token.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="stringa.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="code_package.h">
       <Filter>Code</Filter>
     </ClInclude>
   </ItemGroup>

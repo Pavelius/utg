@@ -179,7 +179,8 @@ public:
 	constexpr int					indexof(const T* e) const { if(e >= (T*)data && e < (T*)data + count) return e - (T*)data; return -1; }
 	constexpr int					indexof(const T t) const { for(auto& e : *this) if(e == t) return &e - (T*)data; return -1; }
 	constexpr bool					is(const T* t) const { return t >= data && t < data + count; }
-	constexpr T*					ptr(int index) const { return (T*)data + index; }
+	constexpr T*					ptr(size_t index) const { return (T*)data + index; }
+	constexpr T*					ptrs(size_t index) const { return (index < count) ? (T*)data + index : 0; }
 };
 // Abstract data access class
 template<typename T> struct bsdata {

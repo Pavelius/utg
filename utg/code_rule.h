@@ -19,6 +19,7 @@ struct rule {
 	tokena				tokens;
 	int					type, param;
 	void				apply(parser& v) const;
+	static fnevent		papply;
 };
 typedef slice<rule>		rulea;
 extern char				string_buffer[256 * 32];

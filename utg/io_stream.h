@@ -18,6 +18,7 @@ struct stream {
 	virtual int			read(void* result, int count) = 0;
 	template<class T> void read(T& object) { read(&object, sizeof(object)); }
 	virtual int			seek(int count, int rel = SeekCur) { return 0; };
+	bool				version(const char* signature, int major, int minor, bool write_mode);
 	virtual int			write(const void* result, int count) = 0;
 	template<class T> void write(const T& e) { write(&e, sizeof(e)); }
 };

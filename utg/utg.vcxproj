@@ -156,6 +156,7 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
+    <ClCompile Include="code_package.cpp" />
     <ClCompile Include="code_rule.cpp" />
     <ClCompile Include="code_token.cpp" />
     <ClCompile Include="condition.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
     <ClCompile Include="sprite_util.cpp" />
+    <ClCompile Include="stringa.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="draw_utg.cpp" />
     <ClCompile Include="draw_text.cpp" />
@@ -222,7 +224,7 @@
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
-    <ClInclude Include="code_evalue.h" />
+    <ClInclude Include="code_package.h" />
     <ClInclude Include="code_token.h" />
     <ClInclude Include="condition.h" />
     <ClInclude Include="counter.h" />
@@ -250,6 +252,7 @@
     <ClInclude Include="screenshoot.h" />
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="stringa.h" />
     <ClInclude Include="strvar.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="utg.h" />

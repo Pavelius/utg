@@ -1,11 +1,12 @@
 #include "code_rule.h"
-#include "code_evalue.h"
+#include "code_package.h"
 #include "stringbuilder.h"
 
 using namespace code;
 
 typedef adat<evalue> evaluea;
 
+fnevent			code::rule::papply;
 rulea			code::this_rules;
 char			code::string_buffer[256 * 32];
 const char*		code::p;
@@ -197,7 +198,7 @@ static void constant_number(operation type, evalue& e1, evalue& e2) {
 	case operation::Mul: e1.value *= e2.value; break;
 	case operation::Div: e1.value /= e2.value; break;
 	case operation::DivRest: e1.value %= e2.value; break;
-	case operation::Scope: e1.value += e2.value*sizeof(int); break;
+	case operation::Scope: e1.value += e2.value * sizeof(int); break;
 	default: break;
 	}
 }
@@ -230,7 +231,7 @@ void rule::apply(parser& e) const {
 		if(!e.param[0])
 			error("ErrorNotSpecifedBinaryOperation");
 		else if(values.getcount() < 2)
-			error("ErrorBinaryOperations", values.getcount());
+			error("ErrorBinaryOperationOperandCount", values.getcount());
 		else {
 			binary_operation((operation)e.param[0], values.data[values.count - 2], values.data[values.count - 1]);
 			values.count--;
@@ -251,6 +252,8 @@ void rule::apply(parser& e) const {
 	default:
 		break;
 	}
+	if(papply)
+		papply();
 }
 
 void code::parse(const char* source_code, const char* rule_id) {

@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "code_rule.h"
+#include "code_package.h"
 #include "draw.h"
 #include "log.h"
 #include "main.h"
@@ -11,8 +11,15 @@ static void start_mission() {
 
 void test_parser();
 
+void test_package() {
+	code::package e;
+	e.create("io.file");
+	e.write("packages/io/file.pkg");
+}
+
 static void test_game() {
 	test_parser();
+	test_package();
 	quest::run(1000);
 }
 
