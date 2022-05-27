@@ -1,7 +1,6 @@
 ﻿AppTitle: Космические миссии
 Continue: Продолжить
+ErrorNotFoundRule: Не найдено правило '%1'
 ErrorParse: Ошибка при разборе
-ExpectedSymbol: Ожидается символ '%1'
 Marines: Морпехи
-OperationsEmpthy: Пустой стэк операций
 Squad: Отряд

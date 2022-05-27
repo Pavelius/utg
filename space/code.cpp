@@ -4,25 +4,21 @@
 
 using namespace code;
 
-typedef adat<evalue> evaluea;
-
-static evaluea		values;
-
 static rule c2_lexer[] = {
 	{"number", {}, rule::Determinal},
 	{"string", {}, rule::Determinal},
 	{"identifier", {}, rule::Determinal},
-	{"if", {"if", "(", "%expression", ")", "%statement"}},
-	{"while", {"while", "(", "%expression", ")", "%statement"}},
+	{"if", {"if", "(", "0%expression", ")", "1%statement"}},
+	{"while", {"while", "(", "0%expression", ")", "1%statement"}},
 	{"block_statement", {"{", "?.%statement", "}"}},
 	{"statement_part", {"^%if", "%while", "%block_statement", "%expression"}},
 	{"statement", {"?%statement_part", ";"}},
 	{"function_call", {"(", "?., %expression", ")"}},
 	{"scored_expression", {"(", "%expression", ")"}},
 	{"determinal", {"^%scored_expression", "%number", "%string", "%identifier"}},
-	{"prefix", {"^++", "--", "\\&"}},
+	{"prefix", {"^++", "--", "\\&"}, rule::SetValueRange, (int)operation::Increment},
 	{"indirection", {"\\.", "%identifier"}},
-	{"scope", {"[", "0%expression", "]"}},
+	{"scope", {"[", "%expression", "]"}, rule::BinaryOperation, (int)operation::Scope},
 	{"postfix", {"^++", "--", "%indirection", "%function_call", "%scope"}},
 	{"unary", {"?%prefix", "%determinal", "?.%postfix"}},
 	{"multiplication_op", {"^/", "*", "\\%"}, rule::SetValueRange, (int)operation::Div},

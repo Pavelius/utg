@@ -8,6 +8,7 @@ enum class operation : unsigned char {
 	ShiftLeft, ShiftRight,
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
 	Or, And,
+	Increment, Decrement, AdressOf, Scope,
 	Assign, If, While,
 	Number, Text, Identifier, Expression
 };

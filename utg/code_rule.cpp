@@ -1,11 +1,15 @@
 #include "code_rule.h"
+#include "code_evalue.h"
 #include "stringbuilder.h"
 
 using namespace code;
 
+typedef adat<evalue> evaluea;
+
 rulea			code::this_rules;
 char			code::string_buffer[256 * 32];
 const char*		code::p;
+static evaluea	values;
 static int		last_index;
 static int		last_value;
 
@@ -14,6 +18,12 @@ void code::errorv(const char* format, const char* format_param) {
 
 void code::error(const char* format, ...) {
 	errorv(getnm(format), xva_start(format));
+}
+
+static void addvalue(operation type, long value) {
+	auto p = values.add();
+	p->type = type;
+	p->value = value;
 }
 
 static void comments() {
@@ -29,7 +39,7 @@ void string() {
 	if(*p == '\"') {
 		stringbuilder sb(string_buffer);
 		p = sb.psstr(p + 1, '\"');
-		//add(operation::Text, (long)szdup(temp));
+		addvalue(operation::Text, (long)szdup(string_buffer));
 		skipws();
 	}
 }
@@ -39,7 +49,7 @@ static void number() {
 	long value = 0;
 	p = stringbuilder::read(p, value);
 	if(p1 != p) {
-		//add(operation::Number, value);
+		addvalue(operation::Number, value);
 		skipws();
 	}
 }
@@ -49,7 +59,7 @@ static void identifier() {
 	stringbuilder sb(string_buffer);
 	p = sb.psidf(p);
 	if(p1 != p) {
-		//add(operation::Identifier, (long)szdup(temp));
+		addvalue(operation::Identifier, (long)szdup(string_buffer));
 		skipws();
 	}
 }
@@ -180,11 +190,28 @@ static void lazy_initialize() {
 	}
 }
 
-static void binary_operation(int type) {
-	if(!type) {
-		error("ErrorNotSpecifedBinaryOperation");
-		return;
+static void constant_number(operation type, evalue& e1, evalue& e2) {
+	switch(type) {
+	case operation::Plus: e1.value += e2.value; break;
+	case operation::Minus: e1.value -= e2.value; break;
+	case operation::Mul: e1.value *= e2.value; break;
+	case operation::Div: e1.value /= e2.value; break;
+	case operation::DivRest: e1.value %= e2.value; break;
+	case operation::Scope: e1.value += e2.value*sizeof(int); break;
+	default: break;
 	}
+}
+
+static void loadvalue(evalue& e1) {
+	if(e1.type == operation::Identifier) {
+		e1.type = operation::Number;
+		e1.value = 3;
+	}
+}
+
+static void binary_operation(operation type, evalue& e1, evalue& e2) {
+	loadvalue(e2);
+	constant_number(type, e1, e2);
 }
 
 void rule::apply(parser& e) const {
@@ -198,7 +225,16 @@ void rule::apply(parser& e) const {
 			identifier();
 		break;
 	case BinaryOperation:
-		binary_operation(e.param[0]);
+		if(param)
+			e.param[0] = param;
+		if(!e.param[0])
+			error("ErrorNotSpecifedBinaryOperation");
+		else if(values.getcount() < 2)
+			error("ErrorBinaryOperations", values.getcount());
+		else {
+			binary_operation((operation)e.param[0], values.data[values.count - 2], values.data[values.count - 1]);
+			values.count--;
+		}
 		break;
 	case UnaryOperation:
 		break;
