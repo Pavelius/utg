@@ -156,7 +156,6 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
-    <ClCompile Include="code_operation.cpp" />
     <ClCompile Include="code_rule.cpp" />
     <ClCompile Include="code_token.cpp" />
     <ClCompile Include="condition.cpp" />

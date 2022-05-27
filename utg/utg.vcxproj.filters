@@ -210,9 +210,6 @@
     <ClCompile Include="code_token.cpp">
       <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="code_operation.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

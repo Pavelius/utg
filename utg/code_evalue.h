@@ -3,15 +3,13 @@
 namespace code {
 enum class operation : unsigned char {
 	None,
-	Plus, Minus, Mul, Div, DivRest,
-	And, Or, Not, Neg, ShiftRight, ShiftLeft,
+	Plus, Minus, Div, Mul, DivRest,
+	BinaryOr, BinaryAnd, Binary’Ór, Not, Neg,
+	ShiftLeft, ShiftRight,
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
+	Or, And,
 	Assign, If, While,
 	Number, Text, Identifier, Expression
-};
-struct operationi {
-	const char*		id;
-	int				operands;
 };
 struct evalue {
 	operation		type;
