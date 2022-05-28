@@ -13,7 +13,7 @@ enum class operation : unsigned char {
 	ShiftLeft, ShiftRight,
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
 	Or, And,
-	Increment, Decrement, AdressOf, Scope,
+	Increment, Decrement, AdressOf, Dereference, Scope,
 	Assign, If, While,
 	Number, Text, Identifier, Expression
 };
@@ -41,7 +41,6 @@ struct symbol {
 	pckh				result; // Result symbol type of expression
 	unsigned			index; // Position in source file
 	unsigned			flags; // Various flags
-	unsigned			local; // Symbol local block
 	pckh				ast; // Abstract syntaxis tree index
 	constexpr bool		is(int v) const { return (flags & (1 << v)) != 0; }
 	constexpr bool		ispointer() const { return parent == Pointers; }
@@ -57,14 +56,15 @@ public:
 	pckh				add(const char* v) { return strings.add(v); }
 	pckh				add(operation type, pckh left, pckh right);
 	pckh				add(operation type, pckh left) { return add(type, left, 0); }
-	pckh				add(pckh id, pckh parent, pckh result, unsigned flags, unsigned level, unsigned index);
+	pckh				add(pckh id, pckh parent, pckh result, unsigned flags, unsigned index);
 	void				clear();
 	void				create(const char* id);
 	pckh				findast(operation type, pckh left, pckh right) const;
-	pckh				findsym(pckh id, pckh parent, unsigned level) const;
-	pckh				findsym(pckh id, pckh parent, pckh type, unsigned level) const;
+	pckh				findsym(pckh id, pckh parent) const;
+	pckh				findsym(const char* id, pckh parent) const;
+	pckh				findsym(pckh id, pckh parent, pckh type) const;
 	const ast*			getast(pckh v) const { return asts.ptrs(v); }
-	const char*			getstr(pckh v) const { return (const char*)strings.ptrs(v); }
+	const char*			getstr(pckh v) const { return (const char*)strings.get(v); }
 	symbol*				getsym(pckh v) const { return symbols.ptrs(v); }
 	void				read(const char* url) { serial(url, false); }
 	pckh				reference(pckh v);

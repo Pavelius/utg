@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{e12c056e-c8f2-4ce3-a41a-76529a81915c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{97b1da7d-b654-4c13-a292-e0b5ca0c2193}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tech.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="unit_type.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="orderable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="orderablea.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="planet.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="rules\Basic.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Data</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

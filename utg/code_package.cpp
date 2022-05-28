@@ -14,11 +14,11 @@ bool isnostrictorder(operation id) {
 }
 
 static void addg(package* p, const char* id) {
-	p->add(p->add(id), This, This, 0, 0, 0);
+	p->add(p->add(id), This, This, 0, 0);
 }
 
 static void addm(package* p, const char* id) {
-	p->add(p->add(id), 0, Modules, 0, 0, 0);
+	p->add(p->add(id), 0, Modules, 0, 0);
 }
 
 void package::create(const char* name) {
@@ -44,7 +44,7 @@ void package::clear() {
 	asts.clear();
 }
 
-pckh package::findsym(pckh id, pckh parent, unsigned level) const {
+pckh package::findsym(pckh id, pckh parent) const {
 	for(auto& e : symbols) {
 		if(e.id == id && e.parent == parent)
 			return &e - symbols.begin();
@@ -52,12 +52,19 @@ pckh package::findsym(pckh id, pckh parent, unsigned level) const {
 	return None;
 }
 
-pckh package::findsym(pckh id, pckh parent, pckh type, unsigned level) const {
+pckh package::findsym(pckh id, pckh parent, pckh type) const {
 	for(auto& e : symbols) {
 		if(e.id == id && e.parent == parent && e.result == type)
 			return &e - symbols.begin();
 	}
 	return None;
+}
+
+pckh package::findsym(const char* id, pckh parent) const {
+	auto nid = strings.find(id);
+	if(nid == None)
+		return None;
+	return findsym(nid, parent);
 }
 
 pckh package::findast(operation type, pckh left, pckh right) const {
@@ -68,12 +75,12 @@ pckh package::findast(operation type, pckh left, pckh right) const {
 	return None;
 }
 
-pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned flags, unsigned level) {
+pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned flags) {
 	pckh v = None;
 	if(parent==Pointers)
-		v = findsym(id, parent, result, level);
+		v = findsym(id, parent, result);
 	else
-		v = findsym(id, parent, level);
+		v = findsym(id, parent);
 	if(v == None) {
 		auto p = symbols.add();
 		p->id = id;
@@ -82,7 +89,6 @@ pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned fl
 		p->index = index;
 		p->flags = flags;
 		p->ast = None;
-		p->local = level;
 		v = p - symbols.begin();
 	}
 	return v;
@@ -134,5 +140,5 @@ bool package::serial(const char* url, bool write_mode) {
 }
 
 pckh package::reference(pckh type) {
-	return add(0, Pointers, type, 0, 0, 0);
+	return add(0, Pointers, type, 0, 0);
 }

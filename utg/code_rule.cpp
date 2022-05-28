@@ -21,10 +21,11 @@ void code::error(const char* format, ...) {
 	errorv(getnm(format), xva_start(format));
 }
 
-static void addvalue(operation type, long value) {
+static void addvalue(operation type, long value, pckh result) {
 	auto p = values.add();
 	p->type = type;
 	p->value = value;
+	p->result = result;
 }
 
 static void comments() {
@@ -40,7 +41,7 @@ void string() {
 	if(*p == '\"') {
 		stringbuilder sb(string_buffer);
 		p = sb.psstr(p + 1, '\"');
-		addvalue(operation::Text, (long)szdup(string_buffer));
+		addvalue(operation::Text, (long)szdup(string_buffer), TypeLiteral);
 		skipws();
 	}
 }
@@ -50,7 +51,7 @@ static void number() {
 	long value = 0;
 	p = stringbuilder::read(p, value);
 	if(p1 != p) {
-		addvalue(operation::Number, value);
+		addvalue(operation::Number, value, i32);
 		skipws();
 	}
 }
@@ -60,7 +61,7 @@ static void identifier() {
 	stringbuilder sb(string_buffer);
 	p = sb.psidf(p);
 	if(p1 != p) {
-		addvalue(operation::Identifier, (long)szdup(string_buffer));
+		addvalue(operation::Identifier, (long)szdup(string_buffer), TypePointer);
 		skipws();
 	}
 }
@@ -203,6 +204,14 @@ static void constant_number(operation type, evalue& e1, evalue& e2) {
 	}
 }
 
+static void constant_number(operation type, evalue& e1) {
+	switch(type) {
+	case operation::Neg: e1.value = -e1.value; break;
+	case operation::Dereference: e1.value = -e1.value; break;
+	default: break;
+	}
+}
+
 static void loadvalue(evalue& e1) {
 	if(e1.type == operation::Identifier) {
 		e1.type = operation::Number;
@@ -213,6 +222,10 @@ static void loadvalue(evalue& e1) {
 static void binary_operation(operation type, evalue& e1, evalue& e2) {
 	loadvalue(e2);
 	constant_number(type, e1, e2);
+}
+
+static void unary_operation(operation type, evalue& e1) {
+	constant_number(type, e1);
 }
 
 void rule::apply(parser& e) const {
@@ -238,6 +251,12 @@ void rule::apply(parser& e) const {
 		}
 		break;
 	case UnaryOperation:
+		if(param)
+			e.param[0] = param;
+		if(!e.param[0])
+			error("ErrorNotSpecifedBinaryOperation");
+		else
+			unary_operation((operation)e.param[0], values.data[values.count - 1]);
 		break;
 	case SetValue:
 		last_value = param;

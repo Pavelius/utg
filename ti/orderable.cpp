@@ -1,0 +1,36 @@
+#include "main.h"
+
+int orderable::get(ability_s v) const {
+	if(bsdata<troop>::have(this))
+		return ((troop*)this)->type->abilities[v];
+	return 0;
+}
+
+int	orderable::get(indicator_s v) const {
+	if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->get(v);
+	return 0;
+}
+
+int orderable::fight(int chance, int count, int reroll) {
+	if(!chance)
+		return 0;
+	if(!count)
+		count = 1;
+	auto n = 0;
+	for(auto i = 0; i < count; i++) {
+		auto r = reroll + 1;
+		while(r-- > 0) {
+			if((1 + (rand() % 10)) >= chance) {
+				n++;
+				break;
+			}
+		}
+	}
+	return n;
+}
+
+void troop::create(const char* id) {
+	clear();
+	type = bsdata<uniti>::find(id);
+}
