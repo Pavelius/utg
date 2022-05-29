@@ -9,3 +9,10 @@ int planeti::get(indicator_s v) const {
 	default: return 0;
 	}
 }
+
+void planeti::exhaust() {
+	if(flags.is(Exhaust))
+		return;
+	flags.set(Exhaust);
+	draw::warning(getnm("ApplyExhaust"), getnm(id));
+}

@@ -103,10 +103,7 @@ void entitya::match(flag_s value, bool keep) {
 	for(auto p : *this) {
 		if(!(*p))
 			continue;
-		if(!bsdata<planeti>::have(p))
-			continue;
-		auto pe = (planeti*)p;
-		if(pe->is(value) != keep)
+		if(p->is(value)!=keep)
 			continue;
 		*ps++ = p;
 	}

@@ -9,7 +9,7 @@ static bool			if_able_mode;
 static fnforeach	for_each;
 
 static void no_active_player(int bonus, int param) {
-	players.filter(playeri::active, false);
+	players.filter(game.active, false);
 }
 
 static void no_mecatol_rex(int bonus, int param) {
@@ -24,8 +24,8 @@ static void select_planet(int bonus, int param) {
 	querry.clear();
 	querry.select(bsdata<planeti>::source);
 	switch(param) {
-	case 1: querry.match(playeri::active, true); break;
-	case 2: querry.match(playeri::active, false); break;
+	case 1: querry.match(playeri::last, true); break;
+	case 2: querry.match(playeri::last, false); break;
 	default: break;
 	}
 }
@@ -68,7 +68,7 @@ static void buy_command_token(int bonus, int param) {
 static void activate_system(int bonus, int param) {
 	if(!systemi::last)
 		return;
-	systemi::last->setactivate(playeri::active, bonus != -1);
+	systemi::last->setactivate(playeri::last, bonus != -1);
 }
 
 static void filter_system(int bonus, int param) {
@@ -204,7 +204,7 @@ static void apply_foreach(variant v) {
 
 void playeri::apply(const variants& source) {
 	draw::pause();
-	last = active;
+	last = game.active;
 	for_each = 0;
 	for(auto v : source)
 		apply_foreach(v);

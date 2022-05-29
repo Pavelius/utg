@@ -1,9 +1,11 @@
-﻿AddCommandToken: Вы должны пополтить ваши резервы команд на [%1i] единицы. Какие резервы хотите пополнить?
+﻿AddCommandToken: Какие резервы хотите пополнить?
 AppTitle: Сумрачная империя
+ApplyExhaust: Планета %1 истощена
+ChooseOptions: (осталось [%1i])
 Continue: Продолжить
 FleetToken: Резерв флота
 PayAnswer: %1 (оплата %2i)
-PayPrompt: Вы должны оплатить %1i
+PayPrompt: Необходимо оплатить
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
 SardakkNorr: Сардак Н'орр

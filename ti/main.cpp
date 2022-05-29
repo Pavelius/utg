@@ -10,11 +10,11 @@ static void test_answers() {
 	auto p2 = bsdata<strategyi>::elements + 0;
 	auto n1 = bsdata<planeti>::find("TrenLak");
 	auto n2 = bsdata<planeti>::find("Quinarra");
-	playeri::active = bsdata<playeri>::elements;
-	playeri::active->setcontrol(n1);
-	playeri::active->setcontrol(n2);
-	playeri::active->apply(p2->primary);
-	playeri::active->pay(Resources, 2);
+	game.prepare();
+	game.active->setcontrol(n1);
+	game.active->setcontrol(n2);
+	game.active->apply(p2->primary);
+	game.active->pay(Influence, 2);
 }
 
 static void test_combat() {

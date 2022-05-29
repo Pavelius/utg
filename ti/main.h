@@ -50,6 +50,8 @@ enum trigger_s : unsigned char {
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
+typedef void(*fnanswer)(answers& an);
+typedef bool(*fnapplyanswer)();
 struct abilityi {
 	const char*		id;
 };
@@ -97,25 +99,8 @@ struct planeti : entity {
 	char			resources, influence;
 	flagable<1>		flags;
 	static planeti*	last;
+	void			exhaust();
 	int				get(indicator_s v) const;
-};
-struct indicatora {
-	char			indicators[VictoryPoints + 1];
-};
-struct playeri : nameable, indicatora {
-	techa			tech, tech_used;
-	uniti			units[10];
-	char			commodities;
-	static playeri* active;
-	static playeri* last;
-	void			add(indicator_s v, int i);
-	void			addcommand(int v);
-	void			apply(const variants& source);
-	bool			is(tech_s v) const { return tech.is(v); }
-	int				get(indicator_s v) const { return indicators[v]; }
-	void			pay(indicator_s type, int count);
-	void			set(indicator_s v, int i) { indicators[v] = i; }
-	void			setcontrol(planeti* p);
 };
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
@@ -186,8 +171,29 @@ struct objectivei : nameable {
 struct gamei {
 	playeri*		speaker;
 	playeri*		human;
+	playeri*		active;
 	playera			players;
+	static void*	result;
+	static int		options;
+	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
 	void			defhandle(trigger_s trigger, void* result);
+	void			prepare();
+};
+struct playeri : nameable {
+	char			indicators[VictoryPoints + 1];
+	techa			tech, tech_used;
+	uniti			units[10];
+	char			commodities;
+	strategyi*		strategy;
+	static playeri* last;
+	void			add(indicator_s v, int i);
+	void			addcommand(int v);
+	void			apply(const variants& source);
+	bool			is(tech_s v) const { return tech.is(v); }
+	int				get(indicator_s v) const { return indicators[v]; }
+	void			pay(indicator_s type, int count);
+	void			set(indicator_s v, int i) { indicators[v] = i; }
+	void			setcontrol(planeti* p);
 };
 extern gamei		game;
 extern entitya	querry;

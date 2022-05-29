@@ -1,9 +1,25 @@
 #include "main.h"
 
-playeri* playeri::active;
 playeri* playeri::last;
 
 static indicator_s command_tokens[] = {TacticToken, FleetToken, StrategyToken};
+
+static void add_token(answers& an) {
+	for(auto v : command_tokens) {
+		auto& e = bsdata<indicatori>::elements[v];
+		an.add(&e, getnm(e.id));
+	}
+}
+
+static bool apply_indicator() {
+	if(bsdata<indicatori>::have(game.result)) {
+		auto v = (indicator_s)bsdata<indicatori>::source.indexof(game.result);
+		playeri::last->add(v, 1);
+		game.options--;
+	} else
+		return false;
+	return true;
+}
 
 void playeri::add(indicator_s v, int i) {
 	auto n0 = get(v);
@@ -17,24 +33,8 @@ void playeri::add(indicator_s v, int i) {
 }
 
 void playeri::addcommand(int count) {
-	draw::output(getnm("AddCommandToken"), count);
-	answers an;
-	while(count > 0) {
-		an.clear();
-		for(auto v : command_tokens) {
-			auto& e = bsdata<indicatori>::elements[v];
-			an.add(&e, getnm(e.id));
-		}
-		auto pe = an.choose();
-		if(!pe)
-			break;
-		if(bsdata<indicatori>::have(pe)) {
-			auto v = (indicator_s)bsdata<indicatori>::source.indexof(pe);
-			last->add(v, 1);
-			count--;
-		} else
-			break;
-	}
+	game.options = count;
+	game.choose(WhenPay, "AddCommandToken", add_token, apply_indicator);
 }
 
 void playeri::setcontrol(planeti* planet) {
@@ -51,23 +51,28 @@ static void select_planets(const playeri* player, bool iscontrol) {
 	querry.match(player, iscontrol);
 }
 
+static indicator_s last_indicator;
+
+static void add_planets(answers& an) {
+	select_planets(playeri::last, true);
+	querry.match(Exhaust, false);
+	querry.match(last_indicator, true);
+	for(auto p : querry)
+		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(last_indicator));
+}
+
+static bool apply_pay() {
+	if(bsdata<planeti>::have(game.result)) {
+		auto p = (planeti*)game.result;
+		game.options -= p->get(last_indicator);
+		p->exhaust();
+	} else
+		return false;
+	return true;
+}
+
 void playeri::pay(indicator_s type, int count) {
-	draw::output(getnm("PayPrompt"), count);
-	answers an;
-	while(count > 0) {
-		an.clear();
-		select_planets(this, true);
-		querry.match(Exhaust, false);
-		querry.match(type, true);
-		for(auto p : querry)
-			an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(type));
-		auto pe = an.choose();
-		if(!pe)
-			break;
-		else if(bsdata<planeti>::have(pe)) {
-			auto p = (planeti*)pe;
-			count -= p->get(type);
-		} else
-			game.defhandle(WhenPay, pe);
-	}
+	last_indicator = type;
+	game.options = count;
+	game.choose(WhenPay, "PayPrompt", add_planets, apply_pay);
 }
