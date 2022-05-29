@@ -143,6 +143,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="indicator.cpp" />
     <ClCompile Include="orderable.cpp" />
     <ClCompile Include="orderablea.cpp" />
     <ClCompile Include="color.cpp" />
@@ -150,6 +152,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="planet.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="playera.cpp" />
+    <ClCompile Include="script.cpp" />
+    <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />
     <ClCompile Include="unit_type.cpp" />

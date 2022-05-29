@@ -6,6 +6,28 @@ int orderable::get(ability_s v) const {
 	return 0;
 }
 
+systemi* orderable::getsystem() const {
+	if(!this)
+		return 0;
+	if(bsdata<troop>::have(this))
+		return ((troop*)this)->location->getsystem();
+	else if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->location->getsystem();
+	else if(bsdata<systemi>::have(this))
+		return (systemi*)this;
+	return 0;
+}
+
+planeti* orderable::getplanet() const {
+	if(!this)
+		return 0;
+	if(bsdata<troop>::have(this))
+		return ((troop*)this)->location->getplanet();
+	else if(bsdata<planeti>::have(this))
+		return (planeti*)this;
+	return 0;
+}
+
 int	orderable::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);

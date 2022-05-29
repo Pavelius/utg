@@ -1,3 +1,9 @@
 #Planet
 
 MecatolRex resources(1) influence(6)
+
+Arnor resources(2) influence(1)
+Lor resources(1) influence(2)
+
+Bereg resources(3) influence(1)
+UrtaVI resources(2) influence(3)

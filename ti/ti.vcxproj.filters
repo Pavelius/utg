@@ -42,6 +42,24 @@
     <ClCompile Include="planet.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="script.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="indicator.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="system.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="playera.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

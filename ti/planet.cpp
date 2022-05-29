@@ -1,5 +1,7 @@
 #include "main.h"
 
+planeti* planeti::last;
+
 int planeti::get(indicator_s v) const {
 	switch(v) {
 	case Resources: return resources;

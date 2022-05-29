@@ -1,11 +1,11 @@
 #Player
 
-SardakkNorr
-TheBaronyOfLetnev
-TheEmiratesOfHacan
-TheFederationOfSol
-TheL1Z1XMindnet
-TheUniversitiesOfJolNar
+SardakkNorr commodities(3)
+TheBaronyOfLetnev commodities(2)
+TheEmiratesOfHacan commodities(6)
+TheFederationOfSol commodities(4)
+TheL1Z1XMindnet commodities(2)
+TheUniversitiesOfJolNar commodities(4)
 
 #Unit
 
@@ -40,3 +40,30 @@ ArcSecundus type(Ships)
 SonOfRagh type(Ships)
  abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) AntiFighterBarrage(6) AntiFighterBarrageCount(4)
  tags SustainDamage
+
+#Strategy
+
+Leadership initiative(1)
+ primary CommandToken+3 NextAction BuyCommandToken+3
+ secondary BuyCommandToken+3
+Diplomacy initiative(2)
+ primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer EachPlayerActivateSystem NextAction SelectPlanetYouControl FilterSystem Exhaust-1
+ secondary StrategyToken-1 SelectPlanet FilterExhaust+1 Exhaust-1
+Politics initiative(3)
+ primary SelectPlayer NoSpeaker ChoosePlayer Speaker NextAction ActionCard+2
+ secondary StrategyToken-1 ActionCard+2
+Construction initiative(4)
+ primary SelectPlanetYouControl ChoosePlanet PDSorDock NextAction SelectPlanetYouControl ChoosePlanet PDS
+ secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem PDSorDock
+Trade initiative(5)
+ primary TradeGoods+3 NextAction ReplenishCommodities NextAction SelectPlayer NoActivePlayer ChoosePlayer ReplenishCommodities
+ secondary StrategyToken-1 ReplenishCommodities
+Warfare initiative(6)
+ primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 NextAction RedistributeCommandTokens
+ secondary StrategyToken-1
+Technology initiative(7)
+ primary ResearchTechnology+1 NextAction Resources-6 ResearchTechnology+1
+ secondary StrategyToken-1 Resources-4 ResearchTechnology+1
+Imperial initiative(8)
+ primary ScorePublicObjective NextAction IfControlMecatolRex+1 VictoryPoints+1 SecretObjective+1
+ secondary StrategyToken-1 SecretObjective+1
