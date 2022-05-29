@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "crt.h"
 #include "flagable.h"
 #include "tag.h"
@@ -9,12 +10,15 @@ enum ability_s : unsigned char {
 	AntiFighterBarrage, AntiFighterBarrageCount, SpaceCannon, SpaceCannonCount,
 	Move, Production, Reinforcement, Capacity,
 };
+enum planet_trait_s : unsigned char {
+	NoTrait, Cultural, Hazardous, Industrial,
+};
 enum tag_s : unsigned char {
 	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage
 };
 enum indicator_s : unsigned char {
 	TradeGoods, Commodities, Resources, Influence,
-	CommandToken, ActionToken, FleetToken, StrategyToken,
+	CommandToken, FleetToken, StrategyToken, TacticToken,
 	VictoryPoints
 };
 enum wormhole_s : unsigned char {
@@ -35,7 +39,7 @@ enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
 };
 enum trigger_s : unsigned char {
-	NoTrigger, AsAction,
+	AsAction,
 	StartRoundSpaceCombat,
 	EndRoundGroundCombat,
 	EndStrategyPhase,
@@ -50,8 +54,12 @@ struct colori {
 };
 struct nameable {
 	const char*		id;
+	void			actv(const char* format, const char* format_param, int level);
 };
 struct indicatori {
+	const char*		id;
+};
+struct planet_traiti {
 	const char*		id;
 };
 struct unit_typei {
@@ -71,7 +79,9 @@ struct orderable : nameable {
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	planeti*		getplanet() const;
+	color_s			getspeciality() const;
 	systemi*		getsystem() const;
+	planet_trait_s	gettrait() const;
 	void			set(tag_s v) { return tags.set(v); }
 };
 struct uniti : nameable {
@@ -80,6 +90,8 @@ struct uniti : nameable {
 	unit_type_s		type;
 };
 struct planeti : orderable {
+	planet_trait_s	trait;
+	color_s			speciality;
 	char			resources, influence;
 	static planeti*	last;
 	int				get(indicator_s v) const;
@@ -93,8 +105,13 @@ struct playeri : nameable, indicatora {
 	char			commodities;
 	static playeri* active;
 	static playeri* last;
+	void			add(indicator_s v, int i);
+	void			addcommand(int v);
+	void			apply(const variants& source);
 	bool			is(tech_s v) const { return tech.is(v); }
+	int				get(indicator_s v) const { return indicators[v]; }
 	void			set(indicator_s v, int i) { indicators[v] = i; }
+	void			setcontrol(planeti* p);
 };
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
@@ -102,6 +119,7 @@ struct playera : adat<playeri*, 6> {
 };
 struct systemi : orderable {
 	flagable<4>		activated;
+	playeri*		home;
 	static systemi*	last;
 	bool			isactivated(const playeri* p) const;
 	void			setactivate(const playeri* p, bool active);
@@ -110,6 +128,9 @@ struct techi {
 	const char*		id;
 	color_s			color;
 	char			required[4]; // RGBY
+};
+struct triggeri {
+	const char*		id;
 };
 struct troop : orderable {
 	const uniti*	type;
@@ -121,6 +142,8 @@ struct orderablea : public adat<orderable*> {
 	int				fight(ability_s power, ability_s count);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
+	void			match(planet_trait_s value, bool keep);
+	void			match(color_s value, bool keep);
 	void			select(array& source);
 	void			select(const playeri* player, const orderable* location);
 	void			selectplanets(const systemi* system);
@@ -130,9 +153,15 @@ struct combat {
 	orderablea		attacker, defender;
 };
 struct poweri {
+};
+struct actioncardi : nameable {
 	trigger_s		trigger;
-	indicatora		cost;
 	variants		use;
+	char			count;
+};
+struct agendai : nameable {
+	variants		target;
+	variants		yes, no;
 };
 struct scripti {
 	typedef void(*fnscript)(int bonus, int param);
@@ -143,6 +172,10 @@ struct scripti {
 struct strategyi : nameable {
 	int				initiative;
 	variants		primary, secondary;
+};
+struct objectivei : nameable {
+	char			stage, value;
+	variants		condition;
 };
 struct gamei {
 	playeri*		speaker;

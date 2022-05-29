@@ -145,6 +145,8 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
+    <ClCompile Include="information.cpp" />
+    <ClCompile Include="nameable.cpp" />
     <ClCompile Include="orderable.cpp" />
     <ClCompile Include="orderablea.cpp" />
     <ClCompile Include="color.cpp" />
@@ -152,12 +154,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="planet.cpp" />
+    <ClCompile Include="planet_trait.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playera.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />
+    <ClCompile Include="trigger.cpp" />
     <ClCompile Include="unit_type.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +175,9 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Objectives.txt" />
     <Text Include="rules\Planets.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

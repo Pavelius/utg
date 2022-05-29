@@ -1,0 +1,33 @@
+#Objective stage(1)
+
+CornerTheMarket
+DevelopWeaponry
+DiversifyResearch
+ErectAMonument
+ condition Resources-8
+ExpandBorders
+ condition SelectPlanetYouControl FilterHomeSystem-1 QuerryCount-6
+FoundResearchOutposts
+IntimidateCouncil
+LeadFromTheFront
+NegotiateTradeRoutes
+ condition TradeGoods-5
+SwayTheCouncil
+ condition Influence-8
+
+#Objective stage(2)
+
+CentralizeGalacticTrade
+ condition TradeGoods-5
+ConquerTheWeak
+ condition SelectSystemOwnPlanetYouControl FilterHomeSystem-1 FilterAnyHomeSystem QuerryCount-1
+FormGalacticBrainTrust
+ condition SelectPlanetYouControl FilterTechnologySpeciality QuerryCount-5
+FoundAGoldenAge
+ condition Resources-12
+GalvanizeThePeople
+ManipulateGalacticLaw
+ condition Influence-16
+SubdueTheGalaxy
+ condition SelectPlanetYouControl FilterHomeSystem-1 QuerryCount-11
+UnifyTheColonies

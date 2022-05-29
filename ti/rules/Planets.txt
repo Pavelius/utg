@@ -1,9 +1,84 @@
+#System
+
+MecatolRexSystem
+AbyzSystem
+ArinamSystem
+ArnorSystem
+BeregSystem
+CentauriSystem
+CoorneeqSystem
+DalBoothaSystem
+LazarSystem
+LodorSystem
+MeharXullSystem
+MellonSystem
+NewAlbionSystem
+QuannSystem
+QucennSystem
+SaudorSystem
+TarMannSystem
+TequranSystem
+ThibahSystem
+VefutIISystem
+WellonSystem
+
+SardakkHomeSystem home(SardakkNorr)
+
 #Planet
 
-MecatolRex resources(1) influence(6)
+MecatolRex resources(1) influence(6) location(MecatolRexSystem)
 
-Arnor resources(2) influence(1)
-Lor resources(1) influence(2)
+Abyz resources(3) influence(0) trait(Hazardous) location(AbyzSystem)
+Fria resources(2) influence(0) trait(Hazardous) location(AbyzSystem)
 
-Bereg resources(3) influence(1)
-UrtaVI resources(2) influence(3)
+Arinam resources(1) influence(2) trait(Industrial) location(ArinamSystem)
+Meer resources(0) influence(4) trait(Hazardous) speciality(Red) location(ArinamSystem)
+
+Arnor resources(1) influence(2) trait(Industrial) location(ArnorSystem)
+Lor resources(2) influence(1) trait(Industrial) location(ArnorSystem)
+
+Bereg resources(3) influence(1) trait(Hazardous) location(BeregSystem)
+LirtaVI resources(2) influence(3) trait(Hazardous) location(BeregSystem)
+
+Centauri resources(1) influence(3) trait(Cultural) location(CentauriSystem)
+Gral resources(1) influence(1) trait(Industrial) speciality(Blue) location(CentauriSystem)
+
+Coorneeq resources(1) influence(2) trait(Cultural) location(CoorneeqSystem)
+Resculon resources(2) influence(0) trait(Cultural) location(CoorneeqSystem)
+
+DalBootha resources(0) influence(2) trait(Cultural) location(DalBoothaSystem)
+Xxehan resources(1) influence(1) trait(Cultural) location(DalBoothaSystem)
+
+Lazar resources(1) influence(1) trait(Industrial) speciality(Yellow) location(LazarSystem)
+Sakulag resources(2) influence(1) trait(Hazardous) location(LazarSystem)
+
+Lodor resources(3) influence(1) trait(Cultural) location(LodorSystem)
+
+MeharXull resources(1) influence(3) trait(Hazardous) speciality(Red) location(MeharXullSystem)
+
+Mellon resources(0) influence(2) trait(Cultural) location(MellonSystem)
+Zhobat resources(3) influence(1) trait(Hazardous) location(MellonSystem)
+
+NewAlbion resources(1) influence(1) trait(Industrial) speciality(Green) location(NewAlbionSystem)
+Starpoint resources(3) influence(1) trait(Hazardous) location(NewAlbionSystem)
+
+Quann resources(2) influence(1) trait(Cultural) location(QuannSystem)
+
+Qucenn resources(1) influence(2) trait(Industrial) location(QucennSystem)
+Rarron resources(0) influence(3) trait(Cultural) location(QucennSystem)
+
+Saudor resources(2) influence(2) trait(Industrial) location(SaudorSystem)
+
+TarMann resources(1) influence(1) trait(Industrial) speciality(Green) location(TarMannSystem)
+
+Tequran resources(2) influence(0) trait(Hazardous) location(TequranSystem)
+Torkan resources(0) influence(3) trait(Cultural) location(TequranSystem)
+
+Thibah resources(1) influence(1) trait(Industrial) speciality(Blue) location(ThibahSystem)
+
+VefutII resources(2) influence(2) trait(Hazardous) location(VefutIISystem)
+
+Wellon resources(1) influence(2) trait(Industrial) speciality(Yellow) location(WellonSystem)
+
+TrenLak resources(1) influence(0) location(SardakkHomeSystem)
+Quinarra resources(3) influence(1) location(SardakkHomeSystem)

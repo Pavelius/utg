@@ -74,6 +74,30 @@ void orderablea::match(const playeri* player, bool keep) {
 	count = ps - data;
 }
 
+void orderablea::match(planet_trait_s value, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		if((p->gettrait() == value) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void orderablea::match(color_s value, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		if((p->getspeciality() == value) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void orderablea::match(const systemi* system, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {

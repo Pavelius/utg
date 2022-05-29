@@ -2,7 +2,21 @@
 #include "main.h"
 #include "strategy.h"
 
-static void start_game() {
+static char console_text[4096 * 2];
+static stringbuilder console(console_text);
+
+static void test_answers() {
+	auto p1 = bsdata<actioncardi>::elements + 0;
+	auto p2 = bsdata<strategyi>::elements + 0;
+	auto n1 = bsdata<planeti>::find("TrenLak");
+	auto n2 = bsdata<planeti>::find("Quinarra");
+	playeri::active = bsdata<playeri>::elements;
+	playeri::active->setcontrol(n1);
+	playeri::active->setcontrol(n2);
+	playeri::active->apply(p2->primary);
+}
+
+static void test_combat() {
 	troop c1, c2, c3;
 	c1.create("Fighter");
 	c2.create("Fighter");
@@ -16,13 +30,21 @@ static void start_game() {
 	r2 += e.defender.fight(Combat, CombatCount);
 }
 
-static void reading() {
+static void start_game() {
+	test_answers();
+}
+
+static void initialize() {
 	bsreq::read("rules/Planets.txt");
+	bsreq::read("rules/ActionCards.txt");
+	bsreq::read("rules/Objectives.txt");
+	answers::console = &console;
+	answers::prompt = console_text;
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	return draw::strategy(start_game, reading);
+	return draw::strategy(start_game, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

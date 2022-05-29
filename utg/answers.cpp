@@ -58,6 +58,10 @@ void draw::pause() {
 }
 
 void draw::pause(const char* title, ...) {
+	if(answers::console) {
+		if(!(*answers::console))
+			return;
+	}
 	char temp[260]; stringbuilder sb(temp);
 	answers an; sb.addv(title, xva_start(title));
 	an.choose(0, temp, true);
@@ -94,6 +98,12 @@ void draw::warning(const char* format, ...) {
 	answers::console->addn("[-");
 	answers::console->addv(format, xva_start(format));
 	answers::console->add("]");
+}
+
+void draw::output(const char* format, ...) {
+	if(!answers::console)
+		return;
+	answers::console->addx("\n", format, xva_start(format));
 }
 
 static const char* find_separator(const char* pb) {

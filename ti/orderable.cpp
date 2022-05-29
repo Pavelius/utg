@@ -28,6 +28,18 @@ planeti* orderable::getplanet() const {
 	return 0;
 }
 
+planet_trait_s orderable::gettrait() const {
+	if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->trait;
+	return NoTrait;
+}
+
+color_s orderable::getspeciality() const {
+	if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->speciality;
+	return NoTech;
+}
+
 int	orderable::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);

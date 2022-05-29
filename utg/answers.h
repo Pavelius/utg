@@ -45,6 +45,7 @@ public:
 };
 namespace draw {
 void information(const char* format, ...);
+void output(const char* format, ...);
 void pause();
 void pause(const char* title, ...);
 void pausenc(const char* title, ...);

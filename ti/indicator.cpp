@@ -6,9 +6,9 @@ BSDATA(indicatori) = {
 	{"Resources"},
 	{"Influence"},
 	{"CommandToken"},
-	{"ActionToken"},
 	{"FleetToken"},
 	{"StrategyToken"},
+	{"TacticToken"},
 	{"VictoryPoints"},
 };
 assert_enum(indicatori, VictoryPoints)

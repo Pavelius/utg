@@ -4,12 +4,14 @@
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
-BSDATAC(troop, 1024)
-BSDATAC(strategyi, 8)
-BSDATAC(systemi, 64)
+BSDATAC(actioncardi, 128)
+BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)
+BSDATAC(strategyi, 8)
+BSDATAC(systemi, 64)
 BSDATAC(techi, 128)
+BSDATAC(troop, 1024)
 BSDATAC(uniti, 32)
 BSDATAD(variant)
 
@@ -19,12 +21,31 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
+BSMETA(actioncardi) = {
+	BSREQ(id),
+	BSREQ(count),
+	BSENM(trigger, triggeri),
+	BSREQ(use),
+	{}};
 BSMETA(colori) = {
 	BSREQ(id),
 	{}};
+BSMETA(indicatori) = {
+	BSREQ(id),
+	{}};
+BSMETA(objectivei) = {
+	BSREQ(id),
+	BSREQ(condition), BSREQ(value), BSREQ(stage),
+	{}};
 BSMETA(planeti) = {
 	BSREQ(id),
+	BSENM(trait, planet_traiti),
+	BSENM(speciality, colori),
 	BSREQ(resources), BSREQ(influence),
+	BSREF(location, systemi),
+	{}};
+BSMETA(planet_traiti) = {
+	BSREQ(id),
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
@@ -38,12 +59,19 @@ BSMETA(strategyi) = {
 	BSREQ(initiative),
 	BSREQ(primary), BSREQ(secondary),
 	{}};
+BSMETA(systemi) = {
+	BSREQ(id),
+	BSREQ(home),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(techi) = {
 	BSREQ(id),
 	BSENM(color, colori),
+	{}};
+BSMETA(triggeri) = {
+	BSREQ(id),
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
@@ -56,10 +84,14 @@ BSMETA(unit_typei) = {
 	{}};
 
 BSDATA(varianti) = {
+	{"ActionCard", VRSTD(actioncardi), 1},
+	{"Indicator", VRSTD(indicatori), 1},
+	{"Objective", VRSTD(objectivei), 1},
 	{"Planet", VRSTD(planeti), 1},
 	{"Player", VRSTD(playeri), 1},
 	{"Script", VRSTD(scripti), 1},
 	{"Strategy", VRSTD(strategyi), 1},
+	{"System", VRSTD(systemi), 1},
 	{"Unit", VRSTD(uniti), 1},
 	{"UnitType", VRSTD(unit_typei), 1},
 };

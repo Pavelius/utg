@@ -1,0 +1,16 @@
+#ActionCard trigger(AsAction) count(1)
+
+EconomicInitiative
+ use SelectPlanetYouControl FilterCultural+1 ForEachPlanet Exhaust-1
+FocusedResearch
+ use TradeGoods-4 ResearchTechnology
+FrontlineDeployment
+ use SelectPlanetYouControl ChoosePlanet Infantry+3
+FrontlineDeployment
+ use SelectPlanetYouControl ChoosePlanet Infantry+3
+GhostShip
+ use SelectSystem FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
+IndustrialInitiative
+ use SelectPlanetYouControl FilterIndustrial+1 TradeGoods+1
+Insubordination
+ use SelectPlayer NoActivePlayer ChoosePlayer ActionToken-1

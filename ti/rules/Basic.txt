@@ -47,8 +47,8 @@ Leadership initiative(1)
  primary CommandToken+3 NextAction BuyCommandToken+3
  secondary BuyCommandToken+3
 Diplomacy initiative(2)
- primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer EachPlayerActivateSystem NextAction SelectPlanetYouControl FilterSystem Exhaust-1
- secondary StrategyToken-1 SelectPlanet FilterExhaust+1 Exhaust-1
+ primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem NextAction SelectPlanetYouControl FilterSystem Exhaust-1
+ secondary StrategyToken-1 SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1
 Politics initiative(3)
  primary SelectPlayer NoSpeaker ChoosePlayer Speaker NextAction ActionCard+2
  secondary StrategyToken-1 ActionCard+2

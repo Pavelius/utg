@@ -1,1 +1,11 @@
-﻿AppTitle: Сумрачная империя
+﻿AddCommandToken: Вы должны пополтить ваши резервы команд на [%1i] единицы. Какие резервы хотите пополнить?
+AppTitle: Сумрачная империя
+Continue: Продолжить
+FleetToken: Резерв флота
+Quinarra: Куинарра
+RaiseIndicatorTo: %1 повысили %2 до %3i
+SardakkNorr: Сардак Н'орр
+SetControlPlanet: %1 установили контроль над планетой %2
+StrategyToken: Стратегический резерв
+TacticToken: Тактический резерв
+TrenLak: Трен'ллак

@@ -1,3 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 68: Can't find variant `ScorePublicObjective`
- Line 68: Can't find variant `VictoryPoints`
+﻿In file `Names.txt`:
+ Define translate for `SetControlPlanet`
