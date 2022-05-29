@@ -14,6 +14,7 @@ static void test_answers() {
 	playeri::active->setcontrol(n1);
 	playeri::active->setcontrol(n2);
 	playeri::active->apply(p2->primary);
+	playeri::active->pay(Resources, 2);
 }
 
 static void test_combat() {

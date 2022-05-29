@@ -14,7 +14,10 @@ enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
 enum tag_s : unsigned char {
-	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage
+	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
+};
+enum flag_s : unsigned char {
+	Exhaust
 };
 enum indicator_s : unsigned char {
 	TradeGoods, Commodities, Resources, Influence,
@@ -43,6 +46,7 @@ enum trigger_s : unsigned char {
 	StartRoundSpaceCombat,
 	EndRoundGroundCombat,
 	EndStrategyPhase,
+	WhenPay,
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
@@ -68,31 +72,30 @@ struct unit_typei {
 struct playeri;
 struct systemi;
 struct planeti;
-struct orderable : nameable {
+struct entity : nameable {
 	playeri*		player;
-	orderable*		location;
-	taga			tags;
-	constexpr explicit operator bool() const { return player != 0; }
+	entity*			location;
+	constexpr explicit operator bool() const { return id != 0; }
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	static int		fight(int chance, int count = 0, int reroll = 0);
-	bool			is(tag_s v) const { return tags.is(v); }
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	planeti*		getplanet() const;
 	color_s			getspeciality() const;
 	systemi*		getsystem() const;
 	planet_trait_s	gettrait() const;
-	void			set(tag_s v) { return tags.set(v); }
+	bool			is(flag_s v) const;
 };
 struct uniti : nameable {
 	taga			tags;
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
 };
-struct planeti : orderable {
+struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;
 	char			resources, influence;
+	flagable<1>		flags;
 	static planeti*	last;
 	int				get(indicator_s v) const;
 };
@@ -110,6 +113,7 @@ struct playeri : nameable, indicatora {
 	void			apply(const variants& source);
 	bool			is(tech_s v) const { return tech.is(v); }
 	int				get(indicator_s v) const { return indicators[v]; }
+	void			pay(indicator_s type, int count);
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
@@ -117,7 +121,7 @@ struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
 	void			filter(const playeri* object, bool keep);
 };
-struct systemi : orderable {
+struct systemi : entity {
 	flagable<4>		activated;
 	playeri*		home;
 	static systemi*	last;
@@ -132,25 +136,27 @@ struct techi {
 struct triggeri {
 	const char*		id;
 };
-struct troop : orderable {
+struct troop : entity {
 	const uniti*	type;
 	void			create(const char* id);
 };
-struct orderablea : public adat<orderable*> {
-	orderable*		choose(const char* title) const;
-	void			filter(const orderable* object, bool keep);
+struct entitya : public adat<entity*> {
+	entity*			choose(const char* title) const;
+	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
 	void			match(planet_trait_s value, bool keep);
 	void			match(color_s value, bool keep);
+	void			match(flag_s value, bool keep);
+	void			match(indicator_s value, bool keep);
 	void			select(array& source);
-	void			select(const playeri* player, const orderable* location);
+	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
-	void			selectlocation(const orderablea& source);
+	void			selectlocation(const entitya& source);
 };
 struct combat {
-	orderablea		attacker, defender;
+	entitya			attacker, defender;
 };
 struct poweri {
 };
@@ -179,6 +185,9 @@ struct objectivei : nameable {
 };
 struct gamei {
 	playeri*		speaker;
+	playeri*		human;
 	playera			players;
+	void			defhandle(trigger_s trigger, void* result);
 };
 extern gamei		game;
+extern entitya	querry;

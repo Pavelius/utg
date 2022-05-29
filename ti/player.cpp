@@ -44,3 +44,30 @@ void playeri::setcontrol(planeti* planet) {
 			getnm(id), getnm(planet->id));
 	}
 }
+
+static void select_planets(const playeri* player, bool iscontrol) {
+	querry.clear();
+	querry.select(bsdata<planeti>::source);
+	querry.match(player, iscontrol);
+}
+
+void playeri::pay(indicator_s type, int count) {
+	draw::output(getnm("PayPrompt"), count);
+	answers an;
+	while(count > 0) {
+		an.clear();
+		select_planets(this, true);
+		querry.match(Exhaust, false);
+		querry.match(type, true);
+		for(auto p : querry)
+			an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(type));
+		auto pe = an.choose();
+		if(!pe)
+			break;
+		else if(bsdata<planeti>::have(pe)) {
+			auto p = (planeti*)pe;
+			count -= p->get(type);
+		} else
+			game.defhandle(WhenPay, pe);
+	}
+}

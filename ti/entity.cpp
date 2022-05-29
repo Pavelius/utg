@@ -1,12 +1,12 @@
 #include "main.h"
 
-int orderable::get(ability_s v) const {
+int entity::get(ability_s v) const {
 	if(bsdata<troop>::have(this))
 		return ((troop*)this)->type->abilities[v];
 	return 0;
 }
 
-systemi* orderable::getsystem() const {
+systemi* entity::getsystem() const {
 	if(!this)
 		return 0;
 	if(bsdata<troop>::have(this))
@@ -18,7 +18,7 @@ systemi* orderable::getsystem() const {
 	return 0;
 }
 
-planeti* orderable::getplanet() const {
+planeti* entity::getplanet() const {
 	if(!this)
 		return 0;
 	if(bsdata<troop>::have(this))
@@ -28,25 +28,31 @@ planeti* orderable::getplanet() const {
 	return 0;
 }
 
-planet_trait_s orderable::gettrait() const {
+planet_trait_s entity::gettrait() const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->trait;
 	return NoTrait;
 }
 
-color_s orderable::getspeciality() const {
+bool entity::is(flag_s v) const {
+	if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->flags.is(v);
+	return false;
+}
+
+color_s entity::getspeciality() const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->speciality;
 	return NoTech;
 }
 
-int	orderable::get(indicator_s v) const {
+int	entity::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);
 	return 0;
 }
 
-int orderable::fight(int chance, int count, int reroll) {
+int entity::fight(int chance, int count, int reroll) {
 	if(!chance)
 		return 0;
 	if(!count)

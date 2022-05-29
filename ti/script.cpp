@@ -2,7 +2,7 @@
 
 typedef void(*fnforeach)(variant v);
 
-static orderablea	querry;
+entitya			querry;
 static playera		players;
 static int			last_value;
 static bool			if_able_mode;

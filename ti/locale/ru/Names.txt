@@ -2,6 +2,8 @@
 AppTitle: Сумрачная империя
 Continue: Продолжить
 FleetToken: Резерв флота
+PayAnswer: %1 (оплата %2i)
+PayPrompt: Вы должны оплатить %1i
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
 SardakkNorr: Сардак Н'орр

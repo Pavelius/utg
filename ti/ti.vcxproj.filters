@@ -33,10 +33,10 @@
     <ClCompile Include="tag.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="orderable.cpp">
+    <ClCompile Include="entity.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="orderablea.cpp">
+    <ClCompile Include="entitya.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="planet.cpp">

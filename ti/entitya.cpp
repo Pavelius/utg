@@ -1,6 +1,6 @@
 #include "main.h"
 
-bool find_entity(orderable** ps, orderable** pe, const orderable* p) {
+bool find_entity(entity** ps, entity** pe, const entity* p) {
 	while(ps < pe) {
 		if(*ps == p)
 			return true;
@@ -9,7 +9,7 @@ bool find_entity(orderable** ps, orderable** pe, const orderable* p) {
 	return false;
 }
 
-int orderablea::fight(ability_s power, ability_s count) {
+int entitya::fight(ability_s power, ability_s count) {
 	auto result = 0;
 	for(auto p : *this) {
 		if(!p)
@@ -19,7 +19,7 @@ int orderablea::fight(ability_s power, ability_s count) {
 	return result;
 }
 
-void orderablea::select(const playeri* player, const orderable* location) {
+void entitya::select(const playeri* player, const entity* location) {
 	auto ps = data;
 	auto pe = endof();
 	for(auto& e : bsdata<troop>()) {
@@ -33,7 +33,7 @@ void orderablea::select(const playeri* player, const orderable* location) {
 	count = ps - data;
 }
 
-void orderablea::selectplanets(const systemi* system) {
+void entitya::selectplanets(const systemi* system) {
 	auto ps = data;
 	auto pe = endof();
 	for(auto& e : bsdata<planeti>()) {
@@ -47,13 +47,13 @@ void orderablea::selectplanets(const systemi* system) {
 	count = ps - data;
 }
 
-void orderablea::select(array& source) {
+void entitya::select(array& source) {
 	auto ps = data;
 	auto px = endof();
 	auto pe = source.end();
 	auto size = source.getsize();
 	for(auto pb = source.begin(); pb < pe; pb += size) {
-		auto p = (orderable*)pb;
+		auto p = (entity*)pb;
 		if(!(*p))
 			continue;
 		if(ps < px)
@@ -62,7 +62,7 @@ void orderablea::select(array& source) {
 	count = ps - data;
 }
 
-void orderablea::match(const playeri* player, bool keep) {
+void entitya::match(const playeri* player, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))
@@ -74,7 +74,7 @@ void orderablea::match(const playeri* player, bool keep) {
 	count = ps - data;
 }
 
-void orderablea::match(planet_trait_s value, bool keep) {
+void entitya::match(planet_trait_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))
@@ -86,7 +86,7 @@ void orderablea::match(planet_trait_s value, bool keep) {
 	count = ps - data;
 }
 
-void orderablea::match(color_s value, bool keep) {
+void entitya::match(color_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))
@@ -98,7 +98,37 @@ void orderablea::match(color_s value, bool keep) {
 	count = ps - data;
 }
 
-void orderablea::match(const systemi* system, bool keep) {
+void entitya::match(flag_s value, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		if(!bsdata<planeti>::have(p))
+			continue;
+		auto pe = (planeti*)p;
+		if(pe->is(value) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void entitya::match(indicator_s value, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		if(bsdata<planeti>::have(p)) {
+			if((((planeti*)p)->get(value) > 0) != keep)
+				continue;
+		} else
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void entitya::match(const systemi* system, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))
@@ -110,7 +140,7 @@ void orderablea::match(const systemi* system, bool keep) {
 	count = ps - data;
 }
 
-void orderablea::selectlocation(const orderablea& source) {
+void entitya::selectlocation(const entitya& source) {
 	auto ps = data;
 	for(auto p : source) {
 		if(!(*p))
@@ -121,7 +151,7 @@ void orderablea::selectlocation(const orderablea& source) {
 	count = ps - data;
 }
 
-void orderablea::filter(const orderable* object, bool keep) {
+void entitya::filter(const entity* object, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if((p==object)!=keep)
@@ -131,6 +161,6 @@ void orderablea::filter(const orderable* object, bool keep) {
 	count = ps - data;
 }
 
-orderable* orderablea::choose(const char* id) const {
+entity* entitya::choose(const char* id) const {
 	return 0;
 }

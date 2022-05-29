@@ -147,8 +147,8 @@
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="nameable.cpp" />
-    <ClCompile Include="orderable.cpp" />
-    <ClCompile Include="orderablea.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="entitya.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
