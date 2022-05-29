@@ -10,7 +10,7 @@ enum ability_s : unsigned char {
 	Move, Production, Reinforcement, Capacity,
 };
 enum tag_s : unsigned char {
-	IgnorePlanetaryShield, PlanetaryShield, SustainDamage
+	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage
 };
 enum indicator_s : unsigned char {
 	TradeGoods, Commodities, Resources, Influence,
@@ -31,6 +31,12 @@ enum tech_s : unsigned char {
 };
 enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
+};
+enum trigger_s : unsigned char {
+	NoTrigger, AsAction,
+	StartRoundSpaceCombat,
+	EndRoundGroundCombat,
+	EndStrategyPhase,
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
@@ -65,7 +71,7 @@ struct uniti : nameable {
 	unit_type_s		type;
 };
 struct planeti : orderable {
-	char			resources, influences;
+	char			resources, influence;
 	int				get(indicator_s v) const;
 };
 struct indicatora {
@@ -94,4 +100,9 @@ struct orderablea : public adat<orderable*> {
 };
 struct combat {
 	orderablea		attacker, defender;
+};
+struct poweri {
+	trigger_s		trigger;
+	indicatora		cost;
+	variants		use;
 };

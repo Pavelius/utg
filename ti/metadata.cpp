@@ -15,15 +15,22 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
+BSMETA(colori) = {
+	BSREQ(id),
+	{}};
+BSMETA(planeti) = {
+	BSREQ(id),
+	BSREQ(resources), BSREQ(influence),
+	{}};
+BSMETA(playeri) = {
+	BSREQ(id),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(techi) = {
 	BSREQ(id),
 	BSENM(color, colori),
-	{}};
-BSMETA(colori) = {
-	BSREQ(id),
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
@@ -36,6 +43,7 @@ BSMETA(unit_typei) = {
 	{}};
 
 BSDATA(varianti) = {
+	{"Planet", VRSTD(planeti), 1},
 	{"Unit", VRSTD(uniti), 1},
 	{"UnitType", VRSTD(unit_typei), 1},
 };

@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 17: Not found field `SustainDamage` in dataset `abilities`
+ Line 1: Not find data type for `Player`

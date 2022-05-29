@@ -1,3 +1,12 @@
+#Player
+
+SardakkNorr
+TheBaronyOfLetnev
+TheEmiratesOfHacan
+TheFederationOfSol
+TheL1Z1XMindnet
+TheUniversitiesOfJolNar
+
 #Unit
 
 Infantry type(GroundForces)
@@ -21,3 +30,13 @@ WarSun type(Ships)
  tags IgnorePlanetaryShield SustainDamage
 SpaceDock type(Structures)
  abilities Production(2)
+
+Quetzecoatl type(Ships)
+ abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
+ tags IgnoreSpaceCannon SustainDamage
+ArcSecundus type(Ships)
+ abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) Bombardment(5) BombardmentCount(3)
+ tags IgnorePlanetaryShield SustainDamage RepairSustainDamage
+SonOfRagh type(Ships)
+ abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) AntiFighterBarrage(6) AntiFighterBarrageCount(4)
+ tags SustainDamage

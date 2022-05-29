@@ -58,5 +58,8 @@
     <Text Include="locale\ru\Names.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="rules\Planets.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

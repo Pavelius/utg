@@ -1,3 +1,4 @@
+#include "bsreq.h"
 #include "main.h"
 #include "strategy.h"
 
@@ -15,9 +16,13 @@ static void start_game() {
 	r2 += e.defender.fight(Combat, CombatCount);
 }
 
+static void reading() {
+	bsreq::read("rules/Planets.txt");
+}
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	return draw::strategy(start_game, 0);
+	return draw::strategy(start_game, reading);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {
