@@ -35,3 +35,15 @@ int	troop::getstackcount() const {
 	}
 	return result;
 }
+
+troop* troop::getstackholder() {
+	auto pb = bsdata<troop>::begin();
+	auto result = this;
+	auto v1 = location;
+	auto v2 = type;
+	for(auto p = this - 1; p >= pb; p--) {
+		if(p->location == v1 && p->type == v2)
+			result = p;
+	}
+	return result;
+}

@@ -145,6 +145,7 @@ struct troop : entity {
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	const char*		getname() const { return getnm(type->id); }
 	int				getstackcount() const;
+	troop*			getstackholder();
 	void			paint() const;
 };
 struct entitya : public adat<entity*> {

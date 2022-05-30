@@ -123,7 +123,7 @@ static void buttonback(int size) {
 	height = texth() + 1 * 2;
 	caret.y -= (height + 1) / 2;
 	caret.x -= (width + 1) / 2;
-	alpha = 192;
+	alpha = (192 * push_alpha) >> 8;
 	rectf();
 	alpha = push_alpha;
 	rectb();

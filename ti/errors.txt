@@ -1,3 +1,1 @@
-﻿In file `Names.txt`:
- Define translate for `Arinam`
- Define translate for `Meer`
+﻿Can't find file 'locale/ru/Names.txt'

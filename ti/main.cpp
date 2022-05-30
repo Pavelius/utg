@@ -5,6 +5,19 @@
 static char console_text[4096 * 2];
 static stringbuilder console(console_text);
 
+static void test_movement() {
+	auto p1 = bsdata<troop>::elements + 0;
+	auto p2 = bsdata<troop>::elements + 4;
+	p2->location = p1;
+	game.updateui();
+	draw::output("Отряды поднялись на борт");
+	draw::pause();
+	p1->location = bsdata<systemi>::elements + 1;
+	game.updateui();
+	draw::output("Крейсер передвинулся");
+	draw::pause();
+}
+
 static void test_answers() {
 	auto p1 = bsdata<actioncardi>::elements + 0;
 	auto p2 = bsdata<strategyi>::elements + 1;
@@ -12,6 +25,7 @@ static void test_answers() {
 	game.prepare();
 	game.updateui();
 	game.active->apply(p2->primary);
+	test_movement();
 }
 
 static void start_game() {
