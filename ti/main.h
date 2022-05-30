@@ -1,8 +1,12 @@
 #include "answers.h"
 #include "crt.h"
 #include "flagable.h"
+#include "point.h"
+#include "pathfind.h"
 #include "tag.h"
 #include "variant.h"
+
+const int hms = 32;
 
 enum ability_s : unsigned char {
 	Cost, CostCount,
@@ -94,10 +98,12 @@ struct uniti : nameable {
 	taga			tags;
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
+	bool			stackable() const { return abilities[CostCount] > 1; }
 };
 struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;
+	char			frame;
 	char			resources, influence;
 	flagable<1>		flags;
 	static planeti*	last;
@@ -127,7 +133,10 @@ struct triggeri {
 };
 struct troop : entity {
 	const uniti*	type;
-	void			create(const char* id);
+	static troop*	add(const char* id, playeri* player);
+	void			clear() { memset(this, 0, sizeof(*this)); }
+	const char*		getname() const { return getnm(type->id); }
+	void			paint() const;
 };
 struct entitya : public adat<entity*> {
 	entity*			choose(const char* title) const;
@@ -182,6 +191,7 @@ struct gamei {
 	static int		options;
 	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
 	void			defhandle(trigger_s trigger, void* result);
+	static void		initialize();
 	static void		pay();
 	void			prepare();
 	static int		rate(indicator_s need, indicator_s currency, int count);
@@ -203,5 +213,7 @@ struct playeri : nameable {
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
+inline point		i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
+inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 extern gamei		game;
-extern entitya	querry;
+extern entitya		querry;

@@ -122,11 +122,11 @@ void object::clear() {
 	*this = def;
 }
 
-static void textcn(const char* string, int dy) {
+static void textcn(const char* string, int dy, unsigned flags) {
 	auto push_caret = caret;
 	caret.x -= textw(string) / 2;
 	caret.y += dy;
-	text(string);
+	text(string, -1, flags);
 	caret = push_caret;
 }
 
@@ -141,7 +141,7 @@ void object::paintns() const {
 		auto push_font = draw::font;
 		if(font)
 			draw::font = font;
-		textcn(string, size);
+		textcn(string, size, flags);
 		draw::font = push_font;
 	}
 }
@@ -187,7 +187,7 @@ void object::paint() const {
 	draw::fsize = size;
 	draw::fore = fore;
 	draw::alpha = alpha;
-	if(data) {
+	if(data && !is(DisableInput)) {
 		auto w = size;
 		if(shape == figure::Hexagon || shape == figure::FHexagon)
 			w = 2 * w / 3;
@@ -284,9 +284,15 @@ void draw::clearobjects() {
 	bsdata<object>::source.clear();
 }
 
+static rect getcorrectarea(int offs) {
+	return {camera.x + offs, camera.y + offs,
+		camera.x + last_screen.width() - offs,
+		camera.y + last_screen.height() - offs};
+}
+
 static void correct_camera(point result, int offs) {
 	if(last_screen) {
-		rect area = {camera.x + offs, camera.y + offs, camera.x + last_screen.width() - offs, camera.y + last_screen.height() - offs};
+		rect area = getcorrectarea(offs);
 		if(!result.in(area)) {
 			if(result.x < area.x1)
 				camera.x -= area.x1 - result.x;

@@ -44,15 +44,15 @@ struct draworder : drawable {
 typedef void(*fnpaint)(const object* pointer);
 struct object : drawable {
 	enum {
-		Visible, Hilite,
+		Visible, Hilite, DisableInput,
 	};
 	const void*		data;
 	const char*		string;
 	figure			shape;
+	unsigned char	priority;
 	const sprite*	resource;
 	const sprite*	font;
 	unsigned short	frame, size;
-	unsigned char	priority;
 	unsigned		flags;
 	static object	def;
 	static fnevent	afterpaintall;

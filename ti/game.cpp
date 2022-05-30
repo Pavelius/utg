@@ -115,3 +115,7 @@ void gamei::prepare() {
 	prepare_players();
 	prepare_finish();
 }
+
+void gamei::initialize() {
+	pathfind::maxcount = 120;
+}

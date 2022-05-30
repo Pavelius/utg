@@ -1,9 +1,14 @@
-﻿AddCommandToken: Какие резервы хотите пополнить?
+﻿Abyz: Абиз
+AddCommandToken: Какие резервы хотите пополнить?
 AppTitle: Сумрачная империя
 ApplyExhaust: Планета %1 истощена
+Carrier: Транспорт
 ChooseOptions: (осталось [%1i])
 Continue: Продолжить
+Fighter: Истребители
 FleetToken: Резерв флота
+Fria: Фрия
+Infantry: Пехота
 Influence: Влияние
 MecatolRex: Мекатол Рекс
 PayAnswer: %1 (оплата %2i)
@@ -14,6 +19,7 @@ RatePrompt: Сколько хотите приобрести %1?
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
 SetControlPlanet: %1 установили контроль над планетой %2
+SpaceDock: Доки
 StrategyToken: Стратегический резерв
 TacticToken: Тактический резерв
 TradeGoods: Товары

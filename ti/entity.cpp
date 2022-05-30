@@ -75,8 +75,3 @@ int entity::fight(int chance, int count, int reroll) {
 	}
 	return n;
 }
-
-void troop::create(const char* id) {
-	clear();
-	type = bsdata<uniti>::find(id);
-}
