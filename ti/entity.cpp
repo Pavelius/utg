@@ -85,6 +85,7 @@ troop* entity::sibling(troop* pb) const {
 	while(pb < pe) {
 		if(pb->location == this)
 			return pb;
+		pb++;
 	}
 	return 0;
 }

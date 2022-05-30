@@ -120,8 +120,10 @@ struct playera : adat<playeri*, 6> {
 struct systemi : entity {
 	flagable<4>		activated;
 	playeri*		home;
+	pathfind::indext index;
 	static systemi*	last;
 	bool			isactivated(const playeri* p) const;
+	bool			isplay() const { return index != pathfind::Blocked; }
 	planeti*		getbestplanet() const;
 	void			paint() const;
 	void			placement(const uniti* unit, playeri* player);
@@ -142,6 +144,7 @@ struct troop : entity {
 	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	const char*		getname() const { return getnm(type->id); }
+	int				getstackcount() const;
 	void			paint() const;
 };
 struct entitya : public adat<entity*> {
@@ -190,6 +193,13 @@ struct objectivei : nameable {
 	char			stage, value;
 	variants		condition;
 };
+class galaxy {
+	unsigned short	tiles[hms * hms];
+public:
+	void			cleargalaxy();
+	systemi*		get(pathfind::indext) const;
+	void			set(pathfind::indext, const systemi* v);
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		human;
@@ -200,6 +210,7 @@ struct gamei {
 	static int		options;
 	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
 	void			defhandle(trigger_s trigger, void* result);
+	void			focusing(const entity* p);
 	static void		initialize();
 	static void		pay();
 	void			prepare();

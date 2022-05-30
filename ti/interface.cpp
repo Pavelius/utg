@@ -1,8 +1,12 @@
 #include "draw.h"
+#include "draw_hexagon.h"
 #include "draw_object.h"
 #include "main.h"
 
 using namespace draw;
+
+const int button_height = 21;
+const int size = 256;
 
 struct armyi {
 	struct troop*	troop;
@@ -15,9 +19,11 @@ class armya : public adat<armyi, 32> {
 		p->level = level;
 	}
 	static int compare(const void* v1, const void* v2) {
-		auto p1 = ((armyi*)v1);
-		auto p2 = ((armyi*)v2);
-		return p1->troop->type->abilities[Cost] - p2->troop->type->abilities[Cost];
+		auto p1 = ((armyi*)v1)->troop->type;
+		auto p2 = ((armyi*)v2)->troop->type;
+		if(p1->type != p2->type)
+			return p2->type - p1->type;
+		return p2->abilities[Cost] - p1->abilities[Cost];
 	}
 	void sort() {
 		qsort(data, count, sizeof(data[0]), compare);
@@ -41,6 +47,7 @@ public:
 			if(ps < pe) {
 				ps->troop = &e;
 				ps->level = 0;
+				ps++;
 			}
 		}
 		count = ps - data;
@@ -75,22 +82,11 @@ public:
 			return;
 		armya basic;
 		basic.clear();
-		basic.select(location);
+		basic.selectbasic(location);
 		basic.sort();
 		selectsibling(basic);
 	}
 };
-
-//point points[6] = {
-//	{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
-//	{(short)(caret.x + fsize * cos_30), (short)(caret.y + fsize / 2)},
-//	{(short)caret.x, (short)(caret.y + fsize)},
-//	{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
-//	{(short)(caret.x - fsize * cos_30), (short)(caret.y - fsize / 2)},
-//	{(short)caret.x, (short)(caret.y - fsize)},
-//};
-
-const int size = 256;
 
 void status_info(void) {
 	auto push_caret = caret;
@@ -101,15 +97,6 @@ void status_info(void) {
 	fore = push_fore;
 	caret = push_caret;
 	caret.y += 4 * 4 + 24;
-}
-
-static void add_troop(troop* ps, point pt) {
-	auto p = addobject(pt.x, pt.y);
-	p->data = ps;
-	p->priority = 5;
-	p->data = ps;
-	p->priority = 10;
-	p->size = 0;
 }
 
 void systemi::paint() const {
@@ -147,9 +134,13 @@ void troop::paint() const {
 	fore = colors::red.mix(colors::black);
 	buttonback(56);
 	fore = push_color;
-	if(type->abilities[CostCount] > 1)
-		textv("%1 x%2i", getname(), 10);
-	else
+	if(type->stackable()) {
+		auto count = getstackcount();
+		if(count>1)
+			textv("%1 x%2i", getname(), count);
+		else
+			textcn(getname());
+	} else
 		textcn(getname());
 }
 
@@ -234,7 +225,7 @@ static point planet_position(point caret, int index) {
 
 static void add_planet(planeti* ps, point pt, int index) {
 	auto p = addobject(pt.x, pt.y);
-	p->priority = 5;
+	p->priority = 2;
 	p->data = ps;
 	p->frame = ps->frame;
 	p->resource = gres("planets", "art/objects");
@@ -265,7 +256,7 @@ static void add_planets(point pt, const systemi* ps) {
 
 static void add_system(systemi* ps, point pt) {
 	auto p = addobject(pt.x, pt.y);
-	p->priority = 1;
+	p->priority = 3;
 	p->data = ps;
 	p->shape = figure::Hexagon;
 	p->size = size;
@@ -274,31 +265,56 @@ static void add_system(systemi* ps, point pt) {
 	add_planets(pt, ps);
 }
 
+static void add_systems() {
+	auto push_interactive = answers::interactive;
+	for(auto& e : bsdata<systemi>()) {
+		if(!e.isplay())
+			continue;
+		add_system(&e, draw::h2p(i2h(e.index), size));
+	}
+	answers::interactive = push_interactive;
+}
+
 void gamei::prepareui() {
-	draw::object::afterpaint = object_paint;
-	add_system(game.active->gethome(), {0, 0});
+	object::afterpaint = object_paint;
+	clearobjects();
+	add_systems();
+	setcamera(h2p({2, 0}, size));
 }
 
-static void update_army(entity* location) {
-	auto ps = findobject(location);
-	if(!ps)
+static void update_units(point position, const entity* location) {
+	armya source;
+	source.select(location);
+	if(!source)
 		return;
-	armya army;
-	army.select(location);
-}
-
-static void update_units_system() {
-	entitya source;
-	for(auto& e : bsdata<troop>()) {
+	auto total_height = button_height * source.getcount();
+	auto y = position.y - total_height / 2 + (button_height - 1) / 2;
+	for(auto& e : source) {
+		auto x = position.x + e.level * (button_height - 4);
+		auto p = findobject(e.troop);
+		if(!p) {
+			p = addobject(x, y);
+			p->data = e.troop;
+			p->priority = 5;
+			p->size = 0;
+		}
+		if(p->x != x || p->y != y) {
+			auto po = p->addorder(1000);
+			po->x = x;
+			po->y = y;
+		}
+		y += button_height;
 	}
 }
 
-static void update_units() {
-}
-
 void gamei::updateui() {
-	add_troop(bsdata<troop>::elements + 0, {0, -8});
-	add_troop(bsdata<troop>::elements + 1, {0, 13});
-	add_troop(bsdata<troop>::elements + 2, {21, -64});
-	add_troop(bsdata<troop>::elements + 3, {0, -85});
+	static point system_offset = {0, -6 * size / 10};
+	waitall();
+	for(auto& e : bsdata<object>()) {
+		if(bsdata<planeti>::have(e.data))
+			update_units(e, (entity*)e.data);
+		else if(bsdata<systemi>::have(e.data))
+			update_units(e + system_offset, (entity*)e.data);
+	}
+	waitall();
 }

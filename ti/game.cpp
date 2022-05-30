@@ -111,10 +111,35 @@ static void prepare_finish() {
 	game.active = game.human;
 }
 
+static void clear_galaxy() {
+	for(auto& e : bsdata<systemi>())
+		e.index = pathfind::Blocked;
+}
+
+static void assign_starting_positions() {
+	static point positions[6] = {{2, 0}, {5, 0}};
+	auto index = 0;
+	for(auto p : game.players) {
+		auto ps = p->gethome();
+		if(!ps)
+			continue;
+		ps->index = h2i(positions[index++]);
+	}
+}
+
+static void create_galaxy() {
+	bsdata<systemi>::elements[0].index = h2i({3, 3});
+	bsdata<systemi>::elements[1].index = h2i({3, 0});
+	bsdata<systemi>::elements[2].index = h2i({2, 1});
+}
+
 void gamei::prepare() {
+	clear_galaxy();
 	assign_factions();
 	determine_speaker();
 	prepare_players();
+	assign_starting_positions();
+	create_galaxy();
 	prepare_finish();
 	prepareui();
 }

@@ -23,3 +23,15 @@ troop* troop::add(const uniti* unit, playeri* player, entity* location) {
 	p->location = location;
 	return p;
 }
+
+int	troop::getstackcount() const {
+	auto pe = bsdata<troop>::end();
+	auto result = 1;
+	auto v1 = location;
+	auto v2 = type;
+	for(auto p = this + 1; p < pe; p++) {
+		if(p->location == v1 && p->type==v2)
+			result++;
+	}
+	return result;
+}
