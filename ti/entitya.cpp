@@ -164,3 +164,20 @@ entity* entitya::choose(const char* id) const {
 		an.add(p, p->getname());
 	return (entity*)an.choose(getnm(id));
 }
+
+entity* entitya::getbest(indicator_s v) const {
+	entity* result = 0;
+	int result_value = 0;
+	for(auto p : *this) {
+		if(!result || result_value < p->get(v)) {
+			result = p;
+			result_value = p->get(v);
+		}
+	}
+	return result;
+}
+
+void entitya::addu(entity* v) {
+	if(!have(v))
+		add(v);
+}

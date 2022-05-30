@@ -75,3 +75,16 @@ int entity::fight(int chance, int count, int reroll) {
 	}
 	return n;
 }
+
+troop* entity::sibling(troop* pb) const {
+	if(!pb)
+		pb = bsdata<troop>::begin();
+	else
+		pb = pb + 1;
+	auto pe = bsdata<troop>::end();
+	while(pb < pe) {
+		if(pb->location == this)
+			return pb;
+	}
+	return 0;
+}

@@ -11,10 +11,6 @@ static void test_answers() {
 	auto p3 = bsdata<playeri>::elements + 0;
 	game.prepare();
 	game.updateui();
-	troop::add("Infantry", p3);
-	troop::add("SpaceDock", p3);
-	troop::add("Fighter", p3);
-	troop::add("Carrier", p3);
 	game.active->apply(p2->primary);
 }
 

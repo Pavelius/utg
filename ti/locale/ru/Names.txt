@@ -5,6 +5,7 @@ ApplyExhaust: Планета %1 истощена
 Carrier: Транспорт
 ChooseOptions: (осталось [%1i])
 Continue: Продолжить
+Cruiser: Крейсер
 Fighter: Истребители
 FleetToken: Резерв флота
 Fria: Фрия

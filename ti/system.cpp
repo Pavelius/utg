@@ -15,3 +15,31 @@ void systemi::setactivate(const playeri* p, bool active) {
 		return;
 	activated.set(i, active);
 }
+
+planeti* systemi::getbestplanet() const {
+	entitya planets;
+	planets.selectplanets(this);
+	return (planeti*)planets.getbest(Resources);
+}
+
+void systemi::placement(const uniti* unit, playeri* player) {
+	if(unit->type == Ships)
+		troop::add(unit, player, this);
+	else {
+		auto planet = getbestplanet();
+		if(planet)
+			troop::add(unit, player, planet);
+	}
+}
+
+void systemi::placement(variants source, playeri* player) {
+	for(auto v : source) {
+		if(!v.iskind<uniti>())
+			continue;
+		auto n = v.counter;
+		if(n < 1)
+			n = 1;
+		for(auto i = 0; i < n; i++)
+			placement(bsdata<uniti>::elements + v.value, player);
+	}
+}

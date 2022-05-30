@@ -6,7 +6,7 @@
 #include "tag.h"
 #include "variant.h"
 
-const int hms = 32;
+const int hms = 8;
 
 enum ability_s : unsigned char {
 	Cost, CostCount,
@@ -77,6 +77,7 @@ struct unit_typei {
 };
 struct playeri;
 struct systemi;
+struct troop;
 struct planeti;
 struct entity : nameable {
 	playeri*		player;
@@ -93,6 +94,7 @@ struct entity : nameable {
 	systemi*		getsystem() const;
 	planet_trait_s	gettrait() const;
 	bool			is(flag_s v) const;
+	troop*			sibling(troop* pb) const;
 };
 struct uniti : nameable {
 	taga			tags;
@@ -109,7 +111,7 @@ struct planeti : entity {
 	static planeti*	last;
 	void			exhaust();
 	int				get(indicator_s v) const;
-	void			paint() const;
+	void			paint(unsigned flags) const;
 };
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
@@ -120,7 +122,10 @@ struct systemi : entity {
 	playeri*		home;
 	static systemi*	last;
 	bool			isactivated(const playeri* p) const;
+	planeti*		getbestplanet() const;
 	void			paint() const;
+	void			placement(const uniti* unit, playeri* player);
+	void			placement(variants source, playeri* player);
 	void			setactivate(const playeri* p, bool active);
 };
 struct techi {
@@ -134,15 +139,19 @@ struct triggeri {
 struct troop : entity {
 	const uniti*	type;
 	static troop*	add(const char* id, playeri* player);
+	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	const char*		getname() const { return getnm(type->id); }
 	void			paint() const;
 };
 struct entitya : public adat<entity*> {
+	void			addu(entity* v);
 	entity*			choose(const char* title) const;
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
+	entity*			getbest(indicator_s v) const;
 	void			grouplocation(const entitya& source);
+	bool			have(entity* v) const { return find(v) != -1; }
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
 	void			match(planet_trait_s value, bool keep);
@@ -194,6 +203,7 @@ struct gamei {
 	static void		initialize();
 	static void		pay();
 	void			prepare();
+	void			prepareui();
 	static int		rate(indicator_s need, indicator_s currency, int count);
 	static void		updateui();
 };
@@ -203,6 +213,7 @@ struct playeri : nameable {
 	uniti			units[10];
 	char			commodities;
 	strategyi*		strategy;
+	variants		troops;
 	static playeri* last;
 	void			add(indicator_s v, int i);
 	void			addcommand(int v);

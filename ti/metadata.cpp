@@ -42,6 +42,7 @@ BSMETA(planeti) = {
 	BSENM(trait, planet_traiti),
 	BSENM(speciality, colori),
 	BSREQ(resources), BSREQ(influence),
+	BSREQ(frame),
 	BSREF(location, systemi),
 	{}};
 BSMETA(planet_traiti) = {
@@ -50,6 +51,7 @@ BSMETA(planet_traiti) = {
 BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(commodities),
+	BSREQ(troops),
 	{}};
 BSMETA(scripti) = {
 	BSREQ(id),

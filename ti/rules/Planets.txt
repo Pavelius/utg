@@ -26,10 +26,10 @@ SardakkHomeSystem home(SardakkNorr)
 
 #Planet
 
-MecatolRex resources(1) influence(6) location(MecatolRexSystem)
+MecatolRex resources(1) influence(6) location(MecatolRexSystem) frame(16)
 
-Abyz resources(3) influence(0) trait(Hazardous) location(AbyzSystem)
-Fria resources(2) influence(0) trait(Hazardous) location(AbyzSystem)
+Abyz resources(3) influence(0) trait(Hazardous) location(AbyzSystem) frame(1)
+Fria resources(2) influence(0) trait(Hazardous) location(AbyzSystem) frame(0)
 
 Arinam resources(1) influence(2) trait(Industrial) location(ArinamSystem)
 Meer resources(0) influence(4) trait(Hazardous) speciality(Red) location(ArinamSystem)
@@ -59,8 +59,8 @@ MeharXull resources(1) influence(3) trait(Hazardous) speciality(Red) location(Me
 Mellon resources(0) influence(2) trait(Cultural) location(MellonSystem)
 Zhobat resources(3) influence(1) trait(Hazardous) location(MellonSystem)
 
-NewAlbion resources(1) influence(1) trait(Industrial) speciality(Green) location(NewAlbionSystem)
-Starpoint resources(3) influence(1) trait(Hazardous) location(NewAlbionSystem)
+NewAlbion resources(1) influence(1) trait(Industrial) speciality(Green) location(NewAlbionSystem) frame(5)
+Starpoint resources(3) influence(1) trait(Hazardous) location(NewAlbionSystem) frame(1)
 
 Quann resources(2) influence(1) trait(Cultural) location(QuannSystem)
 
@@ -69,7 +69,7 @@ Rarron resources(0) influence(3) trait(Cultural) location(QucennSystem)
 
 Saudor resources(2) influence(2) trait(Industrial) location(SaudorSystem)
 
-TarMann resources(1) influence(1) trait(Industrial) speciality(Green) location(TarMannSystem)
+TarMann resources(1) influence(1) trait(Industrial) speciality(Green) location(TarMannSystem) frame(8)
 
 Tequran resources(2) influence(0) trait(Hazardous) location(TequranSystem)
 Torkan resources(0) influence(3) trait(Cultural) location(TequranSystem)
@@ -78,7 +78,7 @@ Thibah resources(1) influence(1) trait(Industrial) speciality(Blue) location(Thi
 
 VefutII resources(2) influence(2) trait(Hazardous) location(VefutIISystem)
 
-Wellon resources(1) influence(2) trait(Industrial) speciality(Yellow) location(WellonSystem)
+Wellon resources(1) influence(2) trait(Industrial) speciality(Yellow) location(WellonSystem) frame(11)
 
-TrenLak resources(1) influence(0) location(SardakkHomeSystem)
-Quinarra resources(3) influence(1) location(SardakkHomeSystem)
+TrenLak resources(1) influence(0) location(SardakkHomeSystem) frame(14)
+Quinarra resources(3) influence(1) location(SardakkHomeSystem) frame(12)

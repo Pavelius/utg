@@ -67,3 +67,8 @@ Technology initiative(7)
 Imperial initiative(8)
  primary ScorePublicObjective NextAction IfControlMecatolRex+1 VictoryPoints+1 SecretObjective+1
  secondary StrategyToken-1 SecretObjective+1
+
+#Player
+
+SardakkNorr
+ troops Carrier+2 Cruiser Infantry+5 SpaceDock PDS

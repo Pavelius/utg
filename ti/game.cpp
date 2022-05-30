@@ -97,10 +97,12 @@ static void set_control(playeri* player, systemi* system) {
 
 static void prepare_players() {
 	for(auto p : game.players) {
-		set_control(p, p->gethome());
+		auto home = p->gethome();
+		set_control(p, home);
 		p->indicators[TacticToken] = 3;
 		p->indicators[FleetToken] = 3;
 		p->indicators[StrategyToken] = 2;
+		home->placement(p->troops, p);
 	}
 }
 
@@ -114,8 +116,10 @@ void gamei::prepare() {
 	determine_speaker();
 	prepare_players();
 	prepare_finish();
+	prepareui();
 }
 
 void gamei::initialize() {
-	pathfind::maxcount = 120;
+	pathfind::maxcount = hms * hms;
+	pathfind::maxdir = 6;
 }
