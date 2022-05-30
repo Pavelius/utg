@@ -32,7 +32,7 @@ static void select_planet(int bonus, int param) {
 
 static void select_system_own_planet(int bonus, int param) {
 	select_planet(bonus, param);
-	querry.selectlocation(querry);
+	querry.grouplocation(querry);
 }
 
 static void select_system(int bonus, int param) {
@@ -61,8 +61,14 @@ static void replenish_commodities(int bonus, int param) {
 	p->set(Commodities, p->commodities);
 }
 
-static void buy_command_token(int bonus, int param) {
-	auto p = playeri::last;
+static void change_influence(int bonus, int param) {
+	auto need = (indicator_s)param;
+	auto currency = Influence;
+	game.options = game.rate(need, currency, bonus);
+	if(game.options > 0) {
+		game.indicator = currency;
+		game.pay();
+	}
 }
 
 static void activate_system(int bonus, int param) {
@@ -195,11 +201,11 @@ static void for_each_planet(variant v) {
 }
 
 static void apply_foreach(variant v) {
-	if(for_each)
+	if(for_each) {
 		for_each(v);
-	else
+		for_each = 0;
+	} else
 		apply_value(v);
-	for_each = 0;
 }
 
 void playeri::apply(const variants& source) {
@@ -214,7 +220,7 @@ void playeri::apply(const variants& source) {
 BSDATA(scripti) = {
 	{"ActionCard", action_card},
 	{"ActivateSystem", activate_system},
-	{"BuyCommandToken", buy_command_token},
+	{"ChangeInfluenceCommandToken", change_influence, CommandToken},
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseSystem", choose_system},

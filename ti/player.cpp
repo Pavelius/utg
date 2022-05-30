@@ -45,34 +45,10 @@ void playeri::setcontrol(planeti* planet) {
 	}
 }
 
-static void select_planets(const playeri* player, bool iscontrol) {
-	querry.clear();
-	querry.select(bsdata<planeti>::source);
-	querry.match(player, iscontrol);
-}
-
-static indicator_s last_indicator;
-
-static void add_planets(answers& an) {
-	select_planets(playeri::last, true);
-	querry.match(Exhaust, false);
-	querry.match(last_indicator, true);
-	for(auto p : querry)
-		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(last_indicator));
-}
-
-static bool apply_pay() {
-	if(bsdata<planeti>::have(game.result)) {
-		auto p = (planeti*)game.result;
-		game.options -= p->get(last_indicator);
-		p->exhaust();
-	} else
-		return false;
-	return true;
-}
-
-void playeri::pay(indicator_s type, int count) {
-	last_indicator = type;
-	game.options = count;
-	game.choose(WhenPay, "PayPrompt", add_planets, apply_pay);
+systemi* playeri::gethome() const {
+	for(auto& e : bsdata<systemi>()) {
+		if(e.home == this)
+			return &e;
+	}
+	return 0;
 }

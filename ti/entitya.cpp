@@ -137,13 +137,13 @@ void entitya::match(const systemi* system, bool keep) {
 	count = ps - data;
 }
 
-void entitya::selectlocation(const entitya& source) {
+void entitya::grouplocation(const entitya& source) {
 	auto ps = data;
 	for(auto p : source) {
 		if(!(*p))
 			continue;
 		if(!find_entity(data, ps, p->location))
-			*ps++ = p;
+			*ps++ = p->location;
 	}
 	count = ps - data;
 }
@@ -159,5 +159,8 @@ void entitya::filter(const entity* object, bool keep) {
 }
 
 entity* entitya::choose(const char* id) const {
-	return 0;
+	answers an;
+	for(auto p : *this)
+		an.add(p, p->getname());
+	return (entity*)an.choose(getnm(id));
 }

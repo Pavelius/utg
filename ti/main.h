@@ -60,7 +60,7 @@ struct colori {
 };
 struct nameable {
 	const char*		id;
-	void			actv(const char* format, const char* format_param, int level);
+	const char*		getname() const { return getnm(id); }
 };
 struct indicatori {
 	const char*		id;
@@ -82,6 +82,8 @@ struct entity : nameable {
 	static int		fight(int chance, int count = 0, int reroll = 0);
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
+	const char*		getid() const;
+	const char*		getname() const { return getnm(getid()); }
 	planeti*		getplanet() const;
 	color_s			getspeciality() const;
 	systemi*		getsystem() const;
@@ -129,6 +131,7 @@ struct entitya : public adat<entity*> {
 	entity*			choose(const char* title) const;
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
+	void			grouplocation(const entitya& source);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
 	void			match(planet_trait_s value, bool keep);
@@ -138,7 +141,6 @@ struct entitya : public adat<entity*> {
 	void			select(array& source);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
-	void			selectlocation(const entitya& source);
 };
 struct combat {
 	entitya			attacker, defender;
@@ -173,11 +175,14 @@ struct gamei {
 	playeri*		human;
 	playeri*		active;
 	playera			players;
+	indicator_s		indicator;
 	static void*	result;
 	static int		options;
 	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
 	void			defhandle(trigger_s trigger, void* result);
+	static void		pay();
 	void			prepare();
+	static int		rate(indicator_s need, indicator_s currency, int count);
 };
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
@@ -191,7 +196,7 @@ struct playeri : nameable {
 	void			apply(const variants& source);
 	bool			is(tech_s v) const { return tech.is(v); }
 	int				get(indicator_s v) const { return indicators[v]; }
-	void			pay(indicator_s type, int count);
+	systemi*		gethome() const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };

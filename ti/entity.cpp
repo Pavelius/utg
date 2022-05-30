@@ -18,6 +18,12 @@ systemi* entity::getsystem() const {
 	return 0;
 }
 
+const char* entity::getid() const {
+	if(id)
+		return id;
+	return "";
+}
+
 planeti* entity::getplanet() const {
 	if(!this)
 		return 0;

@@ -4,12 +4,16 @@ ApplyExhaust: Планета %1 истощена
 ChooseOptions: (осталось [%1i])
 Continue: Продолжить
 FleetToken: Резерв флота
+Influence: Влияние
 PayAnswer: %1 (оплата %2i)
-PayPrompt: Необходимо оплатить
+PayPrompt: Оплатить %indicator
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
+RatePrompt: Сколько хотите приобрести %1?
+SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
 SetControlPlanet: %1 установили контроль над планетой %2
 StrategyToken: Стратегический резерв
 TacticToken: Тактический резерв
+TradeGoods: Товары
 TrenLak: Трен'ллак

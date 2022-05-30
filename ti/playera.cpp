@@ -10,6 +10,9 @@ void playera::filter(const playeri* object, bool keep) {
 	count = ps - data;
 }
 
-playeri* playera::choose(const char* title) {
-	return 0;
+playeri* playera::choose(const char* id) {
+	answers an;
+	for(auto p : *this)
+		an.add(p, p->getname());
+	return (playeri*)an.choose(getnm(id));
 }

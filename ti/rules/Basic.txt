@@ -44,8 +44,8 @@ SonOfRagh type(Ships)
 #Strategy
 
 Leadership initiative(1)
- primary CommandToken+3 NextAction BuyCommandToken+3
- secondary BuyCommandToken+3
+ primary CommandToken+3 NextAction ChangeInfluenceCommandToken+3
+ secondary ChangeInfluenceCommandToken+3
 Diplomacy initiative(2)
  primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem NextAction SelectPlanetYouControl FilterSystem Exhaust-1
  secondary StrategyToken-1 SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1

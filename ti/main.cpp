@@ -7,14 +7,9 @@ static stringbuilder console(console_text);
 
 static void test_answers() {
 	auto p1 = bsdata<actioncardi>::elements + 0;
-	auto p2 = bsdata<strategyi>::elements + 0;
-	auto n1 = bsdata<planeti>::find("TrenLak");
-	auto n2 = bsdata<planeti>::find("Quinarra");
+	auto p2 = bsdata<strategyi>::elements + 1;
 	game.prepare();
-	game.active->setcontrol(n1);
-	game.active->setcontrol(n2);
 	game.active->apply(p2->primary);
-	game.active->pay(Influence, 2);
 }
 
 static void test_combat() {
