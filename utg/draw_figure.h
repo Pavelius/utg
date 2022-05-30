@@ -3,7 +3,8 @@
 enum class figure : unsigned char {
 	None, Check, Circle, CircleFill, Close, Cross,
 	Hexagon, FHexagon, HexagonFill,
-	Rect, Rect3D, RectFill, Trianlge, TrianlgeUp,
+	Rect, Rect3D, RectFill, RectS,
+	Trianlge, TrianlgeUp,
 };
 namespace draw {
 extern figure	hilite_type;

@@ -41,8 +41,8 @@ struct draworder : drawable {
 	void			update();
 	void			wait();
 };
+typedef void(*fnpaint)(const object* pointer);
 struct object : drawable {
-	typedef void(*fnpaint)(const object* pointer);
 	enum {
 		Visible, Hilite,
 	};

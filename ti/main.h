@@ -103,6 +103,7 @@ struct planeti : entity {
 	static planeti*	last;
 	void			exhaust();
 	int				get(indicator_s v) const;
+	void			paint() const;
 };
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
@@ -113,6 +114,7 @@ struct systemi : entity {
 	playeri*		home;
 	static systemi*	last;
 	bool			isactivated(const playeri* p) const;
+	void			paint() const;
 	void			setactivate(const playeri* p, bool active);
 };
 struct techi {
@@ -183,6 +185,7 @@ struct gamei {
 	static void		pay();
 	void			prepare();
 	static int		rate(indicator_s need, indicator_s currency, int count);
+	static void		updateui();
 };
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];

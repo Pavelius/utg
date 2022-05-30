@@ -21,15 +21,15 @@ void draw::field(figure type, int size) {
 		circle(size);
 		break;
 	case figure::Rect:
-		setpos(push.caret.x - size, push.caret.y - size, push.caret.x + size, push.caret.y + size);
+		setpos(push.caret.x - size, push.caret.y - size, size * 2, size * 2);
 		rectb();
 		break;
 	case figure::Rect3D:
-		setpos(push.caret.x - size, push.caret.y - size, push.caret.x + size, push.caret.y + size);
+		setpos(push.caret.x - size, push.caret.y - size, size * 2, size * 2);
 		rectb3d();
 		break;
 	case figure::RectFill:
-		setpos(push.caret.x - size, push.caret.y - size, push.caret.x + size, push.caret.y + size);
+		setpos(push.caret.x - size, push.caret.y - size, size * 2, size * 2);
 		rectf();
 		break;
 	case figure::TrianlgeUp:

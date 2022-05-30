@@ -5,6 +5,7 @@ ChooseOptions: (осталось [%1i])
 Continue: Продолжить
 FleetToken: Резерв флота
 Influence: Влияние
+MecatolRex: Мекатол Рекс
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
 Quinarra: Куинарра

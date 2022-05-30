@@ -9,7 +9,7 @@ BSDATAC(object, 256)
 BSDATAC(draworder, 256)
 
 fnevent				draw::object::afterpaintall;
-object::fnpaint		draw::object::afterpaint;
+fnpaint				draw::object::afterpaint;
 static rect			last_screen;
 static unsigned long timestamp;
 static unsigned long timestamp_last;
@@ -122,9 +122,10 @@ void object::clear() {
 	*this = def;
 }
 
-static void textcn(const char* string) {
+static void textcn(const char* string, int dy) {
 	auto push_caret = caret;
 	caret.x -= textw(string) / 2;
+	caret.y += dy;
 	text(string);
 	caret = push_caret;
 }
@@ -140,7 +141,7 @@ void object::paintns() const {
 		auto push_font = draw::font;
 		if(font)
 			draw::font = font;
-		textcn(string);
+		textcn(string, size);
 		draw::font = push_font;
 	}
 }
