@@ -147,9 +147,7 @@
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
-    <ClCompile Include="information.cpp" />
     <ClCompile Include="main_util.cpp" />
-    <ClCompile Include="nameable.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="entitya.cpp" />
     <ClCompile Include="color.cpp" />

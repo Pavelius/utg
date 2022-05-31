@@ -177,7 +177,10 @@ void gamei::prepare() {
 	prepareui();
 }
 
+void script_initialize();
+
 void gamei::initialize() {
+	script_initialize();
 	pathfind::maxcount = hms * hms;
 	pathfind::maxdir = 6;
 }

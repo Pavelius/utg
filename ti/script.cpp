@@ -144,10 +144,6 @@ static void querry_count(int bonus, int param) {
 	last_value = querry.getcount();
 }
 
-static void set_for_each(int bonus, int param) {
-	for_each = (fnforeach)param;
-}
-
 static void apply_value(indicator_s v, int value) {
 	if(value == 0) {
 		// Simple get value
@@ -172,21 +168,11 @@ static void apply_value(indicator_s v, int value) {
 	}
 }
 
-static void apply_value(variant v) {
-	if(v.iskind<scripti>()) {
-		auto p = bsdata<scripti>::elements + v.value;
-		p->proc(v.counter, p->param);
-	} else if(v.iskind<indicatori>())
-		apply_value((indicator_s)v.value, v.counter);
-	else
-		draw::warning(getnm("ErrorScriptType"), bsdata<varianti>::get(v.type).id);
-}
-
 static void for_each_player(variant v) {
 	auto push_last = playeri::last;
 	for(auto p : players) {
 		playeri::last = p;
-		apply_value(v);
+		script::run(v);
 	}
 	playeri::last = push_last;
 }
@@ -195,29 +181,30 @@ static void for_each_planet(variant v) {
 	auto push_last = planeti::last;
 	for(auto p : querry) {
 		planeti::last = p->getplanet();
-		apply_value(v);
+		script::run(v);
 	}
 	planeti::last = push_last;
 }
 
-static void apply_foreach(variant v) {
-	if(for_each) {
-		for_each(v);
-		for_each = 0;
-	} else
-		apply_value(v);
+static void script_custom(variant v) {
+	if(v.iskind<indicatori>())
+		apply_value((indicator_s)v.value, v.counter);
+	else
+		draw::warning(getnm("ErrorScriptType"), bsdata<varianti>::get(v.type).id);
+}
+
+void script_initialize() {
+	script::custom = script_custom;
 }
 
 void playeri::apply(const variants& source) {
 	draw::pause();
 	last = game.active;
-	for_each = 0;
-	for(auto v : source)
-		apply_foreach(v);
+	script::run(source);
 	draw::pause();
 }
 
-BSDATA(scripti) = {
+BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActivateSystem", activate_system},
 	{"ChangeInfluenceCommandToken", change_influence, CommandToken},
@@ -236,8 +223,8 @@ BSDATA(scripti) = {
 	{"FilterSystem", filter_system},
 	{"FilterTechnologySpeciality", filter_technology_speciality},
 	{"FilterWormhole", filter_wormhole},
-	{"ForEachPlanet", set_for_each, (int)for_each_planet},
-	{"ForEachPlayer", set_for_each, (int)for_each_player},
+	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
+	{"ForEachPlayer", script::setforeach, (int)for_each_player},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"NextAction", next_action},
@@ -259,4 +246,4 @@ BSDATA(scripti) = {
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
 	{"Speaker", speaker},
 };
-BSDATAF(scripti);
+BSDATAF(script);

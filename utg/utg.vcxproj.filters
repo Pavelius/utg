@@ -219,6 +219,9 @@
     <ClCompile Include="function.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="script.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -387,6 +390,9 @@
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="function.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="script.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

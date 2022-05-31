@@ -3,6 +3,7 @@
 #include "flagable.h"
 #include "point.h"
 #include "pathfind.h"
+#include "script.h"
 #include "tag.h"
 #include "variant.h"
 
@@ -184,12 +185,6 @@ struct actioncardi : nameable {
 struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
-};
-struct scripti {
-	typedef void(*fnscript)(int bonus, int param);
-	const char*		id;
-	fnscript		proc;
-	int				param;
 };
 struct strategyi : nameable {
 	int				initiative;

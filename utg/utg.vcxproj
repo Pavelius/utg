@@ -187,6 +187,7 @@
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
+    <ClCompile Include="script.cpp" />
     <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="stringa.cpp" />
     <ClCompile Include="surface_serial.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="quest.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />
+    <ClInclude Include="script.h" />
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="stringa.h" />

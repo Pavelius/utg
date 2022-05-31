@@ -54,7 +54,7 @@ BSMETA(playeri) = {
 	BSREQ(commodities),
 	BSREQ(troops),
 	{}};
-BSMETA(scripti) = {
+BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(strategyi) = {
@@ -98,7 +98,7 @@ BSDATA(varianti) = {
 	{"Objective", VRSTD(objectivei), 1},
 	{"Planet", VRSTD(planeti), 1},
 	{"Player", VRSTD(playeri), 1},
-	{"Script", VRSTD(scripti), 1},
+	{"Script", VRSTD(script), 1},
 	{"Strategy", VRSTD(strategyi), 1},
 	{"System", VRSTD(systemi), 1},
 	{"Unit", VRSTD(uniti), 1},
