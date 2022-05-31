@@ -164,6 +164,7 @@
     <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />
+    <ClCompile Include="tile.cpp" />
     <ClCompile Include="trigger.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit_type.cpp" />

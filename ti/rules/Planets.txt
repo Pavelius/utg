@@ -9,11 +9,11 @@ CentauriSystem
 CoorneeqSystem
 DalBoothaSystem
 LazarSystem
-LodorSystem
+LodorSystem special(WormholeAlpha) special_index(1)
 MeharXullSystem
 MellonSystem
 NewAlbionSystem
-QuannSystem
+QuannSystem special(WormholeBeta) special_index(1)
 QucennSystem
 SaudorSystem
 TarMannSystem
@@ -23,6 +23,11 @@ VefutIISystem
 WellonSystem
 
 SardakkHomeSystem home(SardakkNorr)
+
+NebulaSystem special(Nebula)
+WormholeAlphaSystem special(WormholeAlpha) special_index(3)
+WormholeBetaSystem special(WormholeBeta) special_index(3)
+SupernovaSystem special(Supernova) special_index(3)
 
 #Planet
 

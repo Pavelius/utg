@@ -28,8 +28,8 @@ enum indicator_s : unsigned char {
 	CommandToken, FleetToken, StrategyToken, TacticToken,
 	VictoryPoints
 };
-enum wormhole_s : unsigned char {
-	NoHole, WormholeAlpha, WormholeBeta
+enum tile_s : unsigned char {
+	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,
 };
 enum color_s : unsigned char {
 	NoTech, Red, Green, Blue, Yellow,
@@ -60,6 +60,9 @@ struct abilityi {
 	const char*		id;
 };
 struct colori {
+	const char*		id;
+};
+struct tilei {
 	const char*		id;
 };
 struct nameable {
@@ -120,6 +123,8 @@ struct playera : adat<playeri*, 6> {
 struct systemi : entity {
 	flagable<4>		activated;
 	playeri*		home;
+	char			special_index;
+	tile_s			special;
 	pathfind::indext index;
 	static systemi*	last;
 	bool			isactivated(const playeri* p) const;

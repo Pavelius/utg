@@ -212,6 +212,7 @@ static point planet_position(point caret, int index) {
 		{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
 		{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
 		{(short)(caret.x + fsize / 2), (short)(caret.y + 2 * fsize / 3)},
+		{caret}
 	};
 	return position[index];
 }
@@ -247,6 +248,16 @@ static void add_planets(point pt, const systemi* ps) {
 	}
 }
 
+static void add_special(point pt, int index, int frame) {
+	pt = planet_position(pt, index);
+	auto p = addobject(pt.x, pt.y);
+	p->priority = 2;
+	p->size = 0;
+	p->set(object::DisableInput);
+	p->resource = getres("tiles");
+	p->frame = frame;
+}
+
 static void add_system(systemi* ps, point pt) {
 	auto p = addobject(pt.x, pt.y);
 	p->priority = 3;
@@ -256,6 +267,13 @@ static void add_system(systemi* ps, point pt) {
 	p->fore = colors::border;
 	p->set(object::DisableInput);
 	add_planets(pt, ps);
+	switch(ps->special) {
+	case WormholeAlpha: add_special(pt, ps->special_index, 0); break;
+	case WormholeBeta: add_special(pt, ps->special_index, 1); break;
+	case Nebula: add_special(pt, 3, 2); break;
+	case Supernova: add_special(pt, 3, 3); break;
+	default: break;
+	}
 }
 
 static void add_systems() {

@@ -32,7 +32,7 @@ static void test_direction() {
 static void test_handlers() {
 	recordset source;
 	source.select(bsdata<abilityi>::source);
-	for(auto p : source.getrecords<abilityi>()) {
+	for(auto p : source.records<abilityi>()) {
 		if(!p->id)
 			break;
 	}

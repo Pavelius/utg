@@ -84,6 +84,9 @@
     <ClCompile Include="main_util.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="tile.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

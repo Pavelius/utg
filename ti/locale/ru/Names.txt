@@ -13,6 +13,7 @@ FleetToken: Резерв флота
 Fria: Фрия
 Infantry: Пехота
 Influence: Влияние
+Lodor: Лодор
 MecatolRex: Мекатол Рекс
 Meer: Миир
 PDS: ПВС

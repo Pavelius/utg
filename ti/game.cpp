@@ -131,6 +131,7 @@ static void create_galaxy() {
 	bsdata<systemi>::elements[0].index = h2i({3, 3});
 	bsdata<systemi>::elements[1].index = h2i({3, 0});
 	bsdata<systemi>::elements[2].index = h2i({2, 1});
+	bsdata<systemi>::find("SupernovaSystem")->index = h2i({3, 1});
 }
 
 void gamei::prepare() {

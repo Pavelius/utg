@@ -64,6 +64,8 @@ BSMETA(strategyi) = {
 BSMETA(systemi) = {
 	BSREQ(id),
 	BSREQ(home),
+	BSREQ(special_index),
+	BSENM(special, tilei),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -71,6 +73,9 @@ BSMETA(tagi) = {
 BSMETA(techi) = {
 	BSREQ(id),
 	BSENM(color, colori),
+	{}};
+BSMETA(tilei) = {
+	BSREQ(id),
 	{}};
 BSMETA(triggeri) = {
 	BSREQ(id),

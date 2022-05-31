@@ -28,11 +28,9 @@ static void test_movement() {
 }
 
 static void test_answers() {
-	auto p1 = bsdata<actioncardi>::elements + 0;
-	auto p2 = bsdata<strategyi>::elements + 1;
-	auto p3 = bsdata<playeri>::elements + 0;
 	game.prepare();
 	game.updateui();
+	auto p2 = bsdata<strategyi>::elements + 1;
 	game.active->apply(p2->primary);
 	test_movement();
 }
