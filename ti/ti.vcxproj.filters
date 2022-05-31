@@ -7,6 +7,9 @@
     <Filter Include="Data">
       <UniqueIdentifier>{97b1da7d-b654-4c13-a292-e0b5ca0c2193}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{c712e7d1-3f02-4c8b-b20b-1c354a82a01c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="galaxy.cpp">
       <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

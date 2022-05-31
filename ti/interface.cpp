@@ -12,79 +12,72 @@ struct armyi {
 	struct troop*	troop;
 	char			level;
 };
+static const entity* last_parent;
 class armya : public adat<armyi, 32> {
-	void add(troop* v, int level) {
-		auto p = adat::add();
-		p->troop = v;
-		p->level = level;
-	}
-	static int compare(const void* v1, const void* v2) {
-		auto p1 = ((armyi*)v1)->troop->type;
-		auto p2 = ((armyi*)v2)->troop->type;
+	static int compare_unit(const void* v1, const void* v2) {
+		auto p1 = (uniti*)v1;
+		auto p2 = (uniti*)v2;
 		if(p1->type != p2->type)
 			return p2->type - p1->type;
-		return p2->abilities[Cost] - p1->abilities[Cost];
+		if(p1->abilities[Cost] != p2->abilities[Cost])
+			return p2->abilities[Cost] - p1->abilities[Cost];
+		return p1 - p2;
 	}
-	void sort() {
-		qsort(data, count, sizeof(data[0]), compare);
+	static int compare_troop(const void* v1, const void* v2) {
+		auto p1 = (troop*)v1;
+		auto p2 = (troop*)v2;
+		auto u1 = p1->type;
+		auto u2 = p2->type;
+		if(u1 == u2)
+			return p1 - p2;
+		return compare_unit(u1, u2);
+	}
+	static entity* getcomparer(entity* p) {
+		return (p->location == last_parent) ? p : p->location;
+	}
+	static int compare_tree(const void* v1, const void* v2) {
+		auto t1 = ((armyi*)v1)->troop;
+		auto t2 = ((armyi*)v2)->troop;
+		auto c1 = getcomparer(t1);
+		auto c2 = getcomparer(t2);
+		if(c1 == c2) {
+			if(t2->location == last_parent)
+				return 1;
+			return compare_troop(t1, t2);
+		}
+		return compare_troop(c1, c2);
 	}
 public:
-	static bool find(const armyi* pb, const armyi* ps, const uniti* type) {
-		for(auto pv = pb; pv < ps; pv++) {
-			if(pv->troop->type == type)
-				return true;
-		}
-		return false;
-	}
-	void selectbasic(const entity* location) {
+	void selectnew(const entity* location) {
 		auto ps = data;
 		auto pe = endof();
 		for(auto& e : bsdata<troop>()) {
-			if(e.location != location)
-				continue;
-			if(e.type->stackable() && find(data, ps, e.type))
-				continue;
-			if(ps < pe) {
-				ps->troop = &e;
-				ps->level = 0;
-				ps++;
+			if(e.location == location) {
+				if(ps < pe) {
+					ps->troop = &e;
+					ps->level = 0;
+					ps++;
+				}
+			} else if(bsdata<troop>::have(e.location) && ((troop*)e.location)->location == location) {
+				if(ps < pe) {
+					ps->troop = &e;
+					ps->level = 1;
+					ps++;
+				}
 			}
 		}
 		count = ps - data;
 	}
-	void selectsibling(armya& source) {
-		auto ps = data;
-		for(auto& e : source) {
-			*ps++ = e;
-			auto pb = ps;
-			for(troop* p = e.troop->sibling(0); p; p = e.troop->sibling(p)) {
-				if(e.troop->type->stackable()) {
-					auto found = false;
-					for(auto pv = pb; pv < ps; pv++) {
-						if(pv->troop->type == p->type) {
-							found = true;
-							break;
-						}
-					}
-					if(found)
-						continue;
-				}
-				ps->troop = p;
-				ps->level = e.level + 1;
-				ps++;
-			}
-		}
-		count = ps - data;
+	void sortnew(const entity* location) {
+		last_parent = location;
+		qsort(data, count, sizeof(data[0]), compare_tree);
 	}
 	void select(const entity* location) {
 		clear();
 		if(!location)
 			return;
-		armya basic;
-		basic.clear();
-		basic.selectbasic(location);
-		basic.sort();
-		selectsibling(basic);
+		selectnew(location);
+		sortnew(location);
 	}
 };
 
@@ -132,16 +125,9 @@ static void buttonback(int size) {
 void troop::paint() const {
 	auto push_color = fore;
 	fore = colors::red.mix(colors::black);
-	buttonback(56);
+	buttonback(40);
 	fore = push_color;
-	if(type->stackable()) {
-		auto count = getstackcount();
-		if(count>1)
-			textv("%1 x%2i", getname(), count);
-		else
-			textcn(getname());
-	} else
-		textcn(getname());
+	textcn(getname());
 }
 
 static void background(figure shape, int size) {
@@ -181,8 +167,15 @@ void planeti::paint(unsigned flags) const {
 	caret.x -= 73 * multiplier; caret.y += 15;
 	fore = colors::yellow.mix(colors::black);
 	textvalue(figure::Circle, get(Resources));
+	if(speciality) {
+		caret = push_caret;
+		caret.x -= 73 * multiplier; caret.y -= 15;
+		image(getres("tech"), speciality - 1, 0);
+	}
 	fore = push_fore;
 	caret = push_caret;
+	if(player)
+		image(gres("races_small", "art/objects"), 0, 0);
 }
 
 static void object_paint(const object* po) {
