@@ -215,6 +215,7 @@ struct gamei {
 	static void*	result;
 	static int		options;
 	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
+	static void		choosestrategy();
 	void			defhandle(trigger_s trigger, void* result);
 	void			focusing(const entity* p);
 	static void		initialize();

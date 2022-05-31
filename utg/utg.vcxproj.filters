@@ -216,6 +216,9 @@
     <ClCompile Include="code_package.cpp">
       <Filter>Code</Filter>
     </ClCompile>
+    <ClCompile Include="function.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -382,6 +385,9 @@
     </ClInclude>
     <ClInclude Include="code_package.h">
       <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

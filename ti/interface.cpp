@@ -172,6 +172,14 @@ void planeti::paint(unsigned flags) const {
 		caret.x -= 73 * multiplier; caret.y -= 15;
 		image(getres("tech"), speciality - 1, 0);
 	}
+	if(trait) {
+		const double cos = 0.7660444431189;
+		const double sin = 0.6427876096865;
+		const double radius = 74.0;
+		caret = push_caret;
+		caret.x -= (short)(radius * cos)*multiplier; caret.y -= (short)(radius * sin);
+		image(getres("traits"), trait - 1, 0);
+	}
 	fore = push_fore;
 	caret = push_caret;
 	if(player)

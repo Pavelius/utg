@@ -78,6 +78,38 @@ void gamei::choose(trigger_s trigger, const char* title, fnanswer panswer, fnapp
 	draw::pause();
 }
 
+static playeri* findplayer(const strategyi& e) {
+	for(auto p : game.players) {
+		if(p->strategy == &e)
+			return p;
+	}
+	return 0;
+}
+
+static void choose_strategy(answers& an) {
+	for(auto& e : bsdata<strategyi>()) {
+		if(findplayer(e))
+			continue;
+		an.add(&e, getnm(e.id));
+	}
+}
+
+static bool apply_strategy() {
+	if(bsdata<strategyi>::have(game.result)) {
+		auto p = (strategyi*)game.result;
+		playeri::last->strategy = p;
+	} else
+		return false;
+	return true;
+}
+
+void gamei::choosestrategy() {
+	for(auto p : game.players) {
+		playeri::last = p;
+		choose(EndStrategyPhase, "ChooseStrategy", choose_strategy, apply_strategy);
+	}
+}
+
 static void assign_factions() {
 	game.players.clear();
 	for(auto& e : bsdata<playeri>())
@@ -117,7 +149,7 @@ static void clear_galaxy() {
 }
 
 static void assign_starting_positions() {
-	static point positions[6] = {{2, 0}, {5, 0}};
+	point positions[6] = {{2, 0}, {5, 0}};
 	auto index = 0;
 	for(auto p : game.players) {
 		auto ps = p->gethome();
@@ -128,7 +160,7 @@ static void assign_starting_positions() {
 }
 
 static void create_galaxy() {
-	bsdata<systemi>::elements[0].index = h2i({3, 3});
+	bsdata<systemi>::elements[0].index = h2i({4, 3});
 	bsdata<systemi>::elements[1].index = h2i({3, 0});
 	bsdata<systemi>::elements[2].index = h2i({2, 1});
 	bsdata<systemi>::find("SupernovaSystem")->index = h2i({3, 1});
