@@ -46,17 +46,10 @@ enum tech_s : unsigned char {
 enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
 };
-enum trigger_s : unsigned char {
-	AsAction,
-	StartRoundSpaceCombat,
-	EndRoundGroundCombat,
-	EndStrategyPhase,
-	WhenPay,
-};
 typedef flagable<4> taga;
 typedef flagable<8> techa;
 typedef void(*fnanswer)(answers& an);
-typedef bool(*fnapplyanswer)();
+typedef void(*fnapplyanswer)();
 struct abilityi {
 	const char*		id;
 };
@@ -177,11 +170,6 @@ struct combat {
 };
 struct poweri {
 };
-struct actioncardi : nameable {
-	trigger_s		trigger;
-	variants		use;
-	char			count;
-};
 struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
@@ -201,6 +189,25 @@ public:
 	systemi*		get(pathfind::indext) const;
 	void			set(pathfind::indext, const systemi* v);
 };
+class gamestring : public stringbuilder {
+	void			addidentifier(const char* identifier) override;
+public:
+	gamestring(const stringbuilder& v) : stringbuilder(v) {}
+};
+struct choosestep {
+	const char*		id;
+	fnanswer		panswer;
+	fnapplyanswer	papply;
+	void			run() const;
+	static void		run(const char* id);
+};
+struct component : nameable {
+	choosestep*		trigger;
+	variants		use;
+};
+struct actioncardi : component {
+	char			count;
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		human;
@@ -209,12 +216,8 @@ struct gamei {
 	indicator_s		indicator;
 	static void*	result;
 	static int		options;
-	static void		choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply);
-	static void		choosestrategy();
-	void			defhandle(trigger_s trigger, void* result);
 	void			focusing(const entity* p);
 	static void		initialize();
-	static void		pay();
 	void			prepare();
 	void			prepareui();
 	static int		rate(indicator_s need, indicator_s currency, int count);
@@ -227,11 +230,13 @@ struct playeri : nameable {
 	char			commodities;
 	strategyi*		strategy;
 	variants		troops;
+	bool			use_strategy;
 	static playeri* last;
+	static playeri* human;
 	void			add(indicator_s v, int i);
-	void			addcommand(int v);
 	void			apply(const variants& source);
 	bool			is(tech_s v) const { return tech.is(v); }
+	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
 	systemi*		gethome() const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }

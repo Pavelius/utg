@@ -1,2 +1,7 @@
-﻿In file `rules/Planets.txt`:
- Line 30: Not found identifier `Supernowa`
+﻿In file `rules/ActionCards.txt`:
+ Line 1: Not found identifier `AsAction`
+ Line 1: Not found identifier `AsAction`
+ Line 1: Not found identifier `AsAction`
+ Line 1: Not found identifier `AsAction`
+ Line 1: Not found identifier `AsAction`
+ Line 1: Not found identifier `AsAction`

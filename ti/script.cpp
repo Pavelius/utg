@@ -67,7 +67,7 @@ static void change_influence(int bonus, int param) {
 	game.options = game.rate(need, currency, bonus);
 	if(game.options > 0) {
 		game.indicator = currency;
-		game.pay();
+		choosestep::run("ChoosePay");
 	}
 }
 
@@ -160,7 +160,8 @@ static void apply_value(indicator_s v, int value) {
 	case Influence:
 		break;
 	case CommandToken:
-		playeri::last->addcommand(value);
+		game.options = value;
+		choosestep::run("ChooseCommandToken");
 		break;
 	default:
 		playeri::last->indicators[v] = n1;
@@ -186,15 +187,14 @@ static void for_each_planet(variant v) {
 	planeti::last = push_last;
 }
 
-static void script_custom(variant v) {
+static void script_run(variant v) {
 	if(v.iskind<indicatori>())
 		apply_value((indicator_s)v.value, v.counter);
-	else
+	else if(v.iskind<playeri>()) {
+		if(game.active != bsdata<playeri>::elements + v.value)
+			script::stop = true;
+	} else
 		draw::warning(getnm("ErrorScriptType"), bsdata<varianti>::get(v.type).id);
-}
-
-void script_initialize() {
-	script::custom = script_custom;
 }
 
 void playeri::apply(const variants& source) {
@@ -202,6 +202,17 @@ void playeri::apply(const variants& source) {
 	last = game.active;
 	script::run(source);
 	draw::pause();
+}
+
+static bool script_test(variant v) {
+	if(v.iskind<playeri>())
+		return game.active == (bsdata<playeri>::elements + v.value);
+	return true;
+}
+
+void script_initialize() {
+	script::prun = script_run;
+	script::ptest = script_test;
 }
 
 BSDATA(script) = {

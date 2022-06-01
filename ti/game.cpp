@@ -15,37 +15,6 @@ public:
 	gamestringbuilder(const stringbuilder& v) : stringbuilder(v) {}
 };
 
-void gamei::defhandle(trigger_s trigger, void* result) {
-}
-
-static void select_planets(const playeri* player, bool iscontrol) {
-	querry.clear();
-	querry.select(bsdata<planeti>::source);
-	querry.match(player, iscontrol);
-}
-
-static void add_planets(answers& an) {
-	select_planets(playeri::last, true);
-	querry.match(Exhaust, false);
-	querry.match(game.indicator, true);
-	for(auto p : querry)
-		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(game.indicator));
-}
-
-static bool apply_pay() {
-	if(bsdata<planeti>::have(game.result)) {
-		auto p = (planeti*)game.result;
-		game.options -= p->get(game.indicator);
-		p->exhaust();
-	} else
-		return false;
-	return true;
-}
-
-void gamei::pay() {
-	game.choose(WhenPay, "PayPrompt", add_planets, apply_pay);
-}
-
 int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	auto maximum = playeri::last->get(currency) / count;
 	if(!maximum)
@@ -58,56 +27,6 @@ int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	for(auto i = 0; i < maximum; i++)
 		an.add((void*)i, getnm("RateAnswer"), pn, pc);
 	return (int)an.choose(temp);
-}
-
-void gamei::choose(trigger_s trigger, const char* title, fnanswer panswer, fnapplyanswer papply) {
-	char temp[260]; gamestringbuilder sb(temp);
-	answers an;
-	draw::pause();
-	while(options > 0) {
-		sb.clear();
-		sb.add(getnm(title));
-		sb.adds(getnm("ChooseOptions"), options);
-		an.clear(); panswer(an);
-		result = an.choose(temp);
-		if(!result)
-			break;
-		if(!papply())
-			game.defhandle(trigger, result);
-	}
-	draw::pause();
-}
-
-static playeri* findplayer(const strategyi& e) {
-	for(auto p : game.players) {
-		if(p->strategy == &e)
-			return p;
-	}
-	return 0;
-}
-
-static void choose_strategy(answers& an) {
-	for(auto& e : bsdata<strategyi>()) {
-		if(findplayer(e))
-			continue;
-		an.add(&e, getnm(e.id));
-	}
-}
-
-static bool apply_strategy() {
-	if(bsdata<strategyi>::have(game.result)) {
-		auto p = (strategyi*)game.result;
-		playeri::last->strategy = p;
-	} else
-		return false;
-	return true;
-}
-
-void gamei::choosestrategy() {
-	for(auto p : game.players) {
-		playeri::last = p;
-		choose(EndStrategyPhase, "ChooseStrategy", choose_strategy, apply_strategy);
-	}
 }
 
 static void assign_factions() {

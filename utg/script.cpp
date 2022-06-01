@@ -1,18 +1,36 @@
+#include "condition.h"
 #include "function.h"
 #include "script.h"
 
-script::fnapply		script::custom;
+script::fnapply		script::prun;
+script::fntest		script::ptest;
 script::fnapply		script::foreach;
 bool				script::stop;
+
+bool script::isallow(variants source) {
+	for(auto v : source) {
+		if(v.iskind<conditioni>()) {
+			auto p = bsdata<conditioni>::elements + v.value;
+			if(!p->proc(v.counter, p->param))
+				return false;
+		} else
+			break;
+	}
+	return true;
+}
 
 void script::run(variant v) {
 	if(v.iskind<script>()) {
 		auto p = bsdata<script>::elements + v.value;
 		p->proc(v.counter, p->param);
-	} if(v.iskind<function>())
+	} else if(v.iskind<function>())
 		run(bsdata<function>::elements[v.value].script);
-	else if(custom)
-		custom(v);
+	else if(v.iskind<conditioni>()) {
+		auto p = bsdata<conditioni>::elements + v.value;
+		if(!p->proc(v.counter, p->param))
+			stop = true;
+	} else if(prun)
+		prun(v);
 }
 
 void script::setforeach(int bonus, int param) {

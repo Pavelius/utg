@@ -144,8 +144,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="choosestep.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gamestring.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="entity.cpp" />
@@ -163,7 +165,6 @@
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />
     <ClCompile Include="tile.cpp" />
-    <ClCompile Include="trigger.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit_type.cpp" />
   </ItemGroup>

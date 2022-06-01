@@ -63,9 +63,6 @@
     <ClCompile Include="game.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="trigger.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="planet_trait.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -79,6 +76,12 @@
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="tile.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="choosestep.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="gamestring.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

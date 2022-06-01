@@ -25,8 +25,11 @@ BSMETA(abilityi) = {
 BSMETA(actioncardi) = {
 	BSREQ(id),
 	BSREQ(count),
-	BSENM(trigger, triggeri),
+	BSREQ(trigger),
 	BSREQ(use),
+	{}};
+BSMETA(choosestep) = {
+	BSREQ(id),
 	{}};
 BSMETA(colori) = {
 	BSREQ(id),
