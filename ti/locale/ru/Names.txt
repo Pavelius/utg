@@ -5,20 +5,27 @@ ApplyExhaust: Планета %1 истощена
 Arinam: Эринам
 Carrier: Транспорт
 ChooseOptions: (осталось [%1i])
+ChooseStrategy: Выбирайте стратегию
+Construction: Строительная стратегия
 Continue: Продолжить
 Coorneeq: Корник
 Cruiser: Крейсер
+Diplomacy: Дипломатическая стратегия
+ErrorScriptType: Не обработан тип скрипта '%1'
 Fighter: Истребители
 FleetToken: Резерв флота
 Fria: Фрия
+Imperial: Имперская стратегия
 Infantry: Пехота
 Influence: Влияние
+Leadership: Лидерская стратегия
 Lodor: Лодор
 MecatolRex: Мекатол Рекс
 Meer: Миир
 PDS: ПВС
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
+Politics: Политическая стратегия
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
 RatePrompt: Сколько хотите приобрести %1?
@@ -29,5 +36,13 @@ SetControlPlanet: %1 установили контроль над плането
 SpaceDock: Доки
 StrategyToken: Стратегический резерв
 TacticToken: Тактический резерв
+Technology: Технологическая стратегия
+TheBaronyOfLetnev: Баронство Летнев
+TheEmiratesOfHacan: Эмираты Хаканов
+TheFederationOfSol: Федерация Сол
+TheL1Z1XMindnet: Сеть разума L1Z1
+TheUniversitiesOfJolNar: Вселенные Жол-Наров
+Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
+Warfare: Военная стратегия

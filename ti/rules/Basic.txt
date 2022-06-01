@@ -72,3 +72,8 @@ Imperial initiative(8)
 
 SardakkNorr
  troops Carrier+2 Cruiser Infantry+5 SpaceDock PDS
+
+#Function
+
+StrategyPhase
+ script SelectPlayer ForEachPlayer ChooseStrategy

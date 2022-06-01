@@ -202,6 +202,7 @@ struct choosestep {
 	static void		run(const char* id);
 };
 struct component : nameable {
+	variant			parent;
 	choosestep*		trigger;
 	variants		use;
 };

@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "main.h"
 #include "strategy.h"
+#include "speech.h"
 
 static char console_text[4096 * 2];
 static stringbuilder console(console_text);
@@ -27,12 +28,23 @@ static void test_movement() {
 	draw::output("Отряды высадились на планету"); draw::pause();
 }
 
+static void test_speech() {
+	variant test[] = {"Leadership"};
+	auto p = speech::find(test);
+}
+
+static void test_script() {
+	script::run("StrategyPhase");
+	draw::pause();
+}
+
 static void test_answers() {
 	game.prepare();
 	game.updateui();
-	auto p2 = bsdata<strategyi>::elements + 1;
-	game.active->apply(p2->primary);
-	test_movement();
+	//auto p2 = bsdata<strategyi>::elements + 1;
+	//game.active->apply(p2->primary);
+	test_speech();
+	test_script();
 }
 
 static void start_game() {
@@ -46,8 +58,10 @@ static void initialize() {
 	bsreq::read("rules/Planets.txt");
 	bsreq::read("rules/ActionCards.txt");
 	bsreq::read("rules/Objectives.txt");
+	speech::readl("Speech");
 	answers::console = &console;
 	answers::prompt = console_text;
+	gamei::initialize();
 }
 
 int main(int argc, char* argv[]) {

@@ -56,7 +56,7 @@ static bool ischax(unsigned char u) {
 		|| (u >= 0x410 && u <= 0x44F);
 }
 
-static const char* read_line(const char* p, variant* conditions, stringbuilder& sb, bool& allowrun) {
+static const char* read_line(const char* p, variant* conditions, stringbuilder& sb) {
 	while(ischax(*p)) {
 		auto pe = bsdata<charname>::add();
 		memset(pe, 0, sizeof(*pe));
@@ -102,7 +102,7 @@ void charname::read(const char* url) {
 		p = read_conditions(skipws(p + 1), sb, conditions, conditions + sizeof(conditions) / sizeof(conditions[0]));
 		if(!checksym(p, '\n'))
 			break;
-		p = read_line(skipwscr(p), conditions, sb, allowparse);
+		p = read_line(skipwscr(p), conditions, sb);
 		p = skipwscr(p);
 	}
 	log::close();

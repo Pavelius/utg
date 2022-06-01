@@ -1,5 +1,4 @@
 #include "io_stream.h"
-#include "recordset.h"
 #include "utg.h"
 
 fngetinfo		utg::callback::getinfo;

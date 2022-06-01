@@ -85,6 +85,9 @@ void choosestep::run() const {
 	gamestring sb(temp);
 	answers an;
 	draw::pause();
+	auto push_header = answers::header;
+	if(playeri::last)
+		answers::header = playeri::last->getname();
 	while(game.options > 0) {
 		sb.clear();
 		sb.add(getnm(id));
@@ -96,10 +99,13 @@ void choosestep::run() const {
 			break;
 		if(apply_standart())
 			continue;
-		if(papply)
+		if(papply) {
 			papply();
+			game.options--;
+		}
 	}
 	draw::pause();
+	answers::header = push_header;
 }
 
 void choosestep::run(const char* id) {

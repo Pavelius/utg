@@ -222,6 +222,9 @@
     <ClCompile Include="script.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="speech.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -393,6 +396,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="script.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="speech.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

@@ -109,5 +109,8 @@
     <Text Include="rules\Objectives.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\Speech.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -60,3 +60,11 @@ void script::run(variants source) {
 	}
 	foreach = push_foreach;
 }
+
+void script::run(const char* id) {
+	auto p = bsdata<function>::find(id);
+	if(p) {
+		run(p->script);
+		return;
+	}
+}

@@ -6,6 +6,7 @@
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
 BSDATAC(actioncardi, 128)
+BSDATAC(component, 128)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)
@@ -33,6 +34,12 @@ BSMETA(choosestep) = {
 	{}};
 BSMETA(colori) = {
 	BSREQ(id),
+	{}};
+BSMETA(component) = {
+	BSREQ(id),
+	BSREQ(parent),
+	BSREQ(trigger),
+	BSREQ(use),
 	{}};
 BSMETA(indicatori) = {
 	BSREQ(id),
@@ -102,6 +109,7 @@ BSDATA(varianti) = {
 	{"Planet", VRSTD(planeti), 1},
 	{"Player", VRSTD(playeri), 1},
 	{"Script", VRSTD(script), 1},
+	{"Step", VRSTD(choosestep), 1},
 	{"Strategy", VRSTD(strategyi), 1},
 	{"System", VRSTD(systemi), 1},
 	{"Unit", VRSTD(uniti), 1},

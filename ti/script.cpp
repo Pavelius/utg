@@ -193,6 +193,13 @@ static void script_run(variant v) {
 	else if(v.iskind<playeri>()) {
 		if(game.active != bsdata<playeri>::elements + v.value)
 			script::stop = true;
+	} else if(v.iskind<choosestep>()) {
+		auto p = bsdata<choosestep>::elements + v.value;
+		if(v.counter)
+			game.options = v.counter;
+		if(!game.options)
+			game.options = 1;
+		p->run();
 	} else
 		draw::warning(getnm("ErrorScriptType"), bsdata<varianti>::get(v.type).id);
 }

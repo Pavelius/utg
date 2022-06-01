@@ -1,7 +1,1 @@
-﻿In file `rules/ActionCards.txt`:
- Line 1: Not found identifier `AsAction`
- Line 1: Not found identifier `AsAction`
- Line 1: Not found identifier `AsAction`
- Line 1: Not found identifier `AsAction`
- Line 1: Not found identifier `AsAction`
- Line 1: Not found identifier `AsAction`
+﻿Can't find file 'Speech.txt'

@@ -15,6 +15,7 @@ struct script {
 	static bool		stop;
 	static bool		isallow(variants source);
 	static void		setforeach(int bonus, int param);
+	static void		run(const char* id);
 	static void		run(variant v);
 	static void		run(variants source);
 };
