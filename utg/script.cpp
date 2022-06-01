@@ -13,6 +13,11 @@ bool script::isallow(variants source) {
 			auto p = bsdata<conditioni>::elements + v.value;
 			if(!p->proc(v.counter, p->param))
 				return false;
+		} else if(ptest) {
+			auto need_stop = false;
+			if(!ptest(v, need_stop))
+				break;
+			return need_stop;
 		} else
 			break;
 	}

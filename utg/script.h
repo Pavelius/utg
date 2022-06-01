@@ -5,7 +5,7 @@
 struct script {
 	typedef void(*fnscript)(int bonus, int param);
 	typedef void(*fnapply)(variant v);
-	typedef bool(*fntest)(variant v);
+	typedef bool(*fntest)(variant v, bool& need_stop);
 	const char*		id;
 	fnscript		proc;
 	int				param;
