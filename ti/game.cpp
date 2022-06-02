@@ -33,6 +33,7 @@ static void assign_factions() {
 	game.players.clear();
 	for(auto& e : bsdata<playeri>())
 		game.players.add(&e);
+	playeri::human = game.players[0];
 }
 
 static void determine_speaker() {
@@ -58,8 +59,7 @@ static void prepare_players() {
 }
 
 static void prepare_finish() {
-	game.human = game.players.data[0];
-	game.active = game.human;
+	game.active = playeri::human;
 }
 
 static void clear_galaxy() {
@@ -96,10 +96,7 @@ void gamei::prepare() {
 	prepareui();
 }
 
-void script_initialize();
-
 void gamei::initialize() {
-	script_initialize();
 	pathfind::maxcount = hms * hms;
 	pathfind::maxdir = 6;
 }

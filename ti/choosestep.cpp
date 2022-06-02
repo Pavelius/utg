@@ -35,7 +35,6 @@ static void apply_command_token() {
 	if(bsdata<indicatori>::have(game.result)) {
 		auto v = (indicator_s)bsdata<indicatori>::source.indexof(game.result);
 		playeri::last->add(v, 1);
-		game.options--;
 	}
 }
 
@@ -71,38 +70,78 @@ static void choose_action(answers& an) {
 }
 
 static void apply_action() {
+	if(bsdata<strategyi>::have(game.result)) {
+		auto p = (strategyi*)game.result;
+		if(playeri::last->strategy == p)
+			script::run(p->primary);
+		else
+			script::run(p->secondary);
+	}
 }
 
-static void choose_standart(answers& an, const choosestep* step) {
+static void choose_standart(answers& an, const choosestep* trigger) {
+	for(auto& e : bsdata<component>()) {
+		if(e.trigger != trigger)
+			continue;
+		if(!script::isallow(e.use))
+			continue;
+		an.add(&e, e.getname());
+	}
+	//for(auto& e : bsdata<actioncardi>()) {
+	//	if(e.trigger != trigger)
+	//		continue;
+	//	if(!script::isallow(e.use))
+	//		continue;
+	//	an.add(&e, e.getname());
+	//}
 }
 
 static bool apply_standart() {
 	return false;
 }
 
-void choosestep::run() const {
-	char temp[260];
-	gamestring sb(temp);
+bool choosestep::choosex() const {
+	char temp[260]; gamestring sb(temp);
 	answers an;
+	sb.clear();
+	sb.add(getnm(id));
+	sb.adds(getnm("ChooseOptions"), game.options);
+	an.clear(); panswer(an);
+	choose_standart(an, this);
+	if(game.active->ishuman())
+		game.result = an.choose(temp);
+	else {
+		game.result = an.random();
+	}
+	if(!game.result)
+		return false;
+	if(apply_standart())
+		return true;
+	if(papply) {
+		papply();
+		game.options--;
+	}
+	return true;
+}
+
+void choosestep::choose() const {
+	draw::pause();
+	auto push_header = answers::header;
+	if(playeri::last)
+		answers::header = playeri::last->getname();
+	choosex();
+	draw::pause();
+	answers::header = push_header;
+}
+
+void choosestep::run() const {
 	draw::pause();
 	auto push_header = answers::header;
 	if(playeri::last)
 		answers::header = playeri::last->getname();
 	while(game.options > 0) {
-		sb.clear();
-		sb.add(getnm(id));
-		sb.adds(getnm("ChooseOptions"), game.options);
-		an.clear(); panswer(an);
-		choose_standart(an, this);
-		game.result = an.choose(temp);
-		if(!game.result)
+		if(!choosex())
 			break;
-		if(apply_standart())
-			continue;
-		if(papply) {
-			papply();
-			game.options--;
-		}
 	}
 	draw::pause();
 	answers::header = push_header;
@@ -115,7 +154,7 @@ void choosestep::run(const char* id) {
 }
 
 BSDATA(choosestep) = {
-	{"AsAction", choose_action, apply_action},
+	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChooseStrategy", choose_strategy, apply_strategy},

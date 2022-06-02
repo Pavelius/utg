@@ -1,3 +1,4 @@
+#include "condition.h"
 #include "main.h"
 
 typedef void(*fnforeach)(variant v);
@@ -144,6 +145,10 @@ static void querry_count(int bonus, int param) {
 	last_value = querry.getcount();
 }
 
+static void action_phase_pass(int bonus, int param) {
+	playeri::last->pass_action_phase = (bonus != -1);
+}
+
 static void tactical_move(int bonus, int param) {
 }
 
@@ -178,6 +183,16 @@ static void apply_value(indicator_s v, int value) {
 static void for_each_player(variant v) {
 	auto push_last = playeri::last;
 	for(auto p : players) {
+		playeri::last = p;
+		script::run(v);
+	}
+	playeri::last = push_last;
+}
+
+static void for_each_player_active(variant v) {
+	auto push_last = playeri::last;
+	for(auto p : players) {
+		game.active = p;
 		playeri::last = p;
 		script::run(v);
 	}
@@ -229,13 +244,23 @@ static bool script_test(variant v, bool& need_stop) {
 	return true;
 }
 
+static bool if_play_strategy(int counter, int param) {
+	return game.active && game.active->use_strategy;
+}
+
+static void condition_initialize() {
+	conditioni::add("IfPlayStrategy", if_play_strategy);
+}
+
 void script_initialize() {
 	script::prun = script_run;
 	script::ptest = script_test;
+	condition_initialize();
 }
 
 BSDATA(script) = {
 	{"ActionCard", action_card},
+	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"ChangeInfluenceCommandToken", change_influence, CommandToken},
 	{"ChoosePlanet", choose_planet},
@@ -255,6 +280,7 @@ BSDATA(script) = {
 	{"FilterWormhole", filter_wormhole},
 	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
 	{"ForEachPlayer", script::setforeach, (int)for_each_player},
+	{"ForEachPlayerActive", script::setforeach, (int)for_each_player_active},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"NextAction", next_action},

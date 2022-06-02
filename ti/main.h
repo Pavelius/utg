@@ -198,6 +198,8 @@ struct choosestep {
 	const char*		id;
 	fnanswer		panswer;
 	fnapplyanswer	papply;
+	void			choose() const;
+	bool			choosex() const;
 	void			run() const;
 	static void		run(const char* id);
 };
@@ -212,7 +214,6 @@ struct actioncardi : component {
 };
 struct gamei {
 	playeri*		speaker;
-	playeri*		human;
 	playeri*		active;
 	playera			players;
 	indicator_s		indicator;
@@ -233,6 +234,7 @@ struct playeri : nameable {
 	strategyi*		strategy;
 	variants		troops;
 	bool			use_strategy;
+	bool			pass_action_phase;
 	static playeri* last;
 	static playeri* human;
 	void			add(indicator_s v, int i);

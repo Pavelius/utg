@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "condition.h"
 #include "function.h"
 #include "main.h"
 #include "variant.h"
@@ -104,6 +105,7 @@ BSMETA(unit_typei) = {
 BSDATA(varianti) = {
 	{"ActionCard", VRSTD(actioncardi), 1},
 	{"Component", VRSTD(component), 1},
+	{"Condition", VRSTD(conditioni), 1},
 	{"Function", VRSTD(function), 1},
 	{"Indicator", VRSTD(indicatori), 1},
 	{"Objective", VRSTD(objectivei), 1},

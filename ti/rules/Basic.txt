@@ -75,10 +75,14 @@ SardakkNorr
 
 #Function
 
+ActionPhase
+ script SelectPlayer ForEachPlayerActive ChooseAction
 StrategyPhase
- script SelectPlayer ForEachPlayer ChooseStrategy
+ script SelectPlayer ForEachPlayerActive ChooseStrategy
 
 #Component
 
-TacticAction
- use SelectSystem ChooseSystem ActivateSystem TacticalMove TacticalProduce
+TacticAction trigger(ChooseAction)
+ use TacticToken-1 SelectSystem ChooseSystem ActivateSystem TacticalMove TacticalProduce
+PassAction trigger(ChooseAction)
+ use IfPlayStrategy ActionPhasePass

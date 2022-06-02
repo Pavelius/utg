@@ -35,6 +35,7 @@ static void test_speech() {
 
 static void test_script() {
 	script::run("StrategyPhase");
+	script::run("ActionPhase");
 	draw::pause();
 }
 
@@ -64,8 +65,11 @@ static void initialize() {
 	gamei::initialize();
 }
 
+void script_initialize();
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
+	script_initialize();
 	return draw::strategy(start_game, initialize);
 }
 

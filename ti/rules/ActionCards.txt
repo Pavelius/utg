@@ -1,4 +1,4 @@
-#ActionCard trigger(AsAction) count(1)
+#ActionCard trigger(ChooseAction) count(1)
 
 EconomicInitiative
  use SelectPlanetYouControl FilterCultural+1 ForEachPlanet Exhaust-1
