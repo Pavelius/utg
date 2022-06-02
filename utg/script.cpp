@@ -63,6 +63,7 @@ void apply_foreach(variant v) {
 void script::run(variants source) {
 	auto push_foreach = foreach;
 	foreach = 0;
+	stop = false;
 	for(auto v : source) {
 		if(stop)
 			break;

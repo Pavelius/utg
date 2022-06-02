@@ -47,6 +47,18 @@ void entitya::selectplanets(const systemi* system) {
 	count = ps - data;
 }
 
+void entitya::ingame() {
+	auto ps = data;
+	for(auto p : *this) {
+		if(bsdata<systemi>::have(p)) {
+			if(((systemi*)p)->index == pathfind::Blocked)
+				continue;
+		}
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void entitya::select(array& source) {
 	auto ps = data;
 	auto px = endof();
@@ -162,7 +174,9 @@ entity* entitya::choose(const char* id) const {
 	answers an;
 	for(auto p : *this)
 		an.add(p, p->getname());
-	return (entity*)an.choose(getnm(id));
+	if(game.active->ishuman())
+		return (entity*)an.choose(getnm(id));
+	return (entity*)an.random();
 }
 
 entity* entitya::getbest(indicator_s v) const {

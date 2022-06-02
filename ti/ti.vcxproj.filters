@@ -45,7 +45,7 @@
     <ClCompile Include="planet.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="script.cpp">
+    <ClCompile Include="scripting.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">

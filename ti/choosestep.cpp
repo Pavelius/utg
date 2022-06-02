@@ -72,9 +72,10 @@ static void choose_action(answers& an) {
 static void apply_action() {
 	if(bsdata<strategyi>::have(game.result)) {
 		auto p = (strategyi*)game.result;
-		if(playeri::last->strategy == p)
+		if(game.active->strategy == p) {
 			script::run(p->primary);
-		else
+			game.active->use_strategy = true;
+		} else
 			script::run(p->secondary);
 	}
 }
@@ -97,41 +98,12 @@ static void choose_standart(answers& an, const choosestep* trigger) {
 }
 
 static bool apply_standart() {
-	return false;
-}
-
-bool choosestep::choosex() const {
-	char temp[260]; gamestring sb(temp);
-	answers an;
-	sb.clear();
-	sb.add(getnm(id));
-	sb.adds(getnm("ChooseOptions"), game.options);
-	an.clear(); panswer(an);
-	choose_standart(an, this);
-	if(game.active->ishuman())
-		game.result = an.choose(temp);
-	else {
-		game.result = an.random();
-	}
-	if(!game.result)
+	if(bsdata<component>::have(game.result)) {
+		auto p = (component*)game.result;
+		script::run(p->use);
+	} else
 		return false;
-	if(apply_standart())
-		return true;
-	if(papply) {
-		papply();
-		game.options--;
-	}
 	return true;
-}
-
-void choosestep::choose() const {
-	draw::pause();
-	auto push_header = answers::header;
-	if(playeri::last)
-		answers::header = playeri::last->getname();
-	choosex();
-	draw::pause();
-	answers::header = push_header;
 }
 
 void choosestep::run() const {
@@ -139,9 +111,24 @@ void choosestep::run() const {
 	auto push_header = answers::header;
 	if(playeri::last)
 		answers::header = playeri::last->getname();
+	char temp[260]; gamestring sb(temp); answers an;
 	while(game.options > 0) {
-		if(!choosex())
+		sb.clear();
+		sb.add(getnm(id));
+		sb.adds(getnm("ChooseOptions"), game.options);
+		an.clear(); panswer(an);
+		choose_standart(an, this);
+		if(game.active->ishuman())
+			game.result = an.choose(temp);
+		else
+			game.result = an.random();
+		if(!game.result)
 			break;
+		if(!apply_standart()) {
+			if(papply)
+				papply();
+		}
+		game.options--;
 	}
 	draw::pause();
 	answers::header = push_header;

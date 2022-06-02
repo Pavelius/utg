@@ -34,9 +34,7 @@ static void test_speech() {
 }
 
 static void test_script() {
-	script::run("StrategyPhase");
-	script::run("ActionPhase");
-	draw::pause();
+	game.play();
 }
 
 static void test_answers() {

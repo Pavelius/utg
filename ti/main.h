@@ -154,6 +154,7 @@ struct entitya : public adat<entity*> {
 	int				fight(ability_s power, ability_s count);
 	entity*			getbest(indicator_s v) const;
 	void			grouplocation(const entitya& source);
+	void			ingame();
 	bool			have(entity* v) const { return find(v) != -1; }
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
@@ -198,8 +199,6 @@ struct choosestep {
 	const char*		id;
 	fnanswer		panswer;
 	fnapplyanswer	papply;
-	void			choose() const;
-	bool			choosex() const;
 	void			run() const;
 	static void		run(const char* id);
 };
@@ -223,6 +222,7 @@ struct gamei {
 	static void		initialize();
 	void			prepare();
 	void			prepareui();
+	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
 	static void		updateui();
 };

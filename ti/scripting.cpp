@@ -39,6 +39,7 @@ static void select_system_own_planet(int bonus, int param) {
 static void select_system(int bonus, int param) {
 	querry.clear();
 	querry.select(bsdata<systemi>::source);
+	querry.ingame();
 }
 
 static void select_player(int bonus, int param) {
@@ -216,9 +217,9 @@ static void script_run(variant v) {
 			script::stop = true;
 	} else if(v.iskind<choosestep>()) {
 		auto p = bsdata<choosestep>::elements + v.value;
-		if(v.counter)
+		if(v.counter != 0)
 			game.options = v.counter;
-		if(!game.options)
+		if(game.options<=0)
 			game.options = 1;
 		p->run();
 	} else
