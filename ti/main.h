@@ -205,6 +205,7 @@ struct component : nameable {
 	variant			parent;
 	choosestep*		trigger;
 	variants		use;
+	bool			isallow() const;
 };
 struct actioncardi : component {
 	char			count;

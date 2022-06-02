@@ -1,1 +1,2 @@
-﻿Can't find file 'Speech.txt'
+﻿In file `rules/Basic.txt`:
+ Line 84: Not found requisit `script`

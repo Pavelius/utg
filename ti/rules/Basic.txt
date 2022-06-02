@@ -77,3 +77,8 @@ SardakkNorr
 
 StrategyPhase
  script SelectPlayer ForEachPlayer ChooseStrategy
+
+#Component
+
+TacticAction
+ use SelectSystem ChooseSystem ActivateSystem TacticalMove TacticalProduce

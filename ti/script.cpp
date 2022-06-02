@@ -144,6 +144,12 @@ static void querry_count(int bonus, int param) {
 	last_value = querry.getcount();
 }
 
+static void tactical_move(int bonus, int param) {
+}
+
+static void tactical_produce(int bonus, int param) {
+}
+
 static void apply_value(indicator_s v, int value) {
 	if(value == 0) {
 		// Simple get value
@@ -269,5 +275,7 @@ BSDATA(script) = {
 	{"SelectSystem", select_system, 1},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
 	{"Speaker", speaker},
+	{"TacticalMove", tactical_move},
+	{"TacticalProduce", tactical_produce},
 };
 BSDATAF(script);

@@ -84,6 +84,9 @@
     <ClCompile Include="gamestring.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="component.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
