@@ -9,6 +9,7 @@ ArnorSystem: Система Арнор
 AsteroidFieldSystem: Поле астероидов
 AsteroidFieldSystem2: Поле астероидов
 BeregSystem: Система Берег
+Cancel: Отмена
 Carrier: Транспорт
 CentauriSystem: Система Центаури
 ChooseAction: Выбирайте действие
@@ -69,6 +70,7 @@ SetControlPlanet: %1 установили контроль над плането
 SpaceDock: Доки
 StrategyToken: Стратегический резерв
 SupernovaSystem: Супернова
+TacticAction: Тактическое действие
 TacticToken: Тактический резерв
 TarMannSystem: Система Тар Манн
 Technology: Технологическая стратегия
@@ -88,8 +90,6 @@ WellonSystem: Система Веллон
 WormholeAlphaSystem: Кротовая нора Альфа
 WormholeBetaSystem: Кротовая нора Бэта
 Военная стратегия: 
-Дипломатическая стратегия: 
-Имперская стратегия: 
 Лидерская стратегия: 
-Политическая стратегия: 
+Технологическая стратегия: 
 Торговая стратегия: 

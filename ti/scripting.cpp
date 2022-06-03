@@ -55,7 +55,8 @@ static void choose_player(int bonus, int param) {
 }
 
 static void choose_system(int bonus, int param) {
-	systemi::last = (systemi*)querry.choose(0);
+	//systemi::last = (systemi*)querry.choose(0);
+	systemi::last = game.choose(querry);
 }
 
 static void replenish_commodities(int bonus, int param) {
@@ -233,13 +234,13 @@ void playeri::apply(const variants& source) {
 	draw::pause();
 }
 
-static bool script_test(variant v, bool& need_stop) {
+static bool script_test(variant v, bool& allowed) {
 	if(v.iskind<playeri>())
-		need_stop = (game.active != (bsdata<playeri>::elements + v.value));
+		allowed = (game.active == (bsdata<playeri>::elements + v.value));
 	else if(v.iskind<indicatori>()) {
 		auto i = (indicator_s)v.value;
 		auto b = v.counter;
-		need_stop = (game.active->get(i) + b) < 0;
+		allowed = (game.active->get(i) + b) >= 0;
 	} else
 		return false;
 	return true;

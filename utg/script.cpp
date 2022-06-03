@@ -19,10 +19,10 @@ bool script::isallow(variants source) {
 					return false;
 			}
 		} else if(ptest) {
-			auto need_stop = false;
-			if(!ptest(v, need_stop))
+			auto allowed = true;
+			if(!ptest(v, allowed))
 				break;
-			return need_stop;
+			return allowed;
 		} else
 			break;
 	}

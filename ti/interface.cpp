@@ -294,6 +294,18 @@ static void add_systems() {
 	answers::interactive = push_interactive;
 }
 
+systemi* gamei::choose(entitya& source) {
+	for(auto p : source) {
+		auto pd = findobject(p);
+		if(pd) {
+			pd->remove(object::DisableInput);
+			pd->set(object::Hilite);
+		}
+	}
+	answers an;
+	return (systemi*)an.choose(0, getnm("Cancel"), 1);
+}
+
 void gamei::prepareui() {
 	object::afterpaint = object_paint;
 	clearobjects();

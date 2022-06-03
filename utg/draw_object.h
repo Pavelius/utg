@@ -64,6 +64,7 @@ struct object : drawable {
 	void			move(point goal, int speed, int correct = 0);
 	void			paint() const;
 	void			paintns() const;
+	void			remove(unsigned v) { flags &= ~(((unsigned)0x80000000) >> v); }
 	void			set(unsigned v) { flags |= (((unsigned)0x80000000) >> v); }
 	void			set(point v) { x = v.x; y = v.y; }
 };

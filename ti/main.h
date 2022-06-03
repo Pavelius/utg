@@ -218,6 +218,7 @@ struct gamei {
 	indicator_s		indicator;
 	static void*	result;
 	static int		options;
+	systemi*		choose(entitya& source);
 	void			focusing(const entity* p);
 	static void		initialize();
 	void			prepare();
