@@ -170,21 +170,44 @@ void entitya::filter(const entity* object, bool keep) {
 	count = ps - data;
 }
 
-entity* entitya::choose(const char* id) const {
+void entitya::activated(const playeri* player, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		auto po = p->getsystem();
+		if(po->isactivated(player) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+entity* entitya::random() const {
+	if(!count)
+		return 0;
+	return data[rand() % count];
+}
+
+static entity* choose_ai(const entitya& source, const char* id) {
+	return source.random();
+}
+
+static entity* choose_human(const entitya& source, const char* id) {
 	answers an;
-	if(!game.active->ishuman()) {
-		for(auto p : *this)
-			an.add(p, p->getname());
-		return (entity*)an.random();
-	} else {
-		for(auto p : *this)
-			an.add(p, p->getname());
-		if(an) {
-			auto value = an.begin()[0].value;
-			if(bsdata<systemi>::have(value))
-				return game.choosesystem(an, *this);
-		}
-		return (entity*)an.choose(getnm(id));
+	for(auto p : source)
+		an.add(p, p->getname());
+	return (entity*)an.choose(getnm(id));
+}
+
+entity* entitya::choose(const char* id) const {
+	if(!count)
+		return 0;
+	if(!game.active->ishuman())
+		return choose_ai(*this, id);
+	else {
+		auto value = data[0];
+		if(bsdata<systemi>::have(value))
+			return game.choosesystem(*this);
+		return choose_human(*this, id);
 	}
 }
 

@@ -13,4 +13,4 @@ GhostShip
 IndustrialInitiative
  use SelectPlanetYouControl FilterIndustrial+1 TradeGoods+1
 Insubordination
- use SelectPlayer NoActivePlayer ChoosePlayer ActionToken-1
+ use SelectPlayer NoActivePlayer ChoosePlayer TacticToken-1

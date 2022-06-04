@@ -100,6 +100,7 @@ void draw::painthilite() {
 	fore = colors::active;
 	caret = hilite_position;
 	field(hilite_type, hilite_size);
+	hot.cursor = cursor::Hand;
 	fore = push_fore;
 	caret = push_caret;
 }

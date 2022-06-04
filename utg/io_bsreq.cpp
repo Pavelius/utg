@@ -122,9 +122,9 @@ static void read_value(valuei& e, const bsreq* req) {
 			e.text = szdup(temp);
 		else if(req->type == bsmeta<variant>::meta) {
 			variant v1 = (const char*)temp;
-			v1.counter = last_bonus;
 			if(!v1)
 				log::error(p, "Can't find variant `%1`", temp);
+			v1.counter = last_bonus;
 			e.number = v1.u;
 		} else {
 			auto offset = 0;

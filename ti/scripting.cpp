@@ -108,6 +108,7 @@ static void filter_exhaust(int bonus, int param) {
 }
 
 static void filter_activated(int bonus, int param) {
+	querry.activated(playeri::last, bonus != -1);
 }
 
 static void speaker(int bonus, int param) {
@@ -177,6 +178,17 @@ static void apply_value(indicator_s v, int value) {
 		break;
 	default:
 		playeri::last->indicators[v] = n1;
+		if(n1 < n0) {
+			draw::warning(getnm("LoseIndicator"),
+				playeri::last->getname(),
+				getnm(bsdata<indicatori>::elements[v].id),
+				iabs(n0 - n1));
+		} else {
+			draw::information(getnm("GainIndicator"),
+				playeri::last->getname(),
+				getnm(bsdata<indicatori>::elements[v].id),
+				iabs(n0 - n1));
+		}
 		break;
 	}
 }
@@ -222,8 +234,10 @@ static void script_run(variant v) {
 		if(game.options<=0)
 			game.options = 1;
 		p->run();
-	} else
-		draw::warning(getnm("ErrorScriptType"), bsdata<varianti>::get(v.type).id);
+	} else {
+		auto& ei = bsdata<varianti>::get(v.type);
+		draw::warning(getnm("ErrorScriptType"), ei.id);
+	}
 }
 
 void playeri::apply(const variants& source) {

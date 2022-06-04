@@ -73,9 +73,14 @@ Imperial initiative(8)
 SardakkNorr
  troops Carrier+2 Cruiser Infantry+5 SpaceDock PDS
 
+#Function
+
+ChooseSystemToActivate
+ script SelectSystem FilterActivated-1 ChooseSystem ActivateSystem
+
 #Component
 
 TacticAction trigger(ChooseAction)
- use TacticToken-1 SelectSystem ChooseSystem ActivateSystem TacticalMove TacticalProduce
+ use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalProduce
 PassAction trigger(ChooseAction)
  use IfPlayStrategy ActionPhasePass

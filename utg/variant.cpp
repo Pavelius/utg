@@ -88,7 +88,7 @@ template<> variant::variant(const char* v) : u(0) {
 	if(v) {
 		auto size = zlen(v);
 		for(auto& e : bsdata<varianti>()) {
-			if(!e.source || !e.metadata)
+			if(!e.source || !e.metadata || e.key_count != 1)
 				continue;
 			int i = e.found(v, size);
 			if(i != -1) {

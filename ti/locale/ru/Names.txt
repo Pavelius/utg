@@ -36,6 +36,7 @@ FleetToken: Резерв флота
 FocusedResearch: Сфокусированное исследование
 Fria: Фрия
 FrontlineDeployment: Развертывание на фронте
+GainIndicator: %1 получили %3i %2
 GhostShip: Призрачный корабль
 Imperial: Имперская стратегия
 IndustrialInitiative: Промышленная инициатива
@@ -46,6 +47,7 @@ LazarSystem: Система Лазар
 Leadership: Лидерская стратегия
 Lodor: Лодор
 LodorSystem: Система Лодор
+LoseIndicator: %1 потратили %3i %2
 MecatolRex: Мекатол Рекс
 MecatolRexSystem: Система Мекатол Рекс
 Meer: Миир
@@ -86,7 +88,14 @@ Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
 VefutIISystem: Система Верфут II
+VictoryPoints: 
 Warfare: Военная стратегия
 WellonSystem: Система Веллон
 WormholeAlphaSystem: Кротовая нора Альфа
 WormholeBetaSystem: Кротовая нора Бэта
+Дипломатическая стратегия: 
+Имперская стратегия: 
+Лидерская стратегия: 
+Строительная стратегия: 
+Технологическая стратегия: 
+Торговая стратегия: 

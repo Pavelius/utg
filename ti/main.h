@@ -148,6 +148,7 @@ struct troop : entity {
 	void			paint() const;
 };
 struct entitya : public adat<entity*> {
+	void			activated(const playeri* player, bool keep);
 	void			addu(entity* v);
 	entity*			choose(const char* title) const;
 	void			filter(const entity* object, bool keep);
@@ -165,6 +166,7 @@ struct entitya : public adat<entity*> {
 	void			select(array& source);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
+	entity*			random() const;
 };
 struct combat {
 	entitya			attacker, defender;
@@ -218,7 +220,7 @@ struct gamei {
 	indicator_s		indicator;
 	static void*	result;
 	static int		options;
-	systemi*		choosesystem(answers& an, const entitya& source);
+	static systemi* choosesystem(const entitya& source);
 	void			focusing(const entity* p);
 	static void		initialize();
 	void			prepare();

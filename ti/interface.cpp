@@ -93,6 +93,17 @@ void status_info(void) {
 }
 
 void systemi::paint() const {
+	auto push_caret = caret;
+	caret.y -= size - 24;
+	auto res = getres("races_small");
+	for(auto p : game.players) {
+		if(isactivated(p)) {
+			image(res, getbsi(p), 0);
+			caret.x += 32;
+			caret.y += 16;
+		}
+	}
+	caret = push_caret;
 }
 
 static void textcn(const char* format) {
@@ -321,9 +332,10 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	return ps;
 }
 
-systemi* gamei::choosesystem(answers& an, const entitya& source) {
+systemi* gamei::choosesystem(const entitya& source) {
 	for(auto p : source)
 		add_maker(p, figure::Circle, size/2);
+	answers an;
 	auto result = an.choose(0, getnm("Cancel"), 1);
 	remove_all_markers();
 	return (systemi*)result;
