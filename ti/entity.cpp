@@ -6,6 +6,27 @@ int entity::get(ability_s v) const {
 	return 0;
 }
 
+int	entity::getsumary(unit_type_s v) const {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.location != this || !e.type)
+			continue;
+		if(e.type->type==v)
+			result++;
+	}
+	return result;
+}
+
+int	entity::getsumary(ability_s v) const {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.location != this || !e.type)
+			continue;
+		result += e.type->abilities[v];
+	}
+	return result;
+}
+
 systemi* entity::getsystem() const {
 	if(!this)
 		return 0;

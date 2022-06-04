@@ -112,6 +112,12 @@ static bool isvictory() {
 	return false;
 }
 
+void gamei::limitcapacity() {
+	for(auto& e : bsdata<systemi>()) {
+
+	}
+}
+
 void gamei::play() {
 	do {
 		strategy_phase();

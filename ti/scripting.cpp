@@ -9,6 +9,42 @@ static int			last_value;
 static bool			if_able_mode;
 static fnforeach	for_each;
 
+static void apply_value(indicator_s v, int value) {
+	if(value == 0) {
+		// Simple get value
+		last_value = playeri::last->get(v);
+		return;
+	} else if(value == 100)
+		value = last_value;
+	auto n0 = playeri::last->get(v);
+	auto n1 = n0 + value;
+	if(n1 < 0)
+		return;
+	switch(v) {
+	case Resources:
+	case Influence:
+		break;
+	case CommandToken:
+		game.options = value;
+		choosestep::run("ChooseCommandToken");
+		break;
+	default:
+		playeri::last->indicators[v] = n1;
+		if(n1 < n0) {
+			draw::warning(getnm("LoseIndicator"),
+				playeri::last->getname(),
+				getnm(bsdata<indicatori>::elements[v].id),
+				iabs(n0 - n1));
+		} else {
+			draw::information(getnm("GainIndicator"),
+				playeri::last->getname(),
+				getnm(bsdata<indicatori>::elements[v].id),
+				iabs(n0 - n1));
+		}
+		break;
+	}
+}
+
 static void no_active_player(int bonus, int param) {
 	players.filter(game.active, false);
 }
@@ -60,7 +96,8 @@ static void choose_system(int bonus, int param) {
 
 static void replenish_commodities(int bonus, int param) {
 	auto p = playeri::last;
-	p->set(Commodities, p->commodities);
+	auto n = p->commodities - p->get(Commodities);
+	apply_value(Commodities, n);
 }
 
 static void change_influence(int bonus, int param) {
@@ -76,7 +113,7 @@ static void change_influence(int bonus, int param) {
 static void activate_system(int bonus, int param) {
 	if(!systemi::last)
 		return;
-	game.setcamera(systemi::last);
+	game.focusing(systemi::last);
 	systemi::last->setactivate(playeri::last, bonus != -1);
 }
 
@@ -106,6 +143,10 @@ static void filter_technology_speciality(int bonus, int param) {
 }
 
 static void filter_exhaust(int bonus, int param) {
+}
+
+static void filter_indicator(int bonus, int param) {
+	querry.match((indicator_s)param, bonus != -1);
 }
 
 static void filter_activated(int bonus, int param) {
@@ -156,42 +197,6 @@ static void tactical_move(int bonus, int param) {
 }
 
 static void tactical_produce(int bonus, int param) {
-}
-
-static void apply_value(indicator_s v, int value) {
-	if(value == 0) {
-		// Simple get value
-		last_value = playeri::last->get(v);
-		return;
-	} else if(value == 100)
-		value = last_value;
-	auto n0 = playeri::last->get(v);
-	auto n1 = n0 + value;
-	if(n1 < 0)
-		return;
-	switch(v) {
-	case Resources:
-	case Influence:
-		break;
-	case CommandToken:
-		game.options = value;
-		choosestep::run("ChooseCommandToken");
-		break;
-	default:
-		playeri::last->indicators[v] = n1;
-		if(n1 < n0) {
-			draw::warning(getnm("LoseIndicator"),
-				playeri::last->getname(),
-				getnm(bsdata<indicatori>::elements[v].id),
-				iabs(n0 - n1));
-		} else {
-			draw::information(getnm("GainIndicator"),
-				playeri::last->getname(),
-				getnm(bsdata<indicatori>::elements[v].id),
-				iabs(n0 - n1));
-		}
-		break;
-	}
 }
 
 static void for_each_player(variant v) {
@@ -285,6 +290,7 @@ BSDATA(script) = {
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
 	{"FilterAnyHomeSystem", filter_home_system, 1},
+	{"FilterCommodities", filter_indicator, Commodities},
 	{"FilterCultural", filter_planet_type, Cultural},
 	{"FilterExhaust", filter_exhaust},
 	{"FilterIndustrial", filter_planet_type, Industrial},

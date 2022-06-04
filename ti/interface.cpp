@@ -354,7 +354,7 @@ void gamei::prepareui() {
 	draw::setcamera(h2p({2, 0}, size));
 }
 
-void gamei::setcamera(entity* p) {
+void gamei::focusing(const entity* p) {
 	auto ps = p->getsystem();
 	draw::slidecamera(h2p(i2h(ps->index), size), 48);
 }

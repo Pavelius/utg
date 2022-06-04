@@ -47,6 +47,10 @@ ChooseSystemToActivate
  script SelectSystem FilterActivated-1 ChooseSystem ActivateSystem
 BuyResearchTechnology
  script Resources-4 ResearchTechnology+1
+GainGoods
+ script TradeGoods+3
+GainGoodsSuplier
+ script SelectPlayer NoActivePlayer FilterCommodities-1 ChoosePlayer ReplenishCommodities
 
 #Strategy
 
@@ -63,7 +67,7 @@ Construction initiative(4)
  primary SelectPlanetYouControl ChoosePlanet PDSorDock NextAction SelectPlanetYouControl ChoosePlanet PDS
  secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem PDSorDock
 Trade initiative(5)
- primary TradeGoods+3 NextAction ReplenishCommodities NextAction SelectPlayer NoActivePlayer ChoosePlayer ReplenishCommodities
+ primary GainGoods ReplenishCommodities GainGoodsSuplier
  secondary StrategyToken-1 ReplenishCommodities
 Warfare initiative(6)
  primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 NextAction RedistributeCommandTokens

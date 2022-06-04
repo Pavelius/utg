@@ -6,3 +6,5 @@ BSMETA(function) = {
 	BSREQ(script),
 	{}};
 BSDATAC(function, 512)
+
+function* function::last;

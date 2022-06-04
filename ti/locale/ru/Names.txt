@@ -22,6 +22,7 @@ ChooseCommandToken: Выбирайте резевр
 ChooseOptions: (осталось [%1i])
 ChooseStrategy: Выбирайте стратегию
 ChooseSystem: Выбирайте систему
+Commodities: Продукция
 Construction: Строительная стратегия
 Continue: Продолжить
 Coorneeq: Корник

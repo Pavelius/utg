@@ -33,9 +33,11 @@ void script::run(variant v) {
 	if(v.iskind<script>()) {
 		auto p = bsdata<script>::elements + v.value;
 		p->proc(v.counter, p->param);
-	} else if(v.iskind<function>())
+	} else if(v.iskind<function>()) {
+		auto push_last = function::last;
 		run(bsdata<function>::elements[v.value].script);
-	else if(v.iskind<conditioni>()) {
+		function::last = push_last;
+	} else if(v.iskind<conditioni>()) {
 		auto p = bsdata<conditioni>::elements + v.value;
 		if(v.counter >= 0) {
 			if(!p->proc(v.counter, p->param))

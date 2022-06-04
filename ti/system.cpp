@@ -43,3 +43,14 @@ void systemi::placement(variants source, playeri* player) {
 			placement(bsdata<uniti>::elements + v.value, player);
 	}
 }
+
+void systemi::limitcapacity() {
+	while(true) {
+		auto capacity = getsumary(Capacity);
+		auto total_ships = getsumary(Ships);
+		auto total_ground = getsumary(GroundForces);
+		auto total = total_ships + total_ground;
+		if(capacity >= total)
+			break;
+	}
+}

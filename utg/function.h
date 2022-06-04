@@ -5,4 +5,5 @@
 struct function {
 	const char*		id;
 	variants		script;
+	static function* last;
 };

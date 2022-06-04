@@ -94,6 +94,8 @@ struct entity : nameable {
 	const char*		getname() const { return getnm(getid()); }
 	planeti*		getplanet() const;
 	color_s			getspeciality() const;
+	int				getsumary(ability_s v) const;
+	int				getsumary(unit_type_s v) const;
 	systemi*		getsystem() const;
 	planet_trait_s	gettrait() const;
 	bool			is(flag_s v) const;
@@ -127,9 +129,10 @@ struct systemi : entity {
 	tile_s			special;
 	pathfind::indext index;
 	static systemi*	last;
+	planeti*		getbestplanet() const;
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const { return index != pathfind::Blocked; }
-	planeti*		getbestplanet() const;
+	void			limitcapacity();
 	void			paint() const;
 	void			placement(const uniti* unit, playeri* player);
 	void			placement(variants source, playeri* player);
@@ -221,13 +224,13 @@ struct gamei {
 	static int		options;
 	static systemi* choosesystem(const entitya& source);
 	static troop*	choosetroop(const entitya& source);
-	void			focusing(const entity* p);
+	static void		focusing(const entity* p);
 	static void		initialize();
+	void			limitcapacity();
 	void			prepare();
 	void			prepareui();
 	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
-	static void		setcamera(entity* p);
 	static void		updateui();
 };
 struct playeri : nameable {

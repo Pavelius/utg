@@ -22,6 +22,9 @@
     <Filter Include="Code">
       <UniqueIdentifier>{770f1060-921d-4cc9-af9e-169795a63941}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{aa9db02c-a318-4378-9a8f-f70ff6dabd90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="answers.cpp">
@@ -186,9 +189,6 @@
     <ClCompile Include="dataset.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="condition.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="property.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -216,14 +216,17 @@
     <ClCompile Include="code_package.cpp">
       <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="function.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="speech.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="function.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="script.cpp">
-      <Filter>Support</Filter>
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="condition.cpp">
+      <Filter>Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,9 +365,6 @@
     <ClInclude Include="dataset.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="condition.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="property.h">
       <Filter>Support</Filter>
     </ClInclude>
@@ -392,14 +392,17 @@
     <ClInclude Include="code_package.h">
       <Filter>Code</Filter>
     </ClInclude>
-    <ClInclude Include="function.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="speech.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
     <ClInclude Include="script.h">
-      <Filter>Support</Filter>
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="condition.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
