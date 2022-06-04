@@ -227,6 +227,24 @@ static void for_each_planet(variant v) {
 	planeti::last = push_last;
 }
 
+static void unit_placement(uniti* p, int count) {
+	if(!count)
+		count = 1;
+	if(p->type==GroundForces || p->type==Structures) {
+		game.focusing(planeti::last);
+		for(auto i = 0; i < count; i++)
+			troop::add(p, playeri::last, planeti::last);
+		game.updateui();
+		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(p->id), count);
+	} else if(p->type == Ships) {
+		game.focusing(systemi::last);
+		for(auto i = 0; i < count; i++)
+			troop::add(p, playeri::last, systemi::last);
+		game.updateui();
+		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(p->id), count);
+	}
+}
+
 static void script_run(variant v) {
 	if(v.iskind<indicatori>())
 		apply_value((indicator_s)v.value, v.counter);
@@ -237,10 +255,12 @@ static void script_run(variant v) {
 		auto p = bsdata<choosestep>::elements + v.value;
 		if(v.counter != 0)
 			game.options = v.counter;
-		if(game.options<=0)
+		if(game.options <= 0)
 			game.options = 1;
 		p->run();
-	} else {
+	} else if(v.iskind<uniti>())
+		unit_placement(bsdata<uniti>::elements + v.value, v.counter);
+	else {
 		auto& ei = bsdata<varianti>::get(v.type);
 		draw::warning(getnm("ErrorScriptType"), ei.id);
 	}

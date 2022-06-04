@@ -98,5 +98,7 @@ TheUniversitiesOfJolNar
 
 TacticAction trigger(ChooseAction)
  use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalProduce
+OrbitalDrop trigger(ChooseAction)
+ use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2
 PassAction trigger(ChooseAction)
  use IfPlayStrategy ActionPhasePass

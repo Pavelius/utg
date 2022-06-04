@@ -99,7 +99,7 @@ void systemi::paint() const {
 	for(auto p : game.players) {
 		if(isactivated(p)) {
 			image(res, getbsi(p), 0);
-			caret.x += 32;
+			caret.x += 30;
 			caret.y += 16;
 		}
 	}

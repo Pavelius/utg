@@ -76,11 +76,13 @@ Nar: Нар
 NebulaSystem: Небула
 NewAlbion: Новый Альбион
 NewAlbionSystem: Система Новый Альбион
+OrbitalDrop: Высадка с орбиты
 P0p0p0: [0.0.0]
 PDS: ПВС
 PassAction: Закончить фазу действий
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
+PlaceUnits: %1 разместили %3i %2
 Politics: Политическая стратегия
 Quann: Кван
 QuannSystem: Система Кван
@@ -130,3 +132,9 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
+Военная стратегия: 
+Дипломатическая стратегия: 
+Имперская стратегия: 
+Лидерская стратегия: 
+Технологическая стратегия: 
+Торговая стратегия: 
