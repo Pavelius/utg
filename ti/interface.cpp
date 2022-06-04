@@ -120,7 +120,7 @@ static void textv(const char* format, ...) {
 	textcn(temp);
 }
 
-static void buttonback(int size) {
+static void buttonback(int size, void* data) {
 	auto push_alpha = alpha;
 	rectpush push;
 	width = size * 2;
@@ -131,12 +131,17 @@ static void buttonback(int size) {
 	rectf();
 	alpha = push_alpha;
 	rectb();
+	if(data && ishilite()) {
+		hilite_object = data;
+		if(hot.key == MouseLeft && !hot.pressed)
+			execute(buttonparam, (long)data);
+	}
 }
 
 void troop::paint(unsigned flags) const {
 	auto push_color = fore;
 	fore = colors::red.mix(colors::black);
-	buttonback(43);
+	buttonback(43, 0);
 	fore = push_color;
 	textcn(getname());
 }
@@ -188,7 +193,7 @@ void planeti::paint(unsigned flags) const {
 		const double sin = 0.6427876096865;
 		const double radius = 74.0;
 		caret = push_caret;
-		caret.x -= (short)(radius * cos)*multiplier; caret.y -= (short)(radius * sin);
+		caret.x -= (short)(radius * cos) * multiplier; caret.y -= (short)(radius * sin);
 		image(getres("traits"), trait - 1, 0);
 	}
 	fore = push_fore;
@@ -287,11 +292,10 @@ static void add_system(systemi* ps, point pt) {
 	p->set(object::DisableInput);
 	add_planets(pt, ps);
 	switch(ps->special) {
-	case WormholeAlpha: add_special(pt, ps->special_index, 0); break;
-	case WormholeBeta: add_special(pt, ps->special_index, 1); break;
-	case Nebula: add_special(pt, 3, 2); break;
-	case Supernova: add_special(pt, 3, 3); break;
-	default: break;
+	case NoSpecialTile: break;
+	case WormholeAlpha: add_special(pt, ps->special_index, ps->special - 1); break;
+	case WormholeBeta: add_special(pt, ps->special_index, ps->special - 1); break;
+	default: add_special(pt, 3, ps->special - 1); break;
 	}
 }
 
@@ -340,7 +344,7 @@ troop* gamei::choosetroop(const entitya& source) {
 
 systemi* gamei::choosesystem(const entitya& source) {
 	for(auto p : source)
-		add_maker(p, figure::Circle, size/2);
+		add_maker(p, figure::Circle, size / 3);
 	answers an;
 	auto result = an.choose(0, getnm("Cancel"), 1);
 	remove_all_markers();

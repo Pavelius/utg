@@ -1,5 +1,7 @@
 #include "main.h"
 
+using namespace pathfind;
+
 gamei	game;
 int		gamei::options;
 void*	gamei::result;
@@ -29,9 +31,29 @@ int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	return (int)an.choose(temp);
 }
 
+static point getdirection(point hex, int direction) {
+	static point evenr_directions[2][6] = {
+		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
+		{{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}},
+	};
+	auto parity = hex.y & 1;
+	auto offset = evenr_directions[parity][direction];
+	return hex + offset;
+}
+
+static indext getdirection(indext index, int direction) {
+	if(index == Blocked)
+		return Blocked;
+	auto hex = getdirection(i2h(index), direction);
+	if(hex.x < 0 || hex.y < 0 || hex.x >= hms || hex.y >= hms)
+		return Blocked;
+	return h2i(hex);
+}
+
 void gamei::initialize() {
 	pathfind::maxcount = hms * hms;
 	pathfind::maxdir = 6;
+	pathfind::to = getdirection;
 }
 
 static void choose_step(const char* id) {

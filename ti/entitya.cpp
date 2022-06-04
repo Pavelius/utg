@@ -23,8 +23,6 @@ void entitya::select(const playeri* player, const entity* location) {
 	auto ps = data;
 	auto pe = endof();
 	for(auto& e : bsdata<troop>()) {
-		if(!e)
-			continue;
 		if(e.player != player || e.location != location)
 			continue;
 		if(ps < pe)
@@ -122,6 +120,27 @@ void entitya::match(flag_s value, bool keep) {
 	count = ps - data;
 }
 
+void entitya::matchmove(int mode, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		auto pd = p->getsystem();
+		if(!pd)
+			continue;
+		switch(mode) {
+		case 1:
+			if(pd->movethrought() == keep)
+				continue;
+			break;
+		default:
+			if(pd->movestop() == keep)
+				continue;
+			break;
+		}
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void entitya::match(indicator_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
@@ -191,14 +210,14 @@ static entity* choose_ai(const entitya& source, const char* id) {
 	return source.random();
 }
 
-static entity* choose_human(const entitya& source, const char* id) {
+static entity* choose_human(const entitya& source, const char* id, const char* cancel) {
 	answers an;
 	for(auto p : source)
 		an.add(p, p->getname());
-	return (entity*)an.choose(getnm(id));
+	return (entity*)an.choose(getnm(id), cancel);
 }
 
-entity* entitya::choose(const char* id) const {
+entity* entitya::choose(const char* id, const char* cancel) const {
 	if(!count)
 		return 0;
 	if(!game.active->ishuman())
@@ -207,7 +226,7 @@ entity* entitya::choose(const char* id) const {
 		auto value = data[0];
 		if(bsdata<systemi>::have(value))
 			return game.choosesystem(*this);
-		return choose_human(*this, id);
+		return choose_human(*this, id, cancel);
 	}
 }
 

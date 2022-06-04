@@ -110,3 +110,9 @@ troop* entity::sibling(troop* pb) const {
 	}
 	return 0;
 }
+
+const char* entity::getname() const {
+	if(bsdata<troop>::have(this))
+		return getnm(((troop*)this)->type->id);
+	return getnm(getid());
+}

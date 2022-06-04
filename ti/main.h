@@ -91,7 +91,7 @@ struct entity : nameable {
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	const char*		getid() const;
-	const char*		getname() const { return getnm(getid()); }
+	const char*		getname() const;
 	planeti*		getplanet() const;
 	color_s			getspeciality() const;
 	int				getsumary(ability_s v) const;
@@ -133,6 +133,9 @@ struct systemi : entity {
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const { return index != pathfind::Blocked; }
 	void			limitcapacity();
+	bool			movestop() const;
+	bool			movethrought() const;
+	void			moveunits();
 	void			paint() const;
 	void			placement(const uniti* unit, playeri* player);
 	void			placement(variants source, playeri* player);
@@ -159,7 +162,7 @@ struct troop : entity {
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
 	void			addu(entity* v);
-	entity*			choose(const char* title) const;
+	entity*			choose(const char* title, const char* cancel = 0) const;
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
 	entity*			getbest(indicator_s v) const;
@@ -172,6 +175,7 @@ struct entitya : public adat<entity*> {
 	void			match(color_s value, bool keep);
 	void			match(flag_s value, bool keep);
 	void			match(indicator_s value, bool keep);
+	void			matchmove(int mode, bool keep);
 	void			select(array& source);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
@@ -227,6 +231,7 @@ struct gamei {
 	static void		focusing(const entity* p);
 	static void		initialize();
 	void			limitcapacity();
+	void			makewave();
 	void			prepare();
 	void			prepareui();
 	void			play();

@@ -35,6 +35,7 @@ WormholeAlphaSystem special(WormholeAlpha) special_index(3)
 WormholeBetaSystem special(WormholeBeta) special_index(3)
 SupernovaSystem special(Supernova)
 NebulaSystem special(Nebula)
+GravityRiftSystem special(GravityRift)
 EmpthySystem1
 EmpthySystem2
 EmpthySystem3

@@ -189,11 +189,17 @@ static void querry_count(int bonus, int param) {
 	last_value = querry.getcount();
 }
 
+static void filter_move(int bonus, int param) {
+	querry.matchmove(param, bonus != -1);
+}
+
 static void action_phase_pass(int bonus, int param) {
 	playeri::last->pass_action_phase = (bonus != -1);
 }
 
 static void tactical_move(int bonus, int param) {
+	if(playeri::last->ishuman())
+		systemi::last->moveunits();
 }
 
 static void tactical_produce(int bonus, int param) {
@@ -316,6 +322,7 @@ BSDATA(script) = {
 	{"FilterIndustrial", filter_planet_type, Industrial},
 	{"FilterHasardous", filter_planet_type, Hazardous},
 	{"FilterHomeSystem", filter_home_system},
+	{"FilterMoveStop", filter_move, 0},
 	{"FilterPlanetTrait", filter_planet_type, NoTrait},
 	{"FilterSystem", filter_system},
 	{"FilterTechnologySpeciality", filter_technology_speciality},
