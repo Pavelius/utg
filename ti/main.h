@@ -145,7 +145,7 @@ struct troop : entity {
 	const char*		getname() const { return getnm(type->id); }
 	int				getstackcount() const;
 	troop*			getstackholder();
-	void			paint() const;
+	void			paint(unsigned flags) const;
 };
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
@@ -185,13 +185,6 @@ struct objectivei : nameable {
 	char			stage, value;
 	variants		condition;
 };
-class galaxy {
-	unsigned short	tiles[hms * hms];
-public:
-	void			cleargalaxy();
-	systemi*		get(pathfind::indext) const;
-	void			set(pathfind::indext, const systemi* v);
-};
 class gamestring : public stringbuilder {
 	void			addidentifier(const char* identifier) override;
 public:
@@ -213,6 +206,10 @@ struct component : nameable {
 struct actioncardi : component {
 	char			count;
 };
+struct pointline {
+	point			position;
+	char			count;
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		active;
@@ -221,12 +218,14 @@ struct gamei {
 	static void*	result;
 	static int		options;
 	static systemi* choosesystem(const entitya& source);
+	static troop*	choosetroop(const entitya& source);
 	void			focusing(const entity* p);
 	static void		initialize();
 	void			prepare();
 	void			prepareui();
 	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
+	static void		setcamera(entity* p);
 	static void		updateui();
 };
 struct playeri : nameable {

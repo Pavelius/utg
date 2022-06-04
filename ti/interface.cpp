@@ -133,7 +133,7 @@ static void buttonback(int size) {
 	rectb();
 }
 
-void troop::paint() const {
+void troop::paint(unsigned flags) const {
 	auto push_color = fore;
 	fore = colors::red.mix(colors::black);
 	buttonback(40);
@@ -204,7 +204,7 @@ static void object_paint(const object* po) {
 	else if(bsdata<planeti>::have(p))
 		((planeti*)p)->paint(po->flags);
 	else if(bsdata<troop>::have(p))
-		((troop*)p)->paint();
+		((troop*)p)->paint(po->flags);
 }
 
 static void update_system() {
@@ -332,6 +332,12 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	return ps;
 }
 
+troop* gamei::choosetroop(const entitya& source) {
+	answers an;
+	auto result = an.choose(0, getnm("Cancel"), 1);
+	return (troop*)result;
+}
+
 systemi* gamei::choosesystem(const entitya& source) {
 	for(auto p : source)
 		add_maker(p, figure::Circle, size/2);
@@ -345,7 +351,12 @@ void gamei::prepareui() {
 	object::afterpaint = object_paint;
 	clearobjects();
 	add_systems();
-	setcamera(h2p({2, 0}, size));
+	draw::setcamera(h2p({2, 0}, size));
+}
+
+void gamei::setcamera(entity* p) {
+	auto ps = p->getsystem();
+	draw::slidecamera(h2p(i2h(ps->index), size), 48);
 }
 
 static void update_units(point position, const entity* location) {

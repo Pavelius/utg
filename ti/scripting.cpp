@@ -76,6 +76,7 @@ static void change_influence(int bonus, int param) {
 static void activate_system(int bonus, int param) {
 	if(!systemi::last)
 		return;
+	game.setcamera(systemi::last);
 	systemi::last->setactivate(playeri::last, bonus != -1);
 }
 

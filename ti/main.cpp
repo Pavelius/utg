@@ -50,7 +50,7 @@ static void test_answers() {
 	//auto p2 = bsdata<strategyi>::elements + 1;
 	//game.active->apply(p2->primary);
 	test_speech();
-	test_choose();
+	//test_choose();
 	test_script();
 }
 

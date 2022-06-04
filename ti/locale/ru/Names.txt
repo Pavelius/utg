@@ -5,12 +5,15 @@ AppTitle: Сумрачная империя
 ApplyExhaust: Планета %1 истощена
 Arinam: Эринам
 ArinamSystem: Система Аринам
+Arnor: Арнор
 ArnorSystem: Система Арнор
 AsteroidFieldSystem: Поле астероидов
 AsteroidFieldSystem2: Поле астероидов
+Bereg: Берег
 BeregSystem: Система Берег
 Cancel: Отмена
 Carrier: Транспорт
+Centauri: Центаури
 CentauriSystem: Система Центаури
 ChooseAction: Выбирайте действие
 ChooseCommandToken: Выбирайте резевр
@@ -22,6 +25,7 @@ Continue: Продолжить
 Coorneeq: Корник
 CoorneeqSystem: Система Курниик
 Cruiser: Крейсер
+DalBootha: Дал Бутса
 DalBoothaSystem: Система Дал Бутса
 Diplomacy: Дипломатическая стратегия
 EconomicInitiative: Экономическая инициатива
@@ -38,64 +42,80 @@ Fria: Фрия
 FrontlineDeployment: Развертывание на фронте
 GainIndicator: %1 получили %3i %2
 GhostShip: Призрачный корабль
+Gral: Грал
 Imperial: Имперская стратегия
 IndustrialInitiative: Промышленная инициатива
 Infantry: Пехота
 Influence: Влияние
 Insubordination: Неподчинение
+Lazar: Лазар
 LazarSystem: Система Лазар
 Leadership: Лидерская стратегия
+LirtaVI: Лирта VI
 Lodor: Лодор
 LodorSystem: Система Лодор
+Lor: Лор
 LoseIndicator: %1 потратили %3i %2
 MecatolRex: Мекатол Рекс
 MecatolRexSystem: Система Мекатол Рекс
 Meer: Миир
+MeharXull: Мехар Ксулл
 MeharXullSystem: Система Мехар Ксулл
+Mellon: Меллон
 MellonSystem: Система Мелон
 NebulaSystem: Небула
+NewAlbion: Новый Альбион
 NewAlbionSystem: Система Новый Альбион
 PDS: ПВС
 PassAction: Закончить фазу действий
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
 Politics: Политическая стратегия
+Quann: Кван
 QuannSystem: Система Кван
+Qucenn: Куцент
 QucennSystem: Система Куцент
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
+Rarron: Рарун
 RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
+Sakulag: Сакулаг
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
+Saudor: Саудор
 SaudorSystem: Система Саудор
 SetControlPlanet: %1 установили контроль над планетой %2
 SpaceDock: Доки
+Starpoint: Старпоинт
 StrategyToken: Стратегический резерв
 SupernovaSystem: Супернова
 TacticAction: Тактическое действие
 TacticToken: Тактический резерв
+TarMann: Тип Манн
 TarMannSystem: Система Тар Манн
 Technology: Технологическая стратегия
+Tequran: Текуран
 TequranSystem: Система Текуран
 TheBaronyOfLetnev: Баронство Летнев
 TheEmiratesOfHacan: Эмираты Хаканов
 TheFederationOfSol: Федерация Сол
 TheL1Z1XMindnet: Сеть разума L1Z1
 TheUniversitiesOfJolNar: Вселенные Жол-Наров
+Thibah: Тсибан
 ThibahSystem: Система Тсибан
+Torkan: Торкан
 Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
-VefutIISystem: Система Верфут II
-VictoryPoints: 
+VefutII: Верфут II
+VefutIISystem: Система Вефут II
+VictoryPoints: Очки победы
 Warfare: Военная стратегия
+Wellon: Веллон
 WellonSystem: Система Веллон
 WormholeAlphaSystem: Кротовая нора Альфа
 WormholeBetaSystem: Кротовая нора Бэта
-Дипломатическая стратегия: 
-Имперская стратегия: 
+Xxehan: Ксехан
+Zhobat: Зобат
 Лидерская стратегия: 
-Строительная стратегия: 
-Технологическая стратегия: 
-Торговая стратегия: 

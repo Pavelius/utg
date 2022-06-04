@@ -1,2 +1,3 @@
-﻿In file `rules/ActionCards.txt`:
- Line 16: Can't find variant `ActionToken`
+﻿In file `Names.txt`:
+ Define translate for `Qucenn`
+ Define translate for `Rarron`
