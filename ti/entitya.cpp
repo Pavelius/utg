@@ -172,11 +172,20 @@ void entitya::filter(const entity* object, bool keep) {
 
 entity* entitya::choose(const char* id) const {
 	answers an;
-	for(auto p : *this)
-		an.add(p, p->getname());
-	if(game.active->ishuman())
+	if(!game.active->ishuman()) {
+		for(auto p : *this)
+			an.add(p, p->getname());
+		return (entity*)an.random();
+	} else {
+		for(auto p : *this)
+			an.add(p, p->getname());
+		if(an) {
+			auto value = an.begin()[0].value;
+			if(bsdata<systemi>::have(value))
+				return game.choosesystem(an, *this);
+		}
 		return (entity*)an.choose(getnm(id));
-	return (entity*)an.random();
+	}
 }
 
 entity* entitya::getbest(indicator_s v) const {

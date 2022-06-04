@@ -8,6 +8,8 @@ enum class figure : unsigned char {
 };
 namespace draw {
 extern figure	hilite_type;
+extern int		hilite_size;
 void			field(figure type, int size);
 void			field(figure type, int size, const char* format);
+void			painthilite();
 }

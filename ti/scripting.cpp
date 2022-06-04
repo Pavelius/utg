@@ -55,8 +55,7 @@ static void choose_player(int bonus, int param) {
 }
 
 static void choose_system(int bonus, int param) {
-	//systemi::last = (systemi*)querry.choose(0);
-	systemi::last = game.choose(querry);
+	systemi::last = (systemi*)querry.choose(0);
 }
 
 static void replenish_commodities(int bonus, int param) {

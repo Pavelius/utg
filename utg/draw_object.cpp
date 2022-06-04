@@ -115,6 +115,7 @@ void object::initialize() {
 	def.size = 32;
 	def.alpha = 255;
 	def.flags = 0;
+	def.input = buttonparam;
 	def.set(Visible);
 }
 
@@ -150,7 +151,6 @@ static void raw_beforemodal() {
 	caret = {0, 0};
 	width = getwidth();
 	height = getheight();
-	hilite_object = 0;
 	hot.cursor = cursor::Arrow;
 	hot.hilite.clear();
 }
@@ -196,8 +196,10 @@ void object::paint() const {
 			hilite_type = figure::None;
 			if(is(Hilite) && hilite_object) {
 				hilite_type = figure::Circle;
+				hilite_position = caret;
+				hilite_size = size;
 				if(hot.key == MouseLeft && !hot.pressed)
-					execute(buttonparam, (long)hilite_object, 0, 0);
+					execute(input, (long)hilite_object, 0, 0);
 			}
 		}
 	}

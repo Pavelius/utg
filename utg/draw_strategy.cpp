@@ -242,6 +242,10 @@ static void finish() {
 	camera_finish();
 }
 
+static void tips() {
+	painthilite();
+}
+
 int draw::strategy(fnevent proc, fnevent afterread) {
 	initialize_png();
 	if(!proc)
@@ -260,6 +264,7 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
 	pfinish = finish;
+	ptips = tips;
 	awindow.flags = WFResize | WFMinmax;
 	metrics::border = 6;
 	metrics::padding = 2;

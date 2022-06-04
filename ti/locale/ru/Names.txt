@@ -16,6 +16,7 @@ ChooseAction: Выбирайте действие
 ChooseCommandToken: Выбирайте резевр
 ChooseOptions: (осталось [%1i])
 ChooseStrategy: Выбирайте стратегию
+ChooseSystem: Выбирайте систему
 Construction: Строительная стратегия
 Continue: Продолжить
 Coorneeq: Корник
@@ -89,7 +90,3 @@ Warfare: Военная стратегия
 WellonSystem: Система Веллон
 WormholeAlphaSystem: Кротовая нора Альфа
 WormholeBetaSystem: Кротовая нора Бэта
-Военная стратегия: 
-Лидерская стратегия: 
-Технологическая стратегия: 
-Торговая стратегия: 

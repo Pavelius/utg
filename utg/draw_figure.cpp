@@ -91,3 +91,15 @@ void draw::field(figure type, int size, const char* format) {
 		caret = push_caret;
 	}
 }
+
+void draw::painthilite() {
+	if(hilite_type==figure::None || !hilite_size)
+		return;
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::active;
+	caret = hilite_position;
+	field(hilite_type, hilite_size);
+	fore = push_fore;
+	caret = push_caret;
+}

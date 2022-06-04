@@ -54,6 +54,7 @@ struct object : drawable {
 	const sprite*	font;
 	unsigned short	frame, size;
 	unsigned		flags;
+	fnevent			input;
 	static object	def;
 	static fnevent	afterpaintall;
 	static fnpaint	afterpaint;

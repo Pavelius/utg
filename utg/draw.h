@@ -159,6 +159,8 @@ extern fnevent			domodal;
 extern point			dragmouse, caret, camera, tips_caret, tips_size;
 extern color			fore, fore_stroke;
 extern const void*		hilite_object;
+extern point			hilite_position;
+extern int				hilite_size;
 extern unsigned char    alpha;
 extern int				width, height, fsize, dialog_width;
 extern bool				text_clipped, control_hilited;

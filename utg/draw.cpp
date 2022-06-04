@@ -41,6 +41,8 @@ color*				draw::palt;
 rect				draw::clipping;
 hoti				draw::hot;
 const void*			draw::hilite_object;
+point				draw::hilite_position;
+int					draw::hilite_size;
 // Hot keys and menus
 rect				sys_static_area;
 // Locale draw variables
@@ -2403,6 +2405,8 @@ static void beforemodal() {
 	width = getwidth();
 	height = getheight();
 	hilite_object = 0;
+	hilite_position.clear();
+	hilite_size = 0;
 	hot.cursor = cursor::Arrow;
 	hot.hilite.clear();
 	if(hot.key == InputNeedUpdate)

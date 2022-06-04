@@ -294,16 +294,39 @@ static void add_systems() {
 	answers::interactive = push_interactive;
 }
 
-systemi* gamei::choose(entitya& source) {
-	for(auto p : source) {
-		auto pd = findobject(p);
-		if(pd) {
-			pd->remove(object::DisableInput);
-			pd->set(object::Hilite);
-		}
+static void remove_all_markers() {
+	for(auto& e : bsdata<object>()) {
+		if(bsdata<object>::have(e.data))
+			e.clear();
 	}
-	answers an;
-	return (systemi*)an.choose(0, getnm("Cancel"), 1);
+}
+
+static void marker_press() {
+	auto p = (draw::object*)hot.param;
+	breakmodal((long)p->data);
+}
+
+static draw::object* add_maker(void* p, figure shape, int size, char priority = 50) {
+	auto pd = findobject(p);
+	if(!pd)
+		return 0;
+	auto ps = addobject(pd->x, pd->y);
+	ps->data = pd;
+	ps->priority = priority;
+	ps->shape = figure::Circle;
+	ps->input = marker_press;
+	ps->size = size;
+	ps->fore = colors::green;
+	ps->set(object::Hilite);
+	return ps;
+}
+
+systemi* gamei::choosesystem(answers& an, const entitya& source) {
+	for(auto p : source)
+		add_maker(p, figure::Circle, size/2);
+	auto result = an.choose(0, getnm("Cancel"), 1);
+	remove_all_markers();
+	return (systemi*)result;
 }
 
 void gamei::prepareui() {
