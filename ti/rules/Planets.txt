@@ -23,6 +23,11 @@ VefutIISystem
 WellonSystem
 
 SardakkHomeSystem home(SardakkNorr)
+TheBaronyOfLetnevHomeSystem home(TheBaronyOfLetnev)
+TheEmiratesOfHacanHomeSystem home(TheEmiratesOfHacan)
+TheFederationOfSolHomeSystem home(TheFederationOfSol)
+TheL1Z1XMindnetHomeSystem home(TheL1Z1XMindnet)
+TheUniversitiesOfJolNarHomeSystem home(TheUniversitiesOfJolNar)
 
 AsteroidFieldSystem special(AsteroidField)
 AsteroidFieldSystem2 special(AsteroidField)
@@ -94,3 +99,17 @@ Wellon resources(1) influence(2) trait(Industrial) speciality(Yellow) location(W
 
 TrenLak resources(1) influence(0) location(SardakkHomeSystem) frame(14)
 Quinarra resources(3) influence(1) location(SardakkHomeSystem) frame(12)
+
+ArcPrime resources(4) influence(0) location(TheBaronyOfLetnevHomeSystem) frame(12)
+WrenTerra resources(2) influence(1) location(TheBaronyOfLetnevHomeSystem) frame(5)
+
+Hercant resources(1) influence(1) location(TheEmiratesOfHacanHomeSystem) frame(1)
+Arretze resources(2) influence(0) location(TheEmiratesOfHacanHomeSystem) frame(2)
+Kamdorn resources(0) influence(1) location(TheEmiratesOfHacanHomeSystem) frame(1)
+
+Jord resources(4) influence(2) location(TheFederationOfSolHomeSystem) frame(5)
+
+P0p0p0 resources(5) influence(0) location(TheL1Z1XMindnetHomeSystem) frame(8)
+
+Jol resources(1) influence(2) location(TheUniversitiesOfJolNarHomeSystem) frame(7)
+Nar resources(2) influence(3) location(TheUniversitiesOfJolNarHomeSystem) frame(3)

@@ -21,6 +21,9 @@ enum planet_trait_s : unsigned char {
 enum tag_s : unsigned char {
 	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
 };
+enum racef_s : unsigned char {
+	Assimilate, Fragile,
+};
 enum flag_s : unsigned char {
 	Exhaust
 };
@@ -70,6 +73,9 @@ struct planet_traiti {
 	const char*		id;
 };
 struct unit_typei {
+	const char*		id;
+};
+struct racefi {
 	const char*		id;
 };
 struct playeri;
@@ -204,10 +210,6 @@ struct component : nameable {
 	bool			isallow() const;
 };
 struct actioncardi : component {
-	char			count;
-};
-struct pointline {
-	point			position;
 	char			count;
 };
 struct gamei {

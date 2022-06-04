@@ -162,6 +162,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playera.cpp" />
     <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="racef.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />

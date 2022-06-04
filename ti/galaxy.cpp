@@ -2,23 +2,26 @@
 
 using namespace pathfind;
 
-static pointline players6[] = {
-	{{3, 0}, 2},
-	{{2, 1}, 5},
-	{{1, 2}, 6},
-	{{2, 3}, 2},
-	{{5, 3}, 2},
-	{{1, 4}, 6},
-	{{2, 5}, 5},
-	{{3, 6}, 2},
+struct pointline {
+	point			position;
+	char			count;
 };
-
 struct galaxymap {
 	slice<pointline>	tiles;
 	point				start[6];
 };
 
-static galaxymap galaxy6 = {players6, {{2, 0}, {5, 0}, {0, 3}, {6, 0}, {2, 6}, {5, 6}}};
+static pointline players6[] = {
+	{{2, 0}, 2},
+	{{1, 1}, 5},
+	{{0, 2}, 6},
+	{{1, 3}, 2},
+	{{4, 3}, 2},
+	{{0, 4}, 6},
+	{{1, 5}, 5},
+	{{2, 6}, 2},
+};
+static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
 
 static void assign_factions() {
 	game.players.clear();
@@ -92,7 +95,7 @@ static void create_galaxy(systema& tiles, galaxymap& source) {
 		for(auto i = 0; i < e.count; i++)
 			tiles[tile_index++]->index = index++;
 	}
-	bsdata<systemi>::elements[0].index = h2i({4, 3});
+	bsdata<systemi>::elements[0].index = h2i({3, 3});
 }
 
 static void create_galaxy() {

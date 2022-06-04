@@ -14,7 +14,7 @@ BSDATAC(playeri, 32)
 BSDATAC(strategyi, 8)
 BSDATAC(systemi, 64)
 BSDATAC(techi, 128)
-BSDATAC(troop, 1024)
+BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
 BSDATAD(variant)
 

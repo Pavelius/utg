@@ -5,8 +5,10 @@
 
 using namespace draw;
 
-BSDATAC(object, 256)
-BSDATAC(draworder, 256)
+const size_t max_object_count = 512;
+
+BSDATAC(object, max_object_count)
+BSDATAC(draworder, max_object_count)
 
 fnevent				draw::object::afterpaintall;
 fnpaint				draw::object::afterpaint;
@@ -127,7 +129,7 @@ static void textcn(const char* string, int dy, unsigned flags) {
 	auto push_caret = caret;
 	caret.x -= textw(string) / 2;
 	caret.y += dy;
-	text(string, -1, flags);
+	text(string, -1, flags & (~(ImageMirrorH | ImageMirrorV)));
 	caret = push_caret;
 }
 
@@ -237,7 +239,7 @@ void draw::paintobjects() {
 	auto push_clip = clipping;
 	last_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
 	setclip(last_screen);
-	object* source[128];
+	object* source[max_object_count];
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
 	for(size_t i = 0; i < count; i++) {

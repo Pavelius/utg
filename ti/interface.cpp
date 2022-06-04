@@ -136,7 +136,7 @@ static void buttonback(int size) {
 void troop::paint(unsigned flags) const {
 	auto push_color = fore;
 	fore = colors::red.mix(colors::black);
-	buttonback(40);
+	buttonback(43);
 	fore = push_color;
 	textcn(getname());
 }
@@ -194,7 +194,7 @@ void planeti::paint(unsigned flags) const {
 	fore = push_fore;
 	caret = push_caret;
 	if(player)
-		image(gres("races_small", "art/objects"), 0, 0);
+		image(gres("races_small", "art/objects"), getbsi(player), 0);
 }
 
 static void object_paint(const object* po) {
@@ -388,9 +388,12 @@ void gamei::updateui() {
 	static point system_offset = {0, -6 * size / 10};
 	waitall();
 	for(auto& e : bsdata<object>()) {
-		if(bsdata<planeti>::have(e.data))
-			update_units(e, (entity*)e.data);
-		else if(bsdata<systemi>::have(e.data))
+		if(bsdata<planeti>::have(e.data)) {
+			if(equal("P0p0p0", ((entity*)e.data)->id))
+				update_units(e, (entity*)e.data);
+			else
+				update_units(e, (entity*)e.data);
+		} else if(bsdata<systemi>::have(e.data))
 			update_units(e + system_offset, (entity*)e.data);
 	}
 	waitall();
