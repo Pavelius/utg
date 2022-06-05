@@ -20,9 +20,11 @@ CentauriSystem: Система Центаури
 ChooseAction: Выбирайте действие
 ChooseCommandToken: Выбирайте резевр
 ChooseMove: Выбирайте корабли для передвижения
+ChooseMoveOption: Что нужно сделать кораблю?
 ChooseOptions: (осталось [%1i])
 ChooseStrategy: Выбирайте стратегию
 ChooseSystem: Выбирайте систему
+ChooseUploadUnits: Какие отряды погрузить на борт?
 Commodities: Продукция
 Construction: Строительная стратегия
 Continue: Продолжить
@@ -40,7 +42,7 @@ EmpthySystem2: Система Юзали
 EmpthySystem3: Система Крейз
 EmpthySystem4: Система Ямполь
 EmpthySystem5: Сисмета Млечный путь
-EndLoad: 
+EndLoad: Закончить погрузку
 EndMovement: Закончить передвижение
 ErrorScriptType: Не обработан тип скрипта '%1'
 Fighter: Истребители
@@ -75,7 +77,7 @@ MeharXull: Мехар Ксулл
 MeharXullSystem: Система Мехар Ксулл
 Mellon: Меллон
 MellonSystem: Система Мелон
-Movement: Передвинуться
+MoveShip: Переместить корабль
 Nar: Нар
 NebulaSystem: Небула
 NewAlbion: Новый Альбион
@@ -125,7 +127,7 @@ Torkan: Торкан
 Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
-Upload: 
+UploadUnits: Погрузить отряды на борт
 VefutII: Верфут II
 VefutIISystem: Система Вефут II
 VictoryPoints: Очки победы
@@ -137,6 +139,7 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
+Военная стратегия: 
 Лидерская стратегия: 
-Торговая стратегия: 
-Транспорт: 
+Политическая стратегия: 
+Строительная стратегия: 

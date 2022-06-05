@@ -214,8 +214,8 @@ static void menubt(int i, const void* pv, const char* title, fnevent press_event
 	} else if(hilite_object) {
 		if(pv == hilite_object) {
 			hot.cursor = cursor::Hand;
-			if(press_event)
-				execute(press_event, (long)pv);
+			//if(press_event)
+			//	execute(press_event, (long)pv);
 		}
 	}
 }

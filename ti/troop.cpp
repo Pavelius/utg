@@ -1,5 +1,7 @@
 #include "main.h"
 
+troop* troop::last;
+
 static troop* addnew() {
 	for(auto& e : bsdata<troop>()) {
 		if(!e.type)
@@ -52,10 +54,11 @@ static const char* upload_name = "Upload";
 
 void troop::movement(entity* destination) {
 	answers an;
+	auto cmd_upload = bsdata<choosestep>::find("Upload");
 	while(true) {
 		an.clear();
-		if(get(Capacity))
-			an.add(upload_name, getnm(upload_name));
+		if(cmd_upload && get(Capacity))
+			an.add(cmd_upload, getnm(cmd_upload->id));
 		auto result = an.choose(getname(), getnm("Movement"), 1);
 		if(!result) {
 			location = destination;

@@ -151,6 +151,7 @@ struct triggeri {
 };
 struct troop : entity {
 	const uniti*	type;
+	static troop*	last;
 	static troop*	add(const char* id, playeri* player);
 	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
@@ -213,6 +214,7 @@ struct choosestep {
 	fnanswer		panswer;
 	fnapplyanswer	papply;
 	const char*		cancel;
+	static bool		stop;
 	void			run() const;
 	static void		run(const char* id);
 };

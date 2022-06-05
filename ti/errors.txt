@@ -1,2 +1,8 @@
-﻿In file `Names.txt`:
- Define translate for `Movement`
+﻿In file `rules/Basic.txt`:
+ Line 58: Can't find variant `NextAction`
+ Line 61: Can't find variant `NextAction`
+ Line 64: Can't find variant `NextAction`
+ Line 67: Can't find variant `NextAction`
+ Line 73: Can't find variant `NextAction`
+ Line 76: Can't find variant `NextAction`
+ Line 79: Can't find variant `NextAction`

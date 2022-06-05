@@ -58,7 +58,6 @@ void gamei::initialize() {
 
 static void choose_step(const char* id) {
 	auto push_last = playeri::last;
-	game.options = 1;
 	playeri::last = game.active;
 	choosestep::run(id);
 	playeri::last = push_last;

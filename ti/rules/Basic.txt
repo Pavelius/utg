@@ -55,28 +55,28 @@ GainGoodsSuplier
 #Strategy
 
 Leadership initiative(1)
- primary CommandToken+3 NextAction ChangeInfluenceCommandToken+3
+ primary CommandToken+3 ChangeInfluenceCommandToken+3
  secondary ChangeInfluenceCommandToken+3
 Diplomacy initiative(2)
- primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem NextAction SelectPlanetYouControl FilterSystem Exhaust-1
+ primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem SelectPlanetYouControl FilterSystem Exhaust-1
  secondary StrategyToken-1 SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1
 Politics initiative(3)
- primary SelectPlayer NoSpeaker ChoosePlayer Speaker NextAction ActionCard+2
+ primary SelectPlayer NoSpeaker ChoosePlayer Speaker ActionCard+2
  secondary StrategyToken-1 ActionCard+2
 Construction initiative(4)
- primary SelectPlanetYouControl ChoosePlanet PDSorDock NextAction SelectPlanetYouControl ChoosePlanet PDS
+ primary SelectPlanetYouControl ChoosePlanet PDSorDock SelectPlanetYouControl ChoosePlanet PDS
  secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem PDSorDock
 Trade initiative(5)
  primary GainGoods ReplenishCommodities GainGoodsSuplier
  secondary StrategyToken-1 ReplenishCommodities
 Warfare initiative(6)
- primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 NextAction RedistributeCommandTokens
+ primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 RedistributeCommandTokens
  secondary StrategyToken-1
 Technology initiative(7)
- primary ResearchTechnology+1 NextAction Resources-6 ResearchTechnology+1
+ primary ResearchTechnology+1 Resources-6 ResearchTechnology+1
  secondary StrategyToken-1 BuyResearchTechnology
 Imperial initiative(8)
- primary ScorePublicObjective NextAction IfControlMecatolRex+1 VictoryPoints+1 SecretObjective+1
+ primary ScorePublicObjective IfControlMecatolRex+1 VictoryPoints+1 SecretObjective+1
  secondary StrategyToken-1 SecretObjective+1
 
 #Player
@@ -97,8 +97,8 @@ TheUniversitiesOfJolNar
 #Component
 
 TacticAction trigger(ChooseAction)
- use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalProduce
+ use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalProduce EndAction
 OrbitalDrop trigger(ChooseAction)
- use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2
+ use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2 EndAction
 PassAction trigger(ChooseAction)
- use IfPlayStrategy ActionPhasePass
+ use IfPlayStrategy ActionPhasePass EndAction

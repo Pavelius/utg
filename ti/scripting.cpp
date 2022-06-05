@@ -9,6 +9,13 @@ static int			last_value;
 static bool			if_able_mode;
 static fnforeach	for_each;
 
+static void choose_command_token(int count) {
+	auto push_options = game.options;
+	game.options = count;
+	choosestep::run("ChooseCommandToken");
+	game.options = push_options;
+}
+
 static void apply_value(indicator_s v, int value) {
 	if(value == 0) {
 		// Simple get value
@@ -25,8 +32,7 @@ static void apply_value(indicator_s v, int value) {
 	case Influence:
 		break;
 	case CommandToken:
-		game.options = value;
-		choosestep::run("ChooseCommandToken");
+		choose_command_token(value);
 		break;
 	default:
 		playeri::last->indicators[v] = n1;
@@ -161,7 +167,8 @@ static void speaker(int bonus, int param) {
 static void action_card(int bonus, int param) {
 }
 
-static void next_action(int bonus, int param) {
+static void end_action(int bonus, int param) {
+	choosestep::stop = true;
 }
 
 static void pds_or_dock(int bonus, int param) {
@@ -199,8 +206,17 @@ static void action_phase_pass(int bonus, int param) {
 }
 
 static void tactical_move(int bonus, int param) {
-	game.options = -100;
 	choosestep::run("ChooseMove");
+}
+
+static void upload_units(int bonus, int param) {
+	choosestep::run("ChooseUploadUnits");
+}
+
+static void move_ship(int bonus, int param) {
+	troop::last->location = systemi::active;
+	game.updateui();
+	choosestep::stop = true;
 }
 
 static void tactical_produce(int bonus, int param) {
@@ -260,11 +276,10 @@ static void script_run(variant v) {
 			script::stop = true;
 	} else if(v.iskind<choosestep>()) {
 		auto p = bsdata<choosestep>::elements + v.value;
-		if(v.counter != 0)
-			game.options = v.counter;
-		if(game.options <= 0)
-			game.options = 1;
+		auto push_options = game.options;
+		game.options = v.counter;
 		p->run();
+		game.options = push_options;
 	} else if(v.iskind<uniti>())
 		unit_placement(bsdata<uniti>::elements + v.value, v.counter);
 	else {
@@ -314,6 +329,7 @@ BSDATA(script) = {
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseSystem", choose_system},
+	{"EndAction", end_action},
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
 	{"FilterAnyHomeSystem", filter_home_system, 1},
@@ -333,7 +349,7 @@ BSDATA(script) = {
 	{"ForEachPlayerActive", script::setforeach, (int)for_each_player_active},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
-	{"NextAction", next_action},
+	{"MoveShip", move_ship},
 	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},
 	{"NoSpeaker", no_speaker},
@@ -353,5 +369,6 @@ BSDATA(script) = {
 	{"Speaker", speaker},
 	{"TacticalMove", tactical_move},
 	{"TacticalProduce", tactical_produce},
+	{"UploadUnits", upload_units},
 };
 BSDATAF(script);

@@ -343,6 +343,7 @@ troop* gamei::choosetroop(const entitya& source) {
 }
 
 systemi* gamei::choosesystem(const entitya& source) {
+	draw::pause();
 	for(auto p : source)
 		add_maker(p, figure::Circle, size / 3);
 	answers an;
