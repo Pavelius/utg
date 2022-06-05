@@ -12,7 +12,7 @@ TheUniversitiesOfJolNar commodities(4)
 Infantry type(GroundForces)
  abilities Cost(1) CostCount(2) Combat(8) Reinforcement(50)
 PDS type(Structures)
- abilities SpaceCannon(6) Reinforcement(6)
+ abilities SpaceCannon(6) Reinforcement(6) MaximumInOneLocation(2)
  tags PlanetaryShield
 Fighter type(Ships)
  abilities Cost(1) CostCount(2) Combat(9) Reinforcement(50)
@@ -29,7 +29,7 @@ WarSun type(Ships)
  abilities Cost(12) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage
 SpaceDock type(Structures)
- abilities Production(2)
+ abilities Production(2) MaximumInOneLocation(1)
 
 Quetzecoatl type(Ships)
  abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
@@ -44,7 +44,7 @@ SonOfRagh type(Ships)
 #Function
 
 ChooseSystemToActivate
- script SelectSystem FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
+ script SelectSystem FilterActivated-1 FilterMoveStop-1 FilterControled+2 ChooseSystem ActivateSystem
 BuyResearchTechnology
  script Resources-4 ResearchTechnology+1
 GainGoods

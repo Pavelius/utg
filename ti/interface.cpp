@@ -356,7 +356,7 @@ void gamei::prepareui() {
 	object::afterpaint = object_paint;
 	clearobjects();
 	add_systems();
-	draw::setcamera(h2p({2, 0}, size));
+	draw::setcamera(h2p({0, 0}, size));
 }
 
 void gamei::focusing(const entity* p) {

@@ -135,15 +135,30 @@ static bool isvictory() {
 
 void gamei::limitcapacity() {
 	for(auto& e : bsdata<systemi>()) {
-
 	}
 }
 
 void gamei::play() {
+	updatecontrol();
 	do {
 		strategy_phase();
 		action_phase();
 		status_phase();
 		agenda_phase();
 	} while(!isvictory());
+}
+
+void gamei::updatecontrol() {
+	for(auto& e : bsdata<systemi>()) {
+		if(!e)
+			continue;
+		e.player = 0;
+	}
+	for(auto& e : bsdata<troop>()) {
+		if(!e)
+			continue;
+		if(bsdata<systemi>::have(e.location)
+			|| bsdata<planeti>::have(e.location))
+			e.location->player = e.player;
+	}
 }

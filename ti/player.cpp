@@ -29,3 +29,22 @@ systemi* playeri::gethome() const {
 	}
 	return 0;
 }
+
+bool playeri::canbuild(const uniti* unit) const {
+	auto maxcount = unit->abilities[Reinforcement];
+	if(maxcount < 50) {
+		auto count = getsummary(unit);
+		if(count >= maxcount)
+			return false;
+	}
+	return true;
+}
+
+int	playeri::getsummary(const uniti* type) const {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == this && e.getunit() == type)
+			result++;
+	}
+	return result;
+}

@@ -4,6 +4,8 @@
 using namespace pathfind;
 
 static indext stack[256 * 256];
+static indext* push_counter;
+static indext* pop_counter;
 static indext movement_rate[64 * 64];
 
 int	pathfind::maxcount = 64 * 64;
@@ -11,8 +13,10 @@ int pathfind::maxdir = 6;
 fnto pathfind::to;
 
 void pathfind::clearpath() {
-	if(maxcount)
-		memset(movement_rate, 0, maxcount * sizeof(movement_rate[0]));
+	for(auto i = 0; i < maxcount; i++)
+		movement_rate[i] = NotCalculatedMovement;
+	push_counter = stack;
+	pop_counter = stack;
 }
 
 indext pathfind::getmove(indext i) {
@@ -101,7 +105,7 @@ unsigned pathfind::getpath(indext start, indext goal, indext* result, unsigned m
 
 void pathfind::blockzero() {
 	for(indext i = 0; i < maxcount; i++) {
-		if(!movement_rate[i])
+		if(movement_rate[i] >= NotCalculatedMovement)
 			movement_rate[i] = Blocked;
 	}
 }
@@ -118,37 +122,43 @@ void pathfind::blocknearest(indext index, indext cost) {
 	}
 }
 
-void pathfind::makewave(indext start_index) {
-	if(!isinitializated())
-		return;
-	auto stack_end = stack + sizeof(stack) / sizeof(stack[0]);
-	auto push_counter = stack;
-	auto pop_counter = stack;
-	movement_rate[start_index] = Blocked;
-	*push_counter++ = start_index;
+void pathfind::addwave(indext i) {
+	*push_counter++ = i;
+	if(push_counter >= stack + sizeof(stack) / sizeof(stack[0]))
+		push_counter = stack;
+}
+
+indext pathfind::getwave() {
+	auto index = *pop_counter++;
+	if(pop_counter >= stack + sizeof(stack) / sizeof(stack[0]))
+		pop_counter = stack;
+	return index;
+}
+
+void pathfind::makewavex() {
 	while(pop_counter != push_counter) {
-		auto index = *pop_counter++;
-		if(pop_counter >= stack_end)
-			pop_counter = stack;
-		auto cost = ((index == start_index) ? 0 : movement_rate[index]) + 1;
-		for(int d = 0; d < 6; d++) {
+		auto index = getwave();
+		auto cost = movement_rate[index] + 1;
+		for(int d = 0; d < maxdir; d++) {
 			auto i1 = to(index, d);
 			if(i1 == Blocked)
 				continue;
 			auto c1 = movement_rate[i1];
-			if(c1 == Blocked)
-				continue;
-			if(c1 && c1 < cost)
+			if(c1 == Blocked || (c1 < NotCalculatedMovement && c1 < cost))
 				continue;
 			movement_rate[i1] = cost;
-			if(c1 != StopMovementThrought) {
-				*push_counter++ = i1;
-				if(push_counter >= stack_end)
-					push_counter = stack;
-			}
+			addwave(i1);
 		}
 	}
 	blockzero();
+}
+
+void pathfind::makewave(indext start_index) {
+	if(!isinitializated())
+		return;
+	movement_rate[start_index] = 0;
+	addwave(start_index);
+	makewavex();
 }
 
 void pathfind::blockrange(int range) {
@@ -162,5 +172,5 @@ void pathfind::blockrange(int range) {
 }
 
 bool pathfind::isinitializated() {
-	return maxcount > 0 && to;
+	return maxcount > 0 && to && maxdir > 0;
 }

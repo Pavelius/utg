@@ -102,36 +102,15 @@ static void choose_standart(answers& an, const choosestep* trigger) {
 	//}
 }
 
-static void block_move_system() {
-	for(auto& e : bsdata<systemi>()) {
-		if(e.index == pathfind::Blocked)
-			continue;
-		if(!e.movethrought())
-			pathfind::setmove(e.index, pathfind::Blocked);
-	}
-}
-
-static void block_enemy_system(const playeri* player) {
-	for(auto& e : bsdata<systemi>()) {
-		if(e.index == pathfind::Blocked)
-			continue;
-		if(e.player && e.player != player)
-			pathfind::setmove(e.index, pathfind::Blocked);
-	}
-}
-
 static void makewave(pathfind::indext start) {
 	pathfind::clearpath();
-	block_move_system();
-	block_enemy_system(playeri::last);
+	systemi::blockmove();
+	systemi::blockenemy(playeri::last);
 	pathfind::makewave(start);
-	block_enemy_system(playeri::last);
+	systemi::blockenemy(playeri::last);
 }
 
 static void choose_movement(answers& an) {
-	auto p = game.active;
-	if(!p)
-		return;
 	makewave(systemi::active->index);
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != playeri::last)
@@ -262,12 +241,17 @@ static void choose_invasion_planet(answers& an) {
 	}
 }
 
+static void end_movement() {
+	game.updatecontrol();
+}
+
 static void apply_invasion_planet() {
 	if(bsdata<planeti>::have(game.result)) {
 		auto push_last = planeti::last;
 		planeti::last = (planeti*)game.result;
 		choosestep::run("ChooseInvasion");
 		planeti::last = push_last;
+		game.updatecontrol();
 	}
 }
 
@@ -330,7 +314,7 @@ BSDATA(choosestep) = {
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
 	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply"},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
-	{"ChooseMove", choose_movement, apply_movement, "EndMovement"},
+	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement},
 	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChooseStrategy", choose_strategy, apply_strategy},

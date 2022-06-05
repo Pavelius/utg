@@ -40,7 +40,7 @@ void entitya::select(const playeri* player, const entity* system, unit_type_s ty
 		auto pu = e.getunit();
 		if(!pu)
 			continue;
-		if(pu->type!=type)
+		if(pu->type != type)
 			continue;
 		if(e.getsystem() != system)
 			continue;
@@ -132,7 +132,7 @@ void entitya::match(flag_s value, bool keep) {
 	for(auto p : *this) {
 		if(!(*p))
 			continue;
-		if(p->is(value)!=keep)
+		if(p->is(value) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -201,7 +201,7 @@ void entitya::grouplocation(const entitya& source) {
 void entitya::filter(const entity* object, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
-		if((p==object)!=keep)
+		if((p == object) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -264,4 +264,15 @@ entity* entitya::getbest(indicator_s v) const {
 void entitya::addu(entity* v) {
 	if(!have(v))
 		add(v);
+}
+
+void entitya::matchrange(int range, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		auto po = p->getsystem();
+		if((pathfind::getmove(po->index) <= range) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
 }

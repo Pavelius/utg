@@ -13,7 +13,7 @@ enum ability_s : unsigned char {
 	Cost, CostCount,
 	Combat, CombatCount, Bombardment, BombardmentCount,
 	AntiFighterBarrage, AntiFighterBarrageCount, SpaceCannon, SpaceCannonCount,
-	Move, Production, Reinforcement, Capacity,
+	Move, Production, Reinforcement, MaximumInOneLocation, Capacity,
 };
 enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
@@ -130,10 +130,14 @@ struct systemi : entity {
 	pathfind::indext index;
 	static systemi*	active;
 	static systemi*	last;
+	explicit operator bool() const { return index != pathfind::Blocked; }
+	static void		blockenemy(const playeri* player);
+	static void		blockmove();
 	planeti*		getbestplanet() const;
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const { return index != pathfind::Blocked; }
 	void			limitcapacity();
+	static void		markzerocost(const playeri* player);
 	bool			movestop() const;
 	bool			movethrought() const;
 	void			paint() const;
@@ -152,6 +156,7 @@ struct triggeri {
 struct troop : entity {
 	const uniti*	type;
 	static troop*	last;
+	constexpr explicit operator bool() const { return type != 0; }
 	static troop*	add(const char* id, playeri* player);
 	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
@@ -180,6 +185,7 @@ struct entitya : public adat<entity*> {
 	void			match(flag_s value, bool keep);
 	void			match(indicator_s value, bool keep);
 	void			matchmove(int mode, bool keep);
+	void			matchrange(int range, bool keep);
 	void			select(array& source);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
@@ -214,6 +220,7 @@ struct choosestep {
 	fnanswer		panswer;
 	fnapplyanswer	papply;
 	const char*		cancel;
+	fnevent			finish;
 	static bool		stop;
 	void			run() const;
 	static void		run(const char* id);
@@ -244,6 +251,7 @@ struct gamei {
 	void			prepareui();
 	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
+	static void		updatecontrol();
 	static void		updateui();
 };
 struct playeri : nameable {
@@ -259,10 +267,12 @@ struct playeri : nameable {
 	static playeri* human;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
+	bool			canbuild(const uniti* player) const;
 	bool			is(tech_s v) const { return tech.is(v); }
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
 	systemi*		gethome() const;
+	int				getsummary(const uniti* type) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };

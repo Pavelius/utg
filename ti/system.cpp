@@ -75,3 +75,32 @@ bool systemi::movestop() const {
 	default: return true;
 	}
 }
+
+void systemi::blockmove() {
+	for(auto& e : bsdata<systemi>()) {
+		if(!e)
+			continue;
+		if(!e.movethrought())
+			pathfind::setmove(e.index, pathfind::Blocked);
+	}
+}
+
+void systemi::blockenemy(const playeri* player) {
+	for(auto& e : bsdata<systemi>()) {
+		if(!e)
+			continue;
+		if(e.player && e.player != player)
+			pathfind::setmove(e.index, pathfind::Blocked);
+	}
+}
+
+void systemi::markzerocost(const playeri* player) {
+	for(auto& e : bsdata<systemi>()) {
+		if(!e)
+			continue;
+		if(e.player == player) {
+			pathfind::setmove(e.index, 0);
+			pathfind::addwave(e.index);
+		}
+	}
+}

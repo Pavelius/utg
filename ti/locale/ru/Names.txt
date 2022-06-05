@@ -27,7 +27,7 @@ ChooseMoveOption: Что нужно сделать кораблю?
 ChooseOptions: (осталось [%1i])
 ChooseStrategy: Выбирайте стратегию
 ChooseSystem: Выбирайте систему
-ChooseUploadUnits: Какие отряды погрузить на борт?
+ChooseUploadUnits: Погрузить отряды на борт
 Commodities: Продукция
 Construction: Строительная стратегия
 Continue: Продолжить

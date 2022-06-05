@@ -135,6 +135,14 @@ static void filter_home_system(int bonus, int param) {
 	// param = 1 Any home system
 }
 
+static void filter_controled(int bonus, int param) {
+	pathfind::clearpath();
+	systemi::blockmove();
+	systemi::markzerocost(game.active);
+	pathfind::makewavex();
+	querry.matchrange(iabs(bonus), bonus >= 0);
+}
+
 static void filter_wormhole(int bonus, int param) {
 }
 
@@ -242,7 +250,7 @@ static void for_each_planet(variant v) {
 static void unit_placement(uniti* p, int count) {
 	if(!count)
 		count = 1;
-	if(p->type==GroundForces || p->type==Structures) {
+	if(p->type == GroundForces || p->type == Structures) {
 		game.focusing(planeti::last);
 		for(auto i = 0; i < count; i++)
 			troop::add(p, playeri::last, planeti::last);
@@ -322,6 +330,7 @@ BSDATA(script) = {
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
 	{"FilterAnyHomeSystem", filter_home_system, 1},
+	{"FilterControled", filter_controled},
 	{"FilterCommodities", filter_indicator, Commodities},
 	{"FilterCultural", filter_planet_type, Cultural},
 	{"FilterExhaust", filter_exhaust},
