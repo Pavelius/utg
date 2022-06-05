@@ -165,12 +165,12 @@ static void choose_upload_units(answers& an) {
 		auto move = e.get(Move);
 		if(move > 0)
 			continue;
-		auto ps = e.getsystem();
-		if(!ps || need_system != ps)
+		auto ps = e.location;
+		if(bsdata<troop>::have(ps))
+			continue;
+		if(need_system != e.getsystem())
 			continue;
 		auto planet = e.getplanet();
-		if(pu->type == GroundForces && !planet)
-			continue;
 		if(planet)
 			an.add(&e, "%1 (%2)", e.getname(), planet->getname());
 		else

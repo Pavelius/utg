@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
- Define translate for `EndInvasion`
+ Define translate for `TheBaronyOfLetnevHomeSystem`
+ Define translate for `TheL1Z1XMindnetHomeSystem`

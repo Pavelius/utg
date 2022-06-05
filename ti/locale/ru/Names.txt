@@ -121,9 +121,12 @@ Technology: Технологическая стратегия
 Tequran: Текуран
 TequranSystem: Система Текуран
 TheBaronyOfLetnev: Баронство Летнев
+TheBaronyOfLetnevHomeSystem: Домашняя система Баронства Летнев
 TheEmiratesOfHacan: Эмираты Хаканов
 TheFederationOfSol: Федерация Сол
+TheFederationOfSolHomeSystem: 
 TheL1Z1XMindnet: Сеть разума L1Z1
+TheL1Z1XMindnetHomeSystem: Домашняя система L1Z1
 TheUniversitiesOfJolNar: Вселенные Жол-Наров
 Thibah: Тсибан
 ThibahSystem: Система Тсибан
@@ -143,3 +146,9 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
+Военная стратегия: 
+Дипломатическая стратегия: 
+Лидерская стратегия: 
+Политическая стратегия: 
+Строительная стратегия: 
+Технологическая стратегия: 

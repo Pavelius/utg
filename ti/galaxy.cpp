@@ -24,10 +24,12 @@ static pointline players6[] = {
 static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
 
 static void assign_factions() {
-	game.players.clear();
+	game.origin_players.clear();
 	for(auto& e : bsdata<playeri>())
-		game.players.add(&e);
-	playeri::human = game.players[0];
+		game.origin_players.add(&e);
+	playeri::human = game.origin_players[0];
+	game.origin_players.shuffle();
+	game.players = game.origin_players;
 }
 
 static void determine_speaker() {

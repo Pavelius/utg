@@ -81,12 +81,41 @@ public:
 	}
 };
 
+static void show_players() {
+	auto push_y = caret.y;
+	caret.x += 16; caret.y += 16;
+	auto push_x = caret.x;
+	auto res = getres("races_small");
+	for(auto p : game.players) {
+		image(res, getbsi(p), 0);
+		if(ishilite(17)) {
+			hilite_type = figure::Circle;
+			hilite_object = p;
+			hilite_size = 18;
+			hilite_position = caret;
+		}
+		caret.x += 32 + 8;
+	}
+	auto pi = game.players.find(game.active);
+	if(pi != -1) {
+		auto push_x1 = caret.x;
+		caret.x = push_x + (32 + 8)* pi;
+		auto push_fore = fore;
+		fore = colors::active;
+		circle(17);
+		fore = push_fore;
+		caret.x = push_x1;
+	}
+	caret.y = push_y;
+}
+
 void status_info(void) {
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::border;
 	caret.x += 4;
 	caret.y += 4;
+	show_players();
 	fore = push_fore;
 	caret = push_caret;
 	caret.y += 4 * 4 + 24;

@@ -121,6 +121,7 @@ struct planeti : entity {
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
 	void			filter(const playeri* object, bool keep);
+	void			shuffle() { zshuffle(data, count); }
 };
 struct systemi : entity {
 	flagable<4>		activated;
@@ -237,7 +238,7 @@ struct actioncardi : component {
 struct gamei {
 	playeri*		speaker;
 	playeri*		active;
-	playera			players;
+	playera			players, origin_players;
 	indicator_s		indicator;
 	static void*	result;
 	static int		options;
@@ -246,11 +247,11 @@ struct gamei {
 	static void		focusing(const entity* p);
 	static void		initialize();
 	void			limitcapacity();
-	void			makewave();
 	void			prepare();
 	void			prepareui();
 	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
+	void			sortbyinitiative();
 	static void		updatecontrol();
 	static void		updateui();
 };
@@ -272,6 +273,7 @@ struct playeri : nameable {
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
 	systemi*		gethome() const;
+	int				getinitiative() const;
 	int				getsummary(const uniti* type) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);

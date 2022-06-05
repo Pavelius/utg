@@ -48,3 +48,9 @@ int	playeri::getsummary(const uniti* type) const {
 	}
 	return result;
 }
+
+int	playeri::getinitiative() const {
+	if(!strategy)
+		return 0;
+	return strategy->initiative;
+}

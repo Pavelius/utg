@@ -70,6 +70,7 @@ static void strategy_phase() {
 			choose_step("ChooseStrategy");
 		}
 	}
+	game.sortbyinitiative();
 }
 
 static void action_phase() {
@@ -161,4 +162,18 @@ void gamei::updatecontrol() {
 			|| bsdata<planeti>::have(e.location))
 			e.location->player = e.player;
 	}
+}
+
+static int compare_players(const void* v1, const void* v2) {
+	auto p1 = *((playeri**)v1);
+	auto p2 = *((playeri**)v2);
+	auto i1 = p1->getinitiative();
+	auto i2 = p2->getinitiative();
+	if(i1 != i2)
+		return i1 - i2;
+	return getbsi(p1) - getbsi(p2);
+}
+
+void gamei::sortbyinitiative() {
+	qsort(players.data, players.count, sizeof(players.data[0]), compare_players);
 }
