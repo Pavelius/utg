@@ -47,3 +47,20 @@ troop* troop::getstackholder() {
 	}
 	return result;
 }
+
+void troop::movement(entity* destination) {
+	answers an;
+	while(true) {
+		an.clear();
+		if(get(Capacity)) {
+			entitya querry;
+			querry.select(player, location, GroundForces);
+		}
+		auto result = an.choose(getname(), getnm("Movement"), 1);
+		if(!result) {
+			location = destination;
+			game.updateui();
+			break;
+		}
+	}
+}

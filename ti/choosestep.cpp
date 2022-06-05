@@ -97,6 +97,61 @@ static void choose_standart(answers& an, const choosestep* trigger) {
 	//}
 }
 
+static void block_move_system() {
+	for(auto& e : bsdata<systemi>()) {
+		if(e.index == pathfind::Blocked)
+			continue;
+		if(!e.movethrought())
+			pathfind::setmove(e.index, pathfind::Blocked);
+	}
+}
+
+static void block_enemy_system(const playeri* player) {
+	for(auto& e : bsdata<systemi>()) {
+		if(e.index == pathfind::Blocked)
+			continue;
+		if(e.player && e.player != player)
+			pathfind::setmove(e.index, pathfind::Blocked);
+	}
+}
+
+static void makewave(pathfind::indext start) {
+	pathfind::clearpath();
+	block_move_system();
+	block_enemy_system(playeri::last);
+	pathfind::makewave(start);
+	block_enemy_system(playeri::last);
+}
+
+static void choose_movement(answers& an) {
+	auto p = game.active;
+	if(!p)
+		return;
+	makewave(systemi::active->index);
+	for(auto& e : bsdata<troop>()) {
+		if(e.player != playeri::last)
+			continue;
+		auto pu = e.getunit();
+		if(!pu)
+			continue;
+		auto move = e.get(Move);
+		if(!move)
+			continue;
+		auto ps = (systemi*)e.location;
+		if(!ps)
+			continue;
+		auto cost_move = pathfind::getmove(ps->index);
+		if(cost_move == pathfind::Blocked || move<cost_move)
+			continue;
+		an.add(&e, "%1 (%2)", e.getname(), e.location->getsystem()->getname());
+	}
+}
+
+static void apply_movement() {
+	if(bsdata<troop>::have(game.result))
+		((troop*)game.result)->movement(systemi::active);
+}
+
 static bool apply_standart() {
 	if(bsdata<component>::have(game.result)) {
 		auto p = (component*)game.result;
@@ -112,14 +167,19 @@ void choosestep::run() const {
 	if(playeri::last)
 		answers::header = playeri::last->getname();
 	char temp[260]; gamestring sb(temp); answers an;
-	while(game.options > 0) {
+	auto infinite = (game.options == -100);
+	while(infinite || game.options > 0) {
 		sb.clear();
 		sb.add(getnm(id));
-		sb.adds(getnm("ChooseOptions"), game.options);
+		if(!infinite)
+			sb.adds(getnm("ChooseOptions"), game.options);
 		an.clear(); panswer(an);
 		choose_standart(an, this);
+		const char* cancel_text = 0;
+		if(cancel)
+			cancel_text = getnm(cancel);
 		if(game.active->ishuman())
-			game.result = an.choose(temp);
+			game.result = an.choose(temp, cancel_text);
 		else
 			game.result = an.random();
 		if(!game.result)
@@ -143,6 +203,7 @@ void choosestep::run(const char* id) {
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
+	{"ChooseMove", choose_movement, apply_movement, "EndMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
 };

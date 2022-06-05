@@ -1,6 +1,7 @@
 #include "main.h"
 
 systemi* systemi::last;
+systemi* systemi::active;
 
 bool systemi::isactivated(const playeri* p) const {
 	auto i = bsdata<playeri>::source.indexof(p);
@@ -73,75 +74,4 @@ bool systemi::movestop() const {
 	case AsteroidField: case Supernova: return false;
 	default: return true;
 	}
-}
-
-void block_move_system() {
-	for(auto& e : bsdata<systemi>()) {
-		if(e.index == pathfind::Blocked)
-			continue;
-		if(!e.movethrought())
-			pathfind::setmove(e.index, pathfind::Blocked);
-	}
-}
-
-void block_enemy_system(const playeri* player) {
-	for(auto& e : bsdata<systemi>()) {
-		if(e.index == pathfind::Blocked)
-			continue;
-		if(e.player && e.player != player)
-			pathfind::setmove(e.index, pathfind::Blocked);
-	}
-}
-
-static void makewave(pathfind::indext start) {
-	pathfind::clearpath();
-	block_move_system();
-	block_enemy_system(playeri::last);
-	pathfind::makewave(start);
-}
-
-static void select_you_system_vs_ships(entitya& source) {
-	for(auto& e : bsdata<troop>()) {
-		if(!bsdata<systemi>::have(e.location))
-			continue;
-		if(source.have(e.location))
-			continue;
-		auto ps = (systemi*)e.location;
-		if(pathfind::getmove(ps->index) == pathfind::Blocked)
-			continue;
-		source.add(e.location);
-	}
-}
-
-static entity* activated_location;
-
-static void choose_units(systemi* location, playeri* player, entitya& source) {
-	while(true) {
-		char temp[260]; stringbuilder sb(temp);
-		source.clear();
-		source.select(player, location);
-		auto result = source.choose(0, getnm("Cancel"));
-		if(!result)
-			break;
-		if(bsdata<troop>::have(result)) {
-			auto p = (troop*)result;
-			p->location = activated_location;
-			game.updateui();
-		}
-	}
-}
-
-void systemi::moveunits() {
-	entitya source;
-	activated_location = this;
-	while(true) {
-		makewave(index);
-		source.clear();
-		select_you_system_vs_ships(source);
-		auto ps = game.choosesystem(source);
-		if(!ps)
-			break;
-		choose_units(ps, playeri::last, source);
-	}
-	activated_location = 0;
 }

@@ -115,6 +115,7 @@ static void activate_system(int bonus, int param) {
 		return;
 	game.focusing(systemi::last);
 	systemi::last->setactivate(playeri::last, bonus != -1);
+	systemi::active = systemi::last;
 }
 
 static void filter_system(int bonus, int param) {
@@ -198,8 +199,8 @@ static void action_phase_pass(int bonus, int param) {
 }
 
 static void tactical_move(int bonus, int param) {
-	if(playeri::last->ishuman())
-		systemi::last->moveunits();
+	game.options = -100;
+	choosestep::run("ChooseMove");
 }
 
 static void tactical_produce(int bonus, int param) {

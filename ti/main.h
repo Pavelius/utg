@@ -128,6 +128,7 @@ struct systemi : entity {
 	char			special_index;
 	tile_s			special;
 	pathfind::indext index;
+	static systemi*	active;
 	static systemi*	last;
 	planeti*		getbestplanet() const;
 	bool			isactivated(const playeri* p) const;
@@ -135,7 +136,6 @@ struct systemi : entity {
 	void			limitcapacity();
 	bool			movestop() const;
 	bool			movethrought() const;
-	void			moveunits();
 	void			paint() const;
 	void			placement(const uniti* unit, playeri* player);
 	void			placement(variants source, playeri* player);
@@ -157,6 +157,8 @@ struct troop : entity {
 	const char*		getname() const { return getnm(type->id); }
 	int				getstackcount() const;
 	troop*			getstackholder();
+	const uniti*	getunit() const { return type; }
+	void			movement(entity* destination);
 	void			paint(unsigned flags) const;
 };
 struct entitya : public adat<entity*> {
@@ -177,8 +179,10 @@ struct entitya : public adat<entity*> {
 	void			match(indicator_s value, bool keep);
 	void			matchmove(int mode, bool keep);
 	void			select(array& source);
+	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
+	void			selectground(const systemi* system, const playeri* player);
 	entity*			random() const;
 };
 struct combat {
@@ -207,6 +211,7 @@ struct choosestep {
 	const char*		id;
 	fnanswer		panswer;
 	fnapplyanswer	papply;
+	const char*		cancel;
 	void			run() const;
 	static void		run(const char* id);
 };

@@ -31,6 +31,25 @@ void entitya::select(const playeri* player, const entity* location) {
 	count = ps - data;
 }
 
+void entitya::select(const playeri* player, const entity* system, unit_type_s type) {
+	auto ps = data;
+	auto pe = endof();
+	for(auto& e : bsdata<troop>()) {
+		if(e.player != player)
+			continue;
+		auto pu = e.getunit();
+		if(!pu)
+			continue;
+		if(pu->type!=type)
+			continue;
+		if(e.getsystem() != system)
+			continue;
+		if(ps < pe)
+			*ps++ = &e;
+	}
+	count = ps - data;
+}
+
 void entitya::selectplanets(const systemi* system) {
 	auto ps = data;
 	auto pe = endof();
