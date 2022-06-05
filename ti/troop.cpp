@@ -48,19 +48,33 @@ troop* troop::getstackholder() {
 	return result;
 }
 
+static const char* upload_name = "Upload";
+
 void troop::movement(entity* destination) {
 	answers an;
 	while(true) {
 		an.clear();
-		if(get(Capacity)) {
-			entitya querry;
-			querry.select(player, location, GroundForces);
-		}
+		if(get(Capacity))
+			an.add(upload_name, getnm(upload_name));
 		auto result = an.choose(getname(), getnm("Movement"), 1);
 		if(!result) {
 			location = destination;
 			game.updateui();
 			break;
-		}
+		} else if(result == upload_name)
+			upload();
+	}
+}
+
+void troop::upload() {
+	while(true) {
+		entitya querry;
+		querry.select(player, location, GroundForces);
+		auto result = querry.choose(getname(), getnm("EndLoad"));
+		if(!result)
+			break;
+		auto p = (troop*)result;
+		p->location = this;
+		game.updateui();
 	}
 }

@@ -40,6 +40,7 @@ EmpthySystem2: Система Юзали
 EmpthySystem3: Система Крейз
 EmpthySystem4: Система Ямполь
 EmpthySystem5: Сисмета Млечный путь
+EndLoad: 
 EndMovement: Закончить передвижение
 ErrorScriptType: Не обработан тип скрипта '%1'
 Fighter: Истребители
@@ -124,6 +125,7 @@ Torkan: Торкан
 Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
+Upload: 
 VefutII: Верфут II
 VefutIISystem: Система Вефут II
 VictoryPoints: Очки победы
@@ -136,3 +138,5 @@ WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
 Лидерская стратегия: 
+Торговая стратегия: 
+Транспорт: 

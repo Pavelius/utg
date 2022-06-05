@@ -158,6 +158,7 @@ struct troop : entity {
 	int				getstackcount() const;
 	troop*			getstackholder();
 	const uniti*	getunit() const { return type; }
+	void			upload();
 	void			movement(entity* destination);
 	void			paint(unsigned flags) const;
 };
