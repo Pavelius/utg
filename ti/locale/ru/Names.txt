@@ -2,6 +2,7 @@
 AbyzSystem: Система Абиз
 AddCommandToken: Какие резервы хотите пополнить?
 AppTitle: Сумрачная империя
+Apply: Применить
 ApplyExhaust: Планета %1 истощена
 ArcPrime: Акр Прайм
 Arinam: Эринам
@@ -19,6 +20,8 @@ Centauri: Центаури
 CentauriSystem: Система Центаури
 ChooseAction: Выбирайте действие
 ChooseCommandToken: Выбирайте резевр
+ChooseInvasion: Выберайте отряды вторжения
+ChooseInvasionPlanet: Выберайте планету вторжения
 ChooseMove: Выбирайте корабли для передвижения
 ChooseMoveOption: Что нужно сделать кораблю?
 ChooseOptions: (осталось [%1i])
@@ -42,6 +45,7 @@ EmpthySystem2: Система Юзали
 EmpthySystem3: Система Крейз
 EmpthySystem4: Система Ямполь
 EmpthySystem5: Сисмета Млечный путь
+EndInvasion: Закончить вторжение
 EndLoad: Закончить погрузку
 EndMovement: Закончить передвижение
 ErrorScriptType: Не обработан тип скрипта '%1'
@@ -139,7 +143,3 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
-Военная стратегия: 
-Лидерская стратегия: 
-Политическая стратегия: 
-Строительная стратегия: 

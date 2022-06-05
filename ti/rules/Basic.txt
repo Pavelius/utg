@@ -51,6 +51,11 @@ GainGoods
  script TradeGoods+3
 GainGoodsSuplier
  script SelectPlayer NoActivePlayer FilterCommodities-1 ChoosePlayer ReplenishCommodities
+TacticalInvasion
+ script ChooseInvasionPlanet
+TacticalMove
+ script ChooseMove
+TacticalProduce
 
 #Strategy
 
@@ -97,7 +102,7 @@ TheUniversitiesOfJolNar
 #Component
 
 TacticAction trigger(ChooseAction)
- use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalProduce EndAction
+ use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce EndAction
 OrbitalDrop trigger(ChooseAction)
  use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2 EndAction
 PassAction trigger(ChooseAction)

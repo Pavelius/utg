@@ -205,21 +205,10 @@ static void action_phase_pass(int bonus, int param) {
 	playeri::last->pass_action_phase = (bonus != -1);
 }
 
-static void tactical_move(int bonus, int param) {
-	choosestep::run("ChooseMove");
-}
-
-static void upload_units(int bonus, int param) {
-	choosestep::run("ChooseUploadUnits");
-}
-
 static void move_ship(int bonus, int param) {
 	troop::last->location = systemi::active;
 	game.updateui();
 	choosestep::stop = true;
-}
-
-static void tactical_produce(int bonus, int param) {
 }
 
 static void for_each_player(variant v) {
@@ -367,8 +356,5 @@ BSDATA(script) = {
 	{"SelectSystem", select_system, 1},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
 	{"Speaker", speaker},
-	{"TacticalMove", tactical_move},
-	{"TacticalProduce", tactical_produce},
-	{"UploadUnits", upload_units},
 };
 BSDATAF(script);

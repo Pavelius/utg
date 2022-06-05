@@ -164,14 +164,15 @@ static void apply_movement() {
 
 static void add_script(answers& an, const char* id) {
 	auto p = bsdata<script>::find(id);
-	if(p)
+	if(p) {
 		an.add(p, getnm(p->id));
-}
-
-static void choose_move_options(answers& an) {
-	add_script(an, "MoveShip");
-	if(troop::last->get(Capacity) > 0)
-		add_script(an, "UploadUnits");
+		return;
+	}
+	auto ps = bsdata<choosestep>::find(id);
+	if(ps) {
+		an.add(ps, getnm(ps->id));
+		return;
+	}
 }
 
 static void choose_upload_units(answers& an) {
@@ -183,7 +184,7 @@ static void choose_upload_units(answers& an) {
 		if(!pu || pu->type == Structures)
 			continue;
 		auto move = e.get(Move);
-		if(move)
+		if(move > 0)
 			continue;
 		auto ps = e.getsystem();
 		if(!ps || need_system != ps)
@@ -198,11 +199,75 @@ static void choose_upload_units(answers& an) {
 	}
 }
 
+static bool have_upload_units() {
+	answers an;
+	choose_upload_units(an);
+	return an.getcount() != 0;
+}
+
+static void choose_move_options(answers& an) {
+	add_script(an, "MoveShip");
+	if(troop::last->get(Capacity) > 0 && have_upload_units())
+		add_script(an, "ChooseUploadUnits");
+}
+
 static void apply_upload_units() {
 	if(bsdata<troop>::have(game.result)) {
 		auto p = (troop*)game.result;
 		p->location = troop::last;
 		game.updateui();
+	}
+}
+
+static void choose_invasion(answers& an) {
+	for(auto& e : bsdata<troop>()) {
+		if(e.player != playeri::last)
+			continue;
+		auto pu = e.getunit();
+		if(!pu || pu->type != GroundForces)
+			continue;
+		auto move = e.get(Move);
+		if(move > 0)
+			continue;
+		auto ps = e.getsystem();
+		if(ps != systemi::active)
+			continue;
+		if(bsdata<planeti>::have(e.location))
+			continue;
+		an.add(&e, e.getname());
+	}
+}
+
+static bool have_invasion_units() {
+	answers an;
+	choose_invasion(an);
+	return an.getcount() != 0;
+}
+
+static void apply_invasion() {
+	if(bsdata<troop>::have(game.result)) {
+		auto p = (troop*)game.result;
+		p->location = planeti::last;
+		game.updateui();
+	}
+}
+
+static void choose_invasion_planet(answers& an) {
+	if(!have_invasion_units())
+		return;
+	for(auto& e : bsdata<planeti>()) {
+		if(e.location != systemi::active)
+			continue;
+		an.add(&e, e.getname());
+	}
+}
+
+static void apply_invasion_planet() {
+	if(bsdata<planeti>::have(game.result)) {
+		auto push_last = planeti::last;
+		planeti::last = (planeti*)game.result;
+		choosestep::run("ChooseInvasion");
+		planeti::last = push_last;
 	}
 }
 
@@ -213,6 +278,9 @@ static bool apply_standart() {
 	} else if(bsdata<script>::have(game.result)) {
 		auto p = (script*)game.result;
 		p->proc(0, p->param);
+	} else if(bsdata<choosestep>::have(game.result)) {
+		auto p = (choosestep*)game.result;
+		p->run();
 	} else
 		return false;
 	return true;
@@ -260,10 +328,12 @@ void choosestep::run(const char* id) {
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
+	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply"},
+	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
 	{"ChooseMove", choose_movement, apply_movement, "EndMovement"},
 	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
-	{"ChooseUploadUnits", choose_upload_units, apply_upload_units, "EndMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
+	{"ChooseUploadUnits", choose_upload_units, apply_upload_units, "Apply"},
 };
 BSDATAF(choosestep)
