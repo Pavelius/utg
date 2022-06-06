@@ -89,6 +89,8 @@ static void choose_standart(answers& an, const choosestep* trigger) {
 	for(auto& e : bsdata<component>()) {
 		if(e.trigger != trigger)
 			continue;
+		if(!e.isallow())
+			continue;
 		if(!script::isallow(e.use))
 			continue;
 		an.add(&e, e.getname());

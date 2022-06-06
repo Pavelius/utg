@@ -123,8 +123,9 @@ TequranSystem: Система Текуран
 TheBaronyOfLetnev: Баронство Летнев
 TheBaronyOfLetnevHomeSystem: Домашняя система Баронства Летнев
 TheEmiratesOfHacan: Эмираты Хаканов
+TheEmiratesOfHacanHomeSystem: Домашняя система Эмиратов Хакканов
 TheFederationOfSol: Федерация Сол
-TheFederationOfSolHomeSystem: 
+TheFederationOfSolHomeSystem: Домашняя система Федерации Сол
 TheL1Z1XMindnet: Сеть разума L1Z1
 TheL1Z1XMindnetHomeSystem: Домашняя система L1Z1
 TheUniversitiesOfJolNar: Вселенные Жол-Наров
@@ -146,9 +147,5 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
-Военная стратегия: 
 Дипломатическая стратегия: 
 Лидерская стратегия: 
-Политическая стратегия: 
-Строительная стратегия: 
-Технологическая стратегия: 

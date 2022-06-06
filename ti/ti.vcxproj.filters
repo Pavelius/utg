@@ -90,6 +90,9 @@
     <ClCompile Include="racef.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="analize.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

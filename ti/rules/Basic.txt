@@ -103,7 +103,7 @@ TheUniversitiesOfJolNar
 
 TacticAction trigger(ChooseAction)
  use TacticToken-1 ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce EndAction
-OrbitalDrop trigger(ChooseAction)
+OrbitalDrop trigger(ChooseAction) parent(TheFederationOfSol)
  use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2 EndAction
 PassAction trigger(ChooseAction)
  use IfPlayStrategy ActionPhasePass EndAction

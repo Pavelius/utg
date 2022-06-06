@@ -235,6 +235,13 @@ struct component : nameable {
 struct actioncardi : component {
 	char			count;
 };
+class analize {
+	pathfind::indext data[hms * hms];
+public:
+	void			clear();
+	int				getweight(pathfind::indext i) const;
+	void			setweight(pathfind::indext i, int v);
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		active;

@@ -2,6 +2,7 @@
 
 using namespace pathfind;
 
+namespace {
 struct pointline {
 	point			position;
 	char			count;
@@ -10,6 +11,7 @@ struct galaxymap {
 	slice<pointline>	tiles;
 	point				start[6];
 };
+}
 
 static pointline players6[] = {
 	{{2, 0}, 2},

@@ -7,6 +7,14 @@ using namespace draw;
 
 const int button_height = 21;
 const int size = 256;
+static color player_colors[] = {
+	{97, 189, 79},
+	{242, 214, 0},
+	{255, 159, 26},
+	{235, 90, 70},
+	{195, 119, 224},
+	{0, 121, 191},
+};
 
 struct armyi {
 	struct troop*	troop;
@@ -99,7 +107,7 @@ static void show_players() {
 	auto pi = game.players.find(game.active);
 	if(pi != -1) {
 		auto push_x1 = caret.x;
-		caret.x = push_x + (32 + 8)* pi;
+		caret.x = push_x + (32 + 8) * pi;
 		auto push_fore = fore;
 		fore = colors::active;
 		circle(17);
@@ -169,7 +177,10 @@ static void buttonback(int size, void* data) {
 
 void troop::paint(unsigned flags) const {
 	auto push_color = fore;
-	fore = colors::red.mix(colors::black);
+	auto i = game.origin_players.find(player);
+	if(i == -1)
+		i = 0;
+	fore = player_colors[i];
 	buttonback(43, 0);
 	fore = push_color;
 	textcn(getname());
