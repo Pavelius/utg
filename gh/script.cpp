@@ -37,8 +37,12 @@ static void double_attack(int bonus, int param) {
 static void suffer_damage(int bonus, int param) {
 }
 
+static void recover_discarded(int bonus, int param) {
+}
+
 BSDATA(scripti) = {
 	{"AttackDouble", double_attack},	
 	{"SufferDamage", suffer_damage},
+	{"RecoverDiscarded", recover_discarded},
 };
 BSDATAF(scripti)

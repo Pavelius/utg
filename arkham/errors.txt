@@ -1,2 +1,2 @@
-﻿In file `locale/ru/YeOldeMagickShoppe.txt`:
- Line 20: Can't find variant `P1ay`
+﻿In file `rules/Items.txt`:
+ Line 87: Can't find variant `UnitqueItem`

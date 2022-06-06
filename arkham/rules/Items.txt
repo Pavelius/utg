@@ -84,7 +84,7 @@ RichardUptonPickman
  tags PhysicalResistance
 RubyStandish
  abilities Sneak(2)
- effect UnitqueItem+1
+ effect UniqueItem+1
 RyanDean
  abilities Sneak(1) Will(1)
  effect CommonItem+1

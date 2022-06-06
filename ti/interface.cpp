@@ -117,6 +117,32 @@ static void show_players() {
 	caret.y = push_y;
 }
 
+static void status(const char* id, const char* value) {
+	caret.x += 2;
+	auto name = getnm(id);
+	auto push_fore = fore;
+	fore = colors::h3;
+	text(name); caret.x += textw(name); text(":"); caret.x += textw(":") + 2;
+	fore = colors::text;
+	text(value); caret.x += textw(value) + 2;
+	fore = push_fore;
+}
+
+static void status(const char* id, int value) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add(value); status(id, temp);
+}
+
+static void status(indicator_s v) {
+	status(bsdata<indicatori>::elements[v].id, game.active->get(v));
+}
+
+static void show_indicators() {
+	static indicator_s source[] = {StrategyToken, FleetToken, TacticToken};
+	for(auto v : source)
+		status(v);
+}
+
 void status_info(void) {
 	auto push_caret = caret;
 	auto push_fore = fore;
@@ -125,6 +151,7 @@ void status_info(void) {
 	caret.y += 4;
 	show_players();
 	fore = push_fore;
+	show_indicators();
 	caret = push_caret;
 	caret.y += 4 * 4 + 24;
 }
