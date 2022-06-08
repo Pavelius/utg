@@ -52,11 +52,11 @@
     <Text Include="rules\basic.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="rules\Quest.txt">
-      <Filter>Данные</Filter>
-    </Text>
     <Text Include="rules\Grammar.txt">
       <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Quest.txt">
+      <Filter>Логика</Filter>
     </Text>
   </ItemGroup>
 </Project>

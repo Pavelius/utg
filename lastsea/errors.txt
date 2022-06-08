@@ -1,8 +1,6 @@
-﻿In file `rules/Basic.txt`:
- Line 110: Can't find variant `Story`
- Line 119: Can't find variant `Stroy`
- Line 121: Can't find variant `Story`
- Line 129: Can't find variant `Stroy`
- Line 131: Can't find variant `Story`
- Line 139: Can't find variant `Stroy`
- Line 150: Can't find variant `Story`
+﻿In file `rules/Pirates.txt`:
+ Line 48: Can't find variant `Story59`
+ Line 58: Can't find variant `Story42`
+ Line 60: Can't find variant `Story27`
+ Line 68: Can't find variant `Story49`
+ Line 79: Can't find variant `Story22`

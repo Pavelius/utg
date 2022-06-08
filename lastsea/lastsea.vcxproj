@@ -192,6 +192,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\QuestActions.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Pirates.txt" />
     <Text Include="rules\Treasures.txt" />
     <Text Include="scenario\BeyondTheOceanEdge.txt" />
   </ItemGroup>

@@ -69,6 +69,7 @@ static void starting() {
 
 static void initializing() {
 	bsreq::read("rules/Treasures.txt");
+	bsreq::read("rules/Pirates.txt");
 	charname::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
