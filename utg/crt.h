@@ -236,6 +236,7 @@ const char*							getnm(const char* id);
 const char*							getnm(const char* id, int count);
 const char*							getnmof(const char* id);
 const char*							getnmpl(const char* id);
+const char*							getnmsh(const char* id);
 bool								ischa(unsigned u); // is alphabetical character?
 inline bool							isnum(unsigned u) { return u >= '0' && u <= '9'; } // is numeric character?
 int									isqrt(const int x); // Return aquare root of 'x'

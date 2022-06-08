@@ -91,7 +91,7 @@ public:
 
 static void show_players() {
 	auto push_y = caret.y;
-	caret.x += 16; caret.y += 16;
+	caret.x += 16; caret.y += 20;
 	auto push_x = caret.x;
 	auto res = getres("races_small");
 	for(auto p : game.players) {
@@ -115,22 +115,42 @@ static void show_players() {
 		caret.x = push_x1;
 	}
 	caret.y = push_y;
+	caret.x -= 16;
+}
+
+static void textcnw(const char* name) {
+	caret.x += (width - textw(name)) / 2;
+	text(name);
 }
 
 static void status(const char* id, const char* value) {
-	caret.x += 2;
-	auto name = getnm(id);
+	auto name = getnmsh(id);
 	auto push_fore = fore;
+	auto push_font = font;
+	auto push_caret = caret;
+	auto push_width = width;
+	width = 32;
+	fore = colors::border;
+	line(caret.x, caret.y + 40);
+	caret = push_caret;
+	font = metrics::small;
 	fore = colors::h3;
-	text(name); caret.x += textw(name); text(":"); caret.x += textw(":") + 2;
+	textcnw(name);
+	caret.y += texth();
+	font = metrics::h2;
 	fore = colors::text;
-	text(value); caret.x += textw(value) + 2;
+	caret.x = push_caret.x;
+	textcnw(value);
+	font = push_font;
 	fore = push_fore;
+	caret = push_caret;
+	width = push_width;
+	caret.x += 32;
 }
 
 static void status(const char* id, int value) {
 	char temp[32]; stringbuilder sb(temp);
-	sb.add(value); status(id, temp);
+	sb.add("%1i", value); status(id, temp);
 }
 
 static void status(indicator_s v) {
@@ -148,12 +168,11 @@ void status_info(void) {
 	auto push_fore = fore;
 	fore = colors::border;
 	caret.x += 4;
-	caret.y += 4;
 	show_players();
 	fore = push_fore;
 	show_indicators();
 	caret = push_caret;
-	caret.y += 4 * 4 + 24;
+	caret.y += 4 * 2 + 32;
 }
 
 void systemi::paint() const {

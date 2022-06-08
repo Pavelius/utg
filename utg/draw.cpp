@@ -62,7 +62,6 @@ sprite*				metrics::small = (sprite*)loadb("art/fonts/small.pma");
 sprite*				metrics::icons = (sprite*)loadb("art/fonts/icons.pma");
 int					metrics::padding = 2, metrics::border = 4;
 //
-static bool			use_kering = true;
 static bool			break_modal;
 static long			break_result;
 static fnevent		next_proc;
@@ -1478,8 +1477,6 @@ int draw::textw(const char* string, int count) {
 		return 0;
 	int x1 = 0;
 	auto pk = font->getheader("KRN");
-	if(!use_kering)
-		pk = 0;
 	unsigned char s0 = 0x0;
 	if(count == -1) {
 		const char *s1 = string;
@@ -1519,8 +1516,6 @@ void draw::text(const char* string, int count, unsigned flags) {
 	if(count == -1)
 		count = zlen(string);
 	auto pk = font->getheader("KRN");
-	if(!use_kering)
-		pk = 0;
 	const char *s1 = string;
 	const char *s2 = string + count;
 	auto push_caret = caret;
@@ -2392,10 +2387,6 @@ static void standart_domodal() {
 	if(draw::ptips)
 		draw::ptips();
 	draw::hot.key = draw::rawinput();
-#ifdef _DEBUG
-	if(hot.key == (Ctrl + 'K'))
-		use_kering = !use_kering;
-#endif
 	if(!draw::hot.key)
 		exit(0);
 }

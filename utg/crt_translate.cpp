@@ -14,6 +14,7 @@ static char main_locale[4];
 static array source_name(sizeof(translate));
 static array source_nameof(sizeof(translate));
 static array source_namepl(sizeof(translate));
+static array source_namesh(sizeof(translate));
 static array source_text(sizeof(translate));
 
 static int compare(const void* v1, const void* v2) {
@@ -146,6 +147,7 @@ void initialize_translation(const char* locale) {
 	setfile(source_text, "Descriptions", main_locale, false, false);
 	setfile(source_nameof, "NamesOf", main_locale, false, false);
 	setfile(source_namepl, "NamesPl", main_locale, false, false);
+	setfile(source_namesh, "NamesSh", main_locale, false, false);
 }
 
 const char* getnm(const char* id) {
@@ -167,6 +169,16 @@ const char* getnm(const char* id) {
 	}
 	if(!p->name || !p->name[0])
 		return id;
+	return p->name;
+}
+
+const char* getnmsh(const char* id) {
+	if(!id || id[0] == 0)
+		return "";
+	translate key = {id, 0};
+	auto p = (translate*)bsearch(&key, source_namesh.data, source_namesh.getcount(), source_namesh.getsize(), compare);
+	if(!p || !p->name || !p->name[0])
+		return getnm(id);
 	return p->name;
 }
 

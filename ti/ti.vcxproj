@@ -182,6 +182,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\NamesSh.txt" />
     <Text Include="locale\ru\Speech.txt" />
     <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />

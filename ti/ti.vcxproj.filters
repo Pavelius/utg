@@ -121,5 +121,8 @@
     <Text Include="locale\ru\Speech.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\NamesSh.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

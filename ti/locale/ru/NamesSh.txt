@@ -1,0 +1,3 @@
+﻿FleetToken: Флот
+StrategyToken: СР
+TacticToken: ТР
