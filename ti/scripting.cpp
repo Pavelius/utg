@@ -84,6 +84,16 @@ static void select_system(int bonus, int param) {
 	querry.ingame();
 }
 
+static void select_system_reach(int bonus, int param) {
+	auto player = game.active;
+	querry.clear();
+	for(auto& e : bsdata<troop>()) {
+		if(!e || e.player != player || e.getunit()->type != Ships || !e.get(Move))
+			continue;
+		querry.addreach(e.getsystem(), e.get(Move));
+	}
+}
+
 static void select_player(int bonus, int param) {
 	players = game.players;
 }
@@ -363,6 +373,7 @@ BSDATA(script) = {
 	{"SelectPlanetNotYouControl", select_planet, 2},
 	{"SelectPlayer", select_player},
 	{"SelectSystem", select_system, 1},
+	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
 	{"Speaker", speaker},
 };

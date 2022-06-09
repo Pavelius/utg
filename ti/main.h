@@ -139,6 +139,7 @@ struct systemi : entity {
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const { return index != pathfind::Blocked; }
 	void			limitcapacity();
+	static systemi*	findbyindex(pathfind::indext i);
 	static void		markzerocost(const playeri* player);
 	bool			movestop() const;
 	bool			movethrought() const;
@@ -173,6 +174,7 @@ struct troop : entity {
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
 	void			addu(entity* v);
+	void			addreach(const systemi* system, int range);
 	entity*			choose(const char* title, const char* cancel = 0) const;
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
@@ -182,8 +184,10 @@ struct entitya : public adat<entity*> {
 	int				getsummary(indicator_s v) const;
 	int				getsummary(unit_type_s v) const;
 	void			grouplocation(const entitya& source);
+	void			groupsystem(const entitya& source);
 	void			ingame();
 	bool			have(entity* v) const { return find(v) != -1; }
+	void			match(ability_s id, int value, bool keep);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
 	void			match(planet_trait_s value, bool keep);
@@ -194,6 +198,7 @@ struct entitya : public adat<entity*> {
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
 	void			select(array& source);
+	void			select(answers& an);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
@@ -226,8 +231,9 @@ struct choosestep {
 	fnanswer		panswer;
 	fnapplyanswer	papply;
 	const char*		cancel;
-	fnevent			finish;
+	fnevent			pfinish;
 	static bool		stop;
+	fnanswer		paichoose;
 	void			run() const;
 	static void		run(const char* id);
 };

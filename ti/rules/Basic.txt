@@ -44,7 +44,7 @@ SonOfRagh type(Ships)
 #Function
 
 ChooseSystemToActivate
- script SelectSystem FilterActivated-1 FilterMoveStop-1 FilterControled+2 ChooseSystem ActivateSystem
+ script SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
 BuyResearchTechnology
  script Resources-4 ResearchTechnology+1
 GainGoods

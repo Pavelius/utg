@@ -20,7 +20,7 @@ int entitya::fight(ability_s power, ability_s count) {
 }
 
 void entitya::select(const playeri* player, const entity* location) {
-	auto ps = data;
+	auto ps = data + count;
 	auto pe = endof();
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player || e.location != location)
@@ -32,7 +32,7 @@ void entitya::select(const playeri* player, const entity* location) {
 }
 
 void entitya::select(const playeri* player, const entity* system, unit_type_s type) {
-	auto ps = data;
+	auto ps = data + count;
 	auto pe = endof();
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player)
@@ -42,7 +42,7 @@ void entitya::select(const playeri* player, const entity* system, unit_type_s ty
 			continue;
 		if(pu->type != type)
 			continue;
-		if(e.getsystem() != system)
+		if(system && e.getsystem() != system)
 			continue;
 		if(ps < pe)
 			*ps++ = &e;
@@ -50,8 +50,33 @@ void entitya::select(const playeri* player, const entity* system, unit_type_s ty
 	count = ps - data;
 }
 
+void entitya::select(array& source) {
+	auto ps = data + count;
+	auto px = endof();
+	auto pe = source.end();
+	auto size = source.getsize();
+	for(auto pb = source.begin(); pb < pe; pb += size) {
+		auto p = (entity*)pb;
+		if(!(*p))
+			continue;
+		if(ps < px)
+			*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void entitya::select(answers& an) {
+	auto ps = data + count;
+	auto pe = endof();
+	for(auto& e : an) {
+		if(bsdata<troop>::have(e.value) && ps < pe)
+			*ps++ = (entity*)e.value;
+	}
+	count = ps - data;
+}
+
 void entitya::selectplanets(const systemi* system) {
-	auto ps = data;
+	auto ps = data + count;
 	auto pe = endof();
 	for(auto& e : bsdata<planeti>()) {
 		if(!e)
@@ -76,27 +101,24 @@ void entitya::ingame() {
 	count = ps - data;
 }
 
-void entitya::select(array& source) {
-	auto ps = data;
-	auto px = endof();
-	auto pe = source.end();
-	auto size = source.getsize();
-	for(auto pb = source.begin(); pb < pe; pb += size) {
-		auto p = (entity*)pb;
-		if(!(*p))
-			continue;
-		if(ps < px)
-			*ps++ = p;
-	}
-	count = ps - data;
-}
-
 void entitya::match(const playeri* player, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))
 			continue;
 		if((p->player == player) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void entitya::match(ability_s id, int value, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		if((p->get(id)>=value) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -204,6 +226,18 @@ void entitya::grouplocation(const entitya& source) {
 			continue;
 		if(!find_entity(data, ps, p->location))
 			*ps++ = p->location;
+	}
+	count = ps - data;
+}
+
+void entitya::groupsystem(const entitya& source) {
+	auto ps = data;
+	for(auto p : source) {
+		if(!(*p))
+			continue;
+		auto system = p->getsystem();
+		if(!find_entity(data, ps, system))
+			*ps++ = system;
 	}
 	count = ps - data;
 }

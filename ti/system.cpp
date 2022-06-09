@@ -132,3 +132,11 @@ void systemi::markzerocost(const playeri* player) {
 		}
 	}
 }
+
+systemi* systemi::findbyindex(pathfind::indext i) {
+	for(auto& e : bsdata<systemi>()) {
+		if(e.index == i)
+			return &e;
+	}
+	return 0;
+}

@@ -133,6 +133,17 @@ static void choose_movement(answers& an) {
 	}
 }
 
+static void ai_choose_movement(answers& an) {
+	entitya ships;
+	ships.select(an);
+	entitya logistic;
+	for(auto p : ships)
+		logistic.add(p);
+	for(auto p : logistic)
+		p->location = systemi::active;
+	game.updateui();
+}
+
 static void apply_movement() {
 	if(bsdata<troop>::have(game.result)) {
 		auto push_last = troop::last;
@@ -291,8 +302,13 @@ void choosestep::run() const {
 			cancel_text = getnm(cancel);
 		if(game.active->ishuman())
 			game.result = an.choose(temp, cancel_text);
-		else
-			game.result = an.random();
+		else {
+			if(paichoose) {
+				paichoose(an);
+				break;
+			} else
+				game.result = an.random();
+		}
 		if(!game.result)
 			break;
 		if(!apply_standart()) {
@@ -311,12 +327,26 @@ void choosestep::run(const char* id) {
 		p->run();
 }
 
+void entitya::addreach(const systemi* system, int range) {
+	pathfind::clearpath();
+	systemi::blockmove();
+	pathfind::makewave(system->index);
+	for(auto i = 0; i < pathfind::maxcount; i++) {
+		auto move = pathfind::getmove(i);
+		if(move == pathfind::Blocked || move > range)
+			continue;
+		auto ps = systemi::findbyindex(i);
+		if(ps && !have(ps))
+			add(ps);
+	}
+}
+
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
 	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply"},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
-	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement},
+	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement, ai_choose_movement},
 	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
