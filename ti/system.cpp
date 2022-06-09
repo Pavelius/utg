@@ -92,7 +92,7 @@ void systemi::limitcapacity() {
 
 bool systemi::movethrought() const {
 	switch(special) {
-	case Nebula: case Supernova: return false;
+	case Nebula: case Supernova: case AsteroidField: return false;
 	default: return true;
 	}
 }

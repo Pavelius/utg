@@ -190,6 +190,7 @@ struct entitya : public adat<entity*> {
 	void			match(ability_s id, int value, bool keep);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
+	void			match(unit_type_s type, bool keep);
 	void			match(planet_trait_s value, bool keep);
 	void			match(color_s value, bool keep);
 	void			match(flag_s value, bool keep);

@@ -149,6 +149,21 @@ void entitya::match(color_s value, bool keep) {
 	count = ps - data;
 }
 
+void entitya::match(unit_type_s type, bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if(!bsdata<troop>::have(p))
+			continue;
+		auto pu = ((troop*)p)->getunit();
+		if(!pu)
+			continue;
+		if((pu->type==type) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void entitya::match(flag_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {

@@ -92,6 +92,11 @@ static void select_system_reach(int bonus, int param) {
 			continue;
 		querry.addreach(e.getsystem(), e.get(Move));
 	}
+	for(auto& e : bsdata<planeti>()) {
+		if(!e || e.player != player || querry.have(e.location))
+			continue;
+		querry.add(e.location);
+	}
 }
 
 static void select_player(int bonus, int param) {
@@ -151,6 +156,10 @@ static void filter_controled(int bonus, int param) {
 	systemi::markzerocost(game.active);
 	pathfind::makewavex();
 	querry.matchrange(iabs(bonus), bonus >= 0);
+}
+
+static void focus_home_system(int bonus, int param) {
+	game.focusing(game.active->gethome());
 }
 
 static void filter_wormhole(int bonus, int param) {
@@ -352,6 +361,7 @@ BSDATA(script) = {
 	{"FilterSystem", filter_system},
 	{"FilterTechnologySpeciality", filter_technology_speciality},
 	{"FilterWormhole", filter_wormhole},
+	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
 	{"ForEachPlayer", script::setforeach, (int)for_each_player},
 	{"ForEachPlayerActive", script::setforeach, (int)for_each_player_active},

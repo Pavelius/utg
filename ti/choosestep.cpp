@@ -133,14 +133,33 @@ static void choose_movement(answers& an) {
 	}
 }
 
+static int ai_load(const playeri* player, const systemi* system, unit_type_s type, int capacity) {
+	if(capacity <= 0)
+		return 0;
+	entitya ships;
+	ships.select(player, system, type);
+	ships.matchload(true);
+	auto result = 0;
+	while(result < capacity && ships) {
+		auto p1 = ships[0];
+		p1->location = systemi::active;
+		ships.remove(0);
+		result++;
+	}
+	return result;
+}
+
 static void ai_choose_movement(answers& an) {
 	entitya ships;
 	ships.select(an);
-	entitya logistic;
-	for(auto p : ships)
-		logistic.add(p);
-	for(auto p : logistic)
+	for(auto p : ships) {
+		auto capacity = p->get(Capacity);
+		auto player = p->player;
+		auto system = p->getsystem();
+		capacity -= ai_load(player, system, Ships, capacity);
+		capacity -= ai_load(player, system, GroundForces, capacity);
 		p->location = systemi::active;
+	}
 	game.updateui();
 }
 
@@ -228,6 +247,33 @@ static void choose_invasion(answers& an) {
 			continue;
 		an.add(&e, e.getname());
 	}
+}
+
+static void ai_choose_invasion(answers& an) {
+	auto player = game.active;
+	auto system = systemi::active;
+	entitya ground;
+	ground.select(player, system);
+	ground.match(GroundForces, true);
+	entitya planets;
+	planets.selectplanets(system);
+	if(!planets)
+		return;
+	auto average = ground.getcount() / planets.getcount();
+	if(average < 1)
+		average = 1;
+	for(auto planet : planets) {
+		auto count = 0;
+		for(auto p : ground) {
+			if(count >= average)
+				break;
+			if(p->location != system)
+				continue;
+			p->location = planet;
+			count++;
+		}
+	}
+	game.updateui();
 }
 
 static bool have_invasion_units() {
@@ -344,7 +390,7 @@ void entitya::addreach(const systemi* system, int range) {
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
-	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply"},
+	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply", 0, ai_choose_invasion},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
 	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement, ai_choose_movement},
 	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
