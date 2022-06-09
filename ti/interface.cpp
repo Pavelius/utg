@@ -142,10 +142,14 @@ static void status(const char* id, const char* value) {
 	caret.x = push_caret.x;
 	textcnw(value);
 	font = push_font;
-	fore = push_fore;
 	caret = push_caret;
 	width = push_width;
 	caret.x += 32;
+	push_caret = caret;
+	fore = colors::border;
+	line(caret.x, caret.y + 40);
+	caret = push_caret;
+	fore = push_fore;
 }
 
 static void status(const char* id, int value) {
@@ -158,8 +162,19 @@ static void status(indicator_s v) {
 }
 
 static void show_indicators() {
-	static indicator_s source[] = {StrategyToken, FleetToken, TacticToken};
-	for(auto v : source)
+	static indicator_s source_tokes[] = {StrategyToken, FleetToken, TacticToken};
+	static indicator_s source_goods[] = {TradeGoods, Commodities};
+	static indicator_s source_score[] = {VictoryPoints};
+	for(auto v : source_tokes)
+		status(v);
+	caret.x += 2;
+	for(auto v : source_goods)
+		status(v);
+	caret.x += 2;
+	status(getnmsh("Resources"), game.active->getplanetsummary(Resources));
+	status(getnmsh("Influence"), game.active->getplanetsummary(Influence));
+	caret.x += 2;
+	for(auto v : source_score)
 		status(v);
 }
 

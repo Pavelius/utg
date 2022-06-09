@@ -103,6 +103,7 @@ RaiseIndicatorTo: %1 повысили %2 до %3i
 Rarron: Рарун
 RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
+Resources: Ресурсы
 Sakulag: Сакулаг
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
@@ -123,12 +124,13 @@ TequranSystem: Система Текуран
 TheBaronyOfLetnev: Баронство Летнев
 TheBaronyOfLetnevHomeSystem: Домашняя система Баронства Летнев
 TheEmiratesOfHacan: Эмираты Хаканов
-TheEmiratesOfHacanHomeSystem: Домашняя система Эмиратов Хакканов
+TheEmiratesOfHacanHomeSystem: Домашняя система Хакканов
 TheFederationOfSol: Федерация Сол
 TheFederationOfSolHomeSystem: Домашняя система Федерации Сол
 TheL1Z1XMindnet: Сеть разума L1Z1
 TheL1Z1XMindnetHomeSystem: Домашняя система L1Z1
 TheUniversitiesOfJolNar: Вселенные Жол-Наров
+TheUniversitiesOfJolNarHomeSystem: Домашняя система Жол-Наров
 Thibah: Тсибан
 ThibahSystem: Система Тсибан
 Torkan: Торкан
@@ -147,9 +149,11 @@ WormholeBetaSystem: Кротовая нора Бэта
 WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
+Вли: 
 Дипломатическая стратегия: 
-Имперская стратегия: 
 Лидерская стратегия: 
 Политическая стратегия: 
+Рес: 
 Строительная стратегия: 
+Технологическая стратегия: 
 Торговая стратегия: 

@@ -1,3 +1,8 @@
-﻿FleetToken: Флот
+﻿Commodities: Прд
+Influence: Вли
+FleetToken: Флот
+Resources: Рес
 StrategyToken: СР
 TacticToken: ТР
+TradeGoods: Тов
+VictoryPoints: ОП

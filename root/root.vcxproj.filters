@@ -73,7 +73,7 @@
     <Text Include="locale\ru\Names.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="rules\basic.txt">
+    <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="errors.txt">

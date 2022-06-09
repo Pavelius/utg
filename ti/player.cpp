@@ -49,6 +49,14 @@ int	playeri::getsummary(const uniti* type) const {
 	return result;
 }
 
+int	playeri::getplanetsummary(indicator_s v) const {
+	entitya source;
+	source.select(bsdata<planeti>::source);
+	source.match(this, true);
+	source.match(Exhaust, false);
+	return source.getsummary(v);
+}
+
 int	playeri::getinitiative() const {
 	if(!strategy)
 		return 0;

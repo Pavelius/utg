@@ -176,6 +176,7 @@ struct entitya : public adat<entity*> {
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
 	entity*			getbest(indicator_s v) const;
+	int				getsummary(indicator_s v) const;
 	void			grouplocation(const entitya& source);
 	void			ingame();
 	bool			have(entity* v) const { return find(v) != -1; }
@@ -281,6 +282,7 @@ struct playeri : nameable {
 	int				get(indicator_s v) const { return indicators[v]; }
 	systemi*		gethome() const;
 	int				getinitiative() const;
+	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);

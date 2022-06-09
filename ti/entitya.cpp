@@ -261,6 +261,13 @@ entity* entitya::getbest(indicator_s v) const {
 	return result;
 }
 
+int entitya::getsummary(indicator_s v) const {
+	int result_value = 0;
+	for(auto p : *this)
+		result_value += p->get(v);
+	return result_value;
+}
+
 void entitya::addu(entity* v) {
 	if(!have(v))
 		add(v);
