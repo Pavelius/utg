@@ -201,12 +201,14 @@ struct entitya : public adat<entity*> {
 	void			matchload(bool keep);
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
+	entity*			random() const;
 	void			select(array& source);
 	void			select(answers& an);
+	void			select(const entity* location);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
-	entity*			random() const;
+	void			sortunit();
 };
 struct combat {
 	entitya			attacker, defender;
@@ -235,9 +237,9 @@ struct choosestep {
 	fnanswer		panswer;
 	fnapplyanswer	papply;
 	const char*		cancel;
-	fnevent			pfinish;
-	static bool		stop;
 	fnanswer		paichoose;
+	fnevent			pbefore, pafter;
+	static bool		stop;
 	void			run() const;
 	static void		run(const char* id);
 };

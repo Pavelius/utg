@@ -141,6 +141,7 @@ void gamei::limitcapacity() {
 
 void gamei::play() {
 	updatecontrol();
+	updateui();
 	do {
 		strategy_phase();
 		action_phase();
@@ -159,8 +160,12 @@ void gamei::updatecontrol() {
 		if(!e)
 			continue;
 		if(bsdata<systemi>::have(e.location)
-			|| bsdata<planeti>::have(e.location))
-			e.location->player = e.player;
+			|| bsdata<planeti>::have(e.location)) {
+			if(bsdata<systemi>::have(e.location))
+				e.location->player = e.player;
+			else
+				e.location->player = e.player;
+		}
 	}
 }
 

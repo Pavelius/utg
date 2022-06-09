@@ -14,7 +14,9 @@ AsteroidFieldSystem: Поле астероидов
 AsteroidFieldSystem2: Поле астероидов
 Bereg: Берег
 BeregSystem: Система Берег
+BoardTroop: Погрузить %1
 Cancel: Отмена
+CancelMovement: Отменить движение
 Carrier: Транспорт
 Centauri: Центаури
 CentauriSystem: Система Центаури
@@ -138,6 +140,7 @@ Torkan: Торкан
 Trade: Торговая стратегия
 TradeGoods: Товары
 TrenLak: Трен'ллак
+UnboardTroop: Выгрузить %1
 UploadUnits: Погрузить отряды на борт
 VefutII: Верфут II
 VefutIISystem: Система Вефут II
@@ -151,4 +154,10 @@ WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
 Вли: 
+Военная стратегия: 
+Дипломатическая стратегия: 
+Имперская стратегия: 
+Лидерская стратегия: 
 Рес: 
+Строительная стратегия: 
+Торговая стратегия: 

@@ -3,11 +3,12 @@
 
 typedef void(*fnforeach)(variant v);
 
-entitya			querry;
+entitya				querry;
 static playera		players;
 static int			last_value;
 static bool			if_able_mode;
 static fnforeach	for_each;
+extern entitya		onboard;
 
 static void choose_command_token(int count) {
 	auto push_options = game.options;
@@ -89,6 +90,9 @@ static void select_system_reach(int bonus, int param) {
 	querry.clear();
 	for(auto& e : bsdata<troop>()) {
 		if(!e || e.player != player || e.getunit()->type != Ships || !e.get(Move))
+			continue;
+		auto system = e.getsystem();
+		if(system->isactivated(player))
 			continue;
 		querry.addreach(e.getsystem(), e.get(Move));
 	}
@@ -231,6 +235,8 @@ static void action_phase_pass(int bonus, int param) {
 
 static void move_ship(int bonus, int param) {
 	troop::last->location = systemi::active;
+	for(auto p : onboard)
+		p->location = systemi::active;
 	game.updateui();
 	choosestep::stop = true;
 }

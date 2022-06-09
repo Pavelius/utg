@@ -1,5 +1,28 @@
 #include "main.h"
 
+static int compare_unit(const void* v1, const void* v2) {
+	auto p1 = (uniti*)v1;
+	auto p2 = (uniti*)v2;
+	if(p1->type != p2->type)
+		return p2->type - p1->type;
+	if(p1->abilities[Cost] != p2->abilities[Cost])
+		return p2->abilities[Cost] - p1->abilities[Cost];
+	return p1 - p2;
+}
+static int compare_troop(const void* v1, const void* v2) {
+	auto p1 = (troop**)v1;
+	auto p2 = (troop**)v2;
+	auto n1 = (*p1)->player;
+	auto n2 = (*p2)->player;
+	if(n1 != n2)
+		return n1 - n2;
+	auto u1 = (*p1)->type;
+	auto u2 = (*p2)->type;
+	if(u1 != u2)
+		return compare_unit(u1, u2);
+	return *p1 - *p2;
+}
+
 bool find_entity(entity** ps, entity** pe, const entity* p) {
 	while(ps < pe) {
 		if(*ps == p)
@@ -7,6 +30,10 @@ bool find_entity(entity** ps, entity** pe, const entity* p) {
 		ps++;
 	}
 	return false;
+}
+
+void entitya::sortunit() {
+	qsort(data, count, sizeof(data[0]), compare_troop);
 }
 
 int entitya::fight(ability_s power, ability_s count) {
@@ -24,6 +51,18 @@ void entitya::select(const playeri* player, const entity* location) {
 	auto pe = endof();
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player || e.location != location)
+			continue;
+		if(ps < pe)
+			*ps++ = &e;
+	}
+	count = ps - data;
+}
+
+void entitya::select(const entity* location) {
+	auto ps = data + count;
+	auto pe = endof();
+	for(auto& e : bsdata<troop>()) {
+		if(e.location != location)
 			continue;
 		if(ps < pe)
 			*ps++ = &e;

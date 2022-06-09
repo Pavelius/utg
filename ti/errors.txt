@@ -1,2 +1,5 @@
 ﻿In file `Names.txt`:
- Define translate for `ChoosePDSorDock`
+ Define translate for `BoardTroop`
+ Define translate for `CancelMovement`
+ Define translate for `Planet`
+ Define translate for `UnboardTroop`

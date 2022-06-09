@@ -1,7 +1,12 @@
 #include "main.h"
 
+entitya				onboard;
 bool				choosestep::stop;
 static indicator_s	command_tokens[] = {TacticToken, FleetToken, StrategyToken};
+
+static void clear_onboard() {
+	onboard.clear();
+}
 
 static playeri* find_player(const strategyi& e) {
 	for(auto p : game.players) {
@@ -218,47 +223,42 @@ static void apply_pds_or_dock() {
 	}
 }
 
-static void choose_upload_units(answers& an) {
-	auto need_system = troop::last->getsystem();
-	for(auto& e : bsdata<troop>()) {
-		if(e.player != playeri::last)
-			continue;
-		auto pu = e.getunit();
-		if(!pu || pu->type == Structures)
-			continue;
-		auto move = e.get(Move);
-		if(move > 0)
-			continue;
-		auto ps = e.location;
-		if(bsdata<troop>::have(ps))
-			continue;
-		if(need_system != e.getsystem())
-			continue;
-		auto planet = e.getplanet();
-		if(planet)
-			an.add(&e, "%1 (%2)", e.getname(), planet->getname());
-		else
-			an.add(&e, e.getname());
+static void choose_move_options(answers& an) {
+	char temp[260]; stringbuilder sb(temp);
+	add_script(an, "MoveShip");
+	auto ship = troop::last;
+	auto system = ship->getsystem();
+	auto capacity = ship->get(Capacity);
+	if(capacity > 0) {
+		for(auto& e : bsdata<troop>()) {
+			if(e.player != playeri::last || e.getsystem() != system)
+				continue;
+			if(e.getunit()->type == Structures)
+				continue;
+			if(e.get(Move) != 0)
+				continue;
+			sb.clear();
+			if(onboard.have(&e))
+				sb.add(getnm("UnboardTroop"), e.getname());
+			else if(onboard.getcount() < capacity)
+				sb.add(getnm("BoardTroop"), e.getname());
+			else
+				continue;
+			if(e.location && e.location != system)
+				sb.adds("(%1)", e.location->getname());
+			an.add(&e, temp);
+		}
 	}
 }
 
-static bool have_upload_units() {
-	answers an;
-	choose_upload_units(an);
-	return an.getcount() != 0;
-}
-
-static void choose_move_options(answers& an) {
-	add_script(an, "MoveShip");
-	if(troop::last->get(Capacity) > 0 && have_upload_units())
-		add_script(an, "ChooseUploadUnits");
-}
-
-static void apply_upload_units() {
+static void apply_move_options() {
 	if(bsdata<troop>::have(game.result)) {
 		auto p = (troop*)game.result;
-		p->location = troop::last;
-		game.updateui();
+		auto index = onboard.find(p);
+		if(index == -1)
+			onboard.add(p);
+		else
+			onboard.remove(index, 1);
 	}
 }
 
@@ -371,6 +371,8 @@ void choosestep::run() const {
 	auto push_stop = stop;
 	if(playeri::last)
 		answers::header = playeri::last->getname();
+	if(pbefore)
+		pbefore();
 	char temp[260]; gamestring sb(temp); answers an;
 	while(!stop) {
 		sb.clear(); an.clear();
@@ -399,6 +401,8 @@ void choosestep::run() const {
 		}
 	}
 	stop = push_stop;
+	if(pafter)
+		pafter();
 	draw::pause();
 	answers::header = push_header;
 }
@@ -426,13 +430,12 @@ void entitya::addreach(const systemi* system, int range) {
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
-	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply", 0, ai_choose_invasion},
+	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply", ai_choose_invasion},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
-	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement, ai_choose_movement},
-	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
+	{"ChooseMove", choose_movement, apply_movement, "EndMovement", ai_choose_movement, clear_onboard, end_movement},
+	{"ChooseMoveOption", choose_move_options, apply_move_options, "CancelMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChoosePDSorDock", choose_pds_or_dock, apply_pds_or_dock},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
-	{"ChooseUploadUnits", choose_upload_units, apply_upload_units, "Apply"},
 };
 BSDATAF(choosestep)

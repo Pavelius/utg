@@ -18,79 +18,6 @@ static color player_colors[] = {
 	{0, 121, 191},
 };
 
-struct armyi {
-	struct troop*	troop;
-	char			level;
-};
-static const entity* last_parent;
-class armya : public adat<armyi, 32> {
-	static int compare_unit(const void* v1, const void* v2) {
-		auto p1 = (uniti*)v1;
-		auto p2 = (uniti*)v2;
-		if(p1->type != p2->type)
-			return p2->type - p1->type;
-		if(p1->abilities[Cost] != p2->abilities[Cost])
-			return p2->abilities[Cost] - p1->abilities[Cost];
-		return p1 - p2;
-	}
-	static int compare_troop(const void* v1, const void* v2) {
-		auto p1 = (troop*)v1;
-		auto p2 = (troop*)v2;
-		auto u1 = p1->type;
-		auto u2 = p2->type;
-		if(u1 == u2)
-			return p1 - p2;
-		return compare_unit(u1, u2);
-	}
-	static entity* getcomparer(entity* p) {
-		return (p->location == last_parent) ? p : p->location;
-	}
-	static int compare_tree(const void* v1, const void* v2) {
-		auto t1 = ((armyi*)v1)->troop;
-		auto t2 = ((armyi*)v2)->troop;
-		auto c1 = getcomparer(t1);
-		auto c2 = getcomparer(t2);
-		if(c1 == c2) {
-			if(t2->location == last_parent)
-				return 1;
-			return compare_troop(t1, t2);
-		}
-		return compare_troop(c1, c2);
-	}
-public:
-	void selectnew(const entity* location) {
-		auto ps = data;
-		auto pe = endof();
-		for(auto& e : bsdata<troop>()) {
-			if(e.location == location) {
-				if(ps < pe) {
-					ps->troop = &e;
-					ps->level = 0;
-					ps++;
-				}
-			} else if(bsdata<troop>::have(e.location) && ((troop*)e.location)->location == location) {
-				if(ps < pe) {
-					ps->troop = &e;
-					ps->level = 1;
-					ps++;
-				}
-			}
-		}
-		count = ps - data;
-	}
-	void sortnew(const entity* location) {
-		last_parent = location;
-		qsort(data, count, sizeof(data[0]), compare_tree);
-	}
-	void select(const entity* location) {
-		clear();
-		if(!location)
-			return;
-		selectnew(location);
-		sortnew(location);
-	}
-};
-
 static void show_players() {
 	auto push_y = caret.y;
 	caret.x += 16; caret.y += 20;
@@ -315,15 +242,15 @@ static void object_paint(const object* po) {
 		((troop*)p)->paint(po->flags);
 }
 
-static void update_system() {
-	armya army;
-	for(auto& e : bsdata<systemi>()) {
-		if(!e)
-			continue;
-		army.clear();
-		army.select(&e);
-	}
-}
+//static void update_system() {
+//	ent army;
+//	for(auto& e : bsdata<systemi>()) {
+//		if(!e)
+//			continue;
+//		army.clear();
+//		army.select(&e);
+//	}
+//}
 
 static point system_position(point caret, int index) {
 	switch(index) {
@@ -477,18 +404,21 @@ void gamei::focusing(const entity* p) {
 }
 
 static void update_units(point position, const entity* location) {
-	armya source;
+	if(!location)
+		return;
+	entitya source;
 	source.select(location);
+	source.sortunit();
 	if(!source)
 		return;
 	auto total_height = button_height * source.getcount();
+	auto x = position.x;
 	auto y = position.y - total_height / 2 + (button_height - 1) / 2;
-	for(auto& e : source) {
-		auto x = position.x + e.level * (button_height - 4);
-		auto p = findobject(e.troop);
+	for(auto pt : source) {
+		auto p = findobject(pt);
 		if(!p) {
 			p = addobject(x, y);
-			p->data = e.troop;
+			p->data = pt;
 			p->priority = 5;
 			p->size = 0;
 		}
@@ -505,12 +435,9 @@ void gamei::updateui() {
 	static point system_offset = {0, -6 * size / 10};
 	waitall();
 	for(auto& e : bsdata<object>()) {
-		if(bsdata<planeti>::have(e.data)) {
-			if(equal("P0p0p0", ((entity*)e.data)->id))
-				update_units(e, (entity*)e.data);
-			else
-				update_units(e, (entity*)e.data);
-		} else if(bsdata<systemi>::have(e.data))
+		if(bsdata<planeti>::have(e.data))
+			update_units(e, (entity*)e.data);
+		else if(bsdata<systemi>::have(e.data))
 			update_units(e + system_offset, (entity*)e.data);
 	}
 	waitall();

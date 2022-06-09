@@ -40,18 +40,9 @@ static void test_choose() {
 	querry.choose("ChooseSystem");
 }
 
-static void test_script() {
-	game.play();
-}
-
 static void test_answers() {
 	game.prepare();
-	game.updateui();
-	//auto p2 = bsdata<strategyi>::elements + 1;
-	//game.active->apply(p2->primary);
-	test_speech();
-	//test_choose();
-	test_script();
+	game.play();
 }
 
 static void start_game() {
@@ -74,7 +65,7 @@ static void initialize() {
 void script_initialize();
 
 int main(int argc, char* argv[]) {
-	srand(getcputime());
+	srand(400);
 	script_initialize();
 	return draw::strategy(start_game, initialize);
 }
