@@ -3,6 +3,8 @@
 int entity::get(ability_s v) const {
 	if(bsdata<troop>::have(this))
 		return ((troop*)this)->type->abilities[v];
+	else if(bsdata<uniti>::have(this))
+		return ((uniti*)this)->abilities[v];
 	return 0;
 }
 
@@ -115,4 +117,18 @@ const char* entity::getname() const {
 	if(bsdata<troop>::have(this))
 		return getnm(((troop*)this)->type->id);
 	return getnm(getid());
+}
+
+int	entity::getproduction() const {
+	auto result = 0;
+	if(bsdata<troop>::have(this)) {
+		auto p = (troop*)this;
+		result += p->type->abilities[Production];
+		if(p->type->tags.is(AddPlanetResourceToProduction)) {
+			auto planet = p->getplanet();
+			if(planet)
+				result += planet->get(Resources);
+		}
+	}
+	return result;
 }

@@ -20,6 +20,7 @@ enum planet_trait_s : unsigned char {
 };
 enum tag_s : unsigned char {
 	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
+	AddPlanetResourceToProduction
 };
 enum racef_s : unsigned char {
 	Assimilate, Fragile,
@@ -51,8 +52,6 @@ enum unit_type_s : unsigned char {
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
-typedef void(*fnanswer)(answers& an);
-typedef void(*fnapplyanswer)();
 struct abilityi {
 	const char*		id;
 };
@@ -93,6 +92,7 @@ struct entity : nameable {
 	const char*		getid() const;
 	const char*		getname() const;
 	planeti*		getplanet() const;
+	int				getproduction() const;
 	color_s			getspeciality() const;
 	int				getsumary(ability_s v) const;
 	int				getsumary(unit_type_s v) const;
@@ -106,7 +106,8 @@ struct uniti : nameable {
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
 	static uniti*	last;
-	void			placement(int count) const;
+	int				getcost() const { return abilities[Cost]; }
+	void			placement(int count, bool updateui = true) const;
 	bool			stackable() const { return abilities[CostCount] > 1; }
 };
 struct planeti : entity {
@@ -162,6 +163,7 @@ struct troop : entity {
 	const uniti*	type;
 	static troop*	last;
 	constexpr explicit operator bool() const { return type != 0; }
+	void			add(answers& an);
 	static troop*	add(const char* id, playeri* player);
 	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
@@ -172,6 +174,7 @@ struct troop : entity {
 	void			upload();
 	void			movement(entity* destination);
 	void			paint(unsigned flags) const;
+	void			produce(const uniti* unit) const;
 };
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
@@ -233,11 +236,13 @@ public:
 	gamestring(const stringbuilder& v) : stringbuilder(v) {}
 };
 struct choosestep {
+	typedef void(*fnanswer)(stringbuilder& sbtitle, answers& an);
+	typedef void(*fnaichoose)(answers& an);
 	const char*		id;
 	fnanswer		panswer;
-	fnapplyanswer	papply;
+	fnevent			papply;
 	const char*		cancel;
-	fnanswer		paichoose;
+	fnaichoose		paichoose;
 	fnevent			pbefore, pafter;
 	static bool		stop;
 	void			run() const;

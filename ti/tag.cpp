@@ -6,5 +6,6 @@ BSDATA(tagi) {
 	{"PlanetaryShield"},
 	{"RepairSustainDamage"},
 	{"SustainDamage"},
+	{"AddPlanetResourceToProduction"}
 };
-assert_enum(tagi, SustainDamage)
+assert_enum(tagi, AddPlanetResourceToProduction)

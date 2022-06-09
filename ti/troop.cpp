@@ -81,3 +81,21 @@ void troop::upload() {
 		game.updateui();
 	}
 }
+
+void troop::produce(const uniti* unit) const {
+	auto last_system = systemi::last;
+	auto last_planet = planeti::last;
+	systemi::last = getsystem();
+	planeti::last = getplanet();
+	unit->placement(unit->abilities[CostCount], false);
+	planeti::last = last_planet;
+	systemi::last = last_system;
+}
+
+void troop::add(answers& an) {
+	auto planet = getplanet();
+	if(planet)
+		an.add(this, "%1 (%2)", getname(), planet->getname());
+	else
+		an.add(this, getname());
+}

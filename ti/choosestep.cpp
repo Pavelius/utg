@@ -22,7 +22,7 @@ static void select_planets(const playeri* player, bool iscontrol) {
 	querry.match(player, iscontrol);
 }
 
-static void choose_pay(answers& an) {
+static void choose_pay(stringbuilder& sb, answers& an) {
 	select_planets(playeri::last, true);
 	querry.match(Exhaust, false);
 	querry.match(game.indicator, true);
@@ -30,7 +30,7 @@ static void choose_pay(answers& an) {
 		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(game.indicator));
 }
 
-static void choose_command_token(answers& an) {
+static void choose_command_token(stringbuilder& sb, answers& an) {
 	for(auto v : command_tokens) {
 		auto& e = bsdata<indicatori>::elements[v];
 		an.add(&e, getnm(e.id));
@@ -54,7 +54,7 @@ static void apply_pay() {
 	}
 }
 
-static void choose_strategy(answers& an) {
+static void choose_strategy(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<strategyi>()) {
 		if(find_player(e))
 			continue;
@@ -70,7 +70,7 @@ static void apply_strategy() {
 	}
 }
 
-static void choose_action(answers& an) {
+static void choose_action(stringbuilder& sb, answers& an) {
 	auto p = game.active;
 	if(!p)
 		return;
@@ -117,7 +117,7 @@ static void makewave(pathfind::indext start) {
 	systemi::blockenemy(playeri::last);
 }
 
-static void choose_movement(answers& an) {
+static void choose_movement(stringbuilder& sb, answers& an) {
 	makewave(systemi::active->index);
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != playeri::last)
@@ -211,7 +211,7 @@ static void add_unit(answers& an, const char* id) {
 	an.add(pu, getnm(pu->id));
 }
 
-static void choose_pds_or_dock(answers& an) {
+static void choose_pds_or_dock(stringbuilder& sb, answers& an) {
 	add_unit(an, "PDS");
 	add_unit(an, "SpaceDock");
 }
@@ -223,12 +223,14 @@ static void apply_pds_or_dock() {
 	}
 }
 
-static void choose_move_options(answers& an) {
-	char temp[260]; stringbuilder sb(temp);
-	add_script(an, "MoveShip");
+static void choose_move_options(stringbuilder& sbt, answers& an) {
 	auto ship = troop::last;
 	auto system = ship->getsystem();
 	auto capacity = ship->get(Capacity);
+	sbt.clear();
+	sbt.add(getnm("ChooseMoveOption"), ship->getname(), systemi::active->getname());
+	char temp[260]; stringbuilder sb(temp);
+	add_script(an, "MoveShip");
 	if(capacity > 0) {
 		for(auto& e : bsdata<troop>()) {
 			if(e.player != playeri::last || e.getsystem() != system)
@@ -262,7 +264,7 @@ static void apply_move_options() {
 	}
 }
 
-static void choose_invasion(answers& an) {
+static void choose_invasion(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != playeri::last)
 			continue;
@@ -313,8 +315,8 @@ static void ai_choose_invasion(answers& an) {
 }
 
 static bool have_invasion_units() {
-	answers an;
-	choose_invasion(an);
+	answers an; char temp[260]; stringbuilder sb(temp);
+	choose_invasion(sb, an);
 	return an.getcount() != 0;
 }
 
@@ -326,7 +328,7 @@ static void apply_invasion() {
 	}
 }
 
-static void choose_invasion_planet(answers& an) {
+static void choose_invasion_planet(stringbuilder& sb, answers& an) {
 	if(!have_invasion_units())
 		return;
 	for(auto& e : bsdata<planeti>()) {
@@ -348,6 +350,64 @@ static void apply_invasion_planet() {
 		planeti::last = push_last;
 		game.updatecontrol();
 	}
+}
+
+static void choose_dock(stringbuilder& sb, answers& an) {
+	for(auto& e : bsdata<troop>()) {
+		if(e.player != game.active || !e.get(Production) || e.getsystem() != systemi::active)
+			continue;
+		e.add(an);
+	}
+}
+
+static void apply_dock() {
+	if(bsdata<troop>::have(game.result)) {
+		troop::last = (troop*)game.result;
+		choosestep::stop = true;
+	}
+}
+
+static void choose_production(stringbuilder& sb, answers& an) {
+	if(!troop::last)
+		return;
+	auto production = troop::last->getproduction();
+	if(!production)
+		return;
+	auto resources = game.active->getplanetsummary(Resources);
+	auto goods = game.active->get(TradeGoods);
+	auto production_count = onboard.getsummary(CostCount);
+	auto total_production = production - production_count;
+	auto total_resources = goods + resources - onboard.getsummary(Cost);
+	if(production_count)
+		sb.addn("---");
+	for(auto p : onboard) {
+		auto pu = (uniti*)p;
+		sb.addn("%1 - %Cost [%2i]", p->getname(), pu->getcost());
+		if(pu->abilities[CostCount] > 1)
+			sb.adds("%Count [%1i]", pu->abilities[CostCount]);
+	}
+	if(production_count)
+		sb.addn(getnm("ProductionTotal"), total_resources, total_production);
+	for(auto& e : bsdata<uniti>()) {
+		if(e.type == Structures)
+			continue;
+		auto cost = e.getcost();
+		if(cost > total_resources || total_production <= 0)
+			continue;
+		an.add(&e, e.getname());
+	}
+}
+
+static void apply_production() {
+	if(bsdata<uniti>::have(game.result))
+		onboard.add((entity*)game.result);
+}
+
+static void finish_production() {
+	auto pu = troop::last;
+	for(auto p : onboard)
+		pu->produce((uniti*)p);
+	game.updateui();
 }
 
 static bool apply_standart() {
@@ -373,13 +433,14 @@ void choosestep::run() const {
 		answers::header = playeri::last->getname();
 	if(pbefore)
 		pbefore();
-	char temp[260]; gamestring sb(temp); answers an;
+	char temp[260]; gamestring sb(temp);
+	answers an;
 	while(!stop) {
 		sb.clear(); an.clear();
 		sb.add(getnm(id));
 		if(game.options > 0)
 			sb.adds(getnm("ChooseOptions"), game.options);
-		panswer(an);
+		panswer(sb, an);
 		choose_standart(an, this);
 		const char* cancel_text = 0;
 		if(cancel)
@@ -429,7 +490,9 @@ void entitya::addreach(const systemi* system, int range) {
 
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
+	{"ChooseProduction", choose_production, apply_production, "EndBuild", 0, clear_onboard, finish_production},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
+	{"ChooseDock", choose_dock, apply_dock},
 	{"ChooseInvasion", choose_invasion, apply_invasion, "Apply", ai_choose_invasion},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
 	{"ChooseMove", choose_movement, apply_movement, "EndMovement", ai_choose_movement, clear_onboard, end_movement},
