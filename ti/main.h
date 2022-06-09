@@ -105,6 +105,8 @@ struct uniti : nameable {
 	taga			tags;
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
+	static uniti*	last;
+	void			placement(int count) const;
 	bool			stackable() const { return abilities[CostCount] > 1; }
 };
 struct planeti : entity {

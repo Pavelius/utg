@@ -198,9 +198,6 @@ static void end_action(int bonus, int param) {
 	choosestep::stop = true;
 }
 
-static void pds_or_dock(int bonus, int param) {
-}
-
 static void redistribute_command_tokens(int bonus, int param) {
 }
 
@@ -266,24 +263,6 @@ static void for_each_planet(variant v) {
 	planeti::last = push_last;
 }
 
-static void unit_placement(uniti* p, int count) {
-	if(!count)
-		count = 1;
-	if(p->type == GroundForces || p->type == Structures) {
-		game.focusing(planeti::last);
-		for(auto i = 0; i < count; i++)
-			troop::add(p, playeri::last, planeti::last);
-		game.updateui();
-		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(p->id), count);
-	} else if(p->type == Ships) {
-		game.focusing(systemi::last);
-		for(auto i = 0; i < count; i++)
-			troop::add(p, playeri::last, systemi::last);
-		game.updateui();
-		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(p->id), count);
-	}
-}
-
 static void script_run(variant v) {
 	if(v.iskind<indicatori>())
 		apply_value((indicator_s)v.value, v.counter);
@@ -297,7 +276,7 @@ static void script_run(variant v) {
 		p->run();
 		game.options = push_options;
 	} else if(v.iskind<uniti>())
-		unit_placement(bsdata<uniti>::elements + v.value, v.counter);
+		bsdata<uniti>::elements[v.value].placement(v.counter);
 	else {
 		auto& ei = bsdata<varianti>::get(v.type);
 		draw::warning(getnm("ErrorScriptType"), ei.id);
@@ -371,7 +350,6 @@ BSDATA(script) = {
 	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},
 	{"NoSpeaker", no_speaker},
-	{"PDSorDock", pds_or_dock, 0},
 	{"QuerryCount", querry_count},
 	{"RedistributeCommandTokens", redistribute_command_tokens},
 	{"ReplenishCommodities", replenish_commodities},

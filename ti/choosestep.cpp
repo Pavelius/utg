@@ -186,6 +186,25 @@ static void add_script(answers& an, const char* id) {
 	}
 }
 
+static void add_unit(answers& an, const char* id) {
+	auto pu = bsdata<uniti>::find(id);
+	if(!pu)
+		return;
+	an.add(pu, getnm(pu->id));
+}
+
+static void choose_pds_or_dock(answers& an) {
+	add_unit(an, "PDS");
+	add_unit(an, "SpaceDock");
+}
+
+static void apply_pds_or_dock() {
+	if(bsdata<uniti>::have(game.result)) {
+		((uniti*)game.result)->placement(1);
+		choosestep::stop = true;
+	}
+}
+
 static void choose_upload_units(answers& an) {
 	auto need_system = troop::last->getsystem();
 	for(auto& e : bsdata<troop>()) {
@@ -252,12 +271,16 @@ static void choose_invasion(answers& an) {
 static void ai_choose_invasion(answers& an) {
 	auto player = game.active;
 	auto system = systemi::active;
-	entitya ground;
-	ground.select(player, system);
-	ground.match(GroundForces, true);
+	// Select all planets in a system
 	entitya planets;
 	planets.selectplanets(system);
 	if(!planets)
+		return;
+	// Select all ground units in a space
+	entitya ground;
+	ground.select(player, system);
+	ground.match(GroundForces, true);
+	if(!ground)
 		return;
 	auto average = ground.getcount() / planets.getcount();
 	if(average < 1)
@@ -395,6 +418,7 @@ BSDATA(choosestep) = {
 	{"ChooseMove", choose_movement, apply_movement, "EndMovement", end_movement, ai_choose_movement},
 	{"ChooseMoveOption", choose_move_options, 0, "EndMovement"},
 	{"ChoosePay", choose_pay, apply_pay},
+	{"ChoosePDSorDock", choose_pds_or_dock, apply_pds_or_dock},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
 	{"ChooseUploadUnits", choose_upload_units, apply_upload_units, "Apply"},
 };

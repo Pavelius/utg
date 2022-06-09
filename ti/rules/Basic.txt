@@ -69,8 +69,8 @@ Politics initiative(3)
  primary SelectPlayer NoSpeaker ChoosePlayer Speaker ActionCard+2
  secondary StrategyToken-1 ActionCard+2
 Construction initiative(4)
- primary SelectPlanetYouControl ChoosePlanet PDSorDock SelectPlanetYouControl ChoosePlanet PDS
- secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem PDSorDock
+ primary SelectPlanetYouControl ChoosePlanet ChoosePDSorDock SelectPlanetYouControl ChoosePlanet PDS
+ secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem ChoosePDSorDock
 Trade initiative(5)
  primary GainGoods ReplenishCommodities GainGoodsSuplier
  secondary StrategyToken-1 ReplenishCommodities

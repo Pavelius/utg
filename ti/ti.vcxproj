@@ -169,6 +169,7 @@
     <ClCompile Include="tech.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="troop.cpp" />
+    <ClCompile Include="unit.cpp" />
     <ClCompile Include="unit_type.cpp" />
   </ItemGroup>
   <ItemGroup>
