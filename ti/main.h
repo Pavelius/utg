@@ -185,6 +185,7 @@ struct entitya : public adat<entity*> {
 	int				getsummary(ability_s v) const;
 	int				getsummary(indicator_s v) const;
 	int				getsummary(unit_type_s v) const;
+	int				getsummary(const uniti* pv) const;
 	void			grouplocation(const entitya& source);
 	void			groupsystem(const entitya& source);
 	void			ingame();

@@ -320,6 +320,17 @@ entity* entitya::getbest(indicator_s v) const {
 	return result;
 }
 
+int entitya::getsummary(const uniti* pv) const {
+	int result = 0;
+	for(auto p : *this) {
+		if(bsdata<troop>::have(p)) {
+			if(((troop*)p)->getunit() == pv)
+				result++;
+		}
+	}
+	return result;
+}
+
 int entitya::getsummary(indicator_s v) const {
 	int result_value = 0;
 	for(auto p : *this)

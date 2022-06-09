@@ -186,9 +186,22 @@ static void add_script(answers& an, const char* id) {
 	}
 }
 
+static bool allow(const uniti* pu) {
+	auto maximum_count = pu->abilities[MaximumInOneLocation];
+	if(pu->abilities[MaximumInOneLocation] > 0) {
+		if(pu->type == Structures) {
+			entitya source;
+			source.select(game.active, planeti::last);
+			if(source.getsummary(pu) >= maximum_count)
+				return false;
+		}
+	}
+	return true;
+}
+
 static void add_unit(answers& an, const char* id) {
 	auto pu = bsdata<uniti>::find(id);
-	if(!pu)
+	if(!pu || !allow(pu))
 		return;
 	an.add(pu, getnm(pu->id));
 }
