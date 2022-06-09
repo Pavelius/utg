@@ -5,6 +5,8 @@
 
 using namespace draw;
 
+static bool need_update_ui = false;
+
 const int button_height = 21;
 const int size = 256;
 static color player_colors[] = {
@@ -435,6 +437,15 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	ps->fore = colors::green;
 	ps->set(object::Hilite);
 	return ps;
+}
+
+void entity::clear() {
+	auto p = findobject(this);
+	if(p) {
+		need_update_ui = true;
+		p->clear();
+	}
+	memset(this, 0, sizeof(*this));
 }
 
 troop* gamei::choosetroop(const entitya& source) {

@@ -45,20 +45,48 @@ void systemi::placement(variants source, playeri* player) {
 	}
 }
 
+int systemi::getcapacity(bool include_docks) const {
+	entitya source;
+	source.clear();
+	source.select(player, this);
+	auto capacity = source.getsummary(Capacity);
+	if(include_docks) {
+		entitya ground;
+		ground.select(player, this, Structures);
+		capacity += ground.getsummary(CapacityShips);
+	}
+	return capacity;
+}
+
 void systemi::limitcapacity() {
+	entitya source;
 	while(true) {
-		auto capacity = getsumary(Capacity);
-		auto total_ships = getsumary(Ships);
-		auto total_ground = getsumary(GroundForces);
+		// Get all ships and ground forces in space and calculate summary capacity
+		source.clear();
+		source.select(player, this);
+		if(!source)
+			break;
+		auto capacity = source.getsummary(Capacity);
+		// Get capacity of docks for fighters
+		entitya ground;
+		ground.select(player, this, Structures);
+		auto capacity_ships = ground.getsummary(CapacityShips);
+		// Get only loaded units and calculate total
+		source.matchload(true);
+		auto total_ships = source.getsummary(Ships);
+		if(capacity_ships > 0) {
+			if(capacity_ships > total_ships)
+				capacity_ships = total_ships;
+			total_ships -= capacity_ships;
+		}
+		auto total_ground = source.getsummary(GroundForces);
 		auto total = total_ships + total_ground;
 		if(capacity >= total)
 			break;
-	}
-}
-
-static void block_inpassable() {
-	for(auto& e : bsdata<systemi>()) {
-
+		if(!source)
+			break;
+		// Remove one unit
+		source[0]->clear();
 	}
 }
 

@@ -13,7 +13,7 @@ enum ability_s : unsigned char {
 	Cost, CostCount,
 	Combat, CombatCount, Bombardment, BombardmentCount,
 	AntiFighterBarrage, AntiFighterBarrageCount, SpaceCannon, SpaceCannonCount,
-	Move, Production, Reinforcement, MaximumInOneLocation, Capacity,
+	Move, Production, Reinforcement, MaximumInOneLocation, CapacityShips, Capacity,
 };
 enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
@@ -86,7 +86,7 @@ struct entity : nameable {
 	playeri*		player;
 	entity*			location;
 	constexpr explicit operator bool() const { return id != 0; }
-	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			clear();
 	static int		fight(int chance, int count = 0, int reroll = 0);
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
@@ -135,6 +135,7 @@ struct systemi : entity {
 	static void		blockenemy(const playeri* player);
 	static void		blockmove();
 	planeti*		getbestplanet() const;
+	int				getcapacity(bool include_docks = true) const;
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const { return index != pathfind::Blocked; }
 	void			limitcapacity();
@@ -176,7 +177,10 @@ struct entitya : public adat<entity*> {
 	void			filter(const entity* object, bool keep);
 	int				fight(ability_s power, ability_s count);
 	entity*			getbest(indicator_s v) const;
+	int				getcap() const;
+	int				getsummary(ability_s v) const;
 	int				getsummary(indicator_s v) const;
+	int				getsummary(unit_type_s v) const;
 	void			grouplocation(const entitya& source);
 	void			ingame();
 	bool			have(entity* v) const { return find(v) != -1; }
@@ -186,13 +190,13 @@ struct entitya : public adat<entity*> {
 	void			match(color_s value, bool keep);
 	void			match(flag_s value, bool keep);
 	void			match(indicator_s value, bool keep);
+	void			matchload(bool keep);
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
 	void			select(array& source);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
-	void			selectground(const systemi* system, const playeri* player);
 	entity*			random() const;
 };
 struct combat {

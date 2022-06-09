@@ -139,6 +139,16 @@ void entitya::match(flag_s value, bool keep) {
 	count = ps - data;
 }
 
+void entitya::matchload(bool keep) {
+	auto ps = data;
+	for(auto p : *this) {
+		if((p->get(Move) == 0) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void entitya::matchmove(int mode, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
@@ -268,6 +278,26 @@ int entitya::getsummary(indicator_s v) const {
 	return result_value;
 }
 
+int	entitya::getsummary(ability_s v) const {
+	auto result = 0;
+	for(auto p : *this)
+		result += p->get(v);
+	return result;
+}
+
+int	entitya::getsummary(unit_type_s v) const {
+	auto result = 0;
+	for(auto p : *this) {
+		if(!bsdata<troop>::have(p))
+			continue;
+		auto pu = ((troop*)p)->getunit();
+		if(pu->type != v)
+			continue;
+		result++;
+	}
+	return result;
+}
+
 void entitya::addu(entity* v) {
 	if(!have(v))
 		add(v);
@@ -282,4 +312,8 @@ void entitya::matchrange(int range, bool keep) {
 		*ps++ = p;
 	}
 	count = ps - data;
+}
+
+int entitya::getcap() const {
+	return getsummary(Capacity);
 }

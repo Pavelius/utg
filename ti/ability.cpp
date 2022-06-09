@@ -15,6 +15,7 @@ BSDATA(abilityi) = {
 	{"Production"},
 	{"Reinforcement"},
 	{"MaximumInOneLocation"},
+	{"CapacityShips"},
 	{"Capacity"},
 };
 assert_enum(abilityi, Capacity)
