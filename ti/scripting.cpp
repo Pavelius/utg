@@ -79,6 +79,16 @@ static void select_system_own_planet(int bonus, int param) {
 	querry.grouplocation(querry);
 }
 
+static void select_troop(int bonus, int param) {
+	querry.clear();
+	for(auto& e : bsdata<troop>()) {
+		if(!e)
+			continue;
+		if(e.getsystem() == systemi::active)
+			querry.add(&e);
+	}
+}
+
 static void select_system(int bonus, int param) {
 	querry.clear();
 	querry.select(bsdata<systemi>::source);
@@ -176,6 +186,10 @@ static void filter_planet_type(int bonus, int param) {
 	querry.match((planet_trait_s)param, bonus != -1);
 }
 
+static void filter_unit_ability(int bonus, int param) {
+	querry.match((ability_s)param, 1, bonus != -1);
+}
+
 static void filter_technology_speciality(int bonus, int param) {
 	querry.match((color_s)param, bonus != -1);
 }
@@ -258,6 +272,14 @@ static void for_each_player_active(variant v) {
 		script::run(v);
 	}
 	playeri::last = push_last;
+}
+
+static void for_each_troop(variant v) {
+	auto push = querry;
+	for(auto p : push) {
+		troop::last = (troop*)p;
+		script::run(v);
+	}
 }
 
 static void for_each_planet(variant v) {
@@ -343,6 +365,7 @@ BSDATA(script) = {
 	{"FilterHomeSystem", filter_home_system},
 	{"FilterMoveStop", filter_move, 0},
 	{"FilterPlanetTrait", filter_planet_type, NoTrait},
+	{"FilterProduction", filter_unit_ability, Production},
 	{"FilterSystem", filter_system},
 	{"FilterTechnologySpeciality", filter_technology_speciality},
 	{"FilterWormhole", filter_wormhole},
@@ -350,6 +373,7 @@ BSDATA(script) = {
 	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
 	{"ForEachPlayer", script::setforeach, (int)for_each_player},
 	{"ForEachPlayerActive", script::setforeach, (int)for_each_player_active},
+	{"ForEachTroop", script::setforeach, (int)for_each_troop},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"MoveShip", move_ship},
@@ -369,6 +393,7 @@ BSDATA(script) = {
 	{"SelectSystem", select_system, 1},
 	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
+	{"SelectTroopActive", select_troop},
 	{"Speaker", speaker},
 };
 BSDATAF(script);

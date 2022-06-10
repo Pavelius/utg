@@ -155,8 +155,6 @@ void entitya::match(const playeri* player, bool keep) {
 void entitya::match(ability_s id, int value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
-		if(!(*p))
-			continue;
 		if((p->get(id)>=value) != keep)
 			continue;
 		*ps++ = p;

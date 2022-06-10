@@ -394,7 +394,7 @@ static void choose_production(stringbuilder& sb, answers& an) {
 		auto cost = e.getcost();
 		if(cost > total_resources || total_production <= 0)
 			continue;
-		an.add(&e, e.getname());
+		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.getcost());
 	}
 }
 
