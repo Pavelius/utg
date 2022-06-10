@@ -62,3 +62,9 @@ int	playeri::getinitiative() const {
 		return 0;
 	return strategy->initiative;
 }
+
+int playeri::getcards() const {
+	entitya source;
+	source.selectcards(this);
+	return source.getcount();
+}

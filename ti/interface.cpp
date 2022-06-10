@@ -105,6 +105,8 @@ static void show_indicators() {
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
+	caret.x += 2;
+	status(getnmsh("ActionCards"), game.active->getcards());
 }
 
 void status_info(void) {

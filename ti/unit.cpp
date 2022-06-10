@@ -9,7 +9,7 @@ void uniti::placement(int count, bool updateui) const {
 	case GroundForces: case Structures:
 		game.focusing(planeti::last);
 		for(auto i = 0; i < count; i++)
-			troop::add(this, playeri::last, planeti::last);
+			troop::create(this, playeri::last, planeti::last);
 		if(updateui)
 			game.updateui();
 		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(id), count);
@@ -17,7 +17,7 @@ void uniti::placement(int count, bool updateui) const {
 	case Ships:
 		game.focusing(systemi::last);
 		for(auto i = 0; i < count; i++)
-			troop::add(this, playeri::last, systemi::last);
+			troop::create(this, playeri::last, systemi::last);
 		if(updateui)
 			game.updateui();
 		draw::information(getnm("PlaceUnits"), getnm(playeri::last->id), getnm(id), count);

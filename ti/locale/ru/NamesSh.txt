@@ -1,4 +1,5 @@
-﻿Commodities: Прд
+﻿ActionCards: КД
+Commodities: Прд
 Influence: Вли
 FleetToken: Флот
 Resources: Рес

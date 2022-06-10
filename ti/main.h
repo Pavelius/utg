@@ -77,19 +77,23 @@ struct unit_typei {
 struct racefi {
 	const char*		id;
 };
+struct actioncard;
+struct card;
+struct planeti;
 struct playeri;
 struct systemi;
 struct troop;
-struct planeti;
 struct uniti;
 struct entity : nameable {
 	playeri*		player;
 	entity*			location;
 	constexpr explicit operator bool() const { return id != 0; }
+	void			add(answers& an);
 	void			clear();
 	static int		fight(int chance, int count = 0, int reroll = 0);
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
+	const actioncard* getactioncard() const;
 	const char*		getid() const;
 	const char*		getname() const;
 	planeti*		getplanet() const;
@@ -163,14 +167,14 @@ struct triggeri {
 };
 struct troop : entity {
 	static troop*	last;
-	void			add(answers& an);
-	static troop*	add(const char* id, playeri* player);
-	static troop*	add(const uniti* unit, playeri* player, entity* location);
+	static troop*	create(const char* id, playeri* player);
+	static troop*	create(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
-	void			upload();
-	void			movement(entity* destination);
 	void			paint(unsigned flags) const;
 	void			produce(const uniti* unit) const;
+};
+struct card : entity {
+	void			paint() const;
 };
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
@@ -201,18 +205,18 @@ struct entitya : public adat<entity*> {
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
 	entity*			random() const;
+	entity*			pick();
 	void			select(array& source);
 	void			select(answers& an);
 	void			select(const entity* location);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
+	void			selectcards(const playeri* player);
 	void			selectplanets(const systemi* system);
 	void			sortunit();
 };
 struct combat {
 	entitya			attacker, defender;
-};
-struct poweri {
 };
 struct agendai : nameable {
 	variants		target;
@@ -250,7 +254,7 @@ struct component : nameable {
 	variants		use;
 	bool			isallow() const;
 };
-struct actioncardi : component {
+struct actioncard : component {
 	char			count;
 };
 class analize {
@@ -297,6 +301,7 @@ struct playeri : nameable {
 	bool			is(tech_s v) const { return tech.is(v); }
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
+	int				getcards() const;
 	systemi*		gethome() const;
 	int				getinitiative() const;
 	int				getplanetsummary(indicator_s v) const;

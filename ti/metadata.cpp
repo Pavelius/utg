@@ -6,7 +6,8 @@
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
-BSDATAC(actioncardi, 128)
+BSDATAC(actioncard, 128)
+BSDATAC(card, 256)
 BSDATAC(component, 128)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
@@ -24,7 +25,7 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(actioncardi) = {
+BSMETA(actioncard) = {
 	BSREQ(id),
 	BSREQ(count),
 	BSREQ(trigger),
@@ -103,7 +104,7 @@ BSMETA(unit_typei) = {
 	{}};
 
 BSDATA(varianti) = {
-	{"ActionCard", VRSTD(actioncardi), 1},
+	{"ActionCard", VRSTD(actioncard), 1},
 	{"Component", VRSTD(component), 1},
 	{"Condition", VRSTD(conditioni), 1},
 	{"Function", VRSTD(function), 1},

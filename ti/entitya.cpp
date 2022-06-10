@@ -114,6 +114,18 @@ void entitya::select(answers& an) {
 	count = ps - data;
 }
 
+void entitya::selectcards(const playeri* player) {
+	auto ps = data + count;
+	auto pe = endof();
+	for(auto& e : bsdata<card>()) {
+		if(e.player != player)
+			continue;
+		if(ps < pe)
+			*ps++ = &e;
+	}
+	count = ps - data;
+}
+
 void entitya::selectplanets(const systemi* system) {
 	auto ps = data + count;
 	auto pe = endof();
@@ -411,4 +423,12 @@ void entitya::matchrange(int range, bool keep) {
 
 int entitya::getcap() const {
 	return getsummary(Capacity);
+}
+
+entity* entitya::pick() {
+	if(!count)
+		return 0;
+	auto result = data[0];
+	remove(0);
+	return result;
 }

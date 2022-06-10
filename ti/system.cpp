@@ -25,11 +25,11 @@ planeti* systemi::getbestplanet() const {
 
 void systemi::placement(const uniti* unit, playeri* player) {
 	if(unit->type == Ships)
-		troop::add(unit, player, this);
+		troop::create(unit, player, this);
 	else {
 		auto planet = getbestplanet();
 		if(planet)
-			troop::add(unit, player, planet);
+			troop::create(unit, player, planet);
 	}
 }
 

@@ -114,14 +114,22 @@ troop* entity::sibling(troop* pb) const {
 }
 
 const char* entity::getname() const {
-	if(bsdata<troop>::have(this))
-		return getnm(((troop*)id)->id);
+	if(bsdata<uniti>::have(id))
+		return getnm(((uniti*)id)->id);
+	if(bsdata<actioncard>::have(id))
+		return getnm(((actioncard*)id)->id);
 	return getnm(getid());
 }
 
 const uniti* entity::getunit() const {
-	if(bsdata<troop>::have(this))
+	if(bsdata<uniti>::have(id))
 		return (uniti*)id;
+	return 0;
+}
+
+const actioncard* entity::getactioncard() const {
+	if(bsdata<actioncard>::have(id))
+		return (actioncard*)id;
 	return 0;
 }
 
@@ -137,4 +145,12 @@ int	entity::getproduction() const {
 		}
 	}
 	return result;
+}
+
+void entity::add(answers& an) {
+	auto planet = getplanet();
+	if(planet)
+		an.add(this, "%1 (%2)", getname(), planet->getname());
+	else
+		an.add(this, getname());
 }

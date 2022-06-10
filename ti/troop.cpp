@@ -10,14 +10,14 @@ static troop* addnew() {
 	return bsdata<troop>::add();
 }
 
-troop* troop::add(const char* id, playeri* player) {
+troop* troop::create(const char* id, playeri* player) {
 	auto pu = bsdata<uniti>::find(id);
 	if(!pu)
 		return 0;
-	return add(pu, player, 0);
+	return create(pu, player, 0);
 }
 
-troop* troop::add(const uniti* unit, playeri* player, entity* location) {
+troop* troop::create(const uniti* unit, playeri* player, entity* location) {
 	auto p = addnew();
 	p->clear();
 	p->id = (const char*)unit;
@@ -28,35 +28,18 @@ troop* troop::add(const uniti* unit, playeri* player, entity* location) {
 
 static const char* upload_name = "Upload";
 
-void troop::movement(entity* destination) {
-	answers an;
-	auto cmd_upload = bsdata<choosestep>::find("Upload");
-	while(true) {
-		an.clear();
-		if(cmd_upload && get(Capacity))
-			an.add(cmd_upload, getnm(cmd_upload->id));
-		auto result = an.choose(getname(), getnm("Movement"), 1);
-		if(!result) {
-			location = destination;
-			game.updateui();
-			break;
-		} else if(result == upload_name)
-			upload();
-	}
-}
-
-void troop::upload() {
-	while(true) {
-		entitya querry;
-		querry.select(player, location, GroundForces);
-		auto result = querry.choose(getname(), getnm("EndLoad"));
-		if(!result)
-			break;
-		auto p = (troop*)result;
-		p->location = this;
-		game.updateui();
-	}
-}
+//void troop::upload() {
+//	while(true) {
+//		entitya querry;
+//		querry.select(player, location, GroundForces);
+//		auto result = querry.choose(getname(), getnm("EndLoad"));
+//		if(!result)
+//			break;
+//		auto p = (troop*)result;
+//		p->location = this;
+//		game.updateui();
+//	}
+//}
 
 void troop::produce(const uniti* unit) const {
 	auto last_system = systemi::last;
@@ -66,12 +49,4 @@ void troop::produce(const uniti* unit) const {
 	unit->placement(unit->abilities[CostCount], false);
 	planeti::last = last_planet;
 	systemi::last = last_system;
-}
-
-void troop::add(answers& an) {
-	auto planet = getplanet();
-	if(planet)
-		an.add(this, "%1 (%2)", getname(), planet->getname());
-	else
-		an.add(this, getname());
 }
