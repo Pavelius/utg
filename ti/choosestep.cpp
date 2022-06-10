@@ -373,8 +373,9 @@ static void choose_production(stringbuilder& sb, answers& an) {
 	auto production = troop::last->getproduction();
 	if(!production)
 		return;
+	auto player = troop::last->player;
 	auto resources = game.active->getplanetsummary(Resources);
-	auto goods = game.active->get(TradeGoods);
+	auto goods = player->get(TradeGoods);
 	auto production_count = onboard.getsummary(CostCount);
 	auto total_production = production - production_count;
 	auto total_resources = goods + resources - onboard.getsummary(Cost);
@@ -386,6 +387,8 @@ static void choose_production(stringbuilder& sb, answers& an) {
 		if(pu->abilities[CostCount] > 1)
 			sb.adds("%Count [%1i]", pu->abilities[CostCount]);
 	}
+	if(onboard)
+		sb.addn("---");
 	if(production_count)
 		sb.addn(getnm("ProductionTotal"), total_resources, total_production);
 	for(auto& e : bsdata<uniti>()) {
@@ -394,8 +397,13 @@ static void choose_production(stringbuilder& sb, answers& an) {
 		auto cost = e.getcost();
 		if(cost > total_resources || total_production <= 0)
 			continue;
+		auto total_count = player->getsummary(&e);
+		if(total_count >= e.abilities[Reinforcement])
+			continue;
 		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.getcost());
 	}
+	if(onboard)
+		add_script(an, "CancelOrder");
 }
 
 static void apply_production() {

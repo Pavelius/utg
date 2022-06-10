@@ -4,7 +4,7 @@ troop* troop::last;
 
 static troop* addnew() {
 	for(auto& e : bsdata<troop>()) {
-		if(!e.type)
+		if(!e)
 			return &e;
 	}
 	return bsdata<troop>::add();
@@ -20,34 +20,10 @@ troop* troop::add(const char* id, playeri* player) {
 troop* troop::add(const uniti* unit, playeri* player, entity* location) {
 	auto p = addnew();
 	p->clear();
-	p->type = unit;
+	p->id = (const char*)unit;
 	p->player = player;
 	p->location = location;
 	return p;
-}
-
-int	troop::getstackcount() const {
-	auto pe = bsdata<troop>::end();
-	auto result = 1;
-	auto v1 = location;
-	auto v2 = type;
-	for(auto p = this + 1; p < pe; p++) {
-		if(p->location == v1 && p->type==v2)
-			result++;
-	}
-	return result;
-}
-
-troop* troop::getstackholder() {
-	auto pb = bsdata<troop>::begin();
-	auto result = this;
-	auto v1 = location;
-	auto v2 = type;
-	for(auto p = this - 1; p >= pb; p--) {
-		if(p->location == v1 && p->type == v2)
-			result = p;
-	}
-	return result;
 }
 
 static const char* upload_name = "Upload";

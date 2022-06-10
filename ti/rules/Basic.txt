@@ -57,7 +57,7 @@ TacticalInvasion
 TacticalMove
  script ChooseMove
 TacticalProduce
- script SelectTroopActive FilterProduction ForEachTroop ChooseProduction
+ script SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
 
 #Strategy
 

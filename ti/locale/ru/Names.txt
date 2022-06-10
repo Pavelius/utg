@@ -17,6 +17,7 @@ BeregSystem: Система Берег
 BoardTroop: Погрузить %1
 Cancel: Отмена
 CancelMovement: Отменить движение
+CancelOrder: Отменить заказ
 Carrier: Транспорт
 Centauri: Центаури
 CentauriSystem: Система Центаури

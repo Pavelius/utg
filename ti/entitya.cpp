@@ -16,8 +16,8 @@ static int compare_troop(const void* v1, const void* v2) {
 	auto n2 = (*p2)->player;
 	if(n1 != n2)
 		return n1 - n2;
-	auto u1 = (*p1)->type;
-	auto u2 = (*p2)->type;
+	auto u1 = (*p1)->getunit();
+	auto u2 = (*p2)->getunit();
 	if(u1 != u2)
 		return compare_unit(u1, u2);
 	return *p1 - *p2;
@@ -143,8 +143,6 @@ void entitya::ingame() {
 void entitya::match(const playeri* player, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
-		if(!(*p))
-			continue;
 		if((p->player == player) != keep)
 			continue;
 		*ps++ = p;

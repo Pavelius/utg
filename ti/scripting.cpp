@@ -205,6 +205,10 @@ static void filter_activated(int bonus, int param) {
 	querry.activated(playeri::last, bonus != -1);
 }
 
+static void filter_active_player(int bonus, int param) {
+	querry.match(game.active, bonus != -1);
+}
+
 static void speaker(int bonus, int param) {
 	game.speaker = playeri::last;
 }
@@ -245,6 +249,10 @@ static void filter_move(int bonus, int param) {
 
 static void action_phase_pass(int bonus, int param) {
 	playeri::last->pass_action_phase = (bonus != -1);
+}
+
+static void cancel_order(int counter, int param) {
+	onboard.clear();
 }
 
 static void move_ship(int bonus, int param) {
@@ -348,6 +356,7 @@ BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
+	{"CancelOrder", cancel_order},
 	{"ChangeInfluenceCommandToken", change_influence, CommandToken},
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
@@ -355,6 +364,7 @@ BSDATA(script) = {
 	{"EndAction", end_action},
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
+	{"FilterActivePlayer", filter_active_player},
 	{"FilterAnyHomeSystem", filter_home_system, 1},
 	{"FilterControled", filter_controled},
 	{"FilterCommodities", filter_indicator, Commodities},

@@ -2,7 +2,7 @@
 
 int entity::get(ability_s v) const {
 	if(bsdata<troop>::have(this))
-		return ((troop*)this)->type->abilities[v];
+		return ((uniti*)id)->abilities[v];
 	else if(bsdata<uniti>::have(this))
 		return ((uniti*)this)->abilities[v];
 	return 0;
@@ -11,9 +11,9 @@ int entity::get(ability_s v) const {
 int	entity::getsumary(unit_type_s v) const {
 	auto result = 0;
 	for(auto& e : bsdata<troop>()) {
-		if(e.location != this || !e.type)
+		if(e.location != this)
 			continue;
-		if(e.type->type==v)
+		if(e.getunit()->type==v)
 			result++;
 	}
 	return result;
@@ -22,9 +22,9 @@ int	entity::getsumary(unit_type_s v) const {
 int	entity::getsumary(ability_s v) const {
 	auto result = 0;
 	for(auto& e : bsdata<troop>()) {
-		if(e.location != this || !e.type)
+		if(e.location != this)
 			continue;
-		result += e.type->abilities[v];
+		result += e.get(v);
 	}
 	return result;
 }
@@ -115,17 +115,23 @@ troop* entity::sibling(troop* pb) const {
 
 const char* entity::getname() const {
 	if(bsdata<troop>::have(this))
-		return getnm(((troop*)this)->type->id);
+		return getnm(((troop*)id)->id);
 	return getnm(getid());
+}
+
+const uniti* entity::getunit() const {
+	if(bsdata<troop>::have(this))
+		return (uniti*)id;
+	return 0;
 }
 
 int	entity::getproduction() const {
 	auto result = 0;
-	if(bsdata<troop>::have(this)) {
-		auto p = (troop*)this;
-		result += p->type->abilities[Production];
-		if(p->type->tags.is(AddPlanetResourceToProduction)) {
-			auto planet = p->getplanet();
+	auto pu = getunit();
+	if(pu) {
+		result += pu->abilities[Production];
+		if(pu->tags.is(AddPlanetResourceToProduction)) {
+			auto planet = getplanet();
 			if(planet)
 				result += planet->get(Resources);
 		}

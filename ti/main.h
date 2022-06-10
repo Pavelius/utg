@@ -81,6 +81,7 @@ struct playeri;
 struct systemi;
 struct troop;
 struct planeti;
+struct uniti;
 struct entity : nameable {
 	playeri*		player;
 	entity*			location;
@@ -98,6 +99,7 @@ struct entity : nameable {
 	int				getsumary(unit_type_s v) const;
 	systemi*		getsystem() const;
 	planet_trait_s	gettrait() const;
+	const uniti*	getunit() const;
 	bool			is(flag_s v) const;
 	troop*			sibling(troop* pb) const;
 };
@@ -160,17 +162,11 @@ struct triggeri {
 	const char*		id;
 };
 struct troop : entity {
-	const uniti*	type;
 	static troop*	last;
-	constexpr explicit operator bool() const { return type != 0; }
 	void			add(answers& an);
 	static troop*	add(const char* id, playeri* player);
 	static troop*	add(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
-	const char*		getname() const { return getnm(type->id); }
-	int				getstackcount() const;
-	troop*			getstackholder();
-	const uniti*	getunit() const { return type; }
 	void			upload();
 	void			movement(entity* destination);
 	void			paint(unsigned flags) const;
