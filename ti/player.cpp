@@ -113,6 +113,6 @@ void playeri::getadvance(requirement& result) const {
 	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
 		if(!is(i))
 			continue;
-		result.required[bsdata<techi>::elements[i].color]++;
+		result.required[bsdata<techi>::elements[i].color - 1]++;
 	}
 }

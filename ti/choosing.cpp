@@ -123,6 +123,15 @@ static void apply_action() {
 		if(game.active->strategy == p) {
 			script::run(p->primary);
 			game.active->use_strategy = true;
+			auto current = playeri::last;
+			for(auto pa : game.players) {
+				if(!script::isallow(p->secondary))
+					continue;
+				auto push_player = playeri::last;
+				playeri::last = pa;
+				script::run(p->secondary);
+				playeri::last = push_player;
+			}
 		} else
 			script::run(p->secondary);
 		choosestep::stop = true;
