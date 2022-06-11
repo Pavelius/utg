@@ -107,6 +107,7 @@ static void show_indicators() {
 		status(v);
 	caret.x += 2;
 	status(getnmsh("ActionCards"), game.active->getcards());
+	status(getnmsh("Technology"), game.active->gettechs());
 }
 
 void status_info(void) {

@@ -29,7 +29,7 @@ static void assign_factions() {
 	game.origin_players.clear();
 	for(auto& e : bsdata<playeri>())
 		game.origin_players.add(&e);
-	playeri::human = game.origin_players[0];
+	playeri::human = game.origin_players[3];
 	game.origin_players.shuffle();
 	game.players = game.origin_players;
 }
@@ -43,6 +43,11 @@ static void set_control(playeri* player, systemi* system) {
 		if(e.location == system)
 			e.player = player;
 	}
+}
+
+static void assign_startup() {
+	for(auto p : game.players)
+		p->assign(p->startup);
 }
 
 static void prepare_players() {
@@ -114,6 +119,7 @@ void gamei::prepare() {
 	clear_galaxy();
 	assign_factions();
 	determine_speaker();
+	assign_startup();
 	prepare_players();
 	assign_starting_positions();
 	create_galaxy();

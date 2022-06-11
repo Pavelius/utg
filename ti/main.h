@@ -290,13 +290,14 @@ struct playeri : nameable {
 	uniti			units[10];
 	char			commodities;
 	strategyi*		strategy;
-	variants		troops;
+	variants		troops, startup;
 	bool			use_strategy;
 	bool			pass_action_phase;
 	static playeri* last;
 	static playeri* human;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
+	void			assign(variants source);
 	bool			canbuild(const uniti* player) const;
 	bool			is(tech_s v) const { return tech.is(v); }
 	bool			ishuman() const { return this == human; }
@@ -306,6 +307,7 @@ struct playeri : nameable {
 	int				getinitiative() const;
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
+	int				gettechs() const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };

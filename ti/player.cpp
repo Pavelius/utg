@@ -68,3 +68,19 @@ int playeri::getcards() const {
 	source.selectcards(this);
 	return source.getcount();
 }
+
+int playeri::gettechs() const {
+	auto result = 0;
+	for(auto i = PlasmaScoring; i <= WarSunTech; i = (tech_s)(i+1)) {
+		if(is(i))
+			result++;
+	}
+	return result;
+}
+
+void playeri::assign(variants source) {
+	for(auto v : source) {
+		if(v.iskind<techi>())
+			tech.set(v.value);
+	}
+}

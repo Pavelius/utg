@@ -5,5 +5,6 @@ FleetToken: Флот
 Resources: Рес
 StrategyToken: СР
 TacticToken: ТР
+Technology: Тех
 TradeGoods: Тов
 VictoryPoints: ОП

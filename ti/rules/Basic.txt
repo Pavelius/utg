@@ -4,6 +4,7 @@ SardakkNorr commodities(3)
 TheBaronyOfLetnev commodities(2)
 TheEmiratesOfHacan commodities(6)
 TheFederationOfSol commodities(4)
+ startup NeuralMotivator AntimassDeflectors
 TheL1Z1XMindnet commodities(2)
 TheUniversitiesOfJolNar commodities(4)
 

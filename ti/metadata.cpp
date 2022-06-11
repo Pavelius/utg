@@ -14,7 +14,6 @@ BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)
 BSDATAC(strategyi, 8)
 BSDATAC(systemi, 64)
-BSDATAC(techi, 128)
 BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
 BSDATAD(variant)
@@ -65,6 +64,7 @@ BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(commodities),
 	BSREQ(troops),
+	BSREQ(startup),
 	{}};
 BSMETA(script) = {
 	BSREQ(id),
@@ -116,6 +116,7 @@ BSDATA(varianti) = {
 	{"Step", VRSTD(choosestep), 1},
 	{"Strategy", VRSTD(strategyi), 1},
 	{"System", VRSTD(systemi), 1},
+	{"Tech", VRSTD(techi), 1},
 	{"Unit", VRSTD(uniti), 1},
 	{"UnitType", VRSTD(unit_typei), 1},
 };

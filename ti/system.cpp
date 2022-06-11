@@ -92,14 +92,22 @@ void systemi::limitcapacity() {
 
 bool systemi::movethrought() const {
 	switch(special) {
-	case Nebula: case Supernova: case AsteroidField: return false;
+	case Nebula:
+		return false;
+	case Supernova:
+		return false;
+	case AsteroidField:
+		return playeri::last->is(AntimassDeflectors);
 	default: return true;
 	}
 }
 
 bool systemi::movestop() const {
 	switch(special) {
-	case AsteroidField: case Supernova: return false;
+	case AsteroidField:
+		return playeri::last->is(AntimassDeflectors);
+	case Supernova:
+		return false;
 	default: return true;
 	}
 }
