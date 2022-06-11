@@ -33,7 +33,7 @@ void choosestep::run() const {
 			result = an.choose(temp, cancel_text);
 		else if(paichoose) {
 			paichoose(an);
-			break;
+			break; // All choose make in one case
 		} else
 			result = an.random();
 		if(!result)

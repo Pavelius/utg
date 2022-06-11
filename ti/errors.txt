@@ -1,3 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 7: Can't find variant `NeuralMotivator`
- Line 7: Can't find variant `AntimassDeflectors`
+﻿In file `Names.txt`:
+ Define translate for `CancelInvasion`

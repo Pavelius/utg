@@ -6,6 +6,7 @@ AppTitle: Сумрачная империя
 Apply: Применить
 ApplyExhaust: Планета %1 истощена
 ArcPrime: Акр Прайм
+ArcSecundus: 
 Arinam: Эринам
 ArinamSystem: Система Аринам
 Arnor: Арнор
@@ -17,6 +18,7 @@ Bereg: Берег
 BeregSystem: Система Берег
 BoardTroop: Погрузить %1
 Cancel: Отмена
+CancelInvasion: Отменить высадку
 CancelMovement: Отменить движение
 CancelOrder: Отменить заказ
 Carrier: Транспорт
@@ -109,6 +111,7 @@ Quann: Кван
 QuannSystem: Система Кван
 Qucenn: Куцент
 QucennSystem: Система Куцент
+Quetzecoatl: 
 Quinarra: Куинарра
 RaiseIndicatorTo: %1 повысили %2 до %3i
 Rarron: Рарун
@@ -121,6 +124,7 @@ SardakkNorr: Сардак Н'орр
 Saudor: Саудор
 SaudorSystem: Система Саудор
 SetControlPlanet: %1 установили контроль над планетой %2
+SonOfRagh: 
 SpaceDock: Доки
 Starpoint: Старпоинт
 StrategyToken: Стратегический резерв
@@ -153,6 +157,7 @@ UploadUnits: Погрузить отряды на борт
 VefutII: Верфут II
 VefutIISystem: Система Вефут II
 VictoryPoints: Очки победы
+WarSun: 
 Warfare: Военная стратегия
 Wellon: Веллон
 WellonSystem: Система Веллон
@@ -171,3 +176,4 @@ Zhobat: Зобат
 Строительная стратегия: 
 Тех: 
 Технологическая стратегия: 
+Торговая стратегия: 

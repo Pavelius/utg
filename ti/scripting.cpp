@@ -267,20 +267,26 @@ static void move_ship(int bonus, int param) {
 
 static void for_each_player(variant v) {
 	auto push_last = playeri::last;
+	auto push_human = choosestep::human;
 	for(auto p : players) {
 		playeri::last = p;
+		choosestep::human = playeri::last->ishuman();
 		script::run(v);
 	}
+	choosestep::human = push_human;
 	playeri::last = push_last;
 }
 
 static void for_each_player_active(variant v) {
 	auto push_last = playeri::last;
+	auto push_human = choosestep::human;
 	for(auto p : players) {
 		game.active = p;
 		playeri::last = p;
+		choosestep::human = playeri::last->ishuman();
 		script::run(v);
 	}
+	choosestep::human = push_human;
 	playeri::last = push_last;
 }
 

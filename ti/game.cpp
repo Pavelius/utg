@@ -62,6 +62,8 @@ static void choose_step(const char* id) {
 	auto push_human = choosestep::human;
 	playeri::last = game.active;
 	choosestep::human = playeri::last->ishuman();
+	//if(choosestep::human)
+		game.focusing(playeri::last->gethome());
 	p->run();
 	choosestep::human = push_human;
 	playeri::last = push_last;
