@@ -29,7 +29,6 @@ static void show_players() {
 	for(auto p : game.players) {
 		image(res, getbsi(p), 0);
 		if(ishilite(16)) {
-			hilite_type = figure::Circle;
 			hilite_object = p;
 			hilite_size = 17;
 			hilite_position = caret;

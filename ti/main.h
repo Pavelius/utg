@@ -33,7 +33,7 @@ enum flag_s : unsigned char {
 enum indicator_s : unsigned char {
 	TradeGoods, Commodities, Resources, Influence,
 	CommandToken, FleetToken, StrategyToken, TacticToken,
-	VictoryPoints
+	VictoryPoints,
 };
 enum tile_s : unsigned char {
 	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,

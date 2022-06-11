@@ -2,11 +2,15 @@
 
 SardakkNorr commodities(3)
 TheBaronyOfLetnev commodities(2)
+ startup AntimassDeflectors PlasmaScoring
 TheEmiratesOfHacan commodities(6)
+ startup AntimassDeflectors SarweenTools
 TheFederationOfSol commodities(4)
- startup NeuralMotivator AntimassDeflectors
+ startup AntimassDeflectors NeuralMotivator
 TheL1Z1XMindnet commodities(2)
+ startup NeuralMotivator PlasmaScoring
 TheUniversitiesOfJolNar commodities(4)
+ startup AntimassDeflectors NeuralMotivator SarweenTools PlasmaScoring
 
 #Unit
 
