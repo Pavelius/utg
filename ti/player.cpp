@@ -75,7 +75,7 @@ int playeri::getcards() const {
 
 int playeri::gettechs() const {
 	auto result = 0;
-	for(auto i = PlasmaScoring; i <= WarSunTech; i = (tech_s)(i+1)) {
+	for(auto i = PlasmaScoring; i <= WarSunTech; i = (tech_s)(i + 1)) {
 		if(is(i))
 			result++;
 	}
@@ -89,14 +89,10 @@ void playeri::assign(variants source) {
 	}
 }
 
-const uniti* playeri::getunit(const char* id) const {
-	return getunit(bsdata<uniti>::source.find(id, 0));
-}
-
 const uniti* playeri::getunit(int index) const {
 	if(index == -1)
 		return 0;
-	if(index <= 9) {
+	if(index < (int)(sizeof(prototype::units) / sizeof(prototype::units[0]))) {
 		auto i = getindex();
 		if(i == -1)
 			return 0;

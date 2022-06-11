@@ -15,11 +15,14 @@ TheUniversitiesOfJolNar commodities(4)
 
 #Unit
 
-Infantry type(GroundForces)
- abilities Cost(1) CostCount(2) Combat(8) Reinforcement(50)
+SpaceDock type(Structures)
+ abilities CostCount(1) Production(2) MaximumInOneLocation(1)
+ tags AddPlanetResourceToProduction
 PDS type(Structures)
  abilities CostCount(1) SpaceCannon(6) Reinforcement(6) MaximumInOneLocation(2)
  tags PlanetaryShield
+Infantry type(GroundForces)
+ abilities Cost(1) CostCount(2) Combat(8) Reinforcement(50)
 Fighter type(Ships)
  abilities Cost(1) CostCount(2) Combat(9) Reinforcement(50)
 Destroyer type(Ships)
@@ -37,9 +40,6 @@ Flagman type(Ships)
 WarSun type(Ships)
  abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage
-SpaceDock type(Structures)
- abilities CostCount(1) Production(2) MaximumInOneLocation(1)
- tags AddPlanetResourceToProduction
 
 #Unit type(Ships) replace(Flagman)
 

@@ -314,7 +314,6 @@ struct playeri : nameable {
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
-	const uniti*	getunit(const char* id) const;
 	const uniti*	getunit(int index) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
