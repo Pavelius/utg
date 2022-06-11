@@ -89,6 +89,7 @@ struct entity : nameable {
 	constexpr explicit operator bool() const { return id != 0; }
 	void			add(answers& an);
 	void			clear();
+	void			event(int type, const char* format) const;
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	const actioncard* getactioncard() const;
@@ -106,6 +107,7 @@ struct entity : nameable {
 	void			hit();
 	bool			is(flag_s v) const;
 	bool			is(tag_s v) const;
+	void			remove(flag_s v);
 	troop*			sibling(troop* pb) const;
 	void			startcombat();
 	void			set(flag_s v);

@@ -100,7 +100,7 @@ const uniti* playeri::getunit(int index) const {
 		auto i = getindex();
 		if(i == -1)
 			return 0;
-		return bsdata<prototype>::elements[index].units + i;
+		return bsdata<prototype>::elements[i].units + index;
 	}
 	return bsdata<uniti>::elements + index;
 }

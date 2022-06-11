@@ -51,6 +51,16 @@ static int unit_combat_roll(int chance, int count, int bonus, int reroll, int ad
 	return total;
 }
 
+static void repair_units(entitya& source) {
+	for(auto p : source) {
+		if(p->is(RepairSustainDamage) && p->is(Exhaust)) {
+			p->remove(Exhaust);
+			p->event(0, "%1 %-Repaired");
+		}
+	}
+
+}
+
 int army::roll(ability_s id, ability_s id_count) const {
 	auto push_last = playeri::last;
 	playeri::last = player;
@@ -159,6 +169,8 @@ void entity::startcombat() {
 	do {
 		army::round++;
 		answers::header = getnm("SpaceCombat");
+		repair_units(attacker.units);
+		repair_units(defender.units);
 		attacker.choose("ChooseCombatOption");
 		defender.choose("ChooseCombatOption");
 		auto hits_attacker = attacker.roll(Combat, CombatCount);

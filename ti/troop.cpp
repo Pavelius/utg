@@ -18,6 +18,9 @@ troop* troop::create(const char* id, playeri* player) {
 }
 
 troop* troop::create(const uniti* unit, playeri* player, entity* location) {
+	auto index = getbsi(unit);
+	if(index <= 9)
+		unit = player->getunit(index);
 	auto p = addnew();
 	p->clear();
 	p->id = (const char*)unit;
@@ -44,10 +47,7 @@ void troop::hit() {
 		format = "%1 %-Damaged";
 	} else
 		destroyed = true;
-	if(player->ishuman())
-		draw::warning(format, getname());
-	else
-		draw::information(format, getname());
+	event(-1, format);
 	if(destroyed)
 		clear();
 }

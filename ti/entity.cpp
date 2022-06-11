@@ -77,6 +77,11 @@ bool entity::is(tag_s v) const {
 	return false;
 }
 
+void entity::remove(flag_s v) {
+	if(bsdata<troop>::have(this))
+		((troop*)this)->flags.remove(v);
+}
+
 void entity::set(flag_s v) {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->flags.set(v);
@@ -163,4 +168,14 @@ playeri* entity::getenemy() const {
 			return e.player;
 	}
 	return 0;
+}
+
+void entity::event(int type, const char* format) const {
+	auto isgood = (type >= 0);
+	if(!player->ishuman())
+		isgood = !isgood;
+	if(isgood)
+		draw::information(format, getname());
+	else
+		draw::warning(format, getname());
 }

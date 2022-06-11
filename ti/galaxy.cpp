@@ -25,6 +25,25 @@ static pointline players6[] = {
 };
 static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
 
+static void assign_prototypes() {
+	for(auto p : game.origin_players) {
+		auto proto = bsdata<prototype>::elements + p->getindex();
+		for(auto& e : bsdata<uniti>()) {
+			if(e.race && e.race != p)
+				continue;
+			auto index = getbsi(&e);
+			if(index==9) // By default Warsun is disabled
+				memset(proto->units + index, 0, sizeof(proto->units[0]));
+			else {
+				if(e.replace)
+					index = getbsi(e.replace);
+				if(index < sizeof(proto->units) / sizeof(proto->units[0]))
+					proto->units[index] = e;
+			}
+		}
+	}
+}
+
 static void assign_factions() {
 	game.origin_players.clear();
 	for(auto& e : bsdata<playeri>())
@@ -118,6 +137,7 @@ static void create_galaxy() {
 void gamei::prepare() {
 	clear_galaxy();
 	assign_factions();
+	assign_prototypes();
 	determine_speaker();
 	assign_startup();
 	prepare_players();
