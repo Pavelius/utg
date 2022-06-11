@@ -3,6 +3,10 @@
 playeri* playeri::last;
 playeri* playeri::human;
 
+int	playeri::getindex() const {
+	return game.origin_players.find(const_cast<playeri*>(this));
+}
+
 void playeri::add(indicator_s v, int i) {
 	auto n0 = get(v);
 	auto n1 = n0 + i;
@@ -83,4 +87,20 @@ void playeri::assign(variants source) {
 		if(v.iskind<techi>())
 			tech.set(v.value);
 	}
+}
+
+const uniti* playeri::getunit(const char* id) const {
+	return getunit(bsdata<uniti>::source.find(id, 0));
+}
+
+const uniti* playeri::getunit(int index) const {
+	if(index == -1)
+		return 0;
+	if(index <= 9) {
+		auto i = getindex();
+		if(i == -1)
+			return 0;
+		return bsdata<prototype>::elements[index].units + i;
+	}
+	return bsdata<uniti>::elements + index;
 }

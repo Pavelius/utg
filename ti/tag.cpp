@@ -7,6 +7,10 @@ BSDATA(tagi) {
 	{"RepairSustainDamage"},
 	{"SustainDamage"},
 	{"CombatBonusToOthers"},
-	{"AddPlanetResourceToProduction"}
+	{"BuyCombatBonusToOther"},
+	{"ProduceInfantry"},
+	{"HeavyHits"},
+	{"AdditionalHitOn9n10"},
+	{"AddPlanetResourceToProduction"},
 };
 assert_enum(tagi, AddPlanetResourceToProduction)

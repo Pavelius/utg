@@ -12,6 +12,7 @@ BSDATAC(component, 128)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)
+BSDATAC(prototype, 6)
 BSDATAC(strategyi, 8)
 BSDATAC(systemi, 64)
 BSDATAC(troop, 256)
@@ -102,6 +103,8 @@ BSMETA(uniti) = {
 	BSENM(type, unit_typei),
 	BSDST(abilities, abilityi),
 	BSFLG(tags, tagi),
+	BSREQ(race),
+	BSREQ(replace),
 	{}};
 BSMETA(unit_typei) = {
 	BSREQ(id),

@@ -111,7 +111,7 @@ troop* entity::sibling(troop* pb) const {
 }
 
 const char* entity::getname() const {
-	if(bsdata<uniti>::have(id))
+	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
 		return getnm(((uniti*)id)->id);
 	if(bsdata<actioncard>::have(id))
 		return getnm(((actioncard*)id)->id);
@@ -124,7 +124,7 @@ void entity::hit() {
 }
 
 const uniti* entity::getunit() const {
-	if(bsdata<uniti>::have(id))
+	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
 		return (uniti*)id;
 	return 0;
 }

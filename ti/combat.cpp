@@ -16,7 +16,7 @@ static bool isother(const entitya& source, const entity* object, tag_s v) {
 	return false;
 }
 
-static int unit_combat_roll(int chance, int count, int bonus, int reroll) {
+static int unit_combat_roll(int chance, int count, int bonus, int reroll, int additional_hit) {
 	if(!chance)
 		return 0;
 	if(!count)
@@ -25,11 +25,18 @@ static int unit_combat_roll(int chance, int count, int bonus, int reroll) {
 	for(auto i = 0; i < count; i++) {
 		auto r = reroll + 1;
 		while(r-- > 0) {
-			auto result = 1 + (rand() % 10) + bonus;
+			auto result = 1 + (rand() % 10);
 			if(answers::console) {
 				if(answers::console->get() != new_block)
 					answers::console->add(", ");
 			}
+			if(result >= additional_hit) {
+				total += 2;
+				if(answers::console)
+					answers::console->add("[%1i]x2", result);
+				break;
+			}
+			result += bonus;
 			if(result >= chance) {
 				total++;
 				if(answers::console)
@@ -63,7 +70,10 @@ int army::roll(ability_s id, ability_s id_count) const {
 		auto unit_bonus = bonus;
 		if(isother(units, p, CombatBonusToOthers))
 			unit_bonus++;
-		result += unit_combat_roll(chance, count, unit_bonus, 0);
+		auto additional_hit = 100;
+		if(p->is(AdditionalHitOn9n10))
+			additional_hit = 9;
+		result += unit_combat_roll(chance, count, unit_bonus, 0, additional_hit);
 	}
 	playeri::last = push_last;
 	return result;

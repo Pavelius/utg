@@ -21,7 +21,8 @@ enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
 enum tag_s : unsigned char {
-	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage, CombatBonusToOthers,
+	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
+	CombatBonusToOthers, BuyCombatBonusToOther, ProduceInfantry, HeavyHits, AdditionalHitOn9n10,
 	AddPlanetResourceToProduction
 };
 enum racef_s : unsigned char {
@@ -110,9 +111,11 @@ struct entity : nameable {
 	void			set(flag_s v);
 };
 struct uniti : nameable {
-	taga			tags;
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
+	taga			tags;
+	playeri*		race;
+	const uniti*	replace;
 	static uniti*	last;
 	int				getcost() const { return abilities[Cost]; }
 	int				getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
@@ -261,6 +264,9 @@ struct army {
 	void			hit(int value);
 	int				roll(ability_s id, ability_s id_count) const;
 };
+struct prototype {
+	uniti			units[10];
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		active;
@@ -283,7 +289,6 @@ struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
 	techa			tech, tech_used;
 	flagable<4>		race;
-	uniti			units[10];
 	char			commodities;
 	strategyi*		strategy;
 	variants		troops, startup;
@@ -301,11 +306,14 @@ struct playeri : nameable {
 	int				get(indicator_s v) const { return indicators[v]; }
 	int				getcards() const;
 	systemi*		gethome() const;
+	int				getindex() const;
 	int				getinitiative() const;
 	void			getinfo(stringbuilder& sb) const;
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
+	const uniti*	getunit(const char* id) const;
+	const uniti*	getunit(int index) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };

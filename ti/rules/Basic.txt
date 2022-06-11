@@ -31,6 +31,9 @@ Cruiser type(Ships)
 Dreadnought type(Ships)
  abilities Cost(4) CostCount(1) Combat(5) Move(1) Capacity(1) Reinforcement(5) Bombardment(5)
  tags SustainDamage
+Flagman type(Ships)
+ abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
+ tags SustainDamage
 WarSun type(Ships)
  abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage
@@ -38,18 +41,26 @@ SpaceDock type(Structures)
  abilities CostCount(1) Production(2) MaximumInOneLocation(1)
  tags AddPlanetResourceToProduction
 
-Quetzecoatl type(Ships)
- abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
- tags IgnoreSpaceCannon SustainDamage
-ArcSecundus type(Ships)
- abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) Bombardment(5) BombardmentCount(3)
+#Unit type(Ships) replace(Flagman)
+
+ArcSecundus race(TheBaronyOfLetnev)
+ abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Bombardment(5) BombardmentCount(3) Reinforcement(1)
  tags IgnorePlanetaryShield SustainDamage RepairSustainDamage
-CMorranNorr type(Ships)
- abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) Bombardment(5) BombardmentCount(3)
+CMorranNorr race(SardakkNorr)
+ abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Bombardment(5) BombardmentCount(3) Reinforcement(1)
  tags SustainDamage CombatBonusToOthers
-SonOfRagh type(Ships)
- abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) AntiFighterBarrage(6) AntiFighterBarrageCount(4)
- tags SustainDamage
+WrathOfKenara race(TheEmiratesOfHacan)
+ abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
+ tags SustainDamage BuyCombatBonusToOther
+Genesis race(TheFederationOfSol)
+ abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(12) Reinforcement(1)
+ tags SustainDamage ProduceInfantry
+P0p0p1 race(TheL1Z1XMindnet)
+ abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(5) Reinforcement(1)
+ tags SustainDamage HeavyHits
+JNSHylarim race(TheUniversitiesOfJolNar)
+ abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
+ tags SustainDamage AdditionalHitOn9n10
 
 #Function
 
