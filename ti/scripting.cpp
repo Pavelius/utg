@@ -360,6 +360,9 @@ void script_initialize() {
 	condition_initialize();
 }
 
+void combat_reatreat(int bonus, int param);
+void combat_continue(int bonus, int param);
+
 BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
@@ -369,6 +372,7 @@ BSDATA(script) = {
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseSystem", choose_system},
+	{"ContinueBattle", combat_continue},
 	{"EndAction", end_action},
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
@@ -413,5 +417,6 @@ BSDATA(script) = {
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
 	{"SelectTroopActive", select_troop},
 	{"Speaker", speaker},
+	{"RetreatBattle", combat_reatreat},
 };
 BSDATAF(script);

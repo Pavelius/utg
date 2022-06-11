@@ -2,6 +2,7 @@
 AbyzSystem: Система Абиз
 ActionCards: Карты действий
 AddCommandToken: Какие резервы хотите пополнить?
+AntiFighterBarrage: Заградительный огонь
 AppTitle: Сумрачная империя
 Apply: Применить
 ApplyExhaust: Планета %1 истощена
@@ -25,6 +26,7 @@ Carrier: Транспорт
 Centauri: Центаури
 CentauriSystem: Система Центаури
 ChooseAction: Выбирайте действие
+ChooseCombatOption: Выбирайте опции боя
 ChooseCommandToken: Выбирайте резевр
 ChooseDock: Выбирайте завод
 ChooseInvasion: Выберайте отряды вторжения
@@ -40,6 +42,7 @@ ChooseUploadUnits: Погрузить отряды на борт
 Commodities: Продукция
 Construction: Строительная стратегия
 Continue: Продолжить
+ContinueBattle: Продолжать битву
 Coorneeq: Корник
 CoorneeqSystem: Система Курниик
 Cost: Цена
@@ -47,6 +50,7 @@ Count: Количество
 Cruiser: Крейсер
 DalBootha: Дал Бутса
 DalBoothaSystem: Система Дал Бутса
+Destoyed: Уничтожен
 Destroyer: Эсминец
 Diplomacy: Дипломатическая стратегия
 Dreadnought: Дредноут
@@ -118,6 +122,7 @@ Rarron: Рарун
 RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
 Resources: Ресурсы
+RetreatBattle: Отступить из битвы
 Sakulag: Сакулаг
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
@@ -125,6 +130,7 @@ Saudor: Саудор
 SaudorSystem: Система Саудор
 SetControlPlanet: %1 установили контроль над планетой %2
 SonOfRagh: Сын Рагха
+SpaceCombat: Космический бой
 SpaceDock: Доки
 Starpoint: Старпоинт
 StrategyToken: Стратегический резерв
@@ -167,10 +173,6 @@ WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
 Вли: 
-Дипломатическая стратегия: 
 КД: 
-Лидерская стратегия: 
-Политическая стратегия: 
 Рес: 
 Тех: 
-Торговая стратегия: 

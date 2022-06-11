@@ -5,8 +5,10 @@ static int compare_unit(const void* v1, const void* v2) {
 	auto p2 = (uniti*)v2;
 	if(p1->type != p2->type)
 		return p2->type - p1->type;
-	if(p1->abilities[Cost] != p2->abilities[Cost])
-		return p2->abilities[Cost] - p1->abilities[Cost];
+	auto w1 = p1->getweight();
+	auto w2 = p2->getweight();
+	if(w1 != w2)
+		return w2 - w1;
 	return p1 - p2;
 }
 static int compare_troop(const void* v1, const void* v2) {

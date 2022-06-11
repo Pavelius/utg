@@ -1,4 +1,5 @@
 #include "choosestep.h"
+#include "script.h"
 
 bool choosestep::stop;
 bool choosestep::human;
@@ -57,4 +58,17 @@ void choosestep::run(const char* id) {
 	auto p = bsdata<choosestep>::find(id);
 	if(p)
 		p->run();
+}
+
+void choosestep::addscript(answers& an, const char* id) {
+	auto p = bsdata<script>::find(id);
+	if(p) {
+		an.add(p, getnm(p->id));
+		return;
+	}
+	auto ps = bsdata<choosestep>::find(id);
+	if(ps) {
+		an.add(ps, getnm(ps->id));
+		return;
+	}
 }

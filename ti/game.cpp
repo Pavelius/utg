@@ -4,24 +4,13 @@ using namespace pathfind;
 
 gamei	game;
 
-class gamestringbuilder : public stringbuilder {
-	void addidentifier(const char* identifier) override {
-		if(equal(identifier, "indicator"))
-			add(getnm(bsdata<indicatori>::elements[game.indicator].id));
-		else
-			stringbuilder::addidentifier(identifier);
-	}
-public:
-	gamestringbuilder(const stringbuilder& v) : stringbuilder(v) {}
-};
-
 int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	auto maximum = playeri::last->get(currency) / count;
 	if(!maximum)
 		return 0;
 	auto pn = getnm(bsdata<indicatori>::elements[need].id);
 	auto pc = getnm(bsdata<indicatori>::elements[currency].id);
-	char temp[260]; gamestringbuilder sb(temp);
+	char temp[260]; stringbuilder sb(temp);
 	sb.add(getnm("RatePrompt"), pn, pc);
 	answers an;
 	for(auto i = 0; i < maximum; i++)

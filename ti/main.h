@@ -93,6 +93,7 @@ struct entity : nameable {
 	int				get(indicator_s v) const;
 	const actioncard* getactioncard() const;
 	const char*		getid() const;
+	playeri*		getenemy() const;
 	const char*		getname() const;
 	planeti*		getplanet() const;
 	int				getproduction() const;
@@ -104,6 +105,7 @@ struct entity : nameable {
 	const uniti*	getunit() const;
 	bool			is(flag_s v) const;
 	troop*			sibling(troop* pb) const;
+	void			startcombat();
 };
 struct uniti : nameable {
 	taga			tags;
@@ -111,6 +113,7 @@ struct uniti : nameable {
 	unit_type_s		type;
 	static uniti*	last;
 	int				getcost() const { return abilities[Cost]; }
+	int				getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 	void			placement(int count, bool updateui = true) const;
 	bool			stackable() const { return abilities[CostCount] > 1; }
 };
@@ -215,9 +218,6 @@ struct entitya : public adat<entity*> {
 	void			selectplanets(const systemi* system);
 	void			sortunit();
 };
-struct combat {
-	entitya			attacker, defender;
-};
 struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
@@ -229,11 +229,6 @@ struct strategyi : nameable {
 struct objectivei : nameable {
 	char			stage, value;
 	variants		condition;
-};
-class gamestring : public stringbuilder {
-	void			addidentifier(const char* identifier) override;
-public:
-	gamestring(const stringbuilder& v) : stringbuilder(v) {}
 };
 struct component : nameable {
 	variant			parent;

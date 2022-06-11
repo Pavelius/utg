@@ -154,3 +154,11 @@ void entity::add(answers& an) {
 	else
 		an.add(this, getname());
 }
+
+playeri* entity::getenemy() const {
+	for(auto& e : bsdata<troop>()) {
+		if(e.location == this && e.player != player)
+			return e.player;
+	}
+	return 0;
+}

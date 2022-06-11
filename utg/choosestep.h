@@ -17,6 +17,7 @@ struct choosestep {
 	static const choosestep* last;
 	static fnanswer	pstd_answer;
 	static fnevent	pstd_apply;
+	static void		addscript(answers& an, const char* id);
 	void			run() const;
 	static void		run(const char* id);
 };

@@ -39,19 +39,6 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 	return result;
 }
 
-static void add_script(answers& an, const char* id) {
-	auto p = bsdata<script>::find(id);
-	if(p) {
-		an.add(p, getnm(p->id));
-		return;
-	}
-	auto ps = bsdata<choosestep>::find(id);
-	if(ps) {
-		an.add(ps, getnm(ps->id));
-		return;
-	}
-}
-
 static bool allow(const uniti* pu) {
 	auto maximum_count = pu->abilities[MaximumInOneLocation];
 	if(pu->abilities[MaximumInOneLocation] > 0) {
@@ -203,7 +190,7 @@ static void choose_move_options(stringbuilder& sbt, answers& an) {
 	sbt.clear();
 	sbt.add(getnm("ChooseMoveOption"), ship->getname(), systemi::active->getname());
 	char temp[260]; stringbuilder sb(temp);
-	add_script(an, "MoveShip");
+	choosestep::addscript(an, "MoveShip");
 	if(capacity > 0) {
 		for(auto& e : bsdata<troop>()) {
 			if(e.player != playeri::last || e.getsystem() != system)
@@ -382,7 +369,7 @@ static void choose_production(stringbuilder& sb, answers& an) {
 	}
 	if(choosestep::human) {
 		if(onboard)
-			add_script(an, "CancelOrder");
+			choosestep::addscript(an, "CancelOrder");
 	}
 }
 
@@ -396,6 +383,12 @@ static void finish_production() {
 	for(auto p : onboard)
 		pu->produce((uniti*)p);
 	game.updateui();
+}
+
+static void choose_combat_option(stringbuilder& sb, answers& an) {
+	if(playeri::last->ishuman())
+		choosestep::addscript(an, "RetreatBattle");
+	choosestep::addscript(an, "ContinueBattle");
 }
 
 void entitya::addreach(const systemi* system, int range) {
@@ -453,8 +446,8 @@ void choosestep_initialize() {
 
 BSDATA(choosestep) = {
 	{"ChooseAction", choose_action, apply_action},
-	{"ChooseProduction", choose_production, apply_production, "EndBuild", 0, clear_onboard, finish_production},
 	{"ChooseCommandToken", choose_command_token, apply_command_token},
+	{"ChooseCombatOption", choose_combat_option},
 	{"ChooseDock", choose_dock, apply_dock},
 	{"ChooseInvasion", choose_invasion, apply_onboard, "Apply", ai_choose_invasion, clear_onboard},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
@@ -462,6 +455,7 @@ BSDATA(choosestep) = {
 	{"ChooseMoveOption", choose_move_options, apply_onboard, "CancelMovement", 0, clear_onboard},
 	{"ChoosePay", choose_pay, apply_pay},
 	{"ChoosePDSorDock", choose_pds_or_dock, apply_pds_or_dock},
+	{"ChooseProduction", choose_production, apply_production, "EndBuild", 0, clear_onboard, finish_production},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
 };
 BSDATAF(choosestep)

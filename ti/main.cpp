@@ -33,14 +33,21 @@ static void test_speech() {
 	auto p = speech::find(test);
 }
 
-static void test_choose() {
-	entitya querry;
-	querry.select(bsdata<systemi>::source);
-	querry.ingame();
-	querry.choose("ChooseSystem");
+static void test_combat() {
+	game.prepare();
+	game.updatecontrol();
+	auto system = playeri::human->gethome();
+	auto enemy = bsdata<playeri>::find("SardakkNorr");
+	if(!enemy)
+		return;
+	troop::create(bsdata<uniti>::find("Dreadnought"), enemy, system);
+	troop::create(bsdata<uniti>::find("Cruiser"), enemy, system);
+	game.updateui();
+	game.focusing(system);
+	system->startcombat();
 }
 
-static void test_answers() {
+static void new_game() {
 	game.prepare();
 	game.play();
 }
@@ -49,7 +56,7 @@ static void start_game() {
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG
-	test_answers();
+	test_combat();
 }
 
 static void initialize() {
