@@ -11,6 +11,7 @@ static bool need_update_ui = false;
 const int button_height = 21;
 const int size = 256;
 static color player_colors[] = {
+	{40, 40, 40},
 	{97, 189, 79},
 	{242, 214, 0},
 	{255, 159, 26},
@@ -170,12 +171,13 @@ static void buttonback(int size, void* data) {
 	}
 }
 
+static color getplayercolor(playeri* p) {
+	return player_colors[game.origin_players.find(p) + 1];
+}
+
 void troop::paint(unsigned flags) const {
 	auto push_color = fore;
-	auto i = game.origin_players.find(player);
-	if(i == -1)
-		i = 0;
-	fore = player_colors[i];
+	fore = getplayercolor(player);
 	buttonback(43, 0);
 	fore = push_color;
 	textcn(getname());
@@ -378,11 +380,6 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 }
 
 void entity::clear() {
-	auto p = findobject(this);
-	if(p) {
-		need_update_ui = true;
-		p->clear();
-	}
 	memset(this, 0, sizeof(*this));
 }
 
@@ -442,8 +439,19 @@ static void update_units(point position, const entity* location) {
 	}
 }
 
+void troop::updateui() {
+	for(auto& e : bsdata<troop>()) {
+		if(e)
+			continue;
+		auto p = findobject(&e);
+		if(p)
+			p->clear();
+	}
+}
+
 void gamei::updateui() {
 	static point system_offset = {0, -6 * size / 10};
+	troop::updateui();
 	waitall();
 	for(auto& e : bsdata<object>()) {
 		if(bsdata<planeti>::have(e.data))

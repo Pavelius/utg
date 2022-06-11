@@ -40,8 +40,8 @@ static void test_combat() {
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;
-	troop::create(bsdata<uniti>::find("Dreadnought"), enemy, system);
-	troop::create(bsdata<uniti>::find("Cruiser"), enemy, system);
+	troop::create(bsdata<uniti>::find("CMorranNorr"), enemy, system);
+	troop::create(bsdata<uniti>::find("Fighter"), enemy, system);
 	game.updateui();
 	game.focusing(system);
 	system->startcombat();

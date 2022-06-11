@@ -386,9 +386,11 @@ static void finish_production() {
 }
 
 static void choose_combat_option(stringbuilder& sb, answers& an) {
+	sb.clear();
+	sb.add("%1 (%-Round [%2i])", getnm(choosestep::last->id), army::round);
+	choosestep::addscript(an, "ContinueBattle");
 	if(playeri::last->ishuman())
 		choosestep::addscript(an, "RetreatBattle");
-	choosestep::addscript(an, "ContinueBattle");
 }
 
 void entitya::addreach(const systemi* system, int range) {

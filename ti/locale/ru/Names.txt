@@ -18,6 +18,7 @@ AsteroidFieldSystem2: Поле астероидов
 Bereg: Берег
 BeregSystem: Система Берег
 BoardTroop: Погрузить %1
+CMorranNorr: К'Морран
 Cancel: Отмена
 CancelInvasion: Отменить высадку
 CancelMovement: Отменить движение
@@ -50,6 +51,7 @@ Count: Количество
 Cruiser: Крейсер
 DalBootha: Дал Бутса
 DalBoothaSystem: Система Дал Бутса
+Damaged: Поврежден
 Destoyed: Уничтожен
 Destroyer: Эсминец
 Diplomacy: Дипломатическая стратегия
@@ -102,6 +104,7 @@ Nar: Нар
 NebulaSystem: Небула
 NewAlbion: Новый Альбион
 NewAlbionSystem: Система Новый Альбион
+NoCasualties: Ни одна сторона не понесла потери
 OrbitalDrop: Высадка с орбиты
 P0p0p0: [0.0.0]
 PDS: ПВС
@@ -123,6 +126,7 @@ RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
 Resources: Ресурсы
 RetreatBattle: Отступить из битвы
+Round: Раунд
 Sakulag: Сакулаг
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр

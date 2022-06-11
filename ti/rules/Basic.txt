@@ -1,6 +1,7 @@
 #Player
 
 SardakkNorr commodities(3)
+ race Unrelenting
 TheBaronyOfLetnev commodities(2)
  startup AntimassDeflectors PlasmaScoring
 TheEmiratesOfHacan commodities(6)
@@ -43,6 +44,9 @@ Quetzecoatl type(Ships)
 ArcSecundus type(Ships)
  abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) Bombardment(5) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage RepairSustainDamage
+CMorranNorr type(Ships)
+ abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) Bombardment(5) BombardmentCount(3)
+ tags SustainDamage CombatBonusToOthers
 SonOfRagh type(Ships)
  abilities Cost(8) Combat(5) CombatCount(2) Move(1) Capacity(3) Reinforcement(1) AntiFighterBarrage(6) AntiFighterBarrageCount(4)
  tags SustainDamage

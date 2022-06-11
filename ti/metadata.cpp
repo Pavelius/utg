@@ -65,6 +65,10 @@ BSMETA(playeri) = {
 	BSREQ(commodities),
 	BSREQ(troops),
 	BSREQ(startup),
+	BSFLG(race, racefi),
+	{}};
+BSMETA(racefi) = {
+	BSREQ(id),
 	{}};
 BSMETA(script) = {
 	BSREQ(id),

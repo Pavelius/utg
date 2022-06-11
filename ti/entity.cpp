@@ -66,7 +66,22 @@ planet_trait_s entity::gettrait() const {
 bool entity::is(flag_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->flags.is(v);
+	else if(bsdata<troop>::have(this))
+		return ((troop*)this)->flags.is(v);
 	return false;
+}
+
+bool entity::is(tag_s v) const {
+	if(bsdata<troop>::have(this))
+		return ((troop*)this)->getunit()->tags.is(v);
+	return false;
+}
+
+void entity::set(flag_s v) {
+	if(bsdata<planeti>::have(this))
+		return ((planeti*)this)->flags.set(v);
+	else if(bsdata<troop>::have(this))
+		return ((troop*)this)->flags.set(v);
 }
 
 color_s entity::getspeciality() const {
@@ -79,24 +94,6 @@ int	entity::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);
 	return 0;
-}
-
-int entity::fight(int chance, int count, int reroll) {
-	if(!chance)
-		return 0;
-	if(!count)
-		count = 1;
-	auto n = 0;
-	for(auto i = 0; i < count; i++) {
-		auto r = reroll + 1;
-		while(r-- > 0) {
-			if((1 + (rand() % 10)) >= chance) {
-				n++;
-				break;
-			}
-		}
-	}
-	return n;
 }
 
 troop* entity::sibling(troop* pb) const {
@@ -119,6 +116,11 @@ const char* entity::getname() const {
 	if(bsdata<actioncard>::have(id))
 		return getnm(((actioncard*)id)->id);
 	return getnm(getid());
+}
+
+void entity::hit() {
+	if(bsdata<troop>::have(this))
+		((troop*)this)->hit();
 }
 
 const uniti* entity::getunit() const {

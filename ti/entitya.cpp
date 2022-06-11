@@ -38,16 +38,6 @@ void entitya::sortunit() {
 	qsort(data, count, sizeof(data[0]), compare_troop);
 }
 
-int entitya::fight(ability_s power, ability_s count) {
-	auto result = 0;
-	for(auto p : *this) {
-		if(!p)
-			continue;
-		result += p->fight(p->get(power), p->get(count));
-	}
-	return result;
-}
-
 void entitya::select(const playeri* player, const entity* location) {
 	auto ps = data + count;
 	auto pe = endof();

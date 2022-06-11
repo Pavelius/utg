@@ -26,7 +26,7 @@ struct drawable : point {
 };
 struct draworder : drawable {
 	enum {
-		AutoClear,
+		AutoClear, UserFlags
 	};
 	object*			parent;
 	drawable		start;

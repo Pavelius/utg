@@ -21,11 +21,11 @@ enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
 enum tag_s : unsigned char {
-	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
+	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage, CombatBonusToOthers,
 	AddPlanetResourceToProduction
 };
 enum racef_s : unsigned char {
-	Assimilate, Fragile,
+	Assimilate, Fragile, Unrelenting
 };
 enum flag_s : unsigned char {
 	Exhaust
@@ -88,7 +88,6 @@ struct entity : nameable {
 	constexpr explicit operator bool() const { return id != 0; }
 	void			add(answers& an);
 	void			clear();
-	static int		fight(int chance, int count = 0, int reroll = 0);
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	const actioncard* getactioncard() const;
@@ -103,9 +102,12 @@ struct entity : nameable {
 	systemi*		getsystem() const;
 	planet_trait_s	gettrait() const;
 	const uniti*	getunit() const;
+	void			hit();
 	bool			is(flag_s v) const;
+	bool			is(tag_s v) const;
 	troop*			sibling(troop* pb) const;
 	void			startcombat();
+	void			set(flag_s v);
 };
 struct uniti : nameable {
 	taga			tags;
@@ -169,12 +171,15 @@ struct triggeri {
 	const char*		id;
 };
 struct troop : entity {
+	flagable<1>		flags;
 	static troop*	last;
 	static troop*	create(const char* id, playeri* player);
 	static troop*	create(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			hit();
 	void			paint(unsigned flags) const;
 	void			produce(const uniti* unit) const;
+	static void		updateui();
 };
 struct card : entity {
 	void			paint() const;
@@ -185,7 +190,6 @@ struct entitya : public adat<entity*> {
 	void			addreach(const systemi* system, int range);
 	entity*			choose(const char* title, const char* cancel = 0) const;
 	void			filter(const entity* object, bool keep);
-	int				fight(ability_s power, ability_s count);
 	entity*			getbest(indicator_s v) const;
 	int				getcap() const;
 	int				getsummary(ability_s v) const;
@@ -246,6 +250,17 @@ public:
 	int				getweight(pathfind::indext i) const;
 	void			setweight(pathfind::indext i, int v);
 };
+struct army {
+	playeri*		player;
+	entitya			units;
+	bool			reatreat;
+	static army*	last;
+	static int		round;
+	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			choose(const char* id);
+	void			hit(int value);
+	int				roll(ability_s id, ability_s id_count) const;
+};
 struct gamei {
 	playeri*		speaker;
 	playeri*		active;
@@ -267,6 +282,7 @@ struct gamei {
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
 	techa			tech, tech_used;
+	flagable<4>		race;
 	uniti			units[10];
 	char			commodities;
 	strategyi*		strategy;
@@ -280,6 +296,7 @@ struct playeri : nameable {
 	void			assign(variants source);
 	bool			canbuild(const uniti* player) const;
 	bool			is(tech_s v) const { return tech.is(v); }
+	bool			is(racef_s v) const { return race.is(v); }
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
 	int				getcards() const;
