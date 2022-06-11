@@ -65,7 +65,7 @@ JNSHylarim race(TheUniversitiesOfJolNar)
 SpaceDockII type(Structures) replace(SpaceDock) required(0 0 0 2)
  abilities CostCount(1) Production(4) MaximumInOneLocation(1)
  tags AddPlanetResourceToProduction
-PDS type(Structures) replace(PDS) required(1 0 0 1)
+PDSII type(Structures) replace(PDS) required(1 0 0 1)
  abilities CostCount(1) SpaceCannon(5) Reinforcement(6) MaximumInOneLocation(2)
  tags PlanetaryShield DeepSpaceCannon
 InfantryII type(GroundForces) replace(Infantry) required(0 2 0 0)

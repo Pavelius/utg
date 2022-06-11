@@ -7,6 +7,14 @@ int	playeri::getindex() const {
 	return game.origin_players.find(const_cast<playeri*>(this));
 }
 
+void playeri::act(const char* format, const char* value) const {
+	if(!answers::console)
+		return;
+	answers::console->addn("[+");
+	answers::console->add(getnm(format), getnm(id), value);
+	answers::console->add("]");
+}
+
 void playeri::add(indicator_s v, int i) {
 	auto n0 = get(v);
 	auto n1 = n0 + i;
@@ -75,7 +83,7 @@ int playeri::getcards() const {
 
 int playeri::gettechs() const {
 	auto result = 0;
-	for(auto i = PlasmaScoring; i <= WarSunTech; i = (tech_s)(i + 1)) {
+	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
 		if(is(i))
 			result++;
 	}
@@ -99,4 +107,12 @@ const uniti* playeri::getunit(int index) const {
 		return bsdata<prototype>::elements[i].units + index;
 	}
 	return bsdata<uniti>::elements + index;
+}
+
+void playeri::getadvance(requirement& result) const {
+	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
+		if(!is(i))
+			continue;
+		result.required[bsdata<techi>::elements[i].color]++;
+	}
 }

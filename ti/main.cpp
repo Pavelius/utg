@@ -56,7 +56,7 @@ static void start_game() {
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG
-	test_combat();
+	new_game();
 }
 
 static void initialize() {

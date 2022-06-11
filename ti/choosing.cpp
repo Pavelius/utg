@@ -393,6 +393,26 @@ static void choose_combat_option(stringbuilder& sb, answers& an) {
 		choosestep::addscript(an, "RetreatBattle");
 }
 
+static void choose_technology(stringbuilder& sb, answers& an) {
+	requirement advance = {};
+	playeri::last->getadvance(advance);
+	for(auto& e : bsdata<techi>()) {
+		auto i = getbsi(&e);
+		if(playeri::last->tech.is(i))
+			continue;
+		if(!e.match(advance))
+			continue;
+		an.add(&e, getnm(e.id));
+	}
+}
+static void apply_technology() {
+	if(bsdata<techi>::have(choosestep::result)) {
+		playeri::last->tech.set(getbsi((techi*)choosestep::result));
+		playeri::last->act("LearnTechnology", getnm(((techi*)choosestep::result)->id));
+		choosestep::stop = true;
+	}
+}
+
 void entitya::addreach(const systemi* system, int range) {
 	pathfind::clearpath();
 	systemi::blockmove();
@@ -459,5 +479,6 @@ BSDATA(choosestep) = {
 	{"ChoosePDSorDock", choose_pds_or_dock, apply_pds_or_dock},
 	{"ChooseProduction", choose_production, apply_production, "EndBuild", 0, clear_onboard, finish_production},
 	{"ChooseStrategy", choose_strategy, apply_strategy},
+	{"ChooseTechnology", choose_technology, apply_technology},
 };
 BSDATAF(choosestep)

@@ -47,9 +47,7 @@ enum tech_s : unsigned char {
 	PlasmaScoring, MagenDefenseGrid, DuraniumArmor, AssaultCannon,
 	NeuralMotivator, DacxiveAnimators, HyperMetabolism, X89BacterialWeapon,
 	AntimassDeflectors, GravityDriver, FleetLogistics, LightWaveDeflector,
-	SarweenTools, GravitonLaserSystem, TransitDiodes, IntegratedEconomy,
-	CruiserII, DreadnoughtII, DestroyerII, PDSII, CarrierII, FighterII, InfantryII, SpaceDockII,
-	WarSunTech,
+	SarweenTools, GravitonLaserSystem, TransitDiodes, IntegratedEconomy
 };
 enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
@@ -166,12 +164,17 @@ struct systemi : entity {
 	void			placement(variants source, playeri* player);
 	void			setactivate(const playeri* p, bool active);
 };
+struct requirement {
+	char			required[4]; // RGBY
+	bool			match(const requirement& e) const;
+};
 struct techi {
 	const char*		id;
 	color_s			color;
 	char			required[4]; // RGBY
 	void			getinfo(stringbuilder& sb) const;
 	static void		getinfo(const void* object, stringbuilder& sb) { ((techi*)object)->getinfo(sb); }
+	bool			match(const requirement& e) const;
 };
 struct triggeri {
 	const char*		id;
@@ -270,8 +273,7 @@ struct army {
 struct prototype {
 	uniti			units[10];
 };
-struct unitupgrade : public uniti {
-	char			required[4]; // RGBY
+struct unitupgrade : uniti, requirement {
 };
 struct gamei {
 	playeri*		speaker;
@@ -302,6 +304,7 @@ struct playeri : nameable {
 	bool			pass_action_phase;
 	static playeri* last;
 	static playeri* human;
+	void			act(const char* format, const char* value) const;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
 	void			assign(variants source);
@@ -310,6 +313,7 @@ struct playeri : nameable {
 	bool			is(racef_s v) const { return race.is(v); }
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
+	void			getadvance(requirement& result) const;
 	int				getcards() const;
 	systemi*		gethome() const;
 	int				getindex() const;

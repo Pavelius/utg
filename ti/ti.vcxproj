@@ -165,6 +165,7 @@
     <ClCompile Include="playera.cpp" />
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="race.cpp" />
+    <ClCompile Include="requirement.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="racef.cpp" />
     <ClCompile Include="system.cpp" />

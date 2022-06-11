@@ -17,14 +17,13 @@ BSDATA(techi) {
 	{"GravitonLaserSystem", Yellow, {0, 0, 0, 1}},
 	{"TransitDiodes", Yellow, {0, 0, 0, 2}},
 	{"IntegratedEconomy", Yellow, {0, 0, 0, 3}},
-	{"CruiserII", NoTech, {1, 1, 0, 1}},
-	{"DreadnoughtII", NoTech, {0, 0, 2, 1}},
-	{"DestroyerII", NoTech, {2}},
-	{"PDSII", NoTech, {1, 0, 0, 1}},
-	{"CarrierII", NoTech, {0,0,2}},
-	{"FighterII", NoTech, {0, 1, 1}},
-	{"InfantryII", NoTech, {0, 2}},
-	{"SpaceDockII", NoTech, {0, 0, 0, 2}},
-	{"WarSunTech", NoTech, {3, 0, 0, 1}},
 };
-assert_enum(techi, WarSunTech)
+assert_enum(techi, IntegratedEconomy)
+
+bool techi::match(const requirement& e) const {
+	for(auto i = 0; i < 4; i++) {
+		if(required[i] > e.required[i])
+			return false;
+	}
+	return true;
+}

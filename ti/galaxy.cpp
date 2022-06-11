@@ -4,8 +4,8 @@ using namespace pathfind;
 
 namespace {
 struct pointline {
-	point			position;
-	char			count;
+	point				position;
+	char				count;
 };
 struct galaxymap {
 	slice<pointline>	tiles;
@@ -32,14 +32,10 @@ static void assign_prototypes() {
 			if(e.race && e.race != p)
 				continue;
 			auto index = getbsi(&e);
-			if(index==9) // By default Warsun is disabled
-				memset(proto->units + index, 0, sizeof(proto->units[0]));
-			else {
-				if(e.replace)
-					index = getbsi(e.replace);
-				if(index < sizeof(proto->units) / sizeof(proto->units[0]))
-					proto->units[index] = e;
-			}
+			if(e.replace)
+				index = getbsi(e.replace);
+			if(index < sizeof(proto->units) / sizeof(proto->units[0]))
+				proto->units[index] = e;
 		}
 	}
 }

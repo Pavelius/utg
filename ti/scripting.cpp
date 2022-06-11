@@ -226,6 +226,7 @@ static void redistribute_command_tokens(int bonus, int param) {
 }
 
 static void research_technology(int bonus, int param) {
+	choosestep::run("ChooseTechnology");
 }
 
 static void score_objective(int bonus, int param) {

@@ -1,4 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 44: Not found requisit `Reinforcement`
- Line 44: Not found requisit `Reinforcement`
- Line 44: Not found requisit `Reinforcement`
+﻿In file `Names.txt`:
+ Define translate for `DacxiveAnimators`
