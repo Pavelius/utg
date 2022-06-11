@@ -21,7 +21,8 @@ enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
 enum tag_s : unsigned char {
-	IgnorePlanetaryShield, IgnoreSpaceCannon, PlanetaryShield, RepairSustainDamage, SustainDamage,
+	IgnorePlanetaryShield, IgnoreSpaceCannon, IgnoreDirectHit, PlanetaryShield, RepairSustainDamage, SustainDamage,
+	DeepSpaceCannon,
 	CombatBonusToOthers, BuyCombatBonusToOther, ProduceInfantry, HeavyHits, AdditionalHitOn9n10,
 	AddPlanetResourceToProduction
 };
@@ -268,6 +269,9 @@ struct army {
 };
 struct prototype {
 	uniti			units[10];
+};
+struct unitupgrade : public uniti {
+	char			required[4]; // RGBY
 };
 struct gamei {
 	playeri*		speaker;

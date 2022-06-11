@@ -16,6 +16,7 @@ BSDATAC(strategyi, 8)
 BSDATAC(systemi, 64)
 BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
+BSDATAC(unitupgrade, 32)
 BSDATAD(variant)
 
 BSMETA(variant) = {{}};
@@ -108,6 +109,15 @@ BSMETA(uniti) = {
 BSMETA(unit_typei) = {
 	BSREQ(id),
 	{}};
+BSMETA(unitupgrade) = {
+	BSREQ(id),
+	BSENM(type, unit_typei),
+	BSDST(abilities, abilityi),
+	BSFLG(tags, tagi),
+	BSREQ(race),
+	BSREQ(replace),
+	BSREQ(required),
+	{}};
 
 BSDATA(varianti) = {
 	{"ActionCard", VRSTD(actioncard), 1},
@@ -125,5 +135,6 @@ BSDATA(varianti) = {
 	{"Tech", VRSTD(techi), 1},
 	{"Unit", VRSTD(uniti), 1},
 	{"UnitType", VRSTD(unit_typei), 1},
+	{"UnitUpgrade", VRSTD(unitupgrade), 1},
 };
 BSDATAF(varianti)

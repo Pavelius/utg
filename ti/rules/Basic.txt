@@ -37,9 +37,7 @@ Dreadnought type(Ships)
 Flagman type(Ships)
  abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
  tags SustainDamage
-WarSun type(Ships)
- abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
- tags IgnorePlanetaryShield SustainDamage
+WarSunPrototype type(Ships)
 
 #Unit type(Ships) replace(Flagman)
 
@@ -61,6 +59,31 @@ P0p0p1 race(TheL1Z1XMindnet)
 JNSHylarim race(TheUniversitiesOfJolNar)
  abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
  tags SustainDamage AdditionalHitOn9n10
+
+#UnitUpgrade
+
+SpaceDockII type(Structures) replace(SpaceDock) required(0 0 0 2)
+ abilities CostCount(1) Production(4) MaximumInOneLocation(1)
+ tags AddPlanetResourceToProduction
+PDS type(Structures) replace(PDS) required(1 0 0 1)
+ abilities CostCount(1) SpaceCannon(5) Reinforcement(6) MaximumInOneLocation(2)
+ tags PlanetaryShield DeepSpaceCannon
+InfantryII type(GroundForces) replace(Infantry) required(0 2 0 0)
+ abilities Cost(1) CostCount(2) Combat(7) Reinforcement(50)
+FighterII type(Ships) replace(Fighter) required(0 1 1 0)
+ abilities Cost(1) CostCount(2) Combat(8) Move(2) Reinforcement(50)
+DestroyerII type(Ships) replace(Destroyer) required(2 0 0 0)
+ abilities Cost(1) CostCount(1) Combat(8) Move(2) Reinforcement(8) AntiFighterBarrage(6) AntiFighterBarrageCount(3)
+CarrierII type(Ships) replace(Carrier) required(0 0 2 0)
+ abilities Cost(3) CostCount(1) Combat(9) Move(2) Capacity(6) Reinforcement(4)
+CruiserII type(Ships) replace(Cruiser) required(1 1 0 1)
+ abilities Cost(2) CostCount(1) Combat(6) Move(3) Capacity(1) Reinforcement(8)
+DreadnoughtII type(Ships) replace(Dreadnought) required(0 0 2 1)
+ abilities Cost(4) CostCount(1) Combat(5) Move(2) Capacity(1) Reinforcement(5) Bombardment(5)
+ tags SustainDamage IgnoreDirectHit
+WarSun type(Ships) replace(WarSunPrototype) required(3 0 0 1)
+ abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
+ tags IgnorePlanetaryShield SustainDamage
 
 #Function
 
