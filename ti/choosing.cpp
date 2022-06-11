@@ -1,8 +1,6 @@
 #include "main.h"
 
 entitya				onboard;
-bool				choosestep::stop;
-bool				choosestep::ishuman;
 static indicator_s	command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
 static void clear_onboard() {
@@ -39,18 +37,18 @@ static void choose_command_token(stringbuilder& sb, answers& an) {
 }
 
 static void apply_command_token() {
-	if(bsdata<indicatori>::have(game.result)) {
-		auto v = (indicator_s)bsdata<indicatori>::source.indexof(game.result);
+	if(bsdata<indicatori>::have(choosestep::result)) {
+		auto v = (indicator_s)bsdata<indicatori>::source.indexof(choosestep::result);
 		playeri::last->add(v, 1);
-		game.options--;
-		choosestep::stop = (game.options <= 0);
+		choosestep::options--;
+		choosestep::stop = (choosestep::options <= 0);
 	}
 }
 
 static void apply_pay() {
-	if(bsdata<planeti>::have(game.result)) {
-		auto p = (planeti*)game.result;
-		game.options -= p->get(game.indicator);
+	if(bsdata<planeti>::have(choosestep::result)) {
+		auto p = (planeti*)choosestep::result;
+		choosestep::options -= p->get(game.indicator);
 		p->exhaust();
 	}
 }
@@ -64,8 +62,8 @@ static void choose_strategy(stringbuilder& sb, answers& an) {
 }
 
 static void apply_strategy() {
-	if(bsdata<strategyi>::have(game.result)) {
-		auto p = (strategyi*)game.result;
+	if(bsdata<strategyi>::have(choosestep::result)) {
+		auto p = (strategyi*)choosestep::result;
 		playeri::last->strategy = p;
 		choosestep::stop = true;
 	}
@@ -80,8 +78,8 @@ static void choose_action(stringbuilder& sb, answers& an) {
 }
 
 static void apply_action() {
-	if(bsdata<strategyi>::have(game.result)) {
-		auto p = (strategyi*)game.result;
+	if(bsdata<strategyi>::have(choosestep::result)) {
+		auto p = (strategyi*)choosestep::result;
 		if(game.active->strategy == p) {
 			script::run(p->primary);
 			game.active->use_strategy = true;
@@ -91,9 +89,9 @@ static void apply_action() {
 	}
 }
 
-static void choose_standart(answers& an, const choosestep* trigger) {
+static void std_answer(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<component>()) {
-		if(e.trigger != trigger)
+		if(e.trigger != choosestep::last)
 			continue;
 		if(!e.isallow())
 			continue;
@@ -170,11 +168,11 @@ static void ai_choose_movement(answers& an) {
 }
 
 static void apply_movement() {
-	if(bsdata<troop>::have(game.result)) {
+	if(bsdata<troop>::have(choosestep::result)) {
 		auto push_last = troop::last;
-		troop::last = (troop*)game.result;
+		troop::last = (troop*)choosestep::result;
 		game.focusing(troop::last);
-		choosestep::run(choosestep::ishuman, "ChooseMoveOption");
+		choosestep::run("ChooseMoveOption");
 		troop::last = push_last;
 	}
 }
@@ -218,8 +216,8 @@ static void choose_pds_or_dock(stringbuilder& sb, answers& an) {
 }
 
 static void apply_pds_or_dock() {
-	if(bsdata<uniti>::have(game.result)) {
-		((uniti*)game.result)->placement(1);
+	if(bsdata<uniti>::have(choosestep::result)) {
+		((uniti*)choosestep::result)->placement(1);
 		choosestep::stop = true;
 	}
 }
@@ -242,7 +240,7 @@ static void choose_move_options(stringbuilder& sbt, answers& an) {
 				continue;
 			sb.clear();
 			if(onboard.have(&e)) {
-				if(choosestep::ishuman)
+				if(choosestep::human)
 					sb.add(getnm("UnboardTroop"), e.getname());
 			} else if(onboard.getcount() < capacity)
 				sb.add(getnm("BoardTroop"), e.getname());
@@ -256,8 +254,8 @@ static void choose_move_options(stringbuilder& sbt, answers& an) {
 }
 
 static void apply_move_options() {
-	if(bsdata<troop>::have(game.result)) {
-		auto p = (troop*)game.result;
+	if(bsdata<troop>::have(choosestep::result)) {
+		auto p = (troop*)choosestep::result;
 		auto index = onboard.find(p);
 		if(index == -1)
 			onboard.add(p);
@@ -323,8 +321,8 @@ static bool have_invasion_units() {
 }
 
 static void apply_invasion() {
-	if(bsdata<troop>::have(game.result)) {
-		auto p = (troop*)game.result;
+	if(bsdata<troop>::have(choosestep::result)) {
+		auto p = (troop*)choosestep::result;
 		p->location = planeti::last;
 		game.updateui();
 	}
@@ -345,10 +343,10 @@ static void end_movement() {
 }
 
 static void apply_invasion_planet() {
-	if(bsdata<planeti>::have(game.result)) {
+	if(bsdata<planeti>::have(choosestep::result)) {
 		auto push_last = planeti::last;
-		planeti::last = (planeti*)game.result;
-		choosestep::run(choosestep::ishuman, "ChooseInvasion");
+		planeti::last = (planeti*)choosestep::result;
+		choosestep::run("ChooseInvasion");
 		planeti::last = push_last;
 		game.updatecontrol();
 	}
@@ -363,8 +361,8 @@ static void choose_dock(stringbuilder& sb, answers& an) {
 }
 
 static void apply_dock() {
-	if(bsdata<troop>::have(game.result)) {
-		troop::last = (troop*)game.result;
+	if(bsdata<troop>::have(choosestep::result)) {
+		troop::last = (troop*)choosestep::result;
 		choosestep::stop = true;
 	}
 }
@@ -404,15 +402,15 @@ static void choose_production(stringbuilder& sb, answers& an) {
 			continue;
 		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.getcost());
 	}
-	if(choosestep::ishuman) {
+	if(choosestep::human) {
 		if(onboard)
 			add_script(an, "CancelOrder");
 	}
 }
 
 static void apply_production() {
-	if(bsdata<uniti>::have(game.result))
-		onboard.add((entity*)game.result);
+	if(bsdata<uniti>::have(choosestep::result))
+		onboard.add((entity*)choosestep::result);
 }
 
 static void finish_production() {
@@ -422,70 +420,19 @@ static void finish_production() {
 	game.updateui();
 }
 
-static bool apply_standart() {
-	if(bsdata<component>::have(game.result)) {
-		auto p = (component*)game.result;
+static void std_apply() {
+	if(bsdata<component>::have(choosestep::result)) {
+		auto p = (component*)choosestep::result;
 		script::run(p->use);
-	} else if(bsdata<script>::have(game.result)) {
-		auto p = (script*)game.result;
+	} else if(bsdata<script>::have(choosestep::result)) {
+		auto p = (script*)choosestep::result;
 		p->proc(0, p->param);
-	} else if(bsdata<choosestep>::have(game.result)) {
-		auto p = (choosestep*)game.result;
+	} else if(bsdata<choosestep>::have(choosestep::result)) {
+		auto p = (choosestep*)choosestep::result;
 		p->run();
 	} else
-		return false;
-	return true;
-}
-
-void choosestep::run() const {
-	draw::pause();
-	auto push_header = answers::header;
-	auto push_stop = stop;
-	if(playeri::last)
-		answers::header = playeri::last->getname();
-	if(pbefore)
-		pbefore();
-	char temp[260]; gamestring sb(temp);
-	answers an;
-	while(!stop) {
-		sb.clear(); an.clear();
-		sb.add(getnm(id));
-		if(game.options > 0)
-			sb.adds(getnm("ChooseOptions"), game.options);
-		panswer(sb, an);
-		choose_standart(an, this);
-		const char* cancel_text = 0;
-		if(cancel)
-			cancel_text = getnm(cancel);
-		if(ishuman)
-			game.result = an.choose(temp, cancel_text);
-		else if(paichoose) {
-			paichoose(an);
-			break;
-		} else
-			game.result = an.random();
-		if(!game.result)
-			break;
-		if(!apply_standart()) {
-			if(papply)
-				papply();
-		}
-	}
-	stop = push_stop;
-	if(pafter)
-		pafter();
-	draw::pause();
-	answers::header = push_header;
-}
-
-void choosestep::run(bool human, const char* id) {
-	auto p = bsdata<choosestep>::find(id);
-	if(p) {
-		auto push_human = ishuman;
-		ishuman = human;
-		p->run();
-		ishuman = push_human;
-	}
+		return;
+	choosestep::applied = true;
 }
 
 void entitya::addreach(const systemi* system, int range) {
@@ -500,6 +447,11 @@ void entitya::addreach(const systemi* system, int range) {
 		if(ps && !have(ps))
 			add(ps);
 	}
+}
+
+void choosestep_initialize() {
+	choosestep::pstd_answer = std_answer;
+	choosestep::pstd_apply = std_apply;
 }
 
 BSDATA(choosestep) = {

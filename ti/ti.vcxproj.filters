@@ -78,7 +78,7 @@
     <ClCompile Include="tile.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="choosestep.cpp">
+    <ClCompile Include="choosing.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="gamestring.cpp">

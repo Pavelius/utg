@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "choosestep.h"
 #include "crt.h"
 #include "flagable.h"
 #include "pathfind.h"
@@ -234,20 +235,6 @@ class gamestring : public stringbuilder {
 public:
 	gamestring(const stringbuilder& v) : stringbuilder(v) {}
 };
-struct choosestep {
-	typedef void(*fnanswer)(stringbuilder& sbtitle, answers& an);
-	typedef void(*fnaichoose)(answers& an);
-	const char*		id;
-	fnanswer		panswer;
-	fnevent			papply;
-	const char*		cancel;
-	fnaichoose		paichoose;
-	fnevent			pbefore, pafter;
-	static bool		stop;
-	static bool		ishuman;
-	void			run() const;
-	static void		run(bool human, const char* id);
-};
 struct component : nameable {
 	variant			parent;
 	choosestep*		trigger;
@@ -269,8 +256,6 @@ struct gamei {
 	playeri*		active;
 	playera			players, origin_players;
 	indicator_s		indicator;
-	static void*	result;
-	static int		options;
 	static systemi* choosesystem(const entitya& source);
 	static troop*	choosetroop(const entitya& source);
 	static void		focusing(const entity* p);

@@ -11,10 +11,10 @@ static fnforeach	for_each;
 extern entitya		onboard;
 
 static void choose_command_token(int count) {
-	auto push_options = game.options;
-	game.options = count;
-	choosestep::run(playeri::last->ishuman(), "ChooseCommandToken");
-	game.options = push_options;
+	auto push_options = choosestep::options;
+	choosestep::options = count;
+	choosestep::run("ChooseCommandToken");
+	choosestep::options = push_options;
 }
 
 static void apply_value(indicator_s v, int value) {
@@ -138,11 +138,13 @@ static void replenish_commodities(int bonus, int param) {
 static void change_influence(int bonus, int param) {
 	auto need = (indicator_s)param;
 	auto currency = Influence;
-	game.options = game.rate(need, currency, bonus);
-	if(game.options > 0) {
+	auto push_options = choosestep::options;
+	choosestep::options = game.rate(need, currency, bonus);
+	if(choosestep::options > 0) {
 		game.indicator = currency;
-		choosestep::run(playeri::last->ishuman(), "ChoosePay");
+		choosestep::run("ChoosePay");
 	}
+	choosestep::options = push_options;
 }
 
 static void activate_system(int bonus, int param) {
@@ -307,10 +309,10 @@ static void script_run(variant v) {
 			script::stop = true;
 	} else if(v.iskind<choosestep>()) {
 		auto p = bsdata<choosestep>::elements + v.value;
-		auto push_options = game.options;
-		game.options = v.counter;
+		auto push_options = choosestep::options;
+		choosestep::options = v.counter;
 		p->run();
-		game.options = push_options;
+		choosestep::options = push_options;
 	} else if(v.iskind<uniti>())
 		bsdata<uniti>::elements[v.value].placement(v.counter);
 	else {

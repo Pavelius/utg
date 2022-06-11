@@ -3,8 +3,6 @@
 using namespace pathfind;
 
 gamei	game;
-int		gamei::options;
-void*	gamei::result;
 
 class gamestringbuilder : public stringbuilder {
 	void addidentifier(const char* identifier) override {
@@ -60,13 +58,13 @@ static void choose_step(const char* id) {
 	auto p = bsdata<choosestep>::find(id);
 	if(!p)
 		return;
-	auto push_human = choosestep::ishuman;
 	auto push_last = playeri::last;
+	auto push_human = choosestep::human;
 	playeri::last = game.active;
-	choosestep::ishuman = playeri::last->ishuman();
+	choosestep::human = playeri::last->ishuman();
 	p->run();
+	choosestep::human = push_human;
 	playeri::last = push_last;
-	choosestep::ishuman = push_human;
 }
 
 static void strategy_phase() {

@@ -228,6 +228,9 @@
     <ClCompile Include="condition.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="choosestep.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -408,6 +411,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="nameable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="choosestep.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

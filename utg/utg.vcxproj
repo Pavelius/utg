@@ -156,6 +156,7 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="charname.cpp" />
     <ClCompile Include="chooselist.cpp" />
+    <ClCompile Include="choosestep.cpp" />
     <ClCompile Include="code_package.cpp" />
     <ClCompile Include="code_rule.cpp" />
     <ClCompile Include="code_token.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="bstream.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
+    <ClInclude Include="choosestep.h" />
     <ClInclude Include="code_package.h" />
     <ClInclude Include="code_token.h" />
     <ClInclude Include="condition.h" />

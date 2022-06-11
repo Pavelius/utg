@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="analize.cpp" />
-    <ClCompile Include="choosestep.cpp" />
+    <ClCompile Include="choosing.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="game.cpp" />
