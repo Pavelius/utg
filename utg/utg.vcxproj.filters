@@ -404,5 +404,11 @@
     <ClInclude Include="condition.h">
       <Filter>Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="informable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="nameable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

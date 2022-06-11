@@ -25,6 +25,9 @@ struct varianti {
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* getmetadata(const void* object);
+	const char*			getid(const void* object) const;
+	void				getinfo(const void* object, stringbuilder& sb) const;
+	const char*			getname(const void* object) const;
 	int					found(const char* id, size_t size) const;
 	constexpr bool		isnamed() const { return key_count==1; }
 	void				set(void* object, const char* id, void* value) const;

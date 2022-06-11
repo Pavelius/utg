@@ -1,8 +1,9 @@
 #include "answers.h"
 #include "crt.h"
 #include "flagable.h"
-#include "point.h"
 #include "pathfind.h"
+#include "point.h"
+#include "nameable.h"
 #include "script.h"
 #include "tag.h"
 #include "variant.h"
@@ -60,10 +61,6 @@ struct colori {
 };
 struct tilei {
 	const char*		id;
-};
-struct nameable {
-	const char*		id;
-	const char*		getname() const { return getnm(id); }
 };
 struct indicatori {
 	const char*		id;
@@ -161,6 +158,8 @@ struct techi {
 	const char*		id;
 	color_s			color;
 	char			required[4]; // RGBY
+	void			getinfo(stringbuilder& sb) const;
+	static void		getinfo(const void* object, stringbuilder& sb) { ((techi*)object)->getinfo(sb); }
 };
 struct triggeri {
 	const char*		id;
@@ -305,6 +304,7 @@ struct playeri : nameable {
 	int				getcards() const;
 	systemi*		gethome() const;
 	int				getinitiative() const;
+	void			getinfo(stringbuilder& sb) const;
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;

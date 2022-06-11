@@ -2,6 +2,7 @@
 #include "draw_hexagon.h"
 #include "draw_object.h"
 #include "main.h"
+#include "strategy.h"
 
 using namespace draw;
 
@@ -177,6 +178,12 @@ void troop::paint(unsigned flags) const {
 	buttonback(43, 0);
 	fore = push_color;
 	textcn(getname());
+}
+
+static void windowed(const char* format) {
+	rectpush push;
+	swindow(false);
+	textf(format);
 }
 
 static void background(figure shape, int size) {

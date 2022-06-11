@@ -16,16 +16,17 @@ const char* variant::getdescription() const {
 }
 
 const char* variant::getname() const {
-	return getnm(getid());
+	auto& e = geti();
+	if(!e.source)
+		return getnm("NoVariant");
+	return e.getname(getpointer());
 }
 
 const char* variant::getid() const {
-	auto& e = bsdata<varianti>::elements[type];
+	auto& e = geti();
 	if(!e.source)
 		return "NoVariant";
-	if(!e.isnamed())
-		return "NoName";
-	return *((char**)getpointer());
+	return e.getid(getpointer());
 }
 
 template<> variant::variant(const void* v) : u(0) {
@@ -58,6 +59,23 @@ const varianti* varianti::getsource(const char* id) {
 		}
 	}
 	return 0;
+}
+
+const char* varianti::getname(const void* object) const {
+	if(pgetname)
+		return pgetname(object);
+	if(isnamed()) {
+		auto id = *((const char**)object);
+		if(id)
+			return getnm(id);
+	}
+	return getnm("NoName");
+}
+
+const char* varianti::getid(const void* object) const {
+	if(isnamed())
+		return *((const char**)object);
+	return "NoName";
 }
 
 const varianti* varianti::getmetadata(const void* object) {

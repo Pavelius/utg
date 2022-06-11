@@ -4,10 +4,12 @@
 #include "draw_object.h"
 #include "log.h"
 #include "strategy.h"
+#include "variant.h"
 
 using namespace draw;
 
 static point	camera_drag;
+static point	objects_paint;
 unsigned char	metrics::opacity = 210;
 
 void set_dark_theme();
@@ -41,6 +43,7 @@ static void statusbar() {
 	status_info();
 	linedown();
 	movedown(1);
+	objects_paint = caret;
 }
 
 static void camera_finish() {
@@ -242,8 +245,38 @@ static void finish() {
 	camera_finish();
 }
 
+void varianti::getinfo(const void* object, stringbuilder& sb) const {
+	if(!object)
+		return;
+	sb.add("##%1", getname(object));
+	if(pgetinfo)
+		pgetinfo(object, sb);
+	else {
+		auto id = getid(object);
+		auto description = getdescription(id);
+		if(description)
+			sb.addn(description);
+	}
+}
+
+static void paint_tips() {
+	auto p = varianti::getmetadata(hilite_object);
+	if(!p)
+		return;
+	char temp[1024]; stringbuilder sb(temp);
+	temp[0] = 0; p->getinfo(hilite_object, sb);
+	if(temp[0]) {
+		rectpush push;
+		width = 400;
+		caret.y = metrics::padding + metrics::border + objects_paint.y;
+		caret.x = metrics::padding + metrics::border;
+		menurd(temp);
+	}
+}
+
 static void tips() {
 	painthilite();
+	paint_tips();
 }
 
 int draw::strategy(fnevent proc, fnevent afterread) {

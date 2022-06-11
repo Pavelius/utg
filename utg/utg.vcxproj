@@ -236,6 +236,7 @@
     <ClInclude Include="draw_hexagon.h" />
     <ClInclude Include="function.h" />
     <ClInclude Include="group.h" />
+    <ClInclude Include="informable.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="kering.h" />
     <ClInclude Include="logparse.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="draw_figure.h" />
     <ClInclude Include="front.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="nameable.h" />
     <ClInclude Include="namenpc.h" />
     <ClInclude Include="code_rule.h" />
     <ClInclude Include="pathfind.h" />
