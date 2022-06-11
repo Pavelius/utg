@@ -8,9 +8,9 @@ class answers {
 		const void* value;
 		const char* text;
 	};
-	char buffer[2048];
-	stringbuilder sc;
-	adat<element, 32> elements;
+	char				buffer[2048];
+	stringbuilder		sc;
+	adat<element, 32>	elements;
 public:
 	typedef void(*fnpaint)(int index, const void* value, const char* text, fnevent press_event);
 	static fnevent		afterpaint;
@@ -41,6 +41,7 @@ public:
 	void				modal(const char* title, const char* cancel) const;
 	void				paintanswers(int columns, const char* cancel_text) const;
 	void*				random() const;
+	void				remove(int index) { elements.remove(index, 1); }
 	void				sort();
 };
 namespace draw {

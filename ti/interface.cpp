@@ -24,24 +24,26 @@ static void show_players() {
 	caret.x += 16; caret.y += 20;
 	auto push_x = caret.x;
 	auto res = getres("races_small");
+	auto push_alpha = alpha;
+	alpha = 128;
 	for(auto p : game.players) {
 		image(res, getbsi(p), 0);
-		if(ishilite(17)) {
+		if(ishilite(16)) {
 			hilite_type = figure::Circle;
 			hilite_object = p;
-			hilite_size = 18;
+			hilite_size = 17;
 			hilite_position = caret;
 		}
-		caret.x += 32 + 8;
+		caret.x += 32;
 	}
+	alpha = push_alpha;
 	auto pi = game.players.find(game.active);
 	if(pi != -1) {
+		auto p = game.players[pi];
 		auto push_x1 = caret.x;
-		caret.x = push_x + (32 + 8) * pi;
+		caret.x = push_x + 32 * pi;
+		image(res, getbsi(p), 0);
 		auto push_fore = fore;
-		fore = colors::active;
-		circle(17);
-		fore = push_fore;
 		caret.x = push_x1;
 	}
 	caret.y = push_y;

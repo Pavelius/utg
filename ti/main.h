@@ -244,8 +244,9 @@ struct choosestep {
 	fnaichoose		paichoose;
 	fnevent			pbefore, pafter;
 	static bool		stop;
+	static bool		ishuman;
 	void			run() const;
-	static void		run(const char* id);
+	static void		run(bool human, const char* id);
 };
 struct component : nameable {
 	variant			parent;

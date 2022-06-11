@@ -13,7 +13,7 @@ extern entitya		onboard;
 static void choose_command_token(int count) {
 	auto push_options = game.options;
 	game.options = count;
-	choosestep::run("ChooseCommandToken");
+	choosestep::run(playeri::last->ishuman(), "ChooseCommandToken");
 	game.options = push_options;
 }
 
@@ -141,7 +141,7 @@ static void change_influence(int bonus, int param) {
 	game.options = game.rate(need, currency, bonus);
 	if(game.options > 0) {
 		game.indicator = currency;
-		choosestep::run("ChoosePay");
+		choosestep::run(playeri::last->ishuman(), "ChoosePay");
 	}
 }
 

@@ -215,11 +215,8 @@ static void menubt(int i, const void* pv, const char* title, fnevent press_event
 		if(answers::show_tips)
 			hilite_object = pv;
 	} else if(hilite_object) {
-		if(pv == hilite_object) {
+		if(pv == hilite_object)
 			hot.cursor = cursor::Hand;
-			//if(press_event)
-			//	execute(press_event, (long)pv);
-		}
 	}
 }
 
@@ -249,6 +246,7 @@ void varianti::getinfo(const void* object, stringbuilder& sb) const {
 	if(!object)
 		return;
 	sb.add("##%1", getname(object));
+	auto pb = sb.get();
 	if(pgetinfo)
 		pgetinfo(object, sb);
 	else {
@@ -257,6 +255,8 @@ void varianti::getinfo(const void* object, stringbuilder& sb) const {
 		if(description)
 			sb.addn(description);
 	}
+	if(pb[0] == 0)
+		sb.clear();
 }
 
 static void paint_tips() {

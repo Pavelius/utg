@@ -2,6 +2,7 @@
 
 entitya				onboard;
 bool				choosestep::stop;
+bool				choosestep::ishuman;
 static indicator_s	command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
 static void clear_onboard() {
@@ -173,7 +174,7 @@ static void apply_movement() {
 		auto push_last = troop::last;
 		troop::last = (troop*)game.result;
 		game.focusing(troop::last);
-		choosestep::run("ChooseMoveOption");
+		choosestep::run(choosestep::ishuman, "ChooseMoveOption");
 		troop::last = push_last;
 	}
 }
@@ -240,9 +241,10 @@ static void choose_move_options(stringbuilder& sbt, answers& an) {
 			if(e.get(Move) != 0)
 				continue;
 			sb.clear();
-			if(onboard.have(&e))
-				sb.add(getnm("UnboardTroop"), e.getname());
-			else if(onboard.getcount() < capacity)
+			if(onboard.have(&e)) {
+				if(choosestep::ishuman)
+					sb.add(getnm("UnboardTroop"), e.getname());
+			} else if(onboard.getcount() < capacity)
 				sb.add(getnm("BoardTroop"), e.getname());
 			else
 				continue;
@@ -346,7 +348,7 @@ static void apply_invasion_planet() {
 	if(bsdata<planeti>::have(game.result)) {
 		auto push_last = planeti::last;
 		planeti::last = (planeti*)game.result;
-		choosestep::run("ChooseInvasion");
+		choosestep::run(choosestep::ishuman, "ChooseInvasion");
 		planeti::last = push_last;
 		game.updatecontrol();
 	}
@@ -402,8 +404,10 @@ static void choose_production(stringbuilder& sb, answers& an) {
 			continue;
 		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.getcost());
 	}
-	if(onboard)
-		add_script(an, "CancelOrder");
+	if(choosestep::ishuman) {
+		if(onboard)
+			add_script(an, "CancelOrder");
+	}
 }
 
 static void apply_production() {
@@ -453,15 +457,13 @@ void choosestep::run() const {
 		const char* cancel_text = 0;
 		if(cancel)
 			cancel_text = getnm(cancel);
-		if(game.active->ishuman())
+		if(ishuman)
 			game.result = an.choose(temp, cancel_text);
-		else {
-			if(paichoose) {
-				paichoose(an);
-				break;
-			} else
-				game.result = an.random();
-		}
+		else if(paichoose) {
+			paichoose(an);
+			break;
+		} else
+			game.result = an.random();
 		if(!game.result)
 			break;
 		if(!apply_standart()) {
@@ -476,10 +478,14 @@ void choosestep::run() const {
 	answers::header = push_header;
 }
 
-void choosestep::run(const char* id) {
+void choosestep::run(bool human, const char* id) {
 	auto p = bsdata<choosestep>::find(id);
-	if(p)
+	if(p) {
+		auto push_human = ishuman;
+		ishuman = human;
 		p->run();
+		ishuman = push_human;
+	}
 }
 
 void entitya::addreach(const systemi* system, int range) {

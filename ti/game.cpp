@@ -57,10 +57,16 @@ void gamei::initialize() {
 }
 
 static void choose_step(const char* id) {
+	auto p = bsdata<choosestep>::find(id);
+	if(!p)
+		return;
+	auto push_human = choosestep::ishuman;
 	auto push_last = playeri::last;
 	playeri::last = game.active;
-	choosestep::run(id);
+	choosestep::ishuman = playeri::last->ishuman();
+	p->run();
 	playeri::last = push_last;
+	choosestep::ishuman = push_human;
 }
 
 static void strategy_phase() {
