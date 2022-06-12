@@ -1,2 +1,4 @@
 ﻿In file `Names.txt`:
- Define translate for `DacxiveAnimators`
+ Define translate for `AntimassDeflectors`
+ Define translate for `MagenDefenseGrid`
+ Define translate for `NeuralMotivator`

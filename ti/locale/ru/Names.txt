@@ -3,7 +3,7 @@ AbyzSystem: Система Абиз
 ActionCards: Карты действий
 AddCommandToken: Какие резервы хотите пополнить?
 AntiFighterBarrage: Заградительный огонь
-AntimassDeflectors: 
+AntimassDeflectors: Отражатель материи
 AppTitle: Сумрачная империя
 Apply: Применить
 ApplyExhaust: Планета %1 истощена
@@ -98,7 +98,7 @@ Lodor: Лодор
 LodorSystem: Система Лодор
 Lor: Лор
 LoseIndicator: %1 потратили %3i %2
-MagenDefenseGrid: 
+MagenDefenseGrid: Защитная сеть перимитра
 MecatolRex: Мекатол Рекс
 MecatolRexSystem: Система Мекатол Рекс
 Meer: Миир
@@ -109,7 +109,7 @@ MellonSystem: Система Мелон
 MoveShip: Переместить корабль
 Nar: Нар
 NebulaSystem: Небула
-NeuralMotivator: 
+NeuralMotivator: Невральные мотиваторы
 NewAlbion: Новый Альбион
 NewAlbionSystem: Система Новый Альбион
 NoCasualties: Ни одна сторона не понесла потери
@@ -188,12 +188,6 @@ WrenTerra: Врен Терра
 Xxehan: Ксехан
 Zhobat: Зобат
 Вли: 
-Военная стратегия: 
-Дипломатическая стратегия: 
 КД: 
-Лидерская стратегия: 
-Политическая стратегия: 
 Рес: 
 Тех: 
-Технологическая стратегия: 
-Торговая стратегия: 
