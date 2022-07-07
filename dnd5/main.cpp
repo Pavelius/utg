@@ -9,7 +9,7 @@ static void main_menu() {
 }
 
 static void initialize() {
-	bsreq::read("rules/Advance.txt");
+	bsreq::read("rules/DwarvenRaces.txt");
 }
 
 int main(int argc, char* argv[]) {

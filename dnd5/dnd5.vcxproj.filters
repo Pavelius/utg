@@ -52,7 +52,7 @@
     <Text Include="locale\ru\CharacterNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="rules\Advance.txt">
+    <Text Include="rules\DwarvenRaces.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>

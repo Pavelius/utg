@@ -161,7 +161,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\CharacterNames.txt" />
     <Text Include="locale\ru\Names.txt" />
-    <Text Include="rules\Advance.txt" />
+    <Text Include="rules\DwarvenRaces.txt" />
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

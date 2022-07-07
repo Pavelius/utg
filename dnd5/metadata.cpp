@@ -66,6 +66,7 @@ BSMETA(tagi) = {
 	{}};
 
 BSDATA(varianti) = {
+	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
 	{"Advance", VRSTD(advancei), 3},
 	{"Class", VRSTD(classi), 1},

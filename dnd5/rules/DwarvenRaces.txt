@@ -6,6 +6,9 @@ MountainDwarf parent(Dwarf)
 
 #Advance
 
+AbilityScoreIncrease MountainDwarf 0
+ effect Strenght+2
+
 AbilityScoreIncrease Dwarf 0
  effect Constitution+2
 Darkvision Dwarf 0
