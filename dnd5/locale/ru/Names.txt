@@ -1,0 +1,68 @@
+﻿AdventuringGear: Инструменты
+Antitoxin: Противоядие
+AppTitle: Мир подземелья
+ApplyAbility: Какая ваша способность будет равна [%1i]?
+Armor: Броня
+BagOfBooks: Сумка с книгами
+Bandages: Бинты
+BundleArrows: Стрелы
+Cancel: Отмена
+ChainMailArmor: Кольчуга
+Chaotic: Хаотичный
+CharacterAbility: Характеристики
+CharacterGeneration: Генерация персонажа
+Charisma: Харизма
+Choose: Выбирай
+ChooseAlignment: Каков будет его характер?
+ChooseArmament: Что будет вашим оружием?
+ChooseClass: Кто будет ваш персонаж?
+ChooseDefences: Что будет служить вам защитой?
+ChooseGears: Что вы таскаете с собой?
+ChooseGender: Кто вы?
+ChooseLook: Как вы выглядите?
+ChooseRace: Из каких краев вы родом?
+ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
+Cleric: Священник
+Constitution: Телосложение
+Continue: Продолжить
+Dagger: Кинжал
+Damage: Урон
+Dexterity: Ловкость
+DungeonRations: Еда
+Dwarf: Дварф
+Elf: Эльф
+Evil: Злой
+Female: Женщина
+Fighter: Воин
+Good: Добрый
+HP: Хиты
+Halfling: Полурослик 
+HealingPotion: Лечебное зелье
+Human: Человек
+Intellegence: Интеллект
+Knife: Нож
+Lawful: Законопослушный
+LeatherArmor: Кожанная броня
+Mace: Булава
+Male: Мужчина
+Mistra: Мистра
+Neutral: Нейтральный
+No: Нет
+NoGender: Безполый
+Notes: Заметки
+Npc: НИП
+PoulticesAndHerbs: Травы
+RaggedBow: Лук
+Rapier: Рапира
+RuleshipOfThaine: Правительство Таинов
+ScaleMailArmor: Хаулберк
+Shield: Щит
+ShortSword: Короткий меч
+Staff: Посох
+Strenght: Сила
+Theif: Вор
+UndeadInvasion: Нашествие мертвецов
+Warhammer: Молот
+Wisdow: Мудрость
+Wizard: Волшебник
+Yes: Да

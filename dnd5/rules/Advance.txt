@@ -1,0 +1,30 @@
+#Race
+
+Dwarf
+HillDwarf parent(Dwarf)
+MountainDwarf parent(Dwarf)
+
+#Advance
+
+AbilityScoreIncrease Dwarf 0
+ effect Constitution+2
+Darkvision Dwarf 0
+ effect Darkvision
+DwarvenResilence Dwarf 0
+ effect Proficient SaveVsPoison Resist Poison
+DwarvenCombatTraining Dwarf 0
+ effect Proficient Handaxe Battleaxe LightHammer Warhammer
+ToolProficiency Dwarf 0 choose(1)
+ effect Proficient SmithsTools BrewersSupplies MasonsTools
+Languages Dwarf 0
+ effect Common Dwarvish
+
+AbilityScoreIncrease HillDwarf 0
+ effect Wisdow+1
+DwarvenToughness HillDwarf 0
+ effect Toughness
+
+AbilityScoreIncrease MountainDwarf 0
+ effect Strenght+2
+DwarvenArmorTraining MountainDwarf 0
+ effect Proficient LightArmor MediumArmor

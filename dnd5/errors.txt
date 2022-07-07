@@ -1,0 +1,2 @@
+﻿In file `rules/Advance.txt`:
+ Line 28: Can't find variant `Strenght`
