@@ -1,0 +1,35 @@
+#Race
+
+Elf
+HightElf parent(Elf)
+WoodElf parent(Elf)
+
+#Advance
+
+AbilityScoreIncrease Elf 0
+ effect Dexterity+2
+Darkvision Elf 0
+ effect Darkvision
+KeenSenses Elf 0
+ effect Proficient Perception
+FeyAncestry Elf 0
+ effect Proficient SaveVsCharm ImmuneToSleepMagic
+Trace Elf 0
+
+AbilityScoreIncrease HightElf 0
+ effect Intellegence+1
+ElfWeaponTraining HightElf 0
+ effect Proficient Longsword Shortsword Shortbow Longbow
+Cantrip HightElf 0 choose(1)
+ effect AcidSplash DancingLight FireBolt Light MageHand
+ExtraLanguage HightElf 0 choose(1)
+ effect Dwarvish Orcish Gnomish Draconical Infernal
+
+AbilityScoreIncrease WoodElf 0
+ effect Wisdow+1
+ElfWeaponTraining WoodElf 0
+ effect Proficient Longsword Shortsword Shortbow Longbow
+FleetOfFoot WoodElf 0
+ effect Speed+1
+MaskOfTheWild WoodElf 0
+ effect HideInEnviroment

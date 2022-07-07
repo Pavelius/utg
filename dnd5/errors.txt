@@ -1,2 +1,2 @@
-﻿In file `rules/Advance.txt`:
- Line 28: Can't find variant `Strenght`
+﻿In file `rules/ElvishRaces.txt`:
+ Line 35: Can't find variant `ImpovedHide`

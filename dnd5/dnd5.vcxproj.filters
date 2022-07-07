@@ -55,5 +55,8 @@
     <Text Include="rules\DwarvenRaces.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="rules\ElvishRaces.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -7,8 +7,10 @@ BSDATA(abilityi) = {
 	{"Intellegence"},
 	{"Wisdow"},
 	{"Charisma"},
+	{"SaveVsCharm"},
 	{"SaveVsPoison"},
 	{"Speed"},
 	{"HitPoints"},
+	{"ChannelDivinity"},
 };
 BSDATAF(abilityi)

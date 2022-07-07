@@ -13,6 +13,7 @@ BSDATAC(languagei, 32)
 BSDATAC(listi, 32)
 BSDATAC(racei, 32)
 BSDATAC(skilli, 32)
+BSDATAC(spelli, 512)
 BSDATAD(variant)
 
 BSMETA(variant) = {{}};
@@ -61,6 +62,10 @@ BSMETA(racei) = {
 BSMETA(skilli) = {
 	BSREQ(id),
 	{}};
+BSMETA(spelli) = {
+	BSREQ(id),
+	BSREQ(level),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -77,6 +82,7 @@ BSDATA(varianti) = {
 	{"Modifier", VRSTD(modifieri), 1},
 	{"Race", VRSTD(racei), 1},
 	{"Skill", VRSTD(skilli), 1},
+	{"Spell", VRSTD(spelli), 1},
 	{"Tag", VRSTD(tagi), 1},
 };
 BSDATAF(varianti)

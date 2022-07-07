@@ -11,7 +11,9 @@ enum modifier_s : unsigned char {
 	Immunity, Resist, Vulnerable,
 };
 enum tag_s : unsigned char {
-	Darkvision, Stonecunning, Toughness
+	Darkvision, Stonecunning, Toughness,
+	ImmuneToSleepMagic, HideInEnviroment,
+	RitualCasting,
 };
 
 struct nameable {
@@ -42,9 +44,12 @@ struct racei : nameable {
 };
 struct skilli : nameable {
 };
-struct advancei : nameable {
-	variant			base;
+struct spelli : nameable {
 	char			level;
+};
+struct advancei : nameable {
+	char			level;
+	variant			base;
 	char			choose;
 	variants		effect;
 };

@@ -27,6 +27,11 @@ Persuasion
 
 Common
 Dwarvish
+Elvish
+Orcish
+Gnomish
+Draconical
+Infernal
 
 #Item
 
@@ -77,6 +82,14 @@ Chainmail
 SmithsTools
 BrewersSupplies
 MasonsTools
+
+#Spell
+
+AcidSplash
+DancingLight
+FireBolt
+Light
+MageHand
 
 #List
 

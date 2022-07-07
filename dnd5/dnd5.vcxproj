@@ -163,6 +163,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\DwarvenRaces.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\ElvishRaces.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "io_stream.h"
 #include "strategy.h"
 #include "main.h"
 
@@ -8,8 +9,20 @@ void status_info(void) {
 static void main_menu() {
 }
 
+static void read_files(const char* url, const char* mask) {
+	for(io::file::find file(url); file; file.next()) {
+		auto pn = file.name();
+		if(pn[0] == '.')
+			continue;
+		if(!szpmatch(pn, mask))
+			continue;
+		char temp[260];
+		bsreq::read(file.fullname(temp));
+	}
+}
+
 static void initialize() {
-	bsreq::read("rules/DwarvenRaces.txt");
+	read_files("rules", "*Races.txt");
 }
 
 int main(int argc, char* argv[]) {
