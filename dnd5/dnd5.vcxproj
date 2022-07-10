@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,11 +146,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="alignment.cpp" />
     <ClCompile Include="damage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="moveable.cpp" />
+    <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +164,11 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\CharacterNames.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\CharacterGenerate.txt" />
     <Text Include="rules\DwarvenRaces.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\ElvishRaces.txt" />
+    <Text Include="rules\Menu.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

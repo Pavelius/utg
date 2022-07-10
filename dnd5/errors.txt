@@ -1,2 +1,10 @@
-﻿In file `rules/ElvishRaces.txt`:
- Line 35: Can't find variant `ImpovedHide`
+﻿In file `Names.txt`:
+ Define translate for `ChaoticEvil`
+ Define translate for `ChaoticGood`
+ Define translate for `ChaoticNeutral`
+ Define translate for `LawfulEvil`
+ Define translate for `LawfulGood`
+ Define translate for `LawfulNeutral`
+ Define translate for `NeutralEvil`
+ Define translate for `NeutralGood`
+ Define translate for `TrueNeutral`

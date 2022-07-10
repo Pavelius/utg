@@ -9,6 +9,9 @@ BundleArrows: Стрелы
 Cancel: Отмена
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
+ChaoticEvil: Хаотично-злой
+ChaoticGood: Хаотично-добрый
+ChaoticNeutral: Хаотично-нейтральный
 CharacterAbility: Характеристики
 CharacterGeneration: Генерация персонажа
 Charisma: Харизма
@@ -42,11 +45,16 @@ Human: Человек
 Intellegence: Интеллект
 Knife: Нож
 Lawful: Законопослушный
+LawfulEvil: Законопослушно-злой
+LawfulGood: Законопослушно-добрый
+LawfulNeutral: Законопослушно-нейтральный
 LeatherArmor: Кожанная броня
 Mace: Булава
 Male: Мужчина
 Mistra: Мистра
 Neutral: Нейтральный
+NeutralEvil: Нейтрально-злой
+NeutralGood: Нейтрально-добрый
 No: Нет
 NoGender: Безполый
 Notes: Заметки
@@ -61,6 +69,7 @@ ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
 Theif: Вор
+TrueNeutral: Нейтральный
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот
 Wisdow: Мудрость

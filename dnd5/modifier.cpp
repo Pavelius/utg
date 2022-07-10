@@ -1,7 +1,6 @@
 #include "main.h"
 
 BSDATA(modifieri) = {
-	{"NoModifier"},
 	{"Proficient"},
 	{"Immunity"},
 	{"Resist"},

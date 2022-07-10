@@ -7,6 +7,7 @@ NOBSDATA(dice)
 NOBSDATA(itemi::weaponi)
 
 BSDATAC(advancei, 512)
+BSDATAC(character, 128)
 BSDATAC(classi, 32)
 BSDATAC(itemi, 256)
 BSDATAC(languagei, 32)
@@ -28,6 +29,12 @@ BSMETA(advancei) = {
 	BSREQ(level),
 	BSREQ(choose),
 	BSREQ(effect),
+	{}};
+BSMETA(alignmenti) = {
+	BSREQ(id),
+	{}};
+BSMETA(character) = {
+	BSREQ(id),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
@@ -74,11 +81,15 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},
 	{"Advance", VRSTD(advancei), 3},
+	{"Alignment", VRSTD(alignmenti), 1},
+	{"Character", VRSTD(character), 1},
 	{"Class", VRSTD(classi), 1},
 	{"Damage", VRSTD(damagei), 1},
+	{"Gender", VRSTD(genderi), 1},
 	{"Item", VRSTD(itemi), 1},
 	{"Language", VRSTD(languagei), 1},
 	{"List", VRSTD(listi), 1},
+	{"Menu", VRSTD(menu), 1},
 	{"Modifier", VRSTD(modifieri), 1},
 	{"Race", VRSTD(racei), 1},
 	{"Skill", VRSTD(skilli), 1},

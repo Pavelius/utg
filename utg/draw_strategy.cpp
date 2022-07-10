@@ -300,7 +300,7 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	ptips = tips;
 	awindow.flags = WFResize | WFMinmax;
 	metrics::border = 6;
-	metrics::padding = 2;
+	metrics::padding = 3;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();

@@ -1,6 +1,10 @@
+#include "bsreq.h"
 #include "crt.h"
 #include "gender.h"
 
+BSMETA(genderi) = {
+	BSREQ(id),
+	{}};
 BSDATA(genderi) = {
 	{"NoGender"},
 	{"Male"},

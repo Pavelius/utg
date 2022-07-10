@@ -7,6 +7,10 @@ void status_info(void) {
 }
 
 static void main_menu() {
+	answers::header = "CharacterGenerate";
+	answers::resid = "generate";
+	character e1;
+	e1.advance("CharacterGenerate", 0);
 }
 
 static void read_files(const char* url, const char* mask) {
@@ -23,6 +27,8 @@ static void read_files(const char* url, const char* mask) {
 
 static void initialize() {
 	read_files("rules", "*Races.txt");
+	bsreq::read("rules/Menu.txt");
+	bsreq::read("rules/CharacterGenerate.txt");
 }
 
 int main(int argc, char* argv[]) {

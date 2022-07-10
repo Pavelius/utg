@@ -1,0 +1,8 @@
+#Menu
+
+CharacterGenerate
+
+ChooseGender source(Character) mode(gender)
+ elements Male Female
+ChooseRace source(Character) mode(race)
+ elements Elf Dwarf

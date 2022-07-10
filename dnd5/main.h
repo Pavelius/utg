@@ -1,12 +1,14 @@
+#include "answers.h"
 #include "flagable.h"
+#include "gender.h"
 #include "dice.h"
+#include "menu.h"
 #include "script.h"
 #include "tag.h"
 
 #pragma once
 
 enum modifier_s : unsigned char {
-	NoModififer,
 	Proficient,
 	Immunity, Resist, Vulnerable,
 };
@@ -20,6 +22,8 @@ struct nameable {
 	const char*		id;
 };
 struct abilityi : nameable {
+};
+struct alignmenti : nameable {
 };
 struct classi : nameable {
 };
@@ -60,12 +64,21 @@ struct statable {
 	flagable<8>		items;
 	flagable<2>		resist, immunity, vulnerable;
 	flagable<4>		tags;
+	bool			addstart(variant v, modifier_s modifier, bool run);
 	void			load(statable& e) { *this = e; }
 };
-struct moveable : nameable, statable {
-	statable		basic;
+struct actable : nameable {
 	const racei*	race;
-	void			apply(variant v);
+	gender_s		gender;
+};
+struct moveable : actable, statable {
+	statable		basic;
+	unsigned char	alignment;
+	void			advance(variant base, int level);
+	bool			addstart(variant v, modifier_s modifier, bool run);
 	void			apply(const variants& v);
+	void			apply(const advancei& v);
 	void			update();
+};
+struct character : moveable {
 };

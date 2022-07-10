@@ -1,0 +1,8 @@
+#Advance
+
+ChooseGender CharacterGenerate 0 choose(1)
+ effect Male Female
+ChooseRace CharacterGenerate 0 choose(1)
+ effect Dwarf Elf
+ChooseAlignment CharacterGenerate 0 choose(1)
+ effect LawfulGood NeutralGood ChaoticGood LawfulNeutral TrueNeutral ChaoticNeutral LawfulEvil NeutralEvil ChaoticEvil
