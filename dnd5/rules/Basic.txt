@@ -23,6 +23,13 @@ Intimidation
 Performance
 Persuasion
 
+#Class
+
+Cleric hd(8)
+Fighter hd(10)
+Rogue hd(8)
+Wizard hd(6)
+
 #Language
 
 Common

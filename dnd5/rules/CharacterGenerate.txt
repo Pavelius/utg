@@ -6,3 +6,5 @@ ChooseRace CharacterGenerate 0 choose(1)
  effect Dwarf Elf
 ChooseAlignment CharacterGenerate 0 choose(1)
  effect LawfulGood NeutralGood ChaoticGood LawfulNeutral TrueNeutral ChaoticNeutral LawfulEvil NeutralEvil ChaoticEvil
+ChooseClass CharacterGenerate 0 choose(1)
+ effect Cleric Fighter Rogue Wizard

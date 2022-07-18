@@ -17,6 +17,9 @@ bool moveable::addstart(variant v, modifier_s modifier, bool run) {
 	} else if(v.iskind<alignmenti>()) {
 		if(run)
 			alignment = (unsigned char)v.value;
+	} else if(v.iskind<classi>()) {
+		if(run)
+			classes[v.value]++;
 	} else
 		return statable::addstart(v, modifier, run);
 	return true;

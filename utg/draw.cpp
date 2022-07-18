@@ -2377,6 +2377,8 @@ void draw::key2str(stringbuilder& sb, int key) {
 
 void draw::execute(fnevent proc, long value, long value2, const void* object) {
 	domodal = proc;
+	// Это важно, так как мы никогда не обнуляем эту переменную при исполнении не стандартной команды.
+	// Если не делать, будет зацикливание.
 	hot.key = 0;
 	hot.param = value;
 	hot.param2 = value2;

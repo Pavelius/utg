@@ -62,13 +62,13 @@ Npc: НИП
 PoulticesAndHerbs: Травы
 RaggedBow: Лук
 Rapier: Рапира
+Rogue: Бродяга
 RuleshipOfThaine: Правительство Таинов
 ScaleMailArmor: Хаулберк
 Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
-Theif: Вор
 TrueNeutral: Нейтральный
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот

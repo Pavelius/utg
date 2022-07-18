@@ -18,6 +18,12 @@
     <ClCompile Include="interface.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="stat.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -32,6 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

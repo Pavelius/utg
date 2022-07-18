@@ -38,6 +38,7 @@ BSMETA(character) = {
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
+	BSREQ(hd),
 	{}};
 BSMETA(damagei) = {
 	BSREQ(id),

@@ -1,5 +1,1 @@
-#Resource
-
-Gold format("%1i(%+2i)")
-Mana format("%1i(%+2i)")
-Fame format("%1i")
+#Stat

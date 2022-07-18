@@ -26,6 +26,7 @@ struct abilityi : nameable {
 struct alignmenti : nameable {
 };
 struct classi : nameable {
+	char			hd;
 };
 struct damagei : nameable {
 };
@@ -74,6 +75,7 @@ struct actable : nameable {
 struct moveable : actable, statable {
 	statable		basic;
 	unsigned char	alignment;
+	char			classes[16];
 	void			advance(variant base, int level);
 	bool			addstart(variant v, modifier_s modifier, bool run);
 	void			apply(const variants& v);
