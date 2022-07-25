@@ -152,6 +152,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="stat.cpp" />
+    <ClCompile Include="statable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
@@ -160,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

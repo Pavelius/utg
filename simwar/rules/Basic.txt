@@ -1,1 +1,6 @@
-#Stat
+#Building
+
+Marketplace
+Fort
+Harbor
+Farm

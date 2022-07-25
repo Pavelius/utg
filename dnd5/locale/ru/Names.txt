@@ -25,6 +25,7 @@ ChooseGender: Кто вы?
 ChooseLook: Как вы выглядите?
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
+ChooseSubRace: Из каких именно краев вы родом?
 Cleric: Священник
 Constitution: Телосложение
 Continue: Продолжить
@@ -41,6 +42,8 @@ Good: Добрый
 HP: Хиты
 Halfling: Полурослик 
 HealingPotion: Лечебное зелье
+HightElf: Высший эльф
+HillDwarf: Холмистый дварф
 Human: Человек
 Intellegence: Интеллект
 Knife: Нож
@@ -52,6 +55,7 @@ LeatherArmor: Кожанная броня
 Mace: Булава
 Male: Мужчина
 Mistra: Мистра
+MountainDwarf: Горный дварф
 Neutral: Нейтральный
 NeutralEvil: Нейтрально-злой
 NeutralGood: Нейтрально-добрый
@@ -74,4 +78,5 @@ UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот
 Wisdow: Мудрость
 Wizard: Волшебник
+WoodElf: Лесной эльф
 Yes: Да

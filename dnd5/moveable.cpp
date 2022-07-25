@@ -7,10 +7,22 @@ void moveable::apply(const variants& source) {
 		addstart(v, Proficient, true);
 }
 
+static racei* choose_race(const racei* parent) {
+	answers an;
+	for(auto& e : bsdata<racei>()) {
+		if(e.parent == parent)
+			an.add(&e, getnm(e.id));
+	}
+	return (racei*)an.choose(getnm("ChooseSubRace"));
+}
+
 bool moveable::addstart(variant v, modifier_s modifier, bool run) {
 	if(v.iskind<racei>()) {
-		if(run)
-			race = (racei*)v.getpointer();
+		if(run) {
+			auto p = (racei*)v.getpointer();
+			auto pn = choose_race(p);
+			race = pn ? pn : p;
+		}
 	} else if(v.iskind<genderi>()) {
 		if(run)
 			gender = (gender_s)v.value;

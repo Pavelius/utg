@@ -26,7 +26,7 @@ static void show_players() {
 	auto push_x = caret.x;
 	auto res = getres("races_small");
 	auto push_alpha = alpha;
-	alpha = 128;
+	alpha = 32;
 	for(auto p : game.players) {
 		image(res, getbsi(p), 0);
 		if(ishilite(16)) {

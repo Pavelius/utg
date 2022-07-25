@@ -1,10 +1,3 @@
 ﻿In file `Names.txt`:
- Define translate for `ChaoticEvil`
- Define translate for `ChaoticGood`
- Define translate for `ChaoticNeutral`
- Define translate for `LawfulEvil`
- Define translate for `LawfulGood`
- Define translate for `LawfulNeutral`
- Define translate for `NeutralEvil`
- Define translate for `NeutralGood`
- Define translate for `TrueNeutral`
+ Define translate for `HightElf`
+ Define translate for `WoodElf`

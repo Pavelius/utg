@@ -1,11 +1,15 @@
 #include "draw.h"
 #include "draw_object.h"
+#include "main.h"
 #include "strategy.h"
 
 using namespace draw;
 
 static void main_scene() {
-
+	statable t1 = {};
+	statable t2 = {0, 0, 2, 1};
+	statable t3 = t1;
+	t3 += t2;
 }
 
 static void start_game() {

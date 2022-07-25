@@ -8,15 +8,15 @@ template<> struct bsdata<V> : bsdata<T> {};
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
+BSDATAC(building, 128)
 
-BSMETA(stati) = {
+BSMETA(building) = {
 	BSREQ(id),
-	BSREQ(format),
 	{}};
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Stat", VRSTD(stati), 1},
+	{"Building", VRSTD(building), 1},
 };
 BSDATAF(varianti)
