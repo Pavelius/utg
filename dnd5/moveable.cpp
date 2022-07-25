@@ -37,33 +37,44 @@ bool moveable::addstart(variant v, modifier_s modifier, bool run) {
 	return true;
 }
 
-static void add_variant(moveable* p, answers& an, const variants& source, modifier_s modifier) {
+static void add_variant(moveable* p, answers& an, const variants& source, modifier_s& modifier) {
 	for(auto v : source) {
-		if(!p->addstart(v, modifier, false))
-			continue;
-		an.add(v.getpointer(), v.getname());
+		if(v.iskind<modifieri>())
+			modifier = (modifier_s)v.value;
+		else {
+			if(!p->addstart(v, modifier, false))
+				continue;
+			an.add(v.getpointer(), v.getname());
+		}
 	}
 }
 
 void moveable::apply(const advancei& source) {
+	char temp[260]; stringbuilder sb(temp);
 	for(auto i = 0; i < source.choose; i++) {
 		answers an;
-		add_variant(this, an, source.effect, Proficient);
-		auto pv = an.choose(getnm(source.id));
+		auto modifier = Proficient;
+		add_variant(this, an, source.effect, modifier);
+		auto pn = source.id;
+		if(szstart(pn, "Choose"))
+			pn = getnm(pn);
+		else {
+			sb.clear();
+			sb.add("%Choose [%1]", getnm(source.id));
+			pn = temp;
+		}
+		auto pv = an.choose(pn);
 		if(!pv)
 			break;
-		addstart(pv, Proficient, true);
+		addstart(pv, modifier, true);
 	}
 }
 
 void moveable::advance(variant base, int level) {
-	auto push_header = answers::header;
-	answers::header = base.getname();
 	for(auto& e : bsdata<advancei>()) {
 		if(e.base == base && e.level == level)
 			apply(e);
 	}
-	answers::header = push_header;
 }
 
 void moveable::update() {

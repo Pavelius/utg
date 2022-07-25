@@ -83,4 +83,6 @@ struct moveable : actable, statable {
 	void			update();
 };
 struct character : moveable {
+	void			clear();
+	void			generate();
 };

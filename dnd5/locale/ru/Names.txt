@@ -1,5 +1,4 @@
-﻿AcidSplash: Кислотные брызги
-AdventuringGear: Инструменты
+﻿AdventuringGear: Снаряжение авантюриста
 Antitoxin: Противоядие
 AppTitle: Мир подземелья
 ApplyAbility: Какая ваша способность будет равна [%1i]?
@@ -17,7 +16,7 @@ ChaoticNeutral: Хаотично-нейтральный
 CharacterAbility: Характеристики
 CharacterGenerate: Генерация персонажа
 Charisma: Харизма
-Choose: Выбирай
+Choose: Выбирайте
 ChooseAlignment: Каков будет его характер?
 ChooseArmament: Что будет вашим оружием?
 ChooseClass: Кто будет ваш персонаж?
@@ -80,6 +79,7 @@ Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
+ToolProficiency: Специализацию на инструментах
 TrueNeutral: Нейтральный
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот

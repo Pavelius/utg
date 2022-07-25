@@ -1,5 +1,5 @@
-﻿ Draconical: Драконий
- Dwarvish: Дварйиский
- Gnomish: Гномий
- Infernal: Дьявольский
- Orcish: Орочий
+﻿Draconical: Драконий
+Dwarvish: Дварйиский
+Gnomish: Гномий
+Infernal: Дьявольский
+Orcish: Орочий

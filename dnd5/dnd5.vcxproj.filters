@@ -39,6 +39,9 @@
     <ClCompile Include="statable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="character.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

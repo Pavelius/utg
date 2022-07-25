@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="alignment.cpp" />
+    <ClCompile Include="character.cpp" />
     <ClCompile Include="damage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
