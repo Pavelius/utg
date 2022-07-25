@@ -24,7 +24,7 @@ static int compare(const void* v1, const void* v2) {
 }
 
 static void update_elements(array& ei) {
-	if(ei.getcount()==0)
+	if(ei.getcount() == 0)
 		return;
 	qsort(ei.data, ei.getcount(), ei.getsize(), compare);
 }
@@ -68,6 +68,8 @@ static const char* read_identifier(const char* p, char* ps, const char* pe) {
 static void apply_value(array& source, const char* id, const char* name) {
 	id = szdup(id);
 	name = szdup(name);
+	if(source.find(id, 0) != -1)
+		return;
 	auto p = (translate*)source.add();
 	p->id = id;
 	p->name = name;
@@ -92,12 +94,14 @@ static void readl(const char* url, array& source, bool required) {
 	update_elements(source);
 }
 
-static void savel(const char* url, array& source) {
+static void savel(const char* url, array& source, bool only_empthy) {
 	io::file file(url, StreamText | StreamWrite);
 	if(!file)
 		return;
 	auto records_write = 0;
 	for(auto& e : source.records<translate>()) {
+		if(only_empthy && e.name)
+			continue;
 		file << e.id << ": ";
 		if(e.name) {
 			file << e.name;
@@ -107,17 +111,33 @@ static void savel(const char* url, array& source) {
 	}
 }
 
-static void setfile(array& source, const char* id, const char* locale, bool write_mode, bool required) {
+static void setfile(array& source, const char* id, const char* locale, bool write_mode, bool required, bool only_empthy) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.clear(); sb.addlocalefile(id);
 	if(write_mode)
-		savel(temp, source);
+		savel(temp, source, only_empthy);
 	else
 		readl(temp, source, required);
 }
 
+static void setlist(array& source, const char* id, const char* locale) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.clear(); sb.addlocaleurl();
+	char filter[260]; stringbuilder sf(filter);
+	sf.add("*%1.txt", id);
+	for(io::file::find find(temp); find; find.next()) {
+		auto pn = find.name();
+		if(pn[0] == '.')
+			continue;
+		if(!szpmatch(pn, filter))
+			continue;
+		char file[512];
+		readl(find.fullname(file), source, false);
+	}
+}
+
 static void deinitialize() {
-	setfile(source_name, "Names", main_locale, true, false);
+	setfile(source_name, "NamesNewbe", main_locale, true, false, true);
 }
 
 static void check(array& source, const char* locale, const char* url) {
@@ -125,12 +145,11 @@ static void check(array& source, const char* locale, const char* url) {
 	for(auto& e : source.records<translate>()) {
 		if(e.name && e.name[0])
 			continue;
-		log::error(0, " Define translate for `%1`", e.id);
+		log::error(0, "%1: Define translate", e.id);
 	}
 }
 
 void check_translation() {
-	atexit(deinitialize);
 	check(source_name, main_locale, "Names.txt");
 }
 
@@ -143,15 +162,17 @@ void initialize_translation(const char* locale) {
 	if(main_locale[0])
 		return;
 	copy_locale(locale);
-	setfile(source_name, "Names", main_locale, false, true);
-	setfile(source_text, "Descriptions", main_locale, false, false);
-	setfile(source_nameof, "NamesOf", main_locale, false, false);
-	setfile(source_namepl, "NamesPl", main_locale, false, false);
-	setfile(source_namesh, "NamesSh", main_locale, false, false);
+	setfile(source_name, "Names", main_locale, false, true, false);
+	setlist(source_name, "Names", main_locale);
+	setfile(source_text, "Descriptions", main_locale, false, false, false);
+	setfile(source_nameof, "NamesOf", main_locale, false, false, false);
+	setfile(source_namepl, "NamesPl", main_locale, false, false, false);
+	setfile(source_namesh, "NamesSh", main_locale, false, false, false);
+	atexit(deinitialize);
 }
 
 const char* getnm(const char* id) {
-	if(!id || id[0]==0)
+	if(!id || id[0] == 0)
 		return "";
 	if(isnum(id[0]))
 		return id;
@@ -159,7 +180,6 @@ const char* getnm(const char* id) {
 	auto p = (translate*)bsearch(&key, source_name.data, source_name.getcount(), source_name.getsize(), compare);
 	if(!p) {
 #ifdef _DEBUG
-		// Only in debug mode collect new strings
 		p = (translate*)source_name.add();
 		memset(p, 0, sizeof(*p));
 		p->id = szdup(id);
@@ -213,7 +233,7 @@ const char* getdescription(const char* id) {
 }
 
 const char* getnm(const char* id, int count) {
-	if(count==1)
+	if(count == 1)
 		return getnm(id);
 	return getnmof(id);
 }

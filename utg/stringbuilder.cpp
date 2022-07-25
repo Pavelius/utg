@@ -188,6 +188,10 @@ void stringbuilder::setlocale(const char* id) {
 	sb.add(id);
 }
 
+void stringbuilder::addlocaleurl() {
+	add("locale/%1", current_locale);
+}
+
 void stringbuilder::addlocalefile(const char* name, const char* ext) {
 	if(!ext)
 		ext = "txt";

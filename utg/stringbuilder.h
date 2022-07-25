@@ -28,6 +28,7 @@ public:
 	void				addicon(const char* id, int value);
 	void				addint(int value, int precision, const int radix);
 	void				addlocalefile(const char* name, const char* ext = 0);
+	void				addlocaleurl();
 	void				addn(const char* format, ...) { addx('\n', format, xva_start(format)); }
 	void				addnounf(const char* s);
 	void				addnz(const char* format, unsigned count);

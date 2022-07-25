@@ -1,0 +1,5 @@
+﻿AcidSplash: Кислотные брызги
+DancingLight: Танцующие огоньки
+FireBolt: Луч огня
+Light: Свет
+MageHand: Рука мага

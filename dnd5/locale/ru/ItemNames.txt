@@ -1,0 +1,3 @@
+﻿BrewersSupplies: Инструменты пивовара
+MasonsTools: Инструменты каменщика
+SmithsTools: Инструменты кузнеца

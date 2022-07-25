@@ -11,6 +11,10 @@ static void main_menu() {
 	answers::resid = "generate";
 	character e1;
 	e1.advance("CharacterGenerate", 0);
+	if(e1.race->parent)
+		e1.advance(e1.race->parent->id, 0);
+	if(e1.race)
+		e1.advance(e1.race->id, 0);
 }
 
 static void read_files(const char* url, const char* mask) {

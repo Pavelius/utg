@@ -57,10 +57,13 @@ void moveable::apply(const advancei& source) {
 }
 
 void moveable::advance(variant base, int level) {
+	auto push_header = answers::header;
+	answers::header = base.getname();
 	for(auto& e : bsdata<advancei>()) {
 		if(e.base == base && e.level == level)
 			apply(e);
 	}
+	answers::header = push_header;
 }
 
 void moveable::update() {

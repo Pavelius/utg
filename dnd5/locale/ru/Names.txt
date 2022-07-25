@@ -1,4 +1,5 @@
-﻿AdventuringGear: Инструменты
+﻿AcidSplash: Кислотные брызги
+AdventuringGear: Инструменты
 Antitoxin: Противоядие
 AppTitle: Мир подземелья
 ApplyAbility: Какая ваша способность будет равна [%1i]?
@@ -7,13 +8,14 @@ BagOfBooks: Сумка с книгами
 Bandages: Бинты
 BundleArrows: Стрелы
 Cancel: Отмена
+Cantrip: Заговор
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
 ChaoticEvil: Хаотично-злой
 ChaoticGood: Хаотично-добрый
 ChaoticNeutral: Хаотично-нейтральный
 CharacterAbility: Характеристики
-CharacterGeneration: Генерация персонажа
+CharacterGenerate: Генерация персонажа
 Charisma: Харизма
 Choose: Выбирай
 ChooseAlignment: Каков будет его характер?
@@ -31,13 +33,16 @@ Constitution: Телосложение
 Continue: Продолжить
 Dagger: Кинжал
 Damage: Урон
+DancingLight: Танцующие огоньки
 Dexterity: Ловкость
 DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
 Evil: Злой
+ExtraLanguage: Дополнительный язык
 Female: Женщина
 Fighter: Воин
+FireBolt: Луч огня
 Good: Добрый
 HP: Хиты
 Halfling: Полурослик 
@@ -52,7 +57,9 @@ LawfulEvil: Законопослушно-злой
 LawfulGood: Законопослушно-добрый
 LawfulNeutral: Законопослушно-нейтральный
 LeatherArmor: Кожанная броня
+Light: Свет
 Mace: Булава
+MageHand: Рука мага
 Male: Мужчина
 Mistra: Мистра
 MountainDwarf: Горный дварф
