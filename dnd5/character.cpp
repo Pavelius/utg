@@ -7,6 +7,8 @@ void character::clear() {
 void character::generate() {
 	auto push_resid = answers::resid;
 	auto push_header = answers::header;
+	auto push_column = answers::column_count;
+	answers::column_count = -1;
 	answers::resid = "generate";
 	answers::header = getnm("CharacterGenerate");
 	clear();
@@ -17,4 +19,5 @@ void character::generate() {
 		advance(race->id, 0);
 	answers::header = push_header;
 	answers::resid = push_resid;
+	answers::column_count = push_column;
 }

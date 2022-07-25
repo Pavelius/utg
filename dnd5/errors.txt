@@ -1,2 +1,3 @@
-﻿In file `Names.txt`:
-Orcish: Define translate
+﻿In file `rules/Menu.txt`:
+ Line 6: Can't find variant `Intellect`
+ Line 6: Can't find variant `Widsow`

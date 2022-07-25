@@ -42,6 +42,9 @@
     <ClCompile Include="character.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

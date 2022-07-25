@@ -3,24 +3,30 @@
 
 using namespace draw;
 
-static int getcolumns(const answers& an) {
-	auto divider = an.getcount() % 2;
-	auto count = an.getcount();
-	if(count <= 8 && count != 2)
-		return 1;
+static bool allow(const answers& an, size_t max_width) {
 	for(auto& e : an) {
-		auto len = zlen(e.text);
-		if(len > 20)
-			return 1;
+		if(zlen(e.text) > max_width)
+			return false;
 	}
-	return 2;
+	return true;
+}
+
+static int getcolumns(const answers& an) {
+	auto count = an.getcount();
+	if(!count)
+		return 1;
+	auto result = 1;
+	if(count > 3 && (count % 3) == 0 && allow(an, 13))
+		result = 3;
+	else if((count % 2) == 0)
+		result = 2;
+	return result;
 }
 
 void answers::paintanswers(int columns, const char* cancel_text) const {
-	auto column_width = draw::width;
+	auto column_width = width;
 	if(columns > 1)
 		column_width = column_width / columns - metrics::border;
-	auto next_column = (elements.getcount() + columns - 1) / columns;
 	auto index = 0;
 	auto y1 = caret.y, x1 = caret.x;
 	auto y2 = caret.y;
@@ -28,17 +34,18 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 	width = column_width;
 	for(auto& e : elements) {
 		paintcell(index, e.value, e.text, buttonparam);
-		if(caret.x > x1 + column_width - 64) {
-			caret.x = x1;
-			caret.y += height + metrics::padding + metrics::border * 2;
-		}
 		if(caret.y > y2)
 			y2 = caret.y;
-		if((index % next_column) == next_column - 1) {
-			caret.y = y1;
-			caret.x += column_width + metrics::border * 2;
-		}
 		index++;
+		if(columns > 1) {
+			if((index % columns) == 0) {
+				y1 = caret.y;
+				caret.x = x1;
+			} else {
+				caret.y = y1;
+				caret.x += width + metrics::border * 2;
+			}
+		}
 	}
 	caret.x = x1; caret.y = y2;
 	width = push_width_normal;

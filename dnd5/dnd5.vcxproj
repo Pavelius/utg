@@ -155,6 +155,7 @@
     <ClCompile Include="moveable.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

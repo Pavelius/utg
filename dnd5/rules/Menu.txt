@@ -2,7 +2,5 @@
 
 CharacterGenerate
 
-ChooseGender source(Character) mode(gender)
- elements Male Female
-ChooseRace source(Character) mode(race)
- elements Elf Dwarf
+Abilities source(Character) format(AbilityBox)
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma
