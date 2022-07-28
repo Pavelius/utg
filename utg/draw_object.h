@@ -42,6 +42,7 @@ struct draworder : drawable {
 	void			wait();
 };
 typedef void(*fnpaint)(const object* pointer);
+typedef void(*fnupdate)(object* pointer);
 struct object : drawable {
 	enum {
 		Visible, Hilite, DisableInput,
@@ -56,6 +57,7 @@ struct object : drawable {
 	unsigned		flags;
 	fnevent			input;
 	static object	def;
+	static fnupdate aftercreate;
 	static fnevent	afterpaintall;
 	static fnpaint	afterpaint;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);

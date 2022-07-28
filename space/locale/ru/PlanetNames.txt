@@ -1,0 +1,5 @@
+Earth: Земля 
+Jupiter: Юпитер
+Mars: Марс
+Sun: Солнце
+Venera: Венера

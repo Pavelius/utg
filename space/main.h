@@ -2,6 +2,7 @@
 #include "answers.h"
 #include "gender.h"
 #include "message.h"
+#include "posable.h"
 #include "tag.h"
 #include "timeable.h"
 #include "utg.h"
@@ -31,6 +32,11 @@ public:
 	int				get(state_s v) const { return states[v]; }
 	void			set(ability_s v, int i) { abilities[v] = i; }
 	void			set(state_s v, int i) { states[v] = i; }
+};
+struct systemi : public posable {
+};
+struct planeti : public posable {
+	systemi*		system;
 };
 struct missioni : abilitya {
 	void			apply(variant v);

@@ -1,2 +1,5 @@
-﻿In file `Names.txt`:
- Define translate for `ErrorNotFoundRule`
+﻿In file `rules/Galaxy.txt`:
+ Line 7: Not found requisit `system`
+ Line 8: Not found requisit `system`
+ Line 9: Not found requisit `system`
+ Line 10: Not found requisit `system`

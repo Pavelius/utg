@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "code_package.h"
 #include "draw.h"
 #include "log.h"
 #include "main.h"
@@ -7,29 +6,43 @@
 #include "script.h"
 #include "strategy.h"
 
+void initialize_interface();
+
 void status_info(void) {
 }
 
-void test_parser();
+static void generate_systems() {
+	for(auto& e : bsdata<systemi>())
+		e.setposition({400, 300});
+}
 
-void test_package() {
-	code::package e;
-	e.create("io.file");
-	e.write("packages/io/file.pkg");
+static void generate_planets() {
+	const int dx = 40;
+	const int dn = 6;
+	for(auto& e : bsdata<planeti>()) {
+		point pt;
+		auto index = rand() % (16 * 10);
+		pt.x = (index % 16) * dx + dn + rand() % (dx - dn * 2);
+		pt.y = (index / 10) * dx + dn + rand() % (dx - dn * 2);
+		e.setposition(pt);
+	}
 }
 
 static void test_game() {
-	test_parser();
-	test_package();
-	quest::run(1000);
+	generate_systems();
+	generate_planets();
+	answers an;
+	an.choose(0, getnm("Cancel"), 1);
 }
 
 static void initialize() {
-	quest::read("rules/Quest.txt");
+	bsreq::read("rules/Galaxy.txt");
 }
 
 int main(int argc, char* argv[]) {
+	srand(getcputime());
 	quest::initialize();
+	initialize_interface();
 	return draw::strategy(test_game, initialize);
 }
 

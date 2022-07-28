@@ -1,4 +1,5 @@
 ﻿AppTitle: Космические миссии
+Cancel: Отмена
 Continue: Продолжить
 ErrorNotFoundRule: Не найдено правило '%1'
 ErrorParse: Ошибка при разборе

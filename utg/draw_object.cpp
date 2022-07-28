@@ -11,6 +11,7 @@ BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
 fnevent				draw::object::afterpaintall;
+fnupdate			draw::object::aftercreate;
 fnpaint				draw::object::afterpaint;
 static rect			last_screen;
 static unsigned long timestamp;

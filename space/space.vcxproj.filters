@@ -25,6 +25,15 @@
     <ClCompile Include="code.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="posable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="nameable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -44,6 +53,12 @@
     <ClInclude Include="timeable.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="posable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="nameable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -60,6 +75,15 @@
     </Text>
     <Text Include="rules\Quest.txt">
       <Filter>Логика</Filter>
+    </Text>
+    <Text Include="rules\Galaxy.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\PlanetNames.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Данные</Filter>
     </Text>
   </ItemGroup>
 </Project>
