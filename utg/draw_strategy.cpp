@@ -10,6 +10,7 @@ using namespace draw;
 
 static point	camera_drag;
 static point	objects_paint;
+static int		window_width = 400, window_height = 400;
 unsigned char	metrics::opacity = 210;
 
 void set_dark_theme();
@@ -225,6 +226,28 @@ static void answers_beforepaint() {
 	width = 320;
 	caret.y += metrics::padding + metrics::border;
 	caret.x = getwidth() - width - (metrics::padding + metrics::border);
+	if(answers::header)
+		texth2w(answers::header);
+	if(answers::prompt || answers::prompa || answers::resid) {
+		window(false, answers::prompt, answers::resid, answers::prompa);
+		caret.y += metrics::padding;
+	}
+}
+
+static void paint_window() {
+	rectpush push;
+	width = window_width;
+	height = window_height;
+	swindow(false);
+}
+
+static void answers_beforepaint_center() {
+	paintobjects();
+	width = 320;
+	caret.y += metrics::padding + metrics::border;
+	caret.x = (getwidth() - (width + window_width + metrics::border * 4 + metrics::padding)) / 2 + metrics::border;
+	paint_window();
+	caret.x += window_width + metrics::border * 2 + metrics::padding;
 	if(answers::header)
 		texth2w(answers::header);
 	if(answers::prompt || answers::prompa || answers::resid) {

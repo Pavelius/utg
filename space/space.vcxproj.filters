@@ -41,6 +41,9 @@
     <ClInclude Include="script.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="timeable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

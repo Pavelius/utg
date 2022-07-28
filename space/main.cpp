@@ -5,8 +5,9 @@
 #include "main.h"
 #include "quest.h"
 #include "script.h"
+#include "strategy.h"
 
-static void start_mission() {
+void status_info(void) {
 }
 
 void test_parser();
@@ -23,16 +24,13 @@ static void test_game() {
 	quest::run(1000);
 }
 
-static void reading() {
+static void initialize() {
 	quest::read("rules/Quest.txt");
 }
 
 int main(int argc, char* argv[]) {
-	answers::prompt = utg::sb.begin();
-	answers::console = &utg::sb;
-	answers::resid = "EliteTroops";
 	quest::initialize();
-	return draw::start(test_game, true, reading);
+	return draw::strategy(test_game, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

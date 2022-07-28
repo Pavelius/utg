@@ -174,14 +174,14 @@ static void confirmroll() {
 		rolldices();
 		an.clear();
 		an.add(0, getnm("ApplyRoll"));
-		if(game.get(Reroll) > 0)
-			an.add(&bsdata<statei>::get(Reroll), getnm("UseReroll"));
+		if(game.get(Inside) > 0)
+			an.add(&bsdata<statei>::get(Inside), getnm("UseReroll"));
 		auto pv = an.choose(0);
 		if(!pv)
 			break;
 		if(bsdata<statei>::have(pv)) {
 			switch(bsdata<statei>::source.indexof(pv)) {
-			case Reroll: game.add(Reroll, -1); break;
+			case Inside: game.add(Inside, -1); break;
 			default: break;
 			}
 		}

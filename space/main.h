@@ -3,6 +3,7 @@
 #include "gender.h"
 #include "message.h"
 #include "tag.h"
+#include "timeable.h"
 #include "utg.h"
 
 #pragma once
@@ -15,7 +16,7 @@ enum ability_s : unsigned char {
 };
 enum state_s : unsigned char {
 	Crew, Discontent, Supply, Machinery,
-	Reroll, Problem, Success, Advantage,
+	Inside, Problem, Success, Advantage,
 };
 typedef flagable<8> taga;
 struct statei {
@@ -37,7 +38,9 @@ struct missioni : abilitya {
 	void			beforemove();
 	void			clear();
 };
-extern missioni		game;
+struct gamei : timeable, missioni {
+};
+extern gamei		game;
 extern ability_s	last_ability;
 void				actv(const char* format, const char* format_param);
 inline void			act(const char* format, ...) { actv(format, xva_start(format)); }

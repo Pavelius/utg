@@ -1,6 +1,6 @@
 #include "main.h"
 
-missioni	game;
+gamei game;
 
 void missioni::clear() {
 	memset(this, 0, sizeof(*this));
