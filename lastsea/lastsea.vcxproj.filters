@@ -127,6 +127,9 @@
     <Text Include="rules\Pirates.txt">
       <Filter>Данные</Filter>
     </Text>
+    <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Данные</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="art\example\indecies.png">

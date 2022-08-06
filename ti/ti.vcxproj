@@ -187,6 +187,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\NamesSh.txt" />
     <Text Include="locale\ru\Speech.txt" />
     <Text Include="rules\ActionCards.txt" />
