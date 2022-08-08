@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{7308f9ee-994d-468d-b03a-78ce79924108}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{5553ccbf-a1e3-4d8f-a9c7-b44a01c51fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{abdead2d-1997-4f57-ba6d-72ae50511a87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>data</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

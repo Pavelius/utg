@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dnd5", "dnd5\dnd5.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simwar", "simwar\simwar.vcxproj", "{C9397833-BD7D-4E5D-BA98-D79871438027}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vwc", "vwc\vwc.vcxproj", "{36E5898D-C75E-4157-88A8-0E5C8E49BC26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{C9397833-BD7D-4E5D-BA98-D79871438027}.Release|x64.Build.0 = Release|x64
 		{C9397833-BD7D-4E5D-BA98-D79871438027}.Release|x86.ActiveCfg = Release|Win32
 		{C9397833-BD7D-4E5D-BA98-D79871438027}.Release|x86.Build.0 = Release|Win32
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Debug|x64.ActiveCfg = Debug|x64
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Debug|x64.Build.0 = Debug|x64
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Debug|x86.ActiveCfg = Debug|Win32
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Debug|x86.Build.0 = Debug|Win32
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Release|x64.ActiveCfg = Release|x64
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Release|x64.Build.0 = Release|x64
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Release|x86.ActiveCfg = Release|Win32
+		{36E5898D-C75E-4157-88A8-0E5C8E49BC26}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,8 +8,8 @@ struct guii : datasource {
 	const char*			title;
 	const char*			value;
 	void*				object;
-	int					number;
-	bool				checked, disabled;
+	int					number, index;
+	bool				focused, hilighted, checked, disabled;
 	unsigned			key;
 	unsigned			flags;
 	void				clear();

@@ -1,0 +1,263 @@
+﻿AbandonedHouses: Заброшенные дома
+AbilityGrow: Навык %1 растет на %+2i
+AddBonus: С бонусом
+AddEntry: Добавлена заметка `%1`
+AddGoal: Новая цель `%1`
+AddGun: Пушка [%1i] уровня
+AddMisfortune: Два раза, выбирая меньший результат
+Aim: Меткость
+AllSeein: Провидец
+Animal: Животное
+AnotherPirateOfYouCrew: Еще один пират из вашей команды
+AppTitle: Утраченные моря
+ApplyRoll: Применить результат броска
+Assassin: Убийца
+AttackMove: Название боевого приема
+Back: Назад
+BeforeAbilityRoll: Перед проверкой навыка [%1] выполни
+BonusToAll: Бонус %+1i к броскам навыков до конца раунда
+BonusToExploration: Бонус %+1i к броскам исследования до конца раунда
+Brawl: Сила
+BuryTreasure: Зарыть сокровища
+Cabine: Каюта капитана
+Cancel: Отмена
+CaptainCabine: Каюта капитана
+CaptainMission: Миссия капитана
+CaptainRazor: Капитан Бритва
+CellInfo: %1 (ячейка карты %2i)
+ChartACourse: Проложить курс
+Choose: Выбирайте
+ChooseAnotherPirate: Пират из вашей команды
+ChooseClass: Кто вы?
+ChooseCounter: Выбирайте показатель
+ChooseLeft: (осталось [%1i])
+ChooseName: Как вас зовут?
+ChooseOptions: Выбирайте опции (осталось [%1i]):
+ChooseSkillToRaise: Какой навык хотите повысить?
+ChooseTarget: Выбирайте цель
+CloseHistory: Все понятно. Надеюсь, все закончится хорошо.
+CollectorItem: Предмет коллекционирования
+CondimentSoupDessert: Приправа, суп или дессерт
+ConfirmRaiseAbility: Потратить %-Supply и повысить навык %-1?
+Continue: Продолжить
+CounterA: Показатель А
+CounterB: Показатель Б
+CounterC: Показатель В
+CounterD: Показатель Г
+CounterX: Показатель
+Crew: Команда
+CurrentGoal: Текущая цель
+Danger: Опасность
+DecipherOldMap: Расшифровать старую карту
+DiscardToGain: Используйте чтобы получить 
+Discontent: Недовольство
+DistributeDamage: Распределите повреждения (осталось [%1i]):
+DoYouWantToMoveShip: Вы хотите потратить ресурсы, чтобы передвинуть корабль?
+Eat: Еда
+EatSupply: Съесть припасы
+EndAdventure: Завершить текущее приключение
+Epilogue: Эпилог
+Event1: Первое значимое событие
+Event2: Второе значимое событие
+Event3: Третье значимое событие
+Event4: Переломный момент
+Event5: Финальное событие
+Exploration: Исследование
+FamousMan: Известный человек
+FriendOrFamousPerson: Друг или известный человек
+From: Из
+GainBonusToRollResult: получить %+1i к результату
+GainTreasure: Добавлено [%1]
+GatherNews: Узнать местные новости
+General: Общие
+GenerateCrew: Создание команды
+GloablEvent: %1 развивает свою историю ...
+GloablThreat: А в это время произошло кое-что очень плохое ...
+Grifter: Пройдоха
+Gun1: Левый борт
+Gun2: Правый борт
+Gun3: Кормовые пушки
+Gun4: Передние пушки
+GunAdded: Добавлена пушка уровень [%1i]
+GunAddedUnloaded: Добавлена пушка уровень [%1i] (разряженная)
+GunReloaded: Пушка заряжена
+GunStatus: Уровень [%1i] %-2
+GunUnloaded: Пушка разряжена
+HeavyObject: Тяжелый предмет
+HereIsAHistory: [%герой] поведал%а свою историю.
+Hull: Корпус
+HungryCrew: Команда голодная!
+Hunting: Охота
+IncludeItems: С вещами
+Infamy: Репутация
+LargeAnimal: Большое животное
+LargeBeast: Большой и величественный зверь
+LastNameFamilyYouAreAssassinate: Фамилия семьи, которую вы должны убить
+Loaded: Заряжены
+LoseTreasure: Потеряно [%1]
+LostGame: Это конец. Вы проиграли.
+MadeUpInterrogationTactic: Несуществующая пытка
+MakeRoll: Выполнить бросок
+MapOfTheSeas: Показать карту океана
+Misfortune: Неудача
+Mission: Миссия
+NameOfWoman: Женское имя
+Navigation: Навигация
+NextAction: Следующее действие
+NextScene: Перейти к следующей сцене
+NextStar: Развитие на
+No: Нет
+NotDefinedLastValue: Не указано значение `%1`
+NothingToDo: Ничего не делать.
+Ocean: Океан
+Or: Или
+PagePirate: Пираты
+PageShip: Корабль
+PageShipLog: Журнал
+ParticularlySmellyAnimal: Особенно вонючее животное
+PaySupply: Припасы
+Pirate: Пират
+PirateOfYouCrew: Пират из вашей команды
+PlaceNavigationTile: Расследуете одну область (осталось еще [%1i])
+Port: Порт
+PortMarket: Рынок
+PortWorkTheShip: Поработать на корабле
+PreferredWeapon: Ваше любимое оружие
+PrepareGuns: Подготовить пушки
+ProfessionThatInvolvesTravel: Профессия, связанная с путешествиями
+Prologue: Пролог
+PromtHistory: [%герой] имеет парочку пробелов в истории. Надо бы заполнить. %ShowValues
+PromtStart: Да, что ни говори, но в это приключение собралась еще та веселая компашка! Среди прочих пиратов команды корабля были замечены: %(ShowCrew)Ну и вы - [%герой], собственной персоной.
+PsichycsShanty: Хижина ясновидицы
+RaiseAbilityAndLoseSuppy: [%1]+%2i, но [%Supply]-%2i.
+ReallyHighAndCoolNumber: Большое и красивое число
+ReloadGun: Перезарядить пушку
+RemoveAll: Потерять всю %1
+RemoveEntry: Удалена заметка `%1`
+Reroll: Перебросы
+Roll: Бросок
+RollDice: Бросаем d12
+SailAway: Уплыть отсюда ко всем чертям!
+SailOn: Полный вперед!
+Scout: Разведать
+Seeker: Искатель
+SetAbilityIfNot: Установить %1 до [-%2i], если уже [-%2i], то
+ShipLog: Журнал
+ShowDiscontent: (%1i недовольных)
+Skill: Любой навык
+Skills: Навыки
+SomeoneYouHoldDear: Некто, кого вы высоко цените
+SomethingFoul: Нечто гадкое
+SpearFish: Порыбачить копьем
+Stars: Созвездие
+Steal: Украсть
+StopBury: Хватит. Вы закопали уже достаточно.
+StopMoveShip: Отставить перемещение! Наш корабль сейчас и так развалиться.
+Story1: Вялая обезьяна
+Story12: Баночка волшебства
+Story2: Разноцветный попугай
+Story20: Крутая шляпа
+Story23: Черная метка
+Story24: Кривой нож
+Story3: Упитанный харек
+Story30: Накладные усы
+Story36: Дар бездны
+Story39: Фамильная сабля
+Story4: Яростная ласка
+Story40: Ужасная рука-крюк
+Story41: Боевая деревянная нога
+Story5: Вежливый медведь
+Story51: Злой знак
+Story54: Радужная жемчужина
+Story6: Искренняя крыса
+Story74: Черная повязка на глаз
+Supply: Припасы
+Survivor: Недобиток
+Swagger: Важность
+TalkToCrew: Пообщаться с командой
+TheTipsyTortoise: Выпившая черепаха
+Threat: Угроза
+To: чтобы
+TradeFriend: Поторговать с дружками
+TradeTreasure: Какое сокровище хотите поменять не глядя?
+Treasure: Сокровища
+Treasure14: Рог Нарвалла
+Treasure17: Умеющий считать петух
+Treasure19: Блюдо со странным запахом
+Treasure21: Трижды проклятое кольцо
+Treasure24: Трехлапый кот
+Treasure25: Чепчик крутой девицы
+Treasure26: Новый пиратский флаг
+Treasure27: Бочка дрянного рома
+Treasure28: Бочка отменного рома
+Treasure29: Бочка дегтя
+Treasure30: Мушкет большого мальчика
+Treasure31: Козленок
+Treasure32: Заначка с припасами
+Treasure33: Идеальный прицел
+Treasure34: Цветастая ткань
+Treasure35: Поддельная карта сокровищ
+Treasure36: Ящик с червями
+Treasure37: Улучшенная кобура
+Treasure38: Стыдливая статуя плодородия
+Treasure39: Вино похотливых монахов
+Treasure40: Вульгарные морские песни
+Treasure41: Отличная трубка
+Treasure42: Дорогая веревка
+Treasure43: Чудесные карты
+Treasure44: Накладная борода
+Treasure45: Фальшивый пистолет
+Treasure46: Модное чернильное приспособление
+Treasure47: Мастерский фонарь
+Treasure48: Модный шарф
+Treasure50: Блестящие драгоценности
+Treasure51: Золотые зубы
+Treasure54: Золотой секстант
+Treasure56: Удобный гарпун
+Treasure58: Самодельная бомба
+Treasure59: Оснащенная подзорная труба
+Treasure62: Довгополая куртка
+Treasure65: Королевский парик
+Treasure66: Надежный тесак мамочки 
+Treasure73: Пышная рубаха
+Treasure74: Острейшее мачете 
+Treasure75: Мешок пороха
+Treasure76: Мешок гнилых фруктов
+Treasure82: Чучело куницы
+Treasure84: Рыбалка 5000
+Treasure85: Идеальная цепь
+Treasure88: Непромокаемые ботинки
+TypeOfLocation: Тип ландшафта
+UglyFamily: Дурацкая фамилия
+UnknownCommand: Неизвестная команда %1i c бонусом %+2i
+Unloaded: Не заряжены
+UpgradeGun: Улучшить пушку
+Use: Использовать
+UseGun: Разрядить пушку уровня [%1i] чтобы получить бонус +%2i к броску.
+UseReroll: Использовать [переброс], чтобы перебросить кубик
+UseTreasureToGain: Использовать [%1], чтобы получить %2.
+UseTreasureToGainBonus: Использовать [%1], чтобы получить бонус %+2i.
+VillainousName: Мужская злодейская фамилия
+VisitManyTimes: [~Можно выбирать несколько раз.]
+WellRegardedProfession: Уважаемая профессия
+WhatAboutHistory: Так что там с иторией?
+WhatDoYouWantToVisit: Что вы хотите делать?
+WhatTreasureToBury: Какие сокровища хотите закопать?
+WhenAbilityDecreased: При понижении [%1] получите
+WhenAbilityIncreased: При повышении [%1] получите
+WinGame: Мои поздравления, вы только что выиграли игру!
+Yes: Да
+YouGainStars: Вы получили звезду и обнулили репутацию
+YouGetHistory: Вы получили развитие истории
+YouRoll: Вы выбросили %2i%+3i=%1i.
+YouRollAbility: Тестируем %1.
+YouRollMisfortune: Вы выбросили %4i и %2i. Отбросив больший кубик вышло %2i%+3i=%1i.
+YouVisitLocation: Перед вами %1.
+YourPirate: пират %-1
+ZeroSupplyIfNot: Обнулить припасы или
+Корпус: 
+Навигация: 
+Недовольство: 
+Припасы: 
+Репутация: 
+Сокровища: 
