@@ -231,6 +231,15 @@
     <ClCompile Include="choosestep.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="draw_list.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="datasource.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_gui.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -414,6 +423,15 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="choosestep.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_list.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_gui.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="datasource.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
