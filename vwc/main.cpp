@@ -18,7 +18,7 @@ void table_text_icon();
 static void test_list() {
 	static int origin, current;
 	showborder();
-	draw::list(origin, current, texth() + 2*2, table_text_icon);
+	draw::list(origin, current, texth() + 2, table_text_icon);
 }
 
 static void clear_fill() {
@@ -29,7 +29,7 @@ static void clear_fill() {
 }
 
 static const char* test_getname(const void* object, stringbuilder& sb) {
-	sb.add("Line %1i", gui.index);
+	sb.add(gui.value, gui.index);
 	return sb.begin();
 }
 
@@ -40,8 +40,8 @@ static void mainscene() {
 	width = 200;
 	height = 100;
 	gui.count = 10;
-	gui.value = "Test";
-	gui.number = 2;
+	gui.value = "Row number %1i";
+	gui.number = 3;
 	gui.pgetname = test_getname;
 	test_list();
 }

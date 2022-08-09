@@ -36,12 +36,12 @@ static void list_input(int& current, int& origin, int perpage, int perline) {
 		origin = current - perpage;
 	switch(hot.key) {
 	case MouseWheelUp:
-		if(gui.hilighted && current)
-			execute(cbsetint, current - 1, 0, &current);
+		if(gui.hilighted && origin)
+			execute(cbsetint, origin - 1, 0, &origin);
 		break;
 	case MouseWheelDown:
-		if(gui.hilighted && current < list_maximum - 1)
-			execute(cbsetint, current + 1, 0, &current);
+		if(gui.hilighted && origin + perpage < list_maximum - 1)
+			execute(cbsetint, origin + 1, 0, &origin);
 		break;
 	case KeyUp:
 		if(current)
@@ -84,6 +84,7 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 	list_perpage = height / perline;
 	if(!list_perpage)
 		return;
+	gui.hilighted = ishilite();
 	list_maximum = gui.count;
 	list_input(current, origin, list_perpage, perline);
 	auto push_height = height;
@@ -97,19 +98,16 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 			rectfhl(32);
 		if(ishilite() && hot.key == MouseLeft && hot.pressed)
 			execute(cbsetint, gui.index, 0, &current);
+		auto push_value = gui.value;
 		gui.object = gui.ptr(gui.index);
 		if(gui.pgetname) {
 			sb.clear();
 			gui.value = gui.pgetname(gui.object, sb);
 		}
-		if(true) {
-			rectpush push;
-			auto push_clip = clipping;
-			setoffset(2, 2);
-			setclip({caret.x, caret.y, caret.x + width, caret.y + height});
-			prow();
-			clipping = push_clip;
-		}
+		auto push_caret = caret;
+		prow();
+		caret = push_caret;
+		gui.value = push_value;
 		caret.y += height;
 	}
 	height = push_height;
@@ -121,8 +119,8 @@ static void table_text() {
 
 static void table_icon() {
 	auto push_caret = caret;
-	caret.y += 16 / 2;
-	caret.x += 16 / 2;
+	caret.y += height / 2;
+	caret.x += height / 2;
 	image(metrics::list, gui.number, 0);
 	caret = push_caret;
 }
