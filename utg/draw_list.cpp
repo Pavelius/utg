@@ -1,3 +1,4 @@
+#include "crt.h"
 #include "draw.h"
 #include "draw_gui.h"
 #include "draw_list.h"
@@ -6,6 +7,22 @@ using namespace draw;
 
 static int list_maximum, list_perpage;
 static int* list_current;
+
+sprite* metrics::list = (sprite*)loadb("art/tool/tree.pma");
+
+void draw::showactive() {
+	auto push_fore = fore;
+	fore = colors::active;
+	rectf();
+	fore = push_fore;
+}
+
+void draw::showborder() {
+	auto push_fore = fore;
+	fore = colors::border;
+	rectb();
+	fore = push_fore;
+}
 
 static void list_input(int& current, int& origin, int perpage, int perline) {
 	list_current = &current;
@@ -54,7 +71,11 @@ static void list_input(int& current, int& origin, int perpage, int perline) {
 		list_maximum = origin + perpage + 1;
 }
 
-static void hilighting() {
+static void rectfhl(unsigned char alpha) {
+	auto push_alpha = draw::alpha;
+	draw::alpha = alpha;
+	showactive();
+	draw::alpha = push_alpha;
 }
 
 void draw::list(int& origin, int& current, int perline, fnevent prow) {
@@ -67,36 +88,47 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 	list_input(current, origin, list_perpage, perline);
 	auto push_height = height;
 	height = perline;
+	char temp[1024]; stringbuilder sb(temp);
 	for(gui.index = origin; gui.index < list_maximum; gui.index++) {
 		gui.hilighted = ishilite();
-		auto push_fore = fore;
 		if(gui.index == current)
-			hilighting();
+			rectfhl(128);
+		else if(gui.hilighted)
+			rectfhl(32);
 		if(ishilite() && hot.key == MouseLeft && hot.pressed)
 			execute(cbsetint, gui.index, 0, &current);
 		gui.object = gui.ptr(gui.index);
+		if(gui.pgetname) {
+			sb.clear();
+			gui.value = gui.pgetname(gui.object, sb);
+		}
 		if(true) {
 			rectpush push;
+			auto push_clip = clipping;
 			setoffset(2, 2);
+			setclip({caret.x, caret.y, caret.x + width, caret.y + height});
 			prow();
+			clipping = push_clip;
 		}
-		fore = push_fore;
 		caret.y += height;
 	}
 	height = push_height;
 }
 
 static void table_text() {
-	textc(gui.title);
+	textc(gui.value);
 }
 
 static void table_icon() {
 	auto push_caret = caret;
-	caret.x += 16;
-	caret.x += 16;
-	image(metrics::icons, gui.number, 0);
+	caret.y += 16 / 2;
+	caret.x += 16 / 2;
+	image(metrics::list, gui.number, 0);
+	caret = push_caret;
 }
 
-static void table_text_icon() {
-	textc(gui.title);
+void table_text_icon() {
+	table_icon();
+	caret.x += 16;
+	table_text();
 }

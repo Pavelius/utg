@@ -1,4 +1,5 @@
 #include "datasource.h"
+#include "stringbuilder.h"
 
 #pragma once
 
@@ -12,6 +13,7 @@ struct guii : datasource {
 	bool				focused, hilighted, checked, disabled;
 	unsigned			key;
 	unsigned			flags;
+	fntext				pgetname;
 	void				clear();
 };
 extern guii				gui;
