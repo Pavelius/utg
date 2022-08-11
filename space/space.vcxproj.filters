@@ -73,9 +73,6 @@
     <Text Include="rules\Grammar.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="rules\Quest.txt">
-      <Filter>Логика</Filter>
-    </Text>
     <Text Include="rules\Galaxy.txt">
       <Filter>Данные</Filter>
     </Text>
@@ -83,6 +80,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Quest.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

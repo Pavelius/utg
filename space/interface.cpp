@@ -4,6 +4,11 @@
 
 using namespace draw;
 
+void status_info(void) {
+	auto dy = draw::texth() + metrics::padding * 2;
+	caret.y += dy;
+}
+
 static void aftercreate_object(object* po) {
 	if(bsdata<planeti>::have(po->data)) {
 		auto p = (planeti*)po->data;
@@ -15,6 +20,9 @@ static void aftercreate_object(object* po) {
 		po->size = 32;
 		po->fore = colors::yellow;
 	}
+}
+
+static void afterpaint_object(const object* po) {
 }
 
 void initialize_interface() {

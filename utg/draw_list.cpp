@@ -17,10 +17,24 @@ void draw::showactive() {
 	fore = push_fore;
 }
 
+void draw::partoffset(int x, int y) {
+	caret.x += x; caret.y += y;
+	width -= x; height -= y;
+}
+
 void draw::showborder() {
 	auto push_fore = fore;
 	fore = colors::border;
 	rectb();
+	fore = push_fore;
+}
+
+void draw::showbackground() {
+	rectpush push;
+	auto push_fore = fore;
+	fore = colors::window;
+	width -= 1; height -= 1;
+	rectf();
 	fore = push_fore;
 }
 
@@ -84,6 +98,8 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 	list_perpage = height / perline;
 	if(!list_perpage)
 		return;
+	auto push_clip = clipping;
+	setclipall();
 	gui.hilighted = ishilite();
 	list_maximum = gui.count;
 	list_input(current, origin, list_perpage, perline);
@@ -100,17 +116,18 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 			execute(cbsetint, gui.index, 0, &current);
 		auto push_value = gui.value;
 		gui.object = gui.ptr(gui.index);
+		auto push_caret = caret;
 		if(gui.pgetname) {
 			sb.clear();
 			gui.value = gui.pgetname(gui.object, sb);
 		}
-		auto push_caret = caret;
 		prow();
 		caret = push_caret;
 		gui.value = push_value;
 		caret.y += height;
 	}
 	height = push_height;
+	clipping = push_clip;
 }
 
 static void table_text() {

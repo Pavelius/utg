@@ -231,6 +231,7 @@ void					set(int x, int y);
 void					setcaption(const char* string);
 void					setclip(rect rc);
 inline void				setclip() { clipping.set(0, 0, getwidth(), getheight()); }
+inline void				setclipall() { setclip({caret.x, caret.y, caret.x + width, caret.y + height}); }
 void					setoffset(int x, int y);
 void					setpos(int x, int y);
 void					setpos(int x, int y, int width, int height);

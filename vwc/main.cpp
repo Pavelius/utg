@@ -18,12 +18,14 @@ void table_text_icon();
 static void test_list() {
 	static int origin, current;
 	showborder();
+	partoffset(1, 1);
+	showbackground();
 	draw::list(origin, current, texth() + 2, table_text_icon);
 }
 
 static void clear_fill() {
 	auto push_fore = fore;
-	fore = colors::window;
+	fore = colors::form;
 	rectf();
 	fore = push_fore;
 }
@@ -35,10 +37,10 @@ static const char* test_getname(const void* object, stringbuilder& sb) {
 
 static void mainscene() {
 	clear_fill();
-	caret.x = 100;
-	caret.y = 100;
+	caret.x = metrics::padding;
+	caret.y = metrics::padding + 1;
 	width = 200;
-	height = 100;
+	height = 300;
 	gui.count = 10;
 	gui.value = "Row number %1i";
 	gui.number = 3;

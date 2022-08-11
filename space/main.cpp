@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "draw.h"
 #include "log.h"
 #include "main.h"
 #include "quest.h"
@@ -7,9 +6,6 @@
 #include "strategy.h"
 
 void initialize_interface();
-
-void status_info(void) {
-}
 
 static void generate_systems() {
 	for(auto& e : bsdata<systemi>())
