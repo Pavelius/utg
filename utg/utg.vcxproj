@@ -229,6 +229,7 @@
     <ClInclude Include="bonus.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
+    <ClInclude Include="cdat.h" />
     <ClInclude Include="charname.h" />
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="choosestep.h" />

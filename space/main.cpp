@@ -7,24 +7,35 @@
 
 void initialize_interface();
 
+static point getrandom(int index) {
+	point pt;
+	const int dx = 200;
+	const int dy = 150;
+	pt.x = dx / 2 + (index % 3) * dx + rand() % dx;
+	pt.y = dy / 2 + (index / 3) * dy + rand() % dy;
+	return pt;
+}
+
+static void generate_planets() {
+	const int dx = 200;
+	const int dy = 150;
+	char seeds[] = {0, 1, 2, 3, 5, 6, 7, 8};
+	zshuffle(seeds, sizeof(seeds) / sizeof(seeds[0]));
+	auto seed_index = 0;
+	for(auto& e : bsdata<planeti>())
+		e.setposition(getrandom(seeds[seed_index++]));
+}
+
 static void generate_systems() {
 	for(auto& e : bsdata<systemi>())
 		e.setposition({400, 300});
 }
 
-static void generate_planets() {
-	const int dx = 40;
-	const int dn = 6;
-	for(auto& e : bsdata<planeti>()) {
-		point pt;
-		auto index = rand() % (16 * 10);
-		pt.x = (index % 16) * dx + dn + rand() % (dx - dn * 2);
-		pt.y = (index / 10) * dx + dn + rand() % (dx - dn * 2);
-		e.setposition(pt);
-	}
-}
-
 static void test_game() {
+	game.setdate(3000, 4, 15);
+	auto year = game.getyear();
+	auto month = game.getmonth();
+	auto day = game.getmonthday();
 	generate_systems();
 	generate_planets();
 	answers an;

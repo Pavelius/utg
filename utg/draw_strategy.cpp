@@ -176,7 +176,7 @@ static bool menurd(const char* title) {
 	auto push_caret = caret;
 	auto push_height = height;
 	textfs(title);
-	auto result = swindow(true);
+	auto result = swindow(false);
 	textf(title);
 	height = push_height;
 	width += metrics::border * 2;

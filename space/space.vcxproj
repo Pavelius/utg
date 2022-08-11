@@ -92,6 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <DisableSpecificWarnings>26812; 26437</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,8 +150,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="nameable.cpp" />
+    <ClCompile Include="planet_resource.cpp" />
     <ClCompile Include="posable.cpp" />
-    <ClCompile Include="properties.cpp" />
+    <ClCompile Include="metadata.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -169,10 +171,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
+    <Text Include="locale\ru\NamesOf.txt" />
     <Text Include="locale\ru\PlanetNames.txt" />
-    <Text Include="rules\basic.txt" />
+    <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
     <Text Include="rules\Grammar.txt" />
     <Text Include="rules\Quest.txt" />

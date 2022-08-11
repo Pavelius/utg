@@ -4,7 +4,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="properties.cpp">
+    <ClCompile Include="metadata.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="mission.cpp">
@@ -34,6 +34,9 @@
     <ClCompile Include="nameable.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="planet_resource.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -41,6 +44,9 @@
     </Filter>
     <Filter Include="Данные">
       <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +73,7 @@
     <Text Include="locale\ru\Names.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="rules\basic.txt">
+    <Text Include="rules\Basic.txt">
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Grammar.txt">
@@ -83,6 +89,12 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Quest.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\Descriptions.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesOf.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>
