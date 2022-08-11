@@ -100,6 +100,13 @@ bool draw::ishilite(int size, const void* object) {
 	return true;
 }
 
+bool draw::ishilite(const void* object) {
+	if(!ishilite())
+		return false;
+	hilite_object = object;
+	return true;
+}
+
 static bool window(bool hilite, const char* string, const char* resid, const char* prompt) {
 	if((!string || string[0] == 0) && !resid && (!prompt || prompt[0] == 0))
 		return false;

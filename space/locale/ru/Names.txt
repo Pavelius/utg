@@ -1,7 +1,10 @@
 ﻿AppTitle: Космические миссии
+Assault: Схватка
 Cancel: Отмена
 Continue: Продолжить
+Comunication: Связь
 ErrorNotFoundRule: Не найдено правило '%1'
 ErrorParse: Ошибка при разборе
+Exploration: Исследование
 Marines: Морпехи
 Squad: Отряд

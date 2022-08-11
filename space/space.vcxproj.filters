@@ -97,5 +97,8 @@
     <Text Include="locale\ru\NamesOf.txt">
       <Filter>Данные</Filter>
     </Text>
+    <Text Include="locale\ru\NamesSh.txt">
+      <Filter>Данные</Filter>
+    </Text>
   </ItemGroup>
 </Project>

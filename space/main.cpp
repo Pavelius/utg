@@ -7,6 +7,9 @@
 
 void initialize_interface();
 
+static landscapei* random_landscape() {
+}
+
 static point getrandom(int index) {
 	point pt;
 	const int dx = 200;
