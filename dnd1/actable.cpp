@@ -4,7 +4,7 @@
 void actable::actv(stringbuilder& sbo, const char* format, const char* format_param) const {
 	if(!answers::interactive)
 		return;
-	stringact sb(sbo, getnm(id), gender);
+	stringact sb(sbo, name, gender);
 	sb.addv(format, format_param);
 	sbo = sb;
 }

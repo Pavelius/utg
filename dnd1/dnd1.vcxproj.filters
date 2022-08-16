@@ -56,6 +56,9 @@
     <ClCompile Include="scene.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="class.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">
@@ -74,6 +77,9 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\NameCharacters.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

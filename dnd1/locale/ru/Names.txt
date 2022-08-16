@@ -1,5 +1,6 @@
 ﻿Animal: Животное
 Assassin: Убийца
+AttackMelee: Атаковать врага врукопашную
 ChooseTarget: Укажите цель
 Dwarf: Гном
 HitMelee: %герой нанес%ла удар %оружием.

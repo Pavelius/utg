@@ -18,7 +18,7 @@ enum feat_s : unsigned char {
 };
 enum class_s : unsigned char {
 	Monster,
-	Cleric, Dwarf, Elf, Fighter, Halfling, Wizard,
+	Cleric, Dwarf, Elf, Fighter, Halfling, Theif, Wizard,
 };
 enum duration_s : unsigned char {
 	Instant,
@@ -44,10 +44,12 @@ struct abilityi : nameable {
 struct featable : flagable<4> {};
 struct rangei : nameable {
 };
-struct actable : nameable {
+struct actable {
+	const char*		name;
 	gender_s		gender;
 	void			act(const char* format, ...) const { actv(*answers::console, format, xva_start(format)); }
 	void			actv(stringbuilder& sb, const char* format, const char* format_param) const;
+	const char*		getname() const { return name; }
 };
 struct statable {
 	char			abilities[SaveSpells + 1];
@@ -110,6 +112,7 @@ struct creature : actable, spellable, statable {
 	bool			isactive(spell_s v) const;
 	void			levelup();
 	void			raiselevel();
+	static const char* randomname(class_s type, gender_s gender);
 	void			set(feat_s v) { feats.set(v); }
 	void			update();
 };

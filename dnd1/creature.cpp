@@ -1,3 +1,4 @@
+#include "charname.h"
 #include "main.h"
 
 creature* creature::last;
@@ -101,4 +102,12 @@ void creature::create(class_s type, gender_s gender) {
 	clear();
 	this->type = type;
 	this->gender = gender;
+}
+
+const char* creature::randomname(class_s type, gender_s gender) {
+	variant collection[] = {
+		bsdata<classi>::elements + type,
+		bsdata<genderi>::elements + gender
+	};
+	return charname::getname(charname::random(collection));
 }
