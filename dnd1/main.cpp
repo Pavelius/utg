@@ -1,13 +1,23 @@
+#include "bsreq.h"
 #include "draw_object.h"
 #include "main.h"
 
+static creature* create_player(class_s type, gender_s gender, feat_s feat) {
+	auto p = bsdata<creature>::add();
+	p->create(type, gender);
+	p->set(feat);
+	return p;
+}
+
 static void starting() {
-	answers an;
-	an.add(0, getnm("Continue"));
-	an.choose("Test");
+	auto p1 = create_player(Fighter, Male, Player);
+	auto p2 = create_player(Fighter, Male, Enemy);
+	game.creatures.select();
+	game.combatmode();
 }
 
 static void initializing() {
+	bsreq::read("rules/Monsters.txt");
 }
 
 int main(int argc, char* argv[]) {

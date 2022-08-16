@@ -1,7 +1,15 @@
 #include "main.h"
 
+gamei game;
+static char sb_console_text[4096];
+static stringbuilder sb_console(sb_console_text);
+
 static bool rollsurprisedice(int value = 2) {
 	return d6() >= value;
+}
+
+void gamei::initialize() {
+	answers::console = &sb_console;
 }
 
 void gamei::rollsurprise() {
@@ -21,4 +29,13 @@ void gamei::rollreaction(int bonus) {
 		reaction = Unfriendly;
 	else
 		reaction = Friendly;
+}
+
+void gamei::mainmenu() {
+}
+
+void gamei::combatmode() {
+	game.rollinitiative();
+	for(auto p : game.creatures)
+		p->chooseoptions();
 }

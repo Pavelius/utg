@@ -9,10 +9,15 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
 BSDATAC(classi, 16)
+BSDATAC(creature, 256)
 BSDATAC(monsteri, 128)
 BSDATAC(durationi, 32)
+BSDATAC(ongoing, 128)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(feati) = {
 	BSREQ(id),
 	{}};
 BSMETA(dice) = {
@@ -24,13 +29,17 @@ BSMETA(durationi) = {
 BSMETA(monsteri) = {
 	BSREQ(id),
 	BSDST(abilities, abilityi),
+	BSFLG(feats, feati),
+	{}};
+BSMETA(rangei) = {
+	BSREQ(id),
 	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
-	BSREQ(damage), BSREQ(damage_per_level),
-	BSREQ(level_progress),
+	BSREQ(level),
+	BSREQ(effect),
 	BSENM(duration, durationi),
-	BSREQ(range),
+	BSENM(range, rangei),
 	{}};
 
 #define VAR(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN

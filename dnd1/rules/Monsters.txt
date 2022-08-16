@@ -1,0 +1,8 @@
+#Monster
+
+Skeleton
+ abilities Level(1) AC(2)
+ feats Undead
+Orc
+ abilities Level(1) AC(3)
+ feats SunSensitive
