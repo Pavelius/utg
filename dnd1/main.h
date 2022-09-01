@@ -25,7 +25,7 @@ enum duration_s : unsigned char {
 	Round,
 	Turn, Turn2, Turn3, Turn2d6, Turn4d4,
 	Hour, Hour2,
-	Permanent,
+	Concentration, Permanent,
 };
 enum range_s : unsigned char {
 	Caster, CasterOrCreatureTouched,
@@ -38,11 +38,33 @@ enum spell_s : unsigned char {
 	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism
 };
+enum wear_s : unsigned char {
+	Backpack, BackpackLast = Backpack + 15,
+	MeleeWeapon, MeleeWeaponOffhand, RangedWeapon, ThrownWeapon, Ammunition,
+	Head, Torso, Legs, Gloves, FingerRight, FingerLeft, Elbows,
+};
+enum itemf_s : unsigned char {
+	TwoHanded, Melee, Slow, Blunt, Countable,
+};
+enum damage_s : unsigned char {
+	Blundgeon, Slashing, Pierce,
+	Fire, Cold, Electric, Magic,
+	Cure,
+};
 inline int d6() { return 1 + rand() % 6; }
 struct abilityi : nameable {
 };
 struct featable : flagable<4> {};
 struct rangei : nameable {
+};
+struct bonusi {
+	variant			owner;
+	spell_s			effect;
+	unsigned		rounds;
+	void			clear() { memset(this, 0, sizeof(*this)); }
+};
+struct poweri {
+	const char*		id;
 };
 struct actable {
 	const char*		name;
@@ -60,6 +82,7 @@ struct classi : nameable {
 	int				tohit, hd;
 };
 struct durationi : nameable {
+	short			from, to;
 };
 struct feati : nameable {
 };
@@ -76,21 +99,56 @@ struct itemi : nameable {
 	struct armori {
 		char		ac;
 	};
+	int				cost, weight;
 	armori			armor;
 	weaponi			weapon;
+	wear_s			wear;
+	flagable<4>		flags;
+	bool			is(itemf_s v) const { return flags.is(v); }
+};
+struct itemfi : nameable {
 };
 struct spelli : nameable {
 	char			level[3];
 	duration_s		duration;
 	range_s			range;
 	dice			effect;
+	damage_s		damage;
 };
 struct spellable {
 	unsigned char	spells[Ventriloquism + 1];
 };
 struct item {
 	unsigned char	type, subtype;
-	unsigned char	cursed : 1;
+	union {
+		unsigned short count;
+		struct {
+			unsigned char identified : 1;
+			unsigned char charge : 5;
+		};
+	};
+	explicit operator bool() const { return type != 0; }
+	void			add(item& v);
+	bool			canequip(wear_s v) const;
+	void			clear() { memset(this, 0, sizeof(*this)); }
+	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
+	int				getcount() const;
+	bool			iscountable() const { return geti().is(Countable); }
+	void			setcount(int v);
+};
+struct enchantmenti {
+	char			level;
+	char			magic;
+	const char*		id;
+	variant			special;
+};
+struct weari {
+	const char*		id;
+};
+struct wearable {
+	item			wears[Elbows + 1];
+	void			additem(item& v);
+	void			equip(item& v);
 };
 struct creature : actable, spellable, statable {
 	class_s			type;
@@ -99,15 +157,19 @@ struct creature : actable, spellable, statable {
 	char			initiative;
 	unsigned		experience;
 	static creature* last;
+	bool			apply(spell_s, bool run);
 	bool			attack(ability_s attack, int ac, int bonus) const;
 	void			chooseoptions();
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			create(class_s type, gender_s gender);
+	void			enchant(spell_s, unsigned rounds);
 	void			damage(int value);
+	void			dispell(spell_s effect);
 	int				getbonus(ability_s v) const;
 	feat_s			getenemyfeat() const;
 	int				gethit() const;
-	bool			is(spell_s v) const { return spells[v]!=0; }
+	void			heal(int value) {}
+	bool			is(spell_s v) const { return spells[v] != 0; }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isactive(spell_s v) const;
 	void			levelup();
@@ -123,13 +185,17 @@ struct creaturea : adat<creature*, 32> {
 struct monsteri : nameable, statable {
 	featable		feats;
 };
+struct timeable {
+	unsigned		start_year;
+	unsigned		rounds;
+};
 struct scene {
 	creaturea		creatures;
 	static creaturea targets;
 	creature*		choosetarget() const;
 	void			rollinitiative();
 };
-struct gamei : scene {
+struct gamei : timeable, scene {
 	reaction_s		reaction;
 	bool			party_surprised, monster_surprised;
 	static void		combatmode();

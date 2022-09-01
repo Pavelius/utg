@@ -1,0 +1,7 @@
+#Item
+
+BattleAxe cost(7) weight(50)
+ flags Melee Slow TwoHanded
+Club cost(3) weight(50)
+ flags Melee Blunt
+Dagger cost(3) weight(10)

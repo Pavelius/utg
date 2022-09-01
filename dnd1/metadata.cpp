@@ -8,8 +8,10 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
+BSDATAC(bonusi, 256)
 BSDATAC(classi, 16)
 BSDATAC(creature, 256)
+BSDATAC(itemi, 256)
 BSDATAC(monsteri, 128)
 BSDATAC(durationi, 32)
 BSDATAC(ongoing, 128)
@@ -27,6 +29,14 @@ BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
 BSMETA(durationi) = {
+	BSREQ(id),
+	{}};
+BSMETA(itemi) = {
+	BSREQ(id),
+	BSREQ(cost), BSREQ(weight),
+	BSFLG(flags, itemfi),
+	{}};
+BSMETA(itemfi) = {
 	BSREQ(id),
 	{}};
 BSMETA(monsteri) = {
@@ -49,6 +59,7 @@ BSMETA(spelli) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Class", VAR(classi, 1)},
+	{"Item", VAR(itemi, 1)},
 	{"Gender", VAR(genderi, 1)},
 	{"Monster", VAR(monsteri, 1)},
 };

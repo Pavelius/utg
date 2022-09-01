@@ -1,0 +1,33 @@
+#include "main.h"
+
+void wearable::additem(item& v) {
+	// Try stack existing item
+	for(auto i = Backpack; i <= BackpackLast; i = (wear_s)(i+1)) {
+		if(!v)
+			break;
+		if(wears[i])
+			wears[i].add(v);
+	}
+	if(v) {
+		// Try add new item
+		for(auto i = Backpack; i <= BackpackLast; i = (wear_s)(i + 1)) {
+			if(!wears[i]) {
+				wears[i] = v;
+				v.clear();
+				break;
+			}
+		}
+	}
+}
+
+void wearable::equip(item& v) {
+	for(auto i = Head; i <= Elbows; i = (wear_s)(i + 1)) {
+		if(wears[i])
+			continue;
+		if(!v.canequip(i))
+			continue;
+		wears[i] = v;
+		v.clear();
+		break;
+	}
+}

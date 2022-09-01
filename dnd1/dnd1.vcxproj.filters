@@ -59,6 +59,21 @@
     <ClCompile Include="class.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="wearable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="wear.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="itemf.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="duration.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">
@@ -81,6 +96,9 @@
     </Text>
     <Text Include="locale\ru\NameCharacters.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Items.txt">
+      <Filter>data</Filter>
     </Text>
   </ItemGroup>
 </Project>

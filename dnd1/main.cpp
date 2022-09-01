@@ -19,6 +19,7 @@ static void starting() {
 }
 
 static void initializing() {
+	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
 	charname::read("locale/ru/NameCharacters.txt");
 }

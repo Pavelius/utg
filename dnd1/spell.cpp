@@ -20,3 +20,26 @@ BSDATA(spelli) = {
 	{"Ventriloquism", {0, 1}, Turn2, Range60},
 };
 assert_enum(spelli, Ventriloquism)
+
+static int getduration(duration_s d, int level) {
+	auto r1 = bsdata<durationi>::elements[d].from;
+	auto r2 = bsdata<durationi>::elements[d].to;
+	if(r2 == 0)
+		return r1;
+	return xrand(r1, r2);
+}
+
+bool creature::apply(spell_s id, bool run) {
+	auto level = get(Level);
+	auto& ei = bsdata<spelli>::elements[id];
+	switch(id) {
+	case CureLightWound:
+		heal(ei.effect.roll());
+		break;
+	default:
+		if(ei.duration!=Instant && ei.duration!=Permanent)
+			enchant(id, getduration(ei.duration, level));
+		break;
+	}
+	return true;
+}

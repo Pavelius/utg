@@ -83,6 +83,8 @@ feat_s creature::getenemyfeat() const {
 }
 
 void creature::chooseoptions() {
+	auto push_last = last;
+	last = this;
 	answers an;
 	for(auto& e : bsdata<chooseoption>()) {
 		if(e.test && !e.test())
@@ -96,6 +98,7 @@ void creature::chooseoptions() {
 		if(p->test())
 			p->proc();
 	}
+	last = push_last;
 }
 
 void creature::create(class_s type, gender_s gender) {
@@ -110,4 +113,30 @@ const char* creature::randomname(class_s type, gender_s gender) {
 		bsdata<genderi>::elements + gender
 	};
 	return charname::getname(charname::random(collection));
+}
+
+static bonusi* find_bonus(variant owner, spell_s effect) {
+	for(auto& e : bsdata<bonusi>()) {
+		if(e.owner == owner && e.effect == effect)
+			return &e;
+	}
+	return 0;
+}
+
+void creature::enchant(spell_s effect, unsigned rounds) {
+	rounds += game.rounds;
+	auto p = find_bonus(this, effect);
+	if(!p) {
+		p = bsdata<bonusi>::add();
+		p->owner = this;
+		p->effect = effect;
+		p->rounds = game.rounds + rounds;
+	} else if(p->rounds < rounds)
+		p->rounds = rounds;
+}
+
+void creature::dispell(spell_s effect) {
+	auto p = find_bonus(this, effect);
+	if(p)
+		p->clear();
 }

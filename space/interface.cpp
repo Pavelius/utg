@@ -25,6 +25,10 @@ static void separatorh() {
 	fore = push_fore;
 }
 
+static void gradient() {
+
+}
+
 static void panel(const char* format) {
 	texta(format, AlignCenterCenter);
 	caret.x += width;
