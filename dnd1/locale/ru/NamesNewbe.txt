@@ -1,3 +1,2 @@
 ﻿AppTitle: 
-LoseGame: 
-Хоук: 
+Уолтон: 

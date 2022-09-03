@@ -1,0 +1,57 @@
+#include "main.h"
+
+struct treasurei {
+	struct coini {
+		char	percent;
+		dice	range;
+		short	multiplier;
+	};
+	char		symbol;
+	coini		cp, sp, ep, gp, pp, gems, art, magic;
+};
+
+BSDATA(treasurei) = {
+	{'A', {25, {1, 6}, 1000}, {30, {1, 6}, 1000}, {20, {1, 4}, 1000}, {35, {2, 6}, 1000}, {25, {1, 2}, 1000}, {50, {6, 6}}, {50, {6, 6}}, {30, {3}}},
+	{'B', {50, {1, 8}, 1000}, {25, {1, 6}, 1000}, {25, {1, 4}, 1000}, {25, {1, 3}, 1000}, {}, {25, {1, 6}}, {25, {1, 6}}, {10, {1}}},
+	{'C', {20, {1, 12}, 1000}, {30, {1, 4}, 1000}, {10, {1, 4}, 1000}, {}, {}, {25, {1, 4}}, {25, {1, 4}}, {10, {2}}},
+	{'D', {10, {1, 8}, 1000}, {15, {1, 12}, 1000}, {}, {60, {1, 6}, 1000}, {}, {30, {1, 8}}, {30, {1, 8}}, {15, {2}}},
+	{'E', {5, {1, 10}, 1000}, {30, {1, 12}, 1000}, {25, {1, 4}, 1000}, {25, {1, 8}, 1000}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
+	{'F', {}, {10, {1, 12}, 1000}, {25, {1, 4}, 1000}, {25, {1, 8}, 1000}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
+};
+BSDATAF(treasurei)
+
+const treasurei* find_treasure(char symbol) {
+	for(auto& e : bsdata<treasurei>()) {
+		if(e.symbol == symbol)
+			return &e;
+	}
+	return 0;
+}
+
+static void add_coins(treasure& result, const char* id, const treasurei::coini& e) {
+	auto pi = bsdata<itemi>::find(id);
+	if(!pi)
+		return;
+	if(e.percent < 100) {
+		if(d100() >= e.percent)
+			return;
+	}
+	auto count = e.range.roll();
+	if(e.multiplier)
+		count = count * e.multiplier;
+	item it = {};
+	it.type = pi - bsdata<itemi>::elements;
+	it.setcount(count);
+	result.add(it);
+}
+
+void treasure::generate(char symbol) {
+	auto ps = find_treasure(symbol);
+	if(!ps)
+		return;
+	add_coins(*this, "CP", ps->cp);
+	add_coins(*this, "SP", ps->sp);
+	add_coins(*this, "EP", ps->ep);
+	add_coins(*this, "GP", ps->gp);
+	add_coins(*this, "PP", ps->pp);
+}

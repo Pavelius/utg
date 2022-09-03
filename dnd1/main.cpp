@@ -12,6 +12,8 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 }
 
 static void starting() {
+	treasure loot;
+	loot.generate('A');
 	auto p1 = create_player(Fighter, Male, Player);
 	auto p2 = create_player(Fighter, Male, Enemy);
 	game.creatures.select();

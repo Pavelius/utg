@@ -15,9 +15,6 @@
     <ClInclude Include="main.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="chooseoption.h">
-      <Filter>logic</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,7 +77,7 @@
     <ClCompile Include="damage.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="chooseoption.cpp">
+    <ClCompile Include="treasure.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

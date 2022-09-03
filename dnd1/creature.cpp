@@ -155,11 +155,14 @@ void creature::setenemy(const creature* v) {
 void creature::damage(int value) {
 	if(value <= 0)
 		return;
-	act("%герой получил%а [%1i] урона.", value);
 	auto hp = get(HP) - value;
 	if(hp < -100)
 		hp = -100;
 	abilities[HP] = hp;
+	if(isready())
+		act("%герой получил%а [%1i] урона.", value);
+	else
+		act("%герой получил%а [%1i] урона и упал%а на землю.", value);
 }
 
 bool creature::isready() const {

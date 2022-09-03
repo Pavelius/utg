@@ -54,6 +54,7 @@ enum damage_s : unsigned char {
 	Fire, Cold, Electric, Poison, Magic,
 	Cure,
 };
+inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
 typedef flagable<8> spellf;
 struct abilityi : nameable {
@@ -137,6 +138,9 @@ struct item {
 	int				getcount() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
+};
+struct treasure : adat<item> {
+	void			generate(char symbol);
 };
 struct enchantmenti {
 	char			level;

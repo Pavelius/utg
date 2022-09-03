@@ -1,5 +1,16 @@
 #Item
 
+CP cost(1)
+ flags Countable
+SP cost(1)
+ flags Countable
+EP cost(1)
+ flags Countable
+GP cost(1)
+ flags Countable
+PP cost(1)
+ flags Countable
+
 BattleAxe cost(7) weight(50)
  flags Melee Slow TwoHanded
 Club cost(3) weight(50)
