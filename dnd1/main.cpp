@@ -15,7 +15,7 @@ static void starting() {
 	auto p1 = create_player(Fighter, Male, Player);
 	auto p2 = create_player(Fighter, Male, Enemy);
 	game.creatures.select();
-	game.combatmode();
+	combat_mode();
 }
 
 static void initializing() {

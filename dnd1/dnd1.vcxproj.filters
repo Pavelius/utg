@@ -15,6 +15,9 @@
     <ClInclude Include="main.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="chooseoption.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +75,12 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="duration.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="damage.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="chooseoption.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

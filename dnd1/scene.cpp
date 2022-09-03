@@ -1,7 +1,5 @@
 #include "main.h"
 
-creaturea scene::targets;
-
 creature* scene::choosetarget() const {
 	answers an;
 	for(auto p : targets)

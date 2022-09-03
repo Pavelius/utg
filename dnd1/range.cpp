@@ -3,6 +3,7 @@
 BSDATA(rangei) = {
 	{"Caster"},
 	{"CasterOrCreatureTouched"},
+	{"EnemyCreatureTouched"},
 	{"Range5"},
 	{"Range10"},
 	{"Range30"},

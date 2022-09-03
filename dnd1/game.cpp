@@ -33,9 +33,3 @@ void gamei::rollreaction(int bonus) {
 
 void gamei::mainmenu() {
 }
-
-void gamei::combatmode() {
-	game.rollinitiative();
-	for(auto p : game.creatures)
-		p->chooseoptions();
-}

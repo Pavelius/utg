@@ -17,6 +17,7 @@ BSDATA(abilityi) = {
 	{"Level"},
 	{"HP"},
 	{"HPMax"},
+	{"Speed"},
 	{"SaveDeath"},
 	{"SaveWands"},
 	{"SaveParalize"},

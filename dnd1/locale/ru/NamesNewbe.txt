@@ -1,1 +1,3 @@
 ﻿AppTitle: 
+LoseGame: 
+Хоук: 

@@ -147,14 +147,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="chooseoption.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
+    <ClCompile Include="chooseoption.cpp" />
     <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creaturea.cpp" />
+    <ClCompile Include="damage.cpp" />
     <ClCompile Include="duration.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itemf.cpp" />

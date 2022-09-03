@@ -1,8 +1,6 @@
 #include "charname.h"
 #include "main.h"
 
-creature* creature::last;
-
 static int ability_bonus[] = {
 	-4, -4, -4, -3, -2, -2, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 2, 2, 3
@@ -29,6 +27,11 @@ static unsigned dwarf_experience[] = {
 	0, 0, 2200, 4400, 8800, 17000, 35000, 70000, 140000, 270000,
 	400000, 530000, 660000,
 };
+
+void creature::clear() {
+	memset(this, 0, sizeof(*this));
+	enemy_index = 0xFF;
+}
 
 int	creature::gethit() const {
 	auto n = imin(14, get(Level));
@@ -60,7 +63,7 @@ bool creature::attack(ability_s attack, int ac, int bonus) const {
 	auto r = d + gethit() + bonus;
 	switch(attack) {
 	case MeleeToHit: r += getbonus(Strenght) + get(MeleeToHit); break;
-	case RangedToHit: r += getbonus(Strenght) + get(RangedToHit); break;
+	case RangedToHit: r += getbonus(Dexterity) + get(RangedToHit); break;
 	default: break;
 	}
 	if(d == 1)
@@ -68,6 +71,16 @@ bool creature::attack(ability_s attack, int ac, int bonus) const {
 	if(d == 20)
 		return true;
 	return r >= ac;
+}
+
+void creature::attack() {
+	auto enemy = getenemy();
+	auto ac = enemy->get(AC);
+	if(attack(MeleeToHit, ac, 0)) {
+		actn(getnm("HitMelee"));
+		enemy->damage(xrand(1, 6));
+	} else
+		actn(getnm("MissMelee"));
 }
 
 bool creature::isactive(spell_s v) const {
@@ -82,29 +95,20 @@ feat_s creature::getenemyfeat() const {
 	return Undead;
 }
 
-void creature::chooseoptions() {
-	auto push_last = last;
-	last = this;
-	answers an;
-	for(auto& e : bsdata<chooseoption>()) {
-		if(e.test && !e.test())
-			continue;
-		an.add(&e, getnm(e.id));
-	}
+void creature::choose(const slice<chooseoption>& options) {
+	auto push_last = player;
+	player = this;
 	char temp[260]; stringbuilder sb(temp);
-	actv(sb, getnm("WhatToDo"), 0);
-	auto p = (chooseoption*)an.choose(temp);
-	if(p) {
-		if(p->test())
-			p->proc();
-	}
-	last = push_last;
+	actv(sb, getnm("WhatToDo"), 0, 0);
+	chooseoption::choose(options, temp);
+	player = push_last;
 }
 
 void creature::create(class_s type, gender_s gender) {
 	clear();
 	this->type = type;
 	this->gender = gender;
+	abilities[HP] = 10;
 }
 
 const char* creature::randomname(class_s type, gender_s gender) {
@@ -139,4 +143,25 @@ void creature::dispell(spell_s effect) {
 	auto p = find_bonus(this, effect);
 	if(p)
 		p->clear();
+}
+
+void creature::setenemy(const creature* v) {
+	if(!v)
+		enemy_index = 0xFF;
+	else
+		enemy_index = v - bsdata<creature>::elements;
+}
+
+void creature::damage(int value) {
+	if(value <= 0)
+		return;
+	act("%герой получил%а [%1i] урона.", value);
+	auto hp = get(HP) - value;
+	if(hp < -100)
+		hp = -100;
+	abilities[HP] = hp;
+}
+
+bool creature::isready() const {
+	return get(HP) > 0;
 }
