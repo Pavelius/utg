@@ -1,3 +1,4 @@
+#include "avatarable.h"
 #include "dice.h"
 #include "chooseoption.h"
 #include "gender.h"
@@ -172,7 +173,7 @@ struct wearable {
 	void			additem(item& v);
 	void			equip(item& v);
 };
-struct creature : actable, spellable, statable, wearable {
+struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;
 	statable		basic;
 	featable		feats;

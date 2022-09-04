@@ -15,6 +15,7 @@ static void starting() {
 	auto p1 = create_player(Fighter, Male, Player);
 	p1->generate();
 	auto p2 = create_player(Fighter, Male, Enemy);
+	p2->generate();
 	game.creatures.select();
 	//treasure loot;
 	//loot.generate('A');
@@ -29,14 +30,20 @@ static void initializing() {
 	generatori::read("rules/RandomGems.txt");
 }
 
+static const char* getavatarst(const void* p) {
+	if(((creature*)p)->avatar[0])
+		return 0;
+	return ((creature*)p)->avatarable::getavatar();
+}
+
 int main(int argc, char* argv[]) {
-	//utg::callback::getinfo = game.sfgetproperty;
-	//utg::callback::getstatus = game.sfgetstatus;
+	draw::heroes = bsdata<creature>::source_ptr;
+	draw::heroes_getavatar = getavatarst;
 	srand(getcputime());
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
+	answers::resid = "meet";
 	draw::object::initialize();
-	//goal::info = game.information;
 	return draw::start(starting, true, initializing);
 }
 

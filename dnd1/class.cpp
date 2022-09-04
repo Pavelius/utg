@@ -4,8 +4,6 @@ namespace draw {
 extern int tab_pixels;
 }
 
-static char avatar[32];
-
 BSDATA(classi) = {
 	{"Monster", ToHit, {}},
 	{"Cleric", Wisdow, {}},
@@ -17,6 +15,8 @@ BSDATA(classi) = {
 	{"Wizard", Intellect, {}},
 };
 assert_enum(classi, Wizard)
+
+static avatarable last_avatar;
 
 static void add_abilitites() {
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
@@ -43,8 +43,9 @@ static void add_adjust(answers& an, ability_s a) {
 }
 
 static void choose_avatar() {
-	stringbuilder sb(avatar);
+	stringbuilder sb(last_avatar.avatar);
 	utg::chooseavatar(sb, getnm("ChooseLook"), (player->gender == Female) ? "f*.*" : "m*.*");
+	player->setavatar(last_avatar.avatar);
 }
 
 static void adjust_ability_scores() {
@@ -71,6 +72,10 @@ static void adjust_ability_scores() {
 
 static void choose_class() {
 	answers an;
+	auto push_tabs = draw::tab_pixels; draw::tab_pixels = 36;
+	answers::console->clear();
+	answers::console->addn(getnm("RollRandomAbilities"));
+	add_abilitites();
 	for(auto& e : bsdata<classi>()) {
 		if(&e == bsdata<classi>::elements)
 			continue;
@@ -80,6 +85,8 @@ static void choose_class() {
 	}
 	auto p = (classi*)an.choose(getnm("ChooseClass"));
 	player->type = (class_s)(p - bsdata<classi>::elements);
+	draw::tab_pixels = push_tabs;
+	answers::console->clear();
 }
 
 static void roll_ability_scores() {

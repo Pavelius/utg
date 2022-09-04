@@ -24,6 +24,9 @@ BSMETA(abilityi) = {
 BSMETA(classi) = {
 	BSREQ(id),
 	{}};
+BSMETA(creature) = {
+	BSDST(abilities, abilityi),
+	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
@@ -73,10 +76,13 @@ BSMETA(weari) = {
 #define VAR(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN
 BSDATA(varianti) = {
 	{"NoVariant"},
+	{"Ability", VAR(abilityi, 1)},
 	{"Class", VAR(classi, 1)},
+	{"Creature", VAR(creature, 0)},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1)},
 	{"List", VAR(listi, 1)},
+	{"Menu", VAR(menu, 1)},
 	{"Monster", VAR(monsteri, 1)},
 };
 BSDATAF(varianti)
