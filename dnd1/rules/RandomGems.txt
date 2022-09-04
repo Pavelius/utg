@@ -1,0 +1,7 @@
+#RandomGems
+
+4 OrnamentalStones
+5 SemiPreciousStones
+6 FancyStones
+4 PreciousStones
+1 GemStones

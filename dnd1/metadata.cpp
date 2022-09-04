@@ -59,8 +59,9 @@ BSMETA(spelli) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Class", VAR(classi, 1)},
-	{"Item", VAR(itemi, 1)},
 	{"Gender", VAR(genderi, 1)},
+	{"Item", VAR(itemi, 1)},
+	{"List", VAR(listi, 1)},
 	{"Monster", VAR(monsteri, 1)},
 };
 BSDATAF(varianti)

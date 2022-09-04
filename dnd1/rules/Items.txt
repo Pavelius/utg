@@ -11,8 +11,32 @@ GP cost(1)
 PP cost(1)
  flags Countable
 
+OrnamentalStones cost(10)
+ flags Countable
+SemiPreciousStones cost(50)
+ flags Countable
+FancyStones cost(100)
+ flags Countable
+PreciousStones cost(500)
+ flags Countable
+GemStones cost(1000)
+ flags Countable
+
+BlueRing cost(300)
+GreenRing cost(500)
+RedRing cost(800)
+
+BlueAmulet cost(400)
+GreenAmulet cost(800)
+RedAmulet cost(1200)
+
 BattleAxe cost(7) weight(50)
  flags Melee Slow TwoHanded
 Club cost(3) weight(50)
  flags Melee Blunt
 Dagger cost(3) weight(10)
+
+#List
+
+Jewelry
+ elements BlueRing GreenRing RedRing BlueAmulet GreenAmulet RedAmulet

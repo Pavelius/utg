@@ -1,6 +1,8 @@
 #include "dice.h"
 #include "chooseoption.h"
 #include "gender.h"
+#include "generator.h"
+#include "list.h"
 #include "nameable.h"
 #include "utg.h"
 
@@ -128,19 +130,24 @@ struct item {
 		struct {
 			unsigned char identified : 1;
 			unsigned char charge : 5;
+			unsigned char count_nocountable;
 		};
 	};
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
+	void			addname(stringbuilder& sb) const;
 	bool			canequip(wear_s v) const;
 	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			create(const char* id, int count = 1);
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 	int				getcount() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
 };
 struct treasure : adat<item> {
+	void			add(item it);
 	void			generate(char symbol);
+	void			take();
 };
 struct enchantmenti {
 	char			level;

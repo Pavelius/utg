@@ -1,0 +1,41 @@
+﻿Azurite: Азурит
+BandedAgate: Полосчатый агат
+BlueQuartz: Голубой кварц
+EyeAgate: Глазчатый агат
+Hematite: Гематит
+LapisLazuli: Лазурит
+Malachite: Малахит
+MossAgate: Моховой агат
+Obsidian: Обсидиан
+Rhodochrosite: Родохрозит
+TigerEyeAgate: Тигровый глаз
+Turquoise: Бирюза
+
+Bloodstone: Кровавый камень
+Chalcedony: Халцедон
+Chrysoprase: Хризопраз
+Citrine: Цитрин
+Jasper: Яшма
+Moonstone: Лунный камень
+Onyx: Оникс
+RockCrystal: Горный кристал
+SmokyQuartz: Кварц
+StarRoseQuartz: Звёздчатый розовый кварц
+Zircon: Циркон
+
+Amethyst: Аметист
+Aquamarine: Аквамарин
+Chrysoberyl: Хризоберил
+Coral: Коралл
+Jade: Янтарь
+Pearl: Жемчуг
+Topaz: Топаз
+
+BlackOpal: Черный опал
+BlackSapphire: Черный сапфир
+Diamond: Алмаз
+Emerald: Изумруд
+FireOpal: Огненный опал
+Opal: Опал
+Ruby: Бриллиант
+Sapphire: Сапфир

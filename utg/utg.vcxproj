@@ -180,8 +180,10 @@
     <ClCompile Include="font_util.cpp" />
     <ClCompile Include="front.cpp" />
     <ClCompile Include="function.cpp" />
+    <ClCompile Include="generator.cpp" />
     <ClCompile Include="group.cpp" />
     <ClCompile Include="iterator.cpp" />
+    <ClCompile Include="list.cpp" />
     <ClCompile Include="logparse.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="message.cpp" />
@@ -246,10 +248,12 @@
     <ClInclude Include="draw_object.h" />
     <ClInclude Include="draw_hexagon.h" />
     <ClInclude Include="function.h" />
+    <ClInclude Include="generator.h" />
     <ClInclude Include="group.h" />
     <ClInclude Include="informable.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="kering.h" />
+    <ClInclude Include="list.h" />
     <ClInclude Include="logparse.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />

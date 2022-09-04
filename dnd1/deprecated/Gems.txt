@@ -1,0 +1,96 @@
+#Item
+
+Azurite cost(10)
+ flags Countable
+BandedAgate cost(10)
+ flags Countable
+BlueQuartz cost(12)
+ flags Countable
+EyeAgate cost(10)
+ flags Countable
+Hematite cost(10)
+ flags Countable
+LapisLazuli cost(11)
+ flags Countable
+Malachite cost(15)
+ flags Countable
+MossAgate cost(10)
+ flags Countable
+Obsidian cost(17)
+ flags Countable
+Rhodochrosite cost(17)
+ flags Countable
+TigerEyeAgate cost(12)
+ flags Countable
+Turquoise cost(10)
+ flags Countable
+
+Bloodstone cost(50)
+ flags Countable
+Chalcedony cost(50)
+ flags Countable
+Chrysoprase cost(60)
+ flags Countable
+Citrine cost(70)
+ flags Countable
+Jasper cost(70)
+ flags Countable
+Moonstone cost(50)
+ flags Countable
+Onyx cost(80)
+ flags Countable
+RockCrystal cost(40)
+ flags Countable
+SmokyQuartz cost(50)
+ flags Countable
+StarRoseQuartz cost(50)
+ flags Countable
+Zircon cost(50)
+ flags Countable
+
+Amethyst cost(200)
+ flags Countable
+Aquamarine cost(200)
+ flags Countable
+Chrysoberyl cost(200)
+ flags Countable
+Coral cost(100)
+ flags Countable
+Jade cost(300)
+ flags Countable
+Pearl cost(400)
+ flags Countable
+Topaz cost(500)
+ flags Countable
+
+BlackOpal cost(1000)
+ flags Countable
+BlackSapphire cost(4000)
+ flags Countable
+Diamond cost(4000)
+ flags Countable
+Emerald cost(4000)
+ flags Countable
+FireOpal cost(1500)
+ flags Countable
+Opal cost(1000)
+ flags Countable
+Ruby cost(5000)
+ flags Countable
+Sapphire cost(2000)
+ flags Countable
+
+#List
+
+OrnamentalStones
+ elements Azurite BandedAgate BlueQuartz EyeAgate Hematite LapisLazuli Malachite MossAgate Obsidian Rhodochrosite TigerEyeAgate Turquoise
+SemiPreciousStones
+ elements Bloodstone Chalcedony Chrysoprase Citrine Jasper Moonstone Onyx RockCrystal SmokyQuartz StarRoseQuartz Zircon
+FancyStones
+ elements Amethyst Aquamarine Chrysoberyl Coral
+PreciousStones
+ elements Jade Pearl Topaz
+GemStones
+ elements BlackOpal FireOpal Opal Sapphire
+JewelStones
+ elements BlackSapphire Diamond Emerald Ruby

@@ -12,11 +12,12 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 }
 
 static void starting() {
-	treasure loot;
-	loot.generate('A');
 	auto p1 = create_player(Fighter, Male, Player);
 	auto p2 = create_player(Fighter, Male, Enemy);
 	game.creatures.select();
+	treasure loot;
+	loot.generate('A');
+	loot.take();
 	combat_mode();
 }
 
@@ -24,6 +25,7 @@ static void initializing() {
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
 	charname::read("locale/ru/NameCharacters.txt");
+	generatori::read("rules/RandomGems.txt");
 }
 
 int main(int argc, char* argv[]) {

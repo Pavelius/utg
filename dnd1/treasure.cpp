@@ -7,7 +7,7 @@ struct treasurei {
 		short	multiplier;
 	};
 	char		symbol;
-	coini		cp, sp, ep, gp, pp, gems, art, magic;
+	coini		cp, sp, ep, gp, pp, gems, jewelry, magic;
 };
 
 BSDATA(treasurei) = {
@@ -45,6 +45,54 @@ static void add_coins(treasure& result, const char* id, const treasurei::coini& 
 	result.add(it);
 }
 
+static void add_gems(treasure& result, const treasurei::coini& e) {
+	if(e.percent < 100) {
+		if(d100() >= e.percent)
+			return;
+	}
+	auto count = e.range.roll();
+	if(e.multiplier)
+		count = count * e.multiplier;
+	for(auto i = 0; i < count; i++) {
+		auto value = random_value("RandomGems");
+		if(value.iskind<itemi>()) {
+			item it = {};
+			it.type = (unsigned char)value.value;
+			it.setcount(1);
+			result.add(it);
+		}
+	}
+}
+
+static void add_jewelry(treasure& result, const treasurei::coini& e) {
+	if(e.percent < 100) {
+		if(d100() >= e.percent)
+			return;
+	}
+	auto count = e.range.roll();
+	if(e.multiplier)
+		count = count * e.multiplier;
+	variant jewelry = "Jewelry";
+	if(!jewelry)
+		return;
+	for(auto i = 0; i < count; i++) {
+		auto value = random_list_value(jewelry);
+		if(value.iskind<itemi>()) {
+			item it = {};
+			it.type = (unsigned char)value.value;
+			it.setcount(1);
+			result.add(it);
+		}
+	}
+}
+
+void treasure::add(item it) {
+	for(auto& e : *this)
+		e.add(it);
+	if(it)
+		adat<item>::add(it);
+}
+
 void treasure::generate(char symbol) {
 	auto ps = find_treasure(symbol);
 	if(!ps)
@@ -54,4 +102,23 @@ void treasure::generate(char symbol) {
 	add_coins(*this, "EP", ps->ep);
 	add_coins(*this, "GP", ps->gp);
 	add_coins(*this, "PP", ps->pp);
+	add_gems(*this, ps->gems);
+	add_jewelry(*this, ps->jewelry);
+}
+
+void treasure::take() {
+	char temp[260]; stringbuilder sb(temp);
+	answers an;
+	while(!draw::isnext()) {
+		an.clear();
+		for(auto& e : *this) {
+			sb.clear(); e.addname(sb);
+			an.add(&e, temp);
+		}
+		if(!an)
+			break;
+		auto p = (item*)an.choose(getnm("WhatItemToTake"), getnm("LeaveItHere"));
+		if(!p)
+			break;
+	}
 }

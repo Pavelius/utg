@@ -1,0 +1,13 @@
+﻿FancyStones: Изысканное украшение
+GemStones: Самоцвет
+JewelStones: Драгоценность
+OrnamentalStones: Декоративное украшение
+PreciousStones: Драгоценный камень
+SemiPreciousStones: Полудрагоценный камень
+
+BlueAmulet: Синий амулет
+BlueRing: Синее кольцо
+GreenRing: Зеленое кольцо
+GreenAmulet: Зеленый амулет
+RedAmulet: Красный амулет
+RedRing: Красное кольцо

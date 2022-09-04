@@ -243,6 +243,12 @@
     <ClCompile Include="chooseoption.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="list.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="generator.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -441,6 +447,12 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="chooseoption.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="list.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="generator.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
