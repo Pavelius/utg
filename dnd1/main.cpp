@@ -13,11 +13,12 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 
 static void starting() {
 	auto p1 = create_player(Fighter, Male, Player);
+	p1->generate();
 	auto p2 = create_player(Fighter, Male, Enemy);
 	game.creatures.select();
-	treasure loot;
-	loot.generate('A');
-	loot.take();
+	//treasure loot;
+	//loot.generate('A');
+	//loot.take();
 	combat_mode();
 }
 

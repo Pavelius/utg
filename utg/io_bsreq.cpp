@@ -127,14 +127,14 @@ static void read_value(valuei& e, const bsreq* req) {
 			v1.counter = last_bonus;
 			e.number = v1.u;
 		} else {
-			auto offset = 0;
+			auto shift = 0;
 			auto pk = getkey(req->type);
 			if(pk)
-				offset = pk->offset;
+				shift = pk->offset;
 			if(!req->source)
 				log::error(p, "Invalid source array where read identifier `%1`", temp);
 			else {
-				e.number = req->source->find(temp, offset);
+				e.number = req->source->find(temp, shift);
 				if(e.number == -1) {
 					log::error(p, "Not found identifier `%1`", temp);
 					e.number = 0;
@@ -271,8 +271,8 @@ static bool iscrlevel(int n) {
 	if(p[0] == 10 || p[0] == 13) {
 		auto pn = skipcr(p);
 		auto pe = pn + n;
-		while(pn<pe) {
-			if(*pn!= 0x20)
+		while(pn < pe) {
+			if(*pn != 0x20)
 				return false;
 			pn++;
 		}
@@ -281,8 +281,6 @@ static bool iscrlevel(int n) {
 	}
 	return false;
 }
-
-static void read_scalar(void* object, const bsreq* req, int level);
 
 static void read_dictionary(void* object, const bsreq* type, int level, bool need_linefeed = true) {
 	while(allowparse && ischa(*p)) {
@@ -303,18 +301,12 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 			} else if(req->is(KindDSet))
 				read_dset(object, req);
 			else if(req->is(KindScalar) && req->count > 0)
-				read_scalar(object, req, level+1);
+				read_dictionary(req->ptr(object), req->type, level + 1, false);
 			else
 				read_array(object, req);
 			skipsymcr();
 		}
 	}
-}
-
-static void read_scalar(void* object, const bsreq* req, int level) {
-	auto index = 0;
-	while(allowparse && iscrlevel(level + 1))
-		read_dictionary(req->ptr(object, index++), req->type, level + 1, false);
 }
 
 static void clear_object(void* object, const bsreq* type) {

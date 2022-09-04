@@ -1,23 +1,47 @@
-﻿Animal: Животное
-AppTitle: Драконы и Подземелья
-Assassin: Убийца
+﻿AppTitle: Драконы и Подземелья
 AttackMelee: Атаковать врага
 ContinueBattle: Продолжить битву
+CharacterGeneration: Создание персонажа
 ChargeEnemy: С криком наброситься на врага
+ChooseClass: Выбирайте класс
+ChooseLook: Выбирайте внешний вид вашего персонажа:
 ChooseTarget: Укажите цель
-CP: Медная монета
-Dwarf: Гном
-EP: Электрумная монета
-GP: Золотая монета
+DoNotAdjust: Сейчас все иделально
 HitMelee: %герой нанес%ла удар мечем.
+IncreaseAndLower: Увеличить [%1] на 1 еденицу, но понизить [%2] на 2 еденицы
 LeaveItHere: Оставить это здесь
 LoseGame: Вы проиграли. Игра закончена.
 MissMelee: %герой нанес%ла удар мечем, но промазал%а.
 No: Нет
 Pieces: шт.
-PP: Платиновая монета
-SP: Серебрянная монета
+RerollAbilityAgain: Перебросить атрибуты еще раз
+RollRandomAbilities: У вашего персонажа буду следующие атрибуты:
+TakeThisAbility: Взять эти атрибуты
+YouMayAdjustAbility: Вы [%1] и можете модифицировать некоторые свои атрибуты.
 WhatToDo: Что будет делать [%герой]?
+WhatToDoYou: Что будете делать?
 WhatItemToTake: Какие вещи хотите взять?
 WinBattle: Закончить битву и собрать трофеи.
 Use: Использовать
+
+CP: Медная монета
+SP: Серебрянная монета
+EP: Электрумная монета
+GP: Золотая монета
+PP: Платиновая монета
+
+Monster: Монстер
+Cleric: Клерик
+Dwarf: Гном
+Elf: Эльф
+Fighter: Воин
+Halfling: Хоббит
+Theif: Вор
+Wizard: Волшебник
+
+Charisma: Харизма
+Constitution: Телосложение
+Dexterity: Ловкость
+Intellect: Интеллект
+Strenght: Сила
+Wisdow: Мудрость

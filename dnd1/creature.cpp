@@ -73,11 +73,26 @@ bool creature::attack(ability_s attack, int ac, int bonus) const {
 	return r >= ac;
 }
 
-void creature::attack() {
+void creature::rangeattack(creature* enemy) {
+	auto ac = enemy->get(AC);
+	auto& weapon = wears[RangedWeapon];
+	if(attack(RangedToHit, ac, 0)) {
+		actn(getnm("HitRange"));
+		auto result = weapon.hit();
+		result += get(Damage) + get(RangedDamage);
+		enemy->damage(result);
+	} else
+		actn(getnm("MissRange"));
+}
+
+void creature::meleeattack() {
 	auto enemy = getenemy();
 	auto ac = enemy->get(AC);
+	auto& weapon = wears[MeleeWeapon];
 	if(attack(MeleeToHit, ac, 0)) {
 		actn(getnm("HitMelee"));
+		auto result = weapon.hit();
+		result += get(Damage) + get(MeleeDamage);
 		enemy->damage(xrand(1, 6));
 	} else
 		actn(getnm("MissMelee"));

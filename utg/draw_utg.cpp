@@ -420,13 +420,18 @@ static void avatar_common(int index, const void* object, const char* id, void(*p
 	auto p = gres(id, utg::url_avatars);
 	if(!p)
 		return;
-	image(caret.x, caret.y, p, 0, 0);
 	width = p->get(0).sx;
 	height = p->get(0).sy;
+	auto dx = width + metrics::padding + metrics::border * 2;
+	if(caret.x + dx >= draw::getwidth() - 320 - metrics::padding * 2 - metrics::border * 2) {
+		caret.x = metrics::padding * 2 + metrics::border;
+		caret.y += height + metrics::padding + metrics::border * 2;
+	}
+	image(caret.x, caret.y, p, 0, 0);
 	strokeout(strokeborder);
 	hiliting(object);
 	proc(object);
-	caret.x += width + metrics::padding + metrics::border * 2;
+	caret.x += dx;
 }
 
 void draw::avatar(int index, const void* object, const char* id) {

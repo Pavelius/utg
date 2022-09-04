@@ -2,6 +2,8 @@
 #include "main.h"
 
 NOBSDATA(dice)
+NOBSDATA(itemi::armori)
+NOBSDATA(itemi::weaponi)
 NOBSDATA(variants)
 
 BSMETA(variant) = {{}};
@@ -19,9 +21,6 @@ BSDATAC(ongoing, 128)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(feati) = {
-	BSREQ(id),
-	{}};
 BSMETA(classi) = {
 	BSREQ(id),
 	{}};
@@ -31,10 +30,23 @@ BSMETA(dice) = {
 BSMETA(durationi) = {
 	BSREQ(id),
 	{}};
+BSMETA(feati) = {
+	BSREQ(id),
+	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
 	BSREQ(cost), BSREQ(weight),
 	BSFLG(flags, itemfi),
+	BSENM(wear, weari),
+	BSREQ(weapon),
+	BSREQ(armor),
+	{}};
+BSMETA(itemi::weaponi) = {
+	BSREQ(damage),
+	BSENM(ammunition, itemi),
+	{}};
+BSMETA(itemi::armori) = {
+	BSREQ(ac),
 	{}};
 BSMETA(itemfi) = {
 	BSREQ(id),
@@ -53,6 +65,9 @@ BSMETA(spelli) = {
 	BSREQ(effect),
 	BSENM(duration, durationi),
 	BSENM(range, rangei),
+	{}};
+BSMETA(weari) = {
+	BSREQ(id),
 	{}};
 
 #define VAR(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN

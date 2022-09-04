@@ -84,3 +84,10 @@ void item::addname(stringbuilder& sb) const {
 	if(count > 1)
 		sb.adds("%1i %Pieces", count);
 }
+
+int	item::hit() const {
+	auto& dice = geti().weapon.damage;
+	if(!dice)
+		return xrand(1, 2);
+	return dice.roll();
+}

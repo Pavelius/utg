@@ -1,10 +1,14 @@
 #include "main.h"
 
 BSDATA(itemfi) = {
-	{"TwoHanded"},
-	{"Melee"},
-	{"Slow"},
 	{"Blunt"},
+	{"Large"},
+	{"Martial"},
+	{"TwoHanded"},
+	{"WearLeather"},
+	{"WearIron"},
+	{"WearShield"},
+	{"Slow"},
 	{"Countable"},
 };
 assert_enum(itemfi, Countable)

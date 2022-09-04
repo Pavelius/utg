@@ -7,7 +7,14 @@ SemiPreciousStones: Полудрагоценный камень
 
 BlueAmulet: Синий амулет
 BlueRing: Синее кольцо
+CoralAmulet: Кораловое ожерелье
+GoldAmulet: Золотой амулет
+GoldenRing: Золотое кольцо
 GreenRing: Зеленое кольцо
 GreenAmulet: Зеленый амулет
+IronRing: Железное кольцо
+LeadAmulet: Медный амулет
 RedAmulet: Красный амулет
 RedRing: Красное кольцо
+SilverAmulet: Серебрянный амулет
+SilverRing: Серебрянное кольцо

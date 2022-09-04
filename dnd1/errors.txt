@@ -1,2 +1,2 @@
-﻿In file `rules/RandomGems.txt`:
- Line 3: Expected symbol `#`
+﻿In file `rules/Items.txt`:
+ Line 53: Not found identifier `WearShield`

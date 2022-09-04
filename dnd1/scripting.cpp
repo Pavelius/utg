@@ -45,7 +45,7 @@ static bool attack_melee(bool run) {
 	if(!player->getenemy())
 		return false;
 	if(run)
-		player->attack();
+		player->meleeattack();
 	return true;
 }
 
@@ -58,7 +58,7 @@ static bool charge(bool run) {
 	if(run) {
 		choose_player_enemy();
 		player->add(ToHit, 2);
-		player->attack();
+		player->meleeattack();
 	}
 	return true;
 }

@@ -22,21 +22,47 @@ PreciousStones cost(500)
 GemStones cost(1000)
  flags Countable
 
-BlueRing cost(300)
-GreenRing cost(500)
-RedRing cost(800)
+IronRing cost(300) weight(1)
+SilverRing cost(500) weight(1)
+GoldenRing cost(800) weight(1)
 
-BlueAmulet cost(400)
-GreenAmulet cost(800)
-RedAmulet cost(1200)
+LeadAmulet cost(400) weight(7)
+CoralAmulet cost(600) weight(8)
+SilverAmulet cost(1000) weight(4)
+GoldAmulet cost(1600) weight(5)
 
-BattleAxe cost(7) weight(50)
- flags Melee Slow TwoHanded
-Club cost(3) weight(50)
- flags Melee Blunt
-Dagger cost(3) weight(10)
+BattleAxe cost(7) weight(50) wear(MeleeWeapon)
+ flags Martial Slow TwoHanded
+ weapon damage(1 8)
+Club cost(3) weight(50) wear(MeleeWeapon)
+ flags Martial Blunt
+ weapon damage(1 4)
+Dagger cost(3) weight(10) wear(MeleeWeapon)
+ weapon damage(1 4)
+
+LeatherArmor cost(20) weight(200)
+ flags WearLeather
+ armor ac(2)
+ChainArmor cost(40) weight(400)
+ flags WearIron
+ armor ac(4)
+PlateArmor cost(60) weight(500)
+ flags WearIron
+ armor ac(6)
+Shield cost(10) weight(100)
+ flags WearShield
+ armor ac(1)
+
+Arrow wear(Ammunition)
+
+ShortBow cost(3) weight(10) wear(RangedWeapon)
+ flags Martial TwoHanded
+ weapon damage(1 6) ammunition(Arrow)
+LongBow cost(3) weight(10) wear(RangedWeapon)
+ flags Martial Large TwoHanded
+ weapon damage(1 6) ammunition(Arrow)
 
 #List
 
 Jewelry
- elements BlueRing GreenRing RedRing BlueAmulet GreenAmulet RedAmulet
+ elements IronRing SilverRing GoldenRing LeadAmulet CoralAmulet SilverAmulet GoldAmulet

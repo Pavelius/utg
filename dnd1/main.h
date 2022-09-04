@@ -49,13 +49,14 @@ enum wear_s : unsigned char {
 	Head, Torso, Legs, Gloves, FingerRight, FingerLeft, Elbows,
 };
 enum itemf_s : unsigned char {
-	TwoHanded, Melee, Slow, Blunt, Countable,
+	Blunt, Large, Martial, TwoHanded, WearLeather, WearIron, WearShield,
+	Slow, Countable,
 };
-enum damage_s : unsigned char {
-	Blundgeon, Slashing, Pierce,
-	Fire, Cold, Electric, Poison, Magic,
-	Cure,
-};
+//enum damage_s : unsigned char {
+//	Blundgeon, Slashing, Pierce,
+//	Fire, Cold, Electric, Poison, Magic,
+//	Cure,
+//};
 inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
 typedef flagable<8> spellf;
@@ -90,6 +91,8 @@ struct statable {
 	int				get(ability_s i) const { return abilities[i]; }
 };
 struct classi : nameable {
+	ability_s		prime;
+	char			minimal[6];
 	int				tohit, hd;
 };
 struct durationi : nameable {
@@ -100,6 +103,7 @@ struct feati : nameable {
 struct itemi : nameable {
 	struct weaponi {
 		dice		damage;
+		short 		ammunition;
 	};
 	struct armori {
 		char		ac;
@@ -118,7 +122,7 @@ struct spelli : nameable {
 	duration_s		duration;
 	range_s			range;
 	dice			effect;
-	damage_s		damage;
+	//damage_s		damage;
 };
 struct spellable {
 	unsigned char	spells[Ventriloquism + 1];
@@ -141,6 +145,7 @@ struct item {
 	void			create(const char* id, int count = 1);
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 	int				getcount() const;
+	int				hit() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
 };
@@ -163,7 +168,7 @@ struct wearable {
 	void			additem(item& v);
 	void			equip(item& v);
 };
-struct creature : actable, spellable, statable {
+struct creature : actable, spellable, statable, wearable {
 	class_s			type;
 	statable		basic;
 	featable		feats;
@@ -172,7 +177,6 @@ struct creature : actable, spellable, statable {
 	char			initiative;
 	unsigned		experience;
 	bool			apply(spell_s, bool run);
-	void			attack();
 	bool			attack(ability_s attack, int ac, int bonus) const;
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
@@ -180,6 +184,7 @@ struct creature : actable, spellable, statable {
 	void			enchant(spell_s, unsigned rounds);
 	void			damage(int value);
 	void			dispell(spell_s effect);
+	void			generate();
 	int				getbonus(ability_s v) const;
 	creature*		getenemy() const { return enemy_index == 0xFF ? 0 : bsdata<creature>::elements + enemy_index; }
 	feat_s			getenemyfeat() const;
@@ -190,7 +195,9 @@ struct creature : actable, spellable, statable {
 	bool			isactive(spell_s v) const;
 	bool			isready() const;
 	void			levelup();
+	void			meleeattack();
 	void			raiselevel();
+	void			rangeattack(creature* enemy);
 	static const char* randomname(class_s type, gender_s gender);
 	void			set(feat_s v) { feats.set(v); }
 	void			setenemy(const creature* v);
