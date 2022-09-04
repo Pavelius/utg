@@ -88,7 +88,11 @@ struct actable {
 struct statable {
 	char			abilities[SaveSpells + 1];
 	void			add(ability_s i, int v) { abilities[i] += v; }
+	void			applybest(ability_s v);
+	void			applyminimal(class_s v);
 	int				get(ability_s i) const { return abilities[i]; }
+	ability_s		getbestability() const;
+	void			rollability();
 };
 struct classi : nameable {
 	ability_s		prime;
@@ -184,8 +188,10 @@ struct creature : actable, spellable, statable, wearable {
 	void			enchant(spell_s, unsigned rounds);
 	void			damage(int value);
 	void			dispell(spell_s effect);
+	void			finish();
 	void			generate();
 	int				getbonus(ability_s v) const;
+	int				getbonush(ability_s v) const;
 	creature*		getenemy() const { return enemy_index == 0xFF ? 0 : bsdata<creature>::elements + enemy_index; }
 	feat_s			getenemyfeat() const;
 	int				gethit() const;

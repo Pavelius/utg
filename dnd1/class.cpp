@@ -18,11 +18,6 @@ BSDATA(classi) = {
 };
 assert_enum(classi, Wizard)
 
-static void roll_ability() {
-	for(auto i = 0; i < 6; i++)
-		player->basic.abilities[i] = 3 + (rand() % 6) + (rand() % 6) + (rand() % 6);
-}
-
 static void add_abilitites() {
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		answers::console->addn("  %2i\t%1", getnm(bsdata<abilityi>::elements[i].id), player->basic.abilities[i]);
@@ -91,7 +86,7 @@ static void roll_ability_scores() {
 	char temp[6] = {};
 	auto push_tabs = draw::tab_pixels; draw::tab_pixels = 36;
 	while(!draw::isnext()) {
-		roll_ability();
+		player->basic.rollability();
 		answers an;
 		answers::console->clear();
 		answers::console->addn(getnm("RollRandomAbilities"));
@@ -113,6 +108,7 @@ void creature::generate() {
 	choose_class();
 	adjust_ability_scores();
 	choose_avatar();
+	player->finish();
 	answers::header = push_header;
 	player = push_player;
 }

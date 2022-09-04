@@ -170,6 +170,7 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="spell.cpp" />
+    <ClCompile Include="statable.cpp" />
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
