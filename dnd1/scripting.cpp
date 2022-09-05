@@ -57,7 +57,8 @@ static bool charge(bool run) {
 		return false;
 	if(run) {
 		choose_player_enemy();
-		player->add(ToHit, 2);
+		player->add(ToHit, 1);
+		player->add(AC, -1);
 		player->meleeattack();
 	}
 	return true;
@@ -72,6 +73,7 @@ static void combat_round() {
 	for(auto p : game.creatures) {
 		if(!p->isready())
 			continue;
+		p->update();
 		p->choose(combat_options);
 	}
 }

@@ -43,7 +43,7 @@ BSMETA(feati) = {
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
-	BSREQ(cost), BSREQ(weight),
+	BSREQ(cost), BSREQ(weight), BSREQ(count),
 	BSFLG(flags, itemfi),
 	BSENM(wear, weari),
 	BSREQ(weapon),

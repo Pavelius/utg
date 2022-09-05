@@ -33,9 +33,10 @@ void creature::clear() {
 }
 
 static void start_equipment(creature* p) {
+	item it;
 	for(auto& e : bsdata<equipmenti>()) {
 		if(e.type == p->type) {
-			item it = e.equipment;
+			it.create(bsdata<itemi>::elements + e.equipment);
 			p->equip(it);
 			if(it)
 				p->additem(it);
@@ -205,7 +206,9 @@ void creature::update_equipment() {
 }
 
 void creature::update() {
+	auto hp = abilities[HP];
 	copyvalues(*this, basic);
+	abilities[HP] = hp;
 	update_equipment();
 	auto level = abilities[Level];
 	abilities[ToHit] += maptbl(attack_bonus[bsdata<classi>::elements[type].tohit], level);

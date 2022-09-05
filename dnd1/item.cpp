@@ -20,12 +20,18 @@ static enchantmenti magic_weapon[] = {
 };
 
 void item::create(const char* id, int count) {
-	clear();
-	auto pi = bsdata<itemi>::find(id);
+	create(bsdata<itemi>::find(id), count);
+}
+
+void item::create(const itemi* pi, int count) {
 	if(!pi)
 		return;
+	clear();
 	type = pi - bsdata<itemi>::elements;
-	setcount(count);
+	if(pi->count)
+		setcount(count * pi->count);
+	else
+		setcount(count);
 }
 
 void item::setcount(int v) {
@@ -88,4 +94,14 @@ void item::addname(stringbuilder& sb) const {
 dice item::getdamage() const {
 	auto& r = geti().weapon.damage;
 	return r ? r : dice{1, 2};
+}
+
+int	item::getweight() const {
+	auto& ei = geti();
+	return getcount() * ei.weight;
+}
+
+int item::getcost() const {
+	auto& ei = geti();
+	return getcount() * ei.cost / (ei.count ? ei.count : 1);
 }

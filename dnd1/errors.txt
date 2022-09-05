@@ -1,2 +1,3 @@
-﻿In file `rules/Basic.txt`:
- Line 6: Can't find variant `EquipmentList`
+﻿In file `rules/Items.txt`:
+ Line 62: Not found identifier `Arrow`
+ Line 65: Not found identifier `Arrow`

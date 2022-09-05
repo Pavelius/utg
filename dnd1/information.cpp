@@ -13,6 +13,30 @@ static void print(stringbuilder& sb, const dice& v) {
 		sb.add("%1i-%2i", min, max);
 }
 
+static void print_weight(stringbuilder& sb, int coins) {
+	auto kg = coins / 20;
+	auto gr = (coins % 20) * 5;
+	sb.adds("%1i.%2.2i%Kg", kg, gr);
+}
+
+static void print_weight_hd(stringbuilder& sb, int coins) {
+	if(!coins)
+		return;
+	sb.adds("%Weight");
+	print_weight(sb, coins);
+}
+
+static void print_cost(stringbuilder& sb, int gp) {
+	sb.adds("%1igp", gp);
+}
+
+static void print_cost_hd(stringbuilder& sb, int gp) {
+	if(!gp)
+		return;
+	sb.adds("%Cost");
+	print_cost(sb, gp);
+}
+
 void creature::getstatus(stringbuilder& sb) const {
 	sb.add("%1 - %2 (%3i %-Level)", getname(),
 		getnm(bsdata<classi>::elements[type].id),
@@ -20,7 +44,14 @@ void creature::getstatus(stringbuilder& sb) const {
 }
 
 void creature::getstatus(const void* object, stringbuilder& sb) {
-	((creature*)object)->getstatus(sb);
+	auto index = bsdata<creature>::source.indexof(object);
+	if(index == -1)
+		return;
+	auto p = bsdata<creature>::elements + index;
+	if(p == object)
+		p->getstatus(sb);
+	else if(p->isitem(object))
+		((item*)object)->getstatus(sb);
 }
 
 void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
@@ -48,4 +79,12 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 			break;
 		}
 	}
+}
+
+void item::getstatus(stringbuilder& sb) const {
+	auto& ei = geti();
+	if(ei.armor.ac)
+		sb.adds("AC%+1i", ei.armor.ac);
+	print_weight_hd(sb, getweight());
+	print_cost_hd(sb, getcost());
 }

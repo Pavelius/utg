@@ -2,15 +2,15 @@
 
 NoItem
 
-CP cost(1)
+CP cost(1) count(100)
  flags Countable
-SP cost(1)
+SP cost(1) count(10)
  flags Countable
-EP cost(1)
+EP cost(1) count(5)
  flags Countable
 GP cost(1)
  flags Countable
-PP cost(1)
+PP cost(10)
  flags Countable
 
 OrnamentalStones cost(10)
@@ -41,9 +41,31 @@ Club cost(3) weight(50) wear(MeleeWeapon)
  weapon damage(1 4)
 Dagger cost(3) weight(10) wear(MeleeWeapon)
  weapon damage(1 4)
+Halberd cost(7) weight(150) wear(MeleeWeapon)
+ flags Martial Slow TwoHanded Large
+ weapon damage(1 10)
+HandAxe cost(4) weight(30) wear(MeleeWeapon)
+ flags Martial
+ weapon damage(1 6)
+Mace cost(5) weight(30) wear(MeleeWeapon)
+ flags Martial Blunt
+ weapon damage(1 6)
 Sword cost(10) weight(60) wear(MeleeWeapon)
  flags Martial
  weapon damage(1 8)
+
+Arrow wear(Ammunition) count(30)
+Bolt wear(Ammunition) count(20)
+
+Crossbow cost(30) weight(50) wear(RangedWeapon)
+ flags Martial Slow TwoHanded
+ weapon damage(1 6 1)
+ShortBow cost(25) weight(30) wear(RangedWeapon)
+ flags Martial TwoHanded
+ weapon damage(1 6) ammunition(Arrow)
+LongBow cost(40) weight(30) wear(RangedWeapon)
+ flags Martial Large TwoHanded
+ weapon damage(1 6) ammunition(Arrow)
 
 LeatherArmor cost(20) weight(200) wear(Torso)
  flags WearLeather
@@ -57,15 +79,6 @@ PlateArmor cost(60) weight(500) wear(Torso)
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  flags WearShield
  armor ac(1)
-
-Arrow wear(Ammunition)
-
-ShortBow cost(3) weight(10) wear(RangedWeapon)
- flags Martial TwoHanded
- weapon damage(1 6) ammunition(Arrow)
-LongBow cost(3) weight(10) wear(RangedWeapon)
- flags Martial Large TwoHanded
- weapon damage(1 6) ammunition(Arrow)
 
 #List
 

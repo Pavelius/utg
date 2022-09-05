@@ -7,6 +7,7 @@ ChooseClass: Выбирайте класс
 ChooseLook: Выбирайте внешний вид вашего персонажа:
 ChooseTarget: Укажите цель
 Combat: Бой
+Cost: Стоимость
 Damage: Урон
 DoNotAdjust: Сейчас все иделально
 From: Из
@@ -15,6 +16,7 @@ HitMelee: %герой нанес%ла удар мечем.
 HP: Хиты
 IncreaseAndLower: Увеличить [%1] на 1 еденицу, но понизить [%2] на 2 еденицы
 Items: Предметы
+Kg: кг
 LeaveItHere: Оставить это здесь
 Level: Уровень
 LoseGame: Вы проиграли. Игра закончена.
@@ -25,6 +27,7 @@ RerollAbilityAgain: Перебросить атрибуты еще раз
 RollRandomAbilities: У вашего персонажа буду следующие атрибуты:
 TakeThisAbility: Взять эти атрибуты
 YouMayAdjustAbility: Вы [%1] и можете модифицировать некоторые свои атрибуты.
+Weight: Вес
 WhatToDo: Что будет делать [%герой]?
 WhatToDoYou: Что будете делать?
 WhatItemToTake: Какие вещи хотите взять?

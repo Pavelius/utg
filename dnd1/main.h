@@ -15,7 +15,7 @@ enum ability_s : unsigned char {
 	AC, Level,
 	HP, HPMax,
 	Speed,
-	SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
+	Saves, SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
 };
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
@@ -81,7 +81,7 @@ struct itemi : nameable {
 	struct armori {
 		char		ac;
 	};
-	int				cost, weight;
+	int				cost, weight, count;
 	armori			armor;
 	weaponi			weapon;
 	wear_s			wear;
@@ -98,17 +98,19 @@ struct item {
 			unsigned char count_nocountable;
 		};
 	};
-	constexpr item() : type(0), subtype(0), count(0) {}
-	constexpr item(unsigned char t) : type(t), subtype(0), count(0) {}
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
 	void			addname(stringbuilder& sb) const;
 	bool			canequip(wear_s v) const;
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			create(const char* id, int count = 1);
+	void			create(const itemi* pi, int count = 1);
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
+	int				getcost() const;
 	int				getcount() const;
 	dice			getdamage() const;
+	void			getstatus(stringbuilder& sb) const;
+	int				getweight() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
 };

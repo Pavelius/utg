@@ -11,7 +11,7 @@ static void paint_items(creature* p, bool equipment) {
 		if((slot <= BackpackLast) == equipment)
 			continue;
 		sb.clear(); e.addname(sb);
-		label(temp, 0, 0);
+		label(temp, 0, &e);
 	}
 }
 
