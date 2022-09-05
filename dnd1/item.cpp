@@ -1,24 +1,5 @@
 #include "main.h"
 
-static enchantmenti magic_armor_or_shield[] = {
-	{},
-	{1, 1},
-	{2, 2},
-	{3, 3},
-	{1, -1},
-	{2, -2},
-	{3, -3},
-};
-static enchantmenti magic_weapon[] = {
-	{},
-	{1, 1},
-	{4, 2},
-	{6, 3},
-	{1, -1},
-	{4, -2},
-	{6, -3},
-};
-
 void item::create(const char* id, int count) {
 	create(bsdata<itemi>::find(id), count);
 }
@@ -104,4 +85,29 @@ int	item::getweight() const {
 int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
+}
+
+const enchantmenti* item::getenchant() const {
+	if(!subtype)
+		return 0;
+	auto& ei = geti();
+	if(!ei.enchantments)
+		return 0;
+	return ei.enchantments + subtype - 1;
+}
+
+static const enchantmenti* find_last(const enchantmenti* p) {
+	auto id = p->id;
+	auto pe = bsdata<enchantmenti>::end();
+	auto last = p;
+	while(p < pe && p->id == id)
+		last = p++;
+	return last;
+}
+
+void update_enchantments() {
+	for(auto& e : bsdata<itemi>()) {
+		if(e.enchantments && !e.enchantments_count)
+			e.enchantments_count = find_last(e.enchantments) - e.enchantments + 1;
+	}
 }

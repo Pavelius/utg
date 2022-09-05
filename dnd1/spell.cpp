@@ -18,8 +18,15 @@ BSDATA(spelli) = {
 	{"Shield", {0, 1}, Turn2, Caster},
 	{"Sleep", {0, 1}, Turn4d4, Range240},
 	{"Ventriloquism", {0, 1}, Turn2, Range60},
+	{"ESP", {0, 2}, Hour2, Caster},
+	{"Invisibility", {0, 2}, Permanent, CasterOrCreatureTouched},
+	{"Levitate", {0, 2}, Hour, Caster},
+	{"ShrinkSize", {}, Turn, CasterOrCreatureTouched},
+	{"GrowthSize", {}, Turn, CasterOrCreatureTouched},
+	{"GaseousForm", {}, Turn, CasterOrCreatureTouched},
+	{"DeathPoison", {}, Turn, EnemyCreatureTouched},
 };
-assert_enum(spelli, Ventriloquism)
+assert_enum(spelli, DeathPoison)
 
 static int getduration(duration_s d, int level) {
 	auto r1 = bsdata<durationi>::elements[d].from;

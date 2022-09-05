@@ -1,3 +1,14 @@
+#Enchantment
+
+BasicMagicPotions ShrinkSize "Diminution"
+BasicMagicPotions ESP "ESP"
+BasicMagicPotions GaseousForm "GaseousForm"
+BasicMagicPotions GrowthSize "Growth"
+BasicMagicPotions CureLightWound "Healing"
+BasicMagicPotions Invisibility "Invisibility"
+BasicMagicPotions Levitate "Levitation"
+BasicMagicPotions DeathPoison "Poison"
+
 #Item
 
 NoItem
@@ -79,6 +90,12 @@ PlateArmor cost(60) weight(500) wear(Torso)
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  flags WearShield
  armor ac(1)
+
+AquaPotion cost(10) weight(10) wear(Potion) enchantments(BasicMagicPotions)
+BlackPotion cost(50) weight(10) wear(Potion) enchantments(BasicMagicPotions)
+BluePotion cost(60) weight(10) wear(Potion) enchantments(BasicMagicPotions)
+GreenPotion cost(70) weight(10) wear(Potion) enchantments(BasicMagicPotions)
+YellowPotion cost(100) weight(10) wear(Potion) enchantments(BasicMagicPotions)
 
 #List
 

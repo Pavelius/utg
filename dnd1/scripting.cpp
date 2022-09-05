@@ -3,6 +3,7 @@
 
 creature* player;
 creaturea targets;
+itema items;
 
 static void clear_console() {
 	if(answers::console)
@@ -64,9 +65,20 @@ static bool charge(bool run) {
 	return true;
 }
 
+static bool drink_potion(bool run) {
+	items.select(*player);
+	items.match(Potion, false);
+	if(!items)
+		return false;
+	if(run) {
+	}
+	return false;
+}
+
 static chooseoption combat_options[] = {
 	{"ChargeEnemy", charge},
 	{"AttackMelee", attack_melee},
+	{"DrinkPotion", drink_potion},
 };
 
 static void combat_round() {

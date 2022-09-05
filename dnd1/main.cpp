@@ -20,11 +20,14 @@ static void starting() {
 	combat_mode();
 }
 
+void update_enchantments();
+
 static void initializing() {
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
 	charname::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
+	update_enchantments();
 }
 
 static const char* getavatarst(const void* p) {

@@ -43,10 +43,12 @@ enum reaction_s : unsigned char {
 };
 enum spell_s : unsigned char {
 	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
-	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism
+	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
+	ESP, Invisibility, Levitation,
+	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 enum wear_s : unsigned char {
-	Backpack, BackpackLast = Backpack + 15,
+	Backpack, Potion, BackpackLast = Backpack + 15,
 	MeleeWeapon, MeleeWeaponOffhand, RangedWeapon, ThrownWeapon, Ammunition,
 	Head, Torso, Legs, Gloves, FingerRight, FingerLeft, Elbows,
 };
@@ -68,11 +70,13 @@ struct bonusi {
 	unsigned		rounds;
 	void			clear() { memset(this, 0, sizeof(*this)); }
 };
-struct poweri {
-	const char*		id;
-};
 struct damagei : nameable {
 	feat_s			immunity;
+};
+struct enchantmenti {
+	const char*		id;
+	variant			special;
+	const char*		id_title;
 };
 struct itemi : nameable {
 	struct weaponi {
@@ -87,6 +91,8 @@ struct itemi : nameable {
 	weaponi			weapon;
 	wear_s			wear;
 	flagable<4>		flags;
+	const enchantmenti* enchantments;
+	unsigned		enchantments_count;
 	bool			is(itemf_s v) const { return flags.is(v); }
 };
 struct item {
@@ -110,10 +116,15 @@ struct item {
 	int				getcost() const;
 	int				getcount() const;
 	dice			getdamage() const;
+	const enchantmenti* getenchant() const;
 	void			getstatus(stringbuilder& sb) const;
 	int				getweight() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
+};
+struct itema : adat<item*> {
+	void			select(struct creature& source);
+	void			match(wear_s wear, bool keep);
 };
 struct actable {
 	const char*		name;
@@ -154,7 +165,7 @@ struct spelli : nameable {
 	duration_s		duration;
 	range_s			range;
 	dice			effect;
-	//damage_s		damage;
+	bool			isdurable() const { return duration != Instant; }
 };
 struct spellable {
 	unsigned char	spells[Ventriloquism + 1];
@@ -163,12 +174,6 @@ struct treasure : adat<item> {
 	void			add(item it);
 	void			generate(char symbol);
 	void			take();
-};
-struct enchantmenti {
-	char			level;
-	char			magic;
-	const char*		id;
-	variant			special;
 };
 struct weari {
 	const char*		id;
@@ -192,9 +197,9 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
 	void			create(class_s type, gender_s gender);
-	void			enchant(spell_s, unsigned rounds);
 	void			damage(int value);
 	void			dispell(spell_s effect);
+	void			enchant(spell_s, unsigned rounds);
 	void			finish();
 	void			generate();
 	int				getbonus(ability_s v) const;
@@ -221,6 +226,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			setenemy(const creature* v);
 	void			update();
 	void			update_equipment();
+	void			use(item& it);
 };
 struct creaturea : adat<creature*, 32> {
 	creature*		choose(const char* title) const;

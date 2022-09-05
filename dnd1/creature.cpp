@@ -254,3 +254,11 @@ void creature::create(class_s type, gender_s gender) {
 	start_equipment(this);
 	finish();
 }
+
+void creature::use(item& it) {
+	auto& ei = it.geti();
+	switch(ei.wear) {
+	case Potion:
+		break;
+	}
+}
