@@ -25,7 +25,13 @@ static void backpack_list() {
 		paint_items((creature*)focus_object, false);
 }
 
+static void combatant_list() {
+	for(auto p : game.creatures)
+		label(p->getname(), 0, p);
+}
+
 void initialize_ui() {
 	widget::add("EquipmentList", equipment_list);
 	widget::add("BackpackList", backpack_list);
+	widget::add("CombatantList", combatant_list);
 }

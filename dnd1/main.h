@@ -53,11 +53,6 @@ enum itemf_s : unsigned char {
 	Blunt, Large, Martial, TwoHanded, WearLeather, WearIron, WearShield,
 	Slow, Countable,
 };
-//enum damage_s : unsigned char {
-//	Blundgeon, Slashing, Pierce,
-//	Fire, Cold, Electric, Poison, Magic,
-//	Cure,
-//};
 inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
 typedef flagable<8> spellf;
@@ -78,37 +73,6 @@ struct poweri {
 struct damagei : nameable {
 	feat_s			immunity;
 };
-struct actable {
-	const char*		name;
-	gender_s		gender;
-	void			act(const char* format, ...) const { actv(*answers::console, format, xva_start(format), ' '); }
-	void			actn(const char* format, ...) const { actv(*answers::console, format, xva_start(format), '\n'); }
-	void			actv(stringbuilder& sb, const char* format, const char* format_param, char separator) const;
-	const char*		getname() const { return name; }
-};
-struct statable {
-	char			abilities[SavePoison + 1];
-	void			add(ability_s i, int v) { abilities[i] += v; }
-	void			applybest(ability_s v);
-	void			applyminimal(class_s v);
-	int				get(ability_s i) const { return abilities[i]; }
-	ability_s		getbestability() const;
-	void			rollability();
-};
-struct classi : nameable {
-	ability_s		prime;
-	char			minimal[6];
-	int				tohit, hd;
-};
-struct equipmenti {
-	class_s			type;
-	unsigned char	equipment;
-};
-struct durationi : nameable {
-	short			from, to;
-};
-struct feati : nameable {
-};
 struct itemi : nameable {
 	struct weaponi {
 		dice		damage;
@@ -123,18 +87,6 @@ struct itemi : nameable {
 	wear_s			wear;
 	flagable<4>		flags;
 	bool			is(itemf_s v) const { return flags.is(v); }
-};
-struct itemfi : nameable {
-};
-struct spelli : nameable {
-	char			level[3];
-	duration_s		duration;
-	range_s			range;
-	dice			effect;
-	//damage_s		damage;
-};
-struct spellable {
-	unsigned char	spells[Ventriloquism + 1];
 };
 struct item {
 	unsigned char	type, subtype;
@@ -159,6 +111,50 @@ struct item {
 	dice			getdamage() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
+};
+struct actable {
+	const char*		name;
+	gender_s		gender;
+	void			act(const char* format, ...) const { actv(*answers::console, format, xva_start(format), ' '); }
+	void			actn(const char* format, ...) const { actv(*answers::console, format, xva_start(format), '\n'); }
+	void			actv(stringbuilder& sb, const char* format, const char* format_param, char separator) const;
+	const char*		getname() const { return name; }
+};
+struct statable {
+	char			abilities[SavePoison + 1];
+	void			add(ability_s i, int v) { abilities[i] += v; }
+	void			applybest(ability_s v);
+	void			applyminimal(class_s v);
+	void			equipmentbonus(const item& it);
+	int				get(ability_s i) const { return abilities[i]; }
+	ability_s		getbestability() const;
+	void			rollability();
+};
+struct classi : nameable {
+	ability_s		prime;
+	char			minimal[6];
+	int				tohit, hd;
+};
+struct equipmenti {
+	class_s			type;
+	unsigned char	equipment;
+};
+struct durationi : nameable {
+	short			from, to;
+};
+struct feati : nameable {
+};
+struct itemfi : nameable {
+};
+struct spelli : nameable {
+	char			level[3];
+	duration_s		duration;
+	range_s			range;
+	dice			effect;
+	//damage_s		damage;
+};
+struct spellable {
+	unsigned char	spells[Ventriloquism + 1];
 };
 struct treasure : adat<item> {
 	void			add(item it);
@@ -221,6 +217,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			set(feat_s v) { feats.set(v); }
 	void			setenemy(const creature* v);
 	void			update();
+	void			update_equipment();
 };
 struct creaturea : adat<creature*, 32> {
 	creature*		choose(const char* title) const;

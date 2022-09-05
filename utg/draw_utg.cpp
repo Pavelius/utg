@@ -239,8 +239,12 @@ static void properties() {
 			if(menu::last->source->pgetproperty)
 				proc = menu::last->source->pgetproperty;
 			label(focus_object, menu::last->elements, proc);
-		} else if(utg::callback::getinfo)
-			label(menu::last, menu::last->elements, utg::callback::getinfo);
+		} else {
+			auto proc = standart_getproperty;
+			if(utg::callback::getinfo)
+				proc = utg::callback::getinfo;
+			label(menu::last, menu::last->elements, proc);
+		}
 		title_width = push_title;
 		menu::last = push_menu;
 	}

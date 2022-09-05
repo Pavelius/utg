@@ -113,9 +113,12 @@ static chooseoption end_round_options[] = {
 };
 
 void combat_mode() {
+	auto push_mode = menu::current_mode;
+	menu::current_mode = "Combat";
 	game.rollinitiative();
 	while(!draw::isnext() && continue_battle(false)) {
 		combat_round();
 		chooseoption::choose(end_round_options, 0);
 	}
+	menu::current_mode = push_mode;
 }

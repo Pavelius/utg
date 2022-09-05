@@ -31,3 +31,10 @@ void statable::applybest(ability_s v) {
 		return;
 	iswap(abilities[v], abilities[m]);
 }
+
+void statable::equipmentbonus(const item& it) {
+	if(!it)
+		return;
+	auto& ei = it.geti();
+	abilities[AC] += ei.armor.ac;
+}

@@ -74,18 +74,13 @@ int creature::getbonush(ability_s v) const {
 }
 
 bool creature::attack(ability_s attack, int ac, int bonus) const {
-	auto d = 1 + rand() % 20;
-	auto r = d + bonus + abilities[ToHit];
-	switch(attack) {
-	case MeleeToHit: r += abilities[MeleeToHit]; break;
-	case RangedToHit: r += abilities[RangedToHit]; break;
-	default: break;
-	}
+	auto d = 1 + (rand() % 20);
+	auto r = d + bonus + abilities[ToHit] + abilities[attack];
 	if(d == 1)
 		return false;
 	if(d == 20)
 		return true;
-	return r >= ac;
+	return r >= (10 + ac);
 }
 
 void creature::rangeattack(creature* enemy) {
@@ -204,8 +199,14 @@ static void copyvalues(statable& v1, statable& v2) {
 	v1 = v2;
 }
 
+void creature::update_equipment() {
+	for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1))
+		equipmentbonus(wears[i]);
+}
+
 void creature::update() {
 	copyvalues(*this, basic);
+	update_equipment();
 	auto level = abilities[Level];
 	abilities[ToHit] += maptbl(attack_bonus[bsdata<classi>::elements[type].tohit], level);
 	abilities[MeleeToHit] += getbonus(Strenght);

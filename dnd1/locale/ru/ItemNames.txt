@@ -1,4 +1,10 @@
-﻿FancyStones: Изысканное украшение
+﻿CP: Медная монета
+SP: Серебрянная монета
+EP: Электрумная монета
+GP: Золотая монета
+PP: Платиновая монета
+
+FancyStones: Изысканное украшение
 GemStones: Самоцвет
 JewelStones: Драгоценность
 OrnamentalStones: Декоративное украшение
@@ -18,3 +24,7 @@ RedAmulet: Красный амулет
 RedRing: Красное кольцо
 SilverAmulet: Серебрянный амулет
 SilverRing: Серебрянное кольцо
+
+LeatherArmor: Кожанная броня
+Shield: Щит
+Sword: Меч

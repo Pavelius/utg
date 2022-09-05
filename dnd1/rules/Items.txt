@@ -45,16 +45,16 @@ Sword cost(10) weight(60) wear(MeleeWeapon)
  flags Martial
  weapon damage(1 8)
 
-LeatherArmor cost(20) weight(200)
+LeatherArmor cost(20) weight(200) wear(Torso)
  flags WearLeather
  armor ac(2)
-ChainArmor cost(40) weight(400)
+ChainArmor cost(40) weight(400) wear(Torso)
  flags WearIron
  armor ac(4)
-PlateArmor cost(60) weight(500)
+PlateArmor cost(60) weight(500) wear(Torso)
  flags WearIron
  armor ac(6)
-Shield cost(10) weight(100)
+Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  flags WearShield
  armor ac(1)
 

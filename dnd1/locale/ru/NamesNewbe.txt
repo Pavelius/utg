@@ -1,5 +1,2 @@
 ﻿AC: 
-General: 
-Items: 
-Sword: 
 THAC0: 
