@@ -52,8 +52,8 @@ void creature::raiselevel() {
 	auto d = bsdata<classi>::elements[type].hd;
 	if(d) {
 		auto r = rand() % d;
-		if(n == 1 && type && r < 3)
-			r = 3;
+		while(n == 1 && type && r <= 2)
+			r = rand() % d;
 		basic.abilities[HPMax] += r;
 	}
 }
