@@ -7,15 +7,12 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 	auto p = bsdata<creature>::add();
 	p->create(type, gender);
 	p->set(feat);
-	p->name = p->randomname(type, gender);
 	return p;
 }
 
 static void starting() {
 	auto p1 = create_player(Fighter, Male, Player);
-	p1->generate();
 	auto p2 = create_player(Fighter, Male, Enemy);
-	p2->generate();
 	game.creatures.select();
 	//treasure loot;
 	//loot.generate('A');
@@ -31,10 +28,12 @@ static void initializing() {
 }
 
 static const char* getavatarst(const void* p) {
-	if(((creature*)p)->avatar[0])
+	if(!(*((creature*)p)))
 		return 0;
 	return ((creature*)p)->avatarable::getavatar();
 }
+
+void initialize_ui();
 
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
@@ -44,6 +43,7 @@ int main(int argc, char* argv[]) {
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";
 	draw::object::initialize();
+	initialize_ui();
 	return draw::start(starting, true, initializing);
 }
 

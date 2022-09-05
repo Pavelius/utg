@@ -5,14 +5,14 @@ extern int tab_pixels;
 }
 
 BSDATA(classi) = {
-	{"Monster", ToHit, {}},
-	{"Cleric", Wisdow, {}},
-	{"Dwarf", Strenght, {0, 0, 9, 0, 0, 0}},
-	{"Elf", Dexterity, {0, 0, 0, 9, 0, 0}},
-	{"Fighter", Strenght, {}},
-	{"Halfling", Dexterity, {0, 9, 9, 0, 0, 0}},
-	{"Theif", Dexterity, {}},
-	{"Wizard", Intellect, {}},
+	{"Monster", ToHit, {}, 0, 8},
+	{"Cleric", Wisdow, {}, 1, 6},
+	{"Dwarf", Strenght, {0, 0, 9, 0, 0, 0}, 0, 8},
+	{"Elf", Dexterity, {0, 0, 0, 9, 0, 0}, 0, 6},
+	{"Fighter", Strenght, {}, 0, 8},
+	{"Halfling", Dexterity, {0, 9, 9, 0, 0, 0}, 0, 6},
+	{"Theif", Dexterity, {}, 1, 4},
+	{"Wizard", Intellect, {}, 2, 4},
 };
 assert_enum(classi, Wizard)
 
@@ -43,9 +43,7 @@ static void add_adjust(answers& an, ability_s a) {
 }
 
 static void choose_avatar() {
-	stringbuilder sb(last_avatar.avatar);
-	utg::chooseavatar(sb, getnm("ChooseLook"), (player->gender == Female) ? "f*.*" : "m*.*");
-	player->setavatar(last_avatar.avatar);
+	player->setavatar(avatarable::choose(getnm("ChooseLook"), (player->gender == Female) ? "f*.*" : "m*.*"));
 }
 
 static void adjust_ability_scores() {

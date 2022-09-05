@@ -12,6 +12,6 @@ BSDATAC(menu, 128)
 
 bool menu::isvisible() const {
 	if(!mode || !current_mode)
-		return false;
+		return true;
 	return equal(mode, current_mode);
 }

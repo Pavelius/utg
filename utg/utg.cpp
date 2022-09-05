@@ -13,7 +13,7 @@ const char* utg::getchoose(const char* id) {
 	return getnm(temp);
 }
 
-const char* utg::chooseavatar(answers& an, const char* title) {
+static const char* chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
 	answers::paintcell = draw::avatarch;
 	auto p = (const char*)an.choose(title);
@@ -21,7 +21,7 @@ const char* utg::chooseavatar(answers& an, const char* title) {
 	return p;
 }
 
-void utg::chooseavatar(stringbuilder& result, const char* title, const char* mask) {
+const char* avatarable::choose(const char* title, const char* mask) {
 	answers an; char temp[260];
 	for(io::file::find fn(utg::url_avatars); fn; fn.next()) {
 		auto p = fn.name();
@@ -34,7 +34,5 @@ void utg::chooseavatar(stringbuilder& result, const char* title, const char* mas
 	}
 	for(auto& e : an)
 		e.value = (void*)e.text;
-	auto p = utg::chooseavatar(an, title);
-	if(p)
-		result.add(p);
+	return (const char*)chooseavatar(an, title);
 }

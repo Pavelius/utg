@@ -83,6 +83,12 @@
     <ClCompile Include="statable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">

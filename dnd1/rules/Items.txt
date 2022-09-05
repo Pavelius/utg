@@ -1,5 +1,7 @@
 #Item
 
+NoItem
+
 CP cost(1)
  flags Countable
 SP cost(1)
@@ -39,6 +41,9 @@ Club cost(3) weight(50) wear(MeleeWeapon)
  weapon damage(1 4)
 Dagger cost(3) weight(10) wear(MeleeWeapon)
  weapon damage(1 4)
+Sword cost(10) weight(60) wear(MeleeWeapon)
+ flags Martial
+ weapon damage(1 8)
 
 LeatherArmor cost(20) weight(200)
  flags WearLeather
@@ -66,3 +71,11 @@ LongBow cost(3) weight(10) wear(RangedWeapon)
 
 Jewelry
  elements IronRing SilverRing GoldenRing LeadAmulet CoralAmulet SilverAmulet GoldAmulet
+
+#Equipment
+
+Dwarf BattleAxe
+Dwarf ChainArmor
+Fighter Sword
+Fighter Shield
+Fighter LeatherArmor

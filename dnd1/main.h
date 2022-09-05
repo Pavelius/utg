@@ -87,7 +87,7 @@ struct actable {
 	const char*		getname() const { return name; }
 };
 struct statable {
-	char			abilities[SaveSpells + 1];
+	char			abilities[SavePoison + 1];
 	void			add(ability_s i, int v) { abilities[i] += v; }
 	void			applybest(ability_s v);
 	void			applyminimal(class_s v);
@@ -99,6 +99,10 @@ struct classi : nameable {
 	ability_s		prime;
 	char			minimal[6];
 	int				tohit, hd;
+};
+struct equipmenti {
+	class_s			type;
+	unsigned char	equipment;
 };
 struct durationi : nameable {
 	short			from, to;
@@ -142,6 +146,8 @@ struct item {
 			unsigned char count_nocountable;
 		};
 	};
+	constexpr item() : type(0), subtype(0), count(0) {}
+	constexpr item(unsigned char t) : type(t), subtype(0), count(0) {}
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
 	void			addname(stringbuilder& sb) const;
@@ -150,7 +156,7 @@ struct item {
 	void			create(const char* id, int count = 1);
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 	int				getcount() const;
-	int				hit() const;
+	dice			getdamage() const;
 	bool			iscountable() const { return geti().is(Countable); }
 	void			setcount(int v);
 };
@@ -172,6 +178,7 @@ struct wearable {
 	item			wears[Elbows + 1];
 	void			additem(item& v);
 	void			equip(item& v);
+	bool			isitem(const void* pv) const;
 };
 struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;
@@ -193,9 +200,13 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			generate();
 	int				getbonus(ability_s v) const;
 	int				getbonush(ability_s v) const;
+	dice			getdamage(wear_s v) const;
 	creature*		getenemy() const { return enemy_index == 0xFF ? 0 : bsdata<creature>::elements + enemy_index; }
 	feat_s			getenemyfeat() const;
 	int				gethit() const;
+	static void		getproperty(const void* object, variant id, stringbuilder& sb);
+	void			getstatus(stringbuilder& sb) const;
+	static void		getstatus(const void* object, stringbuilder& sb);
 	void			heal(int value) {}
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
@@ -206,6 +217,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			raiselevel();
 	void			rangeattack(creature* enemy);
 	static const char* randomname(class_s type, gender_s gender);
+	static const char* randomavatar(class_s type, gender_s gender);
 	void			set(feat_s v) { feats.set(v); }
 	void			setenemy(const creature* v);
 	void			update();

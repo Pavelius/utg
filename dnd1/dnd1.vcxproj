@@ -159,6 +159,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="duration.cpp" />
+    <ClCompile Include="information.cpp" />
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itemf.cpp" />
     <ClCompile Include="ongoing.cpp" />

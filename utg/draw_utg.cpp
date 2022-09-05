@@ -197,6 +197,21 @@ static unsigned choose_pages_by_focus(void** ps, void** pe) {
 	return ps - pb;
 }
 
+static void standart_getproperty(const void* object, variant v, stringbuilder& sb) {
+	auto pm = varianti::getmetadata(object);
+	if(!pm)
+		return;
+	for(auto p = pm->metadata; *p; p++) {
+		if(p->source == bsdata<varianti>::elements[v.type].source) {
+			if(p->is(KindDSet)) {
+				auto value = p->get(p->ptr(object, v.value));
+				sb.add("%1i", value);
+			} else if(p->is(KindFlags)) {
+			}
+		}
+	}
+}
+
 static void properties() {
 	void* pages[32];
 	auto count = choose_pages_by_focus(pages, pages + sizeof(pages) / sizeof(pages[0]));
@@ -220,8 +235,10 @@ static void properties() {
 		title_width = 120;
 		menu::last = (menu*)current_tab;
 		if(menu::last->source) {
+			auto proc = standart_getproperty;
 			if(menu::last->source->pgetproperty)
-				label(focus_object, menu::last->elements, menu::last->source->pgetproperty);
+				proc = menu::last->source->pgetproperty;
+			label(focus_object, menu::last->elements, proc);
 		} else if(utg::callback::getinfo)
 			label(menu::last, menu::last->elements, utg::callback::getinfo);
 		title_width = push_title;
@@ -322,9 +339,9 @@ void draw::label(const void* object, const variants& elements, fngetinfo pget) {
 	draw::tab_pixels = textw('0') * 6;
 	hide_separator = caret;
 	for(auto v : elements) {
-		auto object = v.getpointer();
-		if(bsdata<widget>::have(object))
-			((widget*)object)->paint();
+		auto po = v.getpointer();
+		if(bsdata<widget>::have(po))
+			((widget*)po)->paint();
 		else {
 			auto id = v.getid();
 			sb.clear(); pget(object, v, sb);
@@ -423,7 +440,7 @@ static void avatar_common(int index, const void* object, const char* id, void(*p
 	width = p->get(0).sx;
 	height = p->get(0).sy;
 	auto dx = width + metrics::padding + metrics::border * 2;
-	if(caret.x + dx >= draw::getwidth() - 320 - metrics::padding * 2 - metrics::border * 2) {
+	if(caret.x + dx >= clipping.x2) {
 		caret.x = metrics::padding * 2 + metrics::border;
 		caret.y += height + metrics::padding + metrics::border * 2;
 	}

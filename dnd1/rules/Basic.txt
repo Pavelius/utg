@@ -1,4 +1,6 @@
 #Menu
 
-CharacterAbility source(Creature)
- elements Strenght Dexterity Constitution Intellect Wisdow Charisma
+General source(Creature)
+ elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP  AC THAC0 Damage
+Items source(Creature)
+ elements EquipmentList

@@ -21,7 +21,7 @@ void wearable::additem(item& v) {
 }
 
 void wearable::equip(item& v) {
-	for(auto i = Head; i <= Elbows; i = (wear_s)(i + 1)) {
+	for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1)) {
 		if(wears[i])
 			continue;
 		if(!v.canequip(i))
@@ -30,4 +30,8 @@ void wearable::equip(item& v) {
 		v.clear();
 		break;
 	}
+}
+
+bool wearable::isitem(const void* pv) const {
+	return pv >= wears && pv < wears + sizeof(wears) / sizeof(wears[0]);
 }

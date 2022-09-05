@@ -7,7 +7,7 @@ BSDATA(abilityi) = {
 	{"Intellect"},
 	{"Wisdow"},
 	{"Charisma"},
-	{"ToHit"},
+	{"THAC0"},
 	{"Damage"},
 	{"MeleeToHit"},
 	{"MeleeDamage"},

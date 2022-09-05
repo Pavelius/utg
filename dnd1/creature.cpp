@@ -9,15 +9,10 @@ static int ability_bonush[] = {
 	-3, -3, -3, -2, -1, -1, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 1, 1, 2
 };
-static int thac0[3][15] = {
-	{20, 19, 19, 19, 17, 17, 17, 14, 14, 14, 12, 12, 12, 10, 10},
-	{20, 19, 19, 19, 19, 17, 17, 17, 17, 14, 14, 14, 14, 12, 12},
-	{20, 19, 19, 19, 19, 19, 17, 17, 17, 17, 17, 14, 14, 14, 14}
-};
 static int attack_bonus[3][15] = {
-	{0, 0, 0, 0, 2, 2, 2, 5, 5, 5, 7, 7, 7, 9, 9},
-	{0, 0, 0, 0, 0, 2, 2, 2, 2, 5, 5, 5, 5, 7, 7},
-	{0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
+	{-1, 0, 0, 0, 2, 2, 2, 5, 5, 5, 7, 7, 7, 9, 9},
+	{-1, 0, 0, 0, 0, 2, 2, 2, 2, 5, 5, 5, 5, 7, 7},
+	{-1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
 };
 static unsigned fighter_experience[] = {
 	0, 0, 2000, 4000, 8000, 16000, 32000, 64000, 120000, 240000,
@@ -37,9 +32,15 @@ void creature::clear() {
 	enemy_index = 0xFF;
 }
 
-int	creature::gethit() const {
-	auto n = imin(14, get(Level));
-	return attack_bonus[n][bsdata<classi>::elements[type].tohit] + get(ToHit);
+static void start_equipment(creature* p) {
+	for(auto& e : bsdata<equipmenti>()) {
+		if(e.type == p->type) {
+			item it = e.equipment;
+			p->equip(it);
+			if(it)
+				p->additem(it);
+		}
+	}
 }
 
 static unsigned getexperience(unsigned* table, int level) {
@@ -47,13 +48,19 @@ static unsigned getexperience(unsigned* table, int level) {
 }
 
 void creature::raiselevel() {
-	auto n = get(Level);
+	auto n = basic.get(Level);
 	auto d = bsdata<classi>::elements[type].hd;
+	if(d) {
+		auto r = rand() % d;
+		if(n == 1 && type && r < 3)
+			r = 3;
+		basic.abilities[HPMax] += r;
+	}
 }
 
 void creature::levelup() {
-	while(getexperience(fighter_experience, get(Level)) <= experience) {
-		add(Level, 1);
+	while(getexperience(fighter_experience, basic.get(Level) + 1) <= experience) {
+		basic.add(Level, 1);
 		raiselevel();
 	}
 }
@@ -68,10 +75,10 @@ int creature::getbonush(ability_s v) const {
 
 bool creature::attack(ability_s attack, int ac, int bonus) const {
 	auto d = 1 + rand() % 20;
-	auto r = d + gethit() + bonus;
+	auto r = d + bonus + abilities[ToHit];
 	switch(attack) {
-	case MeleeToHit: r += getbonus(Strenght) + get(MeleeToHit); break;
-	case RangedToHit: r += getbonus(Dexterity) + get(RangedToHit); break;
+	case MeleeToHit: r += abilities[MeleeToHit]; break;
+	case RangedToHit: r += abilities[RangedToHit]; break;
 	default: break;
 	}
 	if(d == 1)
@@ -86,7 +93,7 @@ void creature::rangeattack(creature* enemy) {
 	auto& weapon = wears[RangedWeapon];
 	if(attack(RangedToHit, ac, 0)) {
 		actn(getnm("HitRange"));
-		auto result = weapon.hit();
+		auto result = weapon.getdamage().roll();
 		result += get(Damage) + get(RangedDamage);
 		enemy->damage(result);
 	} else
@@ -99,7 +106,7 @@ void creature::meleeattack() {
 	auto& weapon = wears[MeleeWeapon];
 	if(attack(MeleeToHit, ac, 0)) {
 		actn(getnm("HitMelee"));
-		auto result = weapon.hit();
+		auto result = weapon.getdamage().roll();
 		result += get(Damage) + get(MeleeDamage);
 		enemy->damage(xrand(1, 6));
 	} else
@@ -127,22 +134,20 @@ void creature::choose(const slice<chooseoption>& options) {
 	player = push_last;
 }
 
-void creature::create(class_s type, gender_s gender) {
-	clear();
-	this->type = type;
-	this->gender = gender;
-	basic.rollability();
-	basic.applybest(bsdata<classi>::elements[type].prime);
-	basic.applyminimal(type);
-	finish();
-}
-
 const char* creature::randomname(class_s type, gender_s gender) {
 	variant collection[] = {
 		bsdata<classi>::elements + type,
 		bsdata<genderi>::elements + gender
 	};
 	return charname::getname(charname::random(collection));
+}
+
+const char* creature::randomavatar(class_s type, gender_s gender) {
+	auto push_interactive = answers::interactive;
+	answers::interactive = false;
+	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*");
+	answers::interactive = push_interactive;
+	return result;
 }
 
 static bonusi* find_bonus(variant owner, spell_s effect) {
@@ -201,17 +206,47 @@ static void copyvalues(statable& v1, statable& v2) {
 
 void creature::update() {
 	copyvalues(*this, basic);
-	abilities[MeleeToHit] = getbonus(Strenght);
-	abilities[MeleeDamage] = getbonus(Strenght);
-	abilities[RangedToHit] = getbonus(Dexterity);
+	auto level = abilities[Level];
+	abilities[ToHit] += maptbl(attack_bonus[bsdata<classi>::elements[type].tohit], level);
+	abilities[MeleeToHit] += getbonus(Strenght);
+	abilities[RangedToHit] += getbonus(Dexterity);
+	abilities[MeleeDamage] += getbonus(Strenght);
 	abilities[AC] += getbonus(Dexterity);
 	abilities[Speed] += getbonush(Dexterity);
 	abilities[HPMax] += getbonus(Constitution);
+	abilities[SaveWands] += getbonush(Dexterity);
+	abilities[SaveDeath] += getbonus(Constitution);
+	abilities[SavePoison] += getbonus(Constitution);
+	abilities[SaveSpells] += getbonus(Wisdow);
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];
 }
 
 void creature::finish() {
+	levelup();
 	update();
 	abilities[HP] = get(HPMax);
+}
+
+dice creature::getdamage(wear_s v) const {
+	auto r = wears[v].getdamage();
+	r.b += abilities[Damage];
+	switch(v) {
+	case MeleeWeapon: r.b += abilities[MeleeDamage]; break;
+	case RangedWeapon: r.b += abilities[RangedDamage]; break;
+	}
+	return r;
+}
+
+void creature::create(class_s type, gender_s gender) {
+	clear();
+	this->type = type;
+	this->gender = gender;
+	basic.rollability();
+	basic.applybest(bsdata<classi>::elements[type].prime);
+	basic.applyminimal(type);
+	name = randomname(type, gender);
+	setavatar(randomavatar(type, gender));
+	start_equipment(this);
+	finish();
 }

@@ -13,6 +13,7 @@ BSDATAD(variant)
 BSDATAC(bonusi, 256)
 BSDATAC(classi, 16)
 BSDATAC(creature, 256)
+BSDATAC(equipmenti, 256)
 BSDATAC(itemi, 256)
 BSDATAC(monsteri, 128)
 BSDATAC(durationi, 32)
@@ -32,6 +33,10 @@ BSMETA(dice) = {
 	{}};
 BSMETA(durationi) = {
 	BSREQ(id),
+	{}};
+BSMETA(equipmenti) = {
+	BSENM(type, classi),
+	BSENM(equipment, itemi),
 	{}};
 BSMETA(feati) = {
 	BSREQ(id),
@@ -73,16 +78,18 @@ BSMETA(weari) = {
 	BSREQ(id),
 	{}};
 
-#define VAR(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN
+#define VAR(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1)},
-	{"Class", VAR(classi, 1)},
-	{"Creature", VAR(creature, 0)},
-	{"Gender", VAR(genderi, 1)},
-	{"Item", VAR(itemi, 1)},
-	{"List", VAR(listi, 1)},
-	{"Menu", VAR(menu, 1)},
-	{"Monster", VAR(monsteri, 1)},
+	{"Ability", VAR(abilityi), 1},
+	{"Class", VAR(classi), 1},
+	{"Creature", VAR(creature), 0, 0, creature::getstatus, creature::getproperty},
+	{"Equipment", VAR(equipmenti), 2},
+	{"Gender", VAR(genderi), 1},
+	{"Item", VAR(itemi), 1},
+	{"List", VAR(listi), 1},
+	{"Menu", VAR(menu), 1},
+	{"Monster", VAR(monsteri), 1},
+	{"Widget", VAR(widget), 1},
 };
 BSDATAF(varianti)
