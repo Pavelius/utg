@@ -14,7 +14,8 @@ enum ability_s : unsigned char {
 	ToHit, Damage, MeleeToHit, MeleeDamage, RangedToHit, RangedDamage,
 	AC, Level,
 	HP, HPMax,
-	Speed,
+	Speed, Search,
+	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
 	Saves, SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
 };
 enum feat_s : unsigned char {
@@ -239,6 +240,11 @@ struct scene {
 	creaturea		creatures;
 	creature*		choosetarget() const;
 	void			rollinitiative();
+};
+struct roomi {
+	const char*		id;
+	const char*		enter;
+	const char*		look;
 };
 struct gamei : timeable, scene {
 	reaction_s		reaction;

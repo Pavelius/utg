@@ -88,7 +88,7 @@ void item::addname(stringbuilder& sb) const {
 	auto name = getnm(geti().id);
 	sb.add(name);
 	if(count > 1)
-		sb.adds("%1i %Pieces", count);
+		sb.adds("%1i%Pieces", count);
 }
 
 dice item::getdamage() const {
