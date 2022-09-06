@@ -48,6 +48,7 @@ enum spell_s : unsigned char {
 	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
 	ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
+	LastSpell = WizardLock,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 enum wear_s : unsigned char {
@@ -178,7 +179,7 @@ struct spelli : nameable {
 	bool			isdurable() const { return duration != Instant; }
 };
 struct spellable {
-	unsigned char	spells[Ventriloquism + 1];
+	unsigned char	spells[LastSpell + 1];
 };
 struct treasure : adat<item> {
 	void			add(item it);

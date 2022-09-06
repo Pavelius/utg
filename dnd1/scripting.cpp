@@ -58,7 +58,7 @@ static bool charge(bool run) {
 		return false;
 	if(run) {
 		choose_player_enemy();
-		player->add(ToHit, 1);
+		player->add(MeleeToHit, 1);
 		player->add(AC, -1);
 		player->meleeattack();
 	}
