@@ -1,52 +1,73 @@
 #include "main.h"
 
 BSDATA(spelli) = {
-	{"CureLightWound", {1}, Instant, CasterOrCreatureTouched, {1, 6, 1}},
-	{"DetectEvil", {1}, Hour, Range120},
-	{"DetectMagic", {1, 1}, Turn2, Range60},
-	{"Light", {1, 1}, Hour2, Range120},
+	{"CauseLightWound", {1}, Instant, OneEnemy, {1, 6, 1}},
+	{"CauseFear", {1}, Hour2, OneEnemy},
+	{"CureLightWound", {1}, Instant, CasterOrAlly, {1, 6, 1}},
+	{"Darkness", {1, 1}, Hour2, Enviroment},
+	{"DetectEvil", {1}, Hour, OneRandomItem},
+	{"DetectMagic", {1, 1}, Turn2, OneRandomItem},
+	{"Light", {1, 1}, Hour2, Enviroment},
 	{"ProtectionFromEvil", {1, 1}, Hour2, Caster},
-	{"PurifyFoodAndWater", {1}, Permanent, Range10},
-	{"RemoveFear", {1}, Instant, CasterOrCreatureTouched},
-	{"ResistCold", {1}, Hour, Range30},
-	{"CharmPerson", {0, 1}, Instant, Range120},
-	{"FloatingDisc", {0, 1}, Hour, Range5},
-	{"HoldPortal", {0, 1}, Turn2d6, Range10},
-	{"MagicMissile", {0, 1}, Instant, Range150, {1, 6, 1}},
+	{"PurifyFoodAndWater", {1}, Permanent, OneItem},
+	{"RemoveFear", {1}, Instant, CasterOrAlly, {}, {CauseFear}},
+	{"ResistCold", {1}, Hour, CasterOrAlly},
+	{"CharmPerson", {0, 1}, Instant, OneEnemy},
+	{"FloatingDisc", {0, 1}, Hour, Caster},
+	{"HoldPortal", {0, 1}, Turn2d6, OneObject},
+	{"MagicMissile", {0, 1}, Instant, OneEnemy, {1, 6, 1}},
 	{"ReadLanguages", {0, 1}, Turn2, Caster},
 	{"ReadMagic", {0, 1}, Turn, Caster},
 	{"Shield", {0, 1}, Turn2, Caster},
-	{"Sleep", {0, 1}, Turn4d4, Range240},
-	{"Ventriloquism", {0, 1}, Turn2, Range60},
-	{"Blindness", {3, 2}, Permanent, EnemyCreatureTouched},
-	{"ContinualDarkness", {3, 2}, Permanent, Enviroment, {}, {ContinualDarkness, Light}},
-	{"ContinualLight", {3, 2}, Permanent, Enviroment, {}, {ContinualDarkness}},
-	{"DetectInvisibility", {0, 2}, Instant, AllCreatures, {}, {Invisibility}},
+	{"Sleep", {0, 1}, Turn4d4, SomeEnemies},
+	{"Ventriloquism", {0, 1}, Turn2, Enviroment},
+	{"Blindness", {3, 2}, Permanent, OneEnemy},
+	{"ContinualDarkness", {3, 2}, Permanent, Enviroment, {}, {ContinualLight, Light}, Darkness},
+	{"ContinualLight", {3, 2}, Permanent, Enviroment, {}, {ContinualDarkness, Darkness}, Light},
+	{"DetectInvisibility", {0, 2}, Instant, AllEnemies, {}, {Invisibility}},
 	{"ESP", {0, 2}, Hour2, Caster},
-	{"Invisibility", {0, 2}, Permanent, CasterOrCreatureTouched},
+	{"Invisibility", {0, 2}, Permanent, CasterOrAlly},
 	{"Knock", {0, 2}, Instant, Caster},
 	{"Levitate", {0, 2}, Hour, Caster},
 	{"MirrorImages", {0, 2}, Hour, Caster},
-	{"PhantasmalForce", {0, 2}, Hour, Range240},
+	{"PhantasmalForce", {0, 2}, Hour, Enviroment},
 	{"Web", {0, 2}, Hour8, Caster},
 	{"WizardLock", {0, 2}, Permanent, Caster},
-	{"Bless", {2, 0}, Hour, AllAllyCreatures},
-	{"Blight", {2, 0}, Hour, AllAllyCreatures},
-	{"BestowCurse", {3, 4}, Permanent, EnemyCreatureTouched},
-	{"CauseDisease", {3, 0}, Permanent, EnemyCreatureTouched},
-	{"CureDisease", {3, 0}, Instant, CasterOrCreatureTouched, {}, {CauseDisease, Blindness}},
-	{"GrowthOfAnimals", {3, 0}, Hour2, CasterOrCreatureTouched},
-	{"LocateObject", {3, 0}, Hour, Range120},
-	{"RemoveCurse", {3, 4}, Instant, CasterOrCreatureTouched, {}, {BestowCurse}},
+	{"Bless", {2, 0}, Hour, AllAlly},
+	{"Blight", {2, 0}, Hour, AllEnemies},
+	{"FindTraps", {2, 0}, Instant, OneRandomObject},
+	{"HoldPerson", {2, 3}, Instant, OneEnemy},
+	{"KnownAlignment", {2, 0}, Instant, Enviroment},
+	{"ResistFire", {2, 0}, Hour, CasterOrAlly},
+	{"Silence15Radius", {2, 0}, Hour2, Enviroment},
+	{"SnakeCharm", {2, 0}, Turn1d4p1, SomeEnemies},
+	{"SpeakWithAnimals", {2, 0}, Hour, EncounterReaction},
+	{"BestowCurse", {3, 4}, Permanent, OneEnemy},
+	{"CauseDisease", {3, 0}, Permanent, OneEnemy},
+	{"CureDisease", {3, 0}, Instant, CasterOrAlly, {}, {CauseDisease, Blindness}},
+	{"GrowthOfAnimals", {3, 0}, Hour2, CasterOrAlly},
+	{"LocateObject", {3, 0}, Hour, Caster},
+	{"RemoveCurse", {3, 4}, Instant, CasterOrAlly, {}, {BestowCurse}},
 	{"FlameBlade", {3, 0}, Turn, Caster},
 	{"AntiMagicShell", {6, 0}, Hour2, Caster},
 	{"DeathSpell", {6, 0}, Instant, Caster},
 	{"ShrinkSize", {}, Turn, Caster},
 	{"GrowthSize", {}, Turn, Caster},
 	{"GaseousForm", {}, Turn, Caster},
-	{"DeathPoison", {}, Turn, EnemyCreatureTouched},
+	{"DeathPoison", {}, Turn, OneEnemy},
 };
 assert_enum(spelli, DeathPoison)
+
+bool spelli::isevil() const {
+	switch(range) {
+	case OneEnemy:
+	case SomeEnemies:
+	case AllEnemies:
+		return true;
+	default:
+		return false;
+	}
+}
 
 static int getduration(duration_s d, int level) {
 	auto r1 = bsdata<durationi>::elements[d].from;

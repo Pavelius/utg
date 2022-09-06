@@ -36,7 +36,9 @@ void creature::levelup() {
 	}
 }
 
-bool creature::attack(ability_s attack, int ac, int bonus) const {
+bool creature::attack(ability_s attack, int ac, int bonus) {
+	if(is(Invisibility))
+		dispell(Invisibility);
 	auto d = 1 + (rand() % 20);
 	auto r = d + bonus + abilities[attack];
 	if(d == 1)
@@ -185,6 +187,8 @@ void creature::update_finish() {
 	abilities[Speed] += getbonush(Dexterity);
 	abilities[HPMax] += getbonus(Constitution) * abilities[Level];
 	// Saves
+	if(is(BestowCurse))
+		abilities[Saves] -= 2;
 	abilities[SaveDeath] += abilities[Saves] + getbonus(Constitution);
 	abilities[SavePoison] += abilities[Saves] + getbonus(Constitution);
 	abilities[SaveWands] += abilities[Saves] + getbonush(Dexterity);
@@ -202,9 +206,11 @@ void creature::update_finish() {
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];
-	// Special spells
+	// Special spell effect on AC
 	if(is(GaseousForm) && abilities[AC] < 11)
 		abilities[AC] = 11;
+	if(is(Shield) && abilities[AC] < 6)
+		abilities[AC] = 6;
 }
 
 void creature::update() {

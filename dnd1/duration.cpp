@@ -8,6 +8,7 @@ BSDATA(durationi) = {
 	{"Turn", 1 * TURN},
 	{"Turn2", 2 * TURN},
 	{"Turn3", 3 * TURN},
+	{"Turn1d4p1", 2 * TURN, 5 * TURN},
 	{"Turn2d6", 2 * TURN, 12 * TURN},
 	{"Turn4d4", 4 * TURN, 16 * TURN},
 };

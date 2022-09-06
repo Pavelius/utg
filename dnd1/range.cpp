@@ -2,19 +2,17 @@
 
 BSDATA(rangei) = {
 	{"Caster"},
-	{"CasterOrCreatureTouched"},
-	{"EnemyCreatureTouched"},
-	{"AllCreatures"},
-	{"AllAllyCreatures"},
-	{"AllEnemyCreatures"},
-	{"HDEnemyCreatures"},
+	{"CasterOrAlly"},
+	{"OneEnemy"},
+	{"SomeEnemies"},
+	{"AllAlly"},
+	{"AllEnemies"},
+	{"OneItem"},
+	{"OneRandomItem"},
+	{"AllCasterItems"},
+	{"AllPartyItems"},
 	{"Enviroment"},
-	{"Range5"},
-	{"Range10"},
-	{"Range30"},
-	{"Range60"},
-	{"Range120"},
-	{"Range150"},
-	{"Range240"},
+	{"OneObject"},
+	{"OneRandomObject"},
 };
-assert_enum(rangei, Range240)
+assert_enum(rangei, OneRandomObject)

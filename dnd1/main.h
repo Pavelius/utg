@@ -33,25 +33,25 @@ enum class_s : unsigned char {
 enum duration_s : unsigned char {
 	Instant,
 	Round,
-	Turn, Turn2, Turn3, Turn2d6, Turn4d4,
+	Turn, Turn2, Turn3, Turn1d4p1, Turn2d6, Turn4d4,
 	Hour, Hour2, Hour8,
 	Concentration, Permanent,
 };
 enum range_s : unsigned char {
-	Caster, CasterOrCreatureTouched, EnemyCreatureTouched,
-	AllCreatures, AllAllyCreatures, AllEnemyCreatures,
-	HDEnemyCreatures,
-	Enviroment,
-	Range5, Range10, Range30, Range60, Range120, Range150, Range240,
+	Caster, CasterOrAlly, OneEnemy, SomeEnemies,
+	AllAlly, AllEnemies,
+	OneItem, OneRandomItem, AllCasterItems, AllPartyItems,
+	Enviroment, OneObject, OneRandomObject,
+	EncounterReaction,
 };
 enum reaction_s : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly
 };
 enum spell_s : unsigned char {
-	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
+	CauseLightWound, CauseFear, CureLightWound, Darkness, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
 	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
-	Bless, Blight,
+	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,
 	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
 	AntiMagicShell, DeathSpell,
 	LastSpell = DeathSpell,
@@ -192,7 +192,7 @@ struct spelli : nameable {
 	spell_s			mass_effect;
 	dice			hds;
 	bool			isdurable() const { return duration != Instant; }
-	bool			isevil() const { return range == EnemyCreatureTouched; }
+	bool			isevil() const;
 };
 struct spellable {
 	unsigned char	spells[LastSpell + 1];
@@ -214,7 +214,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	char			initiative;
 	unsigned		experience;
 	bool			apply(spell_s, int level, bool run);
-	bool			attack(ability_s attack, int ac, int bonus) const;
+	bool			attack(ability_s attack, int ac, int bonus);
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
 	void			cast(spell_s spell);
