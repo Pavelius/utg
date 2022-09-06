@@ -1,8 +1,11 @@
 #Monster
 
 Skeleton
- abilities Level(1) AC(2)
+ abilities Level(1) AC(7)
  feats Undead
 Orc
- abilities Level(1) AC(3)
+ abilities Level(1) AC(6)
  feats SunSensitive
+Zombie
+ abilities Level(2) AC(8)
+ feats Undead Slow

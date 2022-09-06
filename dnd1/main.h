@@ -20,7 +20,9 @@ enum ability_s : unsigned char {
 };
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	SunSensitive,
+	SunSensitive, Slow,
+	Blunt, Martial, TwoHanded,
+	WearLeather, WearIron, WearLarge, WearShield, Countable,
 	Undead, Summoned, Player, Enemy,
 };
 enum class_s : unsigned char {
@@ -52,10 +54,6 @@ enum wear_s : unsigned char {
 	MeleeWeapon, MeleeWeaponOffhand, RangedWeapon, ThrownWeapon, Ammunition,
 	Head, Torso, Legs, Gloves, FingerRight, FingerLeft, Elbows,
 };
-enum itemf_s : unsigned char {
-	Blunt, Large, Martial, TwoHanded, WearLeather, WearIron, WearShield,
-	Slow, Countable,
-};
 inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
 typedef flagable<8> spellf;
@@ -64,7 +62,7 @@ struct abilityi : nameable {
 struct featable : flagable<4> {};
 struct rangei : nameable {
 };
-struct bonusi {
+struct ongoing {
 	variant			owner;
 	spell_s			effect;
 	unsigned		rounds;
@@ -90,10 +88,10 @@ struct itemi : nameable {
 	armori			armor;
 	weaponi			weapon;
 	wear_s			wear;
-	flagable<4>		flags;
+	featable		flags;
 	const enchantmenti* enchantments;
 	unsigned		enchantments_count;
-	bool			is(itemf_s v) const { return flags.is(v); }
+	bool			is(feat_s v) const { return flags.is(v); }
 };
 struct item {
 	unsigned char	type, subtype;
@@ -101,6 +99,7 @@ struct item {
 		unsigned short count;
 		struct {
 			unsigned char identified : 1;
+			unsigned char broken : 1;
 			unsigned char charge : 5;
 			unsigned char count_nocountable;
 		};
@@ -120,11 +119,18 @@ struct item {
 	void			getstatus(stringbuilder& sb) const;
 	int				getweight() const;
 	bool			iscountable() const { return geti().is(Countable); }
+	bool			ismagical() const { return getenchant()!=0; }
 	void			setcount(int v);
 };
 struct itema : adat<item*> {
 	void			select(struct creature& source);
 	void			match(wear_s wear, bool keep);
+};
+struct wearable {
+	item			wears[Elbows + 1];
+	void			additem(item& v);
+	void			equip(item& v);
+	bool			isitem(const void* pv) const;
 };
 struct actable {
 	const char*		name;
@@ -141,7 +147,11 @@ struct statable {
 	void			applyminimal(class_s v);
 	void			equipmentbonus(const item& it);
 	int				get(ability_s i) const { return abilities[i]; }
+	static int		getattackbonus(int type, int level);
 	ability_s		getbestability() const;
+	int				getbonus(ability_s v) const;
+	int				getbonush(ability_s v) const;
+	static unsigned	getexperience(class_s type, int level);
 	void			rollability();
 };
 struct classi : nameable {
@@ -157,8 +167,6 @@ struct durationi : nameable {
 	short			from, to;
 };
 struct feati : nameable {
-};
-struct itemfi : nameable {
 };
 struct spelli : nameable {
 	char			level[3];
@@ -178,12 +186,6 @@ struct treasure : adat<item> {
 struct weari {
 	const char*		id;
 };
-struct wearable {
-	item			wears[Elbows + 1];
-	void			additem(item& v);
-	void			equip(item& v);
-	bool			isitem(const void* pv) const;
-};
 struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;
 	statable		basic;
@@ -192,29 +194,26 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	unsigned char	enemy_index;
 	char			initiative;
 	unsigned		experience;
-	bool			apply(spell_s, bool run);
+	bool			apply(spell_s, int level, bool run);
 	bool			attack(ability_s attack, int ac, int bonus) const;
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
 	void			create(class_s type, gender_s gender);
 	void			damage(int value);
 	void			dispell(spell_s effect);
+	void			drink(spell_s effect);
 	void			enchant(spell_s, unsigned rounds);
 	void			finish();
 	void			generate();
-	int				getbonus(ability_s v) const;
-	int				getbonush(ability_s v) const;
 	dice			getdamage(wear_s v) const;
 	creature*		getenemy() const { return enemy_index == 0xFF ? 0 : bsdata<creature>::elements + enemy_index; }
 	feat_s			getenemyfeat() const;
-	int				gethit() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
 	void			heal(int value) {}
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
-	bool			isactive(spell_s v) const;
 	bool			isready() const;
 	void			levelup();
 	void			meleeattack();
@@ -226,6 +225,8 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			setenemy(const creature* v);
 	void			update();
 	void			update_equipment();
+	void			update_finish();
+	void			update_spells();
 	void			use(item& it);
 };
 struct creaturea : adat<creature*, 32> {
@@ -263,10 +264,4 @@ struct gamei : timeable, scene {
 extern creature* player;
 extern creaturea targets;
 extern gamei game;
-struct ongoing {
-	spell_s			id;
-	creature*		owner;
-	unsigned		duration;
-	static ongoing*	find(spell_s id, const creature* p);
-};
 void				combat_mode();

@@ -20,7 +20,9 @@ static void starting() {
 	combat_mode();
 }
 
+void initialize_ui();
 void update_enchantments();
+void update_monsters_stats();
 
 static void initializing() {
 	bsreq::read("rules/Items.txt");
@@ -28,6 +30,7 @@ static void initializing() {
 	charname::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
 	update_enchantments();
+	update_monsters_stats();
 }
 
 static const char* getavatarst(const void* p) {
@@ -35,8 +38,6 @@ static const char* getavatarst(const void* p) {
 		return 0;
 	return ((creature*)p)->avatarable::getavatar();
 }
-
-void initialize_ui();
 
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;

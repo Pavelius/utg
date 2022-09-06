@@ -1,6 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 94: Not found requisit `enchantments`
- Line 95: Not found requisit `enchantments`
- Line 96: Not found requisit `enchantments`
- Line 97: Not found requisit `enchantments`
- Line 98: Not found requisit `enchantments`
+﻿In file `rules/Monsters.txt`:
+ Line 11: Not found identifier `Slow`

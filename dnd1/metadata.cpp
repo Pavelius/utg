@@ -10,15 +10,14 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
-BSDATAC(bonusi, 256)
 BSDATAC(classi, 16)
 BSDATAC(creature, 256)
+BSDATAC(durationi, 32)
 BSDATAC(enchantmenti, 256)
 BSDATAC(equipmenti, 256)
 BSDATAC(itemi, 256)
 BSDATAC(monsteri, 128)
-BSDATAC(durationi, 32)
-BSDATAC(ongoing, 128)
+BSDATAC(ongoing, 256)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -50,7 +49,7 @@ BSMETA(feati) = {
 BSMETA(itemi) = {
 	BSREQ(id),
 	BSREQ(cost), BSREQ(weight), BSREQ(count),
-	BSFLG(flags, itemfi),
+	BSFLG(flags, feati),
 	BSENM(wear, weari),
 	BSREQ(weapon),
 	BSREQ(armor),
@@ -62,9 +61,6 @@ BSMETA(itemi::weaponi) = {
 	{}};
 BSMETA(itemi::armori) = {
 	BSREQ(ac),
-	{}};
-BSMETA(itemfi) = {
-	BSREQ(id),
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),

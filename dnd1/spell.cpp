@@ -36,8 +36,7 @@ static int getduration(duration_s d, int level) {
 	return xrand(r1, r2);
 }
 
-bool creature::apply(spell_s id, bool run) {
-	auto level = get(Level);
+bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	switch(id) {
 	case CureLightWound:

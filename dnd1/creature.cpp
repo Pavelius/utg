@@ -1,32 +1,6 @@
 #include "charname.h"
 #include "main.h"
 
-static int ability_bonus[] = {
-	-4, -4, -4, -3, -2, -2, -1, -1, -1, 0,
-	0, 0, 0, 1, 1, 1, 2, 2, 3
-};
-static int ability_bonush[] = {
-	-3, -3, -3, -2, -1, -1, -1, -1, -1, 0,
-	0, 0, 0, 1, 1, 1, 1, 1, 2
-};
-static int attack_bonus[3][15] = {
-	{-1, 0, 0, 0, 2, 2, 2, 5, 5, 5, 7, 7, 7, 9, 9},
-	{-1, 0, 0, 0, 0, 2, 2, 2, 2, 5, 5, 5, 5, 7, 7},
-	{-1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
-};
-static unsigned fighter_experience[] = {
-	0, 0, 2000, 4000, 8000, 16000, 32000, 64000, 120000, 240000,
-	360000, 480000, 600000, 720000, 840000,
-};
-static unsigned elf_experience[] = {
-	0, 0, 4000, 8000, 16000, 32000, 64000, 120000, 250000, 400000,
-	480000, 600000,
-};
-static unsigned dwarf_experience[] = {
-	0, 0, 2200, 4400, 8800, 17000, 35000, 70000, 140000, 270000,
-	400000, 530000, 660000,
-};
-
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 	enemy_index = 0xFF;
@@ -44,10 +18,6 @@ static void start_equipment(creature* p) {
 	}
 }
 
-static unsigned getexperience(unsigned* table, int level) {
-	return table[level];
-}
-
 void creature::raiselevel() {
 	auto n = basic.get(Level);
 	auto d = bsdata<classi>::elements[type].hd;
@@ -60,23 +30,15 @@ void creature::raiselevel() {
 }
 
 void creature::levelup() {
-	while(getexperience(fighter_experience, basic.get(Level) + 1) <= experience) {
+	while(getexperience(type, basic.get(Level) + 1) <= experience) {
 		basic.add(Level, 1);
 		raiselevel();
 	}
 }
 
-int creature::getbonus(ability_s v) const {
-	return maptbl(ability_bonus, get(v));
-}
-
-int creature::getbonush(ability_s v) const {
-	return maptbl(ability_bonush, get(v));
-}
-
 bool creature::attack(ability_s attack, int ac, int bonus) const {
 	auto d = 1 + (rand() % 20);
-	auto r = d + bonus + abilities[ToHit] + abilities[attack];
+	auto r = d + bonus + abilities[attack];
 	if(d == 1)
 		return false;
 	if(d == 20)
@@ -90,7 +52,7 @@ void creature::rangeattack(creature* enemy) {
 	if(attack(RangedToHit, ac, 0)) {
 		actn(getnm("HitRange"));
 		auto result = weapon.getdamage().roll();
-		result += get(Damage) + get(RangedDamage);
+		result += get(RangedDamage);
 		enemy->damage(result);
 	} else
 		actn(getnm("MissRange"));
@@ -103,14 +65,10 @@ void creature::meleeattack() {
 	if(attack(MeleeToHit, ac, 0)) {
 		actn(getnm("HitMelee"));
 		auto result = weapon.getdamage().roll();
-		result += get(Damage) + get(MeleeDamage);
+		result += get(MeleeDamage);
 		enemy->damage(xrand(1, 6));
 	} else
 		actn(getnm("MissMelee"));
-}
-
-bool creature::isactive(spell_s v) const {
-	return ongoing::find(v, this) != 0;
 }
 
 feat_s creature::getenemyfeat() const {
@@ -146,8 +104,8 @@ const char* creature::randomavatar(class_s type, gender_s gender) {
 	return result;
 }
 
-static bonusi* find_bonus(variant owner, spell_s effect) {
-	for(auto& e : bsdata<bonusi>()) {
+static ongoing* find_bonus(variant owner, spell_s effect) {
+	for(auto& e : bsdata<ongoing>()) {
 		if(e.owner == owner && e.effect == effect)
 			return &e;
 	}
@@ -158,7 +116,7 @@ void creature::enchant(spell_s effect, unsigned rounds) {
 	rounds += game.rounds;
 	auto p = find_bonus(this, effect);
 	if(!p) {
-		p = bsdata<bonusi>::add();
+		p = bsdata<ongoing>::add();
 		p->owner = this;
 		p->effect = effect;
 		p->rounds = game.rounds + rounds;
@@ -197,7 +155,9 @@ bool creature::isready() const {
 }
 
 static void copyvalues(statable& v1, statable& v2) {
+	auto hp = v1.abilities[HP];
 	v1 = v2;
+	v1.abilities[HP] = hp;
 }
 
 void creature::update_equipment() {
@@ -205,25 +165,39 @@ void creature::update_equipment() {
 		equipmentbonus(wears[i]);
 }
 
-void creature::update() {
-	auto hp = abilities[HP];
-	copyvalues(*this, basic);
-	abilities[HP] = hp;
-	update_equipment();
-	auto level = abilities[Level];
-	abilities[ToHit] += maptbl(attack_bonus[bsdata<classi>::elements[type].tohit], level);
-	abilities[MeleeToHit] += getbonus(Strenght);
-	abilities[RangedToHit] += getbonus(Dexterity);
-	abilities[MeleeDamage] += getbonus(Strenght);
+void creature::update_spells() {
+}
+
+void creature::update_finish() {
+	// Basic values
+	abilities[ToHit] += getattackbonus(bsdata<classi>::elements[type].tohit, abilities[Level]);
+	// Depended values
+	abilities[MeleeToHit] += abilities[ToHit] + getbonus(Strenght);
+	abilities[MeleeDamage] += abilities[Damage] + getbonus(Strenght);
+	abilities[RangedToHit] += abilities[ToHit] + getbonus(Dexterity);
+	abilities[RangedDamage] += abilities[Damage];
 	abilities[AC] += getbonus(Dexterity);
 	abilities[Speed] += getbonush(Dexterity);
-	abilities[HPMax] += getbonus(Constitution);
-	abilities[SaveWands] += getbonush(Dexterity);
-	abilities[SaveDeath] += getbonus(Constitution);
-	abilities[SavePoison] += getbonus(Constitution);
-	abilities[SaveSpells] += getbonus(Wisdow);
+	abilities[HPMax] += getbonus(Constitution) * abilities[Level];
+	// Saves
+	abilities[SaveDeath] += abilities[Saves] + getbonus(Constitution);
+	abilities[SavePoison] += abilities[Saves] + getbonus(Constitution);
+	abilities[SaveWands] += abilities[Saves] + getbonush(Dexterity);
+	abilities[SaveParalize] += abilities[Saves];
+	abilities[SaveBreathWeapon] += abilities[Saves];
+	abilities[SaveSpells] += abilities[Saves] + getbonus(Wisdow);
+	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];
+	// Special spells
+	if(is(GaseousForm) && abilities[AC] < 11)
+		abilities[AC] = 11;
+}
+
+void creature::update() {
+	copyvalues(*this, basic);
+	update_equipment();
+	update_finish();
 }
 
 void creature::finish() {
@@ -255,10 +229,23 @@ void creature::create(class_s type, gender_s gender) {
 	finish();
 }
 
+void creature::drink(spell_s spell) {
+	auto& ei = bsdata<spelli>::elements[spell];
+	if(ei.isdurable())
+		enchant(spell, (6 + d6()) * 10);
+	else
+		apply(spell, 10, true);
+}
+
 void creature::use(item& it) {
 	auto& ei = it.geti();
+	auto pe = it.getenchant();
 	switch(ei.wear) {
 	case Potion:
+		if(pe) {
+			if(pe->special.iskind<spelli>())
+				drink((spell_s)pe->special.value);
+		}
 		break;
 	}
 }

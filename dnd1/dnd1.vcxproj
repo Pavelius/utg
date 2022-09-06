@@ -163,12 +163,11 @@
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="itema.cpp" />
-    <ClCompile Include="itemf.cpp" />
-    <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="feat.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scripting.cpp" />
@@ -181,6 +180,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\ItemNames.txt" />
+    <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\NameCharacters.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />

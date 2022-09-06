@@ -53,7 +53,7 @@ Club cost(3) weight(50) wear(MeleeWeapon)
 Dagger cost(3) weight(10) wear(MeleeWeapon)
  weapon damage(1 4)
 Halberd cost(7) weight(150) wear(MeleeWeapon)
- flags Martial Slow TwoHanded Large
+ flags Martial Slow TwoHanded WearLarge
  weapon damage(1 10)
 HandAxe cost(4) weight(30) wear(MeleeWeapon)
  flags Martial
@@ -75,7 +75,7 @@ ShortBow cost(25) weight(30) wear(RangedWeapon)
  flags Martial TwoHanded
  weapon damage(1 6) ammunition(Arrow)
 LongBow cost(40) weight(30) wear(RangedWeapon)
- flags Martial Large TwoHanded
+ flags Martial TwoHanded WearLarge
  weapon damage(1 6) ammunition(Arrow)
 
 LeatherArmor cost(20) weight(200) wear(Torso)
