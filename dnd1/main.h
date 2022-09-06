@@ -128,6 +128,10 @@ struct itema : adat<item*> {
 	void			select(struct creature& source);
 	void			match(wear_s wear, bool keep);
 };
+struct spella : adat<spell_s> {
+	void			known(const struct creature& source);
+	void			prepared(const struct creature& source);
+};
 struct wearable {
 	item			wears[Elbows + 1];
 	void			additem(item& v);
@@ -193,7 +197,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;
 	statable		basic;
 	featable		feats;
-	spellf			active_spells;
+	spellf			active_spells, known_spells;
 	unsigned char	enemy_index;
 	char			initiative;
 	unsigned		experience;
@@ -201,6 +205,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	bool			attack(ability_s attack, int ac, int bonus) const;
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
+	void			cast(spell_s spell);
 	void			create(class_s type, gender_s gender);
 	void			damage(int value);
 	void			dispell(spell_s effect);
@@ -217,6 +222,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			heal(int value) {}
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
+	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isready() const;
 	void			levelup();
 	void			meleeattack();

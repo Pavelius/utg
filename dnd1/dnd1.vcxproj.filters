@@ -89,6 +89,9 @@
     <ClCompile Include="monster.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="spella.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">

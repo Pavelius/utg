@@ -4,6 +4,8 @@
 creature* player;
 creaturea targets;
 itema items;
+spella spells;
+static spell_s last_spell;
 
 static void clear_console() {
 	if(answers::console)
@@ -74,6 +76,38 @@ static bool drink_potion(bool run) {
 	}
 	return false;
 }
+
+static bool prepare_spells(bool run) {
+	spells.known(*player);
+	if(!spells)
+		return false;
+	if(run) {
+
+	}
+	return true;
+}
+
+static void choose_spell() {
+	answers an;
+	for(auto spell : spells)
+		an.add((void*)spell, bsdata<spelli>::elements[spell].getname());
+	last_spell = (spell_s)(int)an.choose(getnm("ChooseSpellToCast"));
+}
+
+static bool cast_spells(bool run) {
+	spells.prepared(*player);
+	if(!spells)
+		return false;
+	if(run) {
+		choose_spell();
+		player->cast(spell);
+	}
+	return true;
+}
+
+static chooseoption camp_options[] = {
+	{"PrepareSpells", prepare_spells},
+};
 
 static chooseoption combat_options[] = {
 	{"ChargeEnemy", charge},
