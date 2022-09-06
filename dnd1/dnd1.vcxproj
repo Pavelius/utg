@@ -180,7 +180,6 @@
     <Text Include="locale\ru\ItemNames.txt" />
     <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\NameCharacters.txt" />
-    <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />

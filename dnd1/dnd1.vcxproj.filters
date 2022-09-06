@@ -94,9 +94,6 @@
     <Text Include="locale\ru\Names.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
       <Filter>data</Filter>
     </Text>

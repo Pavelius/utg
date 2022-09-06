@@ -38,7 +38,10 @@ enum duration_s : unsigned char {
 	Concentration, Permanent,
 };
 enum range_s : unsigned char {
-	Caster, CasterOrCreatureTouched, EnemyCreatureTouched, AllCreatures,
+	Caster, CasterOrCreatureTouched, EnemyCreatureTouched,
+	AllCreatures, AllAllyCreatures, AllEnemyCreatures,
+	HDEnemyCreatures,
+	Enviroment,
 	Range5, Range10, Range30, Range60, Range120, Range150, Range240,
 };
 enum reaction_s : unsigned char {
@@ -47,8 +50,11 @@ enum reaction_s : unsigned char {
 enum spell_s : unsigned char {
 	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
-	ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
-	LastSpell = WizardLock,
+	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
+	Bless, Blight,
+	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
+	AntiMagicShell, DeathSpell,
+	LastSpell = DeathSpell,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 enum wear_s : unsigned char {
@@ -182,7 +188,9 @@ struct spelli : nameable {
 	duration_s		duration;
 	range_s			range;
 	dice			effect;
-	spell_s			dispelled[4];
+	spell_s			dispell[4];
+	spell_s			mass_effect;
+	dice			hds;
 	bool			isdurable() const { return duration != Instant; }
 	bool			isevil() const { return range == EnemyCreatureTouched; }
 };

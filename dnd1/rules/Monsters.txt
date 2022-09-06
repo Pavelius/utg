@@ -6,6 +6,7 @@ Skeleton
 Orc
  abilities Level(1) AC(6)
  feats SunSensitive
+
 Zombie
  abilities Level(2) AC(8)
  feats Undead Slow
