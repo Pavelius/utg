@@ -155,9 +155,6 @@
     <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creaturea.cpp" />
-    <ClCompile Include="damage.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="duration.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />

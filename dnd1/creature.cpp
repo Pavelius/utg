@@ -84,7 +84,9 @@ void creature::choose(const slice<chooseoption>& options) {
 	player = this;
 	char temp[260]; stringbuilder sb(temp);
 	actv(sb, getnm("WhatToDo"), 0, 0);
-	chooseoption::choose(options, temp);
+	auto enemy = getenemy();
+	const char* enemy_name = enemy ? enemy->getname() : 0;
+	chooseoption::choose(options, temp, enemy_name);
 	player = push_last;
 }
 
@@ -140,6 +142,11 @@ void creature::setenemy(const creature* v) {
 void creature::damage(int value) {
 	if(value <= 0)
 		return;
+	if(get(IllusionCopies)) {
+		add(IllusionCopies, -1);
+		act("Иллюзия %$1 рассеялась.", getname());
+		return;
+	}
 	auto hp = get(HP) - value;
 	if(hp < -100)
 		hp = -100;

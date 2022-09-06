@@ -1,5 +1,5 @@
 ﻿AppTitle: Драконы и Подземелья
-AttackMelee: Атаковать врага
+AttackMelee: Атаковать %$1
 ContinueBattle: Продолжить битву
 CharacterGeneration: Создание персонажа
 ChargeEnemy: С криком наброситься на врага

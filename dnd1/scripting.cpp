@@ -100,7 +100,7 @@ static bool cast_spells(bool run) {
 		return false;
 	if(run) {
 		choose_spell();
-		player->cast(spell);
+		player->cast(last_spell);
 	}
 	return true;
 }

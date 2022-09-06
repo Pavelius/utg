@@ -35,3 +35,12 @@ void wearable::equip(item& v) {
 bool wearable::isitem(const void* pv) const {
 	return pv >= wears && pv < wears + sizeof(wears) / sizeof(wears[0]);
 }
+
+const char* wearable::getwearname(wear_s id) const {
+	auto it = wears[id];
+	if(it)
+		return it.getname();
+	if(id == MeleeWeapon)
+		return getnm("Fist");
+	return 0;
+}

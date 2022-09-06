@@ -28,9 +28,9 @@ BSDATA(spelli) = {
 	{"PhantasmalForce", {0, 2}, Hour, Range240},
 	{"Web", {0, 2}, Hour8, Caster},
 	{"WizardLock", {0, 2}, Permanent, Caster},
-	{"ShrinkSize", {}, Turn, CasterOrCreatureTouched},
-	{"GrowthSize", {}, Turn, CasterOrCreatureTouched},
-	{"GaseousForm", {}, Turn, CasterOrCreatureTouched},
+	{"ShrinkSize", {}, Turn, Caster},
+	{"GrowthSize", {}, Turn, Caster},
+	{"GaseousForm", {}, Turn, Caster},
 	{"DeathPoison", {}, Turn, EnemyCreatureTouched},
 };
 assert_enum(spelli, DeathPoison)
@@ -47,7 +47,15 @@ bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	switch(id) {
 	case CureLightWound:
-		heal(ei.effect.roll());
+		if(run)
+			heal(ei.effect.roll());
+		break;
+	case MirrorImages:
+		if(run) {
+			auto n = basic.abilities[IllusionCopies] + ei.effect.roll();
+			if(abilities[IllusionCopies] < n)
+				abilities[IllusionCopies] = n;
+		}
 		break;
 	default:
 		if(ei.duration!=Instant && ei.duration!=Permanent)

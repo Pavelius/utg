@@ -68,9 +68,6 @@
     <ClCompile Include="duration.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="damage.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="treasure.cpp">
       <Filter>logic</Filter>
     </ClCompile>

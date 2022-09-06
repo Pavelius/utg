@@ -318,8 +318,11 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 	}
 	*p = 0;
 	char prefix = 0;
+	char padeg = 0;
 	if(*src == '+' || *src == '-')
 		prefix = *src++;
+	if(*src == '$' || *src == '@')
+		padeg = *src++;
 	auto p0 = p;
 	if(*src >= '0' && *src <= '9') {
 		long pn = 0, pnp = 0;
@@ -341,10 +344,16 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 		} else {
 			if(((char**)vl)[pn - 1]) {
 				auto p1 = ((char**)vl)[pn - 1];
-				while(*p1 && p < pe)
-					*p++ = *p1++;
-				if(p < pe)
-					*p = 0;
+				switch(padeg) {
+				case '$': addof(p1); break;
+				case '@': addto(p1); break;
+				default:
+					while(*p1 && p < pe)
+						*p++ = *p1++;
+					if(p < pe)
+						*p = 0;
+					break;
+				}
 			}
 		}
 	} else

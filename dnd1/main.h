@@ -118,6 +118,7 @@ struct item {
 	int				getcount() const;
 	dice			getdamage() const;
 	const enchantmenti* getenchant() const;
+	const char*		getname() const { return geti().getname(); }
 	void			getstatus(stringbuilder& sb) const;
 	int				getweight() const;
 	bool			iscountable() const { return geti().is(Countable); }
@@ -136,6 +137,7 @@ struct wearable {
 	item			wears[Elbows + 1];
 	void			additem(item& v);
 	void			equip(item& v);
+	const char*		getwearname(wear_s id) const;
 	bool			isitem(const void* pv) const;
 };
 struct actable {
@@ -181,6 +183,7 @@ struct spelli : nameable {
 	dice			effect;
 	spell_s			dispelled[4];
 	bool			isdurable() const { return duration != Instant; }
+	bool			isevil() const { return range == EnemyCreatureTouched; }
 };
 struct spellable {
 	unsigned char	spells[LastSpell + 1];
