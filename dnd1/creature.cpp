@@ -154,10 +154,8 @@ bool creature::isready() const {
 	return get(HP) > 0;
 }
 
-static void copyvalues(statable& v1, statable& v2) {
-	auto hp = v1.abilities[HP];
-	v1 = v2;
-	v1.abilities[HP] = hp;
+void creature::update_start() {
+	memcpy(abilities, basic.abilities, sizeof(abilities[0]) * (SavePoison + 1));
 }
 
 void creature::update_equipment() {
@@ -195,8 +193,9 @@ void creature::update_finish() {
 }
 
 void creature::update() {
-	copyvalues(*this, basic);
+	update_start();
 	update_equipment();
+	update_spells();
 	update_finish();
 }
 

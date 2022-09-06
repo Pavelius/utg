@@ -15,7 +15,6 @@ BSDATA(abilityi) = {
 	{"RangedDamage"},
 	{"AC"},
 	{"Level"},
-	{"HP"},
 	{"HPMax"},
 	{"Speed"},
 	{"Search"},
@@ -33,5 +32,7 @@ BSDATA(abilityi) = {
 	{"SaveBreathWeapon"},
 	{"SaveSpells"},
 	{"SavePoison"},
+	{"HP"},
+	{"IllusionCopies"},
 };
-assert_enum(abilityi, SavePoison)
+assert_enum(abilityi, IllusionCopies)

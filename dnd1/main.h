@@ -13,14 +13,15 @@ enum ability_s : unsigned char {
 	Strenght, Dexterity, Constitution, Intellect, Wisdow, Charisma,
 	ToHit, Damage, MeleeToHit, MeleeDamage, RangedToHit, RangedDamage,
 	AC, Level,
-	HP, HPMax,
+	HPMax,
 	Speed, Search,
 	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
 	Saves, SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
+	HP, IllusionCopies,
 };
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	SunSensitive, Slow,
+	SunSensitive, Slow, NormalWeaponImmunity,
 	Blunt, Martial, TwoHanded,
 	WearLeather, WearIron, WearLarge, WearShield, Countable,
 	Undead, Summoned, Player, Enemy,
@@ -33,11 +34,11 @@ enum duration_s : unsigned char {
 	Instant,
 	Round,
 	Turn, Turn2, Turn3, Turn2d6, Turn4d4,
-	Hour, Hour2,
+	Hour, Hour2, Hour8,
 	Concentration, Permanent,
 };
 enum range_s : unsigned char {
-	Caster, CasterOrCreatureTouched, EnemyCreatureTouched,
+	Caster, CasterOrCreatureTouched, EnemyCreatureTouched, AllCreatures,
 	Range5, Range10, Range30, Range60, Range120, Range150, Range240,
 };
 enum reaction_s : unsigned char {
@@ -46,7 +47,7 @@ enum reaction_s : unsigned char {
 enum spell_s : unsigned char {
 	CureLightWound, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
-	ESP, Invisibility, Levitation,
+	ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 enum wear_s : unsigned char {
@@ -141,7 +142,7 @@ struct actable {
 	const char*		getname() const { return name; }
 };
 struct statable {
-	char			abilities[SavePoison + 1];
+	char			abilities[IllusionCopies + 1];
 	void			add(ability_s i, int v) { abilities[i] += v; }
 	void			applybest(ability_s v);
 	void			applyminimal(class_s v);
@@ -173,6 +174,7 @@ struct spelli : nameable {
 	duration_s		duration;
 	range_s			range;
 	dice			effect;
+	spell_s			dispelled[4];
 	bool			isdurable() const { return duration != Instant; }
 };
 struct spellable {
@@ -227,6 +229,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			update_equipment();
 	void			update_finish();
 	void			update_spells();
+	void			update_start();
 	void			use(item& it);
 };
 struct creaturea : adat<creature*, 32> {
