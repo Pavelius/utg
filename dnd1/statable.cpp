@@ -12,6 +12,37 @@ static unsigned dwarf_experience[] = {
 	0, 0, 2200, 4400, 8800, 17000, 35000, 70000, 140000, 270000,
 	400000, 530000, 660000,
 };
+static char cleric_saves[][5] = {
+	{11, 12, 14, 16, 15},
+	{11, 12, 14, 16, 15},
+	{11, 12, 14, 16, 15},
+	{11, 12, 14, 16, 15},
+	{11, 12, 14, 16, 15},
+	{9, 10, 12, 14, 12},
+	{9, 10, 12, 14, 12},
+	{9, 10, 12, 14, 12},
+	{9, 10, 12, 14, 12},
+	{6, 7, 9, 11, 9},
+	{6, 7, 9, 11, 9},
+	{6, 7, 9, 11, 9},
+	{6, 7, 9, 11, 9},
+	{3, 5, 7, 8, 7},
+};
+static char fighter_saves[][5] = {
+	{12, 13, 14, 15, 16},
+	{12, 13, 14, 15, 16},
+	{12, 13, 14, 15, 16},
+	{10, 11, 12, 13, 14},
+	{10, 11, 12, 13, 14},
+	{10, 11, 12, 13, 14},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{6, 7, 8, 8, 10},
+	{6, 7, 8, 8, 10},
+	{6, 7, 8, 8, 10},
+	{4, 5, 6, 5, 8},
+};
 static int ability_bonus[] = {
 	-4, -4, -4, -3, -2, -2, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 2, 2, 3
@@ -43,6 +74,15 @@ unsigned statable::getexperience(class_s type, int level) {
 	case Elf: return maptbl(elf_experience, level);
 	case Dwarf: return maptbl(dwarf_experience, level);
 	default: return maptbl(fighter_experience, level);
+	}
+}
+
+char statable::getsave(class_s type, ability_s save, int level) {
+	if(save == SavePoison)
+		save = SaveDeath;
+	switch(type) {
+	case Cleric: return maptbl(cleric_saves, level)[save - SaveDeath];
+	default: return maptbl(cleric_saves, level)[save - SaveDeath];
 	}
 }
 

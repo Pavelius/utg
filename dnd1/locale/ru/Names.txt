@@ -25,6 +25,7 @@ No: Нет
 Pieces: шт.
 RerollAbilityAgain: Перебросить атрибуты еще раз
 RollRandomAbilities: У вашего персонажа буду следующие атрибуты:
+Saves: Спасброски
 TakeThisAbility: Взять эти атрибуты
 YouMayAdjustAbility: Вы [%1] и можете модифицировать некоторые свои атрибуты.
 Weight: Вес

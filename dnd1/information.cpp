@@ -74,6 +74,9 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 		case Intellect: case Wisdow: case Charisma:
 			sb.add("%1i", p->abilities[id.value]);
 			break;
+		case Saves:
+			sb.add("%1i/%2i/%3i/%4i/%5i", p->get(SaveDeath), p->get(SaveWands), p->get(SaveParalize), p->get(SaveBreathWeapon), p->get(SaveSpells));
+			break;
 		default:
 			sb.add("%1i", p->abilities[id.value]);
 			break;

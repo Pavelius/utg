@@ -191,6 +191,14 @@ void creature::update_finish() {
 	abilities[SaveParalize] += abilities[Saves];
 	abilities[SaveBreathWeapon] += abilities[Saves];
 	abilities[SaveSpells] += abilities[Saves] + getbonus(Wisdow);
+	// Finale saves transformation
+	for(auto i = SaveDeath; i <= SavePoison; i = (ability_s)(i + 1)) {
+		abilities[i] = getsave(type, i, abilities[Level]) - abilities[i];
+		if(abilities[i] < 2)
+			abilities[i] = 2;
+		else if(abilities[i] > 20)
+			abilities[i] = 20;
+	}
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];

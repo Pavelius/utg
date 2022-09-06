@@ -160,6 +160,7 @@ struct statable {
 	int				getbonus(ability_s v) const;
 	int				getbonush(ability_s v) const;
 	static unsigned	getexperience(class_s type, int level);
+	char			getsave(class_s type, ability_s save, int level);
 	void			rollability();
 };
 struct classi : nameable {
