@@ -1,3 +1,9 @@
+#EnchantmentSet
+
+TestSet
+ elements Strenght+2
+ elements Dexterity+2
+
 #Menu
 
 General source(Creature)

@@ -14,6 +14,7 @@ BSDATAC(classi, 16)
 BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
 BSDATAC(enchantmenti, 256)
+BSDATAC(enchantmentseti, 64)
 BSDATAC(equipmenti, 256)
 BSDATAC(itemi, 256)
 BSDATAC(monsteri, 128)
@@ -35,9 +36,12 @@ BSMETA(durationi) = {
 	BSREQ(id),
 	{}};
 BSMETA(enchantmenti) = {
-	BSREQ(id),
 	BSREQ(special),
-	BSREQ(id_title),
+	BSREQ(title),
+	{}};
+BSMETA(enchantmentseti) = {
+	BSREQ(id),
+	BSREQ(elements),
 	{}};
 BSMETA(equipmenti) = {
 	BSENM(type, classi),
@@ -89,6 +93,7 @@ BSDATA(varianti) = {
 	{"Creature", VAR(creature), 0, 0, creature::getstatus, creature::getproperty},
 	{"Equipment", VAR(equipmenti), 2},
 	{"Enchantment", VAR(enchantmenti), 3},
+	{"EnchantmentSet", VAR(enchantmentseti), 1},
 	{"Gender", VAR(genderi), 1},
 	{"Item", VAR(itemi), 1},
 	{"List", VAR(listi), 1},

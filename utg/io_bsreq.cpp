@@ -176,12 +176,15 @@ static void write_value(void* object, const bsreq* req, int index, const valuei&
 	auto p1 = req->ptr(object, index);
 	if(req->is(KindSlice)) {
 		auto ps = (sliceu<int>*)req->ptr(object);
-		auto ci = req->source->getcount();
-		req->source->add();
-		if(!ps->count)
-			ps->start = ci;
-		p1 = (char*)req->source->ptr(ps->start + (ps->count++));
-		req->set(p1, v.number);
+		if(req->source == bsdata<variant>::source_ptr) {
+			auto ci = req->source->getcount();
+			req->source->add();
+			if(!ps->count)
+				ps->start = ci;
+			p1 = (char*)req->source->ptr(ps->start + (ps->count++));
+			req->set(p1, v.number);
+		} else
+			ps->count++;
 	} else if(req->is(KindNumber) || req->is(KindEnum) || req->type == bsmeta<variant>::meta)
 		req->set(p1, v.number);
 	else if(req->is(KindText))
@@ -206,6 +209,13 @@ static void write_value(void* object, const bsreq* req, int index, const valuei&
 		req->set(p1, (long)v.data);
 	else
 		log::error(p, "Unknown type in requisit `%1`", req->id);
+}
+
+static void clear_object(void* object, const bsreq* type) {
+	for(auto req = type; *req; req++) {
+		auto p = req->ptr(object);
+		memset(p, 0, req->lenght);
+	}
 }
 
 static void fill(void* object, const bsreq* type, const valuei* keys, int key_count) {
@@ -239,6 +249,38 @@ static void read_dset(void* object, const bsreq* req) {
 	}
 }
 
+static const bsreq* find_requisit(const bsreq* type, const char* id) {
+	if(!type)
+		return 0;
+	auto req = type->find(temp);
+	if(!req)
+		log::error(p, "Not found requisit `%1`", id);
+	return req;
+}
+
+static void read_element(void* object, const bsreq* type, int level) {
+	valuei v;
+	auto req = type;
+	while(allowparse && isvalue()) {
+		v.clear();
+		read_value(v, req);
+		write_value(object, req, 0, v);
+		req++;
+	}
+}
+
+static void read_slice(void* object, const bsreq* req, int level) {
+	auto ps = (sliceu<int>*)req->ptr(object);
+	if(!ps->count)
+		ps->start = req->source->getcount();
+	while(allowparse && isvalue()) {
+		auto element = req->source->add();
+		clear_object(element, req->type);
+		read_element(element, req->type, level);
+		ps->count++;
+	}
+}
+
 static void read_array(void* object, const bsreq* req) {
 	auto index = 0;
 	while(allowparse && isvalue()) {
@@ -256,15 +298,6 @@ static bool islevel(int level) {
 		return true;
 	p = push_p;
 	return false;
-}
-
-const bsreq* find_requisit(const bsreq* type, const char* id) {
-	if(!type)
-		return 0;
-	auto req = type->find(temp);
-	if(!req)
-		log::error(p, "Not found requisit `%1`", id);
-	return req;
 }
 
 static bool iscrlevel(int n) {
@@ -300,19 +333,17 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 				allowparse = false;
 			} else if(req->is(KindDSet))
 				read_dset(object, req);
-			else if(req->is(KindScalar) && req->count > 0)
+			else if(req->is(KindSlice)) {
+				if(req->source == bsdata<variant>::source_ptr)
+					read_array(object, req);
+				else
+					read_slice(object, req, level + 1);
+			} else if(req->is(KindScalar) && req->count > 0)
 				read_dictionary(req->ptr(object), req->type, level + 1, false);
 			else
 				read_array(object, req);
 			skipsymcr();
 		}
-	}
-}
-
-static void clear_object(void* object, const bsreq* type) {
-	for(auto req = type; *req; req++) {
-		auto p = req->ptr(object);
-		memset(p, 0, req->lenght);
 	}
 }
 

@@ -93,21 +93,5 @@ const enchantmenti* item::getenchant() const {
 	auto& ei = geti();
 	if(!ei.enchantments)
 		return 0;
-	return ei.enchantments + subtype - 1;
-}
-
-static const enchantmenti* find_last(const enchantmenti* p) {
-	auto id = p->id;
-	auto pe = bsdata<enchantmenti>::end();
-	auto last = p;
-	while(p < pe && p->id == id)
-		last = p++;
-	return last;
-}
-
-void update_enchantments() {
-	for(auto& e : bsdata<itemi>()) {
-		if(e.enchantments && !e.enchantments_count)
-			e.enchantments_count = find_last(e.enchantments) - e.enchantments + 1;
-	}
+	return ei.enchantments->elements.begin() + subtype - 1;
 }

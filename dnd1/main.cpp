@@ -21,7 +21,6 @@ static void starting() {
 }
 
 void initialize_ui();
-void update_enchantments();
 void update_monsters_stats();
 
 static void initializing() {
@@ -29,7 +28,6 @@ static void initializing() {
 	bsreq::read("rules/Monsters.txt");
 	charname::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
-	update_enchantments();
 	update_monsters_stats();
 }
 

@@ -1,2 +1,2 @@
-﻿In file `rules/Monsters.txt`:
- Line 11: Not found identifier `Slow`
+﻿In file `rules/Basic.txt`:
+ Line 4: Not found requisit `Test`

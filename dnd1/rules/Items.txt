@@ -1,13 +1,14 @@
-#Enchantment
+#EnchantmentSet
 
-BasicMagicPotions ShrinkSize "Diminution"
-BasicMagicPotions ESP "ESP"
-BasicMagicPotions GaseousForm "GaseousForm"
-BasicMagicPotions GrowthSize "Growth"
-BasicMagicPotions CureLightWound "Healing"
-BasicMagicPotions Invisibility "Invisibility"
-BasicMagicPotions Levitate "Levitation"
-BasicMagicPotions DeathPoison "Poison"
+BasicMagicPotions
+ elements ShrinkSize Diminution
+ elements ESP "ESP"
+ elements GaseousForm "GaseousForm"
+ elements GrowthSize "Growth"
+ elements CureLightWound "Healing"
+ elements Invisibility "Invisibility"
+ elements Levitate "Levitation"
+ elements DeathPoison "Poison"
 
 #Item
 

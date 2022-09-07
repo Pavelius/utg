@@ -80,9 +80,12 @@ struct damagei : nameable {
 	feat_s			immunity;
 };
 struct enchantmenti {
-	const char*		id;
 	variant			special;
-	const char*		id_title;
+	const char*		title;
+};
+struct enchantmentseti {
+	const char*		id;
+	sliceu<enchantmenti> elements;
 };
 struct itemi : nameable {
 	struct weaponi {
@@ -97,8 +100,7 @@ struct itemi : nameable {
 	weaponi			weapon;
 	wear_s			wear;
 	featable		flags;
-	const enchantmenti* enchantments;
-	unsigned		enchantments_count;
+	const enchantmentseti* enchantments;
 	bool			is(feat_s v) const { return flags.is(v); }
 };
 struct item {
