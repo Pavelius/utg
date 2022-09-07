@@ -2,13 +2,13 @@
 
 BasicMagicPotions
  elements ShrinkSize Diminution
- elements ESP "ESP"
- elements GaseousForm "GaseousForm"
- elements GrowthSize "Growth"
- elements CureLightWound "Healing"
- elements Invisibility "Invisibility"
- elements Levitate "Levitation"
- elements DeathPoison "Poison"
+ elements ESP ESP
+ elements GaseousForm GaseousForm
+ elements GrowthSize Growth
+ elements CureLightWound Healing
+ elements Invisibility Invisibility
+ elements Levitate Levitation
+ elements DeathPoison Poison
 
 #Item
 
