@@ -70,6 +70,8 @@ BSMETA(monsteri) = {
 	BSREQ(id),
 	BSDST(abilities, abilityi),
 	BSFLG(feats, feati),
+	BSREQ(dungeon),
+	BSREQ(wilderness),
 	{}};
 BSMETA(rangei) = {
 	BSREQ(id),

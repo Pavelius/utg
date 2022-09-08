@@ -12,7 +12,9 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 
 static void starting() {
 	auto p1 = create_player(Fighter, Male, Player);
-	auto p2 = create_player(Fighter, Male, Enemy);
+	auto p2 = create_player(Fighter, Male, Player);
+	answers::header = "Большой зал";
+	game.encounter(bsdata<monsteri>::find("Skeleton"));
 	game.creatures.select();
 	//treasure loot;
 	//loot.generate('A');
@@ -40,7 +42,8 @@ static const char* getavatarst(const void* p) {
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
-	srand(getcputime());
+	//srand(getcputime());
+	srand(1123);
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";

@@ -26,8 +26,17 @@ static void backpack_list() {
 }
 
 static void combatant_list() {
-	for(auto p : game.creatures)
-		label(p->getname(), 0, p);
+	char temp[260]; stringbuilder sb(temp);
+	for(auto p : game.creatures) {
+		sb.clear();
+		if(!p->isready())
+			sb.add("[~%1]", p->getname());
+		else if(p->is(Enemy))
+			sb.add("[-%1]", p->getname());
+		else
+			sb.add(p->getname());
+		label(temp, 0, p);
+	}
 }
 
 void initialize_ui() {

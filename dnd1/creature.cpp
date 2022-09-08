@@ -88,7 +88,10 @@ void creature::choose(const slice<chooseoption>& options) {
 	actv(sb, getnm("WhatToDo"), 0, 0);
 	auto enemy = getenemy();
 	const char* enemy_name = enemy ? enemy->getname() : 0;
-	chooseoption::choose(options, temp, enemy_name);
+	if(is(Enemy))
+		chooseoption::chooser(options, temp, enemy_name);
+	else
+		chooseoption::choose(options, temp, enemy_name);
 	player = push_last;
 }
 

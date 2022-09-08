@@ -1,6 +1,6 @@
 #Monster
 
-Skeleton
+Skeleton dungeon(1 4) wilderness(1 8)
  abilities Level(1) AC(7)
  feats Undead
 Orc

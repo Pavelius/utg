@@ -40,7 +40,11 @@ void creaturea::matchready(bool keep) {
 	count = ps - data;
 }
 
-creature* creaturea::choose(const char* title) const {
+creature* creaturea::choose(const char* title, bool random) const {
+	if(!count)
+		return 0;
+	if(random)
+		return data[rand() % count];
 	answers an;
 	for(auto p : *this)
 		an.add(p, getnm(p->getname()));

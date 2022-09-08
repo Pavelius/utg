@@ -1,4 +1,6 @@
-﻿AppTitle: Драконы и Подземелья
+﻿AppearSeveral: Внезапно переди появилось несколько %-$1.
+AppearSingle: Внезапно переди появилcя %1.
+AppTitle: Драконы и Подземелья
 AttackMelee: Атаковать %$1
 ContinueBattle: Продолжить битву
 CharacterGeneration: Создание персонажа
@@ -50,3 +52,5 @@ Dexterity: Ловкость
 Intellect: Интеллект
 Strenght: Сила
 Wisdow: Мудрость
+
+Skeleton: Скелет

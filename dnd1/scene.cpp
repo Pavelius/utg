@@ -18,3 +18,18 @@ void scene::rollinitiative() {
 		p->initiative = d6();
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
 }
+
+void scene::encounter(const monsteri* pm) {
+	if(!pm)
+		return;
+	auto count = pm->dungeon.roll();
+	for(auto i = 0; i < count; i++) {
+		auto p = bsdata<creature>::add();
+		p->create(*pm);
+		p->set(Enemy);
+	}
+	if(count > 1)
+		draw::output(getnm("AppearSeveral"), pm->getname());
+	else
+		draw::output(getnm("AppearSingle"), pm->getname());
+}

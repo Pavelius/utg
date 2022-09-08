@@ -223,6 +223,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			clear();
 	void			cast(spell_s spell);
 	void			create(class_s type, gender_s gender);
+	void			create(const struct monsteri& v);
 	void			damage(int value);
 	void			dispell(spell_s effect);
 	void			drink(spell_s effect);
@@ -256,7 +257,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			use(item& it);
 };
 struct creaturea : adat<creature*, 32> {
-	creature*		choose(const char* title) const;
+	creature*		choose(const char* title, bool random = false) const;
 	void			match(feat_s v, bool keep);
 	void			matchenemy(bool keep);
 	void			matchready(bool keep);
@@ -264,6 +265,7 @@ struct creaturea : adat<creature*, 32> {
 };
 struct monsteri : nameable, statable {
 	featable		feats;
+	dice			dungeon, wilderness;
 };
 struct timeable {
 	unsigned		start_year;
@@ -272,6 +274,7 @@ struct timeable {
 struct scene {
 	creaturea		creatures;
 	creature*		choosetarget() const;
+	void			encounter(const monsteri* p);
 	void			rollinitiative();
 };
 struct roomi {

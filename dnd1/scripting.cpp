@@ -38,7 +38,7 @@ static void random_melee_angry(size_t count) {
 static void choose_player_enemy() {
 	if(!player->getenemy()) {
 		choose_enemies();
-		auto pe = targets.choose(getnm("ChooseTarget"));
+		auto pe = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
 		player->setenemy(pe); pe->setenemy(player);
 		random_melee_angry(xrand(1, 2));
 	}
