@@ -2,8 +2,6 @@
 
 #pragma once
 
-typedef adat<struct speech*, 32> speecha;
-
 struct speech {
 	variant			keys[3];
 	const char*		name;
@@ -14,3 +12,4 @@ struct speech {
 	static void		read(const char* url);
 	static void		readl(const char* url);
 };
+typedef adat<speech*, 32> speecha;

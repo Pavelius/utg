@@ -321,7 +321,7 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 	char padeg = 0;
 	if(*src == '+' || *src == '-')
 		prefix = *src++;
-	if(*src == '$' || *src == '@')
+	if(*src == '$' || *src == '@' || *src == '~')
 		padeg = *src++;
 	auto p0 = p;
 	if(*src >= '0' && *src <= '9') {
@@ -347,6 +347,7 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 				switch(padeg) {
 				case '$': addof(p1); break;
 				case '@': addto(p1); break;
+				case '~': addby(p1); break;
 				default:
 					while(*p1 && p < pe)
 						*p++ = *p1++;
@@ -401,7 +402,7 @@ void stringbuilder::addsep(char separator) {
 		return;
 	switch(separator) {
 	case ' ':
-		if(p[-1] == '\n' || p[-1] == '\t' || p[-1]=='[' || p[-1]=='(')
+		if(p[-1] == '\n' || p[-1] == '\t' || p[-1] == '[' || p[-1] == '(')
 			return;
 		break;
 	case '.':
@@ -519,7 +520,7 @@ void stringbuilder::add(const char* s, const grammar* source, const char* def) {
 	}
 	p[0] = 0;
 	if(def)
-		add(def);
+		addv(def, 0);
 }
 
 void stringbuilder::addsym(int sym) {

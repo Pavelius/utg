@@ -3,8 +3,7 @@
 #pragma once
 
 struct recordset : public adat<void*> {
-	void*		choose(const char* title, const char* cancel) const;
-	void*		choosedef(const char* title) const;
+	void*		choose(const char* title, const char* cancel = 0) const;
 	void		distinct();
 	template<typename T> slice<T*> records() const { return slice<T*>((T**)data, count); }
 	void*		random() const;

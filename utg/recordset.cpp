@@ -34,12 +34,6 @@ void* recordset::choose(const char* title, const char* cancel) const {
 	return (void*)an.choose(title, cancel);
 }
 
-void* recordset::choosedef(const char* title) const {
-	if(count==1)
-        return data[0];
-    return choose(title, 0);
-}
-
 void* recordset::choose(const char* id, const char* title, const char* cancel) {
 	auto p = varianti::getsource(id);
 	if(!p || !p->source)

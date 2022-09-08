@@ -38,12 +38,10 @@ static const char* read_line(const char* p, stringbuilder& sb) {
 
 static const char* read_conditions(const char* p, stringbuilder& sb, variant* pb, const variant* pe) {
 	auto count = pe - pb;
+	variant v;
 	while(ischa(p[0])) {
-		p = readidn(p, sb);
-		variant v = (const char*)sb.begin();
-		if(!v)
-			log::error(p, "Can't find variant `%1`", sb.begin());
-		else if(pb >= pe)
+		p = readval(p, sb, v);
+		if(pb >= pe)
 			log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), count);
 		else
 			*pb++ = v;

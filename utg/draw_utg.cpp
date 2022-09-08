@@ -227,7 +227,7 @@ static void properties() {
 	caret.x += metrics::padding;
 	caret.y += metrics::padding;
 	width -= metrics::padding * 2;
-	if(!current_tab)
+	if(!current_tab || !count)
 		return;
 	if(bsdata<menu>::have(current_tab)) {
 		auto push_menu = menu::last;

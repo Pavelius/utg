@@ -141,10 +141,12 @@ void player::background() {
 	auto pn = find_message(type, 4);
 	if(!pn)
 		return;
+	auto push_mode = menu::current_mode;
 	auto push_prompt = answers::prompt;
 	auto push_header = answers::header;
 	char name[260]; stringbuilder sn(name);
 	set_pirate_header(sn);
+	menu::current_mode = "PirateHistory";
 	answers::header = name;
 	char temp[4096]; stringbuilder sb(temp);
 	game.actn(sb, pn->text, 0);
@@ -158,6 +160,7 @@ void player::background() {
 	}
 	answers::header = push_header;
 	answers::prompt = push_prompt;
+	menu::current_mode = push_mode;
 }
 
 void player::epilog(int level, bool apply_tags) {

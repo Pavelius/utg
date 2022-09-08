@@ -5,6 +5,8 @@
 #include "generator.h"
 #include "list.h"
 #include "nameable.h"
+#include "quest.h"
+#include "speech.h"
 #include "utg.h"
 
 #pragma once
