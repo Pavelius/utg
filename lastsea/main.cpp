@@ -86,7 +86,7 @@ static void initialize_widgets() {
 
 int main(int argc, char* argv[]) {
 #ifdef _DEBUG
-	//util_main();
+	util_main();
 	test_handlers();
 #endif // _DEBUG
 	answers::resid = "pirate_kingship";

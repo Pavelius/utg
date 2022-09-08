@@ -78,10 +78,7 @@ void* answers::choose(const char* title, const char* cancel_text, int cancel_mod
 		paintstart();
 		if(beforepaint)
 			beforepaint();
-		auto push_clip = clipping;
-		setclip({push_caret.x, push_caret.y, push_caret.x + width, push_caret.y + height});
 		paintanswers(columns, cancel_text);
-		clipping = push_clip;
 		if(afterpaint)
 			afterpaint();
 		width = push_width;
