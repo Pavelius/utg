@@ -47,6 +47,6 @@ creature* creaturea::choose(const char* title, bool random) const {
 		return data[rand() % count];
 	answers an;
 	for(auto p : *this)
-		an.add(p, getnm(p->getname()));
+		an.add(p, p->getname());
 	return (creature*)an.choose(title, 0, 2);
 }

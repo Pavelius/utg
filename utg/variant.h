@@ -4,6 +4,7 @@
 #pragma once
 
 #define VKIND(T, V) template<> constexpr variant_s variant::kind<T>() { return V; }
+#define VAR(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
 struct bsreq;
 enum variant_s : unsigned char;

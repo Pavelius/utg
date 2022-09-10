@@ -529,6 +529,79 @@ static void rle832(unsigned char* p1, int d1, unsigned char* s, int h, const uns
 	}
 }
 
+static void alc832(unsigned char* p1, int d1, unsigned char* s, int h, const unsigned char* s1, const unsigned char* s2, unsigned char alpha) {
+	const int cbd = 32 / 8;
+	unsigned char* d = p1;
+	if(!alpha)
+		return;
+	auto fr = fore.r;
+	auto fg = fore.g;
+	auto fb = fore.b;
+	while(true) {
+		unsigned char c = *s++;
+		if(c == 0) {
+			p1 += d1;
+			s1 += d1;
+			s2 += d1;
+			if(--h == 0)
+				break;
+			d = p1;
+		} else if(c <= 0x9F) {
+			unsigned char cb;
+			bool need_correct_s = false;
+			// count
+			if(c <= 0x9F) {
+				need_correct_s = true;
+				cb = c;
+			} else if(c == 0xA0)
+				cb = *s++;
+			else
+				cb = c - 0xA0;
+			// clip left invisible part
+			if(d + cb * cbd <= s1 || d > s2) {
+				d += cb * cbd;
+				if(need_correct_s)
+					s += cb;
+				continue;
+			} else if(d < s1) {
+				unsigned char sk = (s1 - d) / cbd;
+				d += sk * cbd;
+				if(need_correct_s)
+					s += sk;
+				cb -= sk;
+			}
+			// visible part
+			do {
+				if(d >= s2)
+					break;
+				auto ap = *s++;
+				if(ap >= 60) {
+					d[0] = fr;
+					d[1] = fg;
+					d[2] = fb;
+				} else {
+					ap = ap << 2;
+					d[0] = (((int)d[0] * (255 - ap)) + ((fr) * (ap))) >> 8;
+					d[1] = (((int)d[1] * (255 - ap)) + ((fg) * (ap))) >> 8;
+					d[2] = (((int)d[2] * (255 - ap)) + ((fb) * (ap))) >> 8;
+				}
+				d += cbd;
+			} while(--cb);
+			// right clip part
+			if(cb) {
+				if(need_correct_s)
+					s += cb;
+				d += cb * cbd;
+			}
+		} else {
+			if(c == 0xA0)
+				d += (*s++) * cbd;
+			else
+				d += (c - 0xA0) * cbd;
+		}
+	}
+}
+
 static void rle832m(unsigned char* p1, int d1, unsigned char* s, int h, const unsigned char* s1, const unsigned char* s2, unsigned char alpha, const color* pallette) {
 	const int cbd = 32 / 8;
 	unsigned char* d = p1;
@@ -712,6 +785,22 @@ static unsigned char* skip_v3(unsigned char* s, int h) {
 				s += c * cbs;
 			}
 		} else if(c == 0xA0)
+			s++;
+	}
+}
+
+static unsigned char* skip_v4(unsigned char* s, int h) {
+	const int cbs = 1;
+	if(!s || !h)
+		return s;
+	while(true) {
+		unsigned char c = *s++;
+		if(c == 0) {
+			if(--h == 0)
+				return s;
+		} else if(c <= 0x9F)
+			s += c * cbs;
+		else if(c == 0xA0)
 			s++;
 	}
 }
@@ -1818,6 +1907,7 @@ void draw::image(int x, int y, const sprite* e, int id, int flags) {
 		if((flags & ImageMirrorV) == 0) {
 			switch(f.encode) {
 			case sprite::ALC: s = skip_alc(s, clipping.y1 - y); break;
+			case sprite::ALC8: s = skip_v4(s, clipping.y1 - y); break;
 			case sprite::RAW: s += (clipping.y1 - y) * f.sx * 3; break;
 			case sprite::RAW8: s += (clipping.y1 - y) * f.sx; break;
 			case sprite::RLE8: s = skip_v3(s, clipping.y1 - y); break;
@@ -1831,6 +1921,7 @@ void draw::image(int x, int y, const sprite* e, int id, int flags) {
 		if(flags & ImageMirrorV) {
 			switch(f.encode) {
 			case sprite::ALC: s = skip_alc(s, y2 - clipping.y2); break;
+			case sprite::ALC8: s = skip_v4(s, y2 - clipping.y2); break;
 			case sprite::RAW: s += (y2 - clipping.y2) * f.sx * 3; break;
 			case sprite::RAW8: s += (y2 - clipping.y2) * f.sx; break;
 			case sprite::RLE8: s = skip_v3(s, y2 - clipping.y2); break;
@@ -1934,6 +2025,14 @@ void draw::image(int x, int y, const sprite* e, int id, int flags) {
 		alc32(ptr(x, sy), wd, s, y2 - y,
 			ptr(clipping.x1, sy), ptr(clipping.x2, sy),
 			fore, (flags & TextItalic) != 0);
+		break;
+	case sprite::ALC8:
+		if(flags & ImageMirrorH) {
+		} else
+			alc832(ptr(x, sy), wd, s, y2 - y,
+				ptr(clipping.x1, sy),
+				ptr(clipping.x2, sy),
+				alpha);
 		break;
 	default:
 		break;
@@ -2115,7 +2214,7 @@ void draw::imager(int xm, int ym, const sprite* e, int id, int r) {
 }
 
 void surface::blend(const surface& source, int alpha) {
-	if(bpp!=32 && bpp != source.bpp || height != source.height || width != source.width)
+	if(bpp != 32 && bpp != source.bpp || height != source.height || width != source.width)
 		return;
 	cpy32a(ptr(0, 0), scanline,
 		const_cast<surface&>(source).ptr(0, 0), source.scanline,

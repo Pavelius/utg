@@ -87,7 +87,6 @@ BSMETA(weari) = {
 	BSREQ(id),
 	{}};
 
-#define VAR(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi), 1},
