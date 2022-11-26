@@ -116,6 +116,7 @@ struct item {
 			unsigned char count_nocountable;
 		};
 	};
+//public:
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
 	void			addname(stringbuilder& sb) const;

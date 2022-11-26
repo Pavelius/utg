@@ -85,22 +85,22 @@ WarSun type(Ships) replace(WarSunPrototype) required(3 0 0 1)
  abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage
 
-#Function
+#List
 
 ChooseSystemToActivate
- script SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
+ elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
 BuyResearchTechnology
- script Resources-4 ResearchTechnology+1
+ elements Resources-4 ResearchTechnology+1
 GainGoods
- script TradeGoods+3
+ elements TradeGoods+3
 GainGoodsSuplier
- script SelectPlayer NoActivePlayer FilterCommodities-1 ChoosePlayer ReplenishCommodities
+ elements SelectPlayer NoActivePlayer FilterCommodities-1 ChoosePlayer ReplenishCommodities
 TacticalInvasion
- script ChooseInvasionPlanet
+ elements ChooseInvasionPlanet
 TacticalMove
- script ChooseMove
+ elements ChooseMove
 TacticalProduce
- script SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
+ elements SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
 
 #Strategy
 

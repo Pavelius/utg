@@ -49,9 +49,9 @@ color color::darken() const {
 
 color color::mix(const color c1, unsigned char a) const {
 	color result;
-	result.r = (((int)r*a) + (c1.r*(255 - a))) >> 8;
-	result.g = (((int)g*a) + (c1.g*(255 - a))) >> 8;
-	result.b = (((int)b*a) + (c1.b*(255 - a))) >> 8;
+	result.r = (((int)r * a) + (c1.r * (255 - a))) >> 8;
+	result.g = (((int)g * a) + (c1.g * (255 - a))) >> 8;
+	result.b = (((int)b * a) + (c1.b * (255 - a))) >> 8;
 	return result;
 }
 
@@ -94,6 +94,9 @@ int	color::scanline(int width, int bpp) {
 		return ((width + 7) / 8) * 4;
 	case 8:
 		return ((width + 3) / 4) * 4;
+	case 16:
+	case -16:
+		return ((width * 2 + 3) / 4) * 4;
 	case 24:
 	case -24:
 		return ((width * 3 + 3) / 4) * 4;
@@ -129,6 +132,18 @@ void color::read(const void* p1, int x, int bpp, const void* pallette) {
 		g = p[1];
 		b = p[2];
 		a = 255;
+		break;
+	case -16:
+		p = (unsigned char*)p1 + x * 2;
+		r = g = b = p[0];
+		a = p[1];
+		break;
+	case 16:
+		p = (unsigned char*)p1 + x * 2;
+		b = (p[0] & 0xF) << 4;
+		g = ((p[0] >> 4) & 0xF) << 4;
+		r = (p[1] & 0xF) << 4;
+		a = ((p[1] >> 4) & 0xF) << 4;
 		break;
 	case -32:
 		p = (unsigned char*)p1 + x * 4;
@@ -212,10 +227,10 @@ void color::convert(void* output, int width, int height, int output_bpp, const v
 	const void* input_static = 0;
 	auto abs_output_bpp = iabs(output_bpp);
 	auto abs_input_bpp = iabs(input_bpp);
-	if(abs_output_bpp > abs_input_bpp && input==output) {
+	if(abs_output_bpp > abs_input_bpp && input == output) {
 		input_static = input;
 		auto old_input = input;
-		input = new char[isc*height];
+		input = new char[isc * height];
 		memcpy((void*)input, old_input, isc * height);
 	}
 	unsigned char* ip = (unsigned char*)input;

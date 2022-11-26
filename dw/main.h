@@ -9,7 +9,7 @@
 #include "gender.h"
 #include "namenpc.h"
 #include "quest.h"
-#include "recordset.h"
+#include "collection.h"
 #include "result.h"
 #include "tag.h"
 #include "utg.h"

@@ -534,9 +534,9 @@ static void alc832(unsigned char* p1, int d1, unsigned char* s, int h, const uns
 	unsigned char* d = p1;
 	if(!alpha)
 		return;
-	auto fr = fore.r;
+	auto fr = fore.b;
 	auto fg = fore.g;
-	auto fb = fore.b;
+	auto fb = fore.r;
 	while(true) {
 		unsigned char c = *s++;
 		if(c == 0) {
@@ -580,10 +580,9 @@ static void alc832(unsigned char* p1, int d1, unsigned char* s, int h, const uns
 					d[1] = fg;
 					d[2] = fb;
 				} else {
-					ap = ap << 2;
-					d[0] = (((int)d[0] * (255 - ap)) + ((fr) * (ap))) >> 8;
-					d[1] = (((int)d[1] * (255 - ap)) + ((fg) * (ap))) >> 8;
-					d[2] = (((int)d[2] * (255 - ap)) + ((fb) * (ap))) >> 8;
+					d[0] = (((int)d[0] * (64 - ap)) + ((fr) * (ap))) >> 6;
+					d[1] = (((int)d[1] * (64 - ap)) + ((fg) * (ap))) >> 6;
+					d[2] = (((int)d[2] * (64 - ap)) + ((fb) * (ap))) >> 6;
 				}
 				d += cbd;
 			} while(--cb);
@@ -593,12 +592,10 @@ static void alc832(unsigned char* p1, int d1, unsigned char* s, int h, const uns
 					s += cb;
 				d += cb * cbd;
 			}
-		} else {
-			if(c == 0xA0)
-				d += (*s++) * cbd;
-			else
-				d += (c - 0xA0) * cbd;
-		}
+		} else if(c == 0xA0)
+			d += (*s++) * cbd;
+		else
+			d += (c - 0xA0) * cbd;
 	}
 }
 
@@ -2644,7 +2641,8 @@ void draw::initialize(const char* title) {
 	draw::fore = colors::text;
 	draw::fore_stroke = colors::border;
 	draw::create(awindow.x, awindow.y, awindow.width, awindow.height, awindow.flags, 32);
-	draw::setcaption(title);
+	if(title)
+		draw::setcaption(title);
 }
 
 void draw::paintstart() {

@@ -10,6 +10,5 @@ struct speech {
 	static bool		match(variant key, const variants& values);
 	static bool		match(const slice<variant>& key, const variants& values);
 	static void		read(const char* url);
-	static void		readl(const char* url);
 };
 typedef adat<speech*, 32> speecha;

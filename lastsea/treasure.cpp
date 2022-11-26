@@ -26,7 +26,7 @@ void treasurei::prepare() {
 }
 
 treasurei* treasurei::pickvaluable() {
-	recordset source;
+	collectiona source;
 	for(auto& e : bsdata<treasurei>()) {
 		if(e.isactive() || e.is(Discarded) || !e.is(Valuable))
 			continue;

@@ -2,7 +2,6 @@
 #include "draw_object.h"
 #include "main.h"
 #include "log.h"
-#include "recordset.h"
 #include "widget.h"
 
 // TODO: Ошибка - нельзя зайти в пестрые пещеры
@@ -27,15 +26,6 @@ static void test_direction() {
 	auto e4 = oceani::to(10, 4);
 	auto e5 = oceani::to(10, 5);
 	auto pt = oceani::gethexsize(); // 84 x 72
-}
-
-static void test_handlers() {
-	recordset source;
-	source.select(bsdata<abilityi>::source);
-	for(auto p : source.records<abilityi>()) {
-		if(!p->id)
-			break;
-	}
 }
 
 #endif // _DEBUG
@@ -87,7 +77,6 @@ static void initialize_widgets() {
 int main(int argc, char* argv[]) {
 #ifdef _DEBUG
 	util_main();
-	test_handlers();
 #endif // _DEBUG
 	answers::resid = "pirate_kingship";
 	utg::callback::getinfo = game.sfgetproperty;

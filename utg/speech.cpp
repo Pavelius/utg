@@ -70,9 +70,3 @@ void speech::read(const char* url) {
 	}
 	log::close();
 }
-
-void speech::readl(const char* locname) {
-	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(locname);
-	read(temp);
-}

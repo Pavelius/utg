@@ -9,7 +9,7 @@
 #include "message.h"
 #include "pathfind.h"
 #include "quest.h"
-#include "recordset.h"
+#include "collection.h"
 #include "tag.h"
 #include "utg.h"
 

@@ -63,7 +63,7 @@ static void initialize() {
 	bsreq::read("rules/Planets.txt");
 	bsreq::read("rules/ActionCards.txt");
 	bsreq::read("rules/Objectives.txt");
-	speech::readl("Speech");
+	//readl("", speech::read("Speech");
 	answers::console = &console;
 	answers::prompt = console_text;
 	gamei::initialize();

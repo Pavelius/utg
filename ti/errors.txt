@@ -1,4 +1,2 @@
-﻿In file `Names.txt`:
- Define translate for `AntimassDeflectors`
- Define translate for `MagenDefenseGrid`
- Define translate for `NeuralMotivator`
+﻿In file `rules/Basic.txt`:
+ Line 91: Not found requisit `script`

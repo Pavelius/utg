@@ -1,6 +1,6 @@
 #include "bsreq.h"
 #include "condition.h"
-#include "function.h"
+#include "list.h"
 #include "main.h"
 #include "variant.h"
 
@@ -123,8 +123,8 @@ BSDATA(varianti) = {
 	{"ActionCard", VRSTD(actioncard), 1},
 	{"Component", VRSTD(component), 1},
 	{"Condition", VRSTD(conditioni), 1},
-	{"Function", VRSTD(function), 1},
 	{"Indicator", VRSTD(indicatori), 1},
+	{"List", VRSTD(listi), 1},
 	{"Objective", VRSTD(objectivei), 1},
 	{"Planet", VRSTD(planeti), 1},
 	{"Player", VRSTD(playeri), 1},
