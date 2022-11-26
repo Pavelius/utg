@@ -100,8 +100,3 @@ void				information(const char* format, ...);
 void				warning(const char* format, ...);
 }
 //extern effectable	game;
-
-VKIND(harm_s, Resource)
-VKIND(move_s, Move)
-VKIND(result_s, Result)
-VKIND(special_s, Special)

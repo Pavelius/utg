@@ -3,65 +3,61 @@
 
 #pragma once
 
-#define VKIND(T, V) template<> constexpr variant_s variant::kind<T>() { return V; }
 #define VAR(T, K) bsmeta<T>::meta, bsdata<T>::source_ptr, K
 
 struct bsreq;
 union variant;
 
 typedef sliceu<variant> variants;
-typedef void (*fnscript)(int index, int bonus);
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
-	const char*			id;
-	const bsreq*		metadata;
-	array*				source;
-	int                 key_count;
-	fngetname			pgetname;
-	fnstatus			pgetinfo;
-	fngetinfo			pgetproperty;
+	const char*		id;
+	const bsreq*	metadata;
+	array*			source;
+	int             key_count;
+	fngetname		pgetname;
+	fnstatus		pgetinfo;
+	fngetinfo		pgetproperty;
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
 	static const varianti* find(const void* object);
-	const char*			getid(const void* object) const;
-	void				getinfo(const void* object, stringbuilder& sb) const;
-	const char*			getname(const void* object) const;
-	int					found(const char* id, size_t size) const;
-	constexpr bool		isnamed() const { return key_count==1; }
-	void				set(void* object, const char* id, void* value) const;
-	void				set(void* object, const char* id, int value) const;
+	const char*		getid(const void* object) const;
+	void			getinfo(const void* object, stringbuilder& sb) const;
+	const char*		getname(const void* object) const;
+	int				found(const char* id, size_t size) const;
+	constexpr bool	isnamed() const { return key_count==1; }
+	void			set(void* object, const char* id, void* value) const;
+	void			set(void* object, const char* id, int value) const;
 };
 union variant {
 	typedef bool (*fnapply)(variant v, bool run);
-	unsigned char		uc[4];
-	unsigned			u;
+	unsigned char	uc[4];
+	unsigned		u;
 	struct {
-		unsigned short	value;
-		char			counter;
-		unsigned char	type;
+		unsigned short value;
+		char		counter;
+		unsigned char type;
 	};
 	constexpr variant() : u(0) {}
 	constexpr variant(unsigned char t, unsigned short n) : value(n), counter(0), type(t) {}
 	constexpr variant(unsigned char t, unsigned short n, char c) : value(n), counter(c), type(t) {}
 	constexpr variant(int u) : u(u) {}
-	template<class T> static constexpr unsigned char kind();
 	template<class T> variant(T* v) : variant((const void*)v) {}
-	template<class T> constexpr variant(T v) : variant(kind<T>(), v) {}
 	constexpr operator int() const { return u; }
 	constexpr explicit operator bool() const { return u != 0; }
 	constexpr bool operator==(const variant& v) const { return u == v.u; }
 	constexpr bool operator!=(const variant& v) const { return u != v.u; }
 	template<class T> operator T*() const { return (T*)((bsdata<varianti>::elements[type].source == bsdata<T>::source_ptr) ? getpointer() : 0); }
-	void				clear() { u = 0; }
-	constexpr bool		issame(const variant& v) const { return type == v.type && value == v.value; }
+	void			clear() { u = 0; }
+	constexpr bool	issame(const variant& v) const { return type == v.type && value == v.value; }
 	template<class T> constexpr bool iskind() const { return bsdata<varianti>::elements[type].source==bsdata<T>::source_ptr; }
-	const char*			getdescription() const;
-	const varianti&		geti() const { return bsdata<varianti>::elements[type]; }
-	const char*			getid() const;
-	void*				getpointer() const { return geti().source->ptr(value); }
-	const char*			getname() const;
-	void				setvariant(unsigned char t, unsigned short v) { type = t; value = v; counter = 0; }
+	const char*		getdescription() const;
+	const varianti&	geti() const { return bsdata<varianti>::elements[type]; }
+	const char*		getid() const;
+	void*			getpointer() const { return geti().source->ptr(value); }
+	const char*		getname() const;
+	void			setvariant(unsigned char t, unsigned short v) { type = t; value = v; counter = 0; }
 };
 template<> variant::variant(const char* v);
 template<> variant::variant(const void* v);

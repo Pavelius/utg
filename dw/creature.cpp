@@ -42,7 +42,7 @@ void creature::choose_abilities() {
 void creature::choose_name() {
 	clearname();
 	short unsigned temp[512];
-	variant source[3] = {last_gender, variant(Class, type), variant(Race, race)};
+	variant source[3] = {variant(Gender, last_gender), variant(Class, type), variant(Race, race)};
 	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
 	if(!count)
 		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 2));

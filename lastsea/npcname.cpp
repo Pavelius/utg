@@ -12,9 +12,9 @@ const char* npcname::getname() const {
 void npcname::randomname() {
 	variant conditions[1];
 	if(rollv(0) <= 3)
-		conditions[0] = Female;
+		conditions[0] = bsdata<genderi>::elements + Female;
 	else
-		conditions[0] = Male;
+		conditions[0] = bsdata<genderi>::elements + Male;
 	nameid = charname::random(conditions);
 	if(rollv(0) <= 2)
 		conditions[0] = "NicknameEnd";

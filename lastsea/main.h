@@ -283,8 +283,3 @@ extern gamei		game;
 extern int			last_result, last_roll, last_bonus;
 extern counters		variables;
 int					rollv(int bonus);
-VKIND(gender_s, Gender)
-VKIND(tag_s, Tag)
-VKIND(treasurei, Card)
-VKIND(trigger_s, Trigger)
-VKIND(groupvaluei, Value)

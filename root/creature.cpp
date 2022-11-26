@@ -58,11 +58,11 @@ const messagei* find_message(variant type, variant result) {
 }
 
 static void fix_move(stringbuilder& sb, move_s v, const creature* pc) {
-	auto p = find_message(v, last_result);
-	if(!p)
-		return;
-	sb.addsep(' ');
-	pc->actv(sb, p->text, 0);
+	//auto p = find_message(v, last_result);
+	//if(!p)
+	//	return;
+	//sb.addsep(' ');
+	//pc->actv(sb, p->text, 0);
 }
 
 void creature::move(move_s v) {
@@ -70,7 +70,7 @@ void creature::move(move_s v) {
 	pbta_roll(get(ei.roll));
 	fix_roll(utg::sb);
 	fix_move(utg::sb, v, this);
-	choose_options(v, get_choose_count(ei.mechanic));
+	//choose_options(v, get_choose_count(ei.mechanic));
 }
 
 void rangeable::addrange(int v) {

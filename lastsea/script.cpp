@@ -38,7 +38,7 @@ static void add_header(const quest* ph) {
 static void add_answer(answers& an, const quest* p) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(p->text);
-	if(p->is(VisitManyTimes))
+	if(p->is(bsdata<tagi>::elements + VisitManyTimes))
 		sb.adds(getnm(bsdata<tagi>::elements[VisitManyTimes].id));
 	an.add(p, temp);
 }
@@ -242,7 +242,7 @@ static bool apply_choose(const quest* ph, const char* title, int count, const ch
 			auto p = (quest*)object;
 			if(!allow_choose(p))
 				return false;
-			if(p->is(VisitManyTimes))
+			if(p->is(bsdata<tagi>::elements + VisitManyTimes))
 				return true;
 			if(ismarked(index))
 				return false;
@@ -370,7 +370,7 @@ static void choose_actions(int count) {
 				return false;
 			if(game.islocked(index))
 				return false;
-			if(p->is(VisitManyTimes))
+			if(p->is(bsdata<tagi>::elements + VisitManyTimes))
 				return true;
 			if(ismarked(index))
 				return false;
@@ -391,8 +391,8 @@ static void choose_actions(int count) {
 	for(auto p = quest::last + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
-		if(p->is(VisitRequired) && count > 0) {
-			if(!p->is(NotUseAction))
+		if(p->is(bsdata<tagi>::elements + VisitRequired) && count > 0) {
+			if(!p->is(bsdata<tagi>::elements + NotUseAction))
 				count--;
 			san.apply(0, p);
 			continue;

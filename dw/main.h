@@ -172,6 +172,3 @@ public:
 	void			usebolster() { bolster--; }
 };
 inline int			d100() { return rand() % 100; }
-
-VKIND(race_s, Race)
-VKIND(gender_s, Gender)

@@ -86,21 +86,20 @@ BSMETA(spelli) = {
 BSMETA(weari) = {
 	BSREQ(id),
 	{}};
-
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi), 1},
-	{"Class", VAR(classi), 1},
-	{"Creature", VAR(creature), 0, 0, creature::getstatus, creature::getproperty},
-	{"Equipment", VAR(equipmenti), 2},
-	{"Enchantment", VAR(enchantmenti), 3},
-	{"EnchantmentSet", VAR(enchantmentseti), 1},
-	{"Gender", VAR(genderi), 1},
-	{"Item", VAR(itemi), 1},
-	{"List", VAR(listi), 1},
-	{"Menu", VAR(menu), 1},
-	{"Monster", VAR(monsteri), 1},
-	{"Spell", VAR(spelli), 1},
-	{"Widget", VAR(widget), 1},
+	{"Ability", VAR(abilityi, 1)},
+	{"Class", VAR(classi, 1)},
+	{"Creature", VAR(creature, 0), 0, creature::getstatus, creature::getproperty},
+	{"Equipment", VAR(equipmenti, 2)},
+	{"Enchantment", VAR(enchantmenti, 3)},
+	{"EnchantmentSet", VAR(enchantmentseti, 1)},
+	{"Gender", VAR(genderi, 1)},
+	{"Item", VAR(itemi, 1)},
+	{"List", VAR(listi, 1)},
+	{"Menu", VAR(menu, 1)},
+	{"Monster", VAR(monsteri, 1)},
+	{"Spell", VAR(spelli, 1)},
+	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

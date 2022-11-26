@@ -2,11 +2,12 @@
 
 #pragma once
 
+enum harm_s : unsigned char;
+
 struct bonusi {
 	const char*		id;
-	variant			object;
+	harm_s			object;
 	int				value, param;
-	static variant_s this_type;
 	static variant	getobject(variant v);
 	static int		getvalue(variant v);
 };
