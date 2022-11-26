@@ -290,7 +290,7 @@ void varianti::getinfo(const void* object, stringbuilder& sb) const {
 }
 
 static void paint_tips() {
-	auto p = varianti::getmetadata(hilite_object);
+	auto p = varianti::find(hilite_object);
 	if(!p)
 		return;
 	char temp[1024]; stringbuilder sb(temp);

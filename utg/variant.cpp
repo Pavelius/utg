@@ -36,7 +36,7 @@ template<> variant::variant(const void* v) : u(0) {
 		auto i = e.source->indexof(v);
 		if(i != -1) {
 			value = i;
-			type = (variant_s)(&e - bsdata<varianti>::elements);
+			type = &e - bsdata<varianti>::elements;
 			break;
 		}
 	}
@@ -78,7 +78,7 @@ const char* varianti::getid(const void* object) const {
 	return "NoName";
 }
 
-const varianti* varianti::getmetadata(const void* object) {
+const varianti* varianti::find(const void* object) {
 	if(object) {
 		for(auto& e : bsdata<varianti>()) {
 			if(e.source && e.source->have(object))
@@ -111,7 +111,7 @@ template<> variant::variant(const char* v) : u(0) {
 			int i = e.found(v, size);
 			if(i != -1) {
 				value = i;
-				type = (variant_s)(&e - bsdata<varianti>::elements);
+				type = &e - bsdata<varianti>::elements;
 				counter = 0;
 				break;
 			}

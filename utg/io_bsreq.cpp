@@ -405,7 +405,7 @@ void varianti::set(void* object, const char* id, int value) const {
 }
 
 const array* varianti::getarray(const void* object, const char* id) {
-	auto pm = getmetadata(object);
+	auto pm = find(object);
 	if(!pm)
 		return 0;
 	auto req = pm->metadata->find(id);

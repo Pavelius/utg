@@ -4,10 +4,9 @@
 #pragma once
 
 #define VKIND(T, V) template<> constexpr variant_s variant::kind<T>() { return V; }
-#define VAR(T) bsmeta<T>::meta, bsdata<T>::source_ptr
+#define VAR(T, K) bsmeta<T>::meta, bsdata<T>::source_ptr, K
 
 struct bsreq;
-enum variant_s : unsigned char;
 union variant;
 
 typedef sliceu<variant> variants;
@@ -22,10 +21,9 @@ struct varianti {
 	fngetname			pgetname;
 	fnstatus			pgetinfo;
 	fngetinfo			pgetproperty;
-	fnscript			pgscript;
 	static const array* getarray(const void* object, const char* id);
 	static const varianti* getsource(const char* id);
-	static const varianti* getmetadata(const void* object);
+	static const varianti* find(const void* object);
 	const char*			getid(const void* object) const;
 	void				getinfo(const void* object, stringbuilder& sb) const;
 	const char*			getname(const void* object) const;
@@ -41,13 +39,13 @@ union variant {
 	struct {
 		unsigned short	value;
 		char			counter;
-		variant_s		type;
+		unsigned char	type;
 	};
 	constexpr variant() : u(0) {}
-	constexpr variant(variant_s t, unsigned short n) : value(n), counter(0), type(t) {}
-	constexpr variant(variant_s t, unsigned short n, char c) : value(n), counter(c), type(t) {}
+	constexpr variant(unsigned char t, unsigned short n) : value(n), counter(0), type(t) {}
+	constexpr variant(unsigned char t, unsigned short n, char c) : value(n), counter(c), type(t) {}
 	constexpr variant(int u) : u(u) {}
-	template<class T> static constexpr variant_s kind();
+	template<class T> static constexpr unsigned char kind();
 	template<class T> variant(T* v) : variant((const void*)v) {}
 	template<class T> constexpr variant(T v) : variant(kind<T>(), v) {}
 	constexpr operator int() const { return u; }
@@ -63,7 +61,7 @@ union variant {
 	const char*			getid() const;
 	void*				getpointer() const { return geti().source->ptr(value); }
 	const char*			getname() const;
-	void				setvariant(variant_s t, unsigned short v) { type = t; value = v; counter = 0; }
+	void				setvariant(unsigned char t, unsigned short v) { type = t; value = v; counter = 0; }
 };
 template<> variant::variant(const char* v);
 template<> variant::variant(const void* v);

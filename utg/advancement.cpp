@@ -37,7 +37,7 @@ void advancement::apply(void* object, fnadd padd, fnset pset) const {
 	auto pv = choose(object, padd);
 	if(pset && pset(object, result, pv))
 		return;
-	auto pm = varianti::getmetadata(object);
+	auto pm = varianti::find(object);
 	if(!pm)
 		return;
 	pm->set(object, result, pv);

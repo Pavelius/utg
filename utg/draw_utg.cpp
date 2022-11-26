@@ -175,7 +175,7 @@ static void paintbars(void** pages, unsigned count) {
 
 static unsigned choose_pages_by_focus(void** ps, void** pe) {
 	auto pb = ps;
-	auto pm = varianti::getmetadata(focus_object);
+	auto pm = varianti::find(focus_object);
 	if(pm) {
 		for(auto& e : bsdata<menu>()) {
 			if(e.source != pm)
@@ -198,7 +198,7 @@ static unsigned choose_pages_by_focus(void** ps, void** pe) {
 }
 
 static void standart_getproperty(const void* object, variant v, stringbuilder& sb) {
-	auto pm = varianti::getmetadata(object);
+	auto pm = varianti::find(object);
 	if(!pm)
 		return;
 	for(auto p = pm->metadata; *p; p++) {
@@ -546,7 +546,7 @@ static void getinformation(const char* id, stringbuilder& sb) {
 }
 
 void utg::getstatus(const void* object, stringbuilder& sb) {
-	auto pm = varianti::getmetadata(object);
+	auto pm = varianti::find(object);
 	if(!pm)
 		return;
 	if(pm->pgetinfo)

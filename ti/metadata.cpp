@@ -4,8 +4,6 @@
 #include "main.h"
 #include "variant.h"
 
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
-
 BSDATAC(actioncard, 128)
 BSDATAC(card, 256)
 BSDATAC(component, 128)
@@ -120,21 +118,21 @@ BSMETA(unitupgrade) = {
 	{}};
 
 BSDATA(varianti) = {
-	{"ActionCard", VRSTD(actioncard), 1},
-	{"Component", VRSTD(component), 1},
-	{"Condition", VRSTD(conditioni), 1},
-	{"Indicator", VRSTD(indicatori), 1},
-	{"List", VRSTD(listi), 1},
-	{"Objective", VRSTD(objectivei), 1},
-	{"Planet", VRSTD(planeti), 1},
-	{"Player", VRSTD(playeri), 1},
-	{"Script", VRSTD(script), 1},
-	{"Step", VRSTD(choosestep), 1},
-	{"Strategy", VRSTD(strategyi), 1},
-	{"System", VRSTD(systemi), 1},
-	{"Tech", VRSTD(techi), 1},
-	{"Unit", VRSTD(uniti), 1},
-	{"UnitType", VRSTD(unit_typei), 1},
-	{"UnitUpgrade", VRSTD(unitupgrade), 1},
+	{"ActionCard", VAR(actioncard, 1)},
+	{"Component", VAR(component, 1)},
+	{"Condition", VAR(conditioni, 1)},
+	{"Indicator", VAR(indicatori, 1)},
+	{"List", VAR(listi, 1)},
+	{"Objective", VAR(objectivei, 1)},
+	{"Planet", VAR(planeti, 1)},
+	{"Player", VAR(playeri, 1)},
+	{"Script", VAR(script, 1)},
+	{"Step", VAR(choosestep, 1)},
+	{"Strategy", VAR(strategyi, 1)},
+	{"System", VAR(systemi, 1)},
+	{"Tech", VAR(techi, 1)},
+	{"Unit", VAR(uniti, 1)},
+	{"UnitType", VAR(unit_typei, 1)},
+	{"UnitUpgrade", VAR(unitupgrade, 1)},
 };
 BSDATAF(varianti)
