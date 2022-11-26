@@ -8,7 +8,6 @@ static stringbuilder console(console_text);
 
 #ifdef _DEBUG
 void util_main();
-#endif // _DEBUG
 
 static void test_movement() {
 	auto p1 = bsdata<troop>::elements + 1;
@@ -47,6 +46,13 @@ static void test_combat() {
 	system->startcombat();
 }
 
+static void test_variant() {
+	variant v = bsdata<uniti>::elements + 1;
+	auto i1 = (unsigned)v;
+}
+
+#endif // _DEBUG
+
 static void new_game() {
 	game.prepare();
 	game.play();
@@ -55,6 +61,7 @@ static void new_game() {
 static void start_game() {
 #ifdef _DEBUG
 	util_main();
+	test_variant();
 #endif // _DEBUG
 	new_game();
 }

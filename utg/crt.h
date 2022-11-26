@@ -151,7 +151,7 @@ public:
 	void*							insert(int index, const void* element);
 	bool							is(const void* e) const { return e >= data && e < (char*)data + count * size; }
 	bool							isgrowable() const { return (count_maximum & 0x80000000) == 0; }
-	void*							ptr(int index) const { return (char*)data + size * index; }
+	constexpr void*					ptr(int index) const { return (char*)data + size * index; }
 	void*							ptrs(int index) const { return (((unsigned)index) < count) ? (char*)data + size * index : 0; }
 	template<class T> slice<T> records() const { return slice<T>((T*)data, count); }
 	void							remove(int index, int elements_count = 1);

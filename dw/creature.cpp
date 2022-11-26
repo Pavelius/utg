@@ -65,13 +65,13 @@ static bool match_party(variant v) {
 static void add_variant(answers& an, const void* object, variant v) {
 	if(v.type == Class) {
 		if(!match_party(v))
-			an.add(v.getpointer(), getnm(v.getid()));
+			an.add(v.getpointer(), v.getname());
 	} else if(v.type == Pack) {
 		char temp[260]; stringbuilder sb(temp);
 		bsdata<packi>::get(v.value).getinfo(sb);
 		an.add(v.getpointer(), temp);
 	} else
-		an.add(v.getpointer(), getnm(v.getid()));
+		an.add(v.getpointer(), v.getname());
 }
 
 static bool set_value(void* object, const char* result, const void* value) {

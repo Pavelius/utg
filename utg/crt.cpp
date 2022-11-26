@@ -340,16 +340,19 @@ static bool matchstring(const char* v1, const char* v2, size_t size) {
 		if(v1[n] != v2[n])
 			return false;
 	}
-	return v1[size] == 0;
+	return memcmp(v1, v2, size)==0 && v1[size] == 0;
 }
 
 int array::findps(const char* value, unsigned offset, size_t size) const {
 	auto m = getcount();
 	for(unsigned i = 0; i < m; i++) {
 		auto p = (const char**)((char*)ptr(i) + offset);
-		if(!(*p))
+		auto pn = *p;
+		if(!pn)
 			continue;
-		if(matchstring(*p, value, size))
+		if(memcmp(pn, value, size)!=0)
+			continue;
+		if(pn[size]==0)
 			return i;
 	}
 	return -1;
