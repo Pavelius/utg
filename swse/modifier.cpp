@@ -1,10 +1,11 @@
 #include "crt.h"
 #include "modifier.h"
 
-modifiers modifier;
+modifier_s modifier;
 
 BSDATA(modifieri) = {
 	{"NoModifier"},
 	{"Permanent"},
+	{"ItemProficiency"},
 };
-BSDATAF(modifieri)
+assert_enum(modifieri, ItemProficiency)

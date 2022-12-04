@@ -8,14 +8,14 @@ void initialize_script();
 static void initialize() {
 	initialize_script();
 	bsreq::read("rules/Items.txt");
+	bsreq::read("rules/Feats.txt");
 	bsreq::read("rules/Advance.txt");
 }
 
 static void generate_character() {
 	creature player;
 	answers an;
-	player.clear();
-	player.create(bsdata<classi>::find("Jedi"), Male);
+	player.create(Jedi, Male);
 	an.add(0, "Test");
 	an.choose();
 }

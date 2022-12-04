@@ -1,3 +1,4 @@
+#pragma once
 #include "damage.h"
 #include "dice.h"
 #include "feat.h"
@@ -5,8 +6,6 @@
 #include "size.h"
 #include "wear.h"
 #include "variant.h"
-
-#pragma once
 
 enum ability_s : unsigned char;
 
@@ -39,7 +38,7 @@ public:
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
 	bool			canequip(wear_s v) const;
-	void			clear() { type = count = 0; }
+	void			clear() { type = count = ammocount = 0; }
 	void			create(const char* id, int count = 1) { create(bsdata<itemi>::find(id), count); }
 	void			create(const itemi* pi, int count = 1);
 	void			damage() {}
@@ -55,14 +54,11 @@ public:
 	const char*		getfullname(int price_percent = 0) const;
 	int				getweight() const;
 	bool			is(wear_s v) const;
-	bool			is(feat_s v) const { return geti().feats.is(v); }
 	bool			is(const itemi& v) const { return v == geti(); }
 	bool			is(const itemi* p) const { return p == &geti(); }
 	bool			is(const item& v) const { return type == v.type; }
 	bool			iscountable() const { return geti().iscountable(); }
 	void			setcount(int v);
-	void			setupgrade(const itemstat* pv);
-	void			upgrade(int chance_suffix, int chance_prefix, int level);
 	void			use() { setcount(getcount() - 1); }
 };
 extern item *last_item;

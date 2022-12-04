@@ -147,11 +147,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="abilityable.cpp" />
+    <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="damage.cpp" />
-    <ClCompile Include="feat.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -165,10 +164,11 @@
     <Text Include="errors.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Feats.txt" />
     <Text Include="rules\Items.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="abilityable.h" />
+    <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="classi.h" />

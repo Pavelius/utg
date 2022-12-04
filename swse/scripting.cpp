@@ -5,11 +5,16 @@
 #include "pushvalue.h"
 #include "script.h"
 
+static void runscriptv(const variants& elements) {
+	for(auto v : elements)
+		runscript(v);
+}
+
 void runscript(variant v) {
-	if(v.iskind<abilityi>())
-		modifier = (modifiers)v.value;
+	if(v.iskind<modifieri>())
+		modifier = (modifier_s)v.value;
 	else if(v.iskind<listi>())
-		runscript(bsdata<listi>::elements[v.value].elements);
+		runscriptv(bsdata<listi>::elements[v.value].elements);
 	else if(v.iskind<script>())
 		bsdata<script>::elements[v.value].proc(v.counter, bsdata<script>::elements[v.value].param);
 	else if(v.iskind<abilityi>()) {
@@ -22,8 +27,7 @@ void runscript(variant v) {
 
 void runscript(const variants& elements) {
 	pushvalue push_modifier(modifier, NoModifier);
-	for(auto v : elements)
-		runscript(v);
+	runscriptv(elements);
 }
 
 void initialize_script() {

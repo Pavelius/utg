@@ -21,7 +21,7 @@
     <ClCompile Include="value.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="abilityable.cpp">
+    <ClCompile Include="ability.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="creature.cpp">
@@ -45,9 +45,6 @@
     <ClCompile Include="damage.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="feat.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -60,6 +57,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Advance.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Feats.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
@@ -79,7 +79,7 @@
     <ClInclude Include="valuei.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="abilityable.h">
+    <ClInclude Include="ability.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="modifier.h">

@@ -2,9 +2,9 @@
 
 #pragma once
 
-enum modifiers : unsigned char {
-	NoModifier, Permanent,
+enum modifier_s : unsigned char {
+	NoModifier, Permanent, ItemProficiency,
 };
 struct modifieri : nameable {
 };
-extern modifiers modifier;
+extern modifier_s modifier;

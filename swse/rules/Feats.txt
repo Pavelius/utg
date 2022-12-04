@@ -1,0 +1,213 @@
+#Feat
+
+AcrobaticStrike
+ArmorProficiencyHeavy
+ArmorProficiencyLight
+ArmorProficiencyMedium
+BanthaRush
+BurstFire
+CarefulShot
+ChargingFire
+Cleave 
+CombatReflexes
+CoordinatedAttack
+Crush
+CyberneticSurgery
+Deadeye
+Dodge
+DoubleAttack
+DreadfulRage
+DualWeaponMasteryI
+DualWeaponMasteryII
+DualWeaponMasteryIII
+ExoticWeaponProficiency
+ExtraRage
+ExtraSecondWind
+FarShot
+ForceBoon
+ForceSensitivity
+ForceTraining
+GreatCleave
+ImprovedCharge
+ImprovedDefenses
+ImprovedDisarm
+ImprovedDamageThreshold
+Linguist
+MartialArtsI
+MartialArtsII
+MartialArtsIII
+MeleeDefense
+MightySwing
+Mobility
+Pin
+PointBlankShot
+PowerAttack
+PowerfulCharge
+PreciseShot
+QuickDraw
+RapidShot
+RapidStrike
+RunningAttack
+ShakeItOff
+SkillFocus
+SkillTraining
+Sniper
+StrongInTheForce
+SurgicalExpertise
+Throw
+Toughness
+Trip
+TripleAttack
+TripleCrit
+VehicularCombat
+WeaponFinesse
+WeaponFocus
+WeaponProficiency
+WhirlwindAttack
+
+AdeptNegotiator
+ForcePersuasion
+ prerequisit AdeptNegotiator
+MasterNegotiator
+ prerequisit AdeptNegotiator
+SkilledAdvisor
+
+AcrobaticRecovery
+BattleMeditation
+ElusiveTarget
+ForceIntuition
+Resilience
+
+ClearMind
+DarkSideSense
+DarkSideScourge
+ prerequisit DarkSideSense
+ForceHaze
+ prerequisit ClearMind
+ResistTheDarkSide
+ prerequisit DarkSideSense
+
+Presence
+DemandSurrender
+ prerequisit Presence
+WeakenResolve
+ prerequisit Presence
+ImprovedWeakenResolve
+ prerequisit Presence WeakenResolve
+
+BolsterAlly
+InspireConfidence
+InspireHaste
+IgniteFervor
+ prerequisit BolsterAlly InspireConfidence
+InspireZeal
+ prerequisit BolsterAlly InspireConfidence IgniteFervor
+
+BornLeader
+Coordinate
+DistantCommand
+ prerequisit BornLeader
+FearlessLeader
+ prerequisit BornLeader
+Rally
+ prerequisit BornLeader DistantCommand
+Trust
+ prerequisit BornLeader Coordinate
+
+Connections
+Educated
+SpontaneousSkill
+ prerequisit Educated
+Wealth
+
+FoolsLuck
+FortunesFavor
+Gambler
+ effect Permanent GamblingCheck+2
+Knack
+LuckyShot
+ prerequisit Knack
+ effect Permanent RerollAttackPerDay+1
+
+DastardlyStrike
+Disruptive
+Skirmisher
+SneakAttack
+ effect Permanent SneakAttackBonus+1
+WalkTheLine
+ prerequisit Disruptive
+
+Gimmick
+MasterSlicer
+ prerequisit Gimmick
+Trace
+
+Hyperdriven
+Spacehound
+StarshipRaider
+ prerequisit Spacehound
+StellarWarrior
+ prerequisit Spacehound
+
+AcuteSenses
+ExpertTracker
+ prerequisit AcuteSenses
+ImprovedInitiative
+ prerequisit AcuteSenses
+KeenShot
+ prerequisit AcuteSenses
+UncannyDodgeI
+ prerequisit AcuteSenses ImprovedInitiative
+UncannyDodgeII
+ prerequisit AcuteSenses ImprovedInitiative UncannyDodgeI
+
+ImprovedStealth
+HiddenMovement
+ prerequisit ImprovedStealth
+TotalConcealment
+ prerequisit HiddenMovement ImprovedStealth
+
+Barter
+FringeSavant
+LongStride
+JuryRigger
+
+Evasion
+ExtremeEffort
+Sprint
+Surefooted
+
+ArmoredDefense
+ImprovedArmoredDefense
+ prerequisit ArmoredDefense
+Juggernaut
+ prerequisit ArmoredDefense
+SecondSkin
+ prerequisit ArmoredDefense
+ArmorMastery
+ prerequisit ArmoredDefense
+
+ExpertGrappler
+GunClub
+MeleeSmash
+StunningStrike
+ prerequisit MeleeSmash
+UnbalanceOpponent
+ prerequisit ExpertGrappler
+
+BattleAnalysis
+CoverFire
+ prerequisit BattleAnalysis
+Demolitionist
+ effect Permanent DemolitionistBonus+2
+DrawFire
+HarmsWay
+ prerequisit Initiative
+Indomitable
+ effect Permanent IndomitableBonus+1
+ToughAsNails
+ effect Permanent SecondWindPerDay+1
+
+DevastatingAttack
+PenetratingAttack
+WeaponSpecialization

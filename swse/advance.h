@@ -1,8 +1,8 @@
+#pragma once
+#include "nameable.h"
 #include "variant.h"
 
-#pragma once
-
-struct advancei {
+struct advancei : nameable {
 	char		level;
 	variant		object;
 	variants	elements;

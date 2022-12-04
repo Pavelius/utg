@@ -2,7 +2,26 @@
 
 NoItem
 
-Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8)
-Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4)
-Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6)
- feats TwoAttacks
+Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(MeleeWeapon)
+Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(MeleeWeapon)
+Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(MeleeWeapon)
+
+Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(RangedWeapon)
+
+BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(RangedWeapon)
+HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(RangedWeapon)
+
+Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(MeleeWeapon)
+ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(MeleeWeapon)
+DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(MeleeWeapon)
+
+#List
+
+SimpleWeaponsMelee
+ elements Club Knife Quarterstaff
+SimpleWeaponsRange
+ elements Bow
+SimpleWeapons
+ elements SimpleWeaponsMelee SimpleWeaponsRange
+Lightsabers
+ elements Lightsaber ShortLightsaber DoubleBladedLightsaber

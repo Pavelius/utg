@@ -5,5 +5,7 @@ BSDATA(damagei) = {
 	{"Bludgeon"},
 	{"Slashing"},
 	{"Piercing"},
+	{"Energy"},
+	{"Ion"},
 };
-BSDATAF(damagei)
+assert_enum(damagei, Ion)

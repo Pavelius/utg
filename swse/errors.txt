@@ -1,2 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 8: Not found identifier `TwoAttacks`
+﻿In file `rules/Feats.txt`:
+ Line 209: Can't find variant `SecondWind`

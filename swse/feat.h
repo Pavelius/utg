@@ -1,13 +1,10 @@
+#pragma once
 #include "nameable.h"
 #include "flagable.h"
+#include "variant.h"
 
-#pragma once
-
-typedef flagable<8> featable;
-
-enum feat_s : unsigned char {
-	TwoAttacks
-};
+typedef flagable<32> featable;
 
 struct feati : nameable {
+	variants	prerequisit, effect;
 };
