@@ -187,6 +187,7 @@
     <ClCompile Include="logparse.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="message.cpp" />
+    <ClCompile Include="nameable.cpp" />
     <ClCompile Include="namenpc.cpp" />
     <ClCompile Include="pathfind.cpp" />
     <ClCompile Include="property.cpp" />

@@ -1,3 +1,4 @@
+#include "crt.h"
 #include "size.h"
 
 BSDATA(sizei) = {

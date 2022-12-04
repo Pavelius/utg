@@ -1,10 +1,9 @@
+#pragma once
 #include "abilityable.h"
 #include "actable.h"
 #include "collection.h"
 #include "classi.h"
 #include "gender.h"
-
-#pragma once
 
 struct creature : actable, abilityable {
 	abilityable	basic;

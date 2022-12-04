@@ -1,6 +1,8 @@
+#include "damage.h"
 #include "dice.h"
 #include "feat.h"
 #include "list.h"
+#include "size.h"
 #include "wear.h"
 #include "variant.h"
 
@@ -9,8 +11,10 @@
 enum ability_s : unsigned char;
 
 struct itemstat : nameable {
-	dice			damage;
+	damages			hit;
+	dice			damage, stun;
 	short			weight, cost;
+	char			size;
 	featable		feats;
 	variants		dress;
 };
@@ -51,6 +55,7 @@ public:
 	const char*		getfullname(int price_percent = 0) const;
 	int				getweight() const;
 	bool			is(wear_s v) const;
+	bool			is(feat_s v) const { return geti().feats.is(v); }
 	bool			is(const itemi& v) const { return v == geti(); }
 	bool			is(const itemi* p) const { return p == &geti(); }
 	bool			is(const item& v) const { return type == v.type; }

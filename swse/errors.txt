@@ -1,2 +1,2 @@
-﻿In file `rules/Advance.txt`:
- Line 4: Can't find variant `Reflexes`
+﻿In file `rules/Items.txt`:
+ Line 8: Not found identifier `TwoAttacks`

@@ -249,6 +249,9 @@
     <ClCompile Include="randomizer.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="nameable.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

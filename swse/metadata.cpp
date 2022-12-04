@@ -40,11 +40,22 @@ BSMETA(classi) = {
 	{}};
 BSMETA(creature) = {
 	{}};
+BSMETA(damagei) = {
+	BSREQ(id),
+	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
-BSMETA(itemi) = {
+BSMETA(feati) = {
 	BSREQ(id),
+	{}};
+BSMETA(itemi) = {
+	BSREQ(id), BSREQ(cost), BSREQ(weight),
+	BSENM(hit, damagei),
+	BSREQ(damage), BSREQ(stun),
+	BSENM(size, sizei),
+	BSREQ(use),
+	BSFLG(feats, feati),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
@@ -66,6 +77,7 @@ BSDATA(varianti) = {
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0)},
 	{"Item", VAR(itemi, 1)},
+	{"Feat", VAR(feati, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1)},
 	{"Size", VAR(sizei, 1)},

@@ -42,6 +42,12 @@
     <ClCompile Include="size.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="damage.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="feat.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -92,6 +98,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="size.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="damage.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
