@@ -7,12 +7,12 @@
 
 using namespace draw;
 
-array*			draw::heroes;
-fngetname		draw::heroes_getavatar;
-const void*		draw::focus_object;
-int				draw::title_width = 220;
-static point	hide_separator;
-static void*	current_tab;
+array*		draw::heroes;
+fngetname	draw::heroes_getavatar;
+const void*	draw::focus_object;
+int			draw::title_width = 220;
+static point hide_separator;
+static void* current_tab;
 
 void set_dark_theme();
 void set_light_theme();
@@ -589,16 +589,13 @@ void initialize_png();
 void check_translation();
 void initialize_translation(const char* locale);
 
-int draw::start(fnevent proc, bool darkmode, fnevent afterread) {
+int draw::start(fnevent proc, fnevent afterread) {
 	initialize_png();
 	if(!utg::callback::getstatus)
 		utg::callback::getstatus = utg::getstatus;
 	if(!proc)
 		return -1;
-	if(darkmode)
-		set_dark_theme();
-	else
-		set_light_theme();
+	set_dark_theme();
 	initialize_widgets();
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ec6fcd84-d297-4e2d-97c3-6798ec7eb2c8}</ProjectGuid>
-    <RootNamespace>ti</RootNamespace>
+    <ProjectGuid>{e95b14d3-3b47-4298-be8f-8d76e358e76d}</ProjectGuid>
+    <RootNamespace>swse</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -73,7 +73,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)utg</IncludePath>
-    <ExternalIncludePath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -90,7 +89,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <DisableSpecificWarnings>26812</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,58 +141,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ability.cpp" />
-    <ClCompile Include="analize.cpp" />
-    <ClCompile Include="choosing.cpp" />
-    <ClCompile Include="combat.cpp" />
-    <ClCompile Include="component.cpp" />
-    <ClCompile Include="galaxy.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="indicator.cpp" />
-    <ClCompile Include="information.cpp" />
-    <ClCompile Include="main_util.cpp" />
-    <ClCompile Include="entity.cpp" />
-    <ClCompile Include="entitya.cpp" />
-    <ClCompile Include="color.cpp" />
-    <ClCompile Include="interface.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="planet.cpp" />
-    <ClCompile Include="planet_trait.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="playera.cpp" />
-    <ClCompile Include="prototype.cpp" />
-    <ClCompile Include="race.cpp" />
-    <ClCompile Include="requirement.cpp" />
-    <ClCompile Include="scripting.cpp" />
-    <ClCompile Include="racef.cpp" />
-    <ClCompile Include="system.cpp" />
-    <ClCompile Include="tag.cpp" />
-    <ClCompile Include="tech.cpp" />
-    <ClCompile Include="tile.cpp" />
-    <ClCompile Include="troop.cpp" />
-    <ClCompile Include="unit.cpp" />
-    <ClCompile Include="unit_type.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="main.h" />
-    <ClInclude Include="strategyi.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
       <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="actable.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="value.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\Names.txt" />
-    <Text Include="locale\ru\NamesNewbe.txt" />
-    <Text Include="locale\ru\NamesSh.txt" />
-    <Text Include="locale\ru\Speech.txt" />
-    <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Objectives.txt" />
-    <Text Include="rules\Planets.txt" />
+    <Text Include="rules\Items.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="actable.h" />
+    <ClInclude Include="classi.h" />
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="skill.h" />
+    <ClInclude Include="valuei.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

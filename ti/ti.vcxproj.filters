@@ -113,6 +113,9 @@
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="strategyi.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

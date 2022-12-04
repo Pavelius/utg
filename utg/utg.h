@@ -29,7 +29,7 @@ void label(const char* id, const char* value, const void* object, fnevent proc);
 void label(const void* object, const variants& elements, fngetinfo pget);
 void noavatar();
 void setnext(fnevent v);
-int	start(fnevent proc, bool darkmode, fnevent afterread = 0);
+int	start(fnevent proc, fnevent afterread = 0);
 void texth2(const char* title);
 void vertical(fnevent proc);
 void warning(const char* format, ...);

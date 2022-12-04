@@ -1,0 +1,47 @@
+#Ability
+
+Strenght
+Dexterity
+Constitution
+Wisdow
+Intellegence
+Charisma
+
+#Skill
+
+Acrobatics ability(Dexterity)
+Climb ability(Strenght)
+Deception ability(Charisma)
+Endurance ability(Constitution)
+GatherInformation ability(Charisma)
+Initiative ability(Dexterity)
+Jump ability(Strenght)
+Mechanics ability(Intellegence)
+Perception ability(Wisdow)
+Persuasion ability(Charisma)
+Pilot ability(Dexterity)
+Ride ability(Dexterity)
+Stealth ability(Dexterity)
+Survival ability(Wisdow)
+Swim ability(Strenght)
+TreatInjury ability(Wisdow)
+UseComputer ability(Intellegence)
+UseTheForce ability(Charisma)
+
+Bureaucracy ability(Intellegence)
+GalacticLore ability(Intellegence)
+LifeSciences ability(Intellegence)
+PhysicalSciences ability(Intellegence)
+SocialSciences ability(Intellegence)
+Tactics ability(Intellegence)
+Technology ability(Intellegence)
+
+#Class
+
+Jedi hd(10) force(5)
+ skills Acrobatics Endurance Initiative Jump Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
+  Technology Mechanics Perception Pilot UseTheForce
+Noble
+Scoundrell
+Scout
+Soldier

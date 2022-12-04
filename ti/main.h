@@ -6,6 +6,7 @@
 #include "point.h"
 #include "nameable.h"
 #include "script.h"
+#include "strategyi.h"
 #include "tag.h"
 #include "variant.h"
 
@@ -54,26 +55,19 @@ enum unit_type_s : unsigned char {
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
-struct abilityi {
-	const char*		id;
+struct abilityi : nameable {
 };
-struct colori {
-	const char*		id;
+struct colori : nameable {
 };
-struct tilei {
-	const char*		id;
+struct tilei : nameable {
 };
-struct indicatori {
-	const char*		id;
+struct indicatori : nameable {
 };
-struct planet_traiti {
-	const char*		id;
+struct planet_traiti : nameable {
 };
-struct unit_typei {
-	const char*		id;
+struct unit_typei : nameable {
 };
-struct racefi {
-	const char*		id;
+struct racefi : nameable {
 };
 struct actioncard;
 struct card;
@@ -176,8 +170,7 @@ struct techi {
 	static void		getinfo(const void* object, stringbuilder& sb) { ((techi*)object)->getinfo(sb); }
 	bool			match(const requirement& e) const;
 };
-struct triggeri {
-	const char*		id;
+struct triggeri : nameable {
 };
 struct troop : entity {
 	flagable<1>		flags;
@@ -234,10 +227,6 @@ struct entitya : public adat<entity*> {
 struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
-};
-struct strategyi : nameable {
-	int				initiative;
-	variants		primary, secondary;
 };
 struct objectivei : nameable {
 	char			stage, value;
