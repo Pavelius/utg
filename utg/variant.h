@@ -19,13 +19,7 @@ struct varianti {
 	fngetname		pgetname;
 	fnstatus		pgetinfo;
 	fngetinfo		pgetproperty;
-	static const array* getarray(const void* object, const char* id);
 	static const varianti* find(const void* object);
-	const char*		getid(const void* object) const;
-	void			getinfo(const void* object, stringbuilder& sb) const;
-	const char*		getname(const void* object) const;
-	int				found(const char* id, size_t size) const;
-	constexpr bool	isnamed() const { return key_count == 1; }
 	void			set(void* object, const char* id, void* value) const;
 	void			set(void* object, const char* id, int value) const;
 };
@@ -53,6 +47,7 @@ union variant {
 	template<class T> constexpr bool iskind() const { return bsdata<varianti>::elements[type].source == bsdata<T>::source_ptr; }
 	const varianti& geti() const { return bsdata<varianti>::elements[type]; }
 	const char*		getid() const;
+	void			getinfo(stringbuilder& sb) const;
 	void*			getpointer() const { return geti().source->ptr(value); }
 	const char*		getname() const;
 	void			setvariant(unsigned char t, unsigned short v) { type = t; value = v; counter = 0; }

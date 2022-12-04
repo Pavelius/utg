@@ -272,29 +272,12 @@ static void finish() {
 	camera_finish();
 }
 
-void varianti::getinfo(const void* object, stringbuilder& sb) const {
-	if(!object)
-		return;
-	sb.add("##%1", getname(object));
-	auto pb = sb.get();
-	if(pgetinfo)
-		pgetinfo(object, sb);
-	else {
-		auto id = getid(object);
-		auto description = getdescription(id);
-		if(description)
-			sb.addn(description);
-	}
-	if(pb[0] == 0)
-		sb.clear();
-}
-
 static void paint_tips() {
-	auto p = varianti::find(hilite_object);
-	if(!p)
+	variant v = hilite_object;
+	if(!v)
 		return;
 	char temp[1024]; stringbuilder sb(temp);
-	temp[0] = 0; p->getinfo(hilite_object, sb);
+	temp[0] = 0; v.getinfo(sb);
 	if(temp[0]) {
 		rectpush push;
 		width = 400;

@@ -42,27 +42,10 @@ const char* variant::getname() const {
 	auto& e = geti();
 	if(!e.source)
 		return getnm("NoVariant");
-	return e.getname(getpointer());
-}
-
-const char* variant::getid() const {
-	auto& e = geti();
-	if(!e.source)
-		return "NoVariant";
-	return e.getid(getpointer());
-}
-
-int varianti::found(const char* id, size_t size) const {
-	int i = -1;
-	if(isnamed())
-		i = source->findps(id, 0, size);
-	return i;
-}
-
-const char* varianti::getname(const void* object) const {
-	if(pgetname)
-		return pgetname(object);
-	if(isnamed()) {
+	auto object = e.source->ptr(value);
+	if(e.pgetname)
+		return e.pgetname(object);
+	if(e.key_count == 1) {
 		auto id = *((const char**)object);
 		if(id)
 			return getnm(id);
@@ -70,10 +53,36 @@ const char* varianti::getname(const void* object) const {
 	return getnm("NoName");
 }
 
-const char* varianti::getid(const void* object) const {
-	if(isnamed())
-		return *((const char**)object);
+const char* variant::getid() const {
+	auto& e = geti();
+	if(!e.source)
+		return "NoVariant";
+	auto object = e.source->ptr(value);
+	if(e.pgetname)
+		return e.pgetname(object);
+	if(e.key_count == 1) {
+		auto id = *((const char**)object);
+		if(id)
+			return id;
+	}
 	return "NoName";
+}
+
+void variant::getinfo(stringbuilder& sb) const {
+	auto& e = geti();
+	if(!e.source)
+		return;
+	if(e.pgetinfo) {
+		sb.add("##%1", getname());
+		e.pgetinfo(e.source->ptr(value), sb);
+	} else {
+		auto id = getid();
+		auto description = getdescription(id);
+		if(description) {
+			sb.add("##%1", getname());
+			sb.addn(description);
+		}
+	}
 }
 
 const varianti* varianti::find(const void* object) {

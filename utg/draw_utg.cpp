@@ -160,7 +160,7 @@ static int getbarpageheight() {
 
 static void paintbars(void** pages, unsigned count) {
 	rectpush push;
-	caret.y += height + metrics::border;
+	caret.y += height + metrics::border - 1;
 	caret.x -= metrics::border;
 	height = getbarpageheight() + metrics::border;
 	auto pe = pages + count;

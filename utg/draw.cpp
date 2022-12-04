@@ -1121,10 +1121,10 @@ void draw::linet(int x1, int y1) {
 }
 
 void draw::rectb() {
-	line(caret.x + width, caret.y);
-	line(caret.x, caret.y + height);
-	line(caret.x - width, caret.y);
-	line(caret.x, caret.y - height);
+	line(caret.x + (width - 1), caret.y);
+	line(caret.x, caret.y + (height - 1));
+	line(caret.x - (width - 1), caret.y);
+	line(caret.x, caret.y - (height - 1));
 }
 
 void draw::rectb3d() {

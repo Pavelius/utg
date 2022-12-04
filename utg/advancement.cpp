@@ -15,6 +15,8 @@ static void def_add(answers& an, const void* object, variant v) {
 	an.add(v.getpointer(), v.getname());
 }
 
+const array* getarray(const void* object, const char* id);
+
 void* advancement::choose(const void* object, fnadd padd) const {
 	answers an;
 	if(!padd)
@@ -23,7 +25,7 @@ void* advancement::choose(const void* object, fnadd padd) const {
 		for(auto v : elements)
 			padd(an, object, v);
 	} else {
-		auto ps = varianti::getarray(object, result);
+		auto ps = getarray(object, result);
 		if(!ps)
 			return 0;
 		auto pe = ps->end();
