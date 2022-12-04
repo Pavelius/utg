@@ -8,6 +8,7 @@
 
 class stringbuilder {
 	struct grammar;
+	struct genderi;
 	char*				p;
 	char*				pb;
 	const char*			pe;
@@ -50,6 +51,7 @@ public:
 	const char*			end() const { return pe; }
 	char*				get() const { return p; }
 	static const char*	getbycount(const char* id, int count);
+	static int			getgender(const char* s);
 	static int			getnum(const char* v);
 	unsigned			getlenght() const { return p - pb; }
 	unsigned			getmaximum() const { return pe - pb - 1; }

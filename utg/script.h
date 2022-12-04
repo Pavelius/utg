@@ -19,3 +19,5 @@ struct script {
 	static void run(variant v);
 	static void run(const variants& source);
 };
+extern void runscript(variant v);
+extern void runscript(const variants& source);

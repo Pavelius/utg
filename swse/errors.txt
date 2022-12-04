@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 42: Not found requisit `skills`
+﻿In file `rules/Advance.txt`:
+ Line 4: Can't find variant `Reflexes`

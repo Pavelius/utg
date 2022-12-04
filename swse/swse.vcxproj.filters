@@ -21,6 +21,27 @@
     <ClCompile Include="value.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="abilityable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="creature.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="wear.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="size.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -30,6 +51,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="errors.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Advance.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
@@ -47,6 +71,27 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="valuei.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="abilityable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="modifier.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="advance.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wear.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="feat.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="size.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

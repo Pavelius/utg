@@ -1,0 +1,4 @@
+#Advance
+
+0 Jedi
+ elements Permanent Fortitude+1 Reflex+1 Will+1

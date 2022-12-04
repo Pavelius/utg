@@ -7,6 +7,10 @@ Wisdow
 Intellegence
 Charisma
 
+Fortitude
+Reflex
+Will
+
 #Skill
 
 Acrobatics ability(Dexterity)

@@ -224,6 +224,15 @@ struct stringbuilder::grammar {
 	operator bool() const { return name != 0; }
 };
 
+struct stringbuilder::genderi {
+	const char*		name;
+	int				value;
+	unsigned		name_size;
+	constexpr genderi() : name(0), value(0), name_size(0) {}
+	constexpr genderi(const char* name, int value) : name(name), value(value), name_size(zlen(name)) {}
+	operator bool() const { return name != 0; }
+};
+
 unsigned char stringbuilder::upper(unsigned char u) {
 	if(u >= 0x61 && u <= 0x7A)
 		return u - 0x61 + 0x41;
@@ -735,4 +744,25 @@ void stringbuilder::addto(const char* s) {
 		{}
 	};
 	add(s, map, "у");
+}
+
+int stringbuilder::getgender(const char* s) {
+	static genderi source[] = {
+		{"а", 1},
+		{"о", 2},
+		{"ы", 3},
+		{"я", 1},
+		{"ье", 2},
+	};
+	auto ps = skip_space(s);
+	auto pw = word_end(ps);
+	unsigned s1 = pw - ps;
+	for(auto& e : source) {
+		auto s2 = e.name_size;
+		if(e.name_size > s1)
+			continue;
+		if(memcmp(pw - s2, e.name, s2) == 0)
+			return e.value;
+	}
+	return 0;
 }
