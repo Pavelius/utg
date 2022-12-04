@@ -233,7 +233,6 @@ static void score_objective(int bonus, int param) {
 }
 
 static void if_control_mecatol_rex(int bonus, int param) {
-
 }
 
 static void if_able(int bonus, int param) {
@@ -270,19 +269,6 @@ static void for_each_player(variant v) {
 	auto push_last = playeri::last;
 	auto push_human = choosestep::human;
 	for(auto p : players) {
-		playeri::last = p;
-		choosestep::human = playeri::last->ishuman();
-		script::run(v);
-	}
-	choosestep::human = push_human;
-	playeri::last = push_last;
-}
-
-static void for_each_player_active(variant v) {
-	auto push_last = playeri::last;
-	auto push_human = choosestep::human;
-	for(auto p : players) {
-		game.active = p;
 		playeri::last = p;
 		choosestep::human = playeri::last->ishuman();
 		script::run(v);
@@ -395,7 +381,6 @@ BSDATA(script) = {
 	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
 	{"ForEachPlayer", script::setforeach, (int)for_each_player},
-	{"ForEachPlayerActive", script::setforeach, (int)for_each_player_active},
 	{"ForEachTroop", script::setforeach, (int)for_each_troop},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},

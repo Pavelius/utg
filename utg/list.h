@@ -4,5 +4,5 @@
 #pragma once
 
 struct listi : nameable {
-	variants		elements;
+	variants elements;
 };

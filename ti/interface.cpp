@@ -8,7 +8,7 @@ using namespace draw;
 
 static bool need_update_ui = false;
 
-const int button_height = 21;
+const int button_height = 20;
 const int size = 256;
 static color player_colors[] = {
 	{40, 40, 40},
@@ -157,7 +157,7 @@ static void buttonback(int size, void* data) {
 	auto push_alpha = alpha;
 	rectpush push;
 	width = size * 2;
-	height = texth() + 1 * 2;
+	height = button_height - 1;
 	caret.y -= (height + 1) / 2;
 	caret.x -= (width + 1) / 2;
 	alpha = (192 * push_alpha) >> 8;
@@ -421,7 +421,7 @@ static void update_units(point position, const entity* location) {
 		return;
 	auto total_height = button_height * source.getcount();
 	auto x = position.x;
-	auto y = position.y - total_height / 2 + (button_height - 1) / 2;
+	auto y = position.y - (total_height - button_height) / 2;
 	for(auto pt : source) {
 		auto p = findobject(pt);
 		if(!p) {

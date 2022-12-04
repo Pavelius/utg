@@ -107,6 +107,7 @@ public:
 	constexpr slice(T* data, unsigned count) : data(data), count(count) {}
 	constexpr slice(T* p1, const T* p2) : data(p1), count(p2 - p1) {}
 	explicit operator bool() const { return count != 0; }
+	void operator++() { if(count) { data++; count--; } }
 	constexpr T*					begin() const { return data; }
 	constexpr T*					end() const { return data + count; }
 	constexpr unsigned				size() const { return count; }

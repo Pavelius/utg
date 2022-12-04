@@ -4,7 +4,7 @@
 
 script::fnapply script::prun;
 script::fntest script::ptest;
-script::fnapply script::foreach;
+static script::fnapply foreach;
 bool script::stop;
 
 bool script::isallow(variants source) {
@@ -29,53 +29,53 @@ bool script::isallow(variants source) {
 	return true;
 }
 
+void script::setforeach(int bonus, int param) {
+	foreach = (fnapply)param;
+}
+
+void script::run(const variants& source) {
+	auto push_foreach = foreach; foreach = 0;
+	script::stop = false;
+	for(auto v : source) {
+		if(script::stop)
+			break;
+		if(foreach) {
+			foreach(v);
+			foreach = 0;
+		} else
+			run(v);
+	}
+	foreach = push_foreach;
+}
+
 void script::run(variant v) {
 	if(v.iskind<script>()) {
 		auto p = bsdata<script>::elements + v.value;
 		p->proc(v.counter, p->param);
 	} else if(v.iskind<listi>())
-		run(bsdata<listi>::elements[v.value].elements);
+		script::run(bsdata<listi>::elements[v.value].elements);
 	else if(v.iskind<conditioni>()) {
 		auto p = bsdata<conditioni>::elements + v.value;
 		if(v.counter >= 0) {
 			if(!p->proc(v.counter, p->param))
-				stop = true;
+				script::stop = true;
 		} else {
 			if(p->proc(-v.counter, p->param))
-				stop = true;
+				script::stop = true;
 		}
-	} else if(prun)
-		prun(v);
-}
-
-void script::setforeach(int bonus, int param) {
-	foreach = (fnapply)param;
-}
-
-void apply_foreach(variant v) {
-	if(script::foreach) {
-		script::foreach(v);
-		script::foreach = 0;
-	} else
-		script::run(v);
-}
-
-void script::run(variants source) {
-	auto push_foreach = foreach;
-	foreach = 0;
-	stop = false;
-	for(auto v : source) {
-		if(stop)
-			break;
-		apply_foreach(v);
-	}
-	foreach = push_foreach;
+	} else if(script::prun)
+		script::prun(v);
 }
 
 void script::run(const char* id) {
-	auto p = bsdata<listi>::find(id);
-	if(p) {
-		run(p->elements);
+	auto p1 = bsdata<listi>::find(id);
+	if(p1) {
+		script::run(p1->elements);
+		return;
+	}
+	auto p2 = bsdata<script>::find(id);
+	if(p2) {
+		p2->proc(0, p2->param);
 		return;
 	}
 }

@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 91: Not found requisit `script`
+ Line 154: Can't find variant `IfPlayStrategy`
