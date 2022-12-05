@@ -1,5 +1,9 @@
 #Feat
 
+SimpleWeapons
+Pistols
+Rifles
+
 AcrobaticStrike
 ArmorProficiencyHeavy
 ArmorProficiencyLight

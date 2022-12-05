@@ -60,6 +60,7 @@ BSMETA(itemi) = {
 	BSREQ(damage), BSREQ(stun),
 	BSENM(size, sizei),
 	BSENM(wear, weari),
+	BSENM(feat, feati),
 	BSREQ(use),
 	BSFLG(feats, feati),
 	{}};
@@ -79,6 +80,7 @@ BSMETA(skillroll) = {
 	BSENM(skill, skilli),
 	BSFLG(reroll, feati),
 	BSREQ(bonuses), BSREQ(required),
+	BSREQ(dc),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),

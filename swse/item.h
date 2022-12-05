@@ -13,8 +13,9 @@ struct itemstat : nameable {
 	damages			hit;
 	dice			damage, stun;
 	short			weight, cost;
+	char			armor;
 	char			size;
-	featf		feats;
+	featf			feats;
 	variants		dress;
 };
 struct itemvariety : nameable {
@@ -24,6 +25,7 @@ struct itemi : itemstat {
 	short			count;
 	short			avatar;
 	wear_s			wear;
+	short			feat;
 	variants		use;
 	const itemi*	ammunition;
 	bool operator==(const itemi& v) const { return this == &v; }
@@ -37,7 +39,6 @@ class item {
 public:
 	explicit operator bool() const { return type != 0; }
 	void			add(item& v);
-	bool			canequip(wear_s v) const;
 	void			clear() { type = count = ammocount = 0; }
 	void			create(const char* id, int count = 1) { create(bsdata<itemi>::find(id), count); }
 	void			create(const itemi* pi, int count = 1);

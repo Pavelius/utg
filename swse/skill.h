@@ -13,9 +13,9 @@ enum skill_s : unsigned char {
 };
 typedef flagable<4> skillf;
 struct skillable {
-	char		skills[Technology + 1];
+	skillf	skills_train;
 };
 struct skilli : nameable {
-	char		ability;
-	featf		reroll;
+	char	ability;
+	featf	reroll;
 };

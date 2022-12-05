@@ -3,6 +3,7 @@
 
 BSDATA(statei) = {
 	{"Concealment"},
+	{"Flatfooted"},
 	{"Immobilized"}, 
 	{"Prone"},
 	{"PermanentConditions"},

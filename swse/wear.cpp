@@ -24,10 +24,6 @@ BSDATA(weari) = {
 	{"Head"},
 	{"Torso"},
 	{"Backward"},
-	{"Legs"},
-	{"Gloves"},
-	{"FingerRight"},
-	{"FingerLeft"},
 	{"Elbows"},
 };
 assert_enum(weari, Elbows)

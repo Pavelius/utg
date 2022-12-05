@@ -80,16 +80,6 @@ void item::add(item& v) {
 	}
 }
 
-bool item::canequip(wear_s v) const {
-	auto w = geti().wear;
-	switch(w) {
-	case FingerRight: case FingerLeft:
-		return v == FingerLeft || v == FingerRight;
-	default:
-		return v == w;
-	}
-}
-
 void item::create(const itemi* pi, int count) {
 	if(!pi)
 		return;
@@ -103,12 +93,7 @@ void item::create(const itemi* pi, int count) {
 
 bool item::is(wear_s v) const {
 	auto wear = geti().wear;
-	switch(v) {
-	case FingerLeft: case FingerRight:
-		return (wear == FingerRight);
-	default:
-		return wear == v;
-	}
+	return (wear == v);
 }
 
 const char*	item::getfullname(int price_percent) const {

@@ -5,7 +5,7 @@ enum ability_s : unsigned char {
 	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
 	Fortitude, Reflex, Will, Armor,
 	AllDefenceBonuses, AllSkillChecks,
-	DodgeBonus, SneakAttackBonus, DemolitionistBonus, IndomitableBonus,
+	MaxDexterityBonus, DodgeBonus, EquipmentBonus, SneakAttackBonus, DemolitionistBonus, IndomitableBonus,
 	ConditionTrack,
 	GamblingCheck,
 	HyperdrivenPerDay, RerollAttackPerDay, SecondWindPerDay,

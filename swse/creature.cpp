@@ -22,10 +22,12 @@ static bool test_prerequisit(const creature* player, variant v) {
 		return player->get((ability_s)v.value) >= v.value;
 	else if(v.iskind<feati>())
 		return player->feats.is(v.value);
+	else if(v.iskind<itemi>())
+		return player->isitem(v.value, v.counter);
 	return true;
 }
 
-bool test_prerequisit(const creature* player, const variants& source) {
+static bool test_prerequisit(const creature* player, const variants& source) {
 	for(auto v : source) {
 		if(!test_prerequisit(player, v))
 			return false;
@@ -35,9 +37,15 @@ bool test_prerequisit(const creature* player, const variants& source) {
 
 void creature::update_ability() {
 	auto level = gethlevel();
-	abilities[Reflex] += 10 + getbonus(Dexterity) + imax(level / 2, get(Armor));
-	abilities[Fortitude] += 10 + getbonus(Constitution);
-	abilities[Will] += 10 + getbonus(Wisdow);
+	auto armor_dexterity_bonus = getbonus(Dexterity);
+	if(armor_dexterity_bonus > get(MaxDexterityBonus))
+		armor_dexterity_bonus = get(MaxDexterityBonus);
+	auto armor = isweararmor() ? get(Armor) : level;
+	abilities[Reflex] += 10 + get(Armor);
+	if(!is(Flatfooted))
+		abilities[Reflex] += armor_dexterity_bonus + get(DodgeBonus);
+	abilities[Fortitude] += 10 + getbonus(Constitution) + level + get(EquipmentBonus);
+	abilities[Will] += 10 + getbonus(Wisdow) + level;
 }
 
 void creature::update() {
@@ -45,17 +53,17 @@ void creature::update() {
 	update_ability();
 }
 
-int	creature::gethlevel() const {
-	auto r = 0;
-	for(auto i = (class_s)Jedi; i <= Soldier; i = (class_s)(i + 1))
-		r += classes[i];
-	return r;
-}
-
 int	creature::getlevel() const {
 	auto r = 0;
 	for(auto v : classes)
 		r += v;
+	return r;
+}
+
+int	creature::gethlevel() const {
+	auto r = 0;
+	for(auto i = (class_s)Jedi; i <= Soldier; i = (class_s)(i + 1))
+		r += classes[i];
 	return r;
 }
 
