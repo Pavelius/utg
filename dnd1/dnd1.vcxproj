@@ -147,6 +147,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="feat.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

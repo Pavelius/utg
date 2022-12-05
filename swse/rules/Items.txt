@@ -3,26 +3,26 @@
 NoItem
 
 Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(MeleeWeapon)\
- feat(WeaponProficiencySimpleWeapons)
+ proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
 Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(MeleeWeapon)\
- feat(WeaponProficiencySimpleWeapons)
+ proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
 Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(MeleeWeapon)\
- feat(WeaponProficiencySimpleWeapons)
+ proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
 
 Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(RangedWeapon)\
- feat(WeaponProficiencySimpleWeapons)
+ proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
 
 BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(RangedWeapon)\
- feat(WeaponProficiencyPistols)
+ proficiency(WeaponProficiencyPistols) focus(WeaponFocusPistols)
 HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(RangedWeapon)\
- feat(WeaponProficiencyPistols)
+ proficiency(WeaponProficiencyPistols) focus(WeaponFocusPistols)
 
 Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(MeleeWeapon)\
- feat(WeaponProficiencyLightsabers)
+ proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
 ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(MeleeWeapon)\
- feat(WeaponProficiencyLightsabers)
+ proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
 DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(MeleeWeapon)\
- feat(WeaponProficiencyLightsabers)
+ proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
 
 SecurityKit
 ToolKit

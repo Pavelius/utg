@@ -15,7 +15,6 @@ struct itemstat : nameable {
 	short			weight, cost;
 	char			armor, maxdex, equipment;
 	char			size;
-	featf			feats;
 	variants		dress;
 };
 struct itemvariety : nameable {
@@ -25,7 +24,7 @@ struct itemi : itemstat {
 	short			count;
 	short			avatar;
 	wear_s			wear;
-	short			feat;
+	short			proficiency, focus, specialization;
 	variants		use;
 	const itemi*	ammunition;
 	bool operator==(const itemi& v) const { return this == &v; }

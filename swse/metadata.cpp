@@ -60,9 +60,10 @@ BSMETA(itemi) = {
 	BSREQ(damage), BSREQ(stun),
 	BSENM(size, sizei),
 	BSENM(wear, weari),
-	BSENM(feat, feati),
+	BSENM(proficiency, feati),
+	BSENM(focus, feati),
+	BSENM(specialization, feati),
 	BSREQ(use),
-	BSFLG(feats, feati),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),

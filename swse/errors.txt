@@ -1,3 +1,10 @@
-﻿In file `rules/Advance.txt`:
- Line 6: Can't find variant `SimpleWeapons`
- Line 6: Can't find variant `Lightsabers`
+﻿In file `rules/Items.txt`:
+ Line 6: Not found requisit `feat`
+ Line 8: Not found requisit `feat`
+ Line 10: Not found requisit `feat`
+ Line 13: Not found requisit `feat`
+ Line 16: Not found requisit `feat`
+ Line 18: Not found requisit `feat`
+ Line 21: Not found requisit `feat`
+ Line 23: Not found requisit `feat`
+ Line 25: Not found requisit `feat`

@@ -1,6 +1,8 @@
+#include "ability.h"
 #include "avatarable.h"
 #include "dice.h"
 #include "chooseoption.h"
+#include "feat.h"
 #include "gender.h"
 #include "generator.h"
 #include "list.h"
@@ -11,23 +13,6 @@
 
 #pragma once
 
-enum ability_s : unsigned char {
-	Strenght, Dexterity, Constitution, Intellect, Wisdow, Charisma,
-	ToHit, Damage, MeleeToHit, MeleeDamage, RangedToHit, RangedDamage,
-	AC, Level,
-	HPMax,
-	Speed, Search,
-	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
-	Saves, SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
-	HP, IllusionCopies,
-};
-enum feat_s : unsigned char {
-	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	SunSensitive, Slow, NormalWeaponImmunity,
-	Blunt, Martial, TwoHanded,
-	WearLeather, WearIron, WearLarge, WearShield, Countable,
-	Undead, Summoned, Player, Enemy,
-};
 enum class_s : unsigned char {
 	Monster,
 	Cleric, Dwarf, Elf, Fighter, Halfling, Theif, Wizard,
@@ -67,8 +52,6 @@ enum wear_s : unsigned char {
 inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
 typedef flagable<8> spellf;
-struct abilityi : nameable {
-};
 struct featable : flagable<4> {};
 struct rangei : nameable {
 };
@@ -185,8 +168,6 @@ struct equipmenti {
 };
 struct durationi : nameable {
 	short			from, to;
-};
-struct feati : nameable {
 };
 struct spelli : nameable {
 	char			level[3];
