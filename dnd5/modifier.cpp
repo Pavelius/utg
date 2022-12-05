@@ -1,4 +1,7 @@
-#include "main.h"
+#include "crt.h"
+#include "modifier.h"
+
+modifier_s modifier;
 
 BSDATA(modifieri) = {
 	{"Proficient"},

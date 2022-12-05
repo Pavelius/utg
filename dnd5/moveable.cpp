@@ -1,6 +1,6 @@
+#include "alignment.h"
+#include "modifier.h"
 #include "main.h"
-
-modifier_s modifieri::last;
 
 void moveable::apply(const variants& source) {
 	for(auto v : source)

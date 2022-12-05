@@ -1,3 +1,4 @@
+#include "pushvalue.h"
 #include "main.h"
 
 void character::clear() {
@@ -5,19 +6,13 @@ void character::clear() {
 }
 
 void character::generate() {
-	auto push_resid = answers::resid;
-	auto push_header = answers::header;
-	auto push_column = answers::column_count;
-	answers::column_count = -1;
-	answers::resid = "generate";
-	answers::header = getnm("CharacterGenerate");
+	pushvalue push_resid(answers::resid, "generate");
+	pushvalue push_header(answers::header, getnm("CharacterGenerate"));
+	pushvalue push_column(answers::column_count, -1);
 	clear();
 	advance("CharacterGenerate", 0);
 	if(race->parent)
 		advance(race->parent->id, 0);
 	if(race)
 		advance(race->id, 0);
-	answers::header = push_header;
-	answers::resid = push_resid;
-	answers::column_count = push_column;
 }

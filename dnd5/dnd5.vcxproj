@@ -142,7 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="alignment.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="modifier.h" />
+    <ClInclude Include="tag.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />

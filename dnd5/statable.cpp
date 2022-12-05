@@ -1,3 +1,6 @@
+#include "ability.h"
+#include "list.h"
+#include "modifier.h"
 #include "main.h"
 
 bool statable::addstart(variant v, modifier_s modifier, bool run) {
@@ -26,22 +29,16 @@ bool statable::addstart(variant v, modifier_s modifier, bool run) {
 			if(run)
 				resist.set(v.value);
 			break;
-		case Immunity:
-			immunity.set(v.value);
-			break;
-		case Vulnerable:
-			vulnerable.set(v.value);
-			break;
-		default:
-			return false;
+		case Immunity: immunity.set(v.value); break;
+		case Vulnerable: vulnerable.set(v.value); break;
+		default: return false;
 		}
 	} else if(v.iskind<skilli>()) {
 		if(skills.is(v.value))
 			return false;
 		if(run)
 			skills.set(v.value);
-	}
-	else if(v.iskind<listi>()) {
+	} else if(v.iskind<listi>()) {
 		for(auto v : bsdata<listi>::elements[v.value].elements) {
 			if(!addstart(v, modifier, run))
 				return false;

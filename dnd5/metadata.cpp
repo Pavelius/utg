@@ -1,10 +1,13 @@
+#include "ability.h"
+#include "alignment.h"
 #include "bsreq.h"
+#include "list.h"
+#include "modifier.h"
 #include "main.h"
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
 NOBSDATA(dice)
-NOBSDATA(itemi::weaponi)
 
 BSDATAC(advancei, 512)
 BSDATAC(character, 128)
@@ -46,19 +49,12 @@ BSMETA(damagei) = {
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b),
 	{}};
-BSMETA(itemi::weaponi) = {
-	BSREQ(damage),
-	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
-	BSREQ(weapon),
+	BSREQ(damage),
 	{}};
 BSMETA(languagei) = {
 	BSREQ(id),
-	{}};
-BSMETA(listi) = {
-	BSREQ(id),
-	BSREQ(elements),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
