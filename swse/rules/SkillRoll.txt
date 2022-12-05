@@ -1,0 +1,9 @@
+#SkillRoll
+
+DisableDevice skill(Mechanics)
+ required SecurityKit
+HandleExplosives skill(Mechanics)
+JuryRig skill(Mechanics)
+ bonuses ToolKit+5
+Repair skill(Mechanics)
+ required ToolKit

@@ -1,5 +1,5 @@
 #include "nameable.h"
-#include "flagable.h"
+#include "feat.h"
 
 #pragma once
 
@@ -11,10 +11,11 @@ enum skill_s : unsigned char {
 	Bureaucracy, GalacticLore, LifeSciences, PhysicalSciences, SocialSciences,
 	Tactics, Technology
 };
-typedef flagable<4> skilla;
+typedef flagable<4> skillf;
 struct skillable {
 	char		skills[Technology + 1];
 };
 struct skilli : nameable {
 	char		ability;
+	featf		reroll;
 };

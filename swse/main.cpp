@@ -10,6 +10,7 @@ static void initialize() {
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Feats.txt");
 	bsreq::read("rules/Advance.txt");
+	bsreq::read("rules/SkillRoll.txt");
 }
 
 static void generate_character() {
@@ -22,7 +23,7 @@ static void generate_character() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	answers::resid = "meet";
+	answers::resid = "start";
 	return draw::start(generate_character, initialize);
 }
 

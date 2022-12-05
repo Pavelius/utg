@@ -8,6 +8,7 @@
 #include "item.h"
 #include "modifier.h"
 #include "size.h"
+#include "skillroll.h"
 #include "wear.h"
 #include "utg.h"
 
@@ -24,6 +25,7 @@ BSDATAC(creature, 1024)
 BSDATAC(feati, 512)
 BSDATAC(itemi, 256)
 BSDATAC(skilli, 32)
+BSDATAC(skillroll, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -70,6 +72,13 @@ BSMETA(sizei) = {
 BSMETA(skilli) = {
 	BSREQ(id),
 	BSENM(ability, abilityi),
+	BSFLG(reroll, feati),
+	{}};
+BSMETA(skillroll) = {
+	BSREQ(id),
+	BSENM(skill, skilli),
+	BSFLG(reroll, feati),
+	BSREQ(bonuses), BSREQ(required),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),
@@ -88,6 +97,7 @@ BSDATA(varianti) = {
 	{"Modifier", VAR(modifieri, 1)},
 	{"Size", VAR(sizei, 1)},
 	{"Skill", VAR(skilli, 1)},
+	{"SkillRoll", VAR(skillroll, 1)},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

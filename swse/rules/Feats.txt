@@ -211,3 +211,8 @@ ToughAsNails
 DevastatingAttack
 PenetratingAttack
 WeaponSpecialization
+
+#Skill
+
+Stealth
+ reroll ImprovedStealth

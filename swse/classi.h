@@ -8,7 +8,7 @@ enum class_s : unsigned char {
 
 struct classi : nameable {
 	char	hd, force, skill;
-	skilla	skills;
+	skillf	skills;
 };
 
 struct classable {

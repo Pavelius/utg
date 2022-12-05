@@ -14,7 +14,7 @@ struct itemstat : nameable {
 	dice			damage, stun;
 	short			weight, cost;
 	char			size;
-	featable		feats;
+	featf		feats;
 	variants		dress;
 };
 struct itemvariety : nameable {

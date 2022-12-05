@@ -77,7 +77,7 @@ static void imagev(const char* resid) {
 		return;
 	image(p, 0, 0);
 	stroke(p, 0);
-	caret.y += p->get(0).sy + metrics::padding + metrics::border;
+	caret.y += p->get(0).sy + metrics::padding + metrics::border * 2;
 }
 
 static void radiobutton(const char* title) {
@@ -410,7 +410,7 @@ static void answers_beforepaint() {
 	imagev(answers::resid);
 	panelv();
 	setposlu();
-	width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding - metrics::border;
+	width = getwidth() - 320 - (metrics::padding + metrics::border * 2) * 2 - metrics::padding;
 	height = push_height - metrics::padding - metrics::border * 2;
 	strokeout(fillwindow);
 	strokeout(strokeborder);

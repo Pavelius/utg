@@ -45,6 +45,12 @@
     <ClCompile Include="damage.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="skillroll.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -60,6 +66,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Feats.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\SkillRoll.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
@@ -101,6 +110,12 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="damage.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skillroll.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

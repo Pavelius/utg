@@ -1,2 +1,4 @@
-﻿In file `rules/Feats.txt`:
- Line 209: Can't find variant `SecondWind`
+﻿In file `rules/SkillRoll.txt`:
+ Line 3: Not found identifier `Mechanic`
+ Line 5: Not found identifier `Mechanic`
+ Line 7: Not found identifier `Mechanic`

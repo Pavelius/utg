@@ -3,7 +3,7 @@
 #include "flagable.h"
 #include "variant.h"
 
-typedef flagable<32> featable;
+typedef flagable<32> featf;
 
 struct feati : nameable {
 	variants	prerequisit, effect;
