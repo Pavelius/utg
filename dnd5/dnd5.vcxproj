@@ -144,10 +144,17 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
+    <ClInclude Include="advance.h" />
     <ClInclude Include="alignment.h" />
+    <ClInclude Include="class.h" />
+    <ClInclude Include="damage.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="language.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="modifier.h" />
+    <ClInclude Include="race.h" />
+    <ClInclude Include="skill.h" />
+    <ClInclude Include="spell.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />

@@ -1,10 +1,17 @@
 #include "ability.h"
+#include "advance.h"
 #include "alignment.h"
+#include "class.h"
 #include "bsreq.h"
+#include "damage.h"
 #include "item.h"
+#include "language.h"
 #include "list.h"
 #include "modifier.h"
 #include "main.h"
+#include "race.h"
+#include "skill.h"
+#include "spell.h"
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
@@ -29,16 +36,14 @@ BSMETA(abilityi) = {
 	{}};
 BSMETA(advancei) = {
 	BSREQ(id),
-	BSREQ(base),
 	BSREQ(level),
 	BSREQ(choose),
-	BSREQ(effect),
+	BSREQ(elements),
 	{}};
 BSMETA(alignmenti) = {
 	BSREQ(id),
 	{}};
 BSMETA(character) = {
-	BSREQ(id),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
@@ -77,21 +82,21 @@ BSMETA(tagi) = {
 
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VRSTD(abilityi), 1},
-	{"Advance", VRSTD(advancei), 3},
-	{"Alignment", VRSTD(alignmenti), 1},
-	{"Character", VRSTD(character), 1},
-	{"Class", VRSTD(classi), 1},
-	{"Damage", VRSTD(damagei), 1},
-	{"Gender", VRSTD(genderi), 1},
-	{"Item", VRSTD(itemi), 1},
-	{"Language", VRSTD(languagei), 1},
-	{"List", VRSTD(listi), 1},
-	{"Menu", VRSTD(menu), 1},
-	{"Modifier", VRSTD(modifieri), 1},
-	{"Race", VRSTD(racei), 1},
-	{"Skill", VRSTD(skilli), 1},
-	{"Spell", VRSTD(spelli), 1},
-	{"Tag", VRSTD(tagi), 1},
+	{"Ability", VAR(abilityi, 1)},
+	{"Advance", VAR(advancei, 3)},
+	{"Alignment", VAR(alignmenti, 1)},
+	{"Character", VAR(character, 1)},
+	{"Class", VAR(classi, 1)},
+	{"Damage", VAR(damagei, 1)},
+	{"Gender", VAR(genderi, 1)},
+	{"Item", VAR(itemi, 1)},
+	{"Language", VAR(languagei, 1)},
+	{"List", VAR(listi, 1)},
+	{"Menu", VAR(menu, 1)},
+	{"Modifier", VAR(modifieri, 1)},
+	{"Race", VAR(racei, 1)},
+	{"Skill", VAR(skilli, 1)},
+	{"Spell", VAR(spelli, 1)},
+	{"Tag", VAR(tagi, 1)},
 };
 BSDATAF(varianti)

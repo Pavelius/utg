@@ -1,8 +1,10 @@
 #include "ability.h"
+#include "damage.h"
 #include "item.h"
 #include "list.h"
 #include "modifier.h"
 #include "main.h"
+#include "skill.h"
 
 bool statable::addstart(variant v, modifier_s modifier, bool run) {
 	if(v.iskind<abilityi>()) {

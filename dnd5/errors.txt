@@ -1,15 +1,10 @@
-﻿In file `rules/Basic.txt`:
- Line 88: Expected symbol `#`
- Line 88: Expected identifier
-In file `rules/DwarvenRaces.txt`:
- Line 18: Can't find variant `SmithsTools`
- Line 18: Can't find variant `BrewersSupplies`
- Line 18: Can't find variant `MasonsTools`
- Line 30: Can't find variant `LightArmor`
- Line 30: Can't find variant `MediumArmor`
+﻿In file `rules/DwarvenRaces.txt`:
+ Line 9: Invalid source array where read identifier `Dwarf`
+ Line 10: Not found requisit `effect`
 In file `rules/ElvishRaces.txt`:
- Line 24: Can't find variant `AcidSplash`
- Line 24: Can't find variant `DancingLight`
- Line 24: Can't find variant `FireBolt`
- Line 24: Can't find variant `Light`
- Line 24: Can't find variant `MageHand`
+ Line 9: Invalid source array where read identifier `Elf`
+ Line 10: Not found requisit `effect`
+In file `rules/CharacterGenerate.txt`:
+ Line 3: Invalid source array where read identifier `CharacterGenerate`
+ Line 3: Not found requisit `choose`
+ Line 4: Not found requisit `effect`

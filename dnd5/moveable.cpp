@@ -1,5 +1,8 @@
+#include "advance.h"
 #include "alignment.h"
+#include "class.h"
 #include "modifier.h"
+#include "race.h"
 #include "main.h"
 
 void moveable::apply(const variants& source) {
@@ -21,11 +24,11 @@ bool moveable::addstart(variant v, modifier_s modifier, bool run) {
 		if(run) {
 			auto p = (racei*)v.getpointer();
 			auto pn = choose_race(p);
-			race = pn ? pn : p;
+			setkind(pn ? pn : p);
 		}
 	} else if(v.iskind<genderi>()) {
 		if(run)
-			gender = (gender_s)v.value;
+			setgender((gender_s)v.value);
 	} else if(v.iskind<alignmenti>()) {
 		if(run)
 			alignment = (unsigned char)v.value;
@@ -54,7 +57,7 @@ void moveable::apply(const advancei& source) {
 	for(auto i = 0; i < source.choose; i++) {
 		answers an;
 		auto modifier = Proficient;
-		add_variant(this, an, source.effect, modifier);
+		add_variant(this, an, source.elements, modifier);
 		auto pn = source.id;
 		if(szstart(pn, "Choose"))
 			pn = getnm(pn);
@@ -70,9 +73,9 @@ void moveable::apply(const advancei& source) {
 	}
 }
 
-void moveable::advance(variant base, int level) {
+void moveable::advance(variant object, int level) {
 	for(auto& e : bsdata<advancei>()) {
-		if(e.base == base && e.level == level)
+		if(e.object == object && e.level == level)
 			apply(e);
 	}
 }
