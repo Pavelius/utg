@@ -1,4 +1,5 @@
-#include "main.h"
+#include "ability.h"
+#include "crt.h"
 
 BSDATA(abilityi) = {
 	{"HP"},

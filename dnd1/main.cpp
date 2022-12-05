@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
 	answers::resid = "meet";
 	draw::object::initialize();
 	initialize_ui();
-	return draw::start(starting, true, initializing);
+	return draw::start(starting, initializing);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

@@ -50,6 +50,12 @@
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ability.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">

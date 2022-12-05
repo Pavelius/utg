@@ -52,11 +52,6 @@ BSMETA(movei) = {
 BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
-BSMETA(packi) = {
-	BSREQ(id),
-	BSREQ(elements),
-	{}};
-BSDATAC(packi, 256)
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
@@ -82,7 +77,7 @@ BSDATA(varianti) = {
 	{"Item", VRSTD(itemi), 1},
 	{"Menu", VRSTD(menu), 1},
 	{"Move", VRSTD(movei), 1},
-	{"Pack", VRSTD(packi), 1},
+	{"Pack", VRSTD(listi), 1},
 	{"Race", VRSTD(racei), 1},
 	{"Tag", VRSTD(tagi), 1},
 	{"Widget", VRSTD(widget), 1},

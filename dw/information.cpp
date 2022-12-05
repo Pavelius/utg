@@ -25,33 +25,6 @@ static void addn(stringbuilder& sb, const char* id, dice v) {
 	addn(sb, v);
 }
 
-void packi::getinfo(stringbuilder& sb) const {
-	auto m = elements.count;
-	variant last = 0;
-	int count = 1;
-	auto pbg = sb.get(); pbg[0] = 0;
-	auto pse = elements.begin();
-	for(unsigned i = 0; i < m; i++) {
-		auto v = pse[i];
-		if(i != (m - 1) && v == pse[i + 1]) {
-			count++;
-			continue;
-		}
-		last = v;
-		if(pbg[0]) {
-			if(i == (m - 1))
-				sb.add(" è ");
-			else
-				sb.add(", ");
-		}
-		if(count == 1)
-			sb.add(v.getname());
-		else
-			sb.add("%1i %-2", count, v.getname());
-		count = 1;
-	}
-}
-
 void creature::getinfo(stringbuilder& sb) const {
 	sb.add("%1-%2", getname(), getnm(bsdata<classi>::get(type).id));
 	sb.adds("(");

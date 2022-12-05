@@ -3,6 +3,33 @@
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 static gender_s last_gender;
 
+static void getinfo(const variants& elements, stringbuilder& sb) {
+	auto m = elements.count;
+	variant last = 0;
+	int count = 1;
+	auto pbg = sb.get(); pbg[0] = 0;
+	auto pse = elements.begin();
+	for(unsigned i = 0; i < m; i++) {
+		auto v = pse[i];
+		if(i != (m - 1) && v == pse[i + 1]) {
+			count++;
+			continue;
+		}
+		last = v;
+		if(pbg[0]) {
+			if(i == (m - 1))
+				sb.add(" è ");
+			else
+				sb.add(", ");
+		}
+		if(count == 1)
+			sb.add(v.getname());
+		else
+			sb.add("%1i %-2", count, v.getname());
+		count = 1;
+	}
+}
+
 const char* creature::getavatarst(const void* p) {
 	if(!((creature*)p)->isvalidname())
 		return 0;
@@ -68,7 +95,7 @@ static void add_variant(answers& an, const void* object, variant v) {
 			an.add(v.getpointer(), v.getname());
 	} else if(v.type == Pack) {
 		char temp[260]; stringbuilder sb(temp);
-		bsdata<packi>::get(v.value).getinfo(sb);
+		getinfo(bsdata<listi>::elements[v.value].elements, sb);
 		an.add(v.getpointer(), temp);
 	} else
 		an.add(v.getpointer(), v.getname());
@@ -78,8 +105,8 @@ static bool set_value(void* object, const char* result, const void* value) {
 	auto p = (creature*)object;
 	if(!value)
 		return false;
-	if(bsdata<packi>::have(value)) {
-		auto pv = (packi*)value;
+	if(bsdata<listi>::have(value)) {
+		auto pv = (listi*)value;
 		for(auto v : pv->elements)
 			set_value(object, result, v.getpointer());
 	} else if(equal("wear", result)) {

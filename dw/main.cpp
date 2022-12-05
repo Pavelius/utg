@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = creature::getavatarst;
 	srand(getcputime());
-	return draw::start(generate_character, true);
+	return draw::start(generate_character);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

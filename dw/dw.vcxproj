@@ -160,7 +160,9 @@
     <ClCompile Include="wearable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="tag.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />

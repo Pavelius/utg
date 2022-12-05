@@ -8,6 +8,7 @@
 #include "front.h"
 #include "gender.h"
 #include "namenpc.h"
+#include "list.h"
 #include "quest.h"
 #include "collection.h"
 #include "result.h"
@@ -18,19 +19,10 @@
 
 template<typename T> struct bsmeta;
 
-enum ability_s : unsigned char {
-	HP, Damage, Armor, Pierce,
-	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
-};
 enum race_s : unsigned char {
 	Human, Dwarf, Elf, Halfling,
 };
-enum tag_s : unsigned char {
-	Arrows, CharismaMinus, Clumsy, Dangerous, Forceful, IgnoreArmor, Messy, NeedArrows, Precise, Ration, Reload, Slow, Stun, Thrown, TwoHanded,
-	HealDebility, HealPoison,
-	UsableGear,
-	Hand, Close, Reach, Near, Far,
-};
+
 enum itemuf_s : unsigned char {
 	HooksAndSpikes, Sharp, PerfectlyWeigthed, SerratedEdges, Glows, Huge, Versatile, WellCrafted,
 };
@@ -61,11 +53,6 @@ typedef flagable<1 + Carouse / 8> movea;
 typedef flagable<1 + Halfling / 8> racea;
 typedef char abilitya[Charisma + 1];
 
-struct packi {
-	const char*		id;
-	variants		elements;
-	void			getinfo(stringbuilder& sb) const;
-};
 struct alignmenti {
 	const char*		id;
 };
@@ -92,7 +79,7 @@ struct moveable {
 	char			forward;
 	bool			is(move_s v) const { return moves.is(v); }
 };
-struct nameable {
+struct raceable {
 	const char*		id;
 	race_s			race;
 	gender_s		gender;
@@ -103,7 +90,7 @@ public:
 	const char*		getname() const { return getnm(id); }
 	race_s			getrace() const { return race; }
 };
-struct itemi : nameable, moveable {
+struct itemi : raceable, moveable {
 	wear_s			slot;
 	taga			tags;
 	racea			need;
