@@ -4,10 +4,11 @@
 #include "classi.h"
 #include "gender.h"
 #include "feat.h"
+#include "forcepower.h"
 #include "state.h"
 #include "wearable.h"
 
-struct creature : wearable, abilityable, classable, skillable {
+struct creature : wearable, abilityable, classable, skillable, forceable {
 	abilityable	basic;
 	featf feats;
 	statef states;

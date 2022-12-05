@@ -1,4 +1,3 @@
-﻿In file `rules/SkillRoll.txt`:
- Line 3: Not found identifier `Mechanic`
- Line 5: Not found identifier `Mechanic`
- Line 7: Not found identifier `Mechanic`
+﻿In file `rules/Advance.txt`:
+ Line 6: Can't find variant `SimpleWeapons`
+ Line 6: Can't find variant `Lightsabers`

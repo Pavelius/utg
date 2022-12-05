@@ -1,8 +1,27 @@
 #Feat
 
-SimpleWeapons
-Pistols
-Rifles
+WeaponProficiencySimpleWeapons
+WeaponProficiencyAdvancedMeleeWeapons
+WeaponProficiencyPistols
+WeaponProficiencyRifles
+WeaponProficiencyHeavyWeapons
+WeaponProficiencyLightsabers
+WeaponProficiencyExoticWeapons
+
+WeaponFocusSimpleWeapons
+ prerequisit WeaponProficiencySimpleWeapons
+WeaponFocusAdvancedMeleeWeapons
+ prerequisit WeaponProficiencyAdvancedMeleeWeapons
+WeaponFocusPistols
+ prerequisit WeaponProficiencyPistols
+WeaponFocusRifles
+ prerequisit WeaponProficiencyRifles
+WeaponFocusHeavyWeapons
+ prerequisit WeaponProficiencyHeavyWeapons
+WeaponFocusLightsabers
+ prerequisit WeaponProficiencyLightsabers
+WeaponFocusExoticWeapons
+ prerequisit WeaponProficiencyExoticWeapons
 
 AcrobaticStrike
 ArmorProficiencyHeavy
@@ -65,8 +84,6 @@ TripleAttack
 TripleCrit
 VehicularCombat
 WeaponFinesse
-WeaponFocus
-WeaponProficiency
 WhirlwindAttack
 
 AdeptNegotiator
@@ -214,7 +231,8 @@ ToughAsNails
 
 DevastatingAttack
 PenetratingAttack
-WeaponSpecialization
+WeaponSpecializationSimpleWeapons
+ prerequisit WeaponFocusSimpleWeapons
 
 #Skill
 

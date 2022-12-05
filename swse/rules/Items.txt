@@ -2,29 +2,27 @@
 
 NoItem
 
-Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(MeleeWeapon) feat(SimpleWeapons)
-Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(MeleeWeapon) feat(SimpleWeapons)
-Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(MeleeWeapon) feat(SimpleWeapons)
+Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(MeleeWeapon)\
+ feat(WeaponProficiencySimpleWeapons)
+Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(MeleeWeapon)\
+ feat(WeaponProficiencySimpleWeapons)
+Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(MeleeWeapon)\
+ feat(WeaponProficiencySimpleWeapons)
 
-Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(RangedWeapon) feat(SimpleWeapons)
+Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(RangedWeapon)\
+ feat(WeaponProficiencySimpleWeapons)
 
-BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(RangedWeapon) feat(Pistols)
-HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(RangedWeapon)
+BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(RangedWeapon)\
+ feat(WeaponProficiencyPistols)
+HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(RangedWeapon)\
+ feat(WeaponProficiencyPistols)
 
-Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(MeleeWeapon)
-ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(MeleeWeapon)
-DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(MeleeWeapon)
+Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(MeleeWeapon)\
+ feat(WeaponProficiencyLightsabers)
+ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(MeleeWeapon)\
+ feat(WeaponProficiencyLightsabers)
+DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(MeleeWeapon)\
+ feat(WeaponProficiencyLightsabers)
 
 SecurityKit
 ToolKit
-
-#List
-
-SimpleWeaponsMelee
- elements Club Knife Quarterstaff
-SimpleWeaponsRange
- elements Bow
-SimpleWeapons
- elements SimpleWeaponsMelee SimpleWeaponsRange
-Lightsabers
- elements Lightsaber ShortLightsaber DoubleBladedLightsaber

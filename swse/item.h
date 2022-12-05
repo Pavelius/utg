@@ -13,7 +13,7 @@ struct itemstat : nameable {
 	damages			hit;
 	dice			damage, stun;
 	short			weight, cost;
-	char			armor;
+	char			armor, maxdex, equipment;
 	char			size;
 	featf			feats;
 	variants		dress;

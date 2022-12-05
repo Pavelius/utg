@@ -54,6 +54,9 @@
     <ClCompile Include="wearable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="forcepower.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -122,6 +125,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="wearable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="forcepower.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

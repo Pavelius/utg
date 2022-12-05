@@ -151,6 +151,7 @@
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="damage.cpp" />
+    <ClCompile Include="forcepower.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
     <ClInclude Include="feat.h" />
+    <ClInclude Include="forcepower.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="size.h" />
