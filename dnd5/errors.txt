@@ -1,3 +1,15 @@
-﻿In file `rules/Menu.txt`:
- Line 6: Can't find variant `Intellect`
- Line 6: Can't find variant `Widsow`
+﻿In file `rules/Basic.txt`:
+ Line 88: Expected symbol `#`
+ Line 88: Expected identifier
+In file `rules/DwarvenRaces.txt`:
+ Line 18: Can't find variant `SmithsTools`
+ Line 18: Can't find variant `BrewersSupplies`
+ Line 18: Can't find variant `MasonsTools`
+ Line 30: Can't find variant `LightArmor`
+ Line 30: Can't find variant `MediumArmor`
+In file `rules/ElvishRaces.txt`:
+ Line 24: Can't find variant `AcidSplash`
+ Line 24: Can't find variant `DancingLight`
+ Line 24: Can't find variant `FireBolt`
+ Line 24: Can't find variant `Light`
+ Line 24: Can't find variant `MageHand`

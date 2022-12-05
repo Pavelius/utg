@@ -45,6 +45,18 @@
     <ClCompile Include="interface.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="wear.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="wearable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="actable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -60,6 +72,18 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="alignment.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wear.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wearable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="actable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

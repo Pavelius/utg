@@ -143,16 +143,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="actable.h" />
     <ClInclude Include="alignment.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="tag.h" />
+    <ClInclude Include="wear.h" />
+    <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="actable.cpp" />
     <ClCompile Include="alignment.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="damage.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
@@ -160,6 +166,8 @@
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="interface.cpp" />
+    <ClCompile Include="wear.cpp" />
+    <ClCompile Include="wearable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

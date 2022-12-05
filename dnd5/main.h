@@ -14,9 +14,6 @@ struct classi : nameable {
 };
 struct damagei : nameable {
 };
-struct itemi : nameable {
-	dice			damage;
-};
 struct languagei : nameable {
 };
 struct racei : nameable {

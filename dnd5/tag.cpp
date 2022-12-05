@@ -2,6 +2,7 @@
 #include "tag.h"
 
 BSDATA(tagi) = {
+	{"Blinded"},
 	{"Darkvision"},
 	{"Stonecunning"},
 	{"Toughness"},

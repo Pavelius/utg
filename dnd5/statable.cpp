@@ -1,4 +1,5 @@
 #include "ability.h"
+#include "item.h"
 #include "list.h"
 #include "modifier.h"
 #include "main.h"

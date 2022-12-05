@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "alignment.h"
 #include "bsreq.h"
+#include "item.h"
 #include "list.h"
 #include "modifier.h"
 #include "main.h"

@@ -86,6 +86,7 @@ Net
 LeatherArmor
 Chainmail
 
+Crowbar
 SmithsTools
 BrewersSupplies
 MasonsTools
