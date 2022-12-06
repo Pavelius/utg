@@ -16,11 +16,9 @@
 #include "spell.h"
 #include "tag.h"
 
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
-
 NOBSDATA(dice)
 
-BSDATAC(advancei, 512)
+BSDATAC(advancei, 1024)
 BSDATAC(character, 128)
 BSDATAC(classi, 32)
 BSDATAC(itemi, 256)

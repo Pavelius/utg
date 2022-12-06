@@ -101,6 +101,8 @@ MageHand
 
 #List
 
+SimpleWeapon
+ elements Club Dagger Greatclub Handaxe Javelin LightHammer Mace Quaterstaff Sickle Spear
 MartialWeapon
  elements Battleaxe Flail Glaive Greataxe Greatsword Halberd Lance Longsword Maul Morningstar Pike Rapier
 LightArmor

@@ -24,9 +24,6 @@
     <ClCompile Include="modifier.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="moveable.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="damage.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -149,6 +146,12 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\ItemNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="rules\ClassCleric.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\SkillNames.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

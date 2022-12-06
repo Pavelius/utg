@@ -1,5 +1,4 @@
-﻿In file `rules/CharacterGenerate.txt`:
- Line 3: Can't find variant `CharacterGenerate`
- Line 5: Can't find variant `CharacterGenerate`
- Line 7: Can't find variant `CharacterGenerate`
- Line 9: Can't find variant `CharacterGenerate`
+﻿In file `rules/ClassCleric.txt`:
+ Line 4: Can't find variant `Profecient`
+ Line 6: Can't find variant `Profecient`
+ Line 8: Can't find variant `Profecient`

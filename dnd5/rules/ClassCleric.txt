@@ -1,0 +1,10 @@
+#Advance
+
+1 Cleric ArmorProficiencies
+ elements Proficient LightArmor
+1 Cleric WeaponProficiencies
+ elements Proficient SimpleWeapon
+1 Cleric SavingThrows
+ elements Proficient Wisdow Charisma
+1 Cleric Skills choose(2)
+ elements Proficient History Insight Medicine Persuasion Religion

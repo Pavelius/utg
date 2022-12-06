@@ -171,7 +171,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
-    <ClCompile Include="moveable.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="interface.cpp" />
@@ -190,8 +189,10 @@
     <Text Include="locale\ru\LanguageNames.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
+    <Text Include="locale\ru\SkillNames.txt" />
     <Text Include="locale\ru\SpellNames.txt" />
     <Text Include="rules\CharacterGenerate.txt" />
+    <Text Include="rules\ClassCleric.txt" />
     <Text Include="rules\DwarvenRaces.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\ElvishRaces.txt" />

@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "advance.h"
+#include "class.h"
 #include "character.h"
 #include "list.h"
 #include "modifier.h"
@@ -25,8 +26,6 @@ static void add_elements(answers& an, const variants& elements) {
 }
 
 static variant choose_advance(const char* id, const variants& elements) {
-	pushvalue push_modifier(modifier, Temporary);
-	pushvalue push_permanent(permanent_modifier, true);
 	char temp[260]; stringbuilder sb(temp);
 	answers an; add_elements(an, elements);
 	if(szstart(id, "Choose"))
@@ -43,12 +42,17 @@ static void apply_advance(const advancei& e) {
 	pushvalue push_modifier(modifier, Temporary);
 	pushvalue push_permanent(permanent_modifier, true);
 	if(e.choose) {
-		auto v = choose_advance(e.id, e.elements);
-		if(e.object.iskind<script>()) {
-			pushvalue push(last_result, v);
-			bsdata<script>::elements[e.object.value].proc(0, 0);
-		} else
-			script::run(v);
+		auto count = e.choose;
+		while(count-- > 0) {
+			modifier = Temporary;
+			permanent_modifier = true;
+			auto v = choose_advance(e.id, e.elements);
+			if(e.object.iskind<script>()) {
+				pushvalue push(last_result, v);
+				bsdata<script>::elements[e.object.value].proc(0, 0);
+			} else
+				script::run(v);
+		}
 	} else
 		script::run(e.elements);
 }
@@ -77,5 +81,10 @@ void character::generate() {
 			advance(race->parent, 0);
 		if(race)
 			advance(race, 0);
+	}
+	for(auto i = 0; i < sizeof(classes) / sizeof(classes[0]); i++) {
+		if(!classes[i])
+			continue;
+		advance(bsdata<classi>::elements + i, classes[i]);
 	}
 }

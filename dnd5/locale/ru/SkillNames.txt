@@ -1,0 +1,7 @@
+﻿Skills: Навыки
+
+History: История
+Insight: Проницательность
+Medicine: Медицина
+Persuasion: Убеждение
+Religion: Религия

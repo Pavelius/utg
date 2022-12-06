@@ -28,6 +28,7 @@ static void read_files(const char* url, const char* mask, void(*proc)(const char
 
 static void initialize() {
 	read_files("rules", "*Races.txt", bsreq::read);
+	read_files("rules", "Class*.txt", bsreq::read);
 	bsreq::read("rules/Menu.txt");
 	bsreq::read("rules/CharacterGenerate.txt");
 }
