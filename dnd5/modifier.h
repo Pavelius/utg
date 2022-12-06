@@ -1,5 +1,6 @@
-#pragma once
 #include "nameable.h"
+
+#pragma once
 
 enum modifier_s : unsigned char {
 	Temporary, Permanent,

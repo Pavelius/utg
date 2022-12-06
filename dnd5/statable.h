@@ -1,5 +1,6 @@
-#pragma once
 #include "flagable.h"
+
+#pragma once
 
 struct statable {
 	char		abilitites[32];

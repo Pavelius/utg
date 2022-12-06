@@ -1,7 +1,8 @@
-#pragma once
 #include "dice.h"
 #include "nameable.h"
 #include "wear.h"
+
+#pragma once
 
 struct itemi : nameable {
 	dice			damage;
