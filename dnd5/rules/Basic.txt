@@ -84,6 +84,7 @@ Longbow
 Net
 
 LeatherArmor
+Chainshirt
 Chainmail
 
 Crowbar
@@ -104,6 +105,9 @@ SacredFlame
 SpareTheDying
 Thaumaturgy
 
+Bless
+CureWounds
+
 #List
 
 SimpleWeapon
@@ -113,6 +117,8 @@ MartialWeapon
 LightArmor
  elements LeatherArmor
 MediumArmor
+ elements Chainshirt
+HeavyArmor
  elements Chainmail
 
 AbilitiesList

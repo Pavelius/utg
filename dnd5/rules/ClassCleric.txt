@@ -1,3 +1,17 @@
+#DivineDomain
+
+KnowledgeDomain
+ spells Bless CureWounds
+ bonus Proficient HeavyArmor
+
+LifeDomain
+ spells Bless CureWounds
+ bonus Proficient HeavyArmor
+
+WarDomain
+ spells Bless CureWounds
+ bonus Proficient HeavyArmor MartialWeapon
+
 #List
 
 ClericSpells0
@@ -11,7 +25,9 @@ ClericSpells0
  elements Proficient SimpleWeapon
 1 Cleric SavingThrows
  elements Proficient Wisdow Charisma
-1 Cleric Skills choose(2)
+1 Cleric Skills choose(2) columns(1)
  elements Proficient History Insight Medicine Persuasion Religion
 1 Cleric Cantrips choose(3)
  elements Proficient ClericSpells0
+1 Cleric DivineDomain choose(1)
+ elements KnowledgeDomain LifeDomain WarDomain

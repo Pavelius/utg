@@ -1,4 +1,9 @@
 ﻿Cantrips: Заговоры
+DivineDomain: Божественный домен
+
+KnowledgeDomain: Домен знаний
+LifeDomain: Домен жизни
+WarDomain: Военный домен
 
 AcidSplash: Кислотные брызги
 DancingLight: Танцующие огоньки

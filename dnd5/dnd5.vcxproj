@@ -148,6 +148,7 @@
     <ClInclude Include="alignment.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="damage.h" />
+    <ClInclude Include="divinedomain.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="language.h" />
     <ClInclude Include="character.h" />

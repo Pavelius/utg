@@ -110,6 +110,9 @@
     <ClInclude Include="moveable.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="divinedomain.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

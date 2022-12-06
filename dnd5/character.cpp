@@ -9,6 +9,8 @@
 #include "race.h"
 #include "script.h"
 
+typedef adat<char, 6> abilitya;
+
 character *player;
 static char ability_places[6];
 void apply_modifier(modifier_s v, int bonus);
@@ -43,6 +45,9 @@ static void apply_advance(const advancei& e) {
 	pushvalue push_modifier(modifier, Temporary);
 	pushvalue push_permanent(permanent_modifier, true);
 	if(e.choose) {
+		pushvalue push_columns(answers::column_count);
+		if(e.columns)
+			answers::column_count = e.columns;
 		auto count = e.choose;
 		while(count-- > 0) {
 			modifier = Temporary;
@@ -58,7 +63,7 @@ static void apply_advance(const advancei& e) {
 		script::run(e.elements);
 }
 
-static void apply_abilities(adat<char, 6>& source, const listi* abilitites) {
+static void apply_abilities(abilitya& source, const listi* abilitites) {
 	if(!abilitites)
 		return;
 	char temp[512]; stringbuilder sb(temp);
@@ -79,7 +84,8 @@ static void apply_abilities(adat<char, 6>& source, const listi* abilitites) {
 			continue;
 		an.add(pv, v.getname());
 	}
-	auto pv = (abilityi*)an.choose(temp);
+	pushvalue push_column(answers::column_count, 1);
+	auto pv = (abilityi*)an.choose(temp, 0, 2);
 	auto n = pv - bsdata<abilityi>::elements;
 	player->abilitites[n] += source.data[0];
 	ability_places[n] = source.data[0];
@@ -92,13 +98,13 @@ static void apply_abilities(character* player_this) {
 	if(!list)
 		return;
 	memset(ability_places, 0, sizeof(ability_places));
-	adat<char, 6> abilities;
+	abilitya abilities;
 	abilities.add(15);
 	abilities.add(14);
 	abilities.add(13);
 	abilities.add(12);
-	abilities.add(11);
-	abilities.add(9);
+	abilities.add(10);
+	abilities.add(8);
 	while(abilities.getcount() > 0)
 		apply_abilities(abilities, (listi*)list.getpointer());
 }
@@ -121,6 +127,7 @@ void character::generate() {
 	pushvalue push_column(answers::column_count, -1);
 	clear();
 	advance("CharacterGenerate");
+	apply_abilities(this);
 	racei* race = getkind();
 	if(race) {
 		if(race->parent)
@@ -133,5 +140,4 @@ void character::generate() {
 			continue;
 		advance(bsdata<classi>::elements + i, classes[i]);
 	}
-	apply_abilities(this);
 }

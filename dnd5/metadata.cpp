@@ -1,15 +1,16 @@
 #include "ability.h"
 #include "advance.h"
 #include "alignment.h"
-#include "class.h"
 #include "bsreq.h"
+#include "character.h"
+#include "class.h"
+#include "divinedomain.h"
 #include "damage.h"
 #include "item.h"
 #include "language.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
-#include "character.h"
 #include "race.h"
 #include "script.h"
 #include "skill.h"
@@ -21,6 +22,7 @@ NOBSDATA(dice)
 BSDATAC(advancei, 1024)
 BSDATAC(character, 128)
 BSDATAC(classi, 32)
+BSDATAC(divinedomain, 16)
 BSDATAC(itemi, 256)
 BSDATAC(languagei, 32)
 BSDATAC(listi, 32)
@@ -40,6 +42,7 @@ BSMETA(advancei) = {
 	BSREQ(object),
 	BSREQ(id),
 	BSREQ(choose),
+	BSREQ(columns),
 	BSREQ(elements),
 	{}};
 BSMETA(alignmenti) = {
@@ -56,6 +59,11 @@ BSMETA(damagei) = {
 	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b),
+	{}};
+BSMETA(divinedomain) = {
+	BSREQ(id),
+	BSREQ(spells),
+	BSREQ(bonus),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
@@ -94,6 +102,7 @@ BSDATA(varianti) = {
 	{"Character", VAR(character, 1)},
 	{"Class", VAR(classi, 1)},
 	{"Damage", VAR(damagei, 1)},
+	{"DivineDomain", VAR(divinedomain, 1)},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1)},
 	{"Language", VAR(languagei, 1)},
