@@ -114,3 +114,6 @@ LightArmor
  elements LeatherArmor
 MediumArmor
  elements Chainmail
+
+AbilitiesList
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma

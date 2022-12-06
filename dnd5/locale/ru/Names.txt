@@ -63,6 +63,7 @@ MageHand: Рука мага
 Male: Мужчина
 Mistra: Мистра
 MountainDwarf: Горный дварф
+NeedRellocateAbility: Распределите атрибуты
 Neutral: Нейтральный
 NeutralEvil: Нейтрально-злой
 NeutralGood: Нейтрально-добрый
@@ -84,6 +85,7 @@ ToolProficiency: Специализацию на инструментах
 TrueNeutral: Нейтральный
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот
+WhereYouWantRelocate: Куда хотите распределить [%1i]?
 Wisdow: Мудрость
 Wizard: Волшебник
 WoodElf: Лесной эльф

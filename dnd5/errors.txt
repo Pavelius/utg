@@ -1,4 +1,2 @@
-﻿In file `rules/ClassCleric.txt`:
- Line 4: Can't find variant `Profecient`
- Line 6: Can't find variant `Profecient`
- Line 8: Can't find variant `Profecient`
+﻿In file `rules/Basic.txt`:
+ Line 119: Can't find variant `Intellect`

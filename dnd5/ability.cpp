@@ -14,4 +14,4 @@ BSDATA(abilityi) = {
 	{"HitPoints"},
 	{"ChannelDivinity"},
 };
-BSDATAF(abilityi)
+assert_enum(abilityi, ChannelDivinity)
