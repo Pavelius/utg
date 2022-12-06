@@ -14,7 +14,7 @@ static void main_menu() {
 	e1.generate();
 }
 
-static void read_files(const char* url, const char* mask) {
+static void read_files(const char* url, const char* mask, void(*proc)(const char* url)) {
 	for(io::file::find file(url); file; file.next()) {
 		auto pn = file.name();
 		if(pn[0] == '.')
@@ -22,12 +22,12 @@ static void read_files(const char* url, const char* mask) {
 		if(!szpmatch(pn, mask))
 			continue;
 		char temp[260];
-		bsreq::read(file.fullname(temp));
+		proc(file.fullname(temp));
 	}
 }
 
 static void initialize() {
-	read_files("rules", "*Races.txt");
+	read_files("rules", "*Races.txt", bsreq::read);
 	bsreq::read("rules/Menu.txt");
 	bsreq::read("rules/CharacterGenerate.txt");
 }

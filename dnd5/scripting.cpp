@@ -2,6 +2,7 @@
 #include "alignment.h"
 #include "character.h"
 #include "class.h"
+#include "collection.h"
 #include "damage.h"
 #include "item.h"
 #include "modifier.h"
@@ -47,17 +48,52 @@ void main_script(variant v) {
 	}
 }
 
+bool script::isallow(variant v) {
+	if(v.iskind<itemi>()) {
+		switch(modifier) {
+		case Proficient: return player->items.is(v.value) != (v.counter >= 0);
+		default: break;
+		}
+	} else if(v.iskind<damagei>()) {
+		switch(modifier) {
+		case Resist: return player->resist.is(v.value) != (v.counter >= 0);
+		case Immunity: return player->immunity.is(v.value) != (v.counter >= 0);
+		case Vulnerable: return player->vulnerable.is(v.value) != (v.counter >= 0);
+		default: break;
+		}
+	} else if(v.iskind<skilli>()) {
+		switch(modifier) {
+		case Proficient: return player->skills.is(v.value) != (v.counter >= 0);
+		default: break;
+		}
+	}
+	return true;
+}
+
+static bool race_parent(const void* object, int param) {
+	return ((racei*)object)->parent == (racei*)param;
+}
+
+static const racei* choose_subrace(const racei* p) {
+	collection<racei> source;
+	source.select();
+	source.match(race_parent, (int)p, true);
+	if(source)
+		p = source.choose(getnm("ChooseSubRace"));
+	return p;
+}
+
 static void character_generate(int bonus, int param) {
-	if(last_result.iskind<racei>())
-		player->setkind(last_result);
-	else if(last_result.iskind<alignmenti>())
+	if(last_result.iskind<racei>()) {
+		const racei* p = bsdata<racei>::elements + last_result.value;
+		p = choose_subrace(p);
+		player->setkind(p);
+	} else if(last_result.iskind<alignmenti>())
 		player->alignment = (char)last_result.value;
 	else if(last_result.iskind<genderi>())
 		player->setgender((gender_s)last_result.value);
-	else if(last_result.iskind<classi>()) {
+	else if(last_result.iskind<classi>())
 		player->classes[last_result.value]++;
-		player->advance(last_result, player->classes[last_result.value]);
-	}
 }
 
 BSDATA(script) = {

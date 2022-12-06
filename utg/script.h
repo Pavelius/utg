@@ -12,6 +12,7 @@ struct script {
 	static fntest ptest;
 	static variants elements;
 	static bool stop;
+	static bool isallow(variant v);
 	static bool isallow(variants source);
 	static void setforeach(int bonus, int param);
 	static void run(const char* id);

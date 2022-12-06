@@ -11,6 +11,7 @@
 #include "modifier.h"
 #include "character.h"
 #include "race.h"
+#include "script.h"
 #include "skill.h"
 #include "spell.h"
 #include "tag.h"
@@ -72,6 +73,9 @@ BSMETA(racei) = {
 	BSREQ(id),
 	BSREQ(parent),
 	{}};
+BSMETA(script) = {
+	BSREQ(id),
+	{}};
 BSMETA(skilli) = {
 	BSREQ(id),
 	{}};
@@ -98,6 +102,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1)},
 	{"Race", VAR(racei, 1)},
+	{"Script", VAR(script, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"Spell", VAR(spelli, 1)},
 	{"Tag", VAR(tagi, 1)},

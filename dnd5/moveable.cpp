@@ -5,15 +5,6 @@
 #include "race.h"
 #include "moveable.h"
 
-//static racei* choose_race(const racei* parent) {
-//	answers an;
-//	for(auto& e : bsdata<racei>()) {
-//		if(e.parent == parent)
-//			an.add(&e, getnm(e.id));
-//	}
-//	return (racei*)an.choose(getnm("ChooseSubRace"));
-//}
-//
 //bool moveable::addstart(variant v, modifier_s modifier, bool run) {
 //	if(v.iskind<racei>()) {
 //		if(run) {

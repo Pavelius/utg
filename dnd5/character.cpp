@@ -17,36 +17,38 @@ static void add_elements(answers& an, const variants& elements) {
 			add_elements(an, bsdata<listi>::elements[v.value].elements);
 		else if(v.iskind<modifieri>())
 			apply_modifier((modifier_s)v.value, v.counter);
-		else
-			an.add(v.getpointer(), v.getname());
+		else {
+			if(script::isallow(v))
+				an.add(v.getpointer(), v.getname());
+		}
 	}
 }
 
-static variant choose_advance(const advancei& source) {
+static variant choose_advance(const char* id, const variants& elements) {
 	pushvalue push_modifier(modifier, Temporary);
 	pushvalue push_permanent(permanent_modifier, true);
 	char temp[260]; stringbuilder sb(temp);
-	answers an; add_elements(an, source.elements);
-	auto pn = source.id;
-	if(szstart(pn, "Choose"))
-		pn = getnm(pn);
+	answers an; add_elements(an, elements);
+	if(szstart(id, "Choose"))
+		id = getnm(id);
 	else {
 		sb.clear();
-		sb.add("%Choose [%1]", getnm(source.id));
-		pn = temp;
+		sb.add("%Choose [%1]", getnm(id));
+		id = temp;
 	}
-	return an.choose(pn);
+	return an.choose(id);
 }
 
 static void apply_advance(const advancei& e) {
 	pushvalue push_modifier(modifier, Temporary);
 	pushvalue push_permanent(permanent_modifier, true);
 	if(e.choose) {
-		auto v = choose_advance(e);
+		auto v = choose_advance(e.id, e.elements);
 		if(e.object.iskind<script>()) {
 			pushvalue push(last_result, v);
 			bsdata<script>::elements[e.object.value].proc(0, 0);
-		}
+		} else
+			script::run(v);
 	} else
 		script::run(e.elements);
 }
