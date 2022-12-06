@@ -7,11 +7,13 @@
 #include "item.h"
 #include "language.h"
 #include "list.h"
+#include "menu.h"
 #include "modifier.h"
-#include "main.h"
+#include "character.h"
 #include "race.h"
 #include "skill.h"
 #include "spell.h"
+#include "tag.h"
 
 #define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 

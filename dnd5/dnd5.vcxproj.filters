@@ -57,9 +57,12 @@
     <ClCompile Include="item.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
+    <ClInclude Include="character.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
@@ -105,6 +108,12 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="advance.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="statable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="moveable.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

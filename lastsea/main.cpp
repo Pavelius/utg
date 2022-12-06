@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
 	initialize_script();
 	initialize_widgets();
 	initialize_information_widgets();
-	return draw::start(starting, true, initializing);
+	return draw::start(starting, initializing);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

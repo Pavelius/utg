@@ -1,5 +1,7 @@
+#include "character.h"
 #include "draw.h"
-#include "main.h"
+#include "menu.h"
+#include "variant.h"
 #include "widget.h"
 
 using namespace draw;

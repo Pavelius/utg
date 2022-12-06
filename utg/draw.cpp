@@ -1562,7 +1562,7 @@ int draw::textw(const char* string, int count) {
 	if(!font)
 		return 0;
 	int x1 = 0;
-	auto pk = font->getheader("KRN");
+	const pma* pk = 0;//font->getheader("KRN");
 	unsigned char s0 = 0x0;
 	if(count == -1) {
 		const char *s1 = string;
@@ -1601,7 +1601,7 @@ void draw::text(const char* string, int count, unsigned flags) {
 		return;
 	if(count == -1)
 		count = zlen(string);
-	auto pk = font->getheader("KRN");
+	const pma* pk = 0; // font->getheader("KRN");
 	const char *s1 = string;
 	const char *s2 = string + count;
 	auto push_caret = caret;

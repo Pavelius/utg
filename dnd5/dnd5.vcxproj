@@ -150,11 +150,13 @@
     <ClInclude Include="damage.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="language.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="character.h" />
     <ClInclude Include="modifier.h" />
+    <ClInclude Include="moveable.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="spell.h" />
+    <ClInclude Include="statable.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
@@ -170,6 +172,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="moveable.cpp" />
+    <ClCompile Include="scripting.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="interface.cpp" />
