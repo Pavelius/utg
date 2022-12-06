@@ -1,5 +1,12 @@
-﻿AcidSplash: Кислотные брызги
+﻿Cantrips: Заговоры
+
+AcidSplash: Кислотные брызги
 DancingLight: Танцующие огоньки
 FireBolt: Луч огня
+Guidance: Опека
 Light: Свет
 MageHand: Рука мага
+Resistance: Сопротивление
+SacredFlame: Священное пламя
+SpareTheDying: Уход за умирающим
+Thaumaturgy: Чудотворство

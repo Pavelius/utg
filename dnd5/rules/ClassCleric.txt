@@ -1,3 +1,8 @@
+#List
+
+ClericSpells0
+ elements Guidance Light Resistance SacredFlame SpareTheDying Thaumaturgy
+
 #Advance
 
 1 Cleric ArmorProficiencies
@@ -8,3 +13,5 @@
  elements Proficient Wisdow Charisma
 1 Cleric Skills choose(2)
  elements Proficient History Insight Medicine Persuasion Religion
+1 Cleric Cantrips choose(3)
+ elements Proficient ClericSpells0

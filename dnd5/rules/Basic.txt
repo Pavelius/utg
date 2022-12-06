@@ -96,8 +96,13 @@ MasonsTools
 AcidSplash
 DancingLight
 FireBolt
+Guidance
 Light
 MageHand
+Resistance
+SacredFlame
+SpareTheDying
+Thaumaturgy
 
 #List
 

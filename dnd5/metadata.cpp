@@ -80,6 +80,7 @@ BSMETA(skilli) = {
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
+	BSDST(classes, classi),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

@@ -25,17 +25,17 @@ static void add_elements(answers& an, const variants& elements) {
 	}
 }
 
-static variant choose_advance(const char* id, const variants& elements) {
+static variant choose_advance(const char* id, const variants& elements, int count) {
 	char temp[260]; stringbuilder sb(temp);
 	answers an; add_elements(an, elements);
 	if(szstart(id, "Choose"))
-		id = getnm(id);
+		sb.add(getnm(id));
 	else {
-		sb.clear();
 		sb.add("%Choose [%1]", getnm(id));
-		id = temp;
+		if(count > 0)
+			sb.adds("(%-Left %1i)", count);
 	}
-	return an.choose(id);
+	return an.choose(temp);
 }
 
 static void apply_advance(const advancei& e) {
@@ -46,7 +46,7 @@ static void apply_advance(const advancei& e) {
 		while(count-- > 0) {
 			modifier = Temporary;
 			permanent_modifier = true;
-			auto v = choose_advance(e.id, e.elements);
+			auto v = choose_advance(e.id, e.elements, count + 1);
 			if(e.object.iskind<script>()) {
 				pushvalue push(last_result, v);
 				bsdata<script>::elements[e.object.value].proc(0, 0);

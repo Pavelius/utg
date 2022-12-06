@@ -56,6 +56,7 @@ LawfulEvil: Законопослушно-злой
 LawfulGood: Законопослушно-добрый
 LawfulNeutral: Законопослушно-нейтральный
 LeatherArmor: Кожанная броня
+Left: Осталось
 Light: Свет
 Mace: Булава
 MageHand: Рука мага

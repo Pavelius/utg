@@ -2,5 +2,6 @@
 #include "nameable.h"
 
 struct spelli : nameable {
-	char			level;
+	char	level;
+	char	classes[16];
 };

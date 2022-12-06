@@ -9,6 +9,7 @@
 #include "race.h"
 #include "script.h"
 #include "skill.h"
+#include "spell.h"
 
 variant last_result;
 
@@ -45,6 +46,11 @@ void main_script(variant v) {
 		case Proficient: player->skills.set(v.value, v.counter >= 0); break;
 		default: break;
 		}
+	} else if(v.iskind<spelli>()) {
+		switch(modifier) {
+		case Proficient: player->spells_knows.set(v.value, v.counter >= 0); break;
+		default: break;
+		}
 	}
 }
 
@@ -64,6 +70,11 @@ bool script::isallow(variant v) {
 	} else if(v.iskind<skilli>()) {
 		switch(modifier) {
 		case Proficient: return player->skills.is(v.value) != (v.counter >= 0);
+		default: break;
+		}
+	} else if(v.iskind<spelli>()) {
+		switch(modifier) {
+		case Proficient: return player->spells_knows.is(v.value) != (v.counter >= 0);
 		default: break;
 		}
 	}
