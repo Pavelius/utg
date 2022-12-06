@@ -6,30 +6,30 @@ WoodElf parent(Elf)
 
 #Advance
 
-AbilityScoreIncrease Elf 0
- effect Dexterity+2
-Darkvision Elf 0
- effect Darkvision
-KeenSenses Elf 0
- effect Proficient Perception
-FeyAncestry Elf 0
- effect Proficient SaveVsCharm ImmuneToSleepMagic
-Trace Elf 0
+0 Elf AbilityScoreIncrease
+ elements Dexterity+2
+0 Elf Darkvision
+ elements Darkvision
+0 Elf KeenSenses
+ elements Proficient Perception
+0 Elf FeyAncestry
+ elements Proficient SaveVsCharm ImmuneToSleepMagic
+0 Elf Trance
 
-AbilityScoreIncrease HightElf 0
- effect Intellegence+1
-ElfWeaponTraining HightElf 0
- effect Proficient Longsword Shortsword Shortbow Longbow
-Cantrip HightElf 0 choose(1)
- effect AcidSplash DancingLight FireBolt Light MageHand
-ExtraLanguage HightElf 0 choose(1)
- effect Dwarvish Orcish Gnomish Draconical Infernal
+0 HightElf AbilityScoreIncrease
+ elements Intellegence+1
+0 HightElf ElfWeaponTraining
+ elements Proficient Longsword Shortsword Shortbow Longbow
+0 HightElf Cantrip choose(1)
+ elements AcidSplash DancingLight FireBolt Light MageHand
+0 HightElf ExtraLanguage choose(1)
+ elements Dwarvish Orcish Gnomish Draconical Infernal
 
-AbilityScoreIncrease WoodElf 0
- effect Wisdow+1
-ElfWeaponTraining WoodElf 0
- effect Proficient Longsword Shortsword Shortbow Longbow
-FleetOfFoot WoodElf 0
- effect Speed+1
-MaskOfTheWild WoodElf 0
- effect HideInEnviroment
+0 WoodElf AbilityScoreIncrease
+ elements Wisdow+1
+0 WoodElf ElfWeaponTraining
+ elements Proficient Longsword Shortsword Shortbow Longbow
+0 WoodElf FleetOfFoot
+ elements Speed+1
+0 WoodElf MaskOfTheWild
+ elements HideInEnviroment

@@ -1,10 +1,2 @@
-﻿In file `rules/DwarvenRaces.txt`:
- Line 9: Invalid source array where read identifier `Dwarf`
- Line 10: Not found requisit `effect`
-In file `rules/ElvishRaces.txt`:
- Line 9: Invalid source array where read identifier `Elf`
- Line 10: Not found requisit `effect`
-In file `rules/CharacterGenerate.txt`:
- Line 3: Invalid source array where read identifier `CharacterGenerate`
- Line 3: Not found requisit `choose`
+﻿In file `rules/CharacterGenerate.txt`:
  Line 4: Not found requisit `effect`

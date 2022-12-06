@@ -6,25 +6,25 @@ MountainDwarf parent(Dwarf)
 
 #Advance
 
-AbilityScoreIncrease Dwarf 0
- effect Constitution+2
-Darkvision Dwarf 0
- effect Darkvision
-DwarvenResilence Dwarf 0
- effect Proficient SaveVsPoison Resist Poison
-DwarvenCombatTraining Dwarf 0
- effect Proficient Handaxe Battleaxe LightHammer Warhammer
-ToolProficiency Dwarf 0 choose(1)
- effect Proficient SmithsTools BrewersSupplies MasonsTools
-Languages Dwarf 0
- effect Common Dwarvish
+0 Dwarf AbilityScoreIncrease
+ elements Constitution+2
+0 Dwarf Darkvision
+ elements Darkvision
+0 Dwarf DwarvenResilence
+ elements Proficient SaveVsPoison Resist Poison
+0 Dwarf DwarvenCombatTraining
+ elements Proficient Handaxe Battleaxe LightHammer Warhammer
+0 Dwarf ToolProficiency choose(1)
+ elements Proficient SmithsTools BrewersSupplies MasonsTools
+0 Dwarf Languages
+ elements Common Dwarvish
 
-AbilityScoreIncrease HillDwarf 0
- effect Wisdow+1
-DwarvenToughness HillDwarf 0
- effect Toughness
+0 HillDwarf AbilityScoreIncrease
+ elements Wisdow+1
+0 HillDwarf DwarvenToughness
+ elements Toughness
 
-AbilityScoreIncrease MountainDwarf 0
- effect Strenght+2
-DwarvenArmorTraining MountainDwarf 0
- effect Proficient LightArmor MediumArmor
+0 MountainDwarf AbilityScoreIncrease
+ elements Strenght+2
+0 MountainDwarf DwarvenArmorTraining
+ elements Proficient LightArmor MediumArmor

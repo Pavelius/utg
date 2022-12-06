@@ -26,7 +26,7 @@ static int getcolumns(const answers& an) {
 void answers::paintanswers(int columns, const char* cancel_text) const {
 	auto column_width = width;
 	if(columns > 1)
-		column_width = column_width / columns - metrics::border;
+		column_width = (column_width - (metrics::border * 2 + metrics::padding) * (columns - 1)) / columns + 1;
 	auto index = 0;
 	auto y1 = caret.y, x1 = caret.x;
 	auto y2 = caret.y;
@@ -43,7 +43,7 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 				caret.x = x1;
 			} else {
 				caret.y = y1;
-				caret.x += width + metrics::border * 2;
+				caret.x += width + metrics::border * 2 + metrics::padding - 1;
 			}
 		}
 	}

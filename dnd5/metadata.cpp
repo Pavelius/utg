@@ -35,8 +35,9 @@ BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
 BSMETA(advancei) = {
-	BSREQ(id),
 	BSREQ(level),
+	BSREQ(object),
+	BSREQ(id),
 	BSREQ(choose),
 	BSREQ(elements),
 	{}};

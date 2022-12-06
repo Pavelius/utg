@@ -1,10 +1,10 @@
 #Advance
 
-ChooseGender CharacterGenerate 0 choose(1)
- effect Male Female
-ChooseRace CharacterGenerate 0 choose(1)
- effect Dwarf Elf
-ChooseAlignment CharacterGenerate 0 choose(1)
- effect LawfulGood NeutralGood ChaoticGood LawfulNeutral TrueNeutral ChaoticNeutral LawfulEvil NeutralEvil ChaoticEvil
-ChooseClass CharacterGenerate 0 choose(1)
- effect Cleric Fighter Rogue Wizard
+0 CharacterGenerate ChooseGender choose(1)
+ elements Male Female
+0 CharacterGenerate ChooseRace choose(1)
+ elements Dwarf Elf
+0 CharacterGenerate ChooseAlignment choose(1)
+ elements LawfulGood NeutralGood ChaoticGood LawfulNeutral TrueNeutral ChaoticNeutral LawfulEvil NeutralEvil ChaoticEvil
+0 CharacterGenerate ChooseClass choose(1)
+ elements Cleric Fighter Rogue Wizard
