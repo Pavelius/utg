@@ -2,8 +2,11 @@
 #include "modifier.h"
 
 modifier_s modifier;
+bool permanent_modifier;
 
 BSDATA(modifieri) = {
+	{"Temporary"},
+	{"Permanent"},
 	{"Proficient"},
 	{"Immunity"},
 	{"Resist"},

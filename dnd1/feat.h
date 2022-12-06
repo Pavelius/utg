@@ -1,5 +1,6 @@
-#pragma once
 #include "nameable.h"
+
+#pragma once
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,

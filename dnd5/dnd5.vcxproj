@@ -173,7 +173,6 @@
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="moveable.cpp" />
     <ClCompile Include="scripting.cpp" />
-    <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="wear.cpp" />

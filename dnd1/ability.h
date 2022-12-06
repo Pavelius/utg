@@ -1,5 +1,6 @@
-#pragma once
 #include "nameable.h"
+
+#pragma once
 
 enum ability_s : unsigned char {
 	Strenght, Dexterity, Constitution, Intellect, Wisdow, Charisma,

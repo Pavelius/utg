@@ -24,7 +24,6 @@ struct varianti {
 	void			set(void* object, const char* id, int value) const;
 };
 union variant {
-	typedef bool (*fnapply)(variant v, bool run);
 	unsigned char	uc[4];
 	unsigned		u;
 	struct {

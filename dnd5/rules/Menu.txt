@@ -1,6 +1,4 @@
 #Menu
 
-CharacterGenerate
-
 Abilities source(Character) format(AbilityBox)
  elements Strenght Dexterity Constitution Intellegence Wisdow Charisma

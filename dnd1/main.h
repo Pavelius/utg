@@ -74,11 +74,12 @@ struct enchantmentseti {
 };
 struct itemi : nameable {
 	struct weaponi {
+		char		attack;
 		dice		damage;
 		short 		ammunition;
 	};
 	struct armori {
-		char		ac;
+		char		ac, dr;
 	};
 	int				cost, weight, count;
 	armori			armor;
@@ -114,8 +115,8 @@ struct item {
 	const char*		getname() const { return geti().getname(); }
 	void			getstatus(stringbuilder& sb) const;
 	int				getweight() const;
-	bool			iscountable() const { return geti().is(Countable); }
-	bool			ismagical() const { return getenchant()!=0; }
+	bool			iscountable() const { return geti().count != 0; }
+	bool			ismagical() const { return getenchant() != 0; }
 	void			setcount(int v);
 };
 struct itema : adat<item*> {
