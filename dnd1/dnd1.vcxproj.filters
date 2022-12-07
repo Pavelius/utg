@@ -21,6 +21,9 @@
     <ClInclude Include="feat.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="wear.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

@@ -16,10 +16,7 @@
     <ClCompile Include="script.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="abilitya.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
-    <ClCompile Include="state.cpp">
+    <ClCompile Include="ability.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="code.cpp">
@@ -63,6 +60,9 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="nameable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="ability.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,13 +12,6 @@
 enum tag_s : unsigned char {
 	Intimate, Close, Far,
 };
-enum ability_s : unsigned char {
-	Assault, Comunication, Exploration, Medicine, Hunting, Research,
-};
-enum state_s : unsigned char {
-	Crew, Discontent, Supply, Machinery,
-	Inside, Problem, Success, Advantage,
-};
 enum planet_resource_s : unsigned char {
 	Food, Industry, Science, Money, Population
 };
@@ -31,20 +24,7 @@ struct planetr {
 };
 struct landscapei : nameable, planetr {
 };
-struct statei {
-	const char*		id;
-};
 struct planet_resourcei : nameable {};
-class abilitya {
-	char			abilities[Research + 1];
-	char			states[Advantage + 1];
-public:
-	void			add(state_s v, int i) { states[v] += i; }
-	int				get(ability_s v) const { return abilities[v]; }
-	int				get(state_s v) const { return states[v]; }
-	void			set(ability_s v, int i) { abilities[v] = i; }
-	void			set(state_s v, int i) { states[v] = i; }
-};
 struct systemi : posable {
 };
 struct planeti : posable, planetr {

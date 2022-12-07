@@ -10,6 +10,7 @@
 #include "quest.h"
 #include "speech.h"
 #include "utg.h"
+#include "wear.h"
 
 #pragma once
 
@@ -43,11 +44,6 @@ enum spell_s : unsigned char {
 	AntiMagicShell, DeathSpell,
 	LastSpell = DeathSpell,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
-};
-enum wear_s : unsigned char {
-	Backpack, Potion, BackpackLast = Backpack + 15,
-	MeleeWeapon, MeleeWeaponOffhand, RangedWeapon, ThrownWeapon, Ammunition,
-	Head, Torso, Legs, Gloves, FingerRight, FingerLeft, Elbows,
 };
 inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
@@ -187,9 +183,6 @@ struct treasure : adat<item> {
 	void			add(item it);
 	void			generate(char symbol);
 	void			take();
-};
-struct weari {
-	const char*		id;
 };
 struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;

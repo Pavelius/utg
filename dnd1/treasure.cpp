@@ -6,8 +6,8 @@ struct treasurei {
 		dice	range;
 		short	multiplier;
 	};
-	char		symbol;
-	coini		cp, sp, ep, gp, pp, gems, jewelry, magic;
+	char	symbol;
+	coini	cp, sp, ep, gp, pp, gems, jewelry, magic;
 };
 
 BSDATA(treasurei) = {

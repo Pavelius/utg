@@ -150,6 +150,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="wear.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
