@@ -1,11 +1,11 @@
-#include "moveable.h"
 #include "statable.h"
+#include "spell.h"
+#include "wearable.h"
 
 #pragma once
 
-struct character : moveable, statable {
+struct character : wearable, statable, spellable {
 	statable	basic;
-	flagable<16> spells_knows, spells;
 	char		alignment;
 	char		classes[16];
 	void		advance(variant object, int level = 0);

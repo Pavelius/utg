@@ -86,6 +86,7 @@ Net
 LeatherArmor
 Chainshirt
 Chainmail
+Scalemail
 
 Crowbar
 SmithsTools

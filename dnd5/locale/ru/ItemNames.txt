@@ -1,3 +1,8 @@
-﻿BrewersSupplies: Инструменты пивовара
+﻿YourArmor: Ваши доспехи
+YourWeapon: Ваше оружие
+
+BrewersSupplies: Инструменты пивовара
 MasonsTools: Инструменты каменщика
 SmithsTools: Инструменты кузнеца
+Chainmail: Кольчуга
+Scalemail: Чешуйчатый доспех

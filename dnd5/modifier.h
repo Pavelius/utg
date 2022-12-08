@@ -4,7 +4,7 @@
 
 enum modifier_s : unsigned char {
 	Temporary, Permanent,
-	Proficient, Immunity, Resist, Vulnerable,
+	Allowed, Proficient, Immunity, Resist, Vulnerable,
 };
 struct modifieri : nameable {
 };

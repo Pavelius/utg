@@ -31,3 +31,7 @@ ClericSpells0
  elements Proficient ClericSpells0
 1 Cleric DivineDomain choose(1)
  elements KnowledgeDomain LifeDomain WarDomain
+1 Cleric YourWeapon choose(1)
+ elements Allowed Mace Warhammer
+1 Cleric YourArmor choose(1)
+ elements Allowed Scalemail LeatherArmor Chainmail

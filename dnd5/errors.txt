@@ -1,2 +1,2 @@
 ﻿In file `rules/ClassCleric.txt`:
- Line 5: Can't find variant `Proficiency`
+ Line 37: Can't find variant `Scalemail`

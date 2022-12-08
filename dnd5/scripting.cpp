@@ -21,6 +21,13 @@ void apply_modifier(modifier_s v, int bonus) {
 	}
 }
 
+static void item_add(int type) {
+	item m;
+	m.clear();
+	m.type = type;
+	player->additem(m);
+}
+
 void main_script(variant v) {
 	if(v.iskind<modifieri>())
 		apply_modifier((modifier_s)v.value, v.counter);
@@ -32,7 +39,7 @@ void main_script(variant v) {
 	} else if(v.iskind<itemi>()) {
 		switch(modifier) {
 		case Proficient: player->items.set(v.value, v.counter >= 0); break;
-		default: break;
+		default: item_add(v.value); break;
 		}
 	} else if(v.iskind<damagei>()) {
 		switch(modifier) {
@@ -57,6 +64,7 @@ void main_script(variant v) {
 bool script::isallow(variant v) {
 	if(v.iskind<itemi>()) {
 		switch(modifier) {
+		case Allowed: return player->items.is(v.value) != (v.counter >= 0);
 		case Proficient: return player->items.is(v.value) != (v.counter >= 0);
 		default: break;
 		}

@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
+    <ClCompile Include="advance.cpp" />
     <ClCompile Include="alignment.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="damage.cpp" />
