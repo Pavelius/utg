@@ -3,5 +3,5 @@
 #pragma once
 
 struct racei : nameable {
-	racei*			parent;
+	racei*	parent;
 };

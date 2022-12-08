@@ -7,7 +7,7 @@ MountainDwarf parent(Dwarf)
 #Advance
 
 0 Dwarf AbilityScoreIncrease
- elements Constitution+2
+ elements Permanent Constitution+2
 0 Dwarf Darkvision
  elements Darkvision
 0 Dwarf DwarvenResilence
@@ -20,11 +20,11 @@ MountainDwarf parent(Dwarf)
  elements Common Dwarvish
 
 0 HillDwarf AbilityScoreIncrease
- elements Wisdow+1
+ elements Permanent Wisdow+1
 0 HillDwarf DwarvenToughness
  elements Toughness
 
 0 MountainDwarf AbilityScoreIncrease
- elements Strenght+2
+ elements Permanent Strenght+2
 0 MountainDwarf DwarvenArmorTraining
  elements Proficient LightArmor MediumArmor

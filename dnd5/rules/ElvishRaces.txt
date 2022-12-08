@@ -7,9 +7,9 @@ WoodElf parent(Elf)
 #Advance
 
 0 Elf AbilityScoreIncrease
- elements Dexterity+2
+ elements Permanent Dexterity+2
 0 Elf Darkvision
- elements Darkvision
+ elements Permanent Darkvision
 0 Elf KeenSenses
  elements Proficient Perception
 0 Elf FeyAncestry
@@ -17,19 +17,19 @@ WoodElf parent(Elf)
 0 Elf Trance
 
 0 HightElf AbilityScoreIncrease
- elements Intellegence+1
+ elements Permanent Intellegence+1
 0 HightElf ElfWeaponTraining
  elements Proficient Longsword Shortsword Shortbow Longbow
-0 HightElf Cantrip choose(1)
- elements AcidSplash DancingLight FireBolt Light MageHand
+0 HightElf Cantrip choose(1) columns(2)
+ elements Proficient AcidSplash DancingLight FireBolt Light MageHand
 0 HightElf ExtraLanguage choose(1)
  elements Dwarvish Orcish Gnomish Draconical Infernal
 
 0 WoodElf AbilityScoreIncrease
- elements Wisdow+1
+ elements Permanent Wisdow+1
 0 WoodElf ElfWeaponTraining
  elements Proficient Longsword Shortsword Shortbow Longbow
 0 WoodElf FleetOfFoot
- elements Speed+1
+ elements Permanent Speed+1
 0 WoodElf MaskOfTheWild
  elements HideInEnviroment

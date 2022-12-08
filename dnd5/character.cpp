@@ -21,10 +21,8 @@ static void add_elements(answers& an, const variants& elements) {
 			add_elements(an, bsdata<listi>::elements[v.value].elements);
 		else if(v.iskind<modifieri>())
 			apply_modifier((modifier_s)v.value, v.counter);
-		else {
-			if(script::isallow(v))
-				an.add(v.getpointer(), v.getname());
-		}
+		else if(script::isallow(v))
+			an.add(v.getpointer(), v.getname());
 	}
 }
 
