@@ -153,6 +153,7 @@
     <ClCompile Include="planet_resource.cpp" />
     <ClCompile Include="posable.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="roll12.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>

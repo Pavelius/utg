@@ -19,12 +19,12 @@ struct statei {
 	constexpr bool is(statef v) const { return (flags & (1 << v)) != 0; }
 };
 class abilitya {
-	char abilities[Research + 1];
-	char states[Advantage + 1];
+	char	abilities[Research + 1];
+	char	states[Advantage + 1];
 public:
-	void add(state_s v, int i) { states[v] += i; }
-	void set(ability_s v, int i) { abilities[v] = i; }
-	void set(state_s v, int i) { states[v] = i; }
-	int get(ability_s v) const { return abilities[v]; }
-	int get(state_s v) const { return states[v]; }
+	void	add(state_s v, int i) { states[v] += i; }
+	int		get(ability_s v) const { return abilities[v]; }
+	int		get(state_s v) const { return states[v]; }
+	void	set(ability_s v, int i) { abilities[v] = i; }
+	void	set(state_s v, int i) { states[v] = i; }
 };
