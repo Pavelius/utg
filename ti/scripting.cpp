@@ -1,4 +1,5 @@
 #include "condition.h"
+#include "scriptmass.h"
 #include "main.h"
 
 typedef void(*fnforeach)(variant v);
@@ -349,6 +350,13 @@ void script_initialize() {
 
 void combat_reatreat(int bonus, int param);
 void combat_continue(int bonus, int param);
+
+BSDATA(scriptmass) = {
+	{"ForEachPlanet", for_each_planet},
+	{"ForEachPlayer", for_each_player},
+	{"ForEachTroop", for_each_troop},
+};
+BSDATAF(scriptmass)
 
 BSDATA(script) = {
 	{"ActionCard", action_card},

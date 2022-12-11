@@ -28,9 +28,6 @@
     <ClCompile Include="posable.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="nameable.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="planet_resource.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -45,7 +42,7 @@
     <Filter Include="Данные">
       <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="locale">
+    <Filter Include="Локализация">
       <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -60,9 +57,6 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="posable.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="nameable.h">
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
@@ -95,7 +89,7 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\Descriptions.txt">
-      <Filter>locale</Filter>
+      <Filter>Локализация</Filter>
     </Text>
     <Text Include="locale\ru\NamesOf.txt">
       <Filter>Данные</Filter>

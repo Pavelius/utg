@@ -14,9 +14,9 @@ BSDATAD(variant)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(bonusi) = {
-	BSREQ(id), BSREQ(object), BSREQ(value),
-	{}};
+//BSMETA(bonusi) = {
+//	BSREQ(id), BSENM(object, harmi), BSREQ(value),
+//	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -56,7 +56,6 @@ BSDATAC(itemi, 256)
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi)},
-	{"Bonus", VRSTD(bonusi)},
 	{"Item", VRSTD(itemi)},
 	{"Menu", VRSTD(menu)},
 	{"Move", VRSTD(movei)},
@@ -67,4 +66,4 @@ BSDATA(varianti) = {
 	{"Tag", VRSTD(tagi)},
 	{"Widget", VRSTD(widget)},
 };
-assert_enum(varianti, Widget)
+BSDATAF(varianti)

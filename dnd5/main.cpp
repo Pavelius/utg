@@ -7,8 +7,6 @@
 void status_info(void) {
 }
 
-void main_script(variant v);
-
 static void main_menu() {
 	character e1;
 	e1.generate();
@@ -36,7 +34,6 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
-	script::prun = main_script;
 	return draw::strategy(main_menu, initialize);
 }
 

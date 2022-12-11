@@ -139,6 +139,37 @@ bool szmatch(const char* text, const char* name) {
 	return true;
 }
 
+static const char* skipspecial(const char* p) {
+	while(*p && *p != '*' && *p != '?' && *p != ',')
+		p++;
+	return p;
+}
+
+static const char* find_part(const char* ps, const char* p, unsigned s) {
+	while(*ps) {
+		if(memcmp(ps, p, s) == 0)
+			return ps;
+		ps++;
+	}
+	return 0;
+}
+
+static bool pszmatch(const char* ps, const char* p) {
+	while(*p == '*') {
+		p++;
+		auto b = p;
+		while(*p && *p != ',' && *p != '*')
+			p++;
+		auto s = p - b;
+		if(!s)
+			return true;
+		ps = find_part(ps, b, s);
+		if(!ps)
+			return false;
+		ps += s;
+	}
+}
+
 static bool szpmatch(const char* text, const char* s, const char* s2) {
 	while(true) {
 		const char* d = text;
@@ -765,4 +796,10 @@ int stringbuilder::getgender(const char* s) {
 			return e.value;
 	}
 	return 0;
+}
+
+const char* str(const char* format, ...) {
+	static char temp[512]; stringbuilder sb(temp);
+	sb.addv(format, xva_start(format));
+	return temp;
 }

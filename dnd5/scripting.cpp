@@ -13,80 +13,82 @@
 
 variant last_result;
 
-void apply_modifier(modifier_s v, int bonus) {
-	switch(v) {
-	case Permanent: permanent_modifier = true; break;
-	case Temporary: permanent_modifier = false; break;
-	default: modifier = v; break;
-	}
-}
-
 static void item_add(int type) {
-	item m;
-	m.clear();
+	item m; m.clear();
 	m.type = type;
 	player->additem(m);
 }
 
-void main_script(variant v) {
-	if(v.iskind<modifieri>())
-		apply_modifier((modifier_s)v.value, v.counter);
-	else if(v.iskind<abilityi>()) {
-		switch(modifier) {
-		case Proficient: player->saves.set(v.value, v.counter >= 0); break;
-		default: player->abilitites[v.value] += v.counter; break;
-		}
-	} else if(v.iskind<itemi>()) {
-		switch(modifier) {
-		case Proficient: player->items.set(v.value, v.counter >= 0); break;
-		default: item_add(v.value); break;
-		}
-	} else if(v.iskind<damagei>()) {
-		switch(modifier) {
-		case Resist: player->resist.set(v.value, v.counter >= 0); break;
-		case Immunity: player->immunity.set(v.value, v.counter >= 0); break;
-		case Vulnerable: player->vulnerable.set(v.value, v.counter >= 0); break;
-		default: break;
-		}
-	} else if(v.iskind<skilli>()) {
-		switch(modifier) {
-		case Proficient: player->skills.set(v.value, v.counter >= 0); break;
-		default: break;
-		}
-	} else if(v.iskind<spelli>()) {
-		switch(modifier) {
-		case Proficient: player->spells_knows.set(v.value, v.counter >= 0); break;
-		default: break;
-		}
+template<> void fnscript<modifieri>(int value, int bonus) {
+	switch(value) {
+	case NoModifier: permanent_modifier = false; modifier = NoModifier; break;
+	case Permanent: permanent_modifier = true; break;
+	default: modifier = (modifier_s)value; break;
 	}
 }
 
-bool script::isallow(variant v) {
-	if(v.iskind<itemi>()) {
-		switch(modifier) {
-		case Allowed: return player->items.is(v.value) != (v.counter >= 0);
-		case Proficient: return player->items.is(v.value) != (v.counter >= 0);
-		default: break;
-		}
-	} else if(v.iskind<damagei>()) {
-		switch(modifier) {
-		case Resist: return player->resist.is(v.value) != (v.counter >= 0);
-		case Immunity: return player->immunity.is(v.value) != (v.counter >= 0);
-		case Vulnerable: return player->vulnerable.is(v.value) != (v.counter >= 0);
-		default: break;
-		}
-	} else if(v.iskind<skilli>()) {
-		switch(modifier) {
-		case Proficient: return player->skills.is(v.value) != (v.counter >= 0);
-		default: break;
-		}
-	} else if(v.iskind<spelli>()) {
-		switch(modifier) {
-		case Proficient: return player->spells_knows.is(v.value) != (v.counter >= 0);
-		default: break;
-		}
+template<> void fnscript<abilityi>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: player->saves.set(value, bonus >= 0); break;
+	default: player->abilitites[value] += bonus; break;
 	}
-	return true;
+}
+
+template<> bool fntest<itemi>(int value, int bonus) {
+	switch(modifier) {
+	case Allowed: return player->items.is(value) != (bonus >= 0);
+	case Proficient: return player->items.is(value) != (bonus >= 0);
+	default: return true;
+	}
+}
+template<> void fnscript<itemi>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: player->items.set(value, bonus >= 0); break;
+	default: item_add(value); break;
+	}
+}
+
+template<> bool fntest<damagei>(int value, int bonus) {
+	switch(modifier) {
+	case Resist: return player->resist.is(value) != (bonus >= 0);
+	case Immunity: return player->immunity.is(value) != (bonus >= 0);
+	case Vulnerable: return player->vulnerable.is(value) != (bonus >= 0);
+	default: return true;
+	}
+}
+template<> void fnscript<damagei>(int value, int bonus) {
+	switch(modifier) {
+	case Resist: player->resist.set(value, bonus >= 0); break;
+	case Immunity: player->immunity.set(value, bonus >= 0); break;
+	case Vulnerable: player->vulnerable.set(value, bonus >= 0); break;
+	default: break;
+	}
+}
+
+template<> bool fntest<skilli>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: return player->skills.is(value) != (bonus >= 0);
+	default: return true;
+	}
+}
+template<> void fnscript<skilli>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: player->skills.set(value, bonus >= 0); break;
+	default: break;
+	}
+}
+
+template<> bool fntest<spelli>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: return player->spells_knows.is(value) != (bonus >= 0);
+	default: return true;
+	}
+}
+template<> void fnscript<spelli>(int value, int bonus) {
+	switch(modifier) {
+	case Proficient: player->spells_knows.set(value, bonus >= 0); break;
+	default: break;
+	}
 }
 
 static bool race_parent(const void* object, int param) {
@@ -102,7 +104,7 @@ static const racei* choose_subrace(const racei* p) {
 	return p;
 }
 
-static void character_generate(int bonus, int param) {
+static void character_generate(int bonus) {
 	if(last_result.iskind<racei>()) {
 		const racei* p = bsdata<racei>::elements + last_result.value;
 		p = choose_subrace(p);

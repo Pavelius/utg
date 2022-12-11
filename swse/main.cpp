@@ -3,10 +3,7 @@
 #include "creature.h"
 #include "utg.h"
 
-void initialize_script();
-
 static void initialize() {
-	initialize_script();
 	bsreq::read("rules/Feats.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Advance.txt");

@@ -5,32 +5,18 @@
 #include "pushvalue.h"
 #include "script.h"
 
-void runscript(variant v) {
-	if(v.iskind<modifieri>())
-		modifier = (modifier_s)v.value;
-	else if(v.iskind<listi>())
-		runscript(bsdata<listi>::elements[v.value].elements);
-	else if(v.iskind<script>())
-		bsdata<script>::elements[v.value].proc(v.counter, bsdata<script>::elements[v.value].param);
-	else if(v.iskind<abilityi>()) {
-		switch(modifier) {
-		case Permanent: player->basic.abilities[v.value] += v.counter; break;
-		default: player->abilities[v.value] += v.counter; break;
-		}
+template<> void fnscript<modifieri>(int value, int bonus) {
+	modifier = (modifier_s)value;
+}
+
+template<> void fnscript<abilityi>(int value, int bonus) {
+	switch(modifier) {
+	case Permanent: player->basic.abilities[value] += bonus; break;
+	default: player->abilities[value] += bonus; break;
 	}
 }
 
-void runscript(const variants& elements) {
-	pushvalue push_modifier(modifier, NoModifier);
-	for(auto v : elements)
-		runscript(v);
-}
-
-void initialize_script() {
-	script::prun = runscript;
-}
-
-static void choose_creature(int bonus, int param) {
+static void choose_creature(int bonus) {
 	player = creatures.choose(0, getnm("Cancel"));
 }
 

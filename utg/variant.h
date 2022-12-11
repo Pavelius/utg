@@ -12,6 +12,8 @@ typedef sliceu<variant> variants;
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
 
 struct varianti {
+	typedef void(*fnscript)(int index, int bonus);
+	typedef bool(*fntest)(int index, int bonus);
 	const char*		id;
 	const bsreq*	metadata;
 	array*			source;
@@ -19,16 +21,18 @@ struct varianti {
 	fngetname		pgetname;
 	fnstatus		pgetinfo;
 	fngetinfo		pgetproperty;
+	fnscript		pscript;
+	fntest			ptest;
 	static const varianti* find(const void* object);
 	void			set(void* object, const char* id, void* value) const;
 	void			set(void* object, const char* id, int value) const;
 };
 union variant {
-	unsigned char	uc[4];
-	unsigned		u;
+	unsigned char uc[4];
+	unsigned u;
 	struct {
 		unsigned short value;
-		char		counter;
+		char counter;
 		unsigned char type;
 	};
 	constexpr variant() : u(0) {}

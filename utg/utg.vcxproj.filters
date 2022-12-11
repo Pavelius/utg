@@ -252,6 +252,9 @@
     <ClCompile Include="nameable.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="scriptmass.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="randomizer.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="scriptmass.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

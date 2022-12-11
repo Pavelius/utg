@@ -5,15 +5,13 @@
 #include "pushvalue.h"
 #include "script.h"
 
-void apply_modifier(modifier_s v, int bonus);
-
 static void add_elements(answers& an, const variants& elements) {
 	for(auto v : elements) {
 		if(v.iskind<listi>())
 			add_elements(an, bsdata<listi>::elements[v.value].elements);
 		else if(v.iskind<modifieri>())
-			apply_modifier((modifier_s)v.value, v.counter);
-		else if(script::isallow(v))
+			fnscript<modifieri>(v.value, v.counter);
+		else if(script::allow(v))
 			an.add(v.getpointer(), v.getname());
 	}
 }
@@ -32,7 +30,7 @@ static variant choose_advance(const char* id, const variants& elements, int coun
 }
 
 void advancei::apply() const {
-	pushvalue push_modifier(modifier, Temporary);
+	pushvalue push_modifier(modifier, NoModifier);
 	pushvalue push_permanent(permanent_modifier, true);
 	if(choose) {
 		pushvalue push_columns(answers::column_count);
@@ -40,12 +38,12 @@ void advancei::apply() const {
 			answers::column_count = columns;
 		auto count = choose;
 		while(count-- > 0) {
-			modifier = Temporary;
+			modifier = NoModifier;
 			permanent_modifier = true;
 			auto v = choose_advance(id, elements, count + 1, choose);
 			if(object.iskind<script>()) {
 				pushvalue push(last_result, v);
-				bsdata<script>::elements[object.value].proc(0, 0);
+				bsdata<script>::elements[object.value].proc(0);
 			} else
 				script::run(v);
 		}

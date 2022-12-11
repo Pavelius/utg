@@ -10,7 +10,7 @@ static const char*	p;
 static int			last_bonus;
 
 static void next() {
-	p = log::skipws(p);
+	p = skipws(p);
 }
 
 static void skipsymcr() {
@@ -28,9 +28,17 @@ static void skipsymcr() {
 	allowparse = false;
 }
 
+static void skipall() {
+	do {
+		p = skipspcr(p);
+		next();
+	} while(*p == 10 || *p == 13);
+}
+
 static void skipsym(char sym) {
 	if(!allowparse)
 		return;
+	skipall();
 	if(*p == sym) {
 		p = p + 1;
 		next();

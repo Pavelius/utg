@@ -44,10 +44,6 @@ enum move_s : unsigned char {
 	QuickShot, StormGroup, TrickShot, ViciousStrike,
 	AskFavor, MeetSomeoneImportant, DrawAttention, SwayNPC, MakePointedThread, CommandResources,
 };
-enum variant_s : unsigned char {
-	NoVariant,
-	Ability, Bonus, Item, Menu, Move, Resource, Result, Risk, Special, Tag, Widget,
-};
 typedef flagable<1 + CommandResources / 8> movea;
 typedef char choosea[StrongSuccess + 1];
 struct statable {
@@ -91,6 +87,7 @@ struct rangeable {
 	void			setrange(tag_s v) { range = v; }
 };
 struct creature : nameable, harmable, statable, rangeable {
+	harmable		suffer;
 	//void			apply(const effectable& source);
 	void			roll(move_s v);
 	void			move(move_s v);

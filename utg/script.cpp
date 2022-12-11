@@ -1,81 +1,43 @@
-#include "condition.h"
 #include "list.h"
 #include "script.h"
 
-script::fnapply script::prun;
-script::fntest script::ptest;
-static script::fnapply foreach;
-bool script::stop;
+script::fnapply script::apply;
 
-bool script::isallow(variants source) {
-	for(auto v : source) {
-		if(v.iskind<conditioni>()) {
-			auto p = bsdata<conditioni>::elements + v.value;
-			if(v.counter >= 0) {
-				if(!p->proc(v.counter, p->param))
-					return false;
-			} else {
-				if(p->proc(-v.counter, p->param))
-					return false;
-			}
-		} else if(ptest) {
-			auto allowed = true;
-			if(!ptest(v, allowed))
-				break;
-			return allowed;
-		} else
-			break;
-	}
-	return true;
+template<> void fnscript<script>(int value, int bonus) {
+	bsdata<script>::elements[value].proc(bonus);
 }
 
-void script::setforeach(int bonus, int param) {
-	foreach = (fnapply)param;
-}
-
-void script::run(const variants& source) {
-	auto push_foreach = foreach; foreach = 0;
-	script::stop = false;
-	for(auto v : source) {
-		if(script::stop)
-			break;
-		if(foreach) {
-			foreach(v);
-			foreach = 0;
-		} else
-			run(v);
-	}
-	foreach = push_foreach;
+template<> void fnscript<listi>(int value, int bonus) {
+	script::run(bsdata<listi>::elements[value].elements);
 }
 
 void script::run(variant v) {
-	if(v.iskind<script>()) {
-		auto p = bsdata<script>::elements + v.value;
-		p->proc(v.counter, p->param);
-	} else if(v.iskind<listi>())
-		script::run(bsdata<listi>::elements[v.value].elements);
-	else if(v.iskind<conditioni>()) {
-		auto p = bsdata<conditioni>::elements + v.value;
-		if(v.counter >= 0) {
-			if(!p->proc(v.counter, p->param))
-				script::stop = true;
-		} else {
-			if(p->proc(-v.counter, p->param))
-				script::stop = true;
-		}
-	} else if(script::prun)
-		script::prun(v);
+	auto& ei = bsdata<varianti>::elements[v.type];
+	if(ei.pscript)
+		ei.pscript(v.value, v.counter);
 }
 
-void script::run(const char* id) {
-	auto p1 = bsdata<listi>::find(id);
-	if(p1) {
-		script::run(p1->elements);
-		return;
+void script::run(const variants& source) {
+	auto push_apply = apply;
+	for(auto v : source) {
+		if(apply) {
+			apply(v);
+			apply = 0;
+		} else
+			run(v);
 	}
-	auto p2 = bsdata<script>::find(id);
-	if(p2) {
-		p2->proc(0, p2->param);
-		return;
+	apply = push_apply;
+}
+
+bool script::allow(variant v) {
+	auto& ei = bsdata<varianti>::elements[v.type];
+	return ei.ptest ? ei.ptest(v.value, v.counter) : true;
+}
+
+bool script::allow(const variants& source) {
+	for(auto v : source) {
+		if(!allow(v))
+			return false;
 	}
+	return true;
 }

@@ -149,7 +149,6 @@
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
-    <ClCompile Include="nameable.cpp" />
     <ClCompile Include="planet_resource.cpp" />
     <ClCompile Include="posable.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -160,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="nameable.h" />
     <ClInclude Include="posable.h" />
     <ClInclude Include="script.h" />
     <ClInclude Include="timeable.h" />

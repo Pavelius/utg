@@ -9,7 +9,7 @@ collection<creature> creatures;
 static void advance_creature(int level, variant object) {
 	for(auto& e : bsdata<advancei>()) {
 		if(e.level == level && e.object == object)
-			runscript(e.elements);
+			script::run(e.elements);
 	}
 }
 

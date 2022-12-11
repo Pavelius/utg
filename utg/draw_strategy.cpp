@@ -8,10 +8,10 @@
 
 using namespace draw;
 
-static point	camera_drag;
-static point	objects_paint;
-static int		window_width = 400, window_height = 400;
-unsigned char	metrics::opacity = 210;
+static point camera_drag;
+static point objects_paint;
+static int window_width = 400, window_height = 400;
+unsigned char metrics::opacity = 210;
 
 void set_dark_theme();
 void set_light_theme();

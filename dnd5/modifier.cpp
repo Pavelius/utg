@@ -5,7 +5,7 @@ modifier_s modifier;
 bool permanent_modifier;
 
 BSDATA(modifieri) = {
-	{"Temporary"},
+	{"NoModifier"},
 	{"Permanent"},
 	{"Allowed"},
 	{"Proficient"},

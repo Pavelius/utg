@@ -77,3 +77,4 @@ public:
 typedef const char* (*fntext)(const void* object, stringbuilder& sb);
 typedef void (*fnstatus)(const void* object, stringbuilder& sb);
 typedef void (*fnprint)(stringbuilder& sb);
+const char* str(const char* format, ...);

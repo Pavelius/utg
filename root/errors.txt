@@ -1,3 +1,2 @@
 ﻿In file `rules/Moves.txt`:
- Line 5: Can't find variant `AddRange`
- Line 6: Can't find variant `LoseMoral`
+ Line 4: Can't find variant `SufferHarm`
