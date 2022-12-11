@@ -13,5 +13,6 @@ BSDATA(abilityi) = {
 	{"Speed"},
 	{"HitPoints"},
 	{"ChannelDivinity"},
+	{"SecondWind"},
 };
-assert_enum(abilityi, ChannelDivinity)
+assert_enum(abilityi, SecondWind)

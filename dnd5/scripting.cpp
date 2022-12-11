@@ -36,9 +36,8 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 
 template<> bool fntest<itemi>(int value, int bonus) {
 	switch(modifier) {
-	case Allowed: return player->items.is(value) != (bonus >= 0);
 	case Proficient: return player->items.is(value) != (bonus >= 0);
-	default: return true;
+	default: return player->items.is(value) == (bonus >= 0);
 	}
 }
 template<> void fnscript<itemi>(int value, int bonus) {

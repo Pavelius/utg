@@ -1,0 +1,10 @@
+#Advance
+
+1 Fighter ArmorProficiencies
+ elements Proficient LightArmor MediumArmor HeavyArmor Shields
+1 Fighter WeaponProficiencies
+ elements Proficient SimpleWeapon MartialWeapon
+1 Fighter SavingThrows
+ elements Proficient Strenght Constitution
+1 Fighter Skills choose(2) columns(1)
+ elements Proficient Acrobatics AnimalHandling Athletics History Insight Intimidation Perception Survival

@@ -7,7 +7,6 @@ bool permanent_modifier;
 BSDATA(modifieri) = {
 	{"NoModifier"},
 	{"Permanent"},
-	{"Allowed"},
 	{"Proficient"},
 	{"Immunity"},
 	{"Resist"},

@@ -1,12 +1,18 @@
 #include "dice.h"
 #include "nameable.h"
 #include "wear.h"
+#include "variant.h"
 
 #pragma once
 
-struct itemi : nameable {
+struct itemstati : nameable {
+	char			magic;
+	variants		effect;
+	int				cost, weight;
+};
+struct itemi : itemstati {
 	dice			damage;
-	int				count, cost, weight;
+	int				count;
 	wear_s			wear;
 };
 struct item {
@@ -21,6 +27,7 @@ struct item {
 	void			clear();
 	void			create(const char* id, int count = 1);
 	void			create(const itemi* pi, int count = 1);
+	void			damage();
 	int				getcost() const;
 	int				getcostall() const;
 	int				getcount() const;

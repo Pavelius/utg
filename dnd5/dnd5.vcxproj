@@ -195,6 +195,7 @@
     <Text Include="locale\ru\SpellNames.txt" />
     <Text Include="rules\CharacterGenerate.txt" />
     <Text Include="rules\ClassCleric.txt" />
+    <Text Include="rules\ClassFighter.txt" />
     <Text Include="rules\DwarvenRaces.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\ElvishRaces.txt" />

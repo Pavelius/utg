@@ -88,6 +88,8 @@ Chainshirt
 Chainmail
 Scalemail
 
+Shield
+
 Crowbar
 SmithsTools
 BrewersSupplies
@@ -121,6 +123,8 @@ MediumArmor
  elements Chainshirt
 HeavyArmor
  elements Chainmail
+Shields
+ elements Shield
 
 AbilitiesList
  elements Strenght Dexterity Constitution Intellegence Wisdow Charisma

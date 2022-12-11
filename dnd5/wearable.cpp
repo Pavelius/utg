@@ -23,17 +23,16 @@ void wearable::additem(item& v) {
 	//	return;
 	//}
 	// Try stack existing item
-	for(auto i = Backpack; i <= BackpackLast; i = (wear_s)(i + 1)) {
+	for(auto& e : backpack()) {
 		if(!v)
 			break;
-		if(wears[i])
-			wears[i].add(v);
+		if(e)
+			e.add(v);
 	}
 	if(v) {
-		// Try add new item
-		for(auto i = Backpack; i <= BackpackLast; i = (wear_s)(i + 1)) {
-			if(!wears[i]) {
-				wears[i] = v;
+		for(auto& e : backpack()) {
+			if(!e) {
+				e = v;
 				v.clear();
 				break;
 			}

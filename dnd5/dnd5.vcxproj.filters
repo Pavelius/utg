@@ -160,5 +160,8 @@
     <Text Include="locale\ru\SkillNames.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="rules\ClassFighter.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

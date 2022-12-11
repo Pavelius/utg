@@ -110,3 +110,10 @@ bool item::is(const itemi* pv) const {
 
 void item::use() {
 }
+
+void item::damage() {
+	if(broken >= 3)
+		setcount(getcount() - 1);
+	else
+		broken--;
+}
