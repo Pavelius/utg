@@ -1,27 +1,27 @@
 #Skill
 
-Athletics
+Athletics ability(Strenght)
 
-Acrobatics
-SleightOfHand
-Stealth
+Acrobatics ability(Dexterity)
+SleightOfHand ability(Dexterity)
+Stealth ability(Dexterity)
 
-Arcana
-History
-Investigation
-Nature
-Religion
+Arcana ability(Intellegence)
+History ability(Intellegence)
+Investigation ability(Intellegence)
+Nature ability(Intellegence)
+Religion ability(Intellegence)
 
-AnimalHandling
-Insight
-Medicine
-Perception
-Survival
+AnimalHandling ability(Wisdow)
+Insight ability(Wisdow)
+Medicine ability(Wisdow)
+Perception ability(Wisdow)
+Survival ability(Wisdow)
 
-Deception
-Intimidation
-Performance
-Persuasion
+Deception ability(Charisma)
+Intimidation ability(Charisma)
+Performance ability(Charisma)
+Persuasion ability(Charisma)
 
 #Class
 
@@ -128,3 +128,16 @@ Shields
 
 AbilitiesList
  elements Strenght Dexterity Constitution Intellegence Wisdow Charisma
+
+#Menu
+
+CharacterSkills format(SkillBox)
+ elements Athletics\
+  Acrobatics SleightOfHand Stealth\
+  Arcana History Investigation Nature Religion\
+  AnimalHandling Insight Medicine Perception Survival\
+  Deception Intimidation Performance Persuasion
+CharacterAbilities format(AbilityBox)
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma
+CharacterSheet format(GroupHorizontal)
+ elements CharacterAbilities+10 PaddingBox+10 CharacterSkills+30

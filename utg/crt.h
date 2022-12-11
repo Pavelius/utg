@@ -236,6 +236,7 @@ const char*							getdescription(const char* id);
 int									getdigitscount(unsigned number); // Get digits count of number. For example if number=100, result be 3.
 const char*							getnm(const char* id);
 const char*							getnm(const char* id, int count);
+const char*							getnme(const char* id);
 const char*							getnmof(const char* id);
 const char*							getnmpl(const char* id);
 const char*							getnmsh(const char* id);

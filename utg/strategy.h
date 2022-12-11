@@ -6,9 +6,10 @@ namespace metrics {
 extern unsigned char opacity;
 }
 namespace draw {
+void strategy_background();
+void texth2w(const char* string);
 bool ishilite(int size, const void* object);
 bool ishilite(const void* object);
-int strategy(fnevent start, fnevent afterread);
 bool swindow(bool hilight);
-void texth2w(const char* string);
+int strategy(fnevent start, fnevent afterread);
 }

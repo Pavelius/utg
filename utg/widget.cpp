@@ -7,12 +7,12 @@ BSMETA(widget) = {
 	BSREQ(id),
 	{}};
 
-const widget* widget::last;
+const widget* lastwidget;
 
 void widget::paint() const {
-	auto push_last = last;
-	last = this; proc();
-	last = push_last;
+	auto push_last = lastwidget;
+	lastwidget = this; proc();
+	lastwidget = push_last;
 }
 
 void widget::add(const char* id, fnevent proc, fnevent click) {

@@ -1,6 +1,11 @@
-﻿Acrobatics: 
-AnimalHandling: 
-Athletics: 
+﻿AnimalHandling: 
+Arcana: 
+Deception: 
 Intimidation: 
+Investigation: 
+Nature: 
 Perception: 
+Performance: 
+SleightOfHand: 
+Stealth: 
 Survival: 

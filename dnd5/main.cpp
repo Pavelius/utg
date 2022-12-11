@@ -4,6 +4,8 @@
 #include "character.h"
 #include "script.h"
 
+void ui_initialize();
+
 void status_info(void) {
 }
 
@@ -34,6 +36,7 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
+	ui_initialize();
 	return draw::strategy(main_menu, initialize);
 }
 

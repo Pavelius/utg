@@ -3,5 +3,6 @@
 #pragma once
 
 struct skilli : nameable {
+	char		ability;
 };
 

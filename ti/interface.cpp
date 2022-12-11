@@ -400,7 +400,7 @@ systemi* gamei::choosesystem(const entitya& source) {
 }
 
 void gamei::prepareui() {
-	object::afterpaint = object_paint;
+	//object::afterpaint = object_paint;
 	clearobjects();
 	add_systems();
 	draw::setcamera(h2p({0, 0}, size));

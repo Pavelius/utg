@@ -11,6 +11,7 @@ BSDATA(abilityi) = {
 	{"SaveVsCharm"},
 	{"SaveVsPoison"},
 	{"Speed"},
+	{"Proficiency"},
 	{"HitPoints"},
 	{"ChannelDivinity"},
 	{"SecondWind"},

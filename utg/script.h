@@ -16,6 +16,7 @@ struct script {
 	fnrun		proc;
 	fntest		test;
 	static fnapply apply;
+	static bool stop;
 	static bool allow(variant v);
 	static bool allow(const variants& source);
 	static void run(variant v);

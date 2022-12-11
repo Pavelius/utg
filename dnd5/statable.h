@@ -9,5 +9,6 @@ struct statable {
 	flagable<8>	items;
 	flagable<2>	resist, immunity, vulnerable;
 	flagable<4>	tags;
+	int			getbonus(int v) const { return abilitites[v] / 2 - 5; }
 	void		load(const statable& e) { *this = e; }
 };

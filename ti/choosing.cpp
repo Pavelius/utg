@@ -125,7 +125,7 @@ static void apply_action() {
 			game.active->use_strategy = true;
 			auto current = playeri::last;
 			for(auto pa : game.players) {
-				if(!script::isallow(p->secondary))
+				if(!script::allow(p->secondary))
 					continue;
 				auto push_player = playeri::last;
 				playeri::last = pa;
@@ -442,7 +442,7 @@ static void std_answer(stringbuilder& sb, answers& an) {
 			continue;
 		if(!e.isallow())
 			continue;
-		if(!script::isallow(e.use))
+		if(!script::allow(e.use))
 			continue;
 		an.add(&e, e.getname());
 	}

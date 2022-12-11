@@ -162,9 +162,6 @@
     <ClCompile Include="logparse.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
-    <ClCompile Include="widget.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="draw_object.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
@@ -254,6 +251,9 @@
     </ClCompile>
     <ClCompile Include="scriptmass.cpp">
       <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="widget.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,9 +368,6 @@
     <ClInclude Include="logparse.h">
       <Filter>Stream</Filter>
     </ClInclude>
-    <ClInclude Include="widget.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="draw_object.h">
       <Filter>Interface</Filter>
     </ClInclude>
@@ -466,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="scriptmass.h">
       <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="widget.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

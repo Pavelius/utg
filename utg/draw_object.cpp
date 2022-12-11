@@ -10,13 +10,11 @@ const size_t max_object_count = 512;
 BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
-fnevent				draw::object::afterpaintall;
-fnupdate			draw::object::aftercreate;
-fnpaint				draw::object::afterpaint;
-static rect			last_screen;
-static unsigned long timestamp;
-static unsigned long timestamp_last;
-object				object::def;
+fnupdate draw::object::aftercreate;
+fnpaint	draw::object::painting;
+object object::def;
+static rect	last_screen;
+static unsigned long timestamp, timestamp_last;
 
 long distance(point from, point to);
 
@@ -24,6 +22,13 @@ static void remove_depends(const draworder* p) {
 	for(auto& e : bsdata<draworder>()) {
 		if(e.depend == p)
 			e.depend = 0;
+	}
+}
+
+point drawable::getscreen() const {
+	switch(mode) {
+	case 1: return {x, y};
+	default: return point{x, y} - camera;
 	}
 }
 
@@ -84,9 +89,6 @@ void draworder::update() {
 	parent->x = (short)calculate(start.x, x, n, m);
 	parent->y = (short)calculate(start.y, y, n, m);
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
-	parent->fore.r = (unsigned char)calculate(start.fore.r, fore.r, n, m);
-	parent->fore.g = (unsigned char)calculate(start.fore.g, fore.g, n, m);
-	parent->fore.b = (unsigned char)calculate(start.fore.b, fore.b, n, m);
 	if(n == m) {
 		if(is(AutoClear))
 			parent->clear();
@@ -112,50 +114,13 @@ draworder* object::addorder(int milliseconds, draworder* depend) {
 }
 
 void object::initialize() {
-	def.fore = colors::text;
 	def.x = def.y = -10000;
 	def.priority = 64;
-	def.size = 32;
 	def.alpha = 255;
-	def.flags = 0;
-	def.input = buttonparam;
-	def.set(Visible);
 }
 
 void object::clear() {
 	*this = def;
-}
-
-static void textcn(const char* string, int dy, unsigned flags) {
-	auto push_caret = caret;
-	caret.x -= textw(string) / 2;
-	caret.y += dy;
-	text(string, -1, flags & (~(ImageMirrorH | ImageMirrorV)));
-	caret = push_caret;
-}
-
-void object::paintns() const {
-	if(shape != figure::None)
-		field(shape, size);
-	if(resource)
-		image(caret.x, caret.y, resource, frame, flags);
-	if(afterpaint)
-		afterpaint(this);
-	if(string) {
-		auto push_font = draw::font;
-		if(font)
-			draw::font = font;
-		textcn(string, size, flags);
-		draw::font = push_font;
-	}
-}
-
-static void raw_beforemodal() {
-	caret = {0, 0};
-	width = getwidth();
-	height = getheight();
-	hot.cursor = cursor::Arrow;
-	hot.hilite.clear();
 }
 
 static void blend(screenshoot& source, screenshoot& destination, unsigned milliseconds) {
@@ -176,7 +141,6 @@ static void blend(screenshoot& source, screenshoot& destination, unsigned millis
 
 void draw::splashscreen(unsigned milliseconds) {
 	screenshoot push;
-	raw_beforemodal();
 	paintstart();
 	paintobjects();
 	screenshoot another;
@@ -184,32 +148,11 @@ void draw::splashscreen(unsigned milliseconds) {
 }
 
 void object::paint() const {
-	auto push_fore = draw::fore;
 	auto push_alpha = draw::alpha;
-	auto push_size = draw::fsize;
-	draw::fsize = size;
-	draw::fore = fore;
 	draw::alpha = alpha;
-	if(data && !is(DisableInput)) {
-		auto w = size;
-		if(shape == figure::Hexagon || shape == figure::FHexagon)
-			w = 2 * w / 3;
-		if(ishilite(w)) {
-			hilite_object = data;
-			hilite_type = figure::None;
-			if(is(Hilite) && hilite_object) {
-				hilite_type = figure::Circle;
-				hilite_position = caret;
-				hilite_size = size;
-				if(hot.key == MouseLeft && !hot.pressed)
-					execute(input, (long)hilite_object, 0, 0);
-			}
-		}
-	}
-	paintns();
-	draw::fsize = push_size;
+	if(painting)
+		painting(this);
 	draw::alpha = push_alpha;
-	draw::fore = push_fore;
 }
 
 static size_t getobjects(object** pb, object** pe) {
@@ -224,8 +167,10 @@ static size_t getobjects(object** pb, object** pe) {
 static int compare(const void* v1, const void* v2) {
 	auto p1 = *((object**)v1);
 	auto p2 = *((object**)v2);
-	if(p1->priority != p2->priority)
-		return p1->priority - p2->priority;
+	auto a1 = p1->priority / 10;
+	auto a2 = p2->priority / 10;
+	if(a1 != a2)
+		return a1 - a2;
 	if(p1->y != p2->y)
 		return p1->y - p2->y;
 	return p1->x - p2->x;
@@ -236,19 +181,17 @@ static void sortobjects(object** pb, size_t count) {
 }
 
 void draw::paintobjects() {
+	static object* source[max_object_count];
 	auto push_caret = caret;
 	auto push_clip = clipping;
 	last_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
 	setclip(last_screen);
-	object* source[max_object_count];
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
 	for(size_t i = 0; i < count; i++) {
-		draw::caret = *source[i] - draw::camera;
+		draw::caret = source[i]->getscreen();
 		source[i]->paint();
 	}
-	if(object::afterpaintall)
-		object::afterpaintall();
 	clipping = push_clip;
 	caret = push_caret;
 }

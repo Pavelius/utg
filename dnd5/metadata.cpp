@@ -16,6 +16,7 @@
 #include "skill.h"
 #include "spell.h"
 #include "tag.h"
+#include "widget.h"
 
 NOBSDATA(dice)
 
@@ -84,6 +85,7 @@ BSMETA(script) = {
 	{}};
 BSMETA(skilli) = {
 	BSREQ(id),
+	BSENM(ability, abilityi),
 	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
@@ -114,5 +116,6 @@ BSDATA(varianti) = {
 	{"Skill", VAR(skilli, 1), 0, 0, 0, fnscript<skilli>, fntest<skilli>},
 	{"Spell", VAR(spelli, 1), 0, 0, 0, fnscript<spelli>, fntest<spelli>},
 	{"Tag", VAR(tagi, 1)},
+	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

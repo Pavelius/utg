@@ -16,6 +16,7 @@ ChaoticNeutral: Хаотично-нейтральный
 CharacterAbility: Характеристики
 CharacterGenerate: Генерация персонажа
 Charisma: Харизма
+CharismaShort: Хар
 Choose: Выбирайте
 ChooseAlignment: Каков будет его характер?
 ChooseArmament: Что будет вашим оружием?
@@ -29,11 +30,13 @@ ChooseRangedWeapons: Какое дистанционное оружие у ва�
 ChooseSubRace: Из каких именно краев вы родом?
 Cleric: Священник
 Constitution: Телосложение
+ConstitutionShort: Тел
 Continue: Продолжить
 Dagger: Кинжал
 Damage: Урон
 DancingLight: Танцующие огоньки
 Dexterity: Ловкость
+DexterityShort: Лов
 DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
@@ -50,6 +53,7 @@ HightElf: Высший эльф
 HillDwarf: Холмистый дварф
 Human: Человек
 Intellegence: Интеллект
+IntellegenceShort: Инт
 Knife: Нож
 Lawful: Законопослушный
 LawfulEvil: Законопослушно-злой
@@ -81,12 +85,14 @@ Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
+StrenghtShort: Cил
 ToolProficiency: Специализацию на инструментах
 TrueNeutral: Нейтральный
 UndeadInvasion: Нашествие мертвецов
 Warhammer: Молот
 WhereYouWantRelocate: Куда хотите распределить [%1i]?
 Wisdow: Мудрость
+WisdowShort: Муд
 Wizard: Волшебник
 WoodElf: Лесной эльф
 Yes: Да

@@ -331,10 +331,10 @@ static void right_align_value() {
 }
 
 void widget::button() {
-	if(!last)
+	if(!lastwidget)
 		return;
-	if(last->click)
-		label(getnm(last->id), 0, last, last->click);
+	if(lastwidget->click)
+		label(getnm(lastwidget->id), 0, lastwidget, lastwidget->click);
 }
 
 void draw::label(const void* object, const variants& elements, fngetinfo pget) {

@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{b6857174-bf14-4e2d-af7f-6edaa2fe27d8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="data">
       <UniqueIdentifier>{a4762edf-a7e2-43e2-b521-a35f47ebcc2a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Locale">
+    <Filter Include="locale">
       <UniqueIdentifier>{7abd0ccd-a9d6-4822-9049-5d509564ca7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="logic">
-      <UniqueIdentifier>{b6857174-bf14-4e2d-af7f-6edaa2fe27d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,10 +125,10 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\Names.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\CharacterNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="rules\DwarvenRaces.txt">
       <Filter>data</Filter>
@@ -143,22 +143,22 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\SpellNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\LanguageNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\ItemNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="rules\ClassCleric.txt">
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\SkillNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="rules\ClassFighter.txt">
       <Filter>data</Filter>

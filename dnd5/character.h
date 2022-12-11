@@ -11,5 +11,6 @@ struct character : wearable, statable, spellable {
 	void		advance(variant object, int level = 0);
 	void		clear();
 	void		generate();
+	int			getskill(int v) const;
 };
 extern character *player;

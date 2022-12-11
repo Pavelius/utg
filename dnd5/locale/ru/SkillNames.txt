@@ -1,5 +1,7 @@
 ﻿Skills: Навыки
 
+Acrobatics: Акробатика
+Athletics: Атлетика
 History: История
 Insight: Проницательность
 Medicine: Медицина

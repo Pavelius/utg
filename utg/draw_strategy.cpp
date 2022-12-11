@@ -263,7 +263,7 @@ static void answers_beforepaint_center() {
 	}
 }
 
-static void paint() {
+void draw::strategy_background() {
 	fillform();
 	statusbar();
 }
@@ -306,7 +306,8 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	if(log::geterrors())
 		return -1;
 	pbeforemodal = beforemodal;
-	pbackground = paint;
+	if(!pbackground)
+		pbackground = strategy_background;
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
 	pfinish = finish;

@@ -8,6 +8,7 @@
 #include "pushvalue.h"
 #include "race.h"
 #include "script.h"
+#include "skill.h"
 
 typedef adat<char, 6> abilitya;
 
@@ -91,4 +92,12 @@ void character::generate() {
 			continue;
 		advance(bsdata<classi>::elements + i, classes[i]);
 	}
+}
+
+int character::getskill(int v) const {
+	auto& ei = bsdata<skilli>::elements[v];
+	auto result = getbonus(ei.ability);
+	if(skills.is(v))
+		result += abilitites[Proficiency];
+	return result;
 }

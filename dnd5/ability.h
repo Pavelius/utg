@@ -4,7 +4,7 @@
 
 enum ability_s : unsigned char {
 	Strenght, Dexterity, Constitution, Intelligence, Wisdow, Charisma,
-	SaveVsCharm, SaveVsPoison, Speed,
+	SaveVsCharm, SaveVsPoison, Speed, Proficiency,
 	HitPoints,
 	ChannelDivinity, SecondWind
 };
