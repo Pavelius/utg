@@ -23,13 +23,13 @@ static void add_camera() {
 
 static void add_seamap() {
 	auto p = draw::addobject(192, 203);
-	p->resource = draw::getres("seamap");
+	//p->resource = draw::getres("seamap");
 	p->priority = 10;
 }
 
 static void add_warning(point pt) {
 	auto p = draw::addobject(pt.x - 16, pt.y + 12);
-	p->resource = draw::getres("tiles");
+	//p->resource = draw::getres("tiles");
 	p->priority = 21;
 	p->frame = 36;
 }
@@ -40,29 +40,29 @@ static void add_you_ship() {
 		return;
 	auto pt = i2s(index);
 	marker_object = draw::addobject(pt.x, pt.y);
-	marker_object->resource = draw::getres("tiles");
+	//marker_object->resource = draw::getres("tiles");
 	marker_object->frame = 31;
 	marker_object->priority = 29;
 }
 
 static void add_tile(point pt, const sprite* resource, int frame, const void* data) {
 	auto p = draw::addobject(pt.x, pt.y);
-	p->resource = resource;
+	//p->resource = resource;
 	p->frame = frame;
-	p->size = 2 * size / 3;
+	//p->size = 2 * size / 3;
 	p->priority = 20;
 	p->data = (void*)data;
-	p->fore = colors::border;
+	//p->fore = colors::border;
 }
 
 static void add_select(point pt, indext data) {
 	auto p = draw::addobject(pt.x, pt.y);
-	p->size = 2 * size / 3;
+	//p->size = 2 * size / 3;
 	p->priority = 30;
-	p->shape = figure::Circle;
+	//p->shape = figure::Circle;
 	p->data = (void*)data;
-	p->fore = colors::button;
-	p->set(object::Hilite);
+	//p->fore = colors::button;
+	//p->set(object::Hilite);
 }
 
 static void add_select(indext index) {
@@ -86,12 +86,12 @@ void oceani::showindecies() {
 			auto i = getindex(x, y);
 			auto pt = draw::fh2p({x, y}, size);
 			auto p = draw::addobject(pt.x, pt.y);
-			p->size = 2 * size / 3;
+			//p->size = 2 * size / 3;
 			p->priority = 20;
-			p->string = sb.get();
+			//p->string = sb.get();
 			sb.add("%1i", i);
 			sb.addsz();
-			p->fore = colors::border;
+			//p->fore = colors::border;
 		}
 	}
 	chooseobject();
@@ -103,7 +103,7 @@ void oceani::createobjects() {
 	add_camera();
 	add_you_ship();
 	add_seamap();
-	auto tiles = getres("tiles");
+	auto tiles = draw::gres("tiles");
 	for(auto& e : bsdata<tilei>()) {
 		if(e.is(Discarded))
 			continue;

@@ -278,17 +278,17 @@ void object::move(point goal, int speed, int correct) {
 	moving(*this, goal, speed, correct);
 }
 
-const sprite* draw::getbackground(const char* name) {
-	return gres(name, "art/objects", {}, 0, 0);
-}
-
-const sprite* draw::getres(const char* name) {
-	return gres(name, "art/objects", {}, -10000, -10000);
-}
-
-const sprite* draw::getres(const char* name, const char* folder) {
-	return gres(name, folder, {}, -10000, -10000);
-}
+//const sprite* draw::getbackground(const char* name) {
+//	return gres(name, "art/objects", {}, 0, 0);
+//}
+//
+//const sprite* draw::getres(const char* name) {
+//	return gres(name, "art/objects", {}, -10000, -10000);
+//}
+//
+//const sprite* draw::getres(const char* name, const char* folder) {
+//	return gres(name, folder, {}, -10000, -10000);
+//}
 
 static point getcameraorigin(point v) {
 	auto w = last_screen.width();

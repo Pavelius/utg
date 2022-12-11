@@ -4,6 +4,7 @@
 
 #pragma once
 
+struct sprite;
 namespace draw {
 struct object;
 struct drawable : point {
@@ -48,9 +49,9 @@ void*				chooseobject();
 void				clearobjects();
 void				focusing(point goal);
 object*				findobject(const void* p);
-const sprite*		getbackground(const char* name);
-const sprite*		getres(const char* name);
-const sprite*		getres(const char* name, const char* folder);
+//const sprite*		getbackground(const char* name);
+//const sprite*		getres(const char* name);
+//const sprite*		getres(const char* name, const char* folder);
 void				paintobjects();
 void				setcamera(point v);
 void				slidecamera(point v, int step = 16);
