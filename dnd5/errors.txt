@@ -1,2 +1,4 @@
-﻿In file `rules/Basic.txt`:
- Line 137: Can't find variant `PaddingBox`
+﻿In file `rules/CharacterGenerate.txt`:
+ Line 3: Not found requisit `ChooseGender`
+ Line 3: Expected token `(`
+ Line 3: Expected line feed

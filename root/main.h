@@ -88,7 +88,6 @@ struct rangeable {
 };
 struct creature : nameable, harmable, statable, rangeable {
 	harmable		suffer;
-	//void			apply(const effectable& source);
 	void			roll(move_s v);
 	void			move(move_s v);
 };
@@ -96,4 +95,3 @@ namespace draw {
 void				information(const char* format, ...);
 void				warning(const char* format, ...);
 }
-//extern effectable	game;

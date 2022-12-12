@@ -50,6 +50,7 @@ struct bsreq {
 	char*					ptr(const void* data) const { return (char*)data + offset; }
 	char*					ptr(const void* data, int index) const { return (char*)data + offset + index * size; }
 	static void				read(const char* url);
+	static void				read2(const char* url);
 	void					set(const void* p, long value) const;
 };
 NOBSDATA(bsreq)

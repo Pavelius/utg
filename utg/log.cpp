@@ -97,8 +97,14 @@ const char* log::skipws(const char* p) {
 		}
 		if(p[0] == '/' && p[1] == '*') { // Complex comment
 			p += 2;
-			while(*p && !(p[0] == '*' && p[1] == '/'))
+			while(*p) {
+				if(p[0] == '*' && p[1] == '/') {
+					p += 2;
+					break;
+				}
 				p++;
+			}
+			continue;
 		}
 		break;
 	}

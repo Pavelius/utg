@@ -255,6 +255,9 @@
     <ClCompile Include="widget.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="io_bsreq2.cpp">
+      <Filter>Stream</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

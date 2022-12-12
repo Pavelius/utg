@@ -19,9 +19,6 @@
     <ClCompile Include="script.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="bonus.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="harm.cpp">
       <Filter>Logic</Filter>
     </ClCompile>

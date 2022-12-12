@@ -148,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="bonus.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="harm.cpp" />
