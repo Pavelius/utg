@@ -182,7 +182,7 @@
     <ClCompile Include="front.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="group.cpp" />
-    <ClCompile Include="io_bsreq2.cpp" />
+    <ClCompile Include="io_bsreq.cpp" />
     <ClCompile Include="iterator.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="logparse.cpp" />
@@ -209,7 +209,6 @@
     <ClCompile Include="draw_theme.cpp" />
     <ClCompile Include="draw_tooltips.cpp" />
     <ClCompile Include="gender.cpp" />
-    <ClCompile Include="io_bsreq.cpp" />
     <ClCompile Include="io_stream.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="png.cpp" />

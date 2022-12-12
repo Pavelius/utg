@@ -69,9 +69,6 @@
     <ClCompile Include="draw_tooltips.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="io_bsreq.cpp">
-      <Filter>Stream</Filter>
-    </ClCompile>
     <ClCompile Include="io_stream.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
@@ -255,7 +252,7 @@
     <ClCompile Include="widget.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="io_bsreq2.cpp">
+    <ClCompile Include="io_bsreq.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
   </ItemGroup>
