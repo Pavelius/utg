@@ -132,23 +132,8 @@ void status_info(void) {
 	height = push_height;
 }
 
-static void aftercreate_object(object* po) {
-	if(bsdata<planeti>::have(po->data)) {
-		auto p = (planeti*)po->data;
-		po->shape = figure::CircleFill;
-		po->size = xrand(5, 10);
-		po->fore = colors::green;
-		//po->set(object::Hilite);
-	} else if(bsdata<systemi>::have(po->data)) {
-		po->shape = figure::CircleFill;
-		po->size = 32;
-		po->fore = colors::yellow;
-	}
-}
-
 static void afterpaint_object(const object* po) {
 }
 
 void initialize_interface() {
-	object::aftercreate = aftercreate_object;
 }

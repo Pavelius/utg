@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "bsreq.h"
 #include "draw.h"
+#include "draw_figure.h"
 #include "draw_object.h"
 #include "log.h"
 #include "strategy.h"

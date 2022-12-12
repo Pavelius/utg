@@ -25,9 +25,6 @@
     <ClCompile Include="realm.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="main_util.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -55,6 +52,9 @@
     <ClCompile Include="special.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -65,6 +65,9 @@
     </Filter>
     <Filter Include="Encounters">
       <UniqueIdentifier>{9437800f-bcb9-4340-a258-4e20f8d29b1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{8ba49da8-f705-4e75-97eb-d4473b9a70d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

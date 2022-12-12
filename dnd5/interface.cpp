@@ -2,6 +2,7 @@
 #include "character.h"
 #include "draw.h"
 #include "draw_object.h"
+#include "draw_figure.h"
 #include "menu.h"
 #include "skill.h"
 #include "strategy.h"
@@ -155,6 +156,7 @@ static void add_background_widget(const char* id) {
 		return;
 	auto p = addobject(0, 0);
 	p->data = pm;
+	p->set(drawable::AbsolutePosition);
 }
 
 static void object_painting(const object* p) {

@@ -191,7 +191,7 @@ static draw::object* getobject(const void* pv) {
 			return 0;
 		draw::setcamera(n->position);
 		ps = draw::addobject(n->position.x, n->position.y);
-		ps->resource = draw::getres("characters");
+		//ps->resource = draw::getres("characters");
 		ps->frame = p->investigator_index;
 		ps->data = p;
 		ps->priority = 100;

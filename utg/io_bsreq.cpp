@@ -284,6 +284,7 @@ static void read_dset(void* object, const bsreq* req) {
 		skip("(");
 		read_value(v, req);
 		skip(")");
+		next();
 		write_value(object, req, index++, v);
 	}
 }

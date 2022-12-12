@@ -10,8 +10,7 @@ const size_t max_object_count = 512;
 BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
-fnupdate draw::object::aftercreate;
-fnpaint	draw::object::painting;
+draw::object::fnpaint draw::object::painting;
 object object::def;
 static rect	last_screen;
 static unsigned long timestamp, timestamp_last;
@@ -26,10 +25,9 @@ static void remove_depends(const draworder* p) {
 }
 
 point drawable::getscreen() const {
-	switch(mode) {
-	case 1: return {x, y};
-	default: return point{x, y} - camera;
-	}
+	if(is(AbsolutePosition))
+		return {x, y};
+	return point{x, y} - camera;
 }
 
 void draworder::clear() {
@@ -274,21 +272,9 @@ static void moving(point& result, point goal, int step, int corrent) {
 	result = goal;
 }
 
-void object::move(point goal, int speed, int correct) {
+void drawable::move(point goal, int speed, int correct) {
 	moving(*this, goal, speed, correct);
 }
-
-//const sprite* draw::getbackground(const char* name) {
-//	return gres(name, "art/objects", {}, 0, 0);
-//}
-//
-//const sprite* draw::getres(const char* name) {
-//	return gres(name, "art/objects", {}, -10000, -10000);
-//}
-//
-//const sprite* draw::getres(const char* name, const char* folder) {
-//	return gres(name, folder, {}, -10000, -10000);
-//}
 
 static point getcameraorigin(point v) {
 	auto w = last_screen.width();
