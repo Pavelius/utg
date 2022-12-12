@@ -1,0 +1,12 @@
+#Advance
+
+1 Rogue ArmorProficiencies
+ elements Proficient LightArmor
+1 Rogue WeaponProficiencies
+ elements Proficient SimpleWeapon CrossbowHand Longsword Rapier Shortsword
+1 Rogue SavingThrows
+ elements Proficient Dexterity Intellegence
+1 Rogue Skills choose(2) columns(1)
+ elements Proficient Acrobatics Athletics Deception Insight Intimidation Investigation Perception Performance Persuasion SleightOfHand Stealth
+1 Rogue SneakAttack
+ elements Permanent SneakAttack+1

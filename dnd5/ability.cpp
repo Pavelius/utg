@@ -16,6 +16,8 @@ BSDATA(abilityi) = {
 	{"DamageBonus"},
 	{"ArmorClass"},
 	{"ExtraAttack"},
+	{"ImprovedCritical"},
+	{"SneakAttack"},
 	{"DivineDomain"},
 	{"FightingStyle"},
 	{"HitPoints"},

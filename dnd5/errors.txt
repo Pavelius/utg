@@ -1,2 +1,2 @@
-﻿In file `rules/ElvishRaces.txt`:
- Line 23: Expected token `)`
+﻿In file `rules/ClassRogue.txt`:
+ Line 12: Can't find variant `SneackAttack`
