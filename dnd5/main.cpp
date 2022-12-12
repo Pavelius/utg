@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "draw.h"
 #include "io_stream.h"
 #include "strategy.h"
 #include "character.h"

@@ -1,3 +1,15 @@
+#Option parent(FightingStyle)
+
+ArcheryStyle
+ effect AttackBonus+2
+DefenseStyle
+ effect ArmorClass+1
+DuelingStyle
+ effect DamageBonus+2
+GreatWeaponFightingStyle
+ProtectionStyle
+TwoWeaponFightingStyle
+
 #Advance
 
 1 Fighter ArmorProficiencies
@@ -8,3 +20,21 @@
  elements Proficient Strenght Constitution
 1 Fighter Skills choose(2) columns(1)
  elements Proficient Acrobatics AnimalHandling Athletics History Insight Intimidation Perception Survival
+1 Fighter FightingStyle choose(1) columns(1)
+ elements ArcheryStyle DefenseStyle DuelingStyle GreatWeaponFightingStyle ProtectionStyle TwoWeaponFightingStyle
+1 Fighter SecondWind
+ elements SecondWind+1
+2 Fighter ActionSurge
+ elements ActionSurge+1
+5 Fighter ExtraAttack
+ elements ExtraAttack+1
+9 Fighter Indomitable
+ elements Indomitable+1
+11 Fighter ExtraAttack
+ elements ExtraAttack+1
+13 Fighter Indomitable
+ elements Indomitable+1
+17 Fighter Indomitable
+ elements Indomitable+1
+20 Fighter ExtraAttack
+ elements ExtraAttack+1

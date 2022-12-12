@@ -12,8 +12,16 @@ BSDATA(abilityi) = {
 	{"SaveVsPoison"},
 	{"Speed"},
 	{"Proficiency"},
+	{"AttackBonus"},
+	{"DamageBonus"},
+	{"ArmorClass"},
+	{"ExtraAttack"},
+	{"DivineDomain"},
+	{"FightingStyle"},
 	{"HitPoints"},
+	{"ActionSurge"},
 	{"ChannelDivinity"},
+	{"Indomitable"},
 	{"SecondWind"},
 };
 assert_enum(abilityi, SecondWind)

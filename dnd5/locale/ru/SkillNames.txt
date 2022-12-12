@@ -1,9 +1,20 @@
 ﻿Skills: Навыки
 
 Acrobatics: Акробатика
+AnimalHandling: Дрессировка животных
+Arcana: Тайные знания
 Athletics: Атлетика
+Deception: Манипуляция
 History: История
 Insight: Проницательность
+Intimidation: Угроза
+Investigation: Исследование
 Medicine: Медицина
+Nature: Знания природы
+Perception: Восприятие
+Performance: Импровизация
 Persuasion: Убеждение
 Religion: Религия
+SleightOfHand: Ловкость рук
+Stealth: Скрытность
+Survival: Выживание

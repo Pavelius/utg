@@ -1,0 +1,8 @@
+﻿FightingStyle: Боевой стиль
+
+ArcheryStyle: Лучник
+DefenseStyle: Латник
+DuelingStyle: Дуэлист
+GreatWeaponFightingStyle: Сражение большим оружием
+ProtectionStyle: Телохранитель
+TwoWeaponFightingStyle: Сражение двумя оружиями

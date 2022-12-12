@@ -6,6 +6,7 @@
 #include "damage.h"
 #include "item.h"
 #include "modifier.h"
+#include "option.h"
 #include "race.h"
 #include "script.h"
 #include "skill.h"
@@ -114,6 +115,10 @@ static void character_generate(int bonus) {
 		player->setgender((gender_s)last_result.value);
 	else if(last_result.iskind<classi>())
 		player->classes[last_result.value]++;
+	else if(last_result.iskind<optioni>()) {
+		auto po = bsdata<optioni>::elements + last_result.value;
+		player->abilitites[po->parent - bsdata<abilityi>::elements] = (char)last_result.value;
+	}
 }
 
 BSDATA(script) = {

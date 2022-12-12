@@ -1,16 +1,16 @@
-#DivineDomain
+#Option parent(DivineDomain)
 
 KnowledgeDomain
  spells Bless CureWounds
- bonus Proficient HeavyArmor
+ effect Proficient HeavyArmor
 
 LifeDomain
  spells Bless CureWounds
- bonus Proficient HeavyArmor
+ effect Proficient HeavyArmor
 
 WarDomain
  spells Bless CureWounds
- bonus Proficient HeavyArmor MartialWeapon
+ effect Proficient HeavyArmor MartialWeapon
 
 #List
 

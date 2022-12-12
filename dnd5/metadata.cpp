@@ -4,13 +4,13 @@
 #include "bsreq.h"
 #include "character.h"
 #include "class.h"
-#include "divinedomain.h"
 #include "damage.h"
 #include "item.h"
 #include "language.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
+#include "option.h"
 #include "race.h"
 #include "script.h"
 #include "skill.h"
@@ -23,10 +23,10 @@ NOBSDATA(dice)
 BSDATAC(advancei, 1024)
 BSDATAC(character, 128)
 BSDATAC(classi, 32)
-BSDATAC(divinedomain, 16)
 BSDATAC(itemi, 256)
 BSDATAC(languagei, 32)
 BSDATAC(listi, 32)
+BSDATAC(optioni, 120)
 BSDATAC(racei, 32)
 BSDATAC(skilli, 32)
 BSDATAC(spelli, 512)
@@ -61,11 +61,6 @@ BSMETA(damagei) = {
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b),
 	{}};
-BSMETA(divinedomain) = {
-	BSREQ(id),
-	BSREQ(spells),
-	BSREQ(bonus),
-	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
 	BSREQ(damage),
@@ -75,6 +70,12 @@ BSMETA(languagei) = {
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
+	{}};
+BSMETA(optioni) = {
+	BSREQ(id),
+	BSREQ(parent),
+	BSREQ(effect),
+	BSREQ(spells),
 	{}};
 BSMETA(racei) = {
 	BSREQ(id),
@@ -104,13 +105,13 @@ BSDATA(varianti) = {
 	{"Character", VAR(character, 1)},
 	{"Class", VAR(classi, 1)},
 	{"Damage", VAR(damagei, 1), 0, 0, 0, fnscript<damagei>, fntest<damagei>},
-	{"DivineDomain", VAR(divinedomain, 1)},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, 0, fnscript<itemi>, fntest<itemi>},
 	{"Language", VAR(languagei, 1)},
 	{"List", VAR(listi, 1), 0, 0, 0, fnscript<listi>},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, 0, fnscript<modifieri>},
+	{"Option", VAR(optioni, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Script", VAR(script, 1), 0, 0, 0, fnscript<script>},
 	{"Skill", VAR(skilli, 1), 0, 0, 0, fnscript<skilli>, fntest<skilli>},

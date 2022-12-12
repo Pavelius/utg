@@ -113,7 +113,7 @@
     <ClInclude Include="moveable.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="divinedomain.h">
+    <ClInclude Include="option.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -162,6 +162,9 @@
     </Text>
     <Text Include="rules\ClassFighter.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\OptionNames.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

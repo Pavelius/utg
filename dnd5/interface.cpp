@@ -145,18 +145,25 @@ static void character_sheet() {
 	paint(*pm);
 }
 
+static void background_map() {
+	auto pi = gres("hills", "maps");
+	image(pi, 0, 0);
+}
+
 static void local_background() {
 	strategy_background();
 	paintobjects();
 }
 
-static void add_background_widget(const char* id) {
+static void add_widget(const char* id, unsigned char priority, bool absolute_position = true) {
 	auto pm = bsdata<widget>::find(id);
 	if(!pm)
 		return;
 	auto p = addobject(0, 0);
 	p->data = pm;
-	p->set(drawable::AbsolutePosition);
+	p->priority = priority;
+	if(absolute_position)
+		p->set(drawable::AbsolutePosition);
 }
 
 static void object_painting(const object* p) {
@@ -168,10 +175,12 @@ void ui_initialize() {
 	pbackground = local_background;
 	object::painting = object_painting;
 	object::initialize();
+	widget::add("BackgroundMap", background_map);
 	widget::add("AbilityBox", ability_box_widget);
 	widget::add("PaddingBox", padding_box);
 	widget::add("CharacterSheet", character_sheet);
 	widget::add("GroupHorizontal", group_horizontal);
 	widget::add("SkillBox", skill_box_widget);
-	add_background_widget("CharacterSheet");
+	add_widget("CharacterSheet", 50);
+	add_widget("BackgroundMap", 0, false);
 }
