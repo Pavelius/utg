@@ -1,8 +1,9 @@
 #pragma once
 
 enum ability_s : unsigned char {
-	Charm, Cunning, Finess, Luck, Might
+	Charm, Cunning, Finess, Luck, Might,
+	Reputation,
 };
 struct abilityi {
-	const char*		id;
+	const char*	id;
 };

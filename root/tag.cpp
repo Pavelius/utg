@@ -2,8 +2,12 @@
 #include "crt.h"
 
 BSDATA(tagi) = {
+	{"ArrowProof"},
 	{"Blunted"},
+	{"CatfolkSteel"},
+	{"Comfortable"},
 	{"Cumbersome"},
+	{"Eaglecraft"},
 	{"Flexible"},
 	{"Large"},
 	{"Makeshift"},

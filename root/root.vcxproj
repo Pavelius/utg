@@ -149,9 +149,9 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="creature.cpp" />
+    <ClCompile Include="rangeable.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="harmable.cpp" />
-    <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nameable.cpp" />
     <ClCompile Include="metadata.cpp" />

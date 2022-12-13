@@ -8,7 +8,7 @@ enum harm_s : unsigned char {
 	Morale, Value,
 };
 struct harmi {
-	const char*		id;
+	const char*	id;
 };
 struct harmable {
 	typedef slice<harm_s> harma;
@@ -17,7 +17,7 @@ struct harmable {
 	void	clear();
 	harm_s	getdefault() const;
 	int		getdistinct() const;
-	int		getdistinct(harma source) const;
-	void	getinfo(stringbuilder& sb, harma source) const;
+	int		getdistinct(const harma& source) const;
+	void	getinfo(stringbuilder& sb, const harma& source) const;
 	void	getinfo(stringbuilder& sb, const char* prompt) const;
 };

@@ -19,9 +19,6 @@
     <ClCompile Include="script.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="information.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="special.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -35,6 +32,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="risk.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="rangeable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

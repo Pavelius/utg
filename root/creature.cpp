@@ -1,12 +1,12 @@
 #include "creature.h"
 
-//static void fix_roll(stringbuilder& sb) {
+static void fix_roll(stringbuilder& sb) {
 //	switch(last_result) {
 //	case Fail: sb.add("[-{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
 //	case Success: sb.add("{%2i%+3i=%1i}", last_roll, last_roll_result, last_roll_bonus); break;
 //	default: sb.add("[+{%2i%+3i=%1i}]", last_roll, last_roll_result, last_roll_bonus); break;
 //	}
-//}
+}
 
 void creature::roll(move_s v) {
 	auto& ei = bsdata<movei>::elements[v];
@@ -14,15 +14,6 @@ void creature::roll(move_s v) {
 
 void creature::move(move_s v) {
 }
-
-//void rangeable::addrange(int v) {
-//	int i = range + v;
-//	if(i < Intimate)
-//		i = Intimate;
-//	else if(i > Far)
-//		i = Far;
-//	range = (tag_s)i;
-//}
 
 //void creature::apply(const effectable& effect) {
 //	static harm_s harms[] = {Injury, Exhaustion, Wear, Morale, Depletion};

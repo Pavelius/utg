@@ -10,8 +10,26 @@ BSDATA(harmi) {
 };
 assert_enum(harmi, Value)
 
+static void addprompt(stringbuilder& sb, const char* start, const char* prompt) {
+	if(!start)
+		return;
+	if(start[0] == 0) {
+		if(prompt)
+			sb.adds(prompt);
+	} else
+		sb.add(",");
+}
+
 void harmable::clear() {
 	memset(this, 0, sizeof(*this));
+}
+
+harm_s harmable::getdefault() const {
+	for(auto& v : harm) {
+		if(v)
+			return harm_s(&v - harm);
+	}
+	return harm_s(0);
 }
 
 int harmable::getdistinct() const {
@@ -23,7 +41,7 @@ int harmable::getdistinct() const {
 	return result;
 }
 
-int harmable::getdistinct(harma source) const {
+int harmable::getdistinct(const harma& source) const {
 	auto n = 0;
 	for(auto v : source) {
 		if(harm[v])
@@ -32,7 +50,7 @@ int harmable::getdistinct(harma source) const {
 	return n;
 }
 
-void harmable::getinfo(stringbuilder& sb, harma source) const {
+void harmable::getinfo(stringbuilder& sb, const harma& source) const {
 	auto n = getdistinct(source);
 	auto pb = sb.get(); pb[0] = 0;
 	for(auto vi : source) {
@@ -52,4 +70,17 @@ void harmable::getinfo(stringbuilder& sb, harma source) const {
 			sb.adds("[%2i] %1", sb.getbycount(pn, v), v);
 		n--;
 	}
+}
+
+void harmable::getinfo(stringbuilder& sb, const char* prompt) const {
+	auto start = sb.get(); start[0] = 0;
+	for(auto i = Injury; i <= Value; i = harm_s(i + 1)) {
+		auto v = harm[i];
+		if(!v)
+			continue;
+		addprompt(sb, start, prompt);
+		sb.adds("[%2i] %1", getnm(bsdata<harmi>::elements[i].id), v);
+	}
+	if(start[0])
+		sb.add(".");
 }

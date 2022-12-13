@@ -10,6 +10,7 @@ struct itemi : nameable, tagable {
 struct item {
 	unsigned char type;
 	unsigned char wear : 3;
+	unsigned char wear_max : 3;
 	constexpr explicit operator bool() const { return type != 0; }
 	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 };
