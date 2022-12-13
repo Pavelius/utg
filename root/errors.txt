@@ -1,6 +1,5 @@
-﻿In file `rules/Moves.txt`:
- Line 3: Can't find variant `Harm`
- Line 4: Can't find variant `Harm`
-In file `rules/MoveConcept.txt`:
- Line 14: Unknown variant identifier `Harm`
- Line 15: Unknown variant identifier `Harm`
+﻿In file `rules/MoveConcept.txt`:
+ Line 26: Can't find identifier named `Injury1`
+ Line 27: Can't find identifier named `Exhaustion1`
+ Line 28: Can't find identifier named `SufferExhaustion1`
+ Line 29: Can't find identifier named `SufferExhaustion1`
