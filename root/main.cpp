@@ -1,6 +1,6 @@
 #include "answers.h"
 #include "quest.h"
-#include "creature.h"
+#include "vagabond.h"
 #include "utg.h"
 
 static void generate_character() {
@@ -8,7 +8,7 @@ static void generate_character() {
 	//game.clear();
 	//game.suffer.add(Injury, 2);
 	//game.inflict.add(Injury, 1);
-	creature player = {};
+	vagabond player = {};
 	player.id = "Umberto";
 	player.abilities[Might] += 2;
 	player.abilities[Cunning] -= 1;

@@ -19,5 +19,5 @@ struct harmable {
 	int		getdistinct() const;
 	int		getdistinct(const harma& source) const;
 	void	getinfo(stringbuilder& sb, const harma& source) const;
-	void	getinfo(stringbuilder& sb, const char* prompt) const;
+	void	getinfo(stringbuilder& sb) const;
 };

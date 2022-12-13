@@ -22,10 +22,10 @@
     <ClCompile Include="special.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp">
+    <ClCompile Include="vagabond.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="nameable.cpp">
+    <ClCompile Include="person.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="harmable.cpp">
@@ -35,6 +35,15 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="rangeable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="group.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +62,7 @@
     <ClInclude Include="harmable.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="nameable.h">
+    <ClInclude Include="person.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="script.h">
@@ -71,7 +80,7 @@
     <ClInclude Include="statable.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="creature.h">
+    <ClInclude Include="vagabond.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="risk.h">
@@ -84,6 +93,15 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="tagable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="fraction.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="group.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

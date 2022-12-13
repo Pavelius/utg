@@ -10,16 +10,6 @@ BSDATA(harmi) {
 };
 assert_enum(harmi, Value)
 
-static void addprompt(stringbuilder& sb, const char* start, const char* prompt) {
-	if(!start)
-		return;
-	if(start[0] == 0) {
-		if(prompt)
-			sb.adds(prompt);
-	} else
-		sb.add(",");
-}
-
 void harmable::clear() {
 	memset(this, 0, sizeof(*this));
 }
@@ -72,13 +62,12 @@ void harmable::getinfo(stringbuilder& sb, const harma& source) const {
 	}
 }
 
-void harmable::getinfo(stringbuilder& sb, const char* prompt) const {
+void harmable::getinfo(stringbuilder& sb) const {
 	auto start = sb.get(); start[0] = 0;
-	for(auto i = Injury; i <= Value; i = harm_s(i + 1)) {
+	for(auto i = harm_s(0); i <= Value; i = harm_s(i + 1)) {
 		auto v = harm[i];
 		if(!v)
 			continue;
-		addprompt(sb, start, prompt);
 		sb.adds("[%2i] %1", getnm(bsdata<harmi>::elements[i].id), v);
 	}
 	if(start[0])

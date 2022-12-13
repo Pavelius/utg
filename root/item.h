@@ -1,3 +1,4 @@
+#include "crt.h"
 #include "nameable.h"
 #include "tagable.h"
 
@@ -12,5 +13,6 @@ struct item {
 	unsigned char wear : 3;
 	unsigned char wear_max : 3;
 	constexpr explicit operator bool() const { return type != 0; }
-	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
+	void			create(unsigned char type);
+	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 };

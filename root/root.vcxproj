@@ -148,12 +148,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="group.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="npc.cpp" />
+    <ClCompile Include="vagabond.cpp" />
     <ClCompile Include="rangeable.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="harmable.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="nameable.cpp" />
+    <ClCompile Include="person.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="risk.cpp" />
     <ClCompile Include="special.cpp" />
@@ -162,11 +165,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
-    <ClInclude Include="creature.h" />
+    <ClInclude Include="npc.h" />
+    <ClInclude Include="group.h" />
+    <ClInclude Include="vagabond.h" />
+    <ClInclude Include="fraction.h" />
     <ClInclude Include="harmable.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="move.h" />
-    <ClInclude Include="nameable.h" />
+    <ClInclude Include="person.h" />
     <ClInclude Include="rangeable.h" />
     <ClInclude Include="risk.h" />
     <ClInclude Include="script.h" />

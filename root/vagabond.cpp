@@ -1,4 +1,4 @@
-#include "creature.h"
+#include "vagabond.h"
 
 static void fix_roll(stringbuilder& sb) {
 //	switch(last_result) {
@@ -8,11 +8,11 @@ static void fix_roll(stringbuilder& sb) {
 //	}
 }
 
-void creature::roll(move_s v) {
+void vagabond::roll(move_s v) {
 	auto& ei = bsdata<movei>::elements[v];
 }
 
-void creature::move(move_s v) {
+void vagabond::move(move_s v) {
 }
 
 //void creature::apply(const effectable& effect) {

@@ -23,6 +23,7 @@ BSDATA(tagi) = {
 	{"Throwable"},
 	{"Unassuming"},
 	{"Weighty"},
+	{"Armor"},
 	{"Intimate"},
 	{"Close"},
 	{"Far"},
