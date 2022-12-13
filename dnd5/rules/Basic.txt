@@ -137,7 +137,5 @@ CharacterSkills format(SkillBox)
   Arcana History Investigation Nature Religion\
   AnimalHandling Insight Medicine Perception Survival\
   Deception Intimidation Performance Persuasion
-CharacterAbilities format(AbilityBox)
- elements Strenght Dexterity Constitution Intellegence Wisdow Charisma
 CharacterSheet format(GroupHorizontal)
- elements CharacterAbilities+10 PaddingBox+10 CharacterSkills+30
+ elements CharacterSkills+30

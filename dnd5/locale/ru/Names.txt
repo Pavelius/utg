@@ -15,6 +15,7 @@ ChaoticGood: Хаотично-добрый
 ChaoticNeutral: Хаотично-нейтральный
 CharacterAbility: Характеристики
 CharacterGenerate: Генерация персонажа
+CharacterSkills: Умения
 Charisma: Харизма
 CharismaShort: Хар
 Choose: Выбирайте

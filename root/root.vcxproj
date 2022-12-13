@@ -150,22 +150,30 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="script.cpp" />
-    <ClCompile Include="harm.cpp" />
     <ClCompile Include="harmable.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nameable.cpp" />
-    <ClCompile Include="property.cpp" />
+    <ClCompile Include="metadata.cpp" />
     <ClCompile Include="risk.cpp" />
     <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="move.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="creature.h" />
     <ClInclude Include="harmable.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="move.h" />
     <ClInclude Include="nameable.h" />
+    <ClInclude Include="rangeable.h" />
+    <ClInclude Include="risk.h" />
     <ClInclude Include="script.h" />
+    <ClInclude Include="special.h" />
+    <ClInclude Include="statable.h" />
+    <ClInclude Include="tag.h" />
+    <ClInclude Include="tagable.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "harmable.h"
 
 static void addprompt(stringbuilder& sb, const char* start, const char* prompt) {
 	if(!start)

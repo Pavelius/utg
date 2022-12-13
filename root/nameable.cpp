@@ -1,4 +1,4 @@
-#include "main.h"
+#include "nameable.h"
 #include "stringact.h"
 
 void nameable::actv(stringbuilder& sbs, const char* format, const char* param, char add_sep) const {

@@ -230,7 +230,6 @@ static void menubt(int i, const void* pv, const char* title, fnevent press_event
 }
 
 static void answers_beforepaint() {
-	paintobjects();
 	width = 320;
 	caret.y += metrics::padding + metrics::border;
 	caret.x = getwidth() - width - (metrics::padding + metrics::border);

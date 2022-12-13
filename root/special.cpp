@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "special.h"
 
 BSDATA(speciali) = {
 	{"Choose"},

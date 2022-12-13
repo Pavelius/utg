@@ -1,5 +1,15 @@
 #include "harmable.h"
 
+BSDATA(harmi) {
+	{"Injury"},
+	{"Exhaustion"},
+	{"Wear"},
+	{"Depletion"},
+	{"Morale"},
+	{"Value"},
+};
+assert_enum(harmi, Value)
+
 void harmable::clear() {
 	memset(this, 0, sizeof(*this));
 }

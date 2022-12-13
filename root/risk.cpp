@@ -1,4 +1,5 @@
-#include "main.h"
+#include "risk.h"
+#include "crt.h"
 
 BSDATA(riski) = {
 	{"BreakSomething"},

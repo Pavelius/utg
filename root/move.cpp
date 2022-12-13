@@ -1,4 +1,5 @@
-#include "main.h"
+#include "move.h"
+#include "crt.h"
 
 BSDATA(movei) = {
 	{"Acrobatics", RoguishFeat, Finess},

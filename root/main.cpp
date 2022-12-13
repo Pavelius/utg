@@ -1,4 +1,7 @@
-#include "main.h"
+#include "answers.h"
+#include "quest.h"
+#include "creature.h"
+#include "utg.h"
 
 static void generate_character() {
 	char temp[16]; stringbuilder sb(temp);

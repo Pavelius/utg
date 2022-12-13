@@ -7,7 +7,6 @@ enum harm_s : unsigned char {
 	Injury, Exhaustion, Wear, Depletion,
 	Morale, Value,
 };
-
 struct harmi {
 	const char*		id;
 };

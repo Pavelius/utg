@@ -1,4 +1,5 @@
-#include "main.h"
+#include "tag.h"
+#include "crt.h"
 
 BSDATA(tagi) = {
 	{"Blunted"},

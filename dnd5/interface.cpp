@@ -108,7 +108,6 @@ static void small_check(bool check) {
 static void skill_box_widget() {
 	if(ability.iskind<skilli>()) {
 		auto push_caret = caret;
-		small_check(player->skills.is(ability.value));
 		text(str("%1i", player->getskill(ability.value))); caret.x += 20;
 		text(ability.getname());
 		caret = push_caret;
@@ -133,15 +132,63 @@ static void group_horizontal() {
 	width = push_width;
 }
 
+static void separator() {
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::border;
+	caret.x -= metrics::border;
+	caret.y += metrics::padding / 2;
+	line(caret.x + width + metrics::border * 2 - 1, caret.y);
+	caret = push_caret;
+	fore = push_fore;
+	caret.y += metrics::padding;
+}
+
+static void rightline() {
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::border;
+	caret.x += width;
+	caret.y -= metrics::padding - 1;
+	line(caret.x, caret.y + height + metrics::padding * 2);
+	fore = push_fore;
+	caret = push_caret;
+}
+
+static void tabs(const variants& elements) {
+	rectpush push;
+	caret.x -= metrics::padding;
+	height = texth() + metrics::padding * 2;
+	for(auto& e : elements) {
+		auto pn = e.getname();
+		width = textw(pn) + metrics::padding * 2;
+		if(width > 160)
+			width = 160;
+		rightline();
+		texta(pn, AlignCenterCenter);
+		ishilite(&e);
+		caret.x += width;
+	}
+}
+
+static void footer(const variants& elements) {
+	auto push_caret = caret;
+	caret.y = caret.y + height - metrics::padding * 3 - texth();
+	separator();
+	tabs(elements);
+	caret = push_caret;
+}
+
 static void character_sheet() {
 	auto pm = bsdata<menu>::find(lastwidget->id);
 	if(!pm)
 		return;
 	rectpush push;
-	width = 446; height = 400;
-	caret.x = getwidth() - width - 320 - metrics::padding * 2 - metrics::border * 3;
+	width = 320; height = 400;
+	caret.x = metrics::padding + metrics::border;
 	caret.y = 1 + metrics::padding + metrics::border;
 	draw::swindow(false);
+	footer(pm->elements);
 	paint(*pm);
 }
 
@@ -180,6 +227,7 @@ void ui_initialize() {
 	widget::add("PaddingBox", padding_box);
 	widget::add("CharacterSheet", character_sheet);
 	widget::add("GroupHorizontal", group_horizontal);
+	widget::add("Separator", separator);
 	widget::add("SkillBox", skill_box_widget);
 	add_widget("CharacterSheet", 50);
 	add_widget("BackgroundMap", 0, false);
