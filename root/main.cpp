@@ -11,6 +11,7 @@ static void generate_character() {
 	player = bsdata<vagabond>::add();
 	player->clear();
 	player->id = "Umberto";
+	player->gender = Male;
 	player->abilities[Might] += 2;
 	player->abilities[Cunning] -= 1;
 	player->move(EngageMelee);
@@ -18,11 +19,11 @@ static void generate_character() {
 
 static void initialize() {
 	quest::read("rules/Moves.txt");
+	movei::read("rules/MoveConcept.txt");
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	//messagei::read("rules/MoveMessages.txt");
 	answers::resid = "northmen";
 	answers::console = &console;
 	answers::prompt = console.begin();

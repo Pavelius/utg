@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "flagable.h"
+#include "variant.h"
 
 #pragma once
 
@@ -14,18 +15,28 @@ enum move_s : unsigned char {
 	QuickShot, StormGroup, TrickShot, ViciousStrike,
 	AskFavor, MeetSomeoneImportant, DrawAttention, SwayNPC, MakePointedThread, CommandResources,
 };
-enum move_mechanic_s : unsigned char {
-	PlainMove,
-	Choose1, Choose1or2, Choose1or3, Choose2or3,
-	ChooseYouAndEnemy,
-};
 enum move_type_s : unsigned char {
 	BasicMove, RoguishFeat, WeaponSkill, ReputationMove, TravelMove,
 };
 typedef flagable<1 + CommandResources / 8> movea;
-struct movei {
-	const char* id;
-	move_type_s type;
-	ability_s roll;
-	move_mechanic_s	mechanic;
+struct moveoptioni {
+	short unsigned	index, next;
+	const char*		text;
+	variants		effect;
+	void			clear() { memset(this, 0, sizeof(*this)); }
+	bool			isanswer() const { return index == 0xFFFF; }
 };
+struct movei {
+	typedef void(*fnproc)();
+	const char*		id;
+	move_type_s		type;
+	ability_s		roll;
+	sliceu<moveoptioni> options;
+	static int		choose_count;
+	const moveoptioni* choose(const moveoptioni* p) const;
+	const moveoptioni* findprompt(short unsigned result) const;
+	const moveoptioni* getanswer(const moveoptioni* p) const;
+	static void		read(const char* url);
+	void			run() const;
+};
+extern const movei* lastmove;

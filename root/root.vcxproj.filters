@@ -16,9 +16,6 @@
     <ClCompile Include="move.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="special.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="vagabond.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -89,9 +86,6 @@
     <ClInclude Include="risk.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="special.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="rangeable.h">
       <Filter>Logic</Filter>
     </ClInclude>
@@ -131,6 +125,9 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\Names.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesNewbe.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

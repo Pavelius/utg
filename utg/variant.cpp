@@ -23,7 +23,7 @@ template<> variant::variant(const void* v) : u(0) {
 
 template<> variant::variant(const char* v) : u(0) {
 	if(v) {
-		auto size = zlen(v);
+		auto size = zlen(v) + 1;
 		for(auto& e : bsdata<varianti>()) {
 			if(!e.source || !e.metadata || e.key_count != 1)
 				continue;

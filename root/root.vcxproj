@@ -160,7 +160,6 @@
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="risk.cpp" />
-    <ClCompile Include="special.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="move.cpp" />
   </ItemGroup>
@@ -177,7 +176,6 @@
     <ClInclude Include="actable.h" />
     <ClInclude Include="rangeable.h" />
     <ClInclude Include="risk.h" />
-    <ClInclude Include="special.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="tagable.h" />
@@ -186,6 +184,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\MoveConcept.txt" />
     <Text Include="rules\MoveMessages.txt" />

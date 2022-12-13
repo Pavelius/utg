@@ -2,9 +2,24 @@
 #include "answers.h"
 #include "harmable.h"
 #include "modifier.h"
+#include "npc.h"
 #include "quest.h"
 #include "script.h"
 #include "vagabond.h"
+
+static void fix_chance(const char* format, const char* name, int value) {
+	if(value > 0)
+		draw::information(format, name, value);
+	else
+		draw::warning(format, name, value);
+}
+
+static void fix_chancer(const char* format, const char* name, int value) {
+	if(value <= 0)
+		draw::information(format, name, value);
+	else
+		draw::warning(format, name, value);
+}
 
 template<> void fnscript<abilityi>(int index, int bonus) {
 	player->harm[index] += bonus;
@@ -12,8 +27,14 @@ template<> void fnscript<abilityi>(int index, int bonus) {
 
 template<> void fnscript<harmi>(int index, int bonus) {
 	switch(modifier) {
-	case Inflict: inflict.harm[index] += bonus; break;
-	case Suffer: suffer.harm[index] += bonus; break;
+	case Inflict:
+		fix_chance(getnm("InflictHarm"), getnm(bsdata<harmi>::elements[index].id), bonus);
+		inflict.harm[index] += bonus;
+		break;
+	case Suffer:
+		fix_chancer(getnm("SufferHarm"), getnm(bsdata<harmi>::elements[index].id), bonus);
+		suffer.harm[index] += bonus;
+		break;
 	default: break;
 	}
 }
@@ -23,39 +44,40 @@ static void add_new(const char* format) {
 	answers::console->add(format);
 }
 
-void quest::run(int page) {
-	if(!answers::console)
-		return;
-	auto p = findprompt(page);
-	const variants* additional = 0;
-	while(p) {
-		player->act(p->text);
-		script::run(p->tags);
-		if(additional) {
-			script::run(additional);
-			additional = 0;
-		}
-		answers an;
-		auto index = p->index;
-		auto pe = bsdata<quest>::end();
-		for(auto pa = p + 1; pa < pe; pa++) {
-			if(pa->index != index)
-				continue;
-			an.add(pa, pa->text);
-		}
-		p = (quest*)an.choose(0, 0, 1);
-		answers::console->clear();
-		if(!p)
-			break;
-		additional = &p->tags;
-		p = findprompt(p->next);
-		if(!p && additional) {
-			script::run(additional);
-			additional = 0;
-		}
+static void change_range(int bonus) {
+}
+
+static void inflict_harm(int bonus) {
+	inflict.clear();
+	if(player)
+		inflict = player->inflict;
+}
+
+static void suffer_harm(int bonus) {
+	suffer.clear();
+	if(opponent)
+		suffer = opponent->inflict;
+}
+
+static void default_harm(int bonus) {
+	auto v = Injury;
+	switch(modifier) {
+	case Inflict: v = inflict.getdefault(); break;
+	case Suffer: v = suffer.getdefault(); break;
+	default: break;
 	}
+	fnscript<harmi>(v, bonus);
+}
+
+static void choose_step(int bonus) {
+	movei::choose_count = bonus;
 }
 
 BSDATA(script) = {
-	{"ChooseVagabond"},
+	{"ChangeRange", change_range},
+	{"Choose", choose_step},
+	{"Harm", default_harm},
+	{"InflictHarm", inflict_harm},
+	{"SufferHarm", suffer_harm},
 };
+BSDATAF(script)

@@ -1,3 +1,4 @@
+#include "pushvalue.h"
 #include "result.h"
 #include "quest.h"
 #include "vagabond.h"
@@ -12,24 +13,24 @@ static void fix_roll(stringbuilder& sb) {
 	}
 }
 
-void vagabond::roll(move_s v) {
-	auto& ei = bsdata<movei>::elements[v];
-	auto bonus = get(bsdata<movei>::elements[v].roll);
-	if(forward.is(v))
+static void make_roll() {
+	auto v = lastmove - bsdata<movei>::elements;
+	auto bonus = player->get(lastmove->roll);
+	if(player->forward.is(v))
 		bonus++;
-	forward.remove(v);
-	bonus += forward_any; forward_any = 0;
+	player->forward.remove(v);
+	bonus += player->forward_any; player->forward_any = 0;
 	pbta_roll(bonus);
 	fix_roll(console);
 }
 
 void vagabond::move(move_s v) {
-	roll(v);
-	if(last_result == Fail) {
-
-	} else {
-		quest::run(1);
-	}
+	auto push_move = lastmove; lastmove = bsdata<movei>::elements + v;
+	make_roll();
+	inflict.clear();
+	suffer.clear();
+	lastmove->run();
+	lastmove = push_move;
 }
 
 //void creature::apply(const effectable& effect) {

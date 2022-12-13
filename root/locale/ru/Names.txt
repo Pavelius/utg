@@ -40,6 +40,7 @@ Halfling: Полурослик
 HealingPotion: Лечебное зелье
 Human: Человек
 Inflict: Нанес%ла
+InflictHarm: Наносимое %1%+2i
 Injury: Ранение
 Intellegence: Интеллект
 Knife: Нож
@@ -61,6 +62,7 @@ ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
 Suffer: Получил%а
+SufferHarm: Получаемое %1%+2i
 Theif: Вор
 Umberto: Умберто
 UndeadInvasion: Нашествие мертвецов

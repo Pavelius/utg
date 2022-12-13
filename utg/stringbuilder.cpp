@@ -291,7 +291,7 @@ void stringbuilder::upper() {
 }
 
 void stringbuilder::addidentifier(const char* identifier) {
-	auto p = getnm(identifier);
+	auto p = getnme(identifier);
 	if(p)
 		addv(p, 0);
 	else {

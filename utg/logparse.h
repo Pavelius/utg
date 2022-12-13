@@ -19,4 +19,5 @@ const char* readidn(const char* p, stringbuilder& result);
 const char* readname(const char* p, stringbuilder& result);
 const char*	readstr(const char* p, stringbuilder& result);
 const char*	readval(const char* p, stringbuilder& sb, variant& result);
+const char* readval(const char* p, stringbuilder& sb, const array& source, unsigned short& result, const char* type_name = 0);
 }

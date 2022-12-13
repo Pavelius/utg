@@ -8,7 +8,7 @@
 #include "npc.h"
 #include "result.h"
 #include "risk.h"
-#include "special.h"
+#include "script.h"
 #include "tag.h"
 #include "variant.h"
 #include "vagabond.h"
@@ -19,6 +19,7 @@ BSMETA(varianti) = {BSREQ(id), {}};
 
 BSDATAC(itemi, 256)
 BSDATAC(menu, 256)
+BSDATAC(moveoptioni, 256)
 BSDATAC(npc, 64)
 BSDATAC(vagabond, 16)
 BSDATAD(variant)
@@ -37,6 +38,9 @@ BSMETA(modifieri) = {
 	BSREQ(id),
 	{}};
 BSMETA(resulti) = {
+	BSREQ(id),
+	{}};
+BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(movei) = {
@@ -58,9 +62,6 @@ BSMETA(genderi) = {
 BSMETA(riski) = {
 	BSREQ(id),
 	{}};
-BSMETA(speciali) = {
-	BSREQ(id),
-	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(wear),
 	BSFLG(tags, tagi),
@@ -69,16 +70,16 @@ BSMETA(itemi) = {
 
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1)},
+	{"Ability", VAR(abilityi, 1), 0, 0, 0, fnscript<abilityi>},
 	{"Item", VAR(itemi, 1)},
 	{"Denizen", VAR(npc, 1)},
 	{"Menu", VAR(menu, 1)},
-	{"Modifier", VAR(modifieri, 1)},
+	{"Modifier", VAR(modifieri, 1), 0, 0, 0, fnscript<modifieri>},
 	{"Move", VAR(movei, 1)},
-	{"Resource", VAR(harmi, 1)},
+	{"Resource", VAR(harmi, 1), 0, 0, 0, fnscript<harmi>},
 	{"Result", VAR(resulti, 1)},
 	{"Risk", VAR(riski, 1)},
-	{"Specail", VAR(speciali, 1)},
+	{"Script", VAR(script, 1), 0, 0, 0, fnscript<script>},
 	{"Tag", VAR(tagi, 1)},
 	{"Widget", VAR(widget, 1)},
 };

@@ -31,6 +31,17 @@ const char* log::readval(const char* p, stringbuilder& sb, variant& result) {
 	return p;
 }
 
+const char* log::readval(const char* p, stringbuilder& sb, const array& source, unsigned short& result_index, const char* type_name) {
+	p = readidn(p, sb);
+	result_index = (unsigned short)source.find(sb.begin(), 0);
+	if(result_index == 0xFFFF) {
+		if(!type_name)
+			type_name = "identifier";
+		log::error(p, "Can\'t find %2 named `%1`", sb.begin(), type_name);
+	}
+	return p;
+}
+
 const char* log::readbon(const char* p, int& bonus) {
 	if(*p == '-')
 		p = stringbuilder::read(p, bonus);

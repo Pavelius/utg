@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "modifier.h"
+#include "script.h"
 
 BSDATA(modifieri) = {
 	{"NoModifier"},
@@ -9,3 +10,7 @@ BSDATA(modifieri) = {
 assert_enum(modifieri, Suffer)
 
 modifier_s modifier;
+
+template<> void fnscript<modifieri>(int index, int bonus) {
+	modifier = modifier_s(index);
+}
