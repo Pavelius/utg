@@ -1,7 +1,5 @@
-﻿AdventuringGear: Инструменты
-And: И
-Antitoxin: Противоядие
-AppTitle: Мир подземелья
+﻿And: И
+AppTitle: Огромный лес
 ApplyAbility: Какая ваша способность будет равна [%1i]?
 Armor: Броня
 BagOfBooks: Сумка с книгами

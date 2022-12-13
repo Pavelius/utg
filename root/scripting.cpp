@@ -43,7 +43,7 @@ void quest::run(int page) {
 				continue;
 			an.add(pa, pa->text);
 		}
-		p = (quest*)an.choose(0, getnm("Back"), 1);
+		p = (quest*)an.choose(0, 0, 1);
 		answers::console->clear();
 		if(!p)
 			break;

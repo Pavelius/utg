@@ -14,7 +14,6 @@ static void generate_character() {
 	player->abilities[Might] += 2;
 	player->abilities[Cunning] -= 1;
 	player->move(EngageMelee);
-	draw::pause();
 }
 
 static void initialize() {

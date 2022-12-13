@@ -27,7 +27,7 @@ int chooselist::getvalueindex(const void* pv) const {
 
 bool chooselist::choose(const char* title, int count, const char* cancel) {
 	answers an;
-	char temp[512]; stringbuilder sb(temp);
+	char temp[256]; stringbuilder sb(temp);
 	while(count > 0) {
 		an.clear(); sb.clear();
 		if(title) {

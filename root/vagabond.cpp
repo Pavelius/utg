@@ -25,7 +25,11 @@ void vagabond::roll(move_s v) {
 
 void vagabond::move(move_s v) {
 	roll(v);
-	quest::run(1);
+	if(last_result == Fail) {
+
+	} else {
+		quest::run(1);
+	}
 }
 
 //void creature::apply(const effectable& effect) {

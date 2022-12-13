@@ -16,6 +16,10 @@ ToughtBrute
 #Item
 
 NoItem
+
 Quarterstaff wear(3)
  moves Parry
- tags Close Reach Blunted
+ tags Close Reach Blunted Load
+Dagger wear(1)
+ moves Parry ViciousStrike
+ tags Intimate Close Quick
