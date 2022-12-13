@@ -10,6 +10,8 @@ BSDATA(harmi) {
 };
 assert_enum(harmi, Value)
 
+harmable inflict, suffer;
+
 void harmable::clear() {
 	memset(this, 0, sizeof(*this));
 }

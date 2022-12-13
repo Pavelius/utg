@@ -16,16 +16,13 @@
     <ClCompile Include="move.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="script.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="special.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="vagabond.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="person.cpp">
+    <ClCompile Include="actable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="harmable.cpp">
@@ -46,6 +43,12 @@
     <ClCompile Include="group.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">
@@ -53,6 +56,9 @@
     </Filter>
     <Filter Include="Data">
       <UniqueIdentifier>{207a4547-7427-4725-ab05-df2564321735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Locale">
+      <UniqueIdentifier>{793a1144-e6c4-466e-a3ef-a674f3fe565e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,10 +68,7 @@
     <ClInclude Include="harmable.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="person.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="script.h">
+    <ClInclude Include="actable.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
@@ -104,14 +107,11 @@
     <ClInclude Include="group.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="modifier.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
@@ -127,8 +127,11 @@
     <Text Include="rules\MoveConcept.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\NamesOf.txt">
-      <Filter>Data</Filter>
+    <Text Include="locale\ru\Descriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

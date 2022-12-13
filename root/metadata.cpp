@@ -3,16 +3,24 @@
 #include "harmable.h"
 #include "item.h"
 #include "menu.h"
+#include "modifier.h"
 #include "move.h"
+#include "npc.h"
 #include "result.h"
 #include "risk.h"
 #include "special.h"
 #include "tag.h"
 #include "variant.h"
+#include "vagabond.h"
 #include "widget.h"
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
+
+BSDATAC(itemi, 256)
+BSDATAC(menu, 256)
+BSDATAC(npc, 64)
+BSDATAC(vagabond, 16)
 BSDATAD(variant)
 
 BSMETA(abilityi) = {
@@ -25,13 +33,21 @@ BSMETA(menu) = {
 	BSREQ(id),
 	BSREQ(elements),
 	{}};
-BSDATAC(menu, 256)
+BSMETA(modifieri) = {
+	BSREQ(id),
+	{}};
 BSMETA(resulti) = {
 	BSREQ(id),
 	{}};
 BSMETA(movei) = {
 	BSREQ(id),
 	BSENM(roll, abilityi),
+	{}};
+BSMETA(npc) = {
+	BSREQ(id),
+	BSENM(group, groupi),
+	BSDST(harm, harmi),
+	BSDSN(inflict, inflict.harm, harmi),
 	{}};
 BSMETA(harmi) = {
 	BSREQ(id),
@@ -50,13 +66,14 @@ BSMETA(itemi) = {
 	BSFLG(tags, tagi),
 	BSFLG(moves, movei),
 	{}};
-BSDATAC(itemi, 256)
 
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1)},
 	{"Item", VAR(itemi, 1)},
+	{"Denizen", VAR(npc, 1)},
 	{"Menu", VAR(menu, 1)},
+	{"Modifier", VAR(modifieri, 1)},
 	{"Move", VAR(movei, 1)},
 	{"Resource", VAR(harmi, 1)},
 	{"Result", VAR(resulti, 1)},

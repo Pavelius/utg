@@ -2,9 +2,9 @@
 #include "group.h"
 
 BSDATA(groupi) = {
-	{"Individual"},
-	{"Small"},
-	{"Medium"},
-	{"Large"},
+	{"Individual", 1},
+	{"SmallGroup", 5},
+	{"MediumGroup", 11},
+	{"LargeGroup", 21},
 };
-assert_enum(groupi, Large)
+assert_enum(groupi, LargeGroup)

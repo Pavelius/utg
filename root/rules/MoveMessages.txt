@@ -14,7 +14,7 @@ Morale1 4: Впечатлить, озадачить или испугать врага
 Success: %герой и враг схватили друг друга. 
 Injury1 1: Нанести несколько быстрых ударов
 Exhaustion1 2: Бросить его на землю
-SufferExhaustion1 Injury2 3: Нащупать полевое место
+SufferExhaustion1 Injury2 3: Нащупать болевое место
 SufferExhaustion1 Injury2 4: Разорвать захват и оттолкнуть врага
 
 #TargetSomeone

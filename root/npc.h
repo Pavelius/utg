@@ -1,11 +1,12 @@
-#include "person.h"
+#include "actable.h"
+#include "group.h"
 
 #pragma once
 
-struct npc : person {
-	person* leader;
-	char	group;
-	bool	isgroup() const { return group != 0; }
-	void	setgroup(int v);
+struct npc : actable {
+	actable* leader;
+	group_s	group;
+	bool	isgroup() const { return group != Individual; }
+	void	setgroup(group_s v);
 };
 extern npc* opponent;

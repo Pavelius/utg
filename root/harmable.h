@@ -21,3 +21,4 @@ struct harmable {
 	void	getinfo(stringbuilder& sb, const harma& source) const;
 	void	getinfo(stringbuilder& sb) const;
 };
+extern harmable inflict, suffer;
