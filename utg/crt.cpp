@@ -293,7 +293,7 @@ void* array::add(const void* element) {
 
 void* array::addfind(const char* id) {
 	auto i = find(id, 0);
-	if(i!=-1)
+	if(i != -1)
 		return ptr(i);
 	auto p = add();
 	*((const char**)p) = id;
@@ -340,7 +340,7 @@ static bool matchstring(const char* v1, const char* v2, size_t size) {
 		if(v1[n] != v2[n])
 			return false;
 	}
-	return memcmp(v1, v2, size)==0 && v1[size] == 0;
+	return memcmp(v1, v2, size) == 0 && v1[size] == 0;
 }
 
 int array::findps(const char* value, unsigned offset, size_t size) const {
@@ -350,9 +350,7 @@ int array::findps(const char* value, unsigned offset, size_t size) const {
 		auto pn = *p;
 		if(!pn)
 			continue;
-		if(memcmp(pn, value, size)!=0)
-			continue;
-		if(pn[size]==0)
+		if(memcmp(pn, value, size) == 0)
 			return i;
 	}
 	return -1;
@@ -537,7 +535,7 @@ void array::change(unsigned offset, int size) {
 
 const void* array::findu(const void* value, size_t size) const {
 	auto p = (char*)data;
-	auto pe = (char*)data + count*(this->size);
+	auto pe = (char*)data + count * (this->size);
 	auto s = *((char*)value);
 	while(p < pe) {
 		p = (char*)memchr(p, s, pe - p);
@@ -571,7 +569,7 @@ const char* array::findus(const char* value, size_t size) const {
 		p = (char*)memchr(p, s, pe - p);
 		if(!p || (unsigned(pe - p) < size))
 			break;
-		if(memcmp(p, value, size) == 0 && p[size]==0)
+		if(memcmp(p, value, size) == 0 && p[size] == 0)
 			return p;
 		p++;
 	}

@@ -1,5 +1,3 @@
 ﻿In file `rules/MoveConcept.txt`:
- Line 26: Can't find identifier named `Injury1`
- Line 27: Can't find identifier named `Exhaustion1`
- Line 28: Can't find identifier named `SufferExhaustion1`
- Line 29: Can't find identifier named `SufferExhaustion1`
+ Line 2: Unknown variant identifier `ChangeRange`
+ Line 16: Unknown variant identifier `ChangeRange`

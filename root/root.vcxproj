@@ -188,8 +188,6 @@
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\MoveConcept.txt" />
-    <Text Include="rules\MoveMessages.txt" />
-    <Text Include="rules\Moves.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -73,7 +73,11 @@ static void choose_step(int bonus) {
 	movei::choose_count = bonus;
 }
 
+static void apply_harm(int bonus) {
+}
+
 BSDATA(script) = {
+	{"ApplyHarm", apply_harm},
 	{"ChangeRange", change_range},
 	{"Choose", choose_step},
 	{"Harm", default_harm},

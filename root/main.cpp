@@ -18,7 +18,6 @@ static void generate_character() {
 }
 
 static void initialize() {
-	quest::read("rules/Moves.txt");
 	movei::read("rules/MoveConcept.txt");
 }
 

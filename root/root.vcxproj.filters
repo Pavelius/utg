@@ -115,12 +115,6 @@
     <Text Include="errors.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="rules\Moves.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="rules\MoveMessages.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\MoveConcept.txt">
       <Filter>Data</Filter>
     </Text>

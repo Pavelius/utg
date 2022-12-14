@@ -84,13 +84,13 @@ static const char* read_options(const char* p, stringbuilder& sb) {
 	ps->next = 0xFFFF;
 	if(ischa(*p)) {
 		p = readval(p, sb, bsdata<resulti>::source, ps->index);
-		p = skipsp(p);
 	} else if(isnum(*p)) {
 		int result = 0;
 		p = sb.read(p, result);
 		ps->index = result;
 	} else
 		ps->index = 0xFFFF;
+	p = skipsp(p);
 	p = read_effect(p, ps->effect, sb);
 	p = readstr(p, sb);
 	ps->text = szdup(sb.begin());
