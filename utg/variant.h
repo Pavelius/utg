@@ -10,6 +10,8 @@ union variant;
 
 typedef sliceu<variant> variants;
 typedef void (*fngetinfo)(const void* object, variant v, stringbuilder& sb);
+template<typename T>
+void ftstatus(const void* object, stringbuilder& sb);
 
 struct varianti {
 	typedef void(*fnscript)(int index, int bonus);

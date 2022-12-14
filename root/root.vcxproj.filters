@@ -46,6 +46,9 @@
     <ClCompile Include="modifier.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

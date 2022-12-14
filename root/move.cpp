@@ -149,11 +149,17 @@ static const char* choose_header() {
 	return temp;
 }
 
+static adat<void*, 32> choosed_answers;
+
 const moveoptioni* movei::choose(const moveoptioni* p) const {
 	answers an; auto pe = options.end();
-	for(auto pa = getanswer(p); pa->isanswer() && pa < pe; pa++)
+	for(auto pa = getanswer(p); pa->isanswer() && pa < pe; pa++) {
+		if(choosed_answers.is((void*)pa))
+			continue;
 		an.add(pa, pa->text);
+	}
 	p = (moveoptioni*)an.choose(choose_header(), 0, 1);
+	choosed_answers.add((void*)p);
 	if(p) {
 		script::run(p->effect);
 		p = findprompt(p->next);
@@ -165,19 +171,14 @@ void movei::run() const {
 	if(!answers::console)
 		return;
 	auto p = findprompt(last_result);
-	while(p) {
-		player->act(p->text);
-		script::run(p->effect);
-		if(!choose_count)
-			p = choose(p);
-		else {
-			while(choose_count > 0) {
-				choose(p);
-				choose_count--;
-			}
-			p = 0;
+	player->act(p->text);
+	script::run(p->effect);
+	if(choose_count>0) {
+		choosed_answers.clear();
+		while(choose_count > 0) {
+			choose(p);
+			choose_count--;
 		}
-		draw::pause();
 	}
 	draw::pause();
 }

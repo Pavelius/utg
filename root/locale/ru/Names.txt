@@ -8,6 +8,7 @@ BundleArrows: Стрелы
 But: Но
 Cancel: Отмена
 ChainMailArmor: Кольчуга
+ChangeRange: Изменить дистанию
 Chaotic: Хаотичный
 CharacterGeneration: Генерация персонажа
 Charisma: Харизма
@@ -37,9 +38,10 @@ Fighter: Воин
 Good: Добрый
 HP: Хиты
 Halfling: Полурослик 
+Harm: Урон
 HealingPotion: Лечебное зелье
 Human: Человек
-Inflict: Нанес%ла
+Inflict: Нанести
 InflictHarm: Наносимое %1%+2i
 Injury: Ранение
 Intellegence: Интеллект
@@ -61,7 +63,7 @@ Shield: Щит
 ShortSword: Короткий меч
 Staff: Посох
 Strenght: Сила
-Suffer: Получил%а
+Suffer: Получить
 SufferHarm: Получаемое %1%+2i
 Theif: Вор
 Umberto: Умберто

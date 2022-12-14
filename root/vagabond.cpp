@@ -13,8 +13,10 @@ static void fix_roll(stringbuilder& sb) {
 	}
 }
 
-static void make_roll() {
-	auto v = lastmove - bsdata<movei>::elements;
+void vagabond::move(move_s v) {
+	auto push_move = lastmove; lastmove = bsdata<movei>::elements + v;
+	inflict.clear();
+	suffer.clear();
 	auto bonus = player->get(lastmove->roll);
 	if(player->forward.is(v))
 		bonus++;
@@ -22,13 +24,6 @@ static void make_roll() {
 	bonus += player->forward_any; player->forward_any = 0;
 	pbta_roll(bonus);
 	fix_roll(console);
-}
-
-void vagabond::move(move_s v) {
-	auto push_move = lastmove; lastmove = bsdata<movei>::elements + v;
-	make_roll();
-	inflict.clear();
-	suffer.clear();
 	lastmove->run();
 	lastmove = push_move;
 }

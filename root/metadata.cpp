@@ -47,6 +47,10 @@ BSMETA(movei) = {
 	BSREQ(id),
 	BSENM(roll, abilityi),
 	{}};
+BSMETA(moveoptioni) = {
+	BSREQ(index), BSREQ(next),
+	BSREQ(text),
+	{}};
 BSMETA(npc) = {
 	BSREQ(id),
 	BSENM(group, groupi),
@@ -76,6 +80,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, 0, fnscript<modifieri>},
 	{"Move", VAR(movei, 1)},
+	{"MoveOption", VAR(moveoptioni, 3), 0, ftstatus<moveoptioni>},
 	{"Resource", VAR(harmi, 1), 0, 0, 0, fnscript<harmi>},
 	{"Result", VAR(resulti, 1)},
 	{"Risk", VAR(riski, 1)},
