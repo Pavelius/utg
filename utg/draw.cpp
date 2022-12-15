@@ -2573,12 +2573,14 @@ void draw::fillwindow() {
 	fore = push_fore;
 }
 
-void draw::strokeout(fnevent proc, int dx, int dy) {
+void draw::strokeout(fnevent proc, int dx) {
 	rectpush push;
-	caret.x -= metrics::border;
-	caret.y -= metrics::border;
-	width += metrics::border * 2 + dx;
-	height += metrics::border * 2 + dy;
+	if(!dx)
+		dx = metrics::border;
+	caret.x -= dx;
+	caret.y -= dx;
+	width += metrics::border * 2;
+	height += metrics::border * 2;
 	proc();
 }
 

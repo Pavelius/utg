@@ -43,7 +43,7 @@ static void add_adjust(answers& an, ability_s a) {
 }
 
 static void choose_avatar() {
-	player->setavatar(avatarable::choose(getnm("ChooseLook"), (player->gender == Female) ? "f*.*" : "m*.*"));
+	player->setavatar(avatarable::choose(getnm("ChooseLook"), (player->gender == Female) ? "f*.*" : "m*.*", 6));
 }
 
 static void adjust_ability_scores() {

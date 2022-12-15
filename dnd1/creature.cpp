@@ -106,7 +106,7 @@ const char* creature::randomname(class_s type, gender_s gender) {
 const char* creature::randomavatar(class_s type, gender_s gender) {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
-	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*");
+	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*", 6);
 	answers::interactive = push_interactive;
 	return result;
 }

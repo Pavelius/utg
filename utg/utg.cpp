@@ -1,4 +1,5 @@
 #include "io_stream.h"
+#include "pushvalue.h"
 #include "utg.h"
 
 fngetinfo		utg::callback::getinfo;
@@ -15,13 +16,14 @@ const char* utg::getchoose(const char* id) {
 
 static const char* chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
-	answers::paintcell = draw::avatarch;
+	answers::paintcell = draw::avatar;
 	auto p = (const char*)an.choose(title);
 	answers::paintcell = push_paint;
 	return p;
 }
 
-const char* avatarable::choose(const char* title, const char* mask) {
+const char* avatarable::choose(const char* title, const char* mask, int columns_count) {
+	pushvalue push_columns(answers::column_count, columns_count);
 	answers an; char temp[260];
 	for(io::file::find fn(utg::url_avatars); fn; fn.next()) {
 		auto p = fn.name();

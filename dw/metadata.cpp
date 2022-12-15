@@ -3,9 +3,6 @@
 #include "option.h"
 #include "widget.h"
 
-//#define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
-//template<> struct bsdata<V> : bsdata<T> {};
-
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
@@ -59,7 +56,8 @@ BSMETA(racei) = {
 	BSREQ(id),
 	{}};
 BSMETA(itemi) = {
-	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(damage), BSREQ(armor), BSREQ(uses), BSREQ(pierce), BSREQ(heal), BSREQ(forward),
+	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses), BSREQ(forward),
+	BSREQ(damage), BSREQ(armor), BSREQ(pierce), BSREQ(heal), 
 	BSFLG(tags, tagi),
 	BSFLG(moves, movei),
 	{}};

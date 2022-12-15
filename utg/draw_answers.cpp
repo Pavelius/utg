@@ -32,11 +32,12 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 	auto y2 = caret.y;
 	auto push_width_normal = width;
 	width = column_width;
+	auto push_x2 = caret.x + width;
 	for(auto& e : elements) {
 		paintcell(index, e.value, e.text, buttonparam);
+		index++;
 		if(caret.y > y2)
 			y2 = caret.y;
-		index++;
 		if(columns > 1) {
 			if((index % columns) == 0) {
 				y1 = caret.y;

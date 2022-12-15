@@ -60,15 +60,6 @@ static void hiliting(const void* object, figure type = figure::Rect) {
 	}
 }
 
-static void focusing(const void* object) {
-	if(!object)
-		return;
-	if(control_hilited && hot.key == MouseLeft && hot.pressed)
-		execute(cbsetptr, (long)hilite_object, 0, &focus_object);
-	if(focus_object == object)
-		strokeactive();
-}
-
 static void imagev(const char* resid) {
 	if(!resid)
 		return;
@@ -250,6 +241,10 @@ static void properties() {
 	}
 }
 
+static void set_focused() {
+	focus_object = (void*)hot.param;
+}
+
 static void avatars() {
 	height = width = 0;
 	if(!heroes || !heroes_getavatar)
@@ -263,7 +258,7 @@ static void avatars() {
 		auto pn = heroes_getavatar(p);
 		if(!pn || pn[0] == 0)
 			continue;
-		avatar(index++, p, pn);
+		avatar(index++, p, pn, set_focused, true);
 	}
 }
 
@@ -417,8 +412,8 @@ static void answers_beforepaint() {
 	caret.x += metrics::padding; width -= metrics::padding;
 	caret.y += metrics::padding; height -= metrics::padding;
 	texth2(answers::header);
-	if(answers::prompt && *answers::prompt) {
-		textf(answers::prompt);
+	if(answers::console && answers::console->begin()[0]) {
+		textf(answers::console->begin());
 		caret.y += metrics::padding;
 	}
 	if(answers::prompa) {
@@ -430,44 +425,30 @@ static void answers_beforepaint() {
 	}
 }
 
-static void focusing_choose(const void* object) {
-	if(!object)
-		return;
-	if(control_hilited && hot.key == MouseLeft && !hot.pressed)
-		execute(buttonparam, (long)hilite_object);
-}
-
-static void avatar_common(int index, const void* object, const char* id, void(*proc)(const void* object)) {
+void draw::avatar(int index, const void* object, const char* id, fnevent press_event, bool right_line) {
 	auto p = gres(id, utg::url_avatars);
 	if(!p)
 		return;
 	width = p->get(0).sx;
 	height = p->get(0).sy;
-	auto dx = width + metrics::padding + metrics::border * 2;
-	if(caret.x + dx >= clipping.x2) {
-		caret.x = metrics::padding * 2 + metrics::border;
-		caret.y += height + metrics::padding + metrics::border * 2;
-	}
 	image(caret.x, caret.y, p, 0, 0);
-	strokeout(strokeborder);
 	hiliting(object);
-	proc(object);
-	caret.x += dx;
+	strokeout(focus_object==object ? strokeactive : strokeborder);
+	if(control_hilited)
+		strokeactive();
+	if(press_event && control_hilited) {
+		hot.cursor = cursor::Hand;
+		if(hot.key == MouseLeft && !hot.pressed)
+			execute(press_event, (long)hilite_object, 0, focus_object);
+	}
+	if(right_line)
+		caret.x += width + metrics::padding + metrics::border * 2;
+	else
+		caret.y += height + metrics::padding + metrics::border * 2;
 }
 
-void draw::avatar(int index, const void* object, const char* id) {
-	avatar_common(index, object, id, focusing);
-}
-
-void draw::avatarch(int index, const void* object, const char* id, fnevent press_event) {
-	avatar_common(index, object, id, focusing_choose);
-}
-
-void draw::noavatar() {
-	width = 64;
-	height = 64;
-	strokeout(strokeborder);
-	caret.x += width + metrics::padding + metrics::border * 2;
+void draw::avatar(int index, const void* object, const char* id, fnevent press_event) {
+	avatar(index, object, id, press_event, false);
 }
 
 static void circleactive() {
@@ -493,7 +474,7 @@ static void hilite_paint() {
 	switch(hilite_type) {
 	case figure::Circle: circleactive(); break;
 	case figure::Rect: strokeout(strokeactive); break;
-	case figure::RectFill: strokeout(stroke_active_fill, 2); break;
+	case figure::RectFill: strokeout(stroke_active_fill); break;
 	case figure::Rect3D: stroke_active_fill(); break;
 	default: break;
 	}

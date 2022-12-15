@@ -241,7 +241,7 @@ void					stroke(int x, int y, const sprite* e, int id, int flags, unsigned char 
 void					strokeactive();
 void					strokeborder();
 void					strokeline();
-void					strokeout(fnevent proc, int dx = 0, int dy = 0);
+void					strokeout(fnevent proc, int dx = 0);
 void					syscursor(bool enable);
 void					text(const char* string, int count = -1, unsigned flags = 0);
 int						text(rect rc, const char* string, unsigned state = 0, int* max_width = 0);

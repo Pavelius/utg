@@ -126,7 +126,9 @@ static bool set_value(void* object, const char* result, const void* value) {
 
 void creature::choose_avatar() {
 	stringbuilder sb(avatar);
-	//utg::chooseavatar(sb, getnm("ChooseLook"), (last_gender == Female) ? "f*.*" : "m*.*");
+	auto pn = avatarable::choose(getnm("ChooseLook"), (last_gender == Female) ? "f*.*" : "m*.*", 6);
+	if(pn)
+		setavatar(pn);
 }
 
 void creature::generate() {
