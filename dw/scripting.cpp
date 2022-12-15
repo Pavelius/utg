@@ -2,6 +2,15 @@
 #include "quest.h"
 #include "script.h"
 
+static void fix_value(const char* id, int value) {
+}
+
+template<> void fnscript<abilityi>(int index, int bonus) {
+}
+
+static void choose_player(int bonus) {
+}
+
 void quest::run(int index) {
 	if(!answers::console)
 		return;
@@ -15,6 +24,8 @@ void quest::run(int index) {
 		for(auto pa = p + 1; pa < pe; pa++) {
 			if(pa->index != index)
 				continue;
+			if(!pa->isanswer())
+				continue;
 			an.add(pa, pa->text);
 		}
 		p = (quest*)an.choose(0, 0, 1);
@@ -26,9 +37,6 @@ void quest::run(int index) {
 		answers::console->clear();
 	}
 	draw::pause();
-}
-
-static void choose_player(int bonus) {
 }
 
 BSDATA(script) = {

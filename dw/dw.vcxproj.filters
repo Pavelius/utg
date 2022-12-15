@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="action.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -60,6 +57,21 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="option.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="race.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wear.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="move.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wearable.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

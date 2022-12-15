@@ -5,6 +5,11 @@
 #include "quest.h"
 #include "widget.h"
 
+template<typename T>
+void figetinfo(const void* object, stringbuilder& sb) {
+	((T*)object)->getinfo(sb);
+}
+
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
@@ -19,12 +24,10 @@ BSMETA(creature) = {
 	BSENM(type, classi),
 	BSENM(race, racei),
 	BSENM(alignment, alignmenti),
+	BSDST(abilities, abilityi),
 	BSENM(diety, dietyi),
 	{}};
 BSMETA(abilityi) = {
-	BSREQ(id),
-	{}};
-BSMETA(actioni) = {
 	BSREQ(id),
 	{}};
 BSMETA(alignmenti) = {
@@ -66,11 +69,10 @@ BSMETA(itemi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1)},
-	{"Action", VAR(actioni, 1)},
 	{"Advancement", VAR(advancement, 2)},
 	{"Alignment", VAR(alignmenti, 1)},
 	{"Class", VAR(classi, 1)},
-	{"Creature", VAR(creature, 0)},
+	{"Creature", VAR(creature, 0), 0, figetinfo<creature>},
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},

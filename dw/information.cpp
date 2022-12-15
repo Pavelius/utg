@@ -25,10 +25,14 @@ static void addn(stringbuilder& sb, const char* id, dice v) {
 	addn(sb, v);
 }
 
+int creature::getmaximumhp() const {
+	return get(Constitution) + geti().damage;
+}
+
 void creature::getinfo(stringbuilder& sb) const {
 	sb.add("%1-%2", getname(), getnm(bsdata<classi>::get(type).id));
 	sb.adds("(");
-	sb.add("Хиты %1i/%2i", get(HP), hp);
+	sb.add("Хиты %1i/%2i", get(HP), getmaximumhp());
 	addn(sb, "Armor", get(Armor));
 	sb.add(")");
 }

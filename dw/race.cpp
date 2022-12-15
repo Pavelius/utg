@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "race.h"
 
 BSDATA(racei) = {
 	{"Human"},
@@ -7,3 +8,4 @@ BSDATA(racei) = {
 	{"Halfling"},
 };
 assert_enum(racei, Halfling)
+

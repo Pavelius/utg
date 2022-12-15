@@ -1,3 +1,5 @@
+#include "flagable.h"
+
 #pragma once
 
 enum tag_s : unsigned char {
@@ -6,7 +8,8 @@ enum tag_s : unsigned char {
 	UsableGear,
 	Hand, Close, Reach, Near, Far,
 };
-
 struct tagi {
 	const char*		id;
 };
+typedef flagable<1 + Far / 8> taga;
+

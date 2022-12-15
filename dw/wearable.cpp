@@ -1,11 +1,11 @@
 #include "main.h"
 
-bool wearable::additem(const item& it) {
-	for(auto i = Backpack; i <= LastBackpack; i = (wear_s)(i+1)) {
-		if(wears[i])
+void wearable::additem(item& it) {
+	for(auto& e : backpack()) {
+		if(e)
 			continue;
-		wears[i] = it;
-		return true;
+		e = it;
+		it.clear();
+		break;
 	}
-	return false;
 }

@@ -12,43 +12,13 @@
 #include "result.h"
 #include "tag.h"
 #include "utg.h"
+#include "wearable.h"
 
 #pragma once
 
 template<typename T> struct bsmeta;
 
-enum race_s : unsigned char {
-	Human, Dwarf, Elf, Halfling,
-};
-enum itemuf_s : unsigned char {
-	HooksAndSpikes, Sharp, PerfectlyWeigthed, SerratedEdges, Glows, Huge, Versatile, WellCrafted,
-};
-enum wear_s : unsigned char {
-	Head, Body, RightHand, LeftHand, RightRing, LeftRing, Legs,
-	Backpack, LastBackpack = Backpack + 16,
-};
-enum move_s : unsigned char {
-	HackAndSlash, Volley, DefyDanger, DefyPoison, Defend, SpoutLore, DiscernRealities, Parley,
-	Aid, Interfere, LastBreath, Encumbrance,
-	MakeCamp, TakeWatch, UndertakeAPerilousJourney, LevelUp, EndOfSession,
-	Carouse, Supply, Recover, Recruit, OutstandingWarrants, Bolster,
-};
-enum action_s : unsigned char {
-	SufferDamage, InflictDamage,
-	UseAmmo, UseGear, UseRation, ForgetSpell,
-	BreakItem, BreakObject,
-};
-
-typedef flagable<1> itemufa;
-typedef flagable<1 + Far / 8> taga;
-typedef flagable<1 + Carouse / 8> movea;
-typedef flagable<1 + Halfling / 8> racea;
-typedef char abilitya[Charisma + 1];
-
 struct alignmenti {
-	const char*		id;
-};
-struct racei {
 	const char*		id;
 };
 struct classi {
@@ -59,69 +29,17 @@ struct classi {
 struct dietyi {
 	const char*		id;
 };
-struct actioni {
-	const char*		id;
-};
-struct movei {
-	const char*		id;
-	ability_s		ability;
-};
-struct moveable {
-	movea			moves;
-	char			forward;
-	bool			is(move_s v) const { return moves.is(v); }
-};
-struct raceable {
-	const char*		id;
-	race_s			race;
-	gender_s		gender;
-public:
-	void			act(const char* format, ...) { actv(format, xva_start(format)); }
-	void			actv(const char* format, const char* format_param);
-	gender_s		getgender() const { return gender; }
-	const char*		getname() const { return getnm(id); }
-	race_s			getrace() const { return race; }
-};
-struct itemi : raceable, moveable {
-	wear_s			slot;
-	taga			tags;
-	racea			need;
-	char			coins;
-	char			weight, damage, pierce, armor, uses, heal;
-};
-union item {
-	unsigned u;
-	short unsigned w[2];
-	struct {
-		unsigned char type;
-		unsigned char signature : 1;
-		unsigned char used : 3;
-		itemufa feats;
-	};
-	constexpr item() : u(0) {}
-	constexpr item(unsigned char type) : type(type), signature(0), used(0), feats() {}
-	constexpr explicit operator bool() const { return u != 0; }
-	constexpr const itemi& geti() const { return bsdata<itemi>::elements[type]; }
-	constexpr bool	is(itemuf_s v) const { return feats.is(v); }
-	constexpr bool	is(tag_s v) const { return geti().tags.is(v); }
-};
-typedef item weara[LastBackpack + 1];
 struct statable : moveable {
-	abilitya		abilities;
+	char			abilities[Charisma+1];
 	void			copy(statable& v) { *this = v; }
 	void			apply_ability(int v);
 	void			update_player();
-};
-class wearable {
-	item			wears[LastBackpack + 1];
-public:
-	bool			additem(const item& it);
 };
 class creature : public namenpc, public avatarable, public statable, public wearable {
 	unsigned char	alignment, type, diety;
 	race_s			race;
 	statable		basic;
-	char			hp;
+	int				coins;
 	void			apply_advance();
 	void			choose_avatar();
 	void			choose_abilities();
@@ -129,7 +47,6 @@ class creature : public namenpc, public avatarable, public statable, public wear
 	void			finish();
 	void			random_ability();
 	void			update();
-	void			update_class(classi& e);
 	friend bsmeta<creature>;
 public:
 	explicit operator bool() const { return isvalidname(); }
@@ -138,10 +55,10 @@ public:
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
-	const classi&	getclass() const { return bsdata<classi>::elements[type]; }
 	dice			getdamage() const;
+	const classi&	geti() const { return bsdata<classi>::elements[type]; }
 	void			getinfo(stringbuilder& sb) const;
-	static void		getinfost(const void* object, stringbuilder& sb) { ((creature*)object)->getinfo(sb); }
+	int				getmaximumhp() const;
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	bool			ismatch(variant v) const;
 };

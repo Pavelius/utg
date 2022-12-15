@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "list.h"
+#include "race.h"
 #include "main.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
@@ -44,15 +45,10 @@ void creature::update() {
 	copy(basic);
 }
 
-void creature::update_class(classi& e) {
-	abilities[HP] += e.damage;
-}
-
 void creature::finish() {
 	update();
 	update_player();
-	update_class(bsdata<classi>::get(type));
-	hp = get(HP);
+	abilities[HP] = getmaximumhp();
 }
 
 void creature::random_ability() {
@@ -118,8 +114,10 @@ static bool set_value(void* object, const char* result, const void* value) {
 			set_value(object, result, v.getpointer());
 	} else if(equal("wear", result)) {
 		auto v = bsdata<itemi>::source.indexof(value);
-		if(v != -1)
-			p->additem(v);
+		if(v != -1) {
+			item it(v);
+			p->additem(it);
+		}
 	} else if(bsdata<genderi>::have(value))
 		last_gender = (gender_s)bsdata<genderi>::source.indexof(value);
 	else
@@ -151,7 +149,7 @@ void creature::generate() {
 
 dice creature::getdamage() const {
 	dice result = {1, 4};
-	auto damage = getclass().damage;
+	auto damage = geti().damage;
 	if(damage)
 		result.d = damage;
 	return result;

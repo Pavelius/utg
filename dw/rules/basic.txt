@@ -1,3 +1,11 @@
+#Class
+
+Npc
+Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(6)
+Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(10)
+Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow) damage(8)
+Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(4)
+
 #Item
 
 NoItem
@@ -126,14 +134,6 @@ WizardGear1
 WizardGear2
  elements Antitoxin Antitoxin Antitoxin
 
-#Class
-
-Npc
-Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(6)
-Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(10)
-Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow) damage(8)
-Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(4)
-
 #Advancement
 
 0 ChooseClass result(type)
@@ -186,5 +186,5 @@ RuleshipOfThaine current(1) maximum(10) present("%1 ([%2i] из %3i)")
 
 #Menu
 
-CharacterAbility source(Creature)
+General source(Creature)
  elements Strenght Dexterity Constitution Intellegence Wisdow Charisma Separator HP Armor Damage
