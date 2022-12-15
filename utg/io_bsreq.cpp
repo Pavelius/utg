@@ -50,7 +50,7 @@ static bool isequal(const char* pn) {
 
 static void skip(const char* command) {
 	if(allowparse && !isequal(command)) {
-		log::error(p, "Expected token `%1`", command);
+		error(p, "Expected token `%1`", command);
 		allowparse = false;
 	}
 }
@@ -77,7 +77,7 @@ static bool islevel(int level) {
 static void readid() {
 	stringbuilder sb(temp); temp[0] = 0;
 	if(!ischa(*p)) {
-		log::error(p, "Expected identifier");
+		error(p, "Expected identifier");
 		allowparse = false;
 	} else
 		p = sb.psidf(p);
@@ -114,7 +114,7 @@ static const char* skipallcr(const char* p) {
 
 static void skiplinefeed() {
 	if(*p && *p != 10 && *p != 13) {
-		log::error(p, "Expected line feed");
+		error(p, "Expected line feed");
 		allowparse = false;
 	}
 	while(*p && (*p == 10 || *p == 13)) {
@@ -337,28 +337,31 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 				readid();
 				auto req = type->find(temp);
 				if(!req) {
-					log::error(p, "Not found requisit `%1`", temp);
+					error(p, "Not found requisit `%1`", temp);
 					allowparse = false;
-				} else if(req->is(KindDSet))
+				} else if(req->is(KindDSet)) {
 					read_dset(object, req);
-				else if(req->is(KindSlice)) {
+					skiplinefeed();
+				} else if(req->is(KindSlice)) {
 					if(req->source == bsdata<variant>::source_ptr)
 						read_array(object, req);
 					else
 						read_slice(object, req, level + 1);
+					skiplinefeed();
 				} else if(req->is(KindScalar) && req->count > 0)
 					read_dictionary(req->ptr(object), req->type, level + 1, false);
-				else
+				else {
 					read_array(object, req);
+					skiplinefeed();
+				}
 			}
-			skiplinefeed();
 		}
 	}
 }
 
 static void* read_object(const bsreq* type, array* source, int key_count, int level, const char* common_initialize) {
 	if(!isvalue()) {
-		log::error(p, "Expected value");
+		error(p, "Expected value");
 		allowparse = false;
 	}
 	valuei keys[8] = {};
@@ -389,7 +392,7 @@ static void parse() {
 		auto pd = find_type(temp);
 		if(!pd) {
 			if(temp[0])
-				log::error(p, "Not find data type for `%1`", temp);
+				error(p, "Not find data type for `%1`", temp);
 			return;
 		}
 		auto common_initialize = p;
