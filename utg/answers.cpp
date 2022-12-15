@@ -1,5 +1,6 @@
 #include "answers.h"
 
+answers* answers::last;
 const char* answers::header;
 const char* answers::prompt;
 const char* answers::prompa;

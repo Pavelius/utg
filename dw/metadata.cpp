@@ -3,6 +3,7 @@
 #include "main.h"
 #include "option.h"
 #include "quest.h"
+#include "script.h"
 #include "widget.h"
 
 template<typename T>
@@ -60,6 +61,9 @@ BSMETA(genderi) = {
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
+BSMETA(script) = {
+	BSREQ(id),
+	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses), BSREQ(forward),
 	BSREQ(damage), BSREQ(armor), BSREQ(pierce), BSREQ(heal), 
@@ -76,12 +80,13 @@ BSDATA(varianti) = {
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},
-	{"Item", VAR(itemi, 1)},
+	{"Item", VAR(itemi, 1), 0, 0, 0, fnscript<itemi>, fntest<itemi>},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Move", VAR(movei, 1)},
 	{"Option", VAR(optioni, 1)},
 	{"Race", VAR(racei, 1)},
+	{"Script", VAR(script, 1)},
 	{"Tag", VAR(tagi, 1)},
 	{"Widget", VAR(widget, 1)},
 };

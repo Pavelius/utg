@@ -150,7 +150,9 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="alignment.cpp" />
     <ClCompile Include="creature.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -162,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="move.h" />

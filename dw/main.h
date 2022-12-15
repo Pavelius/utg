@@ -63,10 +63,4 @@ public:
 	bool			ismatch(variant v) const;
 };
 extern creature* player;
-class gamei {
-	char			bolster;
-public:
-	int				getbolster() const { return bolster; }
-	void			usebolster() { bolster--; }
-};
 inline int			d100() { return rand() % 100; }

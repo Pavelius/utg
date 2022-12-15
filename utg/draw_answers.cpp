@@ -74,6 +74,7 @@ void* answers::choose(const char* title, const char* cancel_text, int cancel_mod
 	auto push_caret = caret;
 	auto push_width = width;
 	auto push_height = height;
+	auto push_last = last;
 	prompa = title;
 	while(ismodal()) {
 		paintstart();
@@ -87,6 +88,7 @@ void* answers::choose(const char* title, const char* cancel_text, int cancel_mod
 		paintfinish();
 		domodal();
 	}
+	last = push_last;
 	prompa = push_title;
 	return (void*)getresult();
 }

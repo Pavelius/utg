@@ -9,6 +9,10 @@ Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) d
 #Item
 
 NoItem
+
+SP coins(1)
+GP coins(10)
+
 RaggedBow weight(2) coins(15)
  tags Near NeedArrows
 FineBow weight(2) coins(60)

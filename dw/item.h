@@ -1,5 +1,6 @@
 #include "race.h"
 #include "move.h"
+#include "tag.h"
 #include "wear.h"
 
 #pragma once
@@ -7,7 +8,7 @@
 enum itemuf_s : unsigned char {
 	HooksAndSpikes, Sharp, PerfectlyWeigthed, SerratedEdges, Glows, Huge, Versatile, WellCrafted,
 };
-typedef flagable<1> itemufa;
+typedef flagable<2> itemufa;
 struct itemi : raceable, moveable {
 	wear_s	slot;
 	taga	tags;
@@ -20,14 +21,17 @@ union item {
 	struct {
 		unsigned char type;
 		unsigned char signature : 1;
-		unsigned char used : 3;
+		unsigned char uses : 3;
 		itemufa feats;
 	};
 	constexpr item() : u(0) {}
-	constexpr item(unsigned char type) : type(type), signature(0), used(0), feats() {}
+	constexpr item(unsigned char type) : type(type), signature(0), uses(geti().uses), feats() {}
 	constexpr explicit operator bool() const { return u != 0; }
-	void clear() { u = 0; }
+	void			clear() { u = 0; }
+	int				getcost() const;
 	constexpr const itemi& geti() const { return bsdata<itemi>::elements[type]; }
-	constexpr bool is(itemuf_s v) const { return feats.is(v); }
-	constexpr bool is(tag_s v) const { return geti().tags.is(v); }
+	const char*		getname() const { return getnm(geti().id); }
+	int				getuses() const;
+	constexpr bool	is(itemuf_s v) const { return feats.is(v); }
+	constexpr bool	is(tag_s v) const { return geti().tags.is(v); }
 };
