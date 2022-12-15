@@ -1,3 +1,4 @@
+#include "script.h"
 #include "main.h"
 
 static void addn(stringbuilder& sb, const char* id, int v) {
@@ -39,6 +40,7 @@ void creature::getinfo(stringbuilder& sb) const {
 
 void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	auto p = (creature*)object;
+	int n;
 	if(v.iskind<abilityi>()) {
 		switch(v.value) {
 		case Strenght:
@@ -47,16 +49,24 @@ void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 		case Intellegence:
 		case Wisdow:
 		case Charisma:
-			sb.add("[%1i] \t%+2i", p->abilities[v.value], p->getbonus((ability_s)v.value));
+			n = p->getbonus((ability_s)v.value);
+			if(n)
+				sb.add("%1i\t%-Bonus %+2i", p->abilities[v.value], n);
+			else
+				sb.add("%1i", p->abilities[v.value]);
 			break;
 		case Damage:
-			sb.add("[");
 			addn(sb, p->getdamage());
-			sb.add("]");
 			break;
 		default:
 			if(p->abilities[v.value])
-				sb.add("[%1i]", p->abilities[v.value]);
+				sb.add("%1i", p->abilities[v.value]);
+			break;
+		}
+	} else if(v.iskind<tagi>()) {
+		switch(v.value) {
+		case Coins:
+			sb.add("%1i", p->coins);
 			break;
 		}
 	}

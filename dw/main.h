@@ -39,7 +39,6 @@ class creature : public namenpc, public avatarable, public statable, public wear
 	unsigned char	alignment, type, diety;
 	race_s			race;
 	statable		basic;
-	int				coins;
 	void			apply_advance();
 	void			choose_avatar();
 	void			choose_abilities();

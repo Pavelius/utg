@@ -6,8 +6,8 @@
 
 class wearable {
 	item			wears[LastBackpack + 1];
-	int				coins;
 public:
+	int				coins;
 	void			additem(item& it);
 	slice<item>		backpack() { return slice<item>(wears + Backpack, wears + LastBackpack + 1); }
 	int				getcoins() const { return coins; }

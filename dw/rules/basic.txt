@@ -11,7 +11,9 @@ Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) d
 NoItem
 
 SP coins(1)
+ tags Coins
 GP coins(10)
+ tags Coins
 
 RaggedBow weight(2) coins(15)
  tags Near NeedArrows
@@ -113,6 +115,8 @@ FighterGear2
  elements Shield
 FighterGear3
  elements Antitoxin DungeonRations PoulticesAndHerbs
+FighterGear4
+ elements SP+22
 TheifWeapon1
  elements Dagger ShortSword
 TheifWeapon2
@@ -140,47 +144,47 @@ WizardGear2
 
 #Advancement
 
-0 ChooseClass result(type)
+0 ChooseClass result(type) choose(1)
  elements Fighter Cleric Theif Wizard
-Cleric ChooseAlignment result(alignment)
+Cleric ChooseAlignment result(alignment) choose(1)
  elements Good Lawful Evil
-Cleric ChooseRace result(race)
+Cleric ChooseRace result(race) choose(1)
  elements Dwarf Human
-Fighter ChooseAlignment result(alignment)
+Fighter ChooseAlignment result(alignment) choose(1)
  elements Good Neutral Evil
-Fighter ChooseRace result(race)
+Fighter ChooseRace result(race) choose(1)
  elements Dwarf Elf Halfling Human
-Theif ChooseAlignment result(alignment)
+Theif ChooseAlignment result(alignment) choose(1)
  elements Chaotic Neutral Evil
-Theif ChooseRace result(race)
+Theif ChooseRace result(race) choose(1)
  elements Halfling Human
-Wizard ChooseAlignment result(alignment)
+Wizard ChooseAlignment result(alignment) choose(1)
  elements Good Neutral Evil
-Wizard ChooseRace result(race)
+Wizard ChooseRace result(race) choose(1)
  elements Elf Human
-0 ChooseGender result(gender)
+0 ChooseGender result(gender) choose(1)
  elements Male Female
-Cleric ChooseDefences result(wear)
+Cleric ChooseDefences result(wear) choose(1)
  elements ClericArmor1 ClericArmor2
-Cleric ChooseArmament result(wear)
+Cleric ChooseArmament result(wear) choose(1)
  elements ClericWeapon1 ClericWeapon2 ClericWeapon3
-Cleric ChooseGears result(wear)
+Cleric ChooseGears result(wear) choose(1)
  elements ClericGear1 ClericGear2
-Fighter ChooseDefences result(wear)
+Fighter ChooseDefences result(wear) choose(1)
  elements FighterArmor1 FighterArmor2
-Fighter ChooseGears result(wear)
- elements FighterGear1 FighterGear2 FighterGear3
-Theif ChooseArmament result(wear)
+Fighter ChooseGears result(wear) choose(2)
+ elements FighterGear1 FighterGear2 FighterGear3 FighterGear4
+Theif ChooseArmament result(wear) choose(1)
  elements TheifWeapon1 TheifWeapon2
-Theif ChooseRangedWeapons result(wear)
+Theif ChooseRangedWeapons result(wear) choose(1)
  elements TheifRangedWeapon1 TheifRangedWeapon2
-Theif ChooseGears result(wear)
+Theif ChooseGears result(wear) choose(1)
  elements TheifGear1 TheifGear2
-Wizard ChooseDefences result(wear)
+Wizard ChooseDefences result(wear) choose(1)
  elements WizardArmor1 WizardArmor2
-Wizard ChooseArmament result(wear)
+Wizard ChooseArmament result(wear) choose(1)
  elements WizardWeapon1 WizardWeapon2
-Wizard ChooseGears result(wear)
+Wizard ChooseGears result(wear) choose(1)
  elements WizardGear1 WizardGear2
 
 #Front
@@ -191,4 +195,4 @@ RuleshipOfThaine current(1) maximum(10) present("%1 ([%2i] из %3i)")
 #Menu
 
 General source(Creature)
- elements Strenght Dexterity Constitution Intellegence Wisdow Charisma Separator HP Armor Damage
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma Separator HP Armor Damage Separator Coins

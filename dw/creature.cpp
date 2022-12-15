@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "item.h"
 #include "list.h"
 #include "race.h"
 #include "main.h"
@@ -7,6 +8,17 @@ static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 static gender_s last_gender;
 
 creature* player;
+
+static void getinfo(variant v, stringbuilder& sb) {
+	if(v.iskind<itemi>()) {
+		auto p = bsdata<itemi>::elements + v.value;
+		if(p->tags.is(Coins))
+			sb.add("%1i %Coins", p->coins * v.counter);
+		else
+			sb.add(getnm(p->id));
+	} else
+		sb.add(v.getname());
+}
 
 static void getinfo(const variants& elements, stringbuilder& sb) {
 	auto m = elements.count;
@@ -28,7 +40,7 @@ static void getinfo(const variants& elements, stringbuilder& sb) {
 				sb.add(", ");
 		}
 		if(count == 1)
-			sb.add(v.getname());
+			getinfo(v, sb);
 		else
 			sb.add("%1i %-2", count, v.getname());
 		count = 1;
@@ -100,27 +112,35 @@ static void add_variant(answers& an, const void* object, variant v) {
 		char temp[260]; stringbuilder sb(temp);
 		getinfo(bsdata<listi>::elements[v.value].elements, sb);
 		an.add(v.getpointer(), temp);
-	} else
-		an.add(v.getpointer(), v.getname());
+	} else {
+		char temp[260]; stringbuilder sb(temp);
+		getinfo(v, sb);
+		an.add(v.getpointer(), temp);
+	}
 }
 
-static bool set_value(void* object, const char* result, const void* value) {
+static bool set_value(void* object, const char* result, const void* value, int count) {
 	auto p = (creature*)object;
 	if(!value)
 		return false;
 	if(bsdata<listi>::have(value)) {
 		auto pv = (listi*)value;
 		for(auto v : pv->elements)
-			set_value(object, result, v.getpointer());
+			set_value(object, result, v.getpointer(), v.counter);
 	} else if(equal("wear", result)) {
-		auto v = bsdata<itemi>::source.indexof(value);
-		if(v != -1) {
-			item it(v);
+		auto pi = (itemi*)value;
+		if(pi->tags.is(Coins))
+			p->setcoins(p->getcoins() + count);
+		else {
+			item it(bsdata<itemi>::source.indexof(value));
 			p->additem(it);
 		}
 	} else if(bsdata<genderi>::have(value))
 		last_gender = (gender_s)bsdata<genderi>::source.indexof(value);
-	else
+	else if(bsdata<variant>::have(value)) {
+		auto p = (variant*)value;
+		return set_value(object, result, p->getpointer(), p->counter);
+	} else
 		return false;
 	return true;
 }

@@ -6,6 +6,7 @@ Armor: Броня
 BagOfBooks: Сумка с книгами
 Bandages: Бинты
 BundleArrows: Стрелы
+Bonus: Бонус
 Cancel: Отмена
 ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
@@ -23,6 +24,7 @@ ChooseLook: Как вы выглядите?
 ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 Cleric: Священник
+Coins: Монет
 Constitution: Телосложение
 Continue: Продолжить
 Dagger: Кинжал

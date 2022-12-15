@@ -76,7 +76,7 @@ BSDATA(varianti) = {
 	{"Advancement", VAR(advancement, 2)},
 	{"Alignment", VAR(alignmenti, 1)},
 	{"Class", VAR(classi, 1)},
-	{"Creature", VAR(creature, 0), 0, figetinfo<creature>},
+	{"Creature", VAR(creature, 0), 0, figetinfo<creature>, creature::getpropertyst},
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},

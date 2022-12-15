@@ -18,7 +18,7 @@ static void play_settlement() {
 static void character_generation() {
 	answers::header = getnm("CharacterGeneration");
 	answers::resid = "meet";
-	answers::interactive = false;
+	answers::interactive = true;
 	create_hero();
 	create_hero();
 	create_hero();
