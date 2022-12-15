@@ -22,7 +22,6 @@ template<typename T> struct bsmeta;
 enum race_s : unsigned char {
 	Human, Dwarf, Elf, Halfling,
 };
-
 enum itemuf_s : unsigned char {
 	HooksAndSpikes, Sharp, PerfectlyWeigthed, SerratedEdges, Glows, Huge, Versatile, WellCrafted,
 };
@@ -40,11 +39,6 @@ enum action_s : unsigned char {
 	SufferDamage, InflictDamage,
 	UseAmmo, UseGear, UseRation, ForgetSpell,
 	BreakItem, BreakObject,
-};
-enum variant_s : unsigned char {
-	NoVariant,
-	Ability, Action, Advancement, Alignment, Class, Creature,
-	Diety, Front, Gender, Item, Menu, Move, Pack, Race, Tag, Widget
 };
 
 typedef flagable<1> itemufa;

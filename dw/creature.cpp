@@ -1,3 +1,4 @@
+#include "bsreq.h"
 #include "main.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
@@ -69,7 +70,10 @@ void creature::choose_abilities() {
 void creature::choose_name() {
 	clearname();
 	short unsigned temp[512];
-	variant source[3] = {variant(Gender, last_gender), variant(Class, type), variant(Race, race)};
+	variant vgender = bsdata<genderi>::elements + last_gender;
+	variant vclass = bsdata<classi>::elements + type;
+	variant vrace = bsdata<racei>::elements + race;
+	variant source[3] = {vgender, vclass, vrace};
 	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
 	if(!count)
 		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 2));
@@ -90,10 +94,10 @@ static bool match_party(variant v) {
 }
 
 static void add_variant(answers& an, const void* object, variant v) {
-	if(v.type == Class) {
+	if(v.iskind<classi>()) {
 		if(!match_party(v))
 			an.add(v.getpointer(), v.getname());
-	} else if(v.type == Pack) {
+	} else if(v.iskind<listi>()) {
 		char temp[260]; stringbuilder sb(temp);
 		getinfo(bsdata<listi>::elements[v.value].elements, sb);
 		an.add(v.getpointer(), temp);
@@ -149,10 +153,12 @@ dice creature::getdamage() const {
 }
 
 bool creature::ismatch(variant v) const {
-	switch(v.type) {
-	case Class: return type == v.value;
-	case Gender: return getgender() == v.value;
-	case Race: return race == v.value;
-	default: return false;
-	}
+	if(v.iskind<classi>())
+		return type == v.value;
+	else if(v.iskind<genderi>())
+		return getgender() == v.value;
+	else if(v.iskind<racei>())
+		return race == v.value;
+	else
+		return false;
 }

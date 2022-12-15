@@ -1,16 +1,20 @@
 #include "bsreq.h"
 #include "main.h"
+#include "option.h"
 #include "widget.h"
 
-#define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
-template<> struct bsdata<V> : bsdata<T> {};
-
-LNK(ability_s, abilityi)
-LNK(gender_s, genderi)
+//#define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
+//template<> struct bsdata<V> : bsdata<T> {};
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
+BSDATAC(creature, 4)
+BSDATAC(classi, 16)
+BSDATAC(dietyi, 32)
+BSDATAC(itemi, 256)
+BSDATAC(menu, 256)
+BSDATAC(optioni, 256)
 
 BSMETA(creature) = {
 	BSENM(type, classi),
@@ -18,7 +22,6 @@ BSMETA(creature) = {
 	BSENM(alignment, alignmenti),
 	BSENM(diety, dietyi),
 	{}};
-BSDATAC(creature, 4)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
@@ -30,22 +33,22 @@ BSMETA(alignmenti) = {
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
-	BSREQ(abilities),
+	BSENM(abilities, abilityi),
 	BSREQ(damage),
 	{}};
-BSDATAC(classi, 16)
+BSMETA(optioni) = {
+	BSREQ(id),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
 BSMETA(dietyi) = {
 	BSREQ(id),
 	{}};
-BSDATAC(dietyi, 32)
 BSMETA(menu) = {
 	BSREQ(id), BSREQ(source),
 	BSREQ(elements),
 	{}};
-BSDATAC(menu, 256)
 BSMETA(movei) = {
 	BSREQ(id),
 	{}};
@@ -60,26 +63,24 @@ BSMETA(itemi) = {
 	BSFLG(tags, tagi),
 	BSFLG(moves, movei),
 	{}};
-BSDATAC(itemi, 256)
-
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VRSTD(abilityi), 1},
-	{"Action", VRSTD(actioni), 1},
-	{"Advancement", VRSTD(advancement), 2},
-	{"Alignment", VRSTD(alignmenti), 1},
-	{"Class", VRSTD(classi), 1},
-	{"Creature", VRSTD(creature)},
-	{"Diety", VRSTD(dietyi), 1},
-	{"Front", VRSTD(front), 1},
-	{"Gender", VRSTD(genderi), 1},
-	{"Item", VRSTD(itemi), 1},
-	{"Menu", VRSTD(menu), 1},
-	{"Move", VRSTD(movei), 1},
-	{"Pack", VRSTD(listi), 1},
-	{"Race", VRSTD(racei), 1},
-	{"Tag", VRSTD(tagi), 1},
-	{"Widget", VRSTD(widget), 1},
+	{"Ability", VAR(abilityi, 1)},
+	{"Action", VAR(actioni, 1)},
+	{"Advancement", VAR(advancement, 2)},
+	{"Alignment", VAR(alignmenti, 1)},
+	{"Class", VAR(classi, 1)},
+	{"Creature", VAR(creature, 0)},
+	{"Diety", VAR(dietyi, 1)},
+	{"Front", VAR(front, 1)},
+	{"Gender", VAR(genderi, 1)},
+	{"Item", VAR(itemi, 1)},
+	{"List", VAR(listi, 1)},
+	{"Menu", VAR(menu, 1)},
+	{"Move", VAR(movei, 1)},
+	{"Option", VAR(optioni, 1)},
+	{"Race", VAR(racei, 1)},
+	{"Tag", VAR(tagi, 1)},
+	{"Widget", VAR(widget, 1)},
 };
-assert_enum(varianti, Widget)
+BSDATAF(varianti)

@@ -6,8 +6,8 @@
 BSMETA(advancement) = {
 	BSREQ(type),
 	BSREQ(id),
-	BSREQ(result), BSREQ(mask),
-	BSREQ(elements), BSREQ(conditions),
+	BSREQ(result),
+	BSREQ(elements),
 	{}};
 BSDATAC(advancement, 256)
 
@@ -15,7 +15,12 @@ static void def_add(answers& an, const void* object, variant v) {
 	an.add(v.getpointer(), v.getname());
 }
 
-const array* getarray(const void* object, const char* id);
+static const array* getarray(const void* object, const char* id) {
+	auto pm = bsdata<varianti>::find(id);
+	if(!pm)
+		return 0;
+	return pm->source;
+}
 
 void* advancement::choose(const void* object, fnadd padd) const {
 	answers an;
@@ -42,5 +47,12 @@ void advancement::apply(void* object, fnadd padd, fnset pset) const {
 	auto pm = varianti::find(object);
 	if(!pm)
 		return;
-	pm->set(object, result, pv);
+	auto pmv = varianti::find(pv);
+	if(!pmv)
+		return;
+	auto pr = pm->metadata->find(result);
+	if(!pr)
+		return;
+	auto index = pmv->source->indexof(pv);
+	pr->set(pr->ptr(object), index);
 }

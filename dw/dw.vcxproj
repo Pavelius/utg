@@ -153,7 +153,7 @@
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="move.cpp" />
-    <ClCompile Include="property.cpp" />
+    <ClCompile Include="metadata.cpp" />
     <ClCompile Include="race.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="option.h" />
     <ClInclude Include="tag.h" />
   </ItemGroup>
   <ItemGroup>

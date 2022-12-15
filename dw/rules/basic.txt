@@ -75,7 +75,7 @@ DungeonRations weight(1) coins(3) uses(5)
 ElvenBread weight(1) coins(10) uses(7)
  tags Ration
 
-#Pack
+#List
 
 ClericArmor1
  elements ChainMailArmor

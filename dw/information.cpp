@@ -35,8 +35,7 @@ void creature::getinfo(stringbuilder& sb) const {
 
 void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	auto p = (creature*)object;
-	switch(v.type) {
-	case Ability:
+	if(v.iskind<abilityi>()) {
 		switch(v.value) {
 		case Strenght:
 		case Dexterity:
@@ -44,7 +43,7 @@ void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 		case Intellegence:
 		case Wisdow:
 		case Charisma:
-			sb.add("[%1i] \t%+2i", p->abilities[v.value], p->getbonus((ability_s)v.value)); break;
+			sb.add("[%1i] \t%+2i", p->abilities[v.value], p->getbonus((ability_s)v.value));
 			break;
 		case Damage:
 			sb.add("[");
@@ -56,6 +55,5 @@ void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 				sb.add("[%1i]", p->abilities[v.value]);
 			break;
 		}
-	default: break;
 	}
 }
