@@ -2,17 +2,23 @@
 #include "wearable.h"
 
 void wearable::additem(item& it) {
-	if(it.geti().tags.is(Coins)) {
-		coins += it.getcost();
-		it.clear();
-		return;
-	}
 	for(auto& e : backpack()) {
 		if(e)
 			continue;
 		e = it;
 		it.clear();
 		break;
+	}
+}
+
+void wearable::additem(const item& it, int count) {
+	if(it.geti().tags.is(Coins))
+		coins += it.getcost() * count;
+	else {
+		while(count--) {
+			item itc = it;
+			additem(itc);
+		}
 	}
 }
 

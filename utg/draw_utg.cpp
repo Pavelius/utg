@@ -197,7 +197,6 @@ static void standart_getproperty(const void* object, variant v, stringbuilder& s
 			if(p->is(KindDSet)) {
 				auto value = p->get(p->ptr(object, v.value));
 				sb.add("%1i", value);
-			} else if(p->is(KindFlags)) {
 			}
 		}
 	}
