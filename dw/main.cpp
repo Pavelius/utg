@@ -1,18 +1,18 @@
 #include "main.h"
 #include "pushvalue.h"
+#include "quest.h"
 
 static char console_text[4096];
 static stringbuilder console(console_text);
 
-static creature* create_hero() {
-	auto p = bsdata<creature>::add();
-	p->generate();
-	return p;
+static void create_hero() {
+	player = bsdata<creature>::add();
+	player->generate();
 }
 
 static void play_settlement() {
 	pushvalue push(answers::header, getnm("Settlement"));
-	quest::manual(1);
+	quest::run(1);
 }
 
 static void character_generation() {

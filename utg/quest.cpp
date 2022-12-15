@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "condition.h"
 #include "logparse.h"
+#include "property.h"
 #include "quest.h"
 
 BSDATAC(quest, 2048)
@@ -118,6 +119,18 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb) 
 
 void quest::clear() {
 	memset(this, 0, sizeof(*this));
+}
+
+const char* quest::getheader() const {
+	return getstring(getbsi(this), prop_header);
+}
+
+const char* quest::getimage() const {
+	return getstring(getbsi(this), prop_image);
+}
+
+int	quest::getvalue(int prop) const {
+	return getnumber(getbsi(this), prop);
 }
 
 const char* quest::getname(int id) {

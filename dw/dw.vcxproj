@@ -156,6 +156,7 @@
     <ClCompile Include="move.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="race.cpp" />
+    <ClCompile Include="scripting.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="wearable.cpp" />

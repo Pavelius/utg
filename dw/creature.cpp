@@ -1,8 +1,11 @@
 #include "bsreq.h"
+#include "list.h"
 #include "main.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 static gender_s last_gender;
+
+creature* player;
 
 static void getinfo(const variants& elements, stringbuilder& sb) {
 	auto m = elements.count;

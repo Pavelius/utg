@@ -8,8 +8,6 @@
 #include "front.h"
 #include "gender.h"
 #include "namenpc.h"
-#include "list.h"
-#include "quest.h"
 #include "collection.h"
 #include "result.h"
 #include "tag.h"
@@ -135,6 +133,7 @@ class creature : public namenpc, public avatarable, public statable, public wear
 	friend bsmeta<creature>;
 public:
 	explicit operator bool() const { return isvalidname(); }
+	void			act(const char* format) const { return actv(*answers::console, format, xva_start(format)); }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
 	static const char* getavatarst(const void* object);
@@ -146,6 +145,7 @@ public:
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
 	bool			ismatch(variant v) const;
 };
+extern creature* player;
 class gamei {
 	char			bolster;
 public:

@@ -1,6 +1,8 @@
 #include "bsreq.h"
+#include "list.h"
 #include "main.h"
 #include "option.h"
+#include "quest.h"
 #include "widget.h"
 
 BSMETA(variant) = {{}};

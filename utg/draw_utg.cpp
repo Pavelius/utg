@@ -412,8 +412,8 @@ static void answers_beforepaint() {
 	caret.x += metrics::padding; width -= metrics::padding;
 	caret.y += metrics::padding; height -= metrics::padding;
 	texth2(answers::header);
-	if(answers::console && answers::console->begin()[0]) {
-		textf(answers::console->begin());
+	if(answers::prompt && answers::prompt[0]) {
+		textf(answers::prompt);
 		caret.y += metrics::padding;
 	}
 	if(answers::prompa) {
@@ -593,6 +593,8 @@ int draw::start(fnevent proc, fnevent afterread) {
 	metrics::padding = 4;
 	answers::paintcell = answerbt;
 	answers::beforepaint = answers_beforepaint;
+	if(answers::console)
+		answers::prompt = answers::console->begin();
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();

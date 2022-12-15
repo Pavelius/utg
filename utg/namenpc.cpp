@@ -2,7 +2,7 @@
 #include "namenpc.h"
 #include "stringact.h"
 
-void namenpc::actv(stringbuilder& sbs, const char* format, const char* format_param) {
+void namenpc::actv(stringbuilder& sbs, const char* format, const char* format_param) const {
 	stringact sb(sbs, getname(), getgender());
 	sb.addsep(' ');
 	sb.addv(format, format_param);
