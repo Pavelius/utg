@@ -1,5 +1,4 @@
 #include "condition.h"
-#include "scriptmass.h"
 #include "main.h"
 
 typedef void(*fnforeach)(variant v);
@@ -53,34 +52,41 @@ static void apply_value(indicator_s v, int value) {
 	}
 }
 
-static void no_active_player(int bonus, int param) {
+static void no_active_player(int bonus) {
 	players.filter(game.active, false);
 }
 
-static void no_mecatol_rex(int bonus, int param) {
+static void no_mecatol_rex(int bonus) {
 	querry.filter(bsdata<systemi>::elements, false);
 }
 
-static void no_speaker(int bonus, int param) {
+static void no_speaker(int bonus) {
 	players.filter(game.speaker, false);
 }
 
-static void select_planet(int bonus, int param) {
+static void select_planet(int bonus) {
 	querry.clear();
 	querry.select(bsdata<planeti>::source);
-	switch(param) {
-	case 1: querry.match(playeri::last, true); break;
-	case 2: querry.match(playeri::last, false); break;
-	default: break;
-	}
 }
 
-static void select_system_own_planet(int bonus, int param) {
-	select_planet(bonus, param);
+static void select_planet_not_you_control(int bonus) {
+	querry.clear();
+	querry.select(bsdata<planeti>::source);
+	querry.match(playeri::last, false);
+}
+
+static void select_planet_you_control(int bonus) {
+	querry.clear();
+	querry.select(bsdata<planeti>::source);
+	querry.match(playeri::last, true);
+}
+
+static void select_system_own_planet(int bonus) {
+	select_planet_you_control(bonus);
 	querry.grouplocation(querry);
 }
 
-static void select_troop(int bonus, int param) {
+static void select_troop(int bonus) {
 	querry.clear();
 	for(auto& e : bsdata<troop>()) {
 		if(!e)
@@ -90,13 +96,13 @@ static void select_troop(int bonus, int param) {
 	}
 }
 
-static void select_system(int bonus, int param) {
+static void select_system(int bonus) {
 	querry.clear();
 	querry.select(bsdata<systemi>::source);
 	querry.ingame();
 }
 
-static void select_system_reach(int bonus, int param) {
+static void select_system_reach(int bonus) {
 	auto player = game.active;
 	querry.clear();
 	for(auto& e : bsdata<troop>()) {
@@ -114,30 +120,29 @@ static void select_system_reach(int bonus, int param) {
 	}
 }
 
-static void select_player(int bonus, int param) {
+static void select_player(int bonus) {
 	players = game.players;
 }
 
-static void choose_planet(int bonus, int param) {
+static void choose_planet(int bonus) {
 	planeti::last = (planeti*)querry.choose(0);
 }
 
-static void choose_player(int bonus, int param) {
+static void choose_player(int bonus) {
 	playeri::last = players.choose(0);
 }
 
-static void choose_system(int bonus, int param) {
+static void choose_system(int bonus) {
 	systemi::last = (systemi*)querry.choose(0);
 }
 
-static void replenish_commodities(int bonus, int param) {
+static void replenish_commodities(int bonus) {
 	auto p = playeri::last;
 	auto n = p->commodities - p->get(Commodities);
 	apply_value(Commodities, n);
 }
 
-static void change_influence(int bonus, int param) {
-	auto need = (indicator_s)param;
+static void change_influence(indicator_s need, int bonus) {
 	auto currency = Influence;
 	auto push_options = choosestep::options;
 	choosestep::options = game.rate(need, currency, bonus);
@@ -148,7 +153,11 @@ static void change_influence(int bonus, int param) {
 	choosestep::options = push_options;
 }
 
-static void activate_system(int bonus, int param) {
+static void change_influence_command_token(int bonus) {
+	change_influence(CommandToken, bonus);
+}
+
+static void activate_system(int bonus) {
 	if(!systemi::last)
 		return;
 	game.focusing(systemi::last);
@@ -156,18 +165,21 @@ static void activate_system(int bonus, int param) {
 	systemi::active = systemi::last;
 }
 
-static void filter_system(int bonus, int param) {
+static void filter_system(int bonus) {
 	if(!systemi::last)
 		return;
 	querry.match(systemi::last, bonus != -1);
 }
 
-static void filter_home_system(int bonus, int param) {
-	// param = 0 Active player home system
-	// param = 1 Any home system
+static void filter_home_system_any(int bonus) {
+	// Any home system
 }
 
-static void filter_controled(int bonus, int param) {
+static void filter_home_system_you(int bonus) {
+	// Active player home system
+}
+
+static void filter_controled(int bonus) {
 	pathfind::clearpath();
 	systemi::blockmove();
 	systemi::markzerocost(game.active);
@@ -175,90 +187,110 @@ static void filter_controled(int bonus, int param) {
 	querry.matchrange(iabs(bonus), bonus >= 0);
 }
 
-static void focus_home_system(int bonus, int param) {
+static void focus_home_system(int bonus) {
 	game.focusing(game.active->gethome());
 }
 
-static void filter_wormhole(int bonus, int param) {
+static void filter_wormhole(int bonus) {
 }
 
-static void exhaust(int bonus, int param) {
+static void exhaust(int bonus) {
 }
 
-static void filter_planet_type(int bonus, int param) {
-	querry.match((planet_trait_s)param, bonus != -1);
+static void filter_cultural_planet(int bonus) {
+	querry.match(Cultural, bonus >= 0);
 }
 
-static void filter_unit_ability(int bonus, int param) {
-	querry.match((ability_s)param, 1, bonus != -1);
+static void filter_hazardous_planet(int bonus) {
+	querry.match(Hazardous, bonus >= 0);
 }
 
-static void filter_technology_speciality(int bonus, int param) {
-	querry.match((color_s)param, bonus != -1);
+static void filter_industrial_planet(int bonus) {
+	querry.match(Industrial, bonus >= 0);
 }
 
-static void filter_exhaust(int bonus, int param) {
+static void filter_notrait_planet(int bonus) {
+	querry.match(NoTrait, bonus >= 0);
 }
 
-static void filter_indicator(int bonus, int param) {
-	querry.match((indicator_s)param, bonus != -1);
+static void filter_production_ability(int bonus) {
+	querry.match(Production, 1, bonus >= 0);
 }
 
-static void filter_activated(int bonus, int param) {
+static void filter_red_technology (int bonus) {
+	querry.match(Red, bonus >= 0);
+}
+
+static void filter_any_technology(int bonus) {
+	querry.match(NoTech, bonus < 0);
+}
+
+static void filter_exhaust(int bonus) {
+}
+
+static void filter_commodities(int bonus) {
+	querry.match(Commodities, bonus >= 0);
+}
+
+static void filter_activated(int bonus) {
 	querry.activated(playeri::last, bonus != -1);
 }
 
-static void filter_active_player(int bonus, int param) {
+static void filter_active_player(int bonus) {
 	querry.match(game.active, bonus != -1);
 }
 
-static void speaker(int bonus, int param) {
+static void speaker(int bonus) {
 	game.speaker = playeri::last;
 }
 
-static void action_card(int bonus, int param) {
+static void action_card(int bonus) {
 }
 
-static void end_action(int bonus, int param) {
+static void end_action(int bonus) {
 	choosestep::stop = true;
 }
 
-static void redistribute_command_tokens(int bonus, int param) {
+static void redistribute_command_tokens(int bonus) {
 }
 
-static void research_technology(int bonus, int param) {
+static void research_technology(int bonus) {
 	choosestep::run("ChooseTechnology");
 }
 
-static void score_objective(int bonus, int param) {
+static void score_objective(int bonus) {
 }
 
-static void if_control_mecatol_rex(int bonus, int param) {
+static void if_control_mecatol_rex(int bonus) {
 }
 
-static void if_able(int bonus, int param) {
+static void if_able(int bonus) {
 }
 
-static void secret_objective(int bonus, int param) {
+static bool if_play_strategy(int bonus) {
+	return game.active && game.active->use_strategy;
 }
 
-static void querry_count(int bonus, int param) {
+static void secret_objective(int bonus) {
+}
+
+static void querry_count(int bonus) {
 	last_value = querry.getcount();
 }
 
-static void filter_move(int bonus, int param) {
-	querry.matchmove(param, bonus != -1);
+static void filter_move(int bonus) {
+	querry.matchmove(0, bonus != -1);
 }
 
-static void action_phase_pass(int bonus, int param) {
+static void action_phase_pass(int bonus) {
 	playeri::last->pass_action_phase = (bonus != -1);
 }
 
-static void cancel_order(int counter, int param) {
+static void cancel_order(int counter) {
 	onboard.clear();
 }
 
-static void move_ship(int bonus, int param) {
+static void move_ship(int bonus) {
 	troop::last->location = systemi::active;
 	for(auto p : onboard)
 		p->location = systemi::active;
@@ -266,7 +298,7 @@ static void move_ship(int bonus, int param) {
 	choosestep::stop = true;
 }
 
-static void for_each_player(variant v) {
+static void apply_for_each_player(variant v) {
 	auto push_last = playeri::last;
 	auto push_human = choosestep::human;
 	for(auto p : players) {
@@ -278,7 +310,11 @@ static void for_each_player(variant v) {
 	playeri::last = push_last;
 }
 
-static void for_each_troop(variant v) {
+static void for_each_player(int bonus) {
+	script::apply = apply_for_each_player;
+}
+
+static void apply_for_each_troop(variant v) {
 	auto push = querry;
 	for(auto p : push) {
 		troop::last = (troop*)p;
@@ -286,13 +322,21 @@ static void for_each_troop(variant v) {
 	}
 }
 
-static void for_each_planet(variant v) {
+static void for_each_troop(int bonus) {
+	script::apply = apply_for_each_troop;
+}
+
+static void apply_for_each_planet(variant v) {
 	auto push_last = planeti::last;
 	for(auto p : querry) {
 		planeti::last = p->getplanet();
 		script::run(v);
 	}
 	planeti::last = push_last;
+}
+
+static void for_each_planet(int bonus) {
+	script::apply = apply_for_each_planet;
 }
 
 static void script_run(variant v) {
@@ -334,36 +378,15 @@ static bool script_test(variant v, bool& allowed) {
 	return true;
 }
 
-static bool if_play_strategy(int counter, int param) {
-	return game.active && game.active->use_strategy;
-}
-
-static void condition_initialize() {
-	conditioni::add("IfPlayStrategy", if_play_strategy);
-}
-
-void script_initialize() {
-	script::prun = script_run;
-	script::ptest = script_test;
-	condition_initialize();
-}
-
-void combat_reatreat(int bonus, int param);
-void combat_continue(int bonus, int param);
-
-BSDATA(scriptmass) = {
-	{"ForEachPlanet", for_each_planet},
-	{"ForEachPlayer", for_each_player},
-	{"ForEachTroop", for_each_troop},
-};
-BSDATAF(scriptmass)
+void combat_reatreat(int bonus);
+void combat_continue(int bonus);
 
 BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"CancelOrder", cancel_order},
-	{"ChangeInfluenceCommandToken", change_influence, CommandToken},
+	{"ChangeInfluenceCommandToken", change_influence_command_token},
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseSystem", choose_system},
@@ -372,26 +395,28 @@ BSDATA(script) = {
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
 	{"FilterActivePlayer", filter_active_player},
-	{"FilterAnyHomeSystem", filter_home_system, 1},
+	{"FilterAnyHomeSystem", filter_home_system_any},
 	{"FilterControled", filter_controled},
-	{"FilterCommodities", filter_indicator, Commodities},
-	{"FilterCultural", filter_planet_type, Cultural},
+	{"FilterCommodities", filter_commodities},
+	{"FilterCultural", filter_cultural_planet},
 	{"FilterExhaust", filter_exhaust},
-	{"FilterIndustrial", filter_planet_type, Industrial},
-	{"FilterHasardous", filter_planet_type, Hazardous},
-	{"FilterHomeSystem", filter_home_system},
-	{"FilterMoveStop", filter_move, 0},
-	{"FilterPlanetTrait", filter_planet_type, NoTrait},
-	{"FilterProduction", filter_unit_ability, Production},
+	{"FilterIndustrial", filter_industrial_planet},
+	{"FilterHasardous", filter_hazardous_planet},
+	{"FilterHomeSystem", filter_home_system_you},
+	{"FilterMoveStop", filter_move},
+	{"FilterPlanetTrait", filter_notrait_planet},
+	{"FilterProduction", filter_production_ability},
 	{"FilterSystem", filter_system},
-	{"FilterTechnologySpeciality", filter_technology_speciality},
+	{"FilterRedTechnology", filter_red_technology},
+	{"FilterTechnologySpeciality", filter_any_technology},
 	{"FilterWormhole", filter_wormhole},
 	{"FocusHomeSystem", focus_home_system},
-	{"ForEachPlanet", script::setforeach, (int)for_each_planet},
-	{"ForEachPlayer", script::setforeach, (int)for_each_player},
-	{"ForEachTroop", script::setforeach, (int)for_each_troop},
+	{"ForEachPlanet", for_each_planet},
+	{"ForEachPlayer", for_each_player},
+	{"ForEachTroop", for_each_troop},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
+	{"IfPlayStrategy", 0, if_play_strategy},
 	{"MoveShip", move_ship},
 	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},
@@ -403,12 +428,12 @@ BSDATA(script) = {
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
 	{"SelectPlanet", select_planet, 0},
-	{"SelectPlanetYouControl", select_planet, 1},
-	{"SelectPlanetNotYouControl", select_planet, 2},
+	{"SelectPlanetYouControl", select_planet_you_control},
+	{"SelectPlanetNotYouControl", select_planet_not_you_control},
 	{"SelectPlayer", select_player},
-	{"SelectSystem", select_system, 1},
+	{"SelectSystem", select_system},
 	{"SelectSystemReach", select_system_reach},
-	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, 1},
+	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},
 	{"Speaker", speaker},
 	{"RetreatBattle", combat_reatreat},

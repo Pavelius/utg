@@ -49,13 +49,16 @@ static void choose_step(const char* id) {
 		return;
 	auto push_last = playeri::last;
 	auto push_human = choosestep::human;
+	auto push_header = answers::header;
 	playeri::last = game.active;
+	answers::header = playeri::last->getname();
 	choosestep::human = playeri::last->ishuman();
 	if(choosestep::human)
 		game.focusing(playeri::last->gethome());
 	p->run();
 	choosestep::human = push_human;
 	playeri::last = push_last;
+	answers::header = push_header;
 }
 
 static void strategy_phase() {

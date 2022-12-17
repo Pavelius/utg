@@ -135,11 +135,11 @@ bool start_combat(const entity* location) {
 	return true;
 }
 
-void combat_continue(int bonus, int param) {
+void combat_continue(int bonus) {
 	choosestep::stop = true;
 }
 
-void combat_reatreat(int bonus, int param) {
+void combat_reatreat(int bonus) {
 	army::last->reatreat = true;
 	choosestep::stop = true;
 }

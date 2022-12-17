@@ -1,8 +1,10 @@
 #include "draw.h"
+#include "draw_figure.h"
 #include "draw_hexagon.h"
 #include "draw_object.h"
+#include "draw_marker.h"
+#include "draw_strategy.h"
 #include "main.h"
-#include "strategy.h"
 
 using namespace draw;
 
@@ -20,11 +22,47 @@ static color player_colors[] = {
 	{0, 121, 191},
 };
 
+static point system_position(point caret, int index) {
+	switch(index) {
+	case 1: return caret + point{size / 3, -2 * size / 3};
+	default: return caret + point{-size / 3, -2 * size / 3};
+	}
+}
+
+static point planet_position(point caret, int index) {
+	const double cos_30 = 0.86602540378;
+	auto fsize = 6 * size / 10;
+	point position[] = {
+		{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
+		{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
+		{(short)(caret.x + fsize / 2), (short)(caret.y + 2 * fsize / 3)},
+		{caret}
+	};
+	return position[index];
+}
+
+static void texth2c(const char* format) {
+	auto push_font = font;
+	auto push_caret = caret;
+	font = metrics::h2;
+	caret.x -= textw(format) / 2;
+	text(format);
+	caret = push_caret;
+	font = push_font;
+}
+
+static void text(const char* format, point offset, void(*proc)(const char*)) {
+	auto push_caret = caret;
+	caret = caret + offset;
+	proc(format);
+	caret = push_caret;
+}
+
 static void show_players() {
 	auto push_y = caret.y;
 	caret.x += 16; caret.y += 20;
 	auto push_x = caret.x;
-	auto res = getres("races_small");
+	auto res = gres("races_small");
 	auto push_alpha = alpha;
 	alpha = 32;
 	for(auto p : game.players) {
@@ -125,10 +163,35 @@ void status_info(void) {
 	caret.y += 4 * 2 + 32;
 }
 
+static void space_hexagon() {
+	auto push_size = fsize; fsize = size;
+	auto push_fore = fore; fore = colors::border;
+	hexagon();
+	fore = push_fore;
+	fsize = push_size;
+}
+
+static void paint_special(int index, int frame) {
+	auto push_caret = caret; caret = planet_position(caret, index);
+	image(gres("tiles"), frame, 0);
+	caret = push_caret;
+}
+
+static void special_paint(tile_s special, int special_index) {
+	switch(special) {
+	case NoSpecialTile: break;
+	case WormholeAlpha: paint_special(special_index, special - 1); break;
+	case WormholeBeta: paint_special(special_index, special - 1); break;
+	default: paint_special(3, special - 1); break;
+	}
+}
+
 void systemi::paint() const {
+	special_paint(special, special_index);
+	space_hexagon();
 	auto push_caret = caret;
 	caret.y -= size - 24;
-	auto res = getres("races_small");
+	auto res = gres("races_small");
 	for(auto p : game.players) {
 		if(isactivated(p)) {
 			image(res, getbsi(p), 0);
@@ -219,6 +282,8 @@ void planeti::paint(unsigned flags) const {
 	auto multiplier = -1;
 	if(flags & ImageMirrorH)
 		multiplier = 1;
+	image(gres("planets"), frame, flags);
+	text(getname(), {0, 56}, texth2c);
 	caret.x -= 58 * multiplier; caret.y += 42;
 	fore = colors::blue.mix(colors::white);
 	textvalue(figure::Circle, get(Influence));
@@ -229,7 +294,7 @@ void planeti::paint(unsigned flags) const {
 	if(speciality) {
 		caret = push_caret;
 		caret.x -= 73 * multiplier; caret.y -= 15;
-		image(getres("tech"), speciality - 1, 0);
+		image(gres("tech"), speciality - 1, 0);
 	}
 	if(trait) {
 		const double cos = 0.7660444431189;
@@ -237,7 +302,7 @@ void planeti::paint(unsigned flags) const {
 		const double radius = 74.0;
 		caret = push_caret;
 		caret.x -= (short)(radius * cos) * multiplier; caret.y -= (short)(radius * sin);
-		image(getres("traits"), trait - 1, 0);
+		image(gres("traits"), trait - 1, 0);
 	}
 	fore = push_fore;
 	caret = push_caret;
@@ -253,35 +318,8 @@ static void object_paint(const object* po) {
 		((planeti*)p)->paint(po->flags);
 	else if(bsdata<troop>::have(p))
 		((troop*)p)->paint(po->flags);
-}
-
-//static void update_system() {
-//	ent army;
-//	for(auto& e : bsdata<systemi>()) {
-//		if(!e)
-//			continue;
-//		army.clear();
-//		army.select(&e);
-//	}
-//}
-
-static point system_position(point caret, int index) {
-	switch(index) {
-	case 1: return caret + point{size / 3, -2 * size / 3};
-	default: return caret + point{-size / 3, -2 * size / 3};
-	}
-}
-
-static point planet_position(point caret, int index) {
-	const double cos_30 = 0.86602540378;
-	auto fsize = 6 * size / 10;
-	point position[] = {
-		{(short)(caret.x + fsize * cos_30), (short)(caret.y - fsize / 2)},
-		{(short)(caret.x - fsize * cos_30), (short)(caret.y + fsize / 2)},
-		{(short)(caret.x + fsize / 2), (short)(caret.y + 2 * fsize / 3)},
-		{caret}
-	};
-	return position[index];
+	else if(bsdata<troop>::have(p))
+		((marker*)p)->paint();
 }
 
 static void add_planet(planeti* ps, point pt, int index) {
@@ -289,15 +327,10 @@ static void add_planet(planeti* ps, point pt, int index) {
 	p->priority = 2;
 	p->data = ps;
 	p->frame = ps->frame;
-	p->resource = gres("planets", "art/objects");
-	p->size = 56;
-	p->font = metrics::h2;
-	p->string = ps->getname();
 	switch(index) {
 	case 1: p->flags |= ImageMirrorH; break;
 	case 2: p->flags |= ImageMirrorV; break;
 	}
-	p->set(object::DisableInput);
 }
 
 static void add_planets(point pt, const systemi* ps) {
@@ -315,31 +348,11 @@ static void add_planets(point pt, const systemi* ps) {
 	}
 }
 
-static void add_special(point pt, int index, int frame) {
-	pt = planet_position(pt, index);
-	auto p = addobject(pt.x, pt.y);
-	p->priority = 2;
-	p->size = 0;
-	p->set(object::DisableInput);
-	p->resource = getres("tiles");
-	p->frame = frame;
-}
-
 static void add_system(systemi* ps, point pt) {
 	auto p = addobject(pt.x, pt.y);
 	p->priority = 3;
 	p->data = ps;
-	p->shape = figure::Hexagon;
-	p->size = size;
-	p->fore = colors::border;
-	p->set(object::DisableInput);
 	add_planets(pt, ps);
-	switch(ps->special) {
-	case NoSpecialTile: break;
-	case WormholeAlpha: add_special(pt, ps->special_index, ps->special - 1); break;
-	case WormholeBeta: add_special(pt, ps->special_index, ps->special - 1); break;
-	default: add_special(pt, 3, ps->special - 1); break;
-	}
 }
 
 static void add_systems() {
@@ -354,9 +367,10 @@ static void add_systems() {
 
 static void remove_all_markers() {
 	for(auto& e : bsdata<object>()) {
-		if(bsdata<object>::have(e.data))
+		if(bsdata<marker>::have(e.data))
 			e.clear();
 	}
+	bsdata<marker>::source.clear();
 }
 
 static void marker_press() {
@@ -368,14 +382,13 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	auto pd = findobject(p);
 	if(!pd)
 		return 0;
+	auto pm = bsdata<marker>::add();
+	pm->shape = shape;
+	pm->size = size;
+	pm->fore = colors::green;
 	auto ps = addobject(pd->x, pd->y);
-	ps->data = pd;
+	ps->data = pm;
 	ps->priority = priority;
-	ps->shape = figure::Circle;
-	ps->input = marker_press;
-	ps->size = size;
-	ps->fore = colors::green;
-	ps->set(object::Hilite);
 	return ps;
 }
 
@@ -400,7 +413,7 @@ systemi* gamei::choosesystem(const entitya& source) {
 }
 
 void gamei::prepareui() {
-	//object::afterpaint = object_paint;
+	object::painting = object_paint;
 	clearobjects();
 	add_systems();
 	draw::setcamera(h2p({0, 0}, size));
@@ -427,8 +440,7 @@ static void update_units(point position, const entity* location) {
 		if(!p) {
 			p = addobject(x, y);
 			p->data = pt;
-			p->priority = 5;
-			p->size = 0;
+			p->priority = 15;
 		}
 		if(p->x != x || p->y != y) {
 			auto po = p->addorder(1000);

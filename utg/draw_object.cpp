@@ -140,7 +140,6 @@ static void blend(screenshoot& source, screenshoot& destination, unsigned millis
 void draw::splashscreen(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
-	paintobjects();
 	screenshoot another;
 	blend(push, another, milliseconds);
 }
@@ -200,7 +199,6 @@ void* draw::chooseobject() {
 }
 
 static void paintobjectsshowmode() {
-	paintobjects();
 	if(hot.key == KeyEscape)
 		execute(buttoncancel);
 	if(!hot.pressed && hot.key == MouseLeft)
@@ -262,7 +260,6 @@ static void moving(point& result, point goal, int step, int corrent) {
 		if(corrent)
 			correct_camera(result, corrent);
 		paintstart();
-		paintobjects();
 		doredraw();
 		waitcputime(1);
 		curds += step;
@@ -312,7 +309,6 @@ void draw::slidecamera(point goal, int step) {
 		camera.x = (short)(start.x + (goal.x - start.x) * curds / maxds);
 		camera.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
 		paintstart();
-		paintobjects();
 		doredraw();
 		waitcputime(1);
 	}
@@ -329,7 +325,6 @@ void draw::waitall() {
 		update_timestamp();
 		update_all_orders();
 		paintstart();
-		paintobjects();
 		doredraw();
 		waitcputime(1);
 		remove_orders();
@@ -344,7 +339,6 @@ void draw::draworder::wait() {
 		update_timestamp();
 		update_all_orders();
 		paintstart();
-		paintobjects();
 		doredraw();
 		waitcputime(1);
 		remove_orders();

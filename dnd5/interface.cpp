@@ -197,11 +197,6 @@ static void background_map() {
 	image(pi, 0, 0);
 }
 
-static void local_background() {
-	strategy_background();
-	paintobjects();
-}
-
 static void add_widget(const char* id, unsigned char priority, bool absolute_position = true) {
 	auto pm = bsdata<widget>::find(id);
 	if(!pm)
@@ -219,7 +214,6 @@ static void object_painting(const object* p) {
 }
 
 void ui_initialize() {
-	pbackground = local_background;
 	object::painting = object_painting;
 	object::initialize();
 	widget::add("BackgroundMap", background_map);

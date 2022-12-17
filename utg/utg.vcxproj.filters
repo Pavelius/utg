@@ -246,9 +246,6 @@
     <ClCompile Include="nameable.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="scriptmass.cpp">
-      <Filter>Scripting</Filter>
-    </ClCompile>
     <ClCompile Include="widget.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
@@ -466,9 +463,6 @@
     </ClInclude>
     <ClInclude Include="randomizer.h">
       <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="scriptmass.h">
-      <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="widget.h">
       <Filter>Interface</Filter>

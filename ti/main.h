@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "ability.h"
 #include "choosestep.h"
 #include "crt.h"
 #include "flagable.h"
@@ -12,12 +13,6 @@
 
 const int hms = 8;
 
-enum ability_s : unsigned char {
-	Cost, CostCount,
-	Combat, CombatCount, Bombardment, BombardmentCount,
-	AntiFighterBarrage, AntiFighterBarrageCount, SpaceCannon, SpaceCannonCount,
-	Move, Production, Reinforcement, MaximumInOneLocation, CapacityShips, Capacity,
-};
 enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
@@ -55,8 +50,6 @@ enum unit_type_s : unsigned char {
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
-struct abilityi : nameable {
-};
 struct colori : nameable {
 };
 struct tilei : nameable {

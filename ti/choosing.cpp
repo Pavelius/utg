@@ -461,7 +461,7 @@ static void std_apply() {
 		script::run(p->use);
 	} else if(bsdata<script>::have(choosestep::result)) {
 		auto p = (script*)choosestep::result;
-		p->proc(0, p->param);
+		p->proc(0);
 	} else if(bsdata<choosestep>::have(choosestep::result)) {
 		auto p = (choosestep*)choosestep::result;
 		p->run();

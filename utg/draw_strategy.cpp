@@ -266,6 +266,7 @@ static void answers_beforepaint_center() {
 void draw::strategy_background() {
 	fillform();
 	statusbar();
+	paintobjects();
 }
 
 static void finish() {

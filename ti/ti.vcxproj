@@ -148,6 +148,7 @@
     <ClCompile Include="choosing.cpp" />
     <ClCompile Include="combat.cpp" />
     <ClCompile Include="component.cpp" />
+    <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
@@ -177,6 +178,8 @@
     <ClCompile Include="unit_type.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="draw_marker.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="strategyi.h" />
   </ItemGroup>

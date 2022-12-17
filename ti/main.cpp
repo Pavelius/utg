@@ -1,6 +1,6 @@
 #include "bsreq.h"
+#include "draw_strategy.h"
 #include "main.h"
-#include "strategy.h"
 #include "speech.h"
 
 static char console_text[4096 * 2];
@@ -76,12 +76,10 @@ static void initialize() {
 	gamei::initialize();
 }
 
-void script_initialize();
 void choosestep_initialize();
 
 int main(int argc, char* argv[]) {
 	srand(400);
-	script_initialize();
 	choosestep_initialize();
 	return draw::strategy(start_game, initialize);
 }

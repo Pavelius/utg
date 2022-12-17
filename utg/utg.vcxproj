@@ -199,7 +199,6 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
     <ClCompile Include="script.cpp" />
-    <ClCompile Include="scriptmass.cpp" />
     <ClCompile Include="speech.cpp" />
     <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="stringa.cpp" />
@@ -279,7 +278,6 @@
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />
     <ClInclude Include="script.h" />
-    <ClInclude Include="scriptmass.h" />
     <ClInclude Include="speech.h" />
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="draw_strategy.h" />
