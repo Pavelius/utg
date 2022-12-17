@@ -1,7 +1,7 @@
 #include "bsreq.h"
 #include "draw.h"
 #include "io_stream.h"
-#include "strategy.h"
+#include "draw_strategy.h"
 #include "character.h"
 #include "script.h"
 

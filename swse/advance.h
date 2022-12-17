@@ -1,4 +1,5 @@
 #pragma once
+
 #include "nameable.h"
 #include "variant.h"
 

@@ -250,7 +250,7 @@ int main(int argc, char *argv[]) {
 	if(argc > 1 && argv[1][0])
 		mainview(argv[1]);
 	else {
-		//dlgmsg("PMA view", "Show sprites in PMA format. Pass to command line path to file wich you want to see.")
+		//dlgmsg("PMA view", "Show sprites in PMA format. Pass to command line path to file wich you want to see.");
 		return -1;
 	}
 	return 0;

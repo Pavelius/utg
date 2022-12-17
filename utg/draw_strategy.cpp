@@ -3,8 +3,8 @@
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_object.h"
+#include "draw_strategy.h"
 #include "log.h"
-#include "strategy.h"
 #include "variant.h"
 
 using namespace draw;
@@ -313,8 +313,8 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	pfinish = finish;
 	ptips = tips;
 	awindow.flags = WFResize | WFMinmax;
-	metrics::border = 6;
-	metrics::padding = 3;
+	metrics::border = 5;
+	metrics::padding = 1;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();

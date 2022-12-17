@@ -5,7 +5,7 @@
 #include "draw_figure.h"
 #include "menu.h"
 #include "skill.h"
-#include "strategy.h"
+#include "draw_strategy.h"
 #include "variant.h"
 #include "widget.h"
 

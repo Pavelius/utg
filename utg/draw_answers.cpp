@@ -28,8 +28,8 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 	if(columns > 1)
 		column_width = (column_width - (metrics::border * 2 + metrics::padding) * (columns - 1)) / columns + 1;
 	auto index = 0;
-	auto y1 = caret.y, x1 = caret.x;
-	auto y2 = caret.y;
+	auto y1 = (int)caret.y, x1 = (int)caret.x;
+	auto y2 = (int)caret.y;
 	auto push_width_normal = width;
 	width = column_width;
 	auto push_x2 = caret.x + width;
@@ -44,7 +44,7 @@ void answers::paintanswers(int columns, const char* cancel_text) const {
 				caret.x = x1;
 			} else {
 				caret.y = y1;
-				caret.x += width + metrics::border * 2 + metrics::padding - 1;
+				caret.x += width + metrics::border * 2 + metrics::padding;
 			}
 		}
 	}

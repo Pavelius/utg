@@ -255,6 +255,12 @@
     <ClCompile Include="io_bsreq.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
+    <ClCompile Include="win_cmd.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="win_message.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -389,7 +395,7 @@
     <ClInclude Include="property.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="strategy.h">
+    <ClInclude Include="draw_strategy.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="kering.h">

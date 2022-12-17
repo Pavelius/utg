@@ -221,8 +221,10 @@
     <ClCompile Include="utg.cpp" />
     <ClCompile Include="variant.cpp" />
     <ClCompile Include="widget.cpp" />
+    <ClCompile Include="win_cmd.cpp" />
     <ClCompile Include="win_draw.cpp" />
     <ClCompile Include="win_io_file.cpp" />
+    <ClCompile Include="win_message.cpp" />
     <ClCompile Include="win_time.cpp" />
     <ClCompile Include="zip.cpp" />
   </ItemGroup>
@@ -280,7 +282,7 @@
     <ClInclude Include="scriptmass.h" />
     <ClInclude Include="speech.h" />
     <ClInclude Include="sprite_util.h" />
-    <ClInclude Include="strategy.h" />
+    <ClInclude Include="draw_strategy.h" />
     <ClInclude Include="stringa.h" />
     <ClInclude Include="strvar.h" />
     <ClInclude Include="tag.h" />
