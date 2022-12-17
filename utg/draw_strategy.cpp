@@ -178,6 +178,14 @@ static bool menuft(const char* title) {
 	return result;
 }
 
+static void tipswindow() {
+	fore = colors::tips::back;
+	strokeout(rectf);
+	fore = colors::border;
+	strokeout(rectb);
+	fore = colors::tips::text;
+}
+
 static bool menurd(const char* title) {
 	if(!title)
 		return false;
@@ -273,6 +281,24 @@ static void finish() {
 	camera_finish();
 }
 
+static void tipsposition(const char* format) {
+	textfs(format);
+	auto x2 = getwidth(), y2 = getheight();
+	auto y = hot.hilite.bottom();
+	if(y + height > y2 || y > y2 - (y2 / 4))
+		y = y - height - metrics::border * 3;
+	else
+		y = hot.hilite.bottom() + metrics::border * 2 + metrics::padding;
+	auto x = hot.hilite.right();
+	if(x + width > x2 || x > x2 - (x2 / 3)) {
+		x = hot.hilite.left() - width - metrics::border - metrics::padding;
+		y = hot.hilite.top();
+	} else
+		x = hot.hilite.left() + metrics::border;
+	caret.x = x;
+	caret.y = y;
+}
+
 static void paint_tips() {
 	variant v = hilite_object;
 	if(!v)
@@ -282,9 +308,9 @@ static void paint_tips() {
 	if(temp[0]) {
 		rectpush push;
 		width = 400;
-		caret.y = metrics::padding + metrics::border + objects_paint.y;
-		caret.x = metrics::padding + metrics::border;
-		menurd(temp);
+		tipsposition(temp);
+		tipswindow();
+		textf(temp);
 	}
 }
 

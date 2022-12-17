@@ -10,7 +10,7 @@ void set_dark_theme() {
 	colors::special = color(255, 244, 32);
 	colors::border = color(63, 63, 70);
 	colors::tips::text = color(255, 255, 255);
-	colors::tips::back = color(100, 100, 120);
+	colors::tips::back = colors::window.mix(colors::border, 128+64+32);
 	colors::h1 = colors::text.mix(colors::button, 64);
 	colors::h2 = colors::text.mix(colors::button, 96);
 	colors::h3 = colors::text.mix(colors::button, 128);

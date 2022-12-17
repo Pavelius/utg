@@ -1,4 +1,6 @@
-﻿Abyz: Абиз
+﻿Construction: Строительная стратегия
+
+Abyz: Абиз
 AbyzSystem: Система Абиз
 ActionCards: Карты действий
 AddCommandToken: Какие резервы хотите пополнить?
@@ -43,7 +45,6 @@ ChooseSystem: Выбирайте систему
 ChooseTechnology: Выбирайте технологию
 ChooseUploadUnits: Погрузить отряды на борт
 Commodities: Продукция
-Construction: Строительная стратегия
 Continue: Продолжить
 ContinueBattle: Продолжать битву
 Coorneeq: Корник
