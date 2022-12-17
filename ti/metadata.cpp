@@ -98,9 +98,6 @@ BSMETA(techi) = {
 BSMETA(tilei) = {
 	BSREQ(id),
 	{}};
-BSMETA(triggeri) = {
-	BSREQ(id),
-	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSENM(type, unit_typei),
@@ -126,13 +123,13 @@ BSDATA(varianti) = {
 	{"ActionCard", VAR(actioncard, 1)},
 	{"Component", VAR(component, 1)},
 	{"Condition", VAR(conditioni, 1)},
-	{"Indicator", VAR(indicatori, 1)},
+	{"Indicator", VAR(indicatori, 1), 0, 0, 0, fntest<indicatori>},
 	{"List", VAR(listi, 1)},
 	{"Objective", VAR(objectivei, 1)},
 	{"Planet", VAR(planeti, 1)},
 	{"Player", VAR(playeri, 1)},
-	{"Script", VAR(script, 1)},
-	{"Step", VAR(choosestep, 1)},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
+	{"Step", VAR(choosestep, 1), 0, 0, fnscript<choosestep>},
 	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
 	{"System", VAR(systemi, 1)},
 	{"Tech", VAR(techi, 1)},

@@ -47,42 +47,42 @@ static void choose_step(const char* id) {
 	auto p = bsdata<choosestep>::find(id);
 	if(!p)
 		return;
-	auto push_last = player;
 	auto push_human = choosestep::human;
 	auto push_header = answers::header;
-	player = game.active;
 	answers::header = player->getname();
 	choosestep::human = player->ishuman();
 	if(choosestep::human)
 		game.focusing(player->gethome());
 	p->run();
-	player = push_last;
 	choosestep::human = push_human;
 	answers::header = push_header;
 }
 
 static void strategy_phase() {
+	auto push_player = player;
 	for(auto p : game.players) {
-		if(!p->strategy) {
-			game.active = p;
+		player = p;
+		if(!player->strategy)
 			choose_step("ChooseStrategy");
-		}
 	}
+	player = push_player;
 	game.sortbyinitiative();
 }
 
 static void action_phase() {
 	auto need_repeat = true;
+	auto push_player = player;
 	while(need_repeat) {
 		need_repeat = false;
 		for(auto p : game.players) {
 			if(p->pass_action_phase)
 				continue;
-			game.active = p;
+			player = p;
 			choose_step("ChooseAction");
 			need_repeat = true;
 		}
 	}
+	player = push_player;
 }
 
 static void score_objectives() {

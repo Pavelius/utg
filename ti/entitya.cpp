@@ -337,7 +337,7 @@ static entity* choose_human(const entitya& source, const char* id, const char* c
 entity* entitya::choose(const char* id, const char* cancel) const {
 	if(!count)
 		return 0;
-	if(!game.active->ishuman())
+	if(!player->ishuman())
 		return choose_ai(*this, id);
 	else {
 		auto value = data[0];

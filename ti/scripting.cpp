@@ -53,7 +53,7 @@ static void apply_value(indicator_s v, int value) {
 }
 
 static void no_active_player(int bonus) {
-	players.filter(game.active, false);
+	players.filter(player, false);
 }
 
 static void no_mecatol_rex(int bonus) {
@@ -103,7 +103,6 @@ static void select_system(int bonus) {
 }
 
 static void select_system_reach(int bonus) {
-	auto player = game.active;
 	querry.clear();
 	for(auto& e : bsdata<troop>()) {
 		if(!e || e.player != player || e.getunit()->type != Ships || !e.get(Move))
@@ -182,13 +181,13 @@ static void filter_home_system_you(int bonus) {
 static void filter_controled(int bonus) {
 	pathfind::clearpath();
 	systemi::blockmove();
-	systemi::markzerocost(game.active);
+	systemi::markzerocost(player);
 	pathfind::makewavex();
 	querry.matchrange(iabs(bonus), bonus >= 0);
 }
 
 static void focus_home_system(int bonus) {
-	game.focusing(game.active->gethome());
+	game.focusing(player->gethome());
 }
 
 static void filter_wormhole(int bonus) {
@@ -217,7 +216,7 @@ static void filter_production_ability(int bonus) {
 	querry.match(Production, 1, bonus >= 0);
 }
 
-static void filter_red_technology (int bonus) {
+static void filter_red_technology(int bonus) {
 	querry.match(Red, bonus >= 0);
 }
 
@@ -237,7 +236,7 @@ static void filter_activated(int bonus) {
 }
 
 static void filter_active_player(int bonus) {
-	querry.match(game.active, bonus != -1);
+	querry.match(player, bonus != -1);
 }
 
 static void speaker(int bonus) {
@@ -268,7 +267,7 @@ static void if_able(int bonus) {
 }
 
 static bool if_play_strategy(int bonus) {
-	return game.active && game.active->use_strategy;
+	return player && player->use_strategy;
 }
 
 static void secret_objective(int bonus) {
@@ -339,46 +338,42 @@ static void for_each_planet(int bonus) {
 	script::apply = apply_for_each_planet;
 }
 
-static void script_run(variant v) {
-	if(v.iskind<indicatori>())
-		apply_value((indicator_s)v.value, v.counter);
-	else if(v.iskind<playeri>()) {
-		if(game.active != bsdata<playeri>::elements + v.value)
-			script::stop = true;
-	} else if(v.iskind<choosestep>()) {
-		auto p = bsdata<choosestep>::elements + v.value;
-		auto push_options = choosestep::options;
-		choosestep::options = v.counter;
-		p->run();
-		choosestep::options = push_options;
-	} else if(v.iskind<uniti>())
-		bsdata<uniti>::elements[v.value].placement(v.counter);
-	else {
-		auto& ei = bsdata<varianti>::get(v.type);
-		draw::warning(getnm("ErrorScriptType"), ei.id);
-	}
-}
-
 void playeri::apply(const variants& source) {
 	draw::pause();
 	auto push_player = player;
-	player = game.active;
+	player = this;
 	script::run(source);
 	draw::pause();
 	player = push_player;
 }
 
-static bool script_test(variant v, bool& allowed) {
-	if(v.iskind<playeri>())
-		allowed = (game.active == (bsdata<playeri>::elements + v.value));
-	else if(v.iskind<indicatori>()) {
-		auto i = (indicator_s)v.value;
-		auto b = v.counter;
-		allowed = (game.active->get(i) + b) >= 0;
-	} else
-		return false;
-	return true;
+template<> bool fntest<indicatori>(int index, int bonus) {
+	return (player->get((indicator_s)index) + bonus) >= 0;
 }
+template<> void fnscript<indicatori>(int index, int bonus) {
+	apply_value((indicator_s)index, bonus);
+}
+
+template<> bool fntest<playeri>(int index, int bonus) {
+	return player == (bsdata<playeri>::elements + index);
+}
+
+template<> void fnscript<choosestep>(int index, int bonus) {
+	auto p = bsdata<choosestep>::elements + index;
+	auto push_options = choosestep::options;
+	choosestep::options = bonus;
+	p->run();
+	choosestep::options = push_options;
+}
+
+template<> void fnscript<uniti>(int index, int bonus) {
+	bsdata<uniti>::elements[index].placement(bonus);
+}
+
+//static void script_run(variant v) {
+//		auto& ei = bsdata<varianti>::get(v.type);
+//		draw::warning(getnm("ErrorScriptType"), ei.id);
+//}
 
 void combat_reatreat(int bonus);
 void combat_continue(int bonus);
@@ -429,7 +424,7 @@ BSDATA(script) = {
 	{"ResearchTechnology", research_technology},
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
-	{"SelectPlanet", select_planet, 0},
+	{"SelectPlanet", select_planet},
 	{"SelectPlanetYouControl", select_planet_you_control},
 	{"SelectPlanetNotYouControl", select_planet_not_you_control},
 	{"SelectPlayer", select_player},

@@ -75,7 +75,7 @@ static void show_players() {
 		caret.x += 32;
 	}
 	alpha = push_alpha;
-	auto pi = game.players.find(game.active);
+	auto pi = game.players.find(player);
 	if(pi != -1) {
 		auto p = game.players[pi];
 		auto push_x1 = caret.x;
@@ -128,7 +128,7 @@ static void status(const char* id, int value) {
 }
 
 static void status(indicator_s v) {
-	status(bsdata<indicatori>::elements[v].id, game.active->get(v));
+	status(bsdata<indicatori>::elements[v].id, player->get(v));
 }
 
 static void show_indicators() {
@@ -141,14 +141,14 @@ static void show_indicators() {
 	for(auto v : source_goods)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("Resources"), game.active->getplanetsummary(Resources));
-	status(getnmsh("Influence"), game.active->getplanetsummary(Influence));
+	status(getnmsh("Resources"), player->getplanetsummary(Resources));
+	status(getnmsh("Influence"), player->getplanetsummary(Influence));
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("ActionCards"), game.active->getcards());
-	status(getnmsh("Technology"), game.active->gettechs());
+	status(getnmsh("ActionCards"), player->getcards());
+	status(getnmsh("Technology"), player->gettechs());
 }
 
 void status_info(void) {

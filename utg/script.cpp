@@ -5,7 +5,15 @@ script::fnapply script::apply;
 bool script::stop;
 
 template<> void fnscript<script>(int value, int bonus) {
-	bsdata<script>::elements[value].proc(bonus);
+	auto p = bsdata<script>::elements + value;
+	if(p->proc)
+		p->proc(bonus);
+}
+template<> bool fntest<script>(int value, int bonus) {
+	auto p = bsdata<script>::elements + value;
+	if(p->test)
+		return p->test(bonus);
+	return true;
 }
 
 template<> void fnscript<listi>(int value, int bonus) {

@@ -144,11 +144,11 @@ TheL1Z1XMindnet
 TheUniversitiesOfJolNar
  troops Dreadnought Carrier+2 Fighter Infantry+2 SpaceDock PDS+2
 
-#Component
+#Component trigger(ChooseAction)
 
-TacticAction trigger(ChooseAction)
- use FocusHomeSystem TacticToken-1 ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce EndAction
-OrbitalDrop trigger(ChooseAction) parent(TheFederationOfSol)
+TacticAction
+ use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce EndAction
+OrbitalDrop parent(TheFederationOfSol)
  use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2 EndAction
-PassAction trigger(ChooseAction)
+PassAction
  use IfPlayStrategy ActionPhasePass EndAction

@@ -77,7 +77,7 @@ static void prepare_players() {
 }
 
 static void prepare_finish() {
-	game.active = playeri::human;
+	player = playeri::human;
 }
 
 static void clear_galaxy() {

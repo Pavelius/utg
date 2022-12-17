@@ -163,8 +163,6 @@ struct techi {
 	static void		getinfo(const void* object, stringbuilder& sb) { ((techi*)object)->getinfo(sb); }
 	bool			match(const requirement& e) const;
 };
-struct triggeri : nameable {
-};
 struct troop : entity {
 	flagable<1>		flags;
 	static troop*	last;
@@ -259,7 +257,6 @@ struct unitupgrade : uniti, requirement {
 };
 struct gamei {
 	playeri*		speaker;
-	playeri*		active;
 	playera			players, origin_players;
 	indicator_s		indicator;
 	static systemi* choosesystem(const entitya& source);

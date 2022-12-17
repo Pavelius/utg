@@ -44,7 +44,7 @@ static bool allow(const uniti* pu) {
 	if(pu->abilities[MaximumInOneLocation] > 0) {
 		if(pu->type == Structures) {
 			entitya source;
-			source.select(game.active, planeti::last);
+			source.select(player, planeti::last);
 			if(source.getsummary(pu) >= maximum_count)
 				return false;
 		}
@@ -103,33 +103,29 @@ static void choose_strategy(stringbuilder& sb, answers& an) {
 	}
 }
 static void apply_strategy() {
-	if(bsdata<strategyi>::have(choosestep::result)) {
+	if(bsdata<strategyi>::have(choosestep::result))
 		player->strategy = (strategyi*)choosestep::result;
-		choosestep::stop = true;
-	}
 }
 
 static void choose_action(stringbuilder& sb, answers& an) {
-	auto p = game.active;
-	if(!p)
+	if(!player)
 		return;
-	if(p->strategy && !p->use_strategy)
-		an.add(p->strategy, getnm(p->strategy->getname()));
+	if(player->strategy && !player->use_strategy)
+		an.add(player->strategy, getnm(player->strategy->getname()));
 }
 static void apply_action() {
 	if(bsdata<strategyi>::have(choosestep::result)) {
 		auto p = (strategyi*)choosestep::result;
-		if(game.active->strategy == p) {
+		if(player->strategy == p) {
 			script::run(p->primary);
-			game.active->use_strategy = true;
-			auto current = player;
+			player->use_strategy = true;
+			auto push_player = player;
 			for(auto pa : game.players) {
-				if(!script::allow(p->secondary))
-					continue;
-				auto push_player = player; player = pa;
-				script::run(p->secondary);
-				player = push_player;
+				player = pa;
+				if(script::allow(p->secondary))
+					script::run(p->secondary);
 			}
+			player = push_player;
 		} else
 			script::run(p->secondary);
 		choosestep::stop = true;
@@ -261,7 +257,6 @@ static void apply_invasion() {
 }
 
 static void ai_choose_invasion(answers& an) {
-	auto player = game.active;
 	auto system = systemi::active;
 	// Select all planets in a system
 	entitya planets;
@@ -326,7 +321,7 @@ static void apply_invasion_planet() {
 
 static void choose_dock(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<troop>()) {
-		if(e.player != game.active || !e.get(Production) || e.getsystem() != systemi::active)
+		if(e.player != player || !e.get(Production) || e.getsystem() != systemi::active)
 			continue;
 		e.add(an);
 	}
@@ -346,7 +341,7 @@ static void choose_production(stringbuilder& sb, answers& an) {
 	if(!production)
 		return;
 	auto player = troop::last->player;
-	auto resources = game.active->getplanetsummary(Resources);
+	auto resources = player->getplanetsummary(Resources);
 	auto goods = player->get(TradeGoods);
 	auto production_count = onboard.getsummary(CostCount);
 	auto total_production = production - production_count;

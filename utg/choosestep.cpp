@@ -20,6 +20,7 @@ void choosestep::run() const {
 	char temp[260]; stringbuilder sb(temp);
 	answers an;
 	while(!stop) {
+		stop = true;
 		sb.clear(); an.clear();
 		sb.add(getnm(id));
 		if(options > 0)
