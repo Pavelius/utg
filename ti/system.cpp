@@ -97,7 +97,7 @@ bool systemi::movethrought() const {
 	case Supernova:
 		return false;
 	case AsteroidField:
-		return playeri::last->is(AntimassDeflectors);
+		return ::player->is(AntimassDeflectors);
 	default: return true;
 	}
 }
@@ -105,7 +105,7 @@ bool systemi::movethrought() const {
 bool systemi::movestop() const {
 	switch(special) {
 	case AsteroidField:
-		return playeri::last->is(AntimassDeflectors);
+		return ::player->is(AntimassDeflectors);
 	case Supernova:
 		return false;
 	default: return true;

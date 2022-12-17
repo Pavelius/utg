@@ -4,6 +4,7 @@
 #pragma once
 
 struct strategyi : nameable {
-	int	initiative;
-	variants primary, secondary;
+	int			initiative;
+	variants	primary, secondary;
+	void		getinfo(stringbuilder& sb) const;
 };

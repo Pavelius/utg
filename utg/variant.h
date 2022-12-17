@@ -20,7 +20,6 @@ struct varianti {
 	const bsreq*	metadata;
 	array*			source;
 	int             key_count;
-	fngetname		pgetname;
 	fnstatus		pgetinfo;
 	fngetinfo		pgetproperty;
 	fnscript		pscript;

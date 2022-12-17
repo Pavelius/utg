@@ -43,8 +43,6 @@ const char* variant::getname() const {
 	if(!e.source)
 		return getnm("NoVariant");
 	auto object = e.source->ptr(value);
-	if(e.pgetname)
-		return e.pgetname(object);
 	if(e.key_count == 1) {
 		auto id = *((const char**)object);
 		if(id)
@@ -58,8 +56,6 @@ const char* variant::getid() const {
 	if(!e.source)
 		return "NoVariant";
 	auto object = e.source->ptr(value);
-	if(e.pgetname)
-		return e.pgetname(object);
 	if(e.key_count == 1) {
 		auto id = *((const char**)object);
 		if(id)

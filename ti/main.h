@@ -7,7 +7,7 @@
 #include "point.h"
 #include "nameable.h"
 #include "script.h"
-#include "strategyi.h"
+#include "strategy.h"
 #include "tag.h"
 #include "variant.h"
 
@@ -242,7 +242,7 @@ public:
 	void			setweight(pathfind::indext i, int v);
 };
 struct army {
-	playeri*		player;
+	playeri*		owner;
 	entitya			units;
 	bool			reatreat;
 	static army*	last;
@@ -284,7 +284,6 @@ struct playeri : nameable {
 	variants		troops, startup;
 	bool			use_strategy;
 	bool			pass_action_phase;
-	static playeri* last;
 	static playeri* human;
 	void			act(const char* format, const char* value) const;
 	void			add(indicator_s v, int i);
@@ -308,6 +307,7 @@ struct playeri : nameable {
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
+extern playeri*		player;
 inline point		i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 extern gamei		game;

@@ -4,6 +4,11 @@
 #include "main.h"
 #include "variant.h"
 
+template<typename T>
+void figetinfo(const void* object, stringbuilder& sb) {
+	return ((T*)object)->getinfo(sb);
+}
+
 BSDATAC(actioncard, 128)
 BSDATAC(card, 256)
 BSDATAC(component, 128)
@@ -128,7 +133,7 @@ BSDATA(varianti) = {
 	{"Player", VAR(playeri, 1)},
 	{"Script", VAR(script, 1)},
 	{"Step", VAR(choosestep, 1)},
-	{"Strategy", VAR(strategyi, 1)},
+	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
 	{"System", VAR(systemi, 1)},
 	{"Tech", VAR(techi, 1)},
 	{"Unit", VAR(uniti, 1)},

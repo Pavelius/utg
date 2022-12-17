@@ -62,8 +62,7 @@ static void repair_units(entitya& source) {
 }
 
 int army::roll(ability_s id, ability_s id_count) const {
-	auto push_last = playeri::last;
-	playeri::last = player;
+	auto push_last = player; player = owner;
 	auto result = 0;
 	auto bonus = 0;
 	if(player->is(Unrelenting))
@@ -85,7 +84,7 @@ int army::roll(ability_s id, ability_s id_count) const {
 			additional_hit = 9;
 		result += unit_combat_roll(chance, count, unit_bonus, 0, additional_hit);
 	}
-	playeri::last = push_last;
+	player = push_last;
 	return result;
 }
 
@@ -118,17 +117,17 @@ bool start_combat(const entity* location) {
 	defender.clear();
 	if(!location)
 		return false;
-	defender.player = location->player;
-	if(!defender.player)
+	defender.owner = location->player;
+	if(!defender.owner)
 		return false;
-	attacker.player = location->getenemy();
-	if(!attacker.player)
+	attacker.owner = location->getenemy();
+	if(!attacker.owner)
 		return false;
-	defender.units.select(defender.player, location);
+	defender.units.select(defender.owner, location);
 	defender.units.sortunit();
 	if(!defender.units)
 		return false;
-	attacker.units.select(attacker.player, location);
+	attacker.units.select(attacker.owner, location);
 	attacker.units.sortunit();
 	if(!attacker.units)
 		return false;
@@ -145,15 +144,13 @@ void combat_reatreat(int bonus) {
 }
 
 void army::choose(const char* id) {
-	auto push_last = last;
-	last = this;
-	auto push_player = playeri::last;
-	playeri::last = player;
+	auto push_last = last; last = this;
+	auto push_player = player; player = owner;
 	auto push_human = choosestep::human;
-	choosestep::human = playeri::last->ishuman();
+	choosestep::human = player->ishuman();
 	choosestep::run(id);
 	choosestep::human = push_human;
-	playeri::last = push_player;
+	player = push_player;
 	last = push_last;
 }
 

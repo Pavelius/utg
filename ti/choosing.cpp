@@ -10,9 +10,9 @@ static void clear_onboard() {
 static void makewave(pathfind::indext start) {
 	pathfind::clearpath();
 	systemi::blockmove();
-	systemi::blockenemy(playeri::last);
+	systemi::blockenemy(player);
 	pathfind::makewave(start);
-	systemi::blockenemy(playeri::last);
+	systemi::blockenemy(player);
 }
 
 static playeri* find_player(const strategyi& e) {
@@ -66,7 +66,7 @@ static void select_planets(const playeri* player, bool iscontrol) {
 }
 
 static void choose_pay(stringbuilder& sb, answers& an) {
-	select_planets(playeri::last, true);
+	select_planets(player, true);
 	querry.match(Exhaust, false);
 	querry.match(game.indicator, true);
 	for(auto p : querry)
@@ -89,7 +89,7 @@ static void choose_command_token(stringbuilder& sb, answers& an) {
 static void apply_command_token() {
 	if(bsdata<indicatori>::have(choosestep::result)) {
 		auto v = (indicator_s)bsdata<indicatori>::source.indexof(choosestep::result);
-		playeri::last->add(v, 1);
+		player->add(v, 1);
 		choosestep::options--;
 		choosestep::stop = (choosestep::options <= 0);
 	}
@@ -104,8 +104,7 @@ static void choose_strategy(stringbuilder& sb, answers& an) {
 }
 static void apply_strategy() {
 	if(bsdata<strategyi>::have(choosestep::result)) {
-		auto p = (strategyi*)choosestep::result;
-		playeri::last->strategy = p;
+		player->strategy = (strategyi*)choosestep::result;
 		choosestep::stop = true;
 	}
 }
@@ -123,14 +122,13 @@ static void apply_action() {
 		if(game.active->strategy == p) {
 			script::run(p->primary);
 			game.active->use_strategy = true;
-			auto current = playeri::last;
+			auto current = player;
 			for(auto pa : game.players) {
 				if(!script::allow(p->secondary))
 					continue;
-				auto push_player = playeri::last;
-				playeri::last = pa;
+				auto push_player = player; player = pa;
 				script::run(p->secondary);
-				playeri::last = push_player;
+				player = push_player;
 			}
 		} else
 			script::run(p->secondary);
@@ -141,7 +139,7 @@ static void apply_action() {
 static void choose_movement(stringbuilder& sb, answers& an) {
 	makewave(systemi::active->index);
 	for(auto& e : bsdata<troop>()) {
-		if(e.player != playeri::last)
+		if(e.player != player)
 			continue;
 		auto pu = e.getunit();
 		if(!pu)
@@ -150,7 +148,7 @@ static void choose_movement(stringbuilder& sb, answers& an) {
 		if(!move)
 			continue;
 		auto ps = e.getsystem();
-		if(!ps || ps->isactivated(playeri::last))
+		if(!ps || ps->isactivated(player))
 			continue;
 		auto cost_move = pathfind::getmove(ps->index);
 		if(cost_move == pathfind::Blocked || move < cost_move)
@@ -202,7 +200,7 @@ static void choose_move_options(stringbuilder& sbt, answers& an) {
 	choosestep::addscript(an, "MoveShip");
 	if(capacity > 0) {
 		for(auto& e : bsdata<troop>()) {
-			if(e.player != playeri::last || e.getsystem() != system)
+			if(e.player != player || e.getsystem() != system)
 				continue;
 			if(e.getunit()->type == Structures)
 				continue;
@@ -235,7 +233,7 @@ static void apply_onboard() {
 
 static void choose_invasion(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<troop>()) {
-		if(e.player != playeri::last)
+		if(e.player != player)
 			continue;
 		auto pu = e.getunit();
 		if(!pu || pu->type != GroundForces)
@@ -398,16 +396,16 @@ static void choose_combat_option(stringbuilder& sb, answers& an) {
 	sb.clear();
 	sb.add("%1 (%-Round [%2i])", getnm(choosestep::last->id), army::round);
 	choosestep::addscript(an, "ContinueBattle");
-	if(playeri::last->ishuman())
+	if(player->ishuman())
 		choosestep::addscript(an, "RetreatBattle");
 }
 
 static void choose_technology(stringbuilder& sb, answers& an) {
 	requirement advance = {};
-	playeri::last->getadvance(advance);
+	player->getadvance(advance);
 	for(auto& e : bsdata<techi>()) {
 		auto i = getbsi(&e);
-		if(playeri::last->tech.is(i))
+		if(player->tech.is(i))
 			continue;
 		if(!e.match(advance))
 			continue;
@@ -416,8 +414,8 @@ static void choose_technology(stringbuilder& sb, answers& an) {
 }
 static void apply_technology() {
 	if(bsdata<techi>::have(choosestep::result)) {
-		playeri::last->tech.set(getbsi((techi*)choosestep::result));
-		playeri::last->act("LearnTechnology", getnm(((techi*)choosestep::result)->id));
+		player->tech.set(getbsi((techi*)choosestep::result));
+		player->act("LearnTechnology", getnm(((techi*)choosestep::result)->id));
 		choosestep::stop = true;
 	}
 }

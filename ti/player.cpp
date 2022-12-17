@@ -1,6 +1,6 @@
 #include "main.h"
 
-playeri* playeri::last;
+playeri* player;
 playeri* playeri::human;
 
 int	playeri::getindex() const {

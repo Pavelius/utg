@@ -20,11 +20,11 @@ static void choose_command_token(int count) {
 static void apply_value(indicator_s v, int value) {
 	if(value == 0) {
 		// Simple get value
-		last_value = playeri::last->get(v);
+		last_value = player->get(v);
 		return;
 	} else if(value == 100)
 		value = last_value;
-	auto n0 = playeri::last->get(v);
+	auto n0 = player->get(v);
 	auto n1 = n0 + value;
 	if(n1 < 0)
 		return;
@@ -36,15 +36,15 @@ static void apply_value(indicator_s v, int value) {
 		choose_command_token(value);
 		break;
 	default:
-		playeri::last->indicators[v] = n1;
+		player->indicators[v] = n1;
 		if(n1 < n0) {
 			draw::warning(getnm("LoseIndicator"),
-				playeri::last->getname(),
+				player->getname(),
 				getnm(bsdata<indicatori>::elements[v].id),
 				iabs(n0 - n1));
 		} else {
 			draw::information(getnm("GainIndicator"),
-				playeri::last->getname(),
+				player->getname(),
 				getnm(bsdata<indicatori>::elements[v].id),
 				iabs(n0 - n1));
 		}
@@ -72,13 +72,13 @@ static void select_planet(int bonus) {
 static void select_planet_not_you_control(int bonus) {
 	querry.clear();
 	querry.select(bsdata<planeti>::source);
-	querry.match(playeri::last, false);
+	querry.match(player, false);
 }
 
 static void select_planet_you_control(int bonus) {
 	querry.clear();
 	querry.select(bsdata<planeti>::source);
-	querry.match(playeri::last, true);
+	querry.match(player, true);
 }
 
 static void select_system_own_planet(int bonus) {
@@ -129,7 +129,7 @@ static void choose_planet(int bonus) {
 }
 
 static void choose_player(int bonus) {
-	playeri::last = players.choose(0);
+	player = players.choose(0);
 }
 
 static void choose_system(int bonus) {
@@ -137,7 +137,7 @@ static void choose_system(int bonus) {
 }
 
 static void replenish_commodities(int bonus) {
-	auto p = playeri::last;
+	auto p = player;
 	auto n = p->commodities - p->get(Commodities);
 	apply_value(Commodities, n);
 }
@@ -161,7 +161,7 @@ static void activate_system(int bonus) {
 	if(!systemi::last)
 		return;
 	game.focusing(systemi::last);
-	systemi::last->setactivate(playeri::last, bonus != -1);
+	systemi::last->setactivate(player, bonus != -1);
 	systemi::active = systemi::last;
 }
 
@@ -233,7 +233,7 @@ static void filter_commodities(int bonus) {
 }
 
 static void filter_activated(int bonus) {
-	querry.activated(playeri::last, bonus != -1);
+	querry.activated(player, bonus != -1);
 }
 
 static void filter_active_player(int bonus) {
@@ -241,7 +241,7 @@ static void filter_active_player(int bonus) {
 }
 
 static void speaker(int bonus) {
-	game.speaker = playeri::last;
+	game.speaker = player;
 }
 
 static void action_card(int bonus) {
@@ -283,7 +283,7 @@ static void filter_move(int bonus) {
 }
 
 static void action_phase_pass(int bonus) {
-	playeri::last->pass_action_phase = (bonus != -1);
+	player->pass_action_phase = (bonus != -1);
 }
 
 static void cancel_order(int counter) {
@@ -299,15 +299,15 @@ static void move_ship(int bonus) {
 }
 
 static void apply_for_each_player(variant v) {
-	auto push_last = playeri::last;
+	auto push_last = player;
 	auto push_human = choosestep::human;
 	for(auto p : players) {
-		playeri::last = p;
-		choosestep::human = playeri::last->ishuman();
+		player = p;
+		choosestep::human = player->ishuman();
 		script::run(v);
 	}
 	choosestep::human = push_human;
-	playeri::last = push_last;
+	player = push_last;
 }
 
 static void for_each_player(int bonus) {
@@ -361,9 +361,11 @@ static void script_run(variant v) {
 
 void playeri::apply(const variants& source) {
 	draw::pause();
-	last = game.active;
+	auto push_player = player;
+	player = game.active;
 	script::run(source);
 	draw::pause();
+	player = push_player;
 }
 
 static bool script_test(variant v, bool& allowed) {

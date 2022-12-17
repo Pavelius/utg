@@ -116,7 +116,7 @@
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="strategyi.h">
+    <ClInclude Include="strategy.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
