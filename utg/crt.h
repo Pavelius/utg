@@ -137,7 +137,7 @@ public:
 	void							change(unsigned offset, int size);
 	void							clear();
 	char*							end() const { return (char*)data + size * count; }
-	int								find(const char* value, unsigned offset) const { return findps(value, offset, zlen(value)); }
+	int								find(const char* value, unsigned offset) const { return findps(value, offset, zlen(value) + 1); }
 	int								find(int i1, int i2, void* value, unsigned offset, size_t size) const;
 	int								find(void* value, unsigned offset, size_t size) const { return find(0, -1, value, offset, size); }
 	int								findps(const char* value, unsigned offset, size_t size) const;

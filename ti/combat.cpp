@@ -1,3 +1,4 @@
+#include "choosestep.h"
 #include "main.h"
 
 army*				army::last;
@@ -135,12 +136,10 @@ bool start_combat(const entity* location) {
 }
 
 void combat_continue(int bonus) {
-	choosestep::stop = true;
 }
 
 void combat_reatreat(int bonus) {
 	army::last->reatreat = true;
-	choosestep::stop = true;
 }
 
 void army::choose(const char* id) {

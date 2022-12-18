@@ -19,9 +19,6 @@ void playeri::add(indicator_s v, int i) {
 	auto n1 = n0 + i;
 	if(n0 == n1)
 		return;
-	if(i > 0)
-		draw::information(getnm("RaiseIndicatorTo"),
-			getnm(id), getnm(bsdata<indicatori>::elements[v].id), n1);
 	indicators[v] = n1;
 }
 

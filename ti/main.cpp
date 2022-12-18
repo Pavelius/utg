@@ -47,8 +47,9 @@ static void test_combat() {
 }
 
 static void test_variant() {
-	variant v = bsdata<uniti>::elements + 1;
-	auto i1 = (unsigned)v;
+	variant v1 = "Capacity";
+	variant v2 = bsdata<uniti>::elements + 1;
+	auto i1 = (unsigned)v1;
 }
 
 #endif // _DEBUG
@@ -80,7 +81,8 @@ static void initialize() {
 void choosestep_initialize();
 
 int main(int argc, char* argv[]) {
-	srand(400);
+	//srand(getcputime());
+	srand(505);
 	choosestep_initialize();
 	return draw::strategy(start_game, initialize);
 }

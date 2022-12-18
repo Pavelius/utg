@@ -120,8 +120,8 @@ TacticalProduce
 #Strategy
 
 Leadership initiative(1)
- primary CommandToken+3 ChangeInfluenceCommandToken+3
- secondary ChangeInfluenceCommandToken+3
+ primary CommandToken+3 PayCommandTokens+3
+ secondary PayCommandTokens+3
 Diplomacy initiative(2)
  primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem SelectPlanetYouControl FilterSystem Exhaust-1
  secondary StrategyToken-1 SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1

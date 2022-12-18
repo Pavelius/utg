@@ -12,7 +12,7 @@ void uniti::placement(int count, bool updateui) const {
 			troop::create(this, player, planeti::last);
 		if(updateui)
 			game.updateui();
-		draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
+		//draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
 		break;
 	case Ships:
 		game.focusing(systemi::last);
@@ -20,7 +20,7 @@ void uniti::placement(int count, bool updateui) const {
 			troop::create(this, player, systemi::last);
 		if(updateui)
 			game.updateui();
-		draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
+		//draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
 		break;
 	}
 }

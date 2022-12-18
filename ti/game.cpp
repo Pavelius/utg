@@ -1,9 +1,11 @@
+#include "choosestep.h"
 #include "main.h"
 #include "pushvalue.h"
+#include "script.h"
 
 using namespace pathfind;
 
-gamei	game;
+gamei game;
 
 int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	auto maximum = player->get(currency) / count;
@@ -54,11 +56,13 @@ static void choose_step(const char* id) {
 }
 
 static void strategy_phase() {
+	//pushvalue push_interactive(answers::interactive, false);
 	auto push_player = player;
 	for(auto p : game.players) {
 		player = p;
+		script::run("FocusHomeSystem");
 		if(!player->strategy)
-			choose_step("ChooseStrategy");
+			script::run("ChooseStrategy");
 	}
 	player = push_player;
 	game.sortbyinitiative();
@@ -73,7 +77,7 @@ static void action_phase() {
 			if(p->pass_action_phase)
 				continue;
 			player = p;
-			choose_step("ChooseAction");
+			script::run("ChooseAction");
 			need_repeat = true;
 		}
 	}

@@ -1,2 +1,3 @@
-﻿In file `locale/ru/Speech.txt`:
- Line 7: Unknown variant identifier `Consttuction`
+﻿In file `rules/Basic.txt`:
+ Line 123: Can't find variant `ChangeInfluenceCommandToken`
+ Line 124: Can't find variant `ChangeInfluenceCommandToken`

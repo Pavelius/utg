@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "choosestep.h"
 #include "condition.h"
 #include "list.h"
 #include "main.h"

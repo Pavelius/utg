@@ -1,6 +1,6 @@
 #include "main.h"
 
-troop* troop::last;
+troop* lasttroop;
 
 static troop* addnew() {
 	for(auto& e : bsdata<troop>()) {

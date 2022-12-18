@@ -1,6 +1,5 @@
 #include "answers.h"
 #include "ability.h"
-#include "choosestep.h"
 #include "crt.h"
 #include "flagable.h"
 #include "pathfind.h"
@@ -165,7 +164,6 @@ struct techi {
 };
 struct troop : entity {
 	flagable<1>		flags;
-	static troop*	last;
 	static troop*	create(const char* id, playeri* player);
 	static troop*	create(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
@@ -174,6 +172,7 @@ struct troop : entity {
 	void			produce(const uniti* unit) const;
 	static void		updateui();
 };
+extern troop* lasttroop;
 struct card : entity {
 	void			paint() const;
 };
@@ -225,7 +224,7 @@ struct objectivei : nameable {
 };
 struct component : nameable {
 	variant			parent;
-	choosestep*		trigger;
+	const char*		trigger;
 	variants		use;
 	bool			isallow() const;
 };
@@ -255,6 +254,7 @@ struct prototype {
 };
 struct unitupgrade : uniti, requirement {
 };
+
 struct gamei {
 	playeri*		speaker;
 	playera			players, origin_players;
@@ -272,6 +272,8 @@ struct gamei {
 	static void		updatecontrol();
 	static void		updateui();
 };
+extern gamei game;
+
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
 	techa			tech, tech_used;
@@ -305,8 +307,9 @@ struct playeri : nameable {
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
-extern playeri*		player;
-inline point		i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
+extern playeri*	player;
+
+inline point i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
-extern gamei		game;
-extern entitya		querry;
+
+extern entitya querry;

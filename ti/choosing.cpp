@@ -1,7 +1,8 @@
+#include "choosestep.h"
+#include "pushvalue.h"
 #include "main.h"
 
 entitya				onboard;
-static indicator_s	command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
 static void clear_onboard() {
 	onboard.clear();
@@ -13,14 +14,6 @@ static void makewave(pathfind::indext start) {
 	systemi::blockenemy(player);
 	pathfind::makewave(start);
 	systemi::blockenemy(player);
-}
-
-static playeri* find_player(const strategyi& e) {
-	for(auto p : game.players) {
-		if(p->strategy == &e)
-			return p;
-	}
-	return 0;
 }
 
 static int ai_load(const playeri* player, const systemi* system, unit_type_s type, int capacity) {
@@ -59,57 +52,6 @@ static void add_unit(answers& an, const char* id) {
 	an.add(pu, getnm(pu->id));
 }
 
-static void select_planets(const playeri* player, bool iscontrol) {
-	querry.clear();
-	querry.select(bsdata<planeti>::source);
-	querry.match(player, iscontrol);
-}
-
-static void choose_pay(stringbuilder& sb, answers& an) {
-	select_planets(player, true);
-	querry.match(Exhaust, false);
-	querry.match(game.indicator, true);
-	for(auto p : querry)
-		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(game.indicator));
-}
-static void apply_pay() {
-	if(bsdata<planeti>::have(choosestep::result)) {
-		auto p = (planeti*)choosestep::result;
-		choosestep::options -= p->get(game.indicator);
-		p->exhaust();
-	}
-}
-
-static void choose_command_token(stringbuilder& sb, answers& an) {
-	for(auto v : command_tokens) {
-		auto& e = bsdata<indicatori>::elements[v];
-		an.add(&e, getnm(e.id));
-	}
-}
-static void apply_command_token() {
-	if(bsdata<indicatori>::have(choosestep::result)) {
-		auto v = (indicator_s)bsdata<indicatori>::source.indexof(choosestep::result);
-		player->add(v, 1);
-		choosestep::options--;
-		choosestep::stop = (choosestep::options <= 0);
-	}
-}
-
-static void choose_strategy(stringbuilder& sb, answers& an) {
-	for(auto& e : bsdata<strategyi>()) {
-		if(find_player(e))
-			continue;
-		an.add(&e, getnm(e.id));
-	}
-}
-static void apply_strategy() {
-	if(bsdata<strategyi>::have(choosestep::result)) {
-		player->strategy = (strategyi*)choosestep::result;
-		if(player->strategy)
-			player->sayspeech(player->strategy->id);
-	}
-}
-
 static void choose_action(stringbuilder& sb, answers& an) {
 	if(!player)
 		return;
@@ -131,7 +73,6 @@ static void apply_action() {
 			player = push_player;
 		} else
 			script::run(p->secondary);
-		choosestep::stop = true;
 	}
 }
 
@@ -157,11 +98,8 @@ static void choose_movement(stringbuilder& sb, answers& an) {
 }
 static void apply_movement() {
 	if(bsdata<troop>::have(choosestep::result)) {
-		auto push_last = troop::last;
-		troop::last = (troop*)choosestep::result;
-		game.focusing(troop::last);
+		pushvalue push(lasttroop, (troop*)choosestep::result);
 		choosestep::run("ChooseMoveOption");
-		troop::last = push_last;
 	}
 }
 static void ai_choose_movement(answers& an) {
@@ -183,14 +121,12 @@ static void choose_pds_or_dock(stringbuilder& sb, answers& an) {
 	add_unit(an, "SpaceDock");
 }
 static void apply_pds_or_dock() {
-	if(bsdata<uniti>::have(choosestep::result)) {
+	if(bsdata<uniti>::have(choosestep::result))
 		((uniti*)choosestep::result)->placement(1);
-		choosestep::stop = true;
-	}
 }
 
 static void choose_move_options(stringbuilder& sbt, answers& an) {
-	auto ship = troop::last;
+	auto ship = lasttroop;
 	auto system = ship->getsystem();
 	auto capacity = ship->get(Capacity);
 	sbt.clear();
@@ -331,19 +267,17 @@ static void choose_dock(stringbuilder& sb, answers& an) {
 }
 
 static void apply_dock() {
-	if(bsdata<troop>::have(choosestep::result)) {
-		troop::last = (troop*)choosestep::result;
-		choosestep::stop = true;
-	}
+	if(bsdata<troop>::have(choosestep::result))
+		lasttroop = (troop*)choosestep::result;
 }
 
 static void choose_production(stringbuilder& sb, answers& an) {
-	if(!troop::last)
+	if(!lasttroop)
 		return;
-	auto production = troop::last->getproduction();
+	auto production = lasttroop->getproduction();
 	if(!production)
 		return;
-	auto player = troop::last->player;
+	auto player = lasttroop->player;
 	auto resources = player->getplanetsummary(Resources);
 	auto goods = player->get(TradeGoods);
 	auto production_count = onboard.getsummary(CostCount);
@@ -384,7 +318,7 @@ static void apply_production() {
 }
 
 static void finish_production() {
-	auto pu = troop::last;
+	auto pu = lasttroop;
 	for(auto p : onboard)
 		pu->produce((uniti*)p);
 	game.updateui();
@@ -411,10 +345,8 @@ static void choose_technology(stringbuilder& sb, answers& an) {
 	}
 }
 static void apply_technology() {
-	if(bsdata<techi>::have(choosestep::result)) {
+	if(bsdata<techi>::have(choosestep::result))
 		player->tech.set(getbsi((techi*)choosestep::result));
-		choosestep::stop = true;
-	}
 }
 
 void entitya::addreach(const systemi* system, int range) {
@@ -432,22 +364,6 @@ void entitya::addreach(const systemi* system, int range) {
 }
 
 static void std_answer(stringbuilder& sb, answers& an) {
-	for(auto& e : bsdata<component>()) {
-		if(e.trigger != laststep)
-			continue;
-		if(!e.isallow())
-			continue;
-		if(!script::allow(e.use))
-			continue;
-		an.add(&e, e.getname());
-	}
-	//for(auto& e : bsdata<actioncardi>()) {
-	//	if(e.trigger != trigger)
-	//		continue;
-	//	if(!script::isallow(e.use))
-	//		continue;
-	//	an.add(&e, e.getname());
-	//}
 }
 
 static void std_apply() {
@@ -471,18 +387,14 @@ void choosestep_initialize() {
 }
 
 BSDATA(choosestep) = {
-	{"ChooseAction", choose_action, apply_action},
-	{"ChooseCommandToken", choose_command_token, apply_command_token},
 	{"ChooseCombatOption", choose_combat_option},
 	{"ChooseDock", choose_dock, apply_dock},
 	{"ChooseInvasion", choose_invasion, apply_onboard, "Apply", ai_choose_invasion, clear_onboard},
 	{"ChooseInvasionPlanet", choose_invasion_planet, apply_invasion_planet, "EndInvasion"},
 	{"ChooseMove", choose_movement, apply_movement, "EndMovement", ai_choose_movement, clear_onboard, end_movement},
 	{"ChooseMoveOption", choose_move_options, apply_onboard, "CancelMovement", 0, clear_onboard},
-	{"ChoosePay", choose_pay, apply_pay},
 	{"ChoosePDSorDock", choose_pds_or_dock, apply_pds_or_dock},
 	{"ChooseProduction", choose_production, apply_production, "EndBuild", 0, clear_onboard, finish_production},
-	{"ChooseStrategy", choose_strategy, apply_strategy},
 	{"ChooseTechnology", choose_technology, apply_technology},
 };
 BSDATAF(choosestep)

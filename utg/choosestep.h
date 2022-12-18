@@ -11,8 +11,9 @@ struct choosestep {
 	const char*		cancel;
 	fnaichoose		paichoose;
 	fnevent			pbefore, pafter;
-	static bool		applied, human, stop;
+	static bool		applied, human;
 	static int		options;
+	static bool		stop;
 	static void*	result;
 	static fnanswer	pstd_answer;
 	static fnevent	pstd_apply;

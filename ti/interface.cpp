@@ -386,6 +386,7 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	pm->shape = shape;
 	pm->size = size;
 	pm->fore = colors::green;
+	pm->data = p;
 	auto ps = addobject(pd->x, pd->y);
 	ps->data = pm;
 	ps->priority = priority;
