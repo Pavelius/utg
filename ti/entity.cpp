@@ -3,7 +3,7 @@
 int entity::get(ability_s v) const {
 	if(bsdata<troop>::have(this))
 		return ((uniti*)id)->abilities[v];
-	else if(bsdata<uniti>::have(this))
+	else if(bsdata<uniti>::have(this) || bsdata<prototype>::have(this))
 		return ((uniti*)this)->abilities[v];
 	return 0;
 }

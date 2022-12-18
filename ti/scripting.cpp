@@ -94,6 +94,10 @@ static bool standart_apply() {
 	return true;
 }
 
+static int d100() {
+	return rand() % 100;
+}
+
 static void choose_complex(const char* id, const char* cancel, fnevent add_answers, fnevent apply_answers, fnevent ai_answers) {
 	pushvalue push_id(choose_id, id);
 	draw::pause();
@@ -110,8 +114,12 @@ static void choose_complex(const char* id, const char* cancel, fnevent add_answe
 		choose_result = an.choose(sb_temp, cancel_text);
 	else if(ai_answers)
 		ai_answers();
-	else
-		choose_result = an.random();
+	else {
+		if(!cancel || d100() < 10)
+			choose_result = 0;
+		else
+			choose_result = an.random();
+	}
 	if(choose_result) {
 		if(!standart_apply()) {
 			if(apply_answers)
@@ -414,6 +422,11 @@ static void convert_resource(indicator_s need, indicator_s currency, int rate) {
 	pushvalue push_currency(game.indicator, currency);
 	choose_pay("ChoosePay", "DoNotPay", ask_convert_resource, apply_pay, 0, rate);
 }
+static void complex_pay(indicator_s need, int rate) {
+	pushvalue push_options(choose_options, rate);
+	pushvalue push_currency(game.indicator, need);
+	choose_pay("PayResources", 0, ask_convert_resource, apply_pay, 0, rate);
+}
 
 static void pay_command_tokens(int bonus) {
 	convert_resource(CommandToken, Influence, bonus);
@@ -582,7 +595,7 @@ static void ask_production() {
 	}
 	sb.addn("---");
 	sb.addn(getnm("ProductionTotal"), total_resources, total_production);
-	for(auto& e : bsdata<uniti>()) {
+	for(auto& e : bsdata<prototype>::elements[player->getindex()].units) {
 		if(e.type == Structures)
 			continue;
 		auto cost = e.getcost();
@@ -599,13 +612,14 @@ static void ask_production() {
 	}
 }
 static void apply_production() {
-	if(bsdata<uniti>::have(choose_result))
+	if(bsdata<uniti>::have(choose_result) || bsdata<prototype>::have(choose_result))
 		onboard.add((entity*)choose_result);
 }
 static void choose_production(int bonus) {
 	auto pu = lasttroop;
 	onboard.clear();
 	choose_until_stop("ChooseProduction", "EndBuild", ask_production, apply_production, 0);
+	complex_pay(Resources, onboard.getsummary(Cost));
 	for(auto p : onboard)
 		pu->produce((uniti*)p);
 	game.updateui();
@@ -777,15 +791,11 @@ static void speaker(int bonus) {
 static void action_card(int bonus) {
 }
 
-static void end_action(int bonus) {
-	//choosestep::stop = true;
-}
-
 static void redistribute_command_tokens(int bonus) {
 }
 
 static void research_technology(int bonus) {
-	//choosestep::run("ChooseTechnology");
+	choose_technology(0);
 }
 
 static void score_objective(int bonus) {
@@ -888,7 +898,10 @@ template<> bool fntest<playeri>(int index, int bonus) {
 }
 
 template<> void fnscript<uniti>(int index, int bonus) {
-	bsdata<uniti>::elements[index].placement(bonus);
+	if(player)
+		bsdata<prototype>::elements[player->getindex()].units[index].placement(bonus);
+	else
+		bsdata<uniti>::elements[index].placement(bonus);
 }
 
 void combat_reatreat(int bonus);
@@ -915,7 +928,6 @@ BSDATA(script) = {
 	{"ChooseSystem", choose_system},
 	{"ChooseTechnology", choose_technology},
 	{"ContinueBattle", combat_continue},
-	{"EndAction", end_action},
 	{"Exhaust", exhaust},
 	{"FilterActivated", filter_activated},
 	{"FilterActivePlayer", filter_active_player},

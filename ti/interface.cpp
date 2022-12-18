@@ -51,6 +51,13 @@ static void texth2c(const char* format) {
 	font = push_font;
 }
 
+static void texth2cg(const char* format) {
+	auto push_fore = fore;
+	fore = fore.mix(colors::window, 64);
+	texth2c(format);
+	fore = push_fore;
+}
+
 static void text(const char* format, point offset, void(*proc)(const char*)) {
 	auto push_caret = caret;
 	caret = caret + offset;
@@ -283,7 +290,7 @@ void planeti::paint(unsigned flags) const {
 	if(flags & ImageMirrorH)
 		multiplier = 1;
 	image(gres("planets"), frame, flags);
-	text(getname(), {0, 56}, texth2c);
+	text(getname(), {0, 56}, is(Exhaust) ? texth2cg : texth2c);
 	caret.x -= 58 * multiplier; caret.y += 42;
 	fore = colors::blue.mix(colors::white);
 	textvalue(figure::Circle, get(Influence));

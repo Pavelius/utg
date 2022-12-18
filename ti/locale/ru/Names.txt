@@ -126,6 +126,7 @@ PDS: ПВС
 PassAction: Закончить фазу действий
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
+PayResources: Оплатите ресурсами
 PlaceUnits: %1 разместили %3i %2
 PlasmaScoring: Плазменные боеголовки
 PlayerChooseStrategy: %1 на этот ход выбрали [%2].
