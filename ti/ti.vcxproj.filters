@@ -10,6 +10,9 @@
     <Filter Include="Logic">
       <UniqueIdentifier>{e12c056e-c8f2-4ce3-a41a-76529a81915c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Locale">
+      <UniqueIdentifier>{5cdcba28-80f4-4417-912b-ece266d6323f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -133,9 +136,6 @@
     <Text Include="errors.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Planets.txt">
       <Filter>Data</Filter>
     </Text>
@@ -145,17 +145,20 @@
     <Text Include="rules\Objectives.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Speech.txt">
-      <Filter>Data</Filter>
+    <Text Include="locale\ru\Descriptions.txt">
+      <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\NamesSh.txt">
-      <Filter>Data</Filter>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Data</Filter>
+      <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Data</Filter>
+    <Text Include="locale\ru\NamesSh.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Speech.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

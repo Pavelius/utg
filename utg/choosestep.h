@@ -14,10 +14,10 @@ struct choosestep {
 	static bool		applied, human, stop;
 	static int		options;
 	static void*	result;
-	static const choosestep* last;
 	static fnanswer	pstd_answer;
 	static fnevent	pstd_apply;
 	static void		addscript(answers& an, const char* id);
 	void			run() const;
 	static void		run(const char* id);
 };
+extern const choosestep* laststep;

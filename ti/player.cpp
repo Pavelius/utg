@@ -1,3 +1,4 @@
+#include "speech.h"
 #include "main.h"
 
 playeri* player;
@@ -7,12 +8,10 @@ int	playeri::getindex() const {
 	return game.origin_players.find(const_cast<playeri*>(this));
 }
 
-void playeri::act(const char* format, const char* value) const {
+void playeri::actv(const char* format, const char* format_param) const {
 	if(!answers::console)
 		return;
-	answers::console->addn("[+");
-	answers::console->add(getnm(format), getnm(id), value);
-	answers::console->add("]");
+	answers::console->addv(format, format_param);
 }
 
 void playeri::add(indicator_s v, int i) {
@@ -115,4 +114,11 @@ void playeri::getadvance(requirement& result) const {
 			continue;
 		result.required[bsdata<techi>::elements[i].color - 1]++;
 	}
+}
+
+void playeri::sayspeech(const char* id) const {
+	variant test[] = {id};
+	auto p = speech::find(test);
+	if(p)
+		actv(p->name, 0);
 }

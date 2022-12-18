@@ -103,8 +103,11 @@ static void choose_strategy(stringbuilder& sb, answers& an) {
 	}
 }
 static void apply_strategy() {
-	if(bsdata<strategyi>::have(choosestep::result))
+	if(bsdata<strategyi>::have(choosestep::result)) {
 		player->strategy = (strategyi*)choosestep::result;
+		if(player->strategy)
+			player->sayspeech(player->strategy->id);
+	}
 }
 
 static void choose_action(stringbuilder& sb, answers& an) {
@@ -389,7 +392,7 @@ static void finish_production() {
 
 static void choose_combat_option(stringbuilder& sb, answers& an) {
 	sb.clear();
-	sb.add("%1 (%-Round [%2i])", getnm(choosestep::last->id), army::round);
+	sb.add("%1 (%-Round [%2i])", getnm(laststep->id), army::round);
 	choosestep::addscript(an, "ContinueBattle");
 	if(player->ishuman())
 		choosestep::addscript(an, "RetreatBattle");
@@ -410,7 +413,6 @@ static void choose_technology(stringbuilder& sb, answers& an) {
 static void apply_technology() {
 	if(bsdata<techi>::have(choosestep::result)) {
 		player->tech.set(getbsi((techi*)choosestep::result));
-		player->act("LearnTechnology", getnm(((techi*)choosestep::result)->id));
 		choosestep::stop = true;
 	}
 }
@@ -431,7 +433,7 @@ void entitya::addreach(const systemi* system, int range) {
 
 static void std_answer(stringbuilder& sb, answers& an) {
 	for(auto& e : bsdata<component>()) {
-		if(e.trigger != choosestep::last)
+		if(e.trigger != laststep)
 			continue;
 		if(!e.isallow())
 			continue;

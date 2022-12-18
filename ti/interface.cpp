@@ -318,7 +318,7 @@ static void object_paint(const object* po) {
 		((planeti*)p)->paint(po->flags);
 	else if(bsdata<troop>::have(p))
 		((troop*)p)->paint(po->flags);
-	else if(bsdata<troop>::have(p))
+	else if(bsdata<marker>::have(p))
 		((marker*)p)->paint();
 }
 

@@ -120,11 +120,12 @@ BSMETA(unitupgrade) = {
 	{}};
 
 BSDATA(varianti) = {
+	{"NoVariant"},
 	{"ActionCard", VAR(actioncard, 1)},
 	{"Component", VAR(component, 1)},
 	{"Condition", VAR(conditioni, 1)},
-	{"Indicator", VAR(indicatori, 1), 0, 0, 0, fntest<indicatori>},
-	{"List", VAR(listi, 1)},
+	{"Indicator", VAR(indicatori, 1), 0, 0, fnscript<indicatori>, fntest<indicatori>},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Objective", VAR(objectivei, 1)},
 	{"Planet", VAR(planeti, 1)},
 	{"Player", VAR(playeri, 1)},

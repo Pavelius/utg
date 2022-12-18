@@ -10,6 +10,13 @@ static bool			if_able_mode;
 static fnforeach	for_each;
 extern entitya		onboard;
 
+static const char* getnameshort(const char* id) {
+	auto pn = getnme(str("%1Short", id));
+	if(pn)
+		return pn;
+	return getnm(id);
+}
+
 static void choose_command_token(int count) {
 	auto push_options = choosestep::options;
 	choosestep::options = count;
@@ -37,17 +44,17 @@ static void apply_value(indicator_s v, int value) {
 		break;
 	default:
 		player->indicators[v] = n1;
-		if(n1 < n0) {
-			draw::warning(getnm("LoseIndicator"),
-				player->getname(),
-				getnm(bsdata<indicatori>::elements[v].id),
-				iabs(n0 - n1));
-		} else {
-			draw::information(getnm("GainIndicator"),
-				player->getname(),
-				getnm(bsdata<indicatori>::elements[v].id),
-				iabs(n0 - n1));
-		}
+		//if(n1 < n0) {
+		//	draw::warning(getnm("LoseIndicator"),
+		//		player->getname(),
+		//		getnameshort(bsdata<indicatori>::elements[v].id),
+		//		iabs(n0 - n1));
+		//} else {
+		//	draw::information(getnm("GainIndicator"),
+		//		player->getname(),
+		//		getnameshort(bsdata<indicatori>::elements[v].id),
+		//		iabs(n0 - n1));
+		//}
 		break;
 	}
 }
@@ -369,11 +376,6 @@ template<> void fnscript<choosestep>(int index, int bonus) {
 template<> void fnscript<uniti>(int index, int bonus) {
 	bsdata<uniti>::elements[index].placement(bonus);
 }
-
-//static void script_run(variant v) {
-//		auto& ei = bsdata<varianti>::get(v.type);
-//		draw::warning(getnm("ErrorScriptType"), ei.id);
-//}
 
 void combat_reatreat(int bonus);
 void combat_continue(int bonus);

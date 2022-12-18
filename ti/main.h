@@ -282,7 +282,7 @@ struct playeri : nameable {
 	bool			use_strategy;
 	bool			pass_action_phase;
 	static playeri* human;
-	void			act(const char* format, const char* value) const;
+	void			actv(const char* format, const char* format_param) const;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
 	void			assign(variants source);
@@ -301,6 +301,7 @@ struct playeri : nameable {
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
 	const uniti*	getunit(int index) const;
+	void			sayspeech(const char* id) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };

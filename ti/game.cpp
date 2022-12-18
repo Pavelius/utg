@@ -1,4 +1,5 @@
 #include "main.h"
+#include "pushvalue.h"
 
 using namespace pathfind;
 
@@ -47,15 +48,9 @@ static void choose_step(const char* id) {
 	auto p = bsdata<choosestep>::find(id);
 	if(!p)
 		return;
-	auto push_human = choosestep::human;
-	auto push_header = answers::header;
-	answers::header = player->getname();
-	choosestep::human = player->ishuman();
-	if(choosestep::human)
-		game.focusing(player->gethome());
+	pushvalue push_human(choosestep::human, player->ishuman());
+	pushvalue push_header(answers::header, player->getname());
 	p->run();
-	choosestep::human = push_human;
-	answers::header = push_header;
 }
 
 static void strategy_phase() {

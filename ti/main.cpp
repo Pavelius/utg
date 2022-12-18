@@ -54,6 +54,7 @@ static void test_variant() {
 #endif // _DEBUG
 
 static void new_game() {
+	test_speech();
 	game.prepare();
 	game.play();
 }
@@ -70,7 +71,7 @@ static void initialize() {
 	bsreq::read("rules/Planets.txt");
 	bsreq::read("rules/ActionCards.txt");
 	bsreq::read("rules/Objectives.txt");
-	//readl("", speech::read("Speech");
+	speech::read("locale/ru/Speech.txt");
 	answers::console = &console;
 	answers::prompt = console_text;
 	gamei::initialize();

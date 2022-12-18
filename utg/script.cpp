@@ -19,6 +19,9 @@ template<> bool fntest<script>(int value, int bonus) {
 template<> void fnscript<listi>(int value, int bonus) {
 	script::run(bsdata<listi>::elements[value].elements);
 }
+template<> bool fntest<listi>(int value, int bonus) {
+	return script::allow(bsdata<listi>::elements[value].elements);
+}
 
 void script::run(variant v) {
 	auto& ei = bsdata<varianti>::elements[v.type];

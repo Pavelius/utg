@@ -1,2 +1,2 @@
-﻿In file `rules/Objectives.txt`:
- Line 25: Can't find variant `FilterTechnologySpeciality`
+﻿In file `locale/ru/Speech.txt`:
+ Line 7: Unknown variant identifier `Consttuction`

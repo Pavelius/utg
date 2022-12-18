@@ -1,4 +1,11 @@
-﻿Construction: Строительная стратегия
+﻿FleetToken: Резерв флота
+FleetTokenShort: РФ
+StrategyToken: Стратегический резерв
+StrategyTokenShort: СР
+TacticToken: Тактический резерв
+TacticTokenShort: ТР
+
+Construction: Строительная стратегия
 
 Abyz: Абиз
 AbyzSystem: Система Абиз
@@ -72,7 +79,6 @@ EndLoad: Закончить погрузку
 EndMovement: Закончить передвижение
 ErrorScriptType: Не обработан тип скрипта '%1'
 Fighter: Истребители
-FleetToken: Резерв флота
 FocusedResearch: Сфокусированное исследование
 Fria: Фрия
 FrontlineDeployment: Развертывание на фронте
@@ -122,6 +128,7 @@ PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
 PlaceUnits: %1 разместили %3i %2
 PlasmaScoring: Плазменные боеголовки
+PlayerChooseStrategy: %1 на этот ход выбрали [%2].
 Politics: Политическая стратегия
 ProductionTotal: Осталось [%1i] ресурсов и [%2i] отрядов
 Quann: Кван
@@ -148,10 +155,8 @@ SonOfRagh: Сын Рагха
 SpaceCombat: Космический бой
 SpaceDock: Доки
 Starpoint: Старпоинт
-StrategyToken: Стратегический резерв
 SupernovaSystem: Супернова
 TacticAction: Тактическое действие
-TacticToken: Тактический резерв
 TarMann: Тип Манн
 TarMannSystem: Система Тар Манн
 Technology: Технологическая стратегия

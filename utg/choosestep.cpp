@@ -6,15 +6,15 @@ bool choosestep::human;
 bool choosestep::applied;
 int choosestep::options;
 void* choosestep::result;
-const choosestep* choosestep::last;
+const choosestep* laststep;
 fnevent choosestep::pstd_apply;
 choosestep::fnanswer choosestep::pstd_answer;
 
 void choosestep::run() const {
 	draw::pause();
 	auto push_stop = stop;
-	auto push_last = last;
-	last = this;
+	auto push_last = laststep;
+	laststep = this;
 	if(pbefore)
 		pbefore();
 	char temp[260]; stringbuilder sb(temp);
@@ -52,7 +52,7 @@ void choosestep::run() const {
 	if(pafter)
 		pafter();
 	draw::pause();
-	last = push_last;
+	laststep = push_last;
 }
 
 void choosestep::run(const char* id) {

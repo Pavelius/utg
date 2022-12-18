@@ -85,6 +85,21 @@ WarSun type(Ships) replace(WarSunPrototype) required(3 0 0 1)
  abilities Cost(12) CostCount(1) Combat(3) CombatCount(3) Move(2) Capacity(6) Reinforcement(2) Bombardment(3) BombardmentCount(3)
  tags IgnorePlanetaryShield SustainDamage
 
+#Player
+
+SardakkNorr
+ troops Carrier+2 Cruiser Infantry+5 SpaceDock PDS
+TheBaronyOfLetnev
+ troops Dreadnought Carrier Destroyer Fighter Infantry+3 SpaceDock
+TheEmiratesOfHacan
+ troops Carrier+2 Cruiser Fighter+2 Infantry+4 SpaceDock
+TheFederationOfSol
+ troops Carrier+2 Destroyer Fighter+3 Infantry+5 SpaceDock
+TheL1Z1XMindnet
+ troops Dreadnought Carrier Fighter+3 Infantry+5 SpaceDock PDS
+TheUniversitiesOfJolNar
+ troops Dreadnought Carrier+2 Fighter Infantry+2 SpaceDock PDS+2
+
 #List
 
 ChooseSystemToActivate
@@ -128,21 +143,6 @@ Technology initiative(7)
 Imperial initiative(8)
  primary ScorePublicObjective IfControlMecatolRex+1 VictoryPoints+1 SecretObjective+1
  secondary StrategyToken-1 SecretObjective+1
-
-#Player
-
-SardakkNorr
- troops Carrier+2 Cruiser Infantry+5 SpaceDock PDS
-TheBaronyOfLetnev
- troops Dreadnought Carrier Destroyer Fighter Infantry+3 SpaceDock
-TheEmiratesOfHacan
- troops Carrier+2 Cruiser Fighter+2 Infantry+4 SpaceDock
-TheFederationOfSol
- troops Carrier+2 Destroyer Fighter+3 Infantry+5 SpaceDock
-TheL1Z1XMindnet
- troops Dreadnought Carrier Fighter+3 Infantry+5 SpaceDock PDS
-TheUniversitiesOfJolNar
- troops Dreadnought Carrier+2 Fighter Infantry+2 SpaceDock PDS+2
 
 #Component trigger(ChooseAction)
 
