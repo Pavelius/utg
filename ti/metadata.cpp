@@ -129,7 +129,7 @@ BSDATA(varianti) = {
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
 	{"System", VAR(systemi, 1)},
-	{"Tech", VAR(techi, 1)},
+	{"Tech", VAR(techi, 1), figetinfo<techi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
 	{"UnitUpgrade", VAR(unitupgrade, 1)},

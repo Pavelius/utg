@@ -1,4 +1,9 @@
-﻿FleetToken: Резерв флота
+﻿Blue: Синяя
+Green: Зеленая
+Red: Красная
+Yellow: Желтая
+
+FleetToken: Резерв флота
 FleetTokenShort: РФ
 StrategyToken: Стратегический резерв
 StrategyTokenShort: СР
@@ -143,6 +148,7 @@ Rarron: Рарун
 RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
 Resources: Ресурсы
+Required: Требует
 RetreatBattle: Отступить из битвы
 Round: Раунд
 Sakulag: Сакулаг
@@ -160,6 +166,7 @@ SupernovaSystem: Супернова
 TacticAction: Тактическое действие
 TarMann: Тип Манн
 TarMannSystem: Система Тар Манн
+Tech: Технология
 Technology: Технологическая стратегия
 Tequran: Текуран
 TequranSystem: Система Текуран
