@@ -55,7 +55,6 @@ static void test_variant() {
 #endif // _DEBUG
 
 static void new_game() {
-	test_speech();
 	game.prepare();
 	game.play();
 }
@@ -78,12 +77,9 @@ static void initialize() {
 	gamei::initialize();
 }
 
-void choosestep_initialize();
-
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	srand(505);
-	choosestep_initialize();
 	return draw::strategy(start_game, initialize);
 }
 

@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "choosestep.h"
 #include "condition.h"
 #include "list.h"
 #include "main.h"
@@ -34,9 +33,6 @@ BSMETA(actioncard) = {
 	BSREQ(count),
 	BSREQ(trigger),
 	BSREQ(use),
-	{}};
-BSMETA(choosestep) = {
-	BSREQ(id),
 	{}};
 BSMETA(colori) = {
 	BSREQ(id),
@@ -131,7 +127,6 @@ BSDATA(varianti) = {
 	{"Planet", VAR(planeti, 1)},
 	{"Player", VAR(playeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Step", VAR(choosestep, 1), 0, 0, fnscript<choosestep>},
 	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
 	{"System", VAR(systemi, 1)},
 	{"Tech", VAR(techi, 1)},

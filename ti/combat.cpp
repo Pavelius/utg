@@ -1,4 +1,3 @@
-#include "choosestep.h"
 #include "main.h"
 
 army*				army::last;
@@ -145,10 +144,7 @@ void combat_reatreat(int bonus) {
 void army::choose(const char* id) {
 	auto push_last = last; last = this;
 	auto push_player = player; player = owner;
-	auto push_human = choosestep::human;
-	choosestep::human = player->ishuman();
-	choosestep::run(id);
-	choosestep::human = push_human;
+	script::run(id, 0);
 	player = push_player;
 	last = push_last;
 }

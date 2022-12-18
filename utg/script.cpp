@@ -23,6 +23,12 @@ template<> bool fntest<listi>(int value, int bonus) {
 	return script::allow(bsdata<listi>::elements[value].elements);
 }
 
+void script::run(const char* id, int bonus) {
+	auto p = bsdata<script>::find(id);
+	if(p->proc)
+		p->proc(bonus);
+}
+
 void script::run(variant v) {
 	auto& ei = bsdata<varianti>::elements[v.type];
 	if(ei.pscript)

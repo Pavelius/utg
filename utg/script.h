@@ -20,5 +20,6 @@ struct script {
 	static bool allow(variant v);
 	static bool allow(const variants& source);
 	static void run(variant v);
+	static void run(const char* id, int bonus);
 	static void run(const variants& source);
 };

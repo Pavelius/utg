@@ -1,4 +1,3 @@
-#include "choosestep.h"
 #include "main.h"
 #include "pushvalue.h"
 #include "script.h"
@@ -46,24 +45,18 @@ void gamei::initialize() {
 	pathfind::to = getdirection;
 }
 
-static void choose_step(const char* id) {
-	auto p = bsdata<choosestep>::find(id);
-	if(!p)
-		return;
-	pushvalue push_human(choosestep::human, player->ishuman());
-	pushvalue push_header(answers::header, player->getname());
-	p->run();
-}
-
 static void strategy_phase() {
-	//pushvalue push_interactive(answers::interactive, false);
+	pushvalue push_interactive(answers::interactive, false);
 	auto push_player = player;
+	auto push_header = answers::header;
 	for(auto p : game.players) {
 		player = p;
-		script::run("FocusHomeSystem");
+		answers::header = player->getname();
+		script::run("FocusHomeSystem", 0);
 		if(!player->strategy)
-			script::run("ChooseStrategy");
+			script::run("ChooseStrategy", 0);
 	}
+	answers::header = push_header;
 	player = push_player;
 	game.sortbyinitiative();
 }
@@ -71,16 +64,19 @@ static void strategy_phase() {
 static void action_phase() {
 	auto need_repeat = true;
 	auto push_player = player;
+	auto push_header = answers::header;
 	while(need_repeat) {
 		need_repeat = false;
 		for(auto p : game.players) {
 			if(p->pass_action_phase)
 				continue;
 			player = p;
-			script::run("ChooseAction");
+			answers::header = player->getname();
+			script::run("ChooseAction", 0);
 			need_repeat = true;
 		}
 	}
+	answers::header = push_header;
 	player = push_player;
 }
 

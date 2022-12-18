@@ -81,9 +81,6 @@
     <ClCompile Include="tile.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="choosing.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="component.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
