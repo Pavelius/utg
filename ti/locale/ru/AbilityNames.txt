@@ -1,0 +1,6 @@
+﻿FleetToken: Резерв флота
+FleetTokenShort: РФ
+StrategyToken: Стратегический резерв
+StrategyTokenShort: СР
+TacticToken: Тактический резерв
+TacticTokenShort: ТР

@@ -160,5 +160,11 @@
     <Text Include="locale\ru\Speech.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="locale\ru\TechNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\AbilityNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

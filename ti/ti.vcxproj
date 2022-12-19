@@ -190,11 +190,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\AbilityNames.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\NamesSh.txt" />
     <Text Include="locale\ru\Speech.txt" />
+    <Text Include="locale\ru\TechNames.txt" />
     <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Objectives.txt" />
