@@ -180,7 +180,7 @@ struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
 	void			addu(entity* v);
 	void			addreach(const systemi* system, int range);
-	entity*			choose(const char* title, const char* cancel = 0) const;
+	entity*			choose(const char* title, const char* cancel = 0, int choose_mode = 0) const;
 	void			filter(const entity* object, bool keep);
 	entity*			getbest(indicator_s v) const;
 	int				getcap() const;

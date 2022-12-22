@@ -1,4 +1,5 @@
 #include "main.h"
+#include "script.h"
 
 bool component::isallow() const {
 	if(parent.iskind<playeri>())

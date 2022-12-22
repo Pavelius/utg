@@ -111,11 +111,11 @@ static void choose_complex(const char* id, const char* cancel, fnevent add_answe
 		cancel_text = getnm(cancel);
 	choose_result = 0;
 	if(player->ishuman())
-		choose_result = an.choose(sb_temp, cancel_text);
+		choose_result = an.choose(sb_temp, cancel_text, 2);
 	else if(ai_answers)
 		ai_answers();
 	else {
-		if(!cancel || d100() < 10)
+		if(cancel && d100() < 10)
 			choose_result = 0;
 		else
 			choose_result = an.random();
@@ -376,7 +376,7 @@ static void select_player(int bonus) {
 }
 
 static void choose_planet(int bonus) {
-	planeti::last = (planeti*)querry.choose(0);
+	planeti::last = (planeti*)querry.choose(0, 0, 2);
 	game.focusing(planeti::last->getsystem());
 }
 
@@ -642,7 +642,7 @@ static void choose_dock(int bonus) {
 
 static bool allow(const uniti* pu) {
 	auto maximum_count = pu->abilities[MaximumInOneLocation];
-	if(pu->abilities[MaximumInOneLocation] > 0) {
+	if(maximum_count > 0) {
 		if(pu->type == Structures) {
 			entitya source;
 			source.select(player, planeti::last);
@@ -814,6 +814,10 @@ static bool if_play_strategy(int bonus) {
 static void secret_objective(int bonus) {
 }
 
+static void end_turn(int bonus) {
+	choose_stop = true;
+}
+
 static void querry_count(int bonus) {
 	last_value = querry.getcount();
 }
@@ -929,6 +933,7 @@ BSDATA(script) = {
 	{"ChooseTechnology", choose_technology},
 	{"ContinueBattle", combat_continue},
 	{"Exhaust", exhaust},
+	{"EndTurn", end_turn},
 	{"FilterActivated", filter_activated},
 	{"FilterActivePlayer", filter_active_player},
 	{"FilterAnyHomeSystem", filter_home_system_any},

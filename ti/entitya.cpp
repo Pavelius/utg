@@ -157,7 +157,7 @@ void entitya::match(const playeri* player, bool keep) {
 void entitya::match(ability_s id, int value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
-		if((p->get(id)>=value) != keep)
+		if((p->get(id) >= value) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -196,7 +196,7 @@ void entitya::match(unit_type_s type, bool keep) {
 		auto pu = ((troop*)p)->getunit();
 		if(!pu)
 			continue;
-		if((pu->type==type) != keep)
+		if((pu->type == type) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -327,14 +327,14 @@ static entity* choose_ai(const entitya& source, const char* id) {
 	return source.random();
 }
 
-static entity* choose_human(const entitya& source, const char* id, const char* cancel) {
+static entity* choose_human(const entitya& source, const char* id, const char* cancel, int choose_mode) {
 	answers an;
 	for(auto p : source)
 		an.add(p, p->getname());
-	return (entity*)an.choose(getnm(id), cancel);
+	return (entity*)an.choose(getnm(id), cancel, choose_mode);
 }
 
-entity* entitya::choose(const char* id, const char* cancel) const {
+entity* entitya::choose(const char* id, const char* cancel, int choose_mode) const {
 	if(!count)
 		return 0;
 	if(!player->ishuman())
@@ -343,7 +343,7 @@ entity* entitya::choose(const char* id, const char* cancel) const {
 		auto value = data[0];
 		if(bsdata<systemi>::have(value))
 			return game.choosesystem(*this);
-		return choose_human(*this, id, cancel);
+		return choose_human(*this, id, cancel, choose_mode);
 	}
 }
 
@@ -362,8 +362,9 @@ entity* entitya::getbest(indicator_s v) const {
 int entitya::getsummary(const uniti* pv) const {
 	int result = 0;
 	for(auto p : *this) {
-		if(bsdata<troop>::have(p)) {
-			if(((troop*)p)->getunit() == pv)
+		if(bsdata<troop>::have(p) || bsdata<prototype>::have(p)) {
+			auto pu = ((troop*)p)->getunit();
+			if(pu == pv || pu->replace == pv || (memcmp(pu, pv, sizeof(*pu)) == 0))
 				result++;
 		}
 	}
