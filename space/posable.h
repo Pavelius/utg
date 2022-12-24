@@ -4,7 +4,8 @@
 #pragma once
 
 class posable : public nameable {
+	point		position;
 public:
-	point		getposition() const;
+	point		getposition() const { return position; }
 	void		setposition(point v);
 };

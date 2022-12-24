@@ -146,21 +146,28 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="code.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
-    <ClCompile Include="planet_resource.cpp" />
+    <ClCompile Include="planetr.cpp" />
     <ClCompile Include="posable.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="roll12.cpp" />
-    <ClCompile Include="script.cpp" />
+    <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="landscape.h" />
+    <ClInclude Include="mission.h" />
+    <ClInclude Include="planet.h" />
+    <ClInclude Include="planetr.h" />
     <ClInclude Include="posable.h" />
-    <ClInclude Include="script.h" />
+    <ClInclude Include="roll12.h" />
+    <ClInclude Include="system.h" />
+    <ClInclude Include="tag.h" />
     <ClInclude Include="timeable.h" />
   </ItemGroup>
   <ItemGroup>

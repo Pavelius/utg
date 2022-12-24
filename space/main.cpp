@@ -1,9 +1,11 @@
+#include "answers.h"
 #include "bsreq.h"
+#include "draw_strategy.h"
+#include "game.h"
 #include "log.h"
-#include "main.h"
+#include "planet.h"
 #include "quest.h"
 #include "script.h"
-#include "strategy.h"
 
 void initialize_interface();
 

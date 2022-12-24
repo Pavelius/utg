@@ -1,7 +1,8 @@
 #include "draw.h"
 #include "draw_object.h"
-#include "strategy.h"
-#include "main.h"
+#include "draw_strategy.h"
+#include "game.h"
+#include "planet.h"
 
 using namespace draw;
 
@@ -132,8 +133,27 @@ void status_info(void) {
 	height = push_height;
 }
 
-static void afterpaint_object(const object* po) {
+void planeti::paint() const {
+	circlef(4);
+	circle(4);
+}
+
+void systemi::paint() const {
+	auto push_fore = fore;
+	fore = colors::yellow;
+	circlef(32);
+	fore = colors::red.mix(fore, 128);
+	circle(32);
+	fore = push_fore;
+}
+
+static void painting(const object* po) {
+	if(bsdata<planeti>::have(po->data))
+		((planeti*)po->data)->paint();
+	if(bsdata<systemi>::have(po->data))
+		((systemi*)po->data)->paint();
 }
 
 void initialize_interface() {
+	object::painting = painting;
 }

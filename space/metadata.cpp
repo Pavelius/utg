@@ -1,5 +1,8 @@
 #include "bsreq.h"
-#include "main.h"
+#include "game.h"
+#include "planet.h"
+#include "tag.h"
+#include "variant.h"
 
 NOBSDATA(variants)
 
@@ -13,7 +16,7 @@ BSDATAC(systemi, 32)
 
 BSMETA(landscapei) = {
 	BSREQ(id),
-	BSDST(resources, planet_resourcei),
+	BSDST(resources, planetri),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -22,19 +25,18 @@ BSMETA(planeti) = {
 	BSREQ(id),
 	BSREQ(system),
 	{}};
-BSMETA(planet_resourcei) = {
+BSMETA(planetri) = {
 	BSREQ(id),
 	{}};
 BSMETA(systemi) = {
 	BSREQ(id),
 	{}};
 
-#define VAR(T, KN) bsmeta<T>::meta, bsdata<T>::source_ptr, KN
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Landscape", VAR(landscapei, 1)},
 	{"Planet", VAR(planeti, 1)},
-	{"PlanetResource", VAR(planet_resourcei, 1)},
+	{"PlanetResource", VAR(planetri, 1)},
 	{"System", VAR(systemi, 1)},
 	{"Tag", VAR(tagi, 1)},
 };

@@ -9,16 +9,14 @@ void posable::setposition(point v) {
 	if(!p) {
 		p = addobject(v.x, v.y);
 		p->data = this;
-		p->string = getname();
-		if(p->aftercreate)
-			p->aftercreate(p);
+		//p->string = getname();
+		//if(p->aftercreate)
+		//	p->aftercreate(p);
 	}
-}
-
-point posable::getposition() const {
-	for(auto& e : bsdata<object>()) {
-		if(e.data == this)
-			return e;
+	position = v;
+	if(position != *p) {
+		auto po = p->addorder();
+		po->x = position.x;
+		po->y = position.y;
 	}
-	return {-1000, -1000};
 }
