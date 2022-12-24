@@ -179,27 +179,41 @@ static void choose_command_token(int bonus) {
 	choose_complex("ChooseCommandToken", 0, ask_command_tokens, apply_command_tokens, 0, bonus);
 }
 
-static void ask_choose_action() {
-	if(!player)
+static void apply_secondanary_ability(strategyi& e) {
+	if(!script::allow(e.secondary))
 		return;
+	if(player->ishuman()) {
+		if(!draw::yesno(getnm("ApplySecondanaryStrategy"), e.getname()))
+			return;
+		script::run(e.secondary);
+	} else {
+		if(d100() < 50)
+			script::run(e.secondary);
+	}
+}
+
+static void apply_primary_ability(strategyi& e) {
+	player->use_strategy = true;
+	script::run(e.primary);
+	auto push_player = player;
+	for(auto pa : game.players) {
+		if(pa == push_player)
+			continue;
+		player = pa;
+		apply_secondanary_ability(e);
+	}
+	player = push_player;
+}
+
+static void ask_choose_action() {
 	if(player->strategy && !player->use_strategy)
 		an.add(player->strategy, getnm(player->strategy->getname()));
 }
 static void apply_choose_action() {
 	if(bsdata<strategyi>::have(choose_result)) {
 		auto p = (strategyi*)choose_result;
-		if(player->strategy == p) {
-			script::run(p->primary);
-			player->use_strategy = true;
-			auto push_player = player;
-			for(auto pa : game.players) {
-				player = pa;
-				if(script::allow(p->secondary))
-					script::run(p->secondary);
-			}
-			player = push_player;
-		} else
-			script::run(p->secondary);
+		if(player->strategy == p)
+			apply_primary_ability(*p);
 	}
 }
 static void choose_action(int bonus) {

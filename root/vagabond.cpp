@@ -13,6 +13,15 @@ static void fix_roll(stringbuilder& sb) {
 	}
 }
 
+bool vagabond::isallow(move_s v) const {
+	switch(bsdata<movei>::elements[v].type) {
+	case WeaponSkill:
+		return moves.is(v);
+	default:
+		return true;
+	}
+}
+
 void vagabond::move(move_s v) {
 	auto push_move = lastmove; lastmove = bsdata<movei>::elements + v;
 	inflict.clear();

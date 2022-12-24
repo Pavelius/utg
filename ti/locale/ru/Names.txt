@@ -82,6 +82,7 @@ AntimassDeflectors: Отражатель материи
 AppTitle: Сумрачная империя
 Apply: Применить
 ApplyExhaust: Планета %1 истощена
+ApplySecondanaryStrategy: Ваш противник выполнил первичную способность стратегии [%1]. Вы хотите выполнить вторичную?
 Arretze: Аретзе
 AsteroidFieldSystem: Поле астероидов
 AsteroidFieldSystem2: Поле астероидов

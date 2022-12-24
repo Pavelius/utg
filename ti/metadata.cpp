@@ -125,7 +125,7 @@ BSDATA(varianti) = {
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Objective", VAR(objectivei, 1)},
 	{"Planet", VAR(planeti, 1)},
-	{"Player", VAR(playeri, 1)},
+	{"Player", VAR(playeri, 1), figetinfo<playeri>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
 	{"System", VAR(systemi, 1)},

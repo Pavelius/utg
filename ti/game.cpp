@@ -61,25 +61,6 @@ static void strategy_phase() {
 	game.sortbyinitiative();
 }
 
-static void action_phase() {
-	auto need_repeat = true;
-	auto push_player = player;
-	auto push_header = answers::header;
-	while(need_repeat) {
-		need_repeat = false;
-		for(auto p : game.players) {
-			if(p->pass_action_phase)
-				continue;
-			player = p;
-			answers::header = player->getname();
-			script::run("ChooseAction", 0);
-			need_repeat = true;
-		}
-	}
-	answers::header = push_header;
-	player = push_player;
-}
-
 static void score_objectives() {
 }
 
@@ -130,6 +111,25 @@ static bool isvictory() {
 void gamei::limitcapacity() {
 	for(auto& e : bsdata<systemi>()) {
 	}
+}
+
+static void action_phase() {
+	auto need_repeat = true;
+	auto push_player = player;
+	auto push_header = answers::header;
+	while(need_repeat) {
+		need_repeat = false;
+		for(auto p : game.players) {
+			if(p->pass_action_phase)
+				continue;
+			player = p;
+			answers::header = player->getname();
+			script::run("ChooseAction", 0);
+			need_repeat = true;
+		}
+	}
+	answers::header = push_header;
+	player = push_player;
 }
 
 void gamei::play() {

@@ -1,3 +1,3 @@
 ﻿In file `rules/MoveConcept.txt`:
- Line 2: Unknown variant identifier `ChangeRange`
- Line 16: Unknown variant identifier `ChangeRange`
+ Line 31: Unknown variant identifier `Exhause`
+ Line 32: Unknown variant identifier `Exhause`

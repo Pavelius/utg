@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "pushvalue.h"
 
 answers* answers::last;
 const char* answers::header;
@@ -82,6 +83,7 @@ bool draw::yesno(const char* title, ...) {
 	answers an;
 	an.add((void*)1, getnm("Yes"));
 	an.add((void*)0, getnm("No"));
+	pushvalue push(answers::column_count, 2);
 	return an.choose(temp);
 }
 

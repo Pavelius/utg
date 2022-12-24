@@ -2,6 +2,7 @@
 #include "harmable.h"
 #include "gender.h"
 #include "nameable.h"
+#include "move.h"
 #include "stringbuilder.h"
 
 #pragma once

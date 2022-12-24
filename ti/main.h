@@ -112,8 +112,7 @@ struct uniti : nameable {
 struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;
-	char			frame;
-	char			resources, influence;
+	char			frame, resources, influence;
 	flagable<1>		flags;
 	static planeti*	last;
 	void			exhaust();

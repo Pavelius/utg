@@ -14,7 +14,7 @@ static void generate_character() {
 	player->gender = Male;
 	player->abilities[Might] += 2;
 	player->abilities[Cunning] -= 1;
-	player->move(EngageMelee);
+	player->move(GrappleEnemy);
 }
 
 static void initialize() {

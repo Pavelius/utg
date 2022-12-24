@@ -74,17 +74,17 @@ BSMETA(itemi) = {
 
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1), 0, 0, 0, fnscript<abilityi>},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Item", VAR(itemi, 1)},
 	{"Denizen", VAR(npc, 1)},
 	{"Menu", VAR(menu, 1)},
-	{"Modifier", VAR(modifieri, 1), 0, 0, 0, fnscript<modifieri>},
+	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Move", VAR(movei, 1)},
-	{"MoveOption", VAR(moveoptioni, 3), 0, ftstatus<moveoptioni>},
-	{"Resource", VAR(harmi, 1), 0, 0, 0, fnscript<harmi>},
+	{"MoveOption", VAR(moveoptioni, 3), ftstatus<moveoptioni>},
+	{"Resource", VAR(harmi, 1), 0, 0, fnscript<harmi>},
 	{"Result", VAR(resulti, 1)},
 	{"Risk", VAR(riski, 1)},
-	{"Script", VAR(script, 1), 0, 0, 0, fnscript<script>},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Tag", VAR(tagi, 1)},
 	{"Widget", VAR(widget, 1)},
 };
