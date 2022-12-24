@@ -9,9 +9,6 @@ void posable::setposition(point v) {
 	if(!p) {
 		p = addobject(v.x, v.y);
 		p->data = this;
-		//p->string = getname();
-		//if(p->aftercreate)
-		//	p->aftercreate(p);
 	}
 	position = v;
 	if(position != *p) {

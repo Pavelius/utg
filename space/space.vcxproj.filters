@@ -31,9 +31,6 @@
     <ClCompile Include="planetr.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="roll12.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -80,43 +77,37 @@
     <ClInclude Include="mission.h">
       <Filter>Логика</Filter>
     </ClInclude>
-    <ClInclude Include="roll12.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Данные</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
-      <Filter>Данные</Filter>
-    </Text>
-    <Text Include="rules\Grammar.txt">
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Galaxy.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\PlanetNames.txt">
-      <Filter>Данные</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Данные</Filter>
-    </Text>
-    <Text Include="rules\Quest.txt">
-      <Filter>Данные</Filter>
-    </Text>
     <Text Include="locale\ru\Descriptions.txt">
       <Filter>Локализация</Filter>
     </Text>
-    <Text Include="locale\ru\NamesOf.txt">
-      <Filter>Данные</Filter>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Локализация</Filter>
     </Text>
-    <Text Include="locale\ru\NamesSh.txt">
-      <Filter>Данные</Filter>
+    <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\MonthNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\PlanetNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\AbilityNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\Quest.txt">
+      <Filter>Локализация</Filter>
     </Text>
   </ItemGroup>
 </Project>

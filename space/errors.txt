@@ -1,7 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 10: Not found field `Population` in dataset `resources`
- Line 12: Not found field `Population` in dataset `resources`
- Line 14: Not found field `Population` in dataset `resources`
- Line 16: Not found field `Population` in dataset `resources`
- Line 18: Not found field `Population` in dataset `resources`
- Line 20: Not found field `Population` in dataset `resources`
+﻿In file `locale/ru/Quest.txt`:
+ Line 10: Can't find variant `Roll`

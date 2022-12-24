@@ -3,6 +3,7 @@
 #include "draw_strategy.h"
 #include "game.h"
 #include "planet.h"
+#include "pushvalue.h"
 
 using namespace draw;
 
@@ -46,6 +47,14 @@ static void textcn(const char* format) {
 	height -= dy;
 }
 
+static void textcx(const char* format) {
+	auto push_caret = caret;
+	caret.x -= textw(format) / 2;
+	text(format);
+	caret = push_caret;
+	caret.y += texth();
+}
+
 static void headersm(const char* format) {
 	auto push_fore = fore;
 	auto push_font = font;
@@ -63,6 +72,13 @@ static void texth3(const char* format) {
 	font = push_font;
 }
 
+static const char* getnmsh(const char* id) {
+	auto pn = getnme(str("%1Short", id));
+	if(pn)
+		return pn;
+	return getnm(id);
+}
+
 static void panel(const abilityi* pi, const char* format) {
 	auto push_caret = caret;
 	auto push_height = height;
@@ -77,10 +93,8 @@ static void panel(const abilityi* pi, const char* format) {
 }
 
 static void panel(const abilityi* pi, const char* format, int w) {
-	auto push_width = width;
-	width = w;
+	pushvalue push_width(width, w);
 	panel(pi, format);
-	width = push_width;
 }
 
 static void panel(const char* format, int panel_width) {
@@ -98,7 +112,12 @@ static const char* getmonsthname(int i) {
 		"September", "October", "November",
 		"December"
 	};
-	return getnmof(maptbl(names, i - 1));
+	static char temp[32];
+	static stringbuilder sb(temp);
+	sb.clear();
+	sb.addof(getnm(maptbl(names, i - 1)));
+	sb.lower();
+	return temp;
 }
 
 static void data_panel() {
@@ -126,16 +145,21 @@ void status_info(void) {
 	height = 32;
 	showform();
 	data_panel();
-	for(auto& e : bsdata<abilityi>())
-		req_panel(&e, 2);
+	for(auto& e : bsdata<abilityi>()) {
+		if(e.is(Ability))
+			req_panel(&e, 2);
+	}
 	caret = push_caret;
 	caret.y += height;
 	height = push_height;
 }
 
 void planeti::paint() const {
-	circlef(4);
-	circle(4);
+	const auto size = 4;
+	circlef(size);
+	circle(size);
+	caret.y += size;
+	textcx(getnm(id));
 }
 
 void systemi::paint() const {

@@ -2,16 +2,13 @@
 #include "crt.h"
 
 BSDATA(abilityi) = {
-	{"Assault"},
-	{"Comunication"},
-	{"Exploration"},
-	{"Medicine"},
-	{"Hunting"},
-	{"Research"},
-};
-assert_enum(abilityi, Research)
-
-BSDATA(statei) = {
+	{"Assault", FG(Ability)},
+	{"Comunication", FG(Ability)},
+	{"Exploration", FG(Ability)},
+	{"Medicine", FG(Ability)},
+	{"Hunting", FG(Ability)},
+	{"Pilot", FG(Ability)},
+	{"Research", FG(Ability)},
 	{"Crew"},
 	{"Discontent", FG(NegativeState)},
 	{"Supply"},
@@ -21,4 +18,4 @@ BSDATA(statei) = {
 	{"Success"},
 	{"Advantage"},
 };
-assert_enum(statei, Advantage)
+assert_enum(abilityi, Advantage)

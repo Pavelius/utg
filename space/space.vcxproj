@@ -153,7 +153,6 @@
     <ClCompile Include="planetr.cpp" />
     <ClCompile Include="posable.cpp" />
     <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="roll12.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
@@ -165,7 +164,6 @@
     <ClInclude Include="planet.h" />
     <ClInclude Include="planetr.h" />
     <ClInclude Include="posable.h" />
-    <ClInclude Include="roll12.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="timeable.h" />
@@ -177,16 +175,15 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\AbilityNames.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
-    <Text Include="locale\ru\NamesOf.txt" />
-    <Text Include="locale\ru\NamesSh.txt" />
+    <Text Include="locale\ru\MonthNames.txt" />
     <Text Include="locale\ru\PlanetNames.txt" />
+    <Text Include="locale\ru\Quest.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
-    <Text Include="rules\Grammar.txt" />
-    <Text Include="rules\Quest.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

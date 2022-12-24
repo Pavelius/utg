@@ -4,7 +4,6 @@
 #include "utg.h"
 
 static void generate_character() {
-	char temp[16]; stringbuilder sb(temp);
 	//game.clear();
 	//game.suffer.add(Injury, 2);
 	//game.inflict.add(Injury, 1);

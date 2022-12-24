@@ -7,6 +7,9 @@
 #include "quest.h"
 #include "script.h"
 
+static char console[512];
+static stringbuilder sb_console(console);
+
 void initialize_interface();
 
 static landscapei* random_landscape() {
@@ -49,11 +52,13 @@ static void test_game() {
 
 static void initialize() {
 	bsreq::read("rules/Galaxy.txt");
+	quest::read("locale/ru/Quest.txt");
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::initialize();
+	answers::console = &sb_console;
 	initialize_interface();
 	return draw::strategy(test_game, initialize);
 }

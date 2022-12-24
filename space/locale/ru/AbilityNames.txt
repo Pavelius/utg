@@ -1,0 +1,14 @@
+﻿Assault: Схватка
+AssaultShort: Схв
+Comunication: Связи
+ComunicationShort: Свз
+Exploration: Разведка
+ExplorationShort: Раз
+Hunting: Охота
+HuntingShort: Охт
+Medicine: Медицина
+MedicineShort: Мед
+Pilot: Пилотирование
+PilotShort: Пил
+Research: Исследование
+ResearchShort: Исл

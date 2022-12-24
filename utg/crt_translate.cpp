@@ -202,16 +202,6 @@ const char* getnme(const char* id) {
 	return p->name;
 }
 
-const char* getnmsh(const char* id) {
-	if(!id || id[0] == 0)
-		return "";
-	translate key = {id, 0};
-	auto p = (translate*)bsearch(&key, source_namesh.data, source_namesh.getcount(), source_namesh.getsize(), compare);
-	if(!p || !p->name || !p->name[0])
-		return getnm(id);
-	return p->name;
-}
-
 const char* getnmof(const char* id) {
 	if(!id || id[0] == 0)
 		return "";

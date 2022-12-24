@@ -232,7 +232,7 @@ void stringbuilder::addlocalefile(const char* name, const char* ext) {
 const char* stringbuilder::getbycount(const char* id, int count) {
 	switch(count) {
 	case 0: case 1: return getnm(id);
-	case 2: case 3: case 4: return getnmof(id);
+	//case 2: case 3: case 4: return getnmof(id);
 	default: return getnmpl(id);
 	}
 }
@@ -724,6 +724,7 @@ void stringbuilder::addof(const char* s) {
 		{"ел", "ла"},
 		{"ий", "ого"},
 		{"ка", "ки"},
+		{"ль", "ля"},
 		{"ны", "н"},
 		{"ое", "ого"},
 		{"рь", "ря"},
