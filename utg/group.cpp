@@ -1,7 +1,7 @@
 #include "bsreq.h"
 #include "logparse.h"
 #include "group.h"
-#include "utg.h"
+#include "draw_utg.h"
 
 using namespace log;
 

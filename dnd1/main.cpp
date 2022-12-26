@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "charname.h"
 #include "draw_object.h"
+#include "draw_utg.h"
 #include "main.h"
 
 static creature* create_player(class_s type, gender_s gender, feat_s feat) {

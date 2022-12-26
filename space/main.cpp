@@ -41,13 +41,13 @@ static void generate_systems() {
 
 static void test_game() {
 	game.setdate(3000, 4, 15);
+	game.add(Insight, 1);
 	auto year = game.getyear();
 	auto month = game.getmonth();
 	auto day = game.getmonthday();
 	generate_systems();
 	generate_planets();
-	answers an;
-	an.choose(0, getnm("Cancel"), 1);
+	quest::run(1);
 }
 
 static void initialize() {
@@ -59,6 +59,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::initialize();
 	answers::console = &sb_console;
+	answers::prompt = console;
 	initialize_interface();
 	return draw::strategy(test_game, initialize);
 }

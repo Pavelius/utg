@@ -281,7 +281,7 @@
     <ClInclude Include="draw.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="utg.h">
+    <ClInclude Include="draw_utg.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="io_stream.h">
@@ -466,6 +466,9 @@
     </ClInclude>
     <ClInclude Include="widget.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="bsenum.h">
+      <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,3 @@
+﻿LeatherArmor: Кожанная броня
+Shield: Щит
+Sword: Меч

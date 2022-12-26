@@ -144,8 +144,12 @@ static bool window(bool hilite, const char* string, const char* resid, const cha
 	height = push_height;
 	if(string)
 		textf(string);
-	if(prompt)
+	if(prompt) {
+		auto push_fore = fore;
+		fore = colors::h3;
 		textf(prompt);
+		fore = push_fore;
+	}
 	caret.y += metrics::border * 2;
 	return rs;
 }

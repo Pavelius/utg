@@ -90,7 +90,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1)},
 	{"Class", VAR(classi, 1)},
-	{"Creature", VAR(creature, 0), 0, creature::getstatus, creature::getproperty},
+	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
 	{"Equipment", VAR(equipmenti, 2)},
 	{"Enchantment", VAR(enchantmenti, 3)},
 	{"EnchantmentSet", VAR(enchantmentseti, 1)},

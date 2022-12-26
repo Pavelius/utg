@@ -5,7 +5,7 @@
 enum ability_s : unsigned char {
 	Assault, Comunication, Exploration, Medicine, Hunting, Pilot, Research,
 	Crew, Discontent, Supply, Machinery,
-	Inside, Problem, Success, Advantage,
+	Insight, Problem, Success, Advantage,
 };
 enum statef : unsigned char {
 	Ability, NegativeState,

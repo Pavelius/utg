@@ -1,7 +1,7 @@
 #include "advancement.h"
 #include "answers.h"
 #include "bsreq.h"
-#include "utg.h"
+#include "draw_utg.h"
 
 BSMETA(advancement) = {
 	BSREQ(type),

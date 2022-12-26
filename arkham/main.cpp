@@ -1,7 +1,7 @@
 #include "bsreq.h"
 #include "draw_object.h"
 #include "main.h"
-#include "strategy.h"
+#include "draw_strategy.h"
 
 #ifdef _DEBUG
 

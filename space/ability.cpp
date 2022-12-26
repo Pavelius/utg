@@ -13,7 +13,7 @@ BSDATA(abilityi) = {
 	{"Discontent", FG(NegativeState)},
 	{"Supply"},
 	{"Machinery"},
-	{"Reroll"},
+	{"Insight"},
 	{"Problem", FG(NegativeState)},
 	{"Success"},
 	{"Advantage"},

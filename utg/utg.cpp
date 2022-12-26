@@ -1,6 +1,6 @@
 #include "io_stream.h"
 #include "pushvalue.h"
-#include "utg.h"
+#include "draw_utg.h"
 
 fngetinfo		utg::callback::getinfo;
 fnstatus		utg::callback::getstatus;

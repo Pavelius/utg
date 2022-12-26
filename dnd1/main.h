@@ -1,4 +1,5 @@
 #include "ability.h"
+#include "draw_utg.h"
 #include "avatarable.h"
 #include "dice.h"
 #include "chooseoption.h"
@@ -9,7 +10,6 @@
 #include "nameable.h"
 #include "quest.h"
 #include "speech.h"
-#include "utg.h"
 #include "wear.h"
 
 #pragma once

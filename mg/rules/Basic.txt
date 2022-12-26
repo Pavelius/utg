@@ -1,0 +1,52 @@
+#Skill
+
+Administrator
+ help Archivist Orator
+Apiarist
+ help Scientist Insectrist Loremouse
+Archivist
+ help Cartographer Administrator
+Armorer
+ help Smith Scientist
+
+#Rang
+
+Tenderpaw age(14 17)
+ skills Will(2) Health(6)
+
+#Tag
+
+Bulky
+ bonus Feint(-1) Maneuver(-1)
+Deadly
+ success Attack(1)
+Hooked
+ bonus Maneuver(1)
+ success Maneuver(1)
+Slow
+ bonus Feint(-1) Defend(-1)
+LongRange
+ bonus Maneuver(2)
+MediumRange
+ bonus Maneuver(1)
+Versatile
+ bonus Attack(1) Defend(1)
+Unwieldy
+ bonus Attack(-1)
+
+#Item
+
+Axe
+ tags Deadly Slow
+Bow
+ tags Missile LongRange Fragile TwoHanded
+Halberd
+ tags Versatile Bulky TwoHanded
+HookAndLine
+ tags Hooked Unwieldy
+Knife
+ tags ShortAndQuick Thrown
+Shield
+ tags Protection Heavy
+Sling
+ tags Missile MediumRange

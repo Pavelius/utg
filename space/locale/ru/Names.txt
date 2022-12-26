@@ -1,7 +1,12 @@
-﻿AppTitle: Космические миссии
+﻿AcceptResult: Принять результат
+AppTitle: Космические миссии
 Cancel: Отмена
 Continue: Продолжить
+DecreaseAbility: Уменьшено %1 на %2i
 ErrorNotFoundRule: Не найдено правило '%1'
 ErrorParse: Ошибка при разборе
+IncreaseAbility: Увеличено %1 на %2i
 Marines: Морпехи
 Squad: Отряд
+UseInside: Использовать знания для переброса результата
+YouRolled: Вы выбросили %1i%+3i=%1i

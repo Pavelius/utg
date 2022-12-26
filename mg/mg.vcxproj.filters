@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{09940b32-bd34-4e9f-9ca0-3ffd83bb68db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic">
+      <UniqueIdentifier>{56fe0bbc-5963-4c92-9c3d-6aa8004832d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="condition.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="animal.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="weather.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="rang.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>Basic</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>Basic</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
