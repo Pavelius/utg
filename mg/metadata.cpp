@@ -48,6 +48,7 @@ BSMETA(rangi) = {
 	BSREQ(age),
 	BSREQ(party_count),
 	BSREQ(wises), BSREQ(talented), BSREQ(convice), BSREQ(mentors), BSREQ(specialization),
+	BSREQ(trait_tender), BSREQ(trait_leader),
 	BSDST(skills, skilli),
 	{}};
 BSMETA(script) = {

@@ -1,5 +1,9 @@
 #List
 
+YouGuardTraits
+ elements Bitter Bodyguard Brave Calm Clever Compassionate Cunning Curious Defender Driven\
+  EarlyRiser Fearful Fearless Jaded Leader NaturalBearings Nocturnal Oldfur Quiet Scarred\
+  SharpEyed Skeptical Skinny Stoic Thoughtful Tough WeatherSense WiseTrait
 YouTalentedSkills
  elements Administrator Apiarist Archivist Armorer Baker Boatcrafter Brewer Carpenter Cartographer Cook\
   Deceiver Fighter Glazier Haggler Harvester Healer Hunter Insectrist Instructor Laborer\
@@ -9,6 +13,11 @@ YouParentSkills
  elements Apiarist Archivist Armorer Baker Boatcrafter Brewer\
   Carpenter Cartographer Glazier Harvester Insectrist Miller\
   Potter Smith Stonemason Weaver
+YouParentTraits
+ elements Bigpaw Brave Calm Clever Compassionate Curious DeepEar Defender Determined EarlyRiser\
+  Extrovert Fearful Fearless Fiery Generous Graceful Longtail Lost NaturalBearings Nimble\
+  QuickWitted Quiet Scarred Sharptooth Short Skeptical Skinny Stubborn Suspicious Tall\
+  Tough WolfsSnout
 YouMasterCrafterSkills
  elements Apiarist Archivist Armorer Baker Boatcrafter Brewer\
   Carpenter Cartographer Glazier Harvester Insectrist Miller\
@@ -19,6 +28,12 @@ YouSpecializationSkills
  elements Fighter Healer Hunter Instructor Pathfinder Scout Survivalist WeatherWatcher
 YouSocialSkills
  elements Deceiver Orator Persuader
+YouNaturalTraits
+ elements Bigpaw Bitter Bodyguard Bold Brave Calm Clever Compassionate Cunning Curious\
+  DeepEar Defender Determined Driven EarlyRiser Extrovert Fat Fearful Fearless Fiery\
+  Generous Graceful GuardsHonor Innocent Jaded Leader Longtail Lost NaturalBearings Nimble\
+  Nocturnal Oldfur QuickWitted Quiet Scarred SharpEyed Sharptooth Short Skeptical Skinny\
+  Stoic Stubborn Suspicious Tall Thoughtful Tough WeatherSense WiseTrait WolfsSnout Young
 
 #Skill
 
@@ -33,15 +48,15 @@ Armorer
 
 #Rang
 
-Tenderpaw age(14 17) wises(1) talented(2) convice(1) mentors(1)
+Tenderpaw age(14 17) wises(1) talented(2) convice(1) mentors(1) trait_tender(1)
  skills Nature(3) Will(2) Health(6) Resources(1) Circles(1) Pathfinder(2) Scout(2) Laborer(2)
 Guardmouse age(18 25) wises(1) talented(1) convice(1) mentors(1) specialization(1)
  skills Nature(3) Will(3) Health(5) Resources(2) Circles(2) Fighter(3) Haggler(2) Scout(2) Pathfinder(3) Survivalist(2)
 PatrolGuard age(21 50) wises(2) talented(1) convice(1) mentors(1) specialization(1)
  skills Nature(3) Will(4) Health(4) Resources(3) Circles(3) Cook(2) Fighter(3) Hunter(3) Scout(2) Healer(2) Pathfinder(2) Survivalist(2) WeatherWatcher(2)
-PatrolLeader age(21 60) wises(3) party_count(1) talented(1) convice(2) mentors(2) specialization(1)
+PatrolLeader age(21 60) wises(3) party_count(1) talented(1) convice(2) mentors(2) specialization(1) trait_leader(1)
  skills Nature(3) Will(5) Health(4) Resources(4) Circles(3) Cook(2) Fighter(3) Hunter(3) Instructor(2) Loremouse(2) Persuader(2) Pathfinder(3) Scout(2) Survivalist(3) WeatherWatcher(2)
-GuardCaptain age(41 60) wises(4) party_count(1) talented(2) convice(2) mentors(1) specialization(1)
+GuardCaptain age(41 60) wises(4) party_count(1) talented(2) convice(2) mentors(1) specialization(1) trait_leader(1)
  skills Nature(3) Will(6) Health(3) Resources(5) Circles(4) Administrator(3) Fighter(3) Healer(2) Hunter(3) Instructor(2) Militarist(3) Orator(2) Pathfinder(3) Scout(3) Survivalist(3) WeatherWatcher(3)
 
 #Tag

@@ -73,6 +73,7 @@ static const traiti* choose_trait(const char* header, const variants& source) {
 			continue;
 		an.add(p, p->getname());
 	}
+	pushvalue push_columns(answers::column_count, 3);
 	return (traiti*)an.choose(header);
 }
 
@@ -154,6 +155,13 @@ static void add_skill_list(const char* id, int columns, int count, skill_s* resu
 	add_skill(getnm(id), list->elements, columns, count, result);
 }
 
+static void add_trait_list(const char* id) {
+	auto list = bsdata<listi>::find(id);
+	if(!list)
+		return;
+	add_trait(getnm(id), list->elements);
+}
+
 static void add_quest(const char* id) {
 	auto p = bsdata<questlist>::find(id);
 	if(!p)
@@ -180,4 +188,9 @@ void hero::create() {
 	add_skill_list("YouSpecializationSkills", 2, getrang()->specialization, &specialization);
 	questrun("NatureQuest");
 	add_new_wises(getrang()->wises);
+	add_trait_list("YouNaturalTraits");
+	if(getrang()->trait_tender > 0)
+		add_trait_list("YouParentTraits");
+	if(getrang()->trait_leader > 0)
+		add_trait_list("YouGuardTraits");
 }

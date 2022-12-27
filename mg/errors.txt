@@ -1,1 +1,2 @@
-﻿Can't find file 'locale/ruNatureQuest.txt'
+﻿In file `rules/Basic.txt`:
+ Line 27: Can't find variant `Wise`
