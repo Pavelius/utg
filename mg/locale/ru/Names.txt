@@ -16,7 +16,13 @@ MouseGuard: Мышинный гвардеец
 No: Нет
 Success: Успех
 Yes: Да
+YouMasterCrafterSkills: Какой местер-ремесленник учил вас в Локхэйвене?
+YouMentorSkills: На что делал упор ваш наставник во время обучения?
 YouNativeSkill: Выбирайте, каким навыком вы овладели с рождения
 YouNativeTrait: Выбирайте, какая черта хараткерна вам с рождения
+YouParentSkills: Чему вас научили родители?
+YouSocialSkills: Как вы убеждаете других сделать что-то или просто поверить вам?
+YouSpecializationSkills: На чем вы специализируетесь?
+YouTalentedSkills: В чем вы талантливы от природы?
 WhatDoYouDo: Что будете делать?
 WhereWereYouBorn: Где вы родились?

@@ -2,6 +2,7 @@
 #include "actable.h"
 #include "crt.h"
 #include "groupname.h"
+#include "list.h"
 #include "hero.h"
 #include "pushvalue.h"
 #include "rang.h"
@@ -33,7 +34,7 @@ static const rangi* choose_rang() {
 
 static const char* choose_options(const char* header, int count, int maximum_count) {
 	static char temp[260];
-	if(!maximum_count)
+	if(maximum_count <= 1)
 		return header;
 	stringbuilder sb(temp);
 	sb.add(header); sb.adds("(%Left [%1i]):", maximum_count - count);
@@ -99,7 +100,7 @@ static void add_player_rang() {
 	player->setskills(p->skills);
 }
 
-static const skilli* choose_skill(const char* header, const variants& source) {
+static const skilli* choose_skill(const char* header, const variants& source, int columns, int count, int maximum_count) {
 	an.clear();
 	for(auto v : source) {
 		skilli* p = v;
@@ -109,13 +110,25 @@ static const skilli* choose_skill(const char* header, const variants& source) {
 			continue;
 		an.add(p, p->getname());
 	}
-	return (skilli*)an.choose(header);
+	pushvalue push_columns(answers::column_count, columns);
+	return (skilli*)an.choose(choose_options(header, count, maximum_count));
 }
 
-static void add_skill(const char* header, const variants& source) {
+static void add_skill(const char* header, const variants& source, int columns) {
 	marked.clear();
-	auto p = choose_skill(header, source);
+	auto p = choose_skill(header, source, columns, 0, 0);
 	raise_skill(p);
+}
+
+static void add_skill(const char* header, const variants& source, int columns, int maximum_count, skill_s* result) {
+	marked.clear();
+	for(auto i = 0; i < maximum_count; i++) {
+		auto p = choose_skill(header, source, columns, i, maximum_count);
+		marked.add(p);
+		raise_skill(p);
+		if(result)
+			*result = (skill_s)getbsi(p);
+	}
 }
 
 static void add_trait(const char* header, const variants& source) {
@@ -127,8 +140,20 @@ static void add_trait(const char* header, const variants& source) {
 static void add_player_born() {
 	auto p = choose_born();
 	player->setborn(p);
-	add_skill(getnm("YouNativeSkill"), player->getborn()->skills);
+	add_skill(getnm("YouNativeSkill"), player->getborn()->skills, 1);
 	add_trait(getnm("YouNativeTrait"), player->getborn()->traits);
+}
+
+static void add_skill_list(const char* id, int columns, int count, skill_s* result = 0) {
+	auto list = bsdata<listi>::find(id);
+	if(!list)
+		return;
+	add_skill(getnm(id), list->elements, columns, count, result);
+}
+
+void hero::clear() {
+	memset(this, 0, sizeof(*this));
+	setname(0xFFFF);
 }
 
 void hero::create() {
@@ -137,5 +162,11 @@ void hero::create() {
 	setname(groupname::randomid("MouseguardMale"));
 	add_player_rang();
 	add_player_born();
-	add_new_wises(bsdata<rangi>::elements[rang].wises);
+	add_skill_list("YouTalentedSkills", 2, getrang()->talented);
+	add_skill_list("YouParentSkills", 2, 1);
+	add_skill_list("YouSocialSkills", 1, getrang()->convice);
+	add_skill_list("YouMasterCrafterSkills", 1, 1);
+	add_skill_list("YouMentorSkills", 2, getrang()->mentors);
+	add_skill_list("YouSpecializationSkills", 2, getrang()->specialization, &specialization);
+	add_new_wises(getrang()->wises);
 }

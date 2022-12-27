@@ -13,8 +13,9 @@ class creature : public actable, public conditionable, public traitable, public 
 };
 class hero : public creature {
 	unsigned short rang, born;
+	skill_s		specialization;
 public:
-	void		clear() { memset(this, 0, sizeof(*this)); }
+	void		clear();
 	void		create();
 	const enviromenti* getborn() const { return getbs<enviromenti>(born); }
 	const rangi* getrang() const { return getbs<rangi>(rang); }

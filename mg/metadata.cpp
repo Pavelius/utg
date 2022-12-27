@@ -1,8 +1,9 @@
 #include "animal.h"
 #include "bsreq.h"
 #include "condition.h"
-#include "item.h"
 #include "enviroment.h"
+#include "item.h"
+#include "list.h"
 #include "hero.h"
 #include "rang.h"
 #include "skill.h"
@@ -44,7 +45,7 @@ BSMETA(rangi) = {
 	BSREQ(id),
 	BSREQ(age),
 	BSREQ(party_count),
-	BSREQ(wises),
+	BSREQ(wises), BSREQ(talented), BSREQ(convice), BSREQ(mentors), BSREQ(specialization),
 	BSDST(skills, skilli),
 	{}};
 BSMETA(skilli) = {
@@ -70,8 +71,9 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Action", VAR(actioni, 1)},
 	{"Animal", VAR(animali, 1)},
-	{"Item", VAR(itemi, 1)},
 	{"Enviroment", VAR(enviromenti, 1)},
+	{"Item", VAR(itemi, 1)},
+	{"List", VAR(listi, 1)},
 	{"Rang", VAR(rangi, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"Tag", VAR(tagi, 1)},
