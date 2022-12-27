@@ -75,10 +75,18 @@ Swamp
 TallGrass
 
 Barkstone type(City)
+ skills Carpenter Potter Glazier
 Cooperwood type(City)
+ skills Smith Haggler
 Elmoss type(City)
+ skills Carpenter Harvester
 Ivydale type(City)
+ skills Harvester Baker
 Lockhaven type(City)
+ skills Weaver Armorer
 PortSumac type(City)
+ skills Boatcrafter WeatherWatcher
 Shaleburrow type(City)
+ skills Stonemason Harvester Miller
 Sprucetuck type(City)
+ skills Scientist Loremouse

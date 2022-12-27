@@ -1,6 +1,2 @@
-﻿In file `Names.txt`:
-CooperwoodWise: Define translate
-ElmossWise: Define translate
-IvydaleWise: Define translate
-ShaleburrowWise: Define translate
-SprucetuckWise: Define translate
+﻿In file `rules/Traits.txt`:
+ Line 1: Not find data type for `Trait`

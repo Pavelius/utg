@@ -12,3 +12,8 @@ struct conditioni {
 	skilla		recover;
 	char		recover_ob;
 };
+class conditionable {
+	conditiona	conditions;
+public:
+	bool		is(condition_s v) const { return conditions.is(v); }
+};

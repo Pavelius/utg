@@ -2,20 +2,6 @@
 
 #pragma once
 
-enum trait_s : unsigned char {
-	Bigpaw, Bitter, Bodyguard, Bold, Brave,
-	Calm, Clever, Compassionate, Cunning, Curious,
-	DeepEar, Defender, Determined, Driven, EarlyRiser,
-	Extrovert, Fat, Fearful, Fearless, Fiery,
-	Generous, Graceful, GuardsHonor, Innocent, Jaded,
-	Leader, Longtail, Lost, NaturalBearings, Nimble,
-	Nocturnal, Oldfur, QuickWitted, Quiet, Scarred,
-	SharpEyed, Sharptooth, Short, Skeptical, Skinny,
-	Stoic, Stubborn, Suspicious, Tall, Thoughtful,
-	Tough, WeatherSense, WiseTrait, WolfsSnout, Young,
-	Alert, HardWorker, Independent, OpenMinded, SteadyPaw, Inquisitive, Rational,
-	FirstTraits = Bigpaw, LastTraits = Rational,
-};
 enum animal_s : unsigned char {
 	Badger, Bear, Crab, Deer, Fox, Frog, Hawk, Moose, Mouse, Owl, Racoon, Snake, Squirrel, Turtle, Weasel, Wolf,
 };

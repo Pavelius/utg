@@ -1,4 +1,5 @@
 #include "nameable.h"
+#include "variant.h"
 
 #pragma once
 
@@ -9,5 +10,6 @@ struct enviroment_typei : nameable {
 };
 struct enviromenti : nameable {
 	enviroment_type_s	type;
+	variants			skills;
 };
 extern enviromenti* environment;

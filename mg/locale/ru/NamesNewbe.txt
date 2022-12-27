@@ -1,1 +1,6 @@
 ﻿AppTitle: 
+Carpenter: 
+Harvester: 
+Miller: 
+Stonemason: 
+YouNativeSkill: 

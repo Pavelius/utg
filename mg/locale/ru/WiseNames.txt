@@ -1,7 +1,7 @@
 ﻿BirdsWise: Знания о птицах
 BurrowWise: Знания о подземніх обитателях
 MammalsWise: Знания о млекопитающих
-PredatorWise: Знания о птицах
+PredatorWise: Знания о хищниках
 CoastWise: Знания о побережье
 ForestWise: Знания о лесах
 LakeWise: Знания озер

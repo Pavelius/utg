@@ -1,0 +1,11 @@
+#Trait
+
+Bigpaw
+ advantages Fighter Carpenter Harvester Hunter Laborer
+ disadvantages Nature Circles Administrator Archivist Armorer Cook Healer Smith Weaver
+Bitter
+ advantages Administrator Archivist Deceiver Instructor Militarist
+ disadvantages Circles Orator Persuader Haggler
+Bodyguard
+ advantages Nature Health Will Fighter Hunter Survivalist
+ disadvantages Laborer Orator Persuader Haggler Deceiver Loremouse

@@ -17,14 +17,14 @@ static void set_mouse_guard(int count) {
 
 static void create_party() {
 	pushvalue push_interactive(answers::interactive);
-	answers::interactive = true;
+	answers::interactive = false;
 	set_mouse_guard(1);
 	player->create();
-	player->add(Fighter, 2);
+	player->addskill(Fighter, 2);
 	party.add(player);
 	set_mouse_guard(2);
 	player->create();
-	player->add(Fighter, 3);
+	player->addskill(Fighter, 3);
 	party.add(player);
 }
 
@@ -36,6 +36,7 @@ static void starting() {
 static void initialize() {
 	groupname::read("locale/ru/Mouseguards.txt");
 	bsreq::read("rules/Wise.txt");
+	bsreq::read("rules/Traits.txt");
 }
 
 int	main(int argc, char *argv[]) {

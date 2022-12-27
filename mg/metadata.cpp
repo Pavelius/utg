@@ -6,6 +6,7 @@
 #include "enviroment.h"
 #include "rang.h"
 #include "skill.h"
+#include "trait.h"
 #include "variant.h"
 #include "wise.h"
 
@@ -34,6 +35,7 @@ BSMETA(itemi) = {
 BSMETA(enviromenti) = {
 	BSREQ(id),
 	BSENM(type, enviroment_typei),
+	BSREQ(skills),
 	{}};
 BSMETA(enviroment_typei) = {
 	BSREQ(id),
@@ -54,6 +56,11 @@ BSMETA(tagi) = {
 	BSDST(bonus, actioni),
 	BSDST(success, actioni),
 	{}};
+BSMETA(traiti) = {
+	BSREQ(id),
+	BSFLG(advantages, skilli),
+	BSFLG(disadvantages, skilli),
+	{}};
 BSMETA(wisei) = {
 	BSREQ(id),
 	BSREQ(subject),
@@ -68,6 +75,7 @@ BSDATA(varianti) = {
 	{"Rang", VAR(rangi, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"Tag", VAR(tagi, 1)},
+	{"Trait", VAR(traiti, 1)},
 	{"Wise", VAR(wisei, 1)},
 };
 BSDATAF(varianti)

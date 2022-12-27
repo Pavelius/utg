@@ -45,6 +45,12 @@
     <ClCompile Include="wise.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="trait.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="hero_roll.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -86,6 +92,12 @@
     <ClInclude Include="wise.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="trait.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="roll.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -117,6 +129,9 @@
     </Text>
     <Text Include="locale\ru\WiseNames.txt">
       <Filter>Locale</Filter>
+    </Text>
+    <Text Include="rules\Traits.txt">
+      <Filter>Basic</Filter>
     </Text>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@ ChooseKnownWise: Выбирайте знания, которые вам изве
 ChooseRang: Выбирайте ваше положение в гвардии
 CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
+CharacterTraitsHelp: Помочь себе чертой [%1].
 Dice: Кубик
 Left: Осталось
 MakeRoll: Бросить кубики

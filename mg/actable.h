@@ -1,9 +1,11 @@
+#include "crt.h"
 #include "gender.h"
 #include "stringbuilder.h"
 
 #pragma once
 
 extern stringbuilder sb;
+extern adat<const void*, 32> marked;
 
 class actable {
 	short unsigned	type, name;
@@ -15,3 +17,5 @@ public:
 	const char*		getname() const;
 	void			setname(short unsigned v) { name = v; }
 };
+bool ismarked(const void* p);
+void markvalue(const void* p);

@@ -145,12 +145,14 @@
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="enviroment.cpp" />
+    <ClCompile Include="hero_roll.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="trait.cpp" />
     <ClCompile Include="weather.cpp" />
     <ClCompile Include="wise.cpp" />
   </ItemGroup>
@@ -164,8 +166,10 @@
     <ClInclude Include="enviroment.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="rang.h" />
+    <ClInclude Include="roll.h" />
     <ClInclude Include="skill.h" />
     <ClInclude Include="tag.h" />
+    <ClInclude Include="trait.h" />
     <ClInclude Include="weather.h" />
     <ClInclude Include="wise.h" />
   </ItemGroup>
@@ -184,6 +188,7 @@
     <Text Include="locale\ru\WiseNames.txt" />
     <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Traits.txt" />
     <Text Include="rules\Wise.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
