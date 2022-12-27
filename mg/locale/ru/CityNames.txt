@@ -1,0 +1,8 @@
+﻿Barkstone: Древоград
+Cooperwood: Меднолесье
+Elmoss: Моховяз
+Ivydale: Плющи
+Lockhaven: Локъейвэн
+PortSumac: Порт-Сумах
+Shaleburrow: Сланцевая нора
+Sprucetuck: Подельник

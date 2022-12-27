@@ -1,4 +1,10 @@
-﻿ChooseKnownWise: Выбирайте знания, которые вам известны
+﻿Tenderpaw: Лапа помощи
+Guardmouse: Страж
+PatrolGuard: Патрульный
+PatrolLeader: Лидер патруля
+GuardCaptain: Капитан
+
+ChooseKnownWise: Выбирайте знания, которые вам известны
 ChooseRang: Выбирайте ваше положение в гвардии
 CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
@@ -10,3 +16,4 @@ No: Нет
 Success: Успех
 Yes: Да
 WhatDoYouDo: Что будете делать?
+WhereWereYouBorn: Где вы родились?

@@ -133,6 +133,16 @@ static const char* choose_options(const char* header, int count, int maximum_cou
 	return temp;
 }
 
+static const enviromenti* choose_born() {
+	an.clear();
+	for(auto& e : bsdata<enviromenti>()) {
+		if(e.type == Wilderness)
+			continue;
+		an.add(&e, e.getname());
+	}
+	return (enviromenti*)an.choose(getnm("WhereWereYouBorn"));
+}
+
 static const wisei* choose_wise(const char* header, int count, int maximum_count) {
 	pushvalue columns(answers::column_count, 2);
 	an.clear();
@@ -151,9 +161,23 @@ static void add_new_wises(int bonus) {
 	}
 }
 
+static void raise_skill(const skilli* p) {
+	auto i = (skill_s)(p - bsdata<skilli>::elements);
+	if(player->get(i))
+		player->set(i, 2);
+	else
+		player->set(i, player->get(i) + 1);
+}
+
 static void add_player_rang() {
 	auto p = choose_rang();
 	player->setrang(p);
+	player->setskills(p->skills);
+}
+
+static void add_player_born() {
+	auto p = choose_born();
+	player->setborn(p);
 }
 
 void hero::create() {
@@ -161,5 +185,6 @@ void hero::create() {
 	clear();
 	setname(groupname::randomid("MouseguardMale"));
 	add_player_rang();
+	add_player_born();
 	add_new_wises(bsdata<rangi>::elements[rang].wises);
 }

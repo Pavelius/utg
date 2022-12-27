@@ -12,11 +12,15 @@ Armorer
 #Rang
 
 Tenderpaw age(14 17) wises(1)
- skills Will(2) Health(6)
-Guardmouse wises(1)
-PatrolGuard party_count(1) wises(2)
-PatrolLeader party_count(1) wises(3)
-GuardCaptain party_count(1) wises(4)
+ skills Will(2) Health(6) Resources(1) Circles(1) Pathfinder(2) Scout(2) Laborer(2)
+Guardmouse age(18 25) wises(1)
+ skills Will(3) Health(5) Resources(2) Circles(2) Fighter(3) Haggler(2) Scout(2) Pathfinder(3) Survivalist(2)
+PatrolGuard age(21 50) wises(2)
+ skills Will(4) Health(4) Resources(3) Circles(3) Cook(2) Fighter(3) Hunter(3) Scout(2) Healer(2) Pathfinder(2) Survivalist(2) WeatherWatcher(2)
+PatrolLeader age(21 60) wises(3) party_count(1)
+ skills Will(5) Health(4) Resources(4) Circles(3) Cook(2) Fighter(3) Hunter(3) Instructor(2) Loremouse(2) Persuader(2) Pathfinder(3) Scout(2) Survivalist(3) WeatherWatcher(2)
+GuardCaptain age(41 60) wises(4) party_count(1)
+ skills Will(6) Health(3) Resources(5) Circles(4) Administrator(3) Fighter(3) Healer(2) Hunter(3) Instructor(2) Militarist(3) Orator(2) Pathfinder(3) Scout(3) Survivalist(3) WeatherWatcher(3)
 
 #Tag
 

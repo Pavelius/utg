@@ -1,4 +1,6 @@
-﻿In file `rules/Basic.txt`:
- Line 17: Not found requisit `patrol_count`
- Line 18: Not found requisit `patrol_count`
- Line 19: Not found requisit `patrol_count`
+﻿In file `Names.txt`:
+CooperwoodWise: Define translate
+ElmossWise: Define translate
+IvydaleWise: Define translate
+ShaleburrowWise: Define translate
+SprucetuckWise: Define translate

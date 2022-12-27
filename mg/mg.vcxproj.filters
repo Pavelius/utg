@@ -112,5 +112,11 @@
     <Text Include="rules\Wise.txt">
       <Filter>Basic</Filter>
     </Text>
+    <Text Include="locale\ru\CityNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\WiseNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

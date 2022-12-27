@@ -1,0 +1,26 @@
+﻿BirdsWise: Знания о птицах
+BurrowWise: Знания о подземніх обитателях
+MammalsWise: Знания о млекопитающих
+PredatorWise: Знания о птицах
+CoastWise: Знания о побережье
+ForestWise: Знания о лесах
+LakeWise: Знания озер
+RockyTerrainWise: Знания скалистой местоности
+SwampWise: Знания болот
+TallGrassWise: Знания высокой травы
+CraftWise: Знания известных ремесленников
+CrimeWise: Знания криминальных лидеров
+GovernorWise: Знания губернаторов
+GuardmouseWise: Знания о стражах
+RainWise: Знания о дождях
+ClearWeatherWise: Знания о ясной погоде
+SnowWise: Знания о снежной погоде
+BarkstoneWise: Знания о Древограде
+CooperwoodWise: Знания о Меднолесье
+DarkHeatherWise: Знания темного вереска
+ElmossWise: Знания о Моховязе
+IvydaleWise: Знания о Плющах
+LockhavenWise: Знания о Локхавене
+PortSumacWise: Знания о Порт-Сумахе
+ShaleburrowWise: Знания о Сланцевой норе
+SprucetuckWise: Знания о Подъельнике
