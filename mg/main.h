@@ -28,16 +28,6 @@ enum wear_s : unsigned char {
 enum roll_flag_s : unsigned char {
 	MarkExperience, RecoveryTest, ActWithNature,
 };
-//struct wisei {
-//	const char*					id;
-//	const char*					name;
-//	variant						subject;
-//};
-//struct traiti {
-//	const char*					id;
-//	const char*					name;
-//	skill_s						bonus[4];
-//};
 //struct conflicti {
 //	const char*					id;
 //	const char*					name;

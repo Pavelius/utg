@@ -149,7 +149,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="hero_generate.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="trait.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animal.h" />
     <ClInclude Include="condition.h" />
-    <ClInclude Include="creature.h" />
+    <ClInclude Include="hero.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="enviroment.h" />
     <ClInclude Include="main.h" />
@@ -185,6 +185,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\SkillNames.txt" />
+    <Text Include="locale\ru\TraitNames.txt" />
     <Text Include="locale\ru\WiseNames.txt" />
     <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />

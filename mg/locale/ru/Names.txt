@@ -16,5 +16,7 @@ MouseGuard: Мышинный гвардеец
 No: Нет
 Success: Успех
 Yes: Да
+YouNativeSkill: Выбирайте, каким навыком вы овладели с рождения
+YouNativeTrait: Выбирайте, какая черта хараткерна вам с рождения
 WhatDoYouDo: Что будете делать?
 WhereWereYouBorn: Где вы родились?

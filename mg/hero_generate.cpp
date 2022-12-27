@@ -1,8 +1,8 @@
 #include "answers.h"
 #include "actable.h"
 #include "crt.h"
-#include "creature.h"
 #include "groupname.h"
+#include "hero.h"
 #include "pushvalue.h"
 #include "rang.h"
 #include "roll.h"
@@ -61,6 +61,17 @@ static const wisei* choose_wise(const char* header, int count, int maximum_count
 	return (wisei*)an.choose(choose_options(header, count, maximum_count));
 }
 
+static const traiti* choose_trait(const char* header, const variants& source) {
+	an.clear();
+	for(auto v : source) {
+		auto p = (traiti*)v;
+		if(!p)
+			continue;
+		an.add(p, p->getname());
+	}
+	return (traiti*)an.choose(header);
+}
+
 static void add_new_wises(int bonus) {
 	for(auto i = 0; i < bonus; i++) {
 		auto p = choose_wise(getnm("ChooseKnownWise"), i, bonus);
@@ -74,6 +85,12 @@ static void raise_skill(const skilli* p) {
 		player->setskill(i, 2);
 	else if(player->getskill(i) < 6)
 		player->addskill(i, 1);
+}
+
+static void raise_trait(const traiti* p) {
+	auto i = (trait_s)getbsi(p);
+	if(player->gettrait(i) < 3)
+		player->settrait(i, player->gettrait(i) + 1);
 }
 
 static void add_player_rang() {
@@ -101,10 +118,17 @@ static void add_skill(const char* header, const variants& source) {
 	raise_skill(p);
 }
 
+static void add_trait(const char* header, const variants& source) {
+	marked.clear();
+	auto p = choose_trait(header, source);
+	raise_trait(p);
+}
+
 static void add_player_born() {
 	auto p = choose_born();
 	player->setborn(p);
 	add_skill(getnm("YouNativeSkill"), player->getborn()->skills);
+	add_trait(getnm("YouNativeTrait"), player->getborn()->traits);
 }
 
 void hero::create() {

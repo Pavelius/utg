@@ -8,7 +8,7 @@ enum rang_s : unsigned char {
 };
 struct rangi : nameable {
 	unsigned char	age[2];
-	skillds			skills[16];
+	skillds			skills;
 	char			party_count;
 	char			talented;
 	char			convice;

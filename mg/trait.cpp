@@ -53,7 +53,7 @@ BSDATA(traiti) = {
 	{"WolfsSnout"},
 	{"Young"},
 	{"Alert"},
-	{"HardWorked"},
+	{"HardWorker"},
 	{"Independent"},
 	{"OpenMinded"},
 	{"SteadyPaw"},

@@ -1,1 +1,40 @@
-﻿Fighter: Боец
+﻿Nature: Природа
+Will: Воля
+Health: Здоровье
+Resources: Ресурсы
+Circles: Связи
+
+Administrator: Администратор
+Apiarist: Пчеловод
+Archivist: Архивариус
+Armorer: Оружейник
+Baker: Пекарь
+Boatcrafter: Корабел
+Brewer: Пивовар
+Carpenter: Плотник
+Cartographer: Картограф
+Cook: Повар
+Deceiver: Манипулятор
+Fighter: Боец
+Glazier: Стекольщик
+Haggler: Торгаш
+Harvester: Собиратель
+Healer: Лекарь
+Hunter: Охотник
+Insectrist: Насекомовод
+Instructor: Инструктор
+Laborer: Разнорабочий
+Loremouse: Знаток зверей
+Militarist: Военный
+Miller: Мельник
+Orator: Оратор
+Pathfinder: Следопыт
+Persuader: Переговорщик
+Potter: Гончар
+Scientist: Ученный
+Scout: Разведчик
+Smith: Кузнец
+Stonemason: Каменщик
+Survivalist: Специалист по выживанию
+WeatherWatcher: Наблюдатель за погодой
+Weaver: Ткач

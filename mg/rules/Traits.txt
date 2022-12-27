@@ -9,3 +9,9 @@ Bitter
 Bodyguard
  advantages Nature Health Will Fighter Hunter Survivalist
  disadvantages Laborer Orator Persuader Haggler Deceiver Loremouse
+OpenMinded
+ advantages Orator Persuader Loremouse Administrator Archivist Scientist
+ disadvantages Laborer Nature Health Will Fighter Hunter Survivalist
+SteadyPaw
+ advantages Armorer Baker Carpenter Stonemason Smith
+ disadvantages Circles Fighter Survivalist Orator Administrator

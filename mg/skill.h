@@ -24,5 +24,5 @@ struct skillable {
 	void		addskill(skill_s v, int i) { setskill(v, getskill(v) + i); }
 	int			getskill(skill_s v) const { return skills[v]; }
 	void		setskill(skill_s v, int i) { skills[v] = i; }
-	void		setskills(const skillds* p) { memcpy(skills, p, sizeof(skills)); }
+	void		setskills(const skillds p) { memcpy(skills, p, sizeof(skills)); }
 };

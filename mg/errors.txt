@@ -1,2 +1,2 @@
-﻿In file `rules/Traits.txt`:
- Line 1: Not find data type for `Trait`
+﻿In file `rules/Basic.txt`:
+ Line 88: Can't find variant `HardWorker`

@@ -76,17 +76,25 @@ TallGrass
 
 Barkstone type(City)
  skills Carpenter Potter Glazier
+ traits SteadyPaw
 Cooperwood type(City)
  skills Smith Haggler
+ traits Independent
 Elmoss type(City)
  skills Carpenter Harvester
+ traits Alert
 Ivydale type(City)
  skills Harvester Baker
+ traits HardWorker
 Lockhaven type(City)
  skills Weaver Armorer
+ traits Generous GuardsHonor
 PortSumac type(City)
  skills Boatcrafter WeatherWatcher
+ traits Tough WeatherSense
 Shaleburrow type(City)
  skills Stonemason Harvester Miller
+ traits OpenMinded
 Sprucetuck type(City)
  skills Scientist Loremouse
+ traits Inquisitive Rational

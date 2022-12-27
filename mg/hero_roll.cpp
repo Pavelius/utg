@@ -1,7 +1,5 @@
 #include "answers.h"
-#include "actable.h"
-#include "crt.h"
-#include "creature.h"
+#include "hero.h"
 #include "groupname.h"
 #include "pushvalue.h"
 #include "rang.h"
@@ -73,6 +71,8 @@ static void add_trait_help() {
 		auto ps = bsdata<traiti>::elements + i;
 		if(find_help(player, ps))
 			continue;
+		if(!ps->advantages.is(skill))
+			continue;
 		auto pa = actions.add();
 		pa->option = TraitsHelp;
 		pa->player = player;
@@ -121,6 +121,7 @@ static void make_roll() {
 		actions.clear(); an.clear(); sb.set(pb);
 		fix_roll();
 		add_helpers();
+		add_trait_help();
 		auto p = an.choose(getnm("WhatDoYouDo"), getnm("MakeRoll"), 1);
 		if(!p)
 			break;

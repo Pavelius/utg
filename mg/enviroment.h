@@ -10,6 +10,6 @@ struct enviroment_typei : nameable {
 };
 struct enviromenti : nameable {
 	enviroment_type_s	type;
-	variants			skills;
+	variants			skills, traits;
 };
 extern enviromenti* environment;

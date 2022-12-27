@@ -33,7 +33,7 @@
     <ClCompile Include="actable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="creature.cpp">
+    <ClCompile Include="hero_generate.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="enviroment.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="rang.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="creature.h">
+    <ClInclude Include="hero.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="actable.h">
@@ -132,6 +132,9 @@
     </Text>
     <Text Include="rules\Traits.txt">
       <Filter>Basic</Filter>
+    </Text>
+    <Text Include="locale\ru\TraitNames.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

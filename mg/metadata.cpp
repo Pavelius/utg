@@ -1,9 +1,9 @@
 #include "animal.h"
 #include "bsreq.h"
 #include "condition.h"
-#include "creature.h"
 #include "item.h"
 #include "enviroment.h"
+#include "hero.h"
 #include "rang.h"
 #include "skill.h"
 #include "trait.h"
@@ -35,7 +35,7 @@ BSMETA(itemi) = {
 BSMETA(enviromenti) = {
 	BSREQ(id),
 	BSENM(type, enviroment_typei),
-	BSREQ(skills),
+	BSREQ(skills), BSREQ(traits),
 	{}};
 BSMETA(enviroment_typei) = {
 	BSREQ(id),
