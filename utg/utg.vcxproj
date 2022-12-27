@@ -195,6 +195,7 @@
     <ClCompile Include="pathfind.cpp" />
     <ClCompile Include="property.cpp" />
     <ClCompile Include="quest.cpp" />
+    <ClCompile Include="questlist.cpp" />
     <ClCompile Include="randomizer.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="property.h" />
     <ClInclude Include="pushvalue.h" />
     <ClInclude Include="quest.h" />
+    <ClInclude Include="questlist.h" />
     <ClInclude Include="randomizer.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="screenshoot.h" />

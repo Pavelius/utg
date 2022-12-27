@@ -5,6 +5,7 @@
 #include "list.h"
 #include "hero.h"
 #include "pushvalue.h"
+#include "questlist.h"
 #include "rang.h"
 #include "roll.h"
 #include "wise.h"
@@ -12,6 +13,8 @@
 hero			*player, *opponent;
 heroa			party;
 static answers	an;
+
+void questrun(const char* id);
 
 static int get_rang_count(const rangi* rang) {
 	auto result = 0;
@@ -75,7 +78,7 @@ static const traiti* choose_trait(const char* header, const variants& source) {
 
 static void add_new_wises(int bonus) {
 	for(auto i = 0; i < bonus; i++) {
-		auto p = choose_wise(getnm("ChooseKnownWise"), i, bonus);
+		auto p = choose_wise(getnm("YouNewWises"), i, bonus);
 		player->setwise(p);
 	}
 }
@@ -151,6 +154,13 @@ static void add_skill_list(const char* id, int columns, int count, skill_s* resu
 	add_skill(getnm(id), list->elements, columns, count, result);
 }
 
+static void add_quest(const char* id) {
+	auto p = bsdata<questlist>::find(id);
+	if(!p)
+		return;
+	pushvalue push_quest(lastquest, p);
+}
+
 void hero::clear() {
 	memset(this, 0, sizeof(*this));
 	setname(0xFFFF);
@@ -168,5 +178,6 @@ void hero::create() {
 	add_skill_list("YouMasterCrafterSkills", 1, 1);
 	add_skill_list("YouMentorSkills", 2, getrang()->mentors);
 	add_skill_list("YouSpecializationSkills", 2, getrang()->specialization, &specialization);
+	questrun("NatureQuest");
 	add_new_wises(getrang()->wises);
 }

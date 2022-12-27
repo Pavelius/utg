@@ -1,9 +1,11 @@
+#include "answers.h"
 #include "crt.h"
 #include "gender.h"
 #include "stringbuilder.h"
 
 #pragma once
 
+extern answers an;
 extern stringbuilder sb;
 extern adat<const void*, 32> marked;
 

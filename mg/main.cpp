@@ -5,6 +5,7 @@
 #include "hero.h"
 #include "groupname.h"
 #include "pushvalue.h"
+#include "questlist.h"
 
 static void set_mouse_guard(int count) {
 	static char temp[260];
@@ -36,6 +37,8 @@ static void initialize() {
 	groupname::read("locale/ru/Mouseguards.txt");
 	bsreq::read("rules/Wise.txt");
 	bsreq::read("rules/Traits.txt");
+	quest::initialize();
+	questlist::read("NatureQuest");
 }
 
 int	main(int argc, char *argv[]) {

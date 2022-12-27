@@ -261,6 +261,9 @@
     <ClCompile Include="groupname.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="questlist.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -474,6 +477,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="groupname.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="questlist.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>

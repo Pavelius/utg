@@ -5,7 +5,9 @@
 #include "item.h"
 #include "list.h"
 #include "hero.h"
+#include "questlist.h"
 #include "rang.h"
+#include "script.h"
 #include "skill.h"
 #include "trait.h"
 #include "variant.h"
@@ -48,6 +50,9 @@ BSMETA(rangi) = {
 	BSREQ(wises), BSREQ(talented), BSREQ(convice), BSREQ(mentors), BSREQ(specialization),
 	BSDST(skills, skilli),
 	{}};
+BSMETA(script) = {
+	BSREQ(id),
+	{}};
 BSMETA(skilli) = {
 	BSREQ(id),
 	BSFLG(help, skilli),
@@ -75,9 +80,10 @@ BSDATA(varianti) = {
 	{"Item", VAR(itemi, 1)},
 	{"List", VAR(listi, 1)},
 	{"Rang", VAR(rangi, 1)},
-	{"Skill", VAR(skilli, 1)},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
+	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>},
 	{"Tag", VAR(tagi, 1)},
-	{"Trait", VAR(traiti, 1)},
+	{"Trait", VAR(traiti, 1), 0, 0, fnscript<traiti>},
 	{"Wise", VAR(wisei, 1)},
 };
 BSDATAF(varianti)

@@ -4,7 +4,6 @@ PatrolGuard: Патрульный
 PatrolLeader: Лидер патруля
 GuardCaptain: Капитан
 
-ChooseKnownWise: Выбирайте знания, которые вам известны
 ChooseRang: Выбирайте ваше положение в гвардии
 CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
@@ -20,6 +19,7 @@ YouMasterCrafterSkills: Какой местер-ремесленник учил 
 YouMentorSkills: На что делал упор ваш наставник во время обучения?
 YouNativeSkill: Выбирайте, каким навыком вы овладели с рождения
 YouNativeTrait: Выбирайте, какая черта хараткерна вам с рождения
+YouNewWises: В чем вы хорошо разбираетесь?
 YouParentSkills: Чему вас научили родители?
 YouSocialSkills: Как вы убеждаете других сделать что-то или просто поверить вам?
 YouSpecializationSkills: На чем вы специализируетесь?

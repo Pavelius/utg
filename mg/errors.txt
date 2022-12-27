@@ -1,2 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 13: Can't find variant `Deciever`
+﻿Can't find file 'locale/ruNatureQuest.txt'

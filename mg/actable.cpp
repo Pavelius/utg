@@ -5,6 +5,7 @@
 
 static char console[1024];
 stringbuilder sb(console);
+answers an;
 adat<const void*, 32> marked;
 
 const char* actable::getname() const {

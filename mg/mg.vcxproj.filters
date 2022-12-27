@@ -51,6 +51,9 @@
     <ClCompile Include="hero_roll.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -134,6 +137,9 @@
       <Filter>Basic</Filter>
     </Text>
     <Text Include="locale\ru\TraitNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\NatureQuest.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
