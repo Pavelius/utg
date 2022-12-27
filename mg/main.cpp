@@ -3,15 +3,29 @@
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "creature.h"
+#include "groupname.h"
 #include "main.h"
 
+static void create_party() {
+	auto p = bsdata<hero>::add();
+	p->create();
+	p->add(Fighter, 3);
+	party.add(p);
+	p = bsdata<hero>::add();
+	p->create();
+	p->add(Fighter, 3);
+	party.add(p);
+	player = p;
+}
+
 static void starting() {
-	hero player;
+	create_party();
 	answers an;
-	player.roll(Fighter);
+	player->roll(Fighter);
 }
 
 static void initialize() {
+	groupname::read("locale/ru/Mouseguards.txt");
 }
 
 int	main(int argc, char *argv[]) {

@@ -56,3 +56,21 @@ Staff
  tags Handy GentleThrashing TwoHanded
 Sword
  tags Useful
+
+#Enviroment
+
+Coast
+Forest
+Lake
+Rocks
+Swamp
+TallGrass
+
+Barkstone type(City)
+Cooperwood type(City)
+Elmoss type(City)
+Ivydale type(City)
+Lockhaven type(City)
+PortSumac type(City)
+Shaleburrow type(City)
+Sprucetuck type(City)

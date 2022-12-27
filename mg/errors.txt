@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 24: Not found field `Maneour` in dataset `bonus`
+ Line 60: Not find data type for `Landscape`

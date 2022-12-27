@@ -1,4 +1,6 @@
-﻿Dice: Кубик
+﻿CharacterHelp: %1 поможет в броске.
+CharacterHelpRoll: [%1] может помочь своим навыком [%2].
+Dice: Кубик
 MakeRoll: Бросить кубики
 No: Нет
 Success: Успех

@@ -2,16 +2,6 @@
 
 #pragma once
 
-enum distace_s : unsigned char {
-	DistanceNormal, DistanceSpear, DistanceThrown, DistanceMissile
-};
-enum item_s : unsigned char {
-	NoItem,
-	Axe, Bow, Halberd, HookAndLine, Knife, Shield, Sling, Spear, Staff, Sword,
-	LightArmor, HeavyArmor,
-	Herbs, Nuts, Grains, Roots,
-	LastItem = Roots,
-};
 enum trait_s : unsigned char {
 	Bigpaw, Bitter, Bodyguard, Bold, Brave,
 	Calm, Clever, Compassionate, Cunning, Curious,
@@ -26,19 +16,7 @@ enum trait_s : unsigned char {
 	Alert, HardWorker, Independent, OpenMinded, SteadyPaw, Inquisitive, Rational,
 	FirstTraits = Bigpaw, LastTraits = Rational,
 };
-enum landscape_s : unsigned char {
-	NoLandscape,
-	Coast, Forest, Lake, Rocks, Swamp, TallGrass
-};
-enum location_s : unsigned char {
-	NoLocation,
-	Barkstone, Cooperwood, Elmoss, Ivydale, Lockhaven, PortSumac, Shaleburrow, Sprucetuck, // Eight most knowed locations
-};
-enum location_size_s : unsigned char {
-	Village, Towm, City,
-};
 enum animal_s : unsigned char {
-	NoAnimal,
 	Badger, Bear, Crab, Deer, Fox, Frog, Hawk, Moose, Mouse, Owl, Racoon, Snake, Squirrel, Turtle, Weasel, Wolf,
 };
 enum wise_s : unsigned char {
