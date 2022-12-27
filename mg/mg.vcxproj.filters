@@ -39,6 +39,12 @@
     <ClCompile Include="enviroment.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="weather.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="wise.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -77,6 +83,9 @@
     <ClInclude Include="enviroment.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="wise.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -99,6 +108,9 @@
     </Text>
     <Text Include="locale\ru\Mouseguards.txt">
       <Filter>Locale</Filter>
+    </Text>
+    <Text Include="rules\Wise.txt">
+      <Filter>Basic</Filter>
     </Text>
   </ItemGroup>
 </Project>

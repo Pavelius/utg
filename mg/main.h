@@ -19,14 +19,6 @@ enum trait_s : unsigned char {
 enum animal_s : unsigned char {
 	Badger, Bear, Crab, Deer, Fox, Frog, Hawk, Moose, Mouse, Owl, Racoon, Snake, Squirrel, Turtle, Weasel, Wolf,
 };
-enum wise_s : unsigned char {
-	BirdsWise, BurrowWise, MammalsWise, PredatorWise,
-	CoastWise, ForestWise, LakeWise, RockyTerrainWise, SwampWise, TallGrassWise,
-	CraftWise, CrimeWise, GovernorWise, GuardmouseWise,
-	RainWise, ClearWeatherWise, SnowWise,
-	BarkstoneWise, CooperwoodWise, DarkHeatherWise, ElmossWise, IvydaleWise, LockhavenWise, PortSumacWise, ShaleburrowWise, SprucetuckWise,
-	FirstWise = BirdsWise, LastWise = SprucetuckWise
-};
 enum conflict_s : unsigned char {
 	FightConflict,
 };

@@ -11,8 +11,12 @@ Armorer
 
 #Rang
 
-Tenderpaw age(14 17)
+Tenderpaw age(14 17) wises(1)
  skills Will(2) Health(6)
+Guardmouse wises(1)
+PatrolGuard party_count(1) wises(2)
+PatrolLeader party_count(1) wises(3)
+GuardCaptain party_count(1) wises(4)
 
 #Tag
 

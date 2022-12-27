@@ -1,31 +1,41 @@
 #include "answers.h"
 #include "actable.h"
+#include "bsreq.h"
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "creature.h"
 #include "groupname.h"
 #include "main.h"
+#include "pushvalue.h"
+
+static void set_mouse_guard(int count) {
+	static char temp[260];
+	player = bsdata<hero>::add();
+	stringbuilder sb(temp); sb.add("%MouseGuard #%1i", count);
+	answers::header = temp;
+}
 
 static void create_party() {
-	auto p = bsdata<hero>::add();
-	p->create();
-	p->add(Fighter, 3);
-	party.add(p);
-	p = bsdata<hero>::add();
-	p->create();
-	p->add(Fighter, 3);
-	party.add(p);
-	player = p;
+	pushvalue push_interactive(answers::interactive);
+	answers::interactive = true;
+	set_mouse_guard(1);
+	player->create();
+	player->add(Fighter, 2);
+	party.add(player);
+	set_mouse_guard(2);
+	player->create();
+	player->add(Fighter, 3);
+	party.add(player);
 }
 
 static void starting() {
 	create_party();
-	answers an;
 	player->roll(Fighter);
 }
 
 static void initialize() {
 	groupname::read("locale/ru/Mouseguards.txt");
+	bsreq::read("rules/Wise.txt");
 }
 
 int	main(int argc, char *argv[]) {

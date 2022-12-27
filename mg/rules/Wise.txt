@@ -1,0 +1,28 @@
+#Wise
+
+BirdsWise
+BurrowWise
+MammalsWise
+PredatorWise
+CoastWise
+ForestWise
+LakeWise
+RockyTerrainWise
+SwampWise
+TallGrassWise
+CraftWise
+CrimeWise
+GovernorWise
+GuardmouseWise
+RainWise
+ClearWeatherWise
+SnowWise
+BarkstoneWise subject(Barkstone)
+CooperwoodWise subject(Cooperwood)
+DarkHeatherWise
+ElmossWise subject(Elmoss)
+IvydaleWise subject(Ivydale)
+LockhavenWise subject(Lockhaven)
+PortSumacWise subject(PortSumac)
+ShaleburrowWise subject(Shaleburrow)
+SprucetuckWise subject(Sprucetuck)

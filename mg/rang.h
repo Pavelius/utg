@@ -1,3 +1,4 @@
+#include "nameable.h"
 #include "skill.h"
 
 #pragma once
@@ -5,10 +6,10 @@
 enum rang_s : unsigned char {
 	Tenderpaws, Guardmouse, PatrolGuard, PatrolLeader, GuardCapitan,
 };
-struct rangi {
-	const char*		id;
+struct rangi : nameable {
 	unsigned char	age[2];
 	skillds			skills[16];
+	char			party_count;
 	char			talented;
 	char			convice;
 	char			mentors;

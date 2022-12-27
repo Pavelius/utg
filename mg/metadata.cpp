@@ -7,6 +7,7 @@
 #include "rang.h"
 #include "skill.h"
 #include "variant.h"
+#include "wise.h"
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
@@ -40,6 +41,8 @@ BSMETA(enviroment_typei) = {
 BSMETA(rangi) = {
 	BSREQ(id),
 	BSREQ(age),
+	BSREQ(party_count),
+	BSREQ(wises),
 	BSDST(skills, skilli),
 	{}};
 BSMETA(skilli) = {
@@ -51,6 +54,10 @@ BSMETA(tagi) = {
 	BSDST(bonus, actioni),
 	BSDST(success, actioni),
 	{}};
+BSMETA(wisei) = {
+	BSREQ(id),
+	BSREQ(subject),
+	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -61,5 +68,6 @@ BSDATA(varianti) = {
 	{"Rang", VAR(rangi, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"Tag", VAR(tagi, 1)},
+	{"Wise", VAR(wisei, 1)},
 };
 BSDATAF(varianti)

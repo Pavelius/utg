@@ -1,7 +1,11 @@
-﻿CharacterHelp: %1 поможет в броске.
+﻿ChooseKnownWise: Выбирайте знания, которые вам известны
+ChooseRang: Выбирайте ваше положение в гвардии
+CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
 Dice: Кубик
+Left: Осталось
 MakeRoll: Бросить кубики
+MouseGuard: Мышинный гвардеец
 No: Нет
 Success: Успех
 Yes: Да

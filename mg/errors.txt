@@ -1,2 +1,4 @@
 ﻿In file `rules/Basic.txt`:
- Line 60: Not find data type for `Landscape`
+ Line 17: Not found requisit `patrol_count`
+ Line 18: Not found requisit `patrol_count`
+ Line 19: Not found requisit `patrol_count`

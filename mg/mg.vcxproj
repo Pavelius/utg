@@ -151,6 +151,8 @@
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="weather.cpp" />
+    <ClCompile Include="wise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actable.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="skill.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="weather.h" />
+    <ClInclude Include="wise.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
@@ -179,6 +182,7 @@
     <Text Include="locale\ru\SkillNames.txt" />
     <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Wise.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
