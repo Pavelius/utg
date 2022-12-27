@@ -7,6 +7,9 @@
     <Filter Include="Basic">
       <UniqueIdentifier>{56fe0bbc-5963-4c92-9c3d-6aa8004832d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Locale">
+      <UniqueIdentifier>{4dc85c7d-4363-4e3b-b4b6-3781130f00b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,6 +28,12 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="actable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="roll.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,6 +65,12 @@
     <ClInclude Include="rang.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="actable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -63,6 +78,15 @@
     </Text>
     <Text Include="rules\Basic.txt">
       <Filter>Basic</Filter>
+    </Text>
+    <Text Include="rules\Animal.txt">
+      <Filter>Basic</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\SkillNames.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

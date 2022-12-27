@@ -89,6 +89,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,17 +142,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="roll.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="animal.h" />
     <ClInclude Include="condition.h" />
+    <ClInclude Include="creature.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="rang.h" />
@@ -165,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\SkillNames.txt" />
+    <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

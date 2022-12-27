@@ -1,21 +1,23 @@
 #include "answers.h"
+#include "actable.h"
 #include "draw_object.h"
 #include "draw_utg.h"
+#include "creature.h"
 #include "main.h"
 
 static void starting() {
+	hero player;
 	answers an;
-	an.add("Test", "test");
-	an.choose("Test");
+	player.roll(Fighter);
 }
 
 static void initialize() {
 }
 
 int	main(int argc, char *argv[]) {
-	answers::console = &utg::sb;
-	answers::prompt = utg::sb.begin();
-	answers::resid = "meet";
+	answers::console = &sb;
+	answers::prompt = sb.begin();
+	answers::resid = "treasure";
 	draw::object::initialize();
 	return draw::start(starting, initialize);
 }

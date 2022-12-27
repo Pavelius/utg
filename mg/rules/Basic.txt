@@ -50,3 +50,9 @@ Shield
  tags Protection Heavy
 Sling
  tags Missile MediumRange
+Spear
+ tags Fast CloseRanks
+Staff
+ tags Handy GentleThrashing TwoHanded
+Sword
+ tags Useful

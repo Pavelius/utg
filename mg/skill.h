@@ -1,4 +1,5 @@
 #include "flagable.h"
+#include "nameable.h"
 
 #pragma once
 
@@ -15,7 +16,6 @@ enum skill_s : unsigned char {
 };
 typedef flagable<(LastSkill + 7) / 8> skilla;
 typedef char skillds[LastSkill + 1];
-struct skilli {
-	const char* id;
+struct skilli : nameable {
 	skilla		help;
 };

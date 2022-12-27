@@ -12,9 +12,6 @@ struct translate {
 
 static char main_locale[4];
 static array source_name(sizeof(translate));
-static array source_nameof(sizeof(translate));
-static array source_namepl(sizeof(translate));
-static array source_namesh(sizeof(translate));
 static array source_text(sizeof(translate));
 
 static int compare(const void* v1, const void* v2) {
@@ -165,9 +162,6 @@ void initialize_translation(const char* locale) {
 	setfile(source_name, "Names", main_locale, false, true, false);
 	setlist(source_name, "Names", main_locale);
 	setfile(source_text, "Descriptions", main_locale, false, false, false);
-	setfile(source_nameof, "NamesOf", main_locale, false, false, false);
-	setfile(source_namepl, "NamesPl", main_locale, false, false, false);
-	setfile(source_namesh, "NamesSh", main_locale, false, false, false);
 	atexit(deinitialize);
 }
 
@@ -202,26 +196,6 @@ const char* getnme(const char* id) {
 	return p->name;
 }
 
-const char* getnmof(const char* id) {
-	if(!id || id[0] == 0)
-		return "";
-	translate key = {id, 0};
-	auto p = (translate*)bsearch(&key, source_nameof.data, source_nameof.getcount(), source_nameof.getsize(), compare);
-	if(!p || !p->name || !p->name[0])
-		return id;
-	return p->name;
-}
-
-const char* getnmpl(const char* id) {
-	if(!id || id[0] == 0)
-		return "";
-	translate key = {id, 0};
-	auto p = (translate*)bsearch(&key, source_namepl.data, source_namepl.getcount(), source_namepl.getsize(), compare);
-	if(!p || !p->name || !p->name[0])
-		return id;
-	return p->name;
-}
-
 const char* getdescription(const char* id) {
 	if(!id || id[0] == 0)
 		return 0;
@@ -230,10 +204,4 @@ const char* getdescription(const char* id) {
 	if(!p || !p->name)
 		return 0;
 	return p->name;
-}
-
-const char* getnm(const char* id, int count) {
-	if(count == 1)
-		return getnm(id);
-	return getnmof(id);
 }

@@ -232,8 +232,16 @@ void stringbuilder::addlocalefile(const char* name, const char* ext) {
 const char* stringbuilder::getbycount(const char* id, int count) {
 	switch(count) {
 	case 0: case 1: return getnm(id);
-	//case 2: case 3: case 4: return getnmof(id);
-	default: return getnmpl(id);
+		//case 2: case 3: case 4: return getnmof(id);
+	default: return getnm(id);
+	}
+}
+
+static void add_by_count(stringbuilder& sb, const char* name, int count) {
+	switch(count) {
+	case 0: case 1: sb.add(name); break;
+	case 2: case 3: case 4: sb.addof(name); break;
+	default: sb.add(name); break;
 	}
 }
 
@@ -361,7 +369,7 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 	char padeg = 0;
 	if(*src == '+' || *src == '-')
 		prefix = *src++;
-	if(*src == '$' || *src == '@' || *src == '~')
+	if(*src == '$' || *src == '@' || *src == '~' || *src == '*')
 		padeg = *src++;
 	auto p0 = p;
 	if(*src >= '0' && *src <= '9') {
@@ -388,6 +396,7 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 				case '$': addof(p1); break;
 				case '@': addto(p1); break;
 				case '~': addby(p1); break;
+				case '*': add_by_count(*this, p1, ((int*)vl)[pn - 2]); break;
 				default:
 					while(*p1 && p < pe)
 						*p++ = *p1++;

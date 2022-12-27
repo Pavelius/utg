@@ -1,2 +1,6 @@
-﻿No: Нет
+﻿Dice: Кубик
+MakeRoll: Бросить кубики
+No: Нет
+Success: Успех
 Yes: Да
+WhatDoYouDo: Что будете делать?

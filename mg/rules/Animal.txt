@@ -1,0 +1,3 @@
+#Animal
+
+Badger gender(Male) nature(8)
