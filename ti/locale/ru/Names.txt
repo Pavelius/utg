@@ -1,4 +1,15 @@
-﻿Construction: Строительная стратегия
+﻿ActionCardsShort: КД
+CommoditiesShort: Прд
+InfluenceShort: Вли
+FleetTokenShort: Флот
+ResourcesShort: Рес
+StrategyTokenShort: СР
+TacticTokenShort: ТР
+TechnologyShort: Тех
+TradeGoodsShort: Тов
+VictoryPointsShort: ОП
+
+Construction: Строительная стратегия
 Diplomacy: Дипломатическая стратегия
 Imperial: Имперская стратегия
 Leadership: Лидерская стратегия

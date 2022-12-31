@@ -1,5 +1,4 @@
-﻿Alert: 
-AppTitle: 
+﻿AppTitle: 
 Bigpaw: 
 Bitter: 
 Bodyguard: 

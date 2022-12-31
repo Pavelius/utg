@@ -1,7 +1,7 @@
 #include "answers.h"
+#include "draw_utg.h"
 #include "quest.h"
 #include "vagabond.h"
-#include "utg.h"
 
 static void generate_character() {
 	//game.clear();

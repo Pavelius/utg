@@ -4,7 +4,8 @@ PatrolGuard: Патрульный
 PatrolLeader: Лидер патруля
 GuardCaptain: Капитан
 
-ChooseRang: Выбирайте ваше положение в гвардии
+ApplyResult: Принять результат броска.
+ChooseRang: Каково ваше положение в гвардии?
 CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
 CharacterTraitsHelp: Помочь себе чертой [%1].
@@ -13,13 +14,14 @@ Left: Осталось
 MakeRoll: Бросить кубики
 MouseGuard: Мышинный гвардеец
 No: Нет
+NoDicesForRoll: Для броска не хватает кубиков.
 Success: Успех
 Yes: Да
 YouGuardTraits: Какую черту вы получили на вашем жизненном пути?
 YouMasterCrafterSkills: Какой местер-ремесленник учил вас в Локхэйвене?
 YouMentorSkills: На что делал упор ваш наставник во время обучения?
-YouNativeSkill: Выбирайте, каким навыком вы овладели с рождения
-YouNativeTrait: Выбирайте, какая черта хараткерна вам с рождения
+YouNativeSkill: Каким навыком вы овладели, как типичный житель своего поселения?
+YouNativeTrait: Какая черта вам характерна, как типичному жителю своего поселения?
 YouNaturalTraits: С какими чертами вы родились?
 YouNewWises: В чем вы хорошо разбираетесь?
 YouParentSkills: Чему вас научили родители?

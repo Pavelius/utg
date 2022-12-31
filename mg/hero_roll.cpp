@@ -9,7 +9,18 @@
 static answers	an;
 static skill_s	skill;
 static int		base_dices, bonus_dices, bonus_success, obstacle, opponent_dices;
+static unsigned char dice_result[32] = {};
 static adat<rolli, 32> actions, helps;
+
+static void clear_dice_pool() {
+	memset(dice_result, 0, sizeof(dice_result));
+}
+
+static void add_dices(int count) {
+	auto n = zlen(dice_result); count += n;
+	for(int i = n; i < count; i++)
+		dice_result[i] = 1 + rand() % 6;
+}
 
 static rolli* find_help(const hero* p) {
 	for(auto& e : helps) {
@@ -81,7 +92,7 @@ static void add_trait_help() {
 	}
 }
 
-static void fix_roll() {
+static void fix_prepare_roll() {
 	auto total_dices = base_dices + bonus_dices;
 	auto pdn = getnm("Dice");
 	sb.addn("[%1] тестирует навык [%2]", player->getname(), bsdata<skilli>::elements[skill].getname());
@@ -97,13 +108,13 @@ static void fix_roll() {
 		sb.adds("[%1i] %-*2 в случае удачи", bonus_success, getnm("Success"));
 	}
 	sb.add(".");
-	for(auto& e : actions) {
+	for(auto& e : helps) {
 		if(e.option == HelpDice)
 			sb.adds(getnm("CharacterHelp"), e.player->getname());
 	}
-	if(total_dices == 0) {
-		sb.adds("Бросьте [%1i] %-*2", total_dices, pdn);
-	} else
+	if(total_dices == 0)
+		sb.adds(getnm("NoDicesForRoll"), total_dices, pdn);
+	else
 		sb.adds("Бросьте [%1i] %-*2", total_dices, pdn);
 	if(opponent) {
 		sb.adds("при этом [%1] будет кидать [%2i] %-*3",
@@ -114,39 +125,58 @@ static void fix_roll() {
 	sb.add(".");
 }
 
-static void make_roll() {
+static void resolve_action(void* p) {
+	if(actions.indexof(p) != -1) {
+		auto pa = (rolli*)p;
+		switch(pa->option) {
+		case HelpDice:
+			bonus_dices++;
+			break;
+		case TraitsHelp:
+			if(player->gettrait((trait_s)getbsi((traiti*)pa->action)) >= 3)
+				bonus_success++;
+			else {
+				bonus_dices++;
+				player->usetrait((trait_s)getbsi((traiti*)pa->action));
+			}
+			break;
+		}
+		helps.add(*pa);
+	}
+}
+
+static void prepare_roll() {
+	base_dices = player->getskill(skill);
 	helps.clear();
 	auto pb = sb.get();
 	while(true) {
-		actions.clear(); an.clear(); sb.set(pb);
-		fix_roll();
+		an.clear(); sb.set(pb); actions.clear();
+		fix_prepare_roll();
 		add_helpers();
 		add_trait_help();
 		auto p = an.choose(getnm("WhatDoYouDo"), getnm("MakeRoll"), 1);
 		if(!p)
 			break;
-		if(actions.indexof(p) != -1) {
-			auto pa = (rolli*)p;
-			switch(pa->option) {
-			case HelpDice:
-				bonus_dices++;
-				break;
-			case TraitsHelp:
-				if(player->gettrait((trait_s)getbsi((traiti*)pa->action)) >= 3)
-					bonus_success++;
-				else {
-					bonus_dices++;
-					player->usetrait((trait_s)getbsi((traiti*)pa->action));
-				}
-				break;
-			}
-			helps.add(*pa);
-		}
+		resolve_action(p);
 	}
+	sb.set(pb);
+}
+
+static void make_roll() {
+	auto pb = sb.get();
+	while(true) {
+		an.clear(); sb.set(pb);
+		auto p = an.choose(getnm("WhatDoYouDo"), getnm("ApplyResult"), 1);
+		if(!p)
+			break;
+		resolve_action(p);
+	}
+	sb.set(pb);
 }
 
 void hero::roll(skill_s tested_skill) {
 	pushvalue push_player(player, this);
 	pushvalue push_skill(skill, tested_skill);
+	prepare_roll();
 	make_roll();
 }

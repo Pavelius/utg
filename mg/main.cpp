@@ -18,12 +18,9 @@ static void create_party() {
 	answers::interactive = false;
 	set_mouse_guard(1);
 	player->create();
-	player->addskill(Fighter, 2);
 	party.add(player);
-	answers::interactive = true;
 	set_mouse_guard(2);
 	player->create();
-	player->addskill(Fighter, 3);
 	party.add(player);
 	answers::interactive = true;
 }

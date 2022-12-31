@@ -100,6 +100,13 @@ static void textcnw(const char* name) {
 	text(name);
 }
 
+static const char* getnmsh(const char* id) {
+	auto pn = getnme(str("%1Short", id));
+	if(!pn)
+		pn = getnm(id);
+	return pn;
+}
+
 static void status(const char* id, const char* value) {
 	auto name = getnmsh(id);
 	auto push_fore = fore;
