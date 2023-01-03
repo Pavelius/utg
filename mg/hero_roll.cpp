@@ -8,23 +8,47 @@
 
 static answers	an;
 static skill_s	skill;
-static int		base_dices, bonus_dices, bonus_success, obstacle, opponent_dices;
-static unsigned char dice_result[32] = {};
+static int		base_dices, bonus_dices, bonus_success, obstacle, opponent_dices, persona_used;
+static adat<char, 32> dices;
 static adat<rolli, 32> actions, helps;
 
-static void clear_dice_pool() {
-	memset(dice_result, 0, sizeof(dice_result));
+static int compare_dice_result(const void* v1, const void* v2) {
+	return *((char*)v2) - *((char*)v1);
+}
+
+static int dice_result(int number) {
+	auto result = 0;
+	for(auto i = 0; i < dices.getcount(); i++) {
+		if(dices[i] >= number)
+			result++;
+	}
+	return result;
+}
+
+static void dice_change(int number, int new_number) {
+	for(auto& e : dices) {
+		if(e == number)
+			e = new_number;
+	}
 }
 
 static void add_dices(int count) {
-	auto n = zlen(dice_result); count += n;
-	for(int i = n; i < count; i++)
-		dice_result[i] = 1 + rand() % 6;
+	for(int i = 0; i < count; i++)
+		dices.add(1 + rand() % 6);
+	qsort(dices.data, dices.count, sizeof(dices.data[0]), compare_dice_result);
 }
 
 static rolli* find_help(const hero* p) {
 	for(auto& e : helps) {
 		if(e.player == p && (e.option == HelpDice || e.option == IAmWise))
+			return &e;
+	}
+	return 0;
+}
+
+static rolli* find_help(rollopt_s option) {
+	for(auto& e : helps) {
+		if(e.option == option)
 			return &e;
 	}
 	return 0;
@@ -47,10 +71,8 @@ static rolli* find_help(const hero* p, const void* pa, rollopt_s option) {
 }
 
 static const skilli* get_help_skills(const hero* player) {
-	if(find_help(player))
-		return 0;
 	auto& ei = bsdata<skilli>::elements[skill];
-	for(auto i = (skill_s)0; i <= LastSkill; i = (skill_s)(i + 1)) {
+	for(auto i = (skill_s)0; i <= Fate; i = (skill_s)(i + 1)) {
 		if(skill != i && !ei.help.is(i))
 			continue;
 		auto n = player->getskill(skill);
@@ -60,9 +82,11 @@ static const skilli* get_help_skills(const hero* player) {
 	return 0;
 }
 
-static void add_helpers() {
+static void add_skill_help() {
 	for(auto p : party) {
 		if(p == player)
+			continue;
+		if(find_help(p))
 			continue;
 		auto ps = get_help_skills(p);
 		if(!ps)
@@ -92,6 +116,73 @@ static void add_trait_help() {
 	}
 }
 
+static bool is_allow_wise(variant subject) {
+	if(environment == subject || (environment && environment->parent == subject))
+		return true;
+	return false;
+}
+
+static void add_wise_help() {
+	for(auto p : party) {
+		if(p == player)
+			continue;
+		if(find_help(p))
+			continue;
+		for(auto& e : bsdata<wisei>()) {
+			if(!p->iswise(&e))
+				continue;
+			if(!is_allow_wise(e.subject))
+				continue;
+			auto pa = actions.add();
+			pa->option = IAmWise;
+			pa->player = p;
+			pa->action = &e;
+			an.add(pa, getnm("CharacterIAmWise"), p->getname(), e.getname());
+		}
+	}
+}
+
+static void add_persona_dices() {
+	if(!player->getskill(Persona))
+		return;
+	if(persona_used >= 3)
+		return;
+	auto pa = actions.add();
+	pa->option = PersonaAddDice;
+	pa->player = player;
+	pa->action = 0;
+	an.add(pa, getnm("CharacterPersonaAddDice"));
+}
+
+static void add_fate_reroll() {
+	if(!player->getskill(Fate))
+		return;
+	if(find_help(FateSuccessReroll))
+		return;
+	auto pa = actions.add();
+	pa->option = FateSuccessReroll;
+	pa->player = player;
+	pa->action = 0;
+	auto count = dice_result(6);
+	an.add(pa, getnm("CharacterFateReroll"), count, getnm("Dice"));
+}
+
+static void fix_roll_result() {
+	player->act("[%герой] выбросил%а: ");
+	auto i = 0;
+	for(auto v : dices) {
+		if(i)
+			sb.add(", ");
+		sb.adds("%1i", v);
+		i++;
+	}
+	if(i)
+		sb.add(".");
+	auto result = dice_result(4);
+	if(result)
+		sb.adds(getnm("ScoreDiceResult"), result, getnm("Success"));
+}
+
 static void fix_prepare_roll() {
 	auto total_dices = base_dices + bonus_dices;
 	auto pdn = getnm("Dice");
@@ -109,8 +200,14 @@ static void fix_prepare_roll() {
 	}
 	sb.add(".");
 	for(auto& e : helps) {
-		if(e.option == HelpDice)
+		switch(e.option) {
+		case HelpDice:
 			sb.adds(getnm("CharacterHelp"), e.player->getname());
+			break;
+		case IAmWise:
+			sb.adds(getnm("UseIAmWise"), e.player->getname());
+			break;
+		}
 	}
 	if(total_dices == 0)
 		sb.adds(getnm("NoDicesForRoll"), total_dices, pdn);
@@ -128,8 +225,9 @@ static void fix_prepare_roll() {
 static void resolve_action(void* p) {
 	if(actions.indexof(p) != -1) {
 		auto pa = (rolli*)p;
+		int count;
 		switch(pa->option) {
-		case HelpDice:
+		case HelpDice: case IAmWise:
 			bonus_dices++;
 			break;
 		case TraitsHelp:
@@ -140,20 +238,41 @@ static void resolve_action(void* p) {
 				player->usetrait((trait_s)getbsi((traiti*)pa->action));
 			}
 			break;
+		case DeeperUnderstanding:
+			break;
+		case OfCourse:
+			break;
+		case FateSuccessReroll:
+			player->setskill(Fate, player->getskill(Fate) - 1);
+			count = dice_result(6);
+			while(count > 0) {
+				dice_change(6, 5);
+				add_dices(count);
+				count = dice_result(6);
+			}
+			break;
+		case PersonaAddDice:
+			player->setskill(Persona, player->getskill(Persona) - 1);
+			persona_used++;
+			bonus_dices++;
+			break;
 		}
 		helps.add(*pa);
 	}
 }
 
 static void prepare_roll() {
+	persona_used = 0;
 	base_dices = player->getskill(skill);
 	helps.clear();
 	auto pb = sb.get();
 	while(true) {
 		an.clear(); sb.set(pb); actions.clear();
 		fix_prepare_roll();
-		add_helpers();
+		add_skill_help();
 		add_trait_help();
+		add_wise_help();
+		add_persona_dices();
 		auto p = an.choose(getnm("WhatDoYouDo"), getnm("MakeRoll"), 1);
 		if(!p)
 			break;
@@ -163,9 +282,13 @@ static void prepare_roll() {
 }
 
 static void make_roll() {
+	dices.clear();
+	add_dices(base_dices + bonus_dices);
 	auto pb = sb.get();
 	while(true) {
 		an.clear(); sb.set(pb);
+		fix_roll_result();
+		add_fate_reroll();
 		auto p = an.choose(getnm("WhatDoYouDo"), getnm("ApplyResult"), 1);
 		if(!p)
 			break;

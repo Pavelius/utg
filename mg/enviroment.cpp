@@ -9,3 +9,5 @@ BSDATA(enviroment_typei) = {
 };
 assert_enum(enviroment_typei, City)
 
+enviromenti* environment;
+

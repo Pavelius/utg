@@ -12,10 +12,10 @@ enum skill_s : unsigned char {
 	Loremouse, Militarist, Miller, Orator, Pathfinder,
 	Persuader, Potter, Scientist, Scout, Smith,
 	Stonemason, Survivalist, WeatherWatcher, Weaver,
-	FirstSkill = Administrator, LastSkill = Weaver,
+	Persona, Fate,
 };
-typedef flagable<(LastSkill + 7) / 8> skilla;
-typedef char skillds[LastSkill + 1];
+typedef flagable<(Fate + 7) / 8> skilla;
+typedef char skillds[Fate + 1];
 struct skilli : nameable {
 	skilla		help;
 };
