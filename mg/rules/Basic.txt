@@ -135,3 +135,8 @@ Shaleburrow type(City)
 Sprucetuck type(City)
  skills Scientist Loremouse
  traits Inquisitive Rational
+
+#Menu
+
+General source(Hero)
+ elements Nature Will Health Resources Circles Separator Persona Fate

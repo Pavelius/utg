@@ -18,9 +18,11 @@ static void create_party() {
 	answers::interactive = false;
 	set_mouse_guard(1);
 	player->create();
+	player->setavatar("guard1");
 	party.add(player);
 	set_mouse_guard(2);
 	player->create();
+	player->setavatar("guard2");
 	party.add(player);
 	answers::interactive = true;
 }
@@ -38,7 +40,13 @@ static void initialize() {
 	questlist::read("NatureQuest");
 }
 
+static const char* getavatarst(const void* p) {
+	return ((hero*)p)->getavatar();
+}
+
 int	main(int argc, char *argv[]) {
+	draw::heroes = bsdata<hero>::source_ptr;
+	draw::heroes_getavatar = getavatarst;
 	answers::console = &sb;
 	answers::prompt = sb.begin();
 	answers::resid = "treasure";

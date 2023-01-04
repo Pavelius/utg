@@ -4,6 +4,7 @@
 #include "enviroment.h"
 #include "item.h"
 #include "list.h"
+#include "menu.h"
 #include "hero.h"
 #include "questlist.h"
 #include "rang.h"
@@ -11,6 +12,7 @@
 #include "skill.h"
 #include "trait.h"
 #include "variant.h"
+#include "widget.h"
 #include "wise.h"
 
 BSMETA(variant) = {{}};
@@ -42,6 +44,8 @@ BSMETA(enviromenti) = {
 	{}};
 BSMETA(enviroment_typei) = {
 	BSREQ(id),
+	{}};
+BSMETA(hero) = {
 	{}};
 BSMETA(rangi) = {
 	BSREQ(id),
@@ -78,13 +82,16 @@ BSDATA(varianti) = {
 	{"Action", VAR(actioni, 1)},
 	{"Animal", VAR(animali, 1)},
 	{"Enviroment", VAR(enviromenti, 1)},
+	{"Hero", VAR(hero, 1), ftstatus<hero>, hero::getproperty},
 	{"Item", VAR(itemi, 1)},
 	{"List", VAR(listi, 1)},
+	{"Menu", VAR(menu, 1)},
 	{"Rang", VAR(rangi, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>},
 	{"Tag", VAR(tagi, 1)},
 	{"Trait", VAR(traiti, 1), 0, 0, fnscript<traiti>},
+	{"Widget", VAR(widget, 1)},
 	{"Wise", VAR(wisei, 1)},
 };
 BSDATAF(varianti)

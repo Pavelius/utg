@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 27: Can't find variant `Wise`
+ Line 142: Can't find variant `Separator`

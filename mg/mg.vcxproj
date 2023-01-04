@@ -146,6 +146,7 @@
     <ClCompile Include="action.cpp" />
     <ClCompile Include="enviroment.cpp" />
     <ClCompile Include="hero_roll.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />

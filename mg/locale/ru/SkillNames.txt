@@ -4,6 +4,9 @@ Health: Здоровье
 Resources: Ресурсы
 Circles: Связи
 
+Fate: Судьба
+Persona: Личность
+
 Administrator: Администратор
 Apiarist: Пчеловод
 Archivist: Архивариус
