@@ -21,7 +21,7 @@ struct skilli : nameable {
 	skilla		help;
 };
 struct skillable {
-	skillds		skills;
+	skillds		skills, skills_fail, skills_pass;
 	void		addskill(skill_s v, int i) { setskill(v, getskill(v) + i); }
 	int			getskill(skill_s v) const { return skills[v]; }
 	void		setskill(skill_s v, int i) { skills[v] = i; }

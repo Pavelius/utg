@@ -51,8 +51,6 @@ enum roll_flag_s : unsigned char {
 //	char						skills[LastSkill + 1];
 //	char						traits[LastTraits + 1];
 //	flagable<LastTraits>		trait_used;
-//	char						fail[LastSkill + 1];
-//	char						pass[LastSkill + 1];
 //	wisea						wises;
 //	item						wears[LastGear + 1];
 //	unsigned short				family_id;

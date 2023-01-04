@@ -140,3 +140,5 @@ Sprucetuck type(City)
 
 General source(Hero)
  elements Nature Will Health Resources Circles Separator Persona Fate
+Skills source(Hero)
+ elements Fighter Hunter

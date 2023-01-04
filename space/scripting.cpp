@@ -6,10 +6,10 @@
 #include "pushvalue.h"
 #include "quest.h"
 #include "script.h"
+#include "variable.h"
 
 static answers an;
-static int counters[16], counter_id;
-static int result, value, rolled[2];
+static int result, value, variable_id, rolled[2];
 static ability_s ability;
 
 static void change_ability(ability_s v, int bonus) {
@@ -36,6 +36,9 @@ template<> void fnscript<abilityi>(int index, int bonus) {
 }
 
 static void add_quest_answers() {
+	an.clear();
+	if(!quest::last)
+		return;
 	auto index = quest::last->index;
 	auto pe = bsdata<quest>::end();
 	for(auto pa = quest::last + 1; pa < pe; pa++) {
@@ -49,8 +52,33 @@ static void add_quest_answers() {
 	}
 }
 
-static void choose_quest_result() {
+static void apply_header() {
+	if(!quest::last)
+		return;
+	auto pn = quest::last->getheader();
+	if(!pn)
+		return;
+	answers::header = pn;
+}
+
+static void apply_text() {
+	if(quest::last && quest::last->text) {
+		answers::console->clear();
+		answers::console->add(quest::last->text);
+	}
+}
+
+static void apply_script() {
 	result = 0;
+	if(!quest::last)
+		return;
+	result = quest::last->next;
+	script::run(quest::last->tags);
+}
+
+static void choose_quest_result() {
+	if(!quest::last)
+		return;
 	auto index = quest::last->index;
 	auto pe = bsdata<quest>::end();
 	auto pr = quest::last + 1;
@@ -63,10 +91,10 @@ static void choose_quest_result() {
 		if(result <= pr->next)
 			break;
 	}
-	result = pr->next;
+	quest::last = pr;
 }
 
-static void roll(int bonus) {
+static void make_roll(int bonus) {
 	char temp[260]; stringbuilder sb(temp);
 	if(game.get(Problem) > 0) {
 		change_ability(Problem, -1);
@@ -94,16 +122,17 @@ static void roll(int bonus) {
 			continue;
 		}
 	}
-	choose_quest_result();
 }
 
-static void change_header(const quest* p) {
-	if(!p)
-		return;
-	auto pn = p->getheader();
-	if(!pn)
-		return;
-	answers::header = pn;
+static void roll(int bonus) {
+	make_roll(bonus);
+	choose_quest_result();
+	apply_text();
+	apply_script();
+	draw::pause();
+	quest::last = quest::findprompt(result);
+	apply_header();
+	apply_text();
 }
 
 void quest::run(int index) {
@@ -112,49 +141,43 @@ void quest::run(int index) {
 	pushvalue push_header(answers::header);
 	pushvalue push_last(last, findprompt(index));
 	while(last) {
-		an.clear();
-		change_header(last);
-		answers::console->addn(last->text);
-		result = 0;
-		script::run(last->tags);
-		if(result != 0) {
-			last = findprompt(result);
-			if(last && last->text) {
-				answers::console->clear();
-				answers::console->addn(last->text);
-			}
-			continue;
-		}
+		apply_header();
+		apply_text();
+		script::run(quest::last->tags);
 		add_quest_answers();
 		auto pv = an.choose(0, 0, 1);
 		if(!pv)
 			break;
-		if(bsdata<quest>::source.have(pv)) {
-			last = (quest*)pv;
-			result = last->next;
+		else if(bsdata<quest>::source.have(pv)) {
+			last = (quest*)pv; result = last->next;
 			script::run(last->tags);
 			last = findprompt(result);
-			if(last && last->text)
-				answers::console->clear();
 		}
 	}
 }
 
-static void add_counter(int bonus) {
-	counters[counter_id] += bonus;
+static void add_variable(int bonus) {
+	if((int)bsdata<variable>::source.getcount() >= variable_id)
+		return;
+	bsdata<variable>::elements[variable_id].value += bonus;
 }
 
-static void set_counter(int bonus) {
-	counter_id = bonus;
+static void set_variable(int bonus) {
+	variable_id = bonus;
 }
 
 static void pass_hours(int bonus) {
 }
 
+static void jump_next(int bonus) {
+	result = bonus;
+}
+
 BSDATA(script) = {
-	{"Counter", add_counter},
+	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
-	{"SetCounter", set_counter},
+	{"SetVariable", set_variable},
+	{"Variable", add_variable},
 };
 BSDATAF(script)

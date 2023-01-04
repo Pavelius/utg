@@ -19,6 +19,7 @@ Fat:
 Fearful: 
 Fearless: 
 Fiery: 
+General: 
 Generous: 
 Graceful: 
 GuardsHonor: 
@@ -38,6 +39,7 @@ SharpEyed:
 Sharptooth: 
 Short: 
 Skeptical: 
+Skills: 
 Skinny: 
 Stoic: 
 Stubborn: 

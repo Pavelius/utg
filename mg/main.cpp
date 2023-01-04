@@ -23,6 +23,9 @@ static void create_party() {
 	set_mouse_guard(2);
 	player->create();
 	player->setavatar("guard2");
+	player->skills_pass[Fighter]++;
+	player->skills_pass[Fighter]++;
+	player->skills_fail[Fighter]++;
 	party.add(player);
 	answers::interactive = true;
 }

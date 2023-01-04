@@ -34,6 +34,9 @@
     <ClCompile Include="game.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="variable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -75,6 +78,9 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="mission.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="variable.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>
