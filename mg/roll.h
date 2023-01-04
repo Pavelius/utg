@@ -5,7 +5,7 @@ enum rollopt_s : unsigned char {
 	TraitsHelp, TraitsImpede, TraitsHurt, TraitsBreakTie,
 	IAmWise, DeeperUnderstanding, OfCourse,
 	FateSuccessReroll,
-	PersonaAddDice,
+	PersonaAddDice, PersonaAddNatureDice,
 };
 struct rolli {
 	rollopt_s	option;

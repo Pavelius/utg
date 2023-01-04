@@ -11,6 +11,7 @@ CharacterHelp: %1 поможет в броске.
 CharacterHelpRoll: [%1] может помочь своим навыком [%2].
 CharacterFateReroll: Потратить [1] очко cудьбы чтобы добавить [%1i] %-*2.
 CharacterPersonaAddDice: Потратить [1] очко личности, чтобы добавить [1] кубик.
+CharacterPersonaAddNatureDice: Потратить [1] очко личности, чтобы добавить [%1i] кубиков, но есть возможность истощить природу.
 CharacterTraitsHelp: Помочь себе чертой [%1].
 Dice: Кубик
 Left: Осталось

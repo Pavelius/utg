@@ -9,6 +9,7 @@
 static answers	an;
 static skill_s	skill;
 static int		base_dices, bonus_dices, bonus_success, obstacle, opponent_dices, persona_used;
+static bool		tag_nature;
 static adat<char, 32> dices;
 static adat<rolli, 32> actions, helps;
 
@@ -154,6 +155,16 @@ static void add_persona_dices() {
 	an.add(pa, getnm("CharacterPersonaAddDice"));
 }
 
+static void add_persona_nature_tag() {
+	if(!player->getskill(Persona))
+		return;
+	auto pa = actions.add();
+	pa->option = PersonaAddNatureDice;
+	pa->player = player;
+	pa->action = 0;
+	an.add(pa, getnm("CharacterPersonaAddNatureDice"), player->getskill(Nature), getnm("Dice"));
+}
+
 static void add_fate_reroll() {
 	if(!player->getskill(Fate))
 		return;
@@ -256,6 +267,11 @@ static void resolve_action(void* p) {
 			persona_used++;
 			bonus_dices++;
 			break;
+		case PersonaAddNatureDice:
+			player->setskill(Persona, player->getskill(Persona) - 1);
+			bonus_dices += player->getskill(Nature);
+			tag_nature = true;
+			break;
 		}
 		helps.add(*pa);
 	}
@@ -263,6 +279,7 @@ static void resolve_action(void* p) {
 
 static void prepare_roll() {
 	persona_used = 0;
+	tag_nature = false;
 	base_dices = player->getskill(skill);
 	helps.clear();
 	auto pb = sb.get();
@@ -273,6 +290,7 @@ static void prepare_roll() {
 		add_trait_help();
 		add_wise_help();
 		add_persona_dices();
+		add_persona_nature_tag();
 		auto p = an.choose(getnm("WhatDoYouDo"), getnm("MakeRoll"), 1);
 		if(!p)
 			break;

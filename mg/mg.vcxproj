@@ -150,6 +150,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="hero_generate.cpp" />
+    <ClCompile Include="natureable.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="skill.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="enviroment.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="natureable.h" />
     <ClInclude Include="rang.h" />
     <ClInclude Include="roll.h" />
     <ClInclude Include="skill.h" />
