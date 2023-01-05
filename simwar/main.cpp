@@ -1,18 +1,25 @@
 #include "draw.h"
 #include "draw_object.h"
-#include "main.h"
-#include "strategy.h"
+#include "draw_strategy.h"
+#include "player.h"
+#include "province.h"
 
 using namespace draw;
 
 static void main_scene() {
-	statable t1 = {};
-	statable t2 = {0, 0, 2, 1};
-	statable t3 = t1;
-	t3 += t2;
+}
+
+static void initialize_scene() {
+	player = bsdata<playeri>::add();
+	player->addcost(Gold, 100);
+	player->addcost(Stone, 5);
+	player->addcost(Woods, 5);
+	player->upkeep.addcost(Woods, 2);
+	player->upkeep.addcost(Gold, 10);
 }
 
 static void start_game() {
+	initialize_scene();
 	draw::scene(main_scene);
 }
 

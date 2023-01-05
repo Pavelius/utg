@@ -1,6 +1,19 @@
+#Landscape
+
+Farmland
+ effect Gold(4)
+Woods
+ effect Gold(2)
+Mountains
+ effect Gold(1)
+
 #Building
 
 Marketplace
+ effect Gold(1)
 Fort
+ effect Warfire(1)
 Harbor
+ effect Gold(1)
 Farm
+ effect Food(2)

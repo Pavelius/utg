@@ -18,13 +18,13 @@
     <ClCompile Include="interface.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="costable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="building.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="stat.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="statable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -40,7 +40,22 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
+    <ClInclude Include="costable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="building.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="province.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="landscape.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="bsref.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

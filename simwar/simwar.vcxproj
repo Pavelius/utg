@@ -147,12 +147,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="building.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="costable.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="stat.cpp" />
-    <ClCompile Include="statable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
@@ -160,7 +160,12 @@
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
+    <ClInclude Include="bsref.h" />
+    <ClInclude Include="building.h" />
+    <ClInclude Include="costable.h" />
+    <ClInclude Include="landscape.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="province.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,3 +1,3 @@
-#include "main.h"
+#include "player.h"
 
-player* player::last;
+playeri* player;
