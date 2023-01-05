@@ -1,2 +1,5 @@
 ﻿In file `rules/Basic.txt`:
- Line 25: Not found requisit `recruit`
+ Line 4: Not found field `Size` in dataset `effect`
+ Line 6: Not found field `Size` in dataset `effect`
+ Line 8: Not found field `Size` in dataset `effect`
+ Line 11: Not found field `Size` in dataset `effect`

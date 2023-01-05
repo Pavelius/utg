@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "draw.h"
 #include "draw_object.h"
+#include "game.h"
 #include "player.h"
 #include "widget.h"
 

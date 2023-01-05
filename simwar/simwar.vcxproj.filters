@@ -36,6 +36,9 @@
     <ClCompile Include="scripting.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -74,6 +77,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="site.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

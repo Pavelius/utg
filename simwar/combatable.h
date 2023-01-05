@@ -4,7 +4,7 @@
 
 enum combat_s : unsigned char {
 	Strenght, Damage, Health, Charge, Archery, Level, Armor,
-	Movement, Explore, Siege,
+	Movement, Explore, Siege, Size,
 	Limit,
 };
 typedef char combata[Limit + 1];

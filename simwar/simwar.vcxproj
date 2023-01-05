@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="building.cpp" />
     <ClCompile Include="combatable.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="bsref.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="costable.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="landscape.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="province.h" />

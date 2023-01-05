@@ -2,14 +2,16 @@
 
 Farmland
  effect Gold(4)
+ combat Size(3)
 Forest
  effect Gold(2) Mana(1)
+ combat Size(3)
 Hills
  effect Gold(2)
- defender Strenght(1)
+ combat Strenght(1) Size(3)
 Swamp
  effect Mana(2)
- defender Damage(4)
+ combat Damage(4) Size(3)
 
 #Building
 

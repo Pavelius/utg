@@ -12,6 +12,7 @@ BSDATA(combati) = {
 	{"Movement"},
 	{"Explore"},
 	{"Siege"},
+	{"Size"},
 	{"Limit"},
 };
 assert_enum(combati, Limit)

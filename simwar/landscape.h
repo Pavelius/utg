@@ -3,7 +3,6 @@
 
 #pragma once
 
-struct landscapei : nameable {
+struct landscapei : nameable, combatable {
 	costa	effect;
-	combata	attacker, defender;
 };

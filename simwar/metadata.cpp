@@ -11,6 +11,7 @@ BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
 BSDATAC(landscapei, 32)
 BSDATAC(playeri, 16)
+BSDATAC(provincei, 128)
 BSDATAC(uniti, 48)
 
 BSMETA(buildingi) = {
@@ -26,8 +27,7 @@ BSMETA(combati) = {
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(effect, costi),
-	BSDST(attacker, combati),
-	BSDST(defender, combati),
+	BSDST(combat, combati),
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),

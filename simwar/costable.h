@@ -11,8 +11,10 @@ struct costi : nameable {
 typedef short costa[Warfire + 1];
 struct costable {
 	costa cost;
-	void operator+=(const costable& v);
-	void operator-=(const costable& v);
+	void operator+=(const costa& v);
+	void operator+=(const costable& v) { operator+=(v.cost); }
+	void operator-=(const costa& v);
+	void operator-=(const costable& v) { operator-=(v.cost); }
 	bool operator>=(const costable& v) const;
 	bool operator<=(const costable& v) const;
 	void addcost(cost_s v, int i) { cost[v] += i; }

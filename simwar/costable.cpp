@@ -12,14 +12,14 @@ BSDATA(costi) = {
 };
 assert_enum(costi, Warfire)
 
-void costable::operator+=(const costable& v) {
+void costable::operator+=(const costa& v) {
 	for(auto i = 0; i <= Warfire; i++)
-		cost[i] += v.cost[i];
+		cost[i] += v[i];
 }
 
-void costable::operator-=(const costable& v) {
+void costable::operator-=(const costa& v) {
 	for(auto i = 0; i <= Warfire; i++)
-		cost[i] -= v.cost[i];
+		cost[i] -= v[i];
 }
 
 bool costable::operator>=(const costable& v) const {
