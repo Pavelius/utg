@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 4: Not found requisit `effect`
+ Line 25: Not found requisit `recruit`

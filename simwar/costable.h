@@ -3,13 +3,12 @@
 #pragma once
 
 enum cost_s : unsigned char {
-	Gold, Food, Woods, Mana, Happiness, Fame, Trade, Lore, Warfire,
-	Stone, Iron, Gems,
+	Gold, Mana, Happiness, Fame, Trade, Lore, Warfire
 };
 struct costi : nameable {
 	int			width;
 };
-typedef short costa[Gems + 1];
+typedef short costa[Warfire + 1];
 struct costable {
 	costa cost;
 	void operator+=(const costable& v);

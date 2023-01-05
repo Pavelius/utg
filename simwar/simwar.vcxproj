@@ -91,6 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,11 +149,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="building.cpp" />
+    <ClCompile Include="combatable.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="costable.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="province.cpp" />
+    <ClCompile Include="scripting.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
@@ -166,6 +170,12 @@
     <ClInclude Include="landscape.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="province.h" />
+    <ClInclude Include="combatable.h" />
+    <ClInclude Include="site.h" />
+    <ClInclude Include="unit.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="maps\silentseas.map" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

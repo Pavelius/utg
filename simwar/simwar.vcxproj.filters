@@ -27,6 +27,15 @@
     <ClCompile Include="player.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="combatable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="province.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -58,5 +67,19 @@
     <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="combatable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="unit.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="site.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="maps\silentseas.map">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>
