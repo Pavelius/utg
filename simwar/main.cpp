@@ -1,8 +1,10 @@
+#include "building.h"
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "player.h"
 #include "province.h"
+#include "script.h"
 
 using namespace draw;
 
@@ -12,14 +14,10 @@ static void main_scene() {
 }
 
 static void initialize_scene() {
-	player = bsdata<playeri>::add();
-	player->addcost(Gold, 100);
-	player->addcost(Mana, 5);
-	player->addcost(Lore, 2);
-	player->upkeep.addcost(Mana, 2);
-	player->upkeep.addcost(Gold, 10);
-	player->upkeep.addcost(Lore, 1);
-	player->upgrade.addcost(Lore, 100);
+	player = bsdata<playeri>::find("SouthernKindom");
+	province = bsdata<provincei>::find("SnakeForest");
+	script::run(player->start);
+	script::run("UpdatePlayer");
 }
 
 static void start_game() {

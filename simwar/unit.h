@@ -12,3 +12,4 @@ struct troop : moveable {
 	provincei*		moveto;
 	const uniti*	type;
 };
+extern uniti*		lastunit;

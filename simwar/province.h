@@ -2,17 +2,19 @@
 #include "crt.h"
 #include "landscape.h"
 #include "point.h"
-#include "player.h"
 
 #pragma once
 
+struct playeri;
+
 struct provincei : nameable, combatable {
-	point				position;
 	playeri*			owner;
+	point				position;
 	const landscapei*	landscape;
 	costa				income;
 };
 struct moveable {
+	playeri*			player;
 	provincei*			province;
-	playeri*			owner;
 };
+extern provincei*		province;

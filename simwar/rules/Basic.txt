@@ -1,6 +1,6 @@
 #Landscape
 
-Farmland
+Plains
  effect Gold(4)
  combat Size(3)
 Forest
@@ -15,12 +15,24 @@ Swamp
 
 #Building
 
-Marketplace
- effect Gold(2)
+Citadel
+ effect Happiness(2) Gold(1) Warfire(4)
+DarkCitadel upgrade(Citadel)
+ effect Happiness(2) Gold(2) Warfire(6)
 Fort
- effect Warfire(1)
+ effect Warfire(2)
+ upkeep Gold(1)
 Harbor
  effect Gold(1)
+Marketplace
+ effect Gold(2)
+Palace
+ effect Happiness(2) Gold(3) Warfire(2)
+Tavern
+ effect Happiness(1)
+ upkeep Gold(1)
+WatchTower
+ effect Warfire(1)
 
 #Unit
 
@@ -33,7 +45,7 @@ Spearmans
  cost Gold(3)
  upkeep Gold(1)
 Archers
- combat Strenght(1) Damage(2) Health(6) Archery(3) Level(1) Movement(1)
+ combat Strenght(1) Damage(2) Health(6) Archery(2) Level(1) Movement(1)
  cost Gold(4)
  upkeep Gold(1)
 Swordsmans
@@ -48,3 +60,15 @@ Knights
  combat Strenght(3) Damage(8) Health(16) Armor(3) Level(3) Movement(1)
  cost Gold(12)
  upkeep Gold(3)
+
+#Player
+
+SouthernKindom
+ cost Gold(100) Mana(20)
+ start Citadel+1 Milita+2 Spearmans+1 Archers+1
+
+#Province
+
+SnakeForest position(401 996) landscape(Forest) owner(SouthernKindom)
+GreenAcres position(256 821) landscape(Plains) owner(SouthernKindom)
+SouthenCoast position(191 994) landscape(Plains)

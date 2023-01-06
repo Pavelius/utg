@@ -1,2 +1,17 @@
-﻿AppTitle: Стратегия
+﻿Citadel: Цитадель
+Fort: Форт
+Marketplace: Рынок
+Palace: Дворец
+Tavern: Таверна
+WatchTower: Дозорная башня
+
 Fame: Слава
+Gold: Золото
+Happiness: Счастье
+Mana: Мана
+Warfire: Армия
+
+AppTitle: Стратегия
+BuildingsUpkeep: Содержание зданий
+ProvincesIncome: Доход от провинций
+UnitsUpkeep: Содержание отрядов

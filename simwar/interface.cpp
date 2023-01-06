@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "draw.h"
 #include "draw_object.h"
+#include "draw_strategy.h"
 #include "game.h"
 #include "player.h"
 #include "widget.h"
@@ -15,6 +16,13 @@ static void paint_vborder() {
 	fore = push_fore;
 	caret = push_caret;
 	caret.x += metrics::padding + 1;
+}
+
+static void hiliting_object(const void* object, int minimal_width) {
+	rectpush push;
+	height = texth();
+	width = minimal_width;
+	ishilite(object);
 }
 
 static void field(const char* format, int minimal_width) {
@@ -47,6 +55,7 @@ static void paint_cost(const costable& v, const costable& u, const costable& n) 
 		auto minimal_width = 60;
 		if(e.width)
 			minimal_width = e.width;
+		hiliting_object(&e, minimal_width);
 		field(temp, minimal_width);
 		paint_vborder();
 	}

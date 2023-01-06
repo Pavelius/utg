@@ -1,3 +1,3 @@
-#include "player.h"
+#include "game.h"
 
 playeri* player;
