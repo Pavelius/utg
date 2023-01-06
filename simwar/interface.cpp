@@ -134,6 +134,7 @@ static void paint_cost(const costable& v, const costable& u, const costable& n) 
 	field(Fame, "%1i", 0, v, n, u);
 	field(Warfire, "%1i/%3i", 0, v, n, u);
 	field(Lore, 0, 120, v, n, u);
+	field(Trade, 0, 80, v, n, u);
 }
 
 void status_info() {

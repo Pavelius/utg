@@ -15,6 +15,7 @@ Gold: Золото
 Happiness: Счастье
 Lore: Наука
 Mana: Ингридиенты
+Trade: Торговля
 Warfire: Армия
 
 AppTitle: Стратегия

@@ -30,7 +30,7 @@ Laboratory
  effect Lore(1)
  upkeep Gold(1)
 Harbor
- effect Gold(1)
+ effect Gold(1) Trade(1)
 Marketplace
  effect Gold(2)
 Palace

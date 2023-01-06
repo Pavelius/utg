@@ -145,6 +145,7 @@ int get_income(const playeri* p, cost_s v, stringbuilder* psb) {
 	result += get_provinces_upkeep(p, v, psb);
 	result += get_upkeep_buildings(p, v, psb);
 	result += get_upkeep_units(p, v, psb);
+	result += get_value(p->trade.cost[v], "TradeBonus", psb);
 	return result;
 }
 
