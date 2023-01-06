@@ -6,7 +6,8 @@ enum cost_s : unsigned char {
 	Gold, Mana, Happiness, Fame, Trade, Lore, Warfire
 };
 struct costi : nameable {
-	int			width;
+	int				width;
+	const char*		format;
 };
 typedef short costa[Warfire + 1];
 struct costable {

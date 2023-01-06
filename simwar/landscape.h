@@ -4,5 +4,5 @@
 #pragma once
 
 struct landscapei : nameable, combatable {
-	costa	effect;
+	costa	effect, upkeep;
 };

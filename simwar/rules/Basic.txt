@@ -2,16 +2,20 @@
 
 Plains
  effect Gold(4)
+ upkeep Happiness(1)
  combat Size(3)
 Forest
  effect Gold(2) Mana(1)
+ upkeep Happiness(1)
  combat Size(3)
 Hills
  effect Gold(2)
+ upkeep Happiness(1)
  combat Strenght(1) Size(3)
 Swamp
  effect Mana(2)
- combat Damage(4) Size(3)
+ upkeep Happiness(1)
+ combat Damage(4) Size(2)
 
 #Building
 

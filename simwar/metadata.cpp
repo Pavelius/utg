@@ -35,6 +35,7 @@ BSMETA(combati) = {
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(effect, costi),
+	BSDST(upkeep, costi),
 	BSDST(combat, combati),
 	{}};
 BSMETA(playeri) = {

@@ -4,11 +4,11 @@
 BSDATA(costi) = {
 	{"Gold"},
 	{"Mana"},
-	{"Happiness"},
+	{"Happiness", 0, "%3i"},
 	{"Fame"},
 	{"Trade"},
 	{"Lore"},
-	{"Warfire"},
+	{"Warfire", 0, "%1i/%3i"},
 };
 assert_enum(costi, Warfire)
 

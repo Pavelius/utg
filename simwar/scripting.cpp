@@ -50,7 +50,6 @@ template<> void fnscript<buildingi>(int value, int bonus) {
 	if(bonus > 0) {
 		build(bonus);
 	} else if(bonus < 0) {
-
 	}
 }
 
@@ -125,9 +124,25 @@ static int get_provinces_income(const playeri* p, cost_s v, stringbuilder* psb) 
 	return get_value(result, "ProvincesIncome", psb);
 }
 
+static int get_upkeep(const provincei* p, cost_s v, stringbuilder* psb) {
+	auto result = p->landscape->upkeep[v];
+	return get_value(result, p->id, psb);
+}
+
+static int get_provinces_upkeep(const playeri* p, cost_s v, stringbuilder* psb) {
+	auto result = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.owner != player)
+			continue;
+		result += get_upkeep(&e, v, 0);
+	}
+	return get_value(-result, "ProvincesUpkeep", psb);
+}
+
 int get_income(const playeri* p, cost_s v, stringbuilder* psb) {
 	auto result = get_provinces_income(p, v, psb);
 	result += get_effect_buildings(p, v, psb);
+	result += get_provinces_upkeep(p, v, psb);
 	result += get_upkeep_buildings(p, v, psb);
 	result += get_upkeep_units(p, v, psb);
 	return result;

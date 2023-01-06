@@ -8,10 +8,12 @@ WatchTower: Дозорная башня
 Fame: Слава
 Gold: Золото
 Happiness: Счастье
+Lore: Знания
 Mana: Мана
 Warfire: Армия
 
 AppTitle: Стратегия
 BuildingsUpkeep: Содержание зданий
 ProvincesIncome: Доход от провинций
+ProvincesUpkeep: Содержание провинций
 UnitsUpkeep: Содержание отрядов

@@ -39,26 +39,34 @@ static void field(const char* format, int minimal_width) {
 	height = push_height;
 }
 
-static void paint_cost(const costable& v, const costable& u, const costable& n) {
+static void field(cost_s v, const char* format, int width, const costable& a1, const costable& a2, const costable& a3) {
+	auto v1 = a1.cost[v];
+	auto v2 = a2.cost[v];
+	auto v3 = a3.cost[v];
+	auto& e = bsdata<costi>::elements[v];
+	if(!width)
+		width = 60;
 	char temp[260]; stringbuilder sb(temp);
-	for(auto i = 0; i <= Warfire; i++) {
-		auto& e = bsdata<costi>::elements[i];
-		sb.clear();
-		if(v.cost[i])
-			sb.add("%1i", v.cost[i]);
-		if(n.cost[i])
-			sb.add("/%1i", n.cost[i]);
-		if(u.cost[i])
-			sb.add("%+1i", u.cost[i]);
-		if(!temp[0])
-			continue;
-		auto minimal_width = 60;
-		if(e.width)
-			minimal_width = e.width;
-		hiliting_object(&e, minimal_width);
-		field(temp, minimal_width);
-		paint_vborder();
+	if(format)
+		sb.add(format, v1, v2, v3);
+	else {
+		sb.add("%1i", v1);
+		if(v2)
+			sb.add("/%1i", v2);
+		if(v3)
+			sb.add("%+1i", v3);
 	}
+	hiliting_object(&e, width);
+	field(temp, width);
+	paint_vborder();
+}
+
+static void paint_cost(const costable& v, const costable& u, const costable& n) {
+	field(Gold, 0, 0, v, n, u);
+	field(Mana, 0, 0, v, n, u);
+	field(Happiness, "%3i", 0, v, n, u);
+	field(Lore, 0, 0, v, n, u);
+	field(Warfire, "%1i/%3i", 0, v, n, u);
 }
 
 void status_info() {
