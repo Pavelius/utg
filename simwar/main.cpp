@@ -9,6 +9,7 @@
 using namespace draw;
 
 void ui_initialize();
+void update_provinces();
 
 static void main_scene() {
 }
@@ -16,8 +17,10 @@ static void main_scene() {
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
 	province = bsdata<provincei>::find("SnakeForest");
+	player->upgrade.addcost(Lore, 50);
 	script::run(player->start);
 	script::run("UpdatePlayer");
+	update_provinces();
 }
 
 static void start_game() {

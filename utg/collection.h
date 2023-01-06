@@ -4,6 +4,7 @@
 
 struct collectiona : adat<void*, 256> {
 	typedef void* fngroup(const void* object);
+	typedef int fncompare(const void* v1, const void* v2);
 	void*	choose(fngetname proc, const char* title, const char* cancel, bool autochoose) const;
 	bool	chooseu(fngetname proc, const char* title, const char* cancel) const;
 	void	distinct();
@@ -17,6 +18,7 @@ struct collectiona : adat<void*, 256> {
 	void	select(array& source, fnvisible proc);
 	void	shuffle();
 	void	sort(fngetname proc);
+	void	sort(fncompare proc);
 };
 template<typename T>
 struct collection : collectiona {

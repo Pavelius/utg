@@ -4,6 +4,7 @@
 #pragma once
 
 struct playeri : nameable, costable {
+	int			shield;
 	costable	upkeep, upgrade;
 	variants	start;
 };

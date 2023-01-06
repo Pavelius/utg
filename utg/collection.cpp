@@ -122,7 +122,13 @@ bool collectiona::chooseu(fngetname proc, const char* title, const char* cancel)
 }
 
 void collectiona::sort(fngetname proc) {
+	auto push_proc = sort_proc; sort_proc = proc;
 	qsort(data, count, sizeof(data), compare_proc);
+	sort_proc = push_proc;
+}
+
+void collectiona::sort(fncompare proc) {
+	qsort(data, count, sizeof(data), proc);
 }
 
 void collectiona::shuffle() {

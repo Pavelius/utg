@@ -1,5 +1,10 @@
-﻿Citadel: Цитадель
+﻿Milita: Ополчение
+Spearmans: Копейщики
+Archers: Лучники
+
+Citadel: Цитадель
 Fort: Форт
+Laboratory: Лаборатория
 Marketplace: Рынок
 Palace: Дворец
 Tavern: Таверна
@@ -8,8 +13,8 @@ WatchTower: Дозорная башня
 Fame: Слава
 Gold: Золото
 Happiness: Счастье
-Lore: Знания
-Mana: Мана
+Lore: Наука
+Mana: Ингридиенты
 Warfire: Армия
 
 AppTitle: Стратегия

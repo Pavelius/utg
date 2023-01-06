@@ -12,6 +12,7 @@ struct provincei : nameable, combatable {
 	point				position;
 	const landscapei*	landscape;
 	costa				income;
+	void				paint() const;
 };
 struct moveable {
 	playeri*			player;

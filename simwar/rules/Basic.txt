@@ -26,6 +26,9 @@ DarkCitadel upgrade(Citadel)
 Fort
  effect Warfire(2)
  upkeep Gold(1)
+Laboratory
+ effect Lore(1)
+ upkeep Gold(1)
 Harbor
  effect Gold(1)
 Marketplace
@@ -69,7 +72,7 @@ Knights
 
 SouthernKindom
  cost Gold(100) Mana(20)
- start Citadel+1 Milita+2 Spearmans+1 Archers+1
+ start Citadel+1 Laboratory+1 Milita+2 Spearmans+1 Archers+1
 
 #Province
 

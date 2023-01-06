@@ -1,0 +1,3 @@
+﻿GreenAcres: Зеленые луга
+SnakeForest: Змеинный лес
+SouthenCoast: Южное побережье

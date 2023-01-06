@@ -148,6 +148,15 @@ int get_income(const playeri* p, cost_s v, stringbuilder* psb) {
 	return result;
 }
 
+int get_units_warfire(const playeri* p) {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == p)
+			result++;
+	}
+	return result;
+}
+
 static void update_income() {
 	for(auto i = (cost_s)0; i <= Warfire; i = (cost_s)(i + 1))
 		player->upkeep.cost[i] = get_income(player, i, 0);
@@ -155,6 +164,7 @@ static void update_income() {
 
 static void update_player(int bonus) {
 	update_income();
+	player->cost[Warfire] = get_units_warfire(player);
 }
 
 BSDATA(script) = {

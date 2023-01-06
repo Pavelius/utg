@@ -11,5 +11,6 @@ struct uniti : nameable, combatable, costable {
 struct troop : moveable {
 	provincei*		moveto;
 	const uniti*	type;
+	void			paint() const;
 };
 extern uniti*		lastunit;
