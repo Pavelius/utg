@@ -1,21 +1,17 @@
 #Landscape
 
 Plains
- effect Gold(4)
+ effect Size(3) Gold(4)
  upkeep Happiness(1)
- combat Size(3)
 Forest
- effect Gold(2) Mana(1)
+ effect Size(3) Gold(2) Mana(1)
  upkeep Happiness(1)
- combat Size(3)
 Hills
- effect Gold(2)
+ effect Strenght(1) Size(3) Gold(2)
  upkeep Happiness(1)
- combat Strenght(1) Size(3)
 Swamp
- effect Mana(2)
+ effect Damage(4) Size(2) Mana(2)
  upkeep Happiness(1)
- combat Damage(4) Size(2)
 
 #Building
 
@@ -44,34 +40,28 @@ WatchTower
 #Unit
 
 Milita
- combat Strenght(1) Damage(2) Health(6) Level(1) Movement(1)
- cost Gold(1)
+ effect Strenght(1) Damage(2) Health(6) Level(1) Movement(1) Gold(1)
  upkeep Gold(1)
 Spearmans
- combat Strenght(1) Damage(3) Health(8) Level(1) Movement(1)
- cost Gold(3)
+ effect Strenght(1) Damage(3) Health(8) Level(1) Movement(1) Gold(3)
  upkeep Gold(1)
 Archers
- combat Strenght(1) Damage(2) Health(6) Archery(2) Level(1) Movement(1)
- cost Gold(4)
+ effect Strenght(1) Damage(2) Health(6) Archery(2) Level(1) Movement(1) Gold(4)
  upkeep Gold(1)
 Swordsmans
- combat Strenght(2) Damage(5) Health(10) Armor(2) Level(2) Movement(1)
- cost Gold(8)
+ effect Strenght(2) Damage(5) Health(10) Armor(2) Level(2) Movement(1) Gold(8)
  upkeep Gold(1)
 Cavalry
- combat Strenght(2) Damage(4) Health(12) Charge(4) Armor(1) Level(2) Movement(2)
- cost Gold(8)
+ effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(1) Level(2) Movement(2) Gold(8)
  upkeep Gold(2)
 Knights
- combat Strenght(3) Damage(8) Health(16) Armor(3) Level(3) Movement(1)
- cost Gold(12)
+ effect Strenght(3) Damage(8) Health(16) Armor(3) Level(3) Movement(1) Gold(12)
  upkeep Gold(3)
 
 #Player
 
 SouthernKindom
- cost Gold(100) Mana(20)
+ resources Gold(100) Mana(20)
  start Citadel+1 Laboratory+1 Milita+2 Spearmans+1 Archers+1
 
 #Province

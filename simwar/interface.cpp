@@ -11,6 +11,7 @@
 using namespace draw;
 
 const int button_height = 20;
+fnevent input_province;
 
 static color player_colors[] = {
 	{40, 40, 40},
@@ -123,11 +124,11 @@ static void field(cost_s v, const char* format, int width, int v1, int v2, int v
 	paint_vborder();
 }
 
-static void field(cost_s v, const char* format, int width, const costable& a1, const costable& a2, const costable& a3) {
-	field(v, format, width, a1.cost[v], a2.cost[v], a3.cost[v]);
+static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
+	field(v, format, width, a1[v], a2[v], a3[v]);
 }
 
-static void paint_cost(const costable& v, const costable& u, const costable& n) {
+static void paint_cost(const costa& v, const costa& u, const costa& n) {
 	field(Gold, 0, 100, v, n, u);
 	field(Mana, 0, 80, v, n, u);
 	field(Happiness, "%3i", 40, v, n, u);
@@ -139,9 +140,10 @@ static void paint_cost(const costable& v, const costable& u, const costable& n) 
 
 void status_info() {
 	auto push_caret = caret;
-	paint_cost(*player, player->upkeep, player->upgrade);
+	caret.y += metrics::padding;
+	paint_cost(player->resources, player->income, player->upgrade);
 	caret = push_caret;
-	caret.y += texth() + metrics::padding;
+	caret.y += texth() + metrics::padding * 2;
 }
 
 static void background_map() {
@@ -159,41 +161,6 @@ static void texth1(const char* format) {
 	font = push_font;
 }
 
-static void paint_buildings() {
-	collection<building> source;
-	source.select(building_in_province);
-	if(!source)
-		return;
-	auto button_height = texth();
-	for(auto pt : source) {
-		textcw(pt->type->getname());
-		caret.y += button_height;
-	}
-}
-
-static void paint_units() {
-	collection<troop> source;
-	source.select(troops_in_province);
-	if(!source)
-		return;
-	auto button_height = texth();
-	for(auto pt : source) {
-		textcw(pt->type->getname());
-		caret.y += button_height;
-	}
-}
-
-static void paint_objects(const provincei* parent) {
-	auto push_fore = fore;
-	auto push_province = province;
-	fore = colors::black;
-	province = const_cast<provincei*>(parent);
-	paint_buildings();
-	paint_units();
-	fore = push_fore;
-	province = push_province;
-}
-
 static void paint_shield(int index) {
 	auto p = gres("shields", "art/sprites");
 	image(p, index, 0);
@@ -203,8 +170,11 @@ void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
 	texth1(getname());
-	caret.y += 8;
-	paint_objects(this);
+	if(input_province && ishilite(32)) {
+		hot.cursor = cursor::Hand;
+		if(hot.key==MouseLeft && !hot.pressed)
+			execute(input_province, (int)this);
+	}
 }
 
 void troop::paint() const {
@@ -219,36 +189,12 @@ void troop::paint() const {
 static int compare_troop(const void* v1, const void* v2) {
 	auto p1 = *((troop**)v1);
 	auto p2 = *((troop**)v2);
-	auto e1 = p1->type->combat[Level];
-	auto e2 = p2->type->combat[Level];
+	auto e1 = p1->type->effect[Level];
+	auto e2 = p2->type->effect[Level];
 	if(e1 != e2)
 		return e1 - e2;
 	return (int)p1->type - (int)p2->type;
 }
-
-//static void update_units(point position) {
-//	collection<troop> source;
-//	source.select(troops_in_province);
-//	if(!source)
-//		return;
-//	auto total_height = button_height * source.getcount();
-//	auto x = position.x;
-//	auto y = position.y - (total_height - button_height) / 2;
-//	for(auto pt : source) {
-//		auto p = findobject(pt);
-//		if(!p) {
-//			p = addobject(x, y);
-//			p->data = pt;
-//			p->priority = 15;
-//		}
-//		if(p->x != x || p->y != y) {
-//			auto po = p->addorder(1000);
-//			po->x = x;
-//			po->y = y;
-//		}
-//		y += button_height;
-//	}
-//}
 
 static void add_widget(const char* id, unsigned char priority, bool absolute_position = true) {
 	auto pm = bsdata<widget>::find(id);

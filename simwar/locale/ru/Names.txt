@@ -19,7 +19,11 @@ Trade: Торговля
 Warfire: Армия
 
 AppTitle: Стратегия
+Buildings: Здания
 BuildingsUpkeep: Содержание зданий
+Cancel: Отмена
+EndTurn: Закончить ход
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
+Units: Отряды
 UnitsUpkeep: Содержание отрядов

@@ -42,7 +42,7 @@ static void recruit(int bonus) {
 }
 
 template<> void fnscript<costi>(int value, int bonus) {
-	player->addcost((cost_s)value, bonus);
+	player->resources[value] += bonus;
 }
 
 template<> void fnscript<buildingi>(int value, int bonus) {
@@ -145,7 +145,7 @@ int get_income(const playeri* p, cost_s v, stringbuilder* psb) {
 	result += get_provinces_upkeep(p, v, psb);
 	result += get_upkeep_buildings(p, v, psb);
 	result += get_upkeep_units(p, v, psb);
-	result += get_value(p->trade.cost[v], "TradeBonus", psb);
+	result += get_value(p->trade[v], "TradeBonus", psb);
 	return result;
 }
 
@@ -160,12 +160,12 @@ int get_units_warfire(const playeri* p) {
 
 static void update_income() {
 	for(auto i = (cost_s)0; i <= Warfire; i = (cost_s)(i + 1))
-		player->upkeep.cost[i] = get_income(player, i, 0);
+		player->income[i] = get_income(player, i, 0);
 }
 
 static void update_player(int bonus) {
 	update_income();
-	player->cost[Warfire] = get_units_warfire(player);
+	player->resources[Warfire] = get_units_warfire(player);
 }
 
 BSDATA(script) = {

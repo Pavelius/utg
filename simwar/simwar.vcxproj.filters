@@ -18,16 +18,13 @@
     <ClCompile Include="interface.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="costable.cpp">
+    <ClCompile Include="statable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="building.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="combatable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="province.cpp">
@@ -64,7 +61,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="costable.h">
+    <ClInclude Include="statable.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="building.h">
@@ -82,9 +79,6 @@
     <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="combatable.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="unit.h">
       <Filter>Logic</Filter>
     </ClInclude>
@@ -92,6 +86,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="special.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

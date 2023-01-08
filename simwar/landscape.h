@@ -1,8 +1,7 @@
-#include "costable.h"
-#include "combatable.h"
+#include "statable.h"
 
 #pragma once
 
-struct landscapei : nameable, combatable {
-	costa	effect, upkeep;
+struct landscapei : nameable {
+	costa		effect, upkeep;
 };

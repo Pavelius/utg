@@ -1,4 +1,4 @@
-#include "combatable.h"
+#include "statable.h"
 #include "crt.h"
 #include "landscape.h"
 #include "point.h"
@@ -7,7 +7,7 @@
 
 struct playeri;
 
-struct provincei : nameable, combatable {
+struct provincei : nameable {
 	playeri*			owner;
 	point				position;
 	const landscapei*	landscape;

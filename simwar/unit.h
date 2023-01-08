@@ -1,12 +1,11 @@
-#include "combatable.h"
-#include "costable.h"
 #include "province.h"
+#include "statable.h"
 #include "nameable.h"
 
 #pragma once
 
-struct uniti : nameable, combatable, costable {
-	costa			upkeep;
+struct uniti : nameable {
+	costa			effect, upkeep;
 };
 struct troop : moveable {
 	provincei*		moveto;

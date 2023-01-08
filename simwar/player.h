@@ -1,11 +1,11 @@
-#include "costable.h"
+#include "statable.h"
 #include "variant.h"
 
 #pragma once
 
-struct playeri : nameable, costable {
+struct playeri : nameable {
 	int			shield;
-	costable	upkeep, upgrade, trade;
+	costa		resources, income, upgrade, trade;
 	variants	start;
 };
 extern playeri* player;

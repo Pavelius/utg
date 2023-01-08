@@ -29,18 +29,15 @@ BSMETA(buildingi) = {
 BSMETA(costi) = {
 	BSREQ(id),
 	{}};
-BSMETA(combati) = {
-	BSREQ(id),
-	{}};
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(effect, costi),
 	BSDST(upkeep, costi),
-	BSDST(combat, combati),
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
-	BSDST(cost, costi),
+	BSDST(resources, costi),
+	BSDST(income, costi),
 	BSREQ(start),
 	{}};
 BSMETA(point) = {
@@ -48,18 +45,17 @@ BSMETA(point) = {
 	{}};
 BSMETA(provincei) = {
 	BSREQ(id),
-	BSDST(combat, combati),
 	BSREQ(owner),
 	BSREQ(position),
 	BSREQ(landscape),
+	BSDST(income, costi),
 	{}};
 BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
-	BSDST(cost, costi),
-	BSDST(combat, combati),
+	BSDST(effect, costi),
 	BSDST(upkeep, costi),
 	{}};
 BSDATA(varianti) = {
