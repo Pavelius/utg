@@ -1,3 +1,4 @@
+#include "calendar.h"
 #include "collection.h"
 #include "crt.h"
 #include "draw.h"
@@ -128,7 +129,15 @@ static void field(cost_s v, const char* format, int width, const costa& a1, cons
 	field(v, format, width, a1[v], a2[v], a3[v]);
 }
 
+static void field_date() {
+	char temp[260]; stringbuilder sb(temp);
+	calendar.getname(sb);
+	field(temp, 120);
+	paint_vborder();
+}
+
 static void paint_cost(const costa& v, const costa& u, const costa& n) {
+	field_date();
 	field(Gold, 0, 100, v, n, u);
 	field(Mana, 0, 80, v, n, u);
 	field(Happiness, "%3i", 40, v, n, u);

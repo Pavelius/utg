@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "building.h"
+#include "calendar.h"
 #include "collection.h"
 #include "draw.h"
 #include "draw_object.h"
@@ -22,6 +23,7 @@ void player_turn();
 extern fnevent input_province;
 
 static void end_turn() {
+	calendar.turn++;
 }
 
 static void choose_province() {
@@ -133,6 +135,7 @@ static void initialize_scene() {
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	script::run("UpdatePlayer");
+	calendar.year = 1410;
 	update_provinces();
 }
 

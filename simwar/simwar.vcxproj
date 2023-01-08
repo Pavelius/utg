@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="building.cpp" />
+    <ClCompile Include="calendar.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="bsref.h" />
     <ClInclude Include="building.h" />
+    <ClInclude Include="calendar.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="landscape.h" />

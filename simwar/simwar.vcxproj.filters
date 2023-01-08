@@ -39,6 +39,9 @@
     <ClCompile Include="unit.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="calendar.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -89,6 +92,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="special.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="calendar.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
