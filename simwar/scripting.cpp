@@ -125,7 +125,7 @@ static int get_provinces_income(const playeri* p, cost_s v, stringbuilder* psb) 
 }
 
 static int get_upkeep(const provincei* p, cost_s v, stringbuilder* psb) {
-	auto result = p->landscape->upkeep[v];
+	auto result = p->landscape->income[v];
 	return get_value(result, p->id, psb);
 }
 

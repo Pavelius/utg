@@ -2,16 +2,16 @@
 
 Plains
  effect Size(3) Gold(4)
- upkeep Happiness(1)
+ income Happiness(1)
 Forest
  effect Size(3) Gold(2) Mana(1)
- upkeep Happiness(1)
+ income Happiness(1)
 Hills
  effect Strenght(1) Size(3) Gold(2)
- upkeep Happiness(1)
+ income Happiness(1)
 Swamp
  effect Damage(4) Size(2) Mana(2)
- upkeep Happiness(1)
+ income Happiness(1)
 
 #Building
 

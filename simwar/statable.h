@@ -13,13 +13,13 @@ struct costi : nameable {
 	const char*	format;
 };
 typedef short costa[Limit + 1];
-struct costable {
-	costa effect;
-	void operator+=(const costa& v);
-	void operator+=(const costable& v) { operator+=(v.effect); }
-	void operator-=(const costa& v);
-	void operator-=(const costable& v) { operator-=(v.effect); }
-	bool operator>=(const costable& v) const;
-	bool operator<=(const costable& v) const;
-	void addcost(cost_s v, int i) { effect[v] += i; }
-};
+//struct costable {
+//	costa effect;
+//	void operator+=(const costa& v);
+//	void operator+=(const costable& v) { operator+=(v.effect); }
+//	void operator-=(const costa& v);
+//	void operator-=(const costable& v) { operator-=(v.effect); }
+//	bool operator>=(const costable& v) const;
+//	bool operator<=(const costable& v) const;
+//	void addcost(cost_s v, int i) { effect[v] += i; }
+//};

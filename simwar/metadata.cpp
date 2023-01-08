@@ -32,7 +32,7 @@ BSMETA(costi) = {
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(effect, costi),
-	BSDST(upkeep, costi),
+	BSDST(income, costi),
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),

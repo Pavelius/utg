@@ -23,6 +23,7 @@ Buildings: Здания
 BuildingsUpkeep: Содержание зданий
 Cancel: Отмена
 EndTurn: Закончить ход
+Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
 Units: Отряды

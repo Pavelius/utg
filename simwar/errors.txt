@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 64: Not found requisit `cost`
+ Line 5: Not found requisit `upkeep`

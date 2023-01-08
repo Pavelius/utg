@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "building.h"
+#include "collection.h"
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
@@ -27,7 +28,27 @@ static void choose_province() {
 	buttonparam();
 }
 
+static bool player_troop(const void* pv) {
+	return ((troop*)pv)->player == player;
+}
+
+static bool player_province_troop(const void* pv) {
+	return ((troop*)pv)->player == player && ((troop*)pv)->province == province;
+}
+
+static bool player_building(const void* pv) {
+	return ((building*)pv)->player == player;
+}
+
+static bool player_province_building(const void* pv) {
+	return ((building*)pv)->player == player && ((building*)pv)->province == province;
+}
+
+static void select_units(collection<troop>& source) {
+}
+
 static void choose_units() {
+	pushvalue push_image(answers::resid, "Units");
 	an.clear();
 	for(auto& e : bsdata<troop>()) {
 		if(e.province != province)
@@ -43,18 +64,42 @@ static void choose_units() {
 }
 
 static void choose_buildings() {
+	pushvalue push_image(answers::resid, "Buildings");
+	an.clear();
+	collection<building> buildings; buildings.select(player_province_building);
+	for(auto p : buildings)
+		an.add(p, p->type->getname());
+	auto push_header = answers::header;
+	answers::header = province->getname();
+	auto pu = an.choose(0, getnm("Cancel"));
+	answers::header = push_header;
+	if(!pu)
+		return;
+}
+
+static void add_answers(fnevent proc, const char* id, int count) {
+	if(count > 0)
+		an.add(proc, "%1 (%2i %Piece)", getnm(id), count);
+	else
+		an.add(proc, getnm(id));
 }
 
 static void province_options() {
-	an.add(choose_units, getnm("Units"));
-	an.add(choose_buildings, getnm("Buildings"));
+	collection<troop> troops; troops.select(player_province_troop);
+	if(troops)
+		add_answers(choose_units, "Units", troops.getcount());
+	collection<building> buildings; buildings.select(player_province_building);
+	add_answers(choose_buildings, "Buildings", buildings.getcount());
 }
 
 static void* choose_answers() {
 	pushvalue push_answers(answers::header);
 	pushvalue push_input(input_province, choose_province);
-	if(province)
+	pushvalue push_image(answers::resid);
+	if(province) {
 		answers::header = province->getname();
+		answers::resid = province->landscape->id;
+	}
 	an.clear();
 	if(province) {
 		province_options();
@@ -70,7 +115,9 @@ static void accept_answers(void* result) {
 		province = 0;
 	else if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
-	else
+	else if(bsdata<troop>::have(result)) {
+	} else if(bsdata<building>::have(result)) {
+	} else
 		((fnevent)result)();
 	draw::setnext(player_turn);
 }
