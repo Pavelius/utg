@@ -13,9 +13,10 @@
 
 using namespace draw;
 
+void player_turn();
 void ui_initialize();
 void update_provinces();
-void player_turn();
+void util_main();
 
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
@@ -28,6 +29,9 @@ static void initialize_scene() {
 }
 
 static void start_game() {
+#ifdef _DEBUG
+	util_main();
+#endif // _DEBUG
 	initialize_scene();
 	draw::setnext(player_turn);
 }

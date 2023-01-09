@@ -219,6 +219,7 @@
     <ClCompile Include="stringbuilder.cpp" />
     <ClCompile Include="szdup.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="tga.cpp" />
     <ClCompile Include="utg.cpp" />
     <ClCompile Include="variant.cpp" />
     <ClCompile Include="widget.cpp" />

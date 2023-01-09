@@ -16,25 +16,57 @@ Swamp
 #Building
 
 WatchTower
- effect Warfire(1)
+ effect Warfire(1) Strenght(1)
+ cost Gold(60)
 Fort upgrade(WatchTower)
- effect Warfire(2)
+ effect Happiness(1) Warfire(2) Strenght(2)
  upkeep Gold(1)
+ cost Gold(250)
 Citadel upgrade(Fort)
- effect Happiness(2) Gold(1) Warfire(4)
+ effect Happiness(2) Gold(1) Warfire(4) Strenght(3)
+ cost Gold(650)
 DarkCitadel upgrade(Fort)
- effect Happiness(2) Gold(2) Warfire(6)
+ effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3)
+ cost Gold(750)
 Palace upgrade(Fort)
- effect Happiness(2) Gold(3) Warfire(2)
+ effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2)
+ cost Gold(1000)
+
 Laboratory
- effect Lore(1)
+ effect Mana(1)
+ cost Gold(50)
  upkeep Gold(1)
+Shrine
+ effect Lore(1)
+ cost Gold(50)
+ upkeep Gold(1)
+Temple upgrade(Shrine)
+ effect Lore(2)
+ cost Gold(90)
+ upkeep Gold(1)
+
+IronMine
+ effect Gold(3)
+ cost Gold(50)
+
 Harbor
  effect Gold(1) Trade(1)
+ cost Gold(80)
 Marketplace
  effect Gold(2)
+ cost Gold(60)
+
 Tavern
  effect Happiness(1)
+ cost Gold(40)
+ upkeep Gold(1)
+Circus upgrade(Tavern)
+ effect Happiness(5)
+ cost Gold(200) Limit(2)
+ upkeep Gold(2)
+Inn upgrade(Tavern)
+ effect Happiness(2)
+ cost Gold(70)
  upkeep Gold(1)
 
 #Unit

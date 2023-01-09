@@ -2,12 +2,17 @@
 Spearmans: Копейщики
 Archers: Лучники
 
+January: Январь
+
+Circus: Цирк
 Citadel: Цитадель
 Fort: Форт
 Harbor: Гавань
+IronMine: Железная шахта
 Laboratory: Лаборатория
 Marketplace: Рынок
 Palace: Дворец
+Shrine: Молебня
 Tavern: Таверна
 WatchTower: Дозорная башня
 

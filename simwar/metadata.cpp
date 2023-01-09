@@ -1,9 +1,13 @@
 #include "bsreq.h"
 #include "building.h"
+#include "list.h"
 #include "player.h"
 #include "script.h"
+#include "tag.h"
 #include "unit.h"
 #include "variant.h"
+
+bool fntestlist(int index, int bonus);
 
 NOBSDATA(point)
 
@@ -23,6 +27,7 @@ BSMETA(buildingi) = {
 	BSDST(effect, costi),
 	BSREQ(upgrade),
 	BSDST(upkeep, costi),
+	BSDST(cost, costi),
 	{}};
 BSMETA(costi) = {
 	BSREQ(id),
@@ -51,6 +56,9 @@ BSMETA(provincei) = {
 BSMETA(script) = {
 	BSREQ(id),
 	{}};
+BSMETA(tagi) = {
+	BSREQ(id),
+	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSDST(effect, costi),
@@ -61,9 +69,11 @@ BSDATA(varianti) = {
 	{"Ability", VAR(costi, 1), ftstatus<costi>},
 	{"Building", VAR(buildingi, 1), 0, 0, fnscript<buildingi>},
 	{"Landscape", VAR(landscapei, 1)},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Player", VAR(playeri, 1)},
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
+	{"Tag", VAR(tagi, 1)},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };
 BSDATAF(varianti)

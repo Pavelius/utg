@@ -1,13 +1,14 @@
 #include "answers.h"
+#include "building.h"
 #include "collection.h"
 #include "draw.h"
 #include "game.h"
-#include "statable.h"
-#include "building.h"
+#include "list.h"
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "statable.h"
 #include "unit.h"
 
 static answers an;
@@ -37,15 +38,6 @@ static void* choose_province_header(const char* title) {
 	auto pu = an.choose(title, getnm("Cancel"));
 	answers::header = push_header;
 	return pu;
-}
-
-static void build(int bonus) {
-	if(build_upgrade())
-		return;
-	auto p = bsdata<building>::add();
-	p->type = lastbuilding;
-	p->province = province;
-	p->player = player;
 }
 
 static bool have_builded(const buildingi* pv) {
@@ -100,14 +92,6 @@ static void recruit(int bonus) {
 
 template<> void fnscript<costi>(int value, int bonus) {
 	player->resources[value] += bonus;
-}
-
-template<> void fnscript<buildingi>(int value, int bonus) {
-	lastbuilding = bsdata<buildingi>::elements + value;
-	if(bonus > 0) {
-		build(bonus);
-	} else if(bonus < 0) {
-	}
 }
 
 template<> void fnscript<uniti>(int value, int bonus) {
@@ -165,11 +149,10 @@ static void accept_answers(void* result) {
 		province = 0;
 	else if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
-	else if(bsdata<troop>::have(result)) {
-	} else if(bsdata<building>::have(result)) {
-	} else
+	else
 		((fnevent)result)();
-	draw::setnext(player_turn);
+	if(!draw::isnext())
+		draw::setnext(player_turn);
 }
 
 static void choose_units() {
@@ -183,29 +166,6 @@ static void choose_units() {
 	choose_province_header(0);
 }
 
-static void add_building() {
-	auto push_building = lastbuilding;
-	choose_build(0);
-	if(lastbuilding)
-		build(0);
-	lastbuilding = push_building;
-}
-
-static void choose_buildings() {
-	an.clear();
-	collection<building> buildings; buildings.select(player_province_building);
-	for(auto p : buildings)
-		an.add(p, p->type->getname());
-	if(province->getbuildings() < province->get(Size))
-		an.add(add_building, getnm("AddBuilding"));
-	pushvalue push_image(answers::resid, "Buildings");
-	auto pu = choose_province_header(0);
-	if(bsdata<building>::have(pu)) {
-
-	} else
-		accept_answers(pu);
-}
-
 static void add_answers(fnevent proc, const char* id, int count, const char* piece_id = 0) {
 	if(count > 0) {
 		if(piece_id)
@@ -214,37 +174,6 @@ static void add_answers(fnevent proc, const char* id, int count, const char* pie
 			an.add(proc, "%1 (%2i %Piece)", getnm(id), count);
 	} else
 		an.add(proc, getnm(id));
-}
-
-static void province_options() {
-	collection<troop> troops; troops.select(player_province_troop);
-	if(troops)
-		add_answers(choose_units, "Army", troops.getcount(), "Unit");
-	collection<building> buildings; buildings.select(player_province_building);
-	add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
-}
-
-static void* choose_answers() {
-	pushvalue push_answers(answers::header);
-	pushvalue push_input(input_province, choose_province);
-	pushvalue push_image(answers::resid);
-	if(province) {
-		answers::header = province->getname();
-		answers::resid = province->landscape->id;
-	}
-	an.clear();
-	if(province) {
-		province_options();
-		return an.choose(0, getnm("Cancel"));
-	} else {
-		an.add(end_turn, getnm("EndTurn"));
-		return an.choose();
-	}
-}
-
-void player_turn() {
-	auto p = choose_answers();
-	accept_answers(p);
 }
 
 static int get_value(int value, const char* id, stringbuilder* psb) {
@@ -355,7 +284,6 @@ static void update_income() {
 
 static void update_player(int bonus) {
 	update_income();
-	player->resources[Warfire] = get_units_upkeep(player, Warfire);
 }
 
 static void gain_income(int bonus) {
@@ -364,8 +292,8 @@ static void gain_income(int bonus) {
 }
 
 int	provincei::get(cost_s v, stringbuilder* psb) const {
-	auto result = landscape->effect[v];
-	result += income[v];
+	auto result = income[v];
+	result += landscape->effect[v];
 	return get_value(result, id, psb);
 }
 
@@ -416,6 +344,91 @@ template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
 	auto p = (provincei*)object;
 	add_description(p->id, sb);
 	add_line_upkeep(p, sb);
+}
+
+static void build(int bonus) {
+	if(!build_upgrade()) {
+		auto p = bsdata<building>::add();
+		p->type = lastbuilding;
+		p->province = province;
+		p->player = player;
+	}
+	update_player(0);
+}
+
+template<> void fnscript<buildingi>(int value, int bonus) {
+	lastbuilding = bsdata<buildingi>::elements + value;
+	if(bonus > 0) {
+		build(bonus);
+	} else if(bonus < 0) {
+	}
+}
+
+static void choose_buildings();
+
+static void add_building() {
+	auto push_building = lastbuilding;
+	choose_build(0);
+	if(lastbuilding)
+		build(0);
+	else
+		draw::setnext(choose_buildings);
+	lastbuilding = push_building;
+}
+
+static void choose_buildings() {
+	an.clear();
+	collection<building> buildings; buildings.select(player_province_building);
+	for(auto p : buildings)
+		an.add(p, p->type->getname());
+	if(province->getbuildings() < province->get(Size))
+		an.add(add_building, getnm("AddBuilding"));
+	pushvalue push_image(answers::resid, "Buildings");
+	auto pu = choose_province_header(0);
+	if(!pu)
+		return;
+	else if(bsdata<building>::have(pu)) {
+	} else
+		accept_answers(pu);
+}
+
+static void province_options() {
+	collection<troop> troops; troops.select(player_province_troop);
+	if(troops)
+		add_answers(choose_units, "Army", troops.getcount(), "Unit");
+	collection<building> buildings; buildings.select(player_province_building);
+	add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
+}
+
+static void* choose_answers() {
+	pushvalue push_answers(answers::header);
+	pushvalue push_input(input_province, choose_province);
+	pushvalue push_image(answers::resid);
+	if(province) {
+		answers::header = province->getname();
+		answers::resid = province->landscape->id;
+	}
+	an.clear();
+	if(province) {
+		province_options();
+		return an.choose(0, getnm("Cancel"));
+	} else {
+		an.add(end_turn, getnm("EndTurn"));
+		return an.choose();
+	}
+}
+
+void player_turn() {
+	auto p = choose_answers();
+	accept_answers(p);
+}
+
+bool fntestlist(int index, int bonus) {
+	for(auto v : bsdata<listi>::elements[index].elements) {
+		if(script::allow(v))
+			return true;
+	}
+	return false;
 }
 
 BSDATA(script) = {

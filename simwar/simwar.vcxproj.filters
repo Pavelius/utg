@@ -7,6 +7,9 @@
     <Filter Include="Data">
       <UniqueIdentifier>{8f8aa1cb-8932-48a1-8585-886e90ff0dc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{c410de39-c3f1-4fda-b322-284268bf5705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,6 +47,12 @@
     </ClCompile>
     <ClCompile Include="log_text.cpp">
       <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +107,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="calendar.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

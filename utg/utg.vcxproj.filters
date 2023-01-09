@@ -264,6 +264,9 @@
     <ClCompile Include="questlist.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="tga.cpp">
+      <Filter>Formats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

@@ -11,6 +11,8 @@
 
 using namespace draw;
 
+static bool show_names;
+
 const int button_height = 20;
 fnevent input_province;
 void log_text(const char* format, ...);
@@ -151,7 +153,7 @@ static void paint_cost(const costa& v, const costa& u, const costa& n) {
 	field(Mana, 0, 80, v, n, u);
 	field(Happiness, "%3i", 40, v, n, u);
 	field(Fame, "%1i", 0, v, n, u);
-	field(Warfire, "%1i/%3i", 0, v, n, u);
+	field(Warfire, "%3i", 0, v, n, u);
 	field(Lore, 0, 120, v, n, u);
 	field(Trade, 0, 80, v, n, u);
 }
@@ -171,6 +173,9 @@ static void hot_keys() {
 			auto pt = camera + hot.mouse;
 			log_text("Province position(%1i %2i) landscape(Plains)", pt.x, pt.y);
 		}
+		break;
+	case Ctrl+'N':
+		show_names = !show_names;
 		break;
 	}
 }
@@ -235,9 +240,10 @@ static void border_circle(int size) {
 void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
+	if(show_names)
+		stroke_texth2(getname());
 	if(input_province) {
-		if(ishilite(16, this)) {
-			paint_shield(player->shield, true);
+		if(ishilite(24, this)) {
 			hot.cursor = cursor::Hand;
 			if(hot.key == MouseLeft && !hot.pressed)
 				execute(input_province, (int)this);
