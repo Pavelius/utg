@@ -33,9 +33,6 @@
     <ClCompile Include="scripting.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="information.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="unit.cpp">
       <Filter>Logic</Filter>
     </ClCompile>

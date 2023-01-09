@@ -5,8 +5,6 @@
 #include "unit.h"
 #include "variant.h"
 
-void get_cost_info(const void* object, stringbuilder& sb);
-
 NOBSDATA(point)
 
 BSMETA(variant) = {{}};
@@ -32,7 +30,7 @@ BSMETA(costi) = {
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(effect, costi),
-	BSDST(income, costi),
+	BSDST(upkeep, costi),
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
@@ -60,11 +58,11 @@ BSMETA(uniti) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(costi, 1), get_cost_info},
+	{"Ability", VAR(costi, 1), ftstatus<costi>},
 	{"Building", VAR(buildingi, 1), 0, 0, fnscript<buildingi>},
 	{"Landscape", VAR(landscapei, 1)},
 	{"Player", VAR(playeri, 1)},
-	{"Province", VAR(provincei, 1)},
+	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };

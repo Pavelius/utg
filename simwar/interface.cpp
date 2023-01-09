@@ -11,7 +11,6 @@
 
 using namespace draw;
 
-static bool show_names = true;
 const int button_height = 20;
 fnevent input_province;
 void log_text(const char* format, ...);
@@ -165,9 +164,7 @@ void status_info() {
 	caret.y += texth() + metrics::padding * 2;
 }
 
-static void background_map() {
-	auto pi = gres("silentseas", "maps");
-	image(pi, 0, 0);
+static void hot_keys() {
 	switch(hot.key) {
 	case MouseRight:
 		if(hot.pressed) {
@@ -175,10 +172,13 @@ static void background_map() {
 			log_text("Province position(%1i %2i) landscape(Plains)", pt.x, pt.y);
 		}
 		break;
-	case Ctrl+'N':
-		show_names = !show_names;
-		break;
 	}
+}
+
+static void background_map() {
+	auto pi = gres("silentseas", "maps");
+	image(pi, 0, 0);
+	hot_keys();
 }
 
 static void texth1(const char* format) {
@@ -217,24 +217,27 @@ static void stroke_texth2(const char* format) {
 	font = push_font;
 }
 
-static void paint_shield(int index) {
+static void paint_shield(int index, bool need_stroke = false) {
 	auto p = gres("shields", "art/sprites");
-	image(p, index, 0);
+	if(need_stroke)
+		stroke(caret.x, caret.y, p, index, 0, 2);
+	else
+		image(p, index, 0);
+}
+
+static void border_circle(int size) {
+	auto push_fore = fore;
+	fore = colors::border;
+	circle(size);
+	fore = push_fore;
 }
 
 void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
-	else if(input_province) {
-		auto push_fore = fore;
-		fore = colors::border;
-		circle(16);
-		fore = push_fore;
-	}
-	if(show_names)
-		stroke_texth2(getname());
 	if(input_province) {
-		if(ishilite(16)) {
+		if(ishilite(16, this)) {
+			paint_shield(player->shield, true);
 			hot.cursor = cursor::Hand;
 			if(hot.key == MouseLeft && !hot.pressed)
 				execute(input_province, (int)this);

@@ -1,4 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 72: Not found identifier `Forests`
- Line 73: Not found identifier `Forests`
- Line 80: Expected line feed
+ Line 5: Not found requisit `income`

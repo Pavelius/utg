@@ -4,6 +4,7 @@ Archers: Лучники
 
 Citadel: Цитадель
 Fort: Форт
+Harbor: Гавань
 Laboratory: Лаборатория
 Marketplace: Рынок
 Palace: Дворец
@@ -15,11 +16,14 @@ Gold: Золото
 Happiness: Счастье
 Lore: Наука
 Mana: Ингридиенты
+Size: Размер
+Strenght: Сила
 Trade: Торговля
 Warfire: Армия
 
 AddBuilding: Построить здание
 AppTitle: Стратегия
+Army: Армия
 Building: Здание
 Buildings: Здания
 BuildingsUpkeep: Содержание зданий
@@ -29,5 +33,7 @@ Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
 Settlements: Поселение
+Unit: Отряд
 Units: Отряды
 UnitsUpkeep: Содержание отрядов
+WhatDoYouWantToBuild: Какое здание хотите построить?

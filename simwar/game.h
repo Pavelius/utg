@@ -7,8 +7,6 @@
 #pragma once
 
 struct gamei : calendari {
-	static int		getincome(cost_s v, stringbuilder* psb);
-	static void		build(const buildingi* pb);
 };
 extern gamei game;
 

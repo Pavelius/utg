@@ -3,5 +3,5 @@
 #pragma once
 
 struct landscapei : nameable {
-	costa		effect, income;
+	costa		effect, upkeep;
 };

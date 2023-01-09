@@ -151,7 +151,6 @@
     <ClCompile Include="building.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="log_text.cpp" />
     <ClCompile Include="main.cpp" />
