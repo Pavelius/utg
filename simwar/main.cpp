@@ -24,7 +24,7 @@ static void initialize_scene() {
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	script::run("UpdatePlayer");
-	game.year = 1410;
+	game.initialize();
 	update_provinces();
 }
 

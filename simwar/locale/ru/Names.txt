@@ -13,6 +13,7 @@ Laboratory: Лаборатория
 Marketplace: Рынок
 Palace: Дворец
 Shrine: Молебня
+Temple: Храм
 Tavern: Таверна
 WatchTower: Дозорная башня
 
@@ -26,6 +27,9 @@ Strenght: Сила
 Trade: Торговля
 Warfire: Армия
 
+No: Нет
+Yes: Да
+
 AddBuilding: Построить здание
 AppTitle: Стратегия
 Army: Армия
@@ -33,11 +37,14 @@ Building: Здание
 Buildings: Здания
 BuildingsUpkeep: Содержание зданий
 Cancel: Отмена
+DoYouWantRemoveBuilding: [%1] действительно подлежит сносу?
 EndTurn: Закончить ход
+Explore: Исследовано
 Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
 Settlements: Поселение
+Site: Локация
 Unit: Отряд
 Units: Отряды
 UnitsUpkeep: Содержание отрядов

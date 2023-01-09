@@ -9,5 +9,6 @@ struct buildingi : nameable {
 struct building : moveable {
 	const buildingi*	type;
 	explicit operator bool() const { return type != 0; }
+	void				clear();
 };
 extern buildingi*		lastbuilding;

@@ -7,6 +7,7 @@
 #pragma once
 
 struct gamei : calendari {
+	void		initialize();
 };
 extern gamei game;
 
