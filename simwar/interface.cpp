@@ -225,12 +225,20 @@ static void paint_shield(int index) {
 void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
+	else if(input_province) {
+		auto push_fore = fore;
+		fore = colors::border;
+		circle(16);
+		fore = push_fore;
+	}
 	if(show_names)
 		stroke_texth2(getname());
-	if(input_province && ishilite(32)) {
-		hot.cursor = cursor::Hand;
-		if(hot.key==MouseLeft && !hot.pressed)
-			execute(input_province, (int)this);
+	if(input_province) {
+		if(ishilite(16)) {
+			hot.cursor = cursor::Hand;
+			if(hot.key == MouseLeft && !hot.pressed)
+				execute(input_province, (int)this);
+		}
 	}
 }
 
