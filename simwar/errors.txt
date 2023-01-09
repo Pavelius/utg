@@ -1,2 +1,4 @@
 ﻿In file `rules/Basic.txt`:
- Line 5: Not found requisit `upkeep`
+ Line 72: Not found identifier `Forests`
+ Line 73: Not found identifier `Forests`
+ Line 80: Expected line feed

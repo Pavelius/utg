@@ -18,7 +18,9 @@ Mana: Ингридиенты
 Trade: Торговля
 Warfire: Армия
 
+AddBuilding: Построить здание
 AppTitle: Стратегия
+Building: Здание
 Buildings: Здания
 BuildingsUpkeep: Содержание зданий
 Cancel: Отмена
@@ -26,5 +28,6 @@ EndTurn: Закончить ход
 Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
+Settlements: Поселение
 Units: Отряды
 UnitsUpkeep: Содержание отрядов

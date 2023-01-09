@@ -1,8 +1,17 @@
+#include "answers.h"
+#include "collection.h"
+#include "draw.h"
+#include "game.h"
+#include "statable.h"
 #include "building.h"
 #include "player.h"
 #include "province.h"
+#include "pushvalue.h"
 #include "script.h"
 #include "unit.h"
+
+static answers an;
+void player_turn();
 
 static void build(int bonus) {
 	auto p = bsdata<building>::add();
@@ -59,6 +68,129 @@ template<> void fnscript<uniti>(int value, int bonus) {
 		recruit(bonus);
 	} else if(bonus < 0) {
 	}
+}
+
+extern fnevent input_province;
+
+static void end_turn() {
+	game.turn++;
+	script::run("PlayerUpdate");
+	script::run("GainIncome");
+}
+
+static void choose_province() {
+	draw::buttonparam();
+}
+
+static bool player_troop(const void* pv) {
+	return ((troop*)pv)->player == player;
+}
+
+static bool player_province_troop(const void* pv) {
+	return ((troop*)pv)->player == player && ((troop*)pv)->province == province;
+}
+
+static bool player_building(const void* pv) {
+	return ((building*)pv)->player == player;
+}
+
+static bool player_province_building(const void* pv) {
+	return ((building*)pv)->player == player && ((building*)pv)->province == province;
+}
+
+static void select_units(collection<troop>& source) {
+}
+
+static void accept_answers(void* result) {
+	if(!result)
+		province = 0;
+	else if(bsdata<provincei>::have(result))
+		province = (provincei*)result;
+	else if(bsdata<troop>::have(result)) {
+	} else if(bsdata<building>::have(result)) {
+	} else
+		((fnevent)result)();
+	draw::setnext(player_turn);
+}
+
+static void choose_units() {
+	pushvalue push_image(answers::resid, "Units");
+	an.clear();
+	for(auto& e : bsdata<troop>()) {
+		if(e.province != province)
+			continue;
+		an.add(&e, e.type->getname());
+	}
+	auto push_header = answers::header;
+	answers::header = province->getname();
+	auto pu = an.choose(0, getnm("Cancel"));
+	answers::header = push_header;
+	if(!pu)
+		return;
+}
+
+static void add_building() {
+	an.clear();
+	for(auto& e : bsdata<buildingi>()) {
+	}
+}
+
+static void choose_buildings() {
+	an.clear();
+	collection<building> buildings; buildings.select(player_province_building);
+	for(auto p : buildings)
+		an.add(p, p->type->getname());
+	an.add(add_building, getnm("AddBuilding"));
+	pushvalue push_image(answers::resid, "Buildings");
+	auto push_header = answers::header;
+	answers::header = province->getname();
+	auto pu = an.choose(0, getnm("Cancel"));
+	answers::header = push_header;
+	if(bsdata<building>::have(pu)) {
+
+	} else
+		accept_answers(pu);
+}
+
+static void add_answers(fnevent proc, const char* id, int count, const char* piece_id = 0) {
+	if(count > 0) {
+		if(piece_id)
+			an.add(proc, "%1 (%2i %-*3)", getnm(id), count, getnm(piece_id));
+		else
+			an.add(proc, "%1 (%2i %Piece)", getnm(id), count);
+	} else
+		an.add(proc, getnm(id));
+}
+
+static void province_options() {
+	collection<troop> troops; troops.select(player_province_troop);
+	if(troops)
+		add_answers(choose_units, "Units", troops.getcount());
+	collection<building> buildings; buildings.select(player_province_building);
+	add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
+}
+
+static void* choose_answers() {
+	pushvalue push_answers(answers::header);
+	pushvalue push_input(input_province, choose_province);
+	pushvalue push_image(answers::resid);
+	if(province) {
+		answers::header = province->getname();
+		answers::resid = province->landscape->id;
+	}
+	an.clear();
+	if(province) {
+		province_options();
+		return an.choose(0, getnm("Cancel"));
+	} else {
+		an.add(end_turn, getnm("EndTurn"));
+		return an.choose();
+	}
+}
+
+void player_turn() {
+	auto p = choose_answers();
+	accept_answers(p);
 }
 
 static int get_value(int value, const char* id, stringbuilder* psb) {
@@ -139,13 +271,13 @@ static int get_provinces_upkeep(const playeri* p, cost_s v, stringbuilder* psb) 
 	return get_value(-result, "ProvincesUpkeep", psb);
 }
 
-int get_income(const playeri* p, cost_s v, stringbuilder* psb) {
-	auto result = get_provinces_income(p, v, psb);
-	result += get_effect_buildings(p, v, psb);
-	result += get_provinces_upkeep(p, v, psb);
-	result += get_upkeep_buildings(p, v, psb);
-	result += get_upkeep_units(p, v, psb);
-	result += get_value(p->trade[v], "TradeBonus", psb);
+int gamei::getincome(cost_s v, stringbuilder* psb) {
+	auto result = get_provinces_income(player, v, psb);
+	result += get_effect_buildings(player, v, psb);
+	result += get_provinces_upkeep(player, v, psb);
+	result += get_upkeep_buildings(player, v, psb);
+	result += get_upkeep_units(player, v, psb);
+	result += get_value(player->trade[v], "TradeBonus", psb);
 	return result;
 }
 
@@ -160,7 +292,7 @@ int get_units_warfire(const playeri* p) {
 
 static void update_income() {
 	for(auto i = (cost_s)0; i <= Warfire; i = (cost_s)(i + 1))
-		player->income[i] = get_income(player, i, 0);
+		player->income[i] = game.getincome(i, 0);
 }
 
 static void update_player(int bonus) {
@@ -168,8 +300,14 @@ static void update_player(int bonus) {
 	player->resources[Warfire] = get_units_warfire(player);
 }
 
+static void gain_income(int bonus) {
+	for(auto i = 0; i < Warfire; i++)
+		player->resources[i] += player->income[i];
+}
+
 BSDATA(script) = {
 	{"Build", build, canbuild},
+	{"GainIncome", gain_income},
 	{"Recruit", recruit},
 	{"UpdatePlayer", update_player},
 };

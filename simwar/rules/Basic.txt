@@ -66,6 +66,13 @@ SouthernKindom
 
 #Province
 
-SnakeForest position(401 996) landscape(Forest) owner(SouthernKindom)
-GreenAcres position(256 821) landscape(Plains) owner(SouthernKindom)
-SouthenCoast position(191 994) landscape(Plains)
+WhiteTower position(211 1082) landscape(Plains) owner(SouthernKindom)
+WesternCoast position(158 961) landscape(Plains) owner(SouthernKindom)
+SnakeHills position(278 957) landscape(Hills)
+SnakeForest position(339 1032) landscape(Forest)
+NothernSnakeForest position(442 976) landscape(Forest)
+EastHills position(579 967) landscape(Hills)
+GreenAcres position(470 887) landscape(Plains)
+NorthAcres position(582 845) landscape(Plains)
+EasternAcres position(675 848) landscape(Plains)
+SnakeUphills position(511 778) landscape(Hills)

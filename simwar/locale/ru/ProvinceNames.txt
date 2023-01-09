@@ -1,3 +1,11 @@
-﻿GreenAcres: Зеленые луга
+﻿EastHills: Восточные холмы
+EasternAcres: Восточные луга
+GreenAcres: Зеленые луга
+NorthAcres: Северные луга
+NothernSnakeForest: Змеинное логово
 SnakeForest: Змеинный лес
+SnakeHills: Змеинные холмы
+SnakeUphills: Змеинное подгорье
 SouthenCoast: Южное побережье
+WesternCoast: Западное побережье
+WhiteTower: Белая башня

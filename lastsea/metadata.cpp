@@ -55,22 +55,21 @@ BSMETA(scripti) = {
 	BSREQ(id), BSREQ(param),
 	{}};
 
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VRSTD(abilityi), 1},
-	{"Card", VRSTD(treasurei), 1, 0, treasurei::sfgetinfo},
-	{"Class", VRSTD(classi), 1},
-	{"Condition", VRSTD(conditioni), 1},
-	{"Gender", VRSTD(genderi), 1},
-	{"Group", VRSTD(groupi), 1},
-	{"Menu", VRSTD(menu), 1},
-	{"NavigationTile", VRSTD(tilei), 0},
-	{"Quest", VRSTD(quest), 0, 0, gamei::sfgetinfo},
-	{"Script", VRSTD(scripti), 1},
-	{"Tag", VRSTD(tagi), 1},
-	{"Trigger", VRSTD(triggeri), 1},
-	{"Value", VRSTD(groupvaluei), 1},
-	{"Widget", VRSTD(widget), 1},
+	{"Ability", VAR(abilityi, 1)},
+	{"Card", VAR(treasurei, 1), treasurei::sfgetinfo},
+	{"Class", VAR(classi, 1)},
+	{"Condition", VAR(conditioni, 1)},
+	{"Gender", VAR(genderi, 1)},
+	{"Group", VAR(groupi, 1)},
+	{"Menu", VAR(menu, 1)},
+	{"NavigationTile", VAR(tilei, 0)},
+	{"Quest", VAR(quest, 0), gamei::sfgetinfo},
+	{"Script", VAR(scripti, 1)},
+	{"Tag", VAR(tagi, 1)},
+	{"Trigger", VAR(triggeri, 1)},
+	{"Value", VAR(groupvaluei, 1)},
+	{"Widget", VAR(widget, 1)},
 };
 assert_enum(varianti, Widget)

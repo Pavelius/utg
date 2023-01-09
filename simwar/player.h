@@ -5,7 +5,7 @@
 
 struct playeri : nameable {
 	int			shield;
-	costa		resources, income, upgrade, trade;
+	costa		resources, income, upgrade, trade, artifacts;
 	variants	start;
 };
 extern playeri* player;

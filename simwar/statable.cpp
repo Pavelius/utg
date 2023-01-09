@@ -24,16 +24,16 @@ BSDATA(costi) = {
 };
 assert_enum(costi, Limit)
 
-//void costable::operator+=(const costa& v) {
-//	for(auto i = 0; i <= Warfire; i++)
-//		effect[i] += v[i];
-//}
-//
-//void costable::operator-=(const costa& v) {
-//	for(auto i = 0; i <= Warfire; i++)
-//		effect[i] -= v[i];
-//}
-//
+void addvalue(costa& v1, const costa& v2) {
+	for(auto i = 0; i <= Warfire; i++)
+		v1[i] += v2[i];
+}
+
+void subvalue(costa& v1, const costa& v2) {
+	for(auto i = 0; i <= Warfire; i++)
+		v1[i] -= v2[i];
+}
+
 //bool costable::operator>=(const costable& v) const {
 //	for(auto i = 0; i <= Warfire; i++) {
 //		if(effect[i] < v.effect[i])

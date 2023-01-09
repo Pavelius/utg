@@ -13,6 +13,8 @@ struct costi : nameable {
 	const char*	format;
 };
 typedef short costa[Limit + 1];
+void addvalue(costa& v1, const costa& v2);
+void subvalue(costa& v1, const costa& v2);
 //struct costable {
 //	costa effect;
 //	void operator+=(const costa& v);

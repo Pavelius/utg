@@ -1,6 +1,7 @@
 #include "condition.h"
 #include "counters.h"
 #include "main.h"
+#include "property.h"
 #include "pathfind.h"
 
 gamei game;

@@ -1,10 +1,14 @@
 #include "building.h"
+#include "calendar.h"
 #include "player.h"
 #include "province.h"
 #include "stringbuilder.h"
 
 #pragma once
 
-int get_income(const playeri* p, cost_s v, stringbuilder* psb);
+struct gamei : calendari {
+	static int		getincome(cost_s v, stringbuilder* psb);
+	static void		build(const buildingi* pb);
+};
+extern gamei game;
 
-void build_bulding(const playeri* p, const buildingi* pb);

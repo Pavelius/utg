@@ -2,6 +2,7 @@
 #include "charname.h"
 #include "chooselist.h"
 #include "counters.h"
+#include "draw_utg.h"
 #include "iterator.h"
 #include "gender.h"
 #include "goal.h"
@@ -11,7 +12,6 @@
 #include "quest.h"
 #include "collection.h"
 #include "tag.h"
-#include "utg.h"
 
 #pragma once
 

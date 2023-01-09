@@ -1,4 +1,5 @@
 #include "goal.h"
+#include "property.h"
 #include "quest.h"
 
 static int prop_danger_maximum;

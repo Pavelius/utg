@@ -13,5 +13,5 @@ void get_cost_info(const void* object, stringbuilder& sb) {
 	auto v = (cost_s)(p - bsdata<costi>::elements);
 	add_description(p->id, sb);
 	sb.addn("---");
-	get_income(player, v, &sb);
+	game.getincome(v, &sb);
 }

@@ -79,13 +79,10 @@ bool draw::swindow(bool hilight) {
 	auto push_fore = fore;
 	setoffset(-metrics::border, -metrics::border);
 	auto rs = ishilite();
-	alpha = metrics::opacity;
+	//alpha = metrics::opacity;
 	fore = colors::form;
-	if(hilight && rs) {
-		fore = colors::button.mix(fore);
-		if(hot.pressed)
-			alpha = 0xFF;
-	}
+	if(hilight && rs)
+		fore = colors::button.mix(fore, hot.pressed ? 128 : 216);
 	rectf();
 	alpha = push_alpha;
 	fore = colors::border;

@@ -9,8 +9,6 @@ static const char* names[] = {
 	"December"
 };
 
-calendari calendar;
-
 void calendari::getname(stringbuilder& sb) const {
 	sb.add("%1 %2i", getnm(names[turn % 12]), getyear());
 }

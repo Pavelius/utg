@@ -7,4 +7,3 @@ struct calendari {
 	void			getname(stringbuilder& sb) const;
 	int				getyear() const { return year + turn / 12; }
 };
-extern calendari calendar;

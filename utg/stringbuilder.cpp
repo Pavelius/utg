@@ -731,6 +731,7 @@ void stringbuilder::addof(const char* s) {
 		{"ая", "ой"},
 		{"би", "би"},
 		{"ел", "ла"},
+		{"ие", "ия"},
 		{"ий", "ого"},
 		{"ка", "ки"},
 		{"ль", "ля"},
@@ -779,7 +780,8 @@ void stringbuilder::addby(const char* s) {
 }
 
 void stringbuilder::addto(const char* s) {
-	static grammar map[] = {{"а", "е"},
+	static grammar map[] = {
+		{"а", "е"},
 		{"о", "у"},
 		{"ы", "ам"},
 		{}

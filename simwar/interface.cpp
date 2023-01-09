@@ -11,8 +11,10 @@
 
 using namespace draw;
 
+static bool show_names = true;
 const int button_height = 20;
 fnevent input_province;
+void log_text(const char* format, ...);
 
 static color player_colors[] = {
 	{40, 40, 40},
@@ -47,6 +49,14 @@ static void textcn(const char* format) {
 	caret.x -= (textw(format) + 1) / 2;
 	caret.y -= (texth() + 1) / 2;
 	text(format);
+	caret = push_caret;
+}
+
+static void textcn(const char* format, unsigned flags) {
+	auto push_caret = caret;
+	caret.x -= (textw(format) + 1) / 2;
+	caret.y -= (texth() + 1) / 2;
+	text(format, -1, flags);
 	caret = push_caret;
 }
 
@@ -131,7 +141,7 @@ static void field(cost_s v, const char* format, int width, const costa& a1, cons
 
 static void field_date() {
 	char temp[260]; stringbuilder sb(temp);
-	calendar.getname(sb);
+	game.getname(sb);
 	field(temp, 120);
 	paint_vborder();
 }
@@ -158,6 +168,17 @@ void status_info() {
 static void background_map() {
 	auto pi = gres("silentseas", "maps");
 	image(pi, 0, 0);
+	switch(hot.key) {
+	case MouseRight:
+		if(hot.pressed) {
+			auto pt = camera + hot.mouse;
+			log_text("Province position(%1i %2i) landscape(Plains)", pt.x, pt.y);
+		}
+		break;
+	case Ctrl+'N':
+		show_names = !show_names;
+		break;
+	}
 }
 
 static void texth1(const char* format) {
@@ -170,6 +191,32 @@ static void texth1(const char* format) {
 	font = push_font;
 }
 
+static void texth2(const char* format) {
+	auto push_font = font;
+	auto push_fore = fore;
+	fore = colors::window;
+	font = metrics::h2;
+	textcn(format);
+	fore = push_fore;
+	font = push_font;
+}
+
+static void stroke_texth2(const char* format) {
+	rectpush push;
+	auto push_stroke = fore_stroke;
+	auto push_font = font;
+	auto push_fore = fore;
+	fore_stroke = colors::white;
+	fore = colors::window;
+	font = metrics::h2;
+	caret.x -= (textw(format) + 1) / 2;
+	caret.y -= (texth() + 1) / 2;
+	text(format, -1, TextStroke);
+	fore_stroke = push_stroke;
+	fore = push_fore;
+	font = push_font;
+}
+
 static void paint_shield(int index) {
 	auto p = gres("shields", "art/sprites");
 	image(p, index, 0);
@@ -178,7 +225,8 @@ static void paint_shield(int index) {
 void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
-	texth1(getname());
+	if(show_names)
+		stroke_texth2(getname());
 	if(input_province && ishilite(32)) {
 		hot.cursor = cursor::Hand;
 		if(hot.key==MouseLeft && !hot.pressed)

@@ -42,6 +42,12 @@
     <ClCompile Include="calendar.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="log_text.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
