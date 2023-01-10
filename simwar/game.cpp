@@ -7,7 +7,7 @@ static void random_explore() {
 		auto size = e.get(Size);
 		auto minimum = size * 3;
 		auto maximum = minimum + size * 10;
-		e.income[Explore] = xrand(minimum, maximum);
+		e.explore(xrand(minimum, maximum));
 	}
 }
 

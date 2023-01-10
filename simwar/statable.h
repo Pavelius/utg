@@ -5,7 +5,7 @@
 enum cost_s : unsigned char {
 	Gold, Mana, Happiness, Fame, Trade, Lore, Warfire,
 	Strenght, Damage, Health, Charge, Archery, Level, Armor,
-	Movement, Explore, Siege, Size,
+	Movement, Explore, ExploreNext, Siege, Size,
 	Limit,
 };
 struct costi : nameable {

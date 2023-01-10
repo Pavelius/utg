@@ -4,6 +4,11 @@ Archers: Лучники
 
 January: Январь
 
+BanditLair: Логово бандитов
+DarkCave: Темная пещера
+DarkYard: Темная поляна
+UnholyGraveyard: Проклятое кладбище
+
 Circus: Цирк
 Citadel: Цитадель
 Fort: Форт

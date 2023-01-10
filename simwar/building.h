@@ -1,13 +1,14 @@
-#include "province.h"
+#include "site.h"
 
 #pragma once
 
-struct buildingi : nameable {
+struct buildingi : sitei {
 	const buildingi*	upgrade;
-	costa				effect, upkeep, cost;
+	costa				cost;
 };
-struct building : moveable {
+struct building {
 	const buildingi*	type;
+	provincei*			province;
 	explicit operator bool() const { return type != 0; }
 	void				clear();
 };

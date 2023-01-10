@@ -18,6 +18,7 @@ BSDATA(costi) = {
 	{"Armor"},
 	{"Movement"},
 	{"Explore"},
+	{"ExploreNext"},
 	{"Siege"},
 	{"Size"},
 	{"Limit"},

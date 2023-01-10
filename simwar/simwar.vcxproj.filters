@@ -54,6 +54,9 @@
     <ClCompile Include="main_util.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="site.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

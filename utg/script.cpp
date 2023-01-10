@@ -25,7 +25,7 @@ template<> bool fntest<listi>(int value, int bonus) {
 
 void script::run(const char* id, int bonus) {
 	auto p = bsdata<script>::find(id);
-	if(p->proc)
+	if(p && p->proc)
 		p->proc(bonus);
 }
 

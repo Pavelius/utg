@@ -13,6 +13,15 @@ Swamp
  effect Damage(4) Size(2) Mana(2)
  upkeep Happiness(1)
 
+#Site
+
+BanditLair
+StoneCanion
+DarkCave
+DarkYard
+UnholyGraveyard
+WolfLair
+
 #Building
 
 WatchTower

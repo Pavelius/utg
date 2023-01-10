@@ -24,7 +24,7 @@ static void add_description(const char* id, stringbuilder& sb) {
 
 static bool build_upgrade() {
 	for(auto& e : bsdata<building>()) {
-		if(e.province == province && e.player == player && lastbuilding->upgrade == e.type) {
+		if(e.province == province && lastbuilding->upgrade == e.type) {
 			e.type = lastbuilding;
 			return true;
 		}
@@ -85,6 +85,12 @@ static void recruit() {
 	p->player = player;
 }
 
+static void add_site(int bonus) {
+	auto p = bsdata<site>::add();
+	p->type = lastsite;
+	p->province = province;
+}
+
 static void recruit(int bonus) {
 	for(auto i = 0; i < bonus; i++)
 		recruit();
@@ -123,11 +129,11 @@ static bool player_province_troop(const void* pv) {
 }
 
 static bool player_building(const void* pv) {
-	return ((building*)pv)->player == player;
+	return ((building*)pv)->province && ((building*)pv)->province->owner == player;
 }
 
 static bool player_province_building(const void* pv) {
-	return ((building*)pv)->player == player && ((building*)pv)->province == province;
+	return ((building*)pv)->province == province;
 }
 
 static void select_units(collection<troop>& source) {
@@ -160,7 +166,7 @@ static int get_value(int value, const char* id, stringbuilder* psb) {
 static int get_upkeep_buildings(const playeri* p, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.player != player)
+		if(e.province && e.province->owner != player)
 			continue;
 		result += e.type->upkeep[v];
 	}
@@ -180,7 +186,7 @@ static int get_upkeep_units(const playeri* p, cost_s v, stringbuilder* psb) {
 static int get_effect_buildings(const playeri* p, const buildingi* b, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.player != player || e.type!=b)
+		if(e.province && e.province->owner != player || e.type!=b)
 			continue;
 		result += e.type->effect[v];
 	}
@@ -262,6 +268,12 @@ static void gain_income(int bonus) {
 		player->resources[i] += player->income[i];
 }
 
+static void random_site(int bonus) {
+	collection<sitei> source;
+	source.select();
+	lastsite = source.random();
+}
+
 int	provincei::get(cost_s v, stringbuilder* psb) const {
 	auto result = income[v];
 	result += landscape->effect[v];
@@ -322,7 +334,6 @@ static void build(int bonus) {
 		auto p = bsdata<building>::add();
 		p->type = lastbuilding;
 		p->province = province;
-		p->player = player;
 	}
 	update_player(0);
 }
@@ -392,6 +403,11 @@ static void choose_buildings() {
 
 static void choose_sites() {
 	an.clear();
+	for(auto& e : bsdata<site>()) {
+		if(e.province != province)
+			continue;
+		an.add(&e, getnm(e.type->getname()));
+	}
 	an.choose(0, getnm("Cancel"), 1);
 }
 
@@ -406,7 +422,7 @@ static void choose_province_options() {
 			add_answers(choose_units, "Army", troops.getcount(), "Unit");
 		collection<building> buildings; buildings.select(player_province_building);
 		add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
-		add_sites(choose_sites, 0, province->get(Explore));
+		add_sites(choose_sites, province->getsites(), province->get(Explore));
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result) {
 			province = 0;
@@ -450,9 +466,11 @@ bool fntestlist(int index, int bonus) {
 }
 
 BSDATA(script) = {
+	{"AddSite", add_site},
 	{"Build", build, canbuild},
 	{"GainIncome", gain_income},
 	{"Recruit", recruit},
+	{"RandomSite", random_site},
 	{"UpdatePlayer", update_player},
 };
 BSDATAF(script)
