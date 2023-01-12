@@ -4,7 +4,6 @@
 
 struct buildingi : sitei {
 	const buildingi*	upgrade;
-	costa				cost;
 };
 struct building {
 	const buildingi*	type;

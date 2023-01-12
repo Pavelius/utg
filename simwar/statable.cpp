@@ -45,18 +45,10 @@ void subvalue(costac& v1, const costac& v2) {
 		v1[i] -= v2[i];
 }
 
-//bool costable::operator>=(const costable& v) const {
-//	for(auto i = 0; i <= Warfire; i++) {
-//		if(effect[i] < v.effect[i])
-//			return false;
-//	}
-//	return true;
-//}
-//
-//bool costable::operator<=(const costable& v) const {
-//	for(auto i = 0; i <= Warfire; i++) {
-//		if(effect[i] > v.effect[i])
-//			return false;
-//	}
-//	return true;
-//}
+bool isenought(const costa& v1, const costa& v2) {
+	for(auto i = 0; i <= Limit; i++) {
+		if(v1[i] < v2[i])
+			return false;
+	}
+	return true;
+}

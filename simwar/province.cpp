@@ -76,12 +76,12 @@ void provincei::explore(int value) {
 }
 
 void provincei::clearcurrent() {
-	memset(current, 0, sizeof(current));
+	memcpy(current, income, sizeof(current));
 }
 
 void provincei::update() {
-	addvalue(current, income);
 	addvalue(current, landscape->effect);
+	subvalue(current, landscape->upkeep);
 	buildings = getbuildings();
 	units = getunits();
 	strenght = getunitsvalue(Strenght);

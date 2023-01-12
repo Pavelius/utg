@@ -430,16 +430,24 @@ static void choose_build(int bonus) {
 		lastbuilding = &e;
 		if(!canbuild(0))
 			continue;
+		if(!isenought(player->resources, e.cost))
+			continue;
 		an.add(lastbuilding, getnm(lastbuilding->id));
 	}
 	lastbuilding = (buildingi*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
 }
 
+static void paycost(int bonus) {
+	subvalue(player->resources, lastbuilding->cost);
+}
+
 static void add_building() {
 	auto push_building = lastbuilding;
 	choose_build(0);
-	if(lastbuilding)
+	if(lastbuilding) {
+		paycost(0);
 		build(0);
+	}
 	lastbuilding = push_building;
 }
 
