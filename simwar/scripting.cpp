@@ -48,6 +48,14 @@ static bool have_builded(const buildingi* pv) {
 	return false;
 }
 
+static bool have_exist(const sitei* pv) {
+	for(auto& e : bsdata<site>()) {
+		if(e.province == province && e.type == pv)
+			return true;
+	}
+	return false;
+}
+
 static bool have_upgraded(const buildingi* pb, const buildingi* p) {
 	while(pb->upgrade) {
 		if(pb->upgrade == p)
@@ -401,14 +409,50 @@ static void choose_buildings() {
 	}
 }
 
-static void choose_sites() {
+static void attack_site() {
+}
+
+static const char* get_site_header(const site* pv) {
+	static char temp[260];
+	stringbuilder sb(temp);
+	sb.add("%1 - %2", pv->province->getname(), pv->type->getname());
+	return temp;
+}
+
+static void choose_site_option(site* pv) {
+	if(!pv)
+		return;
+	pushvalue push_header(answers::header, get_site_header(pv));
+	pushvalue push_prompt(answers::prompt);
+	pushvalue push_resid(answers::resid);
+	if(pv->type->resid)
+		answers::resid = pv->type->resid;
+	answers::prompt = getdescription(pv->type->getid());
 	an.clear();
-	for(auto& e : bsdata<site>()) {
-		if(e.province != province)
-			continue;
-		an.add(&e, getnm(e.type->getname()));
+	an.add(attack_site, getnm("Attack"));
+	auto result = an.choose(0, getnm("Leave"), 1);
+	if(!result)
+		return;
+	else
+		((fnevent)result)();
+}
+
+static void choose_sites() {
+	while(!draw::isnext()) {
+		an.clear();
+		for(auto& e : bsdata<site>()) {
+			if(e.province != province)
+				continue;
+			an.add(&e, e.type->getname());
+		}
+		auto result = an.choose(0, getnm("Cancel"), 1);
+		if(!result)
+			break;
+		else if(bsdata<site>::have(result))
+			choose_site_option((site*)result);
+		else
+			((fnevent)result)();
 	}
-	an.choose(0, getnm("Cancel"), 1);
 }
 
 static void choose_province_options() {
@@ -463,6 +507,20 @@ bool fntestlist(int index, int bonus) {
 			return true;
 	}
 	return false;
+}
+
+bool sitei::isallow(variant v) const {
+	if(v.iskind<sitei>())
+		return have_exist(bsdata<sitei>::elements + v.value);
+	return true;
+}
+
+bool sitei::isallow() const {
+	for(auto v : conditions) {
+		if(!isallow(v))
+			return false;
+	}
+	return true;
 }
 
 BSDATA(script) = {

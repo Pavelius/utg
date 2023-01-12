@@ -5,6 +5,17 @@
 
 provincei* province;
 
+void provincei::getneighbors(neighbort& result) const {
+	auto index = getbsi(this);
+	result.clear();
+	for(auto& e : bsdata<neighbor>()) {
+		if(e.n1 == index)
+			result.add(bsdata<provincei>::elements + e.n2);
+		else if(e.n2 == index)
+			result.add(bsdata<provincei>::elements + e.n1);
+	}
+}
+
 int provincei::getbuildings() const {
 	auto count = 0;
 	for(auto& e : bsdata<building>()) {

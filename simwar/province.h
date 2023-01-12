@@ -7,6 +7,9 @@
 #pragma once
 
 struct playeri;
+struct provincei;
+
+typedef adat<provincei*, 16> neighbort;
 
 struct provincei : nameable {
 	playeri*			owner;
@@ -17,6 +20,7 @@ struct provincei : nameable {
 	void				explore(int value);
 	int					get(cost_s v, stringbuilder* psb = 0) const;
 	int					getbuildings() const;
+	void				getneighbors(neighbort& result) const;
 	int					getsites() const;
 	int					getunits() const;
 	void				paint() const;
@@ -24,5 +28,8 @@ struct provincei : nameable {
 struct moveable {
 	playeri*			player;
 	provincei*			province;
+};
+struct neighbor {
+	short				n1, n2;
 };
 extern provincei*		province;

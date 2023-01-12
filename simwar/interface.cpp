@@ -237,11 +237,28 @@ static void border_circle(int size) {
 	fore = push_fore;
 }
 
+static void paint_neighbor() {
+	auto push_caret = caret;
+	auto push_fore = fore;
+	fore = colors::red;
+	neighbort source;
+	province->getneighbors(source);
+	for(auto p : source) {
+		caret = push_caret;
+		point pt = p->position - camera;
+		line(pt.x, pt.y);
+	}
+	fore = push_fore;
+	caret = push_caret;
+}
+
 void provincei::paint() const {
 	if(owner)
 		paint_shield(owner->shield);
 	if(show_names)
 		stroke_texth2(getname());
+	if(province == this)
+		paint_neighbor();
 	if(input_province) {
 		if(ishilite(24, this)) {
 			hot.cursor = cursor::Hand;

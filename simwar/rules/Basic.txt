@@ -15,12 +15,12 @@ Swamp
 
 #Site
 
-BanditLair
-StoneCanion
-DarkCave
-DarkYard
-UnholyGraveyard
-WolfLair
+BanditLair resid(DarkCave)
+DarkCave resid(DarkCave)
+DarkYard resid(DarkCave)
+StoneCanion resid(DarkCave)
+UnholyGraveyard resid(Graveyard)
+WolfLair resid(Lair)
 
 #Building
 
@@ -104,16 +104,3 @@ Knights
 SouthernKindom
  resources Gold(100) Mana(20)
  start Citadel+1 Laboratory+1 Milita+2 Spearmans+1 Archers+1
-
-#Province
-
-WhiteTower position(211 1082) landscape(Plains) owner(SouthernKindom)
-WesternCoast position(158 961) landscape(Plains) owner(SouthernKindom)
-SnakeHills position(278 957) landscape(Hills)
-SnakeForest position(339 1032) landscape(Forest)
-NothernSnakeForest position(442 976) landscape(Forest)
-EastHills position(579 967) landscape(Hills)
-GreenAcres position(470 887) landscape(Plains)
-NorthAcres position(582 845) landscape(Plains)
-EasternAcres position(675 848) landscape(Plains)
-SnakeUphills position(511 778) landscape(Hills)

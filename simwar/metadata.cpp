@@ -17,6 +17,7 @@ BSDATAD(variant)
 BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
 BSDATAC(landscapei, 32)
+BSDATAC(neighbor, 1024)
 BSDATAC(playeri, 16)
 BSDATAC(provincei, 128)
 BSDATAC(sitei, 256)
@@ -39,6 +40,10 @@ BSMETA(landscapei) = {
 	BSDST(effect, costi),
 	BSDST(upkeep, costi),
 	{}};
+BSMETA(neighbor) = {
+	BSENM(n1, provincei),
+	BSENM(n2, provincei),
+	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
 	BSDST(resources, costi),
@@ -60,7 +65,10 @@ BSMETA(script) = {
 	{}};
 BSMETA(sitei) = {
 	BSREQ(id),
+	BSREQ(resid),
 	BSREQ(effect),
+	BSREQ(conditions),
+	BSREQ(upkeep),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -76,6 +84,7 @@ BSDATA(varianti) = {
 	{"Building", VAR(buildingi, 1), 0, 0, fnscript<buildingi>},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
+	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},

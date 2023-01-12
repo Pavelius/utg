@@ -162,6 +162,7 @@ void initialize_translation(const char* locale) {
 	setfile(source_name, "Names", main_locale, false, true, false);
 	setlist(source_name, "Names", main_locale);
 	setfile(source_text, "Descriptions", main_locale, false, false, false);
+	setlist(source_text, "Descriptions", main_locale);
 	atexit(deinitialize);
 }
 

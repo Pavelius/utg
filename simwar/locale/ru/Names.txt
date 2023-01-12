@@ -8,6 +8,7 @@ BanditLair: Логово бандитов
 DarkCave: Темная пещера
 DarkYard: Темная поляна
 UnholyGraveyard: Проклятое кладбище
+WolfLair: Логово волков
 
 Circus: Цирк
 Citadel: Цитадель
@@ -23,6 +24,7 @@ Tavern: Таверна
 WatchTower: Дозорная башня
 
 Fame: Слава
+ExploreNext: Иследования
 Gold: Золото
 Happiness: Счастье
 Lore: Наука
@@ -35,6 +37,8 @@ Warfire: Армия
 No: Нет
 Yes: Да
 
+Attack: Атаковать
+
 AddBuilding: Построить здание
 AppTitle: Стратегия
 Army: Армия
@@ -45,6 +49,7 @@ Cancel: Отмена
 DoYouWantRemoveBuilding: [%1] действительно подлежит сносу?
 EndTurn: Закончить ход
 Explore: Исследовано
+Leave: Уйти
 Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций

@@ -1,101 +1,220 @@
-include "tactics"
-include "earth_calendar"
+﻿#Province
 
-nation orcs
-nation northerners
-nation southerners
+OljattSea position(1139 1187) landscape(Plains)
+HiemalStrait position(123 1171) landscape(Plains)
+GelidSea position(449 1154) landscape(Plains)
+Giewont position(1068 1103) landscape(Plains)
+JeleniaGora position(825 1095) landscape(Plains)
+CapeBrumal position(211 1085) landscape(Plains)
+NandaDevi position(335 1030) landscape(Plains)
+JeleniaGora position(1043 1007) landscape(Plains)
+RupalValley position(442 978) landscape(Plains)
+WesternZastrugi position(157 970) landscape(Plains)
+Zakopane position(574 968) landscape(Plains)
+Concordia position(271 959) landscape(Plains)
+NangaParbat position(482 891) landscape(Plains)
+DepthsBeyond position(1165 889) landscape(Plains)
+WesternExpanse position(57 869) landscape(Plains)
+Szczebrzeszyn position(187 869) landscape(Plains)
+DiamirValley position(292 860) landscape(Plains)
+Opole position(581 855) landscape(Plains)
+FieldsOfRefuge position(673 851) landscape(Plains)
+SeaOfLostWinds position(893 781) landscape(Plains)
+SteelCliffs position(521 779) landscape(Plains)
+NamcheBazaar position(281 769) landscape(Plains)
+BaltoroFlats position(669 726) landscape(Plains)
+Lhasa position(295 681) landscape(Plains)
+BialeTatry position(597 670) landscape(Plains)
+MowichFace position(410 669) landscape(Plains)
+PlainsOfPolabia position(726 648) landscape(Plains)
+CathedralGap position(533 579) landscape(Plains)
+Skardu position(390 576) landscape(Plains)
+AfflictedShores position(120 573) landscape(Plains)
+Tengpoche position(759 566) landscape(Plains)
+BayOfRurik position(1084 564) landscape(Plains)
+ShunnedLands position(279 561) landscape(Plains)
+DisappointmentCleaver position(654 558) landscape(Plains)
+Regep position(806 487) landscape(Plains)
+BialowiezaForest position(431 483) landscape(Plains)
+Kangchenjunga position(195 464) landscape(Plains)
+PtarmiganRidge position(693 451) landscape(Plains)
+LadakhSanctuary position(884 421) landscape(Plains)
+TheBottleneck position(990 421) landscape(Plains)
+BatorysRest position(286 413) landscape(Plains)
+AcheronianPeninsula position(1090 407) landscape(Plains)
+Mazovia position(770 400) landscape(Plains)
+FirthOfMieszko position(382 395) landscape(Plains)
+LowerBrunetFen position(465 388) landscape(Plains)
+CloudCap position(1017 362) landscape(Plains)
+FarBrunetFen position(370 324) landscape(Plains)
+AmaDablam position(724 324) landscape(Plains)
+MorskieOko position(586 320) landscape(Plains)
+Grunwald position(856 317) landscape(Plains)
+NearBrunetFen position(463 285) landscape(Plains)
+UpperBrunetFen position(394 256) landscape(Plains)
+Pomorze position(549 241) landscape(Plains)
+Lankhmar position(747 237) landscape(Plains)
+Gobelin position(842 215) landscape(Plains)
+ChrobryDeeps position(160 208) landscape(Plains)
+ChersoneseHeadland position(658 207) landscape(Plains)
+RemotePassage position(1107 188) landscape(Plains)
+CthonianAbyss position(494 107) landscape(Plains)
+BorealDepths position(786 86) landscape(Plains)
 
-action raiding order(2) raid(1) support(-3) gold(2) cost_per_unit(1)
-action attacking order(4) attack(1) support(-6) cost(5) fame(1) cost_per_unit(1)
-action defending order(5) defend(1) cost(1)
-action recruit order(3) recruit(1)
-action support order(3) support(5) cost(6)
-action economy order(3) economy(2) cost(8)
-action mobilization order(2) movement(2) cost(2)
-action quest order(1)
+#Neighbor
 
-game map("silentseas.png")
-game year(1241)
-game casualties(4)
-game income_per_level(2)
-game default_action(quest)
-game support_minimum(-60)
-game support_maximum(50)
-game economy_minimum(-5)
-game economy_maximum(5)
-game support_attack(20)
-game support_defend(20)
-game loyalty_base(15)
-game loyalty_maximum(100)
-game loyalty_noble_modifier(2)
-game desert_base(5)
-
-landscape plains income(4)
-landscape mountains income(2) defend(2)
-landscape swamp income(1) defend(2)
-landscape forest income(3) defend(1)
-landscape waste income(1)
-
-province snake_forest position(401, 996) landscape(forest) nation(southerners) neighbors(southen_coast, gracefull_plains)
-province green_acres position(256, 821) landscape(plains) nation(southerners) neighbors(southen_coast, iron_crags, khellos_coast)
-province southen_coast position(191, 994) landscape(plains) level(2) nation(southerners) neighbors(green_acres, snake_forest)
-province lone_mountain position(1024, 383) landscape(plains) level(2) nation(orcs) neighbors(theeth_forest, green_hills)
-province theeth_forest position(830, 396) landscape(forest) nation(orcs) neighbors(green_hills, iron_peaks, waste_of_battles, lone_mountain)
-province green_hills position(738, 227) landscape(plains) nation(orcs) neighbors(theeth_forest, dead_swamp, lone_mountain)
-province gracefull_plains position(617, 849) landscape(plains) nation(southerners) neighbors(waste_of_battles, iron_crags, snake_forest)
-province khellos_coast position(353, 616) landscape(waste) nation(northerners) neighbors(dead_forest, hilly_land, waste_of_battles, green_acres, iron_crags)
-province hilly_land position(227, 422) landscape(waste) level(1) nation(northerners) neighbors(dead_forest, khellos_coast, dead_swamp)
-province iron_peaks position(582, 444) landscape(mountains) nation(northerners) neighbors(dead_swamp, waste_of_battles, dead_forest, theeth_forest)
-province waste_of_battles position(660, 609) landscape(waste) nation(northerners) neighbors(iron_crags, khellos_coast, gracefull_plains, iron_peaks, theeth_forest)
-province iron_crags position(443, 747) landscape(mountains) nation(northerners) neighbors(green_acres, gracefull_plains, khellos_coast, waste_of_battles)
-province dead_swamp position(419, 311) landscape(swamp) nation(orcs) neighbors(iron_peaks, hilly_land, green_hills)
-province dead_forest position(423, 478) landscape(swamp) nation(orcs) neighbors(hilly_land, khellos_coast, iron_peaks)
-
-trait general defend(1) attack(1)
-trait wizard defend(1) magic(1)
-trait hireling attack(1) raid(2) nobility(-1)
-trait raider raid(3) nobility(-1)
-
-trait mad attack(1) sword(1) good(-1)
-trait carefull shield(1)
-trait bloody attack(2) defend(1) good(-1)
-trait cunning attack(1) raid(1)
-trait noble nobility(1) good(1)
-
-hero gordek avatar("art/portraits/gordek.bmp") traits(bloody, hireling) player(red) best_tactic(lighting_attack) origin(waste)
-hero mistra avatar("art/portraits/mistra.bmp") traits(carefull, wizard) best_tactic(careful_defence) gender(female) origin(forest)
-hero antaris avatar("art/portraits/antaris.bmp") traits(bloody, wizard) best_tactic(messy_fighting) origin(plains)
-hero groomsh avatar("art/portraits/groomsh.bmp") traits(cunning, general) player(green) best_tactic(careful_defence) origin(mountains)
-hero bogart avatar("art/portraits/bogard.bmp") traits(bloody, general) best_tactic(messy_fighting) origin(forest)
-hero argh avatar("art/portraits/argh.bmp") traits(mad, general) best_tactic(messy_fighting) origin(waste)
-hero toybo avatar("art/portraits/toybo.bmp") traits(noble, general) best_tactic(careful_defence) origin(mountains)
-
-unit black_orcs attack(2) defend(2) cost(5) income(-2) level(1) nation(orcs)
-unit wolf_riders attack(2) raid(1) defend(1) cost(6) income(-2) wait(2) level(2) nation(orcs) landscape(plains, hills, forest)
-unit barbarians attack(1) defend(1) cost(2) income(-1) recruit(3) nation(northerners) mourning(1)
-unit berserks attack(2) defend(1) sword(1) cost(4) income(-2) nation(northerners) mourning(1)
-unit spearmans attack(1) defend(2) cost(3) income(-1) recruit(2) nation(southerners) mourning(1)
-unit swordsmans attack(2) defend(2) cost(5) income(-2) level(1) nation(southerners) mourning(1)
-unit cavalry attack(2) raid(1) defend(1) sword(1) cost(7) income(-2) level(2) nation(southerners) landscape(plains, hills) mourning(1) wait(2)
-
-// Red player start
-player red cost(50) type(computer)
-province southen_coast player(red)
-troop type(spearmans) province(southen_coast) home(southen_coast)
-troop type(spearmans) province(southen_coast) home(southen_coast)
-
-// Green player start
-player green cost(50) type(human)
-province lone_mountain player(green)
-troop type(orcs) province(lone_mountain) home(lone_mountain)
-troop type(orcs) province(lone_mountain) home(lone_mountain)
-
-event capture_incasator
- effects gold(-10)
- effects test(attack) gold(0)
- effects test(sword) gold(10)
-
-event barbarian_invasion
- effects attack(1) units(berserks, barbarians, barbarians)
- effects test(raid) wounds(1)
- effects test(nobility) recruit(1) units(barbarians)
+OljattSea DepthsBeyond
+OljattSea JeleniaGora
+OljattSea Giewont
+HiemalStrait WesternExpanse
+HiemalStrait CapeBrumal
+HiemalStrait GelidSea
+GelidSea JeleniaGora
+GelidSea CapeBrumal
+GelidSea RupalValley
+GelidSea Zakopane
+GelidSea NandaDevi
+Giewont DepthsBeyond
+Giewont JeleniaGora
+Giewont JeleniaGora
+JeleniaGora SeaOfLostWinds
+JeleniaGora JeleniaGora
+JeleniaGora Zakopane
+JeleniaGora FieldsOfRefuge
+CapeBrumal Concordia
+CapeBrumal WesternExpanse
+CapeBrumal NandaDevi
+CapeBrumal WesternZastrugi
+NandaDevi Concordia
+NandaDevi RupalValley
+JeleniaGora SeaOfLostWinds
+JeleniaGora DepthsBeyond
+RupalValley Concordia
+RupalValley NangaParbat
+RupalValley Zakopane
+WesternZastrugi Concordia
+WesternZastrugi WesternExpanse
+WesternZastrugi Szczebrzeszyn
+Zakopane Opole
+Zakopane FieldsOfRefuge
+Zakopane NangaParbat
+Concordia DiamirValley
+Concordia Szczebrzeszyn
+NangaParbat SteelCliffs
+NangaParbat Opole
+DepthsBeyond SeaOfLostWinds
+DepthsBeyond BayOfRurik
+WesternExpanse Szczebrzeszyn
+WesternExpanse NamcheBazaar
+WesternExpanse Lhasa
+WesternExpanse AfflictedShores
+Szczebrzeszyn DiamirValley
+Szczebrzeszyn NamcheBazaar
+DiamirValley NamcheBazaar
+Opole BaltoroFlats
+Opole SteelCliffs
+Opole FieldsOfRefuge
+FieldsOfRefuge SeaOfLostWinds
+FieldsOfRefuge BaltoroFlats
+SeaOfLostWinds PlainsOfPolabia
+SeaOfLostWinds Tengpoche
+SeaOfLostWinds BayOfRurik
+SeaOfLostWinds BaltoroFlats
+SteelCliffs BaltoroFlats
+SteelCliffs BialeTatry
+NamcheBazaar Lhasa
+BaltoroFlats PlainsOfPolabia
+BaltoroFlats BialeTatry
+Lhasa MowichFace
+Lhasa Skardu
+Lhasa ShunnedLands
+Lhasa AfflictedShores
+BialeTatry CathedralGap
+BialeTatry DisappointmentCleaver
+BialeTatry PlainsOfPolabia
+MowichFace Skardu
+MowichFace CathedralGap
+PlainsOfPolabia DisappointmentCleaver
+PlainsOfPolabia Tengpoche
+CathedralGap Skardu
+CathedralGap BialowiezaForest
+CathedralGap DisappointmentCleaver
+Skardu BialowiezaForest
+Skardu ShunnedLands
+AfflictedShores ChrobryDeeps
+AfflictedShores Kangchenjunga
+AfflictedShores ShunnedLands
+Tengpoche DisappointmentCleaver
+Tengpoche Regep
+Tengpoche PtarmiganRidge
+Tengpoche BayOfRurik
+BayOfRurik RemotePassage
+BayOfRurik AcheronianPeninsula
+BayOfRurik Regep
+BayOfRurik LadakhSanctuary
+BayOfRurik TheBottleneck
+ShunnedLands Kangchenjunga
+ShunnedLands BialowiezaForest
+ShunnedLands BatorysRest
+DisappointmentCleaver PtarmiganRidge
+Regep PtarmiganRidge
+Regep Mazovia
+Regep LadakhSanctuary
+BialowiezaForest FirthOfMieszko
+BialowiezaForest LowerBrunetFen
+BialowiezaForest BatorysRest
+Kangchenjunga ChrobryDeeps
+Kangchenjunga BatorysRest
+PtarmiganRidge MorskieOko
+PtarmiganRidge Mazovia
+LadakhSanctuary Mazovia
+LadakhSanctuary Grunwald
+LadakhSanctuary TheBottleneck
+TheBottleneck AcheronianPeninsula
+TheBottleneck CloudCap
+BatorysRest ChrobryDeeps
+BatorysRest FirthOfMieszko
+BatorysRest FarBrunetFen
+AcheronianPeninsula RemotePassage
+AcheronianPeninsula CloudCap
+Mazovia AmaDablam
+Mazovia Grunwald
+Mazovia MorskieOko
+FirthOfMieszko MorskieOko
+FirthOfMieszko ChrobryDeeps
+FirthOfMieszko FarBrunetFen
+FirthOfMieszko LowerBrunetFen
+LowerBrunetFen MorskieOko
+LowerBrunetFen NearBrunetFen
+LowerBrunetFen FarBrunetFen
+CloudCap RemotePassage
+CloudCap Grunwald
+FarBrunetFen ChrobryDeeps
+FarBrunetFen UpperBrunetFen
+FarBrunetFen NearBrunetFen
+AmaDablam MorskieOko
+AmaDablam Lankhmar
+AmaDablam Grunwald
+MorskieOko NearBrunetFen
+MorskieOko Pomorze
+MorskieOko ChersoneseHeadland
+Grunwald RemotePassage
+Grunwald Lankhmar
+Grunwald Gobelin
+NearBrunetFen CthonianAbyss
+NearBrunetFen UpperBrunetFen
+NearBrunetFen Pomorze
+UpperBrunetFen CthonianAbyss
+UpperBrunetFen ChrobryDeeps
+Pomorze CthonianAbyss
+Pomorze ChersoneseHeadland
+Lankhmar BorealDepths
+Lankhmar ChersoneseHeadland
+Lankhmar Gobelin
+Gobelin BorealDepths
+Gobelin RemotePassage
+ChrobryDeeps CthonianAbyss
+ChersoneseHeadland CthonianAbyss
+ChersoneseHeadland BorealDepths
+RemotePassage BorealDepths
+CthonianAbyss BorealDepths

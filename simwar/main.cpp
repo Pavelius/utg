@@ -1,10 +1,12 @@
 #include "answers.h"
+#include "bsreq.h"
 #include "building.h"
 #include "collection.h"
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "game.h"
+#include "log.h"
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
@@ -32,6 +34,9 @@ static void start_game() {
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG
+	bsreq::read("maps/silentseas.txt");
+	if(log::geterrors())
+		return;
 	initialize_scene();
 	draw::setnext(player_turn);
 }
