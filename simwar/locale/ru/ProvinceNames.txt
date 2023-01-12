@@ -1,4 +1,10 @@
-﻿EastHills: Восточные холмы
+﻿CapeBrumal: Мыс жестокости
+Concordia: Холм изобилия
+FieldsOfRefuge: Поля утешения
+RupalValley: Долина деревьев
+WesternZastrugi: Западный край
+
+EastHills: Восточные холмы
 EasternAcres: Восточные луга
 GreenAcres: Зеленые луга
 NorthAcres: Северные луга

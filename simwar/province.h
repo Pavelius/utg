@@ -10,7 +10,7 @@ struct playeri;
 struct provincei;
 
 struct provincei : nameable {
-	playeri*			owner;
+	playeri*			player;
 	point				position;
 	const landscapei*	landscape;
 	costa				income;

@@ -31,6 +31,7 @@ BSMETA(buildingi) = {
 	BSREQ(upgrade),
 	BSDST(upkeep, costi),
 	BSDST(cost, costi),
+	BSREQ(conditions),
 	{}};
 BSMETA(costi) = {
 	BSREQ(id),
@@ -55,7 +56,7 @@ BSMETA(point) = {
 	{}};
 BSMETA(provincei) = {
 	BSREQ(id),
-	BSREQ(owner),
+	BSREQ(player),
 	BSREQ(position),
 	BSREQ(landscape),
 	BSDST(income, costi),

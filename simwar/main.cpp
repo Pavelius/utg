@@ -22,7 +22,8 @@ void util_main();
 
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
-	province = bsdata<provincei>::find("WhiteTower");
+	province = bsdata<provincei>::find("CapeBrumal");
+	province->player = player;
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	script::run("UpdatePlayer");

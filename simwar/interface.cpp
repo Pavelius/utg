@@ -253,8 +253,8 @@ static void paint_neighbor() {
 }
 
 void provincei::paint() const {
-	if(owner)
-		paint_shield(owner->shield);
+	if(player)
+		paint_shield(player->shield);
 	if(show_names)
 		stroke_texth2(getname());
 	if(province == this)

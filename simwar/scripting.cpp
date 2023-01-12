@@ -73,6 +73,19 @@ static bool have_upgraded(const buildingi* p) {
 	return false;
 }
 
+static bool is_coastal(int bonus) {
+	auto ocean = bsdata<landscapei>::find("Ocean");
+	if(!ocean)
+		return false;
+	neighbors source;
+	source.select(province);
+	for(auto p : source) {
+		if(p->landscape == ocean)
+			return true;
+	}
+	return false;
+}
+
 static bool canbuild(int bonus) {
 	if(have_builded(lastbuilding))
 		return false;
@@ -83,6 +96,8 @@ static bool canbuild(int bonus) {
 		if(have_upgraded(lastbuilding))
 			return false;
 	}
+	if(lastbuilding->conditions && !lastbuilding->isallow())
+		return false;
 	return true;
 }
 
@@ -137,7 +152,7 @@ static bool player_province_troop(const void* pv) {
 }
 
 static bool player_building(const void* pv) {
-	return ((building*)pv)->province && ((building*)pv)->province->owner == player;
+	return ((building*)pv)->province && ((building*)pv)->province->player == player;
 }
 
 static bool player_province_building(const void* pv) {
@@ -174,7 +189,7 @@ static int get_value(int value, const char* id, stringbuilder* psb) {
 static int get_upkeep_buildings(const playeri* p, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.province && e.province->owner != player)
+		if(e.province && e.province->player != player)
 			continue;
 		result += e.type->upkeep[v];
 	}
@@ -194,7 +209,7 @@ static int get_upkeep_units(const playeri* p, cost_s v, stringbuilder* psb) {
 static int get_effect_buildings(const playeri* p, const buildingi* b, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.province && e.province->owner != player || e.type!=b)
+		if(e.province && e.province->player != player || e.type!=b)
 			continue;
 		result += e.type->effect[v];
 	}
@@ -217,7 +232,7 @@ static int get_income(const provincei* p, cost_s v, stringbuilder* psb) {
 static int get_provinces_income(const playeri* p, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
-		if(e.owner != player)
+		if(e.player != player)
 			continue;
 		result += get_income(&e, v, 0);
 	}
@@ -227,7 +242,7 @@ static int get_provinces_income(const playeri* p, cost_s v, stringbuilder* psb) 
 static int get_provinces_upkeep(const playeri* p, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
-		if(e.owner != player)
+		if(e.player != player)
 			continue;
 		result += e.landscape->upkeep[v];
 	}
@@ -512,6 +527,8 @@ bool fntestlist(int index, int bonus) {
 bool sitei::isallow(variant v) const {
 	if(v.iskind<sitei>())
 		return have_exist(bsdata<sitei>::elements + v.value);
+	else if(v.iskind<script>())
+		return fntest<script>(v.value, v.counter);
 	return true;
 }
 
@@ -526,6 +543,7 @@ bool sitei::isallow() const {
 BSDATA(script) = {
 	{"AddSite", add_site},
 	{"Build", build, canbuild},
+	{"Coastal", 0, is_coastal},
 	{"GainIncome", gain_income},
 	{"Recruit", recruit},
 	{"RandomSite", random_site},

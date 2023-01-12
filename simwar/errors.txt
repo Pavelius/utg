@@ -1,2 +1,2 @@
-﻿In file `maps/silentseas.txt`:
- Line 64: Not find data type for `Neighbors`
+﻿In file `rules/Basic.txt`:
+ Line 69: Not found requisit `conditions`
