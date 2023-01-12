@@ -68,10 +68,9 @@ void variant::getinfo(stringbuilder& sb) const {
 	auto& e = geti();
 	if(!e.source)
 		return;
-	if(e.pgetinfo) {
-		sb.add("##%1", getname());
+	if(e.pgetinfo)
 		e.pgetinfo(e.source->ptr(value), sb);
-	} else {
+	else {
 		auto id = getid();
 		auto description = getdescription(id);
 		if(description) {

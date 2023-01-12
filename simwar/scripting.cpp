@@ -16,6 +16,7 @@ static answers an;
 void player_turn();
 
 static void add_description(const char* id, stringbuilder& sb) {
+	sb.addn("##%1", getnm(id));
 	auto pn = getdescription(id);
 	if(!pn)
 		return;
@@ -372,6 +373,7 @@ static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
 }
 
 static void add_description(const buildingi* p, stringbuilder& sb) {
+	sb.addn("##%1", getnm(p->id));
 	auto need_line = true;
 	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
 		auto n = p->effect[v];

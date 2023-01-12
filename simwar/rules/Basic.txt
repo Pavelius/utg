@@ -51,7 +51,7 @@ Laboratory
  cost Gold(50)
  upkeep Gold(1)
 Shrine
- effect Lore(1) Faith(1)
+ effect Faith(1)
  cost Gold(50)
  upkeep Gold(1)
 Temple upgrade(Shrine)

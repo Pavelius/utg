@@ -1,7 +1,12 @@
-﻿BialowiezaForest: 
+﻿ChrobryDeeps: 
+DiamirValley: 
+February: 
 FirthOfMieszko: 
-GelidSea: 
-Lhasa: 
 LowerBrunetFen: 
-NoName: 
+NamcheBazaar: 
+NandaDevi: 
+NangaParbat: 
+NearBrunetFen: 
+Skardu: 
 Szczebrzeszyn: 
+Zakopane: 
