@@ -1,11 +1,8 @@
-﻿BayOfRurik: 
-Damage: 
-FarBrunetFen: 
+﻿BatorysRest: 
 GelidSea: 
 NandaDevi: 
-Opole: 
+NangaParbat: 
+ShunnedLands: 
 SteelCliffs: 
 Szczebrzeszyn: 
-UpperBrunetFen: 
-WesternExpanse: 
 Zakopane: 

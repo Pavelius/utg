@@ -5,7 +5,7 @@
 
 struct sitei : nameable {
 	const char*		resid;
-	costa			effect, upkeep;
+	costac			effect, upkeep;
 	variants		conditions;
 	bool			isallow(variant v) const;
 	bool			isallow() const;

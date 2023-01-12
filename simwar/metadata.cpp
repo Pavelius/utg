@@ -77,6 +77,7 @@ BSMETA(tagi) = {
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSDST(effect, costi),
+	BSDST(cost, costi),
 	BSDST(upkeep, costi),
 	{}};
 BSDATA(varianti) = {

@@ -277,13 +277,56 @@ static int get_units(const playeri* p, const provincei* province, cost_s v) {
 	return result;
 }
 
-static void update_income() {
-	for(auto i = (cost_s)0; i <= Warfire; i = (cost_s)(i + 1))
-		player->income[i] = get_income(i, 0);
+static void clear_current() {
+	for(auto& e : bsdata<provincei>())
+		e.clearcurrent();
+}
+
+static void update_provinces() {
+	for(auto& e : bsdata<provincei>())
+		e.update();
+}
+
+static void update_province_buildings() {
+	for(auto& e : bsdata<building>()) {
+		if(!e)
+			continue;
+		addvalue(e.province->current, e.type->effect);
+	}
+}
+
+static void update_player_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			addvalue(player->income, e.current);
+	}
+}
+
+static void update_player_units() {
+	for(auto& e : bsdata<troop>()) {
+		if(e.province->player != player)
+			continue;
+		addvalue(player->income, e.type->effect);
+		subvalue(player->income, e.type->upkeep);
+	}
+}
+
+static void upkeep_player_buildings() {
+	for(auto& e : bsdata<building>()) {
+		if(e.province->player != player)
+			continue;
+		subvalue(player->income, e.type->upkeep);
+	}
 }
 
 static void update_player(int bonus) {
-	update_income();
+	memset(player->income, 0, sizeof(player->income));
+	clear_current();
+	update_province_buildings();
+	update_provinces();
+	update_player_provinces();
+	update_player_units();
+	upkeep_player_buildings();
 }
 
 static void gain_income(int bonus) {
@@ -304,38 +347,38 @@ int	provincei::get(cost_s v, stringbuilder* psb) const {
 }
 
 static void add_line(stringbuilder& sb, const provincei* province, cost_s v, int n) {
-	int i;
+	if(!n)
+		return;
+	auto& e = bsdata<costi>::elements[v];
+	if(e.frame == -1)
+		return;
 	switch(v) {
 	case Size:
-		sb.add("%Buildings %1i/%2i", province->getbuildings(), n);
-		break;
-	case Strenght:
-		i = get_units(player, province, Strenght);
-		if(i)
-			sb.add("%Army %1i", i + province->get(v));
+		sb.adds(":%1i:%2i/%3i", e.frame, province->getbuildings(), n);
 		break;
 	default:
-		sb.add("%1%+2i", getnm(bsdata<costi>::elements[v].id), n);
+		sb.adds(":%2i:%1i", n, e.frame);
 		break;
 	}
 }
 
+static void add_line(stringbuilder& sb, int f, int n) {
+	if(!n)
+		return;
+	sb.adds(":%2i:%1i", n, f);
+}
+
+static void add_line(stringbuilder& sb, int f, int n, int nm) {
+	if(!nm)
+		return;
+	sb.adds(":%2i:%1i/%3i", n, f, nm);
+}
+
 static void add_line_upkeep(const provincei* province, stringbuilder& sb) {
-	auto pb = sb.get();
-	for(auto i = (cost_s)0; i < Limit; i = (cost_s)(i + 1)) {
-		auto n = province->get(i);
-		if(!n)
-			continue;
-		auto p0 = sb.get();
-		if(!pb[0])
-			sb.addn("---");
-		else
-			sb.add(", ");
-		auto p1 = sb.get();
-		add_line(sb, province, i, n);
-		if(p1[0] == 0)
-			sb.set(p0);
-	}
+	add_line(sb, 4, province->current[Gold]);
+	add_line(sb, 6, province->current[Mana]);
+	add_line(sb, 2, province->strenght);
+	add_line(sb, 5, province->buildings, province->current[Size]);
 }
 
 template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
@@ -349,6 +392,7 @@ template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
 template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
 	auto p = (provincei*)object;
 	add_description(p->id, sb);
+	sb.addn("---");
 	add_line_upkeep(p, sb);
 }
 
@@ -412,7 +456,7 @@ static void choose_buildings() {
 		collection<building> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
-		if(province->getbuildings() < province->get(Size))
+		if(province->buildings < province->current[Size])
 			an.add(add_building, getnm("AddBuilding"));
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)

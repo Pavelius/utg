@@ -37,13 +37,13 @@ Fort upgrade(WatchTower)
  upkeep Gold(1)
  cost Gold(250)
 Citadel upgrade(Fort)
- effect Happiness(2) Gold(1) Warfire(4) Strenght(3)
+ effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Size(1)
  cost Gold(650)
 DarkCitadel upgrade(Fort)
- effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3)
+ effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Size(1)
  cost Gold(750)
 Palace upgrade(Fort)
- effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2)
+ effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Size(1)
  cost Gold(1000)
 
 Laboratory
@@ -88,22 +88,28 @@ Inn upgrade(Tavern)
 #Unit
 
 Milita
- effect Strenght(1) Damage(2) Health(6) Level(1) Movement(1) Gold(1)
+ effect Strenght(1) Damage(2) Health(6) Level(1) Movement(1)
+ cost Gold(10)
  upkeep Gold(1) Warfire(1)
 Spearmans
- effect Strenght(1) Damage(3) Health(8) Level(1) Movement(1) Gold(3)
+ effect Strenght(1) Damage(3) Health(8) Level(1) Movement(1)
+ cost Gold(30)
  upkeep Gold(1) Warfire(1)
 Archers
- effect Strenght(1) Damage(2) Health(6) Archery(2) Level(1) Movement(1) Gold(4)
+ effect Strenght(1) Damage(2) Health(6) Archery(2) Level(1) Movement(1)
+ cost Gold(40)
  upkeep Gold(1) Warfire(1)
 Swordsmans
- effect Strenght(2) Damage(5) Health(10) Armor(2) Level(2) Movement(1) Gold(8)
+ effect Strenght(2) Damage(5) Health(10) Armor(2) Level(2) Movement(1)
+ cost Gold(80)
  upkeep Gold(1) Warfire(1)
 Cavalry
- effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(1) Level(2) Movement(2) Gold(8)
+ effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(1) Level(2) Movement(2)
+ cost Gold(100)
  upkeep Gold(2) Warfire(1)
 Knights
- effect Strenght(3) Damage(8) Health(16) Armor(3) Level(3) Movement(1) Gold(12)
+ effect Strenght(3) Damage(8) Health(16) Armor(3) Level(3) Movement(1)
+ cost Gold(160)
  upkeep Gold(3) Warfire(1)
 
 #Player

@@ -136,7 +136,7 @@ static void field(cost_s v, const char* format, int width, int v1, int v2, int v
 	paint_vborder();
 }
 
-static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
+static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costac& a3) {
 	field(v, format, width, a1[v], a2[v], a3[v]);
 }
 
@@ -147,7 +147,7 @@ static void field_date() {
 	paint_vborder();
 }
 
-static void paint_cost(const costa& v, const costa& u, const costa& n) {
+static void paint_cost(const costa& v, const costac& u, const costa& n) {
 	field_date();
 	field(Gold, 0, 100, v, n, u);
 	field(Mana, 0, 80, v, n, u);

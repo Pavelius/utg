@@ -107,7 +107,7 @@ static const char* citate(const char* p, int x1, int x2, color new_fore, const s
 	draw::font = new_font;
 	caret.x = x1;
 	while(p[0]) {
-		if(p[0] == '-' && p[1] == '#' && p[2] == '-' && (p[3] == 13 || p[3] == 10 || p[3]==0)) {
+		if(p[0] == '-' && p[1] == '#' && p[2] == '-' && (p[3] == 13 || p[3] == 10 || p[3] == 0)) {
 			p = skipspcr(p + 3);
 			break;
 		}
@@ -195,9 +195,8 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 			if(*p == ':')
 				p++;
 			if(metrics::icons) {
-				auto h = metrics::icons->get(0).sy;
-				image(caret.x + 1, caret.y + (font->ascend - h) / 2 + 1, metrics::icons, index, ImageNoOffset);
-				w = metrics::icons->get(0).sx + 2;
+				image(caret.x, caret.y + (font->height + 1) / 2, metrics::icons, index, 0);
+				w = metrics::icons->get(index).sx + 1;
 			}
 		} else {
 			const char* p2 = word(p);
@@ -306,8 +305,6 @@ static void execute_tab() {
 static void execute_command(const char* id) {
 	if(equal(id, "image"))
 		execute_image();
-	else if(equal(id, "center"))
-		execute_center();
 	else if(equal(id, "tab"))
 		execute_tab();
 }

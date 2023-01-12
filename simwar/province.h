@@ -13,14 +13,18 @@ struct provincei : nameable {
 	playeri*			player;
 	point				position;
 	const landscapei*	landscape;
-	costa				income;
+	costac				current, income;
+	char				buildings, units, strenght;
 	void				add(cost_s v, int value);
+	void				clearcurrent();
 	void				explore(int value);
 	int					get(cost_s v, stringbuilder* psb = 0) const;
 	int					getbuildings() const;
 	int					getsites() const;
 	int					getunits() const;
+	int					getunitsvalue(cost_s v) const;
 	void				paint() const;
+	void				update();
 };
 struct moveable {
 	playeri*			player;

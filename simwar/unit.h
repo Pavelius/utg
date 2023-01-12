@@ -5,7 +5,7 @@
 #pragma once
 
 struct uniti : nameable {
-	costa			effect, upkeep;
+	costac			effect, cost, upkeep;
 };
 struct troop : moveable {
 	provincei*		moveto;

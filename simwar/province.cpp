@@ -43,6 +43,15 @@ int provincei::getunits() const {
 	return count;
 }
 
+int provincei::getunitsvalue(cost_s v) const {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.province == this)
+			result += e.type->effect[v];
+	}
+	return result;
+}
+
 void provincei::add(cost_s v, int value) {
 	income[v] += value;
 	switch(v) {
@@ -64,4 +73,18 @@ void provincei::explore(int value) {
 		province = push_province;
 		add(ExploreNext, xrand(8, 20));
 	}
+}
+
+void provincei::clearcurrent() {
+	memset(current, 0, sizeof(current));
+}
+
+void provincei::update() {
+	addvalue(current, income);
+	addvalue(current, landscape->effect);
+	buildings = getbuildings();
+	units = getunits();
+	strenght = getunitsvalue(Strenght);
+	if(strenght)
+		strenght += get(Strenght);
 }
