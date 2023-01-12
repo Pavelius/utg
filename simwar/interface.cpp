@@ -155,7 +155,7 @@ static void paint_cost(const costa& v, const costac& u, const costa& n) {
 	field(Fame, "%1i", 0, v, n, u);
 	field(Warfire, "%3i", 0, v, n, u);
 	field(Lore, 0, 120, v, n, u);
-	field(Trade, 0, 80, v, n, u);
+	field(Faith, 0, 80, v, n, u);
 }
 
 void status_info() {
@@ -252,6 +252,22 @@ static void paint_neighbor() {
 	caret = push_caret;
 }
 
+void add_line_upkeep(const provincei* province, stringbuilder& sb);
+
+static void paint_income(const provincei* province) {
+	char temp[260]; stringbuilder sb(temp); temp[0] = 0;
+	add_line_upkeep(province, sb);
+	if(temp[0] == 0)
+		return;
+	rectpush push;
+	auto push_fore = fore;
+	textfs(temp);
+	caret.x -= width / 2;
+	fore = colors::black;
+	textf(temp);
+	fore = push_fore;
+}
+
 void provincei::paint() const {
 	if(player)
 		paint_shield(player->shield);
@@ -259,6 +275,7 @@ void provincei::paint() const {
 		stroke_texth2(getname());
 	if(province == this)
 		paint_neighbor();
+	paint_income(this);
 	if(input_province) {
 		if(ishilite(24, this)) {
 			hot.cursor = cursor::Hand;

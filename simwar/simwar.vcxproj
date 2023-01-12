@@ -177,6 +177,7 @@
     <ClInclude Include="bsref.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />
+    <ClInclude Include="hero.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="landscape.h" />

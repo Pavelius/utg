@@ -15,7 +15,7 @@
 
 using namespace draw;
 
-void player_turn();
+void next_turn();
 void ui_initialize();
 void update_provinces();
 void util_main();
@@ -39,7 +39,7 @@ static void start_game() {
 	if(log::geterrors())
 		return;
 	initialize_scene();
-	draw::setnext(player_turn);
+	draw::setnext(next_turn);
 }
 
 int main(int argc, char* argv[]) {

@@ -2,14 +2,14 @@
 #include "statable.h"
 
 BSDATA(costi) = {
-	{"Gold", 0, 0, 4},
-	{"Mana", 0, 0, 6},
-	{"Happiness", 0, "%3i"},
+	{"Gold", 0, 0, 0, 4},
+	{"Mana", 0, 0, 0, 6},
+	{"Happiness", 0, 0, "%3i"},
 	{"Fame"},
-	{"Trade"},
+	{"Faith"},
 	{"Lore"},
-	{"Warfire", 0, "%1i/%3i"},
-	{"Strenght", 0, 0, 2},
+	{"Warfire", 0, 0, "%1i/%3i"},
+	{"Strenght", 0, 0, 0, 2},
 	{"Damage"},
 	{"Health"},
 	{"Charge"},
@@ -20,12 +20,18 @@ BSDATA(costi) = {
 	{"Explore"},
 	{"ExploreNext"},
 	{"Siege"},
-	{"Size", 0, 0, 5},
+	{"Build", FG(PerTurn)},
+	{"Size", 0, 0, 0, 5},
 	{"Limit"},
 };
 assert_enum(costi, Limit)
 
 void addvalue(costa& v1, const costa& v2) {
+	for(auto i = 0; i <= Limit; i++)
+		v1[i] += v2[i];
+}
+
+void addvalue(costa& v1, const costac& v2) {
 	for(auto i = 0; i <= Limit; i++)
 		v1[i] += v2[i];
 }

@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "building.h"
+#include "hero.h"
 #include "list.h"
 #include "player.h"
 #include "script.h"
@@ -16,6 +17,7 @@ BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
+BSDATAC(heroi, 64)
 BSDATAC(landscapei, 32)
 BSDATAC(neighbor, 1024)
 BSDATAC(playeri, 16)
@@ -35,6 +37,12 @@ BSMETA(buildingi) = {
 	{}};
 BSMETA(costi) = {
 	BSREQ(id),
+	{}};
+BSMETA(heroi) = {
+	BSREQ(id),
+	BSDST(effect, costi),
+	BSDST(cost, costi),
+	BSDST(upkeep, costi),
 	{}};
 BSMETA(landscapei) = {
 	BSREQ(id),
@@ -83,7 +91,8 @@ BSMETA(uniti) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(costi, 1), ftstatus<costi>},
-	{"Building", VAR(buildingi, 1), 0, 0, fnscript<buildingi>},
+	{"Building", VAR(buildingi, 1), ftstatus<buildingi>, 0, fnscript<buildingi>},
+	{"Hero", VAR(heroi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Neighbor", VAR(neighbor, 2)},

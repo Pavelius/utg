@@ -118,6 +118,9 @@
     <ClInclude Include="tag.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="hero.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\silentseas.txt">

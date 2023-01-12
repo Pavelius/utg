@@ -133,10 +133,24 @@ template<> void fnscript<uniti>(int value, int bonus) {
 
 extern fnevent input_province;
 
+static void remove_per_turn() {
+	for(auto i = (cost_s)0; i <= Limit; i = (cost_s)(i + 1)) {
+		auto& e = bsdata<costi>::elements[i];
+		if(e.is(PerTurn))
+			player->resources[i] = 0;
+	}
+}
+
+void next_turn() {
+	remove_per_turn();
+	script::run("UpdatePlayer", 0);
+	script::run("GainIncome", 0);
+	draw::setnext(player_turn);
+}
+
 static void end_turn() {
 	game.turn++;
-	script::run("PlayerUpdate");
-	script::run("GainIncome");
+	draw::setnext(next_turn);
 }
 
 static void choose_province() {
@@ -330,8 +344,7 @@ static void update_player(int bonus) {
 }
 
 static void gain_income(int bonus) {
-	for(auto i = 0; i < Warfire; i++)
-		player->resources[i] += player->income[i];
+	addvalue(player->resources, player->income);
 }
 
 static void random_site(int bonus) {
@@ -374,11 +387,53 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 	sb.adds(":%2i:%1i/%3i", n, f, nm);
 }
 
-static void add_line_upkeep(const provincei* province, stringbuilder& sb) {
+void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
 	add_line(sb, 2, province->strenght);
-	add_line(sb, 5, province->buildings, province->current[Size]);
+	if(province->player != player)
+		add_line(sb, 5, province->buildings);
+	else if(player->resources[Build])
+		add_line(sb, 5, province->buildings, province->current[Size]);
+	else
+		add_line(sb, 7, province->buildings);
+}
+
+static void add_line(stringbuilder& sb, const costac& source) {
+	for(auto i = 0; i <= Limit; i++) {
+		auto& e = bsdata<costi>::elements[i];
+		auto n = source[i];
+		if(!n)
+			continue;
+		if(e.frame == -1)
+			continue;
+		add_line(sb, e.frame, n);
+	}
+}
+
+static void add_line(stringbuilder& sb, const costa& source) {
+	for(auto i = 0; i <= Limit; i++) {
+		auto& e = bsdata<costi>::elements[i];
+		auto n = source[i];
+		if(!n)
+			continue;
+		if(e.frame == -1)
+			continue;
+		add_line(sb, e.frame, n);
+	}
+}
+
+static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
+	char temp[512]; stringbuilder sb(temp); temp[0] = 0; add_line(sb, source);
+	if(temp[0] == 0)
+		return;
+	sbo.addn("%1: ", getnm(id));
+	sbo.add(temp);
+}
+
+static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
+	costa translate = {}; addvalue(translate, source);
+	add_line(sbo, id, translate);
 }
 
 template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
@@ -394,6 +449,14 @@ template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
 	add_description(p->id, sb);
 	sb.addn("---");
 	add_line_upkeep(p, sb);
+}
+
+template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
+	auto p = (buildingi*)object;
+	add_description(p->id, sb);
+	sb.addn("---");
+	add_line(sb, "Cost", p->cost);
+	add_line(sb, "Upkeep", p->upkeep);
 }
 
 static void build(int bonus) {
@@ -447,6 +510,7 @@ static void add_building() {
 	if(lastbuilding) {
 		paycost(0);
 		build(0);
+		player->resources[Build]--;
 	}
 	lastbuilding = push_building;
 }
@@ -464,7 +528,7 @@ static void choose_buildings() {
 		collection<building> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
-		if(province->buildings < province->current[Size])
+		if(province->buildings < province->current[Size] && player->resources[Build]>0)
 			an.add(add_building, getnm("AddBuilding"));
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)

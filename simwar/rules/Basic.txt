@@ -15,7 +15,7 @@ Swamp
  effect Damage(4) Size(2) Mana(2)
  upkeep Happiness(1)
 Wasteland
- effect Size(2) Gold(1) Mana(1)
+ effect Size(2) Mana(1)
  upkeep Happiness(1)
 
 #Site
@@ -37,13 +37,13 @@ Fort upgrade(WatchTower)
  upkeep Gold(1)
  cost Gold(250)
 Citadel upgrade(Fort)
- effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Size(1)
+ effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Build(1) Size(1)
  cost Gold(650)
 DarkCitadel upgrade(Fort)
- effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Size(1)
+ effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Build(1) Size(1)
  cost Gold(750)
 Palace upgrade(Fort)
- effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Size(1)
+ effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Build(1) Size(1)
  cost Gold(1000)
 
 Laboratory
@@ -51,12 +51,12 @@ Laboratory
  cost Gold(50)
  upkeep Gold(1)
 Shrine
- effect Lore(1)
+ effect Lore(1) Faith(1)
  cost Gold(50)
  upkeep Gold(1)
 Temple upgrade(Shrine)
- effect Lore(2)
- cost Gold(90)
+ effect Lore(1) Faith(2)
+ cost Gold(100)
  upkeep Gold(1)
 
 IronMine
@@ -65,7 +65,7 @@ IronMine
  conditions Hills
 
 Harbor
- effect Gold(1) Trade(1)
+ effect Gold(1)
  cost Gold(80)
  conditions Coastal
 Marketplace
