@@ -4,4 +4,5 @@
 
 struct heroi : uniti {
 	playeri*	player;
+	provincei*	province;
 };

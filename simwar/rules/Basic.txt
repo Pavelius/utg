@@ -65,7 +65,7 @@ IronMine
  conditions Hills
 
 Harbor
- effect Gold(1)
+ effect Gold(1) Sail(1)
  cost Gold(80)
  conditions Coastal
 Marketplace

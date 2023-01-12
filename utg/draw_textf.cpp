@@ -386,7 +386,7 @@ static const char* text_block(const char* p, int x1, int x2) {
 			caret.x = x1 - metrics::border;
 			auto push_fore = fore;
 			fore = colors::border;
-			line(x2 + metrics::border, caret.y);
+			line(x2 + metrics::border - 1, caret.y);
 			fore = push_fore;
 			caret.x = push_x;
 			caret.y += 2;

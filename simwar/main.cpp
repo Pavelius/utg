@@ -2,6 +2,7 @@
 #include "bsreq.h"
 #include "building.h"
 #include "collection.h"
+#include "costitem.h"
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_strategy.h"

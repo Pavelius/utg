@@ -86,5 +86,5 @@ void provincei::update() {
 	units = getunits();
 	strenght = getunitsvalue(Strenght);
 	if(strenght)
-		strenght += get(Strenght);
+		strenght += current[Strenght];
 }

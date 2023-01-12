@@ -39,7 +39,7 @@ Yes: Да
 
 Attack: Атаковать
 
-AddBuilding: Построить здание
+AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
 Army: Армия
 Cost: Стоит

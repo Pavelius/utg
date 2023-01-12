@@ -57,6 +57,9 @@
     <ClCompile Include="site.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="costitem.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -78,6 +81,9 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="locale\ru\SiteDescriptions.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\BuildingDescriptions.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
@@ -119,6 +125,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="hero.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="costitem.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

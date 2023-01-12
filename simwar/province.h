@@ -14,11 +14,10 @@ struct provincei : nameable {
 	point				position;
 	const landscapei*	landscape;
 	costac				current, income;
-	char				buildings, builded, units, strenght;
+	char				buildings, units, strenght;
 	void				add(cost_s v, int value);
 	void				clearcurrent();
 	void				explore(int value);
-	int					get(cost_s v, stringbuilder* psb = 0) const;
 	int					getbuildings() const;
 	int					getsites() const;
 	int					getunits() const;

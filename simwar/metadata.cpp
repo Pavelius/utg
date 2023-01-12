@@ -35,6 +35,10 @@ BSMETA(buildingi) = {
 	BSDST(cost, costi),
 	BSREQ(conditions),
 	{}};
+BSMETA(building) = {
+	BSREQ(type),
+	BSREQ(province),
+	{}};
 BSMETA(costi) = {
 	BSREQ(id),
 	{}};
@@ -97,6 +101,7 @@ BSDATA(varianti) = {
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
+	{"PlayerBuilding", VAR(building, 0), ftstatus<building>},
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Site", VAR(sitei, 1)},

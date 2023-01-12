@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "building.h"
 #include "collection.h"
+#include "costitem.h"
 #include "draw.h"
 #include "game.h"
 #include "list.h"
@@ -190,104 +191,74 @@ static void add_sites(fnevent proc, int count, int explore) {
 	an.add(proc, "%Explore %3i%% (%1i %-*2)", count, getnm("Site"), explore);
 }
 
-static int get_value(int value, const char* id, stringbuilder* psb) {
-	if(psb) {
-		if(value > 0)
-			psb->addn("[+%1i\t%2]", value, getnm(id));
-		else if(value < 0)
-			psb->addn("[-%1i\t%2]", value, getnm(id));
-	}
-	return value;
-}
-
-static int get_upkeep_buildings(const playeri* p, cost_s v, stringbuilder* psb) {
+static int get_buildings_upkeep(cost_s v) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.province && e.province->player != player)
-			continue;
-		result += e.type->upkeep[v];
-	}
-	return get_value(-result, "BuildingsUpkeep", psb);
-}
-
-static int get_upkeep_units(const playeri* p, cost_s v, stringbuilder* psb) {
-	auto result = 0;
-	for(auto& e : bsdata<troop>()) {
-		if(e.player != player)
-			continue;
-		result += e.type->upkeep[v];
-	}
-	return get_value(-result, "UnitsUpkeep", psb);
-}
-
-static int get_effect_buildings(const playeri* p, const buildingi* b, cost_s v, stringbuilder* psb) {
-	auto result = 0;
-	for(auto& e : bsdata<building>()) {
-		if(e.province && e.province->player != player || e.type != b)
-			continue;
-		result += e.type->effect[v];
-	}
-	return get_value(result, b->id, psb);
-}
-
-static int get_effect_buildings(const playeri* p, cost_s v, stringbuilder* psb) {
-	auto result = 0;
-	for(auto& e : bsdata<buildingi>())
-		result += get_effect_buildings(p, &e, v, psb);
-	return result;
-}
-
-static int get_income(const provincei* p, cost_s v, stringbuilder* psb) {
-	auto result = p->landscape->effect[v];
-	result += p->income[v];
-	return get_value(result, p->id, psb);
-}
-
-static int get_provinces_income(const playeri* p, cost_s v, stringbuilder* psb) {
-	auto result = 0;
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player != player)
-			continue;
-		result += get_income(&e, v, 0);
-	}
-	return get_value(result, "ProvincesIncome", psb);
-}
-
-static int get_provinces_upkeep(const playeri* p, cost_s v, stringbuilder* psb) {
-	auto result = 0;
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player != player)
-			continue;
-		result += e.landscape->upkeep[v];
-	}
-	return get_value(-result, "ProvincesUpkeep", psb);
-}
-
-static int get_income(cost_s v, stringbuilder* psb) {
-	auto result = get_provinces_income(player, v, psb);
-	result += get_effect_buildings(player, v, psb);
-	result += get_provinces_upkeep(player, v, psb);
-	result += get_upkeep_buildings(player, v, psb);
-	result += get_upkeep_units(player, v, psb);
-	result += get_value(player->trade[v], "TradeBonus", psb);
-	return result;
-}
-
-static int get_units_upkeep(const playeri* p, cost_s v) {
-	auto result = 0;
-	for(auto& e : bsdata<troop>()) {
-		if(e.player == p)
+		if(e.province && e.province->player == player)
 			result += e.type->upkeep[v];
 	}
+	return get_value("BuildingsUpkeep", -result);
+}
+
+static int get_buildings_effect(const buildingi* b, cost_s v) {
+	auto result = 0;
+	for(auto& e : bsdata<building>()) {
+		if(e.province && e.province->player == player && e.type == b)
+			result += e.type->effect[v];
+	}
+	return get_value(b->id, result);
+}
+
+static int get_buildings_effect(cost_s v) {
+	auto result = 0;
+	for(auto& e : bsdata<buildingi>())
+		result += get_buildings_effect(&e, v);
 	return result;
 }
 
-static int get_units(const playeri* p, const provincei* province, cost_s v) {
+static int get_units_upkeep(cost_s v) {
 	auto result = 0;
 	for(auto& e : bsdata<troop>()) {
-		if(e.player == p && e.province == province)
-			result += e.type->effect[v];
+		if(e.player == player)
+			result += e.type->upkeep[v];
 	}
+	return get_value("UnitsUpkeep", -result);
+}
+
+static int get_provinces_income(cost_s v) {
+	auto result = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			result += e.landscape->effect[v] + e.income[v];
+	}
+	return get_value("ProvincesIncome", result);
+}
+
+static int get_provinces_upkeep(cost_s v) {
+	auto result = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			result += e.landscape->upkeep[v];
+	}
+	return get_value("ProvincesUpkeep", -result);
+}
+
+static int get_income(cost_s v) {
+	auto result = get_provinces_income(v);
+	result += get_buildings_effect(v);
+	result += get_value("FaithBonus", player->faith[v]);
+	result += get_provinces_upkeep(v);
+	result += get_buildings_upkeep(v);
+	result += get_units_upkeep(v);
+	return result;
+}
+
+static int get_income(cost_s v, stringbuilder& sb) {
+	auto push = lastcostitem;
+	costitema source; lastcostitem = &source;
+	auto result = get_income(v);
+	add_cost_items(sb);
+	lastcostitem = push;
 	return result;
 }
 
@@ -302,45 +273,17 @@ static void update_provinces() {
 }
 
 static void update_province_buildings() {
-	for(auto& e : bsdata<building>()) {
-		if(!e)
-			continue;
+	for(auto& e : bsdata<building>())
 		addvalue(e.province->current, e.type->effect);
-	}
-}
-
-static void update_player_provinces() {
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player == player)
-			addvalue(player->income, e.current);
-	}
-}
-
-static void update_player_units() {
-	for(auto& e : bsdata<troop>()) {
-		if(e.province->player != player)
-			continue;
-		addvalue(player->income, e.type->effect);
-		subvalue(player->income, e.type->upkeep);
-	}
-}
-
-static void upkeep_player_buildings() {
-	for(auto& e : bsdata<building>()) {
-		if(e.province->player != player)
-			continue;
-		subvalue(player->income, e.type->upkeep);
-	}
 }
 
 static void update_player(int bonus) {
 	memset(player->income, 0, sizeof(player->income));
 	clear_current();
-	update_province_buildings();
 	update_provinces();
-	update_player_provinces();
-	update_player_units();
-	upkeep_player_buildings();
+	update_province_buildings();
+	for(auto i = (cost_s)0; i <= Limit; i = (cost_s)(i + 1))
+		player->income[i] = get_income(i);
 }
 
 static void gain_income(int bonus) {
@@ -351,12 +294,6 @@ static void random_site(int bonus) {
 	collection<sitei> source;
 	source.select();
 	lastsite = source.random();
-}
-
-int	provincei::get(cost_s v, stringbuilder* psb) const {
-	auto result = income[v];
-	result += landscape->effect[v];
-	return get_value(result, id, psb);
 }
 
 static void add_line(stringbuilder& sb, const provincei* province, cost_s v, int n) {
@@ -391,12 +328,10 @@ void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
 	add_line(sb, 2, province->strenght);
-	if(province->player != player)
+	if(province->player != player || !player->resources[Build])
 		add_line(sb, 5, province->buildings);
-	else if(player->resources[Build])
-		add_line(sb, 5, province->buildings, province->current[Size]);
 	else
-		add_line(sb, 7, province->buildings);
+		add_line(sb, 5, province->buildings, province->current[Size]);
 }
 
 static void add_line(stringbuilder& sb, const costac& source) {
@@ -436,12 +371,38 @@ static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
 	add_line(sbo, id, translate);
 }
 
+static void add_description(const buildingi* p, stringbuilder& sb) {
+	auto need_line = true;
+	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
+		auto n = p->effect[v];
+		if(!n)
+			continue;
+		auto pd = getdescription(str("%1Effect", bsdata<costi>::elements[v].id));
+		if(!pd)
+			continue;
+		if(need_line) {
+			sb.addn("---\n");
+			need_line = false;
+		}
+		sb.adds(pd, n);
+	}
+	for(auto v : p->conditions) {
+		auto id = v.getid();
+		if(!id)
+			continue;
+		auto pd = getdescription(str("%1Condition", id));
+		if(!pd)
+			continue;
+		sb.adds(pd);
+	}
+}
+
 template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
 	auto p = (costi*)object;
 	auto v = (cost_s)(p - bsdata<costi>::elements);
 	add_description(p->id, sb);
 	sb.addn("---");
-	get_income(v, &sb);
+	get_income(v, sb);
 }
 
 template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
@@ -453,10 +414,17 @@ template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
 
 template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
 	auto p = (buildingi*)object;
-	add_description(p->id, sb);
+	add_description(p, sb);
 	sb.addn("---");
 	add_line(sb, "Cost", p->cost);
 	add_line(sb, "Upkeep", p->upkeep);
+}
+
+template<> void ftstatus<building>(const void* object, stringbuilder& sb) {
+	auto p = (building*)object;
+	add_description(p->type, sb);
+	sb.addn("---");
+	add_line(sb, "Upkeep", p->type->upkeep);
 }
 
 static void build(int bonus) {
@@ -528,8 +496,8 @@ static void choose_buildings() {
 		collection<building> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
-		if(province->buildings < province->current[Size] && player->resources[Build]>0)
-			an.add(add_building, getnm("AddBuilding"));
+		if(province->buildings < province->current[Size] && player->resources[Build] > 0)
+			an.add(add_building, getnm("AddBuilding"), player->resources[Build]);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)
 			break;
@@ -597,7 +565,7 @@ static void choose_province_options() {
 			add_answers(choose_units, "Army", troops.getcount(), "Unit");
 		collection<building> buildings; buildings.select(player_province_building);
 		add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
-		add_sites(choose_sites, province->getsites(), province->get(Explore));
+		add_sites(choose_sites, province->getsites(), province->current[Explore]);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result) {
 			province = 0;
