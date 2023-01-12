@@ -62,6 +62,7 @@ Temple upgrade(Shrine)
 IronMine
  effect Gold(3)
  cost Gold(50)
+ conditions Hills
 
 Harbor
  effect Gold(1) Trade(1)

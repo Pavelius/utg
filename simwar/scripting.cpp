@@ -209,7 +209,7 @@ static int get_upkeep_units(const playeri* p, cost_s v, stringbuilder* psb) {
 static int get_effect_buildings(const playeri* p, const buildingi* b, cost_s v, stringbuilder* psb) {
 	auto result = 0;
 	for(auto& e : bsdata<building>()) {
-		if(e.province && e.province->player != player || e.type!=b)
+		if(e.province && e.province->player != player || e.type != b)
 			continue;
 		result += e.type->effect[v];
 	}
@@ -271,7 +271,7 @@ static int get_units_upkeep(const playeri* p, cost_s v) {
 static int get_units(const playeri* p, const provincei* province, cost_s v) {
 	auto result = 0;
 	for(auto& e : bsdata<troop>()) {
-		if(e.player == p && e.province==province)
+		if(e.player == p && e.province == province)
 			result += e.type->effect[v];
 	}
 	return result;
@@ -333,7 +333,7 @@ static void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 			sb.add(", ");
 		auto p1 = sb.get();
 		add_line(sb, province, i, n);
-		if(p1[0]==0)
+		if(p1[0] == 0)
 			sb.set(p0);
 	}
 }
@@ -524,11 +524,23 @@ bool fntestlist(int index, int bonus) {
 	return false;
 }
 
+bool is_oneof(const sitei* p, variants& conditions) {
+	for(auto v : conditions) {
+		if(p->isallow(v))
+			return true;
+	}
+	return false;
+}
+
 bool sitei::isallow(variant v) const {
 	if(v.iskind<sitei>())
 		return have_exist(bsdata<sitei>::elements + v.value);
 	else if(v.iskind<script>())
 		return fntest<script>(v.value, v.counter);
+	else if(v.iskind<landscapei>())
+		return province->landscape == (bsdata<landscapei>::elements + v.value);
+	else if(v.iskind<listi>())
+		return is_oneof(this, bsdata<listi>::elements[v.value].elements);
 	return true;
 }
 

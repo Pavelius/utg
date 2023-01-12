@@ -1,1 +1,11 @@
-﻿
+﻿BayOfRurik: 
+Damage: 
+FarBrunetFen: 
+GelidSea: 
+NandaDevi: 
+Opole: 
+SteelCliffs: 
+Szczebrzeszyn: 
+UpperBrunetFen: 
+WesternExpanse: 
+Zakopane: 

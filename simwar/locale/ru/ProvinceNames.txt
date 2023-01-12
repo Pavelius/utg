@@ -2,6 +2,7 @@
 Concordia: Холм изобилия
 FieldsOfRefuge: Поля утешения
 RupalValley: Долина деревьев
+SeaOfLostWinds: Море потерянных ветров
 WesternZastrugi: Западный край
 
 EastHills: Восточные холмы
