@@ -9,8 +9,6 @@
 struct playeri;
 struct provincei;
 
-typedef adat<provincei*, 16> neighbort;
-
 struct provincei : nameable {
 	playeri*			owner;
 	point				position;
@@ -20,7 +18,6 @@ struct provincei : nameable {
 	void				explore(int value);
 	int					get(cost_s v, stringbuilder* psb = 0) const;
 	int					getbuildings() const;
-	void				getneighbors(neighbort& result) const;
 	int					getsites() const;
 	int					getunits() const;
 	void				paint() const;
@@ -32,4 +29,8 @@ struct moveable {
 struct neighbor {
 	short				n1, n2;
 };
+struct neighbors : adat<provincei*, 16> {
+	void				select(const provincei* base);
+};
+
 extern provincei*		province;

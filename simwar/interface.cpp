@@ -241,8 +241,8 @@ static void paint_neighbor() {
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::red;
-	neighbort source;
-	province->getneighbors(source);
+	neighbors source;
+	source.select(province);
 	for(auto p : source) {
 		caret = push_caret;
 		point pt = p->position - camera;

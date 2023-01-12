@@ -9,8 +9,13 @@ Forest
 Hills
  effect Strenght(1) Size(3) Gold(2)
  upkeep Happiness(1)
+Ocean
+ effect Size(2)
 Swamp
  effect Damage(4) Size(2) Mana(2)
+ upkeep Happiness(1)
+Wasteland
+ effect Size(2) Gold(1) Mana(1)
  upkeep Happiness(1)
 
 #Site
