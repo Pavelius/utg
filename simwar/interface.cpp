@@ -122,6 +122,8 @@ static void field(cost_s v, const char* format, int width, int v1, int v2, int v
 	if(!width)
 		width = 60;
 	char temp[260]; stringbuilder sb(temp);
+	if(e.frame != -1)
+		sb.add(":%1i:", e.frame);
 	if(format)
 		sb.add(format, v1, v2, v3);
 	else {
@@ -174,7 +176,7 @@ static void hot_keys() {
 			log_text("Province position(%1i %2i) landscape(Plains)", pt.x, pt.y);
 		}
 		break;
-	case Ctrl+'N':
+	case Ctrl + 'N':
 		show_names = !show_names;
 		break;
 	}

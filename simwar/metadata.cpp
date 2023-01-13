@@ -44,6 +44,7 @@ BSMETA(costi) = {
 	{}};
 BSMETA(heroi) = {
 	BSREQ(id),
+	BSREQ(resid),
 	BSDST(effect, costi),
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),

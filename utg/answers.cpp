@@ -13,6 +13,10 @@ stringbuilder* answers::console;
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;
 answers::fnpaint answers::paintcell;
+char answers::hotkeys[20] = {
+	'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
+	'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'
+};
 
 int answers::compare(const void* v1, const void* v2) {
 	return strcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);

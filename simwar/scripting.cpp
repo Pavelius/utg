@@ -4,6 +4,7 @@
 #include "costitem.h"
 #include "draw.h"
 #include "game.h"
+#include "hero.h"
 #include "list.h"
 #include "player.h"
 #include "province.h"
@@ -584,12 +585,17 @@ static void choose_province_options() {
 static void choose_game_options() {
 	pushvalue push_input(input_province, choose_province);
 	an.clear();
+	for(auto& e : bsdata<heroi>()) {
+		an.add(&e, "#$left image '%1' 0 'art/avatars'\n###%2 - %-Level %3i", e.resid, e.getname(), e.effect[Strenght]);
+	}
 	auto result = an.choose(0, getnm("EndTurn"), 1);
 	if(!result)
 		end_turn();
 	else if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
-	else
+	else if(bsdata<heroi>::have(result)) {
+
+	} else
 		((fnevent)result)();
 }
 

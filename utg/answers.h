@@ -21,6 +21,7 @@ public:
 	static int			column_count;
 	static stringbuilder* console;
 	static const char*	header;
+	static char			hotkeys[20];
 	static const char*	prompt;
 	static const char*	prompa;
 	static const char*	resid;

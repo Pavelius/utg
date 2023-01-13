@@ -12,7 +12,6 @@ using namespace draw;
 static point camera_drag;
 static point objects_paint;
 static int window_width = 400, window_height = 400;
-unsigned char metrics::opacity = 210;
 
 void set_dark_theme();
 void set_light_theme();
@@ -79,7 +78,6 @@ bool draw::swindow(bool hilight) {
 	auto push_fore = fore;
 	setoffset(-metrics::border, -metrics::border);
 	auto rs = ishilite();
-	//alpha = metrics::opacity;
 	fore = colors::form;
 	if(hilight && rs)
 		fore = colors::button.mix(fore, hot.pressed ? 128 : 216);
@@ -217,15 +215,14 @@ void draw::texth2w(const char* string) {
 }
 
 static void menubt(int i, const void* pv, const char* title, fnevent press_event) {
-	static char answer_hotkeys[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
-	if(i >= (int)(sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0])))
-		i = sizeof(answer_hotkeys) / sizeof(answer_hotkeys[0]) - 1;
+	if(i >= (int)(sizeof(answers::hotkeys) / sizeof(answers::hotkeys[0])))
+		i = sizeof(answers::hotkeys) / sizeof(answers::hotkeys[0]) - 1;
 	auto proc = menufd;
 	if(title[0] == '#') {
 		title++;
 		proc = menuft;
 	}
-	if(button(title, answer_hotkeys[i], proc)) {
+	if(button(title, answers::hotkeys[i], proc)) {
 		if(press_event)
 			execute(press_event, (long)pv);
 	}

@@ -78,7 +78,7 @@ Tavern
  upkeep Gold(1)
 Circus upgrade(Tavern)
  effect Happiness(5)
- cost Gold(200) Limit(2)
+ cost Gold(200) Limit(1)
  upkeep Gold(2)
 Inn upgrade(Tavern)
  effect Happiness(2)
@@ -117,3 +117,8 @@ Knights
 SouthernKindom
  resources Gold(100) Mana(20)
  start Citadel+1 Laboratory+1 Milita+2 Spearmans+1 Archers+1
+
+#Hero
+
+Gordek resid("2MHUM6_S")
+Mistra resid("2FELF2_S")

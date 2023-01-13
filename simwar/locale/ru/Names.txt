@@ -1,4 +1,7 @@
-﻿Milita: Ополчение
+﻿Gordek: Гордек
+Mistra: Мистра
+
+Milita: Ополчение
 Spearmans: Копейщики
 Archers: Лучники
 
@@ -28,6 +31,7 @@ Fame: Слава
 ExploreNext: Иследования
 Gold: Золото
 Happiness: Счастье
+Level: Уровень
 Lore: Наука
 Mana: Ингридиенты
 Size: Размер
