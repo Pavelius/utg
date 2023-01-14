@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "army.h"
 #include "building.h"
 #include "collection.h"
 #include "costitem.h"
@@ -120,6 +121,17 @@ static void add_site(int bonus) {
 static void recruit(int bonus) {
 	for(auto i = 0; i < bonus; i++)
 		recruit();
+}
+
+void add_neutral(const char* id) {
+	auto push_player = player;
+	auto push_unit = lastunit;
+	player = 0;
+	lastunit = bsdata<uniti>::find(id);
+	if(lastunit)
+		recruit(1);
+	lastunit = push_unit;
+	player = push_player;
 }
 
 template<> void fnscript<costi>(int value, int bonus) {
@@ -642,6 +654,68 @@ bool sitei::isallow() const {
 			return false;
 	}
 	return true;
+}
+
+static void fix_stage(stringbuilder& sb, army& attacker, army& defender, const char* suffix) {
+	if(attacker && defender) {
+		attacker.act(sb, getnm(str("Attacker%1", suffix)));
+		defender.act(sb, getnm(str("Defender%1", suffix)));
+	} else if(attacker)
+		attacker.act(sb, getnm(str("Attacker%1", suffix)));
+	else if(defender)
+		defender.act(sb, getnm(str("Attacker%1", suffix)));
+}
+
+static void conquest(stringbuilder& sb, army& attacker, army& defender) {
+	if(!attacker.tactic)
+		attacker.randomtactic();
+	if(!defender.tactic)
+		defender.randomtactic();
+	if(defender.tactic == attacker.tactic)
+		defender.tactic = 0;
+	sb.add("$image BattleField 0 'art/images'\n");
+	attacker.act(sb, getnm("ArmyConquest"), province->getname());
+	if(!defender) {
+		sb.addsep(' ');
+		attacker.act(sb, getnm("YouForceMeetNoResistance"));
+		return;
+	}
+	if(attacker.tactic) {
+		sb.addsep(' ');
+		attacker.act(sb, getdescription(attacker.tactic->id));
+	}
+	sb.addsep(' ');
+	defender.act(sb, getnm("ArmyDefend"), province->getname());
+	if(defender.tactic) {
+		sb.addsep(' ');
+		defender.act(sb, getdescription(defender.tactic->id));
+	}
+	sb.addn("---\n");
+	sb.add("$image BattleField 0 'art/images'\n");
+	fix_stage(sb, attacker, defender, "Melee");
+}
+
+static heroi* find_hero(const provincei* province, const playeri* player) {
+	for(auto& e : bsdata<heroi>()) {
+		if(e.province == province && e.player == player)
+			return &e;
+	}
+	return 0;
+}
+
+void conquest() {
+	char temp[4096]; stringbuilder sb(temp);
+	army attacker, defender;
+	attacker.clear();
+	attacker.select(province, player);
+	attacker.hero = find_hero(province, player);
+	if(!attacker)
+		return;
+	defender.clear();
+	defender.select(province);
+	defender.hero = find_hero(province, province->player);
+	conquest(sb, attacker, defender);
+	answers::message(temp);
 }
 
 BSDATA(script) = {

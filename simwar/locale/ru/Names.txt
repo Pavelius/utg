@@ -48,6 +48,9 @@ SouthernKindomOf: Южного королевства
 
 Army: Армия
 ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
+ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
+AttackerMelee: %Units столкнулись в ближнем бою с отрядами врага.
+DefenderMelee: %Units яростно рубились в ответ.
 AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
 Cost: Стоит
@@ -73,3 +76,4 @@ Units: Отряды
 UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
 WhatDoYouWantToBuild: Какое здание хотите построить?
+YouForceMeetNoResistance: Армия не встретила никакого сопротивления.

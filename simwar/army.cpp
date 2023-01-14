@@ -14,7 +14,9 @@ struct stringarmy : stringact {
 			add(pa->getnameof());
 			if(pa->hero)
 				adds(getnm("LeadedBy"), pa->hero->getname());
-		} else if(szstart(identifier, "Total")) {
+		} else if(equal(identifier, "Units"))
+			pa->addunits(*this);
+		else if(szstart(identifier, "Total")) {
 			auto pv = bsdata<costi>::find(identifier + 5);
 			if(pv) {
 				auto v = (cost_s)(pv - bsdata<costi>::elements);
@@ -108,7 +110,7 @@ void army::select(const provincei* province) {
 
 void army::select(const provincei* province, const playeri* player) {
 	for(auto& e : bsdata<troop>()) {
-		if(e && e.province == province && e.player == player)
+		if(e && e.moveto == province && e.player == player)
 			add(e.type);
 	}
 }
@@ -147,4 +149,20 @@ void army::match(cost_s v, bool keep) {
 		*ps++ = *p;
 	}
 	count = ps - data;
+}
+
+static int compare_units(const void* v1, const void* v2) {
+	auto p1 = *((uniti**)v1);
+	auto p2 = *((uniti**)v2);
+	if(p1->effect[Level] != p2->effect[Level])
+		return p1->effect[Level] - p2->effect[Level];
+	return p2->effect[Health] - p1->effect[Health];
+}
+
+void army::sort() {
+	qsort(data, count, sizeof(data[0]), compare_units);
+}
+
+void army::damage(army& result, int value) {
+
 }

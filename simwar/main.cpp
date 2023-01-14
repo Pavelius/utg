@@ -16,24 +16,26 @@
 
 using namespace draw;
 
+void add_neutral(const char* id);
 void next_turn();
 void ui_initialize();
 void update_provinces();
 void util_main();
+void conquest();
 
 static void test_army() {
-	char temp[1024]; stringbuilder sb(temp);
-	army a1;
-	a1.clear();
-	a1.hero = bsdata<heroi>::find("Gordek");
-	a1.player = bsdata<playeri>::find("SouthernKindom");
-	// a1.province = province;
-	a1.select(province);
-	a1.randomtactic();
-	sb.add("$image BattleField 0 'art/images'\n");
-	a1.act(sb, getnm("ArmyConquest"), province->getname()); sb.addsep(' ');
-	a1.act(sb, getdescription(a1.tactic->id));
-	answers::message(temp);
+	province = bsdata<provincei>::find("NandaDevi");
+	auto hero = bsdata<heroi>::find("Gordek");
+	hero->province = province;
+	hero->player = player;
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == player)
+			e.moveto = province;
+	}
+	add_neutral("Spearmans");
+	add_neutral("Spearmans");
+	add_neutral("Spearmans");
+	conquest();
 }
 
 static void initialize_scene() {
@@ -43,9 +45,9 @@ static void initialize_scene() {
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	script::run("UpdatePlayer");
-	test_army();
 	game.initialize();
 	update_provinces();
+	test_army();
 }
 
 static void start_game() {

@@ -15,6 +15,7 @@ struct army : adat<const uniti*, 24> {
 	void			addtotal(stringbuilder& sb, const char* start, cost_s v) const;
 	void			addunits(stringbuilder& sb) const;
 	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			damage(army& result, int value);
 	int				get(cost_s v) const;
 	int				geteffect(cost_s v) const;
 	const char*		getname() const;
@@ -24,5 +25,6 @@ struct army : adat<const uniti*, 24> {
 	void			match(cost_s v, bool keep);
 	void			select(const provincei* province);
 	void			select(const provincei* province, const playeri* player);
+	void			sort();
 	void			randomtactic();
 };
