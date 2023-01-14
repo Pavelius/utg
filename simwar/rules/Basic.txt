@@ -112,6 +112,25 @@ Knights
  cost Gold(160)
  upkeep Gold(3) Warfire(1)
 
+#Tactic
+
+CarefulDefence
+ effect Strenght(1) Armor(5)
+LightingAttack
+ effect Strenght(3)
+MessyAttack
+ perunit Damage(3)
+
+FearestRage
+ effect Strenght(1)
+ perunit Damage(3)
+ upgrade MessyAttack
+HailOfArrows
+ perunit Archery(4)
+ShieldWall
+ perunit Armor(4)
+ disable HailOfArrows
+
 #Player
 
 SouthernKindom
@@ -121,4 +140,6 @@ SouthernKindom
 #Hero
 
 Gordek resid("2MHUM6_S")
+ effect Strenght(2)
 Mistra resid("2FELF2_S")
+ effect Strenght(2)

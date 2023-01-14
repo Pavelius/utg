@@ -1,13 +1,1 @@
-﻿AmaDablam: 
-BaltoroFlats: 
-BatorysRest: 
-BialeTatry: 
-CathedralGap: 
-GelidSea: 
-Lankhmar: 
-MorskieOko: 
-NandaDevi: 
-NangaParbat: 
-Opole: 
-Pomorze: 
-SteelCliffs: 
+﻿

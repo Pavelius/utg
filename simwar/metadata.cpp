@@ -4,6 +4,7 @@
 #include "list.h"
 #include "player.h"
 #include "script.h"
+#include "tactic.h"
 #include "tag.h"
 #include "unit.h"
 #include "variant.h"
@@ -24,6 +25,7 @@ BSDATAC(playeri, 16)
 BSDATAC(provincei, 128)
 BSDATAC(sitei, 256)
 BSDATAC(site, 2048)
+BSDATAC(tactici, 64)
 BSDATAC(troop, 1024)
 BSDATAC(uniti, 48)
 
@@ -63,6 +65,7 @@ BSMETA(playeri) = {
 	BSDST(resources, costi),
 	BSDST(income, costi),
 	BSREQ(start),
+	BSFLG(tactics, tactici),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -84,6 +87,14 @@ BSMETA(sitei) = {
 	BSREQ(conditions),
 	BSREQ(upkeep),
 	{}};
+BSMETA(tactici) = {
+	BSREQ(id),
+	BSDST(effect, costi),
+	BSDST(perunit, costi),
+	BSDST(cost, costi),
+	BSREQ(upgrade),
+	BSFLG(disable, tactici),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -92,6 +103,7 @@ BSMETA(uniti) = {
 	BSDST(effect, costi),
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),
+	BSFLG(tactics, tactici),
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -106,6 +118,7 @@ BSDATA(varianti) = {
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Site", VAR(sitei, 1)},
+	{"Tactic", VAR(tactici, 1)},
 	{"Tag", VAR(tagi, 1)},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };

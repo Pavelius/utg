@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "army.h"
 #include "bsreq.h"
 #include "building.h"
 #include "collection.h"
@@ -12,7 +13,6 @@
 #include "province.h"
 #include "pushvalue.h"
 #include "script.h"
-#include "unit.h"
 
 using namespace draw;
 
@@ -21,6 +21,19 @@ void ui_initialize();
 void update_provinces();
 void util_main();
 
+static void test_army() {
+	char temp[1024]; stringbuilder sb(temp);
+	army a1;
+	a1.clear();
+	a1.hero = bsdata<heroi>::find("Gordek");
+	a1.player = bsdata<playeri>::find("SouthernKindom");
+	// a1.province = province;
+	a1.select(province);
+	sb.add("$image BattleField 0 'art/images'\n");
+	a1.act(sb, getnm("ArmyConquest"), province->getname());
+	answers::message(temp);
+}
+
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
 	province = bsdata<provincei>::find("CapeBrumal");
@@ -28,6 +41,7 @@ static void initialize_scene() {
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	script::run("UpdatePlayer");
+	test_army();
 	game.initialize();
 	update_provinces();
 }

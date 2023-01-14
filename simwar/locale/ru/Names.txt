@@ -43,10 +43,15 @@ Yes: Да
 
 Attack: Атаковать
 
+SouthernKindom: Южное королевство
+SouthernKindomOf: Южного королевства
+
+Army: Армия
+ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
 AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
-Army: Армия
 Cost: Стоит
+Continue: Продолжить
 Building: Здание
 Buildings: Здания
 BuildingsUpkeep: Содержание зданий
@@ -54,6 +59,9 @@ Cancel: Отмена
 DoYouWantRemoveBuilding: [%1] действительно подлежит сносу?
 EndTurn: Закончить ход
 Explore: Исследовано
+IndependedForce: Нейтралные силы
+IndependedForceOf: Нейтральных сил
+LeadedBy: под предводительством %$1
 Leave: Уйти
 Piece: шт.
 ProvincesIncome: Доход от провинций

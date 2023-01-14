@@ -1,4 +1,5 @@
 #include "statable.h"
+#include "tactic.h"
 #include "variant.h"
 
 #pragma once
@@ -8,5 +9,6 @@ struct playeri : nameable {
 	costa		resources, upgrade;
 	costac		income, faith, artifacts;
 	variants	start;
+	tacticaf	tactics;
 };
 extern playeri* player;

@@ -298,17 +298,18 @@ static void tipsposition(const char* format) {
 }
 
 static void paint_tips() {
-	variant v = hilite_object;
-	if(!v)
-		return;
-	char temp[1024]; stringbuilder sb(temp);
-	temp[0] = 0; v.getinfo(sb);
-	if(temp[0]) {
+	if(!tips_sb) {
+		variant v = hilite_object;
+		if(!v)
+			return;
+		v.getinfo(tips_sb);
+	}
+	if(tips_sb) {
 		rectpush push;
 		width = 400;
-		tipsposition(temp);
+		tipsposition(tips_sb.begin());
 		tipswindow();
-		textf(temp);
+		textf(tips_sb.begin());
 	}
 }
 

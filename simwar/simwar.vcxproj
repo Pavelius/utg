@@ -148,6 +148,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="army.cpp" />
     <ClCompile Include="building.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="costitem.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
     <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="tactic.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="unit.cpp" />
   </ItemGroup>
@@ -176,6 +178,7 @@
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="army.h" />
     <ClInclude Include="bsref.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="province.h" />
     <ClInclude Include="site.h" />
     <ClInclude Include="special.h" />
+    <ClInclude Include="tactic.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>

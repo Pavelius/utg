@@ -60,6 +60,12 @@
     <ClCompile Include="costitem.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="army.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tactic.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -128,6 +134,12 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="costitem.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="army.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tactic.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
