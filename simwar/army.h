@@ -19,7 +19,9 @@ struct army : adat<const uniti*, 24> {
 	int				geteffect(cost_s v) const;
 	const char*		getname() const;
 	const char*		getnameof() const;
+	int				getunitcount(const tactici* v) const;
 	void			fill(tactica& source);
+	void			match(cost_s v, bool keep);
 	void			select(const provincei* province);
 	void			select(const provincei* province, const playeri* player);
 	void			randomtactic();

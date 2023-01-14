@@ -126,3 +126,25 @@ void army::randomtactic() {
 	tactica source; fill(source);
 	tactic = source.random();
 }
+
+int	army::getunitcount(const tactici* v) const {
+	auto result = 0;
+	auto vi = getbsi(v);
+	for(auto p : *this) {
+		if(p->tactics.is(vi))
+			result++;
+	}
+	return result;
+}
+
+void army::match(cost_s v, bool keep) {
+	auto ps = begin();
+	auto pe = end();
+	for(auto p = ps; p < pe; p++) {
+		bool valid = (*p)->effect[v];
+		if(valid != keep)
+			continue;
+		*ps++ = *p;
+	}
+	count = ps - data;
+}
