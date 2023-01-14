@@ -123,4 +123,6 @@ void army::fill(tactica& source) {
 }
 
 void army::randomtactic() {
+	tactica source; fill(source);
+	tactic = source.random();
 }

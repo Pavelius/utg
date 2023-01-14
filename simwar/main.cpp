@@ -29,8 +29,10 @@ static void test_army() {
 	a1.player = bsdata<playeri>::find("SouthernKindom");
 	// a1.province = province;
 	a1.select(province);
+	a1.randomtactic();
 	sb.add("$image BattleField 0 'art/images'\n");
-	a1.act(sb, getnm("ArmyConquest"), province->getname());
+	a1.act(sb, getnm("ArmyConquest"), province->getname()); sb.addsep(' ');
+	a1.act(sb, getdescription(a1.tactic->id));
 	answers::message(temp);
 }
 

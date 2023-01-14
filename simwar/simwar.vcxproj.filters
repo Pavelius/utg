@@ -10,6 +10,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{c410de39-c3f1-4fda-b322-284268bf5705}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Locale">
+      <UniqueIdentifier>{7bcefb8f-8481-494d-9aec-cb4f5c96bcfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,22 +78,28 @@
       <Filter>Data</Filter>
     </Text>
     <Text Include="locale\ru\Names.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\ProvinceNames.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\SiteDescriptions.txt">
-      <Filter>Data</Filter>
+      <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\BuildingDescriptions.txt">
-      <Filter>Data</Filter>
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Descriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\SiteDescriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\TacticDescriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\TacticNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\ProvinceNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

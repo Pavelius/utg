@@ -6,9 +6,18 @@ bool tactici::isdisable(const tactici* v) const {
 }
 
 void tactica::add(const tactici* v) {
-	if(find(const_cast<tactici*>(v)))
+	auto cv = const_cast<tactici*>(v);
+	if(find(cv) != -1)
 		return;
-	collection<tactici>::add(const_cast<tactici*>(v));
+	if(cv->upgrade) {
+		auto uv = const_cast<tactici*>(cv->upgrade);
+		auto i = find(uv);
+		if(i != -1) {
+			data[i] = uv;
+			return;
+		}
+	}
+	collection<tactici>::add(cv);
 }
 
 void tactica::add(const tacticaf& v) {
