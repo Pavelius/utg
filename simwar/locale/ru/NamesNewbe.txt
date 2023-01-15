@@ -1,1 +1,7 @@
-﻿NandaDevi: 
+﻿,: 
+BayOfRurik: 
+DiamirValley: 
+NandaDevi: 
+NangaParbat: 
+Szczebrzeszyn: 
+Zakopane: 

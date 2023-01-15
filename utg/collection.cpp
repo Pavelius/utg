@@ -128,7 +128,7 @@ void collectiona::sort(fngetname proc) {
 }
 
 void collectiona::sort(fncompare proc) {
-	qsort(data, count, sizeof(data), proc);
+	qsort(data, count, sizeof(data[0]), proc);
 }
 
 void collectiona::shuffle() {

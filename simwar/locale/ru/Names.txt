@@ -46,11 +46,13 @@ Attack: Атаковать
 SouthernKindom: Южное королевство
 SouthernKindomOf: Южного королевства
 
+And: И
 Army: Армия
 ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
 ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
-AttackerMelee: %Units столкнулись в ближнем бою с отрядами врага.
-DefenderMelee: %Units яростно рубились в ответ.
+AttackerDamage: %Units %-NameOfNoHero столкнулись в ближнем бою с отрядами врага и нанесли %TotalDamage повреждений.
+CasualtiesTotal: Потери %-NameOfNoHero: %UnitsAll.
+DefenderDamage: %Units %-NameOfNoHero яростно рубились в ответ нанеся %TotalDamage повреждений.
 AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
 Cost: Стоит

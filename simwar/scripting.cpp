@@ -656,7 +656,8 @@ bool sitei::isallow() const {
 	return true;
 }
 
-static void fix_stage(stringbuilder& sb, army& attacker, army& defender, const char* suffix) {
+static void battle_stage(stringbuilder& sb, army& attacker, army& defender, cost_s ability) {
+	auto suffix = bsdata<costi>::elements[ability].id;
 	if(attacker && defender) {
 		attacker.act(sb, getnm(str("Attacker%1", suffix)));
 		defender.act(sb, getnm(str("Defender%1", suffix)));
@@ -664,15 +665,45 @@ static void fix_stage(stringbuilder& sb, army& attacker, army& defender, const c
 		attacker.act(sb, getnm(str("Attacker%1", suffix)));
 	else if(defender)
 		defender.act(sb, getnm(str("Attacker%1", suffix)));
+	auto ad = attacker.get(ability);
+	auto dd = defender.get(ability);
+	army ac; ac.clear();
+	army dc; dc.clear();
+	attacker.damage(ac, dd);
+	defender.damage(dc, ad);
+	if(ac) {
+		sb.addsep('\n');
+		ac.act(sb, getnm("CasualtiesTotal"));
+		attacker.casualty(ac);
+	}
+	if(dc) {
+		sb.addsep('\n');
+		dc.act(sb, getnm("CasualtiesTotal"));
+		defender.casualty(dc);
+	}
 }
 
-static void conquest(stringbuilder& sb, army& attacker, army& defender) {
+static void prepare_battle(army& attacker, army& defender) {
 	if(!attacker.tactic)
 		attacker.randomtactic();
 	if(!defender.tactic)
 		defender.randomtactic();
+	// Same tactic - win attacker
 	if(defender.tactic == attacker.tactic)
 		defender.tactic = 0;
+	// Attacker and defender can disable tactic
+	if(defender.tactic && attacker.tactic) {
+		if(attacker.tactic->disable.is(getbsi(defender.tactic)))
+			defender.tactic = 0;
+		else if(defender.tactic->disable.is(getbsi(attacker.tactic)))
+			attacker.tactic = 0;
+	}
+	attacker.armor = attacker.get(Armor);
+	defender.armor = defender.get(Armor);
+}
+
+static void conquest(stringbuilder& sb, army& attacker, army& defender) {
+	prepare_battle(attacker, defender);
 	sb.add("$image BattleField 0 'art/images'\n");
 	attacker.act(sb, getnm("ArmyConquest"), province->getname());
 	if(!defender) {
@@ -691,8 +722,8 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 		defender.act(sb, getdescription(defender.tactic->id));
 	}
 	sb.addn("---\n");
-	sb.add("$image BattleField 0 'art/images'\n");
-	fix_stage(sb, attacker, defender, "Melee");
+	sb.add("$image BattleArchers 0 'art/images'\n");
+	battle_stage(sb, attacker, defender, Damage);
 }
 
 static heroi* find_hero(const provincei* province, const playeri* player) {
@@ -708,11 +739,15 @@ void conquest() {
 	army attacker, defender;
 	attacker.clear();
 	attacker.select(province, player);
+	attacker.province = province;
+	attacker.player = player;
 	attacker.hero = find_hero(province, player);
 	if(!attacker)
 		return;
 	defender.clear();
 	defender.select(province);
+	defender.province = province;
+	defender.player = province->player;
 	defender.hero = find_hero(province, province->player);
 	conquest(sb, attacker, defender);
 	answers::message(temp);

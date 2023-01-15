@@ -92,7 +92,7 @@ Milita
  cost Gold(10)
  upkeep Gold(1) Warfire(1)
 Spearmans
- effect Strenght(1) Damage(3) Health(8) Level(1) Movement(1)
+ effect Strenght(1) Damage(3) Armor(1) Health(8) Level(1) Movement(1)
  cost Gold(30)
  upkeep Gold(1) Warfire(1)
 Archers

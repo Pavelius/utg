@@ -9,19 +9,24 @@ struct army : adat<const uniti*, 24> {
 	playeri*		player;
 	provincei*		province;
 	heroi*			hero;
+	int				armor;
 	const tactici*	tactic;
 	void			act(stringbuilder& sb, const char* format, ...) const;
 	void			addprompt(stringbuilder& sb) const;
-	void			addtotal(stringbuilder& sb, const char* start, cost_s v) const;
-	void			addunits(stringbuilder& sb) const;
+	void			addtotal(stringbuilder& sb, cost_s v) const;
+	void			addunits(stringbuilder& sb, bool use_distinct = true) const;
+	void			casualty(const army& list);
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			damage(army& result, int value);
+	bool			isattacker() const { return province->player != player; }
 	int				get(cost_s v) const;
+	int				get(cost_s v, const army* opponent, cost_s mv) const;
 	int				geteffect(cost_s v) const;
 	const char*		getname() const;
 	const char*		getnameof() const;
 	int				getunitcount(const tactici* v) const;
 	void			fill(tactica& source);
+	void			normalize();
 	void			match(cost_s v, bool keep);
 	void			select(const provincei* province);
 	void			select(const provincei* province, const playeri* player);
