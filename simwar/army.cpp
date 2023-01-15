@@ -2,6 +2,7 @@
 #include "costitem.h"
 #include "player.h"
 
+void add_line(stringbuilder& sb, const costac& source);
 int get_value(const char* id, int value);
 
 static int compare_units(const void* v1, const void* v2) {
@@ -28,6 +29,8 @@ struct stringarmy : stringact {
 			pa->addunits(*this);
 		else if(equal(identifier, "UnitsAll"))
 			pa->addunits(*this, false);
+		else if(equal(identifier, "Spoils"))
+			add_line(*this, pa->spoils);
 		else if(szstart(identifier, "Total")) {
 			auto pv = bsdata<costi>::find(identifier + 5);
 			if(pv) {
@@ -216,10 +219,18 @@ void army::damage(army& result, int value) {
 	normalize();
 }
 
-void army::casualty(const army& list) {
+void army::casualty(const army& list, army& enemy) {
 	for(auto p : list) {
 		auto pu = isattacker() ? find_troop(p, province, player) : find_troop(p, province);
-		if(pu)
+		if(pu) {
+			enemy.spoils[Gold] += pu->type->effect[Strenght] * 2;
+			enemy.spoils[Fame] += pu->type->effect[Strenght];
 			pu->clear();
+		}
 	}
+}
+
+void army::setcasualty(const army& source) {
+	*this = source;
+	count = 0; memset(data, 0, sizeof(data));
 }

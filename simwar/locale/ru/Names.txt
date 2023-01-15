@@ -50,9 +50,18 @@ And: И
 Army: Армия
 ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
 ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
+AttackerArchery: %Units %-NameOfNoHero дали залп и нанесли %TotalArchery повреждений.
+AttackerCharge: %Units %-NameOfNoHero с разбега влетели в ряды врага нанеся %TotalCharge повреждений.
 AttackerDamage: %Units %-NameOfNoHero столкнулись в ближнем бою с отрядами врага и нанесли %TotalDamage повреждений.
+AttackerFinale: В конце боя на поле остались отряды %-NameOfNoHero общей силой %TotalStrenght.
+AttackerWin: Армия %-NameOfNoHero с общей силой %TotalStrenght полностью разгромила врага.
+BattleSpoils: Трофеи составили: %Spoils.
+BattleTotal: Армия [%-NameOfNoHero] выиграла битву.
 CasualtiesTotal: Потери %-NameOfNoHero: %UnitsAll.
+DefenderArchery: %Units %-NameOfNoHero дали залп в ответ и нанесли %TotalArchery повреждений.
+DefenderCharge: %Units %-NameOfNoHero ударили во фланг завязшего в ближнем бою врага нанеся %TotalCharge повреждений.
 DefenderDamage: %Units %-NameOfNoHero яростно рубились в ответ нанеся %TotalDamage повреждений.
+DefenderFinale: Отряды %-NameOfNoHero имеют общую силу %TotalStrenght.
 AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
 Cost: Стоит

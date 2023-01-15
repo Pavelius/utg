@@ -5,7 +5,7 @@ BSDATA(costi) = {
 	{"Gold", 0, 0, 0, 4},
 	{"Mana", 0, 0, 0, 6},
 	{"Happiness", 0, 0, "%3i"},
-	{"Fame"},
+	{"Fame", 0, 0, 0, 8},
 	{"Faith", 0, 0, 0, 3},
 	{"Lore"},
 	{"Warfire", 0, 0, "%1i/%3i", 1},
@@ -61,6 +61,14 @@ void subvalue(costac& v1, const costac& v2) {
 bool isenought(const costa& v1, const costa& v2) {
 	for(auto i = 0; i <= Limit; i++) {
 		if(v1[i] < v2[i])
+			return false;
+	}
+	return true;
+}
+
+bool isempthy(const costac& v) {
+	for(auto i = 0; i <= Limit; i++) {
+		if(v[i])
 			return false;
 	}
 	return true;

@@ -15,6 +15,7 @@
 #include "unit.h"
 
 static answers an;
+static collection<provincei> provinces;
 void player_turn();
 
 static void add_description(const char* id, stringbuilder& sb) {
@@ -88,6 +89,10 @@ static bool is_coastal(int bonus) {
 			return true;
 	}
 	return false;
+}
+
+static bool is_province_player(const void* pv) {
+	return ((provincei*)pv)->player == player;
 }
 
 static bool canbuild(int bonus) {
@@ -348,7 +353,7 @@ void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 		add_line(sb, 5, province->buildings, province->current[Size]);
 }
 
-static void add_line(stringbuilder& sb, const costac& source) {
+void add_line(stringbuilder& sb, const costac& source) {
 	for(auto i = 0; i <= Limit; i++) {
 		auto& e = bsdata<costi>::elements[i];
 		auto n = source[i];
@@ -658,28 +663,34 @@ bool sitei::isallow() const {
 
 static void battle_stage(stringbuilder& sb, army& attacker, army& defender, cost_s ability) {
 	auto suffix = bsdata<costi>::elements[ability].id;
-	if(attacker && defender) {
-		attacker.act(sb, getnm(str("Attacker%1", suffix)));
-		defender.act(sb, getnm(str("Defender%1", suffix)));
-	} else if(attacker)
-		attacker.act(sb, getnm(str("Attacker%1", suffix)));
-	else if(defender)
-		defender.act(sb, getnm(str("Attacker%1", suffix)));
-	auto ad = attacker.get(ability);
-	auto dd = defender.get(ability);
-	army ac; ac.clear();
-	army dc; dc.clear();
+	army af = attacker; af.match(ability, true);
+	army df = defender; df.match(ability, true);
+	if(!af && !df)
+		return;
+	sb.addn("---\n");
+	sb.addn("$image Battle%1 0 'art/images'\n", suffix);
+	if(af && df) {
+		af.act(sb, getnm(str("Attacker%1", suffix)));
+		df.act(sb, getnm(str("Defender%1", suffix)));
+	} else if(af)
+		af.act(sb, getnm(str("Attacker%1", suffix)));
+	else
+		df.act(sb, getnm(str("Attacker%1", suffix)));
+	auto ad = af.get(ability);
+	auto dd = df.get(ability);
+	army ac; ac.setcasualty(attacker);
+	army dc; dc.setcasualty(defender);
 	attacker.damage(ac, dd);
 	defender.damage(dc, ad);
 	if(ac) {
 		sb.addsep('\n');
 		ac.act(sb, getnm("CasualtiesTotal"));
-		attacker.casualty(ac);
+		attacker.casualty(ac, defender);
 	}
 	if(dc) {
 		sb.addsep('\n');
 		dc.act(sb, getnm("CasualtiesTotal"));
-		defender.casualty(dc);
+		defender.casualty(dc, attacker);
 	}
 }
 
@@ -702,9 +713,93 @@ static void prepare_battle(army& attacker, army& defender) {
 	defender.armor = defender.get(Armor);
 }
 
+static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {
+	auto win_battle = false;
+	sb.addn("---\n");
+	sb.addn("$image BattleWin 0 'art/images'\n");
+	if(attacker && defender) {
+		attacker.act(sb, getnm("AttackerFinale"));
+		sb.addsep('\n');
+		defender.act(sb, getnm("DefenderFinale"));
+		sb.addsep('\n');
+		attacker.strenght = attacker.get(Strenght);
+		defender.strenght = defender.get(Strenght);
+		win_battle = attacker.strenght >= defender.strenght;
+		if(win_battle)
+			attacker.act(sb, getnm("BattleTotal"));
+		else
+			defender.act(sb, getnm("BattleTotal"));
+	} else if(attacker) {
+		attacker.act(sb, getnm("AttackerWin"));
+		attacker.spoils[Fame] += 3;
+		win_battle = true;
+	} else if(defender) {
+		defender.act(sb, getnm("AttackerWin"));
+		defender.spoils[Fame] += 1;
+	}
+	return win_battle;
+}
+
+static void gain_spoils(stringbuilder& sb, army& troops) {
+	if(isempthy(troops.spoils))
+		return;
+	if(!troops.player)
+		return;
+	sb.addsep('\n');
+	troops.act(sb, getnm("BattleSpoils"));
+	addvalue(troops.player->resources, troops.spoils);
+}
+
+static void gain_control(const army& troops) {
+	for(auto p : troops) {
+		auto pu = find_troop(p, troops.province, troops.player);
+		pu->province = pu->moveto;
+		pu->moveto = 0;
+	}
+	troops.province->player = troops.player;
+}
+
+static void retreat_attacker(const army& troops) {
+	for(auto p : troops) {
+		auto pu = find_troop(p, troops.province, troops.player);
+		pu->moveto = 0;
+	}
+}
+
+static void choose_neightbord() {
+	provinces.clear();
+	auto index = getbsi(province);
+	for(auto& e : bsdata<neighbor>()) {
+		if(e.n1 == index)
+			provinces.add(bsdata<provincei>::elements + e.n2);
+		else if(e.n2 == index)
+			provinces.add(bsdata<provincei>::elements + e.n1);
+	}
+}
+
+static void retreat_defender(const army& troops) {
+	auto push_player = player;
+	choose_neightbord();
+	player = troops.player;
+	provinces.match(is_province_player, true);
+	if(provinces) {
+		auto random = provinces.random();
+		for(auto p : troops) {
+			auto pu = find_troop(p, troops.province);
+			pu->province = random;
+		}
+	} else {
+		for(auto p : troops) {
+			auto pu = find_troop(p, troops.province);
+			pu->clear();
+		}
+	}
+	player = push_player;
+}
+
 static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 	prepare_battle(attacker, defender);
-	sb.add("$image BattleField 0 'art/images'\n");
+	sb.addn("$image BattleField 0 'art/images'\n");
 	attacker.act(sb, getnm("ArmyConquest"), province->getname());
 	if(!defender) {
 		sb.addsep(' ');
@@ -721,9 +816,18 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 		sb.addsep(' ');
 		defender.act(sb, getdescription(defender.tactic->id));
 	}
-	sb.addn("---\n");
-	sb.add("$image BattleArchers 0 'art/images'\n");
+	battle_stage(sb, attacker, defender, Archery);
+	battle_stage(sb, attacker, defender, Charge);
 	battle_stage(sb, attacker, defender, Damage);
+	auto win_battle = battle_result(sb, attacker, defender);
+	if(win_battle) {
+		retreat_defender(defender);
+		gain_control(attacker);
+		gain_spoils(sb, attacker);
+	} else {
+		retreat_attacker(attacker);
+		gain_spoils(sb, defender);
+	}
 }
 
 static heroi* find_hero(const provincei* province, const playeri* player) {
