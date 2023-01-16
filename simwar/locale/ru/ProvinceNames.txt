@@ -1,8 +1,12 @@
 ﻿CapeBrumal: Мыс жестокости
 Concordia: Холм изобилия
+GelidSea: Ледяное море
+HiemalStrait: Химальский пролив
 FieldsOfRefuge: Поля утешения
+NandaDevi: Леса Нанды
 RupalValley: Долина деревьев
 SeaOfLostWinds: Море потерянных ветров
+WesternExpanse: Западное море
 WesternZastrugi: Западный край
 
 EastHills: Восточные холмы

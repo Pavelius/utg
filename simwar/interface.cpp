@@ -326,8 +326,18 @@ static void object_painting(const object* p) {
 		((troop*)p->data)->paint();
 }
 
-void update_provinces() {
+static void remove_object(array& source) {
+	for(auto& e : bsdata<object>()) {
+		if(source.indexof(e.data) != -1)
+			e.clear();
+	}
+}
+
+void update_provinces_ui() {
+	remove_object(bsdata<provincei>::source);
 	for(auto& e : bsdata<provincei>()) {
+		if(e.getcost() > 1)
+			continue;
 		auto p = addobject(e.position.x, e.position.y);
 		p->data = &e;
 		p->priority = 1;

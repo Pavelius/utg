@@ -1,9 +1,11 @@
 ﻿Gordek: Гордек
+Kalipse: Калипсо
 Mistra: Мистра
 
+Archers: Лучники
+Cavalry: Кавалерия
 Milita: Ополчение
 Spearmans: Копейщики
-Archers: Лучники
 
 January: Январь
 

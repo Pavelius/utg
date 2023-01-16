@@ -17,11 +17,11 @@ struct provincei : nameable {
 	char				buildings, units, strenght;
 	void				add(cost_s v, int value);
 	void				clearcurrent();
-	static void			clearwave();
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
 	void				makewave() const;
 	int					getbuildings() const;
+	int					getcost() const;
 	int					getindex() const { return this - bsdata<provincei>::elements; }
 	int					getsites() const;
 	int					getunits() const;
@@ -43,3 +43,4 @@ struct neightbors : collection<provincei> {
 };
 extern provincei*		province;
 void					clear_wave();
+provincei*				find_zero_cost();

@@ -19,7 +19,6 @@ using namespace draw;
 void add_neutral(const char* id);
 void next_turn();
 void ui_initialize();
-void update_provinces();
 void util_main();
 void conquest();
 
@@ -45,7 +44,6 @@ static void initialize_scene() {
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
 	game.initialize();
-	update_provinces();
 	script::run("UpdatePlayer");
 	test_army();
 }

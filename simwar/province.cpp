@@ -12,14 +12,26 @@ static short unsigned pstart, pstop;
 static short unsigned movecost[128];
 static short unsigned movestack[256 * 256];
 
-void provincei::clearwave() {
+void clear_wave() {
 	for(auto& e : movecost)
 		e = Unknown;
 }
 
+provincei* find_zero_cost() {
+	int count = bsdata<provincei>::source.getcount();
+	for(int i = 0; i < count; i++) {
+		if(movecost[i] == ZeroCost)
+			return bsdata<provincei>::elements + i;
+	}
+	return 0;
+}
+
 static void add_node(short unsigned index, short unsigned cost) {
 	if(movecost[index] == ZeroCost) {
-		movecost[index] = cost - 1;
+		if(!cost)
+			movecost[index] = 0;
+		else
+			movecost[index] = cost - 1;
 		movestack[pstop++] = index;
 	} else if(movecost[index] == Unknown || (movecost[index] < Unknown && movecost[index] > cost)) {
 		movecost[index] = cost;
@@ -51,6 +63,10 @@ void provincei::setzerocost() const {
 
 void provincei::setblocked() const {
 	movecost[getindex()] = Blocked;
+}
+
+int	provincei::getcost() const {
+	return movecost[getindex()];
 }
 
 void neightbors::selectn(const provincei* province) {

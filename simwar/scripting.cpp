@@ -4,6 +4,7 @@
 #include "collection.h"
 #include "costitem.h"
 #include "draw.h"
+#include "draw_object.h"
 #include "game.h"
 #include "hero.h"
 #include "list.h"
@@ -16,6 +17,7 @@
 
 static answers an;
 void player_turn();
+void update_provinces_ui();
 
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
@@ -140,10 +142,6 @@ void add_neutral(const char* id) {
 		recruit(1);
 	lastunit = push_unit;
 	player = push_player;
-}
-
-static void clear_wave() {
-	provincei::clearwave();
 }
 
 static void block_ocean() {
@@ -310,6 +308,13 @@ static void update_province_buildings() {
 		addvalue(e.province->current, e.type->effect);
 }
 
+static void mark_player_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			e.setzerocost();
+	}
+}
+
 static void update_player(int bonus) {
 	memset(player->income, 0, sizeof(player->income));
 	clear_current();
@@ -317,6 +322,12 @@ static void update_player(int bonus) {
 	update_province_buildings();
 	for(auto i = (cost_s)0; i <= Limit; i = (cost_s)(i + 1))
 		player->income[i] = get_income(i);
+	clear_wave();
+	mark_player_provinces();
+	auto start = find_zero_cost();
+	if(start)
+		start->makewave();
+	update_provinces_ui();
 }
 
 static void gain_income(int bonus) {
