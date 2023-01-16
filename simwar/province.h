@@ -1,7 +1,7 @@
-#include "statable.h"
-#include "crt.h"
+#include "collection.h"
 #include "landscape.h"
 #include "point.h"
+#include "statable.h"
 #include "stringbuilder.h"
 
 #pragma once
@@ -17,12 +17,18 @@ struct provincei : nameable {
 	char				buildings, units, strenght;
 	void				add(cost_s v, int value);
 	void				clearcurrent();
+	static void			clearwave();
 	void				explore(int value);
+	bool				iswater() const { return landscape->water; }
+	void				makewave() const;
 	int					getbuildings() const;
+	int					getindex() const { return this - bsdata<provincei>::elements; }
 	int					getsites() const;
 	int					getunits() const;
 	int					getunitsvalue(cost_s v) const;
 	void				paint() const;
+	void				setblocked() const;
+	void				setzerocost() const;
 	void				update();
 };
 struct moveable {
@@ -32,8 +38,8 @@ struct moveable {
 struct neighbor {
 	short				n1, n2;
 };
-struct neighbors : adat<provincei*, 16> {
-	void				select(const provincei* base);
+struct neightbors : collection<provincei> {
+	void				selectn(const provincei* base);
 };
-
 extern provincei*		province;
+void					clear_wave();

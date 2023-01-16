@@ -44,9 +44,9 @@ static void initialize_scene() {
 	province->player = player;
 	player->upgrade[Lore] += 50;
 	script::run(player->start);
-	script::run("UpdatePlayer");
 	game.initialize();
 	update_provinces();
+	script::run("UpdatePlayer");
 	test_army();
 }
 

@@ -15,7 +15,6 @@
 #include "unit.h"
 
 static answers an;
-static collection<provincei> provinces;
 void player_turn();
 
 static void add_description(const char* id, stringbuilder& sb) {
@@ -82,8 +81,8 @@ static bool is_coastal(int bonus) {
 	auto ocean = bsdata<landscapei>::find("Ocean");
 	if(!ocean)
 		return false;
-	neighbors source;
-	source.select(province);
+	neightbors source;
+	source.selectn(province);
 	for(auto p : source) {
 		if(p->landscape == ocean)
 			return true;
@@ -93,6 +92,10 @@ static bool is_coastal(int bonus) {
 
 static bool is_province_player(const void* pv) {
 	return ((provincei*)pv)->player == player;
+}
+
+static bool is_province_ocean(const void* pv) {
+	return ((provincei*)pv)->iswater();
 }
 
 static bool canbuild(int bonus) {
@@ -137,6 +140,17 @@ void add_neutral(const char* id) {
 		recruit(1);
 	lastunit = push_unit;
 	player = push_player;
+}
+
+static void clear_wave() {
+	provincei::clearwave();
+}
+
+static void block_ocean() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.iswater())
+			e.setblocked();
+	}
 }
 
 template<> void fnscript<costi>(int value, int bonus) {
@@ -725,10 +739,13 @@ static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {
 		attacker.strenght = attacker.get(Strenght);
 		defender.strenght = defender.get(Strenght);
 		win_battle = attacker.strenght >= defender.strenght;
-		if(win_battle)
+		if(win_battle) {
+			attacker.spoils[Fame] += 1;
 			attacker.act(sb, getnm("BattleTotal"));
-		else
+		} else {
+			defender.spoils[Fame] += 1;
 			defender.act(sb, getnm("BattleTotal"));
+		}
 	} else if(attacker) {
 		attacker.act(sb, getnm("AttackerWin"));
 		attacker.spoils[Fame] += 3;
@@ -766,22 +783,12 @@ static void retreat_attacker(const army& troops) {
 	}
 }
 
-static void choose_neightbord() {
-	provinces.clear();
-	auto index = getbsi(province);
-	for(auto& e : bsdata<neighbor>()) {
-		if(e.n1 == index)
-			provinces.add(bsdata<provincei>::elements + e.n2);
-		else if(e.n2 == index)
-			provinces.add(bsdata<provincei>::elements + e.n1);
-	}
-}
-
 static void retreat_defender(const army& troops) {
-	auto push_player = player;
-	choose_neightbord();
-	player = troops.player;
+	neightbors provinces;
+	provinces.selectn(troops.province);
+	auto push_player = player; player = troops.player;
 	provinces.match(is_province_player, true);
+	provinces.match(is_province_ocean, false);
 	if(provinces) {
 		auto random = provinces.random();
 		for(auto p : troops) {

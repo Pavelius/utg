@@ -3,11 +3,58 @@
 #include "script.h"
 #include "unit.h"
 
-provincei* province;
+const short unsigned Unknown = 0xFFF0;
+const short unsigned ZeroCost = 0xFFF1;
+const short unsigned Blocked = 0xFFFF;
 
-void neighbors::select(const provincei* province) {
-	auto index = getbsi(province);
-	clear();
+provincei* province;
+static short unsigned pstart, pstop;
+static short unsigned movecost[128];
+static short unsigned movestack[256 * 256];
+
+void provincei::clearwave() {
+	for(auto& e : movecost)
+		e = Unknown;
+}
+
+static void add_node(short unsigned index, short unsigned cost) {
+	if(movecost[index] == ZeroCost) {
+		movecost[index] = cost - 1;
+		movestack[pstop++] = index;
+	} else if(movecost[index] == Unknown || (movecost[index] < Unknown && movecost[index] > cost)) {
+		movecost[index] = cost;
+		movestack[pstop++] = index;
+	}
+}
+
+void provincei::makewave() const {
+	pstart = pstop = 0;
+	add_node(getindex(), 0);
+	while(pstart < pstop) {
+		auto pi = movestack[pstart++];
+		auto ci = movecost[pi];
+		if(ci == Blocked)
+			continue;
+		ci++;
+		for(auto& e : bsdata<neighbor>()) {
+			if(e.n1 == pi)
+				add_node(e.n2, ci);
+			else if(e.n2 == pi)
+				add_node(e.n1, ci);
+		}
+	}
+}
+
+void provincei::setzerocost() const {
+	movecost[getindex()] = ZeroCost;
+}
+
+void provincei::setblocked() const {
+	movecost[getindex()] = Blocked;
+}
+
+void neightbors::selectn(const provincei* province) {
+	auto index = province->getindex();
 	for(auto& e : bsdata<neighbor>()) {
 		if(e.n1 == index)
 			add(bsdata<provincei>::elements + e.n2);

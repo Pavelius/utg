@@ -52,7 +52,7 @@ BSMETA(heroi) = {
 	BSDST(upkeep, costi),
 	{}};
 BSMETA(landscapei) = {
-	BSREQ(id),
+	BSREQ(id), BSREQ(water),
 	BSDST(effect, costi),
 	BSDST(upkeep, costi),
 	{}};

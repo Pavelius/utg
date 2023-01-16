@@ -9,7 +9,7 @@ Forest
 Hills
  effect Strenght(1) Size(3) Gold(2)
  upkeep Happiness(1)
-Ocean
+Ocean water(true)
  effect Size(2)
 Swamp
  effect Damage(4) Size(2) Mana(2)
@@ -135,11 +135,13 @@ ShieldWall
 
 SouthernKindom
  resources Gold(100) Mana(20)
- start Citadel+1 Laboratory+1 Milita+2 Spearmans+1 Archers+1
+ start Citadel+1 Laboratory+1 Milita+2 Cavalry+1 Archers+1
 
 #Hero
 
 Gordek resid("2MHUM6_S")
  effect Strenght(2)
 Mistra resid("2FELF2_S")
+ effect Strenght(2)
+Kalipse resid("2MDEF2_S")
  effect Strenght(2)

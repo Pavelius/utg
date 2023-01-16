@@ -243,8 +243,8 @@ static void paint_neighbor() {
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::red;
-	neighbors source;
-	source.select(province);
+	neightbors source;
+	source.selectn(province);
 	for(auto p : source) {
 		caret = push_caret;
 		point pt = p->position - camera;
