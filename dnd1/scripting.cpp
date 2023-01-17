@@ -9,6 +9,10 @@ itema items;
 spella spells;
 static spell_s last_spell;
 
+template<> void fnscript<abilityi>(int value, int bonus) {
+	player->abilities[value] += bonus;
+}
+
 static void clear_console() {
 	if(answers::console)
 		answers::console->clear();
@@ -172,3 +176,8 @@ void combat_mode() {
 	}
 	menu::current_mode = push_mode;
 }
+
+BSDATA(script) = {
+	{"NoScript"}
+};
+BSDATAF(script)

@@ -3,7 +3,8 @@
 #include "charname.h"
 #include "draw_object.h"
 #include "draw_utg.h"
-#include "main.h"
+#include "game.h"
+#include "generator.h"
 
 static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 	auto p = bsdata<creature>::add();
@@ -45,8 +46,8 @@ static const char* getavatarst(const void* p) {
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
-	//srand(getcputime());
-	srand(1123);
+	srand(getcputime());
+	//srand(1123);
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";

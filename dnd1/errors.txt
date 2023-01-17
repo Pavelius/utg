@@ -1,6 +1,2 @@
 ﻿In file `rules/Items.txt`:
- Line 83: Not found requisit `enchantments`
- Line 84: Not found requisit `enchantments`
- Line 85: Not found requisit `enchantments`
- Line 86: Not found requisit `enchantments`
- Line 87: Not found requisit `enchantments`
+ Line 72: Not found requisit `armor`

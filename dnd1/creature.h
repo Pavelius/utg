@@ -53,10 +53,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			set(feat_s v) { feats.set(v); }
 	void			setenemy(creature* v);
 	void			update();
-	void			update_equipment();
 	void			update_finish();
-	void			update_spells();
-	void			update_start();
 	void			use(item& it);
 };
 extern creature* player;

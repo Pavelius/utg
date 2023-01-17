@@ -1,6 +1,8 @@
 #include "charname.h"
 #include "creature.h"
 #include "ongoing.h"
+#include "pushvalue.h"
+#include "script.h"
 
 creature* player;
 creaturea creatures;
@@ -150,7 +152,7 @@ void creature::damage(int value) {
 		return;
 	if(get(IllusionCopies)) {
 		add(IllusionCopies, -1);
-		act("Иллюзия %$1 рассеялась.", getname());
+		act("Иллюзия %героя рассеялась.", getname());
 		return;
 	}
 	auto hp = get(HP) - value;
@@ -167,16 +169,18 @@ bool creature::isready() const {
 	return get(HP) > 0;
 }
 
-void creature::update_start() {
-	memcpy(abilities, basic.abilities, sizeof(abilities[0]) * (SavePoison + 1));
+static void update_start() {
+	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SavePoison + 1));
 }
 
-void creature::update_equipment() {
-	//for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1))
-	//	equipmentbonus(wears[i]);
+static void update_equipment() {
+	for(auto& e : player->equipment()) {
+		if(e)
+			script::run(e.geti().effect);
+	}
 }
 
-void creature::update_spells() {
+static void update_spells() {
 }
 
 void creature::update_finish() {
@@ -218,6 +222,7 @@ void creature::update_finish() {
 }
 
 void creature::update() {
+	pushvalue push(player, this);
 	update_start();
 	update_equipment();
 	update_spells();

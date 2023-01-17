@@ -86,8 +86,6 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 
 void item::getstatus(stringbuilder& sb) const {
 	auto& ei = geti();
-	if(ei.armor.ac)
-		sb.adds("AC%+1i", ei.armor.ac);
 	print_weight_hd(sb, getweight());
 	print_cost_hd(sb, getcost());
 }

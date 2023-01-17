@@ -5,10 +5,10 @@
 #include "menu.h"
 #include "monster.h"
 #include "ongoing.h"
+#include "script.h"
 #include "widget.h"
 
 NOBSDATA(dice)
-NOBSDATA(itemi::armori)
 NOBSDATA(itemi::weaponi)
 NOBSDATA(variants)
 
@@ -52,16 +52,12 @@ BSMETA(itemi) = {
 	BSFLG(flags, feati),
 	BSENM(wear, weari),
 	BSREQ(weapon),
-	BSREQ(armor),
 	BSREQ(use),
 	BSREQ(effect),
 	{}};
 BSMETA(itemi::weaponi) = {
 	BSREQ(damage),
 	BSENM(ammunition, itemi),
-	{}};
-BSMETA(itemi::armori) = {
-	BSREQ(ac),
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),
@@ -85,7 +81,7 @@ BSMETA(weari) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1)},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
 	{"Equipment", VAR(equipmenti, 2)},

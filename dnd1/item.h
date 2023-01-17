@@ -11,13 +11,9 @@ struct itemi : nameable {
 		dice	damage;
 		short 	ammunition;
 	};
-	struct armori {
-		char	ac, dr;
-	};
 	const char*	unidentified;
 	int			cost, weight, count;
 	char		magic, charges;
-	armori		armor;
 	weaponi		weapon;
 	wear_s		wear;
 	featable	flags;
