@@ -15,7 +15,6 @@
 #include "statable.h"
 #include "unit.h"
 
-static answers an;
 void player_turn();
 void update_provinces_ui();
 
@@ -872,7 +871,7 @@ void conquest() {
 	defender.player = province->player;
 	defender.hero = find_hero(province, province->player);
 	conquest(sb, attacker, defender);
-	answers::message(temp);
+	draw::message(temp);
 }
 
 BSDATA(script) = {

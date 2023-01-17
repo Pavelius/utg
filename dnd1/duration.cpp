@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "duration.h"
 
 #define TURN 10
 

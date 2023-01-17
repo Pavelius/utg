@@ -1,4 +1,4 @@
-#include "main.h"
+#include "wearable.h"
 
 void wearable::additem(item& v) {
 	// Try stack existing item

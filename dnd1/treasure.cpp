@@ -1,4 +1,6 @@
-#include "main.h"
+#include "draw_utg.h"
+#include "generator.h"
+#include "treasure.h"
 
 struct treasurei {
 	struct coini {
@@ -108,7 +110,6 @@ void treasure::generate(char symbol) {
 
 void treasure::take() {
 	char temp[260]; stringbuilder sb(temp);
-	answers an;
 	while(!draw::isnext()) {
 		an.clear();
 		for(auto& e : *this) {

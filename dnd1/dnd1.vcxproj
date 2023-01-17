@@ -148,9 +148,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="class.h" />
+    <ClInclude Include="duration.h" />
     <ClInclude Include="feat.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="ongoing.h" />
+    <ClInclude Include="range.h" />
+    <ClInclude Include="reaction.h" />
+    <ClInclude Include="spell.h" />
+    <ClInclude Include="treasure.h" />
     <ClInclude Include="wear.h" />
+    <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />

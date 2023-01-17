@@ -18,6 +18,8 @@ char answers::hotkeys[20] = {
 	'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'
 };
 
+answers an;
+
 int answers::compare(const void* v1, const void* v2) {
 	return strcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
 }
@@ -123,7 +125,7 @@ static const char* find_separator(const char* pb) {
 	return 0;
 }
 
-void answers::message(const char* format) {
+void draw::message(const char* format) {
 	if(!format)
 		return;
 	answers an;

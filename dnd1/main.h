@@ -1,4 +1,4 @@
-#include "ability.h"
+#include "class.h"
 #include "draw_utg.h"
 #include "avatarable.h"
 #include "dice.h"
@@ -9,126 +9,24 @@
 #include "list.h"
 #include "nameable.h"
 #include "quest.h"
+#include "reaction.h"
 #include "speech.h"
-#include "wear.h"
+#include "spell.h"
+#include "wearable.h"
 
 #pragma once
 
-enum class_s : unsigned char {
-	Monster,
-	Cleric, Dwarf, Elf, Fighter, Halfling, Theif, Wizard,
-};
-enum duration_s : unsigned char {
-	Instant,
-	Round,
-	Turn, Turn2, Turn3, Turn1d4p1, Turn2d6, Turn4d4,
-	Hour, Hour2, Hour8,
-	Concentration, Permanent,
-};
-enum range_s : unsigned char {
-	Caster, CasterOrAlly, OneEnemy, SomeEnemies,
-	AllAlly, AllEnemies,
-	OneItem, OneRandomItem, AllCasterItems, AllPartyItems,
-	Enviroment, OneObject, OneRandomObject,
-	EncounterReaction,
-};
-enum reaction_s : unsigned char {
-	Hostile, Unfriendly, Neutral, Indifferent, Friendly
-};
-enum spell_s : unsigned char {
-	CauseLightWound, CauseFear, CureLightWound, Darkness, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
-	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
-	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
-	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,
-	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
-	AntiMagicShell, DeathSpell,
-	LastSpell = DeathSpell,
-	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
-};
-inline int d100() { return rand() % 100; }
 inline int d6() { return 1 + rand() % 6; }
-typedef flagable<8> spellf;
-struct featable : flagable<4> {};
-struct rangei : nameable {
-};
-struct ongoing {
-	variant			owner;
-	spell_s			effect;
-	unsigned		rounds;
-	void			clear() { memset(this, 0, sizeof(*this)); }
-};
-struct damagei : nameable {
-	feat_s			immunity;
-};
-struct enchantmenti {
-	variant			special;
-	const char*		title;
-};
-struct enchantmentseti {
-	const char*		id;
-	sliceu<enchantmenti> elements;
-};
-struct itemi : nameable {
-	struct weaponi {
-		char		attack;
-		dice		damage;
-		short 		ammunition;
-	};
-	struct armori {
-		char		ac, dr;
-	};
-	int				cost, weight, count;
-	armori			armor;
-	weaponi			weapon;
-	wear_s			wear;
-	featable		flags;
-	const enchantmentseti* enchantments;
-	bool			is(feat_s v) const { return flags.is(v); }
-};
-struct item {
-	unsigned char	type, subtype;
-	union {
-		unsigned short count;
-		struct {
-			unsigned char identified : 1;
-			unsigned char broken : 1;
-			unsigned char charge : 5;
-			unsigned char count_nocountable;
-		};
-	};
-	explicit operator bool() const { return type != 0; }
-	void			add(item& v);
-	void			addname(stringbuilder& sb) const;
-	bool			canequip(wear_s v) const;
-	void			clear() { memset(this, 0, sizeof(*this)); }
-	void			create(const char* id, int count = 1);
-	void			create(const itemi* pi, int count = 1);
-	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
-	int				getcost() const;
-	int				getcount() const;
-	dice			getdamage() const;
-	const enchantmenti* getenchant() const;
-	const char*		getname() const { return geti().getname(); }
-	void			getstatus(stringbuilder& sb) const;
-	int				getweight() const;
-	bool			iscountable() const { return geti().count != 0; }
-	bool			ismagical() const { return getenchant() != 0; }
-	void			setcount(int v);
-};
 struct itema : adat<item*> {
 	void			select(struct creature& source);
 	void			match(wear_s wear, bool keep);
 };
+struct damagei : nameable {
+	feat_s			immunity;
+};
 struct spella : adat<spell_s> {
 	void			known(const struct creature& source);
 	void			prepared(const struct creature& source);
-};
-struct wearable {
-	item			wears[Elbows + 1];
-	void			additem(item& v);
-	void			equip(item& v);
-	const char*		getwearname(wear_s id) const;
-	bool			isitem(const void* pv) const;
 };
 struct actable {
 	const char*		name;
@@ -153,36 +51,9 @@ struct statable {
 	char			getsave(class_s type, ability_s save, int level);
 	void			rollability();
 };
-struct classi : nameable {
-	ability_s		prime;
-	char			minimal[6];
-	int				tohit, hd;
-};
 struct equipmenti {
 	class_s			type;
 	unsigned char	equipment;
-};
-struct durationi : nameable {
-	short			from, to;
-};
-struct spelli : nameable {
-	char			level[3];
-	duration_s		duration;
-	range_s			range;
-	dice			effect;
-	spell_s			dispell[4];
-	spell_s			mass_effect;
-	dice			hds;
-	bool			isdurable() const { return duration != Instant; }
-	bool			isevil() const;
-};
-struct spellable {
-	unsigned char	spells[LastSpell + 1];
-};
-struct treasure : adat<item> {
-	void			add(item it);
-	void			generate(char symbol);
-	void			take();
 };
 struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;

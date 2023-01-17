@@ -1,4 +1,4 @@
-#include "main.h"
+#include "item.h"
 
 void item::create(const char* id, int count) {
 	create(bsdata<itemi>::find(id), count);

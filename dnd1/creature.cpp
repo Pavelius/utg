@@ -1,5 +1,6 @@
 #include "charname.h"
 #include "main.h"
+#include "ongoing.h"
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));

@@ -39,15 +39,16 @@ public:
 	int					getcount() const { return elements.getcount(); }
 	const char*			getname(void* v);
 	int					indexof(const void* v) const { return elements.indexof(v); }
-	static void			message(const char* format);
 	void				modal(const char* title, const char* cancel) const;
 	void				paintanswers(int columns, const char* cancel_text) const;
 	void*				random() const;
 	void				remove(int index) { elements.remove(index, 1); }
 	void				sort();
 };
+extern answers an;
 namespace draw {
 void information(const char* format, ...);
+void message(const char* format);
 void output(const char* format, ...);
 void pause();
 void pause(const char* title, ...);

@@ -1,5 +1,7 @@
 #include "bsreq.h"
+#include "item.h"
 #include "main.h"
+#include "ongoing.h"
 
 NOBSDATA(dice)
 NOBSDATA(itemi::armori)

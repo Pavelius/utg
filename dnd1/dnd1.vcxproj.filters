@@ -24,6 +24,33 @@
     <ClInclude Include="wear.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="spell.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="duration.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="range.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="reaction.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="class.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ongoing.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="wearable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="treasure.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
