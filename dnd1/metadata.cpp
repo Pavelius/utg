@@ -1,7 +1,11 @@
 #include "bsreq.h"
 #include "item.h"
-#include "main.h"
+#include "game.h"
+#include "list.h"
+#include "menu.h"
+#include "monster.h"
 #include "ongoing.h"
+#include "widget.h"
 
 NOBSDATA(dice)
 NOBSDATA(itemi::armori)

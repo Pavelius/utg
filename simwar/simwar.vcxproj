@@ -181,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="army.h" />
-    <ClInclude Include="bsref.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />
     <ClInclude Include="costitem.h" />

@@ -1,11 +1,4 @@
-#include "main.h"
-
-creature* scene::choosetarget() const {
-	answers an;
-	for(auto p : targets)
-		an.add(p, p->getname());
-	return (creature*)an.choose(getnm("ChooseTarget"));
-}
+#include "game.h"
 
 static int compare_initiative(const void* v1, const void* v2) {
 	auto p1 = *((creature**)v1);
@@ -15,8 +8,15 @@ static int compare_initiative(const void* v1, const void* v2) {
 
 void scene::rollinitiative() {
 	for(auto p : creatures)
-		p->initiative = d6();
+		p->initiative = xrand(1, 6);
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
+}
+
+creature* scene::choosetarget() const {
+	answers an;
+	for(auto p : targets)
+		an.add(p, p->getname());
+	return (creature*)an.choose(getnm("ChooseTarget"));
 }
 
 void scene::encounter(const monsteri* pm) {

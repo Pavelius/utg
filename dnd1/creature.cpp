@@ -1,11 +1,11 @@
 #include "charname.h"
-#include "main.h"
+#include "creature.h"
 #include "ongoing.h"
 
-void creature::clear() {
-	memset(this, 0, sizeof(*this));
-	enemy_index = 0xFF;
-}
+creature* player;
+creaturea creatures;
+
+inline int d6() { return 1 + rand() % 6; }
 
 static void start_equipment(creature* p) {
 	item it;
@@ -17,6 +17,10 @@ static void start_equipment(creature* p) {
 				p->additem(it);
 		}
 	}
+}
+
+void creature::clear() {
+	memset(this, 0, sizeof(*this));
 }
 
 void creature::raiselevel() {
@@ -62,7 +66,6 @@ void creature::rangeattack(creature* enemy) {
 }
 
 void creature::meleeattack() {
-	auto enemy = getenemy();
 	auto ac = enemy->get(AC);
 	auto& weapon = wears[MeleeWeapon];
 	if(attack(MeleeToHit, ac, 0)) {
@@ -87,7 +90,6 @@ void creature::choose(const slice<chooseoption>& options) {
 	player = this;
 	char temp[260]; stringbuilder sb(temp);
 	actv(sb, getnm("WhatToDo"), 0, 0);
-	auto enemy = getenemy();
 	const char* enemy_name = enemy ? enemy->getname() : 0;
 	if(is(Enemy))
 		chooseoption::chooser(options, temp, enemy_name);
@@ -121,13 +123,14 @@ static ongoing* find_bonus(variant owner, spell_s effect) {
 }
 
 void creature::enchant(spell_s effect, unsigned rounds) {
-	rounds += game.rounds;
+	auto current_round = 0;
+	rounds += current_round;
 	auto p = find_bonus(this, effect);
 	if(!p) {
 		p = bsdata<ongoing>::add();
 		p->owner = this;
 		p->effect = effect;
-		p->rounds = game.rounds + rounds;
+		p->rounds = rounds;
 	} else if(p->rounds < rounds)
 		p->rounds = rounds;
 }
@@ -138,11 +141,8 @@ void creature::dispell(spell_s effect) {
 		p->clear();
 }
 
-void creature::setenemy(const creature* v) {
-	if(!v)
-		enemy_index = 0xFF;
-	else
-		enemy_index = v - bsdata<creature>::elements;
+void creature::setenemy(creature* v) {
+	enemy = v;
 }
 
 void creature::damage(int value) {
@@ -172,8 +172,8 @@ void creature::update_start() {
 }
 
 void creature::update_equipment() {
-	for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1))
-		equipmentbonus(wears[i]);
+	//for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1))
+	//	equipmentbonus(wears[i]);
 }
 
 void creature::update_spells() {
@@ -250,6 +250,17 @@ void creature::create(class_s type, gender_s gender) {
 	name = randomname(type, gender);
 	setavatar(randomavatar(type, gender));
 	start_equipment(this);
+	finish();
+}
+
+void creature::create(const struct monsteri& v) {
+	clear();
+	this->type = Monster;
+	this->gender = Male;
+	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+		basic.abilities[i] = 10;
+	this->feats = v.feats;
+	name = getnm(v.id);
 	finish();
 }
 

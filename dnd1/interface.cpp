@@ -1,4 +1,5 @@
-#include "main.h"
+#include "creature.h"
+#include "draw_utg.h"
 
 using namespace draw;
 
@@ -27,7 +28,7 @@ static void backpack_list() {
 
 static void combatant_list() {
 	char temp[260]; stringbuilder sb(temp);
-	for(auto p : game.creatures) {
+	for(auto p : creatures) {
 		sb.clear();
 		if(!p->isready())
 			sb.add("[~%1]", p->getname());

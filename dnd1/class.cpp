@@ -1,4 +1,9 @@
-#include "main.h"
+#include "answers.h"
+#include "avatarable.h"
+#include "class.h"
+#include "creature.h"
+#include "crt.h"
+#include "draw_utg.h"
 
 namespace draw {
 extern int tab_pixels;

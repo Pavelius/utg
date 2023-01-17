@@ -1,4 +1,6 @@
-#include "main.h"
+#include "crt.h"
+#include "creature.h"
+#include "spell.h"
 
 BSDATA(spelli) = {
 	{"CauseLightWound", {1}, Instant, OneEnemy, {1, 6, 1}},
@@ -58,6 +60,8 @@ BSDATA(spelli) = {
 };
 assert_enum(spelli, DeathPoison)
 
+spell_s spell;
+
 bool spelli::isevil() const {
 	switch(range) {
 	case OneEnemy:
@@ -92,9 +96,33 @@ bool creature::apply(spell_s id, int level, bool run) {
 		}
 		break;
 	default:
-		if(ei.duration!=Instant && ei.duration!=Permanent)
+		if(ei.duration != Instant && ei.duration != Permanent)
 			enchant(id, getduration(ei.duration, level));
 		break;
 	}
 	return true;
+}
+
+void spella::select(const spellf& source) {
+	auto ps = begin();
+	auto pe = endof();
+	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+		if(source.is(i)) {
+			if(ps < pe)
+				*ps = i;
+		}
+	}
+	count = ps - data;
+}
+
+void spella::select(const spellable& source) {
+	auto ps = begin();
+	auto pe = endof();
+	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+		if(source.spells[i]) {
+			if(ps < pe)
+				*ps = i;
+		}
+	}
+	count = ps - data;
 }

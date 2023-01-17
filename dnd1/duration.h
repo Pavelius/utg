@@ -12,3 +12,4 @@ enum duration_s : unsigned char {
 struct durationi : nameable {
 	short	from, to;
 };
+extern duration_s duration;

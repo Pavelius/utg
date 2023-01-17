@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "statable.h"
 
 static unsigned fighter_experience[] = {
 	0, 0, 2000, 4000, 8000, 16000, 32000, 64000, 120000, 240000,
@@ -116,11 +117,4 @@ void statable::applybest(ability_s v) {
 	if(v == m)
 		return;
 	iswap(abilities[v], abilities[m]);
-}
-
-void statable::equipmentbonus(const item& it) {
-	if(!it)
-		return;
-	auto& ei = it.geti();
-	abilities[AC] += ei.armor.ac;
 }

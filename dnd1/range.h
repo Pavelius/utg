@@ -11,3 +11,4 @@ enum range_s : unsigned char {
 };
 struct rangei : nameable {
 };
+extern range_s range;

@@ -12,7 +12,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
+    <ClInclude Include="game.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
@@ -49,6 +49,27 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="treasure.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="statable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="timeable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="damage.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="actable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="room.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,13 +137,7 @@
     <ClCompile Include="interface.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="itema.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="monster.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="spella.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

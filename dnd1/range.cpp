@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "range.h"
 
 BSDATA(rangei) = {
 	{"Caster"},
@@ -16,3 +17,5 @@ BSDATA(rangei) = {
 	{"OneRandomObject"},
 };
 assert_enum(rangei, OneRandomObject)
+
+range_s range;

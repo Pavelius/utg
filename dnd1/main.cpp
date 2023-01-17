@@ -1,3 +1,4 @@
+#include "bsref.h"
 #include "bsreq.h"
 #include "charname.h"
 #include "draw_object.h"
@@ -12,11 +13,12 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 }
 
 static void starting() {
+	bsref<itemi> test = bsdata<itemi>::elements + 2;
 	auto p1 = create_player(Fighter, Male, Player);
 	auto p2 = create_player(Fighter, Male, Player);
 	answers::header = "Большой зал";
 	game.encounter(bsdata<monsteri>::find("Skeleton"));
-	game.creatures.select();
+	creatures.select();
 	//treasure loot;
 	//loot.generate('A');
 	//loot.take();

@@ -93,5 +93,22 @@ const enchantmenti* item::getenchant() const {
 	auto& ei = geti();
 	if(!ei.enchantments)
 		return 0;
-	return ei.enchantments->elements.begin() + subtype - 1;
+	return ei.enchantments->elements.begin() + (subtype - 1);
+}
+
+void itema::select(const slice<item>& source) {
+	for(auto& e : source) {
+		if(e)
+			add(&e);
+	}
+}
+
+void itema::match(wear_s wear, bool keep) {
+	auto ps = begin();
+	for(auto p : *this) {
+		if((p->geti().wear == wear) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
 }

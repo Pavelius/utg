@@ -1,7 +1,9 @@
-#include "main.h"
+#include "creature.h"
+#include "draw_utg.h"
+#include "game.h"
 #include "script.h"
+#include "spell.h"
 
-creature* player;
 creaturea targets;
 itema items;
 spella spells;
@@ -15,11 +17,11 @@ static void clear_console() {
 static void choose_enemies() {
 	targets.clear();
 	if(player->is(Player)) {
-		targets = game.creatures;
+		targets = creatures;
 		targets.match(Enemy, true);
 		targets.matchready(true);
 	} else if(player->is(Enemy)) {
-		targets = game.creatures;
+		targets = creatures;
 		targets.match(Player, true);
 		targets.matchready(true);
 	}
@@ -36,7 +38,7 @@ static void random_melee_angry(size_t count) {
 }
 
 static void choose_player_enemy() {
-	if(!player->getenemy()) {
+	if(!player->enemy) {
 		choose_enemies();
 		auto pe = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
 		player->setenemy(pe); pe->setenemy(player);
@@ -45,7 +47,7 @@ static void choose_player_enemy() {
 }
 
 static bool attack_melee(bool run) {
-	if(!player->getenemy())
+	if(!player->enemy)
 		return false;
 	if(run)
 		player->meleeattack();
@@ -53,7 +55,7 @@ static bool attack_melee(bool run) {
 }
 
 static bool charge(bool run) {
-	if(player->getenemy())
+	if(player->enemy)
 		return false;
 	choose_enemies();
 	if(!targets)
@@ -68,7 +70,7 @@ static bool charge(bool run) {
 }
 
 static bool drink_potion(bool run) {
-	items.select(*player);
+	items.select(player->allitems());
 	items.match(Potion, false);
 	if(!items)
 		return false;
@@ -78,7 +80,7 @@ static bool drink_potion(bool run) {
 }
 
 static bool prepare_spells(bool run) {
-	spells.known(*player);
+	spells.select(player->known_spells);
 	if(!spells)
 		return false;
 	if(run) {
@@ -95,7 +97,7 @@ static void choose_spell() {
 }
 
 static bool cast_spells(bool run) {
-	spells.prepared(*player);
+	spells.select(*player);
 	if(!spells)
 		return false;
 	if(run) {
@@ -116,7 +118,7 @@ static chooseoption combat_options[] = {
 };
 
 static void combat_round() {
-	for(auto p : game.creatures) {
+	for(auto p : creatures) {
 		if(!p->isready())
 			continue;
 		p->update();
@@ -125,7 +127,7 @@ static void combat_round() {
 }
 
 static bool lose_game(bool run) {
-	targets = game.creatures;
+	targets = creatures;
 	targets.match(Player, true);
 	targets.matchready(true);
 	if(targets)
@@ -136,7 +138,7 @@ static bool lose_game(bool run) {
 }
 
 static bool win_battle(bool run) {
-	targets = game.creatures;
+	targets = creatures;
 	targets.match(Enemy, true);
 	targets.matchready(true);
 	if(targets)

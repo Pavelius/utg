@@ -1,4 +1,4 @@
-#include "main.h"
+#include "creature.h"
 
 void creaturea::select() {
 	auto ps = begin();
@@ -23,7 +23,7 @@ void creaturea::match(feat_s v, bool keep) {
 void creaturea::matchenemy(bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {
-		if((p->enemy_index != 0xFF) != keep)
+		if((p->enemy != 0) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -33,7 +33,7 @@ void creaturea::matchenemy(bool keep) {
 void creaturea::matchready(bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {
-		if(p->isready()!=keep)
+		if(p->isready() != keep)
 			continue;
 		*ps++ = p;
 	}

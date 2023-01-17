@@ -14,3 +14,5 @@ BSDATA(durationi) = {
 	{"Turn4d4", 4 * TURN, 16 * TURN},
 };
 assert_enum(durationi, Turn4d4)
+
+duration_s duration;

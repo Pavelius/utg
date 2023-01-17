@@ -22,11 +22,14 @@ struct itemi : nameable {
 	struct armori {
 		char	ac, dr;
 	};
+	const char*	unidentified;
 	int			cost, weight, count;
+	char		magic, charges;
 	armori		armor;
 	weaponi		weapon;
 	wear_s		wear;
 	featable	flags;
+	variants	use, effect;
 	const enchantmentseti* enchantments;
 	bool		is(feat_s v) const { return flags.is(v); }
 };
@@ -37,7 +40,7 @@ struct item {
 		struct {
 			unsigned char identified : 1;
 			unsigned char broken : 1;
-			unsigned char charge : 5;
+			unsigned char charges : 5;
 			unsigned char count_nocountable;
 		};
 	};
@@ -59,4 +62,8 @@ struct item {
 	bool		iscountable() const { return geti().count != 0; }
 	bool		ismagical() const { return getenchant() != 0; }
 	void		setcount(int v);
+};
+struct itema : adat<item*> {
+	void		select(const slice<item>& source);
+	void		match(wear_s wear, bool keep);
 };

@@ -1,8 +1,10 @@
-#include "main.h"
+#include "game.h"
 
 gamei game;
 static char sb_console_text[4096];
 static stringbuilder sb_console(sb_console_text);
+
+inline int d6() { return 1 + rand() % 6; }
 
 static bool rollsurprisedice(int value = 2) {
 	return d6() >= value;

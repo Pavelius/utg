@@ -238,6 +238,7 @@
     <ClInclude Include="avatarable.h" />
     <ClInclude Include="bonus.h" />
     <ClInclude Include="bsenum.h" />
+    <ClInclude Include="bsref.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="cdat.h" />

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "creature.h"
 
 static void print(stringbuilder& sb, const dice& v) {
 	auto min = v.c + v.b;
