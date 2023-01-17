@@ -1,15 +1,3 @@
-#EnchantmentSet
-
-BasicMagicPotions
- elements ShrinkSize Diminution
- elements ESP ESP
- elements GaseousForm GaseousForm
- elements GrowthSize Growth
- elements CureLightWound Healing
- elements Invisibility Invisibility
- elements Levitate Levitation
- elements DeathPoison Poison
-
 #Item
 
 NoItem
@@ -92,11 +80,11 @@ Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  flags WearShield
  armor ac(1)
 
-AquaPotion cost(10) weight(10) wear(Potion) enchantments(BasicMagicPotions)
-BlackPotion cost(50) weight(10) wear(Potion) enchantments(BasicMagicPotions)
-BluePotion cost(60) weight(10) wear(Potion) enchantments(BasicMagicPotions)
-GreenPotion cost(70) weight(10) wear(Potion) enchantments(BasicMagicPotions)
-YellowPotion cost(100) weight(10) wear(Potion) enchantments(BasicMagicPotions)
+AquaPotion cost(10) weight(10) wear(Potion)
+BlackPotion cost(50) weight(10) wear(Potion)
+BluePotion cost(60) weight(10) wear(Potion)
+GreenPotion cost(70) weight(10) wear(Potion)
+YellowPotion cost(100) weight(10) wear(Potion)
 
 #List
 

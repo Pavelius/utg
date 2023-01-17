@@ -273,14 +273,4 @@ void creature::drink(spell_s spell) {
 }
 
 void creature::use(item& it) {
-	auto& ei = it.geti();
-	auto pe = it.getenchant();
-	switch(ei.wear) {
-	case Potion:
-		if(pe) {
-			if(pe->special.iskind<spelli>())
-				drink((spell_s)pe->special.value);
-		}
-		break;
-	}
 }

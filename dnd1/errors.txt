@@ -1,8 +1,6 @@
 ﻿In file `rules/Items.txt`:
- Line 7: Expected line feed
-In file `rules/RandomGems.txt`:
- Line 3: Unknown variant identifier `OrnamentalStones`
- Line 4: Unknown variant identifier `SemiPreciousStones`
- Line 5: Unknown variant identifier `FancyStones`
- Line 6: Unknown variant identifier `PreciousStones`
- Line 7: Unknown variant identifier `GemStones`
+ Line 83: Not found requisit `enchantments`
+ Line 84: Not found requisit `enchantments`
+ Line 85: Not found requisit `enchantments`
+ Line 86: Not found requisit `enchantments`
+ Line 87: Not found requisit `enchantments`

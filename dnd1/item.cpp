@@ -20,18 +20,16 @@ void item::setcount(int v) {
 		clear();
 	else if(iscountable())
 		count = v - 1;
-	else
-		count_nocountable = v - 1;
 }
 
 int item::getcount() const {
 	if(!type)
 		return 0;
-	return iscountable() ? count + 1 : count_nocountable + 1;
+	return iscountable() ? count + 1 : 1;
 }
 
 void item::add(item& v) {
-	if(type != v.type || subtype != v.subtype)
+	if(type != v.type)
 		return;
 	if(iscountable()) {
 		unsigned n1 = count + v.count + 1;
@@ -40,15 +38,6 @@ void item::add(item& v) {
 			v.count = n1 - count - 1;
 		} else {
 			count = n1;
-			v.clear();
-		}
-	} else {
-		unsigned n1 = count_nocountable + v.count_nocountable + 1;
-		if(n1 >= 0xFF) {
-			count_nocountable = 0xFF;
-			v.count_nocountable = n1 - count_nocountable - 1;
-		} else {
-			count_nocountable = n1;
 			v.clear();
 		}
 	}
@@ -85,15 +74,6 @@ int	item::getweight() const {
 int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
-}
-
-const enchantmenti* item::getenchant() const {
-	if(!subtype)
-		return 0;
-	auto& ei = geti();
-	if(!ei.enchantments)
-		return 0;
-	return ei.enchantments->elements.begin() + (subtype - 1);
 }
 
 void itema::select(const slice<item>& source) {
