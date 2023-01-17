@@ -18,6 +18,13 @@ static void clear_console() {
 		answers::console->clear();
 }
 
+static void update_enemies() {
+	for(auto p : creatures) {
+		if(p->enemy && !p->enemy->isready())
+			p->enemy = 0;
+	}
+}
+
 static void choose_enemies() {
 	targets.clear();
 	if(player->is(Player)) {
@@ -53,8 +60,10 @@ static void choose_player_enemy() {
 static bool attack_melee(bool run) {
 	if(!player->enemy)
 		return false;
-	if(run)
+	if(run) {
 		player->meleeattack();
+		update_enemies();
+	}
 	return true;
 }
 
@@ -69,6 +78,7 @@ static bool charge(bool run) {
 		player->add(MeleeToHit, 1);
 		player->add(AC, -1);
 		player->meleeattack();
+		update_enemies();
 	}
 	return true;
 }

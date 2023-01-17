@@ -53,4 +53,7 @@ Intellect: Интеллект
 Strenght: Сила
 Wisdow: Мудрость
 
+AC: AC
+THAC0: THAC0
+
 Skeleton: Скелет
