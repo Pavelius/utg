@@ -5,6 +5,7 @@
 #include "menu.h"
 #include "monster.h"
 #include "ongoing.h"
+#include "rolldice.h"
 #include "script.h"
 #include "widget.h"
 
@@ -69,6 +70,10 @@ BSMETA(monsteri) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
+BSMETA(rolldice) = {
+	BSREQ(id),
+	BSREQ(value),
+	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
@@ -84,6 +89,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
+	{"Dice", VAR(rolldice, 1)},
 	{"Equipment", VAR(equipmenti, 2)},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1)},

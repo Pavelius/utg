@@ -160,6 +160,7 @@
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
+    <ClInclude Include="rolldice.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="range.cpp" />
+    <ClCompile Include="rolldice.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="spell.cpp" />

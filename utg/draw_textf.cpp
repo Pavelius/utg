@@ -1,6 +1,12 @@
 #include "crt.h"
 #include "draw.h"
 
+///////////////////////////////////////////////////////////
+// RICH COMMAND FORMAT EXAMPLE
+//
+// $left 64 image Bitmap 0 'art/images'
+// $right 64 tips !-'Some tips with tags'-! image AnotherBitmap 0 'art/images'
+
 using namespace draw;
 
 static char text_params_data[4096];
@@ -9,6 +15,96 @@ long draw::text_params[16];
 static const char* text_start_string;
 static int text_start_horiz;
 static point maxcaret;
+
+static bool equaln(const char*& p, const char* name) {
+	int n = zlen(name);
+	if(memcmp(p, name, n) != 0)
+		return false;
+	switch(p[n]) {
+	case '\n': case ' ': case '\t':
+		p += n;
+		return true;
+	default:
+		return false;
+	}
+}
+
+static const char* read_special_string(const char* p, stringbuilder& sb) {
+	while(*p) {
+		if(p[0] == '-' && p[1] == '!' && p[2] == '\'')
+			p = read_special_string(p + 3, sb);
+		else if(p[0] == '\'' && p[1] == '-' && p[2] == '!') {
+			p = skipsp(p + 3);
+			break;
+		}
+	}
+	return p;
+}
+
+static const char* getparam(const char*& p, stringbuilder& sb) {
+	auto pb = sb.get();
+	if(p[0] == '-' && p[1] == '!' && p[2] == '\'')
+		p = read_special_string(p + 3, sb);
+	else if(p[0] == '\'')
+		p = sb.psstr(p + 1, '\'');
+	else if(p[0] == '\"')
+		p = sb.psstr(p + 1, '\"');
+	sb.addsz();
+	return pb;
+}
+
+static int getparam(const char*& p) {
+	if(isnum(p[0]) || (p[0] == '-' && isnum(p[1]))) {
+		int result = 0;
+		p = stringbuilder::read(p, result);
+		return result;
+	}
+	return 0;
+}
+
+static const char* skip_line(const char* p) {
+	for(; *p && p[0] != 10 && p[0] != 13; p++);
+	return skipcr(p);
+}
+
+static const char* parse_widget_command(const char* p) {
+	auto push_caret = caret;
+	auto push_width = width;
+	const char* tips = 0;
+	char temp[4096]; stringbuilder sb(temp);
+	while(*p) {
+		if(equaln(p, "left")) {
+			auto widget_width = getparam(p);
+			if(widget_width) {
+				width = widget_width;
+				push_width -= widget_width;
+				push_caret.x += widget_width;
+			}
+			continue;
+		} else if(equaln(p, "right")) {
+			auto widget_width = getparam(p);
+			if(widget_width) {
+				width = widget_width;
+				caret.x = caret.x + push_width - width;
+				push_width -= widget_width;
+			}
+			continue;
+		} else if(equaln(p, "tips")) {
+			tips = getparam(p, sb);
+			continue;
+		} else if(equaln(p, "image")) {
+			auto bitmap_name = getparam(p, sb);
+			auto frame_id = getparam(p);
+			auto bitmap_folder = getparam(p, sb);
+		}
+		if(tips && ishilite())
+			tips_sb.add(tips);
+		p = skip_line(p);
+		break;
+	}
+	caret = push_caret;
+	width = push_width;
+}
 
 static bool match(const char** string, const char* name) {
 	int n = zlen(name);

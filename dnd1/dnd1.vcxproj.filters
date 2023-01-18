@@ -72,6 +72,9 @@
     <ClInclude Include="room.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="rolldice.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,6 +141,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="monster.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="rolldice.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
