@@ -627,7 +627,7 @@ static void choose_game_options() {
 	pushvalue push_input(input_province, choose_province);
 	an.clear();
 	for(auto& e : bsdata<heroi>()) {
-		an.add(&e, "#$left image '%1' 0 'art/avatars'\n###%2 - %-Level %3i", e.resid, e.getname(), e.effect[Strenght]);
+		an.add(&e, "#$left 48 image '%1' 0 'art/avatars'\n###%2 - %-Level %3i", e.resid, e.getname(), e.effect[Strenght]);
 	}
 	auto result = an.choose(0, getnm("EndTurn"), 1);
 	if(!result)

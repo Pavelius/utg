@@ -22,7 +22,7 @@ static bool equaln(const char*& p, const char* name) {
 		return false;
 	switch(p[n]) {
 	case '\n': case ' ': case '\t':
-		p += n;
+		p = skipsp(p + n);
 		return true;
 	default:
 		return false;
@@ -49,7 +49,10 @@ static const char* getparam(const char*& p, stringbuilder& sb) {
 		p = sb.psstr(p + 1, '\'');
 	else if(p[0] == '\"')
 		p = sb.psstr(p + 1, '\"');
+	else if(ischa(*p))
+		p = sb.psidf(p);
 	sb.addsz();
+	p = skipsp(p);
 	return pb;
 }
 
@@ -57,6 +60,7 @@ static int getparam(const char*& p) {
 	if(isnum(p[0]) || (p[0] == '-' && isnum(p[1]))) {
 		int result = 0;
 		p = stringbuilder::read(p, result);
+		p = skipsp(p);
 		return result;
 	}
 	return 0;
@@ -68,6 +72,7 @@ static const char* skip_line(const char* p) {
 }
 
 static const char* parse_widget_command(const char* p) {
+	auto next_line = true;
 	auto push_caret = caret;
 	auto push_width = width;
 	const char* tips = 0;
@@ -79,6 +84,7 @@ static const char* parse_widget_command(const char* p) {
 				width = widget_width;
 				push_width -= widget_width;
 				push_caret.x += widget_width;
+				next_line = false;
 			}
 			continue;
 		} else if(equaln(p, "right")) {
@@ -87,23 +93,47 @@ static const char* parse_widget_command(const char* p) {
 				width = widget_width;
 				caret.x = caret.x + push_width - width;
 				push_width -= widget_width;
+				next_line = false;
 			}
 			continue;
 		} else if(equaln(p, "tips")) {
 			tips = getparam(p, sb);
 			continue;
 		} else if(equaln(p, "image")) {
-			auto bitmap_name = getparam(p, sb);
-			auto frame_id = getparam(p);
-			auto bitmap_folder = getparam(p, sb);
-		}
+			auto name = getparam(p, sb);
+			auto id = getparam(p);
+			auto folder = getparam(p, sb);
+			auto ps = gres(name, folder);
+			if(ps) {
+				width = ps->get(id).sx;
+				height = ps->get(id).sy;
+				if(clipping) {
+					image(ps, id, ImageNoOffset);
+					auto push_fore = fore;
+					fore = colors::border;
+					rectb();
+					fore = push_fore;
+				}
+			}
+		} else if(equaln(p, "tab"))
+			tab_pixels = getparam(p);
 		if(tips && ishilite())
 			tips_sb.add(tips);
 		p = skip_line(p);
 		break;
 	}
+	if(caret.x + width > maxcaret.x)
+		maxcaret.x = caret.x + width;
+	if(caret.y + height > maxcaret.y)
+		maxcaret.y = caret.y + height;
 	caret = push_caret;
 	width = push_width;
+	if(next_line) {
+		caret.y += height + metrics::padding;
+		if(caret.y > maxcaret.y)
+			maxcaret.y = caret.y;
+	}
+	return p;
 }
 
 static bool match(const char** string, const char* name) {
@@ -320,141 +350,6 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 	return p;
 }
 
-static const char* text_block(const char* p, int original_x1, int original_x2);
-
-static const char* parse_parameters(const char* p, const char*& id, unsigned& align) {
-	memset(text_params, 0, sizeof(text_params));
-	stringbuilder sb(text_params_data);
-	auto count = 0; id = 0; align = AlignCenter;
-	while(*p && !(*p == 13 || *p == 10)) {
-		auto p1 = p;
-		auto is_text = false;
-		long value = 0;
-		p = stringbuilder::read(p, value);
-		if(p == p1) {
-			is_text = true;
-			value = (long)sb.get();
-			if(p[0] == '$' && p[1] == '{')
-				p = sb.psline(skipspcr(p + 2));
-			else if(p[0] == '\"' || p[0] == '\'')
-				p = sb.psstr(p + 1, p[0]);
-			else
-				p = sb.psidf(p);
-			sb.addsz();
-		}
-		p = skipsp(p);
-		if(p == p1)
-			break;
-		if(is_text) {
-			auto pid = (const char*)value;
-			if(!count) {
-				if(equal(pid, "left")) {
-					align = AlignLeftCenter;
-					continue;
-				} else if(equal(pid, "right")) {
-					align = AlignRightCenter;
-					continue;
-				}
-			}
-			if(!id) {
-				id = pid;
-				continue;
-			}
-		}
-		text_params[count++] = value;
-	}
-	return skipspcr(p);
-}
-
-static void execute_image() {
-	auto name = (const char*)text_params[0];
-	auto id = text_params[1];
-	auto folder = (const char*)text_params[2];
-	auto tips = (const char*)text_params[3];
-	if(!folder)
-		folder = "art/pictures";
-	auto ps = gres(name, folder);
-	if(!ps)
-		return;
-	width = ps->get(id).sx;
-	height = ps->get(id).sy;
-	if(!clipping)
-		return;
-	image(ps, id, ImageNoOffset);
-	auto push_fore = fore;
-	fore = colors::border;
-	rectb();
-	fore = push_fore;
-	if(tips && ishilite())
-		tooltips(tips);
-}
-
-static void execute_center() {
-	auto name = (const char*)text_params[0];
-	auto tips = (const char*)text_params[1];
-}
-
-static void execute_tab() {
-	tab_pixels = text_params[0];
-}
-
-static void execute_command(const char* id) {
-	if(equal(id, "image"))
-		execute_image();
-	else if(equal(id, "tab"))
-		execute_tab();
-}
-
-static const char* parse_command(const char* p, int x1, int x2) {
-	unsigned align; const char* id;
-	p = parse_parameters(p, id, align);
-	if(!id)
-		return p;
-	auto push_width = width;
-	auto push_height = height;
-	auto push_clipping = clipping;
-	width = x2 - x1; height = 0;
-	switch(align) {
-	case AlignLeftCenter:
-		execute_command(id);
-		if(height) {
-			auto y2 = caret.y + height;
-			caret.x += width + metrics::border;
-			p = text_block(p, caret.x, x2);
-			if(caret.y < y2)
-				caret.y = y2;
-			apply_line_feed(x1, 0);
-		}
-		break;
-	case AlignRightCenter:
-		clipping.clear();
-		execute_command(id);
-		clipping = push_clipping;
-		if(height && width) {
-			auto w = width;
-			caret.x = x2 - width;
-			execute_command(id);
-			caret.x = x1;
-			auto y2 = caret.y + height;
-			p = text_block(p, x1, x2 - w - metrics::border);
-			if(caret.y < y2)
-				caret.y = y2;
-			apply_line_feed(x1, 0);
-		}
-		break;
-	default:
-		execute_command(id);
-		if(height)
-			caret.y += height + metrics::border;
-		apply_line_feed(x1, 0);
-		height = push_height;
-		width = push_width;
-		break;
-	}
-	clipping = push_clipping;
-	return p;
-}
-
 static const char* text_block(const char* p, int x1, int x2) {
 	while(p[0]) {
 		caret.x = x1; width = x2 - x1;
@@ -462,10 +357,7 @@ static const char* text_block(const char* p, int x1, int x2) {
 			text_start_string = p;
 			text_start_horiz = caret.y - clipping.y1;
 		}
-		if(match(&p, "$end\n")) {
-			p = skipspcr(p);
-			break;
-		} else if(match(&p, "#--")) // Header small
+		if(match(&p, "#--")) // Header small
 			p = textfln(skipsp(p), x1, x2, colors::h3, metrics::small);
 		else if(match(&p, "###")) // Header 3
 			p = textfln(skipsp(p), x1, x2, colors::h3, metrics::h3);
@@ -500,7 +392,7 @@ static const char* text_block(const char* p, int x1, int x2) {
 			p = textfln(p, caret.x, x2, fore, font);
 			caret.x = push_caret.x;
 		} else if(match(&p, "$"))
-			p = parse_command(p, x1, x2);
+			p = parse_widget_command(p);
 		else
 			p = textfln(p, x1, x2, fore, font);
 	}
@@ -514,8 +406,53 @@ void draw::textf(const char* p) {
 	maxcaret.clear();
 	text_start_string = 0;
 	text_start_horiz = 0;
-	auto x0 = caret.x; auto y0 = caret.y;
-	p = text_block(p, x0, x0 + width);
+	auto x0 = caret.x; auto x2 = caret.x + width; auto y0 = caret.y;
+
+	while(p[0]) {
+		if(caret.y < clipping.y1) {
+			text_start_string = p;
+			text_start_horiz = caret.y - clipping.y1;
+		}
+		if(match(&p, "#--")) // Header small
+			p = textfln(skipsp(p), caret.x, x2, colors::h3, metrics::small);
+		else if(match(&p, "###")) // Header 3
+			p = textfln(skipsp(p), caret.x, x2, colors::h3, metrics::h3);
+		else if(match(&p, "##")) // Header 2
+			p = textfln(skipsp(p), caret.x, x2, colors::h2, metrics::h2);
+		else if(match(&p, "#")) // Header 1
+			p = textfln(skipsp(p), caret.x, x2, colors::h1, metrics::h1);
+		else if(match(&p, "-#-")) // Citate
+			p = citate(skipspcr(p), caret.x + metrics::padding * 2, x2, colors::special.mix(colors::window, 192), metrics::font);
+		else if(match(&p, "---")) { // Line
+			p = skipspcr(p);
+			auto push_x = caret.x;
+			caret.y += 2;
+			caret.x -= metrics::border;
+			auto push_fore = fore;
+			fore = colors::border;
+			line(x2 + metrics::border - 1, caret.y);
+			fore = push_fore;
+			caret.x = push_x;
+			caret.y += 2;
+		} else if(match(&p, "* ")) {
+			// Список
+			auto dx = texth() / 2;
+			auto rd = texth() / 6;
+			auto push_caret = caret;
+			caret.x += dx + 2;
+			caret.y += dx;
+			circlef(rd);
+			circle(rd);
+			caret = push_caret;
+			caret.x += texth();
+			p = textfln(p, caret.x, x2, fore, font);
+			caret.x = push_caret.x;
+		} else if(match(&p, "$"))
+			p = parse_widget_command(p);
+		else
+			p = textfln(p, caret.x, x2, fore, font);
+	}
+
 	maxcaret.x -= x0; maxcaret.y -= y0;
 	tab_pixels = push_tab;
 	width = push_width;
