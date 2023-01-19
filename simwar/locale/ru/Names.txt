@@ -89,4 +89,5 @@ Units: Отряды
 UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
 WhatDoYouWantToBuild: Какое здание хотите построить?
+WhoDo: Кто это будет делать?
 YouForceMeetNoResistance: Армия не встретила никакого сопротивления.

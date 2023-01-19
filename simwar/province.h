@@ -1,4 +1,5 @@
 #include "collection.h"
+#include "flagable.h"
 #include "landscape.h"
 #include "point.h"
 #include "statable.h"
@@ -7,7 +8,7 @@
 #pragma once
 
 struct playeri;
-struct provincei;
+typedef flagable<32> provincef;
 
 struct provincei : nameable {
 	playeri*			player;
@@ -19,6 +20,7 @@ struct provincei : nameable {
 	void				clearcurrent();
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
+	bool				isvisible() const;
 	void				makewave() const;
 	int					getbuildings() const;
 	int					getcost() const;
@@ -42,5 +44,6 @@ struct neightbors : collection<provincei> {
 	void				selectn(const provincei* base);
 };
 extern provincei*		province;
+extern provincef		visibility;
 void					clear_wave();
 provincei*				find_zero_cost();

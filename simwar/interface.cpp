@@ -246,6 +246,8 @@ static void paint_neighbor() {
 	neightbors source;
 	source.selectn(province);
 	for(auto p : source) {
+		if(!p->isvisible())
+			continue;
 		caret = push_caret;
 		point pt = p->position - camera;
 		line(pt.x, pt.y);
@@ -336,7 +338,7 @@ static void remove_object(array& source) {
 void update_provinces_ui() {
 	remove_object(bsdata<provincei>::source);
 	for(auto& e : bsdata<provincei>()) {
-		if(e.getcost() > 1)
+		if(!e.isvisible())
 			continue;
 		auto p = addobject(e.position.x, e.position.y);
 		p->data = &e;

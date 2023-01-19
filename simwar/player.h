@@ -10,5 +10,6 @@ struct playeri : nameable {
 	costac		income, faith, artifacts;
 	variants	start;
 	tacticaf	tactics;
+	provincef	visibility;
 };
 extern playeri* player;

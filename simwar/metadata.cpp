@@ -32,7 +32,6 @@ BSDATAC(uniti, 48)
 
 BSMETA(actioni) = {
 	BSREQ(id),
-	BSFLG(tags, tagi),
 	{}};
 BSMETA(buildingi) = {
 	BSREQ(id),
@@ -55,6 +54,7 @@ BSMETA(heroi) = {
 	BSDST(effect, costi),
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),
+	BSREQ(player),
 	{}};
 BSMETA(landscapei) = {
 	BSREQ(id), BSREQ(water),
@@ -109,6 +109,7 @@ BSMETA(uniti) = {
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),
 	BSFLG(tactics, tactici),
+	BSFLG(tags, tagi),
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},

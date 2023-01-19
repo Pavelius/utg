@@ -5,6 +5,7 @@
 
 enum tag_s : unsigned char {
 	Independed, Water,
+	Walking, Flying,
 	Hostile, Friendly, Neutral,
 };
 typedef flagable<4> tagf;

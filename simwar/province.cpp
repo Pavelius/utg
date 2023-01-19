@@ -7,7 +7,9 @@ const short unsigned Unknown = 0xFFF0;
 const short unsigned ZeroCost = 0xFFF1;
 const short unsigned Blocked = 0xFFFF;
 
-provincei* province;
+provincei*	province;
+provincef	visibility;
+
 static short unsigned pstart, pstop;
 static short unsigned movecost[128];
 static short unsigned movestack[256 * 256];
@@ -150,4 +152,8 @@ void provincei::update() {
 	strenght = getunitsvalue(Strenght);
 	if(strenght)
 		strenght += current[Strenght];
+}
+
+bool provincei::isvisible() const {
+	return visibility.is(getindex());
 }

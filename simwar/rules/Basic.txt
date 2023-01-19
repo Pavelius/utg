@@ -139,16 +139,9 @@ SouthernKindom
 
 #Hero
 
-Gordek resid("2MHUM6_S")
+Gordek resid("2MHUM6_S") player(SouthernKindom)
  effect Strenght(2)
-Mistra resid("2FELF2_S")
+Mistra resid("2FELF2_S") player(SouthernKindom)
  effect Strenght(2)
 Kalipse resid("2MDEF2_S")
  effect Strenght(2)
-
-#Action
-
-ActionConquer
- tags Hostile
-ActionMobilize
- tags Friendly

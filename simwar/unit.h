@@ -1,5 +1,6 @@
 #include "province.h"
 #include "tactic.h"
+#include "tag.h"
 
 #pragma once
 
@@ -7,6 +8,7 @@ typedef flagable<4>	unitaf;
 struct uniti : nameable {
 	costac			effect, cost, upkeep;
 	tacticaf		tactics;
+	tagf			tags;
 };
 struct troop : moveable {
 	provincei*		moveto;
