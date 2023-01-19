@@ -4,5 +4,8 @@
 BSDATA(tagi) = {
 	{"Independed"},
 	{"Water"},
+	{"Hostile"},
+	{"Friendly"},
+	{"Neutral"},
 };
-assert_enum(tagi, Water)
+assert_enum(tagi, Neutral)

@@ -1,3 +1,4 @@
+#include "action.h"
 #include "bsreq.h"
 #include "building.h"
 #include "hero.h"
@@ -29,6 +30,10 @@ BSDATAC(tactici, 64)
 BSDATAC(troop, 1024)
 BSDATAC(uniti, 48)
 
+BSMETA(actioni) = {
+	BSREQ(id),
+	BSFLG(tags, tagi),
+	{}};
 BSMETA(buildingi) = {
 	BSREQ(id),
 	BSDST(effect, costi),
@@ -108,6 +113,7 @@ BSMETA(uniti) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(costi, 1), ftstatus<costi>},
+	{"Action", VAR(actioni, 1)},
 	{"Building", VAR(buildingi, 1), ftstatus<buildingi>, 0, fnscript<buildingi>},
 	{"Hero", VAR(heroi, 1)},
 	{"Landscape", VAR(landscapei, 1)},

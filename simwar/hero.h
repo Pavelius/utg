@@ -1,9 +1,10 @@
+#include "action.h"
 #include "unit.h"
 
 #pragma once
 
-struct heroi : uniti {
+struct heroi : uniti, moveable {
 	const char*	resid;
-	playeri*	player;
-	provincei*	province;
+	actioni*	action;
 };
+extern heroi* hero;

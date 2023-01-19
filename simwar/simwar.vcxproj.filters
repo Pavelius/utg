@@ -69,6 +69,12 @@
     <ClCompile Include="tactic.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="hero.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -99,6 +105,9 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\ActionNames.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
@@ -146,6 +155,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="tactic.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="action.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

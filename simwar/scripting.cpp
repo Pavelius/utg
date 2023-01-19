@@ -18,6 +18,14 @@
 void player_turn();
 void update_provinces_ui();
 
+static heroi* find_hero(const provincei* province, const playeri* player) {
+	for(auto& e : bsdata<heroi>()) {
+		if(e.province == province && e.player == player)
+			return &e;
+	}
+	return 0;
+}
+
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
 	auto pn = getdescription(id);
@@ -97,6 +105,57 @@ static bool is_province_player(const void* pv) {
 
 static bool is_province_ocean(const void* pv) {
 	return ((provincei*)pv)->iswater();
+}
+
+static bool is_province_target_action(const void* pv) {
+	auto p = ((provincei*)pv);
+	if(action->is(Hostile) && p->player == player)
+		return false;
+	if(action->is(Friendly) && p->player != player)
+		return false;
+	if(action->is(Neutral) && p->player)
+		return false;
+	return true;
+}
+
+static bool choose_province_by_action(collection<provincei>& source) {
+	source.select(is_province_target_action);
+	return source.getcount()!=0;
+}
+
+static bool choose_province_by_action(actioni& e) {
+	pushvalue push_action(action, &e);
+	collection<provincei> source;
+	return choose_province_by_action(source);
+}
+
+static provincei* choose_action_province() {
+	collection<provincei> source;
+	if(!choose_province_by_action(source))
+		return 0;
+	return source.choose(getnm("ChooseProvince"), getnm("Cancel"), false);
+}
+
+static actioni* choose_action() {
+	an.clear();
+	for(auto& e : bsdata<actioni>()) {
+		if(!choose_province_by_action(e))
+			continue;
+		an.add(&e, e.getname());
+	}
+	return (actioni*)an.choose(getnm("ChooseAction"), getnm("Cancel"));
+}
+
+static void apply_action(int bonus) {
+	hero->action = choose_action();
+	if(!hero->action)
+		return;
+	auto push_action = action;
+	action = hero->action;
+	hero->province = choose_action_province();
+	action = push_action;
+	if(!hero->province)
+		hero->action = 0;
 }
 
 static bool canbuild(int bonus) {
@@ -623,19 +682,31 @@ static void choose_province_options() {
 	}
 }
 
+static const char* add_hero_prompt(const heroi& e, stringbuilder& sb) {
+	sb.clear();
+	sb.addn("#$left 48 image '%1' 0 'art/avatars'", e.resid);
+	sb.addn("###%1", e.getname());
+	if(e.action)
+		sb.addn(getnm(str("Do%1", e.action->id)), e.province->getname());
+	else
+		sb.addn(getnm("DoRandomAction"));
+	return sb;
+}
+
 static void choose_game_options() {
+	char temp[512]; stringbuilder sb(temp);
 	pushvalue push_input(input_province, choose_province);
 	an.clear();
-	for(auto& e : bsdata<heroi>()) {
-		an.add(&e, "#$left 48 image '%1' 0 'art/avatars'\n###%2 - %-Level %3i", e.resid, e.getname(), e.effect[Strenght]);
-	}
+	for(auto& e : bsdata<heroi>())
+		an.add(&e, add_hero_prompt(e, sb));
 	auto result = an.choose(0, getnm("EndTurn"), 1);
 	if(!result)
 		end_turn();
 	else if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
 	else if(bsdata<heroi>::have(result)) {
-
+		pushvalue push_hero(hero, (heroi*)result);
+		apply_action(0);
 	} else
 		((fnevent)result)();
 }
@@ -845,14 +916,6 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 		retreat_attacker(attacker);
 		gain_spoils(sb, defender);
 	}
-}
-
-static heroi* find_hero(const provincei* province, const playeri* player) {
-	for(auto& e : bsdata<heroi>()) {
-		if(e.province == province && e.player == player)
-			return &e;
-	}
-	return 0;
 }
 
 void conquest() {

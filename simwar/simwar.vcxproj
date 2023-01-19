@@ -148,11 +148,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="army.cpp" />
     <ClCompile Include="building.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="costitem.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="hero.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="log_text.cpp" />
     <ClCompile Include="main.cpp" />
@@ -169,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\ActionNames.txt" />
     <Text Include="locale\ru\BuildingDescriptions.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
@@ -180,6 +183,7 @@
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="action.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />

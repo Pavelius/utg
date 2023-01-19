@@ -45,7 +45,7 @@ static void initialize_scene() {
 	script::run(player->start);
 	game.initialize();
 	script::run("UpdatePlayer");
-	test_army();
+	//test_army();
 }
 
 static void start_game() {

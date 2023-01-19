@@ -145,3 +145,10 @@ Mistra resid("2FELF2_S")
  effect Strenght(2)
 Kalipse resid("2MDEF2_S")
  effect Strenght(2)
+
+#Action
+
+ActionConquer
+ tags Hostile
+ActionMobilize
+ tags Friendly

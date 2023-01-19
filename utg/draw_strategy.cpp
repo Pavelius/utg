@@ -298,6 +298,14 @@ static void tipsposition(const char* format) {
 }
 
 static void paint_tips() {
+	auto tips = tips_sb.begin();
+	if(tips[0] == '@') {
+		auto object = variant(tips + 1);
+		if(object) {
+			hilite_object = object.getpointer();
+			tips_sb.clear();
+		} 
+	}
 	if(!tips_sb) {
 		variant v = hilite_object;
 		if(!v)
