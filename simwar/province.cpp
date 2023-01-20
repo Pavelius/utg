@@ -1,4 +1,6 @@
 #include "building.h"
+#include "hero.h"
+#include "player.h"
 #include "province.h"
 #include "script.h"
 #include "unit.h"
@@ -68,7 +70,8 @@ void provincei::setblocked() const {
 }
 
 int	provincei::getcost() const {
-	return movecost[getindex()];
+	auto i = getindex();
+	return movecost[i];
 }
 
 void neightbors::selectn(const provincei* province) {
@@ -108,15 +111,6 @@ int provincei::getunits() const {
 	return count;
 }
 
-int provincei::getunitsvalue(cost_s v) const {
-	auto result = 0;
-	for(auto& e : bsdata<troop>()) {
-		if(e.province == this)
-			result += e.type->effect[v];
-	}
-	return result;
-}
-
 void provincei::add(cost_s v, int value) {
 	income[v] += value;
 	switch(v) {
@@ -140,18 +134,14 @@ void provincei::explore(int value) {
 	}
 }
 
-void provincei::clearcurrent() {
-	memcpy(current, income, sizeof(current));
-}
-
 void provincei::update() {
+	memcpy(current, income, sizeof(current));
 	addvalue(current, landscape->effect);
 	subvalue(current, landscape->upkeep);
 	buildings = getbuildings();
 	units = getunits();
-	strenght = getunitsvalue(Strenght);
-	if(strenght)
-		strenght += current[Strenght];
+	defend = current[Strenght];
+	attack = 0;
 }
 
 bool provincei::isvisible() const {

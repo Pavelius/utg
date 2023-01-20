@@ -17,3 +17,9 @@ troop* find_troop(const uniti* type, const provincei* province, const playeri* p
 	}
 	return 0;
 }
+
+const char* troop::getname() const {
+	if(!type)
+		return "None";
+	return str("%1 (%2)", type->getname(), province->getname());
+}

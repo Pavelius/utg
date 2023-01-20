@@ -1,3 +1,7 @@
 ﻿In file `rules/Basic.txt`:
- Line 142: Not found requisit `player`
- Line 144: Not found requisit `player`
+ Line 91: Not found field `Movement` in dataset `effect`
+ Line 95: Not found field `Movement` in dataset `effect`
+ Line 99: Not found field `Movement` in dataset `effect`
+ Line 103: Not found field `Movement` in dataset `effect`
+ Line 107: Not found field `Movement` in dataset `effect`
+ Line 111: Not found field `Movement` in dataset `effect`

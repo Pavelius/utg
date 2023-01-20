@@ -16,7 +16,6 @@ BSDATA(costi) = {
 	{"Archery"},
 	{"Level"},
 	{"Armor"},
-	{"Movement"},
 	{"Sail"},
 	{"Explore"},
 	{"ExploreNext"},
@@ -27,7 +26,8 @@ BSDATA(costi) = {
 	{"Mithril", FG(Resource) | FG(PerTurn)},
 	{"Horses", FG(Resource) | FG(PerTurn)},
 	{"Mandrake", FG(Resource) | FG(PerTurn)},
-	{"Build", FG(PerTurn)},
+	{"Build"},
+	{"Recruit"},
 	{"Size", 0, 0, 0, 5},
 	{"Limit"},
 };

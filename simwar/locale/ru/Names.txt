@@ -52,6 +52,7 @@ And: И
 Army: Армия
 ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
 ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
+ArmyMobilize: Армия %-NameOf общей силой %TotalStrenght отправляется на захват провинции %Province.
 AttackerArchery: %Units %-NameOfNoHero дали залп и нанесли %TotalArchery повреждений.
 AttackerCharge: %Units %-NameOfNoHero с разбега влетели в ряды врага нанеся %TotalCharge повреждений.
 AttackerDamage: %Units %-NameOfNoHero столкнулись в ближнем бою с отрядами врага и нанесли %TotalDamage повреждений.
@@ -64,9 +65,11 @@ DefenderArchery: %Units %-NameOfNoHero дали залп в ответ и нан
 DefenderCharge: %Units %-NameOfNoHero ударили во фланг завязшего в ближнем бою врага нанеся %TotalCharge повреждений.
 DefenderDamage: %Units %-NameOfNoHero яростно рубились в ответ нанеся %TotalDamage повреждений.
 DefenderFinale: Отряды %-NameOfNoHero имеют общую силу %TotalStrenght.
+DisableOrder: Вы действительно хотите отменить приказ [%-1] провинцию [%-2]?
 AddBuilding: Построить здание (осталось %1i)
 AppTitle: Стратегия
 Cost: Стоит
+Confirm: Подтвердить
 Continue: Продолжить
 Building: Здание
 Buildings: Здания
@@ -78,16 +81,24 @@ Explore: Исследовано
 IndependedForce: Нейтралные силы
 IndependedForceOf: Нейтральных сил
 LeadedBy: под предводительством %$1
+HeroLeadConquest: %1 возглавляет поход общей силой [%2i].
 Leave: Уйти
+MinimalStrenghtRequired: [-Требуется минимальная сила %1i].
 Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
+Recruit: Нанять
+RemoveAll: Сбросить все
 Settlements: Поселение
 Site: Локация
+TakeActivity: Участвует %1.
 Unit: Отряд
 Units: Отряды
 UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
 WhatDoYouWantToBuild: Какое здание хотите построить?
 WhoDo: Кто это будет делать?
+WhoWillBeMarching: Кто еще участвует в походе?
+YourArmyIs: В походе участвуют
+YourArmyIsEmpthy: Войска не участвуют в походе.
 YouForceMeetNoResistance: Армия не встретила никакого сопротивления.

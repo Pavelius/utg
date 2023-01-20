@@ -29,6 +29,8 @@ struct stringarmy : stringact {
 			pa->addunits(*this);
 		else if(equal(identifier, "UnitsAll"))
 			pa->addunits(*this, false);
+		else if(equal(identifier, "Province"))
+			add(pa->province->getname());
 		else if(equal(identifier, "Spoils"))
 			add_line(*this, pa->spoils);
 		else if(szstart(identifier, "Total")) {

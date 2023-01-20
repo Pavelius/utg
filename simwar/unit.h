@@ -14,6 +14,8 @@ struct troop : moveable {
 	provincei*		moveto;
 	const uniti*	type;
 	constexpr operator bool() const { return type != 0; }
+	const char*		getname() const;
+	static const char* getname(const void* p) { return ((troop*)p)->getname(); }
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			paint() const;
 };

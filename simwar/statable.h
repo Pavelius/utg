@@ -8,9 +8,9 @@ enum statf : unsigned char {
 enum cost_s : unsigned char {
 	Gold, Mana, Happiness, Fame, Faith, Lore, Warfire,
 	Strenght, Damage, Health, Charge, Archery, Level, Armor,
-	Movement, Sail, Explore, ExploreNext, Siege,
+	Sail, Explore, ExploreNext, Siege,
 	Wood, Iron, Silver, Mithril, Horses, Mandrake,
-	Build, Size,
+	Build, Recruit, Size,
 	Limit,
 };
 struct costi : nameable {

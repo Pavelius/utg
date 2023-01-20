@@ -20,8 +20,12 @@ typedef collection<heroi> heroa;
 
 void player_turn();
 void update_provinces_ui();
+static char sb_buffer[4096];
+static stringbuilder sb(sb_buffer);
 static heroa heroes;
 static troopa troops;
+static int troops_movement;
+static bool need_break;
 
 static heroi* find_hero(const provincei* province, const playeri* player) {
 	for(auto& e : bsdata<heroi>()) {
@@ -250,8 +254,16 @@ static bool player_troop(const void* pv) {
 	return ((troop*)pv)->player == player;
 }
 
+static bool troop_moved(const void* pv) {
+	return ((troop*)pv)->moveto && ((troop*)pv)->moveto != province;
+}
+
 static bool player_province_troop(const void* pv) {
 	return ((troop*)pv)->player == player && ((troop*)pv)->province == province;
+}
+
+static bool player_province_troop_moved(const void* pv) {
+	return ((troop*)pv)->player == player && ((troop*)pv)->moveto == province;
 }
 
 static bool player_building(const void* pv) {
@@ -347,19 +359,28 @@ static int get_income(cost_s v, stringbuilder& sb) {
 	return result;
 }
 
-static void clear_current() {
-	for(auto& e : bsdata<provincei>())
-		e.clearcurrent();
-}
-
 static void update_provinces() {
 	for(auto& e : bsdata<provincei>())
 		e.update();
-}
-
-static void update_province_buildings() {
 	for(auto& e : bsdata<building>())
 		addvalue(e.province->current, e.type->effect);
+	for(auto& e : bsdata<troop>()) {
+		if(e.moveto && e.player == player) {
+			if(e.moveto->player != player)
+				e.moveto->attack += e.type->effect[Strenght];
+		} else if(e.province)
+			e.province->defend += e.type->effect[Strenght];
+	}
+	for(auto& e : bsdata<heroi>()) {
+		if(!e.province)
+			continue;
+		if(e.player == player) {
+			if(e.province->player == player)
+				e.province->defend += e.get(Strenght);
+			else
+				e.province->attack += e.get(Strenght);
+		}
+	}
 }
 
 static void mark_player_provinces() {
@@ -385,9 +406,7 @@ static void update_province_visibility() {
 
 static void update_player(int bonus) {
 	memset(player->income, 0, sizeof(player->income));
-	clear_current();
 	update_provinces();
-	update_province_buildings();
 	visibility.clear();
 	update_province_visibility();
 }
@@ -433,7 +452,8 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
-	add_line(sb, 2, province->strenght);
+	add_line(sb, 1, province->attack);
+	add_line(sb, 2, province->defend);
 	if(province->player != player || !player->resources[Build])
 		add_line(sb, 5, province->buildings);
 	else
@@ -551,11 +571,17 @@ template<> void fnscript<buildingi>(int value, int bonus) {
 	}
 }
 
+static void recruit_units() {
+
+}
+
 static void choose_troops() {
 	pushvalue push_image(answers::resid, "Units");
 	an.clear();
 	for(auto p : troops)
 		an.add(p, p->type->getname());
+	if(province->recruit < province->current[Recruit])
+		an.add(recruit_units, getnm("Recruit"));
 	an.choose(0, getnm("Cancel"));
 }
 
@@ -660,7 +686,7 @@ static void choose_sites() {
 
 static bool player_hero_free(const void* pv) {
 	auto p = (heroi*)pv;
-	return p->province == 0 && p->action == 0 && p->player==player;
+	return p->province == 0 && p->action == 0 && p->player == player;
 }
 
 static bool player_hero(const void* pv) {
@@ -691,6 +717,8 @@ static void add_province_hero_actions() {
 	auto you_hero = find_hero(province, player);
 	if(you_hero)
 		return;
+	clear_wave();
+	province->makewave();
 	for(auto& e : bsdata<actioni>()) {
 		if(!e.test(province))
 			continue;
@@ -705,13 +733,99 @@ static void add_province_units() {
 		add_answers(choose_troops, "Army", troops.getcount(), "Unit");
 }
 
-static void do_hero_action(actioni* action) {
-	hero = choose_hero(header("Who", action->id));
-	if(hero) {
-		draw::slidecamera(province->position);
-		hero->action = action;
-		hero->province = province;
+static bool player_troop_cost(const void* pv) {
+	auto p = (troop*)pv;
+	if(p->player != player || !p->province)
+		return false;
+	auto cost = p->province->getcost();
+	return cost <= troops_movement;
+}
+
+static void add_army(stringbuilder& sb, const troopa& source) {
+	auto count = source.getcount();
+	auto pb = sb.get();
+	for(int i = 0; i < count; i++) {
+		if(pb[0]) {
+			if(i == count - 1)
+				sb.add(" %-And");
+			else
+				sb.add(",");
+		}
+		sb.adds("%-1", source[i]->type->getname());
 	}
+}
+
+static void clear_troops_movement() {
+	for(auto p : troops)
+		p->moveto = 0;
+	troops.clear();
+}
+
+static void select(army& destination, const troopa& source) {
+	destination.count = 0;
+	for(auto p : source)
+		destination.add(p->type);
+}
+
+static void apply_need_break() {
+	need_break = true;
+}
+
+static bool troops_mobilization(int value, int defence) {
+	pushvalue push_image(answers::resid, "Marching");
+	pushvalue push_console(answers::prompt, (const char*)sb_buffer);
+	pushvalue push_movement(troops_movement, value);
+	clear_wave();
+	province->makewave();
+	army troops_army;
+	troops_army.clear();
+	troops_army.hero = hero;
+	troops_army.province = province;
+	troops_army.player = hero->player;
+	need_break = false;
+	while(!draw::isnext() && !need_break) {
+		update_provinces();
+		troops.clear();
+		troops.select(player_province_troop_moved);
+		sb.clear();
+		select(troops_army, troops);
+		troops_army.act(sb, getnm("ArmyMobilize"));
+		an.clear();
+		troopa source;
+		source.select(player_troop_cost);
+		source.match(player_province_troop, false);
+		source.match(troop_moved, false);
+		for(auto p : source) {
+			if(p->moveto)
+				an.add(p, p->type->getname());
+			else
+				an.add(p, p->getname());
+		}
+		if(troops_army.get(Strenght) >= defence)
+			an.add(apply_need_break, getnm("Confirm"));
+		else
+			sb.addn(getnm("MinimalStrenghtRequired"), defence);
+		auto p = (troop*)an.choose(getnm("WhoWillBeMarching"), getnm("Cancel"));
+		if(!p) {
+			clear_troops_movement();
+			update_provinces();
+			return false;
+		} else if(bsdata<troop>::have(p))
+			p->moveto = p->moveto ? 0 : province;
+		else
+			((fnevent)p)();
+	}
+	return true;
+}
+
+static void hero_action(actioni* action) {
+	hero = choose_hero(header("Who", action->id));
+	if(!hero)
+		return;
+	hero->province = province;
+	if(!troops_mobilization(1, 3))
+		return;
+	hero->action = action;
 }
 
 static void choose_province_options() {
@@ -731,9 +845,10 @@ static void choose_province_options() {
 			break;
 		} else if(bsdata<provincei>::have(result))
 			province = (provincei*)result;
-		else if(bsdata<actioni>::have(result))
-			do_hero_action((actioni*)result);
-		else {
+		else if(bsdata<actioni>::have(result)) {
+			draw::slidecamera(province->position);
+			hero_action((actioni*)result);
+		} else {
 			pushvalue push_input(input_province, (fnevent)0);
 			((fnevent)result)();
 		}
@@ -749,6 +864,22 @@ static const char* add_hero_prompt(const heroi& e, stringbuilder& sb) {
 	else
 		sb.addn(getnm("DoRandomAction"));
 	return sb;
+}
+
+static void remove_order(heroi* p) {
+	for(auto& e : bsdata<troop>()) {
+		if(e.moveto == p->province && e.player == p->player)
+			e.moveto = 0;
+	}
+	p->action = 0;
+	p->province = 0;
+	update_provinces();
+}
+
+static void accept_remove_order(heroi* hero) {
+	pushvalue push_image(answers::resid, hero->province->landscape->id);
+	if(draw::yesno(getnm("DisableOrder"), hero->action->getname(), hero->province->getname()))
+		remove_order(hero);
 }
 
 static void choose_game_options() {
@@ -767,6 +898,8 @@ static void choose_game_options() {
 		auto p = (heroi*)result;
 		if(p->province)
 			focus(p->province);
+		if(p->action)
+			accept_remove_order(p);
 	} else
 		((fnevent)result)();
 }
@@ -1006,7 +1139,7 @@ static bool friendly_province_vacant_army(const void* pv) {
 	troopa troops; troops.select(player_troop);
 	pushvalue push_province(province, p);
 	troops.match(player_province_troop, false);
-	return troops.getcount()!=0;
+	return troops.getcount() != 0;
 }
 
 static bool friendly_not_explored_province(const void* pv) {
@@ -1043,8 +1176,8 @@ static void action_explore() {
 }
 
 BSDATA(actioni) = {
-	{"ActionConquer", action_conquest, enemy_province, 4},
-	{"ActionExplore", action_explore, friendly_not_explored_province, 1},
-	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 5},
+	{"ActionConquer", action_conquest, enemy_province, 0, 4},
+	{"ActionExplore", action_explore, friendly_not_explored_province, "ActionExplore", 1},
+	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 0, 5},
 };
 BSDATAF(actioni)
