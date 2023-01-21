@@ -78,10 +78,12 @@ Cancel: Отмена
 DoYouWantRemoveBuilding: [%1] действительно подлежит сносу?
 EndTurn: Закончить ход
 Explore: Исследовано
+HeroLeadConquest: %1 возглавляет поход общей силой [%2i].
 IndependedForce: Нейтралные силы
 IndependedForceOf: Нейтральных сил
+Knights: Рыцари
 LeadedBy: под предводительством %$1
-HeroLeadConquest: %1 возглавляет поход общей силой [%2i].
+Swordsmans: Мечники
 Leave: Уйти
 MinimalStrenghtRequired: [-Требуется минимальная сила %1i].
 Piece: шт.
@@ -98,6 +100,7 @@ UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
 WhatDoYouWantToBuild: Какое здание хотите построить?
 WhoDo: Кто это будет делать?
+WhoRecruit: Кого хотите нанять (осталось %1i)?
 WhoWillBeMarching: Кто еще участвует в походе?
 YourArmyIs: В походе участвуют
 YourArmyIsEmpthy: Войска не участвуют в походе.

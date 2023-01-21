@@ -6,6 +6,7 @@ BSDATA(tagi) = {
 	{"Water"},
 	{"Walking"},
 	{"Flying"},
+	{"Recruitable"},
 	{"Hostile"},
 	{"Friendly"},
 	{"Neutral"},

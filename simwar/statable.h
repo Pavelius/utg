@@ -26,6 +26,8 @@ void addvalue(costa& v1, const costa& v2);
 void addvalue(costa& v1, const costac& v2);
 void addvalue(costac& v1, const costac& v2);
 bool isenought(const costa& v1, const costa& v2);
+bool isenought(const costa& v1, const costac& v2);
 bool isempthy(const costac& v);
 void subvalue(costa& v1, const costa& v2);
 void subvalue(costac& v1, const costac& v2);
+void subvalue(costa& v1, const costac& v2);

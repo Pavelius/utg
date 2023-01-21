@@ -176,6 +176,10 @@ static bool canbuild(int bonus) {
 	return true;
 }
 
+static void payunit(int bonus) {
+	subvalue(player->resources, lastunit->cost);
+}
+
 static void recruit() {
 	auto p = bsdata<troop>::add();
 	p->type = lastunit;
@@ -404,9 +408,15 @@ static void update_province_visibility() {
 	update_provinces_ui();
 }
 
-static void update_player(int bonus) {
+static void update_player_income() {
 	memset(player->income, 0, sizeof(player->income));
+	for(auto v = (cost_s)0; v < Limit; v = (cost_s)(v + 1))
+		player->income[v] = get_income(v);
+}
+
+static void update_player(int bonus) {
 	update_provinces();
+	update_player_income();
 	visibility.clear();
 	update_province_visibility();
 }
@@ -524,36 +534,6 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 	}
 }
 
-template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
-	auto p = (costi*)object;
-	auto v = (cost_s)(p - bsdata<costi>::elements);
-	add_description(p->id, sb);
-	sb.addn("---");
-	get_income(v, sb);
-}
-
-template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
-	auto p = (provincei*)object;
-	add_description(p->id, sb);
-	sb.addn("---");
-	add_line_upkeep(p, sb);
-}
-
-template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
-	auto p = (buildingi*)object;
-	add_description(p, sb);
-	sb.addn("---");
-	add_line(sb, "Cost", p->cost);
-	add_line(sb, "Upkeep", p->upkeep);
-}
-
-template<> void ftstatus<building>(const void* object, stringbuilder& sb) {
-	auto p = (building*)object;
-	add_description(p->type, sb);
-	sb.addn("---");
-	add_line(sb, "Upkeep", p->type->upkeep);
-}
-
 static void build(int bonus) {
 	if(!build_upgrade()) {
 		auto p = bsdata<building>::add();
@@ -572,17 +552,45 @@ template<> void fnscript<buildingi>(int value, int bonus) {
 }
 
 static void recruit_units() {
-
+	an.clear();
+	for(auto& e : bsdata<uniti>()) {
+		if(!e.is(Recruitable))
+			continue;
+		if(!isenought(player->resources, e.cost))
+			continue;
+		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.cost[Gold]);
+	}
+	auto left = province->current[Recruit] - province->recruit;
+	auto result = an.choose(str(getnm("WhoRecruit"), left), getnm("Cancel"), 0);
+	if(!result)
+		return;
+	if(bsdata<uniti>::have(result)) {
+		lastunit = (uniti*)result;
+		payunit(0);
+		recruit(1);
+		update_player(0);
+		province->recruit++;
+	}
 }
 
 static void choose_troops() {
 	pushvalue push_image(answers::resid, "Units");
-	an.clear();
-	for(auto p : troops)
-		an.add(p, p->type->getname());
-	if(province->recruit < province->current[Recruit])
-		an.add(recruit_units, getnm("Recruit"));
-	an.choose(0, getnm("Cancel"));
+	while(!draw::isnext()) {
+		an.clear();
+		troops.clear();
+		troops.select(player_province_troop);
+		for(auto p : troops)
+			an.add(p, p->type->getname());
+		if(province->recruit < province->current[Recruit])
+			an.add(recruit_units, getnm("Recruit"));
+		auto result = an.choose(0, getnm("Cancel"));
+		if(!result)
+			return;
+		else if(bsdata<uniti>::have(result)) {
+
+		} else
+			((fnevent)result)();
+	}
 }
 
 static void choose_build(int bonus) {
@@ -1112,6 +1120,36 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 }
 
 static void add_message(const char* format) {
+}
+
+template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
+	auto p = (costi*)object;
+	auto v = (cost_s)(p - bsdata<costi>::elements);
+	add_description(p->id, sb);
+	sb.addn("---");
+	get_income(v, sb);
+}
+
+template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
+	auto p = (provincei*)object;
+	add_description(p->id, sb);
+	sb.addn("---");
+	add_line_upkeep(p, sb);
+}
+
+template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
+	auto p = (buildingi*)object;
+	add_description(p, sb);
+	sb.addn("---");
+	add_line(sb, "Cost", p->cost);
+	add_line(sb, "Upkeep", p->upkeep);
+}
+
+template<> void ftstatus<building>(const void* object, stringbuilder& sb) {
+	auto p = (building*)object;
+	add_description(p->type, sb);
+	sb.addn("---");
+	add_line(sb, "Upkeep", p->type->upkeep);
 }
 
 BSDATA(script) = {

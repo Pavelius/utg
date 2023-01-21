@@ -6,9 +6,11 @@
 
 typedef flagable<4>	unitaf;
 struct uniti : nameable {
-	costac			effect, cost, upkeep;
+	costac			effect, upkeep;
+	costa			cost;
 	tacticaf		tactics;
 	tagf			tags;
+	bool			is(tag_s v) const { return tags.is(v); }
 };
 struct troop : moveable {
 	provincei*		moveto;
