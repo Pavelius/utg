@@ -90,32 +90,27 @@ Inn upgrade(Tavern)
 Milita
  effect Strenght(1) Damage(2) Health(6) Level(1)
  cost Gold(10)
- upkeep Gold(1) Warfire(1)
+ upkeep Gold(1)
 Spearmans
  effect Strenght(1) Damage(3) Armor(1) Health(8) Level(1)
  cost Gold(30)
  upkeep Gold(1) Warfire(1)
- tags Recruitable
 Archers
  effect Strenght(1) Damage(2) Health(6) Archery(2) Level(1)
  cost Gold(40)
  upkeep Gold(1) Warfire(1)
- tags Recruitable
 Swordsmans
  effect Strenght(2) Damage(5) Health(10) Armor(2) Level(2)
  cost Gold(80)
  upkeep Gold(1) Warfire(1)
- tags Recruitable
-Cavalry
+Cavalry fame(50)
  effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(2) Level(2)
  cost Gold(100)
  upkeep Gold(2) Warfire(1)
- tags Recruitable
-Knights
+Knights fame(100)
  effect Strenght(3) Damage(8) Health(16) Armor(3) Level(3)
  cost Gold(160)
  upkeep Gold(3) Warfire(1)
- tags Recruitable
 
 #Tactic
 

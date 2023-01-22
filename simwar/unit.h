@@ -10,7 +10,9 @@ struct uniti : nameable {
 	costa			cost;
 	tacticaf		tactics;
 	tagf			tags;
+	int				fame; // Minimal fame for recruit
 	bool			is(tag_s v) const { return tags.is(v); }
+	bool			isrecruitable() const { return upkeep[Warfire] != 0; }
 };
 struct troop : moveable {
 	provincei*		moveto;

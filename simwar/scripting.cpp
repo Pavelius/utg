@@ -40,15 +40,6 @@ static void focus(const provincei* p) {
 		draw::slidecamera(p->position);
 }
 
-static void add_description(const char* id, stringbuilder& sb) {
-	sb.addn("##%1", getnm(id));
-	auto pn = getdescription(id);
-	if(!pn)
-		return;
-	sb.addn("---");
-	sb.addn(pn);
-}
-
 static bool build_upgrade() {
 	for(auto& e : bsdata<building>()) {
 		if(e.province == province && lastbuilding->upgrade == e.type) {
@@ -344,22 +335,13 @@ static int get_provinces_upkeep(cost_s v) {
 	return get_value("ProvincesUpkeep", -result);
 }
 
-static int get_income(cost_s v) {
+int get_income(cost_s v) {
 	auto result = get_provinces_income(v);
 	result += get_buildings_effect(v);
 	result += get_value("FaithBonus", player->faith[v]);
 	result += get_provinces_upkeep(v);
 	result += get_buildings_upkeep(v);
 	result += get_units_upkeep(v);
-	return result;
-}
-
-static int get_income(cost_s v, stringbuilder& sb) {
-	auto push = lastcostitem;
-	costitema source; lastcostitem = &source;
-	auto result = get_income(v);
-	add_cost_items(sb);
-	lastcostitem = push;
 	return result;
 }
 
@@ -431,109 +413,6 @@ static void random_site(int bonus) {
 	lastsite = source.random();
 }
 
-static void add_line(stringbuilder& sb, const provincei* province, cost_s v, int n) {
-	if(!n)
-		return;
-	auto& e = bsdata<costi>::elements[v];
-	if(e.frame == -1)
-		return;
-	switch(v) {
-	case Size:
-		sb.adds(":%1i:%2i/%3i", e.frame, province->getbuildings(), n);
-		break;
-	default:
-		sb.adds(":%2i:%1i", n, e.frame);
-		break;
-	}
-}
-
-static void add_line(stringbuilder& sb, int f, int n) {
-	if(!n)
-		return;
-	sb.adds(":%2i:%1i", n, f);
-}
-
-static void add_line(stringbuilder& sb, int f, int n, int nm) {
-	if(!nm)
-		return;
-	sb.adds(":%2i:%1i/%3i", n, f, nm);
-}
-
-void add_line_upkeep(const provincei* province, stringbuilder& sb) {
-	add_line(sb, 4, province->current[Gold]);
-	add_line(sb, 6, province->current[Mana]);
-	add_line(sb, 1, province->attack);
-	add_line(sb, 2, province->defend);
-	if(province->player != player || !player->resources[Build])
-		add_line(sb, 5, province->buildings);
-	else
-		add_line(sb, 5, province->buildings, province->current[Size]);
-}
-
-void add_line(stringbuilder& sb, const costac& source) {
-	for(auto i = 0; i <= Limit; i++) {
-		auto& e = bsdata<costi>::elements[i];
-		auto n = source[i];
-		if(!n)
-			continue;
-		if(e.frame == -1)
-			continue;
-		add_line(sb, e.frame, n);
-	}
-}
-
-static void add_line(stringbuilder& sb, const costa& source) {
-	for(auto i = 0; i <= Limit; i++) {
-		auto& e = bsdata<costi>::elements[i];
-		auto n = source[i];
-		if(!n)
-			continue;
-		if(e.frame == -1)
-			continue;
-		add_line(sb, e.frame, n);
-	}
-}
-
-static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
-	char temp[512]; stringbuilder sb(temp); temp[0] = 0; add_line(sb, source);
-	if(temp[0] == 0)
-		return;
-	sbo.addn("%1: ", getnm(id));
-	sbo.add(temp);
-}
-
-static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
-	costa translate = {}; addvalue(translate, source);
-	add_line(sbo, id, translate);
-}
-
-static void add_description(const buildingi* p, stringbuilder& sb) {
-	sb.addn("##%1", getnm(p->id));
-	auto need_line = true;
-	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
-		auto n = p->effect[v];
-		if(!n)
-			continue;
-		auto pd = getdescription(str("%1Effect", bsdata<costi>::elements[v].id));
-		if(!pd)
-			continue;
-		if(need_line) {
-			sb.addn("---\n");
-			need_line = false;
-		}
-		sb.adds(pd, n);
-	}
-	for(auto v : p->conditions) {
-		auto id = v.getid();
-		if(!id)
-			continue;
-		auto pd = getdescription(str("%1Condition", id));
-		if(!pd)
-			continue;
-		sb.adds(pd);
-	}
-}
-
 static void build(int bonus) {
 	if(!build_upgrade()) {
 		auto p = bsdata<building>::add();
@@ -554,14 +433,16 @@ template<> void fnscript<buildingi>(int value, int bonus) {
 static void recruit_units() {
 	an.clear();
 	for(auto& e : bsdata<uniti>()) {
-		if(!e.is(Recruitable))
+		if(!e.isrecruitable())
+			continue;
+		if(e.fame && e.fame < player->resources[Fame])
 			continue;
 		if(!isenought(player->resources, e.cost))
 			continue;
 		an.add(&e, "%1 (%Cost %2i)", e.getname(), e.cost[Gold]);
 	}
 	auto left = province->current[Recruit] - province->recruit;
-	auto result = an.choose(str(getnm("WhoRecruit"), left), getnm("Cancel"), 0);
+	auto result = an.choose(0, getnm("Cancel"));
 	if(!result)
 		return;
 	if(bsdata<uniti>::have(result)) {
@@ -582,7 +463,7 @@ static void choose_troops() {
 		for(auto p : troops)
 			an.add(p, p->type->getname());
 		if(province->recruit < province->current[Recruit])
-			an.add(recruit_units, getnm("Recruit"));
+			an.add(recruit_units, getnm("Recruit"), province->current[Recruit] - province->recruit);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)
 			return;
@@ -1120,36 +1001,6 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 }
 
 static void add_message(const char* format) {
-}
-
-template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
-	auto p = (costi*)object;
-	auto v = (cost_s)(p - bsdata<costi>::elements);
-	add_description(p->id, sb);
-	sb.addn("---");
-	get_income(v, sb);
-}
-
-template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
-	auto p = (provincei*)object;
-	add_description(p->id, sb);
-	sb.addn("---");
-	add_line_upkeep(p, sb);
-}
-
-template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
-	auto p = (buildingi*)object;
-	add_description(p, sb);
-	sb.addn("---");
-	add_line(sb, "Cost", p->cost);
-	add_line(sb, "Upkeep", p->upkeep);
-}
-
-template<> void ftstatus<building>(const void* object, stringbuilder& sb) {
-	auto p = (building*)object;
-	add_description(p->type, sb);
-	sb.addn("---");
-	add_line(sb, "Upkeep", p->type->upkeep);
 }
 
 BSDATA(script) = {

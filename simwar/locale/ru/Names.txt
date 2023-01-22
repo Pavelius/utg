@@ -89,7 +89,7 @@ MinimalStrenghtRequired: [-Требуется минимальная сила %1
 Piece: шт.
 ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
-Recruit: Нанять
+Recruit: Нанять отряд (осталось %1i)
 RemoveAll: Сбросить все
 Settlements: Поселение
 Site: Локация
@@ -100,7 +100,6 @@ UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
 WhatDoYouWantToBuild: Какое здание хотите построить?
 WhoDo: Кто это будет делать?
-WhoRecruit: Кого хотите нанять (осталось %1i)?
 WhoWillBeMarching: Кто еще участвует в походе?
 YourArmyIs: В походе участвуют
 YourArmyIsEmpthy: Войска не участвуют в походе.

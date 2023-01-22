@@ -105,6 +105,7 @@ BSMETA(tagi) = {
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
+	BSREQ(fame),
 	BSDST(effect, costi),
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),
