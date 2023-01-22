@@ -128,6 +128,24 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 	}
 }
 
+static void add_description(const uniti* p, stringbuilder& sb) {
+	sb.addn("##%1", getnm(p->id));
+	auto need_line = true;
+	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
+		auto n = p->effect[v];
+		if(!n)
+			continue;
+		auto pd = getdescription(str("%1UnitEffect", bsdata<costi>::elements[v].id));
+		if(!pd)
+			continue;
+		if(need_line) {
+			sb.addn("---\n");
+			need_line = false;
+		}
+		sb.adds(pd, n);
+	}
+}
+
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
 	auto pn = getdescription(id);
@@ -160,6 +178,21 @@ template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
 	add_line(sb, "Upkeep", p->upkeep);
 	if(p->upgrade)
 		sb.add("%Exchange %1", p->upgrade->getname());
+}
+
+template<> void ftstatus<uniti>(const void* object, stringbuilder& sb) {
+	auto p = (uniti*)object;
+	add_description(p, sb);
+	sb.addn("---");
+	add_line(sb, "Cost", p->cost);
+	add_line(sb, "Upkeep", p->upkeep);
+}
+
+template<> void ftstatus<troop>(const void* object, stringbuilder& sb) {
+	auto p = (troop*)object;
+	add_description(p->type, sb);
+	sb.addn("---");
+	add_line(sb, "Upkeep", p->type->upkeep);
 }
 
 template<> void ftstatus<building>(const void* object, stringbuilder& sb) {

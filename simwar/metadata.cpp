@@ -103,6 +103,9 @@ BSMETA(tactici) = {
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
+BSMETA(troop) = {
+	BSREQ(type),
+	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSREQ(fame),
@@ -128,6 +131,7 @@ BSDATA(varianti) = {
 	{"Site", VAR(sitei, 1)},
 	{"Tactic", VAR(tactici, 1)},
 	{"Tag", VAR(tagi, 1)},
-	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
+	{"Troop", VAR(troop, 1), ftstatus<troop>},
+	{"Unit", VAR(uniti, 1), ftstatus<uniti>, 0, fnscript<uniti>},
 };
 BSDATAF(varianti)

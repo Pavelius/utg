@@ -25,7 +25,7 @@ static stringbuilder sb(sb_buffer);
 static heroa heroes;
 static troopa troops;
 static int troops_movement;
-static bool need_break;
+static int modal_result;
 
 static heroi* find_hero(const provincei* province, const playeri* player) {
 	for(auto& e : bsdata<heroi>()) {
@@ -656,8 +656,8 @@ static void select(army& destination, const troopa& source) {
 		destination.add(p->type);
 }
 
-static void apply_need_break() {
-	need_break = true;
+static void apply_confirm() {
+	modal_result = 1;
 }
 
 static bool troops_mobilization(int value, int defence) {
@@ -671,8 +671,8 @@ static bool troops_mobilization(int value, int defence) {
 	troops_army.hero = hero;
 	troops_army.province = province;
 	troops_army.player = hero->player;
-	need_break = false;
-	while(!draw::isnext() && !need_break) {
+	modal_result = 0;
+	while(!draw::isnext() && !modal_result) {
 		update_provinces();
 		troops.clear();
 		troops.select(player_province_troop_moved);
@@ -680,31 +680,32 @@ static bool troops_mobilization(int value, int defence) {
 		select(troops_army, troops);
 		troops_army.act(sb, getnm("ArmyMobilize"));
 		an.clear();
-		troopa source;
-		source.select(player_troop_cost);
-		source.match(player_province_troop, false);
-		source.match(troop_moved, false);
-		for(auto p : source) {
-			if(p->moveto)
-				an.add(p, p->type->getname());
-			else
-				an.add(p, p->getname());
+		for(auto& e : bsdata<troop>()) {
+			if(e.player != player)
+				continue;
+			if(e.moveto)
+				continue;
+			if(e.province->getcost() > value)
+				continue;
+			if(e.province == province)
+				continue;
+			an.add(&e, e.getname());
 		}
 		if(troops_army.get(Strenght) >= defence)
-			an.add(apply_need_break, getnm("Confirm"));
+			an.add(apply_confirm, getnm("Confirm"));
 		else
 			sb.addn(getnm("MinimalStrenghtRequired"), defence);
-		auto p = (troop*)an.choose(getnm("WhoWillBeMarching"), getnm("Cancel"));
+		auto p = (troop*)an.choose(0, getnm("Cancel"));
 		if(!p) {
 			clear_troops_movement();
-			update_provinces();
-			return false;
+			break;
 		} else if(bsdata<troop>::have(p))
 			p->moveto = p->moveto ? 0 : province;
 		else
 			((fnevent)p)();
 	}
-	return true;
+	update_provinces();
+	return modal_result != 0;
 }
 
 static void hero_action(actioni* action) {
@@ -712,8 +713,11 @@ static void hero_action(actioni* action) {
 	if(!hero)
 		return;
 	hero->province = province;
-	if(!troops_mobilization(1, 3))
+	if(!troops_mobilization(1, 3)) {
+		hero->province = 0;
+		update_provinces();
 		return;
+	}
 	hero->action = action;
 }
 

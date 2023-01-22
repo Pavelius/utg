@@ -113,6 +113,9 @@
     <Text Include="locale\ru\ActionNames.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="locale\ru\UnitDescriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="statable.h">

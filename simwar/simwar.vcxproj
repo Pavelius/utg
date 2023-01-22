@@ -181,6 +181,7 @@
     <Text Include="locale\ru\SiteDescriptions.txt" />
     <Text Include="locale\ru\TacticDescriptions.txt" />
     <Text Include="locale\ru\TacticNames.txt" />
+    <Text Include="locale\ru\UnitDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
