@@ -346,8 +346,8 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 			if(*p == ':')
 				p++;
 			if(metrics::icons) {
+				w = metrics::icons->get(index).sx;
 				image(caret.x, caret.y + (font->height + 1) / 2, metrics::icons, index, 0);
-				w = metrics::icons->get(index).sx + 1;
 			}
 		} else {
 			const char* p2 = word(p);

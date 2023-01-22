@@ -1070,6 +1070,12 @@ static bool visible_not_explored_province(const void* pv) {
 }
 
 static void action_mobilize() {
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == player && e.moveto == province) {
+			e.province = e.moveto;
+			e.moveto = 0;
+		}
+	}
 }
 
 static unsigned reciever(const playeri* player) {

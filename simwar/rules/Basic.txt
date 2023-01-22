@@ -51,7 +51,7 @@ Laboratory
  cost Gold(50)
  upkeep Gold(1)
 Shrine
- effect Faith(1)
+ effect Lore(1) Faith(1)
  cost Gold(50)
  upkeep Gold(1)
 Temple upgrade(Shrine)
@@ -83,7 +83,6 @@ Circus upgrade(Tavern)
 Inn upgrade(Tavern)
  effect Happiness(2)
  cost Gold(70)
- upkeep Gold(1)
 
 #Unit
 

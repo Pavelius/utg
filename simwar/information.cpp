@@ -44,7 +44,10 @@ static void add_line(stringbuilder& sb, const provincei* province, cost_s v, int
 static void add_line(stringbuilder& sb, int f, int n) {
 	if(!n)
 		return;
-	sb.adds(":%2i:%1i", n, f);
+	if(n>1)
+		sb.adds(":%2i:%1i", n, f);
+	else
+		sb.adds(":%1i:", f);
 }
 
 static void add_line(stringbuilder& sb, int f, int n, int nm) {
@@ -56,12 +59,11 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
+	add_line(sb, 3, province->current[Faith]);
+	add_line(sb, 0, province->current[Lore]);
 	add_line(sb, 1, province->attack);
 	add_line(sb, 2, province->defend);
-	if(province->player != player || !player->resources[Build])
-		add_line(sb, 5, province->buildings);
-	else
-		add_line(sb, 5, province->buildings, province->current[Size]);
+	add_line(sb, 5, province->buildings);
 }
 
 void add_line(stringbuilder& sb, const costac& source) {
@@ -177,7 +179,7 @@ template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
 	add_line(sb, "Cost", p->cost);
 	add_line(sb, "Upkeep", p->upkeep);
 	if(p->upgrade)
-		sb.add("%Exchange %1", p->upgrade->getname());
+		sb.addn("%Exchange %1", p->upgrade->getname());
 }
 
 template<> void ftstatus<uniti>(const void* object, stringbuilder& sb) {

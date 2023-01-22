@@ -7,6 +7,9 @@
 
 using namespace log;
 
+static void serial_object(archive& f, void* object, const bsreq* type);
+static void serial_requisit(archive& f, void* object, const bsreq& type);
+
 static void serial_string(archive& f, void* object) {
 	char temp[4096];
 	unsigned size = 0;
@@ -15,7 +18,8 @@ static void serial_string(archive& f, void* object) {
 		if(p) {
 			size = zlen(p);
 			f.set(size);
-			f.set((void*)p, size);
+			if(size)
+				f.set((void*)p, size);
 		} else
 			f.set(size);
 	} else {
@@ -24,7 +28,7 @@ static void serial_string(archive& f, void* object) {
 		if(!size)
 			*((const char**)object) = 0;
 		else {
-			if(size > (sizeof(temp) / sizeof(temp) - 1))
+			if(size > (sizeof(temp) / sizeof(temp[0]) - 1))
 				p = new char[size + 1];
 			f.set(p, size);
 			p[size] = 0;
@@ -46,9 +50,13 @@ static varianti* find_type(const bsreq* type) {
 static void serial_reference(archive& f, void* object, const bsreq* type) {
 	if(!type->is(KindText))
 		return;
-	if(f.writemode)
-		serial_string(f, object);
-	else {
+	auto pv = *((void**)object);
+	if(f.writemode) {
+		if(!pv)
+			f.set(pv);
+		else
+			serial_string(f, pv);
+	} else {
 		const char* id = 0;
 		serial_string(f, &id);
 		*((void**)object) = 0;
@@ -66,8 +74,6 @@ static void serial_reference(archive& f, void* object, const bsreq* type) {
 	}
 }
 
-static void serial_object(archive& f, void* object, const bsreq* type);
-
 static void serial_requisit(archive& f, void* object, const bsreq& type) {
 	if(type.is(KindNumber) || type.is(KindEnum) || type.is(KindFlags) || type.is(KindDSet))
 		f.set(object, type.lenght);
@@ -81,7 +87,7 @@ static void serial_requisit(archive& f, void* object, const bsreq& type) {
 	} else if(type.is(KindScalar)) {
 		if(!type.type)
 			return; // Error: type unknown
-		serial_object(f, type.ptr(object), type.type);
+		serial_object(f, object, type.type);
 	} else if(type.is(KindText))
 		serial_string(f, object);
 	else if(type.is(KindReference))
@@ -93,7 +99,7 @@ static void serial_requisit(archive& f, void* object, const bsreq& type) {
 static void serial_object(archive& f, void* object, const bsreq* type) {
 	for(auto p = type; *p; p++) {
 		if(p->is(KindNumber) || p->is(KindEnum) || p->is(KindFlags) || p->is(KindDSet))
-			f.set(object, p->lenght);
+			f.set(p->ptr(object), p->lenght);
 		else {
 			for(unsigned i = 0; i < p->count; i++)
 				serial_requisit(f, p->ptr(object, i), *p);

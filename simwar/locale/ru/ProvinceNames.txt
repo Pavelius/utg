@@ -1,4 +1,7 @@
-﻿CapeBrumal: Мыс жестокости
+﻿BialeTatry: Бьялые поля
+BialowiezaForest: Беловежская пуща
+CapeBrumal: Мыс жестокости
+CathedralGap: Соборный разлом
 Concordia: Холм изобилия
 GelidSea: Ледяное море
 HiemalStrait: Химальский пролив

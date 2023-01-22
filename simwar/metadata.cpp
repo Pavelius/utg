@@ -106,6 +106,8 @@ BSMETA(tagi) = {
 	{}};
 BSMETA(troop) = {
 	BSREQ(type),
+	BSREQ(province), BSREQ(moveto),
+	BSREQ(player),
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),

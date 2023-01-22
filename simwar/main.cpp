@@ -38,14 +38,15 @@ static void test_army() {
 }
 
 static void initialize_scene() {
-	player = bsdata<playeri>::find("SouthernKindom");
-	province = bsdata<provincei>::find("CapeBrumal");
-	province->player = player;
-	player->upgrade[Lore] += 50;
-	script::run(player->start);
-	game.initialize();
-	script::run("UpdatePlayer");
-	//test_army();
+	if(!game.read("autosave")) {
+		player = bsdata<playeri>::find("SouthernKindom");
+		province = bsdata<provincei>::find("CapeBrumal");
+		province->player = player;
+		player->upgrade[Lore] += 50;
+		script::run(player->start);
+		game.initialize();
+		script::run("UpdatePlayer");
+	}
 }
 
 static void start_game() {

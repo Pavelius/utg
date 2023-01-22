@@ -8,7 +8,7 @@
 
 struct gamei : calendari {
 	void initialize();
-	static void read(const char* id);
+	static bool read(const char* id);
 	static void write(const char* id);
 };
 extern gamei game;

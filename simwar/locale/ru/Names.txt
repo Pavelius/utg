@@ -8,8 +8,11 @@ Goblins: Гоблины
 Milita: Ополчение
 Orks: Орки
 Spearmans: Копейщики
+WolfRiders: Всадники на волках
 
 January: Январь
+August: Август
+February: Февраль
 
 BanditLair: Логово бандитов
 DarkCave: Темная пещера
@@ -21,6 +24,7 @@ Circus: Цирк
 Citadel: Цитадель
 Fort: Форт
 Harbor: Гавань
+Inn: Гостиница
 IronMine: Железная шахта
 Laboratory: Лаборатория
 Marketplace: Рынок
@@ -50,7 +54,9 @@ Attack: Атаковать
 SouthernKindom: Южное королевство
 SouthernKindomOf: Южного королевства
 
+AddBuilding: Построить здание (осталось %1i)
 And: И
+AppTitle: Стратегия
 Army: Армия
 ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
 ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
@@ -62,24 +68,23 @@ AttackerFinale: В конце боя на поле остались отряды
 AttackerWin: Армия %-NameOfNoHero с общей силой %TotalStrenght полностью разгромила врага.
 BattleSpoils: Трофеи составили: %Spoils.
 BattleTotal: Армия [%-NameOfNoHero] выиграла битву.
+Building: Здание
+Buildings: Здания
+BuildingsUpkeep: Содержание зданий
+Cancel: Отмена
 CasualtiesTotal: Потери %-NameOfNoHero: %UnitsAll.
+Cost: Стоит
+Confirm: Подтвердить
+Continue: Продолжить
 DefenderArchery: %Units %-NameOfNoHero дали залп в ответ и нанесли %TotalArchery повреждений.
 DefenderCharge: %Units %-NameOfNoHero ударили во фланг завязшего в ближнем бою врага нанеся %TotalCharge повреждений.
 DefenderDamage: %Units %-NameOfNoHero яростно рубились в ответ нанеся %TotalDamage повреждений.
 DefenderFinale: Отряды %-NameOfNoHero имеют общую силу %TotalStrenght.
 DisableOrder: Вы действительно хотите отменить приказ [%-1] провинцию [%-2]?
-AddBuilding: Построить здание (осталось %1i)
-AppTitle: Стратегия
-Cost: Стоит
-Confirm: Подтвердить
-Continue: Продолжить
-Building: Здание
-Buildings: Здания
-BuildingsUpkeep: Содержание зданий
-Cancel: Отмена
 DoYouWantRemoveBuilding: [%1] действительно подлежит сносу?
 EndTurn: Закончить ход
 Explore: Исследовано
+Exchange: Заменяет
 HeroLeadConquest: %1 возглавляет поход общей силой [%2i].
 IndependedForce: Нейтралные силы
 IndependedForceOf: Нейтральных сил
