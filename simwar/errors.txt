@@ -1,3 +1,3 @@
 ﻿In file `rules/Basic.txt`:
- Line 106: Not found requisit `fame`
- Line 110: Not found requisit `fame`
+ Line 162: Can't find variant `Orks`
+ Line 166: Can't find variant `Orks`

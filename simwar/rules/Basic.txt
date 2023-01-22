@@ -87,9 +87,27 @@ Inn upgrade(Tavern)
 
 #Unit
 
+Barbarians
+ effect Strenght(1) Damage(5) Health(6) Level(1)
+ cost Gold(20)
+ upkeep Gold(1)
+Bandits
+ effect Strenght(1) Damage(3) Health(6) Level(1)
+ cost Gold(15)
+ upkeep Gold(1)
+Berserkers
+ effect Strenght(2) Damage(10) Health(12) Level(2)
+ cost Gold(60)
+ upkeep Gold(1)
 Milita
  effect Strenght(1) Damage(2) Health(6) Level(1)
  cost Gold(10)
+Goblins
+ effect Strenght(1) Damage(2) Health(5) Level(1)
+ cost Gold(10)
+Orks
+ effect Strenght(1) Damage(5) Health(12) Armor(1) Level(1)
+ cost Gold(40)
  upkeep Gold(1)
 Spearmans
  effect Strenght(1) Damage(3) Armor(1) Health(8) Level(1)
@@ -145,3 +163,23 @@ Mistra resid("2FELF2_S") player(SouthernKindom)
  effect Strenght(2)
 Kalipse resid("2MDEF2_S")
  effect Strenght(2)
+
+#RandomList
+
+BarbarianTribe
+ chance Barbarians+3 Berserkers+1
+Outlaws
+ chance Goblins+3 Orks+1
+LocalLord
+ chance Milita+3 Spearmans+1 Archers+1
+WildHorde
+ chance Goblins+3 Orks+1
+
+ForestRandomDwelvers
+ chance Outlaws+3 WildHorde+1
+PlainsRandomDwelvers
+ chance Outlaws+1 LocalLord+2
+HillsRandomDwelvers
+ chance WildHorde+3
+WastelandRandomDwelvers
+ chance BarbarianTribe+2 WildHorde+2

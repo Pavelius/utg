@@ -4,7 +4,9 @@ Mistra: Мистра
 
 Archers: Лучники
 Cavalry: Кавалерия
+Goblins: Гоблины
 Milita: Ополчение
+Orks: Орки
 Spearmans: Копейщики
 
 January: Январь

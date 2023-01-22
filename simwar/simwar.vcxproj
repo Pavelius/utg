@@ -160,6 +160,7 @@
     <ClCompile Include="log_text.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="report.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="site.cpp" />
     <ClCompile Include="statable.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="calendar.h" />
     <ClInclude Include="costitem.h" />
     <ClInclude Include="hero.h" />
+    <ClInclude Include="report.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="landscape.h" />

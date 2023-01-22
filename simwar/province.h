@@ -21,6 +21,7 @@ struct provincei : nameable {
 	bool				iswater() const { return landscape->water; }
 	bool				isvisible() const;
 	void				makewave() const;
+	int					get(cost_s v) const { return current[v]; }
 	int					getbuildings() const;
 	int					getcost() const;
 	int					getindex() const { return this - bsdata<provincei>::elements; }

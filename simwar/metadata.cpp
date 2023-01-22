@@ -4,6 +4,7 @@
 #include "hero.h"
 #include "list.h"
 #include "player.h"
+#include "randomizer.h"
 #include "script.h"
 #include "tactic.h"
 #include "tag.h"
@@ -127,6 +128,7 @@ BSDATA(varianti) = {
 	{"Player", VAR(playeri, 1)},
 	{"PlayerBuilding", VAR(building, 0), ftstatus<building>},
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
+	{"RandomList", VAR(randomizeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Site", VAR(sitei, 1)},
 	{"Tactic", VAR(tactici, 1)},

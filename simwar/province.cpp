@@ -30,14 +30,14 @@ provincei* find_zero_cost() {
 	return 0;
 }
 
-static void add_node(short unsigned index, short unsigned cost) {
+void add_node(short unsigned index, short unsigned cost) {
 	if(movecost[index] == ZeroCost) {
 		if(!cost)
 			movecost[index] = 0;
 		else
 			movecost[index] = cost - 1;
 		movestack[pstop++] = index;
-	} else if(movecost[index] == Unknown || (movecost[index] < Unknown && movecost[index] > cost)) {
+	} else if(movecost[index] == Unknown || (movecost[index] < Unknown && cost < movecost[index])) {
 		movecost[index] = cost;
 		movestack[pstop++] = index;
 	}

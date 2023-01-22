@@ -12,5 +12,6 @@ struct playeri : nameable {
 	tacticaf	tactics;
 	provincef	visibility;
 	char		build;
+	int			getindex() const;
 };
 extern playeri* player;
