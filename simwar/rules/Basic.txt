@@ -102,13 +102,27 @@ Berserkers
 Milita
  effect Strenght(1) Damage(2) Health(6) Level(1)
  cost Gold(10)
+
+Giant
+ effect Strenght(3) Damage(12) Archery(10) Health(20) Armor(3) Level(3)
+ cost Gold(200)
+ upkeep Gold(5)
 Goblins
  effect Strenght(1) Damage(2) Health(5) Level(1)
  cost Gold(10)
+Ogres
+ effect Strenght(2) Damage(10) Health(16) Armor(1) Level(2)
+ cost Gold(120)
+ upkeep Gold(3)
 Orks
  effect Strenght(1) Damage(5) Health(12) Armor(1) Level(1)
  cost Gold(40)
  upkeep Gold(1)
+WolfRiders
+ effect Strenght(2) Damage(5) Health(10) Charge(3) Armor(1) Level(2) Movement(1)
+ cost Gold(70)
+ upkeep Gold(1)
+
 Spearmans
  effect Strenght(1) Damage(3) Armor(1) Health(8) Level(1)
  cost Gold(30)
@@ -122,7 +136,7 @@ Swordsmans
  cost Gold(80)
  upkeep Gold(1) Warfire(1)
 Cavalry fame(50)
- effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(2) Level(2)
+ effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(2) Level(2) Movement(1)
  cost Gold(100)
  upkeep Gold(2) Warfire(1)
 Knights fame(100)
@@ -171,14 +185,14 @@ BarbarianTribe
 Outlaws
  chance Goblins+3 Orks+1
 LocalLord
- chance Milita+3 Spearmans+1 Archers+1
+ chance Milita+4 Spearmans+3 Archers+3 Cavalry+2 Knights+1
 WildHorde
- chance Goblins+3 Orks+1
+ chance Goblins+4 Orks+3 WolfRiders+3 Ogres+2 Giant+1
 
 ForestRandomDwelvers
- chance Outlaws+3 WildHorde+1
+ chance Outlaws+4 WildHorde+3
 PlainsRandomDwelvers
- chance Outlaws+1 LocalLord+2
+ chance LocalLord+3 Outlaws+1
 HillsRandomDwelvers
  chance WildHorde+3
 WastelandRandomDwelvers

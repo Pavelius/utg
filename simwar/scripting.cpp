@@ -12,6 +12,7 @@
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
+#include "randomizer.h"
 #include "script.h"
 #include "statable.h"
 #include "unit.h"
@@ -619,6 +620,8 @@ static void add_province_hero_actions() {
 	clear_wave();
 	province->makewave();
 	for(auto& e : bsdata<actioni>()) {
+		if(szstart(e.id, "Default"))
+			continue;
 		if(!e.test(province))
 			continue;
 		an.add(&e, e.getname());
@@ -1100,10 +1103,38 @@ static void action_conquest() {
 }
 
 static void action_explore() {
-	province->explore(2 + hero->get(Explore));
+	char temp[4096]; stringbuilder sb(temp);
+	auto value = xrand(1, 4) + hero->get(Explore);
+	hero->act(sb, getnm("ReportActionExplore"), province->getname(), value);
+	province->explore(value);
+	reporti::add(temp, game.turn, reciever(hero->player));
+}
+
+static bool assign_random_action_target() {
+	if(!action)
+		return false;
+	collection<provincei> provinces;
+	provinces.select(action->test);
+	if(!provinces)
+		return false;
+	hero->action = action;
+	hero->province = provinces.random();
+	return true;
 }
 
 static void assign_random_action() {
+	pushvalue push_action(action);
+	pushvalue push_hero(hero);
+	for(auto& e : bsdata<heroi>()) {
+		if(e.action)
+			continue;
+		hero = &e;
+		action = bsdata<actioni>::find("DefaultActionExplore");
+		if(!assign_random_action_target()) {
+			action = bsdata<actioni>::find("ActionMobilize");
+			assign_random_action_target();
+		}
+	}
 }
 
 static void resolve_actions() {
@@ -1157,5 +1188,6 @@ BSDATA(actioni) = {
 	{"ActionConquer", action_conquest, enemy_province, 0, 4, 1},
 	{"ActionExplore", action_explore, visible_not_explored_province, "ActionExplore", 1, 0},
 	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 0, 5, 1},
+	{"DefaultActionExplore", action_explore, visible_not_explored_province, 0, 1, 0},
 };
 BSDATAF(actioni)

@@ -10,3 +10,5 @@ DoRandomAction: Исследует случайную провинцию в по
 
 WhoActionConquer: Кто возглавит захват провинции?
 WhoActionExplore: Кто будет исследовать провинцию?
+
+ReportActionExplore: %герой исследовал%а провинцию %1 на [%2i%%].

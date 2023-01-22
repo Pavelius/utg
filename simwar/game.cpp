@@ -46,7 +46,7 @@ static void add_neutral_troops() {
 		auto pn = bsdata<randomizeri>::find(str("%1RandomDwelvers", e.landscape->id));
 		if(!pn)
 			continue;
-		randomizeri* pu = pn->random();
+		randomizeri* pu = pn->random(pn->chance, 10, (level - 1));
 		if(!pu)
 			continue;
 		auto count = level;

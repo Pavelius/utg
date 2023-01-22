@@ -20,21 +20,22 @@ int randomizeri::total(const variants& elements) {
 	return result;
 }
 
-variant randomizeri::random(const variants& elements) {
+variant randomizeri::random(const variants& elements, int range, int bonus) {
+	variant lr = variant();
 	auto summary = total(elements);
+	if(!range)
+		range = summary;
 	if(summary) {
-		auto result = rand() % summary;
+		auto result = bonus + (rand() % summary);
 		for(auto& e : elements) {
 			auto n = getcounter(e);
-			if(result < n) {
-				auto r = e;
-				r.counter = 0;
-				return r;
-			}
+			lr = e; lr.counter = 0;
+			if(result < n)
+				break;
 			result -= n;
 		}
 	}
-	return variant();
+	return lr;
 }
 
 variant single(variant v) {

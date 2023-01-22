@@ -148,6 +148,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="army.cpp" />
     <ClCompile Include="building.cpp" />
@@ -186,6 +187,7 @@
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="building.h" />

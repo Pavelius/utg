@@ -16,6 +16,7 @@ BSDATA(costi) = {
 	{"Archery"},
 	{"Level"},
 	{"Armor"},
+	{"Movement"},
 	{"Sail"},
 	{"Explore"},
 	{"ExploreNext"},

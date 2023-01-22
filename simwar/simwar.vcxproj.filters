@@ -81,6 +81,9 @@
     <ClCompile Include="report.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="actable.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -170,6 +173,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="report.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="actable.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
