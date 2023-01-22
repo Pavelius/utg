@@ -84,6 +84,9 @@
     <ClCompile Include="actable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="serial.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

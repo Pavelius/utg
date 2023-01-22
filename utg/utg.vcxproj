@@ -185,6 +185,7 @@
     <ClCompile Include="group.cpp" />
     <ClCompile Include="groupname.cpp" />
     <ClCompile Include="io_bsreq.cpp" />
+    <ClCompile Include="io_bsreq_bin.cpp" />
     <ClCompile Include="iterator.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="logparse.cpp" />

@@ -267,6 +267,9 @@
     <ClCompile Include="tga.cpp">
       <Filter>Formats</Filter>
     </ClCompile>
+    <ClCompile Include="io_bsreq_bin.cpp">
+      <Filter>Stream</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

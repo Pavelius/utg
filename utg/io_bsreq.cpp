@@ -158,7 +158,7 @@ static const bsreq* find_key(const bsreq* type) {
 	return type->find("id", bsmeta<const char*>::meta);
 }
 
-static void* find_object(array* source, const bsreq* type, valuei* keys, int key_count) {
+void* find_object(array* source, const bsreq* type, valuei* keys, int key_count) {
 	auto pe = source->end();
 	for(auto p = source->begin(); p < pe; p += source->size) {
 		if(compare(p, type, keys, key_count))

@@ -163,6 +163,7 @@
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="report.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="serial.cpp" />
     <ClCompile Include="site.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="player.cpp" />

@@ -631,8 +631,7 @@ static void add_province_hero_actions() {
 static void add_province_units() {
 	troops.clear();
 	troops.select(player_province_troop);
-	if(troops)
-		add_answers(choose_troops, "Army", troops.getcount(), "Unit");
+	add_answers(choose_troops, "Army", troops.getcount(), "Unit");
 }
 
 static bool player_troop_cost(const void* pv) {
@@ -1182,6 +1181,7 @@ void next_turn() {
 	update_player(0);
 	gain_income(0);
 	draw::setnext(show_messages);
+	game.write("autosave");
 }
 
 BSDATA(actioni) = {
