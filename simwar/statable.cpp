@@ -65,7 +65,7 @@ void subvalue(costa& v1, const costac& v2) {
 
 bool isenought(const costa& v1, const costa& v2) {
 	for(auto i = 0; i <= Limit; i++) {
-		if(v1[i] < v2[i])
+		if(v2[i] && v1[i] < v2[i])
 			return false;
 	}
 	return true;

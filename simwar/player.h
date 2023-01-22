@@ -7,9 +7,10 @@
 struct playeri : nameable {
 	int			shield;
 	costa		resources, upgrade;
-	costac		income, faith, artifacts;
+	costac		income, faith;
 	variants	start;
 	tacticaf	tactics;
 	provincef	visibility;
+	char		build;
 };
 extern playeri* player;
