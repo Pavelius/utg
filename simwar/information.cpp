@@ -15,11 +15,13 @@
 #include "unit.h"
 
 int get_income(cost_s v);
+int get_income_modified(cost_s v, int result);
 
 static int get_income(cost_s v, stringbuilder& sb) {
 	auto push = lastcostitem;
 	costitema source; lastcostitem = &source;
 	auto result = get_income(v);
+	result = get_income_modified(v, result);
 	add_cost_items(sb);
 	lastcostitem = push;
 	return result;

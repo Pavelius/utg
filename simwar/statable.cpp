@@ -27,7 +27,6 @@ BSDATA(costi) = {
 	{"Mithril", FG(Resource) | FG(PerTurn)},
 	{"Horses", FG(Resource) | FG(PerTurn)},
 	{"Mandrake", FG(Resource) | FG(PerTurn)},
-	{"Build"},
 	{"Recruit"},
 	{"Size", 0, 0, 0, 5},
 	{"Limit"},

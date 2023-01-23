@@ -10,7 +10,7 @@ enum cost_s : unsigned char {
 	Strenght, Damage, Health, Charge, Archery, Level, Armor,
 	Movement, Sail, Explore, ExploreNext, Siege,
 	Wood, Iron, Silver, Mithril, Horses, Mandrake,
-	Build, Recruit, Size,
+	Recruit, Size,
 	Limit,
 };
 struct costi : nameable {

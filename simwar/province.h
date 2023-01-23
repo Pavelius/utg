@@ -4,6 +4,7 @@
 #include "point.h"
 #include "statable.h"
 #include "stringbuilder.h"
+#include "tag.h"
 
 #pragma once
 
@@ -15,7 +16,7 @@ struct provincei : nameable {
 	point				position;
 	const landscapei*	landscape;
 	costac				current, income;
-	char				buildings, units, defend, attack, recruit;
+	char				buildings, units, defend, attack, recruit, builded;
 	void				add(cost_s v, int value);
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }

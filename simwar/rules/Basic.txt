@@ -33,17 +33,17 @@ WatchTower
  effect Warfire(1) Strenght(1)
  cost Gold(60)
 Fort upgrade(WatchTower)
- effect Happiness(1) Warfire(2) Strenght(2)
- upkeep Gold(1)
+ effect Happiness(1) Warfire(2) Strenght(2) Recruit(1)
+ upkeep Gold(2)
  cost Gold(250)
 Citadel upgrade(Fort)
- effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Build(1) Size(1) Recruit(2)
+ effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Size(1) Recruit(2)
  cost Gold(650)
 DarkCitadel upgrade(Fort)
- effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Build(1) Size(1)
+ effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Size(1)
  cost Gold(750)
 Palace upgrade(Fort)
- effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Build(1) Size(1)
+ effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Size(1)
  cost Gold(1000)
 
 Laboratory
@@ -83,6 +83,7 @@ Circus upgrade(Tavern)
 Inn upgrade(Tavern)
  effect Happiness(2)
  cost Gold(70)
+ upkeep Gold(2)
 
 #Unit
 

@@ -245,10 +245,8 @@ static void end_turn() {
 static void standart_result(void* result) {
 	if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
-	else {
-		//pushvalue push_input(input_province, (fnevent)0);
+	else
 		((fnevent)result)();
-	}
 }
 
 static void choose_province() {
@@ -355,6 +353,23 @@ int get_income(cost_s v) {
 	return result;
 }
 
+static int get_happiness(cost_s v, int base) {
+	if(v != Gold && v != Lore && v != Faith)
+		return 0;
+	auto param = player->income[Happiness];
+	if(param <= -3)
+		return get_value("LowHappiness", base * (param + 2) * 5 / 100);
+	else if(param >= 3)
+		return get_value("HighHappiness", base * (param - 2) * 5 / 100);
+	return 0;
+}
+
+int get_income_modified(cost_s v, int result) {
+	auto base = result;
+	result += get_happiness(v, base);
+	return result;
+}
+
 static void update_provinces() {
 	for(auto& e : bsdata<provincei>())
 		e.update();
@@ -404,6 +419,8 @@ static void update_player_income() {
 	memset(player->income, 0, sizeof(player->income));
 	for(auto v = (cost_s)0; v < Limit; v = (cost_s)(v + 1))
 		player->income[v] = get_income(v);
+	for(auto v = (cost_s)0; v < Limit; v = (cost_s)(v + 1))
+		player->income[v] = get_income_modified(v, player->income[v]);
 }
 
 static void update_player(int bonus) {
@@ -507,7 +524,7 @@ static void add_building() {
 	if(lastbuilding) {
 		paycost(0);
 		build(0);
-		player->build++;
+		province->builded++;
 	}
 	lastbuilding = push_building;
 }
@@ -526,8 +543,9 @@ static void choose_buildings() {
 		collection<building> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
-		if(province->buildings < province->current[Size] && player->build < player->income[Build])
-			an.add(add_building, getnm("AddBuilding"), player->income[Build] - player->build);
+		auto maximum_build = 1;
+		if(province->buildings < province->current[Size] && province->builded < maximum_build)
+			an.add(add_building, getnm("AddBuilding"), maximum_build - province->builded);
 		auto result = an.choose(0, getnm("Cancel"), 1);
 		if(!result)
 			break;
@@ -568,6 +586,7 @@ static void choose_site_option(site* pv) {
 
 static void choose_sites() {
 	while(!draw::isnext()) {
+		update_header("%1 - %Sites", province->getname());
 		an.clear();
 		for(auto& e : bsdata<site>()) {
 			if(e.province != province)
@@ -1167,13 +1186,11 @@ static void remove_all_actions() {
 static void update_province_per_turn() {
 	for(auto& e : bsdata<provincei>()) {
 		e.recruit = 0;
+		e.builded = 0;
 	}
 }
 
 static void update_player_per_turn() {
-	for(auto& e : bsdata<playeri>()) {
-		e.build = 0;
-	}
 }
 
 void next_turn() {
@@ -1193,7 +1210,7 @@ void next_turn() {
 BSDATA(actioni) = {
 	{"ActionConquer", action_conquest, enemy_province, 0, 4, 1},
 	{"ActionExplore", action_explore, visible_not_explored_province, "ActionExplore", 1, 0},
-	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 0, 5, 1},
+	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 0, 5, 2},
 	{"DefaultActionExplore", action_explore, visible_not_explored_province, 0, 1, 0},
 };
 BSDATAF(actioni)

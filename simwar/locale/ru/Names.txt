@@ -46,6 +46,9 @@ Size: Размер
 Strenght: Сила
 Warfire: Армия
 
+LowHappiness: Низкое счастье
+HighHappiness: Высокое счастье
+
 No: Нет
 Yes: Да
 

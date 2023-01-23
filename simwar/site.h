@@ -14,6 +14,7 @@ struct sitei : nameable {
 struct site {
 	const sitei*	type;
 	provincei*		province;
+	tag_s			tags;
 	explicit operator bool() const { return type != 0; }
 	void			clear();
 };

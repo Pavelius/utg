@@ -1,3 +1,4 @@
 ﻿In file `rules/Basic.txt`:
- Line 122: Not found field `Movement` in dataset `effect`
- Line 139: Not found field `Movement` in dataset `effect`
+ Line 40: Not found field `Build` in dataset `effect`
+ Line 43: Not found field `Build` in dataset `effect`
+ Line 46: Not found field `Build` in dataset `effect`

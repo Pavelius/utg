@@ -9,7 +9,7 @@ static void serial(archive& f, const char* id, bool clean_all = false) {
 	auto p = bsdata<varianti>::find(id);
 	if(!p || !p->source)
 		return;
-	if(!f.writemode)
+	if(!f.writemode && clean_all)
 		p->source->clear();
 	serial_object(f, *p->source, p->metadata);
 }
@@ -57,6 +57,7 @@ static bool serial_game_file(const char* id, bool write) {
 	serial(a, "Province");
 	serial(a, "Hero");
 	serial(a, "PlayerBuilding", true);
+	serial(a, "PlayerSites", true);
 	serial(a, "Troop", true);
 	return true;
 }

@@ -82,9 +82,15 @@ BSMETA(provincei) = {
 	BSREQ(position),
 	BSREQ(landscape),
 	BSDST(income, costi),
+	BSREQ(builded), BSREQ(recruit),
 	{}};
 BSMETA(script) = {
 	BSREQ(id),
+	{}};
+BSMETA(site) = {
+	BSREQ(type),
+	BSREQ(province),
+	BSFLG(tags, tagi),
 	{}};
 BSMETA(sitei) = {
 	BSREQ(id),
@@ -129,6 +135,7 @@ BSDATA(varianti) = {
 	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
 	{"PlayerBuilding", VAR(building, 0), ftstatus<building>},
+	{"PlayerSite", VAR(site, 0)},
 	{"Province", VAR(provincei, 1), ftstatus<provincei>},
 	{"RandomList", VAR(randomizeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},

@@ -1,14 +1,18 @@
 ﻿BialeTatry: Бьялые поля
 BialowiezaForest: Беловежская пуща
 CapeBrumal: Мыс жестокости
-CathedralGap: Соборный разлом
+CathedralGap: Соборный путь
 Concordia: Холм изобилия
 GelidSea: Ледяное море
 HiemalStrait: Химальский пролив
 FieldsOfRefuge: Поля утешения
 NandaDevi: Леса Нанды
+Opole: Ополье
+PlainsOfPolabia: Полабийские поля
+PtarmiganRidge: Хребет куропаток
 RupalValley: Долина деревьев
 SeaOfLostWinds: Море потерянных ветров
+SteelCliffs: Стальные утесы
 WesternExpanse: Западное море
 WesternZastrugi: Западный край
 
