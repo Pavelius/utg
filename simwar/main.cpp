@@ -18,6 +18,7 @@ using namespace draw;
 
 void add_neutral(const char* id);
 void next_turn();
+void show_messages();
 void ui_initialize();
 void util_main();
 void conquest();
@@ -38,15 +39,13 @@ static void test_army() {
 }
 
 static void initialize_scene() {
-	if(!game.read("autosave")) {
-		player = bsdata<playeri>::find("SouthernKindom");
-		province = bsdata<provincei>::find("CapeBrumal");
-		province->player = player;
-		player->upgrade[Lore] += 50;
-		script::run(player->start);
-		game.initialize();
-		script::run("UpdatePlayer");
-	}
+	player = bsdata<playeri>::find("SouthernKindom");
+	province = bsdata<provincei>::find("CapeBrumal");
+	province->player = player;
+	player->upgrade[Lore] += 50;
+	script::run(player->start);
+	game.initialize();
+	script::run("UpdatePlayer");
 }
 
 static void start_game() {
@@ -56,8 +55,12 @@ static void start_game() {
 	bsreq::read("maps/silentseas.txt");
 	if(log::geterrors())
 		return;
-	initialize_scene();
-	draw::setnext(next_turn);
+	if(game.read("autosave"))
+		draw::setnext(show_messages);
+	else {
+		initialize_scene();
+		draw::setnext(next_turn);
+	}
 }
 
 int main(int argc, char* argv[]) {

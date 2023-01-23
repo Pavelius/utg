@@ -96,7 +96,7 @@ BSMETA(sitei) = {
 	BSREQ(id),
 	BSREQ(resid),
 	BSREQ(effect),
-	BSREQ(conditions),
+	BSREQ(conditions), BSREQ(defenders), BSREQ(reward),
 	BSREQ(upkeep),
 	{}};
 BSMETA(tactici) = {
@@ -112,7 +112,7 @@ BSMETA(tagi) = {
 	{}};
 BSMETA(troop) = {
 	BSREQ(type),
-	BSREQ(province), BSREQ(moveto),
+	BSREQ(province), BSREQ(moveto), BSREQ(moveto_location),
 	BSREQ(player),
 	{}};
 BSMETA(uniti) = {

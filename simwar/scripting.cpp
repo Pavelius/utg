@@ -113,6 +113,10 @@ static bool is_coastal(int bonus) {
 	return false;
 }
 
+static bool canrecruit(int bonus) {
+	return province->recruit < province->current[Recruit];
+}
+
 static bool is_province_player(const void* pv) {
 	return ((provincei*)pv)->player == player;
 }
@@ -569,6 +573,7 @@ static const char* get_site_header(const site* pv) {
 static void choose_site_option(site* pv) {
 	if(!pv)
 		return;
+	pushvalue push_input(input_province, (fnevent)0);
 	pushvalue push_header(answers::header, get_site_header(pv));
 	pushvalue push_prompt(answers::prompt);
 	pushvalue push_resid(answers::resid);
@@ -650,6 +655,9 @@ static void add_province_hero_actions() {
 static void add_province_units() {
 	troops.clear();
 	troops.select(player_province_troop);
+	auto result = troops.getcount();
+	if(!result && !canrecruit(0))
+		return;
 	add_answers(choose_troops, "Army", troops.getcount(), "Unit");
 }
 
@@ -659,20 +667,6 @@ static bool player_troop_cost(const void* pv) {
 		return false;
 	auto cost = p->province->getcost();
 	return cost <= troops_movement;
-}
-
-static void add_army(stringbuilder& sb, const troopa& source) {
-	auto count = source.getcount();
-	auto pb = sb.get();
-	for(int i = 0; i < count; i++) {
-		if(pb[0]) {
-			if(i == count - 1)
-				sb.add(" %-And");
-			else
-				sb.add(",");
-		}
-		sb.adds("%-1", source[i]->type->getname());
-	}
 }
 
 static void clear_troops_movement() {
@@ -833,6 +827,7 @@ static void choose_game_options() {
 }
 
 static void show_messages(int bonus) {
+	update_player(0);
 	for(auto& e : bsdata<reporti>()) {
 		if(e.turn == game.turn && (e.reciever & (1 << (player->getindex()))) != 0)
 			draw::message(e.text);
@@ -848,7 +843,7 @@ void player_turn() {
 		draw::setnext(player_turn);
 }
 
-static void show_messages() {
+void show_messages() {
 	show_messages(0);
 	draw::setnext(player_turn);
 }

@@ -103,6 +103,7 @@ Recruit: Нанять отряд (осталось %1i)
 RemoveAll: Сбросить все
 Settlements: Поселение
 Site: Локация
+Sites: Локации
 TakeActivity: Участвует %1.
 Unit: Отряд
 Units: Отряды

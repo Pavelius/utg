@@ -57,7 +57,7 @@ static bool serial_game_file(const char* id, bool write) {
 	serial(a, "Province");
 	serial(a, "Hero");
 	serial(a, "PlayerBuilding", true);
-	serial(a, "PlayerSites", true);
+	serial(a, "PlayerSite", true);
 	serial(a, "Troop", true);
 	return true;
 }

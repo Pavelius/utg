@@ -9,6 +9,8 @@
 #pragma once
 
 struct playeri;
+struct site;
+
 typedef flagable<32> provincef;
 
 struct provincei : nameable {
