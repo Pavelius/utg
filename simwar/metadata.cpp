@@ -49,6 +49,9 @@ BSMETA(building) = {
 BSMETA(costi) = {
 	BSREQ(id),
 	{}};
+BSMETA(genderi) = {
+	BSREQ(id),
+	{}};
 BSMETA(heroi) = {
 	BSREQ(id),
 	BSREQ(resid),
@@ -56,6 +59,8 @@ BSMETA(heroi) = {
 	BSDST(cost, costi),
 	BSDST(upkeep, costi),
 	BSREQ(player),
+	BSENM(gender, genderi),
+	BSREQ(wounds),
 	{}};
 BSMETA(landscapei) = {
 	BSREQ(id), BSREQ(water),
@@ -90,13 +95,12 @@ BSMETA(script) = {
 BSMETA(site) = {
 	BSREQ(type),
 	BSREQ(province),
-	BSFLG(tags, tagi),
 	{}};
 BSMETA(sitei) = {
 	BSREQ(id),
 	BSREQ(resid),
 	BSREQ(effect),
-	BSREQ(conditions), BSREQ(defenders), BSREQ(reward),
+	BSREQ(conditions), BSREQ(fail), BSREQ(partial), BSREQ(success),
 	BSREQ(upkeep),
 	{}};
 BSMETA(tactici) = {
@@ -112,7 +116,7 @@ BSMETA(tagi) = {
 	{}};
 BSMETA(troop) = {
 	BSREQ(type),
-	BSREQ(province), BSREQ(moveto), BSREQ(moveto_location),
+	BSREQ(province), BSREQ(moveto),
 	BSREQ(player),
 	{}};
 BSMETA(uniti) = {
@@ -126,7 +130,7 @@ BSMETA(uniti) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(costi, 1), ftstatus<costi>},
+	{"Ability", VAR(costi, 1), ftstatus<costi>, 0, fnscript<costi>},
 	{"Action", VAR(actioni, 1)},
 	{"Building", VAR(buildingi, 1), ftstatus<buildingi>, 0, fnscript<buildingi>},
 	{"Hero", VAR(heroi, 1)},

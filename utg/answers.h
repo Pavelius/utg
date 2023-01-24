@@ -48,7 +48,7 @@ public:
 extern answers an;
 namespace draw {
 void information(const char* format, ...);
-void message(const char* format);
+void message(const char* format, const char* header = 0);
 void output(const char* format, ...);
 void pause();
 void pause(const char* title, ...);

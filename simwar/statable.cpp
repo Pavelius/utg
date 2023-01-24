@@ -16,6 +16,7 @@ BSDATA(costi) = {
 	{"Archery"},
 	{"Level"},
 	{"Armor"},
+	{"Experience", 0, 0, 0, 9},
 	{"Movement"},
 	{"Sail"},
 	{"Explore"},
@@ -80,6 +81,14 @@ bool isenought(const costa& v1, const costac& v2) {
 }
 
 bool isempthy(const costac& v) {
+	for(auto i = 0; i <= Limit; i++) {
+		if(v[i])
+			return false;
+	}
+	return true;
+}
+
+bool isempthy(const costa& v) {
 	for(auto i = 0; i <= Limit; i++) {
 		if(v[i])
 			return false;

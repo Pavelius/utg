@@ -143,7 +143,9 @@ static void table_icon() {
 }
 
 void table_text_icon() {
+	auto push_width = width;
 	table_icon();
-	caret.x += 16;
+	caret.x += height; width -= height;
 	table_text();
+	width = push_width;
 }

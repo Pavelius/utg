@@ -125,11 +125,13 @@ static const char* find_separator(const char* pb) {
 	return 0;
 }
 
-void draw::message(const char* format) {
+void draw::message(const char* format, const char* header) {
 	if(!format)
 		return;
 	answers an;
+	auto push_header = answers::header;
 	auto push_prompt = answers::prompt;
+	answers::header = header;
 	while(true) {
 		auto p = find_separator(format);
 		if(!p)
@@ -150,4 +152,5 @@ void draw::message(const char* format) {
 	an.prompt = format;
 	an.choose(0, getnm("Continue"), 1);
 	answers::prompt = push_prompt;
+	answers::header = push_header;
 }

@@ -10,9 +10,10 @@ Orks: Орки
 Spearmans: Копейщики
 WolfRiders: Всадники на волках
 
-January: Январь
 August: Август
+January: Январь
 February: Февраль
+March: Март
 
 BanditLair: Логово бандитов
 DarkCave: Темная пещера
@@ -101,6 +102,7 @@ ProvincesIncome: Доход от провинций
 ProvincesUpkeep: Содержание провинций
 Recruit: Нанять отряд (осталось %1i)
 RemoveAll: Сбросить все
+Reward: Награда
 Settlements: Поселение
 Site: Локация
 Sites: Локации
@@ -109,8 +111,10 @@ Unit: Отряд
 Units: Отряды
 UnitsUpkeep: Содержание отрядов
 Upkeep: Содержание
+VisitSite: Посетить
 WhatDoYouWantToBuild: Какое здание хотите построить?
 WhoDo: Кто это будет делать?
+WhoDoThis: Кто будет это делать?
 WhoWillBeMarching: Кто еще участвует в походе?
 YourArmyIs: В походе участвуют
 YourArmyIsEmpthy: Войска не участвуют в походе.

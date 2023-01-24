@@ -80,7 +80,7 @@ void add_line(stringbuilder& sb, const costac& source) {
 	}
 }
 
-static void add_line(stringbuilder& sb, const costa& source) {
+void add_line(stringbuilder& sb, const costa& source) {
 	for(auto i = 0; i <= Limit; i++) {
 		auto& e = bsdata<costi>::elements[i];
 		auto n = source[i];

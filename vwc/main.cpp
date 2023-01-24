@@ -41,9 +41,9 @@ static void mainscene() {
 	caret.y = metrics::padding + 1;
 	width = 200;
 	height = 300;
-	gui.count = 10;
+	gui.count = 25;
 	gui.value = "Row number %1i";
-	gui.number = 3;
+	gui.number = 1;
 	gui.pgetname = test_getname;
 	test_list();
 }

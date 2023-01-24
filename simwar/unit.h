@@ -17,7 +17,6 @@ struct uniti : actable {
 };
 struct troop : moveable {
 	provincei*		moveto;
-	site*			moveto_location;
 	const uniti*	type;
 	constexpr operator bool() const { return type != 0; }
 	const char*		getname() const;

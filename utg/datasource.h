@@ -3,8 +3,7 @@
 struct datasource {
 	void*			data;
 	size_t			size;
-	unsigned		mask;
-	unsigned		count;
+	unsigned		mask, count;
 	long			get() const;
 	const char*		getstr() const;
 	bool			is() const { return (get() & mask) != 0; }

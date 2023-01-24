@@ -18,15 +18,6 @@ Wasteland
  effect Size(2) Mana(1)
  upkeep Happiness(1)
 
-#Site
-
-BanditLair resid(DarkCave)
-DarkCave resid(DarkCave)
-DarkYard resid(DarkCave)
-StoneCanion resid(DarkCave)
-UnholyGraveyard resid(Graveyard)
-WolfLair resid(Lair)
-
 #Building
 
 WatchTower
@@ -171,11 +162,11 @@ SouthernKindom
 
 #Hero
 
-Gordek resid("2MHUM6_S") player(SouthernKindom)
+Gordek resid("2MHUM6_S") player(SouthernKindom) gender(Male)
  effect Strenght(2)
-Mistra resid("2FELF2_S") player(SouthernKindom)
+Mistra resid("2FELF2_S") player(SouthernKindom) gender(Female)
  effect Strenght(2)
-Kalipse resid("2MDEF2_S")
+Kalipse resid("2MDEF2_S") gender(Male)
  effect Strenght(2)
 
 #RandomList
@@ -197,3 +188,16 @@ HillsRandomDwelvers
  chance WildHorde+3
 WastelandRandomDwelvers
  chance BarbarianTribe+2 WildHorde+2
+
+#Site
+
+BanditLair resid(DarkCave)
+DarkCave resid(DarkCave)
+ fail Wounds+1
+DarkYard resid(DarkCave)
+StoneCanion resid(DarkCave)
+UnholyGraveyard resid(Graveyard)
+WolfLair resid(Lair)
+ fail Wounds+2
+ partial Wounds+1 Gold+30
+ success Gold+30

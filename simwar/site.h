@@ -7,15 +7,16 @@ struct sitei : nameable {
 	const char*		resid;
 	costac			effect, upkeep;
 	costa			cost;
-	variants		conditions, defenders, reward;
+	variants		conditions;
+	variants		fail, partial, success;
 	bool			isallow(variant v) const;
 	bool			isallow() const;
 };
 struct site {
 	const sitei*	type;
 	provincei*		province;
-	tag_s			tags;
 	explicit operator bool() const { return type != 0; }
 	void			clear();
 };
 extern sitei* lastsite;
+extern site* location;
