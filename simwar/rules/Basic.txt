@@ -196,6 +196,8 @@ DarkCave resid(DarkCave)
  fail Wounds+1
 DarkYard resid(DarkCave)
 StoneCanion resid(DarkCave)
+ partial Mana+5
+ success Gold+50 Mana+10
 UnholyGraveyard resid(Graveyard)
  fail Wounds+1
  success Lore+20 Mana+20
@@ -203,3 +205,7 @@ WolfLair resid(Lair)
  fail Wounds+2
  partial Wounds+1 Gold+30
  success Gold+30
+MercenaryCamp resid(MercenaryCamp)
+ fail Experience+2 
+ partial Experience+4
+ success Experience+8

@@ -18,6 +18,8 @@ March: Март
 BanditLair: Логово бандитов
 DarkCave: Темная пещера
 DarkYard: Темная поляна
+MercenaryCamp: Лагерь наемников
+StoneCanion: Каменное ущелье
 UnholyGraveyard: Проклятое кладбище
 WolfLair: Логово волков
 

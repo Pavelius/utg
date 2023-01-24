@@ -809,7 +809,7 @@ static const char* add_hero_prompt(const heroi& e, stringbuilder& sb) {
 	sb.addn("#$left 48 image '%1' 0 'art/avatars'", e.resid);
 	sb.addn("###%1", e.getname());
 	if(e.action) {
-		auto site_name = location ? location->type->getname() : "";
+		auto site_name = (location && location->type) ? location->type->getname() : "";
 		sb.addn(getnm(str("Do%1", e.action->id)), e.province->getname(), site_name);
 	} else if(e.wounds) {
 		sb.addn("[~");
@@ -1206,6 +1206,9 @@ static void action_visit_site() {
 	addvalue(player->resources, rewards);
 	auto location_name = getnm(location->type->id);
 	location->clear();
+	hero->location = 0;
+	hero->action = 0;
+	location = 0;
 	update_provinces();
 	reporti::add(temp, getnm(location_name), game.turn, reciever(hero->player));
 }
