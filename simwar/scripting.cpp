@@ -1204,9 +1204,10 @@ static void action_visit_site() {
 		add_line(sb, rewards);
 	}
 	addvalue(player->resources, rewards);
+	auto location_name = getnm(location->type->id);
 	location->clear();
 	update_provinces();
-	reporti::add(temp, getnm(location->type->id), game.turn, reciever(hero->player));
+	reporti::add(temp, getnm(location_name), game.turn, reciever(hero->player));
 }
 
 static bool special_action(const void* pv) {
