@@ -147,10 +147,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="test_code.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code\test.c2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

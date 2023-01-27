@@ -9,9 +9,11 @@
 using namespace draw;
 
 void check_translation();
+void initialize_code();
 void initialize_interface();
 void initialize_translation(const char* locale);
 void set_dark_theme();
+bool test_code();
 
 void table_text_icon();
 
@@ -49,6 +51,8 @@ static void mainscene() {
 }
 
 static void mainstart() {
+	if(!test_code())
+		return;
 	draw::scene(mainscene);
 }
 
@@ -58,6 +62,7 @@ int main(int argc, char* argv[]) {
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	check_translation();
+	initialize_code();
 	if(log::geterrors())
 		return -1;
 	awindow.flags = WFResize | WFMinmax;

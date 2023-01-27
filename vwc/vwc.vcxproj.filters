@@ -7,6 +7,9 @@
     <ClCompile Include="metadata.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="test_code.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -18,13 +21,24 @@
     <Filter Include="data">
       <UniqueIdentifier>{abdead2d-1997-4f57-ba6d-72ae50511a87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="code">
+      <UniqueIdentifier>{274ed5c0-8e3c-4d9d-94b5-ac788c185115}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="errors.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>data</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code\test.c2">
+      <Filter>code</Filter>
+    </None>
   </ItemGroup>
 </Project>

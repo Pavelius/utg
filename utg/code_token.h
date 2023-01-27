@@ -7,18 +7,21 @@ enum class flag : unsigned char {
 struct token {
 	const char*			id;
 	unsigned			flags;
-	unsigned char		result;
 	const struct rule*	rule;
-	constexpr token() : id(0), flags(), rule(0), result(0xFF) {}
-	constexpr token(const char* p) : id(p), flags(), rule(0), result(0xFF) {
+	constexpr token() : id(0), flags(), rule(0) {}
+	constexpr token(const char* p) : id(p), flags(), rule(0) {
 		while(*p) {
 			if(*p == '\\') {
 				id = p + 1;
 				break;
 			} else if(p[0] == ',' && p[1] == ' ') {
-				set(flag::ComaSeparated); p++;
+				set(flag::ComaSeparated);
+				set(flag::Repeat);
+				p++;
 			} else if(p[0] == '.' && p[1] == ' ') {
-				set(flag::PointSeparated); p++;
+				set(flag::PointSeparated);
+				set(flag::Repeat);
+				p++;
 			} else if(*p == '^')
 				set(flag::Stop);
 			else if(*p == '.')
@@ -27,8 +30,6 @@ struct token {
 				set(flag::Variable);
 			else if(*p == '?')
 				set(flag::Condition);
-			else if(*p >= '0' && *p <= '9')
-				result = *p - '0';
 			else {
 				id = p;
 				break;

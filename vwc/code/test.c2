@@ -1,0 +1,11 @@
+import sys.crt;
+
+////////////////////////
+// COMMENTS
+
+enum { Message, Question, Answer = 100 };
+
+int x;
+
+int print() {
+}

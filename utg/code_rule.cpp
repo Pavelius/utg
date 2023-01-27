@@ -4,28 +4,27 @@
 
 using namespace code;
 
-typedef adat<evalue> evaluea;
-
-fnevent			code::rule::papply;
-rulea			code::this_rules;
+rulea			code::rules;
+fnerror			code::perror;
 char			code::string_buffer[256 * 32];
 const char*		code::p;
-static evaluea	values;
-static int		last_index;
-static int		last_value;
+const char*		code::last_identifier;
+const char*		code::last_string;
+long			code::last_value;
 
-void code::errorv(const char* format, const char* format_param) {
+static const char* example(const char* p) {
+	static char temp[40]; stringbuilder sb(temp);
+	sb.psstrlf(p);
+	return temp;
+}
+
+void code::errorv(const char* p, const char* format, const char* format_param) {
+	if(perror)
+		perror(p, format, format_param);
 }
 
 void code::error(const char* format, ...) {
-	errorv(getnm(format), xva_start(format));
-}
-
-static void addvalue(operation type, long value, pckh result) {
-	auto p = values.add();
-	p->type = type;
-	p->value = value;
-	p->result = result;
+	errorv(p, format, xva_start(format));
 }
 
 static void comments() {
@@ -37,31 +36,30 @@ static void comments() {
 	}
 }
 
-void string() {
+void code::string() {
 	if(*p == '\"') {
 		stringbuilder sb(string_buffer);
 		p = sb.psstr(p + 1, '\"');
-		addvalue(operation::Text, (long)szdup(string_buffer), TypeLiteral);
+		last_string = szdup(string_buffer);
 		skipws();
 	}
 }
 
-static void number() {
+void code::number() {
 	auto p1 = p;
-	long value = 0;
-	p = stringbuilder::read(p, value);
+	last_value = 0;
+	p = stringbuilder::read(p, last_value);
 	if(p1 != p) {
-		addvalue(operation::Number, value, i32);
 		skipws();
 	}
 }
 
-static void identifier() {
+void code::identifier() {
 	auto p1 = p;
 	stringbuilder sb(string_buffer);
 	p = sb.psidf(p);
 	if(p1 != p) {
-		addvalue(operation::Identifier, (long)szdup(string_buffer), TypePointer);
+		last_identifier = szdup(string_buffer);
 		skipws();
 	}
 }
@@ -78,7 +76,7 @@ void code::skipws() {
 }
 
 static rule* find_rule(const char* id) {
-	for(auto& e : this_rules) {
+	for(auto& e : rules) {
 		if(strcmp(e.id, id) == 0)
 			return &e;
 	}
@@ -87,20 +85,9 @@ static rule* find_rule(const char* id) {
 
 static void parse_token(const token& e);
 
-static void update_result(parser& e, const token& v) {
-	if(v.result == 0xFF)
-		return;
-	const auto maximum = sizeof(e.param) / sizeof(e.param[0]);
-	if(v.result < maximum)
-		e.param[v.result] = last_value;
-	else
-		error("ErrorTokenResultIndex", v.result, maximum);
-}
-
 static void parse_rule(const rule& v) {
-	parser ctx(p);
 	auto need_stop = false;
-	last_index = -1;
+	auto p0 = p;
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
@@ -108,11 +95,30 @@ static void parse_rule(const rule& v) {
 			need_stop = true;
 		auto p1 = p;
 		parse_token(e);
-		if(p1 != p)
-			update_result(ctx, e);
-		last_index = &e - v.tokens;
+		if(p1 == p) {
+			// Token did not work
+			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue executing
+				continue;
+			p = p0; // This rule is invalid, rollback all and exit
+			return;
+		}
+		if(need_stop)
+			break;
+	}
+	if(need_stop && p0 == p)
+		return;
+	if(v.determinal) {
+		if((p0 != p) || !v.tokens[0])
+			v.determinal(); // Only valid token execute proc
+	}
+}
+
+static void parse_token(const token& e) {
+	auto p0 = p;
+	if(e.rule) {
+		parse_rule(*e.rule);
 		if(e.is(flag::Repeat)) {
-			auto p2 = p1;
+			auto p2 = p0;
 			while(p2 != p) {
 				p2 = p;
 				auto required = false;
@@ -128,45 +134,21 @@ static void parse_rule(const rule& v) {
 					}
 				}
 				auto p3 = p;
-				parse_token(e);
-				if(p3 != p)
-					update_result(ctx, e);
+				parse_rule(*e.rule);
 				if(p3 == p) {
 					if(required)
-						error("ErrorExpectedRule", e.id);
+						error("Expected %1", e.id);
 				} else {
 					if(!required) {
 						if(e.is(flag::ComaSeparated))
-							error("ErrorExpectedSymbol", ",");
+							error("Expected symbol `,`");
 						else if(e.is(flag::PointSeparated))
-							error("ErrorExpectedSymbol", ".");
+							error("Expected symbol `.`");
 					}
 				}
 			}
 		}
-		if(p1 == p) {
-			// Token did not work
-			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue executing
-				continue;
-			if(ctx.p != p) {
-				// Some of previous tokens work. Need rollback parser.
-				p = ctx.p;
-			}
-			break;
-		}
-		if(need_stop)
-			break;
-	}
-	if((p != ctx.p || !v.tokens[0])) {
-		// Rule work
-		v.apply(ctx);
-	}
-}
-
-static void parse_token(const token& e) {
-	if(e.rule)
-		parse_rule(*e.rule);
-	else {
+	} else {
 		auto n = zlen(e.id);
 		if(memcmp(p, e.id, n) != 0)
 			return;
@@ -177,7 +159,7 @@ static void parse_token(const token& e) {
 }
 
 static void lazy_initialize() {
-	for(auto& r : this_rules) {
+	for(auto& r : rules) {
 		for(auto& e : r.tokens) {
 			if(!e)
 				break;
@@ -186,93 +168,10 @@ static void lazy_initialize() {
 			if(e.is(flag::Variable)) {
 				e.rule = find_rule(e.id);
 				if(!e.rule)
-					error("ErrorNotFoundRule", e.id);
+					error("In rule `%1` not found token `%2`", r.id, e.id);
 			}
 		}
 	}
-}
-
-static void constant_number(operation type, evalue& e1, evalue& e2) {
-	switch(type) {
-	case operation::Plus: e1.value += e2.value; break;
-	case operation::Minus: e1.value -= e2.value; break;
-	case operation::Mul: e1.value *= e2.value; break;
-	case operation::Div: e1.value /= e2.value; break;
-	case operation::DivRest: e1.value %= e2.value; break;
-	case operation::Scope: e1.value += e2.value * sizeof(int); break;
-	default: break;
-	}
-}
-
-static void constant_number(operation type, evalue& e1) {
-	switch(type) {
-	case operation::Neg: e1.value = -e1.value; break;
-	case operation::Dereference: e1.value = -e1.value; break;
-	default: break;
-	}
-}
-
-static void loadvalue(evalue& e1) {
-	if(e1.type == operation::Identifier) {
-		e1.type = operation::Number;
-		e1.value = 3;
-	}
-}
-
-static void binary_operation(operation type, evalue& e1, evalue& e2) {
-	loadvalue(e2);
-	constant_number(type, e1, e2);
-}
-
-static void unary_operation(operation type, evalue& e1) {
-	constant_number(type, e1);
-}
-
-void rule::apply(parser& e) const {
-	switch(type) {
-	case Determinal:
-		if(equal(id, "number"))
-			number();
-		else if(equal(id, "string"))
-			string();
-		else if(equal(id, "identifier"))
-			identifier();
-		break;
-	case BinaryOperation:
-		if(param)
-			e.param[0] = param;
-		if(!e.param[0])
-			error("ErrorNotSpecifedBinaryOperation");
-		else if(values.getcount() < 2)
-			error("ErrorBinaryOperationOperandCount", values.getcount());
-		else {
-			binary_operation((operation)e.param[0], values.data[values.count - 2], values.data[values.count - 1]);
-			values.count--;
-		}
-		break;
-	case UnaryOperation:
-		if(param)
-			e.param[0] = param;
-		if(!e.param[0])
-			error("ErrorNotSpecifedBinaryOperation");
-		else
-			unary_operation((operation)e.param[0], values.data[values.count - 1]);
-		break;
-	case SetValue:
-		last_value = param;
-		break;
-	case SetValueRange:
-		if(last_index == -1) {
-			error("ErrorLastIndex", id);
-			last_index = 0;
-		}
-		last_value = param + last_index;
-		break;
-	default:
-		break;
-	}
-	if(papply)
-		papply();
 }
 
 void code::parse(const char* source_code, const char* rule_id) {
@@ -280,7 +179,7 @@ void code::parse(const char* source_code, const char* rule_id) {
 		rule_id = "global";
 	auto pr = find_rule(rule_id);
 	if(!pr) {
-		error("ErrorNotFoundRule", rule_id);
+		error("Not found rule `%1`", rule_id);
 		return;
 	}
 	p = source_code;
@@ -289,14 +188,14 @@ void code::parse(const char* source_code, const char* rule_id) {
 		auto pb = p;
 		parse_rule(*pr);
 		if(pb == p) {
-			error("ErrorParse", pb);
+			error("Can't find any rule when parse `%1`", example(pb));
 			return;
 		}
 	}
 }
 
 void code::setrules(rulea source) {
-	this_rules = source;
+	rules = source;
 	lazy_initialize();
 }
 

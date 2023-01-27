@@ -32,7 +32,7 @@ void scenariotilei::updateui() const {
 			auto pt = h2p(position) - ps->offset;
 			p = draw::addobject(pt.x, pt.y);
 			p->data = this;
-			p->resource = draw::getres(type, "art/tiles");
+			//p->resource = draw::getres(type, "art/tiles");
 			p->priority = ps->priority;
 			if(inverse)
 				p->flags = ImageMirrorH | ImageMirrorV;
@@ -57,7 +57,7 @@ void creaturei::updateui() const {
 		focusing(pt);
 		p = draw::addobject(pt.x, pt.y);
 		p->data = this;
-		p->resource = draw::getres(getid(), "art/creatures");
+		//p->resource = draw::getres(getid(), "art/creatures");
 		p->priority = 4;
 		splashscreen(500);
 	}
@@ -70,7 +70,7 @@ void decoration::updateui() const {
 		focusing(pt);
 		p = draw::addobject(pt.x, pt.y);
 		p->data = this;
-		p->resource = draw::getres(parent->id, "art/tiles");
+		//p->resource = draw::getres(parent->id, "art/tiles");
 		p->priority = 4;
 	}
 }
@@ -90,9 +90,9 @@ void ordermove(void* object, point hp, int time, bool depended) {
 
 static draworder* floatstring(point pt, color fc, const char* format) {
 	auto pb = draw::addobject(pt.x, pt.y);
-	pb->string = szdup(format);
-	pb->font = metrics::h1;
-	pb->fore = fc;
+	//pb->string = szdup(format);
+	//pb->font = metrics::h1;
+	//pb->fore = fc;
 	pb->alpha = 0;
 	pb->priority = 101;
 	auto po = pb->addorder(500);
@@ -283,11 +283,11 @@ static void paint_moverange() {
 indext indexable::choosemove() {
 	answers an;
 	an.add((void*)Blocked, getnm("EndMove"));
-	auto push_event = object::afterpaintall;
-	object::afterpaintall = paint_moverange;
+	//auto push_event = object::afterpaintall;
+	//object::afterpaintall = paint_moverange;
 	splashscreen(500);
 	auto result = an.choose();
-	object::afterpaintall = push_event;
+	//object::afterpaintall = push_event;
 	return (indext)(int)result;
 }
 
@@ -305,11 +305,11 @@ static void paint_targets() {
 creaturei* creaturea::choose(const char* title) const {
 	last = this;
 	answers an;
-	auto push_event = object::afterpaintall;
-	object::afterpaintall = paint_targets;
+	//auto push_event = object::afterpaintall;
+	//object::afterpaintall = paint_targets;
 	splashscreen(500);
 	auto result = (creaturei*)an.choose(title, getnm("Cancel"), 1);
-	object::afterpaintall = push_event;
+	//object::afterpaintall = push_event;
 	return result;
 }
 
@@ -498,7 +498,7 @@ static void paint_elements() {
 				alpha = 96;
 			else
 				alpha = 255;
-			image(getres("elements32"), i, 0);
+			image(gres("elements32"), i, 0);
 			alpha = push_alpha;
 		}
 		caret.x += 32 + 3;
@@ -558,6 +558,6 @@ static void overlaped_window() {
 
 void ui_initialize() {
 	draw::ptips = tips;
-	draw::object::afterpaint = object_afterpaint;
-	draw::object::afterpaintall = overlaped_window;
+	//draw::object::afterpaint = object_afterpaint;
+	//draw::object::afterpaintall = overlaped_window;
 }

@@ -22,11 +22,6 @@ enum : pckh {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 	TypeLiteral, TypePointer,
 };
-struct evalue {
-	operation			type;
-	long				value;
-	pckh				result;
-};
 struct ast {
 	operation			type;
 	pckh				right;

@@ -1,2 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 1: Not find data type for `NavigationTile`
+﻿ Line 0: Can't find any rule when parse `import sys.crt;`

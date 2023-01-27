@@ -1,6 +1,5 @@
 #include "bsreq.h"
-#include "draw_object.h"
-#include "strategy.h"
+#include "draw_strategy.h"
 #include "main.h"
 
 void initialize_conditions();
