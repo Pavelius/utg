@@ -8,7 +8,7 @@ namespace code {
 struct rule {
 	const char* id;
 	tokena		tokens;
-	fnevent		determinal;
+	fnevent		apply;
 };
 
 typedef slice<rule> rulea;
@@ -17,10 +17,14 @@ typedef void(*fnerror)(const char* position, const char* format, const char* for
 extern char	string_buffer[256 * 32];
 extern rulea rules;
 extern fnerror perror;
+
 extern const char* p;
 extern const char* last_identifier;
 extern const char* last_string;
+
 extern long last_value;
+
+const char* example(const char* p);
 
 void identifier();
 void number();

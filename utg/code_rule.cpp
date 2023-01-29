@@ -7,12 +7,17 @@ using namespace code;
 rulea			code::rules;
 fnerror			code::perror;
 char			code::string_buffer[256 * 32];
+
 const char*		code::p;
 const char*		code::last_identifier;
 const char*		code::last_string;
+
 long			code::last_value;
 
-static const char* example(const char* p) {
+static const char* last_error_position;
+static const token* last_error_token;
+
+const char* code::example(const char* p) {
 	static char temp[40]; stringbuilder sb(temp);
 	sb.psstrlf(p);
 	return temp;
@@ -95,10 +100,15 @@ static void parse_rule(const rule& v) {
 			need_stop = true;
 		auto p1 = p;
 		parse_token(e);
+		if(e.is(flag::Execute))
+			continue;
 		if(p1 == p) {
 			// Token did not work
-			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue executing
+			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue parse next token
 				continue;
+			// TODO: single_statement fix. And how debug this?
+			last_error_token = &e;
+			last_error_position = p;
 			p = p0; // This rule is invalid, rollback all and exit
 			return;
 		}
@@ -106,16 +116,20 @@ static void parse_rule(const rule& v) {
 			break;
 	}
 	if(need_stop && p0 == p)
-		return;
-	if(v.determinal) {
-		if((p0 != p) || !v.tokens[0])
-			v.determinal(); // Only valid token execute proc
+		return; // If we need 'one of' tokens and not gain valid token exit
+	if(v.apply) {
+		if((p0 != p) || !v.tokens[0]) {
+			v.apply(); // Only valid token execute proc
+		}
 	}
 }
 
 static void parse_token(const token& e) {
-	auto p0 = p;
-	if(e.rule) {
+	if(e.is(flag::Execute)) {
+		if(e.rule && e.rule->apply)
+			e.rule->apply();
+	} else if(e.rule) {
+		auto p0 = p;
 		parse_rule(*e.rule);
 		if(e.is(flag::Repeat)) {
 			auto p2 = p0;
@@ -165,7 +179,7 @@ static void lazy_initialize() {
 				break;
 			if(e.rule)
 				return; // All rules initialized
-			if(e.is(flag::Variable)) {
+			if(e.is(flag::Variable) || e.is(flag::Execute)) {
 				e.rule = find_rule(e.id);
 				if(!e.rule)
 					error("In rule `%1` not found token `%2`", r.id, e.id);
@@ -186,9 +200,17 @@ void code::parse(const char* source_code, const char* rule_id) {
 	skipws();
 	while(*p) {
 		auto pb = p;
+		last_error_position = 0;
+		last_error_token = 0;
 		parse_rule(*pr);
 		if(pb == p) {
-			error("Can't find any rule when parse `%1`", example(pb));
+			if(last_error_token) {
+				if(last_error_position)
+					p = last_error_position;
+				error("Expected token `%1` in `%2`", last_error_token->id, example(last_error_position));
+				p = pb;
+			} else
+				error("Can't parse `%1`", example(pb));
 			return;
 		}
 	}

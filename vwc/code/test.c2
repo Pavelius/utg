@@ -1,11 +1,9 @@
-import sys.crt;
+import crt.rect;
 
-////////////////////////
-// COMMENTS
-
-enum { Message, Question, Answer = 100 };
+enum {OK, Cancel, Answer};
 
 int x;
 
 int print() {
+	return x / 10;
 }

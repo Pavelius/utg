@@ -4,9 +4,16 @@
 
 using namespace code;
 
-static package* last_package;
+enum code_flag_s : unsigned char { Static, Public};
+
 static pckh last_type, last_member_type;
+
+static package* last_package;
 static const char* last_member_identifier;
+static const char* last_statement;
+static const char* last_scope;
+
+static unsigned member_flags;
 
 static void type_identifier() {
 	if(equal(last_identifier, "int"))
@@ -33,18 +40,37 @@ static void add_member() {
 	last_member_identifier = last_identifier;
 }
 
+static void add_variable() {
+	auto result = last_package->findsym(last_identifier, This);
+	if(result == None)
+		error("Undefined identifier `%1`", last_identifier);
+}
+
+static void clear_flags() {
+	member_flags = 0;
+}
+
+static void add_static() {
+	member_flags |= FG(Static);
+}
+
+static void add_public() {
+	member_flags |= FG(Public);
+}
+
 static void declare_function() {
 	auto id = last_package->add(last_member_identifier);
 	last_package->add(id, This, last_member_type, 0, 0);
 }
 
-static void declare_variable() {
+static void declare_member() {
 	auto id = last_package->add(last_member_identifier);
 	last_package->add(id, This, last_member_type, 0, 0);
 }
 
 static rule c2_grammar[] = {
 	{"global", {"^%import", "%enum", "%member_function", "%member_variable"}},
+	{"clear_flags", {}, clear_flags},
 
 	{"identifier", {}, identifier},
 	{"number", {}, number},
@@ -64,21 +90,22 @@ static rule c2_grammar[] = {
 	{"type_reference", {"?.*"}, type_reference},
 	{"type", {"%type_idenfifier", "%?type_reference"}},
 	{"initialization", {"=", "%expression"}},
-	{"static", {"static"}},
-	{"public", {"public"}},
+	{"static", {"static"}, add_static},
+	{"public", {"public"}, add_public},
 	{"member", {"%type", "%identifier"}, add_member},
 	{"parameter", {"%type", "%identifier"}},
 	
-	{"declare_function", {"?%static", "?%public", "%member", "(", ", ?%parameter", ")"}, declare_function},
+	{"declare_function", {"@clear_flags", "?%static", "?%public", "%member", "(", ", ?%parameter", ")"}, declare_function},
 	{"member_function", {"%declare_function", "%block_statements"}},
 	
-	{"declare_variable", {"?%static", "?%public", "%member", "?%array_scope"}, declare_variable},
+	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%member", "?%array_scope"}, declare_member},
 	{"member_variable", {"%declare_variable", "?%initialization", ";"}},
-	{"local_variable", {"?%static", "%member", "?%array_scope", "?%initialization"}},
+	{"local_variable", {"@clear_flags", "?%static", "%member", "?%array_scope", "?%initialization"}},
 
+	{"variable", {"%identifier"}, add_variable},
 	{"sizeof", {"sizeof", "(", "%expression", ")"}},
 	{"array_scope", {"[", "%expression", "]"}},
-	{"unary", {"^%number", "%string", "%sizeof"}},
+	{"unary", {"^%number", "%string", "%sizeof", "%variable"}},
 	{"prefix_op", {"^?\\++", "\\--", "\\&"}},
 	{"prefix", {"?.%prefix_op", "%unary"}},
 	{"indirection", {"\\.", "%identifier"}},
@@ -86,26 +113,27 @@ static rule c2_grammar[] = {
 	{"postfix", {"%unary", "?.%postfix_op"}},
 	{"multiplication_op", {"^/", "*"}},
 	{"multiplication_op_state", {"%multiplication_op", "%postfix"}},
-	{"multiplication", {"%postfix", "?%multiplication_op_state"}},
+	{"multiplication", {"%postfix", "?.%multiplication_op_state"}},
 	{"addiction_op", {"^\\+", "\\-"}},
 	{"addiction_op_state", {"%addiction_op", "%multiplication"}},
-	{"addiction", {"%multiplication", "?%addiction_op_state"}},
+	{"addiction", {"%multiplication", "?.%addiction_op_state"}},
 	{"binary_op", {"^\\|", "\\&", "\\^"}},
 	{"binary_op_state", {"%binary_op", "%addiction"}},
-	{"binary", {"%addiction", "?%binary_op_state"}},
+	{"binary", {"%addiction", "?.%binary_op_state"}},
 	{"conditional_op", {"^\\>", "\\<", "\\<=", "\\>=", "\\==", "\\!="}},
 	{"conditional_op_state", {"%conditional_op", "%binary"}},
-	{"conditional", {"%binary", "?%conditional_op_state"}},
+	{"conditional", {"%binary", "?.%conditional_op_state"}},
 	{"logical_op", {"^\\||", "\\&&"}},
 	{"logical_op_state", {"%logical_op", "%conditional"}},
-	{"logical", {"%conditional", "?%logical_op_state"}},
+	{"logical", {"%conditional", "?.%logical_op_state"}},
 	{"expression", {"%logical"}},
 
 	{"while", {"while", "(", "%expression", ")", "%single_statement"}},
 	{"if", {"if", "(", "%expression", ")", "%single_statement"}},
 	{"switch", {"switch", "(", "%expression", ")", "{", "}"}},
+	{"return", {"return", "?%expression"}},
 
-	{"statement", {"^%local_variable"}},
+	{"statement", {"^%return", "%local_variable"}},
 	{"block_statements", {"{", ".?%single_statement", "}"}},
 	{"single_statement", {"?%statement", ";"}},
 };
@@ -127,7 +155,9 @@ bool test_code() {
 		return false;
 	last_package = bsdata<package>::add();
 	last_package->create("test");
+	last_scope = 0;
 	parse(p, 0, c2_grammar);
 	log::close();
+	last_package->write("code/test.c2b");
 	return log::geterrors() == 0;
 }

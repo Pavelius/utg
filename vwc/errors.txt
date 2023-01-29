@@ -1,1 +1,1 @@
-﻿ Line 0: Can't find any rule when parse `import sys.crt;`
+﻿ Line 4: Expected token `declare_variable` in `int x;`

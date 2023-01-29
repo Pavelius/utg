@@ -2,7 +2,7 @@
 
 namespace code {
 enum class flag : unsigned char {
-	Variable, Condition, Repeat, ComaSeparated, PointSeparated, Stop,
+	Variable, Condition, Repeat, ComaSeparated, PointSeparated, Stop, Execute
 };
 struct token {
 	const char*			id;
@@ -30,6 +30,8 @@ struct token {
 				set(flag::Variable);
 			else if(*p == '?')
 				set(flag::Condition);
+			else if(*p == '@')
+				set(flag::Execute);
 			else {
 				id = p;
 				break;
