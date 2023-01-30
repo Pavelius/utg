@@ -4,15 +4,23 @@ enum {OK, Cancel, Answer};
 
 int x, y;
 
-void main() {
-	int x = crt.gettest(10, 12);
-	switch(x) {
+int print() {
+	return 0;
+}
+
+bool test_switch() {
+	switch(x[10]) {
 	case 10:
 		break;
 	default:
 		break;
 	}
-	if(x < 10)
-		return y;
-	return x;
+}
+
+void main() {
+	print();
+	!test_switch();
+	if(x <= 5)
+		return x;
+	return 10;
 }

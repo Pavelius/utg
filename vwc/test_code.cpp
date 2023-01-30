@@ -1,4 +1,3 @@
-#include "code_package.h"
 #include "code_rule.h"
 #include "logparse.h"
 
@@ -7,7 +6,6 @@ using namespace code;
 enum code_flag_s : unsigned char { Static, Public };
 
 static pckh last_type, member_type;
-static package* last_package;
 static const char *file_source, *last_url;
 static unsigned member_flags;
 static adat<unsigned> locals;
@@ -52,9 +50,10 @@ static void set_type() {
 		last_type = Void;
 	else {
 		last_type = last_package->findsym(last_identifier, Modules);
-		if(!last_type) {
-			error("Not found type `%1`", last_identifier);
+		if(last_type == None) {
+			// error("Not found type `%1`", last_identifier);
 			last_type = i32;
+			code::p = last_position;
 		}
 	}
 }
@@ -78,6 +77,8 @@ static void add_variable() {
 		result = last_package->findsym(id, Modules);
 	if(result == None)
 		error("Undefined identifier `%1`", last_identifier);
+	last_ast = last_package->add(operation::Identifier, result);
+	operations.add(last_ast);
 }
 
 static void add_member() {
@@ -90,13 +91,22 @@ static void add_member() {
 		error("Symbol `%1` already defined", last_identifier);
 		return;
 	}
-	last_package->add(id, This, member_type, member_flags, code::p - file_source, scope);
+	last_package->add(id, This, member_type, member_flags, code::last_position - file_source, scope);
 }
 
 static void add_type() {
 	auto id_result = last_package->add(last_url);
 	auto id = last_package->add(last_identifier);
-	last_package->add(id, Modules, id_result, 0, code::p - file_source, 0);
+	last_package->add(id, Modules, id_result, 0, code::last_position - file_source, 0);
+}
+
+static void expression() {
+	parse_expression();
+	if(!operations) {
+		error("Expected operation when parse `%1`", example(p));
+		last_ast = None;
+	} else
+		last_ast = operations.data[operations.count - 1];
 }
 
 static rule c2_grammar[] = {
@@ -134,32 +144,37 @@ static rule c2_grammar[] = {
 	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
 	{"declare_local", {"@clear_flags", "?%static", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
 
-	{"funtion_call", {"(", "?, %expression", ")"}},
+	{"call", {"(", "?, %expression", ")"}},
 	{"variable", {"%identifier"}, add_variable},
 	{"sizeof", {"sizeof", "(", "%expression", ")"}},
 	{"array_scope", {"[", "%expression", "]"}},
 	{"unary", {"^%number", "%string", "%sizeof", "%variable"}},
+	{"indirection", {"\\.", "%identifier"}},
+	{"postfix", {"^\\++", "\\--", "%indirection", "%call", "%array_scope"}},
+	/*
+	{"postfix", {"%unary", "?.%postfix_op"}},
 	{"prefix_op", {"^?\\++", "\\--", "\\&"}},
 	{"prefix", {"?.%prefix_op", "%unary"}},
-	{"indirection", {"\\.", "%identifier"}},
-	{"postfix_op", {"^\\++", "\\--", "%indirection", "%funtion_call"}},
-	{"postfix", {"%unary", "?.%postfix_op"}},
-	{"multiplication_op", {"^\\/", "\\*"}},
+	{"multiplication_op", {"^\\/", "\\*"}, set_operation},
 	{"multiplication_op_state", {"%multiplication_op", "%postfix"}},
 	{"multiplication", {"%postfix", "?.%multiplication_op_state"}},
-	{"addiction_op", {"^\\+", "\\-"}},
+	{"addiction_op", {"^\\+", "\\-"}, set_operation},
 	{"addiction_op_state", {"%addiction_op", "%multiplication"}},
 	{"addiction", {"%multiplication", "?.%addiction_op_state"}},
-	{"binary_op", {"^\\|", "\\&", "\\^"}},
+	{"binary_op", {"^\\|", "\\&", "\\^"}, set_operation},
 	{"binary_op_state", {"%binary_op", "%addiction"}},
 	{"binary", {"%addiction", "?.%binary_op_state"}},
-	{"conditional_op", {"^\\>", "\\<", "\\<=", "\\>=", "\\==", "\\!="}},
+	{"conditional_op", {"^\\<=", "\\>=", "\\==", "\\!=", "\\>", "\\<"}, set_operation},
 	{"conditional_op_state", {"%conditional_op", "%binary"}},
 	{"conditional", {"%binary", "?.%conditional_op_state"}},
-	{"logical_op", {"^\\||", "\\&&"}},
+	{"logical_op", {"^\\||", "\\&&"}, set_operation},
 	{"logical_op_state", {"%logical_op", "%conditional"}},
 	{"logical", {"%conditional", "?.%logical_op_state"}},
 	{"expression", {"%logical"}},
+	*/
+	{"expression", {}, expression},
+	{"assigment", {"%variable", "=", "%expression", ";"}},
+	{"statement_expression", {"%expression", ";"}},
 
 	{"break", {"break", ";"}},
 	{"default", {"default", ":"}},
@@ -169,9 +184,9 @@ static rule c2_grammar[] = {
 	{"switch", {"switch", "(", "%expression", ")", "%block_statements"}},
 	{"return", {"return", "?%expression", ";"}},
 
-	{"statement", {"^%return", "%if", "%while", "%switch", "%break", "%case", "%default", "%declare_local"}},
+	{"statement", {"^%return", "%if", "%while", "%switch", "%break", "%case", "%default", "%declare_local", "%assigment", "%statement_expression"}},
 	{"block_statements", {"{", "@push_locale", ".?%single_statement", "@pop_locale", "}"}},
-	{"single_statement", {"^%block_statements", "%statement", ";"}},
+	{"single_statement", {"^%block_statements", ";", "%statement"}},
 };
 
 static void code_error(const char* position, const char* format, const char* format_param) {

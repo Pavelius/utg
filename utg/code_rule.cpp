@@ -4,15 +4,17 @@
 
 using namespace code;
 
-rulea			code::rules;
-fnerror			code::perror;
-char			code::string_buffer[256 * 32];
+adat<pckh>	code::operations;
+rulea		code::rules;
+static rule *unary_rule, *postfix_rule;
+fnerror		code::perror;
+char		code::string_buffer[256 * 32];
 
-const char*		code::p;
-const char*		code::last_identifier;
-const char*		code::last_string;
-
-long			code::last_value;
+const char*	code::p;
+const char*	code::last_identifier;
+const char*	code::last_position;
+const char*	code::last_string;
+pckh		code::last_ast;
 
 const char* code::example(const char* p) {
 	static char temp[40]; stringbuilder sb(temp);
@@ -35,6 +37,15 @@ static void comments() {
 		while(*p && *p != 10 && *p != 13)
 			p++;
 		p = skipspcr(p);
+	} else if(p[0] == '/' && p[1] == '*') {
+		p += 2;
+		while(*p) {
+			if(p[0] == '*' && p[1] == '/') {
+				p = skipspcr(p + 2);
+				break;
+			} else
+				p++;
+		}
 	}
 }
 
@@ -49,10 +60,12 @@ void code::string() {
 
 void code::number() {
 	auto p1 = p;
-	last_value = 0;
-	p = stringbuilder::read(p, last_value);
+	long value  = 0;
+	p = stringbuilder::read(p, value);
 	if(p1 != p) {
 		skipws();
+		last_ast = last_package->add(operation::Number, value);
+		operations.add(last_ast);
 	}
 }
 
@@ -77,12 +90,58 @@ void code::skipws() {
 	}
 }
 
-static rule* find_rule(const char* id) {
-	for(auto& e : rules) {
-		if(strcmp(e.id, id) == 0)
-			return &e;
-	}
-	return 0;
+void code::skipws(int n) {
+	p += n;
+	skipws();
+}
+
+operation code::parse_operation(const char* p) {
+	if(p[0] == '<') {
+		if(p[1] == '=')
+			return operation::LessEqual;
+		else if(p[1] == '<')
+			return operation::ShiftLeft;
+		else
+			return operation::Less;
+	} else if(p[0] == '>') {
+		if(p[1] == '=')
+			return operation::GreaterEqual;
+		else if(p[1] == '>')
+			return operation::ShiftRight;
+		else
+			return operation::Greater;
+	} else if(p[0] == '|') {
+		if(p[1] == '|')
+			return operation::Or;
+		else
+			return operation::BinaryOr;
+	} else if(p[0] == '&') {
+		if(p[1] == '&')
+			return operation::And;
+		else
+			return operation::BinaryAnd;
+	} else if(p[0] == '^')
+		return operation::Binary’Ór;
+	else if(p[0] == '!') {
+		if(p[1] == '=')
+			return operation::NotEqual;
+		else
+			return operation::Not;
+	} else if(p[0] == '=') {
+		if(p[1] == '=')
+			return operation::Equal;
+		else
+			return operation::Assign;
+	} else if(p[0] == '/')
+		return operation::Div;
+	else if(p[0] == '*')
+		return operation::Mul;
+	else if(p[0] == '+')
+		return operation::Plus;
+	else if(p[0] == '-')
+		return operation::Minus;
+	else
+		return operation::None;
 }
 
 static void parse_token(const token& e);
@@ -114,6 +173,7 @@ static void parse_rule(const rule& v) {
 		return; // We need 'one of' tokens and not gain valid token at exit
 	if(v.apply) {
 		if((p0 != p) || !v.tokens[0]) {
+			last_position = p0;
 			v.apply(); // Only valid token execute proc
 		}
 	}
@@ -150,9 +210,9 @@ static void parse_token(const token& e) {
 				} else {
 					if(!required) {
 						if(e.is(flag::ComaSeparated))
-							error("Expected symbol `,`");
+							error("Expected symbol `,` when parse `%1`", example(p2));
 						else if(e.is(flag::PointSeparated))
-							error("Expected symbol `.`");
+							error("Expected symbol `.` when parse `%1`", example(p2));
 					}
 				}
 			}
@@ -167,13 +227,234 @@ static void parse_token(const token& e) {
 	}
 }
 
-static void lazy_initialize() {
+void code::binary_operation(operation op) {
+	if(operations.getcount() < 2)
+		error("Operations stack corrupt when parse binare operation in `%1`", example(p));
+	auto n = operations.count;
+	operations.data[n - 2] = last_package->add(op, operations.data[n - 2], operations.data[n - 1]);
+	operations.count--;
+}
+
+void code::unary_operation(operation op) {
+	if(operations.getcount() < 1)
+		error("Operations stack corrupt when parse unary operation in `%1`", example(p));
+	auto n = operations.count;
+	operations.data[n - 2] = last_package->add(op, operations.data[n - 2], operations.data[n - 1]);
+	operations.count--;
+}
+
+static bool match(const char* symbol) {
+	auto i = 0;
+	while(symbol[i]) {
+		if(p[i] != symbol[i])
+			return false;
+		i++;
+	}
+	p += i;
+	return true;
+}
+
+void code::skip(const char* symbol) {
+	if(!match(symbol))
+		error("Expected token `%1` in `%2`", symbol, example(p));
+}
+
+static void unary() {
+	switch(p[0]) {
+	case '-':
+		if(p[1] == '-') {
+			skipws(2);
+			unary();
+		} else {
+			skipws(1);
+			unary();
+			unary_operation(operation::Neg);
+		}
+		break;
+	case '+':
+		if(p[1] == '+') {
+			skipws(2);
+			unary();
+		} else {
+			skipws(1);
+			unary();
+		}
+		break;
+	case '!':
+		skipws(1);
+		unary();
+		unary_operation(operation::Not);
+		break;
+	case '*':
+		skipws(1);
+		unary();
+		unary_operation(operation::Dereference);
+		break;
+	case '&':
+		skipws(1);
+		unary();
+		unary_operation(operation::AdressOf);
+		break;
+	case '(':
+		skipws(1);
+		parse_expression();
+		skip(")");
+		break;
+	default:
+		parse_rule(*unary_rule);
+		break;
+	}
+	parse_rule(*postfix_rule);
+}
+
+static void multiplication() {
+	unary();
+	while((p[0] == '*' || p[0] == '/' || p[0] == '%') && p[1] != '=') {
+		char s = p[0]; skipws(1);
+		operation op;
+		switch(s) {
+		case '/': op = operation::Div; break;
+		case '%': op = operation::DivRest; break;
+		default: op = operation::Mul; break;
+		}
+		unary();
+		binary_operation(op);
+	}
+}
+
+static void addiction() {
+	multiplication();
+	while((p[0] == '+' || p[0] == '-') && p[1] != '=') {
+		char s = p[0]; skipws(1);
+		operation op;
+		switch(s) {
+		case '+': op = operation::Plus; break;
+		case '-': op = operation::Minus; break;
+		default: op = operation::Mul; break;
+		}
+		multiplication();
+		binary_operation(op);
+	}
+}
+
+static void binary_cond() {
+	addiction();
+	while((p[0] == '>' && p[1] != '>')
+		|| (p[0] == '<' && p[1] != '<')
+		|| (p[0] == '=' && p[1] == '=')
+		|| (p[0] == '!' && p[1] == '=')) {
+		char t1 = *p++;
+		char t2 = 0;
+		if(p[0] == '=')
+			t2 = *p++;
+		skipws();
+		operation op;
+		switch(t1) {
+		case '>':
+			op = operation::Greater;
+			if(t2 == '=')
+				op = operation::GreaterEqual;
+			break;
+		case '<':
+			op = operation::Less;
+			if(t2 == '=')
+				op = operation::LessEqual;
+			break;
+		case '!': op = operation::NotEqual; break;
+		default: op = operation::Equal; break;
+		}
+		addiction();
+		binary_operation(op);
+	}
+}
+
+static void binary_and() {
+	binary_cond();
+	while(p[0] == '&' && p[1] != '&') {
+		skipws(1);
+		binary_cond();
+		binary_operation(operation::BinaryAnd);
+	}
+}
+
+static void binary_xor() {
+	binary_and();
+	while(p[0] == '^') {
+		skipws(1);
+		binary_and();
+		binary_operation(operation::Binary’Ór);
+	}
+}
+
+static void binary_or() {
+	binary_xor();
+	while(p[0] == '|' && p[1] != '|') {
+		skipws(1);
+		binary_xor();
+		binary_operation(operation::BinaryOr);
+	}
+}
+
+static void binary_shift() {
+	binary_or();
+	while((p[0] == '>' && p[1] == '>') || (p[0] == '<' && p[1] == '<')) {
+		operation op;
+		switch(p[0]) {
+		case '>': op = operation::ShiftRight; break;
+		default: op = operation::ShiftLeft; break;
+		}
+		skipws(2);
+		binary_or();
+		binary_operation(op);
+	}
+}
+
+static void logical_and() {
+	binary_shift();
+	while(p[0] == '&' && p[1] == '&') {
+		skipws(2);
+		binary_shift();
+		binary_operation(operation::And);
+	}
+}
+
+static void logical_or() {
+	logical_and();
+	while(p[0] == '|' && p[1] == '|') {
+		skipws(2);
+		logical_and();
+		binary_operation(operation::Or);
+	}
+}
+
+void code::parse_expression() {
+	logical_or();
+	while(*p == '?') {
+		p += 1;
+		skipws();
+		parse_expression();
+		skip(":");
+		parse_expression();
+	}
+}
+
+static rule* find_rule(const char* id, bool need_error = false) {
+	for(auto& e : rules) {
+		if(strcmp(e.id, id) == 0)
+			return &e;
+	}
+	if(need_error)
+		error("Not found rule `%1`", id);
+	return 0;
+}
+
+static bool lazy_initialize() {
 	for(auto& r : rules) {
 		for(auto& e : r.tokens) {
 			if(!e)
 				break;
 			if(e.rule)
-				return; // All rules initialized
+				return false; // All rules initialized
 			if(e.is(flag::Variable) || e.is(flag::Execute)) {
 				e.rule = find_rule(e.id);
 				if(!e.rule)
@@ -181,6 +462,7 @@ static void lazy_initialize() {
 			}
 		}
 	}
+	return true;
 }
 
 void code::parse(const char* source_code, const char* rule_id) {
@@ -205,7 +487,10 @@ void code::parse(const char* source_code, const char* rule_id) {
 
 void code::setrules(rulea source) {
 	rules = source;
-	lazy_initialize();
+	auto first_time = lazy_initialize();
+	// Initialize common rules
+	postfix_rule = find_rule("postfix", first_time);
+	unary_rule = find_rule("unary", first_time);
 }
 
 void code::parse(const char* source_code, const char* rule_id, rulea source) {

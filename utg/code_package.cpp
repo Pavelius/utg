@@ -3,6 +3,8 @@
 
 using namespace code;
 
+package* code::last_package;
+
 bool isnostrictorder(operation id) {
 	switch(id) {
 	case operation::Plus:

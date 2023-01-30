@@ -10,8 +10,6 @@
 using namespace code;
 using namespace draw;
 
-static package* last_package;
-
 void check_translation();
 void initialize_code();
 void initialize_interface();

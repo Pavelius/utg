@@ -67,4 +67,5 @@ public:
 	pckh				reference(pckh v);
 	void				write(const char* url) { serial(url, true); }
 };
+extern package* last_package;
 }

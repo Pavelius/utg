@@ -1,5 +1,1 @@
-﻿ Line 9: Symbol `x` already defined
- Line 7: Symbol `main` already defined
- Line 7: Symbol `` already defined
- Line 7: Expected symbol `,`
- Line 6: Can't parse `void main() {`
+﻿ Line 22: Undefined identifier `est_switch`
