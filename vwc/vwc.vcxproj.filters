@@ -10,6 +10,9 @@
     <ClCompile Include="test_code.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="view_code_tree.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">

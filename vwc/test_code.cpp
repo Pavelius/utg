@@ -3,8 +3,6 @@
 
 using namespace code;
 
-enum code_flag_s : unsigned char { Static, Public };
-
 static pckh last_type, member_type;
 static const char *file_source, *last_url;
 static unsigned member_flags;
@@ -20,6 +18,10 @@ static void add_static() {
 
 static void add_public() {
 	member_flags |= FG(Public);
+}
+
+static void set_member_function() {
+	member_flags |= FG(Function);
 }
 
 static void push_locale() {
@@ -91,13 +93,13 @@ static void add_member() {
 		error("Symbol `%1` already defined", last_identifier);
 		return;
 	}
-	last_package->add(id, This, member_type, member_flags, code::last_position - file_source, scope);
+	last_package->add(id, This, member_type, code::last_position - file_source, member_flags, scope);
 }
 
 static void add_type() {
 	auto id_result = last_package->add(last_url);
 	auto id = last_package->add(last_identifier);
-	last_package->add(id, Modules, id_result, 0, code::last_position - file_source, 0);
+	last_package->add(id, Modules, id_result, code::last_position - file_source, 0, 0);
 }
 
 static void expression() {
@@ -113,6 +115,7 @@ static rule c2_grammar[] = {
 	{"global", {"^%import", "%enum", "%declare_function", "%declare_variable"}},
 	{"clear_flags", {}, clear_flags},
 	{"add_member", {}, add_member},
+	{"set_member_function", {}, set_member_function},
 	{"set_member_type", {}, set_member_type},
 	{"set_type", {}, set_type},
 	{"set_url", {}, set_url},
@@ -139,7 +142,7 @@ static rule c2_grammar[] = {
 	{"public", {"public"}, add_public},
 	{"parameter", {"%type", "%identifier"}},
 
-	{"declare_function", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", "%identifier", "(", "@add_member", ", ?%parameter", ")", "%block_statements"}},
+	{"declare_function", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", "%identifier", "(", "@set_member_function", "@add_member", ", ?%parameter", ")", "%block_statements"}},
 	{"declare_variable_loop", {"%identifier", "@add_member", "?%array_scope", "?%initialization"}},
 	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
 	{"declare_local", {"@clear_flags", "?%static", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},

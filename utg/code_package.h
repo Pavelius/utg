@@ -22,6 +22,9 @@ enum : pckh {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 	TypeLiteral, TypePointer,
 };
+enum : unsigned {
+	Standart, Static, Public, Function,
+};
 struct ast {
 	operation			type;
 	pckh				right;

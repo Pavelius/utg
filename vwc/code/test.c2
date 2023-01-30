@@ -1,4 +1,6 @@
 import sys.crt;
+import geo.rect;
+import geo.point;
 
 enum {OK, Cancel, Answer};
 
@@ -19,7 +21,8 @@ bool test_switch() {
 
 void main() {
 	print();
-	!test_switch();
+	if(test_switch()+10)
+		return;
 	if(x <= 5)
 		return x;
 	return 10;

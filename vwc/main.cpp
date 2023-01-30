@@ -16,16 +16,8 @@ void initialize_interface();
 void initialize_translation(const char* locale);
 void set_dark_theme();
 bool test_code();
-
-void table_text_icon();
-
-static void test_list() {
-	static int origin, current;
-	showborder();
-	partoffset(1, 1);
-	showbackground();
-	draw::list(origin, current, texth() + 2, table_text_icon);
-}
+void view_code_tree();
+void update_code_tree();
 
 static void clear_fill() {
 	auto push_fore = fore;
@@ -34,30 +26,21 @@ static void clear_fill() {
 	fore = push_fore;
 }
 
-static const char* test_getname(const void* object, stringbuilder& sb) {
-	auto ps = last_package->getsym(gui.index);
-	auto pn = last_package->getstr(ps->id);
-	return pn;
-}
-
 static void mainscene() {
 	clear_fill();
 	caret.x = metrics::padding;
 	caret.y = metrics::padding + 1;
 	width = 200;
 	height = height - metrics::padding * 2 - 1;
-	gui.count = last_package->symbols.getcount();
-	//gui.value = "Row number %1i";
-	gui.number = 1;
-	gui.pgetname = test_getname;
-	test_list();
+	view_code_tree();
 }
 
 static void mainstart() {
 	if(!test_code())
 		return;
-	last_package = bsdata<package>::add();
-	last_package->read("code/test.c2b");
+	//last_package = bsdata<package>::add();
+	//last_package->read("code/test.c2b");
+	update_code_tree();
 	draw::scene(mainscene);
 }
 

@@ -16,11 +16,11 @@ bool isnostrictorder(operation id) {
 }
 
 static void addg(package* p, const char* id) {
-	p->add(p->add(id), This, This, 0, 0, 0);
+	p->add(p->add(id), This, This, 0, FG(Standart), 0);
 }
 
 static void addm(package* p, const char* id) {
-	p->add(p->add(id), 0, Modules, 0, 0, 0);
+	p->add(p->add(id), 0, Modules, 0, FG(Standart), 0);
 }
 
 void package::create(const char* name) {
