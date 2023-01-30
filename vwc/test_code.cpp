@@ -161,12 +161,15 @@ static rule c2_grammar[] = {
 	{"logical", {"%conditional", "?.%logical_op_state"}},
 	{"expression", {"%logical"}},
 
+	{"break", {"break", ";"}},
+	{"default", {"default", ":"}},
+	{"case", {"case", "%expression", ":"}},
 	{"while", {"while", "(", "%expression", ")", "%single_statement"}},
 	{"if", {"if", "(", "%expression", ")", "%single_statement"}},
-	{"switch", {"switch", "(", "%expression", ")", "{", "}"}},
+	{"switch", {"switch", "(", "%expression", ")", "%block_statements"}},
 	{"return", {"return", "?%expression", ";"}},
 
-	{"statement", {"^%return", "%if", "%while", "%switch", "%declare_local"}},
+	{"statement", {"^%return", "%if", "%while", "%switch", "%break", "%case", "%default", "%declare_local"}},
 	{"block_statements", {"{", "@push_locale", ".?%single_statement", "@pop_locale", "}"}},
 	{"single_statement", {"^%block_statements", "%statement", ";"}},
 };

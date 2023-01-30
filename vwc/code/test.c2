@@ -6,6 +6,12 @@ int x, y;
 
 void main() {
 	int x = crt.gettest(10, 12);
+	switch(x) {
+	case 10:
+		break;
+	default:
+		break;
+	}
 	if(x < 10)
 		return y;
 	return x;
