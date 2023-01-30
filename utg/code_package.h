@@ -35,6 +35,7 @@ struct symbol {
 	pckh				parent; // Parent symbol
 	pckh				result; // Result symbol type of expression
 	unsigned			index; // Position in source file
+	unsigned			scope; // Zone of visibility
 	unsigned			flags; // Various flags
 	pckh				ast; // Abstract syntaxis tree index
 	constexpr bool		is(int v) const { return (flags & (1 << v)) != 0; }
@@ -51,11 +52,12 @@ public:
 	pckh				add(const char* v) { return strings.add(v); }
 	pckh				add(operation type, pckh left, pckh right);
 	pckh				add(operation type, pckh left) { return add(type, left, 0); }
-	pckh				add(pckh id, pckh parent, pckh result, unsigned flags, unsigned index);
+	pckh				add(pckh id, pckh parent, pckh result, unsigned flags, unsigned index, unsigned scope);
 	void				clear();
 	void				create(const char* id);
 	pckh				findast(operation type, pckh left, pckh right) const;
 	pckh				findsym(pckh id, pckh parent) const;
+	pckh				findsymscope(pckh id, pckh parent, unsigned scope) const;
 	pckh				findsym(const char* id, pckh parent) const;
 	pckh				findsym(pckh id, pckh parent, pckh type) const;
 	const ast*			getast(pckh v) const { return asts.ptrs(v); }

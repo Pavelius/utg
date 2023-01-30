@@ -1,1 +1,1 @@
-﻿ Line 4: Expected token `declare_variable` in `int x;`
+﻿ Line 8: Expected symbol `,`

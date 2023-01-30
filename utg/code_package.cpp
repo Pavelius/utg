@@ -14,11 +14,11 @@ bool isnostrictorder(operation id) {
 }
 
 static void addg(package* p, const char* id) {
-	p->add(p->add(id), This, This, 0, 0);
+	p->add(p->add(id), This, This, 0, 0, 0);
 }
 
 static void addm(package* p, const char* id) {
-	p->add(p->add(id), 0, Modules, 0, 0);
+	p->add(p->add(id), 0, Modules, 0, 0, 0);
 }
 
 void package::create(const char* name) {
@@ -60,6 +60,14 @@ pckh package::findsym(pckh id, pckh parent, pckh type) const {
 	return None;
 }
 
+pckh package::findsymscope(pckh id, pckh parent, unsigned scope) const {
+	for(auto& e : symbols) {
+		if(e.id == id && e.parent == parent && e.scope==scope)
+			return &e - symbols.begin();
+	}
+	return None;
+}
+
 pckh package::findsym(const char* id, pckh parent) const {
 	auto nid = strings.find(id);
 	if(nid == None)
@@ -75,12 +83,12 @@ pckh package::findast(operation type, pckh left, pckh right) const {
 	return None;
 }
 
-pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned flags) {
+pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned flags, unsigned scope) {
 	pckh v = None;
 	if(parent==Pointers)
 		v = findsym(id, parent, result);
 	else
-		v = findsym(id, parent);
+		v = findsymscope(id, parent, scope);
 	if(v == None) {
 		auto p = symbols.add();
 		p->id = id;
@@ -88,6 +96,7 @@ pckh package::add(pckh id, pckh parent, pckh result, unsigned index, unsigned fl
 		p->result = result;
 		p->index = index;
 		p->flags = flags;
+		p->scope = scope;
 		p->ast = None;
 		v = p - symbols.begin();
 	}
@@ -140,5 +149,5 @@ bool package::serial(const char* url, bool write_mode) {
 }
 
 pckh package::reference(pckh type) {
-	return add(0, Pointers, type, 0, 0);
+	return add(0, Pointers, type, 0, 0, 0);
 }

@@ -14,9 +14,6 @@ const char*		code::last_string;
 
 long			code::last_value;
 
-static const char* last_error_position;
-static const token* last_error_token;
-
 const char* code::example(const char* p) {
 	static char temp[40]; stringbuilder sb(temp);
 	sb.psstrlf(p);
@@ -107,8 +104,6 @@ static void parse_rule(const rule& v) {
 			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue parse next token
 				continue;
 			// TODO: single_statement fix. And how debug this?
-			last_error_token = &e;
-			last_error_position = p;
 			p = p0; // This rule is invalid, rollback all and exit
 			return;
 		}
@@ -116,7 +111,7 @@ static void parse_rule(const rule& v) {
 			break;
 	}
 	if(need_stop && p0 == p)
-		return; // If we need 'one of' tokens and not gain valid token exit
+		return; // We need 'one of' tokens and not gain valid token at exit
 	if(v.apply) {
 		if((p0 != p) || !v.tokens[0]) {
 			v.apply(); // Only valid token execute proc
@@ -200,17 +195,9 @@ void code::parse(const char* source_code, const char* rule_id) {
 	skipws();
 	while(*p) {
 		auto pb = p;
-		last_error_position = 0;
-		last_error_token = 0;
 		parse_rule(*pr);
 		if(pb == p) {
-			if(last_error_token) {
-				if(last_error_position)
-					p = last_error_position;
-				error("Expected token `%1` in `%2`", last_error_token->id, example(last_error_position));
-				p = pb;
-			} else
-				error("Can't parse `%1`", example(pb));
+			error("Can't parse `%1`", example(pb));
 			return;
 		}
 	}

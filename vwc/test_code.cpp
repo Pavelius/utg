@@ -4,47 +4,13 @@
 
 using namespace code;
 
-enum code_flag_s : unsigned char { Static, Public};
+enum code_flag_s : unsigned char { Static, Public };
 
-static pckh last_type, last_member_type;
-
+static pckh last_type, member_type;
 static package* last_package;
-static const char* last_member_identifier;
-static const char* last_statement;
-static const char* last_scope;
-
+static const char *file_source, *last_url;
 static unsigned member_flags;
-
-static void type_identifier() {
-	if(equal(last_identifier, "int"))
-		last_type = i32;
-	else if(equal(last_identifier, "char"))
-		last_type = i8;
-	else if(equal(last_identifier, "short"))
-		last_type = i16;
-	else if(equal(last_identifier, "unsigned"))
-		last_type = u32;
-	else {
-		last_type = last_package->findsym(last_identifier, Modules);
-		if(!last_type)
-			last_type = i32;
-	}
-}
-
-static void type_reference() {
-	last_type = last_package->reference(last_type);
-}
-
-static void add_member() {
-	last_member_type = last_type;
-	last_member_identifier = last_identifier;
-}
-
-static void add_variable() {
-	auto result = last_package->findsym(last_identifier, This);
-	if(result == None)
-		error("Undefined identifier `%1`", last_identifier);
-}
+static adat<unsigned> locals;
 
 static void clear_flags() {
 	member_flags = 0;
@@ -58,27 +24,97 @@ static void add_public() {
 	member_flags |= FG(Public);
 }
 
-static void declare_function() {
-	auto id = last_package->add(last_member_identifier);
-	last_package->add(id, This, last_member_type, 0, 0);
+static void push_locale() {
+	locals.add(code::p - file_source);
 }
 
-static void declare_member() {
-	auto id = last_package->add(last_member_identifier);
-	last_package->add(id, This, last_member_type, 0, 0);
+static void pop_locale() {
+	if(!locals.count)
+		error("Closing scope bracing without opening one");
+	else
+		locals.count--;
+}
+
+static void set_url() {
+	last_url = code::p;
+}
+
+static void set_type() {
+	if(equal(last_identifier, "int") || equal(last_identifier, "bool"))
+		last_type = i32;
+	else if(equal(last_identifier, "char"))
+		last_type = i8;
+	else if(equal(last_identifier, "short"))
+		last_type = i16;
+	else if(equal(last_identifier, "unsigned"))
+		last_type = u32;
+	else if(equal(last_identifier, "void"))
+		last_type = Void;
+	else {
+		last_type = last_package->findsym(last_identifier, Modules);
+		if(!last_type) {
+			error("Not found type `%1`", last_identifier);
+			last_type = i32;
+		}
+	}
+}
+
+static void type_reference() {
+	last_type = last_package->reference(last_type);
+}
+
+static void set_member_type() {
+	member_type = last_type;
+}
+
+static void add_variable() {
+	auto id = last_package->add(last_identifier);
+	pckh result = None;
+	for(int i = locals.count - 1; (result == None) && i >= 0; i--)
+		result = last_package->findsymscope(id, This, locals.data[i]);
+	if(result == None)
+		result = last_package->findsymscope(id, This, 0);
+	if(result == None)
+		result = last_package->findsym(id, Modules);
+	if(result == None)
+		error("Undefined identifier `%1`", last_identifier);
+}
+
+static void add_member() {
+	auto scope = 0;
+	if(locals)
+		scope = locals.data[locals.count - 1];
+	auto id = last_package->add(last_identifier);
+	auto symbol = last_package->findsymscope(id, This, scope);
+	if(symbol != None) {
+		error("Symbol `%1` already defined", last_identifier);
+		return;
+	}
+	last_package->add(id, This, member_type, member_flags, code::p - file_source, scope);
+}
+
+static void add_type() {
+	auto id_result = last_package->add(last_url);
+	auto id = last_package->add(last_identifier);
+	last_package->add(id, Modules, id_result, 0, code::p - file_source, 0);
 }
 
 static rule c2_grammar[] = {
-	{"global", {"^%import", "%enum", "%member_function", "%member_variable"}},
+	{"global", {"^%import", "%enum", "%declare_function", "%declare_variable"}},
 	{"clear_flags", {}, clear_flags},
+	{"add_member", {}, add_member},
+	{"set_member_type", {}, set_member_type},
+	{"set_type", {}, set_type},
+	{"set_url", {}, set_url},
+	{"push_locale", {}, push_locale},
+	{"pop_locale", {}, pop_locale},
 
 	{"identifier", {}, identifier},
 	{"number", {}, number},
 	{"string", {}, string},
-		
-	{"import", {"import", "%url", "?%pseudoname", ";"}},
+
+	{"import", {"import", "@set_url", ". %identifier", "?%pseudoname", ";"}, add_type},
 	{"pseudoname", {"as", "%identifier"}},
-	{"url", {". %identifier"}},
 
 	{"enum", {"enum", "{", ", %enum_value", "}", ";"}},
 	{"enum_value", {"%identifier", "?%enum_assign"}},
@@ -86,22 +122,19 @@ static rule c2_grammar[] = {
 
 	{"constant", {"%expression"}},
 
-	{"type_idenfifier", {"%identifier"}, type_identifier},
 	{"type_reference", {"?.*"}, type_reference},
-	{"type", {"%type_idenfifier", "%?type_reference"}},
+	{"type", {"%identifier", "@set_type", "%?type_reference"}},
 	{"initialization", {"=", "%expression"}},
 	{"static", {"static"}, add_static},
 	{"public", {"public"}, add_public},
-	{"member", {"%type", "%identifier"}, add_member},
 	{"parameter", {"%type", "%identifier"}},
-	
-	{"declare_function", {"@clear_flags", "?%static", "?%public", "%member", "(", ", ?%parameter", ")"}, declare_function},
-	{"member_function", {"%declare_function", "%block_statements"}},
-	
-	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%member", "?%array_scope"}, declare_member},
-	{"member_variable", {"%declare_variable", "?%initialization", ";"}},
-	{"local_variable", {"@clear_flags", "?%static", "%member", "?%array_scope", "?%initialization"}},
 
+	{"declare_function", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", "%identifier", "(", "@add_member", ", ?%parameter", ")", "%block_statements"}},
+	{"declare_variable_loop", {"%identifier", "@add_member", "?%array_scope", "?%initialization"}},
+	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
+	{"declare_local", {"@clear_flags", "?%static", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
+
+	{"funtion_call", {"(", "?, %expression", ")"}},
 	{"variable", {"%identifier"}, add_variable},
 	{"sizeof", {"sizeof", "(", "%expression", ")"}},
 	{"array_scope", {"[", "%expression", "]"}},
@@ -109,9 +142,9 @@ static rule c2_grammar[] = {
 	{"prefix_op", {"^?\\++", "\\--", "\\&"}},
 	{"prefix", {"?.%prefix_op", "%unary"}},
 	{"indirection", {"\\.", "%identifier"}},
-	{"postfix_op", {"^\\++", "\\--", "%indirection"}},
+	{"postfix_op", {"^\\++", "\\--", "%indirection", "%funtion_call"}},
 	{"postfix", {"%unary", "?.%postfix_op"}},
-	{"multiplication_op", {"^/", "*"}},
+	{"multiplication_op", {"^\\/", "\\*"}},
 	{"multiplication_op_state", {"%multiplication_op", "%postfix"}},
 	{"multiplication", {"%postfix", "?.%multiplication_op_state"}},
 	{"addiction_op", {"^\\+", "\\-"}},
@@ -131,11 +164,11 @@ static rule c2_grammar[] = {
 	{"while", {"while", "(", "%expression", ")", "%single_statement"}},
 	{"if", {"if", "(", "%expression", ")", "%single_statement"}},
 	{"switch", {"switch", "(", "%expression", ")", "{", "}"}},
-	{"return", {"return", "?%expression"}},
+	{"return", {"return", "?%expression", ";"}},
 
-	{"statement", {"^%return", "%local_variable"}},
-	{"block_statements", {"{", ".?%single_statement", "}"}},
-	{"single_statement", {"?%statement", ";"}},
+	{"statement", {"^%return", "%if", "%while", "%switch", "%declare_local"}},
+	{"block_statements", {"{", "@push_locale", ".?%single_statement", "@pop_locale", "}"}},
+	{"single_statement", {"^%block_statements", "%statement", ";"}},
 };
 
 static void code_error(const char* position, const char* format, const char* format_param) {
@@ -155,7 +188,7 @@ bool test_code() {
 		return false;
 	last_package = bsdata<package>::add();
 	last_package->create("test");
-	last_scope = 0;
+	file_source = p;
 	parse(p, 0, c2_grammar);
 	log::close();
 	last_package->write("code/test.c2b");

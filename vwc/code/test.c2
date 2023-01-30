@@ -1,9 +1,12 @@
-import crt.rect;
+import sys.crt;
 
 enum {OK, Cancel, Answer};
 
-int x;
+int x, y;
 
-int print() {
-	return x / 10;
+void main() {
+	int x = crt.gettest(10, 12);
+	if(x < 10)
+		return y;
+	return x;
 }

@@ -1,12 +1,16 @@
 #include "answers.h"
 #include "bsreq.h"
+#include "code_package.h"
 #include "crt.h"
 #include "draw.h"
 #include "draw_gui.h"
 #include "draw_list.h"
 #include "log.h"
 
+using namespace code;
 using namespace draw;
+
+static package* last_package;
 
 void check_translation();
 void initialize_code();
@@ -33,8 +37,9 @@ static void clear_fill() {
 }
 
 static const char* test_getname(const void* object, stringbuilder& sb) {
-	sb.add(gui.value, gui.index);
-	return sb.begin();
+	auto ps = last_package->getsym(gui.index);
+	auto pn = last_package->getstr(ps->id);
+	return pn;
 }
 
 static void mainscene() {
@@ -42,9 +47,9 @@ static void mainscene() {
 	caret.x = metrics::padding;
 	caret.y = metrics::padding + 1;
 	width = 200;
-	height = 300;
-	gui.count = 25;
-	gui.value = "Row number %1i";
+	height = height - metrics::padding * 2 - 1;
+	gui.count = last_package->symbols.getcount();
+	//gui.value = "Row number %1i";
 	gui.number = 1;
 	gui.pgetname = test_getname;
 	test_list();
@@ -53,6 +58,8 @@ static void mainscene() {
 static void mainstart() {
 	if(!test_code())
 		return;
+	last_package = bsdata<package>::add();
+	last_package->read("code/test.c2b");
 	draw::scene(mainscene);
 }
 
