@@ -6,6 +6,7 @@ using namespace code;
 
 adat<pckh>	code::operations;
 rulea		code::rules;
+ruleopalla	code::operators;
 static rule *unary_rule, *postfix_rule;
 fnerror		code::perror;
 char		code::string_buffer[256 * 32];
@@ -251,6 +252,7 @@ static bool match(const char* symbol) {
 		i++;
 	}
 	p += i;
+	skipws();
 	return true;
 }
 
@@ -435,6 +437,28 @@ void code::parse_expression() {
 		parse_expression();
 		skip(":");
 		parse_expression();
+	}
+}
+
+static operation match_operation(const ruleopa& source) {
+	for(auto& e : source) {
+		if(match(e.id))
+			return e.value;
+	}
+	return operation::None;
+}
+
+static void parse_binary(int level) {
+	if(level < 0) {
+		return;
+	}
+	parse_binary(level - 1);
+	while(true) {
+		auto op = match_operation(operators.begin()[level]);
+		if(op == operation::None)
+			break;
+		parse_binary(level - 1);
+		binary_operation(op);
 	}
 }
 

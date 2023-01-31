@@ -10,6 +10,10 @@ struct rule {
 	tokena		tokens;
 	fnevent		apply;
 };
+struct ruleop {
+	const char*	id;
+	operation	value;
+};
 struct evalue {
 	operation	type;
 	long		value;
@@ -18,10 +22,13 @@ struct evalue {
 
 typedef adat<pckh> operationa;
 typedef slice<rule> rulea;
+typedef slice<ruleop> ruleopa;
+typedef slice<ruleopa> ruleopalla;
 typedef void(*fnerror)(const char* position, const char* format, const char* format_param);
 
 extern char	string_buffer[256 * 32];
 extern rulea rules;
+extern ruleopalla operators;
 extern fnerror perror;
 
 extern pckh	last_ast;

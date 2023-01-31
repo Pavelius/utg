@@ -1,12 +1,26 @@
 #include "code_rule.h"
+#include "viewpackage.h"
 #include "logparse.h"
 
 using namespace code;
 
-static pckh last_type, member_type;
+static pckh last_type, member_type, last_member;
 static const char *file_source, *last_url;
 static unsigned member_flags;
 static adat<unsigned> locals;
+
+static ruleop operator_or[] = {{"||", operation::Or}};
+static ruleop operator_and[] = {{"&&", operation::And}};
+static ruleop operator_shift[] = {{">>", operation::ShiftRight}, {"<<", operation::ShiftLeft}};
+static ruleop operator_bor[] = {{"|", operation::BinaryOr}};
+static ruleop operator_bxor[] = {{"^", operation::BinaryÕîr}};
+static ruleop operator_band[] = {{"&", operation::BinaryAnd}};
+static ruleop operator_cond[] = {{">=", operation::GreaterEqual}, {">", operation::Greater},
+	{"<=", operation::LessEqual}, {"<", operation::Less},
+	{"!=", operation::NotEqual}, {"==", operation::Equal}
+};
+static ruleop operator_add[] = {{"+", operation::Plus}, {"-", operation::Minus}};
+static ruleop operator_mul[] = {{"*", operation::Mul}, {"/", operation::Div}, {"%", operation::DivRest}};
 
 static void clear_flags() {
 	member_flags = 0;
@@ -60,6 +74,12 @@ static void set_type() {
 	}
 }
 
+static void set_member_ast() {
+	auto ps = last_package->getsym(last_member);
+	if(ps)
+		ps->ast = last_ast;
+}
+
 static void type_reference() {
 	last_type = last_package->reference(last_type);
 }
@@ -93,7 +113,7 @@ static void add_member() {
 		error("Symbol `%1` already defined", last_identifier);
 		return;
 	}
-	last_package->add(id, This, member_type, code::last_position - file_source, member_flags, scope);
+	last_member = last_package->add(id, This, member_type, code::last_position - file_source, member_flags, scope);
 }
 
 static void add_type() {
@@ -103,12 +123,14 @@ static void add_type() {
 }
 
 static void expression() {
+	auto push_member = last_member;
 	parse_expression();
 	if(!operations) {
 		error("Expected operation when parse `%1`", example(p));
 		last_ast = None;
 	} else
 		last_ast = operations.data[operations.count - 1];
+	last_member = push_member;
 }
 
 static rule c2_grammar[] = {
@@ -117,6 +139,7 @@ static rule c2_grammar[] = {
 	{"add_member", {}, add_member},
 	{"set_member_function", {}, set_member_function},
 	{"set_member_type", {}, set_member_type},
+	{"set_member_ast", {}, set_member_ast},
 	{"set_type", {}, set_type},
 	{"set_url", {}, set_url},
 	{"push_locale", {}, push_locale},
@@ -137,12 +160,12 @@ static rule c2_grammar[] = {
 
 	{"type_reference", {"?.*"}, type_reference},
 	{"type", {"%identifier", "@set_type", "%?type_reference"}},
-	{"initialization", {"=", "%expression"}},
+	{"initialization", {"=", "%expression", "@set_member_ast"}},
 	{"static", {"static"}, add_static},
 	{"public", {"public"}, add_public},
 	{"parameter", {"%type", "%identifier"}},
 
-	{"declare_function", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", "%identifier", "(", "@set_member_function", "@add_member", ", ?%parameter", ")", "%block_statements"}},
+	{"declare_function", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", "%identifier", "(", "@set_member_function", "@add_member", ", ?%parameter", ")", "%block_statements", "@set_member_ast"}},
 	{"declare_variable_loop", {"%identifier", "@add_member", "?%array_scope", "?%initialization"}},
 	{"declare_variable", {"@clear_flags", "?%static", "?%public", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
 	{"declare_local", {"@clear_flags", "?%static", "%type", "@set_member_type", ", %declare_variable_loop", ";"}},
@@ -199,19 +222,13 @@ static void code_error(const char* position, const char* format, const char* for
 }
 
 void initialize_code() {
+	code::project = "code";
 	perror = code_error;
 	setrules(c2_grammar);
 }
 
 bool test_code() {
-	auto p = log::read("code/test.c2");
-	if(!p)
-		return false;
-	last_package = bsdata<package>::add();
-	last_package->create("test");
-	file_source = p;
-	parse(p, 0, c2_grammar);
-	log::close();
+	last_package = openview("test");
 	last_package->write("code/test.c2b");
 	return log::geterrors() == 0;
 }

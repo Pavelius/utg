@@ -145,6 +145,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="viewpackage.cpp" />
     <ClCompile Include="view_code_tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -157,6 +158,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="code\test.c2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code_lexer.h" />
+    <ClInclude Include="viewpackage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

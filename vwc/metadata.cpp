@@ -1,6 +1,6 @@
 #include "bsreq.h"
-#include "code_package.h"
 #include "variant.h"
+#include "viewpackage.h"
 #include "widget.h"
 
 using namespace code;
@@ -11,7 +11,7 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
-BSDATAC(package, 512)
+BSDATAC(viewpackage, 512)
 
 BSDATA(varianti) = {
 	{"NoVariant"},
