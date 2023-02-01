@@ -145,6 +145,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code_lexer.cpp" />
     <ClCompile Include="viewpackage.cpp" />
     <ClCompile Include="view_code_tree.cpp" />
     <ClCompile Include="main.cpp" />

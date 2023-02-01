@@ -4,6 +4,11 @@
 
 namespace code {
 struct lexer {
-	rulea		rules;
+	const char*		id;
+	const char*		files;
+	rulea			rules;
+	ruleopa			unaryops;
+	ruleopalla		binaryops;
 };
+extern lexer* last_lexer;
 }

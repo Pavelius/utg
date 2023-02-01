@@ -491,5 +491,8 @@
     <ClInclude Include="bsref.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="code_command.h">
+      <Filter>Code</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

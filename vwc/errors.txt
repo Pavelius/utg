@@ -1,2 +1,2 @@
-﻿ Line 23: Undefined identifier `pri1nt`
- Line 23: Undefined identifier `pri1nt`
+﻿In file `rules/Basic.txt`:
+ Line 1: Not find data type for `Rule`

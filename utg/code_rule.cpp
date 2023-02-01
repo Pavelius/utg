@@ -6,8 +6,10 @@ using namespace code;
 
 adat<pckh>	code::operations;
 rulea		code::rules;
-ruleopalla	code::operators;
-static rule *unary_rule, *postfix_rule;
+ruleopalla	code::binaryops;
+ruleopa		code::unaryops;
+ruleopa		code::postfixops;
+static rule *unary_rule, *postfix_rule, *postfix_call_rule, *postfix_scope_rule, *postfix_initialize_rule;
 fnerror		code::perror;
 char		code::string_buffer[256 * 32];
 
@@ -16,6 +18,7 @@ const char*	code::last_identifier;
 const char*	code::last_position;
 const char*	code::last_string;
 pckh		code::last_ast;
+static int	binary_level;
 
 const char* code::example(const char* p) {
 	static char temp[40]; stringbuilder sb(temp);
@@ -61,7 +64,7 @@ void code::string() {
 
 void code::number() {
 	auto p1 = p;
-	long value  = 0;
+	long value = 0;
 	p = stringbuilder::read(p, value);
 	if(p1 != p) {
 		skipws();
@@ -432,11 +435,12 @@ static void logical_or() {
 void code::parse_expression() {
 	logical_or();
 	while(*p == '?') {
-		p += 1;
-		skipws();
+		skipws(1);
 		parse_expression();
 		skip(":");
 		parse_expression();
+		binary_operation(operation::LeftIfTrue);
+		binary_operation(operation::BooleanChoose);
 	}
 }
 
@@ -448,18 +452,63 @@ static operation match_operation(const ruleopa& source) {
 	return operation::None;
 }
 
-static void parse_binary(int level) {
-	if(level < 0) {
-		return;
-	}
-	parse_binary(level - 1);
+static void parse_postfix() {
 	while(true) {
-		auto op = match_operation(operators.begin()[level]);
-		if(op == operation::None)
+		switch(*p) {
+		case '(': // Calling
+			skip(")");
 			break;
-		parse_binary(level - 1);
-		binary_operation(op);
+		case '[': // Scoping
+			skip("]");
+			break;
+		case '{': // Initializing
+			skip("}");
+			break;
+		default:
+			auto op = match_operation(postfixops);
+			if(op == operation::None)
+				return;
+			unary_operation(op);
+			break;
+		}
 	}
+}
+
+static void parse_binary();
+
+static void parse_unary() {
+	if(*p == '(') {
+		skipws(1);
+		parse_binary();
+		skip(")");
+	} else {
+		while(true) {
+			auto op = match_operation(unaryops);
+			if(op == operation::None)
+				break;
+			parse_unary();
+			unary_operation(op);
+		}
+	}
+}
+
+static void parse_binary(int level) {
+	if(level < 0)
+		parse_unary();
+	else {
+		parse_binary(level - 1);
+		while(true) {
+			auto op = match_operation(binaryops.begin()[level]);
+			if(op == operation::None)
+				break;
+			parse_binary(level - 1);
+			binary_operation(op);
+		}
+	}
+}
+
+static void parse_binary() {
+	parse_binary(binary_level);
 }
 
 static rule* find_rule(const char* id, bool need_error = false) {
@@ -515,9 +564,7 @@ void code::setrules(rulea source) {
 	// Initialize common rules
 	postfix_rule = find_rule("postfix", first_time);
 	unary_rule = find_rule("unary", first_time);
-}
-
-void code::parse(const char* source_code, const char* rule_id, rulea source) {
-	setrules(source);
-	parse(source_code, rule_id);
+	//postfix_scope_rule = find_rule("postfix_scope", first_time);
+	//postfix_call_rule = find_rule("postfix_call", first_time);
+	//postfix_initialize_rule = find_rule("postfix_initialize", first_time);
 }

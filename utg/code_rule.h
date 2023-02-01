@@ -28,7 +28,9 @@ typedef void(*fnerror)(const char* position, const char* format, const char* for
 
 extern char	string_buffer[256 * 32];
 extern rulea rules;
-extern ruleopalla operators;
+extern ruleopalla binaryops;
+extern ruleopa unaryops;
+extern ruleopa postfixops;
 extern fnerror perror;
 
 extern pckh	last_ast;
@@ -51,7 +53,6 @@ void unary_operation(operation op);
 
 void errorv(const char* position, const char* format, const char* format_param);
 void error(const char* format, ...);
-void parse(const char* source_code, const char* rule_id, rulea source);
 void parse(const char* source_code, const char* rule_id = 0);
 void parse_expression();
 void setrules(rulea source);

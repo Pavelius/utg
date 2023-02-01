@@ -247,6 +247,7 @@
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="chooseoption.h" />
     <ClInclude Include="choosestep.h" />
+    <ClInclude Include="code_command.h" />
     <ClInclude Include="code_package.h" />
     <ClInclude Include="code_token.h" />
     <ClInclude Include="collection.h" />

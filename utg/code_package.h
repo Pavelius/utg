@@ -13,6 +13,7 @@ enum class operation : unsigned char {
 	ShiftLeft, ShiftRight,
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
 	Or, And,
+	BooleanChoose, LeftIfTrue,
 	Increment, Decrement, AdressOf, Dereference, Scope,
 	Assign, If, While,
 	Number, Text, Identifier, Expression
