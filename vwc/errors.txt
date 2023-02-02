@@ -1,1 +1,2 @@
-﻿In rule `variable` not found command `add_variable`
+﻿In file `rules/lexer_c2.txt`:
+ Line 18: Not found identifier `Or`

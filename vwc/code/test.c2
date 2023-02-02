@@ -17,6 +17,7 @@ bool test_switch() {
 	default:
 		break;
 	}
+	return 1;
 }
 
 void main() {

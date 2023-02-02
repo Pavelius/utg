@@ -48,6 +48,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	set_dark_theme();
 	bsreq::read("rules/Basic.txt");
+	bsreq::read("rules/lexer_c2.txt");
 	initialize_translation("ru");
 	check_translation();
 	initialize_code();

@@ -244,9 +244,12 @@ static void write_value(void* object, const bsreq* req, int index, const valuei&
 		req->set(p1, v.number);
 	else if(req->is(KindText))
 		req->set(p1, (long)szdup(v.text));
-	else if(req->is(KindScalar))
-		write_value(req->ptr(object), req->type + index, 0, v);
-	else if(req->is(KindADat)) {
+	else if(req->is(KindScalar)) {
+		if(req->count > 0)
+			write_value(req->ptr(object, index), req->type, 0, v);
+		else
+			write_value(req->ptr(object), req->type + index, 0, v);
+	} else if(req->is(KindADat)) {
 		auto p2 = (char*)req->ptr(object);
 		auto pc = (int*)(p2 + FO(adat<char>, count));
 		auto pd = p2 + FO(adat<char>, data);

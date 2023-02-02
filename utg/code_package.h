@@ -26,6 +26,9 @@ enum : pckh {
 enum : unsigned {
 	Standart, Static, Public, Function,
 };
+struct operationi {
+	const char*			id;
+};
 struct ast {
 	operation			type;
 	pckh				right;

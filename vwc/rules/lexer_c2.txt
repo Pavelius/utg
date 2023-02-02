@@ -1,0 +1,23 @@
+#Rule
+
+global tokens("^%import" "%enum" "%declare_function" "%declare_variable")
+
+number tokens("@number")
+string tokens("@string")
+identifier tokens("@identifier")
+
+import tokens("import" "@declaration" "@set_url" ". %identifier" "?%pseudoname" ";" "@add_type")
+pseudoname tokens("as" "%identifier")
+
+enum tokens("enum" "{" ", %enum_value" "}" ";")
+enum_value tokens("%identifier" "?%enum_assign")
+enum_assign tokens("=" "%constant")
+
+#RuleOperation
+
+"||" OpOr
+
+#Lexer
+
+c2 files("*.c2")
+

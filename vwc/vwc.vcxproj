@@ -145,6 +145,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code_operation.cpp" />
     <ClCompile Include="viewpackage.cpp" />
     <ClCompile Include="view_code_tree.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,6 +156,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\lexer_c2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="code\test.c2" />
