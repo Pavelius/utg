@@ -159,6 +159,7 @@
     <ClCompile Include="chooselist.cpp" />
     <ClCompile Include="chooseoption.cpp" />
     <ClCompile Include="choosestep.cpp" />
+    <ClCompile Include="code_lexer.cpp" />
     <ClCompile Include="code_package.cpp" />
     <ClCompile Include="code_rule.cpp" />
     <ClCompile Include="code_token.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="chooseoption.h" />
     <ClInclude Include="choosestep.h" />
     <ClInclude Include="code_command.h" />
+    <ClInclude Include="code_lexer.h" />
     <ClInclude Include="code_package.h" />
     <ClInclude Include="code_token.h" />
     <ClInclude Include="collection.h" />

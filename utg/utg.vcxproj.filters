@@ -270,6 +270,9 @@
     <ClCompile Include="io_bsreq_bin.cpp">
       <Filter>Stream</Filter>
     </ClCompile>
+    <ClCompile Include="code_lexer.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -492,6 +495,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="code_command.h">
+      <Filter>Code</Filter>
+    </ClInclude>
+    <ClInclude Include="code_lexer.h">
       <Filter>Code</Filter>
     </ClInclude>
   </ItemGroup>

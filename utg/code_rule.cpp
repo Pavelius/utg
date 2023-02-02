@@ -16,30 +16,29 @@ struct context {
 };
 }
 
-adat<pckh>	code::operations;
-rulea		code::rules;
-ruleopalla	code::binaryops;
-ruleopa		code::unaryops;
-ruleopa		code::postfixops;
-static rule *unary_rule, *postfix_rule, *postfix_call_rule, *postfix_scope_rule, *postfix_initialize_rule;
-fnerror		code::perror;
-char		code::string_buffer[256 * 32];
-context		context_data[32];
-unsigned	context_current;
+adat<pckh>		code::operations;
+rulea			code::rules;
+ruleopa			code::unaryops;
+ruleopa			code::postfixops;
+fnerror			code::perror;
+char			code::string_buffer[256 * 32];
 
+static rule		*unary_rule, *postfix_rule, *postfix_call_rule, *postfix_scope_rule, *postfix_initialize_rule;
 static adat<unsigned> locals;
 static adat<symbol, 32> symbols;
+
+static context	context_data[32];
+static unsigned	context_current;
 
 static const char* file_source;
 static const char* last_url;
 static bool command_error;
 
-const char*	code::p;
-const char*	code::last_identifier;
-const char*	code::last_position;
-const char*	code::last_string;
-pckh		code::last_ast;
-static int	binary_level;
+const char*		code::p;
+const char*		code::last_identifier;
+const char*		code::last_position;
+const char*		code::last_string;
+static int		binary_level;
 
 static context& getctx() {
 	return context_data[context_current];
@@ -454,42 +453,42 @@ static void parse_postfix() {
 	}
 }
 
-static void parse_binary();
+//static void parse_binary();
+//
+//static void parse_unary() {
+//	if(*p == '(') {
+//		skipws(1);
+//		parse_binary();
+//		skip(")");
+//	} else {
+//		while(true) {
+//			auto op = match_operation(unaryops);
+//			if(op == operation::None)
+//				break;
+//			parse_unary();
+//			unary_operation(op);
+//		}
+//	}
+//}
 
-static void parse_unary() {
-	if(*p == '(') {
-		skipws(1);
-		parse_binary();
-		skip(")");
-	} else {
-		while(true) {
-			auto op = match_operation(unaryops);
-			if(op == operation::None)
-				break;
-			parse_unary();
-			unary_operation(op);
-		}
-	}
-}
-
-static void parse_binary(int level) {
-	if(level < 0)
-		parse_unary();
-	else {
-		parse_binary(level - 1);
-		while(true) {
-			auto op = match_operation(binaryops.begin()[level]);
-			if(op == operation::None)
-				break;
-			parse_binary(level - 1);
-			binary_operation(op);
-		}
-	}
-}
-
-static void parse_binary() {
-	parse_binary(binary_level);
-}
+//static void parse_binary(int level) {
+//	if(level < 0)
+//		parse_unary();
+//	else {
+//		parse_binary(level - 1);
+//		while(true) {
+//			auto op = match_operation(binaryops.begin()[level]);
+//			if(op == operation::None)
+//				break;
+//			parse_binary(level - 1);
+//			binary_operation(op);
+//		}
+//	}
+//}
+//
+//static void parse_binary() {
+//	parse_binary(binary_level);
+//}
 
 static rule* find_rule(const char* id, bool need_error = false) {
 	for(auto& e : rules) {

@@ -16,9 +16,6 @@
     <ClCompile Include="viewpackage.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="code_lexer.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -52,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="viewpackage.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="code_lexer.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

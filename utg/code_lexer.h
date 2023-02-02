@@ -7,8 +7,9 @@ struct lexer {
 	const char*		id;
 	const char*		files;
 	rulea			rules;
-	ruleopa			unaryops;
-	ruleopalla		binaryops;
+	ruleopa			operations;
+	ruleopa			operations_priority[10];
+	void			initialize();
 };
 extern lexer* last_lexer;
 }
