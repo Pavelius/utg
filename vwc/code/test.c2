@@ -6,7 +6,7 @@ enum {OK, Cancel, Answer};
 
 int x, y;
 
-int print() {
+void print() {
 	return 0;
 }
 

@@ -9,6 +9,10 @@ namespace {
 struct context {
 	pckh		symbol, type, ast;
 	unsigned	flags;
+	void clear() {
+		symbol = type = ast = None;
+		flags = 0;
+	}
 };
 }
 
@@ -28,6 +32,7 @@ static adat<symbol, 32> symbols;
 
 static const char* file_source;
 static const char* last_url;
+static bool command_error;
 
 const char*	code::p;
 const char*	code::last_identifier;
@@ -35,8 +40,6 @@ const char*	code::last_position;
 const char*	code::last_string;
 pckh		code::last_ast;
 static int	binary_level;
-static symbol last_symbol_instance;
-static symbol* last_symbol;
 
 static context& getctx() {
 	return context_data[context_current];
@@ -123,9 +126,10 @@ void code::skipws(int n) {
 static void parse_token(const token& e);
 
 static void parse_rule(const rule& v) {
-	auto p0 = p;
 	auto need_stop = false;
+	auto push_position = last_position;
 	auto push_context = context_current;
+	last_position = p;
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
@@ -133,6 +137,11 @@ static void parse_rule(const rule& v) {
 			need_stop = true;
 		auto p1 = p;
 		parse_token(e);
+		if(command_error) {
+			command_error = false;
+			p = last_position;  // Error in command
+			break;
+		}
 		if(e.is(flag::Execute))
 			continue;
 		if(p1 == p) {
@@ -140,29 +149,20 @@ static void parse_rule(const rule& v) {
 			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue parse next token
 				continue;
 			// TODO: single_statement fix. And how debug this?
-			p = p0; // This rule is invalid, rollback all and exit
-			return;
+			p = last_position; // This rule is invalid, rollback all and exit
+			break;
 		}
 		if(need_stop)
 			break;
 	}
+	last_position = push_position;
 	context_current = push_context;
-	if(need_stop && p0 == p)
-		return; // We need 'one of' tokens and not gain valid token at exit
-	if(v.apply) {
-		if((p0 != p) || !v.tokens[0]) {
-			last_position = p0;
-			v.apply(); // Only valid token execute proc
-		}
-	}
 }
 
 static void parse_token(const token& e) {
-	if(e.command)
+	if(e.command) {
+		command_error = false;
 		e.command->proc();
-	else if(e.is(flag::Execute)) {
-		if(e.rule && e.rule->apply)
-			e.rule->apply();
 	} else if(e.rule) {
 		auto p0 = p;
 		parse_rule(*e.rule);
@@ -525,6 +525,8 @@ void code::parse(const char* source_code, const char* rule_id) {
 static void push_context() {
 	if(context_current >= sizeof(context_data) / sizeof(context_data[0]))
 		error("Context stack corrupt");
+	if(context_current < sizeof(context_data) / sizeof(context_data[0]) - 1)
+		context_data[context_current + 1] = context_data[context_current];
 	context_current++;
 }
 
@@ -563,11 +565,41 @@ static void add_variable() {
 }
 
 static void set_static() {
-	last_symbol->flags |= FG(Static);
+	getctx().flags |= FG(Static);
 }
 
 static void set_public() {
-	last_symbol->flags |= FG(Public);
+	getctx().flags |= FG(Public);
+}
+
+static void set_function() {
+	getctx().flags |= FG(Function);
+}
+
+static void set_url() {
+	last_url = code::p;
+}
+
+static void set_type() {
+	auto& e = getctx();
+	if(equal(last_identifier, "int") || equal(last_identifier, "bool"))
+		e.type = i32;
+	else if(equal(last_identifier, "char"))
+		e.type = i8;
+	else if(equal(last_identifier, "short"))
+		e.type = i16;
+	else if(equal(last_identifier, "unsigned"))
+		e.type = u32;
+	else if(equal(last_identifier, "void"))
+		e.type = Void;
+	else {
+		e.type = last_package->findsym(last_identifier, Modules);
+		if(getctx().type == None) {
+			// error("Not found type `%1`", last_identifier);
+			e.type = i32;
+			command_error = true;
+		}
+	}
 }
 
 static void set_symbol_ast() {
@@ -600,11 +632,18 @@ static void expression() {
 		getctx().ast = operations.data[operations.count - 1];
 }
 
+static void declaration() {
+	push_context();
+	getctx().clear();
+}
+
 static command default_commands[] = {
 	{"add_type", add_type},
 	{"add_member", add_member},
+	{"add_variable", add_variable},
 	{"identifier", identifier},
 	{"expression", expression},
+	{"declaration", declaration},
 	{"number", number},
 	{"pop_locals", pop_locals},
 	{"push_context", push_context},
@@ -612,7 +651,11 @@ static command default_commands[] = {
 	{"string", string},
 	{"set_public", set_public},
 	{"set_static", set_static},
+	{"set_function", set_function},
 	{"set_symbol_ast", set_symbol_ast},
+	{"set_url", set_url},
+	{"set_type", set_type},
+	{"type_reference", type_reference},
 };
 
 static const command* find_command(const char* id) {
@@ -630,7 +673,7 @@ static bool lazy_initialize() {
 				break;
 			if(e.rule)
 				return false; // All rules initialized
-			if(e.is(flag::Variable) || e.is(flag::Execute)) {
+			if(e.is(flag::Variable)) {
 				e.rule = find_rule(e.id);
 				if(!e.rule)
 					error("In rule `%1` not found token `%2`", r.id, e.id);

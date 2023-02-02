@@ -8,7 +8,6 @@ namespace code {
 struct rule {
 	const char* id;
 	tokena		tokens;
-	fnevent		apply;
 };
 struct ruleop {
 	const char*	id;

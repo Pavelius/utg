@@ -1,2 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 1: Not find data type for `Rule`
+﻿In rule `variable` not found command `add_variable`
