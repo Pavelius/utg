@@ -42,6 +42,7 @@ struct symbol {
 	unsigned			scope; // Zone of visibility
 	unsigned			flags; // Various flags
 	pckh				ast; // Abstract syntaxis tree index
+	void				clear() { memset(this, 0, sizeof(*this)); }
 	constexpr bool		is(int v) const { return (flags & (1 << v)) != 0; }
 	constexpr bool		ispointer() const { return parent == Pointers; }
 	constexpr void		set(int v) { flags |= 1 << v; }

@@ -8,8 +8,9 @@ struct token {
 	const char*			id;
 	unsigned			flags;
 	const struct rule*	rule;
-	constexpr token() : id(0), flags(), rule(0) {}
-	constexpr token(const char* p) : id(p), flags(), rule(0) {
+	const struct command* command;
+	constexpr token() : id(0), flags(), rule(0), command(0) {}
+	constexpr token(const char* p) : id(p), flags(), rule(0), command(0) {
 		while(*p) {
 			if(*p == '\\') {
 				id = p + 1;

@@ -192,6 +192,9 @@ WastelandRandomDwelvers
 #Site
 
 BanditLair resid(DarkCave)
+ fail Wounds+2
+ partial Wounds+1
+ success Gold+60
 DarkCave resid(DarkCave)
  fail Wounds+1
 DarkYard resid(DarkCave)
