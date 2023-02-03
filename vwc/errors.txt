@@ -1,2 +1,2 @@
 ﻿In file `rules/lexer_c2.txt`:
- Line 18: Not found identifier `Or`
+ Line 33: Not found requisit `toeksn`
