@@ -19,9 +19,6 @@
     <ClCompile Include="ability.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="code.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="interface.cpp">
       <Filter>Логика</Filter>
     </ClCompile>

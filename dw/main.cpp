@@ -18,12 +18,11 @@ static void play_settlement() {
 static void character_generation() {
 	answers::header = getnm("CharacterGeneration");
 	answers::resid = "meet";
-	answers::interactive = true;
+	pushvalue push(answers::interactive, false);
 	create_hero();
 	create_hero();
 	create_hero();
 	create_hero();
-	answers::interactive = true;
 	draw::setnext(play_settlement);
 }
 

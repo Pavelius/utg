@@ -4,6 +4,7 @@ using namespace code;
 
 BSDATA(operationi) = {
 	{"OpNone"},
+	{"UnaryNop"},
 	{"BinaryPlus"},
 	{"BinaryMinus"},
 	{"BinaryDiv"},
@@ -24,5 +25,19 @@ BSDATA(operationi) = {
 	{"ConditionNotEqual"},
 	{"ConditionOr"},
 	{"ConditionAnd"},
+	{"BooleanChoose"},
+	{"LeftIfTrue"},
+	{"Increment"},
+	{"Decrement"},
+	{"UnaryAddressOf"},
+	{"UnaryDereference"},
+	{"BinaryScope"},
+	{"Assign"},
+	{"If"},
+	{"While"},
+	{"Number"},
+	{"Text"},
+	{"Identifier"},
+	{"Expression"},
 };
-assert_enum(operationi, operation::And)
+assert_enum(operationi, operation::Expression)

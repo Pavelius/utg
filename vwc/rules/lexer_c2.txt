@@ -40,7 +40,19 @@ postfix tokens("^\\++" "\\--" "%indirection" "%call" "%array_scope")
 c2 files("*.c2")
  binary "||" ConditionOr
  binary "&&" ConditionAnd
+ binary ">" ConditionGreater
+ binary ">=" ConditionGreaterEqual
+ binary "<" ConditionLess
+ binary "<=" ConditionLessEqual
+ binary "==" ConditionEqual
+ binary "!=" ConditionNotEqual
  binary "&" BinaryAnd
  binary "|" BinaryOr
  binary "^" BinaryXor
+ binary "+" BinaryPlus
+ binary "-" BinaryMinus
+ unary "!" UnaryNot
  unary "-" UnaryNeg
+ unary "+" UnaryNop
+ unary "*" UnaryDereference
+ unary "&" UnaryAddressOf

@@ -7,7 +7,7 @@ namespace code {
 typedef unsigned	pckh;
 const unsigned		None = 0xFFFFFFFF;
 enum class operation : unsigned char {
-	None,
+	None, Nop,
 	Plus, Minus, Div, Mul, DivRest,
 	BinaryOr, BinaryAnd, Binary’Ór, Not, Neg,
 	ShiftLeft, ShiftRight,
