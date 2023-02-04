@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "bsreq.h"
 #include "code_package.h"
+#include "code_lexer.h"
 #include "crt.h"
 #include "draw.h"
 #include "draw_gui.h"
@@ -48,7 +49,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	set_dark_theme();
 	bsreq::read("rules/Basic.txt");
-	bsreq::read("rules/lexer_c2.txt");
+	lexer::read("rules/lexer_c2.txt");
 	initialize_translation("ru");
 	check_translation();
 	initialize_code();

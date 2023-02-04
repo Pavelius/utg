@@ -4,12 +4,12 @@
 
 namespace code {
 struct lexer {
-	const char*		id;
-	const char*		files;
-	rulea			rules;
-	ruleopa			operations;
-	ruleopa			operations_priority[10];
-	void			initialize();
+	const char*	id;
+	const char*	files;
+	rulea		rules;
+	ruleopa		binary, unary, postfix;
+	ruleopa		binary_priority[10];
+	static void read(const char* url);
 };
 extern lexer* last_lexer;
 }

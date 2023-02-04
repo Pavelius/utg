@@ -210,6 +210,7 @@ NOBSDATA(bool)
 template<typename T> struct sliceu {
 	unsigned						start, count;
 	constexpr sliceu() : start(0), count(0) {}
+	constexpr sliceu(unsigned start, unsigned count) : start(start), count(count) {}
 	template<size_t N> sliceu(T(&v)[N]) { set(v, N); }
 	constexpr explicit operator bool() const { return count != 0; }
 	T*								begin() const { return (T*)bsdata<T>::source.ptr(start); }

@@ -20,14 +20,12 @@ struct evalue {
 };
 
 typedef adat<pckh> operationa;
-typedef slice<rule> rulea;
-typedef slice<ruleop> ruleopa;
+typedef sliceu<rule> rulea;
+typedef sliceu<ruleop> ruleopa;
 typedef void(*fnerror)(const char* position, const char* format, const char* format_param);
 
 extern char	string_buffer[256 * 32];
 extern rulea rules;
-extern ruleopa unaryops;
-extern ruleopa postfixops;
 extern fnerror perror;
 
 extern operationa operations;

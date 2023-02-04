@@ -35,11 +35,12 @@ unary tokens("^%number" "%string" "%sizeof" "%variable")
 indirection tokens("\\." "%identifier")
 postfix tokens("^\\++" "\\--" "%indirection" "%call" "%array_scope")
 
-#RuleOperation
-
-"||" OpOr
-
 #Lexer
 
 c2 files("*.c2")
-
+ binary "||" ConditionOr
+ binary "&&" ConditionAnd
+ binary "&" BinaryAnd
+ binary "|" BinaryOr
+ binary "^" BinaryXor
+ unary "-" UnaryNeg

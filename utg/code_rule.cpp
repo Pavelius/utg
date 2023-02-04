@@ -18,8 +18,6 @@ struct context {
 
 adat<pckh>		code::operations;
 rulea			code::rules;
-ruleopa			code::unaryops;
-ruleopa			code::postfixops;
 fnerror			code::perror;
 char			code::string_buffer[256 * 32];
 
@@ -32,13 +30,13 @@ static unsigned	context_current;
 
 static const char* file_source;
 static const char* last_url;
+
 static bool command_error;
 
-const char*		code::p;
-const char*		code::last_identifier;
-const char*		code::last_position;
-const char*		code::last_string;
-static int		binary_level;
+const char* code::p;
+const char* code::last_identifier;
+const char* code::last_position;
+const char*	code::last_string;
 
 static context& getctx() {
 	return context_data[context_current];
@@ -208,7 +206,7 @@ static void parse_token(const token& e) {
 
 void code::binary_operation(operation op) {
 	if(operations.getcount() < 2)
-		error("Operations stack corrupt when parse binare operation in `%1`", example(p));
+		error("Binary operations stack corrupt in `%1`", example(p));
 	auto n = operations.count;
 	operations.data[n - 2] = last_package->add(op, operations.data[n - 2], operations.data[n - 1]);
 	operations.count--;
@@ -216,27 +214,9 @@ void code::binary_operation(operation op) {
 
 void code::unary_operation(operation op) {
 	if(operations.getcount() < 1)
-		error("Operations stack corrupt when parse unary operation in `%1`", example(p));
+		error("Unary operations stack corrupt in `%1`", example(p));
 	auto n = operations.count;
-	operations.data[n - 2] = last_package->add(op, operations.data[n - 2], operations.data[n - 1]);
-	operations.count--;
-}
-
-static bool match(const char* symbol) {
-	auto i = 0;
-	while(symbol[i]) {
-		if(p[i] != symbol[i])
-			return false;
-		i++;
-	}
-	p += i;
-	skipws();
-	return true;
-}
-
-void code::skip(const char* symbol) {
-	if(!match(symbol))
-		error("Expected token `%1` in `%2`", symbol, example(p));
+	operations.data[n - 1] = last_package->add(op, operations.data[n - 1]);
 }
 
 static void unary() {
@@ -419,77 +399,6 @@ void code::parse_expression() {
 	}
 }
 
-static operation match_operation(const ruleopa& source) {
-	for(auto& e : source) {
-		if(match(e.id))
-			return e.value;
-	}
-	return operation::None;
-}
-
-static void parse_postfix() {
-	while(true) {
-		switch(*p) {
-		case '(': // Calling
-			skip(")");
-			return; // Must return
-		case '[': // Scoping
-			skipws(1);
-			parse_expression();
-			skip("]");
-			break;
-		case '{': // Initializing
-			skipws(1);
-			parse_expression();
-			skip("}");
-			return; // Must return
-		default:
-			auto op = match_operation(postfixops);
-			if(op == operation::None)
-				return;
-			unary_operation(op);
-			break;
-		}
-	}
-}
-
-//static void parse_binary();
-//
-//static void parse_unary() {
-//	if(*p == '(') {
-//		skipws(1);
-//		parse_binary();
-//		skip(")");
-//	} else {
-//		while(true) {
-//			auto op = match_operation(unaryops);
-//			if(op == operation::None)
-//				break;
-//			parse_unary();
-//			unary_operation(op);
-//		}
-//	}
-//}
-
-//static void parse_binary(int level) {
-//	if(level < 0)
-//		parse_unary();
-//	else {
-//		parse_binary(level - 1);
-//		while(true) {
-//			auto op = match_operation(binaryops.begin()[level]);
-//			if(op == operation::None)
-//				break;
-//			parse_binary(level - 1);
-//			binary_operation(op);
-//		}
-//	}
-//}
-//
-//static void parse_binary() {
-//	parse_binary(binary_level);
-//}
-
 static rule* find_rule(const char* id, bool need_error = false) {
 	for(auto& e : rules) {
 		if(strcmp(e.id, id) == 0)
@@ -594,7 +503,6 @@ static void set_type() {
 	else {
 		e.type = last_package->findsym(last_identifier, Modules);
 		if(getctx().type == None) {
-			// error("Not found type `%1`", last_identifier);
 			e.type = i32;
 			command_error = true;
 		}
@@ -636,7 +544,39 @@ static void declaration() {
 	getctx().clear();
 }
 
-static command default_commands[] = {
+static bool lazy_initialize() {
+	for(auto& r : rules) {
+		for(auto& e : r.tokens) {
+			if(!e)
+				break;
+			if(e.rule)
+				return false; // All rules initialized
+			if(e.is(flag::Variable)) {
+				e.rule = find_rule(e.id);
+				if(!e.rule)
+					error("In rule `%1` not found token `%2`", r.id, e.id);
+			} else if(e.is(flag::Execute)) {
+				e.command = bsdata<command>::find(e.id);
+				if(!e.command)
+					error("In rule `%1` not found command `%2`", r.id, e.id);
+			}
+		}
+	}
+	return true;
+}
+
+void code::setrules(rulea source) {
+	rules = source;
+	auto first_time = lazy_initialize();
+	// Initialize common rules
+	postfix_rule = find_rule("postfix", first_time);
+	unary_rule = find_rule("unary", first_time);
+	//postfix_scope_rule = find_rule("postfix_scope", first_time);
+	//postfix_call_rule = find_rule("postfix_call", first_time);
+	//postfix_initialize_rule = find_rule("postfix_initialize", first_time);
+}
+
+BSDATA(command) = {
 	{"add_type", add_type},
 	{"add_member", add_member},
 	{"add_variable", add_variable},
@@ -656,43 +596,4 @@ static command default_commands[] = {
 	{"set_type", set_type},
 	{"type_reference", type_reference},
 };
-
-static const command* find_command(const char* id) {
-	for(auto& e : default_commands) {
-		if(equal(e.id, id))
-			return &e;
-	}
-	return 0;
-}
-
-static bool lazy_initialize() {
-	for(auto& r : rules) {
-		for(auto& e : r.tokens) {
-			if(!e)
-				break;
-			if(e.rule)
-				return false; // All rules initialized
-			if(e.is(flag::Variable)) {
-				e.rule = find_rule(e.id);
-				if(!e.rule)
-					error("In rule `%1` not found token `%2`", r.id, e.id);
-			} else if(e.is(flag::Execute)) {
-				e.command = find_command(e.id);
-				if(!e.command)
-					error("In rule `%1` not found command `%2`", r.id, e.id);
-			}
-		}
-	}
-	return true;
-}
-
-void code::setrules(rulea source) {
-	rules = source;
-	auto first_time = lazy_initialize();
-	// Initialize common rules
-	postfix_rule = find_rule("postfix", first_time);
-	unary_rule = find_rule("unary", first_time);
-	//postfix_scope_rule = find_rule("postfix_scope", first_time);
-	//postfix_call_rule = find_rule("postfix_call", first_time);
-	//postfix_initialize_rule = find_rule("postfix_initialize", first_time);
-}
+BSDATAF(command)

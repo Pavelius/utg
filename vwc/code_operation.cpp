@@ -4,11 +4,25 @@ using namespace code;
 
 BSDATA(operationi) = {
 	{"OpNone"},
-	{"OpPlus"},
-	{"OpMinus"},
-	{"OpDiv"},
-	{"OpMul"},
-	{"OpDivRest"},
-	{"OpOr"},
+	{"BinaryPlus"},
+	{"BinaryMinus"},
+	{"BinaryDiv"},
+	{"BinaryMul"},
+	{"BinaryDivRest"},
+	{"BinaryOr"},
+	{"BinaryAnd"},
+	{"BinaryXor"},
+	{"UnaryNot"},
+	{"UnaryNeg"},
+	{"ShiftLeft"},
+	{"ShiftRight"},
+	{"ConditionLess"},
+	{"ConditionLessEqual"},
+	{"ConditionGreater"},
+	{"ConditionGreaterEqual"},
+	{"ConditionEqual"},
+	{"ConditionNotEqual"},
+	{"ConditionOr"},
+	{"ConditionAnd"},
 };
-BSDATAF(operationi)
+assert_enum(operationi, operation::And)

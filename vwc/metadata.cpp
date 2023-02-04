@@ -22,6 +22,9 @@ BSMETA(lexer) = {
 	BSREQ(id),
 	BSREQ(files),
 	BSREQ(rules),
+	BSREQ(binary),
+	BSREQ(unary),
+	BSREQ(postfix),
 	{}};
 BSMETA(operationi) = {
 	BSREQ(id),

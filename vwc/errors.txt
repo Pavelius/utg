@@ -1,2 +1,3 @@
 ﻿In file `rules/lexer_c2.txt`:
- Line 33: Not found requisit `toeksn`
+ Line 41: Not found identifier `ConditionalOr`
+ Line 42: Not found identifier `ConditionalAnd`
