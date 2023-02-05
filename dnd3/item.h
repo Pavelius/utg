@@ -1,10 +1,10 @@
 #include "crt.h"
 #include "dice.h"
 #include "magic.h"
-#include "nameable.h"
 #include "range.h"
 #include "resid.h"
 #include "variant.h"
+#include "wear.h"
 
 #pragma once
 
@@ -25,6 +25,7 @@ struct itemi : nameable {
 	variants		dress, use;
 	animationi		animation;
 	weaponi			weapon;
+	wear_s			wear;
 };
 struct item {
 	unsigned short	type;
@@ -38,5 +39,11 @@ struct item {
 		unsigned char data;
 	};
 	constexpr item() : type(0), count(0), data(0) {}
+	constexpr explicit operator bool() { return type != 0; }
+	void			add(item& v);
+	bool			canequip(wear_s v) const;
+	void			clear() { type = 0; count = 0; data = 0; }
+	int				getcost() const { return geti().cost; }
+	int				getcostall() const;
 	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 };

@@ -142,18 +142,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="creature.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="magic.h" />
     <ClInclude Include="resid.h" />
     <ClInclude Include="tag.h" />
+    <ClInclude Include="wear.h" />
+    <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="information.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="range.cpp" />
+    <ClCompile Include="magic.cpp" />
+    <ClCompile Include="wear.cpp" />
+    <ClCompile Include="wearable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

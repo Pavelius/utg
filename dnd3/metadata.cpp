@@ -22,8 +22,13 @@ BSMETA(dice) = {
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(id_unidentified),
+	BSENM(rate, magici),
 	BSREQ(weapon),
 	BSREQ(count), BSREQ(weight), BSREQ(cost),
+	BSREQ(dress), BSREQ(use),
+	{}};
+BSMETA(magici) = {
+	BSREQ(id),
 	{}};
 BSMETA(rangei) = {
 	BSREQ(id),
@@ -38,6 +43,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
+	{"Rate", VAR(magici, 1), 0, 0},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)
