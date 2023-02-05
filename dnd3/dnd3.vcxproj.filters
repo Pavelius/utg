@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="locale">
+      <UniqueIdentifier>{5728c0e4-b1ed-4570-84c2-1bf11c016084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{6f28b18b-950c-4df3-af70-74ef963c06c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rules">
+      <UniqueIdentifier>{94dc90c1-ab40-4faf-a164-f0b9c4ab8c34}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ability.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="range.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="resid.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="magic.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="range.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="rules\Items.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
