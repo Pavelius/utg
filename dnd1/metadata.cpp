@@ -22,6 +22,7 @@ BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
 BSDATAC(equipmenti, 256)
 BSDATAC(itemi, 256)
+BSDATAC(itempoweri, 64)
 BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
 
@@ -47,6 +48,13 @@ BSMETA(equipmenti) = {
 BSMETA(feati) = {
 	BSREQ(id),
 	{}};
+BSMETA(itempoweri) = {
+	BSREQ(id),
+	BSREQ(magic),
+	BSREQ(condition),
+	BSREQ(damage),
+	BSREQ(wearing),
+	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
 	BSREQ(cost), BSREQ(weight), BSREQ(count),
@@ -54,7 +62,8 @@ BSMETA(itemi) = {
 	BSENM(wear, weari),
 	BSREQ(weapon),
 	BSREQ(use),
-	BSREQ(effect),
+	BSREQ(wearing),
+	BSREQ(powers),
 	{}};
 BSMETA(itemi::weaponi) = {
 	BSREQ(damage),
@@ -93,6 +102,7 @@ BSDATA(varianti) = {
 	{"Equipment", VAR(equipmenti, 2)},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1)},
+	{"ItemPower", VAR(itempoweri, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Monster", VAR(monsteri, 1)},

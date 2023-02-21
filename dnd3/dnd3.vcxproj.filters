@@ -10,6 +10,9 @@
     <Filter Include="rules">
       <UniqueIdentifier>{94dc90c1-ab40-4faf-a164-f0b9c4ab8c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{55b18d00-2e73-47bd-b929-8b13589390df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">

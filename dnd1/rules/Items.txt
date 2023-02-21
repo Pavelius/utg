@@ -1,28 +1,34 @@
+#ItemPower
+
+Magical1 magic(1)
+Magical2 magic(2)
+Magical3 magic(3)
+MagicArmor1 magic(1)
+ wearing AC+1
+MagicArmor2 magic(2)
+ wearing AC+2
+MagicArmor3 magic(3)
+ wearing AC+3
+FlamingWeapon magic(2) damage(1 6)
+FrozenWeapon magic(2) damage(1 6)
+DefendingWeapon magic(1)
+ wearing AC+2
+
 #Item
 
 NoItem
 
 CP cost(1) count(100)
- flags Countable
 SP cost(1) count(10)
- flags Countable
 EP cost(1) count(5)
- flags Countable
 GP cost(1)
- flags Countable
 PP cost(10)
- flags Countable
 
 OrnamentalStones cost(10)
- flags Countable
 SemiPreciousStones cost(50)
- flags Countable
 FancyStones cost(100)
- flags Countable
 PreciousStones cost(500)
- flags Countable
 GemStones cost(1000)
- flags Countable
 
 IronRing cost(300) weight(1)
 SilverRing cost(500) weight(1)
@@ -36,26 +42,33 @@ GoldAmulet cost(1600) weight(5)
 BattleAxe cost(7) weight(50) wear(MeleeWeapon)
  flags Martial Slow TwoHanded
  weapon damage(1 8)
+ powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 Club cost(3) weight(50) wear(MeleeWeapon)
  flags Martial Blunt
  weapon damage(1 4)
+ powers Magical1 Magical2
 Dagger cost(3) weight(10) wear(MeleeWeapon)
  weapon damage(1 4)
+ powers Magical1 Magical2 Magical3
 Halberd cost(7) weight(150) wear(MeleeWeapon)
  flags Martial Slow TwoHanded WearLarge
  weapon damage(1 10)
+ powers Magical1 Magical2 Magical3
 HandAxe cost(4) weight(30) wear(MeleeWeapon)
  flags Martial
  weapon damage(1 6)
+ powers Magical1 Magical2 Magical3
 Mace cost(5) weight(30) wear(MeleeWeapon)
  flags Martial Blunt
  weapon damage(1 6)
+ powers Magical1 Magical2 Magical3
 Sword cost(10) weight(60) wear(MeleeWeapon)
  flags Martial
  weapon damage(1 8)
+ powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 
-Arrow wear(Ammunition) count(30)
-Bolt wear(Ammunition) count(20)
+Arrow wear(Ammunition) cost(5) count(30)
+Bolt wear(Ammunition) cost(5) count(20)
 
 Crossbow cost(30) weight(50) wear(RangedWeapon)
  flags Martial Slow TwoHanded
@@ -69,16 +82,16 @@ LongBow cost(40) weight(30) wear(RangedWeapon)
 
 LeatherArmor cost(20) weight(200) wear(Torso)
  flags WearLeather
- effect AC+2
+ wearing AC+2
 ChainArmor cost(40) weight(400) wear(Torso)
  flags WearIron
- effect AC+4
+ wearing AC+4
 PlateArmor cost(60) weight(500) wear(Torso)
  flags WearIron
- effect AC+6
+ wearing AC+6
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  flags WearShield
- effect AC+1
+ wearing AC+1
 
 AquaPotion cost(10) weight(10) wear(Potion)
 BlackPotion cost(50) weight(10) wear(Potion)

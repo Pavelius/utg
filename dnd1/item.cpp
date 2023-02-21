@@ -7,12 +7,13 @@ void item::create(const char* id, int count) {
 void item::create(const itemi* pi, int count) {
 	if(!pi)
 		return;
+	create(pi - bsdata<itemi>::elements, pi->count ? pi->count * count : count);
+}
+
+void item::create(unsigned short type, int count) {
 	clear();
-	type = pi - bsdata<itemi>::elements;
-	if(pi->count)
-		setcount(count * pi->count);
-	else
-		setcount(count);
+	this->type = count;
+	setcount(count);
 }
 
 void item::setcount(int v) {
@@ -33,8 +34,8 @@ void item::add(item& v) {
 		return;
 	if(iscountable()) {
 		unsigned n1 = count + v.count + 1;
-		if(n1 >= 0xFFFF) {
-			count = 0xFFFF;
+		if(n1 >= 0xFF) {
+			count = 0xFF;
 			v.count = n1 - count - 1;
 		} else {
 			count = n1;
@@ -91,4 +92,11 @@ void itema::match(wear_s wear, bool keep) {
 		*ps++ = p;
 	}
 	count = ps - data;
+}
+
+const itempoweri* item::getpower() const {
+	auto& ei = geti();
+	if(!ei.powers[0] || !power)
+		return 0;
+	return ei.powers[power - 1];
 }

@@ -175,8 +175,14 @@ static void update_start() {
 
 static void update_equipment() {
 	for(auto& e : player->equipment()) {
-		if(e)
-			script::run(e.geti().effect);
+		if(!e)
+			continue;
+		script::run(e.geti().wearing);
+		auto pi = e.getpower();
+		if(!pi)
+			continue;
+		if(pi->wearing)
+			script::run(pi->wearing);
 	}
 }
 

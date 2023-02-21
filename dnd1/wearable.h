@@ -4,6 +4,7 @@
 
 struct wearable {
 	item		wears[Elbows + 1];
+	static unsigned coins;
 	void		additem(item& v);
 	slice<item>	allitems() { return slice<item>(wears, wears + Elbows + 1); }
 	slice<item>	equipment() { return slice<item>(wears + MeleeWeapon, wears + Elbows + 1); }
