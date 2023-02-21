@@ -1,5 +1,22 @@
 #include "item.h"
 
+void itema::select(const slice<item>& source) {
+	for(auto& e : source) {
+		if(e)
+			add(&e);
+	}
+}
+
+void itema::match(wear_s wear, bool keep) {
+	auto ps = begin();
+	for(auto p : *this) {
+		if((p->geti().wear == wear) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - begin();
+}
+
 void item::create(const char* id, int count) {
 	create(bsdata<itemi>::find(id), count);
 }
@@ -12,8 +29,14 @@ void item::create(const itemi* pi, int count) {
 
 void item::create(unsigned short type, int count) {
 	clear();
-	this->type = count;
+	this->type = type;
 	setcount(count);
+}
+
+int item::getcount() const {
+	if(iscountable())
+		return count + 1;
+	return 1;
 }
 
 void item::setcount(int v) {
@@ -23,24 +46,18 @@ void item::setcount(int v) {
 		count = v - 1;
 }
 
-int item::getcount() const {
-	if(!type)
-		return 0;
-	return iscountable() ? count + 1 : 1;
-}
-
 void item::add(item& v) {
-	if(type != v.type)
+	if(type != v.type || flags != v.flags)
 		return;
-	if(iscountable()) {
-		unsigned n1 = count + v.count + 1;
-		if(n1 >= 0xFF) {
-			count = 0xFF;
-			v.count = n1 - count - 1;
-		} else {
-			count = n1;
-			v.clear();
-		}
+	if(iscountable())
+		return;
+	unsigned n1 = count + v.count + 1;
+	if(n1 >= 0xFF) {
+		count = 0xFF;
+		v.count = n1 - count - 1;
+	} else {
+		count = n1;
+		v.clear();
 	}
 }
 
@@ -69,29 +86,12 @@ dice item::getdamage() const {
 
 int	item::getweight() const {
 	auto& ei = geti();
-	return getcount() * ei.weight;
+	return getcount() * ei.weight / (ei.count ? ei.count : 1);
 }
 
 int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
-}
-
-void itema::select(const slice<item>& source) {
-	for(auto& e : source) {
-		if(e)
-			add(&e);
-	}
-}
-
-void itema::match(wear_s wear, bool keep) {
-	auto ps = begin();
-	for(auto p : *this) {
-		if((p->geti().wear == wear) != keep)
-			continue;
-		*ps++ = p;
-	}
-	count = ps - data;
 }
 
 const itempoweri* item::getpower() const {

@@ -1,3 +1,4 @@
+#include "collection.h"
 #include "dice.h"
 #include "feat.h"
 #include "list.h"
@@ -50,8 +51,8 @@ public:
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
 	void		create(unsigned short type, int count);
-	void		create(const char* id, int count = 1);
-	void		create(const itemi* pi, int count = 1);
+	void		create(const char* id, int count);
+	void		create(const itemi* pi, int count);
 	void		damage();
 	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	int			getcost() const;
@@ -62,10 +63,10 @@ public:
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		iscursed() const { return cursed != 0; }
-	bool		iscountable() const { return geti().count != 0; }
+	bool		iscountable() const { return geti().powers != 0; }
 	void		setcount(int v);
 };
-struct itema : adat<item*> {
+struct itema : collection<item> {
+	void		match(wear_s v, bool keep);
 	void		select(const slice<item>& source);
-	void		match(wear_s wear, bool keep);
 };

@@ -41,8 +41,7 @@ static void add_coins(treasure& result, const char* id, const treasurei::coini& 
 	auto count = e.range.roll();
 	if(e.multiplier)
 		count = count * e.multiplier;
-	item it; it.create(pi);
-	it.setcount(count);
+	item it; it.create(pi, count);
 	result.add(it);
 }
 

@@ -1,3 +1,4 @@
+#include "collection.h"
 #include "creature.h"
 #include "draw_utg.h"
 #include "game.h"

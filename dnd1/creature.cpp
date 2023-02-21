@@ -13,7 +13,7 @@ static void start_equipment(creature* p) {
 	item it;
 	for(auto& e : bsdata<equipmenti>()) {
 		if(e.type == p->type) {
-			it.create(bsdata<itemi>::elements + e.equipment);
+			it.create(e.equipment, 1);
 			p->equip(it);
 			if(it)
 				p->additem(it);
