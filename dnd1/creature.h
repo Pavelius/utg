@@ -1,6 +1,5 @@
 #include "actable.h"
 #include "avatarable.h"
-#include "bsref.h"
 #include "chooseoption.h"
 #include "monster.h"
 #include "spell.h"
@@ -9,10 +8,6 @@
 
 #pragma once
 
-struct equipmenti {
-	class_s			type;
-	unsigned char	equipment;
-};
 struct creature : actable, spellable, statable, avatarable, wearable {
 	class_s			type;
 	statable		basic;

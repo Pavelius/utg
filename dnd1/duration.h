@@ -7,7 +7,7 @@ enum duration_s : unsigned char {
 	Round,
 	Turn, Turn2, Turn3, Turn1d4p1, Turn2d6, Turn4d4,
 	Hour, Hour2, Hour8,
-	Concentration, Permanent,
+	Concentration, PermanentDuration,
 };
 struct durationi : nameable {
 	short	from, to;

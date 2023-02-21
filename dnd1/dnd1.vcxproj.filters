@@ -75,6 +75,12 @@
     <ClInclude Include="rolldice.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="modifier.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="advance.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -144,6 +150,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="rolldice.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,7 @@
+#include "advance.h"
 #include "charname.h"
 #include "creature.h"
+#include "modifier.h"
 #include "ongoing.h"
 #include "pushvalue.h"
 #include "script.h"
@@ -9,15 +11,31 @@ creaturea creatures;
 
 inline int d6() { return 1 + rand() % 6; }
 
-static void start_equipment(creature* p) {
-	item it;
-	for(auto& e : bsdata<equipmenti>()) {
-		if(e.type == p->type) {
-			it.create(e.equipment, 1);
-			p->equip(it);
-			if(it)
-				p->additem(it);
-		}
+template<> void fnscript<abilityi>(int index, int value) {
+	switch(modifier) {
+	case Permanent: player->basic.abilities[index] += value; break;
+	default: player->abilities[index] += value; break;
+	}
+}
+
+template<> void fnscript<itemi>(int index, int value) {
+	auto count = value ? value : 1;
+	item it; it.create(index, count);
+	player->equip(it);
+	if(it)
+		player->additem(it);
+}
+
+static void apply_wear(const variants& source) {
+	pushvalue push_modifier(modifier, Permanent);
+	for(auto v : source)
+		script::run(v);
+}
+
+static void apply_advance(variant type, int level) {
+	for(auto& e : bsdata<advancei>()) {
+		if(e.type == type && e.level==level)
+			apply_wear(e.elements);
 	}
 }
 
@@ -34,6 +52,7 @@ void creature::raiselevel() {
 			r = rand() % d;
 		basic.abilities[HPMax] += r;
 	}
+	apply_advance(bsdata<classi>::elements + type, n);
 }
 
 void creature::levelup() {
@@ -182,7 +201,7 @@ static void update_equipment() {
 		if(!pi)
 			continue;
 		if(pi->wearing)
-			script::run(pi->wearing);
+			apply_wear(pi->wearing);
 	}
 }
 
@@ -252,15 +271,17 @@ dice creature::getdamage(wear_s v) const {
 }
 
 void creature::create(class_s type, gender_s gender) {
+	pushvalue push_player(player, this);
+	auto pi = bsdata<classi>::elements + type;
 	clear();
 	this->type = type;
 	this->gender = gender;
 	basic.rollability();
-	basic.applybest(bsdata<classi>::elements[type].prime);
+	basic.applybest(pi->prime);
 	basic.applyminimal(type);
 	name = randomname(type, gender);
 	setavatar(randomavatar(type, gender));
-	start_equipment(this);
+	apply_advance(pi, 1);
 	finish();
 }
 

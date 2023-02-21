@@ -11,7 +11,7 @@ BSDATA(spelli) = {
 	{"DetectMagic", {1, 1}, Turn2, OneRandomItem},
 	{"Light", {1, 1}, Hour2, Enviroment},
 	{"ProtectionFromEvil", {1, 1}, Hour2, Caster},
-	{"PurifyFoodAndWater", {1}, Permanent, OneItem},
+	{"PurifyFoodAndWater", {1}, PermanentDuration, OneItem},
 	{"RemoveFear", {1}, Instant, CasterOrAlly, {}, {CauseFear}},
 	{"ResistCold", {1}, Hour, CasterOrAlly},
 	{"CharmPerson", {0, 1}, Instant, OneEnemy},
@@ -23,18 +23,18 @@ BSDATA(spelli) = {
 	{"Shield", {0, 1}, Turn2, Caster},
 	{"Sleep", {0, 1}, Turn4d4, SomeEnemies},
 	{"Ventriloquism", {0, 1}, Turn2, Enviroment},
-	{"Blindness", {3, 2}, Permanent, OneEnemy},
-	{"ContinualDarkness", {3, 2}, Permanent, Enviroment, {}, {ContinualLight, Light}, Darkness},
-	{"ContinualLight", {3, 2}, Permanent, Enviroment, {}, {ContinualDarkness, Darkness}, Light},
+	{"Blindness", {3, 2}, PermanentDuration, OneEnemy},
+	{"ContinualDarkness", {3, 2}, PermanentDuration, Enviroment, {}, {ContinualLight, Light}, Darkness},
+	{"ContinualLight", {3, 2}, PermanentDuration, Enviroment, {}, {ContinualDarkness, Darkness}, Light},
 	{"DetectInvisibility", {0, 2}, Instant, AllEnemies, {}, {Invisibility}},
 	{"ESP", {0, 2}, Hour2, Caster},
-	{"Invisibility", {0, 2}, Permanent, CasterOrAlly},
+	{"Invisibility", {0, 2}, PermanentDuration, CasterOrAlly},
 	{"Knock", {0, 2}, Instant, Caster},
 	{"Levitate", {0, 2}, Hour, Caster},
 	{"MirrorImages", {0, 2}, Hour, Caster},
 	{"PhantasmalForce", {0, 2}, Hour, Enviroment},
 	{"Web", {0, 2}, Hour8, Caster},
-	{"WizardLock", {0, 2}, Permanent, Caster},
+	{"WizardLock", {0, 2}, PermanentDuration, Caster},
 	{"Bless", {2, 0}, Hour, AllAlly},
 	{"Blight", {2, 0}, Hour, AllEnemies},
 	{"FindTraps", {2, 0}, Instant, OneRandomObject},
@@ -44,8 +44,8 @@ BSDATA(spelli) = {
 	{"Silence15Radius", {2, 0}, Hour2, Enviroment},
 	{"SnakeCharm", {2, 0}, Turn1d4p1, SomeEnemies},
 	{"SpeakWithAnimals", {2, 0}, Hour, EncounterReaction},
-	{"BestowCurse", {3, 4}, Permanent, OneEnemy},
-	{"CauseDisease", {3, 0}, Permanent, OneEnemy},
+	{"BestowCurse", {3, 4}, PermanentDuration, OneEnemy},
+	{"CauseDisease", {3, 0}, PermanentDuration, OneEnemy},
 	{"CureDisease", {3, 0}, Instant, CasterOrAlly, {}, {CauseDisease, Blindness}},
 	{"GrowthOfAnimals", {3, 0}, Hour2, CasterOrAlly},
 	{"LocateObject", {3, 0}, Hour, Caster},
@@ -96,7 +96,7 @@ bool creature::apply(spell_s id, int level, bool run) {
 		}
 		break;
 	default:
-		if(ei.duration != Instant && ei.duration != Permanent)
+		if(ei.duration != Instant && ei.duration != PermanentDuration)
 			enchant(id, getduration(ei.duration, level));
 		break;
 	}

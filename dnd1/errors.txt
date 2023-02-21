@@ -1,11 +1,2 @@
 ﻿In file `rules/Items.txt`:
- Line 22: Not found identifier `Countable`
- Line 24: Not found identifier `Countable`
- Line 26: Not found identifier `Countable`
- Line 28: Not found identifier `Countable`
- Line 30: Not found identifier `Countable`
- Line 33: Not found identifier `Countable`
- Line 35: Not found identifier `Countable`
- Line 37: Not found identifier `Countable`
- Line 39: Not found identifier `Countable`
- Line 41: Not found identifier `Countable`
+ Line 107: Not find data type for `Equipment`

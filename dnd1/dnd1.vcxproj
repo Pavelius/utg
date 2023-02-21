@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
+    <ClInclude Include="advance.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="range.h" />
@@ -183,6 +185,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="modifier.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="rolldice.cpp" />
