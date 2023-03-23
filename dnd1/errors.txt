@@ -1,2 +1,9 @@
 ﻿In file `rules/Items.txt`:
- Line 107: Not find data type for `Equipment`
+ Line 86: Not found identifier `MagicalArmor1`
+ Line 86: Not found identifier `MagicalArmor2`
+ Line 90: Not found identifier `MagicalArmor1`
+ Line 90: Not found identifier `MagicalArmor2`
+ Line 94: Not found identifier `MagicalArmor1`
+ Line 94: Not found identifier `MagicalArmor2`
+ Line 98: Not found identifier `MagicalArmor1`
+ Line 98: Not found identifier `MagicalArmor2`

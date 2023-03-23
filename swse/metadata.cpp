@@ -11,7 +11,7 @@
 #include "size.h"
 #include "skillroll.h"
 #include "wear.h"
-#include "utg.h"
+#include "draw_utg.h"
 
 NOBSDATA(dice)
 NOBSDATA(variants)
@@ -92,7 +92,7 @@ BSMETA(weari) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1), 0, 0, 0, fnscript<abilityi>},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advance", VAR(advancei, 3)},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0)},
@@ -101,8 +101,8 @@ BSDATA(varianti) = {
 	{"List", VAR(listi, 1)},
 	{"Feat", VAR(feati, 1)},
 	{"Menu", VAR(menu, 1)},
-	{"Modifier", VAR(modifieri, 1), 0, 0, 0, fnscript<modifieri>},
-	{"Script", VAR(script, 1), 0, 0, 0, fnscript<script>},
+	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Size", VAR(sizei, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"SkillRoll", VAR(skillroll, 1)},

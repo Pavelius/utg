@@ -52,7 +52,8 @@ unsigned char* load_pallette(const char* url) {
 	return (unsigned char*)result;
 }
 
-static const char* mode_names[] = {"Auto", "RAW", "RLE", "ALC", "RAW8", "RLE8"};
+static const char* mode_names[] = {"Auto", "RAW", "RLE", "ALC", "RAW8", "RLE8", "ALC8", "RAW1"};
+static_assert(sizeof(mode_names) / sizeof(mode_names[0]) == (sprite::RAW1 + 1), "Invalid mode name descriptions");
 
 static void show_grid_lines() {
 	auto push_caret = caret;
@@ -104,7 +105,6 @@ void mainview(const char* url) {
 		wy = f1.sy;
 		setting::show::center = false;
 	}
-	draw::create(-1, -1, wx, wy, WFResize | WFMinmax, 32);
 	draw::initialize(0);
 	draw::palt = (color*)load_pallette(url);
 	settimer(100);

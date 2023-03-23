@@ -1,7 +1,7 @@
 #include "ability.h"
 #include "bsreq.h"
 #include "creature.h"
-#include "utg.h"
+#include "draw_utg.h"
 
 static void initialize() {
 	bsreq::read("rules/Feats.txt");
