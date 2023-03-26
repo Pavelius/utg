@@ -4,9 +4,7 @@
 
 namespace draw {
 struct drawable : point {
-	enum {
-		AbsolutePosition, AutoClear
-	};
+	enum { AbsolutePosition, AutoClear };
 	unsigned char	alpha, priority, param, flags;
 	point			getscreen() const;
 	bool			is(int v) const { return (flags & (1 << v)) != 0; }

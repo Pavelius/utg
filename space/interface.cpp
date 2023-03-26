@@ -174,7 +174,7 @@ void systemi::paint() const {
 static void painting(const object* po) {
 	if(bsdata<planeti>::have(po->data))
 		((planeti*)po->data)->paint();
-	if(bsdata<systemi>::have(po->data))
+	else if(bsdata<systemi>::have(po->data))
 		((systemi*)po->data)->paint();
 }
 
