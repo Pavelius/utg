@@ -52,6 +52,7 @@ static void test_game() {
 
 static void initialize() {
 	bsreq::read("rules/Galaxy.txt");
+	bsreq::read("rules/Weapons.txt");
 	quest::read("locale/ru/Quest.txt");
 }
 

@@ -34,6 +34,12 @@
     <ClCompile Include="variable.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="combat.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="module.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -80,6 +86,18 @@
     <ClInclude Include="variable.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="combat.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="range.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -111,6 +129,12 @@
     </Text>
     <Text Include="locale\ru\Quest.txt">
       <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="rules\Modules.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Weapons.txt">
+      <Filter>Данные</Filter>
     </Text>
   </ItemGroup>
 </Project>

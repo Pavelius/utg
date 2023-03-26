@@ -145,10 +145,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="combat.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
+    <ClCompile Include="module.cpp" />
     <ClCompile Include="planetr.cpp" />
     <ClCompile Include="posable.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -158,16 +160,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="combat.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="landscape.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="planetr.h" />
     <ClInclude Include="posable.h" />
+    <ClInclude Include="range.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="timeable.h" />
     <ClInclude Include="variable.h" />
+    <ClInclude Include="module.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
@@ -185,6 +191,8 @@
     <Text Include="locale\ru\Quest.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
+    <Text Include="rules\Modules.txt" />
+    <Text Include="rules\Weapons.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

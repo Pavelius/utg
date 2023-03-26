@@ -500,5 +500,8 @@
     <ClInclude Include="code_lexer.h">
       <Filter>Code</Filter>
     </ClInclude>
+    <ClInclude Include="interval.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

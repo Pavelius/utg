@@ -265,6 +265,7 @@
     <ClInclude Include="group.h" />
     <ClInclude Include="groupname.h" />
     <ClInclude Include="informable.h" />
+    <ClInclude Include="interval.h" />
     <ClInclude Include="iterator.h" />
     <ClInclude Include="kering.h" />
     <ClInclude Include="list.h" />

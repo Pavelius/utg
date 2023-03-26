@@ -1,2 +1,3 @@
-﻿In file `locale/ru/Quest.txt`:
- Line 12: Can't find variant `Coun1ter`
+﻿In file `rules/Weapons.txt`:
+ Line 5: Not found requisit `cirtical`
+ Line 11: Not found requisit `cirtical`
