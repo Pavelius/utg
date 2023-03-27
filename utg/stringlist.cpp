@@ -68,7 +68,7 @@ void stringlist::read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
-		p = readidn(p, sb);
+		p = readidn(p+1, sb);
 		if(!checksym(p, '\n'))
 			break;
 		auto id = szdup(temp);

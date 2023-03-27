@@ -1,10 +1,10 @@
 #include "advance.h"
-#include "charname.h"
 #include "creature.h"
 #include "modifier.h"
 #include "ongoing.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "stringlist.h"
 
 creature* player;
 creaturea creatures;
@@ -120,11 +120,9 @@ void creature::choose(const slice<chooseoption>& options) {
 }
 
 const char* creature::randomname(class_s type, gender_s gender) {
-	variant collection[] = {
-		bsdata<classi>::elements + type,
-		bsdata<genderi>::elements + gender
-	};
-	return charname::getname(charname::random(collection));
+	return stringlist::getname(stringlist::random(str("%1%2",
+		bsdata<classi>::elements[type].getid(),
+		bsdata<genderi>::elements[gender].id)));
 }
 
 const char* creature::randomavatar(class_s type, gender_s gender) {

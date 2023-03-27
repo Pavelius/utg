@@ -2,11 +2,11 @@
 #include "stringact.h"
 #include "stringlist.h"
 
-void namenpc::actv(stringbuilder& sbs, const char* format, const char* format_param) const {
-	stringact sb(sbs, getname(), getgender());
+void namenpc::actv(stringbuilder& sb, const char* format, const char* format_param) const {
+	if(!format || format[0] == 0)
+		return;
 	sb.addsep(' ');
-	sb.addv(format, format_param);
-	sbs = sb;
+	addact(sb, getname(), getgender(), format, format_param);
 }
 
 gender_s namenpc::getgender() const {

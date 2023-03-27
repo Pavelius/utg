@@ -1,6 +1,6 @@
 #include "bsref.h"
 #include "bsreq.h"
-#include "charname.h"
+#include "stringlist.h"
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "game.h"
@@ -32,7 +32,7 @@ void update_monsters_stats();
 static void initializing() {
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
-	charname::read("locale/ru/NameCharacters.txt");
+	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
 	update_monsters_stats();
 }
