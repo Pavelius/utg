@@ -141,7 +141,7 @@
     <ClCompile Include="win_time.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="charname.cpp">
+    <ClCompile Include="stringlist.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="namenpc.cpp">
@@ -368,7 +368,7 @@
     <ClInclude Include="bonus.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="charname.h">
+    <ClInclude Include="stringlist.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="namenpc.h">

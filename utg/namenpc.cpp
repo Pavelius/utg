@@ -1,6 +1,6 @@
-#include "charname.h"
 #include "namenpc.h"
 #include "stringact.h"
+#include "stringlist.h"
 
 void namenpc::actv(stringbuilder& sbs, const char* format, const char* format_param) const {
 	stringact sb(sbs, getname(), getgender());
@@ -12,11 +12,11 @@ void namenpc::actv(stringbuilder& sbs, const char* format, const char* format_pa
 gender_s namenpc::getgender() const {
 	if(nameid == 0xFFFF)
 		return NoGender;
-	return (gender_s)bsdata<charname>::elements[nameid].conditions[0].value;
+	return Male;
 }
 
 const char* namenpc::getname() const {
 	if(nameid == 0xFFFF)
 		return "Noname";
-	return bsdata<charname>::elements[nameid].name;
+	return bsdata<stringlist>::elements[nameid].name;
 }
