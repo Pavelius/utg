@@ -5,6 +5,35 @@
 void add_line(stringbuilder& sb, const costac& source);
 int get_value(const char* id, int value);
 
+const army* last_army;
+
+static void army_identifier(stringbuilder& sb, const char* identifier) {
+	if(equal(identifier, "Name"))
+		sb.add(last_army->getname());
+	else if(equal(identifier, "NameOf")) {
+		sb.add(last_army->getnameof());
+		if(last_army->hero)
+			sb.adds(getnm("LeadedBy"), last_army->hero->getname());
+	} else if(equal(identifier, "NameOfNoHero"))
+		sb.add(last_army->getnameof());
+	else if(equal(identifier, "Units"))
+		last_army->addunits(sb);
+	else if(equal(identifier, "UnitsAll"))
+		last_army->addunits(sb, false);
+	else if(equal(identifier, "Province"))
+		sb.add(last_army->province->getname());
+	else if(equal(identifier, "Spoils"))
+		add_line(sb, last_army->spoils);
+	else if(szstart(identifier, "Total")) {
+		auto pv = bsdata<costi>::find(identifier + 5);
+		if(pv) {
+			auto v = (cost_s)(pv - bsdata<costi>::elements);
+			last_army->addtotal(sb, v);
+		}
+	} else
+		act_identifier(sb, identifier);
+}
+
 static int compare_units(const void* v1, const void* v2) {
 	auto p1 = *((uniti**)v1);
 	auto p2 = *((uniti**)v2);
@@ -12,37 +41,6 @@ static int compare_units(const void* v1, const void* v2) {
 		return p1->effect[Level] - p2->effect[Level];
 	return p2->effect[Health] - p1->effect[Health];
 }
-
-struct stringarmy : stringact {
-	const army* pa;
-	stringarmy(stringbuilder& sb, const army* pa) : stringact(sb, pa->getname(), NoGender), pa(pa) {}
-	void addidentifier(const char* identifier) {
-		if(equal(identifier, "Name"))
-			add(pa->getname());
-		else if(equal(identifier, "NameOf")) {
-			add(pa->getnameof());
-			if(pa->hero)
-				adds(getnm("LeadedBy"), pa->hero->getname());
-		} else if(equal(identifier, "NameOfNoHero"))
-			add(pa->getnameof());
-		else if(equal(identifier, "Units"))
-			pa->addunits(*this);
-		else if(equal(identifier, "UnitsAll"))
-			pa->addunits(*this, false);
-		else if(equal(identifier, "Province"))
-			add(pa->province->getname());
-		else if(equal(identifier, "Spoils"))
-			add_line(*this, pa->spoils);
-		else if(szstart(identifier, "Total")) {
-			auto pv = bsdata<costi>::find(identifier + 5);
-			if(pv) {
-				auto v = (cost_s)(pv - bsdata<costi>::elements);
-				pa->addtotal(*this, v);
-			}
-		} else
-			stringact::addidentifier(identifier);
-	}
-};
 
 void army::addunits(stringbuilder& sb, bool use_distinct) const {
 	collection<uniti> source;
@@ -64,9 +62,13 @@ void army::addunits(stringbuilder& sb, bool use_distinct) const {
 }
 
 void army::act(stringbuilder& sb, const char* format, ...) const {
-	stringarmy sa(sb, this);
-	sa.addv(format, xva_start(format));
-	sb = sa;
+	auto push_army = last_army;
+	auto push_custom = stringbuilder::custom;
+	stringbuilder::custom = army_identifier;
+	last_army = this;
+	sb.addv(format, xva_start(format));
+	last_army = push_army;
+	stringbuilder::custom = push_custom;
 }
 
 const char*	army::getname() const {

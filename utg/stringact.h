@@ -3,5 +3,8 @@
 class stringbuilder;
 enum gender_s : unsigned char;
 
-void addact(stringbuilder& sbs, const char* name, gender_s gender, const char* format, const char* format_param);
+void act_identifier(stringbuilder& sb, const char* identifier);
+
+extern const char*	act_name;
+extern gender_s		act_gender;
 

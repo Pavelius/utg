@@ -4,6 +4,29 @@
 static char current_locale[4] = {"ru"};
 static const char spaces[] = " \n\t\r.,!?;:";
 
+stringbuilder::fncustom stringbuilder::custom = stringbuilder::defidentifier;
+
+struct stringbuilder::grammar {
+	const char*		name;
+	const char*		change;
+	unsigned		name_size;
+	unsigned		change_size;
+	constexpr grammar() : name(0), change(0), name_size(0), change_size(0) {}
+	constexpr grammar(const char* name, const char* change) :
+		name(name), change(change), name_size(zlen(name)), change_size(zlen(change)) {
+	}
+	operator bool() const { return name != 0; }
+};
+
+struct stringbuilder::genderi {
+	const char*		name;
+	int				value;
+	unsigned		name_size;
+	constexpr genderi() : name(0), value(0), name_size(0) {}
+	constexpr genderi(const char* name, int value) : name(name), value(value), name_size(zlen(name)) {}
+	operator bool() const { return name != 0; }
+};
+
 static const char* psnum16(const char* p, long& value) {
 	int result = 0;
 	const int radix = 16;
@@ -251,27 +274,6 @@ void stringbuilder::addcount(const char* id, int count, const char* format) {
 	add(format, count, getbycount(id, count));
 }
 
-struct stringbuilder::grammar {
-	const char*		name;
-	const char*		change;
-	unsigned		name_size;
-	unsigned		change_size;
-	constexpr grammar() : name(0), change(0), name_size(0), change_size(0) {}
-	constexpr grammar(const char* name, const char* change) :
-		name(name), change(change), name_size(zlen(name)), change_size(zlen(change)) {
-	}
-	operator bool() const { return name != 0; }
-};
-
-struct stringbuilder::genderi {
-	const char*		name;
-	int				value;
-	unsigned		name_size;
-	constexpr genderi() : name(0), value(0), name_size(0) {}
-	constexpr genderi(const char* name, int value) : name(name), value(value), name_size(zlen(name)) {}
-	operator bool() const { return name != 0; }
-};
-
 unsigned char stringbuilder::upper(unsigned char u) {
 	if(u >= 0x61 && u <= 0x7A)
 		return u - 0x61 + 0x41;
@@ -298,21 +300,22 @@ void stringbuilder::upper() {
 		*p = upper(*p);
 }
 
-void stringbuilder::addidentifier(const char* identifier) {
-	auto p = getnme(identifier);
+void stringbuilder::defidentifier(stringbuilder& sb, const char* id) {
+	auto p = getnme(id);
 	if(p)
-		addv(p, 0);
+		sb.addv(p, 0);
 	else {
-		addv("[-", 0);
-		addv(identifier, 0);
-		addv("]", 0);
+		sb.addv("[-", 0);
+		sb.addv(id, 0);
+		sb.addv("]", 0);
 	}
 }
 
 const char* stringbuilder::readvariable(const char* p) {
 	char temp[260]; stringbuilder s1(temp);
 	p = s1.psidf(p);
-	addidentifier(temp);
+	if(custom)
+		custom(*this, temp);
 	return p;
 }
 

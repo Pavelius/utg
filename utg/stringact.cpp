@@ -2,6 +2,11 @@
 #include "stringact.h"
 #include "stringlist.h"
 
+const char*	act_name;
+gender_s	act_gender;
+
+bool apply_list(const char* identifier, stringbuilder& sb);
+
 namespace {
 struct gender_change_string {
 	const char*	female;
@@ -13,44 +18,32 @@ static gender_change_string player_gender[] = {
 	{"женщина", "мужчина", "господа"},
 	{"стерва", "ублюдок", "ублюдки"},
 	{"миледи", "милорд", "милорды"},
-	{"леди", "лорд", "лорды"},
 	{"такая", "такой", "такие"},
+	{"леди", "лорд", "лорды"},
+	{"ась", "ся", "ись"},
+	{"нее", "него", "них"},
 	{"она", "он", "они"},
 	{"шла", "шел", "шли"},
-	{"нее", "него", "них"},
-	{"ась", "ся", "ись"},
 	{"ая", "ый", "ые"},
+	{"ее", "его", "их"},
 	{"ей", "ему", "им"},
 	{"ла", "", "ли"},
-	{"ее", "его", "их"},
 	{"а", "", "и"},
 };
-struct stringact : stringbuilder {
-	const char*	name;
-	gender_s	gender;
-	stringact(const stringbuilder& v, const char* name, gender_s gender) : stringbuilder(v), name(name), gender(gender) {}
-	void		addidentifier(const char* identifier) override;
-};
 }
 
-static unsigned get_count(stringlist* pb) {
-	auto pe = bsdata<stringlist>::end();
-	auto id = pb->id;
-	auto result = 0;
-	while(pb < pe && pb->id == id)
-		result++;
-	return result;
-}
-
-static bool apply_list(const char* identifier, stringbuilder& sb) {
-	for(auto& e : bsdata<stringlist>()) {
-		if(equal(e.id, identifier)) {
-			auto count = get_count(&e);
-			sb.add((&e)[rand() % count].name);
-			return true;
-		}
-	}
-	return false;
+static bool apply_name(const char* identifier, stringbuilder& sb) {
+	if(!act_name)
+		return false;
+	if(equal(identifier, "герой") || equal(identifier, "name"))
+		sb.add(act_name);
+	else if(equal(identifier, "героя"))
+		sb.addof(act_name);
+	else if(equal(identifier, "герою"))
+		sb.addto(act_name);
+	else
+		return false;
+	return true;
 }
 
 static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
@@ -68,24 +61,12 @@ static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gen
 	return false;
 }
 
-void stringact::addidentifier(const char* identifier) {
-	if(name && (equal(identifier, "герой") || equal(identifier, "name")))
-		add(name);
-	else if(name && strcmp(identifier, "героя") == 0)
-		addof(name);
-	else if(name && strcmp(identifier, "герою") == 0)
-		addto(name);
-	else {
-		if(apply_gender(identifier, *this, gender))
-			return;
-		if(apply_list(identifier, *this))
-			return;
-		stringbuilder::addidentifier(identifier);
-	}
-}
-
-void addact(stringbuilder& sbs, const char* name, gender_s gender, const char* format, const char* format_param) {
-	stringact sb(sbs, name, gender);
-	sb.addv(format, format_param);
-	sbs = sb;
+void act_identifier(stringbuilder& sb, const char* identifier) {
+	if(apply_name(identifier, sb))
+		return;
+	if(apply_gender(identifier, sb, act_gender))
+		return;
+	if(apply_list(identifier, sb))
+		return;
+	stringbuilder::defidentifier(sb, identifier);
 }

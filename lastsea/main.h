@@ -1,5 +1,4 @@
 #include "cannoneer.h"
-#include "charname.h"
 #include "chooselist.h"
 #include "counters.h"
 #include "draw_utg.h"
@@ -11,6 +10,7 @@
 #include "pathfind.h"
 #include "quest.h"
 #include "collection.h"
+#include "stringlist.h"
 #include "tag.h"
 
 #pragma once

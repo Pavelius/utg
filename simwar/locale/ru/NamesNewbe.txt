@@ -1,3 +1,5 @@
-﻿May: 
-NamcheBazaar: 
+﻿BaltoroFlats: 
+December: 
+JeleniaGora: 
 NangaParbat: 
+Szczebrzeszyn: 

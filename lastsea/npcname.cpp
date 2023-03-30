@@ -1,32 +1,23 @@
-#include "charname.h"
+#include "stringlist.h"
 #include "main.h"
 
 gender_s npcname::getgender() const {
-	return (gender_s)bsdata<charname>::elements[nameid].conditions[0].value;
+	return equal(bsdata<stringlist>::elements[nameid].id, "Female") ? Female : Male;
 }
 
 const char* npcname::getname() const {
-	return bsdata<charname>::elements[nameid].name;
+	return bsdata<stringlist>::elements[nameid].name;
 }
 
 void npcname::randomname() {
-	variant conditions[1];
-	if(rollv(0) <= 3)
-		conditions[0] = bsdata<genderi>::elements + Female;
-	else
-		conditions[0] = bsdata<genderi>::elements + Male;
-	nameid = charname::random(conditions);
-	if(rollv(0) <= 2)
-		conditions[0] = "NicknameEnd";
-	else
-		conditions[0] = "Nickname";
-	nicknameid = charname::random(conditions);
+	nameid = stringlist::random(rollv(0) <= 3 ? "Female" : "Male");
+	nicknameid = stringlist::random(rollv(0) <= 2 ? "NicknameEnd" : "Nickname");
 }
 
 void npcname::getname(stringbuilder& sb) const {
-	auto& e1 = bsdata<charname>::elements[nameid];
-	auto& e2 = bsdata<charname>::elements[nicknameid];
-	auto first = (e2.conditions[0].type == Script && e2.conditions[0].value == 0);
+	auto& e1 = bsdata<stringlist>::elements[nameid];
+	auto& e2 = bsdata<stringlist>::elements[nicknameid];
+	auto first = equal(e2.id, "Nickname");
 	auto female = (getgender()==Female);
 	if(first) {
 		if(female)

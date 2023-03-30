@@ -77,3 +77,24 @@ void stringlist::read(const char* url) {
 	}
 	log::close();
 }
+
+unsigned stringlist::getcount() const {
+	auto pb = this;
+	auto pe = bsdata<stringlist>::end();
+	auto id = this->id;
+	auto result = 0;
+	while(pb < pe && pb->id == id)
+		result++;
+	return result;
+}
+
+bool apply_list(const char* identifier, stringbuilder& sb) {
+	for(auto& e : bsdata<stringlist>()) {
+		if(equal(e.id, identifier)) {
+			auto count = e.getcount();
+			sb.add((&e)[rand() % count].name);
+			return true;
+		}
+	}
+	return false;
+}

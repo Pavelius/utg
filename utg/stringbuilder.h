@@ -6,6 +6,8 @@
 #define xva_start(v) (((const char*)&v) + sizeof(v)*4)
 #endif
 
+enum gender_s : unsigned char;
+
 class stringbuilder {
 	struct grammar;
 	struct genderi;
@@ -16,16 +18,18 @@ class stringbuilder {
 	const char*			readvariable(const char* format);
 	void				add(const char* s, const grammar* source, const char* def = 0);
 public:
+	typedef void (*fncustom)(stringbuilder& sb, const char* id);
 	constexpr stringbuilder(char* pb, const char* pe) : p(pb), pb(pb), pe(pe) {}
 	template<unsigned N> constexpr stringbuilder(char(&result)[N]) : stringbuilder(result, result + N - 1) {}
 	constexpr operator char*() const { return pb; }
 	explicit constexpr operator bool() const { return pb[0]; }
+	static fncustom		custom;
+	static void			defidentifier(stringbuilder& sb, const char* id);
 	void				add(const char* format, ...) { addv(format, xva_start(format)); }
 	void				add(char sym);
 	void				addby(const char* s);
 	void				addch(char sym);
 	void				addcount(const char* id, int count, const char* format = 0);
-	virtual void		addidentifier(const char* identifier);
 	void				addicon(const char* id, int value);
 	void				addint(int value, int precision, const int radix);
 	void				addlocalefile(const char* name, const char* ext = 0);
