@@ -1,5 +1,2 @@
-﻿BaltoroFlats: 
-December: 
-JeleniaGora: 
-NangaParbat: 
-Szczebrzeszyn: 
+﻿MowichFace: 
+Skardu: 

@@ -1,3 +1,2 @@
-﻿In file `rules/MoveConcept.txt`:
- Line 31: Unknown variant identifier `Exhause`
- Line 32: Unknown variant identifier `Exhause`
+﻿In file `Names.txt`:
+Fox: Define translate

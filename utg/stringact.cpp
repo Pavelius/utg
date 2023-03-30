@@ -2,8 +2,8 @@
 #include "stringact.h"
 #include "stringlist.h"
 
-const char*	act_name;
-gender_s	act_gender;
+const char	*act_name, *act_enemy_name;
+gender_s	act_gender, act_enemy_gender;
 
 bool apply_list(const char* identifier, stringbuilder& sb);
 
@@ -69,4 +69,14 @@ void act_identifier(stringbuilder& sb, const char* identifier) {
 	if(apply_list(identifier, sb))
 		return;
 	stringbuilder::defidentifier(sb, identifier);
+}
+
+void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param) {
+	auto push_name = act_name;
+	auto push_gender = act_gender;
+	act_name = name;
+	act_gender = gender;
+	sb.addv(format, format_param);
+	act_gender = push_gender;
+	act_name = push_name;
 }

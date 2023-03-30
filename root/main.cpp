@@ -1,12 +1,12 @@
 #include "answers.h"
 #include "draw_utg.h"
 #include "quest.h"
+#include "stringact.h"
 #include "vagabond.h"
 
+void initialize_str();
+
 static void generate_character() {
-	//game.clear();
-	//game.suffer.add(Injury, 2);
-	//game.inflict.add(Injury, 1);
 	player = bsdata<vagabond>::add();
 	player->clear();
 	player->id = "Umberto";
@@ -17,7 +17,10 @@ static void generate_character() {
 }
 
 static void initialize() {
+	initialize_str();
 	movei::read("rules/MoveConcept.txt");
+	act_enemy_name = getnm("Fox");
+	act_enemy_gender = Male;
 }
 
 int main(int argc, char* argv[]) {

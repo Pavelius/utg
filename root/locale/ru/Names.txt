@@ -35,6 +35,7 @@ Evil: Злой
 Exhaustion: Истощение
 Female: Женщина
 Fighter: Воин
+Fox: Лис
 Good: Добрый
 HP: Хиты
 Halfling: Полурослик 
