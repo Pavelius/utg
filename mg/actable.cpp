@@ -2,16 +2,15 @@
 #include "answers.h"
 #include "stringact.h"
 
-answers an;
 static char console[1024];
 stringbuilder sb(console);
 adat<const void*, 32> marked;
 
 void actable::actv(stringbuilder& sa, const char* format, const char* format_param, char separator, const char* name, gender_s gender) {
-	stringact sb(sa, name, gender);
-	sb.addsep(separator);
-	sb.addv(format, format_param);
-	sa = sb;
+	if(!format || !format[0])
+		return;
+	sa.addsep(' ');
+	stract(sa, gender, name, format, format_param);
 }
 
 bool ismarked(const void* p) {
@@ -26,4 +25,8 @@ void markvalue(const void* p) {
 	if(ismarked(p))
 		return;
 	marked.add(p);
+}
+
+void initialize_str() {
+	stringbuilder::custom = act_identifier;
 }
