@@ -1,48 +1,51 @@
 #include "main.h"
 #include "stringact.h"
 
+static void addvname(stringbuilder& sb, variant v, int padeg = 0) {
+	if(!v)
+		return;
+	if(v.type == Group && v.value <= 1) {
+		game.friends[v.value].getname(sb);
+		return;
+	}
+	auto pv = (groupvaluei*)v;
+	if(pv) {
+		switch(padeg) {
+		case 1: sb.addby(pv->name); break;
+		case 2: sb.addof(pv->name); break;
+		default: sb.add(pv->name); break;
+		}
+	}
+}
+
+static void show_values(stringbuilder& sb, const player& source) {
+	auto index = 0;
+	for(auto v : source.values) {
+		if(v) {
+			sb.addn("* ");
+			sb.add(game.getclass().types[index].getname());
+			sb.add(": ");
+			addvname(sb, v);
+		}
+		index++;
+	}
+	sb.addsep('\n');
+}
+
+static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
+	for(auto& e : game.getfriends()) {
+		sb.addn(padding);
+		if(hilite)
+			sb.add("[");
+		e.getname(sb);
+		if(hilite)
+			sb.add("]");
+		sb.add(separator);
+	}
+}
+
 class player::string : public stringact {
 	const player& source;
-	static void addvname(stringbuilder& sb, variant v, int padeg = 0) {
-		if(!v)
-			return;
-		if(v.type == Group && v.value <= 1) {
-			game.friends[v.value].getname(sb);
-			return;
-		}
-		auto pv = (groupvaluei*)v;
-		if(pv) {
-			switch(padeg) {
-			case 1: sb.addby(pv->name); break;
-			case 2: sb.addof(pv->name); break;
-			default: sb.add(pv->name); break;
-			}
-		}
-	}
-	static void show_values(stringbuilder& sb, const player& source) {
-		auto index = 0;
-		for(auto v : source.values) {
-			if(v) {
-				sb.addn("* ");
-				sb.add(game.getclass().types[index].getname());
-				sb.add(": ");
-				addvname(sb, v);
-			}
-			index++;
-		}
-		sb.addsep('\n');
-	}
-	static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
-		for(auto& e : game.getfriends()) {
-			sb.addn(padding);
-			if(hilite)
-				sb.add("[");
-			e.getname(sb);
-			if(hilite)
-				sb.add("]");
-			sb.add(separator);
-		}
-	}
 	void addidentifier(const char* identifier) override {
 		if(equal(identifier, "герой"))
 			source.getactive().getname(*this);

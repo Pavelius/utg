@@ -26,6 +26,7 @@ static void starting() {
 	combat_mode();
 }
 
+void initialize_str();
 void initialize_ui();
 void update_monsters_stats();
 
@@ -34,6 +35,7 @@ static void initializing() {
 	bsreq::read("rules/Monsters.txt");
 	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
+	initialize_str();
 	update_monsters_stats();
 }
 

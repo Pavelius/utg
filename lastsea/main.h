@@ -150,11 +150,11 @@ class player : public npcname {
 	static const int maxcount = 4;
 	short unsigned	active;
 	short unsigned	classid;
-	variant			values[5];
-	npcname			friends[maxcount - 1];
 	unsigned char	order[maxcount];
 	class string;
 public:
+	npcname			friends[maxcount - 1];
+	variant			values[5];
 	void			act(const char* format, ...) const { actn(utg::sb, format, xva_start(format)); }
 	void			actn(stringbuilder& sb, const char* format, const char* format_param, bool add_sep = true) const;
 	static void		background();

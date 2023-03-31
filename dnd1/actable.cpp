@@ -6,5 +6,9 @@ void actable::actv(stringbuilder& sbo, const char* format, const char* format_pa
 		return;
 	if(separator)
 		sbo.addsep(separator);
-	addact(sbo, getname(), gender, format, format_param);
+	stract(sbo, gender, getname(), format, format_param);
+}
+
+void initialize_str() {
+	stringbuilder::custom = act_identifier;
 }
