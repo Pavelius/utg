@@ -85,14 +85,15 @@ void creature::choose_name() {
 	variant vclass = bsdata<classi>::elements + type;
 	variant vrace = bsdata<racei>::elements + race;
 	variant source[3] = {vgender, vclass, vrace};
-	auto count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), source);
-	if(!count)
-		count = charname::select(temp, temp + sizeof(temp) / sizeof(temp[0]), slice<variant>(source, 2));
+	auto count = stringlist::select(temp, temp + sizeof(temp) / sizeof(temp[0]), str("%1%2%3",
+		bsdata<racei>::elements[race].id,
+		bsdata<genderi>::elements[last_gender].id,
+		bsdata<classi>::elements[type].id));
 	if(!count)
 		return;
 	answers an;
 	for(auto v : slice<short unsigned>(temp, count))
-		an.add((void*)v, charname::getname(v));
+		an.add((void*)v, stringlist::getname(v));
 	setname((int)an.choose("Как вас зовут?", 0));
 }
 

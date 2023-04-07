@@ -1,43 +1,43 @@
-﻿#Male Cleric Dwarf
+﻿#DwarfMaleCleric
 Эльфар, Рургош, Драммонд, Сиггруг
-#Female Cleric Dwarf
+#DwarfFemaleCleric
 Дарга, Герда, Бьёрн, Хельга, Фрея
-#Male Cleric Human
+#HumanMaleCleric
 Уэсли, Бринтон, Джон, Хоторн, Кларк, Пётр
-#Female Cleric Human
+#HumanFemaleCleric
 Ленора, Элис, Сара, Далия, Кармин
 
-#Male Fighter Dwarf
+#DwarfMaleFighter
 Озрук, Сурт, Янос, Дим, Рундриг, Ярл, Зоток
-#Female Fighter Dwarf
+#DwarfFemaleFighter
 Брунгильда, Анника, Грета
-#Male Fighter Elf
+#ElfMaleFighter
 Элоир, Шеварал, Кадеус, Эльдар, Тэлиан
-#Female Fighter Elf
+#ElfFemaleFighter
 Шарасет, Хазрит, Китракет
-#Male Fighter Halfling
+#HalflingMaleFighter
 Финнеган, Олив, Рандольф, Бальдуин
-#Female Fighter Halfling
+#HalflingFemaleFighter
 Бартлби, Обри, Бекка
-#Male Fighter Human
+#HumanMaleFighter
 Хоук, Рудигер, Грегор, Уолтон, Кастор, Хоб
-#Female Fighter Human
+#HumanFemaleFighter
 Брианна, Шанна, Аякс
 
-#Male Theif Halfling
+#HalflingMaleTheif
 Феликс, Весельчак, Робин, Омар, Жук.
-#Female Theif Halfling
+#HalflingFemaleTheif
 Сорока, Мышь, Трикси, Бринн
-#Male Theif Human
+#HumanMaleTheif
 Воробей, Шило, Джек, Крыса, Прыщ, Скромник
-#Female Theif Human
+#HumanFemaleTheif
 Фарли, Марло, Хитрюга
 
-#Male Wizard Elf
+#ElfMaleWizard
 Галадийр, Фенферил, Лиллиейстр, Фиросейл, Энкираш, Эльвир
-#Female Wizard Elf
+#ElfFemaleWizard
 Галадиерра, Фенариона, Лиллайта, Фиросеил, Эльфиранта
-#Male Wizard Human
+#HumanMaleWizard
 Эйвон, Морган, Овид, Витус, Зено
-#Female Wizard Human
+#HumanFemaleWizard
 Рет, Изольда, Альдра, Ури
