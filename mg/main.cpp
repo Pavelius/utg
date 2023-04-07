@@ -49,10 +49,15 @@ static const char* getavatarst(const void* p) {
 	return ((hero*)p)->getavatar();
 }
 
+static bool isplayer(const void* p) {
+	return player == p;
+}
+
 int	main(int argc, char *argv[]) {
 	initialize_str();
 	draw::heroes = bsdata<hero>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
+	draw::heroes_isplayer = isplayer;
 	answers::console = &sb;
 	answers::prompt = sb.begin();
 	answers::resid = "treasure";

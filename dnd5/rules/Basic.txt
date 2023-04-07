@@ -131,6 +131,8 @@ AbilitiesList
 
 #Menu
 
+CharacterAbilities format(AbilityBox)
+ elements Strenght Dexterity Constitution Intellegence Wisdow Charisma
 CharacterSkills format(SkillBox)
  elements Athletics\
   Acrobatics SleightOfHand Stealth\
@@ -138,4 +140,4 @@ CharacterSkills format(SkillBox)
   AnimalHandling Insight Medicine Perception Survival\
   Deception Intimidation Performance Persuasion
 CharacterSheet format(GroupHorizontal)
- elements CharacterSkills+30
+ elements CharacterSkills+30 CharacterAbilities+30

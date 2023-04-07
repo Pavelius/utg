@@ -31,7 +31,6 @@ static void initialize() {
 	auto size = sizeof(character);
 	read_files("rules", "*Races.txt", bsreq::read);
 	read_files("rules", "Class*.txt", bsreq::read);
-	bsreq::read("rules/Menu.txt");
 	bsreq::read("rules/CharacterGenerate.txt");
 }
 

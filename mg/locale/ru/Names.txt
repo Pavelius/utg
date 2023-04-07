@@ -1,4 +1,6 @@
-﻿Tenderpaw: Лапа помощи
+﻿General: Общие
+
+Tenderpaw: Лапа помощи
 Guardmouse: Страж
 PatrolGuard: Патрульный
 PatrolLeader: Лидер патруля

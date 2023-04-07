@@ -9,6 +9,7 @@ using namespace draw;
 
 array*		draw::heroes;
 fngetname	draw::heroes_getavatar;
+fnvisible	draw::heroes_isplayer;
 const void*	draw::focus_object;
 int			draw::title_width = 220;
 static point hide_separator;
@@ -424,6 +425,13 @@ static void answers_beforepaint() {
 	}
 }
 
+static void strokered() {
+	auto push_fore = fore;
+	fore = colors::h3;
+	rectb();
+	fore = push_fore;
+}
+
 void draw::avatar(int index, const void* object, const char* id, fnevent press_event, bool right_line) {
 	auto p = gres(id, utg::url_avatars);
 	if(!p)
@@ -435,6 +443,8 @@ void draw::avatar(int index, const void* object, const char* id, fnevent press_e
 	strokeout(focus_object==object ? strokeactive : strokeborder);
 	if(control_hilited)
 		strokeactive();
+	if(heroes_isplayer && heroes_isplayer(object))
+		strokeout(strokered, 2);
 	if(press_event && control_hilited) {
 		hot.cursor = cursor::Hand;
 		if(hot.key == MouseLeft && !hot.pressed)

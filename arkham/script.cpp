@@ -8,7 +8,6 @@ static int			m_jump;
 static int			m_trade_count;
 static bool			need_stop;
 static bool			shown_info;
-answers				an;
 static cardpool		pool;
 static cardquerry	querry;
 
@@ -208,7 +207,7 @@ void player::modify(ability_s i, int bonus, bool payment) {
 		const char* format = "YouGain";
 		if(bonus < 0)
 			format = "YouLose";
-		game.information(getnm(format), getnm(bsdata<abilityi>::elements[i].id, iabs(n)), iabs(n));
+		game.information(getnm(format), getnm(bsdata<abilityi>::elements[i].id), iabs(n));
 		game.add(i, n);
 	} else if(bsdata<abilityi>::elements[i].is(abilityi::Stat)) {
 		show_text();

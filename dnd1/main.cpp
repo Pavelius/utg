@@ -45,9 +45,14 @@ static const char* getavatarst(const void* p) {
 	return ((creature*)p)->avatarable::getavatar();
 }
 
+static bool isplayer(const void* p) {
+	return p==player;
+}
+
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
+	draw::heroes_isplayer = isplayer;
 	srand(getcputime());
 	//srand(1123);
 	answers::console = &utg::sb;

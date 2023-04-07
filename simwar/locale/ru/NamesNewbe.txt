@@ -1,17 +1,1 @@
-﻿AfflictedShores: 
-April: 
-BaltoroFlats: 
-DiamirValley: 
-July: 
-June: 
-May: 
-MowichFace: 
-NamcheBazaar: 
-NangaParbat: 
-ShunnedLands: 
-Skardu: 
-Zakopane: 
-Каменное ущелье: 
-Лагерь наемников: 
-Логово бандитов: 
-Проклятое кладбище: 
+﻿October: 

@@ -41,3 +41,5 @@ Stonemason: Каменщик
 Survivalist: Специалист по выживанию
 WeatherWatcher: Наблюдатель за погодой
 Weaver: Ткач
+
+Skills: Навыки

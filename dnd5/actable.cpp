@@ -7,7 +7,7 @@ void actable::actv(stringbuilder& sb, const char* format, const char* format_par
 	if(!format)
 		return;
 	sb.addsep(separator);
-	addact(sb, name, female, format, format_param);
+	stract(sb, female, name, format, format_param);
 }
 
 void actable::act(const char* format, ...) const {

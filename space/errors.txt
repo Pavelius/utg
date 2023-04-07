@@ -1,3 +1,2 @@
-﻿In file `rules/Weapons.txt`:
- Line 5: Not found requisit `cirtical`
- Line 11: Not found requisit `cirtical`
+﻿In file `locale/ru/Quest.txt`:
+ Line 1: Unknown property name `image`

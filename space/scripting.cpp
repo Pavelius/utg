@@ -56,9 +56,11 @@ static void apply_header() {
 	if(!quest::last)
 		return;
 	auto pn = quest::last->getheader();
-	if(!pn)
-		return;
-	answers::header = pn;
+	if(pn)
+		answers::header = pn;
+	pn = quest::last->getimage();
+	if(pn)
+		answers::resid = pn;
 }
 
 static void apply_text() {
@@ -139,6 +141,7 @@ void quest::run(int index) {
 	if(!answers::console)
 		return;
 	pushvalue push_header(answers::header);
+	pushvalue push_image(answers::resid);
 	pushvalue push_last(last, findprompt(index));
 	while(last) {
 		apply_header();

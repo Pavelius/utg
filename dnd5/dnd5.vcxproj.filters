@@ -136,9 +136,6 @@
     <Text Include="rules\ElvishRaces.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="rules\Menu.txt">
-      <Filter>data</Filter>
-    </Text>
     <Text Include="rules\CharacterGenerate.txt">
       <Filter>data</Filter>
     </Text>
