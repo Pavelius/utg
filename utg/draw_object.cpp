@@ -121,27 +121,11 @@ void object::clear() {
 	*this = def;
 }
 
-static void blend(screenshoot& source, screenshoot& destination, unsigned milliseconds) {
-	if(!milliseconds)
-		return;
-	auto start = getcputime();
-	auto finish = start + milliseconds;
-	auto current = start;
-	while(ismodal() && current < finish) {
-		auto alpha = ((current - start) << 8) / milliseconds;
-		source.restore();
-		canvas->blend(destination, alpha);
-		doredraw();
-		waitcputime(1);
-		current = getcputime();
-	}
-}
-
 void draw::splashscreen(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
 	screenshoot another;
-	blend(push, another, milliseconds);
+	push.blend(another, milliseconds);
 }
 
 void object::paint() const {

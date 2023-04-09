@@ -8,7 +8,6 @@ BSDATA(abilityi) = {
 	{"Medicine", FG(Ability)},
 	{"Hunting", FG(Ability)},
 	{"Pilot", FG(Ability)},
-	{"Research", FG(Ability)},
 	{"Crew"},
 	{"Discontent", FG(NegativeState)},
 	{"Supply"},

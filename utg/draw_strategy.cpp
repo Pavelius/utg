@@ -2,7 +2,6 @@
 #include "bsreq.h"
 #include "draw.h"
 #include "draw_figure.h"
-#include "draw_object.h"
 #include "draw_strategy.h"
 #include "log.h"
 #include "variant.h"
@@ -254,25 +253,9 @@ static void paint_window() {
 	swindow(false);
 }
 
-static void answers_beforepaint_center() {
-	paintobjects();
-	width = 320;
-	caret.y += metrics::padding + metrics::border;
-	caret.x = (getwidth() - (width + window_width + metrics::border * 4 + metrics::padding)) / 2 + metrics::border;
-	paint_window();
-	caret.x += window_width + metrics::border * 2 + metrics::padding;
-	if(answers::header)
-		texth2w(answers::header);
-	if(answers::prompt || answers::prompa || answers::resid) {
-		window(false, answers::prompt, answers::resid, answers::prompa);
-		caret.y += metrics::padding;
-	}
-}
-
 void draw::strategy_background() {
 	fillform();
 	statusbar();
-	paintobjects();
 }
 
 static void finish() {
@@ -331,7 +314,6 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	if(!proc)
 		return -1;
 	set_dark_theme();
-	draw::object::initialize();
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	if(afterread)

@@ -30,13 +30,19 @@ static void generate_planets() {
 	char seeds[] = {0, 1, 2, 3, 5, 6, 7, 8};
 	zshuffle(seeds, sizeof(seeds) / sizeof(seeds[0]));
 	auto seed_index = 0;
-	for(auto& e : bsdata<planeti>())
-		e.setposition(getrandom(seeds[seed_index++]));
+	for(auto& e : bsdata<planeti>()) {
+		e.alpha = 255;
+		e.priority = 2;
+		e.position = getrandom(seeds[seed_index++]);
+	}
 }
 
 static void generate_systems() {
-	for(auto& e : bsdata<systemi>())
-		e.setposition({400, 300});
+	for(auto& e : bsdata<systemi>()) {
+		e.alpha = 255;
+		e.priority = 1;
+		e.position = {400, 300};
+	}
 }
 
 static void test_game() {

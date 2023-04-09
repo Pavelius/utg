@@ -1,9 +1,12 @@
 #include "draw.h"
-#include "draw_object.h"
+#include "draw_posable.h"
 #include "draw_strategy.h"
 #include "game.h"
 #include "planet.h"
 #include "pushvalue.h"
+#include "ship.h"
+
+#define FOSC(T, D) ((unsigned)(D*)((T*)((void*)0x0000FFFF)) - 0x0000FFFF)
 
 using namespace draw;
 
@@ -154,6 +157,16 @@ void status_info(void) {
 	height = push_height;
 }
 
+static void marker(int size) {
+	auto push_caret = caret;
+	caret.x -= size;
+	line(caret.x + size * 2, caret.y);
+	caret.x = push_caret.x;
+	caret.y -= size;
+	line(caret.x, caret.y + size * 2);
+	caret = push_caret;
+}
+
 void planeti::paint() const {
 	const auto size = 4;
 	circlef(size);
@@ -171,13 +184,41 @@ void systemi::paint() const {
 	fore = push_fore;
 }
 
-static void painting(const object* po) {
-	if(bsdata<planeti>::have(po->data))
-		((planeti*)po->data)->paint();
-	else if(bsdata<systemi>::have(po->data))
-		((systemi*)po->data)->paint();
+void ship::paint() const {
+	auto push_fore = fore;
+	fore = colors::green;
+	marker(4);
+	fore = push_fore;
+}
+
+static void painting(const posable* po) {
+	if(bsdata<planeti>::have(po))
+		((planeti*)po)->paint();
+	else if(bsdata<systemi>::have(po))
+		((systemi*)po)->paint();
+}
+
+static void getposables(posable::collection_type& result) {
+	auto rc = posable::getscreen(-32);
+	for(auto& e : bsdata<planeti>()) {
+		if(!e.priority || !e.position.in(rc))
+			continue;
+		result.add(&e);
+	}
+	for(auto& e : bsdata<systemi>()) {
+		if(!e.priority || !e.position.in(rc))
+			continue;
+		result.add(&e);
+	}
+}
+
+static void main_background() {
+	strategy_background();
+	posable::paintall();
 }
 
 void initialize_interface() {
-	object::painting = painting;
+	posable::getposables = getposables;
+	posable::painting = painting;
+	pbackground = main_background;
 }

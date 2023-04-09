@@ -3,7 +3,7 @@
 
 #pragma once
 
-struct planeti : posable, planetr {
+struct planeti : nameable, posable, planetr {
 	systemi*	system;
 	landscapei*	landscape;
 	void		paint() const;

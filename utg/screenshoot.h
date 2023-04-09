@@ -8,6 +8,7 @@ struct screenshoot : public point, public surface {
 	screenshoot(bool fade = false);
 	screenshoot(rect rc, bool fade = false);
 	~screenshoot();
-	void				restore();
+	void				restore() const;
+	void				blend(const screenshoot& source, unsigned milliseconds) const;
 };
 }

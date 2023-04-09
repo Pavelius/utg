@@ -3,7 +3,7 @@
 #pragma once
 
 enum range_s : unsigned char {
-	PrepareStep, LongRange, MediumRange, CloseRange, FinalStep
+	LongRange, MediumRange, CloseRange
 };
 struct rangei : nameable {
 };

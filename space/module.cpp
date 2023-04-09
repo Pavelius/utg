@@ -8,7 +8,7 @@ BSDATA(weapon_typei) = {
 };
 assert_enum(weapon_typei, Rocket)
 
-int ship::reduce(int& count, ship_stat_s ability) {
+int shipstata::reduce(int& count, ship_stat_s ability) {
 	auto v = get(ability);
 	if(v > 0) {
 		if(count > v) {
