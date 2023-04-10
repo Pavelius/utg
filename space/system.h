@@ -1,8 +1,8 @@
-#include "draw_posable.h"
+#include "drawable.h"
 #include "nameable.h"
 
 #pragma once
 
-struct systemi : nameable, posable {
+struct systemi : nameable, drawable {
 	void		paint() const;
 };

@@ -1,12 +1,15 @@
+#include "bsreq.h"
 #include "crt.h"
 #include "draw.h"
-#include "draw_posable.h"
+#include "drawable.h"
 #include "screenshoot.h"
+#include "variant.h"
 
 using namespace draw;
 
-posable::fnpaint posable::painting;
-posable::fnget posable::getposables;
+drawable::fnpaint drawable::painting;
+
+static adat<drawable*, 512> objects;
 
 static unsigned long timestamp, timestamp_last;
 static rect last_screen;
@@ -14,9 +17,9 @@ static rect last_screen;
 long distance(point from, point to);
 
 namespace {
-struct orderi : posable {
-	posable*	parent;
-	posable		start;
+struct orderi : drawable {
+	drawable*	parent;
+	drawable		start;
 	unsigned long tick_start, tick_stop;
 	void		update();
 };
@@ -26,7 +29,7 @@ BSDATAC(orderi, 512)
 
 static void correct_camera(point result, int offs) {
 	if(last_screen) {
-		rect area = posable::getscreen(offs);
+		rect area = drawable::getscreen(offs);
 		if(!result.in(area)) {
 			if(result.x < area.x1)
 				camera.x -= area.x1 - result.x;
@@ -59,7 +62,7 @@ static void moving(point& result, point goal, int step, int corrent) {
 	result = goal;
 }
 
-inline void copy(posable& e1, posable& e2) {
+inline void copy(drawable& e1, drawable& e2) {
 	e1 = e2;
 }
 
@@ -113,7 +116,7 @@ void orderi::update() {
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
 }
 
-static orderi* add_order(posable* parent, int milliseconds) {
+static orderi* add_order(drawable* parent, int milliseconds) {
 	auto p = bsdata<orderi>::addz();
 	copy(*p, *parent);
 	copy(p->start, *parent);
@@ -123,12 +126,35 @@ static orderi* add_order(posable* parent, int milliseconds) {
 	return p;
 }
 
-static size_t getobjects(posable** pb, posable** pe) {
+static void add_objects(const rect& rc, array& source, unsigned offset) {
+	auto pe = (drawable*)(source.end() + offset);
+	auto size = source.size;
+	for(auto pb = (drawable*)(source.begin() + offset); pb < pe; pb = (drawable*)((char*)pb + size)) {
+		if(!pb->priority)
+			continue;
+		if(!pb->position.in(rc))
+			continue;
+		objects.add(pb);
+	}
+}
+
+static void prepare_objects() {
+	auto rc = drawable::getscreen(-128);
+	for(auto& em : bsdata<varianti>()) {
+		if(!em.source || !em.metadata)
+			continue;
+		auto pm = em.metadata->find("position");
+		if(!pm)
+			continue;
+		if(em.metadata->find("alpha") == 0 || em.metadata->find("priority") == 0)
+			continue;
+		add_objects(rc, *em.source, pm->offset);
+	}
 }
 
 static int compare(const void* v1, const void* v2) {
-	auto p1 = *((posable**)v1);
-	auto p2 = *((posable**)v2);
+	auto p1 = *((drawable**)v1);
+	auto p2 = *((drawable**)v2);
 	auto a1 = p1->priority / 10;
 	auto a2 = p2->priority / 10;
 	if(a1 != a2)
@@ -140,15 +166,15 @@ static int compare(const void* v1, const void* v2) {
 	return a1 - a2;
 }
 
-static void sortobjects(posable** pb, size_t count) {
+static void sortobjects(drawable** pb, size_t count) {
 	qsort(pb, count, sizeof(pb[0]), compare);
 }
 
-void posable::clear() {
+void drawable::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-bool posable::iswaitable() const {
+bool drawable::iswaitable() const {
 	for(auto& e : bsdata<orderi>()) {
 		if(e.parent == this)
 			return true;
@@ -156,7 +182,7 @@ bool posable::iswaitable() const {
 	return false;
 }
 
-void posable::paint() const {
+void drawable::paint() const {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
 	if(painting)
@@ -164,18 +190,15 @@ void posable::paint() const {
 	draw::alpha = push_alpha;
 }
 
-void posable::paintall() {
-	static posable::collection_type source;
-	if(!getposables)
-		return;
+void drawable::paintall() {
 	auto push_caret = caret;
 	auto push_clip = clipping;
 	last_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
 	setclip(last_screen);
-	source.clear();
-	getposables(source);
-	sortobjects(source.data, source.count);
-	for(auto p : source) {
+	objects.clear();
+	prepare_objects();
+	sortobjects(objects.data, objects.count);
+	for(auto p : objects) {
 		draw::caret = p->position - camera;
 		p->paint();
 	}
@@ -183,7 +206,7 @@ void posable::paintall() {
 	caret = push_caret;
 }
 
-rect posable::getscreen(int offs) {
+rect drawable::getscreen(int offs) {
 	return {camera.x + offs, camera.y + offs,
 		camera.x + last_screen.width() - offs,
 		camera.y + last_screen.height() - offs};
@@ -205,13 +228,13 @@ void setcamera(point v) {
 	camera = getcameraorigin(v);
 }
 
-void posable::focusing() const {
+void drawable::focusing() const {
 	const int offset = 16;
-	if(!position.in(posable::getscreen(offset)))
-		posable::slide(position, offset);
+	if(!position.in(drawable::getscreen(offset)))
+		drawable::slide(position, offset);
 }
 
-void posable::slide(point goal, int step) {
+void drawable::slide(point goal, int step) {
 	goal = getcameraorigin(goal);
 	auto start = camera;
 	auto maxds = distance(start, goal);
@@ -230,7 +253,7 @@ void posable::slide(point goal, int step) {
 	}
 }
 
-void posable::waitall() {
+void drawable::waitall() {
 	start_timer();
 	while(bsdata<orderi>::source.count > 0 && ismodal()) {
 		update_timestamp();
@@ -242,7 +265,7 @@ void posable::waitall() {
 	}
 }
 
-void posable::wait() const {
+void drawable::wait() const {
 	if(!iswaitable())
 		return;
 	start_timer();
@@ -256,7 +279,7 @@ void posable::wait() const {
 	}
 }
 
-void posable::splash(unsigned milliseconds) {
+void drawable::splash(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
 	screenshoot another;

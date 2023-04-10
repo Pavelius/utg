@@ -1,11 +1,11 @@
 #include "item.h"
-#include "draw_posable.h"
+#include "drawable.h"
 
 #pragma once
 
 struct shipi : item {
 };
-struct ship : posable {
+struct ship : drawable {
 	unsigned char	type;
 	void			paint() const;
 };

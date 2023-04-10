@@ -37,9 +37,6 @@
     <ClCompile Include="module.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="draw_posable.cpp">
-      <Filter>Интерфейс</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -50,9 +47,6 @@
     </Filter>
     <Filter Include="Локализация">
       <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Интерфейс">
-      <UniqueIdentifier>{b6981fbb-75ab-4daf-8038-a625637ec213}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="ship.h">
       <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="draw_posable.h">
-      <Filter>Интерфейс</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

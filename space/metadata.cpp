@@ -7,6 +7,7 @@
 #include "variant.h"
 #include "module.h"
 
+NOBSDATA(point)
 NOBSDATA(variants)
 NOBSDATA(interval)
 
@@ -29,9 +30,13 @@ BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(resources, planetri),
 	{}};
+BSMETA(point) = {
+	BSREQ(x), BSREQ(y),
+	{}};
 BSMETA(planeti) = {
 	BSREQ(id),
 	BSREQ(system),
+	BSREQ(position), BSREQ(priority), BSREQ(alpha),
 	{}};
 BSMETA(planetri) = {
 	BSREQ(id),
@@ -41,6 +46,7 @@ BSMETA(script) = {
 	{}};
 BSMETA(systemi) = {
 	BSREQ(id),
+	BSREQ(position), BSREQ(priority), BSREQ(alpha),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

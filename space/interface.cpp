@@ -1,5 +1,4 @@
 #include "draw.h"
-#include "draw_posable.h"
 #include "draw_strategy.h"
 #include "game.h"
 #include "planet.h"
@@ -191,34 +190,19 @@ void ship::paint() const {
 	fore = push_fore;
 }
 
-static void painting(const posable* po) {
+static void painting(const drawable* po) {
 	if(bsdata<planeti>::have(po))
 		((planeti*)po)->paint();
 	else if(bsdata<systemi>::have(po))
 		((systemi*)po)->paint();
 }
 
-static void getposables(posable::collection_type& result) {
-	auto rc = posable::getscreen(-32);
-	for(auto& e : bsdata<planeti>()) {
-		if(!e.priority || !e.position.in(rc))
-			continue;
-		result.add(&e);
-	}
-	for(auto& e : bsdata<systemi>()) {
-		if(!e.priority || !e.position.in(rc))
-			continue;
-		result.add(&e);
-	}
-}
-
 static void main_background() {
 	strategy_background();
-	posable::paintall();
+	drawable::paintall();
 }
 
 void initialize_interface() {
-	posable::getposables = getposables;
-	posable::painting = painting;
+	drawable::painting = painting;
 	pbackground = main_background;
 }

@@ -146,7 +146,6 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="combat.cpp" />
-    <ClCompile Include="draw_posable.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="combat.h" />
-    <ClInclude Include="draw_posable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="good.h" />
     <ClInclude Include="item.h" />

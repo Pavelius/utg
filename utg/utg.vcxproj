@@ -155,6 +155,7 @@
     <ClCompile Include="avatarable.cpp" />
     <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="bstream.cpp" />
+    <ClCompile Include="drawable.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
     <ClCompile Include="chooseoption.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="cdat.h" />
+    <ClInclude Include="drawable.h" />
     <ClInclude Include="stringlist.h" />
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="chooseoption.h" />
