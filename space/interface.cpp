@@ -195,6 +195,8 @@ static void painting(const drawable* po) {
 		((planeti*)po)->paint();
 	else if(bsdata<systemi>::have(po))
 		((systemi*)po)->paint();
+	else if(bsdata<ship>::have(po))
+		((ship*)po)->paint();
 }
 
 static void main_background() {

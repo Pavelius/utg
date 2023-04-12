@@ -3,6 +3,7 @@
 #include "main.h"
 #include "speech.h"
 
+void initialize_ui();
 static char console_text[4096 * 2];
 static stringbuilder console(console_text);
 
@@ -80,6 +81,7 @@ static void initialize() {
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	srand(505);
+	initialize_ui();
 	return draw::strategy(start_game, initialize);
 }
 

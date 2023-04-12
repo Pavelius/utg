@@ -6,6 +6,7 @@
 #include "planet.h"
 #include "quest.h"
 #include "script.h"
+#include "ship.h"
 
 static char console[512];
 static stringbuilder sb_console(console);
@@ -45,6 +46,10 @@ static void generate_systems() {
 	}
 }
 
+static void generate_ships() {
+	ship::add("Cobra", {100, 100});
+}
+
 static void test_game() {
 	game.setdate(3000, 4, 15);
 	game.add(Insight, 1);
@@ -53,12 +58,14 @@ static void test_game() {
 	auto day = game.getmonthday();
 	generate_systems();
 	generate_planets();
+	generate_ships();
 	quest::run(1);
 }
 
 static void initialize() {
 	bsreq::read("rules/Galaxy.txt");
 	bsreq::read("rules/Weapons.txt");
+	bsreq::read("rules/Ships.txt");
 	quest::read("locale/ru/Quest.txt");
 }
 

@@ -37,6 +37,9 @@
     <ClCompile Include="module.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="ship.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -134,6 +137,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Weapons.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Ships.txt">
       <Filter>Данные</Filter>
     </Text>
   </ItemGroup>

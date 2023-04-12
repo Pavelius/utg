@@ -154,6 +154,7 @@
     <ClCompile Include="planetr.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="ship.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="variable.cpp" />
   </ItemGroup>
@@ -192,6 +193,7 @@
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
     <Text Include="rules\Modules.txt" />
+    <Text Include="rules\Ships.txt" />
     <Text Include="rules\Weapons.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

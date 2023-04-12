@@ -3,6 +3,8 @@
 #include "main.h"
 #include "draw_strategy.h"
 
+void initialize_ui();
+
 #ifdef _DEBUG
 
 void util_main();
@@ -78,6 +80,7 @@ int main(int argc, char* argv[]) {
 	util_main();
 #endif // _DEBUG
 	draw::object::initialize();
+	initialize_ui();
 	return draw::strategy(main_menu, initialization);
 }
 

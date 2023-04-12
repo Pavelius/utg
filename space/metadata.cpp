@@ -3,6 +3,7 @@
 #include "interval.h"
 #include "planet.h"
 #include "script.h"
+#include "ship.h"
 #include "tag.h"
 #include "variant.h"
 #include "module.h"
@@ -18,6 +19,8 @@ BSDATAD(variant)
 BSDATAC(landscapei, 32)
 BSDATAC(planeti, 512)
 BSDATAC(systemi, 32)
+BSDATAC(ship, 1024)
+BSDATAC(shipi, 256)
 BSDATAC(weaponi, 32)
 
 BSMETA(abilityi) = {
@@ -44,6 +47,13 @@ BSMETA(planetri) = {
 BSMETA(script) = {
 	BSREQ(id),
 	{}};
+BSMETA(shipi) = {
+	BSREQ(id),
+	{}};
+BSMETA(ship) = {
+	BSREQ(type),
+	BSREQ(position), BSREQ(priority), BSREQ(alpha),
+	{}};
 BSMETA(systemi) = {
 	BSREQ(id),
 	BSREQ(position), BSREQ(priority), BSREQ(alpha),
@@ -68,6 +78,8 @@ BSDATA(varianti) = {
 	{"Landscape", VAR(landscapei, 1)},
 	{"Planet", VAR(planeti, 1)},
 	{"PlanetResource", VAR(planetri, 1)},
+	{"Ship", VAR(shipi, 1)},
+	{"ShipObject", VAR(ship, 0)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"System", VAR(systemi, 1)},
 	{"Tag", VAR(tagi, 1)},

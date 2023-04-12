@@ -3,9 +3,10 @@
 
 #pragma once
 
-struct shipi : item {
+struct shipi : itemi {
 };
 struct ship : drawable {
 	unsigned char	type;
+	static ship*	add(const char* id, point position);
 	void			paint() const;
 };

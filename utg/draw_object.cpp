@@ -111,12 +111,6 @@ draworder* object::addorder(int milliseconds, draworder* depend) {
 	return p;
 }
 
-void object::initialize() {
-	def.x = def.y = -10000;
-	def.priority = 64;
-	def.alpha = 255;
-}
-
 void object::clear() {
 	*this = def;
 }
@@ -175,6 +169,12 @@ void draw::paintobjects() {
 	}
 	clipping = push_clip;
 	caret = push_caret;
+}
+
+void object::initialize() {
+	def.x = def.y = -10000;
+	def.priority = 64;
+	def.alpha = 255;
 }
 
 void* draw::chooseobject() {

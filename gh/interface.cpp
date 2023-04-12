@@ -531,7 +531,7 @@ void creaturei::paint() const {
 		active_hexagon();
 }
 
-static void object_afterpaint(const object* ps) {
+static void painting(const object* ps) {
 	if(bsdata<creaturei>::have(ps->data))
 		((creaturei*)ps->data)->paint();
 }

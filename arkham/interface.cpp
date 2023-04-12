@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "draw_object.h"
+#include "draw_strategy.h"
 #include "main.h"
 
 using namespace draw;
@@ -67,4 +68,13 @@ void status_info() {
 	}
 	caret = push_caret;
 	caret.y += texth() + metrics::border*2 + metrics::padding;
+}
+
+static void main_background() {
+	strategy_background();
+	paintobjects();
+}
+
+void initialize_ui() {
+	pbackground = main_background;
 }

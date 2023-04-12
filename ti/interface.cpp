@@ -488,3 +488,13 @@ void gamei::updateui() {
 	}
 	waitall();
 }
+
+static void main_background() {
+	strategy_background();
+	paintobjects();
+}
+
+void initialize_ui() {
+	object::initialize();
+	pbackground = main_background;
+}
