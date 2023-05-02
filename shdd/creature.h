@@ -1,11 +1,11 @@
 #include "class.h"
-#include "item.h"
 #include "race.h"
 #include "statable.h"
+#include "wearable.h"
 
 #pragma once
 
-struct creature : statable {
+struct creature : statable, wearable {
 	class_s		kind;
 	race_s		ancestry;
 	statable	basic;

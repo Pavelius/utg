@@ -1,28 +1,37 @@
 #Item
 
-BastardSword damage(8)
- flags Versatile Bulky
-Club damage(4)
-Crossbow damage(6)
+BastardSword damage(8) slot(2)
+ flags Versatile
+Club damage(4) slot(1)
+Crossbow damage(6) slot(1)
  flags TwoHanded Loading
-Dagger damage(4)
+Dagger damage(4) slot(1)
  flags Finesse Thrown
-Greateaxe damage(8)
- flags Versatile Bulky
-Greatesword damage(12)
- flags TwoHanded Bulky
-Javelin damage(4)
+Greateaxe damage(8) slot(2)
+ flags Versatile
+Greatesword damage(12) slot(2)
+ flags TwoHanded
+Javelin damage(4) slot(1)
  flags Thrown
-Longbow damage(8)
+Longbow damage(8) slot(1)
  flags TwoHanded
-Longsword damage(8)
-Mace damage(6)
-Shortbow damage(6)
+Longsword damage(8) slot(1)
+Mace damage(6) slot(1)
+Shortbow damage(6) slot(1)
  flags TwoHanded
-Shortsword damage(6)
-Spear damage(6)
+Shortsword damage(6) slot(1)
+Spear damage(6) slot(1)
  flags TwoHanded
-Staff damage(4)
+Staff damage(4) slot(1)
  flags TwoHanded
-Warhammer damage(10)
+Warhammer damage(10) slot(1)
  flags TwoHanded
+
+LeatherArmor slot(1)
+ wearing AC+1
+Chainmail slot(2)
+ wearing AC+3
+Platemail slot(3)
+ wearing AC+5
+Shield slot(1)
+ wearing AC+2

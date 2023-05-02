@@ -3,6 +3,7 @@
 #include "crt.h"
 #include "draw.h"
 #include "draw_utg.h"
+#include "item.h"
 
 static void starting() {
 	an.clear();
@@ -13,6 +14,9 @@ static void starting() {
 
 static void initializing() {
 	bsreq::read("rules/Advancement.txt");
+	bsreq::read("rules/Items.txt");
+	item_armor = bsdata<itemi>::find("BastardSword");
+	item_weapon = bsdata<itemi>::find("LeatherArmor");
 }
 
 int main(int argc, char* argv[]) {

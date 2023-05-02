@@ -5,7 +5,7 @@
 
 enum feat_s : unsigned char {
 	BonusTalent, BonusHitRoll,
-	Bulky, Finesse, Loading, Thrown, TwoHanded, Versatile,
+	Finesse, Loading, Thrown, TwoHanded, Versatile,
 	Summoned, Player, Enemy,
 };
 struct feati : nameable {

@@ -155,6 +155,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="race.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="wear.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="modifier.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
+    <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />

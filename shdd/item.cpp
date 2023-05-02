@@ -1,5 +1,8 @@
 #include "item.h"
 
+itemi* item_armor;
+itemi* item_weapon;
+
 void itema::select(const slice<item>& source) {
 	for(auto& e : source) {
 		if(e)

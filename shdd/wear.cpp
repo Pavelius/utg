@@ -21,7 +21,6 @@ BSDATA(weari) = {
 	{"MeleeWeapon"},
 	{"MeleeWeaponOffhand"},
 	{"RangedWeapon"},
-	{"ThrownWeapon"},
 	{"Ammunition"},
 	{"Head"},
 	{"Torso"},

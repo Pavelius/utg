@@ -15,13 +15,15 @@ struct itempoweri : nameable {
 };
 struct itemi : nameable {
 	const char*	unidentified;
-	int			cost, damage, count;
+	int			cost, damage, count, slot;
 	wear_s		wear;
 	featable	flags;
 	variants	use, wearing;
 	itempoweri*	powers[16];
 	bool		is(feat_s v) const { return flags.is(v); }
 };
+extern itemi* item_armor;
+extern itemi* item_weapon;
 class item {
 	unsigned short type;
 	union {

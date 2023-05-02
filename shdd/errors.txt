@@ -1,2 +1,3 @@
-﻿In file `rules/Advancement.txt`:
- Line 18: Can't find variant `Attack`
+﻿In file `rules/Items.txt`:
+ Line 11: Not found identifier `Bulky`
+ Line 13: Not found identifier `Bulky`

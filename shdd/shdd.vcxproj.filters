@@ -51,6 +51,9 @@
     <ClCompile Include="class.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="ongoing.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -84,6 +87,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="ongoing.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="spell.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
