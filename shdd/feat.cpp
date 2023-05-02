@@ -4,6 +4,12 @@
 BSDATA(feati) = {
 	{"BonusTalent"},
 	{"BonusHitRoll"},
+	{"Bulky"},
+	{"Finesse"},
+	{"Loading"},
+	{"Thrown"},
+	{"TwoHanded"},
+	{"Versatile"},
 	{"Summoned"},
 	{"Player"},
 	{"Enemy"},

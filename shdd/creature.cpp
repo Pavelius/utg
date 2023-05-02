@@ -11,3 +11,7 @@ void creature::update() {
 	update_stats();
 	player = push_player;
 }
+
+bool creature::isallow(const item& v) const {
+	return true;
+}

@@ -1,0 +1,28 @@
+#Item
+
+BastardSword damage(8)
+ flags Versatile Bulky
+Club damage(4)
+Crossbow damage(6)
+ flags TwoHanded Loading
+Dagger damage(4)
+ flags Finesse Thrown
+Greateaxe damage(8)
+ flags Versatile Bulky
+Greatesword damage(12)
+ flags TwoHanded Bulky
+Javelin damage(4)
+ flags Thrown
+Longbow damage(8)
+ flags TwoHanded
+Longsword damage(8)
+Mace damage(6)
+Shortbow damage(6)
+ flags TwoHanded
+Shortsword damage(6)
+Spear damage(6)
+ flags TwoHanded
+Staff damage(4)
+ flags TwoHanded
+Warhammer damage(10)
+ flags TwoHanded

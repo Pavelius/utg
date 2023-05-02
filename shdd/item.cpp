@@ -80,13 +80,7 @@ void item::addname(stringbuilder& sb) const {
 }
 
 dice item::getdamage() const {
-	auto& r = geti().weapon.damage;
-	return r ? r : dice{1, 2};
-}
-
-int	item::getweight() const {
-	auto& ei = geti();
-	return getcount() * ei.weight / (ei.count ? ei.count : 1);
+	return dice{1, (char)geti().damage};
 }
 
 int item::getcost() const {

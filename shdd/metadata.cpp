@@ -10,7 +10,6 @@
 #include "widget.h"
 
 NOBSDATA(dice)
-NOBSDATA(itemi::weaponi)
 NOBSDATA(variants)
 
 BSMETA(variant) = {{}};
@@ -38,17 +37,12 @@ BSMETA(itempoweri) = {
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
-	BSREQ(cost), BSREQ(weight), BSREQ(count),
+	BSREQ(cost), BSREQ(damage), BSREQ(count),
 	BSFLG(flags, feati),
 	BSENM(wear, weari),
-	BSREQ(weapon),
 	BSREQ(use),
 	BSREQ(wearing),
 	BSREQ(powers),
-	{}};
-BSMETA(itemi::weaponi) = {
-	BSREQ(damage),
-	BSENM(ammunition, itemi),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),

@@ -6,3 +6,13 @@ Dwarf Stout
  elements Permanent HP+2 BonusHitRoll
 HalfOrc Mighty
  elements Permanent MeleeAttack+1 MeleeDamage+1
+
+#List
+
+RaiseAnyAbility
+ elements Strenght+1 Dexterity+1 Constitution+1 Intellect+1 Wisdow+1 Charisma+1
+FighterStatsRaise
+ elements Strenght+2 Dexterity+2 Constitution+2
+
+FighterTalents
+ elements WeaponMastery Attack RaiseClassStats ArmorMastery

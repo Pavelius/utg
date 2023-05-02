@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="feat.cpp" />
     <ClCompile Include="item.cpp" />
@@ -161,10 +163,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
+    <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />
@@ -175,6 +179,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Advancement.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Items.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

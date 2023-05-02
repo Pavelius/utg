@@ -1,3 +1,2 @@
 ﻿In file `rules/Advancement.txt`:
- Line 3: Can't find variant `Human`
- Line 5: Can't find variant `Dwarf`
+ Line 18: Can't find variant `Attack`
