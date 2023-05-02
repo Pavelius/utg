@@ -1,0 +1,5 @@
+﻿General: Общие
+
+No: Нет
+Yes: Да
+WhatDoYouDo: Что будете делать?
