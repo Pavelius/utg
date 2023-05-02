@@ -12,6 +12,7 @@ static void starting() {
 }
 
 static void initializing() {
+	bsreq::read("rules/Advancement.txt");
 }
 
 int main(int argc, char* argv[]) {

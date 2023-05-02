@@ -146,23 +146,34 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ability.cpp" />
+    <ClCompile Include="creature.cpp" />
     <ClCompile Include="feat.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="race.cpp" />
+    <ClCompile Include="statable.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
     <ClCompile Include="scripting.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="modifier.h" />
+    <ClInclude Include="race.h" />
+    <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\Advancement.txt" />
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

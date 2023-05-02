@@ -1,0 +1,8 @@
+#Advancement
+
+Human Ambitious
+ elements TalentRoll
+Dwarf Stout
+ elements Permanent HP+2 BonusHitRoll
+HalfOrc Mighty
+ elements Permanent MeleeAttack+1 MeleeDamage+1

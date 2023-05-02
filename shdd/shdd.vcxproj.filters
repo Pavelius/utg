@@ -33,6 +33,21 @@
     <ClCompile Include="main.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="statable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="creature.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="race.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -47,6 +62,21 @@
     <ClInclude Include="wearable.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="ability.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="statable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="modifier.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="creature.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="race.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">
@@ -56,6 +86,9 @@
       <Filter>rules</Filter>
     </Text>
     <Text Include="errors.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Advancement.txt">
       <Filter>rules</Filter>
     </Text>
   </ItemGroup>
