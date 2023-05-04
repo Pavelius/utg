@@ -1,9 +1,11 @@
 #include "advancement.h"
 #include "bsreq.h"
+#include "creature.h"
 #include "item.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
+#include "monster.h"
 #include "race.h"
 #include "statable.h"
 #include "script.h"
@@ -16,10 +18,14 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
+BSDATAC(creature, 1024)
 BSDATAC(itemi, 256)
-BSDATAC(itempoweri, 64)
+BSDATAC(monsteri, 64)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(classi) = {
 	BSREQ(id),
 	{}};
 BSMETA(dice) = {
@@ -27,13 +33,6 @@ BSMETA(dice) = {
 	{}};
 BSMETA(feati) = {
 	BSREQ(id),
-	{}};
-BSMETA(itempoweri) = {
-	BSREQ(id),
-	BSREQ(magic),
-	BSREQ(condition),
-	BSREQ(damage),
-	BSREQ(wearing),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
@@ -47,6 +46,13 @@ BSMETA(itemi) = {
 BSMETA(modifieri) = {
 	BSREQ(id),
 	{}};
+BSMETA(monsteri) = {
+	BSREQ(id),
+	BSENM(kind, classi),
+	BSENM(ancestry, racei),
+	BSREQ(feats),
+	BSDST(abilities, abilityi),
+	{}};
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
@@ -58,16 +64,16 @@ BSMETA(weari) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1)},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
-	{"ItemPower", VAR(itempoweri, 1)},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1)},
-	{"Script", VAR(script, 1)},
+	{"Monster", VAR(monsteri, 1)},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

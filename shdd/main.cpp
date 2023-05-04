@@ -1,11 +1,14 @@
 #include "answers.h"
 #include "bsreq.h"
+#include "creature.h"
 #include "crt.h"
 #include "draw.h"
 #include "draw_utg.h"
 #include "item.h"
 
 static void starting() {
+	creature::add("Orc");
+	creature::add(Dwarf, Fighter);
 	an.clear();
 	an.add(0, "Test case 1");
 	an.add((void*)1, "Test case 2");
@@ -15,8 +18,7 @@ static void starting() {
 static void initializing() {
 	bsreq::read("rules/Advancement.txt");
 	bsreq::read("rules/Items.txt");
-	item_armor = bsdata<itemi>::find("BastardSword");
-	item_weapon = bsdata<itemi>::find("LeatherArmor");
+	bsreq::read("rules/Monsters.txt");
 }
 
 int main(int argc, char* argv[]) {

@@ -3,9 +3,9 @@
 Human Ambitious
  elements TalentRoll
 Dwarf Stout
- elements Permanent HP+2 BonusHitRoll
+ elements HP+2 BonusHitRoll
 HalfOrc Mighty
- elements Permanent MeleeAttack+1 MeleeDamage+1
+ elements MeleeAttack+1 MeleeDamage+1
 
 #List
 

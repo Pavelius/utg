@@ -54,6 +54,9 @@
     <ClCompile Include="ongoing.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -92,6 +95,9 @@
     <ClInclude Include="spell.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="locale\ru\Names.txt">
@@ -107,6 +113,9 @@
       <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Items.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Monsters.txt">
       <Filter>rules</Filter>
     </Text>
   </ItemGroup>

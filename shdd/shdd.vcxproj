@@ -155,6 +155,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="race.cpp" />
     <ClCompile Include="statable.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
+    <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="spell.h" />
@@ -182,6 +184,7 @@
     <Text Include="rules\Advancement.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
+    <Text Include="rules\Monsters.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

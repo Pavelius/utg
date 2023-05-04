@@ -1,3 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 11: Not found identifier `Bulky`
- Line 13: Not found identifier `Bulky`
+﻿In file `rules/Monsters.txt`:
+ Line 9: Can't find variant `Greataxe`

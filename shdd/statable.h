@@ -3,8 +3,8 @@
 #pragma once
 
 struct statable {
-	unsigned	weapons, armors, weapon_matery;
-	char		abilities[HP + 1];
+	unsigned	usable, mastery;
+	char		abilities[Dodge + 1];
 	void		add(ability_s i, int v) { abilities[i] += v; }
 	void		applybest(ability_s v);
 	int			get(ability_s i) const { return abilities[i]; }

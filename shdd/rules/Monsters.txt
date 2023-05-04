@@ -1,0 +1,13 @@
+#Monster
+
+Goblin
+ abilities Strenght(0) Dexterity(1) Constitution(1) Intellect(-1) Wisdow(-1) Charisma(-2) HP(5) Level(1) RangeAttack(1)
+ feats Club Shortbow
+
+Kobold
+ abilities Strenght(-2) Dexterity(2) Constitution(0) Intellect(-1) Wisdow(0) Charisma(-1) HP(1) Level(0)
+ feats Dodge LeatherArmor Spear
+
+Orc
+ abilities Strenght(2) Dexterity(0) Constitution(0) Intellect(-1) Wisdow(0) Charisma(-1) HP(4) Level(1) MeleeAttack(2)
+ feats Rage Chainmail Shield Greateaxe

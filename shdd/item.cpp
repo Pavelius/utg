@@ -27,6 +27,8 @@ void item::create(const char* id, int count) {
 void item::create(const itemi* pi, int count) {
 	if(!pi)
 		return;
+	if(!count)
+		count = 1;
 	create(pi - bsdata<itemi>::elements, pi->count ? pi->count * count : count);
 }
 
@@ -91,9 +93,9 @@ int item::getcost() const {
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
 }
 
-const itempoweri* item::getpower() const {
+variant item::getpower() const {
 	auto& ei = geti();
-	if(!ei.powers[0] || !power)
-		return 0;
-	return ei.powers[power - 1];
+	if(!ei.powers || !count)
+		return variant();
+	return ei.powers->elements.begin()[count - 1];
 }

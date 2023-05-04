@@ -7,38 +7,24 @@
 
 #pragma once
 
-struct itempoweri : nameable {
-	char		magic;
-	dice		damage; // Additional damage
-	variant		condition; // For weapon when hit - race or alignment for additional damage
-	variants	wearing; // Additional wearing effect
-};
 struct itemi : nameable {
 	const char*	unidentified;
 	int			cost, damage, count, slot;
 	wear_s		wear;
 	featable	flags;
 	variants	use, wearing;
-	itempoweri*	powers[16];
+	listi*		powers;
 	bool		is(feat_s v) const { return flags.is(v); }
 };
-extern itemi* item_armor;
-extern itemi* item_weapon;
 class item {
 	unsigned short type;
+	unsigned char count;
 	union {
 		unsigned char flags;
 		struct {
 			unsigned char identified : 1;
-			unsigned char personal : 1;
 			unsigned char cursed : 1;
-		};
-	};
-	union {
-		unsigned char count;
-		struct {
-			unsigned char power : 4;
-			unsigned char broken : 4;
+			unsigned char charges : 6;
 		};
 	};
 public:
@@ -56,7 +42,7 @@ public:
 	int			getcount() const;
 	dice		getdamage() const;
 	const char*	getname() const { return geti().getname(); }
-	const itempoweri* getpower() const;
+	variant		getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		iscursed() const { return cursed != 0; }

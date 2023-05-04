@@ -1,37 +1,37 @@
 #Item
 
-BastardSword damage(8) slot(2)
+BastardSword damage(8) slot(2) wear(MeleeWeapon)
  flags Versatile
-Club damage(4) slot(1)
-Crossbow damage(6) slot(1)
+Club damage(4) slot(1) wear(MeleeWeapon)
+Crossbow damage(6) slot(1) wear(RangedWeapon)
  flags TwoHanded Loading
-Dagger damage(4) slot(1)
+Dagger damage(4) slot(1) wear(MeleeWeapon)
  flags Finesse Thrown
-Greateaxe damage(8) slot(2)
+Greateaxe damage(8) slot(2) wear(MeleeWeapon)
  flags Versatile
-Greatesword damage(12) slot(2)
+Greatesword damage(12) slot(2) wear(MeleeWeapon)
  flags TwoHanded
-Javelin damage(4) slot(1)
+Javelin damage(4) slot(1) wear(MeleeWeapon)
  flags Thrown
-Longbow damage(8) slot(1)
+Longbow damage(8) slot(1) wear(MeleeWeapon)
  flags TwoHanded
-Longsword damage(8) slot(1)
-Mace damage(6) slot(1)
-Shortbow damage(6) slot(1)
+Longsword damage(8) slot(1) wear(MeleeWeapon)
+Mace damage(6) slot(1) wear(MeleeWeapon)
+Shortbow damage(6) slot(1) wear(RangedWeapon)
  flags TwoHanded
-Shortsword damage(6) slot(1)
-Spear damage(6) slot(1)
+Shortsword damage(6) slot(1) wear(MeleeWeapon)
+Spear damage(6) slot(1) wear(MeleeWeapon)
  flags TwoHanded
-Staff damage(4) slot(1)
+Staff damage(4) slot(1) wear(MeleeWeapon)
  flags TwoHanded
-Warhammer damage(10) slot(1)
+Warhammer damage(10) slot(1) wear(MeleeWeapon)
  flags TwoHanded
 
-LeatherArmor slot(1)
+LeatherArmor slot(1) wear(Torso)
  wearing AC+1
-Chainmail slot(2)
+Chainmail slot(2) wear(Torso)
  wearing AC+3
-Platemail slot(3)
+Platemail slot(3) wear(Torso)
  wearing AC+5
-Shield slot(1)
+Shield slot(1) wear(Torso)
  wearing AC+2

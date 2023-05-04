@@ -7,8 +7,9 @@ enum ability_s : unsigned char {
 	MeleeAttack, MeleeDamage,
 	RangeAttack, RangeDamage,
 	SpellRoll,
+	NumberAttacks,
 	AC, Level,
-	HP,
+	HP, Rage, Dodge
 };
 struct abilityi : nameable {
 };

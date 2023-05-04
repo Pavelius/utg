@@ -6,4 +6,5 @@ enum class_s : unsigned char {
 	NoClass, Fighter, Priest, Theif, Wizard
 };
 struct classi : nameable {
+	int		hits;
 };

@@ -6,6 +6,8 @@
 #include "script.h"
 
 static void item_add(int type, int count) {
+	item it; it.create(type, count);
+	player->equip(it);
 }
 
 template<> void fnscript<itemi>(int value, int bonus) {
@@ -13,6 +15,8 @@ template<> void fnscript<itemi>(int value, int bonus) {
 }
 
 template<> void fnscript<abilityi>(int value, int bonus) {
+	if(!bonus)
+		bonus = 1;
 	switch(modifier) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
@@ -69,10 +73,25 @@ static void raise_class_ability(int bonus) {
 	apply_one_of(str("%1StatsRaise", bsdata<classi>::elements[player->kind].id), 1);
 }
 
+static void choose_usable(const char* title, unsigned& usable, wear_s w1, wear_s w2) {
+	for(auto& e : bsdata<itemi>()) {
+		if(e.wear != w1 && e.wear != w2)
+			continue;
+		if((usable & FG(&e - bsdata<itemi>::elements)) != 0)
+			continue;
+		an.add(&e, e.getname());
+	}
+	auto p = (itemi*)an.choose(title);
+	if(p)
+		usable |= FG(p - bsdata<itemi>::elements);
+}
+
 static void armor_mastery(int bonus) {
+	choose_usable("ChooseArmor", player->usable, Torso, Torso);
 }
 
 static void weapon_mastery(int bonus) {
+	choose_usable("ChooseWeapon", player->mastery, MeleeWeapon, RangedWeapon);
 }
 
 BSDATA(script) = {

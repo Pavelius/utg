@@ -13,8 +13,11 @@ BSDATA(abilityi) = {
 	{"RangeAttack"},
 	{"RangeDamage"},
 	{"SpellRoll"},
+	{"NumberAttacks"},
 	{"AC"},
 	{"Level"},
 	{"HP"},
+	{"Rage"},
+	{"Dodge"},
 };
-assert_enum(abilityi, HP)
+assert_enum(abilityi, Dodge)
