@@ -1,3 +1,4 @@
+#include "actable.h"
 #include "class.h"
 #include "race.h"
 #include "statable.h"
@@ -5,7 +6,7 @@
 
 #pragma once
 
-struct creature : statable, wearable {
+struct creature : actable, statable, wearable {
 	class_s		kind;
 	race_s		ancestry;
 	featable	feats;

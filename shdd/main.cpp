@@ -17,6 +17,7 @@ static void starting() {
 
 static void initializing() {
 	bsreq::read("rules/Advancement.txt");
+	bsreq::read("rules/Spells.txt");
 	bsreq::read("rules/Items.txt");
 	bsreq::read("rules/Monsters.txt");
 }

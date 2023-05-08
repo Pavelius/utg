@@ -4,7 +4,8 @@
 #pragma once
 
 struct spelli : nameable {
-	char		classes[8];
+	char		tier;
+	unsigned	classes;
 	char		rounds;
 	variants	enchant, summon;
 };

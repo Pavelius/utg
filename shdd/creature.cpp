@@ -3,9 +3,11 @@
 #include "modifier.h"
 #include "monster.h"
 #include "pushvalue.h"
+#include "roll.h"
 #include "script.h"
 
 creature* player;
+creature* opponent;
 
 static void wearing(variant v) {
 	if(v.iskind<abilityi>())
@@ -69,20 +71,6 @@ bool creature::isallow(const item& v) const {
 	default:
 		return true;
 	}
-}
-
-static int roll(int value, int advantages) {
-	auto r = xrand(1, value);
-	if(advantages > 0) {
-		auto r1 = xrand(1, value);
-		if(r1 > r)
-			r = r1;
-	} else if(advantages < 0) {
-		auto r1 = xrand(1, value);
-		if(r1 < r)
-			r = r1;
-	}
-	return r;
 }
 
 static void roll_hit_points() {
@@ -149,4 +137,22 @@ void creature::add(const monsteri* pm) {
 	copy_special_abilities(*pm);
 	advance(pm->feats);
 	finish_create();
+}
+
+static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+	roll20(advantage);
+	auto critical_miss = (roll_result <= 1);
+	auto critical_hit = (roll_result >= 20);
+	auto to_hit = roll_result + player->get(attack);
+	auto ac = opponent->get(AC);
+	if(critical_miss || to_hit < ac) {
+		player->act("PlayerMiss");
+		return;
+	}
+	auto damage = weapon.getdamage().roll();
+	if(critical_hit)
+		damage *= 2;
+	damage += player->get(attack_damage);
+	player->act("PlayerHit");
+	//enemy->damage(damage);
 }

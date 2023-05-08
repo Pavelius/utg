@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="actable.cpp" />
     <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="feat.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="race.cpp" />
+    <ClCompile Include="roll.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
@@ -165,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="actable.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
+    <ClInclude Include="roll.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />
@@ -181,10 +185,12 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\Talks.txt" />
     <Text Include="rules\Advancement.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
+    <Text Include="rules\Spells.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

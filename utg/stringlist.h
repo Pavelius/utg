@@ -6,6 +6,7 @@
 struct stringlist {
 	const char*		id;
 	const char*		name;
+	short unsigned	index, weight;
 	unsigned		getcount() const;
 	static const char* getname(unsigned short v);
 	bool			match(const char* id) const;

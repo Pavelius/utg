@@ -7,6 +7,7 @@
 #include "modifier.h"
 #include "monster.h"
 #include "race.h"
+#include "spell.h"
 #include "statable.h"
 #include "script.h"
 #include "widget.h"
@@ -21,6 +22,7 @@ BSDATAD(variant)
 BSDATAC(creature, 1024)
 BSDATAC(itemi, 256)
 BSDATAC(monsteri, 64)
+BSDATAC(spelli, 256)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -59,6 +61,12 @@ BSMETA(racei) = {
 BSMETA(script) = {
 	BSREQ(id),
 	{}};
+BSMETA(spelli) = {
+	BSREQ(id),
+	BSREQ(tier), BSREQ(rounds),
+	BSFLG(classes, classi),
+	BSREQ(enchant), BSREQ(summon),
+	{}};
 BSMETA(weari) = {
 	BSREQ(id),
 	{}};
@@ -74,6 +82,7 @@ BSDATA(varianti) = {
 	{"Modifier", VAR(modifieri, 1)},
 	{"Monster", VAR(monsteri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
+	{"Spell", VAR(spelli, 1)},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

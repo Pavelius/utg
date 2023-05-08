@@ -22,7 +22,7 @@ unsigned stringlist::select(short unsigned* pb, short unsigned* pe, const char* 
 		if(!e.match(id))
 			continue;
 		if(ps < pe)
-			*ps++ = &e - bsdata<stringlist>::elements;
+			*ps++ = getbse(e);
 	}
 	return ps - pb;
 }
@@ -43,11 +43,13 @@ static bool ischax(unsigned char u) {
 }
 
 static const char* read_line(const char* p, const char* id, stringbuilder& sb) {
+	auto index = 0;
 	while(ischax(*p)) {
 		auto pe = bsdata<stringlist>::add();
 		memset(pe, 0, sizeof(*pe));
 		p = readname(skipws(p), sb);
 		pe->id = id;
+		pe->index = index;
 		pe->name = getstring(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
@@ -55,6 +57,7 @@ static const char* read_line(const char* p, const char* id, stringbuilder& sb) {
 		if(!checksym(p, ','))
 			break;
 		p = skipwscr(p + 1);
+		index++;
 	}
 	return p;
 }

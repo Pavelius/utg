@@ -234,6 +234,7 @@ typedef void(*fncommand)(void* object);
 // Common functions
 bool								equal(const char* s1, const char* s2);
 template<typename T> short unsigned getbsi(const T* v) { return bsdata<T>::source.indexof(v); }
+template<typename T> short unsigned getbse(const T& v) { return bsdata<T>::source.indexof(&v); }
 template<typename T> T*				getbs(short unsigned i) { return (i == 0xFFFF) ? 0 : bsdata<T>::elements + i; }
 const char*							getdescription(const char* id);
 int									getdigitscount(unsigned number); // Get digits count of number. For example if number=100, result be 3.
