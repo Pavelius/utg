@@ -18,13 +18,13 @@ struct itemi : nameable {
 };
 class item {
 	unsigned short type;
-	unsigned char count;
+	unsigned char count; // count or superpower
 	union {
 		unsigned char flags;
 		struct {
 			unsigned char identified : 1;
 			unsigned char cursed : 1;
-			unsigned char charges : 6;
+			unsigned char charges : 3;
 		};
 	};
 public:

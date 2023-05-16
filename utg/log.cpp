@@ -5,21 +5,20 @@
 
 bool log::allowparse = true;
 static int error_count;
-static const char* current_url;
-static const char* current_file;
+log::contexti log::context;
 
 void log::setfile(const char* v) {
-	current_file = v;
+	context.file = v;
 }
 
 void log::seturl(const char* v) {
-	current_url = v;
+	context.url = v;
 }
 
 const char* log::read(const char* url, bool error_if_not_exist) {
 	auto p_alloc = loadt(url);
 	if(!p_alloc) {
-		current_url = 0;
+		context.url = 0;
 		if(error_if_not_exist)
 			error(0, "Can't find file '%1'", url);
 		return 0;
@@ -30,9 +29,9 @@ const char* log::read(const char* url, bool error_if_not_exist) {
 }
 
 void log::close() {
-	if(current_file)
-		delete current_file;
-	current_file = 0;
+	if(context.file)
+		delete context.file;
+	context.file = 0;
 }
 
 const char* endline(const char* p) {
@@ -58,15 +57,15 @@ void log::errorv(const char* position, const char* format) {
 		return;
 	error_count++;
 	if(position)
-		file << " Line " << getline(current_file, position) << ": ";
+		file << " Line " << getline(context.file, position) << ": ";
 	file << format << "\n";
 }
 
 void log::error(const char* position, const char* format, ...) {
 	char temp[4096]; stringbuilder sb(temp);
-	if(current_url) {
-		sb.add("In file `%1`:", current_url);
-		current_url = 0;
+	if(context.url) {
+		sb.add("In file `%1`:", context.url);
+		context.url = 0;
 		errorv(0, temp);
 		sb.clear();
 	}

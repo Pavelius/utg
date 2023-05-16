@@ -152,7 +152,6 @@
     <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ability.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />

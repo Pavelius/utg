@@ -15,20 +15,13 @@ static void starting() {
 	an.choose("Choose case");
 }
 
-static void initializing() {
-	bsreq::read("rules/Advancement.txt");
-	bsreq::read("rules/Spells.txt");
-	bsreq::read("rules/Items.txt");
-	bsreq::read("rules/Monsters.txt");
-}
-
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	//srand(1123);
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";
-	return draw::start(starting, initializing);
+	return draw::start(starting);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

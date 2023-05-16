@@ -15,4 +15,5 @@ enum range_s : unsigned char {
 	Range120,
 };
 struct rangei : nameable {
+	int			range;
 };

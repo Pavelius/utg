@@ -15,9 +15,11 @@ struct creature : actable, statable, wearable {
 	static void add(const char* id);
 	static void add(const struct monsteri* pm);
 	void		clear();
+	void		damage(int value);
 	bool		is(feat_s v) const { return feats.is(v); }
 	bool		isallow(const item& v) const;
 	bool		isplayer() const { return true; }
+	void		kill();
 	void		update();
 };
 extern creature* player;

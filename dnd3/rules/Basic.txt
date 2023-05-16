@@ -1,0 +1,8 @@
+#Ability
+
+Strenght
+Dexterity
+Constitution
+Intellgence
+Wisdow
+Charisma

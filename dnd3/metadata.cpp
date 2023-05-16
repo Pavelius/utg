@@ -8,6 +8,7 @@
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 
+BSDATAC(abilityi, 64)
 BSDATAC(itemi, 512)
 BSDATAD(variant)
 

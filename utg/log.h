@@ -2,6 +2,11 @@
 
 namespace log {
 extern bool allowparse;
+struct contexti {
+	const char*	url;
+	const char*	file;
+};
+extern contexti	context;
 void			close();
 int				geterrors();
 void			error(const char* position, const char* format, ...);

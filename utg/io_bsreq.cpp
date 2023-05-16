@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "logparse.h"
+#include "pushvalue.h"
 #include "stringbuilder.h"
 #include "variant.h"
 
@@ -388,10 +389,39 @@ static void* read_object(const bsreq* type, array* source, int key_count, int le
 	return object;
 }
 
+static bool read_string() {
+	valuei value;
+	auto pn = p;
+	read_value(value, 0);
+	if(!value.text) {
+		error(pn, "Expected string value");
+		allowparse = false;
+		return false;
+	}
+	return true;
+}
+
+static bool parse_directives() {
+	if(equal(temp, "include")) {
+		if(!read_string())
+			return false;
+		bsreq::read(szdup(temp));
+		return true;
+	}
+	return false;
+}
+
 static void parse() {
 	while(*p && allowparse) {
 		skip("#");
+		if(!allowparse)
+			break;
 		readid();
+		if(parse_directives()) {
+			skipline();
+			skiplinefeed();
+			continue;
+		}
 		auto pd = find_type(temp);
 		if(!pd) {
 			if(temp[0])
@@ -407,6 +437,8 @@ static void parse() {
 }
 
 void bsreq::read(const char* url) {
+	pushvalue push(log::context);
+	pushvalue push_parser(p);
 	p = log::read(url);
 	if(!p)
 		return;

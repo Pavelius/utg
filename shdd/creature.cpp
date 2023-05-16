@@ -139,6 +139,21 @@ void creature::add(const monsteri* pm) {
 	finish_create();
 }
 
+void creature::kill() {
+	abilities[HP] = 0;
+	act(getnm("PlayerDead"));
+}
+
+void creature::damage(int value) {
+	act(getnm("SufferDamage"), value);
+	auto new_hp = get(HP) - value;
+	if(new_hp > 0) {
+		abilities[HP] = new_hp;
+		return;
+	}
+	kill();
+}
+
 static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
 	roll20(advantage);
 	auto critical_miss = (roll_result <= 1);
@@ -154,5 +169,5 @@ static void attack_enemy(ability_s attack, ability_s attack_damage, int advantag
 		damage *= 2;
 	damage += player->get(attack_damage);
 	player->act("PlayerHit");
-	//enemy->damage(damage);
+	opponent->damage(damage);
 }
