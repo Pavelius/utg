@@ -39,6 +39,9 @@
     <ClInclude Include="creature.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="numberlist.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +68,15 @@
     <ClCompile Include="wearable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="numberlist.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Items.txt">
@@ -78,6 +90,9 @@
     </Text>
     <Text Include="locale\ru\Names.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Tables.txt">
+      <Filter>rules</Filter>
     </Text>
   </ItemGroup>
 </Project>

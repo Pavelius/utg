@@ -1,1 +1,2 @@
-﻿Can't find file 'locale/ru/Names.txt'
+﻿In file `rules/Tables.txt`:
+ Line 6: Expected symbol line feed

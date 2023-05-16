@@ -41,8 +41,10 @@ void status_info();
 
 static void statusbar() {
 	status_info();
-	linedown();
-	movedown(1);
+	if(caret) {
+		linedown();
+		movedown(1);
+	}
 	objects_paint = caret;
 }
 

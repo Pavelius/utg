@@ -144,6 +144,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="numberlist.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="magic.h" />
     <ClInclude Include="resid.h" />
@@ -152,12 +153,15 @@
     <ClInclude Include="wearable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ability.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="numberlist.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="magic.cpp" />
+    <ClCompile Include="scripting.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
   </ItemGroup>
@@ -171,6 +175,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
+    <Text Include="rules\Tables.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

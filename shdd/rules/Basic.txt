@@ -1,11 +1,11 @@
-#include "rules/Advancement.txt"
-#include "rules/Spells.txt"
-#include "rules/Items.txt"
-#include "rules/Monsters.txt"
-
 #Item
 
 Axe
 Bow
 Halberd
 HookAndLine
+
+#include "rules/Advancement.txt"
+#include "rules/Spells.txt"
+#include "rules/Items.txt"
+#include "rules/Monsters.txt"

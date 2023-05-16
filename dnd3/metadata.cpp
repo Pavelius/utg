@@ -8,7 +8,6 @@
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 
-BSDATAC(abilityi, 64)
 BSDATAC(itemi, 512)
 BSDATAD(variant)
 
@@ -17,6 +16,7 @@ NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
+	BSREQ(formula),
 	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
