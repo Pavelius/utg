@@ -109,7 +109,7 @@ public:
 	constexpr slice(T* p1, const T* p2) : data(p1), count(p2 - p1) {}
 	explicit operator bool() const { return count != 0; }
 	void operator++() { if(count) { data++; count--; } }
-	void							alloc(int count) { data = new T[count]; this->count = count; }
+	void							alloc(int count, const T* source) { data = new T[count]; this->count = count; memcpy(data, source, sizeof(T) * count); }
 	constexpr T*					begin() const { return data; }
 	constexpr T*					end() const { return data + count; }
 	constexpr unsigned				size() const { return count; }

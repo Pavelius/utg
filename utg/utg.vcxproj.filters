@@ -276,6 +276,9 @@
     <ClCompile Include="drawable.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="compiler.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="drawable.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="compiler.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

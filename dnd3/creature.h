@@ -1,6 +1,9 @@
+#include "ability.h"
 #include "wearable.h"
 
 #pragma once
 
-struct creature : wearable {
+struct creature : statable, wearable {
+	void		create();
+	void		clear();
 };

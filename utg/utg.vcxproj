@@ -155,6 +155,9 @@
     <ClCompile Include="avatarable.cpp" />
     <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="bstream.cpp" />
+    <ClCompile Include="compiler.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="drawable.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
@@ -245,6 +248,9 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="cdat.h" />
+    <ClInclude Include="compiler.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="drawable.h" />
     <ClInclude Include="stringlist.h" />
     <ClInclude Include="chooselist.h" />

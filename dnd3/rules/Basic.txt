@@ -6,3 +6,25 @@ Constitution
 Intellgence
 Wisdow
 Charisma
+
+#List
+
+StrBonus
+ elements Strenght AbilityBonus
+DexBonus
+ elements Dexterity AbilityBonus
+ConBonus
+ elements Constitution AbilityBonus
+IntBonus
+ elements Intellgence AbilityBonus
+WisBonus
+ elements Wisdow AbilityBonus
+ChaBonus
+ elements Charisma AbilityBonus
+
+#Ability
+
+Melee
+ formula StrBonus
+Range
+ formula DexBonus

@@ -2,6 +2,9 @@
 #include "bsreq.h"
 #include "crt.h"
 #include "item.h"
+#include "list.h"
+#include "numberlist.h"
+#include "script.h"
 #include "variant.h"
 #include "widget.h"
 
@@ -31,7 +34,13 @@ BSMETA(itemi) = {
 BSMETA(magici) = {
 	BSREQ(id),
 	{}};
+BSMETA(numberlist) = {
+	BSREQ(id),
+	{}};
 BSMETA(rangei) = {
+	BSREQ(id),
+	{}};
+BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(weaponi) = {
@@ -44,7 +53,10 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
+	{"List", VAR(listi, 1), 0, 0},
+	{"NumberList", VAR(numberlist, 1), 0, 0},
 	{"Rate", VAR(magici, 1), 0, 0},
+	{"Script", VAR(script, 1), 0, 0},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)
