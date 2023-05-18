@@ -2,6 +2,10 @@
 #include "draw.h"
 #include "draw_strategy.h"
 #include "numberlist.h"
+#include "room.h"
+
+void initialize_ui();
+void update_ui();
 
 static void main_scene() {
 }
@@ -10,6 +14,9 @@ static void test_creature() {
 	creature player;
 	player.create();
 	player.update();
+	auto pr = bsdata<roomi>::add();
+	pr->setavatar("hills");
+	update_ui();
 }
 
 static void start_main() {
@@ -18,6 +25,7 @@ static void start_main() {
 }
 
 static void initialize() {
+	initialize_ui();
 }
 
 int main(int argc, char* argv[]) {

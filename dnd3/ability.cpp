@@ -7,6 +7,7 @@
 const int ability_maximum = 64;
 
 int ability_result;
+int result_param[4];
 
 BSDATAC(abilityi, ability_maximum)
 
@@ -17,9 +18,13 @@ static void calculate(statable* p, variant v) {
 		if(!v.counter)
 			v.counter = 1;
 		ability_result += p->abilities[v.value] * v.counter;
-	} else if(v.iskind<listi>())
+	} else if(v.iskind<listi>()) {
+		if(!v.counter)
+			v.counter = 1;
+		auto push_result = ability_result; ability_result = 0;
 		calculate(p, bsdata<listi>::elements[v.value].elements);
-	else if(v.iskind<script>())
+		ability_result = push_result + ability_result * v.counter;
+	} else if(v.iskind<script>())
 		bsdata<script>::elements[v.value].proc(v.counter);
 	else if(v.iskind<numberlist>()) {
 		if(!v.counter)

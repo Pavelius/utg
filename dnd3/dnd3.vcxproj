@@ -142,12 +142,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="background.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="numberlist.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="magic.h" />
     <ClInclude Include="resid.h" />
+    <ClInclude Include="resable.h" />
+    <ClInclude Include="room.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
@@ -156,12 +159,14 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="information.cpp" />
+    <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="numberlist.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="magic.cpp" />
+    <ClCompile Include="resable.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />

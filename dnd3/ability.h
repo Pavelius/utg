@@ -11,3 +11,4 @@ struct statable {
 	void		update();
 };
 extern int ability_result;
+extern int result_param[4];

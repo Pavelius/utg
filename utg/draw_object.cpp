@@ -200,6 +200,14 @@ object*	draw::addobject(int x, int y) {
 	return p;
 }
 
+object*	draw::addobject(point screen, void* data) {
+	auto p = bsdata<object>::add();
+	*p = object::def;
+	p->x = screen.x; p->y = screen.y;
+	p->data = data;
+	return p;
+}
+
 object* draw::findobject(const void* p) {
 	for(auto& e : bsdata<object>()) {
 		if(e.data == p)

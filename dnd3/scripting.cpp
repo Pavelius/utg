@@ -15,9 +15,14 @@ static void multiply(int counter) {
 		ability_result *= counter;
 }
 
+static void set_param(int counter) {
+	result_param[counter] = ability_result;
+}
+
 BSDATA(script) = {
 	{"Divide", divide},
 	{"Number", number},
-	{"Multiply", multiply}
+	{"Multiply", multiply},
+{"SetParam", set_param}
 };
 BSDATAF(script)

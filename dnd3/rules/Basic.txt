@@ -24,7 +24,37 @@ ChaBonus
 
 #Ability
 
+Talents
+Enqumbrance
+
 Melee
  formula StrBonus
+MeleeDamage
 Range
  formula DexBonus
+RangeDamage
+AC
+ formula DexBonus Number+10
+
+#Background
+
+Urchin
+Wanted
+CultInitiate
+ThievesGuild
+Banished
+Orphaned
+WizardsApprentice
+Jeweler
+Herbalist
+Barbarian
+Mercenary
+Sailor
+Acolyte
+Soldier
+Ranger
+Scout
+Minstrel
+Scholar
+Noble
+Chirurgeon

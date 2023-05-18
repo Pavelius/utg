@@ -42,6 +42,15 @@
     <ClInclude Include="numberlist.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="resable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="room.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +87,12 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="creature.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="resable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -44,6 +44,7 @@ void splashscreen(unsigned milliseconds);
 void showobjects();
 void waitall();
 object* addobject(int x, int y);
+object* addobject(point screen, void* data);
 object* findobject(const void* p);
 void* chooseobject();
 }
