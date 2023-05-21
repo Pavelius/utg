@@ -1,5 +1,7 @@
 #include "creature.h"
 
+creature* player;
+
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 }

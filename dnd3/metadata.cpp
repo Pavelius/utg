@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "background.h"
 #include "bsreq.h"
+#include "creature.h"
 #include "crt.h"
 #include "item.h"
 #include "list.h"
@@ -14,6 +15,7 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 
 BSDATAC(backgroundi, 64)
+BSDATAC(creature, 512)
 BSDATAC(itemi, 512)
 BSDATAC(roomi, 16)
 BSDATAD(variant)

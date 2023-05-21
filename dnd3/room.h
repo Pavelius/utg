@@ -3,4 +3,5 @@
 #pragma once
 
 struct roomi : resable {
+	void			paint() const;
 };

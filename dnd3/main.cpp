@@ -10,10 +10,16 @@ void update_ui();
 static void main_scene() {
 }
 
+static void add_creature(point index, const char* avatar) {
+	player = bsdata<creature>::add();;
+	player->create();
+	player->setavatar(avatar);
+	player->index = index;
+	player->update();
+}
+
 static void test_creature() {
-	creature player;
-	player.create();
-	player.update();
+	add_creature({12, 10}, "me1");
 	auto pr = bsdata<roomi>::add();
 	pr->setavatar("hills");
 	update_ui();

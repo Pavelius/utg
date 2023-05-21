@@ -1,10 +1,12 @@
 #include "ability.h"
-#include "avatarable.h"
+#include "resable.h"
 #include "wearable.h"
 
 #pragma once
 
-struct creature : avatarable, statable, wearable {
+struct creature : resable, statable, wearable {
 	void		clear();
 	void		create();
+	void		paint() const;
 };
+extern creature* player;
