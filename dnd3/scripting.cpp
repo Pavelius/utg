@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "script.h"
+#include "statable.h"
 
 static void number(int counter) {
 	ability_result += counter;
@@ -16,13 +17,14 @@ static void multiply(int counter) {
 }
 
 static void set_param(int counter) {
-	result_param[counter] = ability_result;
+	if(counter<sizeof(result_param)/sizeof(result_param[0]))
+		result_param[counter] = ability_result;
 }
 
 BSDATA(script) = {
 	{"Divide", divide},
 	{"Number", number},
 	{"Multiply", multiply},
-{"SetParam", set_param}
+	{"SetParam", set_param}
 };
 BSDATAF(script)

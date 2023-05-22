@@ -2,6 +2,7 @@
 #include "list.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "statable.h"
 #include "numberlist.h"
 
 const int ability_maximum = 64;

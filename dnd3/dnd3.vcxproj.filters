@@ -51,6 +51,12 @@
     <ClInclude Include="room.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="statable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="skilli.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

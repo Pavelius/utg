@@ -18,10 +18,14 @@ static void add_creature(point index, const char* avatar) {
 	player->update();
 }
 
+static void add_map(point index, const char* avatar) {
+	auto pr = bsdata<roomi>::add();
+	pr->setavatar(avatar);
+}
+
 static void test_creature() {
 	add_creature({12, 10}, "me1");
-	auto pr = bsdata<roomi>::add();
-	pr->setavatar("hills");
+	add_map({0, 0}, "hills");
 	update_ui();
 }
 

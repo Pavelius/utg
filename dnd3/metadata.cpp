@@ -25,7 +25,7 @@ NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
-	BSREQ(formula),
+	BSREQ(formula), BSREQ(round),
 	{}};
 BSMETA(backgroundi) = {
 	BSREQ(id),

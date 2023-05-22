@@ -151,6 +151,8 @@
     <ClInclude Include="resid.h" />
     <ClInclude Include="resable.h" />
     <ClInclude Include="room.h" />
+    <ClInclude Include="skilli.h" />
+    <ClInclude Include="statable.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />

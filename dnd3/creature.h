@@ -1,5 +1,5 @@
-#include "ability.h"
 #include "resable.h"
+#include "statable.h"
 #include "wearable.h"
 
 #pragma once
