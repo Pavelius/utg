@@ -1,0 +1,13 @@
+#Material
+
+Wood
+Iron
+Stone
+Silver
+Gold
+
+Acid
+Fire
+Cold
+Sonic
+Water

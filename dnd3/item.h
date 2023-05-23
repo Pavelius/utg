@@ -32,9 +32,9 @@ struct item {
 	unsigned char	count;
 	union {
 		struct {
-			unsigned char broken : 2;
 			unsigned char identified : 1;
-			unsigned char charges : 5;
+			unsigned char equiped : 1;
+			unsigned char charges : 4;
 		};
 		unsigned char data;
 	};

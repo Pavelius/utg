@@ -8,10 +8,15 @@ void creature::clear() {
 
 void creature::create() {
 	clear();
-	abilities[0] = 14;
-	abilities[1] = 13;
-	abilities[2] = 13;
-	abilities[3] = 13;
-	abilities[4] = 13;
-	abilities[5] = 13;
+	basic.abilities[0] = 14;
+	basic.abilities[1] = 13;
+	basic.abilities[2] = 13;
+	basic.abilities[3] = 13;
+	basic.abilities[4] = 13;
+	basic.abilities[5] = 13;
+}
+
+void creature::update() {
+	copy(basic);
+	statable::update();
 }

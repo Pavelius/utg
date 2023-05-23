@@ -57,6 +57,15 @@
     <ClInclude Include="skilli.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="spell.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="material.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="enumerator.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +110,12 @@
     <ClCompile Include="resable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="statable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="enumerator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Items.txt">
@@ -116,6 +131,12 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="rules\Tables.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Materials.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Abilities.txt">
       <Filter>rules</Filter>
     </Text>
   </ItemGroup>

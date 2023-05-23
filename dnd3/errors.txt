@@ -1,7 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 13: Can't find variant `AbilityBonus`
- Line 15: Can't find variant `AbilityBonus`
- Line 17: Can't find variant `AbilityBonus`
- Line 19: Can't find variant `AbilityBonus`
- Line 21: Can't find variant `AbilityBonus`
- Line 23: Can't find variant `AbilityBonus`
+﻿In file `rules/Abilities.txt`:
+ Line 25: Can't find variant `Level`
