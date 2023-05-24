@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "calculator.h"
 #include "draw.h"
 #include "draw_strategy.h"
 #include "numberlist.h"

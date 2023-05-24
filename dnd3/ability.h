@@ -6,7 +6,5 @@
 struct abilityi : nameable {
 	variants	formula, round;
 };
-struct challengei {
-	variant		roll;
-	char		dc;
-};
+extern variant* script_begin;
+extern variant* script_end;

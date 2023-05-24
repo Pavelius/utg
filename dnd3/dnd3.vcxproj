@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="background.h" />
+    <ClInclude Include="calculator.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="item.h" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="calculator.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="enumerator.cpp" />
     <ClCompile Include="information.cpp" />

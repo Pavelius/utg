@@ -66,6 +66,9 @@
     <ClInclude Include="enumerator.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="calculator.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,6 +117,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="enumerator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="calculator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

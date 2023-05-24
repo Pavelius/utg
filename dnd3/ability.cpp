@@ -7,6 +7,9 @@
 
 const int ability_maximum = 64;
 
+variant* script_begin;
+variant* script_end;
+
 int ability_result;
 int result_param[4];
 
@@ -35,8 +38,12 @@ static void calculate(statable* p, variant v) {
 }
 
 static void calculate(statable* p, variants source) {
-	for(auto v : source)
-		calculate(p, v);
+	pushvalue push_b(script_begin, source.begin());
+	pushvalue push_e(script_end, source.end());
+	while(script_begin < script_end) {
+		calculate(p, *script_begin);
+		script_begin++;
+	}
 }
 
 void statable::update() {
