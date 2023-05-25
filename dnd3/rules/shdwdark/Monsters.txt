@@ -1,0 +1,9 @@
+#Monster level(1)
+
+Orc
+ abilities AC+15 HP+4 Str+2 Int-1 Cha-1
+
+#Monster level(2)
+
+Skeleton
+ abilities AC+13 HP+11 Str+1 Con+2 Int-2 Cha-1

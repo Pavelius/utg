@@ -10,6 +10,9 @@
     <Filter Include="rules">
       <UniqueIdentifier>{94dc90c1-ab40-4faf-a164-f0b9c4ab8c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rules\Shadow Dark">
+      <UniqueIdentifier>{b1fa4b3d-350d-481d-869a-83e99353eaa1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">
@@ -69,6 +72,12 @@
     <ClInclude Include="calculator.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="consumable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,28 +131,37 @@
     <ClCompile Include="calculator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="consumable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="rules\Items.txt">
-      <Filter>rules</Filter>
-    </Text>
-    <Text Include="rules\Basic.txt">
-      <Filter>rules</Filter>
-    </Text>
     <Text Include="errors.txt">
       <Filter>rules</Filter>
     </Text>
     <Text Include="locale\ru\Names.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="rules\Tables.txt">
+    <Text Include="rules\Basic.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="rules\Materials.txt">
-      <Filter>rules</Filter>
+    <Text Include="rules\shdwdark\Core.txt">
+      <Filter>rules\Shadow Dark</Filter>
     </Text>
-    <Text Include="rules\Abilities.txt">
-      <Filter>rules</Filter>
+    <Text Include="rules\shdwdark\Abilities.txt">
+      <Filter>rules\Shadow Dark</Filter>
+    </Text>
+    <Text Include="rules\shdwdark\Items.txt">
+      <Filter>rules\Shadow Dark</Filter>
+    </Text>
+    <Text Include="rules\shdwdark\Materials.txt">
+      <Filter>rules\Shadow Dark</Filter>
+    </Text>
+    <Text Include="rules\shdwdark\Tables.txt">
+      <Filter>rules\Shadow Dark</Filter>
+    </Text>
+    <Text Include="rules\shdwdark\Monsters.txt">
+      <Filter>rules\Shadow Dark</Filter>
     </Text>
   </ItemGroup>
 </Project>

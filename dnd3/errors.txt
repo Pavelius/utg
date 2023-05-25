@@ -1,2 +1,2 @@
-﻿In file `rules/Abilities.txt`:
- Line 25: Can't find variant `Level`
+﻿In file `rules/shdwdark/Abilities.txt`:
+ Line 4: Not found requisit `creating`

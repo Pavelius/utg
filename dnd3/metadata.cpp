@@ -8,6 +8,7 @@
 #include "item.h"
 #include "list.h"
 #include "material.h"
+#include "monster.h"
 #include "numberlist.h"
 #include "room.h"
 #include "script.h"
@@ -21,6 +22,7 @@ BSDATAC(backgroundi, 64)
 BSDATAC(creature, 512)
 BSDATAC(enumi, 2048)
 BSDATAC(itemi, 512)
+BSDATAC(monsteri, 256)
 BSDATAC(groupi, 256)
 BSDATAC(materiali, 32)
 BSDATAC(roomi, 16)
@@ -31,9 +33,12 @@ NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
-	BSREQ(formula), BSREQ(round),
+	BSREQ(creating), BSREQ(formula), BSREQ(round),
 	{}};
 BSMETA(backgroundi) = {
+	BSREQ(id),
+	{}};
+BSMETA(consumablei) = {
 	BSREQ(id),
 	{}};
 BSMETA(groupi) = {
@@ -55,6 +60,11 @@ BSMETA(magici) = {
 BSMETA(materiali) = {
 	BSREQ(id),
 	{}};
+BSMETA(monsteri) = {
+	BSREQ(id),
+	BSREQ(level),
+	BSREQ(abilities),
+	{}};
 BSMETA(numberlist) = {
 	BSREQ(id),
 	{}};
@@ -75,12 +85,13 @@ BSMETA(weaponi) = {
 
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1), 0, 0},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Background", VAR(backgroundi, 1), 0, 0},
 	{"Group", VAR(groupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
 	{"List", VAR(listi, 1), 0, 0},
 	{"Material", VAR(materiali, 1), 0, 0},
+	{"Monster", VAR(monsteri, 1), 0, 0},
 	{"NumberList", VAR(numberlist, 1), 0, 0},
 	{"Rate", VAR(magici, 1), 0, 0},
 	{"Script", VAR(script, 1), 0, 0},

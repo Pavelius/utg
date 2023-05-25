@@ -144,10 +144,12 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="background.h" />
     <ClInclude Include="calculator.h" />
+    <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="monster.h" />
     <ClInclude Include="numberlist.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="magic.h" />
@@ -164,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="calculator.cpp" />
+    <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="enumerator.cpp" />
     <ClCompile Include="information.cpp" />
@@ -188,11 +191,13 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
-    <Text Include="rules\Abilities.txt" />
     <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Items.txt" />
-    <Text Include="rules\Materials.txt" />
-    <Text Include="rules\Tables.txt" />
+    <Text Include="rules\shdwdark\Abilities.txt" />
+    <Text Include="rules\shdwdark\Core.txt" />
+    <Text Include="rules\shdwdark\Items.txt" />
+    <Text Include="rules\shdwdark\Materials.txt" />
+    <Text Include="rules\shdwdark\Monsters.txt" />
+    <Text Include="rules\shdwdark\Tables.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

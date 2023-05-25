@@ -1,0 +1,72 @@
+#Ability
+
+Str
+ creating Str Multiply+2 Number+10 AddRandom+1
+Dex
+ creating Dex Multiply+2 Number+10 AddRandom+1
+Con
+ creating Con Multiply+2 Number+10 AddRandom+1
+Int
+ creating Int Multiply+2 Number+10 AddRandom+1
+Wis
+ creating Wis Multiply+2 Number+10 AddRandom+1
+Cha
+ creating Cha Multiply+2 Number+10 AddRandom+1
+
+Level
+
+#List
+
+StrBonus
+ elements Str AbilityBonus
+DexBonus
+ elements Dex AbilityBonus
+ConBonus
+ elements Con AbilityBonus
+IntBonus
+ elements Int AbilityBonus
+WisBonus
+ elements Wis AbilityBonus
+ChaBonus
+ elements Cha AbilityBonus
+HalfLevel
+ elements Level Divide+2
+
+#Ability
+
+Enqumbrance
+Talents
+
+Melee
+ formula StrBonus
+MeleeDamage
+Range
+ formula DexBonus
+RangeDamage
+AC
+ formula DexBonus Number+10
+HP
+ formula ConBonus Level
+
+#Background
+
+Urchin
+Wanted
+CultInitiate
+ThievesGuild
+Banished
+Orphaned
+WizardsApprentice
+Jeweler
+Herbalist
+Barbarian
+Mercenary
+Sailor
+Acolyte
+Soldier
+Ranger
+Scout
+Minstrel
+Scholar
+Noble
+Chirurgeon

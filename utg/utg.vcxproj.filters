@@ -515,5 +515,8 @@
     <ClInclude Include="compiler.h">
       <Filter>Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="flagux.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

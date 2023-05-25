@@ -1,0 +1,4 @@
+#include "rules/shdwdark/Abilities.txt"
+#include "rules/shdwdark/Materials.txt"
+#include "rules/shdwdark/Items.txt"
+#include "rules/shdwdark/Monsters.txt"

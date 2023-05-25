@@ -11,12 +11,9 @@ void update_ui();
 static void main_scene() {
 }
 
-static void add_creature(point index, const char* avatar) {
-	player = bsdata<creature>::add();;
-	player->create();
-	player->setavatar(avatar);
+static void add_creature(point index, const char* id) {
+	player->create(id);
 	player->index = index;
-	player->update();
 }
 
 static void add_map(point index, const char* avatar) {
@@ -25,7 +22,7 @@ static void add_map(point index, const char* avatar) {
 }
 
 static void test_creature() {
-	add_creature({12, 10}, "me1");
+	add_creature({12, 10}, "Skeleton");
 	add_map({0, 0}, "hills");
 	update_ui();
 }
@@ -41,7 +38,7 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	numberlist::read("rules/Tables.txt");
+	numberlist::read("rules/shdwdark/Tables.txt");
 	return draw::strategy(start_main, initialize);
 }
 

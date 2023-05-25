@@ -1,4 +1,6 @@
 #include "creature.h"
+#include "monster.h"
+#include "script.h"
 
 creature* player;
 
@@ -14,6 +16,22 @@ void creature::create() {
 	basic.abilities[3] = 13;
 	basic.abilities[4] = 13;
 	basic.abilities[5] = 13;
+}
+
+void creature::create(const char* id) {
+	create(bsdata<monsteri>::find(id));
+}
+
+void creature::create(const monsteri* pm) {
+	if(!pm)
+		return;
+	player = bsdata<creature>::add();
+	player->clear();
+	script::run(pm->abilities);
+	player->basic.setability("Level", pm->level);
+	player->basic.creating();
+	player->setavatar(pm->id);
+	player->update();
 }
 
 void creature::update() {

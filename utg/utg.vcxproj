@@ -252,6 +252,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="drawable.h" />
+    <ClInclude Include="flagux.h" />
     <ClInclude Include="stringlist.h" />
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="chooseoption.h" />
