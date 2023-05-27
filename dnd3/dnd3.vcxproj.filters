@@ -13,6 +13,9 @@
     <Filter Include="rules\Shadow Dark">
       <UniqueIdentifier>{b1fa4b3d-350d-481d-869a-83e99353eaa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{3304043e-1aa9-4d9f-bfc7-aae4fe604f96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">

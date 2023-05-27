@@ -7,4 +7,5 @@
 struct monsteri : nameable {
 	char		level;
 	variants	abilities;
+	void		paint() const;
 };

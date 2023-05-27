@@ -1,8 +1,10 @@
 #include "crt.h"
 #include "creature.h"
 #include "draw.h"
+#include "draw_figure.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
+#include "monster.h"
 #include "room.h"
 #include "widget.h"
 
@@ -26,6 +28,12 @@ void creature::paint() const {
 	circle(32);
 }
 
+void monsteri::paint() const {
+	auto pa = gres(id, "art/avatars");
+	imager(caret.x, caret.y, pa, 0, 32);
+	circle(32);
+}
+
 static void object_painting(const object* pv) {
 	if(bsdata<roomi>::have(pv->data))
 		((roomi*)pv->data)->paint();
@@ -33,17 +41,29 @@ static void object_painting(const object* pv) {
 		((creature*)pv->data)->paint();
 }
 
-static void show_panel(int dx, int dy) {
+static void paint_border(const void* pv) {
 	auto push_caret = caret;
+	if(ishilite(width / 2)) {
+		hilite_object = pv;
+		hilite_position = caret;
+		hilite_type = figure::Circle;
+		hilite_size = width / 2 + 2;
+	}
+	caret = push_caret;
+}
+
+static void show_panel(int dx, int dy) {
+	rectpush push;
+	height = dy; width = dx;
 	caret.y += metrics::padding;
 	caret.x += metrics::padding;
 	caret.x += dx / 2;
 	caret.y += dy / 2;
-	for(auto& e : bsdata<creature>()) {
+	for(auto& e : bsdata<monsteri>()) {
+		paint_border(&e);
 		e.paint();
-		caret.x += dx + metrics::padding;
+		caret.x += width + metrics::padding;
 	}
-	caret = push_caret;
 }
 
 void status_info() {
@@ -61,6 +81,7 @@ static void ui_background() {
 }
 
 static void ui_finish() {
+	painthilite();
 	inputcamera();
 }
 
