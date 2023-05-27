@@ -8,6 +8,7 @@
 #include "item.h"
 #include "list.h"
 #include "material.h"
+#include "modifier.h"
 #include "monster.h"
 #include "numberlist.h"
 #include "room.h"
@@ -61,6 +62,9 @@ BSMETA(magici) = {
 BSMETA(materiali) = {
 	BSREQ(id),
 	{}};
+BSMETA(modifieri) = {
+	BSREQ(id),
+	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),
 	BSREQ(level),
@@ -88,15 +92,16 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Background", VAR(backgroundi, 1), 0, 0},
-	{"Consumable", VAR(consumablei, 1), 0, 0},
+	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
 	{"Group", VAR(groupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
-	{"List", VAR(listi, 1), 0, 0},
-	{"Material", VAR(materiali, 1), 0, 0},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
+	{"Material", VAR(materiali, 1), 0, 0, fnscript<materiali>},
+	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1), 0, 0},
 	{"NumberList", VAR(numberlist, 1), 0, 0},
 	{"Rate", VAR(magici, 1), 0, 0},
-	{"Script", VAR(script, 1), 0, 0},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

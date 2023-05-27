@@ -30,6 +30,10 @@ template<> void fnscript<materiali>(int index, int value) {
 	}
 }
 
+static int getmaximum(variant v) {
+
+}
+
 static void add_random(int counter) {
 	if(!counter)
 		return;
