@@ -20,3 +20,4 @@ struct creature : resable, statable, consumable, enumerable, wearable {
 	void		update();
 };
 extern creature* player;
+extern creature* party[8];

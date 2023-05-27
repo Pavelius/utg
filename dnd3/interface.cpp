@@ -33,10 +33,24 @@ static void object_painting(const object* pv) {
 		((creature*)pv->data)->paint();
 }
 
+static void show_panel(int dx, int dy) {
+	auto push_caret = caret;
+	caret.y += metrics::padding;
+	caret.x += metrics::padding;
+	caret.x += dx / 2;
+	caret.y += dy / 2;
+	for(auto& e : bsdata<creature>()) {
+		e.paint();
+		caret.x += dx + metrics::padding;
+	}
+	caret = push_caret;
+}
+
 void status_info() {
 	auto push_height = height;
 	height = metrics::padding * 2 + 64;
-	gradv(colors::form.lighten(), colors::form.darken());
+	gradv(colors::border.lighten().lighten(), colors::border.darken().darken());
+	show_panel(64, 64);
 	caret.y += height;
 	height = push_height;
 }
@@ -46,10 +60,16 @@ static void ui_background() {
 	paintobjects();
 }
 
+static void ui_finish() {
+	inputcamera();
+}
+
 void initialize_ui() {
 	initialize_png();
 	pbackground = ui_background;
+	pfinish = ui_finish;
 	object::painting = object_painting;
+	metrics::padding = 8;
 }
 
 static draworder* modify(object* po) {

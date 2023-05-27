@@ -28,6 +28,7 @@ static void test_creature() {
 }
 
 static void start_main() {
+	metrics::padding = 8;
 	test_creature();
 	draw::scene(main_scene);
 }

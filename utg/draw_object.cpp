@@ -12,8 +12,9 @@ BSDATAC(draworder, max_object_count)
 
 draw::object::fnpaint draw::object::painting;
 object object::def;
-static rect	last_screen;
+static rect objects_screen;
 static unsigned long timestamp, timestamp_last;
+static point camera_drag;
 
 long distance(point from, point to);
 
@@ -159,8 +160,8 @@ void draw::paintobjects() {
 	static object* source[max_object_count];
 	auto push_caret = caret;
 	auto push_clip = clipping;
-	last_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
-	setclip(last_screen);
+	objects_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
+	setclip(objects_screen);
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
 	for(size_t i = 0; i < count; i++) {
@@ -222,12 +223,12 @@ void draw::clearobjects() {
 
 static rect getcorrectarea(int offs) {
 	return {camera.x + offs, camera.y + offs,
-		camera.x + last_screen.width() - offs,
-		camera.y + last_screen.height() - offs};
+		camera.x + objects_screen.width() - offs,
+		camera.y + objects_screen.height() - offs};
 }
 
 static void correct_camera(point result, int offs) {
-	if(last_screen) {
+	if(objects_screen) {
 		rect area = getcorrectarea(offs);
 		if(!result.in(area)) {
 			if(result.x < area.x1)
@@ -266,10 +267,10 @@ void drawable::move(point goal, int speed, int correct) {
 }
 
 static point getcameraorigin(point v) {
-	auto w = last_screen.width();
+	auto w = objects_screen.width();
 	if(!w)
 		w = getwidth();
-	auto h = last_screen.height();
+	auto h = objects_screen.height();
 	if(!h)
 		h = getheight();
 	v.x -= w / 2;
@@ -281,8 +282,39 @@ void draw::setcamera(point v) {
 	camera = getcameraorigin(v);
 }
 
+void draw::inputcamera() {
+	const int step = 32;
+	if(!hot.mouse.in(objects_screen))
+		return;
+	switch(hot.key) {
+	case KeyLeft: execute(cbsetsht, camera.x - step, 0, &camera.x); break;
+	case KeyRight: execute(cbsetsht, camera.x + step, 0, &camera.x); break;
+	case KeyUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseLeft:
+		if(hot.pressed && !hot.hilite) {
+			dragbegin(&camera);
+			camera_drag = camera;
+		}
+		break;
+	default:
+		if(dragactive(&camera)) {
+			hot.cursor = cursor::All;
+			if(hot.mouse.x >= 0 && hot.mouse.y >= 0)
+				camera = camera_drag + (dragmouse - hot.mouse);
+		}
+		break;
+	}
+}
+
+bool draw::mouseinobjects() {
+	return hot.mouse.in(objects_screen);
+}
+
 bool draw::cameravisible(point goal, int border) {
-	rect rc = {camera.x, camera.y, camera.x + last_screen.width(), camera.y + last_screen.height()};
+	rect rc = {camera.x, camera.y, camera.x + objects_screen.width(), camera.y + objects_screen.height()};
 	rc.offset(-border);
 	return goal.in(rc);
 }

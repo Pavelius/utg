@@ -3,6 +3,7 @@
 #include "script.h"
 
 creature* player;
+creature* party[8];
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));

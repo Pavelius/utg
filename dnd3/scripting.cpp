@@ -59,11 +59,54 @@ static void set_param(int counter) {
 		result_param[counter] = ability_result;
 }
 
+static bool in_party(const creature* p) {
+	for(auto pv : party) {
+		if(pv == p)
+			return true;
+	}
+	return false;
+}
+
+static void shrink_party() {
+	auto ps = party;
+	auto pb = party;
+	auto pe = pb + sizeof(party) / sizeof(party[0]);
+	for(; pb < pe; pb++) {
+		if(!(*pb))
+			continue;
+		*ps++ = *pb;
+	}
+	while(ps < pe)
+		*ps++ = 0;
+}
+
+void join_party(int bonus) {
+	if(bonus >= 0) {
+		if(in_party(player))
+			return;
+		for(auto& pv : party) {
+			if(!pv) {
+				pv = player;
+				return;
+			}
+		}
+	} else {
+		for(auto& pv : party) {
+			if(pv==player) {
+				pv = 0;
+				shrink_party();
+				return;
+			}
+		}
+	}
+}
+
 BSDATA(script) = {
+	{"AddRandom", add_random},
 	{"Divide", divide},
+	{"JoinParty", join_party},
 	{"Number", number},
 	{"Multiply", multiply},
-	{"AddRandom", add_random},
 	{"SetParam", set_param}
 };
 BSDATAF(script)

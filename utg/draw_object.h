@@ -35,6 +35,8 @@ struct object : drawable {
 	void			paint() const;
 };
 bool cameravisible(point goal, int border = 48);
+void inputcamera();
+bool mouseinobjects();
 void clearobjects();
 void focusing(point goal);
 void paintobjects();

@@ -8,7 +8,6 @@
 
 using namespace draw;
 
-static point camera_drag;
 static int window_width = 400, window_height = 400;
 
 void set_dark_theme();
@@ -42,32 +41,8 @@ static void statusbar() {
 	status_info();
 	if(caret) {
 		linedown();
-		movedown(1);
-	}
-}
-
-static void camera_finish() {
-	const int step = 32;
-	switch(hot.key) {
-	case KeyLeft: execute(cbsetsht, camera.x - step, 0, &camera.x); break;
-	case KeyRight: execute(cbsetsht, camera.x + step, 0, &camera.x); break;
-	case KeyUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
-	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
-	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
-	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
-	case MouseLeft:
-		if(hot.pressed && !hot.hilite) {
-			dragbegin(&camera);
-			camera_drag = camera;
-		}
-		break;
-	default:
-		if(dragactive(&camera)) {
-			hot.cursor = cursor::All;
-			if(hot.mouse.x >= 0 && hot.mouse.y >= 0)
-				camera = camera_drag + (dragmouse - hot.mouse);
-		}
-		break;
+		draw::caret.y += 1;
+		height -= draw::caret.y;
 	}
 }
 
@@ -258,10 +233,6 @@ void draw::strategy_background() {
 	statusbar();
 }
 
-static void finish() {
-	camera_finish();
-}
-
 static void tipsposition(const char* format) {
 	textfs(format);
 	auto x2 = getwidth(), y2 = getheight();
@@ -314,6 +285,8 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 	if(!proc)
 		return -1;
 	set_dark_theme();
+	metrics::border = 5;
+	metrics::padding = 1;
 	bsreq::read("rules/Basic.txt");
 	initialize_translation("ru");
 	if(afterread)
@@ -326,11 +299,8 @@ int draw::strategy(fnevent proc, fnevent afterread) {
 		pbackground = strategy_background;
 	answers::beforepaint = answers_beforepaint;
 	answers::paintcell = menubt;
-	pfinish = finish;
 	ptips = tips;
 	awindow.flags = WFResize | WFMinmax;
-	metrics::border = 5;
-	metrics::padding = 1;
 	initialize(getnm("AppTitle"));
 	setnext(proc);
 	start();
