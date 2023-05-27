@@ -48,6 +48,10 @@ AC
 HP
  formula ConBonus Level
 
+#Consumable
+
+Hits maximum(HP)
+
 #Background
 
 Urchin

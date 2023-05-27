@@ -1,2 +1,2 @@
 ﻿In file `rules/shdwdark/Abilities.txt`:
- Line 4: Not found requisit `creating`
+ Line 54: Expected line feed

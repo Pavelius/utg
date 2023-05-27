@@ -1,6 +1,7 @@
 #include "condition.h"
 #include "pushvalue.h"
 #include "main.h"
+#include "script.h"
 
 entitya			querry, onboard;
 static playera	players;
@@ -856,7 +857,8 @@ static void move_ship(int bonus) {
 	choose_stop = true;
 }
 
-static void apply_for_each_player(variant v) {
+static void for_each_player(int bonus) {
+	auto v = *script_begin++;
 	auto push_last = player;
 	for(auto p : players) {
 		player = p;
@@ -865,11 +867,8 @@ static void apply_for_each_player(variant v) {
 	player = push_last;
 }
 
-static void for_each_player(int bonus) {
-	script::apply = apply_for_each_player;
-}
-
-static void apply_for_each_troop(variant v) {
+static void for_each_troop(int bonus) {
+	auto v = *script_begin++;
 	auto push = querry;
 	for(auto p : push) {
 		lasttroop = (troop*)p;
@@ -877,21 +876,14 @@ static void apply_for_each_troop(variant v) {
 	}
 }
 
-static void for_each_troop(int bonus) {
-	script::apply = apply_for_each_troop;
-}
-
-static void apply_for_each_planet(variant v) {
+static void for_each_planet(int bonus) {
+	auto v = *script_begin++; 
 	auto push_last = planeti::last;
 	for(auto p : querry) {
 		planeti::last = p->getplanet();
 		script::run(v);
 	}
 	planeti::last = push_last;
-}
-
-static void for_each_planet(int bonus) {
-	script::apply = apply_for_each_planet;
 }
 
 void playeri::apply(const variants& source) {

@@ -1,3 +1,2 @@
 ﻿In file `rules/Scenarios.txt`:
  Line 4: Expected token `#`
- Line 4: Expected identifier

@@ -40,6 +40,7 @@ BSMETA(backgroundi) = {
 	{}};
 BSMETA(consumablei) = {
 	BSREQ(id),
+	BSREQ(maximum),
 	{}};
 BSMETA(groupi) = {
 	BSREQ(id),
@@ -87,6 +88,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Background", VAR(backgroundi, 1), 0, 0},
+	{"Consumable", VAR(consumablei, 1), 0, 0},
 	{"Group", VAR(groupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
 	{"List", VAR(listi, 1), 0, 0},

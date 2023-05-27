@@ -1,8 +1,8 @@
 #include "script.h"
 #include "list.h"
 
-script::fnapply script::apply;
-bool script::stop;
+variant* script_begin;
+variant* script_end;
 
 template<> void fnscript<script>(int value, int bonus) {
 	bsdata<script>::elements[value].proc(bonus);
@@ -21,6 +21,10 @@ template<> bool fntest<listi>(int value, int bonus) {
 	return script::allow(bsdata<listi>::elements[value].elements);
 }
 
+void script::stop() {
+	script_begin = script_end;
+}
+
 void script::run(const char* id, int bonus) {
 	auto p = bsdata<script>::find(id);
 	if(p && p->proc)
@@ -34,21 +38,14 @@ void script::run(variant v) {
 }
 
 void script::run(const variants& source) {
-	if(stop)
-		return;
-	auto push_stop = stop;
-	auto push_apply = apply;
-	for(auto v : source) {
-		if(stop)
-			break;
-		if(apply) {
-			apply(v);
-			apply = 0;
-		} else
-			run(v);
-	}
-	apply = push_apply;
-	stop = push_stop;
+	auto push_begin = script_begin;
+	auto push_end = script_end;
+	script_begin = source.begin();
+	script_end = source.end();
+	while(script_begin < script_end)
+		run(*script_begin++);
+	script_end = push_end;
+	script_begin = push_begin;
 }
 
 bool script::allow(variant v) {

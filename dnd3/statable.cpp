@@ -8,9 +8,6 @@
 
 #define ISU(F, V) ((F & FG(V))!=0)
 
-variant* script_begin;
-variant* script_end;
-
 int ability_result;
 int result_param[4];
 

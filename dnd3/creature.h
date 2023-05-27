@@ -1,6 +1,7 @@
 #include "consumable.h"
 #include "resable.h"
 #include "statable.h"
+#include "variant.h"
 #include "wearable.h"
 
 #pragma once
