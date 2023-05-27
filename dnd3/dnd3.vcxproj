@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +150,7 @@
     <ClInclude Include="enumerator.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="numberlist.h" />
     <ClInclude Include="range.h" />
@@ -174,6 +176,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="modifier.cpp" />
     <ClCompile Include="numberlist.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="magic.cpp" />
