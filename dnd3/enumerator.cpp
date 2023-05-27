@@ -1,4 +1,16 @@
+#include "bsreq.h"
+#include "crt.h"
 #include "enumerator.h"
+
+BSDATAC(enumi, 4096)
+BSDATAC(enumgroupi, 256)
+
+BSMETA(enumgroupi) = {
+	BSREQ(id),
+	{}};
+BSMETA(enumi) = {
+	BSREQ(id), BSREQ(type),
+	{}};
 
 static void auto_increment(enumi* pb, enumi* pe, variant type, int index) {
 	while(pb < pe) {

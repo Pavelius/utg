@@ -143,8 +143,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
-    <ClInclude Include="background.h" />
     <ClInclude Include="calculator.h" />
+    <ClInclude Include="chooseable.h" />
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="enumerator.h" />
@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="calculator.cpp" />
+    <ClCompile Include="chooseable.cpp" />
     <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="enumerator.cpp" />

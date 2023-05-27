@@ -45,9 +45,6 @@
     <ClInclude Include="numberlist.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="background.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="resable.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -79,6 +76,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="modifier.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="chooseable.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -138,6 +138,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="modifier.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="chooseable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -33,6 +33,14 @@ static void object_painting(const object* pv) {
 		((creature*)pv->data)->paint();
 }
 
+void status_info() {
+	auto push_height = height;
+	height = metrics::padding * 2 + 64;
+	gradv(colors::form.lighten(), colors::form.darken());
+	caret.y += height;
+	height = push_height;
+}
+
 static void ui_background() {
 	strategy_background();
 	paintobjects();

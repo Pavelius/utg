@@ -1,4 +1,6 @@
 #include "consumable.h"
+#include "enumerator.h"
+#include "gender.h"
 #include "resable.h"
 #include "statable.h"
 #include "variant.h"
@@ -8,7 +10,7 @@
 
 struct monsteri;
 
-struct creature : resable, statable, consumable, wearable {
+struct creature : resable, statable, consumable, enumerable, wearable {
 	statable	basic;
 	void		clear();
 	void		create();

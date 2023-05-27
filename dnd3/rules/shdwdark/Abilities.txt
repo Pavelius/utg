@@ -52,7 +52,19 @@ HP
 
 Hits maximum(HP)
 
-#Background
+#Reference
+
+Alignment
+Background
+Class
+
+#Element type(Alignment)
+
+Lawful
+Neutral
+Chaotic
+
+#Element type(Background)
 
 Urchin
 Wanted

@@ -1,10 +1,9 @@
 #include "ability.h"
-#include "background.h"
 #include "bsreq.h"
+#include "chooseable.h"
 #include "creature.h"
 #include "crt.h"
 #include "enumerator.h"
-#include "group.h"
 #include "item.h"
 #include "list.h"
 #include "material.h"
@@ -19,12 +18,9 @@
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 
-BSDATAC(backgroundi, 64)
 BSDATAC(creature, 512)
-BSDATAC(enumi, 2048)
 BSDATAC(itemi, 512)
 BSDATAC(monsteri, 256)
-BSDATAC(groupi, 256)
 BSDATAC(materiali, 32)
 BSDATAC(roomi, 16)
 BSDATAD(variant)
@@ -36,15 +32,12 @@ BSMETA(abilityi) = {
 	BSREQ(id),
 	BSREQ(creating), BSREQ(formula), BSREQ(round),
 	{}};
-BSMETA(backgroundi) = {
-	BSREQ(id),
+BSMETA(enumi) = {
+	BSREQ(id), BSREQ(type),
 	{}};
 BSMETA(consumablei) = {
 	BSREQ(id),
 	BSREQ(maximum),
-	{}};
-BSMETA(groupi) = {
-	BSREQ(id),
 	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
@@ -91,9 +84,9 @@ BSMETA(weaponi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
-	{"Background", VAR(backgroundi, 1), 0, 0},
+	{"Element", VAR(enumi, 1), 0, 0},
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
-	{"Group", VAR(groupi, 1), 0, 0},
+	{"Group", VAR(enumgroupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Material", VAR(materiali, 1), 0, 0, fnscript<materiali>},
@@ -101,6 +94,7 @@ BSDATA(varianti) = {
 	{"Monster", VAR(monsteri, 1), 0, 0},
 	{"NumberList", VAR(numberlist, 1), 0, 0},
 	{"Rate", VAR(magici, 1), 0, 0},
+	{"Reference", VAR(chooseablei, 1), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Widget", VAR(widget, 1)},
 };

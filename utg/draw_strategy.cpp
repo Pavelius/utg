@@ -9,7 +9,6 @@
 using namespace draw;
 
 static point camera_drag;
-static point objects_paint;
 static int window_width = 400, window_height = 400;
 
 void set_dark_theme();
@@ -45,7 +44,6 @@ static void statusbar() {
 		linedown();
 		movedown(1);
 	}
-	objects_paint = caret;
 }
 
 static void camera_finish() {
