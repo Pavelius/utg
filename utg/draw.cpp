@@ -976,8 +976,12 @@ bool draw::dragactive() {
 	return drag_object != 0;
 }
 
+const void* draw::getdragactive() {
+	return drag_object;
+}
+
 bool draw::dragactive(const void* p) {
-	if(drag_object == p) {
+	if(p && drag_object == p) {
 		if(!hot.pressed || hot.key == KeyEscape) {
 			drag_object = 0;
 			hot.key = InputUpdate;

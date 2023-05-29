@@ -1,7 +1,6 @@
 #include "crt.h"
 #include "creature.h"
 #include "draw.h"
-#include "draw_figure.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "monster.h"
@@ -34,22 +33,35 @@ void monsteri::paint() const {
 	circle(32);
 }
 
+static void object_painting_data(const void* pd) {
+	if(bsdata<roomi>::have(pd))
+		((roomi*)pd)->paint();
+	else if(bsdata<creature>::have(pd))
+		((creature*)pd)->paint();
+	else if(bsdata<monsteri>::have(pd))
+		((monsteri*)pd)->paint();
+}
+
 static void object_painting(const object* pv) {
-	if(bsdata<roomi>::have(pv->data))
-		((roomi*)pv->data)->paint();
-	else if(bsdata<creature>::have(pv->data))
-		((creature*)pv->data)->paint();
+	object_painting_data(pv->data);
 }
 
 static void paint_border(const void* pv) {
 	auto push_caret = caret;
 	if(ishilite(width / 2)) {
 		hilite_object = pv;
-		hilite_position = caret;
-		hilite_type = figure::Circle;
-		hilite_size = width / 2 + 2;
 	}
 	caret = push_caret;
+}
+
+static void paint_drag_target() {
+	auto pv = getdragactive();
+	if(dragactive(pv)) {
+		auto push_caret = caret;
+		caret = hot.mouse;
+		object_painting_data(pv);
+		caret = push_caret;
+	}
 }
 
 static void show_panel(int dx, int dy) {
@@ -60,8 +72,9 @@ static void show_panel(int dx, int dy) {
 	caret.x += dx / 2;
 	caret.y += dy / 2;
 	for(auto& e : bsdata<monsteri>()) {
-		paint_border(&e);
-		e.paint();
+		if(hot.pressed && (hot.key == MouseLeft) && ishilite(32))
+			dragbegin(&e);
+		object_painting_data(&e);
 		caret.x += width + metrics::padding;
 	}
 }
@@ -78,10 +91,10 @@ void status_info() {
 static void ui_background() {
 	strategy_background();
 	paintobjects();
+	paint_drag_target();
 }
 
 static void ui_finish() {
-	painthilite();
 	inputcamera();
 }
 

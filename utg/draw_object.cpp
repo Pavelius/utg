@@ -126,8 +126,7 @@ void draw::splashscreen(unsigned milliseconds) {
 void object::paint() const {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
-	if(painting)
-		painting(this);
+	painting(this);
 	draw::alpha = push_alpha;
 }
 
@@ -158,6 +157,8 @@ static void sortobjects(object** pb, size_t count) {
 
 void draw::paintobjects() {
 	static object* source[max_object_count];
+	if(!object::painting)
+		return;
 	auto push_caret = caret;
 	auto push_clip = clipping;
 	objects_screen = {caret.x, caret.y, caret.x + width, caret.y + height};

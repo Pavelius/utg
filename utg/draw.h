@@ -194,6 +194,7 @@ void					fhexagon();
 void					fillform();
 void					fillwindow();
 int						getbpp();
+const void*				getdragactive();
 inline rect				getrect() { return {caret.x, caret.y, caret.x + width, caret.y + height}; }
 int						getheight();
 int						getwidth();
