@@ -12,6 +12,8 @@ BSDATAC(draworder, max_object_count)
 
 draw::object::fnpaint draw::object::painting;
 object object::def;
+point objects_mouse;
+
 static rect objects_screen;
 static unsigned long timestamp, timestamp_last;
 static point camera_drag;
@@ -155,12 +157,13 @@ static void sortobjects(object** pb, size_t count) {
 	qsort(pb, count, sizeof(pb[0]), compare);
 }
 
-void draw::paintobjects() {
+void draw::paint_objects() {
 	static object* source[max_object_count];
 	if(!object::painting)
 		return;
 	auto push_caret = caret;
 	auto push_clip = clipping;
+	objects_mouse = camera + hot.mouse;
 	objects_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
 	setclip(objects_screen);
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
@@ -180,7 +183,7 @@ void object::initialize() {
 }
 
 void* draw::chooseobject() {
-	draw::scene(paintobjects);
+	draw::scene(paint_objects);
 	return (void*)getresult();
 }
 
@@ -294,7 +297,7 @@ void draw::inputcamera() {
 	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
-	case MouseLeft:
+	case MouseRight:
 		if(hot.pressed && !hot.hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;

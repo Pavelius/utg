@@ -276,7 +276,7 @@ static void paint_tips() {
 }
 
 static void tips() {
-	painthilite();
+	paint_hilite_figure();
 	paint_tips();
 }
 

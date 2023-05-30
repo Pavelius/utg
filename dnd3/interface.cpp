@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "creature.h"
 #include "draw.h"
+#include "draw_figure.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "monster.h"
@@ -8,6 +9,8 @@
 #include "widget.h"
 
 using namespace draw;
+
+static void* current_object;
 
 void initialize_png();
 
@@ -46,12 +49,31 @@ static void object_painting(const object* pv) {
 	object_painting_data(pv->data);
 }
 
-static void paint_border(const void* pv) {
-	auto push_caret = caret;
+static void paint_selected_border() {
+	auto push_fore = fore;
+	fore = colors::button;
+	circle(34);
+	circle(33);
+	circle(32);
+	fore = push_fore;
+}
+
+static void paint_hilite_border() {
+	auto push_fore = fore;
+	fore = colors::active;
+	circle(35);
+	fore = push_fore;
+}
+
+static void paint_hilite_object(const void* pv) {
+	if(current_object == pv)
+		paint_selected_border();
 	if(ishilite(width / 2)) {
 		hilite_object = pv;
+		paint_hilite_border();
+		if(hot.key == MouseLeft && hot.pressed)
+			execute(cbsetptr, (long)pv, 0, &current_object);
 	}
-	caret = push_caret;
 }
 
 static void paint_drag_target() {
@@ -72,9 +94,8 @@ static void show_panel(int dx, int dy) {
 	caret.x += dx / 2;
 	caret.y += dy / 2;
 	for(auto& e : bsdata<monsteri>()) {
-		if(hot.pressed && (hot.key == MouseLeft) && ishilite(32))
-			dragbegin(&e);
 		object_painting_data(&e);
+		paint_hilite_object(&e);
 		caret.x += width + metrics::padding;
 	}
 }
@@ -90,11 +111,23 @@ void status_info() {
 
 static void ui_background() {
 	strategy_background();
-	paintobjects();
+	paint_objects();
 	paint_drag_target();
 }
 
+static void add_current_object() {
+	addobject(objects_mouse, current_object);
+}
+
+static void put_selected_object() {
+	if(!current_object)
+		return;
+	if(mouseinobjects() && hot.key==MouseLeft && hot.pressed)
+		execute(add_current_object);
+}
+
 static void ui_finish() {
+	put_selected_object();
 	inputcamera();
 }
 

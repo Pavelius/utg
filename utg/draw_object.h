@@ -1,6 +1,9 @@
 #include "point.h"
+#include "rect.h"
 
 #pragma once
+
+extern point objects_mouse;
 
 namespace draw {
 struct drawable : point {
@@ -39,7 +42,7 @@ void inputcamera();
 bool mouseinobjects();
 void clearobjects();
 void focusing(point goal);
-void paintobjects();
+void paint_objects();
 void setcamera(point v);
 void slidecamera(point v, int step = 16);
 void splashscreen(unsigned milliseconds);

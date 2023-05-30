@@ -92,7 +92,7 @@ void draw::field(figure type, int size, const char* format) {
 	}
 }
 
-void draw::painthilite() {
+void draw::paint_hilite_figure() {
 	if(hilite_type==figure::None || !hilite_size)
 		return;
 	auto push_caret = caret;
