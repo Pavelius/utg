@@ -21,6 +21,7 @@ BSDATA(abilityi) = {
 	{"Damage10"},
 	{"Damage12"},
 	{"WeaponDice"},
+	{"WeaponDiceRaise"},
 	{"AC"},
 	{"Level"},
 	{"HP"},

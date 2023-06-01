@@ -6,6 +6,8 @@
 #include "script.h"
 #include "roll.h"
 
+static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
+
 static void item_add(int type, int count) {
 	item it; it.create(type, count);
 	player->equip(it);
@@ -109,7 +111,9 @@ static void attack_enemy(ability_s attack, ability_s attack_damage, int advantag
 		player->act("PlayerMiss");
 		return;
 	}
-	auto damage = weapon.getdamage().roll();
+	auto damage_dice = weapon.getdamage();
+	damage_dice.d = maptbl(dice_table, damage_dice.d + player->get(WeaponDiceRaise));
+	auto damage = damage_dice.roll();
 	if(critical_hit)
 		damage *= 2;
 	damage += player->get(attack_damage);

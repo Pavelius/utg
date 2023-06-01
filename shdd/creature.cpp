@@ -36,6 +36,11 @@ static void update_equipment() {
 	}
 }
 
+static void update_special() {
+	if(player->wears[MeleeWeapon].is(Versatile) && !player->wears[MeleeWeaponOffhand])
+		player->abilities[WeaponDiceRaise]++;
+}
+
 static void update_ongoing() {
 	variant owner = player;
 	for(auto& e : bsdata<ongoing>()) {
@@ -59,6 +64,7 @@ void creature::update() {
 	pushvalue push(player, this);
 	update_start();
 	update_equipment();
+	update_special();
 	update_ongoing();
 	update_maximum_ability();
 }

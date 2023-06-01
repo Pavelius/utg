@@ -46,6 +46,7 @@ public:
 	variant		getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
+	bool		is(feat_s v) const { return geti().is(v); }
 	bool		iscursed() const { return cursed != 0; }
 	bool		iscountable() const { return geti().powers != 0; }
 	void		setcount(int v);
