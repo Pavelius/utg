@@ -16,6 +16,7 @@ struct creature : actable, statable, wearable {
 	static void add(const struct monsteri* pm);
 	void		clear();
 	void		damage(int value);
+	dice		getdamage(ability_s ability) const;
 	bool		is(feat_s v) const { return feats.is(v); }
 	bool		isallow(const item& v) const;
 	bool		isplayer() const { return true; }

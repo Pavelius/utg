@@ -9,6 +9,25 @@
 creature* player;
 creature* opponent;
 
+static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
+
+static ability_s get_attack_damage(ability_s v) {
+	switch(v) {
+	case MeleeAttack: return MeleeDamage;
+	case RangeAttack: return RangeDamage;
+	default: return Strenght;
+	}
+}
+
+dice creature::getdamage(ability_s ability) const {
+	auto result = wears[ability].getdamage();
+	result.d = maptbl(dice_table, result.d + get(WeaponDiceRaise));
+	auto damage_ability = get_attack_damage(ability);
+	if(damage_ability)
+		result.m += player->get(damage_ability);
+	return result;
+}
+
 static void wearing(variant v) {
 	if(v.iskind<abilityi>())
 		player->abilities[v.value] += v.counter;
