@@ -21,5 +21,7 @@ struct script {
 	static void run(const variants& source);
 	static void	stop();
 };
+void conditional_script(int bonus);
 extern variant* script_begin;
 extern variant* script_end;
+extern script* last_script;

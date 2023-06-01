@@ -1,0 +1,4 @@
+﻿#1
+0 LookEnemy MakeMeleeAttack) Набросится на врага с мечем.
+0 LookEnemy MakeRangeAttack) Стрелять по врагу из %оружия.
+2) Бежать отсюда прочь.

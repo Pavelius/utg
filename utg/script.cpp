@@ -3,9 +3,11 @@
 
 variant* script_begin;
 variant* script_end;
+script* last_script;
 
 template<> void fnscript<script>(int value, int bonus) {
-	bsdata<script>::elements[value].proc(bonus);
+	last_script = bsdata<script>::elements + value;
+	last_script->proc(bonus);
 }
 template<> bool fntest<script>(int value, int bonus) {
 	auto p = bsdata<script>::elements + value;
@@ -21,14 +23,21 @@ template<> bool fntest<listi>(int value, int bonus) {
 	return script::allow(bsdata<listi>::elements[value].elements);
 }
 
+void conditional_script(int bonus) {
+	if(!last_script->test)
+		return;
+	if(!last_script->test(bonus))
+		script::stop();
+}
+
 void script::stop() {
 	script_begin = script_end;
 }
 
 void script::run(const char* id, int bonus) {
-	auto p = bsdata<script>::find(id);
-	if(p)
-		p->proc(bonus);
+	last_script = bsdata<script>::find(id);
+	if(last_script)
+		last_script->proc(bonus);
 }
 
 void script::run(variant v) {

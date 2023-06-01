@@ -5,6 +5,7 @@
 #include "draw.h"
 #include "draw_utg.h"
 #include "item.h"
+#include "quest.h"
 
 static void starting() {
 	creature::add("Orc");
@@ -15,13 +16,17 @@ static void starting() {
 	an.choose("Choose case");
 }
 
+static void initialize() {
+	quest::read("locale/ru/Actions.txt");
+}
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	//srand(1123);
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";
-	return draw::start(starting);
+	return draw::start(starting, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

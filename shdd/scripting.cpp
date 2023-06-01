@@ -156,6 +156,13 @@ static void look_enemy(int bonus) {
 		script::stop();
 	player->enemy = getbsi(opponent);
 }
+static bool if_look_enemy(int bonus) {
+	return player->getenemy() != 0;
+}
+
+static bool if_melee_weapon(int bonus) {
+	return player->wears[MeleeWeapon].operator bool();
+}
 
 BSDATA(script) = {
 	{"ArmorMastery", armor_mastery},
@@ -163,9 +170,9 @@ BSDATA(script) = {
 	{"ChanceBenefit", chance_benefit},
 	{"ChanceCused", chance_cursed},
 	{"Damage", raise_damage},
-	{"LookEnemy", look_enemy},
+	{"LookEnemy", look_enemy, if_look_enemy},
 	{"MakeIdentify", make_identify},
-	{"MakeMeleeAttack", make_melee_attack},
+	{"MakeMeleeAttack", make_melee_attack, if_melee_weapon},
 	{"MakeRangeAttack", make_range_attack},
 	{"RaiseAbility", raise_ability},
 	{"RaiseClassStats", raise_class_ability},

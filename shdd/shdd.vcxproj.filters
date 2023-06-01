@@ -10,6 +10,9 @@
     <Filter Include="rules">
       <UniqueIdentifier>{ebad3484-de76-45ff-b817-cca33f2b93a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="locale\ru">
+      <UniqueIdentifier>{5a111ba0-0963-46e6-b49e-4a369a60f15e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="feat.cpp">
@@ -112,9 +115,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
       <Filter>rules</Filter>
     </Text>
@@ -130,11 +130,17 @@
     <Text Include="rules\Monsters.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\Talks.txt">
-      <Filter>rules</Filter>
-    </Text>
     <Text Include="rules\Spells.txt">
       <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\Talks.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\Actions.txt">
+      <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>
 </Project>

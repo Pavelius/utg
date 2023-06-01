@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 1: Expected token `#`
+﻿In file `locale/ru/Actions.txt`:
+ Line 3: Can't find variant `MakeRangedAttack`
