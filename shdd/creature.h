@@ -23,3 +23,4 @@ struct creature : actable, statable, wearable {
 	void		update();
 };
 extern creature* player;
+extern creature* opponent;

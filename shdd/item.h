@@ -23,6 +23,7 @@ class item {
 		unsigned char flags;
 		struct {
 			unsigned char identified : 1;
+			unsigned char damaged : 2;
 			unsigned char cursed : 1;
 			unsigned char charges : 3;
 		};
@@ -48,8 +49,11 @@ public:
 	bool		iscursed() const { return cursed != 0; }
 	bool		iscountable() const { return geti().powers != 0; }
 	void		setcount(int v);
+	void		setcursed(int v) { cursed = 1; }
+	void		setidentify(int v) { identified = v; }
 };
 struct itema : collection<item> {
 	void		match(wear_s v, bool keep);
 	void		select(const slice<item>& source);
 };
+extern item* last_item;

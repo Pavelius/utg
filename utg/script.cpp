@@ -27,7 +27,7 @@ void script::stop() {
 
 void script::run(const char* id, int bonus) {
 	auto p = bsdata<script>::find(id);
-	if(p && p->proc)
+	if(p)
 		p->proc(bonus);
 }
 

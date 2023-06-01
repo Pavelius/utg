@@ -14,6 +14,7 @@ void wearable::additem(item& v) {
 			if(!e) {
 				e = v;
 				v.clear();
+				last_item = &e;
 				break;
 			}
 		}
@@ -28,6 +29,7 @@ void wearable::equip(item& v) {
 			continue;
 		wears[i] = v;
 		v.clear();
+		last_item = &wears[i];
 		break;
 	}
 }

@@ -61,7 +61,7 @@ static void paint_selected_border() {
 static void paint_hilite_border() {
 	auto push_fore = fore;
 	fore = colors::active;
-	circle(35);
+	circle(32);
 	fore = push_fore;
 }
 

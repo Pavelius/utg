@@ -44,7 +44,7 @@ static void update_ongoing() {
 	}
 }
 
-static void update_maximum() {
+static void update_maximum_ability() {
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1)) {
 		if(player->abilities[i] > 18)
 			player->abilities[i] = 18;
@@ -60,7 +60,7 @@ void creature::update() {
 	update_start();
 	update_equipment();
 	update_ongoing();
-	update_maximum();
+	update_maximum_ability();
 }
 
 bool creature::isallow(const item& v) const {
@@ -152,22 +152,4 @@ void creature::damage(int value) {
 		return;
 	}
 	kill();
-}
-
-static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
-	roll20(advantage);
-	auto critical_miss = (roll_result <= 1);
-	auto critical_hit = (roll_result >= 20);
-	auto to_hit = roll_result + player->get(attack);
-	auto ac = opponent->get(AC);
-	if(critical_miss || to_hit < ac) {
-		player->act("PlayerMiss");
-		return;
-	}
-	auto damage = weapon.getdamage().roll();
-	if(critical_hit)
-		damage *= 2;
-	damage += player->get(attack_damage);
-	player->act("PlayerHit");
-	opponent->damage(damage);
 }

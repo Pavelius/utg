@@ -4,6 +4,7 @@
 #include "item.h"
 #include "modifier.h"
 #include "script.h"
+#include "roll.h"
 
 static void item_add(int type, int count) {
 	item it; it.create(type, count);
@@ -21,6 +22,10 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
 	}
+}
+
+static int d100() {
+	return rand() % 100;
 }
 
 static void talent_roll(int bonus) {
@@ -94,10 +99,55 @@ static void weapon_mastery(int bonus) {
 	choose_usable("ChooseWeapon", player->mastery, MeleeWeapon, RangedWeapon);
 }
 
+static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+	roll20(advantage);
+	auto critical_miss = (roll_result <= 1);
+	auto critical_hit = (roll_result >= 20);
+	auto to_hit = roll_result + player->get(attack);
+	auto ac = opponent->get(AC);
+	if(critical_miss || to_hit < ac) {
+		player->act("PlayerMiss");
+		return;
+	}
+	auto damage = weapon.getdamage().roll();
+	if(critical_hit)
+		damage *= 2;
+	damage += player->get(attack_damage);
+	player->act("PlayerHit");
+	opponent->damage(damage);
+}
+
+static void make_melee_attack(int bonus) {
+	attack_enemy(MeleeAttack, MeleeDamage, 0, player->wears[MeleeWeapon]);
+}
+
+static void make_range_attack(int bonus) {
+	attack_enemy(RangeAttack, RangeDamage, 0, player->wears[RangedWeapon]);
+}
+
+static void make_identify(int bonus) {
+	last_item->setidentify(bonus);
+}
+
+static bool chanceroll(int bonus) {
+	if(bonus > 0)
+		return d100() < bonus;
+	return false;
+}
+
+static void chance_cursed(int bonus) {
+	if(chanceroll(bonus))
+		last_item->setcursed(1);
+}
+
 BSDATA(script) = {
 	{"ArmorMastery", armor_mastery},
 	{"Attack", raise_attack},
+	{"ChanceCused", chance_cursed},
 	{"Damage", raise_damage},
+	{"MakeIdentify", make_identify},
+	{"MakeMeleeAttack", make_melee_attack},
+	{"MakeRangeAttack", make_range_attack},
 	{"RaiseAbility", raise_ability},
 	{"RaiseClassStats", raise_class_ability},
 	{"TalentRoll", talent_roll},

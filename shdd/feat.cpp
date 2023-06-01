@@ -2,6 +2,7 @@
 #include "feat.h"
 
 BSDATA(feati) = {
+	{"Ambush"},
 	{"BonusTalent"},
 	{"BonusHitRoll"},
 	{"Finesse"},

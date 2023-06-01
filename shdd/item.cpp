@@ -1,5 +1,6 @@
 #include "item.h"
 
+item* last_item;
 itemi* item_armor;
 itemi* item_weapon;
 
@@ -64,6 +65,7 @@ void item::add(item& v) {
 		count = n1;
 		v.clear();
 	}
+	last_item = this;
 }
 
 bool item::canequip(wear_s v) const {
@@ -98,4 +100,11 @@ variant item::getpower() const {
 	if(!ei.powers || !count)
 		return variant();
 	return ei.powers->elements.begin()[count - 1];
+}
+
+void item::damage() {
+	if(damaged >= 3)
+		clear();
+	else
+		damaged++;
 }

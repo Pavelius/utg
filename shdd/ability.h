@@ -8,8 +8,9 @@ enum ability_s : unsigned char {
 	RangeAttack, RangeDamage,
 	SpellRoll,
 	NumberAttacks,
+	Damage3, Damage4, Damage6, Damage8, Damage10, Damage12, WeaponDice,
 	AC, Level,
-	HP, Rage, Dodge
+	HP, Rage, Dodge,
 };
 struct abilityi : nameable {
 };

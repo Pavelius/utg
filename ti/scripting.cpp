@@ -822,6 +822,9 @@ static void if_control_mecatol_rex(int bonus) {
 static void if_able(int bonus) {
 }
 
+static void play_strategy(int bonus) {
+}
+
 static bool if_play_strategy(int bonus) {
 	return player && player->use_strategy;
 }
@@ -963,7 +966,7 @@ BSDATA(script) = {
 	{"ForEachTroop", for_each_troop},
 	{"IfAble", if_able},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
-	{"IfPlayStrategy", 0, if_play_strategy},
+	{"IfPlayStrategy", play_strategy, if_play_strategy},
 	{"MoveShip", move_ship},
 	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},

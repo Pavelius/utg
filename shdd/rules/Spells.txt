@@ -1,21 +1,21 @@
-#Spell
+#Spell tier(1)
 
-CureWounds tier(1)
-HolyWeapon tier(1)
+CureWounds
+HolyWeapon
  enchant MeleeAttack+1 MeleeDamage+1
-Light tier(1)
-ProtectionFromEvil tier(1)
-ShieldOfFaith tier(1) rounds(5)
+Light
+ProtectionFromEvil
+ShieldOfFaith rounds(5)
  enchant AC+2
-TurnUndead tier(1)
+TurnUndead
 
-Alarm tier(1)
-BurningHands tier(1)
-CharmPerson tier(1)
-DetectMagic tier(1)
-FeatherFall tier(1)
-FloatingDisk tier(1)
-HoldPortal tier(1)
-MageArmor tier(1)
-MagicMissile tier(1)
-Sleep tier(1)
+Alarm
+BurningHands
+CharmPerson
+DetectMagic
+FeatherFall
+FloatingDisk
+HoldPortal
+MageArmor
+MagicMissile
+Sleep
