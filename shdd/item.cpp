@@ -3,6 +3,7 @@
 item* last_item;
 itemi* item_armor;
 itemi* item_weapon;
+itemad items;
 
 void itema::select(const slice<item>& source) {
 	for(auto& e : source) {

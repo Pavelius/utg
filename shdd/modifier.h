@@ -2,7 +2,7 @@
 
 enum modifier_s : unsigned char {
 	NoModifier,
-	Permanent,
+	Permanent, Enviroment,
 };
 struct modifieri {
 	const char* id;

@@ -57,4 +57,7 @@ struct itema : collection<item> {
 	void		match(wear_s v, bool keep);
 	void		select(const slice<item>& source);
 };
+struct itemad : adat<item> {
+};
+extern itemad items;
 extern item* last_item;

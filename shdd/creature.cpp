@@ -77,6 +77,7 @@ static void update_maximum_ability() {
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
+	enemy = 0xFFFF;
 }
 
 void creature::update() {
@@ -164,9 +165,19 @@ void creature::add(const monsteri* pm) {
 	finish_create();
 }
 
+static void remove_enemy(short unsigned id) {
+	if(id == 0xFFFF)
+		return;
+	for(auto& e : bsdata<creature>()) {
+		if(e.enemy == id)
+			e.enemy = 0xFFFF;
+	}
+}
+
 void creature::kill() {
 	abilities[HP] = 0;
 	act(getnm("PlayerDead"));
+	remove_enemy(getbsi(this));
 }
 
 void creature::damage(int value) {
@@ -177,4 +188,12 @@ void creature::damage(int value) {
 		return;
 	}
 	kill();
+}
+
+creature* creature::getenemy() const {
+	for(auto& e : bsdata<creature>()) {
+		if(e.isenemy(*this))
+			return &e;
+	}
+	return 0;
 }
