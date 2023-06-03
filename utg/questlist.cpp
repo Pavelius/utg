@@ -3,7 +3,7 @@
 #include "questlist.h"
 
 BSDATAC(questlist, 128)
-questlist* lastquest;
+questlist* last_questlist;
 
 void questlist::read(const char* id) {
 	char temp[260]; stringbuilder sb(temp);

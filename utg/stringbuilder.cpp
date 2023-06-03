@@ -818,3 +818,10 @@ const char* str(const char* format, ...) {
 	sb.addv(format, xva_start(format));
 	return temp;
 }
+
+void stringbuilder::trimr() {
+	while(p > pb && (p[-1] == ' ' || p[-1] == '\t' || p[-1] == '\n')) {
+		p[-1] = 0;
+		p--;
+	}
+}

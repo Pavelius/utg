@@ -35,3 +35,7 @@ Platemail slot(3) wear(Torso)
  wearing AC+5
 Shield slot(1) wear(Torso)
  wearing AC+2
+
+Fork
+Torch
+Stone

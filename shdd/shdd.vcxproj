@@ -157,6 +157,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="monster.cpp" />
+    <ClCompile Include="nametable.cpp" />
     <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="race.cpp" />
     <ClCompile Include="roll.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
+    <ClInclude Include="nametable.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="roll.h" />
@@ -184,9 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\Actions.txt" />
+    <Text Include="locale\ru\Combat.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\Talks.txt" />
+    <Text Include="locale\ru\Treasure0.txt" />
     <Text Include="rules\Advancement.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />

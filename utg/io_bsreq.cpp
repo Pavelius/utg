@@ -401,13 +401,41 @@ static bool read_string() {
 	return true;
 }
 
+static bool read_identifier() {
+	readid();
+	return allowparse;
+}
+
+static bool read_import() {
+	if(!read_identifier())
+		return false;
+	auto pn = bsdata<varianti>::find(temp);
+	if(!pn) {
+		error(p, "Can't find data descriptor `%1`", temp);
+		return false;
+	}
+	if(!pn) {
+		error(p, "Can't find data descriptor `%1`", temp);
+		return false;
+	}
+	if(!pn->pread) {
+		error(p, "Not defined reading procedure in data descriptor `%1`", temp);
+		return false;
+	}
+	if(!read_string())
+		return false;
+	pn->pread(szdup(temp));
+	return true;
+}
+
 static bool parse_directives() {
 	if(equal(temp, "include")) {
 		if(!read_string())
 			return false;
 		bsreq::read(szdup(temp));
 		return true;
-	}
+	} else if(equal(temp, "import"))
+		return read_import();
 	return false;
 }
 

@@ -66,6 +66,9 @@
     <ClCompile Include="actable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="nametable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -113,6 +116,9 @@
     <ClInclude Include="actable.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="nametable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -139,7 +145,10 @@
     <Text Include="locale\ru\Talks.txt">
       <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\Actions.txt">
+    <Text Include="locale\ru\Combat.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\Treasure0.txt">
       <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>

@@ -5,13 +5,10 @@
 #include "quest.h"
 
 BSDATAC(quest, 4096)
-BSDATAC(questheader, 128)
-
-questheader* last_questheader;
 
 int quest::prop_image;
 int quest::prop_header;
-const quest* quest::last;
+const quest* last_quest;
 
 using namespace log;
 
@@ -174,8 +171,6 @@ void quest::read(const char* url) {
 	auto p = log::read(url);
 	if(!p)
 		return;
-	last_questheader = bsdata<questheader>::add();
-	auto n1 = bsdata<quest>::source.getcount();
 	char temp[4096]; stringbuilder sb(temp);
 	allowparse = true;
 	while(allowparse && *p) {
@@ -188,9 +183,6 @@ void quest::read(const char* url) {
 		p = read_answers(p, event_parent, sb);
 	}
 	log::close();
-	auto n2 = bsdata<quest>::source.getcount();
-	last_questheader->name = szdup(url);
-	last_questheader->source = slice<quest>(bsdata<quest>::elements + n1, unsigned(n2 - n1));
 }
 
 void quest::initialize() {
@@ -219,12 +211,4 @@ void quest::manual(short page) {
 			break;
 		manual(pn->next);
 	}
-}
-
-const questheader* quest::getquest() const {
-	for(auto& e : bsdata<questheader>()) {
-		if(this >= e.source.begin() && this <= e.source.end())
-			return &e;
-	}
-	return 0;
 }

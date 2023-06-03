@@ -74,6 +74,7 @@ public:
 	static const char*	read(const char* p, short& result);
 	void				set(char* v) { p = v; p[0] = 0; }
 	static void			setlocale(const char* id);
+	void				trimr();
 	static unsigned char upper(unsigned char sym);
 	void				upper();
 };

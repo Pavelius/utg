@@ -3,8 +3,10 @@
 #include "creature.h"
 #include "item.h"
 #include "modifier.h"
-#include "script.h"
+#include "nametable.h"
+#include "questlist.h"
 #include "roll.h"
+#include "script.h"
 
 static int d100() {
 	return rand() % 100;
@@ -14,6 +16,63 @@ static item& create_item(int type, int count) {
 	static item it;
 	it.create(type, count);
 	return it;
+}
+
+static void print_prompt(const quest* p) {
+	if(!p->text)
+		return;
+	an.console->add(p->text);
+}
+
+static void print_answers(const quest* pb) {
+	an.clear();
+	auto index = pb->index;
+	auto pe = last_questlist->elements.end();
+	for(auto p = pb + 1; p < pe; p++) {
+		if(p->index != index)
+			break;
+		if(!p->text)
+			continue;
+		if(p->tags && !script::allow(p->tags))
+			continue;
+		an.add(p, p->text);
+	}
+	if(!an)
+		an.add(0, getnm("Continue"));
+}
+
+static void apply_quest() {
+	if(!last_quest || !last_quest->tags)
+		return;
+	script::run(last_quest->tags);
+}
+
+static bool apply_next() {
+	if(!last_quest || !last_questlist)
+		return false;
+	last_quest = last_questlist->find(last_quest->next);
+	return true;
+}
+
+static void play_quest() {
+	if(!an.console)
+		return;
+	apply_quest();
+	while(last_quest) {
+		print_prompt(last_quest);
+		print_answers(last_quest);
+		last_quest = (quest*)an.choose(getnm("WhatDoYouDo"));
+		apply_quest();
+		if(!apply_next())
+			break;
+		apply_quest();
+	}
+}
+
+template<> void fnscript<questlist>(int value, int bonus) {
+	last_questlist = bsdata<questlist>::elements + value;
+	last_quest = last_questlist->find(bonus);
+	play_quest();
 }
 
 template<> void fnscript<itemi>(int value, int bonus) {
@@ -30,6 +89,11 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
 	}
+}
+
+template<> void fnscript<nametable>(int value, int bonus) {
+	auto p = bsdata<nametable>::elements[value].random();
+	script::run(p->elements);
 }
 
 static void talent_roll(int bonus) {

@@ -16,6 +16,7 @@ void ftstatus(const void* object, stringbuilder& sb);
 struct varianti {
 	typedef void(*fnscript)(int index, int bonus);
 	typedef bool(*fntest)(int index, int bonus);
+	typedef void(*fnread)(const char* url);
 	const char*		id;
 	const bsreq*	metadata;
 	array*			source;
@@ -24,6 +25,7 @@ struct varianti {
 	fngetinfo		pgetproperty;
 	fnscript		pscript;
 	fntest			ptest;
+	fnread			pread;
 	static const varianti* find(const void* object);
 	void			set(void* object, const char* id, void* value) const;
 	void			set(void* object, const char* id, int value) const;

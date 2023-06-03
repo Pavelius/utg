@@ -6,6 +6,8 @@
 #include "menu.h"
 #include "modifier.h"
 #include "monster.h"
+#include "nametable.h"
+#include "questlist.h"
 #include "race.h"
 #include "spell.h"
 #include "statable.h"
@@ -55,6 +57,9 @@ BSMETA(monsteri) = {
 	BSREQ(feats),
 	BSDST(abilities, abilityi),
 	{}};
+BSMETA(questlist) = {
+	BSREQ(id),
+	{}};
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
@@ -81,8 +86,10 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1)},
 	{"Monster", VAR(monsteri, 1)},
+	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist::read},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Spell", VAR(spelli, 1)},
+	{"RollTable", VAR(nametable, 1), 0, 0, fnscript<nametable>, 0, nametable::read},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)
