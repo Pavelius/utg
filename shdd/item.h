@@ -25,6 +25,7 @@ class item {
 			unsigned char identified : 1;
 			unsigned char damaged : 2;
 			unsigned char cursed : 1;
+			unsigned char masterwork : 1;
 			unsigned char charges : 3;
 		};
 	};
@@ -50,8 +51,9 @@ public:
 	bool		iscursed() const { return cursed != 0; }
 	bool		iscountable() const { return geti().powers != 0; }
 	void		setcount(int v);
-	void		setcursed(int v) { cursed = 1; }
+	void		setcursed(int v) { cursed = (v >= 0) ? 1 : 0; }
 	void		setidentify(int v) { identified = v; }
+	void		setmasterwork(int v) { masterwork = (v >= 0) ? 1 : 0; }
 };
 struct itema : collection<item> {
 	void		match(wear_s v, bool keep);

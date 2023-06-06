@@ -78,7 +78,7 @@ template<> void fnscript<questlist>(int value, int bonus) {
 template<> void fnscript<itemi>(int value, int bonus) {
 	switch(modifier) {
 	case Enviroment: items.add(create_item(value, bonus)); break;
-	default: player->equip(create_item(value, bonus)); break;
+	default: player->addequip(create_item(value, bonus)); break;
 	}
 }
 
@@ -207,6 +207,11 @@ static void chance_cursed(int bonus) {
 		last_item->setcursed(1);
 }
 
+static void chance_masterwork(int bonus) {
+	if(chanceroll(bonus))
+		last_item->setmasterwork(1);
+}
+
 static void chance_benefit(int bonus) {
 	if(chanceroll(bonus)) {
 	}
@@ -228,11 +233,18 @@ static bool if_melee_weapon(int bonus) {
 	return player->wears[MeleeWeapon].operator bool();
 }
 
+static void damage_item(int bonus) {
+	if(bonus >= 0)
+		last_item->damage();
+}
+
 BSDATA(script) = {
 	{"ArmorMastery", armor_mastery},
 	{"Attack", raise_attack},
+	{"DamageItem", damage_item},
 	{"ChanceBenefit", chance_benefit},
 	{"ChanceCused", chance_cursed},
+	{"ChanceMasterwork", chance_masterwork},
 	{"Damage", raise_damage},
 	{"LookEnemy", look_enemy, if_look_enemy},
 	{"MakeIdentify", make_identify},

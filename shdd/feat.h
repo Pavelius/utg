@@ -4,7 +4,7 @@
 #pragma once
 
 enum feat_s : unsigned char {
-	Ambush, BonusTalent, BonusHitRoll,
+	Coins, Ambush, BonusTalent, BonusHitRoll,
 	Finesse, Loading, Thrown, TwoHanded, Versatile,
 	Summoned, Player, Enemy,
 };

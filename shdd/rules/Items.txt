@@ -36,6 +36,11 @@ Platemail slot(3) wear(Torso)
 Shield slot(1) wear(Torso)
  wearing AC+2
 
+PotionEmpthy
+
 Fork
+Latern
+Mirror
 Torch
 Stone
+GoldenTooth

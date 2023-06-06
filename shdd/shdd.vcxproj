@@ -150,6 +150,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="class.cpp" />
+    <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="feat.cpp" />
     <ClCompile Include="item.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
     <ClInclude Include="class.h" />
+    <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />

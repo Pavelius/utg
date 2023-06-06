@@ -1,2 +1,2 @@
 ﻿In file `locale/ru/Treasure0.txt`:
- Line 4: Unknown variant identifier `CP`
+ Line 11: Unknown variant identifier `GreateAxe`

@@ -80,6 +80,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
+	{"Consumable", VAR(consumablei, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},

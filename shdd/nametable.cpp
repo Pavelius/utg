@@ -31,6 +31,7 @@ static const char* read_script(const char* p, variants& elements, stringbuilder&
 		auto pe = (variant*)pr->add();
 		pe->clear();
 		p = readval(p, sb, *pe);
+		p = skipsp(p);
 		elements.count++;
 	}
 	return p;
