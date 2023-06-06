@@ -243,7 +243,7 @@ BSDATA(script) = {
 	{"Attack", raise_attack},
 	{"DamageItem", damage_item},
 	{"ChanceBenefit", chance_benefit},
-	{"ChanceCused", chance_cursed},
+	{"ChanceCursed", chance_cursed},
 	{"ChanceMasterwork", chance_masterwork},
 	{"Damage", raise_damage},
 	{"LookEnemy", look_enemy, if_look_enemy},

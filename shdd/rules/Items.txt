@@ -27,6 +27,8 @@ Staff damage(4) slot(1) wear(MeleeWeapon)
 Warhammer damage(10) slot(1) wear(MeleeWeapon)
  flags TwoHanded
 
+Arrow
+
 LeatherArmor slot(1) wear(Torso)
  wearing AC+1
 Chainmail slot(2) wear(Torso)
@@ -36,7 +38,12 @@ Platemail slot(3) wear(Torso)
 Shield slot(1) wear(Torso)
  wearing AC+2
 
+Cloack
+
 PotionEmpthy
+
+Pearl cost(200)
+Emerald
 
 Fork
 Latern
@@ -44,3 +51,4 @@ Mirror
 Torch
 Stone
 GoldenTooth
+ObsidianStatue

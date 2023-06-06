@@ -1,2 +1,2 @@
-﻿In file `locale/ru/Treasure0.txt`:
- Line 11: Unknown variant identifier `GreateAxe`
+﻿In file `rules/Items.txt`:
+ Line 46: Expected line feed
