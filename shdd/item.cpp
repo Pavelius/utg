@@ -34,10 +34,12 @@ void item::create(const itemi* pi, int count) {
 	create(pi - bsdata<itemi>::elements, pi->count ? pi->count * count : count);
 }
 
-void item::create(unsigned short type, int count) {
+void item::create(unsigned short p_type, int p_count) {
+	if(!p_count)
+		p_count = 1;
 	clear();
-	this->type = type;
-	setcount(count);
+	this->type = p_type;
+	setcount(p_count);
 }
 
 int item::getcount() const {

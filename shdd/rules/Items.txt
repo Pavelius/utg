@@ -48,7 +48,9 @@ Emerald
 Fork
 Latern
 Mirror
+Spikes
 Torch
 Stone
+GoldenPin cost(200)
 GoldenTooth
 ObsidianStatue
