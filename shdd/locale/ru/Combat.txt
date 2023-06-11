@@ -1,4 +1,5 @@
-﻿#1 Обыкав трупы вы нашли %-TreasureText.
+﻿#1 Header("Темный лес") Image("dark_forest")
+Обыкав трупы вы нашли %-TreasureText.
 0 LookEnemy MakeMeleeAttack) Набросится на врага с %-~Weapon.
 0 LookEnemy MakeRangeAttack) Стрелять по врагу из лука.
 2) Бежать отсюда прочь.

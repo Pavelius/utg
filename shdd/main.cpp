@@ -13,6 +13,7 @@ void stringbuilder_proc(stringbuilder& sb, const char* id);
 static void starting() {
 	creature::add("Orc");
 	creature::add(Dwarf, Fighter);
+	creature::add(Human, Fighter);
 	auto pn = bsdata<listi>::find("MainScript");
 	if(!pn)
 		return;
@@ -39,13 +40,13 @@ static void initialize_avatars() {
 }
 
 int main(int argc, char* argv[]) {
+	quest::initialize();
 	initialize_avatars();
 	srand(getcputime());
 	//srand(1123);
 	stringbuilder::custom = stringbuilder_proc;
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
-	answers::resid = "meet";
 	return draw::start(starting, initialize);
 }
 

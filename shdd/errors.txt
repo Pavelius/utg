@@ -1,2 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 46: Expected line feed
+﻿In file `locale/ru/Combat.txt`:
+ Line 1: Unknown property name `Header`

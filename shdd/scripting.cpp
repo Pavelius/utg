@@ -19,6 +19,12 @@ static item& create_item(int type, int count) {
 }
 
 static void print_prompt(const quest* p) {
+	auto header = p->getheader();
+	if(header)
+		answers::header = header;
+	auto resid = p->getimage();
+	if(resid)
+		answers::resid = resid;
 	if(!p->text)
 		return;
 	an.console->add(p->text);
