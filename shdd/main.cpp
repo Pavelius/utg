@@ -8,6 +8,8 @@
 #include "questlist.h"
 #include "script.h"
 
+void stringbuilder_proc(stringbuilder& sb, const char* id);
+
 static void starting() {
 	creature::add("Orc");
 	creature::add(Dwarf, Fighter);
@@ -20,9 +22,27 @@ static void starting() {
 static void initialize() {
 }
 
+static const char* getavatarst(const void* p) {
+	if(!(*((creature*)p)))
+		return 0;
+	return ((creature*)p)->avatarable::getavatar();
+}
+
+static bool isplayer(const void* p) {
+	return p == player;
+}
+
+static void initialize_avatars() {
+	draw::heroes = bsdata<creature>::source_ptr;
+	draw::heroes_getavatar = getavatarst;
+	draw::heroes_isplayer = isplayer;
+}
+
 int main(int argc, char* argv[]) {
+	initialize_avatars();
 	srand(getcputime());
 	//srand(1123);
+	stringbuilder::custom = stringbuilder_proc;
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";

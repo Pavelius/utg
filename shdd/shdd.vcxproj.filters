@@ -72,6 +72,9 @@
     <ClCompile Include="consumable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -155,6 +158,9 @@
       <Filter>locale\ru</Filter>
     </Text>
     <Text Include="locale\ru\Treasure0.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\NamesNewbe.txt">
       <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>

@@ -22,7 +22,7 @@ static const char* chooseavatar(answers& an, const char* title) {
 	return p;
 }
 
-const char* avatarable::choose(const char* title, const char* mask, int columns_count) {
+const char* avatarable::choose(const char* title, const char* mask, int columns_count, fnallow allow) {
 	pushvalue push_columns(answers::column_count, columns_count);
 	answers an; char temp[260];
 	for(io::file::find fn(utg::url_avatars); fn; fn.next()) {
@@ -30,6 +30,8 @@ const char* avatarable::choose(const char* title, const char* mask, int columns_
 		if(p[0] == '.')
 			continue;
 		if(mask && !szpmatch(p, mask))
+			continue;
+		if(allow && !allow(p))
 			continue;
 		szfnamewe(temp, p);
 		an.add(0, temp);

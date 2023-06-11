@@ -2,6 +2,8 @@
 #include "nametable.h"
 #include "logparse.h"
 
+const nametable::element* last_table_element;
+
 BSDATAC(nametable::element, 4096)
 BSDATAC(nametable, 128)
 

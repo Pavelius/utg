@@ -1,4 +1,6 @@
+#include "answers.h"
 #include "creature.h"
+#include "gender.h"
 #include "ongoing.h"
 #include "modifier.h"
 #include "monster.h"
@@ -138,6 +140,25 @@ static void finish_create() {
 		player->abilities[i] = player->basic.abilities[i];
 }
 
+static bool is_unique_avatar(const char* id) {
+	for(auto& e : bsdata<creature>()) {
+		if(!e)
+			continue;
+		auto pav = e.getavatar();
+		if(pav && equal(pav, id))
+			return false;
+	}
+	return true;
+}
+
+const char* random_avatar(class_s type, gender_s gender) {
+	auto push_interactive = answers::interactive;
+	answers::interactive = false;
+	auto result = avatarable::choose(0, gender == Female ? "f*.*" : "m*.*", 6, is_unique_avatar);
+	answers::interactive = push_interactive;
+	return result;
+}
+
 void creature::add(race_s race, class_s kind) {
 	player = bsdata<creature>::add();
 	player->clear();
@@ -147,6 +168,7 @@ void creature::add(race_s race, class_s kind) {
 	roll_hit_points();
 	starting_hits();
 	finish_create();
+	player->setavatar(random_avatar(player->kind, player->gender));
 }
 
 void creature::add(const char* id) {

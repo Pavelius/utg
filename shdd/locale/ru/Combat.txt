@@ -1,4 +1,4 @@
-﻿#1
-0 LookEnemy MakeMeleeAttack) Набросится на врага с мечем.
-0 LookEnemy MakeRangeAttack) Стрелять по врагу из %оружия.
+﻿#1 Обыкав трупы вы нашли %-TreasureText.
+0 LookEnemy MakeMeleeAttack) Набросится на врага с %-~Weapon.
+0 LookEnemy MakeRangeAttack) Стрелять по врагу из лука.
 2) Бежать отсюда прочь.

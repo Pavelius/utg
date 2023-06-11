@@ -1,5 +1,13 @@
 ﻿General: Общие
 
+AppTitle: Приключения в забытых королевствах
+
+Hands: Кулаки
+Dagger: Кинжал
+Greatesword: Двуручный меч
+Longsword: Длинный меч
+Shortsword: Меч
+
 No: Нет
 Yes: Да
 WhatDoYouDo: Что будете делать?

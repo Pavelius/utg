@@ -92,8 +92,8 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 }
 
 template<> void fnscript<nametable>(int value, int bonus) {
-	auto p = bsdata<nametable>::elements[value].random();
-	script::run(p->elements);
+	last_table_element = bsdata<nametable>::elements[value].random();
+	script::run(last_table_element->elements);
 }
 
 static void talent_roll(int bonus) {

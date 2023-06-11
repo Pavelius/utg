@@ -15,3 +15,4 @@ struct nametable : nameable {
 	const element*	random() const;
 	static void		read(const char* url);
 };
+extern const nametable::element* last_table_element;

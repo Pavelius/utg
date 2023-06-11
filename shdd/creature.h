@@ -1,4 +1,5 @@
 #include "actable.h"
+#include "avatarable.h"
 #include "class.h"
 #include "consumable.h"
 #include "race.h"
@@ -7,7 +8,7 @@
 
 #pragma once
 
-struct creature : actable, statable, consumablea, wearable {
+struct creature : actable, statable, consumablea, wearable, avatarable {
 	class_s		kind;
 	race_s		ancestry;
 	featable	feats;

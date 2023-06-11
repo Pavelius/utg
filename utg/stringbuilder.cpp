@@ -409,8 +409,16 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 				}
 			}
 		}
-	} else
+	} else {
+		char temp[260]; stringbuilder sb(temp);
 		src = readvariable(src);
+		switch(padeg) {
+		case '$': sb.copy(p0); p = p0; addof(temp); break;
+		case '@': sb.copy(p0); p = p0; addto(temp); break;
+		case '~': sb.copy(p0); p = p0; addby(temp); break;
+		default: break;
+		}
+	}
 	if(p0 && p0 != p) {
 		switch(prefix) {
 		case '-': *p0 = lower(*p0); break;
