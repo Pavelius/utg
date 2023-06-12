@@ -32,6 +32,9 @@ BSMETA(abilityi) = {
 BSMETA(classi) = {
 	BSREQ(id),
 	{}};
+BSMETA(creature) = {
+	BSDST(abilities, abilityi),
+	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
@@ -81,6 +84,7 @@ BSDATA(varianti) = {
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
 	{"Consumable", VAR(consumablei, 1)},
+	{"Creature", VAR(creature, 0)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},

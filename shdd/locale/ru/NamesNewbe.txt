@@ -1,1 +1,8 @@
-﻿
+﻿AC: 
+Charisma: 
+Constitution: 
+Dexterity: 
+HP: 
+Intellect: 
+Strenght: 
+Wisdow: 

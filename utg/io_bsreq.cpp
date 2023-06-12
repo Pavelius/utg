@@ -424,6 +424,7 @@ static bool read_import() {
 	}
 	if(!read_string())
 		return false;
+	pushvalue push(log::context);
 	pn->pread(szdup(temp));
 	return true;
 }

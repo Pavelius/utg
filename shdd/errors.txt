@@ -1,2 +1,2 @@
-﻿In file `locale/ru/Combat.txt`:
- Line 1: Unknown property name `Header`
+﻿In file `rules/Basic.txt`:
+ Line 16: Not found identifier `Creature`

@@ -10,3 +10,8 @@
 
 MainScript
  elements Treasure0 Combat+1
+
+#Menu
+
+General source(Creature)
+ elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC

@@ -56,7 +56,7 @@ void log::errorv(const char* position, const char* format) {
 	if(!file)
 		return;
 	error_count++;
-	if(position)
+	if(position && context.file)
 		file << " Line " << getline(context.file, position) << ": ";
 	file << format << "\n";
 }
