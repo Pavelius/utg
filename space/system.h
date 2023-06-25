@@ -6,3 +6,4 @@
 struct systemi : nameable, drawable {
 	void		paint() const;
 };
+extern systemi* current_system;

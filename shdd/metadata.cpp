@@ -32,8 +32,13 @@ BSMETA(abilityi) = {
 BSMETA(classi) = {
 	BSREQ(id),
 	{}};
-BSMETA(creature) = {
+BSMETA(creature) = {	
 	BSDST(abilities, abilityi),
+	BSFLG(feats, feati),
+	BSENM(kind, classi),
+	BSFLG(usable, itemi),
+	BSFLG(mastery, itemi),
+	BSENM(ancestry, racei),
 	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),

@@ -151,10 +151,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="module.cpp" />
+    <ClCompile Include="planet.cpp" />
     <ClCompile Include="planetr.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="ship.cpp" />
+    <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="variable.cpp" />
   </ItemGroup>

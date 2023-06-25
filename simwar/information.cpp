@@ -61,7 +61,6 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
-	add_line(sb, 3, province->current[Faith]);
 	add_line(sb, 0, province->current[Lore]);
 	add_line(sb, 1, province->attack);
 	add_line(sb, 2, province->defend);

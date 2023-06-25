@@ -8,3 +8,4 @@ struct planeti : nameable, drawable, planetr {
 	landscapei*	landscape;
 	void		paint() const;
 };
+extern planeti* current_planet;

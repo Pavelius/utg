@@ -157,7 +157,6 @@ static void paint_cost(const costa& v, const costac& u, const costa& n) {
 	field(Fame, "%1i", 0, v, n, u);
 	field(Warfire, "%3i", 0, v, n, u);
 	field(Lore, 0, 120, v, n, u);
-	field(Faith, 0, 80, v, n, u);
 }
 
 void status_info() {
@@ -224,6 +223,16 @@ static void stroke_texth2(const char* format) {
 	font = push_font;
 }
 
+static void paint_hilite_province(int index, bool need_stroke = false) {
+	auto push_fore = fore;
+	auto push_alpha = alpha;
+	fore = colors::red;
+	alpha = 32;
+	circlef(32);
+	alpha = push_alpha;
+	fore = push_fore;
+}
+
 static void paint_shield(int index, bool need_stroke = false) {
 	auto p = gres("shields", "art/sprites");
 	if(need_stroke)
@@ -267,14 +276,17 @@ static void paint_income(const provincei* province) {
 	auto push_fore = fore;
 	textfs(temp);
 	caret.x -= width / 2;
+	caret.y -= texth() / 2;
 	fore = colors::black;
 	textf(temp);
 	fore = push_fore;
 }
 
 void provincei::paint() const {
-	if(player)
-		paint_shield(player->shield);
+	if(player) {
+		paint_hilite_province(player->shield);
+		//paint_shield(player->shield);
+	}
 	if(show_names)
 		stroke_texth2(getname());
 	if(province == this)
@@ -346,9 +358,20 @@ void update_provinces_ui() {
 	}
 }
 
+static void ui_background() {
+	strategy_background();
+	paint_objects();
+}
+
+static void ui_finish() {
+	inputcamera();
+}
+
 void ui_initialize() {
 	object::painting = object_painting;
 	object::initialize();
 	widget::add("BackgroundMap", background_map);
 	add_widget("BackgroundMap", 0, false);
+	pbackground = ui_background;
+	pfinish = ui_finish;
 }

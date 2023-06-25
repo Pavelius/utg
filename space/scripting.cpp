@@ -3,6 +3,7 @@
 #include "condition.h"
 #include "crt.h"
 #include "game.h"
+#include "planet.h"
 #include "pushvalue.h"
 #include "quest.h"
 #include "script.h"
@@ -37,11 +38,11 @@ template<> void fnscript<abilityi>(int index, int bonus) {
 
 static void add_quest_answers() {
 	an.clear();
-	if(!quest::last)
+	if(!last_quest)
 		return;
-	auto index = quest::last->index;
+	auto index = last_quest->index;
 	auto pe = bsdata<quest>::end();
-	for(auto pa = quest::last + 1; pa < pe; pa++) {
+	for(auto pa = last_quest + 1; pa < pe; pa++) {
 		if(pa->index != index)
 			continue;
 		if(!pa->isanswer())
@@ -53,37 +54,37 @@ static void add_quest_answers() {
 }
 
 static void apply_header() {
-	if(!quest::last)
+	if(!last_quest)
 		return;
-	auto pn = quest::last->getheader();
+	auto pn = last_quest->getheader();
 	if(pn)
 		answers::header = pn;
-	pn = quest::last->getimage();
+	pn = last_quest->getimage();
 	if(pn)
 		answers::resid = pn;
 }
 
 static void apply_text() {
-	if(quest::last && quest::last->text) {
+	if(last_quest && last_quest->text) {
 		answers::console->clear();
-		answers::console->add(quest::last->text);
+		answers::console->add(last_quest->text);
 	}
 }
 
 static void apply_script() {
 	result = 0;
-	if(!quest::last)
+	if(!last_quest)
 		return;
-	result = quest::last->next;
-	script::run(quest::last->tags);
+	result = last_quest->next;
+	script::run(last_quest->tags);
 }
 
 static void choose_quest_result() {
-	if(!quest::last)
+	if(!last_quest)
 		return;
-	auto index = quest::last->index;
+	auto index = last_quest->index;
 	auto pe = bsdata<quest>::end();
-	auto pr = quest::last + 1;
+	auto pr = last_quest + 1;
 	for(auto pa = pr; pa < pe; pa++) {
 		if(pa->index != index)
 			continue;
@@ -93,7 +94,7 @@ static void choose_quest_result() {
 		if(result <= pr->next)
 			break;
 	}
-	quest::last = pr;
+	last_quest = pr;
 }
 
 static void make_roll(int bonus) {
@@ -132,7 +133,7 @@ static void roll(int bonus) {
 	apply_text();
 	apply_script();
 	draw::pause();
-	quest::last = quest::findprompt(result);
+	last_quest = quest::findprompt(result);
 	apply_header();
 	apply_text();
 }
@@ -142,19 +143,19 @@ void quest::run(int index) {
 		return;
 	pushvalue push_header(answers::header);
 	pushvalue push_image(answers::resid);
-	pushvalue push_last(last, findprompt(index));
-	while(last) {
+	pushvalue push_last(last_quest, findprompt(index));
+	while(last_quest) {
 		apply_header();
 		apply_text();
-		script::run(quest::last->tags);
+		script::run(last_quest->tags);
 		add_quest_answers();
 		auto pv = an.choose(0, 0, 1);
 		if(!pv)
 			break;
 		else if(bsdata<quest>::source.have(pv)) {
-			last = (quest*)pv; result = last->next;
-			script::run(last->tags);
-			last = findprompt(result);
+			last_quest = (quest*)pv; result = last_quest->next;
+			script::run(last_quest->tags);
+			last_quest = findprompt(result);
 		}
 	}
 }
@@ -176,7 +177,17 @@ static void jump_next(int bonus) {
 	result = bonus;
 }
 
+static void choose_move(int bonus) {
+	for(auto& e : bsdata<planeti>()) {
+		if(e.system != current_system)
+			continue;
+		an.add(&e, e.getname());
+	}
+	current_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
+}
+
 BSDATA(script) = {
+	{"ChooseMove", choose_move},
 	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},

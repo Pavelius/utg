@@ -31,11 +31,11 @@ troop* troop::create(const uniti* unit, playeri* player, entity* location) {
 
 void troop::produce(const uniti* unit) const {
 	auto last_system = systemi::last;
-	auto last_planet = planeti::last;
+	auto push_planet = last_planet;
 	systemi::last = getsystem();
-	planeti::last = getplanet();
+	last_planet = getplanet();
 	unit->placement(unit->abilities[CostCount], false);
-	planeti::last = last_planet;
+	last_planet = push_planet;
 	systemi::last = last_system;
 }
 

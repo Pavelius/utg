@@ -114,11 +114,11 @@ struct planeti : entity {
 	color_s			speciality;
 	char			frame, resources, influence;
 	flagable<1>		flags;
-	static planeti*	last;
 	void			exhaust();
 	int				get(indicator_s v) const;
 	void			paint(unsigned flags) const;
 };
+extern planeti* last_planet;
 struct playera : adat<playeri*, 6> {
 	playeri*		choose(const char* title);
 	void			filter(const playeri* object, bool keep);

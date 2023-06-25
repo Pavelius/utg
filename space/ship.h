@@ -10,3 +10,4 @@ struct ship : drawable {
 	static ship*	add(const char* id, point position);
 	void			paint() const;
 };
+extern ship* current_ship;

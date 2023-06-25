@@ -391,8 +391,8 @@ static void select_player(int bonus) {
 }
 
 static void choose_planet(int bonus) {
-	planeti::last = (planeti*)querry.choose(0, 0, 2);
-	game.focusing(planeti::last->getsystem());
+	last_planet = (planeti*)querry.choose(0, 0, 2);
+	game.focusing(last_planet->getsystem());
 }
 
 static void choose_player(int bonus) {
@@ -460,7 +460,7 @@ static void ask_invasion() {
 		auto ps = e.getsystem();
 		if(ps != systemi::active)
 			continue;
-		if(e.location == planeti::last) {
+		if(e.location == last_planet) {
 			if(player->ishuman())
 				an.add(&e, "%1 (%Cancel)", e.getname());
 		} else if(!bsdata<planeti>::have(e.location))
@@ -470,10 +470,10 @@ static void ask_invasion() {
 static void apply_invasion() {
 	if(bsdata<troop>::have(choose_result)) {
 		auto p = (troop*)choose_result;
-		if(p->location == planeti::last)
-			p->location = planeti::last->getsystem();
+		if(p->location == last_planet)
+			p->location = last_planet->getsystem();
 		else
-			p->location = planeti::last;
+			p->location = last_planet;
 	}
 }
 static void ai_invasion() {
@@ -528,12 +528,12 @@ static void ask_invasion_planet() {
 }
 static void apply_invasion_planet() {
 	if(bsdata<planeti>::have(choose_result)) {
-		auto push_last = planeti::last;
+		auto push_last = last_planet;
 		auto push_result = choose_result;
-		planeti::last = (planeti*)choose_result;
+		last_planet = (planeti*)choose_result;
 		script::run("ChooseInvasion", 0);
 		choose_result = push_result;
-		planeti::last = push_last;
+		last_planet = push_last;
 		game.updateui();
 		game.updatecontrol();
 	}
@@ -660,7 +660,7 @@ static bool allow(const uniti* pu) {
 	if(maximum_count > 0) {
 		if(pu->type == Structures) {
 			entitya source;
-			source.select(player, planeti::last);
+			source.select(player, last_planet);
 			if(source.getsummary(pu) >= maximum_count)
 				return false;
 		}
@@ -881,12 +881,12 @@ static void for_each_troop(int bonus) {
 
 static void for_each_planet(int bonus) {
 	auto v = *script_begin++; 
-	auto push_last = planeti::last;
+	auto push_last = last_planet;
 	for(auto p : querry) {
-		planeti::last = p->getplanet();
+		last_planet = p->getplanet();
 		script::run(v);
 	}
-	planeti::last = push_last;
+	last_planet = push_last;
 }
 
 void playeri::apply(const variants& source) {

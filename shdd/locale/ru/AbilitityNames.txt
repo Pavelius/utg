@@ -1,0 +1,9 @@
+﻿Charisma: Харизма
+Constitution: Телосложение
+Dexterity: Ловкость
+Intellect: Интеллект
+Strenght: Сила
+Wisdow: Мудрость
+
+AC: КБ
+HP: ЖЗ

@@ -40,6 +40,12 @@
     <ClCompile Include="ship.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="system.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="planet.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">

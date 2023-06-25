@@ -4,9 +4,8 @@
 BSDATA(costi) = {
 	{"Gold", 0, 0, 0, 4},
 	{"Mana", 0, 0, 0, 6},
-	{"Happiness", 0, 0, "%3i"},
+	{"Happiness", 0, 0, "%3i", 10},
 	{"Fame", 0, 0, 0, 8},
-	{"Faith", 0, 0, 0, 3},
 	{"Lore"},
 	{"Warfire", 0, 0, "%1i/%3i", 1},
 	{"Strenght", 0, 0, 0, 2},

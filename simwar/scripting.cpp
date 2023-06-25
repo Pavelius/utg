@@ -371,7 +371,7 @@ int get_income(cost_s v) {
 }
 
 static int get_happiness(cost_s v, int base) {
-	if(v != Gold && v != Lore && v != Faith)
+	if(v != Gold && v != Lore)
 		return 0;
 	auto param = player->income[Happiness];
 	if(param <= -3)

@@ -7,9 +7,9 @@ void uniti::placement(int count, bool updateui) const {
 		count = 1;
 	switch(type) {
 	case GroundForces: case Structures:
-		game.focusing(planeti::last);
+		game.focusing(last_planet);
 		for(auto i = 0; i < count; i++)
-			troop::create(this, player, planeti::last);
+			troop::create(this, player, last_planet);
 		if(updateui)
 			game.updateui();
 		//draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);

@@ -1,6 +1,6 @@
 #include "main.h"
 
-planeti* planeti::last;
+planeti* last_planet;
 
 int planeti::get(indicator_s v) const {
 	switch(v) {
