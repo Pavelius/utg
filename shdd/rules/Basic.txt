@@ -1,6 +1,6 @@
-#include "rules/Advancement.txt"
 #include "rules/Spells.txt"
 #include "rules/Items.txt"
+#include "rules/Advancement.txt"
 #include "rules/Monsters.txt"
 
 #import Quest "Combat"
@@ -15,3 +15,5 @@ MainScript
 
 General source(Creature)
  elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC
+Items source(Creature)
+ elements EquipmentList

@@ -1,4 +1,5 @@
 ﻿General: Общие
+Items: Предметы
 
 AppTitle: Приключения в забытых королевствах
 DarkForest: Темный лес
@@ -12,4 +13,4 @@ Shortsword: Меч
 
 No: Нет
 Yes: Да
-WhatDoYouDo: Что будете делать?
+WhatDoYouDo: Что будет делать [%1]?

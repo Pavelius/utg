@@ -23,8 +23,14 @@ void creature_getproperty(const void* object, variant v, stringbuilder& sb) {
 }
 
 template<> void ftstatus<creature>(const void* object, stringbuilder& sb) {
-	auto p = (creature*)object;
-	sb.add("%1 - %2", p->getname(), p->getkindname(), p->get(Level));
+	if(bsdata<creature>::source.haveio(object)) {
+		auto p = (creature*)object;
+		sb.add("%1 - %2", p->getname(), p->getkindname(), p->get(Level));
+	} else if(bsdata<creature>::source.have(object)) {
+		auto p = (creature*)bsdata<creature>::source.ptr(bsdata<creature>::source.indexof(object));
+		if(p->isitem(object)) {
+		}
+	}
 }
 
 static void treasure_text(stringbuilder& sb) {

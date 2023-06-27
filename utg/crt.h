@@ -150,6 +150,7 @@ public:
 	size_t							getcount() const { return count; }
 	size_t							getsize() const { return size; }
 	constexpr bool					have(const void* element) const { return element >= data && element < ((char*)data + size * count); }
+	bool							haveio(const void* element) const;
 	int								indexof(const void* element) const;
 	void*							insert(int index, const void* element);
 	bool							is(const void* e) const { return e >= data && e < (char*)data + count * size; }

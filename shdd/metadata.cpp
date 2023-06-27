@@ -48,7 +48,7 @@ BSMETA(feati) = {
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
-	BSREQ(cost), BSREQ(damage), BSREQ(count), BSREQ(slot),
+	BSREQ(cost), BSREQ(damage), BSREQ(count), BSREQ(slot), BSREQ(attack),
 	BSFLG(flags, feati),
 	BSENM(wear, weari),
 	BSREQ(use),
@@ -91,6 +91,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
+	{"Class", VAR(classi, 1)},
 	{"Consumable", VAR(consumablei, 1)},
 	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},

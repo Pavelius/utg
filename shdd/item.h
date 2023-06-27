@@ -9,7 +9,7 @@
 
 struct itemi : nameable {
 	const char*	unidentified;
-	int			cost, damage, count, slot;
+	int			cost, damage, count, slot, attack;
 	wear_s		wear;
 	featable	flags;
 	variants	use, wearing;
@@ -40,6 +40,7 @@ public:
 	void		create(const itemi* pi, int count);
 	void		damage();
 	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
+	int			getattacks() const;
 	int			getcost() const;
 	int			getcount() const;
 	dice		getdamage() const;

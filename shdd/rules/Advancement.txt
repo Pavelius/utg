@@ -7,6 +7,9 @@ Dwarf Stout
 HalfOrc Mighty
  elements MeleeAttack+1 MeleeDamage+1
 
+Fighter+1 Equipment
+ elements LeatherArmor Shield Longsword
+
 #List
 
 RaiseAnyAbility

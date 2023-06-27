@@ -60,6 +60,12 @@ static bool apply_next() {
 	return true;
 }
 
+static void ask_what_to_do() {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(getnm("WhatDoYouDo"), player->getname());
+	last_quest = (quest*)an.choose(temp);
+}
+
 static void play_quest() {
 	if(!an.console)
 		return;
@@ -67,7 +73,7 @@ static void play_quest() {
 	while(last_quest) {
 		print_prompt(last_quest);
 		print_answers(last_quest);
-		last_quest = (quest*)an.choose(getnm("WhatDoYouDo"));
+		ask_what_to_do();
 		apply_quest();
 		if(!apply_next())
 			break;
@@ -173,7 +179,7 @@ static void weapon_mastery(int bonus) {
 	choose_usable("ChooseWeaponMastery", player->mastery, MeleeWeapon, RangedWeapon);
 }
 
-static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+static void single_attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
 	roll20(advantage);
 	auto critical_miss = (roll_result <= 1);
 	auto critical_hit = (roll_result >= 20);
@@ -188,6 +194,12 @@ static void attack_enemy(ability_s attack, ability_s attack_damage, int advantag
 		damage *= 2;
 	player->act("PlayerHit");
 	opponent->damage(damage);
+}
+
+static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+	auto number_of_attacks = weapon.getattacks();
+	for(auto i = 0; i < number_of_attacks; i++)
+		single_attack_enemy(attack, attack_damage, advantage, weapon);
 }
 
 static void make_melee_attack(int bonus) {

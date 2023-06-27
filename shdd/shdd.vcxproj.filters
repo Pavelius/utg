@@ -75,6 +75,9 @@
     <ClCompile Include="information.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -170,6 +173,9 @@
       <Filter>locale\ru</Filter>
     </Text>
     <Text Include="locale\ru\Players.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\ItemNames.txt">
       <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>

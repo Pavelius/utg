@@ -12,6 +12,7 @@
 #include "script.h"
 
 void stringbuilder_proc(stringbuilder& sb, const char* id);
+void initialize_ui();
 
 static void starting() {
 	creature::add("Orc");
@@ -44,6 +45,7 @@ static void initialize_avatars() {
 }
 
 int main(int argc, char* argv[]) {
+	initialize_ui();
 	quest::initialize();
 	initialize_avatars();
 	srand(getcputime());

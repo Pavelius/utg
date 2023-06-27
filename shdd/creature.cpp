@@ -1,3 +1,4 @@
+#include "advancement.h"
 #include "answers.h"
 #include "creature.h"
 #include "gender.h"
@@ -171,8 +172,18 @@ static void random_name() {
 	player->name = i;
 }
 
+static void apply_advance(variant type) {
+	for(auto& e : bsdata<advancement>()) {
+		if(e.type == type)
+			advance(e.elements);
+	}
+}
+
 static void apply_level_up() {
-	player->basic.abilities[Level]++;
+	variant type = bsdata<classi>::elements + player->kind;
+	type.counter = player->get(Level) + 1;
+	apply_advance(type);
+	player->abilities[Level]++;
 }
 
 void creature::add(race_s race, gender_s gender, class_s kind) {

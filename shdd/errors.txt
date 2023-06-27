@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 16: Not found identifier `Creature`
+ Line 19: Can't find variant `ItemsList`

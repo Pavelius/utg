@@ -93,6 +93,11 @@ dice item::getdamage() const {
 	return dice{1, (char)geti().damage};
 }
 
+int	item::getattacks() const {
+	auto count = geti().attack;
+	return count ? count : 1;
+}
+
 int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
