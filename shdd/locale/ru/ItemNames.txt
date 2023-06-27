@@ -25,7 +25,15 @@ RedRing: Красное кольцо
 SilverAmulet: Серебрянный амулет
 SilverRing: Серебрянное кольцо
 
+Hands: Кулаки
+Dagger: Кинжал
+BastardSword: Полутораручный меч 
+Greatesword: Двуручный меч
+Longbow: Длинный лук
+Longsword: Длинный меч
+Shortsword: Меч
+
 ChainArmor: Кольчуга
 LeatherArmor: Кожанная броня
 Shield: Щит
-Sword: Меч
+

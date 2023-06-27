@@ -4,9 +4,13 @@
 #include "item.h"
 #include "modifier.h"
 #include "nametable.h"
+#include "pushvalue.h"
 #include "questlist.h"
 #include "roll.h"
 #include "script.h"
+#include "special.h"
+
+static int special_attacks;
 
 static int d100() {
 	return rand() % 100;
@@ -179,6 +183,17 @@ static void weapon_mastery(int bonus) {
 	choose_usable("ChooseWeaponMastery", player->mastery, MeleeWeapon, RangedWeapon);
 }
 
+static void special_attack(item& weapon, speciali& effect) {
+}
+
+static void special_attack(item& weapon) {
+	if(!opponent)
+		return;
+	auto power = weapon.getpower();
+	if(power.iskind<speciali>())
+		special_attack(weapon, bsdata<speciali>::elements[power.value]);
+}
+
 static void single_attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
 	roll20(advantage);
 	auto critical_miss = (roll_result <= 1);
@@ -194,9 +209,11 @@ static void single_attack_enemy(ability_s attack, ability_s attack_damage, int a
 		damage *= 2;
 	player->act("PlayerHit");
 	opponent->damage(damage);
+	special_attack(weapon);
 }
 
 static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+	pushvalue push(special_attacks, 0);
 	auto number_of_attacks = weapon.getattacks();
 	for(auto i = 0; i < number_of_attacks; i++)
 		single_attack_enemy(attack, attack_damage, advantage, weapon);

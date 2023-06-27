@@ -60,6 +60,7 @@ static void update_equipment() {
 }
 
 static void update_special() {
+	player->abilities[AC] += player->getbonus(Dexterity);
 	if(player->wears[MeleeWeapon].is(Versatile) && !player->wears[MeleeWeaponOffhand])
 		player->abilities[WeaponDiceRaise]++;
 }

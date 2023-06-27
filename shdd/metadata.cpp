@@ -10,11 +10,13 @@
 #include "questlist.h"
 #include "race.h"
 #include "spell.h"
+#include "special.h"
 #include "statable.h"
 #include "script.h"
 #include "widget.h"
 
 NOBSDATA(dice)
+NOBSDATA(item)
 NOBSDATA(variants)
 
 BSMETA(variant) = {{}};
@@ -25,6 +27,7 @@ BSDATAC(creature, 1024)
 BSDATAC(itemi, 256)
 BSDATAC(monsteri, 64)
 BSDATAC(spelli, 256)
+BSDATAC(speciali, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -55,6 +58,8 @@ BSMETA(itemi) = {
 	BSREQ(wearing),
 	BSREQ(powers),
 	{}};
+BSMETA(item) = {
+	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
 	{}};
@@ -73,6 +78,11 @@ BSMETA(racei) = {
 	{}};
 BSMETA(script) = {
 	BSREQ(id),
+	{}};
+BSMETA(speciali) = {
+	BSREQ(id),
+	BSENM(save, abilityi), BSREQ(dc),
+	BSREQ(effect),
 	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
@@ -95,6 +105,7 @@ BSDATA(varianti) = {
 	{"Consumable", VAR(consumablei, 1)},
 	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
+	{"ItemObject", VAR(item, 0), ftstatus<item>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},

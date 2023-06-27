@@ -81,14 +81,6 @@ bool item::canequip(wear_s v) const {
 	}
 }
 
-void item::addname(stringbuilder& sb) const {
-	auto count = getcount();
-	auto name = getnm(geti().id);
-	sb.add(name);
-	if(count > 1)
-		sb.adds("%1i%Pieces", count);
-}
-
 dice item::getdamage() const {
 	return dice{1, (char)geti().damage};
 }

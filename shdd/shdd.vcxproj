@@ -183,6 +183,7 @@
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="roll.h" />
+    <ClInclude Include="special.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />

@@ -4,12 +4,7 @@ Items: Предметы
 AppTitle: Приключения в забытых королевствах
 DarkForest: Темный лес
 
-Hands: Кулаки
-Dagger: Кинжал
-Greatesword: Двуручный меч
-Longbow: Длинный лук
-Longsword: Длинный меч
-Shortsword: Меч
+Slots: Слот
 
 No: Нет
 Yes: Да
