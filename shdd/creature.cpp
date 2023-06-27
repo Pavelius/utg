@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "creature.h"
 #include "gender.h"
+#include "groupname.h"
 #include "ongoing.h"
 #include "modifier.h"
 #include "monster.h"
@@ -159,15 +160,33 @@ const char* random_avatar(class_s type, gender_s gender) {
 	return result;
 }
 
-void creature::add(race_s race, class_s kind) {
+static void random_name() {
+	char temp[260]; stringbuilder sb(temp);
+	sb.clear(); sb.add("%1%2", bsdata<classi>::elements[player->kind].id, bsdata<genderi>::elements[player->gender].id);
+	auto i = groupname::randomid(temp);
+	if(i == 0xFFFF) {
+		sb.clear(); sb.add("%1%2", bsdata<racei>::elements[player->ancestry].id, bsdata<genderi>::elements[player->gender].id);
+		i = groupname::randomid(temp);
+	}
+	player->name = i;
+}
+
+static void apply_level_up() {
+	player->basic.abilities[Level]++;
+}
+
+void creature::add(race_s race, gender_s gender, class_s kind) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->ancestry = race;
 	player->kind = kind;
+	player->gender = gender;
 	roll_random_abilities();
 	roll_hit_points();
 	starting_hits();
+	apply_level_up();
 	finish_create();
+	random_name();
 	player->setavatar(random_avatar(player->kind, player->gender));
 }
 
@@ -218,4 +237,12 @@ creature* creature::getenemy() const {
 			return &e;
 	}
 	return 0;
+}
+
+const char*	creature::getkindname() const {
+	return bsdata<classi>::elements[kind].getname();
+}
+
+const char*	creature::getracename() const {
+	return bsdata<racei>::elements[ancestry].getname();
 }

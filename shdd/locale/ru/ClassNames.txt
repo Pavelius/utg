@@ -1,0 +1,4 @@
+﻿Fighter: Воин
+Priest: Клерик
+Theif: Вор
+Wizard: Волшебник

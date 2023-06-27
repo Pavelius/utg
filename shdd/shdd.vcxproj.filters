@@ -166,5 +166,11 @@
     <Text Include="locale\ru\AbilitityNames.txt">
       <Filter>locale\ru</Filter>
     </Text>
+    <Text Include="locale\ru\ClassNames.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\Players.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
   </ItemGroup>
 </Project>

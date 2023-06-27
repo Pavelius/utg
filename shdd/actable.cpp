@@ -1,5 +1,6 @@
 #include "actable.h"
 #include "answers.h"
+#include "groupname.h"
 #include "stringact.h"
 
 void actable::actv(const char* format, const char* format_param) const {
@@ -11,5 +12,5 @@ void actable::act(const char* format, ...) const {
 }
 
 const char* actable::getname() const {
-	return "Pavel";
+	return bsdata<groupname>::elements[name].name;
 }

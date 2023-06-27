@@ -83,13 +83,16 @@ BSMETA(spelli) = {
 BSMETA(weari) = {
 	BSREQ(id),
 	{}};
+
+void creature_getproperty(const void* object, variant v, stringbuilder& sb);
+
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
 	{"Consumable", VAR(consumablei, 1)},
-	{"Creature", VAR(creature, 0)},
+	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},

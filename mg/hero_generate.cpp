@@ -166,7 +166,6 @@ static void add_quest(const char* id) {
 	auto p = bsdata<questlist>::find(id);
 	if(!p)
 		return;
-	pushvalue push_quest(lastquest, p);
 }
 
 void hero::clear() {

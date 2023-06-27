@@ -122,3 +122,9 @@ const char* log::skipwscr(const char* p) {
 	}
 	return p;
 }
+
+void log::readloc(fnread proc, const char* id) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.addlocalefile(id, "txt");
+	proc(temp);
+}

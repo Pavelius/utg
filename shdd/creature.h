@@ -15,13 +15,15 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 	statable	basic;
 	short		distance;
 	short unsigned enemy;
-	static void add(race_s race, class_s kind);
+	static void add(race_s race, gender_s gender, class_s kind);
 	static void add(const char* id);
 	static void add(const struct monsteri* pm);
 	void		clear();
 	void		damage(int value);
+	const char*	getkindname() const;
 	dice		getdamage(ability_s ability) const;
 	creature*	getenemy() const;
+	const char*	getracename() const;
 	bool		is(feat_s v) const { return feats.is(v); }
 	bool		isallow(const item& v) const;
 	bool		isenemy(const creature& v) const { return v.is(Enemy) != is(Enemy); }

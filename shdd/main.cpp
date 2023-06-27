@@ -4,7 +4,10 @@
 #include "crt.h"
 #include "draw.h"
 #include "draw_utg.h"
+#include "gender.h"
+#include "groupname.h"
 #include "item.h"
+#include "log.h"
 #include "questlist.h"
 #include "script.h"
 
@@ -12,8 +15,8 @@ void stringbuilder_proc(stringbuilder& sb, const char* id);
 
 static void starting() {
 	creature::add("Orc");
-	creature::add(Dwarf, Fighter);
-	creature::add(Human, Fighter);
+	creature::add(Dwarf, Male, Fighter);
+	creature::add(Human, Male, Fighter);
 	auto pn = bsdata<listi>::find("MainScript");
 	if(!pn)
 		return;
@@ -21,6 +24,7 @@ static void starting() {
 }
 
 static void initialize() {
+	log::readloc(groupname::read, "Players");
 }
 
 static const char* getavatarst(const void* p) {

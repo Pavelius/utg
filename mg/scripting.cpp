@@ -17,9 +17,9 @@ template<> void fnscript<traiti>(int index, int bonus) {
 
 static const quest* choose_answers(const char* header) {
 	an.clear();
-	auto index = quest::last->index;
-	auto pb = quest::last + 1;
-	for(auto pe = lastquest->elements.end(); pb < pe; pb++) {
+	auto index = last_quest->index;
+	auto pb = last_quest + 1;
+	for(auto pe = last_questlist->elements.end(); pb < pe; pb++) {
 		if(pb->index != index)
 			break;
 		an.add(pb, pb->text);
@@ -29,7 +29,7 @@ static const quest* choose_answers(const char* header) {
 
 static void choose_list(int bonus) {
 	marked.clear();
-	pushvalue push_last(quest::last, lastquest->find(1000, quest::last + 1));
+	pushvalue push_last(quest::last, last_questlist->find(1000, quest::last + 1));
 	if(!quest::last)
 		return;
 	auto header = quest::last->text;
