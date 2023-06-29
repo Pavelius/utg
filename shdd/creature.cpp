@@ -62,7 +62,8 @@ static void update_equipment() {
 static void update_special() {
 	player->abilities[MeleeAttack] += player->getbonus(Strenght);
 	player->abilities[RangeAttack] += player->getbonus(Dexterity);
-	player->abilities[AC] += player->getbonus(Dexterity);
+	if(!player->is(NoDexBonusAC))
+		player->abilities[AC] += player->getbonus(Dexterity);
 	if(player->wears[MeleeWeapon].is(Versatile) && !player->wears[MeleeWeaponOffhand])
 		player->abilities[WeaponDiceRaise]++;
 }

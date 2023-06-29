@@ -100,6 +100,9 @@ BSMETA(spelli) = {
 	BSFLG(classes, classi),
 	BSREQ(enchant), BSREQ(summon),
 	{}};
+BSMETA(statei) = {
+	BSREQ(id),
+	{}};
 BSMETA(weari) = {
 	BSREQ(id),
 	{}};
@@ -126,6 +129,7 @@ BSDATA(varianti) = {
 	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist::read},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Spell", VAR(spelli, 1)},
+	{"State", VAR(statei, 1), 0, 0, fnscript<statei>},
 	{"RollTable", VAR(nametable, 1), 0, 0, fnscript<nametable>, 0, nametable::read},
 	{"Widget", VAR(widget, 1)},
 };

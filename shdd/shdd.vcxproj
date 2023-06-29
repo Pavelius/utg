@@ -156,6 +156,7 @@
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />
+    <ClCompile Include="lyingitem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="race.cpp" />
     <ClCompile Include="roll.cpp" />
     <ClCompile Include="statable.cpp" />
+    <ClCompile Include="state.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
     <ClCompile Include="scripting.cpp" />
@@ -179,6 +181,7 @@
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="location.h" />
+    <ClInclude Include="lyingitem.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="nametable.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="special.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
+    <ClInclude Include="state.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
   </ItemGroup>

@@ -25,6 +25,7 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 	creature*	getenemy() const;
 	const char*	getracename() const;
 	bool		is(feat_s v) const { return feats.is(v); }
+	bool		is(state_s v) const { return states.is(v); }
 	bool		isallow(const item& v) const;
 	bool		isenemy(const creature& v) const { return v.is(Enemy) != is(Enemy); }
 	bool		isplayer() const { return true; }

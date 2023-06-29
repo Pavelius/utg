@@ -9,6 +9,7 @@
 #include "roll.h"
 #include "script.h"
 #include "special.h"
+#include "state.h"
 
 static int special_attacks;
 
@@ -105,6 +106,13 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
 	}
+}
+
+template<> void fnscript<statei>(int value, int bonus) {
+	if(bonus >= 0)
+		player->states.set(value);
+	else
+		player->states.remove(value);
 }
 
 template<> void fnscript<nametable>(int value, int bonus) {
@@ -273,6 +281,19 @@ static void damage_item(int bonus) {
 		last_item->damage();
 }
 
+static void if_have(int bonus) {
+	auto v = *script_begin++;
+	if(v.iskind<statei>()) {
+		if(bonus >= 0) {
+			if(!player->states.is(v.value))
+				script::stop();
+		} else {
+			if(player->states.is(v.value))
+				script::stop();
+		}
+	}
+}
+
 BSDATA(script) = {
 	{"ArmorMastery", armor_mastery},
 	{"Attack", raise_attack},
@@ -281,6 +302,7 @@ BSDATA(script) = {
 	{"ChanceCursed", chance_cursed},
 	{"ChanceMasterwork", chance_masterwork},
 	{"Damage", raise_damage},
+	{"IfHave", if_have},
 	{"LookEnemy", look_enemy, if_look_enemy},
 	{"MakeIdentify", make_identify},
 	{"MakeMeleeAttack", make_melee_attack, if_melee_weapon},

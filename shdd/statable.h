@@ -1,9 +1,11 @@
 #include "ability.h"
+#include "state.h"
 
 #pragma once
 
 struct statable {
 	unsigned	usable, mastery;
+	stateable	states;
 	char		abilities[Dodge + 1];
 	void		add(ability_s i, int v) { abilities[i] += v; }
 	void		applybest(ability_s v);

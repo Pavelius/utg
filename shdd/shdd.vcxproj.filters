@@ -78,6 +78,12 @@
     <ClCompile Include="interface.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="lyingitem.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="feat.h">
@@ -138,6 +144,12 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="location.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="lyingitem.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
