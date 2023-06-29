@@ -33,3 +33,5 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 };
 extern creature* player;
 extern creature* opponent;
+
+creature* getowner(item& it);

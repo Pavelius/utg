@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 19: Can't find variant `ItemsList`
+﻿In file `rules/Area.txt`:
+ Line 1: Not find data type for `Area`

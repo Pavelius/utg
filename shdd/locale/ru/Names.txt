@@ -6,6 +6,9 @@ DarkForest: Темный лес
 
 Slots: Слот
 
+ToHit: к попаданию
+ToDamage: к урону
+
 No: Нет
 Yes: Да
-WhatDoYouDo: Что будет делать [%1]?
+WhatDoYouDo: Что будет делать [%Name]?

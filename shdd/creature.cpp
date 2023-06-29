@@ -60,6 +60,8 @@ static void update_equipment() {
 }
 
 static void update_special() {
+	player->abilities[MeleeAttack] += player->getbonus(Strenght);
+	player->abilities[RangeAttack] += player->getbonus(Dexterity);
 	player->abilities[AC] += player->getbonus(Dexterity);
 	if(player->wears[MeleeWeapon].is(Versatile) && !player->wears[MeleeWeaponOffhand])
 		player->abilities[WeaponDiceRaise]++;
@@ -257,4 +259,11 @@ const char*	creature::getkindname() const {
 
 const char*	creature::getracename() const {
 	return bsdata<racei>::elements[ancestry].getname();
+}
+
+creature* getowner(item& it) {
+	auto i = bsdata<creature>::source.indexof(&it);
+	if(i == -1)
+		return 0;
+	return bsdata<creature>::elements + i;
 }

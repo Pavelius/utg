@@ -172,11 +172,13 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
+    <ClInclude Include="area.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="location.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="nametable.h" />
@@ -192,6 +194,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\AbilitityNames.txt" />
+    <Text Include="locale\ru\AreaNames.txt" />
     <Text Include="locale\ru\ClassNames.txt" />
     <Text Include="locale\ru\Combat.txt" />
     <Text Include="locale\ru\ItemNames.txt" />
@@ -201,6 +204,7 @@
     <Text Include="locale\ru\Talks.txt" />
     <Text Include="locale\ru\Treasure0.txt" />
     <Text Include="rules\Advancement.txt" />
+    <Text Include="rules\Area.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />

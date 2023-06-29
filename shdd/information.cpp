@@ -4,8 +4,8 @@
 #include "variant.h"
 
 struct stringproc {
-	const char*		id;
-	fnprint			proc;
+	const char*	id;
+	fnprint		proc;
 };
 
 static void add_dice(stringbuilder& sb, const creature* p, const item& weapon) {
@@ -13,10 +13,17 @@ static void add_dice(stringbuilder& sb, const creature* p, const item& weapon) {
 	auto damage_count = 1;
 	auto damage_bonus = p->get(MeleeDamage);
 	sb.adds("%+1i", p->get(MeleeAttack));
-	sb.adds(weapon.getname());
+	// sb.adds(weapon.getname());
 	sb.adds("%1id%2i", damage_count, damage);
 	if(damage_bonus)
 		sb.add("%+1i", damage_bonus);
+}
+
+static void add_attack(stringbuilder& sb, const creature* p, ability_s attack, ability_s damage) {
+	sb.adds("%+1i %ToHit", p->get(attack));
+	auto i = p->get(damage);
+	if(i)
+		sb.adds("%+1i %ToDamage", i);
 }
 
 void creature_getproperty(const void* object, variant v, stringbuilder& sb) {
@@ -27,7 +34,10 @@ void creature_getproperty(const void* object, variant v, stringbuilder& sb) {
 			sb.add("%1i", 10 + p->get(AC));
 			break;
 		case MeleeAttack:
-			add_dice(sb, p, p->wears[MeleeAttack]);
+			add_attack(sb, p, MeleeAttack, MeleeDamage);
+			break;
+		case RangeAttack:
+			add_attack(sb, p, RangeAttack, RangeDamage);
 			break;
 		default:
 			sb.add("%1i", p->get((ability_s)v.value));
@@ -45,6 +55,7 @@ template<> void ftstatus<dice>(const void* object, stringbuilder& sb) {
 
 template<> void ftstatus<item>(const void* object, stringbuilder& sb) {
 	auto p = (item*)object;
+	auto po = getowner(*p);
 	sb.add(p->getname());
 	auto& ei = p->geti();
 	sb.adds("(%Weight %1i", ei.slot);
@@ -67,9 +78,13 @@ template<> void ftstatus<creature>(const void* object, stringbuilder& sb) {
 	}
 }
 
+void item::addname(stringbuilder& sb) const {
+	sb.adds(getname());
+}
+
 static void treasure_text(stringbuilder& sb) {
 	if(!last_table_element)
-		sb.add("NoTreasure");
+		sb.add(getnm("NoTreasure"));
 	else
 		sb.add(last_table_element->name);
 }
@@ -83,11 +98,15 @@ static void weapon_text(stringbuilder& sb) {
 		sb.add(getnm("Hands"));
 }
 
-void item::addname(stringbuilder& sb) const {
-	sb.adds(getname());
+static void hero_name(stringbuilder& sb) {
+	if(!player)
+		sb.add(getnm("NoPlayer"));
+	else
+		sb.add(player->getname());
 }
 
 BSDATA(stringproc) = {
+	{"Name", hero_name},
 	{"TreasureText", treasure_text},
 	{"Weapon", weapon_text},
 };

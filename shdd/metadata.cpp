@@ -1,7 +1,9 @@
 #include "advancement.h"
+#include "area.h"
 #include "bsreq.h"
 #include "creature.h"
 #include "item.h"
+#include "location.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
@@ -23,13 +25,18 @@ BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
 BSDATAD(variant)
 
+BSDATAC(areai, 128)
 BSDATAC(creature, 1024)
 BSDATAC(itemi, 256)
+BSDATAC(locationi, 2048)
 BSDATAC(monsteri, 64)
 BSDATAC(spelli, 256)
 BSDATAC(speciali, 128)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(areai) = {
 	BSREQ(id),
 	{}};
 BSMETA(classi) = {
@@ -59,6 +66,9 @@ BSMETA(itemi) = {
 	BSREQ(powers),
 	{}};
 BSMETA(item) = {
+	{}};
+BSMETA(locationi) = {
+	BSENM(area_id, areai),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
@@ -101,6 +111,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
+	{"Area", VAR(areai, 1)},
 	{"Class", VAR(classi, 1)},
 	{"Consumable", VAR(consumablei, 1)},
 	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
@@ -108,6 +119,7 @@ BSDATA(varianti) = {
 	{"ItemObject", VAR(item, 0), ftstatus<item>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},
+	{"Location", VAR(locationi, 0)},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1)},
 	{"Monster", VAR(monsteri, 1)},

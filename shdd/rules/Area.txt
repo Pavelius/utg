@@ -1,0 +1,9 @@
+#Area
+
+SmallRoom
+LargeRoom
+ColumedHall
+
+Forest
+DeepForest
+Swamp

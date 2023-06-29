@@ -2,6 +2,7 @@
 #include "rules/Items.txt"
 #include "rules/Advancement.txt"
 #include "rules/Monsters.txt"
+#include "rules/Area.txt"
 
 #import Quest "Combat"
 #import RollTable "Treasure0"
@@ -14,6 +15,6 @@ MainScript
 #Menu
 
 General source(Creature)
- elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC
+ elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC Separator MeleeAttack RangeAttack
 Items source(Creature)
  elements EquipmentList

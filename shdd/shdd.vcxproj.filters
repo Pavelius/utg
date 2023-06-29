@@ -134,6 +134,12 @@
     <ClInclude Include="special.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="area.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="location.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -180,6 +186,12 @@
     </Text>
     <Text Include="locale\ru\ItemNames.txt">
       <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\AreaNames.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="rules\Area.txt">
+      <Filter>rules</Filter>
     </Text>
   </ItemGroup>
 </Project>
