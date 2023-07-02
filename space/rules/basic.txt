@@ -7,6 +7,8 @@
 
 #List
 
+RoutePath
+ elements SelectSystemPlanets ChoosePlanet MoveTo
+
 StartScript
- elements Earth Cobra SetPlayer SelectSystemPlanets ChoosePlanet MoveTo\
-  Mars Cobra SelectSystemPlanets ChoosePlanet MoveTo
+ elements Earth Cobra RoutePath SetPlayer Mars Cobra RoutePath

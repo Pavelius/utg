@@ -213,7 +213,6 @@ static void select_planets(int bonus) {
 
 static void choose_planet(int bonus) {
 	pushvalue interactive(answers::interactive, isplayer());
-	pushvalue avatar(answers::resid, "SolarSystem");
 	last_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
 	an.clear();
 }
@@ -223,6 +222,15 @@ static void update_planets() {
 
 static void set_player(int bonus) {
 	player = last_ship;
+}
+
+void player_turn() {
+	if(!player)
+		return;
+	player->wait();
+	pushvalue ship(last_ship, player);
+	script::run("RoutePath");
+	next_player_scene();
 }
 
 BSDATA(querryi) = {

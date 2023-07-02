@@ -43,7 +43,7 @@ BSMETA(planeti) = {
 	BSREQ(id),
 	BSENM(system, systemi),
 	BSENM(landscape, landscapei),
-	BSREQ(position), BSREQ(priority), BSREQ(alpha),
+	BSREQ(position),
 	{}};
 BSMETA(planetri) = {
 	BSREQ(id),
@@ -66,7 +66,7 @@ BSMETA(ship) = {
 	{}};
 BSMETA(systemi) = {
 	BSREQ(id),
-	BSREQ(position), BSREQ(priority), BSREQ(alpha),
+	BSREQ(position),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

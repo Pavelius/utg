@@ -2,10 +2,9 @@
 
 extern unsigned long drawable_stamp;
 
-class timeable {
+struct timeable {
 	static constexpr unsigned rday = 24 * 60;
 	static constexpr unsigned dyear = 12 * 30;
-public:
 	unsigned getdays() const { return getround() / rday; }
 	unsigned getmonthday() const { return 1 + (getdays() % 30); }
 	unsigned getmonth() const { return 1 + (getdays() % dyear) / 30; }

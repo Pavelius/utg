@@ -7,6 +7,7 @@
 
 using namespace draw;
 
+drawable::fnprepare drawable::preparing;
 drawable::fnpaint drawable::painting;
 
 static adat<drawable*, 512> objects;
@@ -134,6 +135,10 @@ static orderi* add_order(drawable* parent, int milliseconds) {
 	return p;
 }
 
+void drawable::add() {
+	objects.add(this);
+}
+
 static void add_objects(const rect& rc, array& source, unsigned offset) {
 	auto pe = (drawable*)(source.end() + offset);
 	auto size = source.size;
@@ -142,7 +147,7 @@ static void add_objects(const rect& rc, array& source, unsigned offset) {
 			continue;
 		if(!pb->position.in(rc))
 			continue;
-		objects.add(pb);
+		pb->add();
 	}
 }
 
@@ -158,6 +163,8 @@ static void prepare_objects() {
 			continue;
 		add_objects(rc, *em.source, pm->offset);
 	}
+	if(drawable::preparing)
+		drawable::preparing();
 }
 
 static int compare(const void* v1, const void* v2) {

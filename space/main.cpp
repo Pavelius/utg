@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "bsreq.h"
+#include "draw.h"
 #include "draw_strategy.h"
 #include "game.h"
 #include "log.h"
@@ -53,8 +54,8 @@ static void test_game() {
 	generate_systems();
 	generate_planets();
 	script::run("StartScript");
-	ship::waitall();
-	quest::run(1);
+	next_player_scene();
+	draw::start();
 }
 
 int main(int argc, char* argv[]) {

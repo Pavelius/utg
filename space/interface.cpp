@@ -220,8 +220,37 @@ static void main_finish() {
 	drawable::inputcamera();
 }
 
+static void add_system() {
+	if(current_system)
+		current_system->add();
+}
+
+static void add_planets() {
+	auto rc = drawable::getscreen(-32);
+	auto system_id = getbsi(current_system);
+	for(auto& e : bsdata<planeti>()) {
+		if(e.system != system_id)
+			continue;
+		if(!e.position.in(rc))
+			continue;
+		e.add();
+	}
+}
+
+static void preparing() {
+	add_system();
+	add_planets();
+}
+
+void player_turn();
+
+void next_player_scene() {
+	draw::setnext(player_turn);
+}
+
 void initialize_interface() {
 	drawable::painting = painting;
+	drawable::preparing = preparing;
 	pbackground = main_background;
 	pfinish = main_finish;
 }
