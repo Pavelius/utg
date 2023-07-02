@@ -20,7 +20,9 @@ struct drawable {
 	static fnupdate	updating;
 	static void		slide(point goal, int step);
 	static void		splash(unsigned milliseconds);
+	static void		stop();
 	void			wait() const;
 	static void		waitall();
 };
 void setcamera(point v);
+extern unsigned long drawable_stamp;

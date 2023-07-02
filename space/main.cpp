@@ -49,6 +49,8 @@ static void generate_systems() {
 static void generate_ships() {
 	ship::add("Cobra", {100, 100});
 	last_ship->move(bsdata<planeti>::elements[0].position);
+	ship::add("Cobra", {300, 120});
+	last_ship->move(bsdata<planeti>::elements[1].position);
 }
 
 static void test_game() {

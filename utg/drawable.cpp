@@ -12,8 +12,10 @@ drawable::fnupdate drawable::updating;
 
 static adat<drawable*, 512> objects;
 
-static unsigned long timestamp, timestamp_last;
+unsigned long drawable_stamp;
+static unsigned long drawable_stamp_last;
 static rect last_screen;
+static bool continue_animation;
 
 long distance(point from, point to);
 
@@ -22,6 +24,8 @@ struct orderi : drawable {
 	drawable*		parent;
 	drawable		start;
 	unsigned long	tick_start, tick_stop;
+	operator bool() const { return parent != 0; }
+	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			update();
 };
 }
@@ -91,17 +95,17 @@ static void update_all_orders() {
 }
 
 static void start_timer() {
-	timestamp_last = getcputime();
+	drawable_stamp_last = getcputime();
 }
 
 static void update_timestamp() {
 	auto c = getcputime();
-	if(!timestamp_last || c < timestamp_last)
-		timestamp_last = c;
-	auto d = c - timestamp_last;
+	if(!drawable_stamp_last || c < drawable_stamp_last)
+		drawable_stamp_last = c;
+	auto d = c - drawable_stamp_last;
 	if(d < 1000)
-		timestamp += d;
-	timestamp_last = c;
+		drawable_stamp += d;
+	drawable_stamp_last = c;
 }
 
 static int calculate(int v1, int v2, int n, int m) {
@@ -109,20 +113,20 @@ static int calculate(int v1, int v2, int n, int m) {
 }
 
 void orderi::update() {
-	if(tick_start > timestamp)
+	if(tick_start > drawable_stamp)
 		return;
 	int m = tick_stop - tick_start;
 	if(!m) {
 		clear();
 		return;
 	}
-	int n = timestamp - tick_start;
+	int n = drawable_stamp - tick_start;
 	if(n >= m)
 		n = m;
 	parent->position.x = (short)calculate(start.position.x, position.x, n, m);
 	parent->position.y = (short)calculate(start.position.y, position.y, n, m);
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
-	if(tick_stop <= timestamp)
+	if(tick_stop <= drawable_stamp)
 		clear();
 }
 
@@ -130,7 +134,7 @@ static orderi* add_order(drawable* parent, int milliseconds) {
 	auto p = bsdata<orderi>::addz();
 	copy(*p, *parent);
 	copy(p->start, *parent);
-	p->tick_start = timestamp;
+	p->tick_start = drawable_stamp;
 	p->parent = parent;
 	p->tick_stop = p->tick_start + milliseconds;
 	return p;
@@ -264,8 +268,25 @@ void drawable::slide(point goal, int step) {
 }
 
 void drawable::waitall() {
+	auto need_continue = true;
+	while(need_continue) {
+		need_continue = false;
+		for(auto& e : bsdata<orderi>()) {
+			if(e.parent) {
+				e.parent->wait();
+				need_continue = true;
+				break;
+			}
+		}
+	}
+}
+
+void drawable::wait() const {
+	if(!iswaitable())
+		return;
 	start_timer();
-	while(bsdata<orderi>::source.count > 0 && ismodal()) {
+	continue_animation = true;
+	while(bsdata<orderi>::source.count > 0 && iswaitable() && ismodal() && continue_animation) {
 		update_timestamp();
 		update_all_orders();
 		paintstart();
@@ -276,19 +297,8 @@ void drawable::waitall() {
 	}
 }
 
-void drawable::wait() const {
-	if(!iswaitable())
-		return;
-	start_timer();
-	while(bsdata<orderi>::source.count > 0 && iswaitable() && ismodal()) {
-		update_timestamp();
-		update_all_orders();
-		paintstart();
-		extern_update();
-		doredraw();
-		waitcputime(1);
-		remove_orders();
-	}
+void drawable::stop() {
+	continue_animation = false;
 }
 
 void drawable::splash(unsigned milliseconds) {
