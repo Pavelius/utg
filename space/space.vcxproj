@@ -194,6 +194,7 @@
     <Text Include="locale\ru\Quest.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
+    <Text Include="rules\Landscape.txt" />
     <Text Include="rules\Modules.txt" />
     <Text Include="rules\Ships.txt" />
     <Text Include="rules\Weapons.txt" />

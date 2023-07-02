@@ -4,8 +4,10 @@
 #pragma once
 
 struct planeti : nameable, drawable, planetr {
-	systemi*	system;
-	landscapei*	landscape;
-	void		paint() const;
+	short unsigned	system;
+	short unsigned	landscape;
+	void			paint() const;
+	landscapei*		getlandscape() const;
+	systemi*		getsystem() const;
 };
 extern planeti* current_planet;

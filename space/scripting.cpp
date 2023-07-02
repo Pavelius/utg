@@ -178,8 +178,9 @@ static void jump_next(int bonus) {
 }
 
 static void choose_move(int bonus) {
+	auto system_id = getbsi(current_system);
 	for(auto& e : bsdata<planeti>()) {
-		if(e.system != current_system)
+		if(e.system != system_id)
 			continue;
 		an.add(&e, e.getname());
 	}

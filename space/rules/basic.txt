@@ -1,20 +1,6 @@
-﻿#Landscape
+﻿#include "rules/Landscape.txt"
+#include "rules/Galaxy.txt"
+#include "rules/Weapons.txt"
+#include "rules/Ships.txt"
 
-Jungle
- resources Food(4) Industry(4) Science(2) Money(2)
-Terrain
- resources Food(4) Industry(2) Science(2) Money(4)
-Ocean
- resources Food(4) Industry(2) Science(4) Money(2)
-Arid
- resources Food(2) Industry(2) Science(2) Money(6) Population(-1)
-Tundra
- resources Food(2) Industry(6) Science(2) Money(2) Population(-1)
-Desert
- resources Food(1) Industry(1) Science(0) Money(9) Population(-2)
-Arctic
- resources Food(1) Industry(0) Science(9) Money(1) Population(-2)
-Lava
- resources Food(0) Industry(12) Science(0) Money(1) Population(-3)
-Barren
- resources Food(0) Industry(1) Science(12) Money(0) Population(-3)
+#import Quest "Quest"

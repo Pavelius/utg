@@ -2,6 +2,7 @@
 #include "game.h"
 #include "interval.h"
 #include "planet.h"
+#include "questlist.h"
 #include "script.h"
 #include "ship.h"
 #include "tag.h"
@@ -38,10 +39,14 @@ BSMETA(point) = {
 	{}};
 BSMETA(planeti) = {
 	BSREQ(id),
-	BSREQ(system),
+	BSENM(system, systemi),
+	BSENM(landscape, landscapei),
 	BSREQ(position), BSREQ(priority), BSREQ(alpha),
 	{}};
 BSMETA(planetri) = {
+	BSREQ(id),
+	{}};
+BSMETA(questlist) = {
 	BSREQ(id),
 	{}};
 BSMETA(script) = {
@@ -78,6 +83,7 @@ BSDATA(varianti) = {
 	{"Landscape", VAR(landscapei, 1)},
 	{"Planet", VAR(planeti, 1)},
 	{"PlanetResource", VAR(planetri, 1)},
+	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist::read},
 	{"Ship", VAR(shipi, 1)},
 	{"ShipObject", VAR(ship, 0)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},

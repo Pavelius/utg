@@ -33,7 +33,7 @@ static void generate_planets() {
 	auto seed_index = 0;
 	for(auto& e : bsdata<planeti>()) {
 		e.alpha = 255;
-		e.priority = 2;
+		e.priority = 11;
 		e.position = getrandom(seeds[seed_index++]);
 	}
 }
@@ -56,21 +56,11 @@ static void generate_ships() {
 static void test_game() {
 	game.setdate(3000, 4, 15);
 	game.add(Insight, 1);
-	auto year = game.getyear();
-	auto month = game.getmonth();
-	auto day = game.getmonthday();
 	generate_systems();
 	generate_planets();
 	generate_ships();
 	ship::waitall();
 	quest::run(1);
-}
-
-static void initialize() {
-	bsreq::read("rules/Galaxy.txt");
-	bsreq::read("rules/Weapons.txt");
-	bsreq::read("rules/Ships.txt");
-	quest::read("locale/ru/Quest.txt");
 }
 
 int main(int argc, char* argv[]) {
@@ -79,7 +69,7 @@ int main(int argc, char* argv[]) {
 	answers::console = &sb_console;
 	answers::prompt = console;
 	initialize_interface();
-	return draw::strategy(test_game, initialize);
+	return draw::strategy(test_game, 0);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

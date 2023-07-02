@@ -12,7 +12,7 @@ void ship::add(const char* id, point position) {
 	last_ship = bsdata<ship>::addz();
 	last_ship->type = (unsigned char)getbsi(pi);
 	last_ship->position = position;
-	last_ship->priority = 2;
+	last_ship->priority = 21;
 	last_ship->alpha = 255;
 }
 
