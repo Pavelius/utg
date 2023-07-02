@@ -226,7 +226,7 @@ static void set_player(int bonus) {
 }
 
 BSDATA(querryi) = {
-	{"SelectPlanets", select_planets},
+	{"SelectSystemPlanets", select_planets},
 };
 BSDATAF(querryi)
 

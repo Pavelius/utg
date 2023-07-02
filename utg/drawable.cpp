@@ -14,6 +14,7 @@ static adat<drawable*, 512> objects;
 unsigned long drawable_stamp;
 static unsigned long drawable_stamp_last;
 static rect last_screen;
+static point camera_drag;
 
 long distance(point from, point to);
 
@@ -233,6 +234,33 @@ static point getcameraorigin(point v) {
 
 void setcamera(point v) {
 	camera = getcameraorigin(v);
+}
+
+void drawable::inputcamera() {
+	const int step = 32;
+	if(!hot.mouse.in(last_screen))
+		return;
+	switch(hot.key) {
+	case KeyLeft: execute(cbsetsht, camera.x - step, 0, &camera.x); break;
+	case KeyRight: execute(cbsetsht, camera.x + step, 0, &camera.x); break;
+	case KeyUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
+	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
+	case MouseRight:
+		if(hot.pressed && !hot.hilite) {
+			dragbegin(&camera);
+			camera_drag = camera;
+		}
+		break;
+	default:
+		if(dragactive(&camera)) {
+			hot.cursor = cursor::All;
+			if(hot.mouse.x >= 0 && hot.mouse.y >= 0)
+				camera = camera_drag + (dragmouse - hot.mouse);
+		}
+		break;
+	}
 }
 
 void drawable::focusing() const {

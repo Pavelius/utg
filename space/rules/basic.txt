@@ -8,4 +8,5 @@
 #List
 
 StartScript
- elements Earth Cobra SetPlayer SelectPlanets ChoosePlanet MoveTo Mars Cobra SelectPlanets ChoosePlanet MoveTo
+ elements Earth Cobra SetPlayer SelectSystemPlanets ChoosePlanet MoveTo\
+  Mars Cobra SelectSystemPlanets ChoosePlanet MoveTo

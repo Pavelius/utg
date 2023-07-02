@@ -174,7 +174,19 @@ void planeti::paint() const {
 	textcx(getnm(id));
 }
 
+static void paint_space_background() {
+	auto p = gres("bg01", "art/space");
+	if(!p)
+		return;
+	auto push_caret = caret;
+	caret.x -= 1000;
+	caret.y -= 1000;
+	image(p, 0, 0);
+	caret = push_caret;
+}
+
 void systemi::paint() const {
+	paint_space_background();
 	auto push_fore = fore;
 	fore = colors::yellow;
 	circlef(32);
@@ -204,7 +216,12 @@ static void main_background() {
 	drawable::paintall();
 }
 
+static void main_finish() {
+	drawable::inputcamera();
+}
+
 void initialize_interface() {
 	drawable::painting = painting;
 	pbackground = main_background;
+	pfinish = main_finish;
 }
