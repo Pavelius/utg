@@ -4,6 +4,7 @@
 #include "planet.h"
 #include "questlist.h"
 #include "list.h"
+#include "querry.h"
 #include "script.h"
 #include "ship.h"
 #include "tag.h"
@@ -47,6 +48,9 @@ BSMETA(planeti) = {
 BSMETA(planetri) = {
 	BSREQ(id),
 	{}};
+BSMETA(querryi) = {
+	BSREQ(id),
+	{}};
 BSMETA(questlist) = {
 	BSREQ(id),
 	{}};
@@ -84,6 +88,7 @@ BSDATA(varianti) = {
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},
 	{"PlanetResource", VAR(planetri, 1)},
+	{"Querry", VAR(querryi, 1), 0, 0, fnscript<querryi>},
 	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist::read},
 	{"Ship", VAR(shipi, 1), 0, 0, fnscript<shipi>},
 	{"ShipObject", VAR(ship, 0)},

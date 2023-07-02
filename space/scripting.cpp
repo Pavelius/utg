@@ -6,6 +6,7 @@
 #include "planet.h"
 #include "pushvalue.h"
 #include "quest.h"
+#include "querry.h"
 #include "script.h"
 #include "ship.h"
 #include "variable.h"
@@ -51,7 +52,6 @@ template<> void fnscript<shipi>(int index, int bonus) {
 }
 
 static void add_quest_answers() {
-	an.clear();
 	if(!last_quest)
 		return;
 	auto index = last_quest->index;
@@ -159,6 +159,7 @@ void quest::run(int index) {
 	pushvalue push_image(answers::resid);
 	pushvalue push_last(last_quest, findprompt(index));
 	while(last_quest) {
+		an.clear();
 		apply_header();
 		apply_text();
 		script::run(last_quest->tags);
@@ -199,15 +200,22 @@ static void move_to(int bonus) {
 	last_ship->move(last_planet->position);
 }
 
-static void choose_planet(int bonus) {
+static void select_planets(int bonus) {
 	auto system_id = getbsi(current_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
 			continue;
+		if(last_ship->position == e.position)
+			continue;
 		an.add(&e, e.getname());
 	}
+}
+
+static void choose_planet(int bonus) {
 	pushvalue interactive(answers::interactive, isplayer());
+	pushvalue avatar(answers::resid, "SolarSystem");
 	last_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
+	an.clear();
 }
 
 static void update_planets() {
@@ -216,6 +224,11 @@ static void update_planets() {
 static void set_player(int bonus) {
 	player = last_ship;
 }
+
+BSDATA(querryi) = {
+	{"SelectPlanets", select_planets},
+};
+BSDATAF(querryi)
 
 BSDATA(script) = {
 	{"ChoosePlanet", choose_planet},
