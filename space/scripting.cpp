@@ -7,6 +7,7 @@
 #include "pushvalue.h"
 #include "quest.h"
 #include "script.h"
+#include "ship.h"
 #include "variable.h"
 
 static answers an;
@@ -34,6 +35,19 @@ template<> void fnscript<abilityi>(int index, int bonus) {
 	ability = (ability_s)index;
 	value = game.get(ability);
 	change_ability(ability, bonus);
+}
+
+template<> void fnscript<planeti>(int index, int bonus) {
+	last_planet = bsdata<planeti>::elements + index;
+}
+
+template<> void fnscript<shipi>(int index, int bonus) {
+	last_ship = bsdata<ship>::addz();
+	last_ship->type = index;
+	last_ship->homeworld = getbsi(last_planet);
+	last_ship->position = last_planet->position;
+	last_ship->priority = 21;
+	last_ship->alpha = 255;
 }
 
 static void add_quest_answers() {
@@ -177,21 +191,39 @@ static void jump_next(int bonus) {
 	result = bonus;
 }
 
-static void choose_move(int bonus) {
+static bool isplayer() {
+	return last_ship == player;
+}
+
+static void move_to(int bonus) {
+	last_ship->move(last_planet->position);
+}
+
+static void choose_planet(int bonus) {
 	auto system_id = getbsi(current_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
 			continue;
 		an.add(&e, e.getname());
 	}
-	current_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
+	pushvalue interactive(answers::interactive, isplayer());
+	last_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
+}
+
+static void update_planets() {
+}
+
+static void set_player(int bonus) {
+	player = last_ship;
 }
 
 BSDATA(script) = {
-	{"ChooseMove", choose_move},
+	{"ChoosePlanet", choose_planet},
+	{"MoveTo", move_to},
 	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
+	{"SetPlayer", set_player},
 	{"SetVariable", set_variable},
 	{"Variable", add_variable},
 };

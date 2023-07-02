@@ -8,14 +8,12 @@
 using namespace draw;
 
 drawable::fnpaint drawable::painting;
-drawable::fnupdate drawable::updating;
 
 static adat<drawable*, 512> objects;
 
 unsigned long drawable_stamp;
 static unsigned long drawable_stamp_last;
 static rect last_screen;
-static bool continue_animation;
 
 long distance(point from, point to);
 
@@ -69,11 +67,6 @@ static void moving(point& result, point goal, int step, int corrent) {
 
 inline void copy(drawable& e1, drawable& e2) {
 	e1 = e2;
-}
-
-static void extern_update() {
-	if(drawable::updating)
-		drawable::updating();
 }
 
 static void remove_orders() {
@@ -281,24 +274,21 @@ void drawable::waitall() {
 	}
 }
 
+void drawable::dowait() {
+	update_timestamp();
+	update_all_orders();
+	paintstart();
+	doredraw();
+	waitcputime(1);
+	remove_orders();
+}
+
 void drawable::wait() const {
 	if(!iswaitable())
 		return;
 	start_timer();
-	continue_animation = true;
-	while(bsdata<orderi>::source.count > 0 && iswaitable() && ismodal() && continue_animation) {
-		update_timestamp();
-		update_all_orders();
-		paintstart();
-		extern_update();
-		doredraw();
-		waitcputime(1);
-		remove_orders();
-	}
-}
-
-void drawable::stop() {
-	continue_animation = false;
+	while(bsdata<orderi>::source && iswaitable() && ismodal())
+		dowait();
 }
 
 void drawable::splash(unsigned milliseconds) {

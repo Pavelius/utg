@@ -4,3 +4,8 @@
 #include "rules/Ships.txt"
 
 #import Quest "Quest"
+
+#List
+
+StartScript
+ elements Earth Cobra SetPlayer ChoosePlanet MoveTo Mars Cobra ChoosePlanet MoveTo

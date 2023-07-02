@@ -1,3 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 6: Can't find data descriptor `Quest`
- Line 6: Not find data type for `Quest`
+ Line 8: Not find data type for `List`

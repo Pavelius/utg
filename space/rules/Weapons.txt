@@ -10,7 +10,7 @@ BeamLaser damage(5 10)
 BeamLaserII damage(6 12)
 BeamLaserIII damage(7 14) critical(20)
 
-#Weapon type(Rocket) accuracy(0 90 60 10) critical(15) critical_multiplier(3) weight(5) cost(10) rof(1)
+#Weapon type(Rocket) accuracy(0 90 60 10) critical(15) critical_multiplier(3) weight(5) cost(10)
 
 ShardRocket damage(5 30)
 ShardRocketII damage(7 40)

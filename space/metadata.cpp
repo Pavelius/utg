@@ -3,6 +3,7 @@
 #include "interval.h"
 #include "planet.h"
 #include "questlist.h"
+#include "list.h"
 #include "script.h"
 #include "ship.h"
 #include "tag.h"
@@ -76,15 +77,15 @@ BSMETA(weaponi) = {
 	BSREQ(accuracy), BSREQ(damage), BSREQ(rof),
 	BSREQ(critical), BSREQ(critical_multiplier),
 	{}};
-
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Landscape", VAR(landscapei, 1)},
-	{"Planet", VAR(planeti, 1)},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
+	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},
 	{"PlanetResource", VAR(planetri, 1)},
 	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist::read},
-	{"Ship", VAR(shipi, 1)},
+	{"Ship", VAR(shipi, 1), 0, 0, fnscript<shipi>},
 	{"ShipObject", VAR(ship, 0)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"System", VAR(systemi, 1)},
