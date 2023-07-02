@@ -165,6 +165,7 @@
     <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="race.cpp" />
     <ClCompile Include="roll.cpp" />
+    <ClCompile Include="serial.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="wear.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="feat.h" />
+    <ClInclude Include="feature.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="location.h" />
     <ClInclude Include="lyingitem.h" />

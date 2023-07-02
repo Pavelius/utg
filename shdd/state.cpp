@@ -3,5 +3,8 @@
 
 BSDATA(statei) = {
 	{"NoDexBonusAC"},
+	{"BadSwim"},
+	{"BadStealth"},
+	{"NoSwim"},
 };
-assert_enum(statei, NoDexBonusAC)
+assert_enum(statei, NoSwim)

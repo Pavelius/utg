@@ -85,7 +85,7 @@ static void update_maximum_ability() {
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
-	enemy = 0xFFFF;
+	enemy = leader = 0xFFFF;
 }
 
 void creature::update() {
@@ -267,4 +267,14 @@ creature* getowner(item& it) {
 	if(i == -1)
 		return 0;
 	return bsdata<creature>::elements + i;
+}
+
+bool creature::ismelee() const {
+	for(auto& e : bsdata<creature>()) {
+		if(e.location != location || e.distance!=distance)
+			continue;
+		if(isenemy(e))
+			return true;
+	}
+	return false;
 }

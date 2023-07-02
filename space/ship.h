@@ -7,7 +7,9 @@ struct shipi : itemi {
 };
 struct ship : drawable {
 	unsigned char	type;
-	static ship*	add(const char* id, point position);
+	static void		add(const char* id, point position);
+	int				getspeed() const; // Pixels per one seconds
+	void			move(point position);
 	void			paint() const;
 };
-extern ship* current_ship;
+extern ship* last_ship;

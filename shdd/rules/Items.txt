@@ -32,9 +32,9 @@ Arrow
 LeatherArmor slot(1) wear(Torso)
  wearing AC+1
 Chainmail slot(2) wear(Torso)
- wearing AC+3
+ wearing BadStealth BadSwim AC+3
 Platemail slot(3) wear(Torso)
- wearing AC+5
+ wearing BadStealth NoSwim NoDexBonusAC AC+5
 Shield slot(1) wear(Torso)
  wearing AC+2
 

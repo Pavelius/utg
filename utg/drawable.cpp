@@ -8,6 +8,7 @@
 using namespace draw;
 
 drawable::fnpaint drawable::painting;
+drawable::fnupdate drawable::updating;
 
 static adat<drawable*, 512> objects;
 
@@ -18,10 +19,10 @@ long distance(point from, point to);
 
 namespace {
 struct orderi : drawable {
-	drawable*	parent;
+	drawable*		parent;
 	drawable		start;
-	unsigned long tick_start, tick_stop;
-	void		update();
+	unsigned long	tick_start, tick_stop;
+	void			update();
 };
 }
 
@@ -66,6 +67,11 @@ inline void copy(drawable& e1, drawable& e2) {
 	e1 = e2;
 }
 
+static void extern_update() {
+	if(drawable::updating)
+		drawable::updating();
+}
+
 static void remove_orders() {
 	auto pb = bsdata<orderi>::begin();
 	auto pe = bsdata<orderi>::end();
@@ -92,7 +98,9 @@ static void update_timestamp() {
 	auto c = getcputime();
 	if(!timestamp_last || c < timestamp_last)
 		timestamp_last = c;
-	timestamp += c - timestamp_last;
+	auto d = c - timestamp_last;
+	if(d < 1000)
+		timestamp += d;
 	timestamp_last = c;
 }
 
@@ -114,6 +122,8 @@ void orderi::update() {
 	parent->position.x = (short)calculate(start.position.x, position.x, n, m);
 	parent->position.y = (short)calculate(start.position.y, position.y, n, m);
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
+	if(tick_stop <= timestamp)
+		clear();
 }
 
 static orderi* add_order(drawable* parent, int milliseconds) {
@@ -259,6 +269,7 @@ void drawable::waitall() {
 		update_timestamp();
 		update_all_orders();
 		paintstart();
+		extern_update();
 		doredraw();
 		waitcputime(1);
 		remove_orders();
@@ -273,6 +284,7 @@ void drawable::wait() const {
 		update_timestamp();
 		update_all_orders();
 		paintstart();
+		extern_update();
 		doredraw();
 		waitcputime(1);
 		remove_orders();
@@ -284,4 +296,9 @@ void drawable::splash(unsigned milliseconds) {
 	paintstart();
 	screenshoot another;
 	push.blend(another, milliseconds);
+}
+
+void drawable::move(point position, unsigned milliseconds) {
+	auto po = add_order(this, milliseconds);
+	po->position = position;
 }

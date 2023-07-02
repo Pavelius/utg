@@ -68,7 +68,7 @@ BSMETA(itemi) = {
 BSMETA(item) = {
 	{}};
 BSMETA(locationi) = {
-	BSENM(area_id, areai),
+	BSENM(area, areai),
 	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),

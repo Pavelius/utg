@@ -5,6 +5,8 @@
 
 enum state_s : unsigned char {
 	NoDexBonusAC,
+	BadSwim, BadStealth,
+	NoSwim,
 };
 struct statei : nameable {
 };
