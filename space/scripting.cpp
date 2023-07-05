@@ -48,7 +48,6 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->homeworld = getbsi(last_planet);
 	last_ship->position = last_planet->position;
 	last_ship->priority = 21;
-	last_ship->alpha = 255;
 }
 
 static void add_quest_answers() {
@@ -224,13 +223,13 @@ static void set_player(int bonus) {
 	player = last_ship;
 }
 
-void player_turn() {
+void play_player_turn() {
 	if(!player)
 		return;
 	player->wait();
 	pushvalue ship(last_ship, player);
 	script::run("RoutePath");
-	next_player_scene();
+	draw::setnext(play_player_turn);
 }
 
 BSDATA(querryi) = {

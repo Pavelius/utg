@@ -7,7 +7,7 @@ struct drawable {
 	typedef void(*fnpaint)(const drawable* p);
 	typedef void(*fnprepare)();
 	point			position;
-	unsigned char	alpha, priority; // priority==0 for empthy object
+	unsigned char	priority; // priority==0 for empthy object
 	explicit operator bool() const { return priority != 0; }
 	void			add();
 	void			clear();
@@ -23,8 +23,15 @@ struct drawable {
 	static fnprepare preparing;
 	static void		slide(point goal, int step);
 	static void		splash(unsigned milliseconds);
+	void			stop();
 	void			wait() const;
 	static void		waitall();
 };
 void setcamera(point v);
 extern unsigned long drawable_stamp;
+
+typedef void(*fnevent)();
+namespace draw {
+bool				isnext();
+void				setnext(fnevent v);
+}

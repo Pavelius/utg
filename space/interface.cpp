@@ -237,15 +237,22 @@ static void add_planets() {
 	}
 }
 
+static void add_ships() {
+	auto rc = drawable::getscreen(-16);
+	auto system_id = getbsi(current_system);
+	for(auto& e : bsdata<ship>()) {
+		if(e.system != system_id)
+			continue;
+		if(!e.position.in(rc))
+			continue;
+		e.add();
+	}
+}
+
 static void preparing() {
 	add_system();
 	add_planets();
-}
-
-void player_turn();
-
-void next_player_scene() {
-	draw::setnext(player_turn);
+	add_ships();
 }
 
 void initialize_interface() {

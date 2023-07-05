@@ -62,7 +62,7 @@ BSMETA(shipi) = {
 	{}};
 BSMETA(ship) = {
 	BSREQ(type),
-	BSREQ(position), BSREQ(priority), BSREQ(alpha),
+	BSREQ(position), BSREQ(priority),
 	{}};
 BSMETA(systemi) = {
 	BSREQ(id),

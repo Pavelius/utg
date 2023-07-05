@@ -32,6 +32,14 @@ struct orderi : drawable {
 
 BSDATAC(orderi, 512)
 
+orderi* find_order(const drawable* parent) {
+	for(auto& e : bsdata<orderi>()) {
+		if(e.parent == parent)
+			return &e;
+	}
+	return 0;
+}
+
 static void correct_camera(point result, int offs) {
 	if(last_screen) {
 		rect area = drawable::getscreen(offs);
@@ -120,7 +128,6 @@ void orderi::update() {
 		n = m;
 	parent->position.x = (short)calculate(start.position.x, position.x, n, m);
 	parent->position.y = (short)calculate(start.position.y, position.y, n, m);
-	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
 	if(tick_stop <= drawable_stamp)
 		clear();
 }
@@ -152,17 +159,6 @@ static void add_objects(const rect& rc, array& source, unsigned offset) {
 }
 
 static void prepare_objects() {
-	auto rc = drawable::getscreen(-128);
-	for(auto& em : bsdata<varianti>()) {
-		if(!em.source || !em.metadata)
-			continue;
-		auto pm = em.metadata->find("position");
-		if(!pm)
-			continue;
-		if(em.metadata->find("alpha") == 0 || em.metadata->find("priority") == 0)
-			continue;
-		add_objects(rc, *em.source, pm->offset);
-	}
 	if(drawable::preparing)
 		drawable::preparing();
 }
@@ -190,19 +186,12 @@ void drawable::clear() {
 }
 
 bool drawable::iswaitable() const {
-	for(auto& e : bsdata<orderi>()) {
-		if(e.parent == this)
-			return true;
-	}
-	return false;
+	return find_order(this) != 0;
 }
 
 void drawable::paint() const {
-	auto push_alpha = draw::alpha;
-	draw::alpha = alpha;
 	if(painting)
 		painting(this);
-	draw::alpha = push_alpha;
 }
 
 void drawable::paintall() {
@@ -292,6 +281,15 @@ void drawable::slide(point goal, int step) {
 		paintstart();
 		doredraw();
 		waitcputime(1);
+	}
+}
+
+void drawable::stop() {
+	while(true) {
+		auto p = find_order(this);
+		if(!p)
+			break;
+		p->clear();
 	}
 }
 

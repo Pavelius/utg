@@ -15,7 +15,7 @@ struct ship : drawable {
 	void			paint() const;
 };
 
-void next_player_scene();
+void play_player_turn();
 
 extern ship* last_ship;
 extern ship* player;

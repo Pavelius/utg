@@ -33,7 +33,6 @@ static void generate_planets() {
 	zshuffle(seeds, sizeof(seeds) / sizeof(seeds[0]));
 	auto seed_index = 0;
 	for(auto& e : bsdata<planeti>()) {
-		e.alpha = 255;
 		e.priority = 11;
 		e.position = getrandom(seeds[seed_index++]);
 	}
@@ -41,7 +40,6 @@ static void generate_planets() {
 
 static void generate_systems() {
 	for(auto& e : bsdata<systemi>()) {
-		e.alpha = 255;
 		e.priority = 1;
 		e.position = {400, 300};
 	}
@@ -54,7 +52,7 @@ static void test_game() {
 	generate_systems();
 	generate_planets();
 	script::run("StartScript");
-	next_player_scene();
+	draw::setnext(play_player_turn);
 	draw::start();
 }
 
