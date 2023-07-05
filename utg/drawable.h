@@ -27,6 +27,7 @@ struct drawable {
 	void			wait() const;
 	static void		waitall();
 };
+
 void setcamera(point v);
 extern unsigned long drawable_stamp;
 
