@@ -25,7 +25,7 @@ struct orderable : drawable {
 	unsigned long	tick_start, tick_stop;
 	operator bool() const { return parent != 0; }
 	void			clear();
-	void			update();
+	void			domove();
 };
 
 BSDATAC(orderable, 512)
@@ -76,7 +76,7 @@ static void remove_orders() {
 static void update_all_orders() {
 	for(auto& e : bsdata<orderable>()) {
 		if(e)
-			e.update();
+			e.domove();
 	}
 }
 
@@ -98,7 +98,7 @@ static int calculate(int v1, int v2, int n, int m) {
 	return v1 + (v2 - v1) * n / m;
 }
 
-void orderable::update() {
+void orderable::domove() {
 	if(tick_start > drawable_stamp)
 		return;
 	int m = tick_stop - tick_start;
@@ -168,7 +168,7 @@ void drawable::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-bool drawable::iswaitable() const {
+bool drawable::ismoving() const {
 	return find_order(this) != 0;
 }
 
@@ -300,10 +300,10 @@ void drawable::dowait() {
 }
 
 void drawable::wait() const {
-	if(!iswaitable())
+	if(!ismoving())
 		return;
 	start_timer();
-	while(bsdata<orderable>::source && iswaitable() && ismodal())
+	while(bsdata<orderable>::source && ismoving() && ismodal())
 		dowait();
 }
 

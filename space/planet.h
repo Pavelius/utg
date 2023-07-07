@@ -9,6 +9,6 @@ struct planeti : nameable, drawable, planetr {
 	void			paint() const;
 	landscapei*		getlandscape() const;
 	systemi*		getsystem() const;
-	void			update();
+	void			domove();
 };
 extern planeti* last_planet;

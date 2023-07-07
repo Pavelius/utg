@@ -16,7 +16,7 @@ static void update_basic(planetr* dest, planetr* source) {
 	memcpy(dest, source, sizeof(*dest));
 }
 
-void planeti::update() {
+void planeti::domove() {
 	//pushvalue push(last_planet, this);
 	update_basic(this, &bsdata<landscapei>::elements[landscape]);
 }

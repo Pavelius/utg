@@ -223,6 +223,9 @@ static void set_player(int bonus) {
 	player = last_ship;
 }
 
+static void update_order() {
+}
+
 void play_player_turn() {
 	if(!player)
 		return;

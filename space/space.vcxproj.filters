@@ -46,6 +46,12 @@
     <ClCompile Include="planet.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="drawable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="moveable.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -105,6 +111,12 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="ship.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="moveable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

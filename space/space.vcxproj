@@ -146,11 +146,13 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="combat.cpp" />
+    <ClCompile Include="drawable.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
     <ClCompile Include="module.cpp" />
+    <ClCompile Include="moveable.cpp" />
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="planetr.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -163,11 +165,13 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="combat.h" />
+    <ClInclude Include="drawable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="good.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="landscape.h" />
     <ClInclude Include="mission.h" />
+    <ClInclude Include="moveable.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="planetr.h" />
     <ClInclude Include="range.h" />

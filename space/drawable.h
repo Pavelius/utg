@@ -15,7 +15,7 @@ struct drawable {
 	void			focusing() const;
 	static rect		getscreen(int offset);
 	static void		inputcamera();
-	bool			iswaitable() const;
+	bool			ismoving() const;
 	void			move(point position, unsigned milliseconds);
 	void			paint() const;
 	static void		paintall();
