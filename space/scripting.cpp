@@ -236,7 +236,7 @@ static void update_order() {
 }
 
 void play_player_turn() {
-	while(player && !draw::isnext() && draw::ismodal()) {
+	while(draw::ismodal()) {
 		update_order();
 		moveable::dowait();
 	}
