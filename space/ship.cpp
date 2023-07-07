@@ -28,5 +28,5 @@ planeti* ship::getplanet() const {
 void ship::move(point position) {
 	auto d = distance(this->position, position);
 	auto n = d * timeable::rday / getspeed();
-	drawable::move(position, n);
+	moveable::move(position, n);
 }

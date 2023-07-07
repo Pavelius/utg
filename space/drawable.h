@@ -15,18 +15,12 @@ struct drawable {
 	void			focusing() const;
 	static rect		getscreen(int offset);
 	static void		inputcamera();
-	bool			ismoving() const;
-	void			move(point position, unsigned milliseconds);
 	void			paint() const;
 	static void		paintall();
 	static fnpaint	painting;
 	static fnprepare preparing;
 	static void		slide(point goal, int step);
 	static void		splash(unsigned milliseconds);
-	void			stop();
-	void			wait() const;
-	static void		wait(unsigned milliseconds);
-	static void		waitall();
 };
 
 void setcamera(point v);

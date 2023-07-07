@@ -2,6 +2,7 @@
 #include "ability.h"
 #include "condition.h"
 #include "crt.h"
+#include "draw.h"
 #include "game.h"
 #include "planet.h"
 #include "pushvalue.h"
@@ -224,15 +225,21 @@ static void set_player(int bonus) {
 }
 
 static void update_order() {
+	pushvalue push_ship(last_ship);
+	for(auto& e : bsdata<ship>()) {
+		last_ship = &e;
+		if(last_ship->ismoving())
+			last_ship->domove();
+		else
+			script::run("RoutePath");
+	}
 }
 
 void play_player_turn() {
-	if(!player)
-		return;
-	player->wait();
-	pushvalue ship(last_ship, player);
-	script::run("RoutePath");
-	draw::setnext(play_player_turn);
+	while(player && !draw::isnext() && draw::ismodal()) {
+		update_order();
+		moveable::dowait();
+	}
 }
 
 BSDATA(querryi) = {

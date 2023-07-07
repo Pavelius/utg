@@ -6,7 +6,7 @@ static int calculate(int v1, int v2, int n, int m) {
 
 void moveable::stop() {
 	start_tick = end_tick = 0;
-	end_position = position;
+	start_position = end_position = position;
 }
 
 bool moveable::ismoving() const {

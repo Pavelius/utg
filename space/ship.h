@@ -1,12 +1,12 @@
 #include "item.h"
-#include "drawable.h"
+#include "moveable.h"
 
 #pragma once
 
 struct planeti;
 struct shipi : itemi {
 };
-struct ship : drawable {
+struct ship : moveable {
 	unsigned short	type, system, homeworld;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
