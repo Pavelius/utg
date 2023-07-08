@@ -188,6 +188,7 @@ static void set_variable(int bonus) {
 }
 
 static void pass_hours(int bonus) {
+	last_ship->wait(bonus * 60);
 }
 
 static void jump_next(int bonus) {
@@ -203,7 +204,7 @@ static void move_to(int bonus) {
 }
 
 static void select_route_path_to_planet(int bonus) {
-	auto system_id = getbsi(current_system);
+	auto system_id = getbsi(last_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
 			continue;
@@ -256,12 +257,7 @@ static void choose_action_querry(const char* id) {
 	if(bsdata<planeti>::have(last_choose_result))
 		last_planet = (planeti*)last_choose_result;
 	else if(bsdata<systemi>::have(last_choose_result))
-		current_system = (systemi*)last_choose_result;
-}
-
-static void apply_action(int bonus) {
-	if(last_action)
-		script::run(last_action->effect);
+		last_system = (systemi*)last_choose_result;
 }
 
 static void choose_action_querry(int bonus) {
@@ -273,10 +269,11 @@ static void choose_action_querry(int bonus) {
 		if(!last_choose_result)
 			return;
 	}
-	apply_action(0);
+	if(last_action)
+		script::run(last_action->effect);
 }
 
-static void apply_flight_header() {
+static void apply_action_header() {
 	answers::header = 0;
 	answers::resid = 0;
 	auto planet = last_ship->getplanet();
@@ -286,12 +283,12 @@ static void apply_flight_header() {
 	}
 }
 
-static void update_player_action() {
+static void update_player_action(actionstate_s state) {
 	pushvalue resid(answers::resid);
 	pushvalue header(answers::header);
-	apply_flight_header();
+	apply_action_header();
 	an.clear();
-	select_actions(ShipOnOrbit);
+	select_actions(state);
 	choose_action();
 	choose_action_querry(0);
 }
@@ -303,7 +300,7 @@ static void update_order() {
 		if(last_ship->ismoving())
 			last_ship->domove();
 		else
-			update_player_action();
+			update_player_action(ShipOnOrbit);
 	}
 }
 

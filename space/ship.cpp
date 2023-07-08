@@ -17,7 +17,7 @@ planeti* ship::gethomeworld() const {
 }
 
 planeti* ship::getplanet() const {
-	auto system_id = getbsi(current_system);
+	auto system_id = getbsi(last_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system == system_id && e.position == position)
 			return &e;

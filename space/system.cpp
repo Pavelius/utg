@@ -1,3 +1,3 @@
 #include "system.h"
 
-systemi* current_system;
+systemi* last_system;

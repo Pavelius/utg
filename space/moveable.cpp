@@ -34,3 +34,10 @@ void moveable::move(point goal_position, unsigned milliseconds) {
 	start_position = position;
 	end_position = goal_position;
 }
+
+void moveable::wait(unsigned milliseconds) {
+	start_tick = drawable_stamp;
+	end_tick = start_tick + milliseconds;
+	start_position = position;
+	end_position = position;
+}

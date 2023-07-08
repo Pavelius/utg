@@ -3,3 +3,4 @@
 RoutePathToPlanet
  effect MoveTo
 LandToPlanet
+ effect PassHours+6

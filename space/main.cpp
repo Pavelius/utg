@@ -41,7 +41,7 @@ static void generate_systems() {
 		e.priority = 1;
 		e.position = {400, 300};
 	}
-	current_system = bsdata<systemi>::elements;
+	last_system = bsdata<systemi>::elements;
 }
 
 static void test_game() {

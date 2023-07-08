@@ -1,4 +1,2 @@
 ﻿In file `rules/Actions.txt`:
- Line 4: Can't find variant `SelectSystemPlanets`
-In file `rules/Basic.txt`:
- Line 10: Can't find variant `SelectSystemPlanets`
+ Line 6: Can't find variant `PassTime`

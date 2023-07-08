@@ -9,4 +9,5 @@ struct moveable : drawable {
 	bool			ismoving() const;
 	void			move(point position, unsigned milliseconds);
 	void			stop();
+	void			wait(unsigned milliseconds);
 };

@@ -221,13 +221,13 @@ static void main_finish() {
 }
 
 static void add_system() {
-	if(current_system)
-		current_system->add();
+	if(last_system)
+		last_system->add();
 }
 
 static void add_planets() {
 	auto rc = drawable::getscreen(-32);
-	auto system_id = getbsi(current_system);
+	auto system_id = getbsi(last_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
 			continue;
@@ -239,7 +239,7 @@ static void add_planets() {
 
 static void add_ships() {
 	auto rc = drawable::getscreen(-16);
-	auto system_id = getbsi(current_system);
+	auto system_id = getbsi(last_system);
 	for(auto& e : bsdata<ship>()) {
 		if(e.system != system_id)
 			continue;
