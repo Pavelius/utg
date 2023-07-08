@@ -1,4 +1,5 @@
 ﻿#Action state(ShipOnOrbit)
 
-RoutePathToPlanet querry(SelectSystemPlanets) cancel(Cancel)
-LandToPlanet next(ShipOnPlanet)
+RoutePathToPlanet
+ effect MoveTo
+LandToPlanet

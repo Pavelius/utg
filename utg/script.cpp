@@ -39,6 +39,10 @@ void script::stop() {
 	script_begin = script_end;
 }
 
+bool script::isrun() {
+	return script_end > script_begin;
+}
+
 void script::run(const char* id, int bonus) {
 	last_script = bsdata<script>::find(id);
 	if(last_script)

@@ -11,8 +11,7 @@ enum actionstate_s : unsigned char {
 struct actionstatei : nameable {
 };
 struct actioni : nameable {
-	actionstate_s	state, next;
+	actionstate_s	state;
 	variants		condition, effect;
-	querryi*		querry;
-	const char*		cancel;
 };
+extern actioni* last_action;

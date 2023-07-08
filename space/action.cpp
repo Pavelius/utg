@@ -6,3 +6,5 @@ BSDATA(actionstatei) = {
 	{"ShipOnPlanet"},
 };
 assert_enum(actionstatei, ShipOnPlanet)
+
+actioni* last_action;

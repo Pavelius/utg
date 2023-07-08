@@ -29,10 +29,7 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSENM(state, actionstatei),
-	BSENM(next, actionstatei),
-	BSREQ(cancel),
 	BSREQ(effect),
-	BSREQ(querry),
 	{}};
 BSMETA(actionstatei) = {
 	BSREQ(id),

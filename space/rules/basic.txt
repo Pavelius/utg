@@ -4,12 +4,9 @@
 #include "rules/Ships.txt"
 #include "rules/Actions.txt"
 
+#import Quest "Quest"
+
 #List
 
-RoutePath
- elements SelectSystemPlanets ChoosePlanet MoveTo
-
 StartScript
- elements Earth Cobra RoutePath SetPlayer Mars Cobra RoutePath
-
-#import Quest "Quest"
+ elements Earth Cobra SetPlayer Mars Cobra

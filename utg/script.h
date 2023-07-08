@@ -20,6 +20,7 @@ struct script {
 	static void run(const char* id, int bonus);
 	static void run(const variants& source);
 	static void	stop();
+	static bool isrun();
 };
 void conditional_script(int bonus);
 extern variant* script_begin;

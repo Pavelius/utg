@@ -15,6 +15,7 @@
 static answers an;
 static int result, value, variable_id, rolled[2];
 static ability_s ability;
+static void* last_choose_result;
 
 static void change_ability(ability_s v, int bonus) {
 	if(!bonus)
@@ -49,6 +50,7 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->homeworld = getbsi(last_planet);
 	last_ship->position = last_planet->position;
 	last_ship->priority = 21;
+	last_ship->state = ShipOnOrbit;
 }
 
 static void add_quest_answers() {
@@ -200,7 +202,7 @@ static void move_to(int bonus) {
 	last_ship->move(last_planet->position);
 }
 
-static void select_planets(int bonus) {
+static void select_route_path_to_planet(int bonus) {
 	auto system_id = getbsi(current_system);
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
@@ -211,9 +213,9 @@ static void select_planets(int bonus) {
 	}
 }
 
-static void choose_planet(int bonus) {
+static void choose_action() {
 	pushvalue interactive(answers::interactive, isplayer());
-	last_planet = (planeti*)an.choose(getnm("WhichWayToGo"));
+	last_action = (actioni*)an.choose(getnm("WhatYouWantToDo"));
 	an.clear();
 }
 
@@ -224,6 +226,76 @@ static void set_player(int bonus) {
 	player = last_ship;
 }
 
+static void select_actions(actionstate_s state) {
+	for(auto& e : bsdata<actioni>()) {
+		if(e.state != state)
+			continue;
+		an.add(&e, e.getname());
+	}
+}
+
+static const char* choose_cancel(const char* id) {
+	static char temp[260]; stringbuilder sb(temp);
+	sb.add("%1Cancel", id);
+	return getnme(temp);
+}
+
+static const char* choose_title(const char* id) {
+	static char temp[260]; stringbuilder sb(temp);
+	sb.add("%1Ask", id);
+	return getnme(temp);
+}
+
+static void choose_action_querry(const char* id) {
+	pushvalue push(answers::interactive, isplayer());
+	last_choose_result = an.choose(choose_title(id), choose_cancel(id));
+	if(!last_choose_result) {
+		script::stop();
+		return;
+	}
+	if(bsdata<planeti>::have(last_choose_result))
+		last_planet = (planeti*)last_choose_result;
+	else if(bsdata<systemi>::have(last_choose_result))
+		current_system = (systemi*)last_choose_result;
+}
+
+static void apply_action(int bonus) {
+	if(last_action)
+		script::run(last_action->effect);
+}
+
+static void choose_action_querry(int bonus) {
+	auto id = str("Select%1", last_action->id);
+	auto querry = bsdata<querryi>::find(id);
+	if(querry) {
+		an.clear(); querry->proc(bonus);
+		choose_action_querry(last_action->id);
+		if(!last_choose_result)
+			return;
+	}
+	apply_action(0);
+}
+
+static void apply_flight_header() {
+	answers::header = 0;
+	answers::resid = 0;
+	auto planet = last_ship->getplanet();
+	if(planet) {
+		answers::header = planet->getname();
+		answers::resid = "jupiter";
+	}
+}
+
+static void update_player_action() {
+	pushvalue resid(answers::resid);
+	pushvalue header(answers::header);
+	apply_flight_header();
+	an.clear();
+	select_actions(ShipOnOrbit);
+	choose_action();
+	choose_action_querry(0);
+}
+
 static void update_order() {
 	pushvalue push_ship(last_ship);
 	for(auto& e : bsdata<ship>()) {
@@ -231,7 +303,7 @@ static void update_order() {
 		if(last_ship->ismoving())
 			last_ship->domove();
 		else
-			script::run("RoutePath");
+			update_player_action();
 	}
 }
 
@@ -243,12 +315,11 @@ void play_player_turn() {
 }
 
 BSDATA(querryi) = {
-	{"SelectSystemPlanets", select_planets},
+	{"SelectRoutePathToPlanet", select_route_path_to_planet},
 };
 BSDATAF(querryi)
 
 BSDATA(script) = {
-	{"ChoosePlanet", choose_planet},
 	{"MoveTo", move_to},
 	{"Next", jump_next},
 	{"PassHours", pass_hours},
