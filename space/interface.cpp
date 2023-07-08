@@ -156,7 +156,7 @@ void status_info(void) {
 	height = push_height;
 }
 
-static void marker(int size) {
+static void ship_common(int size) {
 	auto push_caret = caret;
 	caret.x -= size;
 	line(caret.x + size * 2, caret.y);
@@ -164,6 +164,10 @@ static void marker(int size) {
 	caret.y -= size;
 	line(caret.x, caret.y + size * 2);
 	caret = push_caret;
+}
+
+static void ship_cargo(int size) {
+	circle(size);
 }
 
 void planeti::paint() const {
@@ -198,7 +202,9 @@ void systemi::paint() const {
 void ship::paint() const {
 	auto push_fore = fore;
 	fore = colors::green;
-	marker(4);
+	auto size = 4;
+	//ship_common(size);
+	ship_cargo(size);
 	fore = push_fore;
 }
 
@@ -237,11 +243,13 @@ static void add_planets() {
 	}
 }
 
-static void add_ships() {
+static void add_system_ships() {
 	auto rc = drawable::getscreen(-16);
 	auto system_id = getbsi(last_system);
 	for(auto& e : bsdata<ship>()) {
 		if(e.system != system_id)
+			continue;
+		if(e.state != ShipOnOrbit)
 			continue;
 		if(!e.position.in(rc))
 			continue;
@@ -252,7 +260,7 @@ static void add_ships() {
 static void preparing() {
 	add_system();
 	add_planets();
-	add_ships();
+	add_system_ships();
 }
 
 void initialize_interface() {

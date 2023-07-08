@@ -29,7 +29,8 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSENM(state, actionstatei),
-	BSREQ(effect),
+	BSREQ(effect), BSREQ(condition),
+	BSREQ(cancel),
 	{}};
 BSMETA(actionstatei) = {
 	BSREQ(id),
@@ -40,6 +41,7 @@ BSMETA(interval) = {
 BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(resources, planetri),
+	BSREQ(resid),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -87,6 +89,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Action", VAR(actioni, 1)},
+	{"ActionState", VAR(actionstatei, 1), 0, 0, fnscript<actionstatei>},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},

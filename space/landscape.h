@@ -4,4 +4,5 @@
 #pragma once
 
 struct landscapei : nameable, planetr {
+	const char*		resid;
 };

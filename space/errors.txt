@@ -1,2 +1,2 @@
-﻿In file `rules/Actions.txt`:
- Line 6: Can't find variant `PassTime`
+﻿In file `rules/Landscape.txt`:
+ Line 21: Not found requisit `resid`

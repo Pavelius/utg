@@ -1,6 +1,9 @@
 ﻿Cancel: Отмена
 
+FlyToOrbit: Взлететь на орбиту планеты
 LandToPlanet: Приземлиться на планету
 RoutePathToPlanet: Проложить курс к другой планете этой системы
 RoutePathToPlanetAsk: Куда хотите проложить курс?
-RoutePathToPlanetCancel: Отмена
+VisitDocks: Посетить доки
+VisitGoverment: Посетить правительство
+VisitMarket: Посетить рынок

@@ -1,6 +1,14 @@
 ﻿#Action state(ShipOnOrbit)
 
-RoutePathToPlanet
+RoutePathToPlanet cancel(Cancel)
  effect MoveTo
 LandToPlanet
- effect PassHours+6
+ effect PassHours+2 ShipOnPlanet SetState
+
+#Action state(ShipOnPlanet)
+
+VisitDocks
+VisitGoverment
+VisitMarket
+FlyToOrbit
+ effect PassHours+2 ShipOnOrbit SetState

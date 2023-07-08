@@ -4,7 +4,7 @@ Sun
 
 #Planet
 
-Earth system(Sun)
-Mars system(Sun)
-Venera system(Sun)
-Jupiter system(Sun)
+Earth system(Sun) landscape(Terrain)
+Mars system(Sun) landscape(Barren)
+Venera system(Sun) landscape(Lava)
+Jupiter system(Sun) landscape(GasGiant)

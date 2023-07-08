@@ -2,7 +2,7 @@
 
 Jungle
  resources Food(4) Industry(4) Science(2) Money(2)
-Terrain
+Terrain resid(Earth)
  resources Food(4) Industry(2) Science(2) Money(4)
 Ocean
  resources Food(4) Industry(2) Science(4) Money(2)
@@ -14,7 +14,9 @@ Desert
  resources Food(1) Industry(1) Science(0) Money(9) Population(-2)
 Arctic
  resources Food(1) Industry(0) Science(9) Money(1) Population(-2)
-Lava
+Lava resid(Lava)
  resources Food(0) Industry(12) Science(0) Money(1) Population(-3)
 Barren
  resources Food(0) Industry(1) Science(12) Money(0) Population(-3)
+GasGiant resid(Jupiter)
+ resources Food(0) Industry(10) Science(0) Money(0) Population(-3)

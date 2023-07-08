@@ -13,5 +13,7 @@ struct actionstatei : nameable {
 struct actioni : nameable {
 	actionstate_s	state;
 	variants		condition, effect;
+	const char*		cancel;
 };
 extern actioni* last_action;
+extern actionstate_s last_action_state;

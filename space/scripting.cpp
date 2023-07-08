@@ -44,6 +44,10 @@ template<> void fnscript<planeti>(int index, int bonus) {
 	last_planet = bsdata<planeti>::elements + index;
 }
 
+template<> void fnscript<actionstatei>(int index, int bonus) {
+	last_action_state = (actionstate_s)index;
+}
+
 template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship = bsdata<ship>::addz();
 	last_ship->type = index;
@@ -227,6 +231,10 @@ static void set_player(int bonus) {
 	player = last_ship;
 }
 
+static void set_state(int bonus) {
+	last_ship->state = last_action_state;
+}
+
 static void select_actions(actionstate_s state) {
 	for(auto& e : bsdata<actioni>()) {
 		if(e.state != state)
@@ -236,9 +244,11 @@ static void select_actions(actionstate_s state) {
 }
 
 static const char* choose_cancel(const char* id) {
+	if(!id)
+		return 0;
 	static char temp[260]; stringbuilder sb(temp);
-	sb.add("%1Cancel", id);
-	return getnme(temp);
+	sb.add(getnm(id));
+	return temp;
 }
 
 static const char* choose_title(const char* id) {
@@ -247,9 +257,9 @@ static const char* choose_title(const char* id) {
 	return getnme(temp);
 }
 
-static void choose_action_querry(const char* id) {
+static void choose_action_querry(const char* id, const char* cancel) {
 	pushvalue push(answers::interactive, isplayer());
-	last_choose_result = an.choose(choose_title(id), choose_cancel(id));
+	last_choose_result = an.choose(choose_title(id), choose_cancel(cancel));
 	if(!last_choose_result) {
 		script::stop();
 		return;
@@ -261,11 +271,10 @@ static void choose_action_querry(const char* id) {
 }
 
 static void choose_action_querry(int bonus) {
-	auto id = str("Select%1", last_action->id);
-	auto querry = bsdata<querryi>::find(id);
+	auto querry = bsdata<querryi>::find(str("Select%1", last_action->id));
 	if(querry) {
 		an.clear(); querry->proc(bonus);
-		choose_action_querry(last_action->id);
+		choose_action_querry(last_action->id, last_action->cancel);
 		if(!last_choose_result)
 			return;
 	}
@@ -273,13 +282,22 @@ static void choose_action_querry(int bonus) {
 		script::run(last_action->effect);
 }
 
+static void update_ship_enviroment() {
+	last_planet = last_ship->getplanet();
+	last_system = last_planet ? last_planet->getsystem() : 0;
+}
+
 static void apply_action_header() {
+	update_ship_enviroment();
+	if(!isplayer())
+		return;
 	answers::header = 0;
 	answers::resid = 0;
-	auto planet = last_ship->getplanet();
-	if(planet) {
-		answers::header = planet->getname();
-		answers::resid = "jupiter";
+	if(last_planet) {
+		answers::resid = "Earth";
+		if(last_planet->getlandscape()->resid)
+			answers::resid = last_planet->getlandscape()->resid;
+		answers::header = last_planet->getname();
 	}
 }
 
@@ -300,7 +318,7 @@ static void update_order() {
 		if(last_ship->ismoving())
 			last_ship->domove();
 		else
-			update_player_action(ShipOnOrbit);
+			update_player_action(last_ship->state);
 	}
 }
 
@@ -322,6 +340,7 @@ BSDATA(script) = {
 	{"PassHours", pass_hours},
 	{"Roll", roll},
 	{"SetPlayer", set_player},
+	{"SetState", set_state},
 	{"SetVariable", set_variable},
 	{"Variable", add_variable},
 };
