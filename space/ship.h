@@ -4,12 +4,25 @@
 
 #pragma once
 
+// Speed, Guns, Lasers, Rockets, Shield, Armor,
+// Weight,
+
+enum shipclass_s : unsigned char {
+	Fighter, Fregate, Destroyer, Cruiser, Battleship,
+	Carrier,
+};
+
 struct planeti;
+struct shipclassi : nameable {
+};
 struct shipi : itemi {
+	shipclass_s		kind;
+	char			size;
 };
 struct ship : moveable {
 	unsigned short	type, system, homeworld;
 	actionstate_s	state;
+	const shipi&	geti() const;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
 	int				getspeed() const; // Pixels per one seconds

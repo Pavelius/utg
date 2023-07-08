@@ -16,7 +16,7 @@ Arctic
  resources Food(1) Industry(0) Science(9) Money(1) Population(-2)
 Lava resid(Lava)
  resources Food(0) Industry(12) Science(0) Money(1) Population(-3)
-Barren
+Barren resid(Barren)
  resources Food(0) Industry(1) Science(12) Money(0) Population(-3)
 GasGiant resid(Jupiter)
  resources Food(0) Industry(10) Science(0) Money(0) Population(-3)

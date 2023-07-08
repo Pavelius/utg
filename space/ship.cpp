@@ -3,10 +3,24 @@
 #include "ship.h"
 #include "timeable.h"
 
+BSDATA(shipclassi) = {
+	{"Fighter"},
+	{"Fregate"},
+	{"Destroyer"},
+	{"Cruiser"},
+	{"Battleship"},
+	{"Carrier"},
+};
+assert_enum(shipclassi, Carrier)
+
 long distance(point p1, point p2);
 
 ship* last_ship;
 ship* player;
+
+const shipi& ship::geti() const {
+	return bsdata<shipi>::elements[type];
+}
 
 int	ship::getspeed() const {
 	return 40;

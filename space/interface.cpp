@@ -156,7 +156,7 @@ void status_info(void) {
 	height = push_height;
 }
 
-static void ship_common(int size) {
+static void show_marker(int size) {
 	auto push_caret = caret;
 	caret.x -= size;
 	line(caret.x + size * 2, caret.y);
@@ -166,8 +166,19 @@ static void ship_common(int size) {
 	caret = push_caret;
 }
 
-static void ship_cargo(int size) {
+static void show_circle(int size) {
 	circle(size);
+}
+
+static void show_rect(int size) {
+	auto push_caret = caret;
+	caret.x -= size;
+	caret.y -= size;
+	line(caret.x + size * 2, caret.y);
+	line(caret.x, caret.y + size * 2);
+	line(caret.x - size * 2, caret.y);
+	line(caret.x, caret.y - size * 2);
+	caret = push_caret;
 }
 
 void planeti::paint() const {
@@ -202,9 +213,12 @@ void systemi::paint() const {
 void ship::paint() const {
 	auto push_fore = fore;
 	fore = colors::green;
-	auto size = 4;
-	//ship_common(size);
-	ship_cargo(size);
+	auto& ei = geti();
+	auto size = ei.size;
+	switch(ei.kind) {
+	case Carrier: show_rect(size); break;
+	default: show_marker(size); break;
+	}
 	fore = push_fore;
 }
 

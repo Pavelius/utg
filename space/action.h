@@ -7,6 +7,7 @@
 enum actionstate_s : unsigned char {
 	NoActionState,
 	ShipOnOrbit, ShipOnPlanet,
+	YouOnMarket
 };
 struct actionstatei : nameable {
 };

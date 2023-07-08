@@ -1,3 +1,7 @@
-﻿#Ship
+﻿#Ship kind(Fighter)
 
-Cobra
+Cobra size(3)
+
+#Ship kind(Carrier)
+
+Mule size(4)

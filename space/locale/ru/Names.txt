@@ -7,6 +7,7 @@ ErrorNotFoundRule: Не найдено правило '%1'
 ErrorParse: Ошибка при разборе
 IncreaseAbility: Увеличено %1 на %2i
 Marines: Морпехи
+Planet: Планета
 Squad: Отряд
 UseInside: Использовать знания для переброса результата
 WhatYouWantToDo: Что будете делать?

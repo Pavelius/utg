@@ -291,13 +291,15 @@ static void apply_action_header() {
 	update_ship_enviroment();
 	if(!isplayer())
 		return;
+	static char header_text[260];
 	answers::header = 0;
 	answers::resid = 0;
 	if(last_planet) {
 		answers::resid = "Earth";
 		if(last_planet->getlandscape()->resid)
 			answers::resid = last_planet->getlandscape()->resid;
-		answers::header = last_planet->getname();
+		stringbuilder sb(header_text); sb.add("%1 %2", getnm("Planet"), last_planet->getname());
+		answers::header = header_text;
 	}
 }
 

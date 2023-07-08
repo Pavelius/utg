@@ -9,4 +9,4 @@
 #List
 
 StartScript
- elements Earth Cobra SetPlayer Mars Cobra
+ elements Earth Cobra SetPlayer Mars Mule

@@ -1,2 +1,3 @@
-﻿In file `rules/Landscape.txt`:
- Line 21: Not found requisit `resid`
+﻿In file `rules/Ships.txt`:
+ Line 3: Not found requisit `size`
+ Line 7: Not found requisit `size`

@@ -6,6 +6,6 @@ struct itemi : nameable {
 	short			weight, cost;
 };
 struct item {
-	unsigned short	type, weight;
+	unsigned short	type;
 	unsigned char	modification, uses;
 };

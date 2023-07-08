@@ -6,12 +6,9 @@
 #pragma once
 
 enum ship_stat_s : unsigned char {
-	CineticAccuracy, CineticDamageBonus, CineticArmor,
-	CineticEnemyAccuracy, CineticEnemyDamageBonus,
-	BeamAccuracy, BeamDamageBonus, BeamArmor,
-	BeamEnemyAccuracy, BeamEnemyDamageBonus,
-	RocketAccuracy, RocketDamageBonus,
-	RocketEnemyAccuracy, RocketEnemyDamageBonus,
+	CineticAccuracy, CineticDamageBonus, CineticArmor, CineticEnemyAccuracy, CineticEnemyDamageBonus,
+	BeamAccuracy, BeamDamageBonus, BeamArmor, BeamEnemyAccuracy, BeamEnemyDamageBonus,
+	RocketAccuracy, RocketDamageBonus, RocketEnemyAccuracy, RocketEnemyDamageBonus,
 	RepairHull, RepairEquipment,
 	Research,
 };
@@ -39,6 +36,7 @@ struct shipstata {
 	int			reduce(int& count, ship_stat_s ability);
 	void		set(ship_stat_s v, int i) { abilities[v] = i; }
 };
+
 int apply_percent(int value, int percent);
 int roll_damage(int count, int minimum, int maximum);
 int roll_damage(int count, int minimum, int maximum, int critical, int multiplier);

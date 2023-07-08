@@ -3,6 +3,6 @@
 #pragma once
 
 struct missioni : abilitya {
-	void beforemove();
-	void clear();
+	void		beforemove();
+	void		clear();
 };

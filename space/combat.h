@@ -3,7 +3,7 @@
 #pragma once
 
 enum combat_s : unsigned char {
-	ScouningPhase, LongRange, MediumRange, CloseRange, FinalPhase,
+	ScoutingPhase, LongRange, MediumRange, CloseRange, FinalPhase,
 };
 struct combati : nameable {
 };

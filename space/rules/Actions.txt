@@ -10,5 +10,12 @@ LandToPlanet
 VisitDocks
 VisitGoverment
 VisitMarket
+ effect PassHours+2 YouOnMarket SetState
 FlyToOrbit
  effect PassHours+2 ShipOnOrbit SetState
+
+#Action state(YouOnMarket)
+
+BuyOrSellCommodities
+BuyOrSellEquipment
+BlackMarketOperation
