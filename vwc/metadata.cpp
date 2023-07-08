@@ -6,12 +6,6 @@
 
 using namespace code;
 
-NOBSDATA(variants)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
-
 BSDATAC(lexer, 32)
 BSDATAC(rule, 512)
 BSDATAC(ruleop, 512)

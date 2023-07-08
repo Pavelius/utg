@@ -15,10 +15,6 @@
 #include "widget.h"
 #include "wise.h"
 
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
-
 BSDATAC(animali, 64)
 BSDATAC(itemi, 128)
 BSDATAC(enviromenti, 32)
@@ -54,9 +50,6 @@ BSMETA(rangi) = {
 	BSREQ(wises), BSREQ(talented), BSREQ(convice), BSREQ(mentors), BSREQ(specialization),
 	BSREQ(trait_tender), BSREQ(trait_leader),
 	BSDST(skills, skilli),
-	{}};
-BSMETA(script) = {
-	BSREQ(id),
 	{}};
 BSMETA(skilli) = {
 	BSREQ(id),

@@ -1,7 +1,11 @@
 #include "answers.h"
+#include "bsreq.h"
 #include "pushvalue.h"
 #include "questlist.h"
 
+BSMETA(questlist) = {
+	BSREQ(id),
+	{}};
 BSDATAC(questlist, 128)
 questlist* last_questlist;
 

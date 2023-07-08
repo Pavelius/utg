@@ -1,16 +1,12 @@
 #include "actable.h"
 #include "answers.h"
-#include "charname.h"
+#include "stringlist.h"
 #include "stringact.h"
 
 void actable::actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s female, char separator) {
 	if(!format)
 		return;
-	stringact sa(sb, name, female);
-	sa.addsep(separator);
-	auto pb = sa.get();
-	sa.addv(format, format_param);
-	sb = sa;
+	stract(sb, female, name, format, format_param);
 }
 
 void actable::act(const char* format, ...) const {
@@ -29,6 +25,6 @@ bool actable::ischaracter() const {
 
 const char* actable::getname() const {
 	if(name_id != 0xFFFF)
-		return charname::getname(name_id);
+		return stringlist::getname(name_id);
 	return kind.getname();
 }

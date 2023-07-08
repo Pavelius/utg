@@ -14,11 +14,6 @@
 #include "draw_utg.h"
 
 NOBSDATA(dice)
-NOBSDATA(variants)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 
 BSDATAC(advancei, 256)
 BSDATAC(classi, 16)
@@ -67,9 +62,6 @@ BSMETA(itemi) = {
 	BSREQ(use),
 	{}};
 BSMETA(modifieri) = {
-	BSREQ(id),
-	{}};
-BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(sizei) = {

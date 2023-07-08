@@ -51,11 +51,11 @@ void main_menu() {
 static void read_quests() {
 	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : bsdata<locationi>()) {
-		if(e.type == Street)
+		if(e.type == Street || e.type==Special)
 			continue;
 		auto pb = bsdata<quest>::end();
 		sb.clear(); sb.addlocalefile(e.id);
-		quest::read(temp, false);
+		quest::read(temp);
 		auto pe = bsdata<quest>::end();
 		e.encounters = quests(pb, pe - pb);
 	}

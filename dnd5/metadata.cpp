@@ -30,10 +30,6 @@ BSDATAC(optioni, 120)
 BSDATAC(racei, 32)
 BSDATAC(skilli, 32)
 BSDATAC(spelli, 512)
-BSDATAD(variant)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -80,9 +76,6 @@ BSMETA(optioni) = {
 BSMETA(racei) = {
 	BSREQ(id),
 	BSREQ(parent),
-	{}};
-BSMETA(script) = {
-	BSREQ(id),
 	{}};
 BSMETA(skilli) = {
 	BSREQ(id),

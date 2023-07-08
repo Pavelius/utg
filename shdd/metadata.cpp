@@ -19,11 +19,6 @@
 
 NOBSDATA(dice)
 NOBSDATA(item)
-NOBSDATA(variants)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 
 BSDATAC(areai, 128)
 BSDATAC(creature, 1024)
@@ -80,13 +75,7 @@ BSMETA(monsteri) = {
 	BSREQ(feats),
 	BSDST(abilities, abilityi),
 	{}};
-BSMETA(questlist) = {
-	BSREQ(id),
-	{}};
 BSMETA(racei) = {
-	BSREQ(id),
-	{}};
-BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(speciali) = {

@@ -15,15 +15,11 @@
 #include "variant.h"
 #include "widget.h"
 
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-
 BSDATAC(creature, 512)
 BSDATAC(itemi, 512)
 BSDATAC(monsteri, 256)
 BSDATAC(materiali, 32)
 BSDATAC(roomi, 16)
-BSDATAD(variant)
 
 NOBSDATA(dice)
 NOBSDATA(weaponi)
@@ -71,9 +67,6 @@ BSMETA(rangei) = {
 	{}};
 BSMETA(roomi) = {
 	BSREQ(avatar),
-	{}};
-BSMETA(script) = {
-	BSREQ(id),
 	{}};
 BSMETA(weaponi) = {
 	BSREQ(bonus), BSREQ(ac), BSREQ(magic),

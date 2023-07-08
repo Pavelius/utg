@@ -4,15 +4,10 @@
 #include "menu.h"
 #include "variant.h"
 
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 BSDATAC(cardprotoi, 256)
 BSDATAC(investigator, 32)
 BSDATAC(locationi, 128)
 NOBSDATA(point)
-
-#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -69,6 +64,7 @@ BSMETA(investigator) = {
 	BSREQ(location),
 	{}};
 
+#define VRSTD(T) bsmeta<T>::meta, bsdata<T>::source_ptr
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VRSTD(abilityi), 1},

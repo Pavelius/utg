@@ -14,15 +14,10 @@
 #include "vagabond.h"
 #include "widget.h"
 
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-
 BSDATAC(itemi, 256)
-BSDATAC(menu, 256)
 BSDATAC(moveoptioni, 256)
 BSDATAC(npc, 64)
 BSDATAC(vagabond, 16)
-BSDATAD(variant)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -30,17 +25,10 @@ BSMETA(abilityi) = {
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
-BSMETA(menu) = {
-	BSREQ(id),
-	BSREQ(elements),
-	{}};
 BSMETA(modifieri) = {
 	BSREQ(id),
 	{}};
 BSMETA(resulti) = {
-	BSREQ(id),
-	{}};
-BSMETA(script) = {
 	BSREQ(id),
 	{}};
 BSMETA(movei) = {

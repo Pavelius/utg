@@ -187,5 +187,11 @@
     <Text Include="locale\ru\YeOldeMagickShoppe.txt">
       <Filter>Encounters</Filter>
     </Text>
+    <Text Include="locale\ru\Abyss.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\TheDreamlands.txt">
+      <Filter>Encounters</Filter>
+    </Text>
   </ItemGroup>
 </Project>

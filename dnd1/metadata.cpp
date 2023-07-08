@@ -13,11 +13,6 @@
 
 NOBSDATA(dice)
 NOBSDATA(itemi::weaponi)
-NOBSDATA(variants)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 
 BSDATAC(advancei, 256)
 BSDATAC(classi, 16)

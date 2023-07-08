@@ -151,15 +151,15 @@ void gamei::apply(const variants& source) {
 }
 
 static void play() {
-	if(!quest::last)
+	if(!last_quest)
 		return;
-	apply_text(quest::last);
-	game.apply(quest::last->tags);
+	apply_text(last_quest);
+	game.apply(last_quest->tags);
 	show_text();
 }
 
 static void play_result(int n) {
-	quest::last = find_entry(quest::last, n);
+	last_quest = find_entry(last_quest, n);
 	play();
 }
 
@@ -187,13 +187,13 @@ bool gamei::isallow(const variants& source) {
 }
 
 static void play(int n) {
-	quest::last = quest::findprompt(n);
+	last_quest = quest::findprompt(n);
 	play();
 }
 
 static void apply_result(int r) {
 	an.clear();
-	quest::last = find_roll_result(quest::last, r);
+	last_quest = find_roll_result(last_quest, r);
 	play();
 }
 
@@ -410,7 +410,7 @@ static void take(int bonus, int param) {
 }
 
 static const quest* choose_option(const char* title) {
-	auto ph = quest::last;
+	auto ph = last_quest;
 	auto pe = bsdata<quest>::end();
 	an.clear();
 	for(auto p = ph + 1; p < pe; p++) {
@@ -425,11 +425,11 @@ static const quest* choose_option(const char* title) {
 }
 
 static void choose(int bonus, int param) {
-	auto push_last = quest::last;
+	auto push_last = last_quest;
 	char temp[128]; stringbuilder sb(temp);
 	auto count = bonus;
 	while(!bonus || count > 0) {
-		quest::last = push_last;
+		last_quest = push_last;
 		sb.clear();
 		if(bonus)
 			sb.add(getnm("ChooseLeft"), count);
@@ -443,12 +443,12 @@ static void choose(int bonus, int param) {
 			break;
 		ph = find_entry(ph, ph->next);
 		if(ph) {
-			quest::last = ph;
+			last_quest = ph;
 			play();
 		}
 		count--;
 	}
-	quest::last = push_last;
+	last_quest = push_last;
 }
 
 static void gate_appear(int bonus, int param) {
@@ -532,9 +532,9 @@ static void raise_ability(int bonus, int param) {
 }
 
 static void play_block(int bonus, int param) {
-	auto p = find_entry(quest::last, bonus);
+	auto p = find_entry(last_quest, bonus);
 	if(p) {
-		quest::last = p;
+		last_quest = p;
 		play();
 	}
 }
@@ -554,7 +554,7 @@ static void ability_lesser(int bonus, int param) {
 void locationi::encounter(int count) const {
 	if(!count)
 		count = 1;
-	quest::last = choose(count);
+	last_quest = choose(count);
 	answers::header = getnm(id);
 	play();
 }

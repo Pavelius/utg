@@ -12,12 +12,7 @@
 #include "module.h"
 
 NOBSDATA(point)
-NOBSDATA(variants)
 NOBSDATA(interval)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 
 BSDATAC(landscapei, 32)
 BSDATAC(planeti, 512)
@@ -49,9 +44,6 @@ BSMETA(planetri) = {
 	BSREQ(id),
 	{}};
 BSMETA(querryi) = {
-	BSREQ(id),
-	{}};
-BSMETA(questlist) = {
 	BSREQ(id),
 	{}};
 BSMETA(script) = {

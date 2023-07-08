@@ -20,10 +20,6 @@ BSDATAC(systemi, 64)
 BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
 BSDATAC(unitupgrade, 32)
-BSDATAD(variant)
-
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
 
 BSMETA(abilityi) = {
 	BSREQ(id),

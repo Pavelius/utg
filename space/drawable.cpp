@@ -71,18 +71,6 @@ void drawable::add() {
 	objects.add(this);
 }
 
-//static void add_objects(const rect& rc, array& source, unsigned offset) {
-//	auto pe = (drawable*)(source.end() + offset);
-//	auto size = source.size;
-//	for(auto pb = (drawable*)(source.begin() + offset); pb < pe; pb = (drawable*)((char*)pb + size)) {
-//		if(!pb->priority)
-//			continue;
-//		if(!pb->position.in(rc))
-//			continue;
-//		pb->add();
-//	}
-//}
-
 static void prepare_objects() {
 	if(drawable::preparing)
 		drawable::preparing();
@@ -205,41 +193,12 @@ void drawable::slide(point goal, int step) {
 	}
 }
 
-//void drawable::waitall() {
-//	auto need_continue = true;
-//	while(need_continue) {
-//		need_continue = false;
-//		for(auto& e : bsdata<orderable>()) {
-//			if(e.parent) {
-//				e.parent->wait();
-//				need_continue = true;
-//				break;
-//			}
-//		}
-//	}
-//}
-
 void drawable::dowait() {
 	paintstart();
 	doredraw();
 	waitcputime(1);
 	update_timestamp();
 }
-
-//void drawable::wait() const {
-//	if(!ismoving())
-//		return;
-//	start_timer();
-//	while(bsdata<orderable>::source && ismoving() && ismodal())
-//		dowait();
-//}
-
-//void drawable::wait(unsigned milliseconds) {
-//	start_timer();
-//	auto end_stamp = drawable_stamp + milliseconds;
-//	while((drawable_stamp <= end_stamp) && ismodal())
-//		dowait();
-//}
 
 void drawable::splash(unsigned milliseconds) {
 	screenshoot push;

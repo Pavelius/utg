@@ -72,9 +72,14 @@ void status_info() {
 
 static void main_background() {
 	strategy_background();
-	paintobjects();
+	paint_objects();
+}
+
+static void main_finish() {
+	inputcamera();
 }
 
 void initialize_ui() {
 	pbackground = main_background;
+	pfinish = main_finish;
 }

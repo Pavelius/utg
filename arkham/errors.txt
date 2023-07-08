@@ -1,16 +1,2 @@
-﻿In file `rules/Items.txt`:
- Line 83: Expected line feed
-In file `rules/Monsters.txt`:
- Line 4: Expected line feed
-In file `rules/Investigators.txt`:
- Line 4: Expected line feed
-In file `locale/ru/BlackCave.txt`:
- Line 23: Can't find variant `TomMountainMurphy`
-In file `locale/ru/HibbsRoadhouse.txt`:
- Line 3: Can't find variant `RyanDean`
-In file `locale/ru/ScienceBuilding.txt`:
- Line 34: Can't find variant `SirWilliamBrinton`
-In file `locale/ru/SilverTwilightLodge.txt`:
- Line 8: Can't find variant `RubyStandish`
-In file `locale/ru/TheWitchHouse.txt`:
- Line 33: Can't find variant `ThomasFMalone`
+﻿Can't find file 'locale/ru/Abyss.txt'
+Can't find file 'locale/ru/TheDreamlands.txt'

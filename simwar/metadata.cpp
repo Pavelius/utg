@@ -15,9 +15,6 @@ bool fntestlist(int index, int bonus);
 
 NOBSDATA(point)
 
-BSMETA(variant) = {{}};
-BSMETA(varianti) = {BSREQ(id), {}};
-BSDATAD(variant)
 BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
 BSDATAC(heroi, 64)
@@ -47,9 +44,6 @@ BSMETA(building) = {
 	BSREQ(province),
 	{}};
 BSMETA(costi) = {
-	BSREQ(id),
-	{}};
-BSMETA(genderi) = {
 	BSREQ(id),
 	{}};
 BSMETA(heroi) = {
@@ -88,9 +82,6 @@ BSMETA(provincei) = {
 	BSREQ(landscape),
 	BSDST(income, costi),
 	BSREQ(builded), BSREQ(recruit),
-	{}};
-BSMETA(script) = {
-	BSREQ(id),
 	{}};
 BSMETA(site) = {
 	BSREQ(type),

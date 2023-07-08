@@ -1,4 +1,9 @@
+#include "bsreq.h"
 #include "variant.h"
+
+BSMETA(variant) = {{}};
+BSMETA(varianti) = {BSREQ(id), {}};
+BSDATAD(variant)
 
 static const char* match(const char* text, const char* name) {
 	while(*name) {

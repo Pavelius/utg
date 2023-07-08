@@ -29,10 +29,10 @@ static const quest* choose_answers(const char* header) {
 
 static void choose_list(int bonus) {
 	marked.clear();
-	pushvalue push_last(quest::last, last_questlist->find(1000, quest::last + 1));
-	if(!quest::last)
+	pushvalue push_last(last_quest, last_questlist->find(1000, last_quest + 1));
+	if(!last_quest)
 		return;
-	auto header = quest::last->text;
+	auto header = last_quest->text;
 	for(auto i = 0; i < bonus; i++) {
 		auto p = choose_answers(header);
 		marked.add(p);
@@ -40,16 +40,16 @@ static void choose_list(int bonus) {
 }
 
 static void questrun(int index) {
-	pushvalue push_last(quest::last);
-	quest::last = lastquest->find(index, 0);
-	while(quest::last) {
-		player->act(quest::last->text);
-		if(quest::last->tags)
-			script::run(quest::last->tags);
+	pushvalue push_last(last_quest);
+	last_quest = last_questlist->find(index, 0);
+	while(last_quest) {
+		player->act(last_quest->text);
+		if(last_quest->tags)
+			script::run(last_quest->tags);
 		auto p = choose_answers(0);
 		if(p->tags)
 			script::run(p->tags);
-		quest::last = lastquest->find(p->next);
+		last_quest = last_questlist->find(p->next);
 		answers::console->clear();
 	}
 }
@@ -58,7 +58,7 @@ void questrun(const char* id) {
 	auto p = bsdata<questlist>::find(id);
 	if(!p)
 		return;
-	pushvalue push_list(lastquest, p);
+	pushvalue push_list(last_questlist, p);
 	questrun(1);
 }
 

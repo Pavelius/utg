@@ -194,6 +194,8 @@
     <Text Include="locale\ru\SilverTwilightLodge.txt" />
     <Text Include="locale\ru\SouthChurch.txt" />
     <Text Include="locale\ru\StMarysHospital.txt" />
+    <Text Include="locale\ru\Abyss.txt" />
+    <Text Include="locale\ru\TheDreamlands.txt" />
     <Text Include="locale\ru\TheUnnamable.txt" />
     <Text Include="locale\ru\TheWitchHouse.txt" />
     <Text Include="locale\ru\TrainStation.txt" />

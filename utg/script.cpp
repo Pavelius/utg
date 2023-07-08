@@ -1,5 +1,10 @@
+#include "bsreq.h"
 #include "script.h"
 #include "list.h"
+
+BSMETA(script) = {
+	BSREQ(id),
+	{}};
 
 variant* script_begin;
 variant* script_end;
