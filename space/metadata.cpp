@@ -1,3 +1,4 @@
+#include "action.h"
 #include "bsreq.h"
 #include "game.h"
 #include "interval.h"
@@ -14,6 +15,7 @@
 NOBSDATA(point)
 NOBSDATA(interval)
 
+BSDATAC(actioni, 256)
 BSDATAC(landscapei, 32)
 BSDATAC(planeti, 512)
 BSDATAC(systemi, 32)
@@ -22,6 +24,17 @@ BSDATAC(shipi, 256)
 BSDATAC(weaponi, 32)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(actioni) = {
+	BSREQ(id),
+	BSENM(state, actionstatei),
+	BSENM(next, actionstatei),
+	BSREQ(cancel),
+	BSREQ(effect),
+	BSREQ(querry),
+	{}};
+BSMETA(actionstatei) = {
 	BSREQ(id),
 	{}};
 BSMETA(interval) = {
@@ -76,6 +89,7 @@ BSMETA(weaponi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Action", VAR(actioni, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},

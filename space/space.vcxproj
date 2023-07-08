@@ -145,9 +145,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="combat.cpp" />
     <ClCompile Include="drawable.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mission.cpp" />
@@ -164,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="action.h" />
     <ClInclude Include="combat.h" />
     <ClInclude Include="drawable.h" />
     <ClInclude Include="game.h" />
@@ -190,12 +193,14 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\AbilityNames.txt" />
+    <Text Include="locale\ru\ActionNames.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\MonthNames.txt" />
     <Text Include="locale\ru\PlanetNames.txt" />
     <Text Include="locale\ru\Quest.txt" />
+    <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />
     <Text Include="rules\Landscape.txt" />

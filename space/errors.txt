@@ -1,3 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 11: Can't find variant `SelectPlanets`
- Line 11: Can't find variant `SelectPlanets`
+﻿Can't find file 'locale/ru/ActionQuest.txt'

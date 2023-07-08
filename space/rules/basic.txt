@@ -2,8 +2,7 @@
 #include "rules/Galaxy.txt"
 #include "rules/Weapons.txt"
 #include "rules/Ships.txt"
-
-#import Quest "Quest"
+#include "rules/Actions.txt"
 
 #List
 
@@ -12,3 +11,5 @@ RoutePath
 
 StartScript
  elements Earth Cobra RoutePath SetPlayer Mars Cobra RoutePath
+
+#import Quest "Quest"

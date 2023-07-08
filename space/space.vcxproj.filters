@@ -52,6 +52,12 @@
     <ClCompile Include="moveable.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -119,6 +125,9 @@
     <ClInclude Include="drawable.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -162,6 +171,12 @@
     </Text>
     <Text Include="rules\Landscape.txt">
       <Filter>Данные</Filter>
+    </Text>
+    <Text Include="rules\Actions.txt">
+      <Filter>Данные</Filter>
+    </Text>
+    <Text Include="locale\ru\ActionNames.txt">
+      <Filter>Локализация</Filter>
     </Text>
   </ItemGroup>
 </Project>

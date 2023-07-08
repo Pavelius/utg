@@ -1,0 +1,5 @@
+﻿Cancel: Отмена
+
+LandToPlanet: Приземлиться на планету
+RoutePathToPlanet: Проложить курс к другой планете этой системы
+RoutePathToPlanetAsk: Куда хотите проложить курс?

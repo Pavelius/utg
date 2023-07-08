@@ -1,3 +1,4 @@
+#include "action.h"
 #include "item.h"
 #include "moveable.h"
 
@@ -8,6 +9,7 @@ struct shipi : itemi {
 };
 struct ship : moveable {
 	unsigned short	type, system, homeworld;
+	actionstate_s	state;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
 	int				getspeed() const; // Pixels per one seconds

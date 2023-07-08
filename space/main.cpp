@@ -13,9 +13,7 @@ static char console[512];
 static stringbuilder sb_console(console);
 
 void initialize_interface();
-
-static landscapei* random_landscape() {
-}
+void stringbuilder_proc(stringbuilder& sb, const char* id);
 
 static point getrandom(int index) {
 	point pt;
@@ -61,6 +59,7 @@ int main(int argc, char* argv[]) {
 	quest::initialize();
 	answers::console = &sb_console;
 	answers::prompt = console;
+	stringbuilder::custom = stringbuilder_proc;
 	initialize_interface();
 	return draw::strategy(test_game, 0);
 }
