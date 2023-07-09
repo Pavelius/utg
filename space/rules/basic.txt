@@ -1,6 +1,6 @@
 ﻿#include "rules/Landscape.txt"
 #include "rules/Galaxy.txt"
-#include "rules/Weapons.txt"
+//#include "rules/Weapons.txt"
 #include "rules/Ships.txt"
 #include "rules/Actions.txt"
 

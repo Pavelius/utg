@@ -12,7 +12,7 @@ enum actionstate_s : unsigned char {
 struct actionstatei : nameable {
 };
 struct actioni : nameable {
-	actionstate_s	state;
+	actionstate_s	state, back;
 	variants		condition, effect;
 	const char*		cancel;
 };

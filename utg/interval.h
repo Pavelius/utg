@@ -1,5 +1,5 @@
 #pragma once
 
 struct interval {
-	int		min, max;
+	int			min, max;
 };

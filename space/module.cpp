@@ -1,21 +1,45 @@
 #include "crt.h"
 #include "module.h"
 
-BSDATA(weapon_typei) = {
-	{"Cinetic"},
-	{"Beam"},
-	{"Rocket"},
-};
-assert_enum(weapon_typei, Rocket)
+//BSDATA(weaponi) = {
+//	{"ShardCannonI"},
+//	{"ShardCannonII"},
+//	{"ShardCannonIII"},
+//	{"ShardCannonIV"},
+//	{"ShardCannonV"},
+//	{"BeamLaserI"},
+//	{"BeamLaserII"},
+//	{"BeamLaserIII"},
+//	{"BeamLaserIV"},
+//	{"BeamLaserV"},
+//	{"RocketI"},
+//	{"RocketII"},
+//	{"RocketIII"},
+//	{"RocketIV"},
+//	{"RocketV"},
+//};
+//assert_enum(weaponi, RocketV)
 
-int shipstata::reduce(int& count, ship_stat_s ability) {
+BSDATA(modulei) = {
+	{"ShardCannons"},
+	{"LaserBeams"},
+	{"RocketLaunchers"},
+	{"Engine"},
+	{"Hull"},
+	{"Sensors"},
+	{"Shield"},
+	{"Armor"},
+};
+assert_enum(modulei, Armor)
+
+int modulea::reduce(int& count, module_s ability) {
 	auto v = get(ability);
 	if(v > 0) {
 		if(count > v) {
-			abilities[ability] = 0;
+			modules[ability] = 0;
 			count -= v;
 		} else {
-			abilities[ability] -= count;
+			modules[ability] -= count;
 			count = 0;
 		}
 	}

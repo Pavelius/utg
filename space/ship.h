@@ -4,9 +4,6 @@
 
 #pragma once
 
-// Speed, Guns, Lasers, Rockets, Shield, Armor,
-// Weight,
-
 enum shipclass_s : unsigned char {
 	Fighter, Fregate, Destroyer, Cruiser, Battleship,
 	Carrier,
@@ -21,6 +18,7 @@ struct shipi : itemi {
 };
 struct ship : moveable {
 	unsigned short	type, system, homeworld;
+	short			hull, shield;
 	actionstate_s	state;
 	const shipi&	geti() const;
 	planeti*		gethomeworld() const;

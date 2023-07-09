@@ -21,7 +21,6 @@ BSDATAC(planeti, 512)
 BSDATAC(systemi, 32)
 BSDATAC(ship, 1024)
 BSDATAC(shipi, 256)
-BSDATAC(weaponi, 32)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -29,6 +28,7 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSENM(state, actionstatei),
+	BSENM(back, actionstatei),
 	BSREQ(effect), BSREQ(condition),
 	BSREQ(cancel),
 	{}};
@@ -42,6 +42,10 @@ BSMETA(landscapei) = {
 	BSREQ(id),
 	BSDST(resources, planetri),
 	BSREQ(resid),
+	{}};
+BSMETA(modulei) = {
+	BSREQ(id),
+	BSREQ(power),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -80,16 +84,6 @@ BSMETA(systemi) = {
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
-BSMETA(weapon_typei) = {
-	BSREQ(id),
-	{}};
-BSMETA(weaponi) = {
-	BSREQ(id),
-	BSREQ(weight), BSREQ(cost),
-	BSENM(type, weapon_typei),
-	BSREQ(accuracy), BSREQ(damage), BSREQ(rof),
-	BSREQ(critical), BSREQ(critical_multiplier),
-	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
@@ -106,6 +100,5 @@ BSDATA(varianti) = {
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"System", VAR(systemi, 1)},
 	{"Tag", VAR(tagi, 1)},
-	{"Weapon", VAR(weaponi, 1)},
 };
 BSDATAF(varianti)
