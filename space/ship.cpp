@@ -1,15 +1,17 @@
+#include "assign.h"
 #include "crt.h"
 #include "planet.h"
+#include "pushvalue.h"
 #include "ship.h"
 #include "timeable.h"
 
 BSDATA(shipclassi) = {
-	{"Fighter"},
-	{"Fregate"},
-	{"Destroyer"},
-	{"Cruiser"},
-	{"Battleship"},
-	{"Carrier"},
+	{"Fighter", 20, 20},
+	{"Fregate", 30, 15},
+	{"Destroyer", 30, 20},
+	{"Cruiser", 40, 15},
+	{"Battleship", 40, 10},
+	{"Carrier", 100, 5}, // Big transporter
 };
 assert_enum(shipclassi, Carrier)
 
@@ -18,12 +20,12 @@ long distance(point p1, point p2);
 ship* last_ship;
 ship* player;
 
-const shipi& ship::geti() const {
-	return bsdata<shipi>::elements[type];
+const shipclassi& shipi::geti() const {
+	return bsdata<shipclassi>::elements[kind];
 }
 
-int	ship::getspeed() const {
-	return 40;
+const shipi& ship::geti() const {
+	return bsdata<shipi>::elements[type];
 }
 
 planeti* ship::gethomeworld() const {
@@ -43,4 +45,32 @@ void ship::move(point position) {
 	auto d = distance(this->position, position);
 	auto n = d * timeable::rday / getspeed();
 	moveable::move(position, n);
+}
+
+static void update_stats() {
+	auto& ei = last_ship->geti();
+	auto& ec = ei.geti();
+	last_ship->modules[Hull] = ec.hull * (ei.size + last_ship->modules[Hull]);
+	last_ship->modules[Shield] = 15 * last_ship->modules[Shield];
+	last_ship->modules[Engine] = ec.speed * (2 + last_ship->modules[Engine]); // Pixels per day
+	last_ship->modules[Sensors] = 30 * (2 + last_ship->modules[Sensors]); // Pixels for radar
+}
+
+void ship::update_correction() {
+	if(modules[Hull] > hull)
+		hull = modules[Hull];
+	if(modules[Shield] > shield)
+		shield = modules[Shield];
+}
+
+void ship::update() {
+	pushvalue push(last_ship, this);
+	assign<shipable>(*this, basic);
+	update_stats();
+	update_correction();
+}
+
+void ship::recover() {
+	shield += 2;
+	update();
 }

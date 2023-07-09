@@ -45,7 +45,6 @@ BSMETA(landscapei) = {
 	{}};
 BSMETA(modulei) = {
 	BSREQ(id),
-	BSREQ(power),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),

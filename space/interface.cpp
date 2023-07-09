@@ -210,6 +210,13 @@ void systemi::paint() const {
 	fore = push_fore;
 }
 
+static void show_sensors(int size) {
+	auto push_fore = fore;
+	fore = colors::blue;
+	circle(size);
+	fore = push_fore;
+}
+
 void ship::paint() const {
 	auto push_fore = fore;
 	fore = colors::green;
@@ -219,6 +226,8 @@ void ship::paint() const {
 	case Carrier: show_rect(size); break;
 	default: show_marker(size); break;
 	}
+	if(player == this)
+		show_sensors(modules[Sensors]);
 	fore = push_fore;
 }
 

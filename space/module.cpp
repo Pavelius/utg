@@ -32,20 +32,6 @@ BSDATA(modulei) = {
 };
 assert_enum(modulei, Armor)
 
-int modulea::reduce(int& count, module_s ability) {
-	auto v = get(ability);
-	if(v > 0) {
-		if(count > v) {
-			modules[ability] = 0;
-			count -= v;
-		} else {
-			modules[ability] -= count;
-			count = 0;
-		}
-	}
-	return count;
-}
-
 inline int d100() {
 	return rand() % 100;
 }

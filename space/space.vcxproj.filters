@@ -110,9 +110,6 @@
     <ClInclude Include="range.h">
       <Filter>Логика</Filter>
     </ClInclude>
-    <ClInclude Include="item.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
     <ClInclude Include="good.h">
       <Filter>Логика</Filter>
     </ClInclude>
@@ -126,6 +123,9 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="shipable.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,2 +1,5 @@
-﻿In file `rules/Weapons.txt`:
- Line 1: Not find data type for `Weapon`
+﻿In file `rules/Ships.txt`:
+ Line 3: Not found requisit `weight`
+ Line 3: Not found requisit `shield`
+ Line 7: Not found requisit `weight`
+ Line 7: Not found requisit `shield`

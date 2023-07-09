@@ -524,5 +524,8 @@
     <ClInclude Include="querry.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="assign.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

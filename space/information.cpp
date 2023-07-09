@@ -8,6 +8,15 @@ struct stringproc {
 	fnprint		proc;
 };
 
+static void add_header(stringbuilder& sb, const char* name) {
+	sb.add("###%1", name);
+}
+
+void ship::getinfo(stringbuilder& sb) const {
+	auto& ei = geti();
+	add_header(sb, ei.getname());
+}
+
 static void planet_text(stringbuilder& sb) {
 	if(!last_planet)
 		sb.add(getnm("NoPlanet"));

@@ -252,6 +252,7 @@
     <ClInclude Include="compiler.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="assign.h" />
     <ClInclude Include="drawable.h" />
     <ClInclude Include="flagux.h" />
     <ClInclude Include="querry.h" />

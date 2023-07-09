@@ -1,6 +1,6 @@
 #include "action.h"
-#include "item.h"
 #include "moveable.h"
+#include "shipable.h"
 
 #pragma once
 
@@ -11,21 +11,29 @@ enum shipclass_s : unsigned char {
 
 struct planeti;
 struct shipclassi : nameable {
+	short			hull, speed;
 };
-struct shipi : itemi {
+struct shipi : modulei {
 	shipclass_s		kind;
 	char			size;
+	variants		elements;
+	const shipclassi& geti() const;
 };
-struct ship : moveable {
+struct ship : moveable, shipable {
 	unsigned short	type, system, homeworld;
 	short			hull, shield;
 	actionstate_s	state;
+	shipable		basic;
 	const shipi&	geti() const;
+	void			getinfo(stringbuilder& sb) const;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
-	int				getspeed() const; // Pixels per one seconds
+	int				getspeed() const { return modules[Engine]; }
 	void			move(point position);
 	void			paint() const;
+	void			recover();
+	void			update();
+	void			update_correction();
 };
 
 void play_player_turn();

@@ -55,6 +55,7 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->position = last_planet->position;
 	last_ship->priority = 21;
 	last_ship->state = ShipOnOrbit;
+	last_ship->update();
 }
 
 static void add_quest_answers() {
@@ -313,6 +314,15 @@ static void update_player_action(actionstate_s state) {
 	choose_action_querry(0);
 }
 
+static void update_each_day() {
+	static auto counter = timeable::getround();
+	if(timeable::getround() >= counter) {
+		counter += timeable::rday;
+		for(auto& e : bsdata<ship>())
+			e.recover();
+	}
+}
+
 static void update_order() {
 	pushvalue push_ship(last_ship);
 	for(auto& e : bsdata<ship>()) {
@@ -326,6 +336,7 @@ static void update_order() {
 
 void play_player_turn() {
 	while(draw::ismodal()) {
+		update_each_day();
 		update_order();
 		moveable::dowait();
 	}

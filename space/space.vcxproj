@@ -171,7 +171,6 @@
     <ClInclude Include="drawable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="good.h" />
-    <ClInclude Include="item.h" />
     <ClInclude Include="landscape.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="moveable.h" />
@@ -179,6 +178,7 @@
     <ClInclude Include="planetr.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="ship.h" />
+    <ClInclude Include="shipable.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="timeable.h" />
