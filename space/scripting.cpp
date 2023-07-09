@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "ability.h"
 #include "condition.h"
+#include "collection.h"
 #include "crt.h"
 #include "draw.h"
 #include "game.h"
@@ -16,6 +17,7 @@ static answers an;
 static int result, value, variable_id, rolled[2];
 static ability_s ability;
 static void* last_choose_result;
+static collection<ship> ships;
 
 static void change_ability(ability_s v, int bonus) {
 	if(!bonus)
@@ -219,9 +221,21 @@ static void select_route_path_to_planet(int bonus) {
 	}
 }
 
-static void choose_action() {
+static void choose_action(actionstate_s state) {
 	pushvalue interactive(answers::interactive, isplayer());
-	last_action = (actioni*)an.choose(getnm("WhatYouWantToDo"));
+	auto& ei = bsdata<actionstatei>::elements[state];
+	const char* cancel = 0;
+	if(ei.cancel_state) {
+		cancel = ei.cancel;
+		if(!cancel)
+			cancel = "Cancel";
+		cancel = getnm(cancel);
+	}
+	last_action = (actioni*)an.choose(getnm("WhatYouWantToDo"), cancel);
+	if(!last_action) {
+		if(ei.cancel_state)
+			last_ship->state = ei.cancel_state;
+	}
 	an.clear();
 }
 
@@ -272,6 +286,8 @@ static void choose_action_querry(const char* id, const char* cancel) {
 }
 
 static void choose_action_querry(int bonus) {
+	if(!last_action)
+		return;
 	auto querry = bsdata<querryi>::find(str("Select%1", last_action->id));
 	if(querry) {
 		an.clear(); querry->proc(bonus);
@@ -310,7 +326,7 @@ static void update_player_action(actionstate_s state) {
 	apply_action_header();
 	an.clear();
 	select_actions(state);
-	choose_action();
+	choose_action(state);
 	choose_action_querry(0);
 }
 
@@ -323,10 +339,23 @@ static void update_each_day() {
 	}
 }
 
+static void update_ships() {
+	ships.clear();
+	auto system_id = last_ship->system;
+	for(auto& e : bsdata<ship>()) {
+		if(e.system != system_id)
+			continue;
+		if(!last_ship->cansee(e))
+			continue;
+		ships.add(&e);
+	}
+}
+
 static void update_order() {
 	pushvalue push_ship(last_ship);
 	for(auto& e : bsdata<ship>()) {
 		last_ship = &e;
+		update_ships();
 		if(last_ship->ismoving())
 			last_ship->domove();
 		else

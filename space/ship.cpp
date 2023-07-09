@@ -24,6 +24,14 @@ const shipclassi& shipi::geti() const {
 	return bsdata<shipclassi>::elements[kind];
 }
 
+long ship::rangeto(const ship& v) const {
+	return distance(position, v.position);
+}
+
+bool ship::cansee(const ship& v) const {
+	return rangeto(v) <= modules[Sensors];
+}
+
 const shipi& ship::geti() const {
 	return bsdata<shipi>::elements[type];
 }

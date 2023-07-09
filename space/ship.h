@@ -24,6 +24,7 @@ struct ship : moveable, shipable {
 	short			hull, shield;
 	actionstate_s	state;
 	shipable		basic;
+	bool			cansee(const ship& v) const;
 	const shipi&	geti() const;
 	void			getinfo(stringbuilder& sb) const;
 	planeti*		gethomeworld() const;
@@ -31,6 +32,7 @@ struct ship : moveable, shipable {
 	int				getspeed() const { return modules[Engine]; }
 	void			move(point position);
 	void			paint() const;
+	long			rangeto(const ship& v) const;
 	void			recover();
 	void			update();
 	void			update_correction();

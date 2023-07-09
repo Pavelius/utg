@@ -1,5 +1,8 @@
 ﻿Cancel: Отмена
 
+BlackMarketOperation: Операции на черном рынке
+BuyOrSellCommodities: Продать или купить товары
+BuyOrSellEquipment: Продать или купить оборудование
 FlyToOrbit: Взлететь на орбиту планеты
 LandToPlanet: Приземлиться на планету
 RoutePathToPlanet: Проложить курс к другой планете этой системы

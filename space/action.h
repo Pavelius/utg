@@ -10,6 +10,8 @@ enum actionstate_s : unsigned char {
 	YouOnMarket
 };
 struct actionstatei : nameable {
+	actionstate_s	cancel_state;
+	const char*		cancel;
 };
 struct actioni : nameable {
 	actionstate_s	state, back;

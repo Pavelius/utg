@@ -4,7 +4,7 @@ BSDATA(actionstatei) = {
 	{"NoActionState"},
 	{"ShipOnOrbit"},
 	{"ShipOnPlanet"},
-	{"YouOnMarket"},
+	{"YouOnMarket", ShipOnPlanet},
 };
 assert_enum(actionstatei, YouOnMarket)
 
