@@ -144,7 +144,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ability.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="combat.cpp" />
     <ClCompile Include="drawable.cpp" />
@@ -165,7 +164,6 @@
     <ClCompile Include="variable.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ability.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="combat.h" />
     <ClInclude Include="drawable.h" />
@@ -192,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\AbilityDescriptions.txt" />
     <Text Include="locale\ru\AbilityNames.txt" />
     <Text Include="locale\ru\ActionNames.txt" />
     <Text Include="locale\ru\Descriptions.txt" />

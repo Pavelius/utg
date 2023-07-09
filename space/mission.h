@@ -2,7 +2,7 @@
 
 #pragma once
 
-struct missioni : abilitya {
+struct missioni {
 	void		beforemove();
 	void		clear();
 };

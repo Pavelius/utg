@@ -24,13 +24,15 @@ BSDATA(modulei) = {
 	{"ShardCannons"},
 	{"LaserBeams"},
 	{"RocketLaunchers"},
+	{"Crew"},
 	{"Engine"},
 	{"Hull"},
 	{"Sensors"},
 	{"Shield"},
 	{"Armor"},
+	{"Credits"},
 };
-assert_enum(modulei, Armor)
+assert_enum(modulei, Credits)
 
 inline int d100() {
 	return rand() % 100;

@@ -16,9 +16,6 @@
     <ClCompile Include="scripting.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="ability.cpp">
-      <Filter>Логика</Filter>
-    </ClCompile>
     <ClCompile Include="interface.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
@@ -72,9 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timeable.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
-    <ClInclude Include="ability.h">
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="tag.h">
@@ -176,6 +170,9 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="locale\ru\ActionNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\AbilityDescriptions.txt">
       <Filter>Локализация</Filter>
     </Text>
   </ItemGroup>

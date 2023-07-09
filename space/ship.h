@@ -22,6 +22,7 @@ struct shipi : modulei {
 struct ship : moveable, shipable {
 	unsigned short	type, system, homeworld;
 	short			hull, shield;
+	int				credits;
 	actionstate_s	state;
 	shipable		basic;
 	bool			cansee(const ship& v) const;

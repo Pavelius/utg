@@ -46,7 +46,7 @@ static void generate_systems() {
 
 static void test_game() {
 	game.setdate(3000, 4, 15);
-	game.add(Insight, 1);
+	//game.add(Insight, 1);
 	generate_systems();
 	generate_planets();
 	script::run("StartScript");

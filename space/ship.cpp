@@ -9,8 +9,8 @@ BSDATA(shipclassi) = {
 	{"Fighter", 20, 20, 0, 0},
 	{"Fregate", 30, 15, 0, 10},
 	{"Destroyer", 30, 20, 0, 0},
-	{"Cruiser", 40, 15, 1, 5},
-	{"Battleship", 40, 10, 2, 0},
+	{"Cruiser", 50, 15, 1, 5},
+	{"Battleship", 70, 10, 2, 0},
 	{"Carrier", 100, 5}, // Big transporter
 };
 assert_enum(shipclassi, Carrier)

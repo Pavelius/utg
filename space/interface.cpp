@@ -81,11 +81,11 @@ static const char* getnmsh(const char* id) {
 	return getnm(id);
 }
 
-static void panel(const abilityi* pi, const char* format) {
+static void panel(const void* object, const char* header_text, const char* format) {
 	auto push_caret = caret;
 	auto push_height = height;
-	ishilite(pi);
-	headersm(getnmsh(pi->id));
+	ishilite(object);
+	headersm(header_text);
 	separatorh();
 	texth3(format);
 	height = push_height;
@@ -94,9 +94,9 @@ static void panel(const abilityi* pi, const char* format) {
 	separatorv();
 }
 
-static void panel(const abilityi* pi, const char* format, int w) {
+static void panel(const void* object, const char* header_text, const char* format, int w) {
 	pushvalue push_width(width, w);
-	panel(pi, format);
+	panel(object, header_text, format);
 }
 
 static void panel(const char* format, int panel_width) {
@@ -128,10 +128,10 @@ static void data_panel() {
 	panel(temp, 120);
 }
 
-static void req_panel(const abilityi* pi, int value) {
+static void req_panel(const void* object, const char* header_text, int value, int width) {
 	char temp[32]; stringbuilder sb(temp);
 	sb.add("%1i", value);
-	panel(pi, temp, 32);
+	panel(object, header_text, temp, width);
 }
 
 static void showform() {
@@ -141,16 +141,18 @@ static void showform() {
 	fore = push_fore;
 }
 
+static void req_panel(module_s id) {
+	auto p = bsdata<modulei>::elements + id;
+	req_panel(p, getnmsh(p->getid()), last_ship->basic.modules[id], 32);
+}
+
 void status_info(void) {
 	auto push_caret = caret;
 	auto push_height = height;
 	height = 32;
 	showform();
 	data_panel();
-	for(auto& e : bsdata<abilityi>()) {
-		if(e.is(Ability))
-			req_panel(&e, 2);
-	}
+	req_panel(0, getnm("Credits"), last_ship->credits, 64);
 	caret = push_caret;
 	caret.y += height;
 	height = push_height;

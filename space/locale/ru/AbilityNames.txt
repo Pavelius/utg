@@ -18,3 +18,12 @@ Insight: Знания
 Hull: Корпус
 Shield: Щит
 Speed: Скорость
+
+ShardCannons: Осколочное оружие
+ShardCannonsShort: КОр
+LaserBeams: Лазерное оружие
+LaserBeamsShort: ЛОр
+RocketLaunchers: Ракетное оружие
+RocketLaunchersShort: РОр
+Sensors: Сенсоры
+SensorsShort: Снс

@@ -6,7 +6,8 @@
 
 enum module_s : unsigned char {
 	ShardCannons, LaserBeams, RocketLaunchers,
-	Hull, Engine, Sensors, Shield, Armor,
+	Crew, Hull, Engine, Sensors, Shield, Armor,
+	Credits,
 };
 struct modulei : nameable {
 	short		weight, cost;

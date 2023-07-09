@@ -195,6 +195,8 @@ void drawable::slide(point goal, int step) {
 
 void drawable::dowait() {
 	paintstart();
+	if(draw::ptips)
+		draw::ptips();
 	doredraw();
 	waitcputime(1);
 	update_timestamp();

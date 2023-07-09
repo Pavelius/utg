@@ -8,7 +8,9 @@ LandToPlanet
 #Action state(ShipOnPlanet)
 
 VisitDocks
+ effect PassHours+2
 VisitGoverment
+ effect PassHours+2
 VisitMarket
  effect PassHours+2 YouOnMarket SetState
 FlyToOrbit
