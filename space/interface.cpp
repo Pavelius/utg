@@ -228,6 +228,7 @@ void ship::paint() const {
 	}
 	if(player == this)
 		show_sensors(modules[Sensors]);
+	ishilite(8, this);
 	fore = push_fore;
 }
 

@@ -6,11 +6,11 @@
 #include "timeable.h"
 
 BSDATA(shipclassi) = {
-	{"Fighter", 20, 20},
-	{"Fregate", 30, 15},
-	{"Destroyer", 30, 20},
-	{"Cruiser", 40, 15},
-	{"Battleship", 40, 10},
+	{"Fighter", 20, 20, 0, 0},
+	{"Fregate", 30, 15, 0, 10},
+	{"Destroyer", 30, 20, 0, 0},
+	{"Cruiser", 40, 15, 1, 5},
+	{"Battleship", 40, 10, 2, 0},
 	{"Carrier", 100, 5}, // Big transporter
 };
 assert_enum(shipclassi, Carrier)
@@ -48,12 +48,12 @@ void ship::move(point position) {
 }
 
 static void update_stats() {
-	auto& ei = last_ship->geti();
-	auto& ec = ei.geti();
+	auto& ei = last_ship->geti(); auto& ec = ei.geti();
 	last_ship->modules[Hull] = ec.hull * (ei.size + last_ship->modules[Hull]);
-	last_ship->modules[Shield] = 15 * last_ship->modules[Shield];
 	last_ship->modules[Engine] = ec.speed * (2 + last_ship->modules[Engine]); // Pixels per day
 	last_ship->modules[Sensors] = 30 * (2 + last_ship->modules[Sensors]); // Pixels for radar
+	last_ship->modules[Shield] = ec.shield + 15 * last_ship->modules[Shield];
+	last_ship->modules[Armor] = ec.armor + last_ship->modules[Armor];
 }
 
 void ship::update_correction() {
@@ -71,6 +71,7 @@ void ship::update() {
 }
 
 void ship::recover() {
-	shield += 2;
+	if(modules[Shield])
+		shield += 2;
 	update();
 }

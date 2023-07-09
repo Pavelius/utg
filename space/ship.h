@@ -11,7 +11,7 @@ enum shipclass_s : unsigned char {
 
 struct planeti;
 struct shipclassi : nameable {
-	short			hull, speed;
+	short			hull, speed, armor, shield;
 };
 struct shipi : modulei {
 	shipclass_s		kind;

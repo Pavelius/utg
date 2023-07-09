@@ -14,3 +14,7 @@ Research: Исследование
 ResearchShort: Исл
 
 Insight: Знания
+
+Hull: Корпус
+Shield: Щит
+Speed: Скорость
