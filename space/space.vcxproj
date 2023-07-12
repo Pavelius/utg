@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="calculation.cpp" />
     <ClCompile Include="combat.cpp" />
     <ClCompile Include="drawable.cpp" />
     <ClCompile Include="game.cpp" />
@@ -165,10 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="action.h" />
+    <ClInclude Include="calculation.h" />
     <ClInclude Include="combat.h" />
     <ClInclude Include="drawable.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="good.h" />
     <ClInclude Include="landscape.h" />
     <ClInclude Include="mission.h" />
     <ClInclude Include="moveable.h" />

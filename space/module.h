@@ -7,6 +7,7 @@
 enum module_s : unsigned char {
 	ShardCannons, LaserBeams, RocketLaunchers,
 	Crew, Hull, Engine, Sensors, Shield, Armor,
+	Foods, Medicaments, Technics, Luxury, Minerals, Alchogols, Weapons, Drugs,
 	Credits,
 };
 struct modulei : nameable {

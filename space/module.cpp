@@ -30,6 +30,14 @@ BSDATA(modulei) = {
 	{"Sensors"},
 	{"Shield"},
 	{"Armor"},
+	{"Foods"},
+	{"Medicaments"},
+	{"Technics"},
+	{"Luxury"},
+	{"Minerals"},
+	{"Alchogols"},
+	{"Weapons"},
+	{"Drugs"},
 	{"Credits"},
 };
 assert_enum(modulei, Credits)

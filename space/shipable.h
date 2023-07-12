@@ -3,5 +3,5 @@
 #pragma once
 
 struct shipable {
-	short		modules[Armor + 1];
+	short		modules[Credits + 1];
 };

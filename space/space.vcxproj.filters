@@ -55,6 +55,9 @@
     <ClCompile Include="action.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="calculation.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -104,9 +107,6 @@
     <ClInclude Include="range.h">
       <Filter>Логика</Filter>
     </ClInclude>
-    <ClInclude Include="good.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
     <ClInclude Include="ship.h">
       <Filter>Логика</Filter>
     </ClInclude>
@@ -120,6 +120,9 @@
       <Filter>Логика</Filter>
     </ClInclude>
     <ClInclude Include="shipable.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="calculation.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>
