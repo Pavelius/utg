@@ -128,6 +128,12 @@
     <ClInclude Include="aidata.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="tech.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="techcolor.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

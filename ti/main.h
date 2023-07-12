@@ -8,6 +8,7 @@
 #include "script.h"
 #include "strategy.h"
 #include "tag.h"
+#include "tech.h"
 #include "variant.h"
 
 const int hms = 8;
@@ -35,22 +36,11 @@ enum indicator_s : unsigned char {
 enum tile_s : unsigned char {
 	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,
 };
-enum color_s : unsigned char {
-	NoTech, Red, Green, Blue, Yellow,
-};
-enum tech_s : unsigned char {
-	PlasmaScoring, MagenDefenseGrid, DuraniumArmor, AssaultCannon,
-	NeuralMotivator, DacxiveAnimators, HyperMetabolism, X89BacterialWeapon,
-	AntimassDeflectors, GravityDriver, FleetLogistics, LightWaveDeflector,
-	SarweenTools, GravitonLaserSystem, TransitDiodes, IntegratedEconomy
-};
 enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
 };
 typedef flagable<4> taga;
 typedef flagable<8> techa;
-struct colori : nameable {
-};
 struct tilei : nameable {
 };
 struct indicatori : nameable {
@@ -148,17 +138,6 @@ struct systemi : entity {
 	void			placement(const uniti* unit, playeri* player);
 	void			placement(variants source, playeri* player);
 	void			setactivate(const playeri* p, bool active);
-};
-struct requirement {
-	char			required[4]; // RGBY
-	bool			match(const requirement& e) const;
-};
-struct techi : nameable {
-	color_s			color;
-	char			required[4]; // RGBY
-	void			getinfo(stringbuilder& sb) const;
-	static void		getinfo(const void* object, stringbuilder& sb) { ((techi*)object)->getinfo(sb); }
-	bool			match(const requirement& e) const;
 };
 struct troop : entity {
 	flagable<1>		flags;

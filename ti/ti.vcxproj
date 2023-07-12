@@ -182,6 +182,8 @@
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="tech.h" />
+    <ClInclude Include="techcolor.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
