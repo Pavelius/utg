@@ -19,6 +19,7 @@ public:
 	void	clear();
 	void	create();
 	const enviromenti* getborn() const { return getbs<enviromenti>(born); }
+	void	getinfo(stringbuilder& sb) const;
 	const rangi* getrang() const { return getbs<rangi>(rang); }
 	static void getproperty(const void* object, variant v, stringbuilder& sb);
 	void	roll(skill_s skill);

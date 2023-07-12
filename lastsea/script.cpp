@@ -3,6 +3,7 @@
 #include "main.h"
 #include "property.h"
 #include "pathfind.h"
+#include "pushvalue.h"
 
 gamei game;
 static int last_counter, last_value, last_action;
@@ -57,8 +58,8 @@ void gamei::apply(const variants& tags) {
 }
 
 static bool allow_promt(const quest* p, const variants& tags) {
-	auto push_last = quest::last;
-	quest::last = p;
+	auto push_last = last_quest;
+	last_quest = p;
 	for(auto v : tags) {
 		conditioni* pc = v;
 		if(pc) {
@@ -68,7 +69,7 @@ static bool allow_promt(const quest* p, const variants& tags) {
 		}
 		break;
 	}
-	quest::last = push_last;
+	last_quest = push_last;
 	return true;
 }
 
@@ -88,7 +89,7 @@ const quest* find_promt(int index) {
 static const quest* find_forward(int bonus) {
 	auto pe = bsdata<quest>::end();
 	auto index = AnswerForward + bonus;
-	for(auto p = quest::last + 1; p < pe; p++) {
+	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->next != -1)
 			continue;
 		if(p->index < AnswerForward || p->index >= AnswerForward + 100)
@@ -174,7 +175,7 @@ static void add_message(const char* format) {
 
 static void apply_effect(const quest* p) {
 	while(p) {
-		quest::last = p;
+		last_quest = p;
 		add_header(p);
 		if(p->text && p->next != AnswerChoose)
 			add_message(p->text);
@@ -286,9 +287,9 @@ static bool apply_choose(const quest* ph, const char* title, int count, const ch
 static void apply_choose(int page, int count) {
 	auto p = find_promt(page);
 	if(p) {
-		auto push_last = quest::last;
+		auto push_quest = last_quest;
 		apply_choose(p, p->text, count);
-		quest::last = push_last;
+		last_quest = push_quest;
 	}
 }
 
@@ -296,9 +297,9 @@ static bool apply_choose(int page, int count, const char* cancel) {
 	auto r = false;
 	auto p = find_promt(page);
 	if(p) {
-		auto push_last = quest::last;
+		auto push_last = last_quest;
 		r = apply_choose(p, p->text, count, cancel);
-		quest::last = push_last;
+		last_quest = push_last;
 	}
 	return r;
 }
@@ -380,16 +381,16 @@ static void choose_actions(int count) {
 	};
 	if(!last_location)
 		return;
-	quest::last = last_location;
-	add_header(quest::last);
-	if(quest::last->text)
-		add_message(quest::last->text);
-	game.apply(quest::last->tags);
+	last_quest = last_location;
+	add_header(last_quest);
+	if(last_quest->text)
+		add_message(last_quest->text);
+	game.apply(last_quest->tags);
 	game.clearactions();
 	handler san;
-	auto index = quest::last->index;
+	auto index = last_quest->index;
 	auto pe = bsdata<quest>::end();
-	for(auto p = quest::last + 1; p < pe; p++) {
+	for(auto p = last_quest + 1; p < pe; p++) {
 		if(p->index != index)
 			break;
 		if(p->is(bsdata<tagi>::elements + VisitRequired) && count > 0) {
@@ -589,7 +590,7 @@ void pirate::makeroll(int mode) {
 void pirate::roll(int mode) {
 	makeroll(mode);
 	confirmroll();
-	apply_roll_result(quest::last, last_result);
+	apply_roll_result(last_quest, last_result);
 }
 
 void gamei::script(int page) {
@@ -706,7 +707,7 @@ static bool if_treasure(int counter, int param) {
 }
 
 static bool if_visit(int counter, int param) {
-	return quest::last && (getnumber(quest::last->index, prop_visit) == counter);
+	return last_quest && (getnumber(last_quest->index, prop_visit) == counter);
 }
 
 static void bury(int bonus, int param) {
@@ -790,7 +791,7 @@ static void block_action(int bonus, int param) {
 }
 
 static void choose_case(int bonus, int param) {
-	apply_choose(quest::last, 0, bonus);
+	apply_choose(last_quest, 0, bonus);
 }
 
 static void make_roll(int bonus, int param) {
@@ -799,7 +800,7 @@ static void make_roll(int bonus, int param) {
 
 static void make_roll_silent(int bonus, int param) {
 	rollv(bonus);
-	apply_roll_result(quest::last, last_result);
+	apply_roll_result(last_quest, last_result);
 }
 
 static void damage(int bonus, int param) {
@@ -1069,14 +1070,14 @@ static void choose_custom(int bonus, int param) {
 static void mark_visit(int bonus, int param) {
 	if(!bonus)
 		bonus = 1;
-	addnumber(quest::last->index, prop_visit, bonus);
+	addnumber(last_quest->index, prop_visit, bonus);
 }
 
 static void set_visit(int bonus, int param) {
 	if(!bonus)
-		removenumber(quest::last->index, prop_visit);
+		removenumber(last_quest->index, prop_visit);
 	else
-		setproperty(quest::last->index, prop_visit, bonus);
+		setproperty(last_quest->index, prop_visit, bonus);
 }
 
 static void remove_all_navigation(int bonus, int param) {

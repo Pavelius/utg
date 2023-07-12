@@ -1,8 +1,7 @@
 #include "hero.h"
 
-template<> void ftstatus<hero>(const void* object, stringbuilder& sb) {
-	auto p = (hero*)object;
-	sb.add(p->getname());
+void hero::getinfo(stringbuilder& sb) const {
+	sb.add(getname());
 }
 
 void hero::getproperty(const void* object, variant v, stringbuilder& sb) {
