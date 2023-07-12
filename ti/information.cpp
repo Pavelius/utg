@@ -1,9 +1,15 @@
 #include "main.h"
 
+static void add_h3(stringbuilder& sb, const char* format, ...) {
+	sb.addn("###");
+	sb.addv(format, xva_start(format));
+}
+
 void strategyi::getinfo(stringbuilder& sb) const {
 	auto pn = getdescription(id);
 	if(!pn)
 		return;
+	add_h3(sb, getname());
 	sb.addn("---");
 	sb.addn(pn);
 }
@@ -49,6 +55,7 @@ static void add_description(stringbuilder& sb, const char* id) {
 }
 
 void techi::getinfo(stringbuilder& sb) const {
+	add_h3(sb, getname());
 	sb.addn("---");
 	sb.addn("%1 %-Tech", bsdata<colori>::elements[color].getname());
 	addreq(sb, required);
@@ -56,6 +63,7 @@ void techi::getinfo(stringbuilder& sb) const {
 }
 
 void playeri::getinfo(stringbuilder& sb) const {
+	add_h3(sb, getname());
 	sb.addn("---");
 	addv(this, sb, StrategyToken);
 	addv(this, sb, FleetToken);

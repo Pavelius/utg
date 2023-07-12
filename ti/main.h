@@ -153,8 +153,7 @@ struct requirement {
 	char			required[4]; // RGBY
 	bool			match(const requirement& e) const;
 };
-struct techi {
-	const char*		id;
+struct techi : nameable {
 	color_s			color;
 	char			required[4]; // RGBY
 	void			getinfo(stringbuilder& sb) const;
