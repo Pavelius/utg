@@ -29,7 +29,7 @@ struct draworder : drawable {
 struct object : drawable {
 	typedef void(*fnpaint)(const object* pointer);
 	const void*		data;
-	unsigned short	frame, cicle;
+	unsigned short	frame;// , cicle;
 	static object	def;
 	static fnpaint	painting;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);

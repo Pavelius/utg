@@ -262,7 +262,7 @@ const char*	creature::getracename() const {
 	return bsdata<racei>::elements[ancestry].getname();
 }
 
-creature* getowner(item& it) {
+creature* getowner(const item& it) {
 	auto i = bsdata<creature>::source.indexof(&it);
 	if(i == -1)
 		return 0;

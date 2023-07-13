@@ -24,6 +24,7 @@ struct moveoptioni {
 	const char*		text;
 	variants		effect;
 	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			getinfo(stringbuilder& sb) const;
 	bool			isanswer() const { return index == 0xFFFF; }
 };
 struct movei {

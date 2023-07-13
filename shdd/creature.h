@@ -21,6 +21,7 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 	static void add(const struct monsteri* pm);
 	void		clear();
 	void		damage(int value);
+	void		getinfo(stringbuilder& sb) const;
 	const char*	getkindname() const;
 	dice		getdamage(ability_s ability) const;
 	creature*	getenemy() const;
@@ -38,4 +39,4 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 extern creature* player;
 extern creature* opponent;
 
-creature* getowner(item& it);
+creature* getowner(const item& it);

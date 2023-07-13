@@ -97,6 +97,7 @@ BSMETA(weari) = {
 	{}};
 
 void creature_getproperty(const void* object, variant v, stringbuilder& sb);
+template<> void ftstatus<dice>(const void* object, stringbuilder& sb);
 
 BSDATA(varianti) = {
 	{"NoVariant"},

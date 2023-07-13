@@ -12,6 +12,7 @@ struct uniti : actable {
 	tacticaf		tactics;
 	tagf			tags;
 	int				fame; // Minimal fame for recruit
+	void			getinfo(stringbuilder& sb) const;
 	bool			is(tag_s v) const { return tags.is(v); }
 	bool			isrecruitable() const { return upkeep[Warfire] != 0; }
 };
@@ -19,6 +20,7 @@ struct troop : moveable {
 	provincei*		moveto;
 	const uniti*	type;
 	constexpr operator bool() const { return type != 0; }
+	void			getinfo(stringbuilder& sb) const;
 	const char*		getname() const;
 	static const char* getname(const void* p) { return ((troop*)p)->getname(); }
 	void			clear() { memset(this, 0, sizeof(*this)); }

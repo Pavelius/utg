@@ -158,49 +158,43 @@ static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn(pn);
 }
 
-template<> void ftstatus<costi>(const void* object, stringbuilder& sb) {
-	auto p = (costi*)object;
-	auto v = (cost_s)(p - bsdata<costi>::elements);
-	add_description(p->id, sb);
+void costi::getinfo(stringbuilder& sb) const {
+	auto v = (cost_s)(this - bsdata<costi>::elements);
+	add_description(id, sb);
 	sb.addn("---");
 	get_income(v, sb);
 }
 
-template<> void ftstatus<provincei>(const void* object, stringbuilder& sb) {
-	auto p = (provincei*)object;
-	add_description(p->id, sb);
+void provincei::getinfo(stringbuilder& sb) const {
+	add_description(id, sb);
 	sb.addn("---");
-	add_line_upkeep(p, sb);
+	add_line_upkeep(this, sb);
 }
 
-template<> void ftstatus<buildingi>(const void* object, stringbuilder& sb) {
-	auto p = (buildingi*)object;
-	add_description(p, sb);
+void buildingi::getinfo(stringbuilder& sb) const {
+	add_description(this, sb);
 	sb.addn("---");
-	add_line(sb, "Cost", p->cost);
-	add_line(sb, "Upkeep", p->upkeep);
-	if(p->upgrade)
-		sb.addn("%Exchange %1", p->upgrade->getname());
+	add_line(sb, "Cost", cost);
+	add_line(sb, "Upkeep", upkeep);
+	if(upgrade)
+		sb.addn("%Exchange %1", upgrade->getname());
 }
 
-template<> void ftstatus<uniti>(const void* object, stringbuilder& sb) {
-	auto p = (uniti*)object;
-	add_description(p, sb);
+void uniti::getinfo(stringbuilder& sb) const {
+	add_description(this, sb);
 	sb.addn("---");
-	add_line(sb, "Cost", p->cost);
-	add_line(sb, "Upkeep", p->upkeep);
+	add_line(sb, "Cost", cost);
+	add_line(sb, "Upkeep", upkeep);
 }
 
-template<> void ftstatus<troop>(const void* object, stringbuilder& sb) {
-	auto p = (troop*)object;
-	add_description(p->type, sb);
+void troop::getinfo(stringbuilder& sb) const {
+	add_description(type, sb);
 	sb.addn("---");
-	add_line(sb, "Upkeep", p->type->upkeep);
+	add_line(sb, "Upkeep", type->upkeep);
 }
 
-template<> void ftstatus<building>(const void* object, stringbuilder& sb) {
-	auto p = (building*)object;
-	add_description(p->type, sb);
+void building::getinfo(stringbuilder& sb) const {
+	add_description(type, sb);
 	sb.addn("---");
-	add_line(sb, "Upkeep", p->type->upkeep);
+	add_line(sb, "Upkeep", type->upkeep);
 }

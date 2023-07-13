@@ -2,6 +2,8 @@
 
 #pragma once
 
+class stringbuilder;
+
 enum statf : unsigned char {
 	PerTurn, Resource,
 };
@@ -19,6 +21,7 @@ struct costi : nameable {
 	const char*	format;
 	int			frame = -1;
 	bool		is(statf v) const { return (flags & (1 << v)) != 0; }
+	void		getinfo(stringbuilder& sb) const;
 };
 typedef short costa[Limit + 1];
 typedef char costac[Limit + 1];

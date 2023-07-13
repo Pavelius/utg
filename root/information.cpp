@@ -12,7 +12,6 @@ static void script_info(const variants& elements, stringbuilder& sb) {
 	}
 }
 
-template<> void ftstatus<moveoptioni>(const void* object, stringbuilder& sb) {
-	auto p = (moveoptioni*)object;
-	script_info(p->effect, sb);
+void moveoptioni::getinfo(stringbuilder& sb) const {
+	script_info(effect, sb);
 }

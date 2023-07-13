@@ -28,6 +28,7 @@ struct provincei : nameable {
 	int					getbuildings() const;
 	int					getcost() const;
 	int					getindex() const { return this - bsdata<provincei>::elements; }
+	void				getinfo(stringbuilder& sb) const;
 	int					getsites() const;
 	int					getunits() const;
 	void				paint() const;
