@@ -5,23 +5,25 @@
 
 using namespace draw;
 
+bool is_dynamic_image(const void* data);
+
 static void add_worldmap() {
 	auto p = addobject(0, 0);
-	//p->resource = getbackground("worldmap");
+	p->data = gres("worldmap", "art/objects");
 	p->priority = 1;
 }
 
 static void add_monsters() {
 	auto p = addobject(764, 128);
-	//p->resource = getres("byakhee");
-	p->priority = 90;
+	p->data = gres("byakhee", "art/objects");
+	p->priority = 81;
 }
 
 static void add_gates() {
 	auto p = addobject(764, 108);
-	//p->resource = getres("gates");
+	p->data = gres("gates", "art/objects");
 	p->frame = 1;
-	p->priority = 10;
+	p->priority = 11;
 }
 
 static void add_clues() {
@@ -70,6 +72,11 @@ void status_info() {
 	caret.y += texth() + metrics::border*2 + metrics::padding;
 }
 
+static void objects_paint(const object* pointer) {
+	auto pd = pointer->data;
+	image((sprite*)pd, pointer->frame, 0);
+}
+
 static void main_background() {
 	strategy_background();
 	paint_objects();
@@ -80,6 +87,7 @@ static void main_finish() {
 }
 
 void initialize_ui() {
+	object::painting = objects_paint;
 	pbackground = main_background;
 	pfinish = main_finish;
 }

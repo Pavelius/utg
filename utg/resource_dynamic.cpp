@@ -14,6 +14,10 @@ struct resei {
 }
 static vector<resei> source;
 
+bool is_dynamic_image(const void* data) {
+	return source.have(data);
+}
+
 static resei* find(const char* name, const char* folder) {
 	for(auto& e : source) {
 		if(strcmp(e.name, name))

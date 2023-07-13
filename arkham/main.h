@@ -4,6 +4,7 @@
 #include "draw.h"
 #include "flagable.h"
 #include "quest.h"
+#include "nameable.h"
 #include "stringbuilder.h"
 #include "tag.h"
 #include "variant.h"
@@ -66,10 +67,7 @@ struct abilitya {
 	void			loadability(const abilitya& source);
 	void			set(ability_s v, int i) { abilities[v] = i; }
 };
-struct nameablei {
-	const char*		id;
-};
-struct locationi : nameablei {
+struct locationi : nameable {
 	cardtype_s		type;
 	point			position;
 	locationi*		neightboard[8];
@@ -93,8 +91,7 @@ struct scripti {
 	int				param;
 	fntest			choose;
 };
-struct realmi {
-	const char*		id;
+struct realmi : nameable {
 };
 struct deck : adat<cardt> {
 	void			create(cardtype_s type);
@@ -104,14 +101,12 @@ struct deck : adat<cardt> {
 	bool			pick(cardt v);
 	void			shuffle();
 };
-struct cardtypei {
-	const char*		id;
+struct cardtypei : nameable {
 	deck			cards;
 };
-struct speciali {
-	const char*		id;
+struct speciali : nameable {
 };
-struct cardprotoi : nameablei, abilitya {
+struct cardprotoi : nameable, abilitya {
 	cardtype_s		type;
 	special_s		special;
 	char			hands, difficult, cost, count, pay, bonus;
@@ -154,7 +149,7 @@ struct cardquerry : adat<cardi*, 32> {
 	int				get(ability_s v) const;
 	bool			isonly(tag_s v) const;
 };
-struct investigator : nameablei, abilitya {
+struct investigator : nameable, abilitya {
 	variants		extra;
 	locationi*		location;
 	explicit operator bool() const { return location != 0; }
@@ -228,6 +223,5 @@ struct gamei : public player {
 	static void		play();
 	static void		turn();
 };
-extern cardpool			cards;
-extern gamei			game;
-extern answers			an;
+extern cardpool		cards;
+extern gamei		game;

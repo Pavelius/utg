@@ -149,7 +149,7 @@ struct troop : entity {
 	void			produce(const uniti* unit) const;
 	static void		updateui();
 };
-extern troop* lasttroop;
+extern troop* last_troop;
 struct card : entity {
 	void			paint() const;
 };
@@ -231,7 +231,6 @@ struct prototype {
 };
 struct unitupgrade : uniti, requirement {
 };
-
 struct gamei {
 	playeri*		speaker;
 	playera			players, origin_players;
@@ -250,7 +249,6 @@ struct gamei {
 	static void		updateui();
 };
 extern gamei game;
-
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
 	techa			tech, tech_used;

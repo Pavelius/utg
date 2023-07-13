@@ -243,7 +243,7 @@ static void ask_movement() {
 }
 static void apply_movement() {
 	if(bsdata<troop>::have(choose_result)) {
-		pushvalue push(lasttroop, (troop*)choose_result);
+		pushvalue push(last_troop, (troop*)choose_result);
 		script::run("ChooseMoveOption", 0);
 	}
 }
@@ -543,7 +543,7 @@ static void choose_invasion_planet(int bonus) {
 }
 
 static void ask_move_options() {
-	auto ship = lasttroop;
+	auto ship = last_troop;
 	auto system = ship->getsystem();
 	auto capacity = ship->get(Capacity);
 	sb.clear();
@@ -588,12 +588,12 @@ static void choose_move_options(int bonus) {
 }
 
 static void ask_production() {
-	if(!lasttroop)
+	if(!last_troop)
 		return;
-	auto production = lasttroop->getproduction();
+	auto production = last_troop->getproduction();
 	if(!production)
 		return;
-	auto player = lasttroop->player;
+	auto player = last_troop->player;
 	auto resources = player->getplanetsummary(Resources);
 	auto goods = player->get(TradeGoods);
 	auto production_count = onboard.getsummary(CostCount);
@@ -631,7 +631,7 @@ static void apply_production() {
 		onboard.add((entity*)choose_result);
 }
 static void choose_production(int bonus) {
-	auto pu = lasttroop;
+	auto pu = last_troop;
 	onboard.clear();
 	choose_until_stop("ChooseProduction", "EndBuild", ask_production, apply_production, 0);
 	complex_pay(Resources, onboard.getsummary(Cost));
@@ -649,7 +649,7 @@ static void ask_dock() {
 }
 static void apply_dock() {
 	if(bsdata<troop>::have(choose_result))
-		lasttroop = (troop*)choose_result;
+		last_troop = (troop*)choose_result;
 }
 static void choose_dock(int bonus) {
 	choose_complex("ChooseDock", 0, ask_dock, apply_dock, 0);
@@ -853,7 +853,7 @@ static void cancel_order(int counter) {
 }
 
 static void move_ship(int bonus) {
-	lasttroop->location = systemi::active;
+	last_troop->location = systemi::active;
 	for(auto p : onboard)
 		p->location = systemi::active;
 	game.updateui();
@@ -874,7 +874,7 @@ static void for_each_troop(int bonus) {
 	auto v = *script_begin++;
 	auto push = querry;
 	for(auto p : push) {
-		lasttroop = (troop*)p;
+		last_troop = (troop*)p;
 		script::run(v);
 	}
 }
