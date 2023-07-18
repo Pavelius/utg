@@ -2,7 +2,6 @@
 #include "crt.h"
 
 BSDATA(combati) = {
-	{"ScouningPhase"},
 	{"LongRange"},
 	{"MediumRange"},
 	{"CloseRange"},

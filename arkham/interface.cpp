@@ -5,8 +5,6 @@
 
 using namespace draw;
 
-bool is_dynamic_image(const void* data);
-
 static void add_worldmap() {
 	auto p = addobject(0, 0);
 	p->data = gres("worldmap", "art/objects");
@@ -22,6 +20,13 @@ static void add_monsters() {
 static void add_gates() {
 	auto p = addobject(764, 108);
 	p->data = gres("gates", "art/objects");
+	p->frame = 1;
+	p->priority = 11;
+}
+
+static void add_characters() {
+	auto p = addobject(game.location->position.x, game.location->position.y);
+	p->data = static_cast<player*>(&game);
 	p->frame = 1;
 	p->priority = 11;
 }
@@ -74,7 +79,10 @@ void status_info() {
 
 static void objects_paint(const object* pointer) {
 	auto pd = pointer->data;
-	image((sprite*)pd, pointer->frame, 0);
+	if(&game==pd)
+		image(gres("characters", "art/objects"), game.investigator_index, 0);
+	else
+		image((sprite*)pd, pointer->frame, 0);
 }
 
 static void main_background() {

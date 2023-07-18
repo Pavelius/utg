@@ -1,1 +1,5 @@
-﻿
+﻿DiamirValley: 
+NamcheBazaar: 
+NangaParbat: 
+Szczebrzeszyn: 
+Zakopane: 

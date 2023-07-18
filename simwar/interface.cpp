@@ -1,3 +1,4 @@
+#include "banner.h"
 #include "calendar.h"
 #include "collection.h"
 #include "crt.h"
@@ -286,12 +287,17 @@ void provincei::paint() const {
 	if(player) {
 		paint_hilite_province(player->shield);
 		//paint_shield(player->shield);
+		if(defend)
+			show_banner(16, 1, str("%1i", defend));
+	} else {
+		if(defend)
+			show_banner(16, 0, str("%1i", defend));
 	}
 	if(show_names)
 		stroke_texth2(getname());
 	if(province == this)
 		paint_neighbor();
-	paint_income(this);
+	//paint_income(this);
 	if(input_province) {
 		if(ishilite(24, this)) {
 			hot.cursor = cursor::Hand;

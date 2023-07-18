@@ -282,6 +282,9 @@
     <ClCompile Include="querry.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="banner.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -526,6 +529,9 @@
     </ClInclude>
     <ClInclude Include="assign.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="banner.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

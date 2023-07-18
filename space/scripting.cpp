@@ -17,6 +17,7 @@ static answers an;
 static int result, value, variable_id, rolled[2];
 static void* last_choose_result;
 static collection<ship> ships;
+static int last_hits, last_damage;
 
 static void change_ability(module_s v, int bonus) {
 	if(!bonus)
@@ -368,6 +369,10 @@ void play_player_turn() {
 		update_order();
 		moveable::dowait();
 	}
+}
+
+static void shoot_ships() {
+
 }
 
 BSDATA(querryi) = {
