@@ -1,5 +1,8 @@
-﻿DiamirValley: 
-NamcheBazaar: 
+﻿BaltoroFlats: 
 NangaParbat: 
-Szczebrzeszyn: 
+November: 
+October: 
+September: 
 Zakopane: 
+Логово волков: 
+Темная пещера: 

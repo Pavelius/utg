@@ -12,7 +12,7 @@ Hills
 Ocean water(true)
  effect Size(2)
 Swamp
- effect Damage(4) Size(2) Mana(2)
+ effect Size(2) Mana(2)
  upkeep Happiness(1)
 Wasteland
  effect Size(2) Mana(1)
@@ -71,86 +71,62 @@ Inn upgrade(Tavern)
 #Unit
 
 Barbarians
- effect Strenght(1) Damage(5) Health(6) Level(1)
+ effect Strenght(1)
  cost Gold(20)
  upkeep Gold(1)
 Bandits
- effect Strenght(1) Damage(3) Health(6) Level(1)
+ effect Strenght(1)
  cost Gold(15)
  upkeep Gold(1)
 Berserkers
- effect Strenght(2) Damage(10) Health(12) Level(2)
+ effect Strenght(2)
  cost Gold(60)
  upkeep Gold(1)
 Milita
- effect Strenght(1) Damage(2) Health(6) Level(1)
+ effect Strenght(1)
  cost Gold(10)
 
 Giant
- effect Strenght(3) Damage(12) Archery(10) Health(20) Armor(3) Level(3)
+ effect Strenght(3)
  cost Gold(200)
  upkeep Gold(5)
 Goblins
- effect Strenght(1) Damage(2) Health(5) Level(1)
+ effect Strenght(1)
  cost Gold(10)
 Ogres
- effect Strenght(2) Damage(10) Health(16) Armor(1) Level(2)
+ effect Strenght(2)
  cost Gold(120)
  upkeep Gold(3)
 Orks
- effect Strenght(1) Damage(5) Health(12) Armor(1) Level(1)
+ effect Strenght(1)
  cost Gold(40)
  upkeep Gold(1)
 WolfRiders
- effect Strenght(2) Damage(5) Health(10) Charge(3) Armor(1) Level(2) Movement(1)
+ effect Strenght(2)
  cost Gold(70)
  upkeep Gold(1)
 
 Spearmans
- effect Strenght(1) Damage(3) Armor(1) Health(8) Level(1)
+ effect Strenght(1)
  cost Gold(30)
  upkeep Gold(1) Warfire(1)
-Archers
- effect Strenght(1) Damage(2) Health(6) Archery(2) Level(1)
- cost Gold(40)
- upkeep Gold(1) Warfire(1)
-Swordsmans
- effect Strenght(2) Damage(5) Health(10) Armor(2) Level(2)
- cost Gold(80)
- upkeep Gold(1) Warfire(1)
 Cavalry fame(50)
- effect Strenght(2) Damage(4) Health(12) Charge(4) Armor(2) Level(2) Movement(1)
+ effect Strenght(2)
  cost Gold(100)
  upkeep Gold(2) Warfire(1)
-Knights fame(100)
- effect Strenght(3) Damage(8) Health(16) Armor(3) Level(3)
- cost Gold(160)
- upkeep Gold(3) Warfire(1)
 
 #Tactic
 
 CarefulDefence
- effect Strenght(1) Armor(5)
+ effect Strenght(1)
 LightingAttack
  effect Strenght(3)
-MessyAttack
- perunit Damage(3)
-
-FearestRage
- effect Strenght(1)
- perunit Damage(3)
- upgrade MessyAttack
-HailOfArrows
- perunit Archery(4)
-ShieldWall
- perunit Armor(4)
- disable HailOfArrows
 
 #Player
 
 SouthernKindom
  resources Gold(100) Mana(20)
- start Citadel+1 Laboratory+1 Milita+2 Cavalry+1 Archers+1
+ start Citadel+1 Laboratory+1 Milita+2 Cavalry+1
 
 #Hero
 
@@ -168,7 +144,7 @@ BarbarianTribe
 Outlaws
  chance Goblins+3 Orks+1
 LocalLord
- chance Milita+4 Spearmans+3 Archers+3 Cavalry+2 Knights+1
+ chance Spearmans+3 Cavalry+2
 WildHorde
  chance Goblins+4 Orks+3 WolfRiders+3 Ogres+2 Giant+1
 

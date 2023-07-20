@@ -711,7 +711,6 @@ static bool troops_mobilization(int value, int defence) {
 		province->makewave();
 		army troops_army;
 		troops_army.clear();
-		troops_army.hero = hero;
 		troops_army.province = province;
 		troops_army.player = hero->player;
 		update_provinces();
@@ -954,8 +953,6 @@ static void prepare_battle(army& attacker, army& defender) {
 		else if(defender.tactic->disable.is(getbsi(attacker.tactic)))
 			attacker.tactic = 0;
 	}
-	attacker.armor = attacker.get(Armor);
-	defender.armor = defender.get(Armor);
 }
 
 static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {
@@ -1055,9 +1052,6 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 		sb.addsep(' ');
 		defender.act(sb, getdescription(defender.tactic->id));
 	}
-	battle_stage(sb, attacker, defender, Archery);
-	battle_stage(sb, attacker, defender, Charge);
-	battle_stage(sb, attacker, defender, Damage);
 	auto win_battle = battle_result(sb, attacker, defender);
 	if(win_battle) {
 		retreat_defender(defender);
@@ -1145,14 +1139,12 @@ static void action_conquest() {
 	attacker.select(province, player);
 	attacker.province = province;
 	attacker.player = player;
-	attacker.hero = find_hero(province, player);
-	if(!attacker && !attacker.hero)
+	if(!attacker)
 		return;
 	defender.clear();
 	defender.select(province);
 	defender.province = province;
 	defender.player = province->player;
-	defender.hero = find_hero(province, province->player);
 	conquest(sb, attacker, defender);
 	reporti::add(temp, 0, game.turn, reciever(attacker.player, defender.player));
 }

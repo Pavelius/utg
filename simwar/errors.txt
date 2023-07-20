@@ -1,2 +1,2 @@
 ﻿In file `rules/Basic.txt`:
- Line 197: Not found requisit `syccess`
+ Line 129: Can't find variant `Archers`

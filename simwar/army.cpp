@@ -12,8 +12,8 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 		sb.add(last_army->getname());
 	else if(equal(identifier, "NameOf")) {
 		sb.add(last_army->getnameof());
-		if(last_army->hero)
-			sb.adds(getnm("LeadedBy"), last_army->hero->getname());
+		//if(last_army->hero)
+		//	sb.adds(getnm("LeadedBy"), last_army->hero->getname());
 	} else if(equal(identifier, "NameOfNoHero"))
 		sb.add(last_army->getnameof());
 	else if(equal(identifier, "Units"))
@@ -39,7 +39,7 @@ static int compare_units(const void* v1, const void* v2) {
 	auto p2 = *((uniti**)v2);
 	if(p1->effect[Level] != p2->effect[Level])
 		return p1->effect[Level] - p2->effect[Level];
-	return p2->effect[Health] - p1->effect[Health];
+	return p2->effect[Strenght] - p1->effect[Strenght];
 }
 
 void army::addunits(stringbuilder& sb, bool use_distinct) const {
@@ -196,30 +196,8 @@ void army::normalize() {
 }
 
 void army::damage(army& result, int value) {
-	if(value <= 0)
-		return;
-	else if(value > armor) {
-		value -= armor;
-		armor = 0;
-	} else {
-		armor -= value;
-		value = 0;
-	}
-	if(value <= 0)
-		return;
-	for(unsigned i = 0; i < count; i++) {
-		auto hits = data[i]->effect[Health];
-		if(hits > value) {
-			hits -= value;
-			value = 0;
-		} else {
-			result.add(data[i]);
-			value -= hits;
-			data[i] = 0;
-		}
-		if(!value)
-			break;
-	}
+	for(auto i = 0; i < value; i++)
+		result.add(data[i]);
 	normalize();
 }
 

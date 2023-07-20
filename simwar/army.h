@@ -8,8 +8,7 @@
 struct army : adat<const uniti*, 24> {
 	playeri*		player;
 	provincei*		province;
-	heroi*			hero;
-	int				armor, strenght;
+	int				strenght;
 	const tactici*	tactic;
 	costac			spoils;
 	void			act(stringbuilder& sb, const char* format, ...) const;
