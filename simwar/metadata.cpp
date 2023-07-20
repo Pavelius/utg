@@ -98,9 +98,6 @@ BSMETA(tactici) = {
 	BSREQ(id),
 	BSDST(effect, costi),
 	BSDST(perunit, costi),
-	BSDST(cost, costi),
-	BSREQ(upgrade),
-	BSFLG(disable, tactici),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

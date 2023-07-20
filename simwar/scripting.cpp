@@ -947,12 +947,12 @@ static void prepare_battle(army& attacker, army& defender) {
 	if(defender.tactic == attacker.tactic)
 		defender.tactic = 0;
 	// Attacker and defender can disable tactic
-	if(defender.tactic && attacker.tactic) {
-		if(attacker.tactic->disable.is(getbsi(defender.tactic)))
-			defender.tactic = 0;
-		else if(defender.tactic->disable.is(getbsi(attacker.tactic)))
-			attacker.tactic = 0;
-	}
+	//if(defender.tactic && attacker.tactic) {
+	//	if(attacker.tactic->disable.is(getbsi(defender.tactic)))
+	//		defender.tactic = 0;
+	//	else if(defender.tactic->disable.is(getbsi(attacker.tactic)))
+	//		attacker.tactic = 0;
+	//}
 }
 
 static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {

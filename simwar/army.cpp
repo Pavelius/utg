@@ -37,8 +37,6 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 static int compare_units(const void* v1, const void* v2) {
 	auto p1 = *((uniti**)v1);
 	auto p2 = *((uniti**)v2);
-	if(p1->effect[Level] != p2->effect[Level])
-		return p1->effect[Level] - p2->effect[Level];
 	return p2->effect[Strenght] - p1->effect[Strenght];
 }
 

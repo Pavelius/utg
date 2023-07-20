@@ -9,7 +9,7 @@ enum statf : unsigned char {
 };
 enum cost_s : unsigned char {
 	Gold, Mana, Happiness, Fame, Lore, Warfire,
-	Strenght, Level, Experience,
+	Strenght, Army, Sword, Shield, Experience,
 	Movement, Sail, Explore, ExploreNext, Siege,
 	Wood, Iron, Silver, Mithril, Horses, Mandrake,
 	Recruit, Size,

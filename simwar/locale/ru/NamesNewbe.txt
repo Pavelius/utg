@@ -1,8 +1,1 @@
-﻿BaltoroFlats: 
-NangaParbat: 
-November: 
-October: 
-September: 
-Zakopane: 
-Логово волков: 
-Темная пещера: 
+﻿Giant: 

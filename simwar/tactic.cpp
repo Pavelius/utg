@@ -1,9 +1,9 @@
 #include "crt.h"
 #include "tactic.h"
 
-bool tactici::isdisable(const tactici* v) const {
-	return disable.is(getbsi(v));
-}
+//bool tactici::isdisable(const tactici* v) const {
+//	return disable.is(getbsi(v));
+//}
 
 void tactica::add(const tactici* v) {
 	auto cv = const_cast<tactici*>(v);

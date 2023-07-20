@@ -319,10 +319,6 @@ void troop::paint() const {
 static int compare_troop(const void* v1, const void* v2) {
 	auto p1 = *((troop**)v1);
 	auto p2 = *((troop**)v2);
-	auto e1 = p1->type->effect[Level];
-	auto e2 = p2->type->effect[Level];
-	if(e1 != e2)
-		return e1 - e2;
 	return (int)p1->type - (int)p2->type;
 }
 
