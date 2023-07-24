@@ -16,10 +16,10 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 		//	sb.adds(getnm("LeadedBy"), last_army->hero->getname());
 	} else if(equal(identifier, "NameOfNoHero"))
 		sb.add(last_army->getnameof());
-	else if(equal(identifier, "Units"))
-		last_army->addunits(sb);
-	else if(equal(identifier, "UnitsAll"))
-		last_army->addunits(sb, false);
+	//else if(equal(identifier, "Units"))
+	//	last_army->addunits(sb);
+	//else if(equal(identifier, "UnitsAll"))
+	//	last_army->addunits(sb, false);
 	else if(equal(identifier, "Province"))
 		sb.add(last_army->province->getname());
 	else if(equal(identifier, "Spoils"))
@@ -34,30 +34,30 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 		act_identifier(sb, identifier);
 }
 
-static int compare_units(const void* v1, const void* v2) {
-	auto p1 = *((uniti**)v1);
-	auto p2 = *((uniti**)v2);
-	return p2->effect[Strenght] - p1->effect[Strenght];
-}
+//static int compare_units(const void* v1, const void* v2) {
+//	auto p1 = *((uniti**)v1);
+//	auto p2 = *((uniti**)v2);
+//	return p2->effect[Strenght] - p1->effect[Strenght];
+//}
 
-void army::addunits(stringbuilder& sb, bool use_distinct) const {
-	collection<uniti> source;
-	for(auto p : *this)
-		source.add(const_cast<uniti*>(p));
-	if(use_distinct)
-		source.distinct();
-	source.sort(compare_units);
-	int count = source.getcount();
-	for(int i = 0; i < count; i++) {
-		if(i > 0) {
-			if(i == count - 1)
-				sb.adds("%-1", getnm("And"));
-			else
-				sb.add(getnm(","));
-		}
-		sb.adds(source[i]->getname());
-	}
-}
+//void army::addunits(stringbuilder& sb, bool use_distinct) const {
+//	collection<uniti> source;
+//	for(auto p : *this)
+//		source.add(const_cast<uniti*>(p));
+//	if(use_distinct)
+//		source.distinct();
+//	source.sort(compare_units);
+//	int count = source.getcount();
+//	for(int i = 0; i < count; i++) {
+//		if(i > 0) {
+//			if(i == count - 1)
+//				sb.adds("%-1", getnm("And"));
+//			else
+//				sb.add(getnm(","));
+//		}
+//		sb.adds(source[i]->getname());
+//	}
+//}
 
 void army::act(stringbuilder& sb, const char* format, ...) const {
 	auto push_army = last_army;
@@ -98,19 +98,20 @@ void army::addtotal(stringbuilder& sb, cost_s v) const {
 }
 
 int army::geteffect(cost_s v) const {
-	auto result = 0;
-	for(auto p : *this)
-		result += get_value(p->id, p->effect[v]);
-	return result;
+	switch(v) {
+	case Strenght: return strenght;
+	case Sword: return casualty;
+	default: return 0;
+	}
 }
 
 int army::get(cost_s v) const {
 	int result = geteffect(v);
-	if(hero)
-		result += get_value(hero->id, hero->effect[v]);
+	//if(hero)
+	//	result += get_value(hero->id, hero->effect[v]);
 	if(tactic) {
 		result += get_value(tactic->id, tactic->effect[v]);
-		result += get_value(tactic->id, tactic->perunit[v] * getcount());
+		result += get_value(tactic->id, tactic->perunit[v] * units);
 	}
 	if(province)
 		result += get_value(province->id, province->current[v]);
@@ -129,26 +130,15 @@ int army::get(cost_s v, const army* opponent, cost_s mv) const {
 }
 
 void army::select(const provincei* province) {
-	for(auto& e : bsdata<troop>()) {
-		if(e && e.province == province)
-			add(e.type);
-	}
+	units = province->units;
 }
 
 void army::select(const provincei* province, const playeri* player) {
-	for(auto& e : bsdata<troop>()) {
-		if(e && e.moveto == province && e.player == player)
-			add(e.type);
-	}
+	if(province->player==player)
+		units = province->units;
 }
 
 void army::fill(tactica& source) {
-	for(auto i = 0; i < 3; i++)
-		source.add(bsdata<tactici>::elements + i);
-	for(auto p : *this)
-		source.add(p->tactics);
-	if(hero)
-		source.add(hero->tactics);
 }
 
 void army::randomtactic() {
@@ -157,60 +147,21 @@ void army::randomtactic() {
 }
 
 int	army::getunitcount(const tactici* v) const {
-	auto result = 0;
-	auto vi = getbsi(v);
-	for(auto p : *this) {
-		if(p->tactics.is(vi))
-			result++;
-	}
-	return result;
+	return 0;
 }
 
 void army::match(cost_s v, bool keep) {
-	auto ps = begin();
-	auto pe = end();
-	for(auto p = ps; p < pe; p++) {
-		bool valid = (*p)->effect[v];
-		if(valid != keep)
-			continue;
-		*ps++ = *p;
-	}
-	count = ps - data;
 }
 
 void army::sort() {
-	qsort(data, count, sizeof(data[0]), compare_units);
 }
 
 void army::normalize() {
-	auto ps = data;
-	auto pe = end();
-	for(auto p = ps; p < pe; p++) {
-		if(!(*p))
-			continue;
-		*ps++ = *p;
-	}
-	count = ps - data;
 }
 
 void army::damage(army& result, int value) {
-	for(auto i = 0; i < value; i++)
-		result.add(data[i]);
-	normalize();
-}
-
-void army::casualty(const army& list, army& enemy) {
-	for(auto p : list) {
-		auto pu = isattacker() ? find_troop(p, province, player) : find_troop(p, province);
-		if(pu) {
-			enemy.spoils[Gold] += pu->type->effect[Strenght] * 2;
-			enemy.spoils[Fame] += pu->type->effect[Strenght];
-			pu->clear();
-		}
-	}
-}
-
-void army::setcasualty(const army& source) {
-	*this = source;
-	count = 0; memset(data, 0, sizeof(data));
+	if(value > units)
+		value = units;
+	units -= value;
+	casualty += value;
 }

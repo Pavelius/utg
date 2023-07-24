@@ -30,10 +30,6 @@ static void test_army() {
 	auto hero = bsdata<heroi>::find("Gordek");
 	hero->province = province;
 	hero->player = player;
-	for(auto& e : bsdata<troop>()) {
-		if(e.player == player)
-			e.moveto = province;
-	}
 	add_neutral("Spearmans");
 	add_neutral("Spearmans");
 	add_neutral("Spearmans");

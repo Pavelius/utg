@@ -4,6 +4,7 @@
 #include "draw_object.h"
 #include "draw_marker.h"
 #include "draw_strategy.h"
+#include "pushvalue.h"
 #include "main.h"
 
 using namespace draw;
@@ -12,6 +13,8 @@ static bool need_update_ui = false;
 
 const int button_height = 20;
 const int size = 256;
+const int tech_padding = 16;
+
 static color player_colors[] = {
 	{40, 40, 40},
 	{97, 189, 79},
@@ -20,6 +23,13 @@ static color player_colors[] = {
 	{235, 90, 70},
 	{195, 119, 224},
 	{0, 121, 191},
+};
+static color tech_colors[] = {
+	{40, 40, 40},
+	{227, 91, 110},
+	{152, 199, 108},
+	{53, 189, 238},
+	{249, 238, 106},
 };
 
 static point system_position(point caret, int index) {
@@ -496,6 +506,48 @@ static void main_background() {
 
 static void main_finish() {
 	inputcamera();
+}
+
+static void empthy_scene() {
+}
+
+static void textct(const char* format) {
+	text(getrect().get(4, 4), format, AlignCenterCenter);
+}
+
+static void tech_paint(tech_s i) {
+	auto push_fore = fore;
+	auto& e = bsdata<techi>::elements[i];
+	fore = tech_colors[e.color];
+	rectb();
+	fore = push_fore;
+	textct(e.getname());
+}
+
+static void tech_area_paint() {
+	rectpush push;
+	width = 128;
+	height = texth() * 3;
+	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
+		tech_paint(i);
+		if((i % 4) == 3) {
+			caret.x = push.caret.x;
+			caret.y += height + tech_padding;
+		} else
+			caret.x += width + tech_padding;
+	}
+}
+
+static void tech_scene() {
+	strategy_background();
+	caret.x = (getwidth() - 128 * 4 - tech_padding * 3) / 2;
+	tech_area_paint();
+}
+
+void tech_selection() {
+	pushvalue p1(pbackground, empthy_scene);
+	pushvalue p2(pfinish, empthy_scene);
+	scene(tech_scene);
 }
 
 void initialize_ui() {

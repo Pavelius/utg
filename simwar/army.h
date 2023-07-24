@@ -1,21 +1,20 @@
 #include "stringact.h"
 #include "hero.h"
-#include "unit.h"
 #include "tactic.h"
 
 #pragma once
 
-struct army : adat<const uniti*, 24> {
+struct army {
 	playeri*		player;
 	provincei*		province;
-	int				strenght;
+	int				strenght, units, casualty;
 	const tactici*	tactic;
 	costac			spoils;
+	operator bool() const { return units != 0; }
 	void			act(stringbuilder& sb, const char* format, ...) const;
 	void			addprompt(stringbuilder& sb) const;
 	void			addtotal(stringbuilder& sb, cost_s v) const;
 	void			addunits(stringbuilder& sb, bool use_distinct = true) const;
-	void			casualty(const army& list, army& spoils);
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			damage(army& result, int value);
 	bool			isattacker() const { return province->player != player; }

@@ -7,7 +7,6 @@
 #include "draw_strategy.h"
 #include "game.h"
 #include "player.h"
-#include "unit.h"
 #include "widget.h"
 
 using namespace draw;
@@ -29,7 +28,7 @@ static color player_colors[] = {
 };
 
 static bool troops_in_province(const void* object) {
-	return ((troop*)object)->province == province;
+	return province->units > 0;
 }
 
 static bool building_in_province(const void* object) {
@@ -37,7 +36,7 @@ static bool building_in_province(const void* object) {
 }
 
 static bool troops_player(const void* object) {
-	return ((troop*)object)->player == player;
+	return province->units > 0;
 }
 
 static color getplayercolor(playeri* p) {
@@ -286,12 +285,11 @@ static void paint_income(const provincei* province) {
 void provincei::paint() const {
 	if(player) {
 		paint_hilite_province(player->shield);
-		//paint_shield(player->shield);
-		if(defend)
-			show_banner(16, 1, str("%1i", defend));
+		if(units)
+			show_banner(16, 1, str("%1i", units));
 	} else {
-		if(defend)
-			show_banner(16, 0, str("%1i", defend));
+		if(units)
+			show_banner(16, 0, str("%1i", units));
 	}
 	if(show_names)
 		stroke_texth2(getname());
@@ -305,21 +303,6 @@ void provincei::paint() const {
 				execute(input_province, (int)this);
 		}
 	}
-}
-
-void troop::paint() const {
-	auto push_color = fore;
-	fore = getplayercolor(player);
-	buttonback(43, 0);
-	fore = colors::window;
-	textcn(type->getname());
-	fore = push_color;
-}
-
-static int compare_troop(const void* v1, const void* v2) {
-	auto p1 = *((troop**)v1);
-	auto p2 = *((troop**)v2);
-	return (int)p1->type - (int)p2->type;
 }
 
 static void add_widget(const char* id, unsigned char priority, bool absolute_position = true) {
@@ -338,8 +321,6 @@ static void object_painting(const object* p) {
 		((widget*)p->data)->paint();
 	else if(bsdata<provincei>::have(p->data))
 		((provincei*)p->data)->paint();
-	else if(bsdata<troop>::have(p->data))
-		((troop*)p->data)->paint();
 }
 
 static void remove_object(array& source) {

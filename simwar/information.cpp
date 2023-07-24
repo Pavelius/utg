@@ -12,7 +12,6 @@
 #include "pushvalue.h"
 #include "script.h"
 #include "statable.h"
-#include "unit.h"
 
 int get_income(cost_s v);
 int get_income_modified(cost_s v, int result);
@@ -62,8 +61,6 @@ void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 4, province->current[Gold]);
 	add_line(sb, 6, province->current[Mana]);
 	add_line(sb, 0, province->current[Lore]);
-	add_line(sb, 1, province->attack);
-	add_line(sb, 2, province->defend);
 	add_line(sb, 5, province->buildings);
 }
 
@@ -131,24 +128,6 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 	}
 }
 
-static void add_description(const uniti* p, stringbuilder& sb) {
-	sb.addn("##%1", getnm(p->id));
-	auto need_line = true;
-	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
-		auto n = p->effect[v];
-		if(!n)
-			continue;
-		auto pd = getdescription(str("%1UnitEffect", bsdata<costi>::elements[v].id));
-		if(!pd)
-			continue;
-		if(need_line) {
-			sb.addn("---\n");
-			need_line = false;
-		}
-		sb.adds(pd, n);
-	}
-}
-
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
 	auto pn = getdescription(id);
@@ -178,19 +157,6 @@ void buildingi::getinfo(stringbuilder& sb) const {
 	add_line(sb, "Upkeep", upkeep);
 	if(upgrade)
 		sb.addn("%Exchange %1", upgrade->getname());
-}
-
-void uniti::getinfo(stringbuilder& sb) const {
-	add_description(this, sb);
-	sb.addn("---");
-	add_line(sb, "Cost", cost);
-	add_line(sb, "Upkeep", upkeep);
-}
-
-void troop::getinfo(stringbuilder& sb) const {
-	add_description(type, sb);
-	sb.addn("---");
-	add_line(sb, "Upkeep", type->upkeep);
 }
 
 void building::getinfo(stringbuilder& sb) const {

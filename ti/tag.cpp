@@ -1,6 +1,7 @@
 #include "main.h"
 
 BSDATA(tagi) {
+	{"NonFighter"},
 	{"IgnorePlanetaryShield"},
 	{"IgnoreSpaceCannon"},
 	{"IgnoreDirectHit"},

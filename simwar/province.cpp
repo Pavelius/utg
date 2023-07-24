@@ -3,7 +3,6 @@
 #include "player.h"
 #include "province.h"
 #include "script.h"
-#include "unit.h"
 
 const short unsigned Unknown = 0xFFF0;
 const short unsigned ZeroCost = 0xFFF1;
@@ -103,12 +102,7 @@ int provincei::getsites() const {
 }
 
 int provincei::getunits() const {
-	auto count = 0;
-	for(auto& e : bsdata<troop>()) {
-		if(e.province == this)
-			count++;
-	}
-	return count;
+	return units;
 }
 
 void provincei::add(cost_s v, int value) {
@@ -140,8 +134,6 @@ void provincei::update() {
 	subvalue(current, landscape->upkeep);
 	buildings = getbuildings();
 	units = getunits();
-	defend = current[Strenght];
-	attack = 0;
 }
 
 bool provincei::isvisible() const {

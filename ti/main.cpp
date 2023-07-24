@@ -55,8 +55,11 @@ static void test_variant() {
 
 #endif // _DEBUG
 
+void tech_selection();
+
 static void new_game() {
 	game.prepare();
+	tech_selection();
 	game.play();
 }
 

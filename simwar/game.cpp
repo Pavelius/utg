@@ -2,7 +2,6 @@
 #include "pushvalue.h"
 #include "script.h"
 #include "randomizer.h"
-#include "unit.h"
 
 gamei game;
 
@@ -29,7 +28,6 @@ static void mark_start_provinces() {
 static void add_neutral_troops() {
 	pushvalue push_player(player);
 	pushvalue push_province(province);
-	pushvalue push_unit(lastunit);
 	auto ps = bsdata<script>::find("Recruit");
 	if(!ps)
 		return;
@@ -43,20 +41,11 @@ static void add_neutral_troops() {
 		auto level = e.getcost();
 		if(!level)
 			continue;
-		auto pn = bsdata<randomizeri>::find(str("%1RandomDwelvers", e.landscape->id));
-		if(!pn)
-			continue;
-		randomizeri* pu = pn->random(pn->chance, 10, (level - 1));
-		if(!pu)
-			continue;
 		auto count = level;
 		if(count > 8)
 			count = 8;
 		for(auto i = 0; i < count; i++) {
 			if(d100() < 35)
-				continue;
-			lastunit = pu->random();
-			if(!lastunit)
 				continue;
 			ps->proc(1);
 		}

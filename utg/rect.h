@@ -12,6 +12,7 @@ struct rect {
 	inline rect			operator-(const int v) const { return{x1 - v, y1 - v, x2 + v, y2 + v}; }
 	int					bottom() const { return y1 > y2 ? y1 : y2; }
 	void				clear() { x1 = x2 = y1 = y2 = 0; }
+	rect				get(int x, int y) const { return {x1 + x, y1 + y, x2 - x, y2 - y}; }
 	inline int			height() const { return y2 - y1; }
 	bool				intersect(const rect& rc) const { return x1<rc.x2 && x2>rc.x1 && y1<rc.y2 && y2>rc.y1; }
 	int					left() const { return x1 < x2 ? x1 : x2; }

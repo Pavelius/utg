@@ -17,10 +17,11 @@ enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
 };
 enum tag_s : unsigned char {
+	NonFighter,
 	IgnorePlanetaryShield, IgnoreSpaceCannon, IgnoreDirectHit, PlanetaryShield, RepairSustainDamage, SustainDamage,
 	DeepSpaceCannon,
 	CombatBonusToOthers, BuyCombatBonusToOther, ProduceInfantry, HeavyHits, AdditionalHitOn9n10,
-	AddPlanetResourceToProduction
+	AddPlanetResourceToProduction,
 };
 enum racef_s : unsigned char {
 	Assimilate, Fragile, Unrelenting

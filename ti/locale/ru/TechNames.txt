@@ -2,3 +2,23 @@
 Green: Зеленая
 Red: Красная
 Yellow: Желтая
+
+AntimassDeflectors: Отражатель материи
+GravityDriver: Гравитационный двигатель
+FleetLogistics: Логистика флота
+LightWaveDeflector: Отражатель световых волн
+
+PlasmaScoring: Плазменные боеголовки
+MagenDefenseGrid: Защитная сеть "Маген"
+DuraniumArmor: Дураниевая броня
+AssaultCannon: Осадная пушка
+
+NeuralMotivator: Невральные мотиваторы
+DacxiveAnimators: Оживление трупов
+HyperMetabolism: Гипер метаболизм
+X89BacterialWeapon: Бактериальное оружие X89
+
+SarweenTools: Высокоточные инструменты
+GravitonLaserSystem: Лазерная система наведения
+TransitDiodes: Телепортирующие врата
+IntegratedEconomy: Интегрированная экономика

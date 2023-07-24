@@ -1,13 +1,14 @@
+#include "actable.h"
 #include "action.h"
-#include "unit.h"
+#include "site.h"
 
 #pragma once
 
-struct heroi : uniti, moveable {
+struct heroi : actable, moveable {
 	const char*	resid;
 	actioni*	action;
 	site*		location;
 	char		wounds;
-	int			get(cost_s v) const { return effect[v]; }
+	int			get(cost_s v) const { return 0; }
 };
 extern heroi* hero;

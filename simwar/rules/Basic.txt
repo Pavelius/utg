@@ -68,53 +68,6 @@ Inn upgrade(Tavern)
  cost Gold(70)
  upkeep Gold(2)
 
-#Unit
-
-Barbarians
- effect Strenght(1)
- cost Gold(20)
- upkeep Gold(1)
-Bandits
- effect Strenght(1)
- cost Gold(15)
- upkeep Gold(1)
-Berserkers
- effect Strenght(2)
- cost Gold(60)
- upkeep Gold(1)
-Milita
- effect Strenght(1)
- cost Gold(10)
-
-Giant
- effect Strenght(3)
- cost Gold(200)
- upkeep Gold(5)
-Goblins
- effect Strenght(1)
- cost Gold(10)
-Ogres
- effect Strenght(2)
- cost Gold(120)
- upkeep Gold(3)
-Orks
- effect Strenght(1)
- cost Gold(40)
- upkeep Gold(1)
-WolfRiders
- effect Strenght(2)
- cost Gold(70)
- upkeep Gold(1)
-
-Spearmans
- effect Strenght(1)
- cost Gold(30)
- upkeep Gold(1) Warfire(1)
-Cavalry fame(50)
- effect Strenght(2)
- cost Gold(100)
- upkeep Gold(2) Warfire(1)
-
 #Tactic
 
 CarefulDefence
@@ -126,36 +79,13 @@ LightingAttack
 
 SouthernKindom
  resources Gold(100) Mana(20)
- start Citadel+1 Laboratory+1 Milita+2 Cavalry+1
+ start Citadel+1 Laboratory+1 Unit+2
 
 #Hero
 
-Gordek resid("2MHUM6_S") player(SouthernKindom) gender(Male)
- effect Strenght(2)
-Mistra resid("2FELF2_S") player(SouthernKindom) gender(Female)
- effect Strenght(2)
-Kalipse resid("2MDEF2_S") gender(Male)
- effect Strenght(2)
-
-#RandomList
-
-BarbarianTribe
- chance Barbarians+3 Berserkers+1
-Outlaws
- chance Goblins+3 Orks+1
-LocalLord
- chance Spearmans+3 Cavalry+2
-WildHorde
- chance Goblins+4 Orks+3 WolfRiders+3 Ogres+2 Giant+1
-
-ForestRandomDwelvers
- chance Outlaws+4 WildHorde+3
-PlainsRandomDwelvers
- chance LocalLord+3 Outlaws+1
-HillsRandomDwelvers
- chance WildHorde+3
-WastelandRandomDwelvers
- chance BarbarianTribe+2 WildHorde+2
+Gordek resid("2MHUM6_S") player(SouthernKindom)
+Mistra resid("2FELF2_S") player(SouthernKindom)
+Kalipse resid("2MDEF2_S")
 
 #Site
 

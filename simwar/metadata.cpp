@@ -8,7 +8,6 @@
 #include "script.h"
 #include "tactic.h"
 #include "tag.h"
-#include "unit.h"
 #include "variant.h"
 
 bool fntestlist(int index, int bonus);
@@ -25,8 +24,6 @@ BSDATAC(provincei, 128)
 BSDATAC(sitei, 256)
 BSDATAC(site, 2048)
 BSDATAC(tactici, 64)
-BSDATAC(troop, 1024)
-BSDATAC(uniti, 48)
 
 BSMETA(actioni) = {
 	BSREQ(id),
@@ -49,11 +46,7 @@ BSMETA(costi) = {
 BSMETA(heroi) = {
 	BSREQ(id),
 	BSREQ(resid),
-	BSDST(effect, costi),
-	BSDST(cost, costi),
-	BSDST(upkeep, costi),
 	BSREQ(player),
-	BSENM(gender, genderi),
 	BSREQ(wounds),
 	{}};
 BSMETA(landscapei) = {
@@ -81,7 +74,7 @@ BSMETA(provincei) = {
 	BSREQ(position),
 	BSREQ(landscape),
 	BSDST(income, costi),
-	BSREQ(builded), BSREQ(recruit),
+	BSREQ(builded), BSREQ(recruit), BSREQ(units),
 	{}};
 BSMETA(site) = {
 	BSREQ(type),
@@ -102,20 +95,6 @@ BSMETA(tactici) = {
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
-BSMETA(troop) = {
-	BSREQ(type),
-	BSREQ(province), BSREQ(moveto),
-	BSREQ(player),
-	{}};
-BSMETA(uniti) = {
-	BSREQ(id),
-	BSREQ(fame),
-	BSDST(effect, costi),
-	BSDST(cost, costi),
-	BSDST(upkeep, costi),
-	BSFLG(tactics, tactici),
-	BSFLG(tags, tagi),
-	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(costi, 1), ftstatus<costi>, 0, fnscript<costi>},
@@ -134,7 +113,5 @@ BSDATA(varianti) = {
 	{"Site", VAR(sitei, 1)},
 	{"Tactic", VAR(tactici, 1)},
 	{"Tag", VAR(tagi, 1)},
-	{"Troop", VAR(troop, 1), ftstatus<troop>},
-	{"Unit", VAR(uniti, 1), ftstatus<uniti>, 0, fnscript<uniti>},
 };
 BSDATAF(varianti)

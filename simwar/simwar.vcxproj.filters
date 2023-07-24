@@ -39,9 +39,6 @@
     <ClCompile Include="scripting.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="unit.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="calendar.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -85,6 +82,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="serial.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="moveorder.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -142,9 +142,6 @@
     <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="unit.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="site.h">
       <Filter>Logic</Filter>
     </ClInclude>
@@ -179,6 +176,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="actable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="moveorder.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

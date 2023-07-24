@@ -161,6 +161,7 @@
     <ClCompile Include="log_text.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="moveorder.cpp" />
     <ClCompile Include="report.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="serial.cpp" />
@@ -171,7 +172,6 @@
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tactic.cpp" />
     <ClCompile Include="tag.cpp" />
-    <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
@@ -195,6 +195,7 @@
     <ClInclude Include="calendar.h" />
     <ClInclude Include="costitem.h" />
     <ClInclude Include="hero.h" />
+    <ClInclude Include="moveorder.h" />
     <ClInclude Include="report.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="game.h" />
@@ -205,7 +206,6 @@
     <ClInclude Include="special.h" />
     <ClInclude Include="tactic.h" />
     <ClInclude Include="tag.h" />
-    <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\silentseas.txt" />

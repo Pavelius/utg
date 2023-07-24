@@ -18,7 +18,7 @@ struct provincei : nameable {
 	point				position;
 	const landscapei*	landscape;
 	costac				current, income;
-	char				buildings, units, defend, attack, recruit, builded;
+	char				buildings, units, recruit, builded;
 	void				add(cost_s v, int value);
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
@@ -30,6 +30,7 @@ struct provincei : nameable {
 	int					getindex() const { return this - bsdata<provincei>::elements; }
 	void				getinfo(stringbuilder& sb) const;
 	int					getsites() const;
+	int					getstrenght() const { return units; }
 	int					getunits() const;
 	void				paint() const;
 	void				setblocked() const;

@@ -27,16 +27,19 @@ Fighter type(Ships)
  abilities Cost(1) CostCount(2) Combat(9) Reinforcement(50)
 Destroyer type(Ships)
  abilities Cost(1) CostCount(1) Combat(9) Move(2) Reinforcement(8) AntiFighterBarrage(9) AntiFighterBarrageCount(2)
+ tags NonFighter
 Carrier type(Ships)
  abilities Cost(3) CostCount(1) Combat(9) Move(1) Capacity(4) Reinforcement(4)
+ tags NonFighter
 Cruiser type(Ships)
  abilities Cost(2) CostCount(1) Combat(7) Move(2) Reinforcement(8)
+ tags NonFighter
 Dreadnought type(Ships)
  abilities Cost(4) CostCount(1) Combat(5) Move(1) Capacity(1) Reinforcement(5) Bombardment(5)
- tags SustainDamage
+ tags SustainDamage NonFighter
 Flagman type(Ships)
  abilities Cost(8) Combat(7) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
- tags SustainDamage
+ tags SustainDamage NonFighter
 WarSunPrototype type(Ships)
 
 #Unit type(Ships) replace(Flagman)
