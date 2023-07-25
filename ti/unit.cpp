@@ -1,7 +1,5 @@
 #include "main.h"
 
-uniti* uniti::last;
-
 void uniti::placement(int count, bool updateui) const {
 	if(!count)
 		count = 1;

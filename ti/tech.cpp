@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "tech.h"
+#include "main.h"
 
 BSDATA(techi) {
 	{"PlasmaScoring", Red, {}},
@@ -21,10 +22,18 @@ BSDATA(techi) {
 };
 assert_enum(techi, IntegratedEconomy)
 
+collection<techi> technologies;
+
 bool techi::match(const requirement& e) const {
 	for(auto i = 0; i < 4; i++) {
 		if(required[i] > e.required[i])
 			return false;
 	}
 	return true;
+}
+
+bool tech_player_allowed(const void* pv) {
+	auto p = (techi*)pv;
+	if(p->player && p->player != player)
+		return false;
 }

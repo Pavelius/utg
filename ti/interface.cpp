@@ -234,6 +234,21 @@ static void textcn(const char* format) {
 	caret = push_caret;
 }
 
+static void texthd(const char* format) {
+	auto push_caret = caret;
+	caret.x += (width - textw(format)) / 2;
+	text(format);
+	caret = push_caret;
+	caret.y += texth() + metrics::padding * 2;
+}
+
+static void texth2(const char* format) {
+	auto push_font = font;
+	font = metrics::h2;
+	texthd(format);
+	font = push_font;
+}
+
 static void textv(const char* format, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.addv(format, xva_start(format));
@@ -512,22 +527,44 @@ static void empthy_scene() {
 }
 
 static void textct(const char* format) {
-	text(getrect().get(4, 4), format, AlignCenterCenter);
+	rectpush push;
+	setoffset(4, 4);
+	texta(format, AlignCenterCenter);
+}
+
+static void rectbc(color v, bool mark) {
+	rectpush push;
+	auto push_fore = fore;
+	fore = v;
+	auto push_alpha = alpha;
+	alpha = 16;
+	if(mark)
+		alpha += 64;
+	if(ishilite()) {
+		alpha += 16;
+		if(hot.pressed)
+			alpha -= 32;
+	}
+	rectf();
+	alpha = push_alpha;
+	rectb();
+	if(mark) {
+		setoffset(3, 3);
+		rectb();
+	}
+	fore = push_fore;
 }
 
 static void tech_paint(tech_s i) {
-	auto push_fore = fore;
 	auto& e = bsdata<techi>::elements[i];
-	fore = tech_colors[e.color];
-	rectb();
-	fore = push_fore;
+	rectbc(tech_colors[e.color], player->is(i));
 	textct(e.getname());
 }
 
-static void tech_area_paint() {
+static void basic_technology_paint() {
 	rectpush push;
 	width = 128;
-	height = texth() * 3;
+	height = texth() * 3 + 24;
 	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
 		tech_paint(i);
 		if((i % 4) == 3) {
@@ -538,10 +575,20 @@ static void tech_area_paint() {
 	}
 }
 
+static void faction_technology_paint() {
+	rectpush push;
+	width = 128;
+	height = texth() * 3;
+}
+
 static void tech_scene() {
 	strategy_background();
+	texth2(getnm("BasicTechnologies"));
+	auto push_caret = caret;
 	caret.x = (getwidth() - 128 * 4 - tech_padding * 3) / 2;
-	tech_area_paint();
+	basic_technology_paint();
+	faction_technology_paint();
+	caret.y = texth() * 3 + tech_padding*3 + 8;
 }
 
 void tech_selection() {

@@ -87,6 +87,7 @@ BSMETA(tagi) = {
 BSMETA(techi) = {
 	BSREQ(id),
 	BSENM(color, colori),
+	BSREQ(player),
 	{}};
 BSMETA(tilei) = {
 	BSREQ(id),

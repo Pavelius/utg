@@ -1,4 +1,7 @@
-﻿Blue: Синяя
+﻿BasicTechnologies: Базовые технологии
+UnitUpgradeTechnologies: Прототипы боевых единиц
+
+Blue: Синяя
 Green: Зеленая
 Red: Красная
 Yellow: Желтая

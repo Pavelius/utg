@@ -94,7 +94,6 @@ struct uniti : nameable {
 	taga			tags;
 	playeri*		race;
 	const uniti*	replace;
-	static uniti*	last;
 	int				getcost() const { return abilities[Cost]; }
 	int				getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 	void			placement(int count, bool updateui = true) const;
