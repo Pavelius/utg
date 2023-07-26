@@ -249,6 +249,17 @@ static void texth2(const char* format) {
 	font = push_font;
 }
 
+static void texth2cw(const char* format) {
+	auto push_font = font;
+	font = metrics::h2;
+	auto push_caret = caret;
+	caret.x = (getwidth() - textw(format)) / 2;
+	text(format);
+	caret = push_caret;
+	caret.y += texth() + metrics::padding * 2;
+	font = push_font;
+}
+
 static void textv(const char* format, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.addv(format, xva_start(format));
@@ -532,7 +543,7 @@ static void textct(const char* format) {
 	texta(format, AlignCenterCenter);
 }
 
-static void rectbc(color v, bool mark) {
+static void rectbc(color v, bool mark, void* hilite_item) {
 	rectpush push;
 	auto push_fore = fore;
 	fore = v;
@@ -540,7 +551,7 @@ static void rectbc(color v, bool mark) {
 	alpha = 16;
 	if(mark)
 		alpha += 64;
-	if(ishilite()) {
+	if(ishilite(hilite_item)) {
 		alpha += 16;
 		if(hot.pressed)
 			alpha -= 32;
@@ -557,7 +568,7 @@ static void rectbc(color v, bool mark) {
 
 static void tech_paint(tech_s i) {
 	auto& e = bsdata<techi>::elements[i];
-	rectbc(tech_colors[e.color], player->is(i));
+	rectbc(tech_colors[e.color], player->is(i), &e);
 	textct(e.getname());
 }
 
@@ -583,12 +594,13 @@ static void faction_technology_paint() {
 
 static void tech_scene() {
 	strategy_background();
-	texth2(getnm("BasicTechnologies"));
-	auto push_caret = caret;
+	caret.y += 8;
+	texth2cw(getnm("BasicTechnologies"));
 	caret.x = (getwidth() - 128 * 4 - tech_padding * 3) / 2;
 	basic_technology_paint();
 	faction_technology_paint();
-	caret.y = texth() * 3 + tech_padding*3 + 8;
+	caret.y += (texth() * 3 + 24) * 4 + tech_padding * 3 + 8;
+	texth2cw(getnm("UnitUpgradedTechnologies"));
 }
 
 void tech_selection() {

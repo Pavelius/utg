@@ -150,6 +150,7 @@
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="goal.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main_util.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="aidata.h" />
     <ClInclude Include="draw_marker.h" />
+    <ClInclude Include="goal.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="tech.h" />
@@ -198,6 +200,7 @@
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\NamesSh.txt" />
     <Text Include="locale\ru\Speech.txt" />
+    <Text Include="locale\ru\TechDescriptions.txt" />
     <Text Include="locale\ru\TechNames.txt" />
     <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />
