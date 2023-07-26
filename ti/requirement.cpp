@@ -7,3 +7,12 @@ bool requirement::match(const requirement& e) const {
 	}
 	return true;
 }
+
+int requirement::maximize() const {
+	int result = 0;
+	for(auto i = Red; i <= Yellow; i = (color_s)(i + 1)) {
+		if(result < required[i])
+			result = required[i];
+	}
+	return result;
+}

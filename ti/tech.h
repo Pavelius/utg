@@ -15,6 +15,7 @@ struct playeri;
 struct requirement {
 	char			required[4]; // RGBY
 	bool			match(const requirement& e) const;
+	int				maximize() const;
 };
 struct techi : nameable {
 	color_s			color;

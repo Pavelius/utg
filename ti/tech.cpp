@@ -36,4 +36,5 @@ bool tech_player_allowed(const void* pv) {
 	auto p = (techi*)pv;
 	if(p->player && p->player != player)
 		return false;
+	return true;
 }

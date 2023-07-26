@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "goal.h"
 #include "main.h"
+#include "tech.h"
 
 static int get_non_home_planets() {
 	auto result = 0;
@@ -20,6 +21,19 @@ static int get_specialization_planets() {
 			result++;
 	}
 	return result;
+}
+
+static void get_tech_colors(requirement& colors) {
+	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i+1)) {
+		if(player->is(i))
+			colors.required[bsdata<techi>::elements[i].color]++;
+	}
+}
+
+static int get_maximum_colors() {
+	requirement source = {};
+	get_tech_colors(source);
+	return source.maximize();
 }
 
 bool need_spend(goal_s v) {
