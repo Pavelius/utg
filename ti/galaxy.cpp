@@ -44,7 +44,7 @@ static void assign_factions() {
 	game.origin_players.clear();
 	for(auto& e : bsdata<playeri>())
 		game.origin_players.add(&e);
-	playeri::human = game.origin_players[3];
+	playeri::human = game.origin_players[2];
 	game.origin_players.shuffle();
 	game.players = game.origin_players;
 }

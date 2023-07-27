@@ -111,7 +111,7 @@
     <ClCompile Include="draw_marker.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="goal.cpp">
+    <ClCompile Include="objective.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,7 +137,7 @@
     <ClInclude Include="techcolor.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="goal.h">
+    <ClInclude Include="objective.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,6 +179,9 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\TechDescriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\AbilityDescriptions.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

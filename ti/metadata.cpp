@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "condition.h"
 #include "list.h"
+#include "objective.h"
 #include "main.h"
 #include "variant.h"
 

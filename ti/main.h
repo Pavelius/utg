@@ -195,10 +195,6 @@ struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
 };
-struct objectivei : nameable {
-	char			stage, value;
-	variants		condition;
-};
 struct component : nameable {
 	variant			parent;
 	const char*		trigger;

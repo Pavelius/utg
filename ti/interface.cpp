@@ -117,13 +117,16 @@ static const char* getnmsh(const char* id) {
 	return pn;
 }
 
-static void status(const char* id, const char* value) {
+static void status(const char* id, const char* value, const void* object) {
 	auto name = getnmsh(id);
 	auto push_fore = fore;
 	auto push_font = font;
 	auto push_caret = caret;
 	auto push_width = width;
+	auto push_height = height;
 	width = 32;
+	height = 32 + 4;
+	ishilite(object);
 	fore = colors::border;
 	line(caret.x, caret.y + 40);
 	caret = push_caret;
@@ -144,15 +147,16 @@ static void status(const char* id, const char* value) {
 	line(caret.x, caret.y + 40);
 	caret = push_caret;
 	fore = push_fore;
+	height = push_height;
 }
 
-static void status(const char* id, int value) {
+static void status(const char* id, int value, const void* object) {
 	char temp[32]; stringbuilder sb(temp);
-	sb.add("%1i", value); status(id, temp);
+	sb.add("%1i", value); status(id, temp, object);
 }
 
 static void status(indicator_s v) {
-	status(bsdata<indicatori>::elements[v].id, player->get(v));
+	status(bsdata<indicatori>::elements[v].id, player->get(v), bsdata<indicatori>::elements + v);
 }
 
 static void show_indicators() {
@@ -165,14 +169,14 @@ static void show_indicators() {
 	for(auto v : source_goods)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("Resources"), player->getplanetsummary(Resources));
-	status(getnmsh("Influence"), player->getplanetsummary(Influence));
+	status(getnmsh("Resources"), player->getplanetsummary(Resources), bsdata<indicatori>::elements + Resources);
+	status(getnmsh("Influence"), player->getplanetsummary(Influence), bsdata<indicatori>::elements + Influence);
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("ActionCards"), player->getcards());
-	status(getnmsh("Technology"), player->gettechs());
+	status(getnmsh("ActionCards"), player->getcards(), 0);
+	status(getnmsh("Technology"), player->gettechs(), 0);
 }
 
 void status_info(void) {

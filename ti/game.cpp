@@ -46,18 +46,18 @@ void gamei::initialize() {
 }
 
 static void strategy_phase() {
-	pushvalue push_interactive(answers::interactive, false);
-	auto push_player = player;
-	auto push_header = answers::header;
+	//pushvalue push_interactive(answers::interactive, false);
+	pushvalue push_resid(answers::resid);
+	pushvalue push_header(answers::header);
+	pushvalue push_player(player);
 	for(auto p : game.players) {
 		player = p;
 		answers::header = player->getname();
+		answers::resid = player->getid();
 		script::run("FocusHomeSystem", 0);
 		if(!player->strategy)
 			script::run("ChooseStrategy", 0);
 	}
-	answers::header = push_header;
-	player = push_player;
 	game.sortbyinitiative();
 }
 

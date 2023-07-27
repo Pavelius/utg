@@ -112,7 +112,7 @@ static void choose_complex(const char* id, const char* cancel, fnevent add_answe
 		cancel_text = getnm(cancel);
 	choose_result = 0;
 	if(player->ishuman())
-		choose_result = an.choose(sb_temp, cancel_text, 2);
+		choose_result = an.choose(sb_temp, cancel_text, 1);
 	else if(ai_answers)
 		ai_answers();
 	else {

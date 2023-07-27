@@ -195,3 +195,6 @@ UploadUnits: Погрузить отряды на борт
 VictoryPoints: Очки победы
 WormholeAlphaSystem: Кротовая нора Альфа
 WormholeBetaSystem: Кротовая нора Бэта
+
+No: Нет
+Yes: Да
