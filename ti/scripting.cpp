@@ -363,6 +363,17 @@ static void select_troop(int bonus) {
 	}
 }
 
+static void select_troop_home(int bonus) {
+	querry.clear();
+	auto system = player->gethome();
+	for(auto& e : bsdata<troop>()) {
+		if(!e)
+			continue;
+		if(e.getsystem() == system)
+			querry.add(&e);
+	}
+}
+
 static void select_system(int bonus) {
 	querry.clear();
 	querry.select(bsdata<systemi>::source);
@@ -393,6 +404,11 @@ static void select_player(int bonus) {
 static void choose_planet(int bonus) {
 	last_planet = (planeti*)querry.choose(0, 0, 2);
 	game.focusing(last_planet->getsystem());
+}
+
+static void choose_troop(int bonus) {
+	last_troop = (troop*)querry.choose(0, 0, 2);
+	game.focusing(last_troop->getsystem());
 }
 
 static void choose_player(int bonus) {
@@ -940,6 +956,7 @@ BSDATA(script) = {
 	{"ChooseStrategy", choose_strategy},
 	{"ChooseSystem", choose_system},
 	{"ChooseTechnology", choose_technology},
+	{"ChooseTroop", choose_troop},
 	{"ContinueBattle", combat_continue},
 	{"Exhaust", exhaust},
 	{"EndTurn", end_turn},
@@ -986,6 +1003,7 @@ BSDATA(script) = {
 	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},
+	{"SelectTroopHome", select_troop_home},
 	{"Speaker", speaker},
 	{"RetreatBattle", combat_reatreat},
 };

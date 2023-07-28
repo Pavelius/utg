@@ -119,6 +119,8 @@ TacticalMove
  elements ChooseMove
 TacticalProduce
  elements SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
+ProduceOneUnit
+ elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
 
 #Strategy
 
@@ -139,7 +141,7 @@ Trade initiative(5)
  secondary StrategyToken-1 ReplenishCommodities
 Warfare initiative(6)
  primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 RedistributeCommandTokens
- secondary StrategyToken-1
+ secondary StrategyToken-1 ProduceOneUnit
 Technology initiative(7)
  primary ResearchTechnology+1 Resources-6 ResearchTechnology+1
  secondary StrategyToken-1 BuyResearchTechnology

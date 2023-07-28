@@ -73,3 +73,8 @@ void playeri::getinfo(stringbuilder& sb) const {
 	addp(this, sb, Influence);
 	add_description(sb, id);
 }
+
+void indicatori::getinfo(stringbuilder& sb) const {
+	add_h3(sb, getname());
+	add_description(sb, id);
+}

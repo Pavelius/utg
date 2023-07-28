@@ -4,9 +4,9 @@ using namespace pathfind;
 
 namespace {
 struct pointline {
-	point			position;
-	char			count;
-	char			weight;
+	point		position;
+	char		count;
+	char		weight;
 };
 }
 

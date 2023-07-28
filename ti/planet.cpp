@@ -1,3 +1,4 @@
+#include "pushvalue.h"
 #include "main.h"
 
 planeti* last_planet;
@@ -14,5 +15,6 @@ void planeti::exhaust() {
 	if(flags.is(Exhaust))
 		return;
 	flags.set(Exhaust);
-	draw::warning(getnm("ApplyExhaust"), getnm(id));
+	if(player->ishuman())
+		draw::warning(getnm("ApplyExhaust"), getnm(id));
 }

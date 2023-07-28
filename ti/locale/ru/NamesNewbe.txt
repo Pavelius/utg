@@ -1,4 +1,5 @@
-﻿ChoosePay: 
+﻿ChooseMoveOptions: 
+ChoosePay: 
 Вли: 
 Военная стратегия: 
 Имперская стратегия: 

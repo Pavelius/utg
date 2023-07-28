@@ -45,6 +45,7 @@ typedef flagable<8> techa;
 struct tilei : nameable {
 };
 struct indicatori : nameable {
+	void		getinfo(stringbuilder& sb) const;
 };
 struct planet_traiti : nameable {
 };
