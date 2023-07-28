@@ -297,7 +297,7 @@ void draw::inputcamera() {
 	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
-	case MouseRight:
+	case MouseLeft:
 		if(hot.pressed && !hot.hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;

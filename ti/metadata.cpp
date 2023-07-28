@@ -5,10 +5,7 @@
 #include "main.h"
 #include "variant.h"
 
-template<typename T>
-void figetinfo(const void* object, stringbuilder& sb) {
-	return ((T*)object)->getinfo(sb);
-}
+template<> void ftstatus<script>(const void* object, stringbuilder& sb);
 
 BSDATAC(actioncard, 128)
 BSDATAC(card, 256)
@@ -113,21 +110,20 @@ BSMETA(unitupgrade) = {
 	BSREQ(replace),
 	BSREQ(required),
 	{}};
-
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"ActionCard", VAR(actioncard, 1)},
 	{"Component", VAR(component, 1)},
 	{"Condition", VAR(conditioni, 1)},
-	{"Indicator", VAR(indicatori, 1), figetinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
+	{"Indicator", VAR(indicatori, 1), ftstatus<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Objective", VAR(objectivei, 1)},
 	{"Planet", VAR(planeti, 1)},
-	{"Player", VAR(playeri, 1), figetinfo<playeri>},
-	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Strategy", VAR(strategyi, 1), figetinfo<strategyi>},
+	{"Player", VAR(playeri, 1), ftstatus<playeri>},
+	{"Script", VAR(script, 1), ftstatus<script>, 0, fnscript<script>, fntest<script>},
+	{"Strategy", VAR(strategyi, 1), ftstatus<strategyi>},
 	{"System", VAR(systemi, 1)},
-	{"Tech", VAR(techi, 1), figetinfo<techi>},
+	{"Tech", VAR(techi, 1), ftstatus<techi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
 	{"UnitUpgrade", VAR(unitupgrade, 1)},

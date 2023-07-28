@@ -385,6 +385,24 @@ int	entitya::getsummary(ability_s v) const {
 	return result;
 }
 
+int	entitya::getproductioncost() const {
+	auto r = getsummary(Cost);
+	if(player->is(SarweenTools))
+		r--;
+	return imax(r, 0);
+}
+
+int	entitya::getfight() const {
+	auto result = 0;
+	for(auto p : *this) {
+		auto pu = p->getunit();
+		if(!pu)
+			continue;
+		result += pu->getcost();
+	}
+	return result;
+}
+
 int	entitya::getsummary(unit_type_s v) const {
 	auto result = 0;
 	for(auto p : *this) {

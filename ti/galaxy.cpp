@@ -78,6 +78,7 @@ static void prepare_players() {
 
 static void prepare_finish() {
 	player = playeri::human;
+	game.finale_score = 8;
 }
 
 static void clear_galaxy() {

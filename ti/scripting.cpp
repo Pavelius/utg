@@ -613,8 +613,9 @@ static void ask_production() {
 	auto resources = player->getplanetsummary(Resources);
 	auto goods = player->get(TradeGoods);
 	auto production_count = onboard.getsummary(CostCount);
+	auto total_cost = onboard.getproductioncost();
 	auto total_production = production - production_count;
-	auto total_resources = goods + resources - onboard.getsummary(Cost);
+	auto total_resources = goods + resources - total_cost;
 	if(onboard.getcount() > 0) {
 		sb.addn("---");
 		for(auto p : onboard) {
@@ -650,7 +651,7 @@ static void choose_production(int bonus) {
 	auto pu = last_troop;
 	onboard.clear();
 	choose_until_stop("ChooseProduction", "EndBuild", ask_production, apply_production, 0);
-	complex_pay(Resources, onboard.getsummary(Cost));
+	complex_pay(Resources, onboard.getproductioncost());
 	for(auto p : onboard)
 		pu->produce((uniti*)p);
 	game.updateui();
@@ -905,6 +906,9 @@ static void for_each_planet(int bonus) {
 	last_planet = push_last;
 }
 
+static void show_tech(int bonus) {
+}
+
 void playeri::apply(const variants& source) {
 	auto push_player = player;
 	auto push_header = answers::header;
@@ -1004,6 +1008,7 @@ BSDATA(script) = {
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
+	{"ShowTech", show_tech},
 	{"Speaker", speaker},
 	{"RetreatBattle", combat_reatreat},
 };

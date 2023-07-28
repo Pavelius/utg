@@ -96,9 +96,13 @@ struct uniti : nameable {
 	playeri*		race;
 	const uniti*	replace;
 	int				getcost() const { return abilities[Cost]; }
+	int				getspacepower() const;
 	int				getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 	void			placement(int count, bool updateui = true) const;
 	bool			stackable() const { return abilities[CostCount] > 1; }
+private:
+	int				getscore(ability_s v) const;
+	int				getscore(tag_s v, int n) const;
 };
 struct planeti : entity {
 	planet_trait_s	trait;
@@ -162,10 +166,12 @@ struct entitya : public adat<entity*> {
 	void			filter(const entity* object, bool keep);
 	entity*			getbest(indicator_s v) const;
 	int				getcap() const;
+	int				getproductioncost() const;
 	int				getsummary(ability_s v) const;
 	int				getsummary(indicator_s v) const;
 	int				getsummary(unit_type_s v) const;
 	int				getsummary(const uniti* pv) const;
+	int				getfight() const;
 	void			grouplocation(const entitya& source);
 	void			groupsystem(const entitya& source);
 	void			ingame();
@@ -232,6 +238,7 @@ struct gamei {
 	playeri*		speaker;
 	playera			players, origin_players;
 	indicator_s		indicator;
+	int				finale_score;
 	static systemi* choosesystem(const entitya& source);
 	static troop*	choosetroop(const entitya& source);
 	static void		focusing(const entity* p);

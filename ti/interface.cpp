@@ -126,7 +126,13 @@ static void status(const char* id, const char* value, const void* object) {
 	auto push_height = height;
 	width = 32;
 	height = 32 + 4;
-	ishilite(object);
+	if(ishilite(object)) {
+		if(bsdata<script>::have(object)) {
+			pushvalue push_alpha(alpha, (unsigned char)32);
+			pushvalue push_height(height, height + 4);
+			rectf();
+		}
+	}
 	fore = colors::border;
 	line(caret.x, caret.y + 40);
 	caret = push_caret;
@@ -155,8 +161,20 @@ static void status(const char* id, int value, const void* object) {
 	sb.add("%1i", value); status(id, temp, object);
 }
 
+static void status(const char* id, int value, int maximum, const void* object) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add("%1i/%2i", value, maximum); status(id, temp, object);
+}
+
 static void status(indicator_s v) {
-	status(bsdata<indicatori>::elements[v].id, player->get(v), bsdata<indicatori>::elements + v);
+	switch(v) {
+	case VictoryPoints:
+		status(bsdata<indicatori>::elements[v].id, player->get(v), game.finale_score, bsdata<indicatori>::elements + v);
+		break;
+	default:
+		status(bsdata<indicatori>::elements[v].id, player->get(v), bsdata<indicatori>::elements + v);
+		break;
+	}
 }
 
 static void show_indicators() {
@@ -176,7 +194,7 @@ static void show_indicators() {
 		status(v);
 	caret.x += 2;
 	status(getnmsh("ActionCards"), player->getcards(), 0);
-	status(getnmsh("Technology"), player->gettechs(), 0);
+	status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));
 }
 
 void status_info(void) {

@@ -121,6 +121,10 @@ TacticalProduce
  elements SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
 ProduceOneUnit
  elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
+ProduceOnePDSorDock
+ elements SelectPlanetYouControl ChoosePlanet ActivateSystem ChoosePDSorDock
+ReadyExhaustPlanet
+ elements SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1
 
 #Strategy
 
@@ -129,13 +133,13 @@ Leadership initiative(1)
  secondary PayCommandTokens+3
 Diplomacy initiative(2)
  primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem SelectPlanetYouControl FilterSystem Exhaust-1
- secondary StrategyToken-1 SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1
+ secondary StrategyToken-1 ReadyExhaustPlanet
 Politics initiative(3)
  primary SelectPlayer NoSpeaker ChoosePlayer Speaker ActionCard+2
  secondary StrategyToken-1 ActionCard+2
 Construction initiative(4)
  primary SelectPlanetYouControl ChoosePlanet ChoosePDSorDock SelectPlanetYouControl ChoosePlanet PDS
- secondary StrategyToken-1 SelectPlanetYouControl ChoosePlanet ActivateSystem ChoosePDSorDock
+ secondary StrategyToken-1 ProduceOnePDSorDock
 Trade initiative(5)
  primary GainGoods ReplenishCommodities GainGoodsSuplier
  secondary StrategyToken-1 ReplenishCommodities

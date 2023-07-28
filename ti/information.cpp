@@ -78,3 +78,19 @@ void indicatori::getinfo(stringbuilder& sb) const {
 	add_h3(sb, getname());
 	add_description(sb, id);
 }
+
+static void add_technologies(stringbuilder& sb) {
+	for(auto i = (tech_s)0; i < IntegratedEconomy; i = (tech_s)(i + 1)) {
+		if(!player->is(i))
+			continue;
+		sb.addn(bsdata<techi>::elements[i].getname());
+	}
+}
+
+template<> void ftstatus<script>(const void* object, stringbuilder& sb) {
+	auto p = (script*)object;
+	if(equal(p->id, "ShowTech")) {
+		add_h3(sb, getnm("Technologies"));
+		add_technologies(sb);
+	}
+}

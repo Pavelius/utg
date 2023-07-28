@@ -1,4 +1,5 @@
-﻿BasicTechnologies: Базовые технологии
+﻿Technologies: Технологии
+BasicTechnologies: Базовые технологии
 UnitUpgradeTechnologies: Прототипы боевых единиц
 
 Blue: Синяя

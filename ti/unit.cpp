@@ -22,3 +22,23 @@ void uniti::placement(int count, bool updateui) const {
 		break;
 	}
 }
+
+int uniti::getscore(ability_s v) const {
+	ability_s v1 = (ability_s)(v + 1);
+	auto count = abilities[v1];
+	if(!count)
+		count = 1;
+	return (10 - abilities[v]) * count;
+}
+
+int uniti::getscore(tag_s v, int n) const {
+	if(tags.is(v))
+		return n;
+	return 0;
+}
+
+int uniti::getspacepower() const {
+	auto r = getscore(Combat);
+	r += getscore(SustainDamage, 2);
+	return r;
+}
