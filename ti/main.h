@@ -172,8 +172,8 @@ struct agendai : nameable {
 };
 struct component : nameable {
 	variant			parent;
-	const char*		trigger;
 	variants		use;
+	const char*		trigger;
 	bool			isallow() const;
 };
 struct actioncard : component {

@@ -1,3 +1,2 @@
-﻿In file `locale/ru/Speech.txt`:
- Line 3: Unknown variant identifier `LeadershipSecondanary`
- Line 12: Unknown variant identifier `PoliticsSecondanary`
+﻿In file `rules/Basic.txt`:
+ Line 158: Not find data type for `Component`

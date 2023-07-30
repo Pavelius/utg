@@ -91,6 +91,7 @@ template<> void ftstatus<script>(const void* object, stringbuilder& sb) {
 	auto p = (script*)object;
 	if(equal(p->id, "ShowTech")) {
 		add_h3(sb, getnm("Technologies"));
+		sb.addn("---");
 		add_technologies(sb);
 	}
 }

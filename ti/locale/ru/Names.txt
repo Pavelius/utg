@@ -9,14 +9,6 @@ TechnologyShort: Тех
 TradeGoodsShort: Тов
 VictoryPointsShort: ОП
 
-Construction: Строительная стратегия
-Diplomacy: Дипломатическая стратегия
-Imperial: Имперская стратегия
-Leadership: Лидерская стратегия
-Politics: Политическая стратегия
-Trade: Торговая стратегия
-Warfare: Военная стратегия
-
 Carrier: Транспорт
 Cruiser: Крейсер
 Destroyer: Эсминец

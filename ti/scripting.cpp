@@ -74,7 +74,7 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 }
 
 static void standart_answers() {
-	for(auto& e : bsdata<component>()) {
+	for(auto& e : bsdata<actioncard>()) {
 		if(strcmp(e.trigger, choose_id) != 0)
 			continue;
 		if(!e.isallow())
@@ -86,8 +86,8 @@ static void standart_answers() {
 }
 
 static bool standart_apply() {
-	if(bsdata<component>::have(choose_result))
-		script::run(((component*)choose_result)->use);
+	if(bsdata<actioncard>::have(choose_result))
+		script::run(((actioncard*)choose_result)->use);
 	else if(bsdata<script>::have(choose_result))
 		((script*)choose_result)->proc(0);
 	else
