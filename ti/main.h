@@ -4,24 +4,19 @@
 #include "flagable.h"
 #include "pathfind.h"
 #include "point.h"
+#include "indicator.h"
 #include "nameable.h"
 #include "script.h"
 #include "strategy.h"
 #include "tag.h"
 #include "tech.h"
 #include "variant.h"
+#include "unit.h"
 
 const int hms = 8;
 
 enum planet_trait_s : unsigned char {
 	NoTrait, Cultural, Hazardous, Industrial,
-};
-enum tag_s : unsigned char {
-	NonFighter,
-	IgnorePlanetaryShield, IgnoreSpaceCannon, IgnoreDirectHit, PlanetaryShield, RepairSustainDamage, SustainDamage,
-	DeepSpaceCannon,
-	CombatBonusToOthers, BuyCombatBonusToOther, ProduceInfantry, HeavyHits, AdditionalHitOn9n10,
-	AddPlanetResourceToProduction,
 };
 enum racef_s : unsigned char {
 	Assimilate, Fragile, Unrelenting
@@ -29,23 +24,11 @@ enum racef_s : unsigned char {
 enum flag_s : unsigned char {
 	Exhaust
 };
-enum indicator_s : unsigned char {
-	TradeGoods, Commodities, Resources, Influence,
-	CommandToken, FleetToken, StrategyToken, TacticToken,
-	VictoryPoints,
-};
 enum tile_s : unsigned char {
 	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,
 };
-enum unit_type_s : unsigned char {
-	GroundForces, Ships, Structures,
-};
-typedef flagable<4> taga;
 typedef flagable<8> techa;
 struct tilei : nameable {
-};
-struct indicatori : nameable {
-	void		getinfo(stringbuilder& sb) const;
 };
 struct planet_traiti : nameable {
 };
@@ -89,21 +72,6 @@ struct entity : nameable {
 	void			startcombat();
 	void			set(flag_s v);
 };
-struct uniti : nameable {
-	char			abilities[Capacity + 1];
-	unit_type_s		type;
-	taga			tags;
-	playeri*		race;
-	const uniti*	replace;
-	int				getcost() const { return abilities[Cost]; }
-	int				getspacepower() const;
-	int				getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
-	void			placement(int count, bool updateui = true) const;
-	bool			stackable() const { return abilities[CostCount] > 1; }
-private:
-	int				getscore(ability_s v) const;
-	int				getscore(tag_s v, int n) const;
-};
 struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;
@@ -125,8 +93,6 @@ struct systemi : entity {
 	char			special_index;
 	tile_s			special;
 	pathfind::indext index;
-	static systemi*	active;
-	static systemi*	last;
 	explicit operator bool() const { return index != pathfind::Blocked; }
 	static void		blockenemy(const playeri* player);
 	static void		blockmove();
@@ -144,6 +110,8 @@ struct systemi : entity {
 	void			placement(variants source, playeri* player);
 	void			setactivate(const playeri* p, bool active);
 };
+extern systemi* last_system;
+extern systemi* active_system;
 struct troop : entity {
 	flagable<1>		flags;
 	static troop*	create(const char* id, playeri* player);
@@ -228,9 +196,6 @@ struct army {
 	void			choose(const char* id);
 	void			hit(int value);
 	int				roll(ability_s id, ability_s id_count) const;
-};
-struct prototype {
-	uniti			units[10];
 };
 struct unitupgrade : uniti, requirement {
 };

@@ -1,4 +1,8 @@
+#include "crt.h"
 #include "main.h"
+#include "unit.h"
+
+int	uniti::getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 
 void uniti::placement(int count, bool updateui) const {
 	if(!count)
@@ -10,15 +14,13 @@ void uniti::placement(int count, bool updateui) const {
 			troop::create(this, player, last_planet);
 		if(updateui)
 			game.updateui();
-		//draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
 		break;
 	case Ships:
-		game.focusing(systemi::last);
+		game.focusing(last_system);
 		for(auto i = 0; i < count; i++)
-			troop::create(this, player, systemi::last);
+			troop::create(this, player, last_system);
 		if(updateui)
 			game.updateui();
-		//draw::information(getnm("PlaceUnits"), getnm(player->id), getnm(id), count);
 		break;
 	}
 }
@@ -28,7 +30,7 @@ int uniti::getscore(ability_s v) const {
 	auto count = abilities[v1];
 	if(!count)
 		count = 1;
-	return (10 - abilities[v]) * count;
+	return (2 + 10 - abilities[v]) * count;
 }
 
 int uniti::getscore(tag_s v, int n) const {

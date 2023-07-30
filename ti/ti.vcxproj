@@ -181,11 +181,15 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="aidata.h" />
     <ClInclude Include="draw_marker.h" />
+    <ClInclude Include="indicator.h" />
     <ClInclude Include="objective.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="tag.h" />
     <ClInclude Include="tech.h" />
     <ClInclude Include="techcolor.h" />
+    <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

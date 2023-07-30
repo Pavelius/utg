@@ -66,7 +66,7 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 	auto result = 0;
 	while(result < capacity && ships) {
 		auto p1 = ships[0];
-		p1->location = systemi::active;
+		p1->location = active_system;
 		ships.remove(0);
 		result++;
 	}
@@ -222,7 +222,7 @@ static void choose_action(int bonus) {
 }
 
 static void ask_movement() {
-	makewave(systemi::active->index);
+	makewave(active_system->index);
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player)
 			continue;
@@ -256,7 +256,7 @@ static void ai_movement() {
 		auto system = p->getsystem();
 		capacity -= ai_load(player, system, Ships, capacity);
 		capacity -= ai_load(player, system, GroundForces, capacity);
-		p->location = systemi::active;
+		p->location = active_system;
 	}
 	game.updateui();
 }
@@ -358,7 +358,7 @@ static void select_troop(int bonus) {
 	for(auto& e : bsdata<troop>()) {
 		if(!e)
 			continue;
-		if(e.getsystem() == systemi::active)
+		if(e.getsystem() == active_system)
 			querry.add(&e);
 	}
 }
@@ -416,7 +416,7 @@ static void choose_player(int bonus) {
 }
 
 static void choose_system(int bonus) {
-	systemi::last = (systemi*)querry.choose(0);
+	active_system = (systemi*)querry.choose(0);
 }
 
 static void replenish_commodities(int bonus) {
@@ -474,7 +474,7 @@ static void ask_invasion() {
 		if(move > 0)
 			continue;
 		auto ps = e.getsystem();
-		if(ps != systemi::active)
+		if(ps != active_system)
 			continue;
 		if(e.location == last_planet) {
 			if(player->ishuman())
@@ -493,7 +493,7 @@ static void apply_invasion() {
 	}
 }
 static void ai_invasion() {
-	auto system = systemi::active;
+	auto system = active_system;
 	// Select all planets in a system
 	entitya planets;
 	planets.selectplanets(system);
@@ -537,7 +537,7 @@ static void ask_invasion_planet() {
 	if(!have_invasion_units())
 		return;
 	for(auto& e : bsdata<planeti>()) {
-		if(e.location != systemi::active)
+		if(e.location != active_system)
 			continue;
 		an.add(&e, e.getname());
 	}
@@ -563,7 +563,7 @@ static void ask_move_options() {
 	auto system = ship->getsystem();
 	auto capacity = ship->get(Capacity);
 	sb.clear();
-	sb.add(getnm("ChooseMoveOption"), ship->getname(), systemi::active->getname());
+	sb.add(getnm("ChooseMoveOption"), ship->getname(), active_system->getname());
 	char temp[260]; stringbuilder sbt(temp);
 	addscript("MoveShip");
 	if(capacity > 0) {
@@ -659,7 +659,7 @@ static void choose_production(int bonus) {
 
 static void ask_dock() {
 	for(auto& e : bsdata<troop>()) {
-		if(e.player != player || !e.get(Production) || e.getsystem() != systemi::active)
+		if(e.player != player || !e.get(Production) || e.getsystem() != active_system)
 			continue;
 		e.add(an);
 	}
@@ -733,17 +733,17 @@ static void choose_combat_option(int bonus) {
 }
 
 static void activate_system(int bonus) {
-	if(!systemi::last)
+	if(!last_system)
 		return;
-	game.focusing(systemi::last);
-	systemi::last->setactivate(player, bonus != -1);
-	systemi::active = systemi::last;
+	game.focusing(last_system);
+	last_system->setactivate(player, bonus != -1);
+	active_system = last_system;
 }
 
 static void filter_system(int bonus) {
-	if(!systemi::last)
+	if(!last_system)
 		return;
-	querry.match(systemi::last, bonus != -1);
+	querry.match(last_system, bonus != -1);
 }
 
 static void filter_home_system_any(int bonus) {
@@ -870,9 +870,9 @@ static void cancel_order(int counter) {
 }
 
 static void move_ship(int bonus) {
-	last_troop->location = systemi::active;
+	last_troop->location = active_system;
 	for(auto p : onboard)
-		p->location = systemi::active;
+		p->location = active_system;
 	game.updateui();
 	choose_stop = true;
 }

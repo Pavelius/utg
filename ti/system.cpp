@@ -1,7 +1,7 @@
 #include "main.h"
 
-systemi* systemi::last;
-systemi* systemi::active;
+systemi* last_system;
+systemi* active_system;
 
 bool systemi::isactivated(const playeri* p) const {
 	auto i = bsdata<playeri>::source.indexof(p);

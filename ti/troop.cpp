@@ -1,3 +1,4 @@
+#include "pushvalue.h"
 #include "main.h"
 
 troop* last_troop;
@@ -30,13 +31,9 @@ troop* troop::create(const uniti* unit, playeri* player, entity* location) {
 }
 
 void troop::produce(const uniti* unit) const {
-	auto last_system = systemi::last;
-	auto push_planet = last_planet;
-	systemi::last = getsystem();
-	last_planet = getplanet();
+	pushvalue push_system(last_system, getsystem());
+	pushvalue push_planet(last_planet, getplanet());
 	unit->placement(unit->abilities[CostCount], false);
-	last_planet = push_planet;
-	systemi::last = last_system;
 }
 
 void troop::hit() {

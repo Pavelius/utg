@@ -140,6 +140,18 @@
     <ClInclude Include="objective.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="indicator.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="unit.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
