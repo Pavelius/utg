@@ -1,14 +1,9 @@
-#include "answers.h"
-#include "ability.h"
 #include "crt.h"
-#include "flagable.h"
+#include "entity.h"
 #include "pathfind.h"
 #include "point.h"
-#include "indicator.h"
-#include "nameable.h"
 #include "script.h"
 #include "strategy.h"
-#include "tag.h"
 #include "tech.h"
 #include "variant.h"
 #include "unit.h"
@@ -39,31 +34,6 @@ struct playeri;
 struct systemi;
 struct troop;
 struct uniti;
-struct entity : nameable, taga {
-	playeri*		player;
-	entity*			location;
-	constexpr explicit operator bool() const { return id != 0; }
-	void			add(answers& an);
-	void			clear();
-	void			event(int type, const char* format) const;
-	void			exhaust();
-	int				get(ability_s v) const;
-	int				get(indicator_s v) const;
-	const actioncard* getactioncard() const;
-	const char*		getid() const;
-	playeri*		getenemy() const;
-	const char*		getname() const;
-	planeti*		getplanet() const;
-	int				getproduction() const;
-	color_s			getspeciality() const;
-	int				getsumary(ability_s v) const;
-	int				getsumary(unit_type_s v) const;
-	systemi*		getsystem() const;
-	planet_trait_s	gettrait() const;
-	const uniti*	getunit() const;
-	void			hit();
-	void			startcombat();
-};
 struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;

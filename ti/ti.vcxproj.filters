@@ -152,6 +152,9 @@
     <ClInclude Include="tag.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
