@@ -823,6 +823,11 @@ static void speaker(int bonus) {
 }
 
 static void action_card(int bonus) {
+	for(auto i = 0; i < bonus; i++) {
+		auto p = actioncards.pick();
+		if(p)
+			p->player = player;
+	}
 }
 
 static void redistribute_command_tokens(int bonus) {
@@ -906,6 +911,9 @@ static void for_each_planet(int bonus) {
 		script::run(v);
 	}
 	last_planet = push_last;
+}
+
+static void show_action_cards(int bonus) {
 }
 
 static void show_tech(int bonus) {
@@ -1010,6 +1018,7 @@ BSDATA(script) = {
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
+	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
 	{"Speaker", speaker},
 	{"RetreatBattle", combat_reatreat},

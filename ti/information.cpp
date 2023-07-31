@@ -87,11 +87,26 @@ static void add_technologies(stringbuilder& sb) {
 	}
 }
 
+static void add_action_cards(stringbuilder& sb) {
+	for(auto& e : bsdata<entity>()) {
+		auto p = e.getactioncard();
+		if(!p)
+			continue;
+		if(e.player != player)
+			continue;
+		sb.addn(p->getname());
+	}
+}
+
 template<> void ftstatus<script>(const void* object, stringbuilder& sb) {
 	auto p = (script*)object;
 	if(equal(p->id, "ShowTech")) {
 		add_h3(sb, getnm("Technologies"));
 		sb.addn("---");
 		add_technologies(sb);
+	} else if(equal(p->id, "ShowActionCards")) {
+		add_h3(sb, getnm("ActionCards"));
+		sb.addn("---");
+		add_action_cards(sb);
 	}
 }

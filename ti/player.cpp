@@ -71,6 +71,18 @@ int	playeri::getinitiative() const {
 	return strategy->initiative;
 }
 
+int	playeri::getactioncards() const {
+	auto result = 0;
+	for(auto& e : bsdata<entity>()) {
+		auto p = e.getactioncard();
+		if(!p)
+			continue;
+		if(e.player==this)
+			result++;
+	}
+	return result;
+}
+
 int playeri::gettechs() const {
 	auto result = 0;
 	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {

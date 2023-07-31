@@ -196,7 +196,7 @@ struct playeri : nameable {
 	bool			ishuman() const { return this == human; }
 	int				get(indicator_s v) const { return indicators[v]; }
 	void			getadvance(requirement& result) const;
-	int				getcards() const;
+	int				getactioncards() const;
 	systemi*		gethome() const;
 	int				getindex() const;
 	int				getinitiative() const;
