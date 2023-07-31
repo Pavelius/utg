@@ -71,8 +71,14 @@ static void draw_action_cards() {
 }
 
 static void remove_command_tokens() {
-	for(auto& e : bsdata<systemi>())
-		e.activated.clear();
+	for(auto& e : bsdata<systemi>()) {
+		e.remove(Player1);
+		e.remove(Player2);
+		e.remove(Player3);
+		e.remove(Player4);
+		e.remove(Player5);
+		e.remove(Player6);
+	}
 }
 
 static void ready_cards() {

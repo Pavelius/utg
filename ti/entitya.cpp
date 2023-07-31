@@ -106,18 +106,6 @@ void entitya::select(answers& an) {
 	count = ps - data;
 }
 
-void entitya::selectcards(const playeri* player) {
-	auto ps = data + count;
-	auto pe = endof();
-	for(auto& e : bsdata<card>()) {
-		if(e.player != player)
-			continue;
-		if(ps < pe)
-			*ps++ = &e;
-	}
-	count = ps - data;
-}
-
 void entitya::selectplanets(const systemi* system) {
 	auto ps = data + count;
 	auto pe = endof();
@@ -203,7 +191,7 @@ void entitya::match(unit_type_s type, bool keep) {
 	count = ps - data;
 }
 
-void entitya::match(flag_s value, bool keep) {
+void entitya::match(tag_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
 		if(!(*p))

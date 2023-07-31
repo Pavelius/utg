@@ -63,32 +63,6 @@ planet_trait_s entity::gettrait() const {
 	return NoTrait;
 }
 
-bool entity::is(flag_s v) const {
-	if(bsdata<planeti>::have(this))
-		return ((planeti*)this)->flags.is(v);
-	else if(bsdata<troop>::have(this))
-		return ((troop*)this)->flags.is(v);
-	return false;
-}
-
-bool entity::is(tag_s v) const {
-	if(bsdata<troop>::have(this))
-		return ((troop*)this)->getunit()->tags.is(v);
-	return false;
-}
-
-void entity::remove(flag_s v) {
-	if(bsdata<troop>::have(this))
-		((troop*)this)->flags.remove(v);
-}
-
-void entity::set(flag_s v) {
-	if(bsdata<planeti>::have(this))
-		return ((planeti*)this)->flags.set(v);
-	else if(bsdata<troop>::have(this))
-		return ((troop*)this)->flags.set(v);
-}
-
 color_s entity::getspeciality() const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->speciality;
@@ -98,20 +72,6 @@ color_s entity::getspeciality() const {
 int	entity::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);
-	return 0;
-}
-
-troop* entity::sibling(troop* pb) const {
-	if(!pb)
-		pb = bsdata<troop>::begin();
-	else
-		pb = pb + 1;
-	auto pe = bsdata<troop>::end();
-	while(pb < pe) {
-		if(pb->location == this)
-			return pb;
-		pb++;
-	}
 	return 0;
 }
 
@@ -178,4 +138,12 @@ void entity::event(int type, const char* format) const {
 		draw::information(format, getname());
 	else
 		draw::warning(format, getname());
+}
+
+void entity::exhaust() {
+	if(is(Exhaust))
+		return;
+	set(Exhaust);
+	if(player->ishuman())
+		draw::warning(getnm("ApplyExhaust"), getnm(id));
 }

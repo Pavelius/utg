@@ -7,14 +7,14 @@ bool systemi::isactivated(const playeri* p) const {
 	auto i = bsdata<playeri>::source.indexof(p);
 	if(i == -1)
 		return false;
-	return activated.is(i);
+	return is((tag_s)i);
 }
 
 void systemi::setactivate(const playeri* p, bool active) {
 	auto i = bsdata<playeri>::source.indexof(p);
 	if(i == -1)
 		return;
-	activated.set(i, active);
+	set((tag_s)i, active);
 }
 
 planeti* systemi::getbestplanet() const {

@@ -30,9 +30,13 @@ static void test_combat() {
 	system->startcombat();
 }
 
+void tech_selection();
+
+static void test_cards() {
+}
+
 #endif // _DEBUG
 
-void tech_selection();
 
 static void new_game() {
 	game.prepare();

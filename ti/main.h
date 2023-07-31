@@ -21,9 +21,6 @@ enum planet_trait_s : unsigned char {
 enum racef_s : unsigned char {
 	Assimilate, Fragile, Unrelenting
 };
-enum flag_s : unsigned char {
-	Exhaust
-};
 enum tile_s : unsigned char {
 	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,
 };
@@ -37,19 +34,19 @@ struct unit_typei : nameable {
 struct racefi : nameable {
 };
 struct actioncard;
-struct card;
 struct planeti;
 struct playeri;
 struct systemi;
 struct troop;
 struct uniti;
-struct entity : nameable {
+struct entity : nameable, taga {
 	playeri*		player;
 	entity*			location;
 	constexpr explicit operator bool() const { return id != 0; }
 	void			add(answers& an);
 	void			clear();
 	void			event(int type, const char* format) const;
+	void			exhaust();
 	int				get(ability_s v) const;
 	int				get(indicator_s v) const;
 	const actioncard* getactioncard() const;
@@ -65,19 +62,13 @@ struct entity : nameable {
 	planet_trait_s	gettrait() const;
 	const uniti*	getunit() const;
 	void			hit();
-	bool			is(flag_s v) const;
-	bool			is(tag_s v) const;
-	void			remove(flag_s v);
-	troop*			sibling(troop* pb) const;
 	void			startcombat();
-	void			set(flag_s v);
 };
 struct planeti : entity {
 	planet_trait_s	trait;
 	color_s			speciality;
 	char			frame, resources, influence;
 	flagable<1>		flags;
-	void			exhaust();
 	int				get(indicator_s v) const;
 	void			paint(unsigned flags) const;
 };
@@ -88,7 +79,6 @@ struct playera : adat<playeri*, 6> {
 	void			shuffle() { zshuffle(data, count); }
 };
 struct systemi : entity {
-	flagable<4>		activated;
 	playeri*		home;
 	char			special_index;
 	tile_s			special;
@@ -123,9 +113,6 @@ struct troop : entity {
 	static void		updateui();
 };
 extern troop* last_troop;
-struct card : entity {
-	void			paint() const;
-};
 struct entitya : public adat<entity*> {
 	void			activated(const playeri* player, bool keep);
 	void			addu(entity* v);
@@ -150,7 +137,7 @@ struct entitya : public adat<entity*> {
 	void			match(unit_type_s type, bool keep);
 	void			match(planet_trait_s value, bool keep);
 	void			match(color_s value, bool keep);
-	void			match(flag_s value, bool keep);
+	void			match(tag_s value, bool keep);
 	void			match(indicator_s value, bool keep);
 	void			matchload(bool keep);
 	void			matchmove(int mode, bool keep);
@@ -162,7 +149,6 @@ struct entitya : public adat<entity*> {
 	void			select(const entity* location);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
-	void			selectcards(const playeri* player);
 	void			selectplanets(const systemi* system);
 	void			sortunit();
 };

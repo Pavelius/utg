@@ -193,7 +193,7 @@ static void show_indicators() {
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("ActionCards"), player->getcards(), 0);
+	status(getnmsh("ActionCards"), 0, 0);
 	status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));
 }
 

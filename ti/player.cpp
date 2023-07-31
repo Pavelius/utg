@@ -71,12 +71,6 @@ int	playeri::getinitiative() const {
 	return strategy->initiative;
 }
 
-int playeri::getcards() const {
-	entitya source;
-	source.selectcards(this);
-	return source.getcount();
-}
-
 int playeri::gettechs() const {
 	auto result = 0;
 	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
