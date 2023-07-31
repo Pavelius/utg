@@ -48,6 +48,20 @@ int	entity::getsumary(ability_s v) const {
 	return result;
 }
 
+const char* entity::getname() const {
+	return getnm(getid());
+}
+
+const char* entity::getid() const {
+	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
+		return ((uniti*)id)->id;
+	else if(bsdata<actioncard>::have(id))
+		return ((actioncard*)id)->id;
+	else if(id)
+		return id;
+	return "";
+}
+
 systemi* entity::getsystem() const {
 	if(!this)
 		return 0;
@@ -58,12 +72,6 @@ systemi* entity::getsystem() const {
 	else if(bsdata<systemi>::have(this))
 		return (systemi*)this;
 	return 0;
-}
-
-const char* entity::getid() const {
-	if(id)
-		return id;
-	return "";
 }
 
 planeti* entity::getplanet() const {
@@ -92,14 +100,6 @@ int	entity::get(indicator_s v) const {
 	if(bsdata<planeti>::have(this))
 		return ((planeti*)this)->get(v);
 	return 0;
-}
-
-const char* entity::getname() const {
-	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
-		return getnm(((uniti*)id)->id);
-	if(bsdata<actioncard>::have(id))
-		return getnm(((actioncard*)id)->id);
-	return getnm(getid());
 }
 
 void entity::hit() {

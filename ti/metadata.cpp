@@ -8,6 +8,7 @@
 template<> void ftstatus<script>(const void* object, stringbuilder& sb);
 
 BSDATAC(actioncard, 128)
+BSDATAC(entity, 512)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)

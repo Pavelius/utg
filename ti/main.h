@@ -120,7 +120,10 @@ struct entitya : public adat<entity*> {
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);
 	void			selectplanets(const systemi* system);
+	void			shuffle();
 	void			sortunit();
+};
+struct decka : entitya {
 };
 struct agendai : nameable {
 	variants		target;
@@ -133,6 +136,7 @@ struct actioncard : nameable {
 	char			count;
 	bool			isallow() const;
 };
+extern decka actioncards;
 class analize {
 	pathfind::indext data[hms * hms];
 public:

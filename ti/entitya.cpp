@@ -38,6 +38,10 @@ void entitya::sortunit() {
 	qsort(data, count, sizeof(data[0]), compare_troop);
 }
 
+void entitya::shuffle() {
+	zshuffle(data, count);
+}
+
 void entitya::select(const playeri* player, const entity* location) {
 	auto ps = data + count;
 	auto pe = endof();

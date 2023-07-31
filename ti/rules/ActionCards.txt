@@ -7,19 +7,73 @@ OrbitalDrop parent(TheFederationOfSol)
 PassAction
  use IfPlayStrategy ActionPhasePass
 
-#ActionCard trigger(ChooseAction) count(1)
+#ActionCard count(1)
 
-EconomicInitiative
+AncientBurialSites
+AssassinateRepresentative
+Bribery
+Bunker
+ConfusingLegalText
+ConstructionRider
+CourageousToTheEnd
+CrippleDefenses
+DiplomacyRider
+Disable
+DistinguishedCouncilor
+EconomicInitiative trigger(ChooseAction)
  use SelectPlanetYouControl FilterCultural+1 ForEachPlanet Exhaust-1
-FocusedResearch
+EmergencyRepairs
+ExperimentalBattlestation
+FighterPrototype
+FireTeam
+FocusedResearch trigger(ChooseAction) 
  use TradeGoods-4 ResearchTechnology
-FrontlineDeployment
+FrontlineDeployment trigger(ChooseAction)
  use SelectPlanetYouControl ChoosePlanet Infantry+3
-FrontlineDeployment
- use SelectPlanetYouControl ChoosePlanet Infantry+3
-GhostShip
+GhostShip trigger(ChooseAction)
  use SelectSystem FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
-IndustrialInitiative
+ImperialRider
+InTheSilenceOfSpace
+IndustrialInitiative trigger(ChooseAction)
  use SelectPlanetYouControl FilterIndustrial+1 TradeGoods+1
-Insubordination
+Infiltrate
+Insubordination trigger(ChooseAction)
  use SelectPlayer NoActivePlayer ChoosePlayer TacticToken-1
+Intercept
+LeadershipRider
+LostStarChart
+LuckyShot trigger(ChooseAction)
+MiningInitiative trigger(ChooseAction)
+Parley
+Plague
+PoliticalStability
+PoliticsRider
+PublicDisgrace
+ReactorMeltdown
+Reparations
+RepealLaw trigger(ChooseAction)
+RiseOfAMessiah trigger(ChooseAction)
+Salvage
+SignalJamming
+Spy trigger(ChooseAction)
+Summit
+TacticalBombardment trigger(ChooseAction)
+TechnologyRider
+TradeRider
+UnexpectedAction trigger(ChooseAction)
+UnstablePlanet trigger(ChooseAction)
+Upgrade
+Uprising trigger(ChooseAction)
+Veto
+WarEffort trigger(ChooseAction)
+WarfareRider
+
+#ActionCard count(4)
+
+DirectHit
+FlankSpeed
+ManeuveringJets
+MoraleBoost
+Sabotage
+ShieldsHolding
+SkilledRetreat

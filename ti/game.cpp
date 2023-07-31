@@ -5,6 +5,7 @@
 using namespace pathfind;
 
 gamei game;
+decka actioncards;
 
 int gamei::rate(indicator_s need, indicator_s currency, int count) {
 	auto maximum = player->get(currency) / count;
@@ -141,12 +142,12 @@ static void action_phase() {
 void gamei::play() {
 	updatecontrol();
 	updateui();
-	do {
+	while(!isvictory()) {
 		strategy_phase();
 		action_phase();
 		status_phase();
 		agenda_phase();
-	} while(!isvictory());
+	};
 }
 
 void gamei::updatecontrol() {

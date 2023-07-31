@@ -131,6 +131,24 @@ static void create_galaxy() {
 	create_galaxy(systems, galaxy6);
 }
 
+static void add_card(decka& deck, void* parent) {
+	auto p = bsdata<entity>::add();
+	p->id = (const char*)parent;
+	p->flags = 0;
+	p->location = 0;
+	p->player = 0;
+	deck.add(p);
+}
+
+static void create_action_card_deck() {
+	actioncards.clear();
+	for(auto& e : bsdata<actioncard>()) {
+		for(auto i = 0; i < e.count; i++)
+			add_card(actioncards, &e);
+	}
+	actioncards.shuffle();
+}
+
 void gamei::prepare() {
 	clear_galaxy();
 	assign_factions();
@@ -140,6 +158,7 @@ void gamei::prepare() {
 	prepare_players();
 	assign_starting_positions();
 	create_galaxy();
+	create_action_card_deck();
 	prepare_finish();
 	prepareui();
 }
