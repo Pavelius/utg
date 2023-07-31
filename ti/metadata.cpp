@@ -8,7 +8,6 @@
 template<> void ftstatus<script>(const void* object, stringbuilder& sb);
 
 BSDATAC(actioncard, 128)
-BSDATAC(component, 128)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
 BSDATAC(playeri, 32)
@@ -23,18 +22,13 @@ BSMETA(abilityi) = {
 	{}};
 BSMETA(actioncard) = {
 	BSREQ(id),
+	BSREQ(parent),
 	BSREQ(count),
 	BSREQ(trigger),
 	BSREQ(use),
 	{}};
 BSMETA(colori) = {
 	BSREQ(id),
-	{}};
-BSMETA(component) = {
-	BSREQ(id),
-	BSREQ(parent),
-	BSREQ(trigger),
-	BSREQ(use),
 	{}};
 BSMETA(indicatori) = {
 	BSREQ(id),
@@ -112,7 +106,6 @@ BSMETA(unitupgrade) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"ActionCard", VAR(actioncard, 1)},
-	{"Component", VAR(component, 1)},
 	{"Condition", VAR(conditioni, 1)},
 	{"Indicator", VAR(indicatori, 1), ftstatus<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},

@@ -1,3 +1,4 @@
+#include "entity.h"
 #include "main.h"
 
 int entity::get(ability_s v) const {
@@ -6,6 +7,24 @@ int entity::get(ability_s v) const {
 	else if(bsdata<uniti>::have(this) || bsdata<prototype>::have(this))
 		return ((uniti*)this)->abilities[v];
 	return 0;
+}
+
+bool entity::is(tag_s v) const {
+	if(v <= Exhaust)
+		return (flags & (1 << v)) != 0;
+	if(bsdata<uniti>::have(this) || bsdata<prototype>::have(this))
+		return ((uniti*)this)->tags.is(v);
+	return false;
+}
+
+void entity::set(tag_s v, bool n) {
+	if(v <= Exhaust) {
+		if(n)
+			flags |= 1 << v;
+		else
+			flags &= ~(1 << v);
+	} else if(bsdata<uniti>::have(this) || bsdata<prototype>::have(this))
+		((uniti*)this)->tags.set(v, n);
 }
 
 int	entity::getsumary(unit_type_s v) const {
@@ -143,7 +162,7 @@ void entity::event(int type, const char* format) const {
 void entity::exhaust() {
 	if(is(Exhaust))
 		return;
-	set(Exhaust);
+	set(Exhaust, true);
 	if(player->ishuman())
 		draw::warning(getnm("ApplyExhaust"), getnm(id));
 }

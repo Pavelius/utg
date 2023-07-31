@@ -154,12 +154,3 @@ Technology initiative(7)
 Imperial initiative(8)
  primary ScorePublicObjective IfControlMecatolRex VictoryPoints+1 SecretObjective+1
  secondary StrategyToken-1 SecretObjective+1
-
-#Component trigger(ChooseAction)
-
-TacticAction
- use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
-OrbitalDrop parent(TheFederationOfSol)
- use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2
-PassAction
- use IfPlayStrategy ActionPhasePass

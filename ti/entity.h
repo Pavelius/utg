@@ -16,9 +16,10 @@ enum color_s : unsigned char;
 enum planet_trait_s : unsigned char;
 enum unit_type_s : unsigned char;
 
-struct entity : nameable, taga {
+struct entity : nameable {
 	playeri*			player;
 	entity*				location;
+	unsigned short		flags;
 	constexpr explicit operator bool() const { return id != 0; }
 	void				add(answers& an);
 	void				clear();
@@ -39,5 +40,7 @@ struct entity : nameable, taga {
 	planet_trait_s		gettrait() const;
 	const uniti*		getunit() const;
 	void				hit();
+	bool				is(tag_s v) const;
+	void				set(tag_s v, bool n);
 	void				startcombat();
 };

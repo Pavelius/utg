@@ -54,7 +54,7 @@ static int unit_combat_roll(int chance, int count, int bonus, int reroll, int ad
 static void repair_units(entitya& source) {
 	for(auto p : source) {
 		if(p->is(RepairSustainDamage) && p->is(Exhaust)) {
-			p->remove(Exhaust);
+			p->set(Exhaust, false);
 			p->event(0, "%1 %-Repaired");
 		}
 	}

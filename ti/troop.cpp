@@ -40,7 +40,7 @@ void troop::hit() {
 	const char* format = "%1 %-Destoyed";
 	auto destroyed = false;
 	if(is(SustainDamage) && !is(Exhaust)) {
-		set(Exhaust);
+		set(Exhaust, true);
 		format = "%1 %-Damaged";
 	} else
 		destroyed = true;

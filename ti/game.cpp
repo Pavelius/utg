@@ -46,7 +46,7 @@ void gamei::initialize() {
 }
 
 static void strategy_phase() {
-	//pushvalue push_interactive(answers::interactive, false);
+	pushvalue push_interactive(answers::interactive, false);
 	pushvalue push_resid(answers::resid);
 	pushvalue push_header(answers::header);
 	pushvalue push_player(player);
@@ -72,12 +72,12 @@ static void draw_action_cards() {
 
 static void remove_command_tokens() {
 	for(auto& e : bsdata<systemi>()) {
-		e.remove(Player1);
-		e.remove(Player2);
-		e.remove(Player3);
-		e.remove(Player4);
-		e.remove(Player5);
-		e.remove(Player6);
+		e.set(Player1, false);
+		e.set(Player2, false);
+		e.set(Player3, false);
+		e.set(Player4, false);
+		e.set(Player5, false);
+		e.set(Player6, false);
 	}
 }
 

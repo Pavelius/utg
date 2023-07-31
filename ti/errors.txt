@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 158: Not find data type for `Component`
+﻿In file `rules/ActionCards.txt`:
+ Line 5: Not found requisit `parent`

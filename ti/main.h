@@ -126,14 +126,12 @@ struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
 };
-struct component : nameable {
+struct actioncard : nameable {
 	variant			parent;
 	variants		use;
 	const char*		trigger;
-	bool			isallow() const;
-};
-struct actioncard : component {
 	char			count;
+	bool			isallow() const;
 };
 class analize {
 	pathfind::indext data[hms * hms];

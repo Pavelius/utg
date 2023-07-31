@@ -75,6 +75,8 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 
 static void standart_answers() {
 	for(auto& e : bsdata<actioncard>()) {
+		if(e.count)
+			continue;
 		if(strcmp(e.trigger, choose_id) != 0)
 			continue;
 		if(!e.isallow())
