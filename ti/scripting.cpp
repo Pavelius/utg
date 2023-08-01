@@ -42,6 +42,13 @@ static bool is_ability(const void* object, int index) {
 	return ((entity*)object)->get((ability_s)index) > 0;
 }
 
+static bool is_ingame(const void* object) {
+	auto p = ((entity*)object)->getsystem();
+	if(!p)
+		return false;
+	return p->index != pathfind::Blocked;
+}
+
 static bool join_systems(const void* object, int index) {
 	auto p = ((entity*)object)->getsystem();
 	if(!p)
@@ -406,10 +413,7 @@ static void select_pds(int bonus) {
 }
 
 static void select_planets(int bonus) {
-	if(!bonus)
-		querry.select(bsdata<planeti>::source);
-	else
-		querry.select(bsdata<planeti>::source, is_player_controled, bonus >= 0);
+	querry.select(bsdata<planeti>::source, is_player_controled, bonus >= 0);
 }
 
 static void select_planet_not_you_control(int bonus) {
@@ -466,14 +470,18 @@ static void select_troop_home(int bonus) {
 	}
 }
 
+static void join_planets_by_systems(int bonus) {
+	auto systems = querry;
+	querry.select(bsdata<planeti>::source, join_systems, (int)&systems, true);
+}
+
 static void join_troop_by_systems(int bonus) {
 	auto systems = querry;
 	querry.select(bsdata<troop>::source, join_systems, (int)&systems, true);
 }
 
-static void select_system(int bonus) {
-	querry.select(bsdata<systemi>::source);
-	querry.ingame();
+static void select_systems(int bonus) {
+	querry.select(bsdata<systemi>::source, is_ingame, true);
 }
 
 static void select_system_reach(int bonus) {
@@ -918,7 +926,7 @@ static void filter_player_controled(int bonus) {
 }
 
 static void filter_production_ability(int bonus) {
-	querry.match(Production, 1, bonus >= 0);
+	querry.match(is_ability, Production, bonus >= 0);
 }
 
 static void filter_red_technology(int bonus) {
@@ -931,6 +939,10 @@ static void filter_any_technology(int bonus) {
 
 static void filter_exhaust(int bonus) {
 	querry.match(is_tag, Exhaust, bonus >= 0);
+}
+
+static void filter_bombardment(int bonus) {
+	querry.match(is_ability, Bombardment, bonus >= 0);
 }
 
 static void filter_commodities(int bonus) {
@@ -1118,6 +1130,7 @@ BSDATA(script) = {
 	{"FilterActivated", filter_activated},
 	{"FilterActivePlayer", filter_active_player},
 	{"FilterAnyHomeSystem", filter_home_system_any},
+	{"FilterBombardment", filter_bombardment},
 	{"FilterControled", filter_controled},
 	{"FilterCommodities", filter_commodities},
 	{"FilterCultural", filter_cultural_planet},
@@ -1142,6 +1155,7 @@ BSDATA(script) = {
 	{"GroupSystems", group_systems},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", play_strategy, if_play_strategy},
+	{"JoinPlanetsBySystems", join_planets_by_systems},
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
 	{"NoActivePlayer", no_active_player},
@@ -1157,7 +1171,7 @@ BSDATA(script) = {
 	{"SelectPDS", select_pds},
 	{"SelectPlanets", select_planets},
 	{"SelectPlayers", select_players},
-	{"SelectSystem", select_system},
+	{"SelectSystems", select_systems},
 	{"SelectSystemCanShoot", select_system_can_shoot},
 	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},

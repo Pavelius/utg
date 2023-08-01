@@ -31,7 +31,7 @@ FocusedResearch trigger(ChooseAction)
 FrontlineDeployment trigger(ChooseAction)
  use SelectPlanets+1 ChoosePlanet Infantry+3
 GhostShip trigger(ChooseAction)
- use SelectSystem FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
+ use SelectSystems FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
 ImperialRider
 InTheSilenceOfSpace
 IndustrialInitiative trigger(ChooseAction)
@@ -60,10 +60,13 @@ SignalJamming trigger(ChooseAction)
 Spy trigger(ChooseAction)
 Summit
 TacticalBombardment trigger(ChooseAction)
+ use SelectTroops+1 FilterProduction GroupSystems JoinPlanetsBySystems FilterPlayerControled-1 ChooseSystem SelectPlanets-1 FilterSystem Exhaust-1
 TechnologyRider
 TradeRider
 UnexpectedAction trigger(ChooseAction)
+ use SelectSystems FilterActivated ChooseSystem ActivateSystem-1
 UnstablePlanet trigger(ChooseAction)
+ use SelectPlanets-1 FilterHasardous+1 ChoosePlanet Infantry-3
 Upgrade
 Uprising trigger(ChooseAction)
 Veto

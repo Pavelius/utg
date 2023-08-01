@@ -18,7 +18,6 @@ struct entitya : public collection<entity> {
 	bool			have(entity* v) const { return find(v) != -1; }
 	void			match(fnallow proc, int param, bool keep) { collectiona::match(proc, param, keep); }
 	void			match(fnvisible proc, bool keep) { collectiona::match(proc, keep); }
-	void			match(ability_s id, int value, bool keep);
 	void			match(const playeri* player, bool keep);
 	void			match(const systemi* system, bool keep);
 	void			match(unit_type_s type, bool keep);

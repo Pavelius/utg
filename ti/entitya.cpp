@@ -139,16 +139,6 @@ void entitya::match(const playeri* player, bool keep) {
 	count = ps - data;
 }
 
-void entitya::match(ability_s id, int value, bool keep) {
-	auto ps = data;
-	for(auto p : *this) {
-		if((p->get(id) >= value) != keep)
-			continue;
-		*ps++ = p;
-	}
-	count = ps - data;
-}
-
 void entitya::match(planet_trait_s value, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {

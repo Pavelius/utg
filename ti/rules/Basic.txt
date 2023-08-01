@@ -146,7 +146,7 @@ Trade initiative(5)
  primary GainGoods ReplenishCommodities GainGoodsSuplier
  secondary StrategyToken-1 ReplenishCommodities
 Warfare initiative(6)
- primary SelectSystem FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 RedistributeCommandTokens
+ primary SelectSystems FilterActivated ChooseSystem ActivateSystem-1 CommandToken+1 RedistributeCommandTokens
  secondary StrategyToken-1 ProduceOneUnit
 Technology initiative(7)
  primary ResearchTechnology+1 Resources-6 ResearchTechnology+1
