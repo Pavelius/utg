@@ -90,7 +90,7 @@ static bool is_valid_entity(const void* object) {
 }
 
 void entitya::select(array& source) {
-	collectiona::select(source, is_valid_entity);
+	collectiona::select(source, is_valid_entity, true);
 }
 
 void entitya::select(answers& an) {
@@ -349,11 +349,6 @@ int	entitya::getsummary(unit_type_s v) const {
 		result++;
 	}
 	return result;
-}
-
-void entitya::addu(entity* v) {
-	if(!have(v))
-		add(v);
 }
 
 void entitya::matchrange(int range, bool keep) {

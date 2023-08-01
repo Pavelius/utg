@@ -108,13 +108,13 @@ TheUniversitiesOfJolNar
 ChooseSystemToActivate
  elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
 ChooseNewSpeaker
- elements SelectPlayer NoSpeaker ChoosePlayer Speaker
+ elements SelectPlayers NoSpeaker ChoosePlayer Speaker
 BuyResearchTechnology
  elements Resources-4 ResearchTechnology+1
 GainGoods
  elements TradeGoods+3
 GainGoodsSuplier
- elements SelectPlayer NoActivePlayer FilterCommodities-1 ChoosePlayer ReplenishCommodities
+ elements SelectPlayers-1 FilterCommodities-1 ChoosePlayer ReplenishCommodities
 TacticalInvasion
  elements ChooseInvasionPlanet
 TacticalMove
@@ -124,9 +124,9 @@ TacticalProduce
 ProduceOneUnit
  elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
 ProduceOnePDSorDock
- elements SelectPlanetYouControl ChoosePlanet ActivateSystem ChoosePDSorDock
+ elements SelectPlanets+1 ChoosePlanet ActivateSystem ChoosePDSorDock
 ReadyExhaustPlanet
- elements SelectPlanet FilterExhaust+1 ChoosePlanet Exhaust-1
+ elements SelectPlanets+1 FilterExhaust+1 ChoosePlanet Exhaust-1
 
 #Strategy
 
@@ -134,13 +134,13 @@ Leadership initiative(1)
  primary CommandToken+3 PayCommandTokens+3
  secondary PayCommandTokens+3
 Diplomacy initiative(2)
- primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayer NoActivePlayer ForEachPlayer ActivateSystem SelectPlanetYouControl FilterSystem Exhaust-1
+ primary SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayers-1 ForEachPlayer ActivateSystem SelectPlanets+1 FilterSystem Exhaust-1
  secondary StrategyToken-1 ReadyExhaustPlanet
 Politics initiative(3)
  primary ChooseNewSpeaker ActionCard+2
  secondary StrategyToken-1 ActionCard+2
 Construction initiative(4)
- primary SelectPlanetYouControl ChoosePlanet ChoosePDSorDock SelectPlanetYouControl ChoosePlanet PDS
+ primary SelectPlanets+1 ChoosePlanet ChoosePDSorDock SelectPlanets+1 ChoosePlanet PDS
  secondary StrategyToken-1 ProduceOnePDSorDock
 Trade initiative(5)
  primary GainGoods ReplenishCommodities GainGoodsSuplier

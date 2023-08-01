@@ -1,4 +1,5 @@
 #include "condition.h"
+#include "pathfind.h"
 #include "pushvalue.h"
 #include "main.h"
 #include "script.h"
@@ -21,8 +22,31 @@ static bool is_mecatol_rex(const void* object) {
 		|| object == bsdata<planeti>::elements;
 }
 
+static bool is_player_controled(const void* object) {
+	return ((entity*)object)->player == player;
+}
+
+static bool is_cruiser_or_destroyer(const void* object) {
+	auto index = bsdata<playeri>::source.indexof(player);
+	auto p = (troop*)object;
+	auto pu = p->getunit();
+	return pu == (uniti*)(bsdata<prototype>::elements + 4) // Destroyer
+		|| pu == (uniti*)(bsdata<prototype>::elements + 6); // Cruiser
+}
+
 static bool is_tag(const void* object, int index) {
 	return ((entity*)object)->is((tag_s)index);
+}
+
+static bool is_ability(const void* object, int index) {
+	return ((entity*)object)->get((ability_s)index) > 0;
+}
+
+static bool join_systems(const void* object, int index) {
+	auto p = ((entity*)object)->getsystem();
+	if(!p)
+		return false;
+	return ((collectiona*)index)->have(p);
 }
 
 static bool is_whormhole(const void* object) {
@@ -44,6 +68,19 @@ static bool is_any_home_system(const void* object) {
 	if(!p)
 		return false;
 	return p->home != 0;
+}
+
+static bool is_enemy_ships_in_system(const void* object) {
+	auto system = ((entity*)object)->getsystem();
+	if(!system)
+		return false;
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == player)
+			continue;
+		if(e.getsystem() == system)
+			return true;
+	}
+	return false;
 }
 
 static playeri* find_player(const strategyi& e) {
@@ -363,9 +400,16 @@ static void no_speaker(int bonus) {
 	players.filter(game.speaker, false);
 }
 
-static void select_planet(int bonus) {
+static void select_pds(int bonus) {
 	querry.clear();
-	querry.select(bsdata<planeti>::source);
+	querry.select(bsdata<troop>::source, is_ability, SpaceCannon, true);
+}
+
+static void select_planets(int bonus) {
+	if(!bonus)
+		querry.select(bsdata<planeti>::source);
+	else
+		querry.select(bsdata<planeti>::source, is_player_controled, bonus >= 0);
 }
 
 static void select_planet_not_you_control(int bonus) {
@@ -380,7 +424,7 @@ static void select_planet_you_control(int bonus) {
 	querry.match(player, true);
 }
 
-static void group_system() {
+static void group_systems(int bonus) {
 	for(auto& e : querry)
 		e = e->getsystem();
 	querry.distinct();
@@ -394,7 +438,11 @@ static void group_location() {
 
 static void select_system_own_planet(int bonus) {
 	select_planet_you_control(bonus);
-	group_system();
+	group_systems(0);
+}
+
+static void select_troops(int bonus) {
+	querry.select(bsdata<troop>::source, is_player_controled, bonus >= 0);
 }
 
 static void select_troop(int bonus) {
@@ -418,8 +466,12 @@ static void select_troop_home(int bonus) {
 	}
 }
 
+static void join_troop_by_systems(int bonus) {
+	auto systems = querry;
+	querry.select(bsdata<troop>::source, join_systems, (int)&systems, true);
+}
+
 static void select_system(int bonus) {
-	querry.clear();
 	querry.select(bsdata<systemi>::source);
 	querry.ingame();
 }
@@ -441,8 +493,10 @@ static void select_system_reach(int bonus) {
 	}
 }
 
-static void select_player(int bonus) {
+static void select_players(int bonus) {
 	players = game.players;
+	if(bonus < 0)
+		no_active_player(0);
 }
 
 static void choose_planet(int bonus) {
@@ -776,10 +830,32 @@ static void choose_combat_option(int bonus) {
 	choose_complex("ChooseCombatOption", 0, ask_combat_option, 0, 0);
 }
 
+static void add_neighboring(int bonus) {
+	querry.distinct();
+	for(auto pe : querry) {
+		auto p = pe->getsystem();
+		if(!p)
+			continue;
+		auto need_correct = false;
+		for(auto d = 0; d < pathfind::maxcount; d++) {
+			auto ni = pathfind::to(p->index, d);
+			if(ni == pathfind::Blocked)
+				continue;
+			auto p1 = p->findbyindex(ni);
+			if(!p1)
+				continue;
+			need_correct = true;
+			querry.add(p1);
+		}
+		if(need_correct)
+			querry.distinct();
+	}
+}
+
 static void activate_system(int bonus) {
 	if(last_system) {
 		game.focusing(last_system);
-		last_system->setactivate(player, bonus != -1);
+		last_system->setactivate(player, bonus >= 0);
 	}
 }
 
@@ -813,6 +889,10 @@ static void exhaust(int bonus) {
 	last_planet->exhaust();
 }
 
+static void filter_cruiser_or_destroyer(int bonus) {
+	querry.match(is_cruiser_or_destroyer, bonus >= 0);
+}
+
 static void filter_wormhole(int bonus) {
 	querry.match(is_whormhole, bonus >= 0);
 }
@@ -831,6 +911,10 @@ static void filter_industrial_planet(int bonus) {
 
 static void filter_notrait_planet(int bonus) {
 	querry.match(NoTrait, bonus >= 0);
+}
+
+static void filter_player_controled(int bonus) {
+	querry.match(is_player_controled, bonus >= 0);
 }
 
 static void filter_production_ability(int bonus) {
@@ -855,6 +939,10 @@ static void filter_commodities(int bonus) {
 
 static void filter_activated(int bonus) {
 	querry.match(is_tag, bsdata<playeri>::source.indexof(player), bonus >= 0);
+}
+
+static void filter_enemy_ship_system(int bonus) {
+	querry.match(is_enemy_ships_in_system, bonus >= 0);
 }
 
 static void filter_active_player(int bonus) {
@@ -927,10 +1015,18 @@ static void move_ship(int bonus) {
 	choose_stop = true;
 }
 
+static void select_system_can_shoot(int bonus) {
+	select_pds(0);
+	filter_player_controled(0);
+	group_systems(0);
+	filter_enemy_ship_system(0);
+}
+
 static void for_each_player(int bonus) {
 	auto v = *script_begin++;
 	auto push_last = player;
-	for(auto p : players) {
+	auto push = players;
+	for(auto p : push) {
 		player = p;
 		script::run(v);
 	}
@@ -947,9 +1043,10 @@ static void for_each_troop(int bonus) {
 }
 
 static void for_each_planet(int bonus) {
-	auto v = *script_begin++; 
+	auto v = *script_begin++;
 	auto push_last = last_planet;
-	for(auto p : querry) {
+	auto push = querry;
+	for(auto p : push) {
 		last_planet = p->getplanet();
 		script::run(v);
 	}
@@ -997,6 +1094,7 @@ BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
+	{"AddNeighboring", add_neighboring},
 	{"CancelOrder", cancel_order},
 	{"ChooseAction", choose_action},
 	{"ChooseCombatOption", choose_combat_option},
@@ -1023,12 +1121,15 @@ BSDATA(script) = {
 	{"FilterControled", filter_controled},
 	{"FilterCommodities", filter_commodities},
 	{"FilterCultural", filter_cultural_planet},
+	{"FilterCruiserOrDestroyer", filter_cruiser_or_destroyer},
+	{"FilterEnemyShipSystem", filter_enemy_ship_system},
 	{"FilterExhaust", filter_exhaust},
 	{"FilterIndustrial", filter_industrial_planet},
 	{"FilterHasardous", filter_hazardous_planet},
 	{"FilterHomeSystem", filter_home_system_you},
 	{"FilterMoveStop", filter_move},
 	{"FilterPlanetTrait", filter_notrait_planet},
+	{"FilterPlayerControled", filter_player_controled},
 	{"FilterProduction", filter_production_ability},
 	{"FilterSystem", filter_system},
 	{"FilterRedTechnology", filter_red_technology},
@@ -1038,9 +1139,10 @@ BSDATA(script) = {
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachTroop", for_each_troop},
-	{"IfAble", if_able},
+	{"GroupSystems", group_systems},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", play_strategy, if_play_strategy},
+	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
 	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},
@@ -1052,15 +1154,16 @@ BSDATA(script) = {
 	{"ResearchTechnology", research_technology},
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
-	{"SelectPlanet", select_planet},
-	{"SelectPlanetYouControl", select_planet_you_control},
-	{"SelectPlanetNotYouControl", select_planet_not_you_control},
-	{"SelectPlayer", select_player},
+	{"SelectPDS", select_pds},
+	{"SelectPlanets", select_planets},
+	{"SelectPlayers", select_players},
 	{"SelectSystem", select_system},
+	{"SelectSystemCanShoot", select_system_can_shoot},
 	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
+	{"SelectTroops", select_troops},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
 	{"Speaker", set_speaker},

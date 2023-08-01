@@ -46,7 +46,7 @@ void collectiona::select(array& source) {
 	count = ps - data;
 }
 
-void collectiona::select(array& source, fnvisible proc) {
+void collectiona::select(array& source, fnvisible proc, bool keep) {
 	if(!proc) {
 		select(source);
 		return;
@@ -58,7 +58,26 @@ void collectiona::select(array& source, fnvisible proc) {
 	for(auto p = source.begin(); p < ae; p += s) {
 		if(ps >= pe)
 			break;
-		if(!proc(p))
+		if(proc(p) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
+void collectiona::select(array& source, fnallow proc, int param, bool keep) {
+	if(!proc) {
+		select(source);
+		return;
+	}
+	auto ps = data;
+	auto pe = endof();
+	auto ae = source.end();
+	auto s = source.getsize();
+	for(auto p = source.begin(); p < ae; p += s) {
+		if(ps >= pe)
+			break;
+		if(proc(p, param) != keep)
 			continue;
 		*ps++ = p;
 	}
@@ -78,7 +97,7 @@ void collectiona::match(fnvisible proc, bool keep) {
 void collectiona::match(const collectiona& source, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {
-		if((source.find(p)!=-1) != keep)
+		if((source.find(p) != -1) != keep)
 			continue;
 		*ps++ = p;
 	}

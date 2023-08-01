@@ -1,2 +1,2 @@
 ﻿In file `rules/ActionCards.txt`:
- Line 5: Not found requisit `parent`
+ Line 41: Can't find variant `SelectPlayer`

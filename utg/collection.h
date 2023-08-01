@@ -9,13 +9,15 @@ struct collectiona : adat<void*, 256> {
 	bool	chooseu(fngetname proc, const char* title, const char* cancel) const;
 	void	distinct();
 	void	group(fngroup proc);
+	bool	have(const void* object) { return indexof(object) != -1; }
 	void	match(fnvisible proc, bool keep);
 	void	match(fnallow proc, int param, bool keep);
 	void	match(const collectiona& source, bool keep);
 	void*	random() const;
 	void*	pick();
 	void	select(array& source);
-	void	select(array& source, fnvisible proc);
+	void	select(array& source, fnvisible proc, bool keep);
+	void	select(array& source, fnallow proc, int param, bool keep);
 	void	shuffle();
 	void	sort(fngetname proc);
 	void	sort(fncompare proc);

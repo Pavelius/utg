@@ -4,8 +4,6 @@
 #pragma once
 
 struct entitya : public collection<entity> {
-	//void			activated(const playeri* player, bool keep);
-	void			addu(entity* v);
 	void			addreach(const systemi* system, int range);
 	entity*			choose(const char* title, const char* cancel = 0, int choose_mode = 0) const;
 	entity*			getbest(indicator_s v) const;
@@ -32,6 +30,8 @@ struct entitya : public collection<entity> {
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
 	void			select(array& source);
+	void			select(array& source, fnvisible proc, bool keep) { collectiona::select(source, proc, keep); }
+	void			select(array& source, fnallow proc, int param, bool keep) { collectiona::select(source, proc, param, keep); }
 	void			select(answers& an);
 	void			select(const entity* location);
 	void			select(const playeri* player, const entity* system, unit_type_s type);

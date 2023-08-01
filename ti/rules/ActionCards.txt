@@ -3,7 +3,7 @@
 TacticAction
  use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
 OrbitalDrop parent(TheFederationOfSol)
- use StrategyToken-1 SelectPlanetYouControl ChoosePlanet Infantry+2
+ use StrategyToken-1 SelectPlanets+1 ChoosePlanet Infantry+2
 PassAction
  use IfPlayStrategy ActionPhasePass
 
@@ -21,7 +21,7 @@ DiplomacyRider
 Disable
 DistinguishedCouncilor
 EconomicInitiative trigger(ChooseAction)
- use SelectPlanetYouControl FilterCultural+1 ForEachPlanet Exhaust-1
+ use SelectPlanets+1 FilterCultural+1 ForEachPlanet Exhaust-1
 EmergencyRepairs
 ExperimentalBattlestation
 FighterPrototype
@@ -29,20 +29,21 @@ FireTeam
 FocusedResearch trigger(ChooseAction) 
  use TradeGoods-4 ResearchTechnology
 FrontlineDeployment trigger(ChooseAction)
- use SelectPlanetYouControl ChoosePlanet Infantry+3
+ use SelectPlanets+1 ChoosePlanet Infantry+3
 GhostShip trigger(ChooseAction)
  use SelectSystem FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
 ImperialRider
 InTheSilenceOfSpace
 IndustrialInitiative trigger(ChooseAction)
- use SelectPlanetYouControl FilterIndustrial+1 TradeGoods+1
+ use SelectPlanets+1 FilterIndustrial+1 TradeGoods+1
 Infiltrate
 Insubordination trigger(ChooseAction)
- use SelectPlayer NoActivePlayer ChoosePlayer TacticToken-1
+ use SelectPlayers-1 ChoosePlayer TacticToken-1
 Intercept
 LeadershipRider
 LostStarChart
 LuckyShot trigger(ChooseAction)
+ use SelectPlanets+1 GroupSystems JoinTroopsBySystems
 MiningInitiative trigger(ChooseAction)
 Parley
 Plague
@@ -54,7 +55,8 @@ Reparations
 RepealLaw trigger(ChooseAction)
 RiseOfAMessiah trigger(ChooseAction)
 Salvage
-SignalJamming
+SignalJamming trigger(ChooseAction)
+ use SelectTroops GroupSystems AddNeighboring FilterPlayerControled-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
 Spy trigger(ChooseAction)
 Summit
 TacticalBombardment trigger(ChooseAction)
