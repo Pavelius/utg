@@ -149,6 +149,9 @@
     <ClInclude Include="entity.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="entitya.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

@@ -85,19 +85,12 @@ void entitya::select(const playeri* player, const entity* system, unit_type_s ty
 	count = ps - data;
 }
 
+static bool is_valid_entity(const void* object) {
+	return ((entity*)object)->operator bool();
+}
+
 void entitya::select(array& source) {
-	auto ps = data + count;
-	auto px = endof();
-	auto pe = source.end();
-	auto size = source.getsize();
-	for(auto pb = source.begin(); pb < pe; pb += size) {
-		auto p = (entity*)pb;
-		if(!(*p))
-			continue;
-		if(ps < px)
-			*ps++ = p;
-	}
-	count = ps - data;
+	collectiona::select(source, is_valid_entity);
 }
 
 void entitya::select(answers& an) {
@@ -265,56 +258,6 @@ void entitya::match(const systemi* system, bool keep) {
 	count = ps - data;
 }
 
-void entitya::grouplocation(const entitya& source) {
-	auto ps = data;
-	for(auto p : source) {
-		if(!(*p))
-			continue;
-		if(!find_entity(data, ps, p->location))
-			*ps++ = p->location;
-	}
-	count = ps - data;
-}
-
-void entitya::groupsystem(const entitya& source) {
-	auto ps = data;
-	for(auto p : source) {
-		if(!(*p))
-			continue;
-		auto system = p->getsystem();
-		if(!find_entity(data, ps, system))
-			*ps++ = system;
-	}
-	count = ps - data;
-}
-
-void entitya::filter(const entity* object, bool keep) {
-	auto ps = data;
-	for(auto p : *this) {
-		if((p == object) != keep)
-			continue;
-		*ps++ = p;
-	}
-	count = ps - data;
-}
-
-void entitya::activated(const playeri* player, bool keep) {
-	auto ps = data;
-	for(auto p : *this) {
-		auto po = p->getsystem();
-		if(po->isactivated(player) != keep)
-			continue;
-		*ps++ = p;
-	}
-	count = ps - data;
-}
-
-entity* entitya::random() const {
-	if(!count)
-		return 0;
-	return data[rand() % count];
-}
-
 static entity* choose_ai(const entitya& source, const char* id) {
 	return source.random();
 }
@@ -426,12 +369,4 @@ void entitya::matchrange(int range, bool keep) {
 
 int entitya::getcap() const {
 	return getsummary(Capacity);
-}
-
-entity* entitya::pick() {
-	if(!count)
-		return 0;
-	auto result = data[0];
-	remove(0);
-	return result;
 }

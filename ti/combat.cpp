@@ -105,7 +105,7 @@ void army::hit(int value) {
 		auto index = find_sustain(units);
 		if(index==-1)
 			index = units.count - 1;
-		auto p = units.data[index];
+		auto p = (entity*)units.data[index];
 		p->hit();
 		if(!(*p))
 			units.remove(index, 1);

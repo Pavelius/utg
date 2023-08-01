@@ -16,6 +16,36 @@ static void*	choose_result;
 static const char* choose_id;
 static indicator_s command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
+static bool is_mecatol_rex(const void* object) {
+	return object == bsdata<systemi>::elements
+		|| object == bsdata<planeti>::elements;
+}
+
+static bool is_tag(const void* object, int index) {
+	return ((entity*)object)->is((tag_s)index);
+}
+
+static bool is_whormhole(const void* object) {
+	auto p = ((entity*)object)->getsystem();
+	if(!p)
+		return false;
+	return p->special == WormholeAlpha || p->special == WormholeBeta;
+}
+
+static bool is_player_home_system(const void* object) {
+	auto p = ((entity*)object)->getsystem();
+	if(!p)
+		return false;
+	return p->home == player;
+}
+
+static bool is_any_home_system(const void* object) {
+	auto p = ((entity*)object)->getsystem();
+	if(!p)
+		return false;
+	return p->home != 0;
+}
+
 static playeri* find_player(const strategyi& e) {
 	for(auto p : game.players) {
 		if(p->strategy == &e)
@@ -326,7 +356,7 @@ static void no_active_player(int bonus) {
 }
 
 static void no_mecatol_rex(int bonus) {
-	querry.filter(bsdata<systemi>::elements, false);
+	querry.match(is_mecatol_rex, false);
 }
 
 static void no_speaker(int bonus) {
@@ -350,9 +380,21 @@ static void select_planet_you_control(int bonus) {
 	querry.match(player, true);
 }
 
+static void group_system() {
+	for(auto& e : querry)
+		e = e->getsystem();
+	querry.distinct();
+}
+
+static void group_location() {
+	for(auto& e : querry)
+		e = e->location;
+	querry.distinct();
+}
+
 static void select_system_own_planet(int bonus) {
 	select_planet_you_control(bonus);
-	querry.grouplocation(querry);
+	group_system();
 }
 
 static void select_troop(int bonus) {
@@ -747,11 +789,11 @@ static void filter_system(int bonus) {
 }
 
 static void filter_home_system_any(int bonus) {
-	// Any home system
+	querry.match(is_any_home_system, bonus >= 0);
 }
 
 static void filter_home_system_you(int bonus) {
-	// Active player home system
+	querry.match(is_player_home_system, bonus >= 0);
 }
 
 static void filter_controled(int bonus) {
@@ -772,6 +814,7 @@ static void exhaust(int bonus) {
 }
 
 static void filter_wormhole(int bonus) {
+	querry.match(is_whormhole, bonus >= 0);
 }
 
 static void filter_cultural_planet(int bonus) {
@@ -803,6 +846,7 @@ static void filter_any_technology(int bonus) {
 }
 
 static void filter_exhaust(int bonus) {
+	querry.match(is_tag, Exhaust, bonus >= 0);
 }
 
 static void filter_commodities(int bonus) {
@@ -810,7 +854,7 @@ static void filter_commodities(int bonus) {
 }
 
 static void filter_activated(int bonus) {
-	querry.activated(player, bonus != -1);
+	querry.match(is_tag, bsdata<playeri>::source.indexof(player), bonus >= 0);
 }
 
 static void filter_active_player(int bonus) {
