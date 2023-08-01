@@ -111,9 +111,6 @@
     <ClCompile Include="draw_marker.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="objective.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -138,9 +135,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="objective.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="indicator.h">
@@ -203,6 +197,9 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\StrategyDescriptions.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\ActionCardNames.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

@@ -1,0 +1,3 @@
+﻿Bribery: Подкуп
+LuckyShot: Выстрел на удачу
+Sabotage: Саботаж

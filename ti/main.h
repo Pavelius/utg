@@ -71,7 +71,6 @@ struct systemi : entity {
 	void			setactivate(const playeri* p, bool active);
 };
 extern systemi* last_system;
-extern systemi* active_system;
 struct troop : entity {
 	flagable<1>		flags;
 	static troop*	create(const char* id, playeri* player);

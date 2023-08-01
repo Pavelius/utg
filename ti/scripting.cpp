@@ -66,7 +66,7 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 	auto result = 0;
 	while(result < capacity && ships) {
 		auto p1 = ships[0];
-		p1->location = active_system;
+		p1->location = last_system;
 		ships.remove(0);
 		result++;
 	}
@@ -224,7 +224,7 @@ static void choose_action(int bonus) {
 }
 
 static void ask_movement() {
-	makewave(active_system->index);
+	makewave(last_system->index);
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player)
 			continue;
@@ -258,7 +258,7 @@ static void ai_movement() {
 		auto system = p->getsystem();
 		capacity -= ai_load(player, system, Ships, capacity);
 		capacity -= ai_load(player, system, GroundForces, capacity);
-		p->location = active_system;
+		p->location = last_system;
 	}
 	game.updateui();
 }
@@ -360,7 +360,7 @@ static void select_troop(int bonus) {
 	for(auto& e : bsdata<troop>()) {
 		if(!e)
 			continue;
-		if(e.getsystem() == active_system)
+		if(e.getsystem() == last_system)
 			querry.add(&e);
 	}
 }
@@ -418,7 +418,7 @@ static void choose_player(int bonus) {
 }
 
 static void choose_system(int bonus) {
-	active_system = (systemi*)querry.choose(0);
+	last_system = (systemi*)querry.choose(0);
 }
 
 static void replenish_commodities(int bonus) {
@@ -476,7 +476,7 @@ static void ask_invasion() {
 		if(move > 0)
 			continue;
 		auto ps = e.getsystem();
-		if(ps != active_system)
+		if(ps != last_system)
 			continue;
 		if(e.location == last_planet) {
 			if(player->ishuman())
@@ -495,7 +495,7 @@ static void apply_invasion() {
 	}
 }
 static void ai_invasion() {
-	auto system = active_system;
+	auto system = last_system;
 	// Select all planets in a system
 	entitya planets;
 	planets.selectplanets(system);
@@ -539,7 +539,7 @@ static void ask_invasion_planet() {
 	if(!have_invasion_units())
 		return;
 	for(auto& e : bsdata<planeti>()) {
-		if(e.location != active_system)
+		if(e.location != last_system)
 			continue;
 		an.add(&e, e.getname());
 	}
@@ -565,7 +565,7 @@ static void ask_move_options() {
 	auto system = ship->getsystem();
 	auto capacity = ship->get(Capacity);
 	sb.clear();
-	sb.add(getnm("ChooseMoveOption"), ship->getname(), active_system->getname());
+	sb.add(getnm("ChooseMoveOption"), ship->getname(), last_system->getname());
 	char temp[260]; stringbuilder sbt(temp);
 	addscript("MoveShip");
 	if(capacity > 0) {
@@ -661,7 +661,7 @@ static void choose_production(int bonus) {
 
 static void ask_dock() {
 	for(auto& e : bsdata<troop>()) {
-		if(e.player != player || !e.get(Production) || e.getsystem() != active_system)
+		if(e.player != player || !e.get(Production) || e.getsystem() != last_system)
 			continue;
 		e.add(an);
 	}
@@ -735,17 +735,15 @@ static void choose_combat_option(int bonus) {
 }
 
 static void activate_system(int bonus) {
-	if(!last_system)
-		return;
-	game.focusing(last_system);
-	last_system->setactivate(player, bonus != -1);
-	active_system = last_system;
+	if(last_system) {
+		game.focusing(last_system);
+		last_system->setactivate(player, bonus != -1);
+	}
 }
 
 static void filter_system(int bonus) {
-	if(!last_system)
-		return;
-	querry.match(last_system, bonus != -1);
+	if(last_system)
+		querry.match(last_system, bonus != -1);
 }
 
 static void filter_home_system_any(int bonus) {
@@ -769,10 +767,11 @@ static void focus_home_system(int bonus) {
 		game.focusing(player->gethome());
 }
 
-static void filter_wormhole(int bonus) {
+static void exhaust(int bonus) {
+	last_planet->exhaust();
 }
 
-static void exhaust(int bonus) {
+static void filter_wormhole(int bonus) {
 }
 
 static void filter_cultural_planet(int bonus) {
@@ -818,7 +817,7 @@ static void filter_active_player(int bonus) {
 	querry.match(player, bonus != -1);
 }
 
-static void speaker(int bonus) {
+static void set_speaker(int bonus) {
 	game.speaker = player;
 }
 
@@ -877,9 +876,9 @@ static void cancel_order(int counter) {
 }
 
 static void move_ship(int bonus) {
-	last_troop->location = active_system;
+	last_troop->location = last_system;
 	for(auto p : onboard)
-		p->location = active_system;
+		p->location = last_system;
 	game.updateui();
 	choose_stop = true;
 }
@@ -1020,7 +1019,7 @@ BSDATA(script) = {
 	{"SelectTroopHome", select_troop_home},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
-	{"Speaker", speaker},
+	{"Speaker", set_speaker},
 	{"RetreatBattle", combat_reatreat},
 };
 BSDATAF(script);

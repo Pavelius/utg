@@ -1,5 +1,5 @@
-﻿LuckyShot: 
-TradeRider: 
+﻿ChooseMoveOptions: 
+JNSHylarim: 
 Вли: 
 Военная стратегия: 
 Имперская стратегия: 
