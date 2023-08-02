@@ -1027,6 +1027,36 @@ static void move_ship(int bonus) {
 	choose_stop = true;
 }
 
+static void choose_event(answers& an, const char* format) {
+	if(player->ishuman()) {
+		pushvalue push_header(answers::header, player->getname());
+		pushvalue push_resid(answers::resid, player->id);
+		choose_result = an.choose(format, getnm("Cancel"), 1);
+	} else
+		choose_result = an.random();
+}
+
+void playeri::event(const char* id) {
+	pushvalue push_player(player, this);
+	answers an;
+	for(auto& e : bsdata<entity>()) {
+		if(e.player != player)
+			continue;
+		auto p = e.getactioncard();
+		if(!p)
+			continue;
+		if(!equal(p->trigger, id))
+			continue;
+		if(!script::allow(p->use))
+			continue;
+		an.add(p, p->getname());
+	}
+	if(an) {
+		choose_event(an, 0);
+		standart_apply();
+	}
+}
+
 static void select_system_can_shoot(int bonus) {
 	select_pds(0);
 	filter_player_controled(0);

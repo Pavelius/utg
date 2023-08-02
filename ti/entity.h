@@ -23,7 +23,6 @@ struct entity : nameable {
 	constexpr explicit operator bool() const { return id != 0; }
 	void				add(answers& an);
 	void				clear();
-	void				event(int type, const char* format) const;
 	void				exhaust();
 	int					get(ability_s v) const;
 	int					get(indicator_s v) const;
@@ -43,4 +42,5 @@ struct entity : nameable {
 	bool				is(tag_s v) const;
 	void				set(tag_s v, bool n);
 	void				startcombat();
+	void				status(int type, const char* format) const;
 };

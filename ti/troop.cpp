@@ -44,7 +44,7 @@ void troop::hit() {
 		format = "%1 %-Damaged";
 	} else
 		destroyed = true;
-	event(-1, format);
+	status(-1, format);
 	if(destroyed)
 		clear();
 }

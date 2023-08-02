@@ -150,6 +150,7 @@ struct playeri : nameable {
 	void			apply(const variants& source);
 	void			assign(variants source);
 	bool			canbuild(const uniti* player) const;
+	void			event(const char* id);
 	bool			is(tech_s v) const { return tech.is(v); }
 	bool			is(racef_s v) const { return race.is(v); }
 	bool			ishuman() const { return this == human; }

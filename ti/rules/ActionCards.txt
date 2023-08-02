@@ -26,7 +26,7 @@ EmergencyRepairs
 ExperimentalBattlestation
 FighterPrototype
 FireTeam
-FocusedResearch trigger(ChooseAction) 
+FocusedResearch trigger(ChooseAction)
  use TradeGoods-4 ResearchTechnology
 FrontlineDeployment trigger(ChooseAction)
  use SelectPlanets+1 ChoosePlanet Infantry+3
@@ -54,7 +54,7 @@ ReactorMeltdown
 Reparations
 RepealLaw trigger(ChooseAction)
 RiseOfAMessiah trigger(ChooseAction)
-Salvage
+Salvage trigger(AfterWinSpaceCombat)
 SignalJamming trigger(ChooseAction)
  use SelectTroops GroupSystems AddNeighboring FilterPlayerControled-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
 Spy trigger(ChooseAction)
@@ -71,6 +71,7 @@ Upgrade
 Uprising trigger(ChooseAction)
 Veto
 WarEffort trigger(ChooseAction)
+ use SelectTroops+1 GroupSystems ChooseSystem Cruiser+1
 WarfareRider
 
 #ActionCard count(4)

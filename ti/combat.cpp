@@ -1,3 +1,4 @@
+#include "pushvalue.h"
 #include "main.h"
 
 army*				army::last;
@@ -55,7 +56,7 @@ static void repair_units(entitya& source) {
 	for(auto p : source) {
 		if(p->is(RepairSustainDamage) && p->is(Exhaust)) {
 			p->set(Exhaust, false);
-			p->event(0, "%1 %-Repaired");
+			p->status(0, "%1 %-Repaired");
 		}
 	}
 
@@ -178,6 +179,14 @@ void entity::startcombat() {
 			draw::output(getnm("NoCasualties"));
 		game.updateui();
 	} while(!attacker.reatreat && !defender.reatreat && attacker.units && defender.units);
+	if(attacker.units && (!defender.units || defender.reatreat)) { // Attacker wins
+		attacker.owner->event("AfterWinSpaceCombat");
+		defender.owner->event("AfterLoseSpaceCombat");
+	}
+	if(defender.units && (!attacker.units || attacker.reatreat)) { // Defender wins
+		defender.owner->event("AfterWinSpaceCombat");
+		attacker.owner->event("AfterLoseSpaceCombat");
+	}
 	draw::pause();
 	answers::header = push_header;
 }

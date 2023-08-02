@@ -149,7 +149,7 @@ playeri* entity::getenemy() const {
 	return 0;
 }
 
-void entity::event(int type, const char* format) const {
+void entity::status(int type, const char* format) const {
 	auto isgood = (type >= 0);
 	if(!player->ishuman())
 		isgood = !isgood;
