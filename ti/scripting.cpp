@@ -298,6 +298,8 @@ static void choose_action(int bonus) {
 }
 
 static void ask_movement() {
+	if(!last_system)
+		return;
 	makewave(last_system->index);
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player)

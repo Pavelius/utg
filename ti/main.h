@@ -165,6 +165,7 @@ struct playeri : nameable {
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
 	const uniti*	getunit(int index) const;
+	void			reaction(const char* id) const;
 	void			sayspeech(const char* id) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
