@@ -83,14 +83,18 @@ void draw::pausenc(const char* title, ...) {
 	an.choose(0, temp, true);
 }
 
-bool draw::yesno(const char* title, ...) {
+bool draw::yesnov(const char* title, const char* title_param) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.addv(title, xva_start(title));
+	sb.addv(title, title_param);
 	answers an;
 	an.add((void*)1, getnm("Yes"));
 	an.add((void*)0, getnm("No"));
 	pushvalue push(answers::column_count, 2);
 	return an.choose(temp);
+}
+
+bool draw::yesno(const char* title, ...) {
+	return yesnov(title, xva_start(title));
 }
 
 void draw::information(const char* format, ...) {

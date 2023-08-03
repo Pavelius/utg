@@ -1,8 +1,13 @@
+#include "pushvalue.h"
 #include "speech.h"
 #include "main.h"
 
 playeri* player;
 playeri* playeri::human;
+
+static int d100() {
+	return rand() % 100;
+}
 
 int	playeri::getindex() const {
 	return game.origin_players.find(const_cast<playeri*>(this));
@@ -77,7 +82,7 @@ int	playeri::getactioncards() const {
 		auto p = e.getactioncard();
 		if(!p)
 			continue;
-		if(e.player==this)
+		if(e.player == this)
 			result++;
 	}
 	return result;
@@ -124,4 +129,21 @@ void playeri::sayspeech(const char* id) const {
 	auto p = speech::find(test);
 	if(p)
 		actv(p->name, 0);
+}
+
+bool playeri::askv(const char* header_id, const char* format, const char* format_param) const {
+	pushvalue push_header(answers::header, getnm(header_id));
+	pushvalue push_resid(answers::resid, id);
+	return draw::yesnov(format, format_param);
+}
+
+bool playeri::ask(const char* header_id, const char* format, ...) const {
+	return askv(header_id, format, xva_start(format));
+}
+
+void playeri::sayv(const char* format, const char* format_param) const {
+	pushvalue push_header(answers::header, getnm(id));
+	pushvalue push_resid(answers::resid, id);
+	answers::console->addv(format, format_param);
+	draw::pause();
 }

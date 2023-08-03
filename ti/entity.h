@@ -23,6 +23,7 @@ struct entity : nameable {
 	constexpr explicit operator bool() const { return id != 0; }
 	void				add(answers& an);
 	void				clear();
+	void				discard();
 	void				exhaust();
 	int					get(ability_s v) const;
 	int					get(indicator_s v) const;

@@ -41,6 +41,7 @@ static void test_cards() {
 static void new_game() {
 	game.prepare();
 	//tech_selection();
+	//bsdata<playeri>::elements[0].ask("Bribery", "Test action", 12, 10);
 	game.play();
 }
 

@@ -41,7 +41,10 @@ void troop::hit() {
 	auto destroyed = false;
 	if(is(SustainDamage) && !is(Exhaust)) {
 		set(Exhaust, true);
-		format = "%1 %-Damaged";
+		if(!is(IgnoreDirectHit) && reaction("DirectHit", 0, player, getname()))
+			destroyed = true;
+		else
+			format = "%1 %-Damaged";
 	} else
 		destroyed = true;
 	status(-1, format);

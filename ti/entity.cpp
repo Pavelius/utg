@@ -166,3 +166,10 @@ void entity::exhaust() {
 	if(player->ishuman())
 		draw::warning(getnm("ApplyExhaust"), getnm(id));
 }
+
+void entity::discard() {
+	if(bsdata<actioncard>::have(id))
+		actioncards.add(this); // To the down of deck
+	flags = 0; // Remove all players token
+	player = 0; // Clear player
+}

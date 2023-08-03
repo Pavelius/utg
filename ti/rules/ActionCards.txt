@@ -74,12 +74,15 @@ WarEffort trigger(ChooseAction)
  use SelectTroops+1 GroupSystems ChooseSystem Cruiser+1
 WarfareRider
 
+#ActionCard trigger(Reaction) count(1)
+
+DirectHit count(4)
+Sabotage count(4)
+
 #ActionCard count(4)
 
-DirectHit
 FlankSpeed
 ManeuveringJets
 MoraleBoost
-Sabotage
 ShieldsHolding
 SkilledRetreat

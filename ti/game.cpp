@@ -47,7 +47,7 @@ void gamei::initialize() {
 }
 
 static void strategy_phase() {
-	pushvalue push_interactive(answers::interactive, false);
+	pushvalue push_interactive(answers::interactive, true);
 	pushvalue push_resid(answers::resid);
 	pushvalue push_header(answers::header);
 	pushvalue push_player(player);

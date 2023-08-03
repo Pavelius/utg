@@ -148,6 +148,8 @@ struct playeri : nameable {
 	void			actv(const char* format, const char* format_param) const;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
+	bool			ask(const char* header_id, const char* format, ...) const;
+	bool			askv(const char* header_id, const char* format, const char* format_param) const;
 	void			assign(variants source);
 	bool			canbuild(const uniti* player) const;
 	void			event(const char* id);
@@ -165,7 +167,7 @@ struct playeri : nameable {
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
 	const uniti*	getunit(int index) const;
-	void			reaction(const char* id) const;
+	void			sayv(const char* format, const char* format_param) const;
 	void			sayspeech(const char* id) const;
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
@@ -176,3 +178,5 @@ inline point i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 
 extern entitya querry;
+
+bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);

@@ -54,5 +54,6 @@ void pause();
 void pause(const char* title, ...);
 void pausenc(const char* title, ...);
 bool yesno(const char* title, ...);
+bool yesnov(const char* title, const char* title_param);
 void warning(const char* format, ...);
 }

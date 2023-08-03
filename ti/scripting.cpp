@@ -1029,6 +1029,44 @@ static void move_ship(int bonus) {
 	choose_stop = true;
 }
 
+static entity* find_reaction_entity(const char* id, const playeri* need_player, const playeri* exclude_player) {
+	for(auto& e : bsdata<entity>()) {
+		if(e.player != need_player)
+			continue;
+		if(e.player == exclude_player)
+			continue;
+		auto p = e.getactioncard();
+		if(!p)
+			continue;
+		if(!equal(p->id, id))
+			continue;
+		if(!equal(p->trigger, "Reaction"))
+			continue;
+		return &e;
+	}
+	return 0;
+}
+
+bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...) {
+	auto pe = find_reaction_entity(id, need_player, exclude_player);
+	if(!pe)
+		return false;
+	if(pe->player->ishuman()) {
+		if(!pe->player->askv(id, str("Ask%1"), xva_start(exclude_player)))
+			return false;
+	} else {
+		if(d100() < 15)
+			return false;
+	}
+	if(!equal(id, "Sabotage")) {
+		if(reaction("Sabotage", 0, pe->player))
+			return false;
+	}
+	pe->player->sayv(str("Say%1"), xva_start(exclude_player));
+	pe->discard();
+	return true;
+}
+
 static void choose_event(answers& an, const char* format) {
 	if(player->ishuman()) {
 		pushvalue push_header(answers::header, player->getname());
