@@ -178,7 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="actioncard.h" />
     <ClInclude Include="aidata.h" />
+    <ClInclude Include="decka.h" />
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />

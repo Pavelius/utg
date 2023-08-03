@@ -1,5 +1,6 @@
+#include "actioncard.h"
 #include "crt.h"
-#include "entitya.h"
+#include "decka.h"
 #include "pathfind.h"
 #include "point.h"
 #include "script.h"
@@ -82,18 +83,9 @@ struct troop : entity {
 	static void		updateui();
 };
 extern troop* last_troop;
-struct decka : entitya {
-};
 struct agendai : nameable {
 	variants		target;
 	variants		yes, no;
-};
-struct actioncard : nameable {
-	variant			parent;
-	variants		use;
-	const char*		trigger;
-	char			count;
-	bool			isallow() const;
 };
 extern decka actioncards;
 class analize {

@@ -44,3 +44,23 @@ int uniti::getspacepower() const {
 	r += getscore(SustainDamage, 2);
 	return r;
 }
+
+prototype* uniti::getprototype() const {
+	if(bsdata<prototype>::have(this))
+		return bsdata<prototype>::elements + bsdata<prototype>::source.indexof(this);
+	return 0;
+}
+
+int	uniti::getindex() const {
+	auto p = getprototype();
+	if(p)
+		return (this - p->units);
+	return -1;
+}
+
+int	uniti::getbonus() const {
+	auto p = getprototype();
+	if(p)
+		return p->bonus[this-p->units];
+	return 0;
+}

@@ -8,13 +8,17 @@ struct playeri;
 enum unit_type_s : unsigned char {
 	GroundForces, Ships, Structures,
 };
+struct prototype;
 struct uniti : nameable {
 	char			abilities[Capacity + 1];
 	unit_type_s		type;
 	taga			tags;
 	playeri*		race;
 	const uniti*	replace;
+	int				getbonus() const;
 	int				getcost() const { return abilities[Cost]; }
+	int				getindex() const;
+	prototype*		getprototype() const;
 	int				getspacepower() const;
 	int				getweight() const;
 	void			placement(int count, bool updateui = true) const;
@@ -25,4 +29,5 @@ private:
 };
 struct prototype {
 	uniti			units[10];
+	char			bonus[10];
 };

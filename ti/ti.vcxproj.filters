@@ -152,6 +152,12 @@
     <ClInclude Include="entitya.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="actioncard.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="decka.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

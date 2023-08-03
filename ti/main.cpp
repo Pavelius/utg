@@ -20,6 +20,7 @@ static void test_combat() {
 	game.prepare();
 	game.updatecontrol();
 	auto system = playeri::human->gethome();
+	troop::create(bsdata<uniti>::find("Cruiser"), playeri::human, system);
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;
@@ -32,16 +33,12 @@ static void test_combat() {
 
 void tech_selection();
 
-static void test_cards() {
-}
-
 #endif // _DEBUG
 
 
 static void new_game() {
+	test_combat();
 	game.prepare();
-	//tech_selection();
-	//bsdata<playeri>::elements[0].ask("Bribery", "Test action", 12, 10);
 	game.play();
 }
 

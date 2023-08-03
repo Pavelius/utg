@@ -77,7 +77,7 @@ int army::roll(ability_s id, ability_s id_count) const {
 			new_block = answers::console->get();
 		}
 		auto count = p->get(id_count);
-		auto unit_bonus = bonus;
+		auto unit_bonus = bonus + p->getunit()->getbonus();
 		if(isother(units, p, CombatBonusToOthers))
 			unit_bonus++;
 		auto additional_hit = 100;
