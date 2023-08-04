@@ -42,6 +42,14 @@ void entitya::shuffle() {
 	zshuffle(data, count);
 }
 
+bool entitya::is(unit_type_s v) const {
+	for(auto p : *this) {
+		if(p->getunit()->type == v)
+			return true;
+	}
+	return false;
+}
+
 bool entitya::is(tag_s v, const entity* exclude) const {
 	for(auto p : *this) {
 		if(p == exclude)

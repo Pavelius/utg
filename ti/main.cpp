@@ -24,7 +24,7 @@ static void test_combat() {
 	if(!enemy)
 		return;
 	troop::create(bsdata<uniti>::find("Flagman"), enemy, system);
-	troop::create(bsdata<uniti>::find("Fighter"), enemy, system);
+	troop::create(bsdata<uniti>::find("Destroyer"), enemy, system);
 	game.updateui();
 	game.focusing(system);
 	system->startcombat();

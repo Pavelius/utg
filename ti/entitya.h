@@ -16,6 +16,7 @@ struct entitya : public collection<entity> {
 	int				getfight() const;
 	void			ingame();
 	bool			is(tag_s v, const entity* exclude) const;
+	bool			is(unit_type_s v) const;
 	bool			have(entity* v) const { return find(v) != -1; }
 	void			match(fnallow proc, int param, bool keep) { collectiona::match(proc, param, keep); }
 	void			match(fnvisible proc, bool keep) { collectiona::match(proc, keep); }

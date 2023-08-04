@@ -832,7 +832,7 @@ static void choose_technology(int bonus) {
 }
 
 static void ask_combat_option() {
-	sb.add("%1 (%-Round [%2i])", getnm("ChooseCombatOption"), army::round);
+	sb.adds("(%-Round [%1i])", army::round);
 	addscript("ContinueBattle");
 	if(player->ishuman())
 		addscript("RetreatBattle");

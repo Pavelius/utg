@@ -148,7 +148,7 @@ void entity::startcombat() {
 	auto push_header = answers::header;
 	answers::header = getnm(bsdata<abilityi>::elements[AntiFighterBarrage].id);
 	defender.hit(attacker.roll(AntiFighterBarrage, AntiFighterBarrageCount));
-	attacker.hit(attacker.roll(AntiFighterBarrage, AntiFighterBarrageCount));
+	attacker.hit(defender.roll(AntiFighterBarrage, AntiFighterBarrageCount));
 	draw::pause();
 	do {
 		army::round++;
