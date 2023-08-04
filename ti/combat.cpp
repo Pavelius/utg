@@ -90,6 +90,20 @@ static int find_sustain(entitya& source) {
 	return -1;
 }
 
+void army::hit(int value, tag_s v, bool keep) {
+	while(value--) {
+		if(!units)
+			break;
+		auto index = find_sustain(units);
+		if(index == -1)
+			index = units.count - 1;
+		auto p = (entity*)units.data[index];
+		p->hit();
+		if(!(*p))
+			units.remove(index, 1);
+	}
+}
+
 void army::hit(int value) {
 	while(value--) {
 		if(!units)

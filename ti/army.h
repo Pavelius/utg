@@ -12,5 +12,6 @@ struct army {
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			choose(const char* id);
 	void			hit(int value);
+	void			hit(int value, tag_s v, bool keep);
 	int				roll(ability_s id, ability_s id_count) const;
 };
