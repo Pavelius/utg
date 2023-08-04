@@ -121,6 +121,17 @@ void entitya::select(answers& an) {
 	count = ps - data;
 }
 
+void entitya::normalize() {
+	auto ps = data + count;
+	auto pe = endof();
+	for(auto p : *this) {
+		if(!(*p))
+			continue;
+		*ps++ = p;
+	}
+	count = ps - data;
+}
+
 void entitya::selectplanets(const systemi* system) {
 	auto ps = data + count;
 	auto pe = endof();

@@ -30,6 +30,7 @@ struct entitya : public collection<entity> {
 	void			matchload(bool keep);
 	void			matchmove(int mode, bool keep);
 	void			matchrange(int range, bool keep);
+	void			normalize();
 	void			select(array& source);
 	void			select(array& source, fnvisible proc, bool keep) { collectiona::select(source, proc, keep); }
 	void			select(array& source, fnallow proc, int param, bool keep) { collectiona::select(source, proc, param, keep); }
