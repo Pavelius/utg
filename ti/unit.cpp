@@ -57,10 +57,3 @@ int	uniti::getindex() const {
 		return (this - p->units);
 	return -1;
 }
-
-int	uniti::getbonus() const {
-	auto p = getprototype();
-	if(p)
-		return p->bonus[this-p->units];
-	return 0;
-}

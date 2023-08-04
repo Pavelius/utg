@@ -15,7 +15,6 @@ struct uniti : nameable {
 	taga			tags;
 	playeri*		race;
 	const uniti*	replace;
-	int				getbonus() const;
 	int				getcost() const { return abilities[Cost]; }
 	int				getindex() const;
 	prototype*		getprototype() const;
@@ -29,5 +28,4 @@ private:
 };
 struct prototype {
 	uniti			units[10];
-	char			bonus[10];
 };

@@ -1,3 +1,4 @@
+#include "army.h"
 #include "pushvalue.h"
 #include "main.h"
 
@@ -6,16 +7,6 @@ static army			attacker, defender;
 int					army::round;
 static int			hits;
 static const char*	new_block;
-
-static bool isother(const entitya& source, const entity* object, tag_s v) {
-	for(auto p : source) {
-		if(p == object)
-			continue;
-		if(p->is(v))
-			return true;
-	}
-	return false;
-}
 
 static int unit_combat_roll(int chance, int count, int bonus, int reroll, int additional_hit) {
 	if(!chance)
@@ -77,8 +68,8 @@ int army::roll(ability_s id, ability_s id_count) const {
 			new_block = answers::console->get();
 		}
 		auto count = p->get(id_count);
-		auto unit_bonus = bonus + p->getunit()->getbonus();
-		if(isother(units, p, CombatBonusToOthers))
+		auto unit_bonus = bonus + bonuses[p->getunit()->getindex()];
+		if(units.is(CombatBonusToOthers, p))
 			unit_bonus++;
 		auto additional_hit = 100;
 		if(p->is(AdditionalHitOn9n10))

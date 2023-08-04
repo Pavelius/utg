@@ -20,7 +20,6 @@ static void test_combat() {
 	game.prepare();
 	game.updatecontrol();
 	auto system = playeri::human->gethome();
-	troop::create(bsdata<uniti>::find("Cruiser"), playeri::human, system);
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;

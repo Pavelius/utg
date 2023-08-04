@@ -180,6 +180,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="actioncard.h" />
     <ClInclude Include="aidata.h" />
+    <ClInclude Include="army.h" />
     <ClInclude Include="decka.h" />
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="entity.h" />

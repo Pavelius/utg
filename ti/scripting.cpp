@@ -1,3 +1,4 @@
+#include "army.h"
 #include "condition.h"
 #include "pathfind.h"
 #include "pushvalue.h"

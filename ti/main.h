@@ -95,17 +95,6 @@ public:
 	int				getweight(pathfind::indext i) const;
 	void			setweight(pathfind::indext i, int v);
 };
-struct army {
-	playeri*		owner;
-	entitya			units;
-	bool			reatreat;
-	static army*	last;
-	static int		round;
-	void			clear() { memset(this, 0, sizeof(*this)); }
-	void			choose(const char* id);
-	void			hit(int value);
-	int				roll(ability_s id, ability_s id_count) const;
-};
 struct unitupgrade : uniti, requirement {
 };
 struct gamei {

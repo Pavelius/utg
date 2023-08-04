@@ -42,6 +42,16 @@ void entitya::shuffle() {
 	zshuffle(data, count);
 }
 
+bool entitya::is(tag_s v, const entity* exclude) const {
+	for(auto p : *this) {
+		if(p == exclude)
+			continue;
+		if(p->is(v))
+			return true;
+	}
+	return false;
+}
+
 void entitya::select(const playeri* player, const entity* location) {
 	auto ps = data + count;
 	auto pe = endof();

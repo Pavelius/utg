@@ -158,6 +158,9 @@
     <ClInclude Include="decka.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="army.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
