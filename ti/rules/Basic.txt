@@ -154,3 +154,7 @@ Technology initiative(7)
 Imperial initiative(8)
  primary ScorePublicObjective IfControlMecatolRex VictoryPoints+1 SecretObjective+1
  secondary StrategyToken-1 SecretObjective+1
+
+#include "rules/Planets.txt"
+#include "rules/ActionCards.txt"
+#include "rules/Objectives.txt"

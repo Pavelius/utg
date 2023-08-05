@@ -30,38 +30,28 @@ static void test_combat() {
 	system->startcombat();
 }
 
-void tech_selection();
-
 #endif // _DEBUG
 
-
-static void new_game() {
+static void start_game() {
+#ifdef _DEBUG
+	util_main();
+#endif
 	//test_combat();
 	game.prepare();
 	game.play();
 }
 
-static void start_game() {
-#ifdef _DEBUG
-	util_main();
-#endif // _DEBUG
-	new_game();
-}
-
 static void initialize() {
-	bsreq::read("rules/Planets.txt");
-	bsreq::read("rules/ActionCards.txt");
-	bsreq::read("rules/Objectives.txt");
 	speech::read("locale/ru/Speech.txt");
-	answers::console = &console;
-	answers::prompt = console_text;
-	gamei::initialize();
 }
 
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	srand(505);
 	initialize_ui();
+	answers::console = &console;
+	answers::prompt = console_text;
+	gamei::initialize();
 	return draw::strategy(start_game, initialize);
 }
 
