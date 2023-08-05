@@ -79,6 +79,39 @@ void indicatori::getinfo(stringbuilder& sb) const {
 	add_description(sb, id);
 }
 
+static void addv(stringbuilder& sb, const char* format, int value, int count) {
+	if(!value)
+		return;
+	if(count>1)
+		sb.addn("%1: %2ix%3i", format, value, count);
+	else
+		sb.addn("%1: %2i", format, value);
+}
+
+static void addcost(stringbuilder& sb, int value, int count) {
+	if(!value)
+		return;
+	if(count > 1)
+		sb.addn("%Cost: %1i (%Per %2i %Units)", value, count);
+	else
+		sb.addn("%Cost: %1i", value);
+}
+
+static void addv(stringbuilder& sb, ability_s id, int value, int count = 0) {
+	addv(sb, getnm(bsdata<abilityi>::elements[id].id), value, count);
+}
+
+void troop::getinfo(stringbuilder& sb) const {
+	add_h3(sb, getname());
+	sb.addn("---");
+	addv(sb, Combat, get(Combat), get(CombatCount));
+	addv(sb, AntiFighterBarrage, get(AntiFighterBarrage), get(AntiFighterBarrageCount));
+	addv(sb, Bombardment, get(Bombardment), get(BombardmentCount));
+	addv(sb, SpaceCannon, get(SpaceCannon), get(SpaceCannonCount));
+	addcost(sb, get(Cost), get(CostCount));
+	addv(sb, Move, get(Move));
+}
+
 static void add_technologies(stringbuilder& sb) {
 	for(auto i = (tech_s)0; i < IntegratedEconomy; i = (tech_s)(i + 1)) {
 		if(!player->is(i))

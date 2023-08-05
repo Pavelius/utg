@@ -77,6 +77,7 @@ struct troop : entity {
 	static troop*	create(const char* id, playeri* player);
 	static troop*	create(const uniti* unit, playeri* player, entity* location);
 	void			clear() { memset(this, 0, sizeof(*this)); }
+	void			getinfo(stringbuilder& sb) const;
 	void			hit();
 	void			paint(unsigned flags) const;
 	void			produce(const uniti* unit) const;

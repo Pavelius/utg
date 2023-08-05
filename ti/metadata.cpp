@@ -31,6 +31,9 @@ BSMETA(actioncard) = {
 BSMETA(colori) = {
 	BSREQ(id),
 	{}};
+BSMETA(entity) = {
+	BSREQ(id),
+	{}};
 BSMETA(indicatori) = {
 	BSREQ(id),
 	{}};
@@ -84,6 +87,11 @@ BSMETA(techi) = {
 BSMETA(tilei) = {
 	BSREQ(id),
 	{}};
+BSMETA(troop) = {
+	BSREQ(id),
+	BSREQ(player),
+	BSREQ(location),
+	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSENM(type, unit_typei),
@@ -117,6 +125,7 @@ BSDATA(varianti) = {
 	{"Strategy", VAR(strategyi, 1), ftstatus<strategyi>},
 	{"System", VAR(systemi, 1)},
 	{"Tech", VAR(techi, 1), ftstatus<techi>},
+	{"Troop", VAR(troop, 3), ftstatus<troop>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
 	{"UnitUpgrade", VAR(unitupgrade, 1)},

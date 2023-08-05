@@ -288,7 +288,7 @@ static void textv(const char* format, ...) {
 	textcn(temp);
 }
 
-static void buttonback(int size, void* data) {
+static void buttonback(int size, const void* data) {
 	auto push_alpha = alpha;
 	rectpush push;
 	width = size * 2;
@@ -313,7 +313,7 @@ static color getplayercolor(playeri* p) {
 void troop::paint(unsigned flags) const {
 	auto push_color = fore;
 	fore = getplayercolor(player);
-	buttonback(43, 0);
+	buttonback(43, this);
 	fore = push_color;
 	textcn(getname());
 }
