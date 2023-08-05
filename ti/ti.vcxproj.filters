@@ -96,7 +96,7 @@
     <ClCompile Include="information.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="combat.cpp">
+    <ClCompile Include="army.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="race.cpp">

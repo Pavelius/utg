@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="analize.cpp" />
-    <ClCompile Include="combat.cpp" />
+    <ClCompile Include="army.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="galaxy.cpp" />

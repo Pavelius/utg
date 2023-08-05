@@ -98,9 +98,7 @@ void army::hit(int value, tag_s v, bool keep) {
 }
 
 void army::hit(int value) {
-	while(value--) {
-		if(!units)
-			break;
+	while(value-- && units) {
 		auto index = find_sustain(units);
 		if(index==-1)
 			index = units.count - 1;
@@ -130,6 +128,7 @@ bool start_combat(const entity* location) {
 	attacker.units.sortunit();
 	if(!attacker.units)
 		return false;
+	draw::pause();
 	return true;
 }
 
@@ -140,6 +139,17 @@ void combat_reatreat(int bonus) {
 	army::last->reatreat = true;
 }
 
+static void anti_fighter_barrage() {
+	auto scene_id = bsdata<abilityi>::elements[AntiFighterBarrage].id;
+	pushvalue push_header(answers::header, getnm(scene_id));
+	auto attacker_shoots = attacker.roll(AntiFighterBarrage, AntiFighterBarrageCount);
+	defender.hit(attacker_shoots, NonFighter, false);
+	auto defender_shoots = defender.roll(AntiFighterBarrage, AntiFighterBarrageCount);
+	attacker.hit(defender_shoots, NonFighter, false);
+	game.updateui();
+	draw::pause();
+}
+
 void army::choose(const char* id) {
 	auto push_last = last; last = this;
 	auto push_player = player; player = owner;
@@ -148,15 +158,23 @@ void army::choose(const char* id) {
 	last = push_last;
 }
 
-void entity::startcombat() {
-	if(!start_combat(this))
-		return;
-	draw::pause();
-	auto push_header = answers::header;
-	answers::header = getnm(bsdata<abilityi>::elements[AntiFighterBarrage].id);
-	defender.hit(attacker.roll(AntiFighterBarrage, AntiFighterBarrageCount));
-	attacker.hit(defender.roll(AntiFighterBarrage, AntiFighterBarrageCount));
-	draw::pause();
+static void echange_harms() {
+	auto hits_attacker = attacker.roll(Combat, CombatCount);
+	if(answers::console)
+		answers::console->addn("---");
+	auto hits_defender = defender.roll(Combat, CombatCount);
+	if(answers::console)
+		answers::console->addn("---");
+	if(hits_attacker || hits_defender) {
+		defender.hit(hits_attacker);
+		attacker.hit(hits_defender);
+	} else
+		draw::output(getnm("NoCasualties"));
+	game.updateui();
+}
+
+static void space_combat() {
+	pushvalue push_header(answers::header);
 	do {
 		army::round++;
 		answers::header = getnm("SpaceCombat");
@@ -164,18 +182,7 @@ void entity::startcombat() {
 		repair_units(defender.units);
 		attacker.choose("ChooseCombatOption");
 		defender.choose("ChooseCombatOption");
-		auto hits_attacker = attacker.roll(Combat, CombatCount);
-		if(answers::console)
-			answers::console->addn("---");
-		auto hits_defender = defender.roll(Combat, CombatCount);
-		if(answers::console)
-			answers::console->addn("---");
-		if(hits_attacker || hits_defender) {
-			defender.hit(hits_attacker);
-			attacker.hit(hits_defender);
-		} else
-			draw::output(getnm("NoCasualties"));
-		game.updateui();
+		echange_harms();
 	} while(!attacker.reatreat && !defender.reatreat && attacker.units && defender.units);
 	if(attacker.units && (!defender.units || defender.reatreat)) { // Attacker wins
 		attacker.owner->event("AfterWinSpaceCombat");
@@ -186,5 +193,11 @@ void entity::startcombat() {
 		attacker.owner->event("AfterLoseSpaceCombat");
 	}
 	draw::pause();
-	answers::header = push_header;
+}
+
+void entity::startcombat() {
+	if(!start_combat(this))
+		return;
+	anti_fighter_barrage();
+	space_combat();
 }

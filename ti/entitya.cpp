@@ -122,7 +122,7 @@ void entitya::select(answers& an) {
 }
 
 void entitya::normalize() {
-	auto ps = data + count;
+	auto ps = data;
 	auto pe = endof();
 	for(auto p : *this) {
 		if(!(*p))

@@ -1131,7 +1131,8 @@ static void for_each_planet(int bonus) {
 	auto push = querry;
 	for(auto p : push) {
 		last_planet = p->getplanet();
-		script::run(v);
+		if(last_planet)
+			script::run(v);
 	}
 	last_planet = push_last;
 }

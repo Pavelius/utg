@@ -36,7 +36,7 @@ void tech_selection();
 
 
 static void new_game() {
-	test_combat();
+	//test_combat();
 	game.prepare();
 	game.play();
 }
