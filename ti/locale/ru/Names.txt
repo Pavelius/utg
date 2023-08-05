@@ -190,3 +190,6 @@ WormholeBetaSystem: Кротовая нора Бэта
 
 No: Нет
 Yes: Да
+
+Per: за
+Units: отрядов

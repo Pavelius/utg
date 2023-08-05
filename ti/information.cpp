@@ -110,6 +110,8 @@ void troop::getinfo(stringbuilder& sb) const {
 	addv(sb, SpaceCannon, get(SpaceCannon), get(SpaceCannonCount));
 	addcost(sb, get(Cost), get(CostCount));
 	addv(sb, Move, get(Move));
+	addv(sb, Production, getproduction());
+	addv(sb, Capacity, get(Capacity));
 }
 
 static void add_technologies(stringbuilder& sb) {

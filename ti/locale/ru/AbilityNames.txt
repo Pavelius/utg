@@ -6,5 +6,7 @@ TacticToken: Тактический резерв
 TacticTokenShort: ТР
 
 Bombardment: Бомбардировка
+Capacity: Вместимость
 Combat: Сражение
 Move: Движение
+Production: Производство
