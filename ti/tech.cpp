@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "tech.h"
+#include "player.h"
 #include "main.h"
 
 BSDATA(techi) {

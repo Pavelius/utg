@@ -1,5 +1,6 @@
 #include "entity.h"
 #include "main.h"
+#include "player.h"
 
 int entity::get(ability_s v) const {
 	if(bsdata<troop>::have(this))

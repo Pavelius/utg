@@ -1,4 +1,5 @@
 #include "main.h"
+#include "player.h"
 #include "script.h"
 
 bool actioncard::isallow() const {

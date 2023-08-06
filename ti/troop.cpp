@@ -1,4 +1,5 @@
 #include "pushvalue.h"
+#include "player.h"
 #include "main.h"
 
 troop* last_troop;

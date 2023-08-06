@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "draw_strategy.h"
 #include "main.h"
+#include "player.h"
 #include "speech.h"
 
 void initialize_ui();
@@ -19,7 +20,7 @@ static void test_speech() {
 static void test_combat() {
 	game.prepare();
 	game.updatecontrol();
-	auto system = playeri::human->gethome();
+	auto system = human_player->gethome();
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;

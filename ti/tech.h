@@ -1,4 +1,5 @@
 #include "collection.h"
+#include "flagable.h"
 #include "nameable.h"
 #include "stringbuilder.h"
 #include "techcolor.h"
@@ -12,6 +13,7 @@ enum tech_s : unsigned char {
 	SarweenTools, GravitonLaserSystem, TransitDiodes, IntegratedEconomy
 };
 struct playeri;
+typedef flagable<8> techa;
 struct requirement {
 	char			required[4]; // RGBY
 	bool			match(const requirement& e) const;

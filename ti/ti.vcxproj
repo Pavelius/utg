@@ -188,6 +188,7 @@
     <ClInclude Include="indicator.h" />
     <ClInclude Include="objective.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="tech.h" />

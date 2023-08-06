@@ -1,3 +1,4 @@
+#include "player.h"
 #include "main.h"
 
 void playera::filter(const playeri* object, bool keep) {

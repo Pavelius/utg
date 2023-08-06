@@ -5,6 +5,7 @@
 #include "draw_marker.h"
 #include "draw_strategy.h"
 #include "pushvalue.h"
+#include "player.h"
 #include "main.h"
 
 using namespace draw;

@@ -2,6 +2,7 @@
 #include "condition.h"
 #include "pathfind.h"
 #include "pushvalue.h"
+#include "player.h"
 #include "main.h"
 #include "script.h"
 

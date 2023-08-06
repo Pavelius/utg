@@ -1,4 +1,5 @@
 #include "main.h"
+#include "player.h"
 
 using namespace pathfind;
 
@@ -44,7 +45,7 @@ static void assign_factions() {
 	game.origin_players.clear();
 	for(auto& e : bsdata<playeri>())
 		game.origin_players.add(&e);
-	playeri::human = game.origin_players[2];
+	human_player = game.origin_players[2];
 	game.origin_players.shuffle();
 	game.players = game.origin_players;
 }
@@ -77,7 +78,7 @@ static void prepare_players() {
 }
 
 static void prepare_finish() {
-	player = playeri::human;
+	player = human_player;
 	game.finale_score = 8;
 }
 

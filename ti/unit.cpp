@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "main.h"
+#include "player.h"
 #include "unit.h"
 
 int	uniti::getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }

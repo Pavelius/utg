@@ -1,5 +1,6 @@
 #include "main.h"
 #include "pushvalue.h"
+#include "player.h"
 #include "script.h"
 
 using namespace pathfind;

@@ -1,3 +1,4 @@
+#include "player.h"
 #include "main.h"
 
 static void add_h3(stringbuilder& sb, const char* format, ...) {

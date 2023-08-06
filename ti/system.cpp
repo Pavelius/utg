@@ -1,3 +1,4 @@
+#include "player.h"
 #include "main.h"
 
 systemi* last_system;

@@ -1,12 +1,17 @@
 #include "pushvalue.h"
 #include "speech.h"
+#include "player.h"
 #include "main.h"
 
 playeri* player;
-playeri* playeri::human;
+playeri* human_player;
 
 static int d100() {
 	return rand() % 100;
+}
+
+bool playeri::ishuman() const {
+	return human_player == this;
 }
 
 int	playeri::getindex() const {

@@ -2,6 +2,7 @@
 #include "condition.h"
 #include "list.h"
 #include "objective.h"
+#include "player.h"
 #include "main.h"
 #include "variant.h"
 
