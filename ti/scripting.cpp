@@ -2,6 +2,8 @@
 #include "condition.h"
 #include "pathfind.h"
 #include "pushvalue.h"
+#include "planet.h"
+#include "planet_trait.h"
 #include "player.h"
 #include "main.h"
 #include "script.h"
@@ -94,7 +96,7 @@ static bool is_enemy_ships_in_system(const void* object) {
 }
 
 static playeri* find_player(const strategyi& e) {
-	for(auto p : game.players) {
+	for(auto p : players) {
 		if(p->strategy == &e)
 			return p;
 	}
@@ -276,7 +278,7 @@ static void apply_primary_ability(strategyi& e) {
 	player->use_strategy = true;
 	script::run(e.primary);
 	auto push_player = player;
-	for(auto pa : game.players) {
+	for(auto pa : players) {
 		if(pa == push_player)
 			continue;
 		player = pa;
@@ -339,12 +341,12 @@ static void ai_movement() {
 		capacity -= ai_load(player, system, GroundForces, capacity);
 		p->location = last_system;
 	}
-	game.updateui();
+	update_ui();
 }
 static void choose_movement(int bonus) {
 	onboard.clear();
 	choose_until_stop("ChooseMove", "EndMovement", ask_movement, apply_movement, ai_movement);
-	game.updatecontrol();
+	update_control();
 }
 
 static void ask_choose_strategy() {
@@ -507,7 +509,7 @@ static void select_system_reach(int bonus) {
 }
 
 static void select_players(int bonus) {
-	players = game.players;
+	players = players;
 	if(bonus < 0)
 		no_active_player(0);
 }
@@ -630,7 +632,7 @@ static void ai_invasion() {
 			count++;
 		}
 	}
-	game.updateui();
+	update_ui();
 }
 static void choose_invasion(int bonus) {
 	choose_until_stop("ChooseInvasion", "Apply", ask_invasion, apply_invasion, ai_invasion);
@@ -661,8 +663,8 @@ static void apply_invasion_planet() {
 		script::run("ChooseInvasion", 0);
 		choose_result = push_result;
 		last_planet = push_last;
-		game.updateui();
-		game.updatecontrol();
+		update_control();
+		update_ui();
 	}
 }
 static void choose_invasion_planet(int bonus) {
@@ -765,7 +767,7 @@ static void choose_production(int bonus) {
 	complex_pay(Resources, onboard.getproductioncost());
 	for(auto p : onboard)
 		pu->produce((uniti*)p);
-	game.updateui();
+	update_ui();
 }
 
 static void ask_dock() {
@@ -1028,7 +1030,7 @@ static void move_ship(int bonus) {
 	last_troop->location = last_system;
 	for(auto p : onboard)
 		p->location = last_system;
-	game.updateui();
+	update_ui();
 	choose_stop = true;
 }
 

@@ -20,14 +20,14 @@ static void test_speech() {
 
 static void test_combat() {
 	game.prepare();
-	game.updatecontrol();
+	update_control();
 	auto system = human_player->gethome();
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;
 	troop::create(bsdata<uniti>::find("Flagman"), enemy, system);
 	troop::create(bsdata<uniti>::find("Destroyer"), enemy, system);
-	game.updateui();
+	update_ui();
 	game.focusing(system);
 	system->startcombat();
 }

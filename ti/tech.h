@@ -12,8 +12,11 @@ enum tech_s : unsigned char {
 	AntimassDeflectors, GravityDriver, FleetLogistics, LightWaveDeflector,
 	SarweenTools, GravitonLaserSystem, TransitDiodes, IntegratedEconomy
 };
+
 struct playeri;
+
 typedef flagable<8> techa;
+
 struct requirement {
 	char			required[4]; // RGBY
 	bool			match(const requirement& e) const;
@@ -28,5 +31,3 @@ struct techi : nameable {
 	bool			match(const requirement& e) const;
 };
 extern collection<techi> technologies;
-
-void filter_required_tech(int bonus);

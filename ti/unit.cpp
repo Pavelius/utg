@@ -1,12 +1,13 @@
 #include "crt.h"
 #include "main.h"
+#include "planet.h"
 #include "player.h"
 #include "system.h"
 #include "unit.h"
 
 int	uniti::getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 
-void uniti::placement(int count, bool updateui) const {
+void uniti::placement(int count, bool need_update_ui) const {
 	if(!count)
 		count = 1;
 	switch(type) {
@@ -14,15 +15,15 @@ void uniti::placement(int count, bool updateui) const {
 		game.focusing(last_planet);
 		for(auto i = 0; i < count; i++)
 			troop::create(this, player, last_planet);
-		if(updateui)
-			game.updateui();
+		if(need_update_ui)
+			update_ui();
 		break;
 	case Ships:
 		game.focusing(last_system);
 		for(auto i = 0; i < count; i++)
 			troop::create(this, player, last_system);
-		if(updateui)
-			game.updateui();
+		if(need_update_ui)
+			update_ui();
 		break;
 	}
 }

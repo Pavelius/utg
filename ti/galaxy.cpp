@@ -1,4 +1,5 @@
 #include "main.h"
+#include "planet.h"
 #include "player.h"
 #include "system.h"
 
@@ -28,7 +29,7 @@ static pointline players6[] = {
 static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
 
 static void assign_prototypes() {
-	for(auto p : game.origin_players) {
+	for(auto p : origin_players) {
 		auto proto = bsdata<prototype>::elements + p->getindex();
 		for(auto& e : bsdata<uniti>()) {
 			if(e.race && e.race != p)
@@ -43,16 +44,16 @@ static void assign_prototypes() {
 }
 
 static void assign_factions() {
-	game.origin_players.clear();
+	origin_players.clear();
 	for(auto& e : bsdata<playeri>())
-		game.origin_players.add(&e);
-	human_player = game.origin_players[2];
-	game.origin_players.shuffle();
-	game.players = game.origin_players;
+		origin_players.add(&e);
+	human_player = origin_players[2];
+	origin_players.shuffle();
+	players = origin_players;
 }
 
 static void determine_speaker() {
-	game.speaker = game.players.data[rand() % game.players.count];
+	game.speaker = players.data[rand() % players.count];
 }
 
 static void set_control(playeri* player, systemi* system) {
@@ -63,12 +64,12 @@ static void set_control(playeri* player, systemi* system) {
 }
 
 static void assign_startup() {
-	for(auto p : game.players)
+	for(auto p : players)
 		p->assign(p->startup);
 }
 
 static void prepare_players() {
-	for(auto p : game.players) {
+	for(auto p : players) {
 		auto home = p->gethome();
 		set_control(p, home);
 		p->indicators[TacticToken] = 3;
@@ -91,7 +92,7 @@ static void clear_galaxy() {
 static void assign_starting_positions() {
 	auto index = 0;
 	auto& positions = galaxy6.start;
-	for(auto p : game.players) {
+	for(auto p : players) {
 		auto ps = p->gethome();
 		if(!ps)
 			continue;

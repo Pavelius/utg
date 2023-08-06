@@ -1,6 +1,8 @@
 #include "player.h"
 #include "main.h"
 
+playera	players, origin_players;
+
 void playera::filter(const playeri* object, bool keep) {
 	auto ps = data;
 	for(auto p : *this) {

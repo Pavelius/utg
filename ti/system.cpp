@@ -1,3 +1,4 @@
+#include "planet.h"
 #include "player.h"
 #include "system.h"
 #include "main.h"

@@ -188,6 +188,8 @@
     <ClInclude Include="indicator.h" />
     <ClInclude Include="objective.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="planet.h" />
+    <ClInclude Include="planet_trait.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playera.h" />
     <ClInclude Include="strategy.h" />

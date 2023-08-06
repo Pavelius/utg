@@ -12,13 +12,8 @@
 
 const int hms = 8;
 
-enum planet_trait_s : unsigned char {
-	NoTrait, Cultural, Hazardous, Industrial,
-};
 enum racef_s : unsigned char {
 	Assimilate, Fragile, Unrelenting
-};
-struct planet_traiti : nameable {
 };
 struct unit_typei : nameable {
 };
@@ -30,15 +25,6 @@ struct playeri;
 struct systemi;
 struct troop;
 struct uniti;
-struct planeti : entity {
-	planet_trait_s	trait;
-	color_s			speciality;
-	char			frame, resources, influence;
-	flagable<1>		flags;
-	int				get(indicator_s v) const;
-	void			paint(unsigned flags) const;
-};
-extern planeti* last_planet;
 struct troop : entity {
 	flagable<1>		flags;
 	static troop*	create(const char* id, playeri* player);
@@ -67,7 +53,6 @@ struct unitupgrade : uniti, requirement {
 };
 struct gamei {
 	playeri*		speaker;
-	playera			players, origin_players;
 	indicator_s		indicator;
 	int				finale_score;
 	static systemi* choosesystem(const entitya& source);
@@ -80,12 +65,8 @@ struct gamei {
 	void			play();
 	static int		rate(indicator_s need, indicator_s currency, int count);
 	void			sortbyinitiative();
-	static void		updatecontrol();
-	static void		updateui();
 };
 extern gamei game;
 
 inline point i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
-
-extern entitya querry;

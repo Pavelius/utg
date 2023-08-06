@@ -52,3 +52,6 @@ extern playeri*	player;
 extern playeri* human_player;
 
 bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);
+
+void update_control();
+void update_ui();

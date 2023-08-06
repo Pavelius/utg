@@ -5,13 +5,12 @@
 #include "draw_marker.h"
 #include "draw_strategy.h"
 #include "pushvalue.h"
+#include "planet.h"
 #include "player.h"
 #include "system.h"
 #include "main.h"
 
 using namespace draw;
-
-static bool need_update_ui = false;
 
 const int button_height = 20;
 const int size = 256;
@@ -84,7 +83,7 @@ static void show_players() {
 	auto res = gres("races_small");
 	auto push_alpha = alpha;
 	alpha = 32;
-	for(auto p : game.players) {
+	for(auto p : players) {
 		image(res, getbsi(p), 0);
 		if(ishilite(16)) {
 			hilite_object = p;
@@ -94,9 +93,9 @@ static void show_players() {
 		caret.x += 32;
 	}
 	alpha = push_alpha;
-	auto pi = game.players.find(player);
+	auto pi = players.find(player);
 	if(pi != -1) {
-		auto p = game.players[pi];
+		auto p = players[pi];
 		auto push_x1 = caret.x;
 		caret.x = push_x + 32 * pi;
 		image(res, getbsi(p), 0);
@@ -240,7 +239,7 @@ void systemi::paint() const {
 	auto push_caret = caret;
 	caret.y -= size - 24;
 	auto res = gres("races_small");
-	for(auto p : game.players) {
+	for(auto p : players) {
 		if(isactivated(p)) {
 			image(res, getbsi(p), 0);
 			caret.x += 30;
@@ -309,7 +308,7 @@ static void buttonback(int size, const void* data) {
 }
 
 static color getplayercolor(playeri* p) {
-	return player_colors[game.origin_players.find(p) + 1];
+	return player_colors[origin_players.find(p) + 1];
 }
 
 void troop::paint(unsigned flags) const {
@@ -536,7 +535,7 @@ void troop::updateui() {
 	}
 }
 
-void gamei::updateui() {
+void update_ui() {
 	static point system_offset = {0, -6 * size / 10};
 	troop::updateui();
 	waitall();

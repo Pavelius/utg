@@ -9,3 +9,4 @@ struct playera : adat<playeri*, 6> {
 	void		filter(const playeri* object, bool keep);
 	void		shuffle() { zshuffle(data, count); }
 };
+extern playera	players, origin_players;

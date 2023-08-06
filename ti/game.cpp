@@ -1,5 +1,6 @@
 #include "main.h"
 #include "pushvalue.h"
+#include "planet.h"
 #include "player.h"
 #include "script.h"
 #include "system.h"
@@ -53,7 +54,7 @@ static void strategy_phase() {
 	pushvalue push_resid(answers::resid);
 	pushvalue push_header(answers::header);
 	pushvalue push_player(player);
-	for(auto p : game.players) {
+	for(auto p : players) {
 		player = p;
 		answers::header = player->getname();
 		answers::resid = player->getid();
@@ -93,7 +94,7 @@ static void repair_units() {
 }
 
 static void return_strategic_cards() {
-	for(auto p : game.players) {
+	for(auto p : players) {
 		p->use_strategy = false;
 		p->pass_action_phase = false;
 		p->strategy = 0;
@@ -128,7 +129,7 @@ static void action_phase() {
 	auto push_header = answers::header;
 	while(need_repeat) {
 		need_repeat = false;
-		for(auto p : game.players) {
+		for(auto p : players) {
 			if(p->pass_action_phase)
 				continue;
 			player = p;
@@ -142,8 +143,8 @@ static void action_phase() {
 }
 
 void gamei::play() {
-	updatecontrol();
-	updateui();
+	update_control();
+	update_ui();
 	while(!isvictory()) {
 		strategy_phase();
 		action_phase();
@@ -152,7 +153,7 @@ void gamei::play() {
 	};
 }
 
-void gamei::updatecontrol() {
+void update_control() {
 	for(auto& e : bsdata<systemi>()) {
 		if(!e)
 			continue;

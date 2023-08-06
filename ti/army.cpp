@@ -147,7 +147,7 @@ static void anti_fighter_barrage() {
 	defender.hit(attacker_shoots, NonFighter, false);
 	auto defender_shoots = defender.roll(AntiFighterBarrage, AntiFighterBarrageCount);
 	attacker.hit(defender_shoots, NonFighter, false);
-	game.updateui();
+	update_ui();
 	draw::pause();
 }
 
@@ -171,7 +171,7 @@ static void echange_harms() {
 		attacker.hit(hits_defender);
 	} else
 		draw::output(getnm("NoCasualties"));
-	game.updateui();
+	update_ui();
 }
 
 static void space_combat() {

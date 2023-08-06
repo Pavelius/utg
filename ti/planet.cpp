@@ -1,5 +1,5 @@
 #include "pushvalue.h"
-#include "main.h"
+#include "planet.h"
 
 planeti* last_planet;
 

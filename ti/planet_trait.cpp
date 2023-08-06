@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "planet_trait.h"
 
 BSDATA(planet_traiti) = {
 	{"NoTrait"},

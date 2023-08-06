@@ -1,6 +1,7 @@
 #include "pushvalue.h"
 #include "speech.h"
 #include "system.h"
+#include "planet.h"
 #include "player.h"
 #include "main.h"
 
@@ -16,7 +17,7 @@ bool playeri::ishuman() const {
 }
 
 int	playeri::getindex() const {
-	return game.origin_players.find(const_cast<playeri*>(this));
+	return origin_players.find(const_cast<playeri*>(this));
 }
 
 void playeri::actv(const char* format, const char* format_param) const {

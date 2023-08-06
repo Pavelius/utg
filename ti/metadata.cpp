@@ -2,6 +2,8 @@
 #include "condition.h"
 #include "list.h"
 #include "objective.h"
+#include "planet.h"
+#include "planet_trait.h"
 #include "player.h"
 #include "system.h"
 #include "main.h"

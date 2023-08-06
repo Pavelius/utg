@@ -173,6 +173,12 @@
     <ClInclude Include="playera.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="planet.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="planet_trait.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
