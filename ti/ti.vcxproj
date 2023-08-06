@@ -198,6 +198,7 @@
     <ClInclude Include="tech.h" />
     <ClInclude Include="techcolor.h" />
     <ClInclude Include="tile.h" />
+    <ClInclude Include="troop.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>

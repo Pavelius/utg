@@ -6,6 +6,7 @@
 #include "planet_trait.h"
 #include "player.h"
 #include "system.h"
+#include "troop.h"
 #include "main.h"
 #include "variant.h"
 

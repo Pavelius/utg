@@ -53,7 +53,7 @@ static void assign_factions() {
 }
 
 static void determine_speaker() {
-	game.speaker = players.data[rand() % players.count];
+	speaker = players.data[rand() % players.count];
 }
 
 static void set_control(playeri* player, systemi* system) {
@@ -81,7 +81,7 @@ static void prepare_players() {
 
 static void prepare_finish() {
 	player = human_player;
-	game.finale_score = 8;
+	finale_score = 8;
 }
 
 static void clear_galaxy() {

@@ -6,6 +6,7 @@
 struct entitya : public collection<entity> {
 	void			addreach(const systemi* system, int range);
 	entity*			choose(const char* title, const char* cancel = 0, int choose_mode = 0) const;
+	systemi*		choosesystem() const;
 	entity*			getbest(indicator_s v) const;
 	int				getcap() const;
 	int				getproductioncost() const;

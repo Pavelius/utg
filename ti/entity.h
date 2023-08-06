@@ -25,6 +25,7 @@ struct entity : nameable {
 	void				clear();
 	void				discard();
 	void				exhaust();
+	void				focusing() const;
 	int					get(ability_s v) const;
 	int					get(indicator_s v) const;
 	const actioncard*	getactioncard() const;

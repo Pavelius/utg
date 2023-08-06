@@ -4,6 +4,7 @@
 #include "player.h"
 #include "system.h"
 #include "speech.h"
+#include "troop.h"
 
 void initialize_ui();
 static char console_text[4096 * 2];
@@ -25,10 +26,10 @@ static void test_combat() {
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
 	if(!enemy)
 		return;
-	troop::create(bsdata<uniti>::find("Flagman"), enemy, system);
-	troop::create(bsdata<uniti>::find("Destroyer"), enemy, system);
+	create_troop(bsdata<uniti>::find("Flagman"), enemy, system);
+	create_troop(bsdata<uniti>::find("Destroyer"), enemy, system);
 	update_ui();
-	game.focusing(system);
+	system->focusing();
 	system->startcombat();
 }
 

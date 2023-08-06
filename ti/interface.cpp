@@ -8,6 +8,7 @@
 #include "planet.h"
 #include "player.h"
 #include "system.h"
+#include "troop.h"
 #include "main.h"
 
 using namespace draw;
@@ -170,7 +171,7 @@ static void status(const char* id, int value, int maximum, const void* object) {
 static void status(indicator_s v) {
 	switch(v) {
 	case VictoryPoints:
-		status(bsdata<indicatori>::elements[v].id, player->get(v), game.finale_score, bsdata<indicatori>::elements + v);
+		status(bsdata<indicatori>::elements[v].id, player->get(v), finale_score, bsdata<indicatori>::elements + v);
 		break;
 	default:
 		status(bsdata<indicatori>::elements[v].id, player->get(v), bsdata<indicatori>::elements + v);
@@ -470,15 +471,9 @@ void entity::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-troop* gamei::choosetroop(const entitya& source) {
-	answers an;
-	auto result = an.choose(0, getnm("Cancel"), 1);
-	return (troop*)result;
-}
-
-systemi* gamei::choosesystem(const entitya& source) {
+systemi* entitya::choosesystem() const {
 	draw::pause();
-	for(auto p : source)
+	for(auto p : *this)
 		add_maker(p, figure::Circle, size / 3);
 	answers an;
 	auto result = an.choose(0, getnm("Cancel"), 1);
@@ -493,9 +488,12 @@ void gamei::prepareui() {
 	draw::setcamera(h2p({0, 0}, size));
 }
 
-void gamei::focusing(const entity* p) {
-	auto ps = p->getsystem();
-	draw::slidecamera(h2p(i2h(ps->index), size), 48);
+void entity::focusing() const {
+	if(!this)
+		return;
+	auto ps = getsystem();
+	if(ps)
+		draw::slidecamera(h2p(i2h(ps->index), size), 48);
 }
 
 static void update_units(point position, const entity* location) {

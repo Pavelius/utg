@@ -49,7 +49,10 @@ struct playeri : nameable {
 	void			setcontrol(planeti* p);
 };
 extern playeri*	player;
+extern playeri* speaker;
 extern playeri* human_player;
+
+extern int finale_score;
 
 bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);
 

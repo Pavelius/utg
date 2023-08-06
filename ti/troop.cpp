@@ -2,7 +2,8 @@
 #include "planet.h"
 #include "player.h"
 #include "system.h"
-#include "main.h"
+#include "troop.h"
+#include "unit.h"
 
 troop* last_troop;
 
@@ -14,14 +15,14 @@ static troop* addnew() {
 	return bsdata<troop>::add();
 }
 
-troop* troop::create(const char* id, playeri* player) {
+troop* create_troop(const char* id, playeri* player) {
 	auto pu = bsdata<uniti>::find(id);
 	if(!pu)
 		return 0;
-	return create(pu, player, 0);
+	return create_troop(pu, player, 0);
 }
 
-troop* troop::create(const uniti* unit, playeri* player, entity* location) {
+troop* create_troop(const uniti* unit, playeri* player, entity* location) {
 	auto index = getbsi(unit);
 	if(index <= 9)
 		unit = player->getunit(index);

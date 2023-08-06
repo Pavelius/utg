@@ -1,4 +1,5 @@
 #include "player.h"
+#include "troop.h"
 #include "main.h"
 
 static void add_h3(stringbuilder& sb, const char* format, ...) {

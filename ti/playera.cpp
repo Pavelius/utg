@@ -1,5 +1,6 @@
+#include "answers.h"
 #include "player.h"
-#include "main.h"
+#include "playera.h"
 
 playera	players, origin_players;
 

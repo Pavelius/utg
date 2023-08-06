@@ -1,12 +1,19 @@
+#include "entitya.h"
 #include "pushvalue.h"
 #include "speech.h"
 #include "system.h"
 #include "planet.h"
 #include "player.h"
-#include "main.h"
+#include "playera.h"
+#include "strategy.h"
+#include "troop.h"
+#include "unit.h"
 
 playeri* player;
+playeri* speaker;
 playeri* human_player;
+
+int finale_score;
 
 static int d100() {
 	return rand() % 100;

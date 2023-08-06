@@ -4,6 +4,7 @@
 #include "player.h"
 #include "script.h"
 #include "system.h"
+#include "troop.h"
 
 using namespace pathfind;
 

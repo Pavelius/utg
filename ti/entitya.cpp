@@ -1,7 +1,10 @@
-#include "main.h"
+#include "entitya.h"
+#include "pathfind.h"
 #include "planet.h"
 #include "player.h"
 #include "system.h"
+#include "troop.h"
+#include "unit.h"
 
 static int compare_unit(const void* v1, const void* v2) {
 	auto p1 = (uniti*)v1;
@@ -299,7 +302,7 @@ entity* entitya::choose(const char* id, const char* cancel, int choose_mode) con
 	else {
 		auto value = data[0];
 		if(bsdata<systemi>::have(value))
-			return game.choosesystem(*this);
+			return choosesystem();
 		return choose_human(*this, id, cancel, choose_mode);
 	}
 }

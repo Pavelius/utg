@@ -1,7 +1,10 @@
+#include "entitya.h"
+#include "pathfind.h"
 #include "planet.h"
 #include "player.h"
 #include "system.h"
-#include "main.h"
+#include "troop.h"
+#include "unit.h"
 
 systemi* last_system;
 
@@ -35,11 +38,11 @@ planeti* systemi::getbestplanet() const {
 
 void systemi::placement(const uniti* unit, playeri* player) {
 	if(unit->type == Ships)
-		troop::create(unit, player, this);
+		create_troop(unit, player, this);
 	else {
 		auto planet = getbestplanet();
 		if(planet)
-			troop::create(unit, player, planet);
+			create_troop(unit, player, planet);
 	}
 }
 

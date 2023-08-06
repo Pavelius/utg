@@ -8,6 +8,7 @@
 #include "main.h"
 #include "script.h"
 #include "system.h"
+#include "troop.h"
 
 entitya			querry, onboard;
 static playera	players;
@@ -411,7 +412,7 @@ static void no_mecatol_rex(int bonus) {
 }
 
 static void no_speaker(int bonus) {
-	players.filter(game.speaker, false);
+	players.filter(speaker, false);
 }
 
 static void select_pds(int bonus) {
@@ -516,12 +517,12 @@ static void select_players(int bonus) {
 
 static void choose_planet(int bonus) {
 	last_planet = (planeti*)querry.choose(0, 0, 2);
-	game.focusing(last_planet->getsystem());
+	last_planet->getsystem()->focusing();
 }
 
 static void choose_troop(int bonus) {
 	last_troop = (troop*)querry.choose(0, 0, 2);
-	game.focusing(last_troop->getsystem());
+	last_troop->getsystem()->focusing();
 }
 
 static void choose_player(int bonus) {
@@ -869,7 +870,7 @@ static void add_neighboring(int bonus) {
 
 static void activate_system(int bonus) {
 	if(last_system) {
-		game.focusing(last_system);
+		last_system->focusing();
 		last_system->setactivate(player, bonus >= 0);
 	}
 }
@@ -897,7 +898,7 @@ static void filter_controled(int bonus) {
 
 static void focus_home_system(int bonus) {
 	if(answers::interactive)
-		game.focusing(player->gethome());
+		player->gethome()->focusing();
 }
 
 static void exhaust(int bonus) {
@@ -969,7 +970,7 @@ static void filter_active_player(int bonus) {
 }
 
 static void set_speaker(int bonus) {
-	game.speaker = player;
+	speaker = player;
 }
 
 static void action_card(int bonus) {
