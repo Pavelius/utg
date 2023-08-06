@@ -32,6 +32,8 @@ BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
 BSDATAC(techunit, 32)
 
+NOBSDATA(color)
+
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
@@ -44,6 +46,9 @@ BSMETA(actioncard) = {
 	{}};
 BSMETA(colori) = {
 	BSREQ(id),
+	{}};
+BSMETA(color) = {
+	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
 BSMETA(entity) = {
 	BSREQ(id),
@@ -72,6 +77,7 @@ BSMETA(playeri) = {
 	BSREQ(troops),
 	BSREQ(startup),
 	BSFLG(race, racefi),
+	BSREQ(fore),
 	{}};
 BSMETA(racefi) = {
 	BSREQ(id),

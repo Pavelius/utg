@@ -1,16 +1,16 @@
 #Player
 
-SardakkNorr commodities(3)
+SardakkNorr commodities(3) fore(40 40 40)
  race Unrelenting
-TheBaronyOfLetnev commodities(2)
+TheBaronyOfLetnev commodities(2) fore(235 90 70)
  startup AntimassDeflectors PlasmaScoring
-TheEmiratesOfHacan commodities(6)
+TheEmiratesOfHacan commodities(6) fore(255 159 26)
  startup AntimassDeflectors SarweenTools
-TheFederationOfSol commodities(4)
+TheFederationOfSol commodities(4) fore(0 121 191)
  startup AntimassDeflectors NeuralMotivator
-TheL1Z1XMindnet commodities(2)
+TheL1Z1XMindnet commodities(2) fore(165 36 18)
  startup NeuralMotivator PlasmaScoring
-TheUniversitiesOfJolNar commodities(4)
+TheUniversitiesOfJolNar commodities(4) fore(195 119 224)
  startup AntimassDeflectors NeuralMotivator SarweenTools PlasmaScoring
 
 #Unit

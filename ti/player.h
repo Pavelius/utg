@@ -1,3 +1,4 @@
+#include "color.h"
 #include "nameable.h"
 #include "indicator.h"
 #include "tech.h"
@@ -14,6 +15,7 @@ enum racef_s : unsigned char;
 
 struct playeri : nameable {
 	char			indicators[VictoryPoints + 1];
+	color			fore;
 	techa			tech, tech_used;
 	flagable<4>		race;
 	char			commodities;
