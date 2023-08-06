@@ -1,4 +1,4 @@
-#include "nameable.h"
+#include "decka.h"
 #include "variant.h"
 
 #pragma once
@@ -10,3 +10,4 @@ struct actioncard : nameable {
 	char			count;
 	bool			isallow() const;
 };
+extern decka actioncards;

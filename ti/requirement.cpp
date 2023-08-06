@@ -1,4 +1,4 @@
-#include "main.h"
+#include "tech.h"
 
 bool requirement::match(const requirement& e) const {
 	for(auto i = 0; i < 4; i++) {

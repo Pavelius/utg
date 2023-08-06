@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "unit_type.h"
 
 BSDATA(unit_typei) = {
 	{"GroundForces"},

@@ -1,7 +1,11 @@
-#include "main.h"
+#include "actioncard.h"
+#include "analize.h"
+#include "pathfind.h"
 #include "planet.h"
 #include "player.h"
+#include "playera.h"
 #include "system.h"
+#include "unit.h"
 
 using namespace pathfind;
 
@@ -27,6 +31,31 @@ static pointline players6[] = {
 	{{2, 6}, 2},
 };
 static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
+
+static point getdirection(point hex, int direction) {
+	static point evenr_directions[2][6] = {
+		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
+		{{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}},
+	};
+	auto parity = hex.y & 1;
+	auto offset = evenr_directions[parity][direction];
+	return hex + offset;
+}
+
+static indext getdirection(short unsigned index, int direction) {
+	if(index == Blocked)
+		return Blocked;
+	auto hex = getdirection(i2h(index), direction);
+	if(hex.x < 0 || hex.y < 0 || hex.x >= hms || hex.y >= hms)
+		return Blocked;
+	return h2i(hex);
+}
+
+void initialize_game() {
+	pathfind::maxcount = hms * hms;
+	pathfind::maxdir = 6;
+	pathfind::to = getdirection;
+}
 
 static void assign_prototypes() {
 	for(auto p : origin_players) {
@@ -152,7 +181,7 @@ static void create_action_card_deck() {
 	actioncards.shuffle();
 }
 
-void gamei::prepare() {
+void prepare_game() {
 	clear_galaxy();
 	assign_factions();
 	assign_prototypes();
@@ -163,5 +192,5 @@ void gamei::prepare() {
 	create_galaxy();
 	create_action_card_deck();
 	prepare_finish();
-	prepareui();
+	prepare_game_ui();
 }

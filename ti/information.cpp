@@ -1,6 +1,9 @@
+#include "actioncard.h"
 #include "player.h"
+#include "script.h"
+#include "strategy.h"
 #include "troop.h"
-#include "main.h"
+#include "unit.h"
 
 static void add_h3(stringbuilder& sb, const char* format, ...) {
 	sb.addn("###");

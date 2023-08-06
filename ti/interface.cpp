@@ -1,15 +1,19 @@
+#include "analize.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"
 #include "draw_object.h"
 #include "draw_marker.h"
 #include "draw_strategy.h"
+#include "entitya.h"
 #include "pushvalue.h"
 #include "planet.h"
 #include "player.h"
+#include "playera.h"
+#include "script.h"
 #include "system.h"
 #include "troop.h"
-#include "main.h"
+#include "unit.h"
 
 using namespace draw;
 
@@ -481,7 +485,7 @@ systemi* entitya::choosesystem() const {
 	return (systemi*)result;
 }
 
-void gamei::prepareui() {
+void prepare_game_ui() {
 	object::painting = object_paint;
 	clearobjects();
 	add_systems();

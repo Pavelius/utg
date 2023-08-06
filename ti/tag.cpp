@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "tag.h"
 
 BSDATA(tagi) {
 	{"Player1"},

@@ -1,3 +1,4 @@
+#include "actioncard.h"
 #include "bsreq.h"
 #include "condition.h"
 #include "list.h"
@@ -5,12 +6,20 @@
 #include "planet.h"
 #include "planet_trait.h"
 #include "player.h"
+#include "racef.h"
+#include "script.h"
+#include "strategy.h"
 #include "system.h"
+#include "tech.h"
+#include "techunit.h"
 #include "troop.h"
-#include "main.h"
+#include "unit.h"
+#include "unit_type.h"
 #include "variant.h"
 
 template<> void ftstatus<script>(const void* object, stringbuilder& sb);
+
+decka actioncards;
 
 BSDATAC(actioncard, 128)
 BSDATAC(entity, 512)
@@ -21,7 +30,7 @@ BSDATAC(strategyi, 8)
 BSDATAC(systemi, 64)
 BSDATAC(troop, 256)
 BSDATAC(uniti, 32)
-BSDATAC(unitupgrade, 32)
+BSDATAC(techunit, 32)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -108,7 +117,7 @@ BSMETA(uniti) = {
 BSMETA(unit_typei) = {
 	BSREQ(id),
 	{}};
-BSMETA(unitupgrade) = {
+BSMETA(techunit) = {
 	BSREQ(id),
 	BSENM(type, unit_typei),
 	BSDST(abilities, abilityi),
@@ -130,9 +139,9 @@ BSDATA(varianti) = {
 	{"Strategy", VAR(strategyi, 1), ftstatus<strategyi>},
 	{"System", VAR(systemi, 1)},
 	{"Tech", VAR(techi, 1), ftstatus<techi>},
+	{"TechUnit", VAR(techunit, 1)},
 	{"Troop", VAR(troop, 3), ftstatus<troop>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
-	{"UnitUpgrade", VAR(unitupgrade, 1)},
 };
 BSDATAF(varianti)

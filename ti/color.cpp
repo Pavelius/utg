@@ -1,4 +1,5 @@
-#include "main.h"
+#include "crt.h"
+#include "tech.h"
 
 BSDATA(colori) = {
 	{"NoTech"},

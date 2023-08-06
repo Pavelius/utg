@@ -12,3 +12,4 @@ enum indicator_s : unsigned char {
 struct indicatori : nameable {
 	void		getinfo(stringbuilder& sb) const;
 };
+extern indicator_s last_indicator;

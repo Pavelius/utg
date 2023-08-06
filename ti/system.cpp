@@ -5,6 +5,7 @@
 #include "system.h"
 #include "troop.h"
 #include "unit.h"
+#include "unit_type.h"
 
 systemi* last_system;
 

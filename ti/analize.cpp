@@ -1,12 +1,15 @@
-#include "main.h"
+#include "analize.h"
+#include "crt.h"
+#include "pathfind.h"
+#include "point.h"
 
 using namespace pathfind;
 
 namespace {
 struct pointline {
-	point		position;
-	char		count;
-	char		weight;
+	point	position;
+	char	count;
+	char	weight;
 };
 }
 

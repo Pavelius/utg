@@ -54,7 +54,15 @@ extern playeri* human_player;
 
 extern int finale_score;
 
+int	getrate(indicator_s need, indicator_s currency, int count);
+
 bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);
 
+void initialize_game();
+void limit_by_capacity();
+void play_game();
+void players_sort_by_initiative();
+void prepare_game();
+void prepare_game_ui();
 void update_control();
 void update_ui();

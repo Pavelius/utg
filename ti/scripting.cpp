@@ -1,3 +1,4 @@
+#include "actioncard.h"
 #include "army.h"
 #include "condition.h"
 #include "pathfind.h"
@@ -5,10 +6,13 @@
 #include "planet.h"
 #include "planet_trait.h"
 #include "player.h"
-#include "main.h"
+#include "playera.h"
 #include "script.h"
+#include "strategy.h"
 #include "system.h"
 #include "troop.h"
+#include "unit.h"
+#include "unit_type.h"
 
 entitya			querry, onboard;
 static playera	players;
@@ -548,28 +552,28 @@ static void select_planets(const playeri* player, bool iscontrol) {
 static void ask_convert_resource() {
 	select_planets(player, true);
 	querry.match(Exhaust, false);
-	querry.match(game.indicator, true);
-	auto total = querry.getsummary(game.indicator);
+	querry.match(last_indicator, true);
+	auto total = querry.getsummary(last_indicator);
 	if(total < choose_options)
 		return;
 	for(auto p : querry)
-		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(game.indicator));
+		an.add(p, getnm("PayAnswer"), getnm(p->id), p->get(last_indicator));
 }
 static void apply_pay() {
 	if(bsdata<planeti>::have(choose_result)) {
 		auto p = (planeti*)choose_result;
-		choose_options -= p->get(game.indicator);
+		choose_options -= p->get(last_indicator);
 		p->exhaust();
 	}
 }
 static void convert_resource(indicator_s need, indicator_s currency, int rate) {
-	pushvalue push_options(choose_options, game.rate(need, currency, rate));
-	pushvalue push_currency(game.indicator, currency);
+	pushvalue push_options(choose_options, getrate(need, currency, rate));
+	pushvalue push_currency(last_indicator, currency);
 	choose_pay("ChoosePay", "DoNotPay", ask_convert_resource, apply_pay, 0, rate);
 }
 static void complex_pay(indicator_s need, int rate) {
 	pushvalue push_options(choose_options, rate);
-	pushvalue push_currency(game.indicator, need);
+	pushvalue push_currency(last_indicator, need);
 	choose_pay("PayResources", 0, ask_convert_resource, apply_pay, 0, rate);
 }
 
@@ -978,6 +982,11 @@ static void action_card(int bonus) {
 		auto p = actioncards.pick();
 		if(p)
 			p->player = player;
+	}
+}
+
+void limit_by_capacity() {
+	for(auto& e : bsdata<systemi>()) {
 	}
 }
 

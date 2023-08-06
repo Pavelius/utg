@@ -63,7 +63,7 @@ JNSHylarim race(TheUniversitiesOfJolNar)
  abilities Cost(8) Combat(6) CombatCount(2) Move(1) Capacity(3) Reinforcement(1)
  tags SustainDamage AdditionalHitOn9n10
 
-#UnitUpgrade
+#TechUnit
 
 SpaceDockII type(Structures) replace(SpaceDock) required(0 0 0 2)
  abilities CostCount(1) Production(4) MaximumInOneLocation(1)

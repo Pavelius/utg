@@ -1,4 +1,7 @@
-#include "main.h"
+#include "crt.h"
+#include "indicator.h"
+
+indicator_s last_indicator;
 
 BSDATA(indicatori) = {
 	{"TradeGoods"},

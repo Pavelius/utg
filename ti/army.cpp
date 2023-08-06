@@ -1,7 +1,10 @@
 #include "army.h"
 #include "player.h"
 #include "pushvalue.h"
-#include "main.h"
+#include "racef.h"
+#include "unit.h"
+#include "troop.h"
+#include "script.h"
 
 army*				army::last;
 static army			attacker, defender;

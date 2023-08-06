@@ -99,9 +99,6 @@
     <ClCompile Include="army.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="race.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="prototype.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -113,9 +110,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="strategy.h">
       <Filter>Logic</Filter>
     </ClInclude>
@@ -180,6 +174,21 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="troop.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="unit_type.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="racef.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="techunit.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="agenda.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="analize.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

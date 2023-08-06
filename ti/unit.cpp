@@ -4,6 +4,7 @@
 #include "system.h"
 #include "troop.h"
 #include "unit.h"
+#include "unit_type.h"
 
 int	uniti::getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 

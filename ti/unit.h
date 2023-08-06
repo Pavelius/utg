@@ -4,11 +4,10 @@
 #pragma once
 
 struct playeri;
-
-enum unit_type_s : unsigned char {
-	GroundForces, Ships, Structures,
-};
 struct prototype;
+
+enum unit_type_s : unsigned char;
+
 struct uniti : nameable {
 	char			abilities[Capacity + 1];
 	unit_type_s		type;

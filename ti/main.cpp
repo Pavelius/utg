@@ -1,6 +1,5 @@
 #include "bsreq.h"
 #include "draw_strategy.h"
-#include "main.h"
 #include "player.h"
 #include "system.h"
 #include "speech.h"
@@ -20,7 +19,7 @@ static void test_speech() {
 }
 
 static void test_combat() {
-	game.prepare();
+	prepare_game();
 	update_control();
 	auto system = human_player->gethome();
 	auto enemy = bsdata<playeri>::find("SardakkNorr");
@@ -40,8 +39,8 @@ static void start_game() {
 	util_main();
 #endif
 	//test_combat();
-	game.prepare();
-	game.play();
+	prepare_game();
+	play_game();
 }
 
 static void initialize() {
@@ -54,7 +53,7 @@ int main(int argc, char* argv[]) {
 	initialize_ui();
 	answers::console = &console;
 	answers::prompt = console_text;
-	gamei::initialize();
+	initialize_game();
 	return draw::strategy(start_game, initialize);
 }
 

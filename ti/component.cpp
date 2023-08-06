@@ -1,6 +1,5 @@
-#include "main.h"
+#include "actioncard.h"
 #include "player.h"
-#include "script.h"
 
 bool actioncard::isallow() const {
 	if(parent.iskind<playeri>())
