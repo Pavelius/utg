@@ -63,9 +63,6 @@
     <ClCompile Include="playera.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="planet_trait.cpp">
       <Filter>Logic</Filter>
     </ClCompile>

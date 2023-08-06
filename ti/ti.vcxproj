@@ -149,7 +149,6 @@
     <ClCompile Include="component.cpp" />
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="galaxy.cpp" />
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main_util.cpp" />

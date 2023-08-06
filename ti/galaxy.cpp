@@ -4,9 +4,13 @@
 #include "planet.h"
 #include "player.h"
 #include "playera.h"
+#include "pushvalue.h"
+#include "script.h"
 #include "system.h"
 #include "unit.h"
+#include "troop.h"
 
+typedef adat<systemi*> systema;
 using namespace pathfind;
 
 namespace {
@@ -129,8 +133,6 @@ static void assign_starting_positions() {
 	}
 }
 
-typedef adat<systemi*> systema;
-
 static void shuffle(systema& source) {
 	zshuffle(source.data, source.count);
 }
@@ -193,4 +195,130 @@ void prepare_game() {
 	create_action_card_deck();
 	prepare_finish();
 	prepare_game_ui();
+}
+
+static void strategy_phase() {
+	pushvalue push_interactive(answers::interactive, false);
+	pushvalue push_resid(answers::resid);
+	pushvalue push_header(answers::header);
+	pushvalue push_player(player);
+	for(auto p : players) {
+		player = p;
+		answers::header = player->getname();
+		answers::resid = player->getid();
+		script::run("FocusHomeSystem", 0);
+		if(!player->strategy)
+			script::run("ChooseStrategy", 0);
+	}
+	players_sort_by_initiative();
+}
+
+static void score_objectives() {
+}
+
+static void reveal_public_objective() {
+}
+
+static void draw_action_cards() {
+}
+
+static void remove_command_tokens() {
+	for(auto& e : bsdata<systemi>()) {
+		e.set(Player1, false);
+		e.set(Player2, false);
+		e.set(Player3, false);
+		e.set(Player4, false);
+		e.set(Player5, false);
+		e.set(Player6, false);
+	}
+}
+
+static void ready_cards() {
+	for(auto& e : bsdata<planeti>())
+		e.flags.remove(Exhaust);
+}
+
+static void repair_units() {
+	for(auto& e : bsdata<troop>()) {
+		if(e.is(RepairSustainDamage) && e.is(Exhaust)) {
+			e.set(Exhaust, false);
+			if(e.player->ishuman())
+				e.status(0, "%1 %-Repaired");
+		}
+	}
+	draw::pause();
+}
+
+static void return_strategic_cards() {
+	for(auto p : players) {
+		p->use_strategy = false;
+		p->pass_action_phase = false;
+		p->strategy = 0;
+	}
+}
+
+static void agenda_phase() {
+}
+
+static void status_phase() {
+	score_objectives();
+	reveal_public_objective();
+	draw_action_cards();
+	remove_command_tokens();
+	return_strategic_cards();
+	repair_units();
+	ready_cards();
+}
+
+static bool isvictory() {
+	return false;
+}
+
+static void action_phase() {
+	auto need_repeat = true;
+	auto push_player = player;
+	auto push_header = answers::header;
+	while(need_repeat) {
+		need_repeat = false;
+		for(auto p : players) {
+			if(p->pass_action_phase)
+				continue;
+			player = p;
+			answers::header = player->getname();
+			script::run("ChooseAction", 0);
+			need_repeat = true;
+		}
+	}
+	answers::header = push_header;
+	player = push_player;
+}
+
+void play_game() {
+	update_control();
+	update_ui();
+	while(!isvictory()) {
+		strategy_phase();
+		action_phase();
+		status_phase();
+		agenda_phase();
+	};
+}
+
+void update_control() {
+	for(auto& e : bsdata<systemi>()) {
+		if(!e)
+			continue;
+		e.player = 0;
+	}
+	for(auto& e : bsdata<troop>()) {
+		if(!e)
+			continue;
+		if(bsdata<systemi>::have(e.location)
+			|| bsdata<planeti>::have(e.location)) {
+			if(bsdata<systemi>::have(e.location))
+				e.location->player = e.player;
+			else
+				e.location->player = e.player;
+		}
+	}
 }
