@@ -6,6 +6,7 @@
 #include "draw_strategy.h"
 #include "pushvalue.h"
 #include "player.h"
+#include "system.h"
 #include "main.h"
 
 using namespace draw;

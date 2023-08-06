@@ -2,6 +2,7 @@
 #include "pushvalue.h"
 #include "player.h"
 #include "script.h"
+#include "system.h"
 
 using namespace pathfind;
 

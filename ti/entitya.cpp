@@ -1,5 +1,6 @@
 #include "main.h"
 #include "player.h"
+#include "system.h"
 
 static int compare_unit(const void* v1, const void* v2) {
 	auto p1 = (uniti*)v1;

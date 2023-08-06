@@ -189,10 +189,13 @@
     <ClInclude Include="objective.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="playera.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="system.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="tech.h" />
     <ClInclude Include="techcolor.h" />
+    <ClInclude Include="tile.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>

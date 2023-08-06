@@ -5,6 +5,7 @@
 #include "player.h"
 #include "main.h"
 #include "script.h"
+#include "system.h"
 
 entitya			querry, onboard;
 static playera	players;

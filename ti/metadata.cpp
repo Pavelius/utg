@@ -3,6 +3,7 @@
 #include "list.h"
 #include "objective.h"
 #include "player.h"
+#include "system.h"
 #include "main.h"
 #include "variant.h"
 

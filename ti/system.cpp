@@ -1,7 +1,16 @@
 #include "player.h"
+#include "system.h"
 #include "main.h"
 
 systemi* last_system;
+
+systemi::operator bool() const {
+	return index != pathfind::Blocked;
+}
+
+bool systemi::isplay() const {
+	return index != pathfind::Blocked;
+}
 
 bool systemi::isactivated(const playeri* p) const {
 	auto i = bsdata<playeri>::source.indexof(p);

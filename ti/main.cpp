@@ -2,6 +2,7 @@
 #include "draw_strategy.h"
 #include "main.h"
 #include "player.h"
+#include "system.h"
 #include "speech.h"
 
 void initialize_ui();

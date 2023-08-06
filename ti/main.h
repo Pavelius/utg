@@ -3,6 +3,7 @@
 #include "decka.h"
 #include "pathfind.h"
 #include "point.h"
+#include "playera.h"
 #include "script.h"
 #include "strategy.h"
 #include "tech.h"
@@ -16,11 +17,6 @@ enum planet_trait_s : unsigned char {
 };
 enum racef_s : unsigned char {
 	Assimilate, Fragile, Unrelenting
-};
-enum tile_s : unsigned char {
-	NoSpecialTile, WormholeAlpha, WormholeBeta, AsteroidField, Nebula, Supernova, GravityRift,
-};
-struct tilei : nameable {
 };
 struct planet_traiti : nameable {
 };
@@ -43,34 +39,6 @@ struct planeti : entity {
 	void			paint(unsigned flags) const;
 };
 extern planeti* last_planet;
-struct playera : adat<playeri*, 6> {
-	playeri*		choose(const char* title);
-	void			filter(const playeri* object, bool keep);
-	void			shuffle() { zshuffle(data, count); }
-};
-struct systemi : entity {
-	playeri*		home;
-	char			special_index;
-	tile_s			special;
-	pathfind::indext index;
-	explicit operator bool() const { return index != pathfind::Blocked; }
-	static void		blockenemy(const playeri* player);
-	static void		blockmove();
-	planeti*		getbestplanet() const;
-	int				getcapacity(bool include_docks = true) const;
-	bool			isactivated(const playeri* p) const;
-	bool			isplay() const { return index != pathfind::Blocked; }
-	void			limitcapacity();
-	static systemi*	findbyindex(pathfind::indext i);
-	static void		markzerocost(const playeri* player);
-	bool			movestop() const;
-	bool			movethrought() const;
-	void			paint() const;
-	void			placement(const uniti* unit, playeri* player);
-	void			placement(variants source, playeri* player);
-	void			setactivate(const playeri* p, bool active);
-};
-extern systemi* last_system;
 struct troop : entity {
 	flagable<1>		flags;
 	static troop*	create(const char* id, playeri* player);
@@ -121,5 +89,3 @@ inline point i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / hms
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 
 extern entitya querry;
-
-bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);

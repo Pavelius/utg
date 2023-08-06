@@ -164,6 +164,15 @@
     <ClInclude Include="player.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="system.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tile.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="playera.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

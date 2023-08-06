@@ -1,5 +1,6 @@
 #include "pushvalue.h"
 #include "speech.h"
+#include "system.h"
 #include "player.h"
 #include "main.h"
 
