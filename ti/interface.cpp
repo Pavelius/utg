@@ -94,11 +94,6 @@ static void show_players() {
 	caret.x -= 16;
 }
 
-static void textcnw(const char* name) {
-	caret.x += (width - textw(name)) / 2;
-	text(name);
-}
-
 static const char* getnmsh(const char* id) {
 	auto pn = getnme(str("%1Short", id));
 	if(!pn)
@@ -186,7 +181,7 @@ static void show_indicators() {
 	status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));
 }
 
-void status_info(void) {
+void status_info() {
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::border;
@@ -234,14 +229,6 @@ void systemi::paint() const {
 			caret.y += 16;
 		}
 	}
-	caret = push_caret;
-}
-
-static void textcn(const char* format) {
-	auto push_caret = caret;
-	caret.x -= (textw(format) + 1) / 2;
-	caret.y -= (texth() + 1) / 2;
-	text(format);
 	caret = push_caret;
 }
 
@@ -375,30 +362,6 @@ static void paint_planet() {
 	((planeti*)last_object->data)->paint(last_object->flags);
 }
 
-static void paint_system() {
-	((systemi*)last_object->data)->paint();
-}
-
-static void paint_troop() {
-	((troop*)last_object->data)->paint();
-}
-
-static void paint_marker() {
-	((marker*)last_object->data)->paint();
-}
-
-//static void object_paint() {
-//	auto p = last_object->data;
-//	if(bsdata<systemi>::have(p))
-//		((systemi*)p)->paint();
-//	else if(bsdata<planeti>::have(p))
-//		((planeti*)p)->paint(last_object->flags);
-//	else if(bsdata<troop>::have(p))
-//		((troop*)p)->paint();
-//	else if(bsdata<marker>::have(p))
-//		((marker*)p)->paint();
-//}
-
 static void add_planet(planeti* ps, point pt, int index) {
 	auto p = addobject(pt, ps, paint_planet);
 	p->priority = 2;
@@ -425,7 +388,7 @@ static void add_planets(point pt, const systemi* ps) {
 }
 
 static void add_system(systemi* ps, point pt) {
-	auto p = addobject(pt, ps, paint_system);
+	auto p = addobject(pt, ps, ftpaint<systemi>);
 	p->priority = 3;
 	add_planets(pt, ps);
 }
@@ -462,7 +425,7 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	pm->size = size;
 	pm->fore = colors::green;
 	pm->data = p;
-	auto ps = addobject(*pd, pm, paint_marker);
+	auto ps = addobject(*pd, pm, ftpaint<marker>);
 	ps->priority = priority;
 	return ps;
 }
@@ -482,7 +445,6 @@ systemi* entitya::choosesystem() const {
 }
 
 void prepare_game_ui() {
-	// object::painting = object_paint;
 	clearobjects();
 	add_systems();
 	draw::setcamera(h2p({0, 0}, size));
@@ -510,7 +472,7 @@ static void update_units(point position, const entity* location) {
 	for(auto pt : source) {
 		auto p = findobject(pt);
 		if(!p) {
-			p = addobject({(short)x, (short)y}, (troop*)pt, paint_troop);
+			p = addobject({(short)x, (short)y}, (troop*)pt, ftpaint<troop>);
 			p->priority = 15;
 		}
 		if(p->x != x || p->y != y) {
@@ -630,7 +592,6 @@ void tech_selection() {
 }
 
 void initialize_ui() {
-	object::initialize();
 	pbackground = main_background;
 	pfinish = main_finish;
 }

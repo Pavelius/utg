@@ -32,10 +32,8 @@ struct object : drawable {
 	const void*		data;
 	unsigned short	frame;
 	fnevent			painting;
-	static object	def;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
-	static void		initialize();
 	void			paint() const;
 };
 
@@ -59,6 +57,6 @@ object* findobject(const void* p);
 
 void* chooseobject();
 
-//template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
+template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
 
 }

@@ -10,7 +10,6 @@ const size_t max_object_count = 512;
 BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
-object object::def;
 point objects_mouse;
 
 static rect objects_screen;
@@ -116,7 +115,8 @@ draworder* object::addorder(int milliseconds, draworder* depend) {
 }
 
 void object::clear() {
-	*this = def;
+	painting = 0;
+	data = 0;
 }
 
 void draw::splashscreen(unsigned milliseconds) {
@@ -130,7 +130,6 @@ void object::paint() const {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
 	last_object = const_cast<object*>(this);
-	//painting();
 	painting();
 	draw::alpha = push_alpha;
 }
@@ -179,12 +178,6 @@ void draw::paint_objects() {
 	caret = push_caret;
 }
 
-void object::initialize() {
-	def.x = def.y = -10000;
-	def.priority = 64;
-	def.alpha = 255;
-}
-
 void* draw::chooseobject() {
 	draw::scene(paint_objects);
 	return (void*)getresult();
@@ -203,10 +196,13 @@ void draw::showobjects() {
 
 object*	draw::addobject(point screen, void* data, fnevent painting) {
 	auto p = bsdata<object>::add();
-	*p = object::def;
 	p->x = screen.x; p->y = screen.y;
 	p->painting = painting;
 	p->data = data;
+	p->flags = 0;
+	p->frame = 0;
+	p->priority = 64;
+	p->alpha = 255;
 	return p;
 }
 
