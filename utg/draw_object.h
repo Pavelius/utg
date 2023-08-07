@@ -31,18 +31,21 @@ struct draworder : drawable {
 struct object : drawable {
 	const void*		data;
 	unsigned short	frame;
+	fnevent			painting;
 	static object	def;
-	static fnevent	painting;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	static void		initialize();
 	void			paint() const;
 };
+
 extern object* last_object;
+
 bool cameravisible(point goal, int border = 48);
-void inputcamera();
 bool mouseinobjects();
+
 void clearobjects();
+void inputcamera();
 void focusing(point goal);
 void paint_objects();
 void setcamera(point v);
@@ -50,8 +53,12 @@ void slidecamera(point v, int step = 16);
 void splashscreen(unsigned milliseconds);
 void showobjects();
 void waitall();
-object* addobject(int x, int y);
-object* addobject(point screen, void* data);
+
+object* addobject(point screen, void* data, fnevent painting);
 object* findobject(const void* p);
+
 void* chooseobject();
+
+//template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
+
 }

@@ -57,28 +57,11 @@ static point planet_position(point caret, int index) {
 	return position[index];
 }
 
-static void texth2c(const char* format) {
-	auto push_font = font;
-	auto push_caret = caret;
-	font = metrics::h2;
-	caret.x -= textw(format) / 2;
-	text(format);
-	caret = push_caret;
-	font = push_font;
-}
-
 static void texth2cg(const char* format) {
 	auto push_fore = fore;
 	fore = fore.mix(colors::window, 64);
 	texth2c(format);
 	fore = push_fore;
-}
-
-static void text(const char* format, point offset, void(*proc)(const char*)) {
-	auto push_caret = caret;
-	caret = caret + offset;
-	proc(format);
-	caret = push_caret;
 }
 
 static void show_players() {
@@ -388,22 +371,37 @@ void planeti::paint(unsigned flags) const {
 		image(gres("races_small", "art/objects"), getbsi(player), 0);
 }
 
-static void object_paint() {
-	auto p = last_object->data;
-	if(bsdata<systemi>::have(p))
-		((systemi*)p)->paint();
-	else if(bsdata<planeti>::have(p))
-		((planeti*)p)->paint(last_object->flags);
-	else if(bsdata<troop>::have(p))
-		((troop*)p)->paint();
-	else if(bsdata<marker>::have(p))
-		((marker*)p)->paint();
+static void paint_planet() {
+	((planeti*)last_object->data)->paint(last_object->flags);
 }
 
+static void paint_system() {
+	((systemi*)last_object->data)->paint();
+}
+
+static void paint_troop() {
+	((troop*)last_object->data)->paint();
+}
+
+static void paint_marker() {
+	((marker*)last_object->data)->paint();
+}
+
+//static void object_paint() {
+//	auto p = last_object->data;
+//	if(bsdata<systemi>::have(p))
+//		((systemi*)p)->paint();
+//	else if(bsdata<planeti>::have(p))
+//		((planeti*)p)->paint(last_object->flags);
+//	else if(bsdata<troop>::have(p))
+//		((troop*)p)->paint();
+//	else if(bsdata<marker>::have(p))
+//		((marker*)p)->paint();
+//}
+
 static void add_planet(planeti* ps, point pt, int index) {
-	auto p = addobject(pt.x, pt.y);
+	auto p = addobject(pt, ps, paint_planet);
 	p->priority = 2;
-	p->data = ps;
 	p->frame = ps->frame;
 	switch(index) {
 	case 1: p->flags |= ImageMirrorH; break;
@@ -427,9 +425,8 @@ static void add_planets(point pt, const systemi* ps) {
 }
 
 static void add_system(systemi* ps, point pt) {
-	auto p = addobject(pt.x, pt.y);
+	auto p = addobject(pt, ps, paint_system);
 	p->priority = 3;
-	p->data = ps;
 	add_planets(pt, ps);
 }
 
@@ -465,8 +462,7 @@ static draw::object* add_maker(void* p, figure shape, int size, char priority = 
 	pm->size = size;
 	pm->fore = colors::green;
 	pm->data = p;
-	auto ps = addobject(pd->x, pd->y);
-	ps->data = pm;
+	auto ps = addobject(*pd, pm, paint_marker);
 	ps->priority = priority;
 	return ps;
 }
@@ -486,7 +482,7 @@ systemi* entitya::choosesystem() const {
 }
 
 void prepare_game_ui() {
-	object::painting = object_paint;
+	// object::painting = object_paint;
 	clearobjects();
 	add_systems();
 	draw::setcamera(h2p({0, 0}, size));
@@ -514,8 +510,7 @@ static void update_units(point position, const entity* location) {
 	for(auto pt : source) {
 		auto p = findobject(pt);
 		if(!p) {
-			p = addobject(x, y);
-			p->data = pt;
+			p = addobject({(short)x, (short)y}, (troop*)pt, paint_troop);
 			p->priority = 15;
 		}
 		if(p->x != x || p->y != y) {

@@ -246,6 +246,7 @@ void					strokeout(fnevent proc, int dx = 0);
 void					syscursor(bool enable);
 void					text(const char* string, int count = -1, unsigned flags = 0);
 int						text(rect rc, const char* string, unsigned state = 0, int* max_width = 0);
+void					text(const char* format, point offset, void(*proc)(const char*));
 void					texta(const char* string, unsigned state = 0);
 void					textas(const char* string);
 void					textc(const char* string, int count = -1, unsigned flags = 0);
@@ -256,6 +257,7 @@ void					textf(const char* string, const char*& cashe_string, int& cashe_origin)
 void					textfs(const char* string);
 int						texth();
 int						texth(const char* string, int width);
+void					texth2c(const char* format);
 int						textw(int sym);
 int						textw(const char* string, int count = -1);
 int						textw(rect& rc, const char* string);

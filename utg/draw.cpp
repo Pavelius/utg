@@ -1762,6 +1762,23 @@ void draw::texta(const char* string, unsigned state) {
 	caret = push_caret;
 }
 
+void draw::texth2c(const char* format) {
+	auto push_font = font;
+	auto push_caret = caret;
+	font = metrics::h2;
+	caret.x -= textw(format) / 2;
+	text(format);
+	caret = push_caret;
+	font = push_font;
+}
+
+void draw::text(const char* format, point offset, void(*proc)(const char*)) {
+	auto push_caret = caret;
+	caret = caret + offset;
+	proc(format);
+	caret = push_caret;
+}
+
 static void hilite_text_line(int x, int y, int width, int height, const char* string, int count, unsigned state, int i1, int i2) {
 	int w = draw::textw(string, count);
 	auto push_caret = caret;

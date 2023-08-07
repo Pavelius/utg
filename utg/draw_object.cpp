@@ -10,7 +10,6 @@ const size_t max_object_count = 512;
 BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
-fnevent draw::object::painting;
 object object::def;
 point objects_mouse;
 
@@ -131,6 +130,7 @@ void object::paint() const {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
 	last_object = const_cast<object*>(this);
+	//painting();
 	painting();
 	draw::alpha = push_alpha;
 }
@@ -162,8 +162,6 @@ static void sortobjects(object** pb, size_t count) {
 
 void draw::paint_objects() {
 	static object* source[max_object_count];
-	if(!object::painting)
-		return;
 	auto push_caret = caret;
 	auto push_clip = clipping;
 	objects_mouse = camera + hot.mouse;
@@ -171,10 +169,12 @@ void draw::paint_objects() {
 	setclip(objects_screen);
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
+	auto push_object = last_object;
 	for(size_t i = 0; i < count; i++) {
 		draw::caret = source[i]->getscreen();
 		source[i]->paint();
 	}
+	last_object = push_object;
 	clipping = push_clip;
 	caret = push_caret;
 }
@@ -201,17 +201,11 @@ void draw::showobjects() {
 	draw::scene(paintobjectsshowmode);
 }
 
-object*	draw::addobject(int x, int y) {
-	auto p = bsdata<object>::add();
-	*p = object::def;
-	p->x = x; p->y = y;
-	return p;
-}
-
-object*	draw::addobject(point screen, void* data) {
+object*	draw::addobject(point screen, void* data, fnevent painting) {
 	auto p = bsdata<object>::add();
 	*p = object::def;
 	p->x = screen.x; p->y = screen.y;
+	p->painting = painting;
 	p->data = data;
 	return p;
 }
