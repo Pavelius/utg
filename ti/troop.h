@@ -7,7 +7,7 @@ struct troop : entity {
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			getinfo(stringbuilder& sb) const;
 	void			hit();
-	void			paint(unsigned flags) const;
+	void			paint() const;
 	void			produce(const uniti* unit) const;
 	static void		updateui();
 };

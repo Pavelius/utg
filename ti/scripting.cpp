@@ -303,7 +303,7 @@ static void apply_choose_action() {
 			apply_primary_ability(*p);
 	}
 }
-static void choose_action(int bonus) {
+void choose_action(int bonus) {
 	choose_complex("ChooseAction", 0, ask_choose_action, apply_choose_action, 0);
 }
 

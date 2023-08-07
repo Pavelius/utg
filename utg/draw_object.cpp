@@ -10,7 +10,7 @@ const size_t max_object_count = 512;
 BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
-draw::object::fnpaint draw::object::painting;
+fnevent draw::object::painting;
 object object::def;
 point objects_mouse;
 
@@ -19,6 +19,8 @@ static unsigned long timestamp, timestamp_last;
 static point camera_drag;
 
 long distance(point from, point to);
+
+object* draw::last_object;
 
 static void remove_depends(const draworder* p) {
 	for(auto& e : bsdata<draworder>()) {
@@ -128,7 +130,8 @@ void draw::splashscreen(unsigned milliseconds) {
 void object::paint() const {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
-	painting(this);
+	last_object = const_cast<object*>(this);
+	painting();
 	draw::alpha = push_alpha;
 }
 

@@ -274,23 +274,24 @@ static bool isvictory() {
 	return false;
 }
 
+void choose_action(int bonus);
+
 static void action_phase() {
+	pushvalue push_header(answers::header);
+	pushvalue push_player(player);
 	auto need_repeat = true;
-	auto push_player = player;
-	auto push_header = answers::header;
 	while(need_repeat) {
 		need_repeat = false;
 		for(auto p : players) {
 			if(p->pass_action_phase)
 				continue;
-			player = p;
-			answers::header = player->getname();
-			script::run("ChooseAction", 0);
+			player = p; answers::header = player->getname();
+			if(p->ishuman())
+				p->gethome()->focusing();
+			choose_action(0);
 			need_repeat = true;
 		}
 	}
-	answers::header = push_header;
-	player = push_player;
 }
 
 void play_game() {

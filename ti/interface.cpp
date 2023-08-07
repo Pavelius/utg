@@ -316,7 +316,7 @@ static color getplayercolor(playeri* p) {
 	return p->fore;// player_colors[origin_players.find(p) + 1];
 }
 
-void troop::paint(unsigned flags) const {
+void troop::paint() const {
 	auto push_color = fore;
 	fore = getplayercolor(player);
 	buttonback(43, this);
@@ -388,14 +388,14 @@ void planeti::paint(unsigned flags) const {
 		image(gres("races_small", "art/objects"), getbsi(player), 0);
 }
 
-static void object_paint(const object* po) {
-	auto p = po->data;
+static void object_paint() {
+	auto p = last_object->data;
 	if(bsdata<systemi>::have(p))
 		((systemi*)p)->paint();
 	else if(bsdata<planeti>::have(p))
-		((planeti*)p)->paint(po->flags);
+		((planeti*)p)->paint(last_object->flags);
 	else if(bsdata<troop>::have(p))
-		((troop*)p)->paint(po->flags);
+		((troop*)p)->paint();
 	else if(bsdata<marker>::have(p))
 		((marker*)p)->paint();
 }

@@ -5,6 +5,8 @@
 
 extern point objects_mouse;
 
+typedef void(*fnevent)();
+
 namespace draw {
 struct drawable : point {
 	enum { AbsolutePosition, AutoClear };
@@ -27,16 +29,16 @@ struct draworder : drawable {
 	void			wait();
 };
 struct object : drawable {
-	typedef void(*fnpaint)(const object* pointer);
 	const void*		data;
-	unsigned short	frame;// , cicle;
+	unsigned short	frame;
 	static object	def;
-	static fnpaint	painting;
+	static fnevent	painting;
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	static void		initialize();
 	void			paint() const;
 };
+extern object* last_object;
 bool cameravisible(point goal, int border = 48);
 void inputcamera();
 bool mouseinobjects();
