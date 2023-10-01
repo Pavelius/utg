@@ -7,7 +7,6 @@ extern point objects_mouse;
 
 typedef void(*fnevent)();
 
-namespace draw {
 struct drawable : point {
 	enum { AbsolutePosition, AutoClear };
 	unsigned char	alpha, priority, param, flags;
@@ -42,21 +41,19 @@ extern object* last_object;
 bool cameravisible(point goal, int border = 48);
 bool mouseinobjects();
 
-void clearobjects();
-void inputcamera();
+void clear_objects();
+void input_camera();
 void focusing(point goal);
 void paint_objects();
 void setcamera(point v);
-void slidecamera(point v, int step = 16);
-void splashscreen(unsigned milliseconds);
-void showobjects();
-void waitall();
+void slide_camera(point v, int step = 16);
+void splash_screen(unsigned milliseconds);
+void show_objects();
+void wait_all();
 
-object* addobject(point screen, void* data, fnevent painting);
+object* addobject(point screen, const void* data, fnevent painting, unsigned char priority = 10);
 object* findobject(const void* p);
 
-void* chooseobject();
+void* choose_object();
 
 template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
-
-}

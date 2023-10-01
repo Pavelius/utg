@@ -10,16 +10,16 @@
 enum ability_s : unsigned char;
 
 struct itemstat : nameable {
-	damages			hit;
+	damage_s		hit;
 	dice			damage, stun;
 	short			weight, cost;
 	char			armor, maxdex, equipment;
 	char			size;
 	variants		dress;
 };
-struct itemvariety : nameable {
-	const itemstat*	elements[15];
-};
+//struct itemvariety : nameable {
+//	const itemstat*	elements[15];
+//};
 struct itemi : itemstat {
 	short			count;
 	short			avatar;

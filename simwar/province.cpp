@@ -121,8 +121,8 @@ void provincei::explore(int value) {
 	add(Explore, value);
 	while(income[Explore] >= income[ExploreNext] && income[ExploreNext] < 100) {
 		auto push_province = province; province = this;
-		script::run("RandomSite", 0);
-		script::run("AddSite", 0);
+		script_run("RandomSite", 0);
+		script_run("AddSite", 0);
 		province = push_province;
 		add(ExploreNext, xrand(8, 20));
 	}

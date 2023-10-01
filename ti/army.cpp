@@ -157,7 +157,7 @@ static void anti_fighter_barrage() {
 void army::choose(const char* id) {
 	auto push_last = last; last = this;
 	auto push_player = player; player = owner;
-	script::run(id, 0);
+	script_run(id, 0);
 	player = push_player;
 	last = push_last;
 }

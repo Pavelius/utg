@@ -161,7 +161,7 @@ const moveoptioni* movei::choose(const moveoptioni* p) const {
 	p = (moveoptioni*)an.choose(choose_header(), 0, 1);
 	choosed_answers.add((void*)p);
 	if(p) {
-		script::run(p->effect);
+		script_run(p->effect);
 		p = findprompt(p->next);
 	}
 	return p;
@@ -172,7 +172,7 @@ void movei::run() const {
 		return;
 	auto p = findprompt(last_result);
 	player->act(p->text);
-	script::run(p->effect);
+	script_run(p->effect);
 	if(choose_count>0) {
 		choosed_answers.clear();
 		while(choose_count > 0) {

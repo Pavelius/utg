@@ -5,12 +5,14 @@
 #include "collection.h"
 #include "damage.h"
 #include "item.h"
+#include "language.h"
 #include "modifier.h"
 #include "option.h"
 #include "race.h"
 #include "script.h"
 #include "skill.h"
 #include "spell.h"
+#include "tag.h"
 
 variant last_result;
 
@@ -65,6 +67,12 @@ template<> void fnscript<damagei>(int value, int bonus) {
 	}
 }
 
+template<> void fnscript<languagei>(int value, int bonus) {
+}
+
+template<> void fnscript<optioni>(int value, int bonus) {
+}
+
 template<> bool fntest<skilli>(int value, int bonus) {
 	switch(modifier) {
 	case Proficient: return player->skills.is(value) != (bonus >= 0);
@@ -89,6 +97,9 @@ template<> void fnscript<spelli>(int value, int bonus) {
 	case Proficient: player->spells_knows.set(value, bonus >= 0); break;
 	default: break;
 	}
+}
+
+template<> void fnscript<tagi>(int value, int bonus) {
 }
 
 static bool race_parent(const void* object, int param) {

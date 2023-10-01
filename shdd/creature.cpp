@@ -45,7 +45,7 @@ static void wearing(const variants& source) {
 static void advance(variants source) {
 	pushvalue push_modifier(modifier, Permanent);
 	for(auto v : source)
-		script::run(v);
+		script_run(v);
 }
 
 static void update_start() {

@@ -58,7 +58,6 @@ int main(int argc, char* argv[]) {
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";
-	draw::object::initialize();
 	initialize_ui();
 	return draw::start(starting, initializing);
 }

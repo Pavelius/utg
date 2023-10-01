@@ -36,17 +36,16 @@ void monsteri::paint() const {
 	circle(32);
 }
 
-static void object_painting_data(const void* pd) {
-	if(bsdata<roomi>::have(pd))
-		((roomi*)pd)->paint();
-	else if(bsdata<creature>::have(pd))
-		((creature*)pd)->paint();
-	else if(bsdata<monsteri>::have(pd))
-		((monsteri*)pd)->paint();
+static void paint_room() {
+	((roomi*)last_object->data)->paint();
 }
 
-static void object_painting(const object* pv) {
-	object_painting_data(pv->data);
+static void paint_creature() {
+	((creature*)last_object->data)->paint();
+}
+
+static void paint_monster() {
+	((monsteri*)last_object->data)->paint();
 }
 
 static void paint_selected_border() {
@@ -81,7 +80,7 @@ static void paint_drag_target() {
 	if(dragactive(pv)) {
 		auto push_caret = caret;
 		caret = hot.mouse;
-		object_painting_data(pv);
+		//object_painting_data(pv);
 		caret = push_caret;
 	}
 }
@@ -94,7 +93,7 @@ static void show_panel(int dx, int dy) {
 	caret.x += dx / 2;
 	caret.y += dy / 2;
 	for(auto& e : bsdata<monsteri>()) {
-		object_painting_data(&e);
+		e.paint();
 		paint_hilite_object(&e);
 		caret.x += width + metrics::padding;
 	}
@@ -116,7 +115,6 @@ static void ui_background() {
 }
 
 static void add_current_object() {
-	addobject(objects_mouse, current_object);
 }
 
 static void put_selected_object() {
@@ -128,14 +126,13 @@ static void put_selected_object() {
 
 static void ui_finish() {
 	put_selected_object();
-	inputcamera();
+	input_camera();
 }
 
 void initialize_ui() {
 	initialize_png();
 	pbackground = ui_background;
 	pfinish = ui_finish;
-	object::painting = object_painting;
 	metrics::padding = 8;
 }
 
@@ -148,7 +145,7 @@ static void update_rooms() {
 		auto pd = findobject(&e);
 		auto ps = e.getscreen();
 		if(!pd) {
-			pd = addobject(ps, &e);
+			pd = addobject(ps, &e, paint_room);
 			auto po = modify(pd);
 			po->alpha = 255;
 		} else if(ps != *pd) {
@@ -165,7 +162,7 @@ static void update_creatures() {
 		auto pd = findobject(&e);
 		auto ps = e.getscreenc();
 		if(!pd) {
-			pd = addobject(ps, &e);
+			pd = addobject(ps, &e, paint_creature);
 			pd->priority = 10;
 			auto po = modify(pd);
 			po->alpha = 255;
@@ -181,5 +178,5 @@ static void update_creatures() {
 void update_ui() {
 	update_rooms();
 	update_creatures();
-	waitall();
+	wait_all();
 }

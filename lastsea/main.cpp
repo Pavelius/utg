@@ -85,7 +85,6 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
-	draw::object::initialize();
 	oceani::initialize();
 	quest::initialize();
 	goal::initialize();

@@ -45,8 +45,8 @@ void advancei::apply() const {
 				pushvalue push(last_result, v);
 				bsdata<script>::elements[object.value].proc(0);
 			} else
-				script::run(v);
+				script_run(v);
 		}
 	} else
-		script::run(elements);
+		script_run(elements);
 }

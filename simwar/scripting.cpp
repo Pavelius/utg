@@ -52,7 +52,7 @@ static heroi* find_hero(const provincei* province, const playeri* player) {
 
 static void focus(const provincei* p) {
 	if(p)
-		draw::slidecamera(p->position);
+		slide_camera(p->position);
 }
 
 static bool build_upgrade() {
@@ -1073,7 +1073,7 @@ static void acth(stringbuilder& sb, const char* id, ...) {
 
 static void quest_result(stringbuilder& sb, const char* prefix, const variants& reward) {
 	acth(sb, str("Investigate%1%2", prefix, location->type->id), getnm(location->type->id));
-	script::run(reward);
+	script_run(reward);
 }
 
 static void action_heal() {

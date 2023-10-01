@@ -57,7 +57,7 @@ void quest::run(int index) {
 		an.clear();
 		auto push_last = an.last;
 		player->act(p->text);
-		script::run(p->tags);
+		script_run(p->tags);
 		auto index = p->index;
 		auto pe = bsdata<quest>::end();
 		for(auto pa = p + 1; pa < pe; pa++) {

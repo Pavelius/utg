@@ -55,7 +55,7 @@ static void print_answers(const quest* pb) {
 static void apply_quest() {
 	if(!last_quest || !last_quest->tags)
 		return;
-	script::run(last_quest->tags);
+	script_run(last_quest->tags);
 }
 
 static bool apply_next() {
@@ -117,7 +117,7 @@ template<> void fnscript<statei>(int value, int bonus) {
 
 template<> void fnscript<nametable>(int value, int bonus) {
 	last_table_element = bsdata<nametable>::elements[value].random();
-	script::run(last_table_element->elements);
+	script_run(last_table_element->elements);
 }
 
 static void talent_roll(int bonus) {
@@ -141,7 +141,7 @@ static void apply_one_of(const listi* p, const char* title, int bonus) {
 				an.add(&v, v.getname());
 		}
 		auto pv = (variant*)choose_answers(title, 0, bonus);
-		script::run(*pv);
+		script_run(*pv);
 		bonus--;
 	}
 }
@@ -265,7 +265,7 @@ static void look_enemy(int bonus) {
 	if(!opponent)
 		opponent = player->getenemy();
 	if(!opponent)
-		script::stop();
+		script_stop();
 	player->enemy = getbsi(opponent);
 }
 static bool if_look_enemy(int bonus) {
@@ -286,10 +286,10 @@ static void if_have(int bonus) {
 	if(v.iskind<statei>()) {
 		if(bonus >= 0) {
 			if(!player->states.is(v.value))
-				script::stop();
+				script_stop();
 		} else {
 			if(player->states.is(v.value))
-				script::stop();
+				script_stop();
 		}
 	}
 }

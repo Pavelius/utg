@@ -215,7 +215,7 @@ void setcamera(point v) {
 	camera = getcameraorigin(v);
 }
 
-void drawable::inputcamera() {
+void drawable::input_camera() {
 	const int step = 32;
 	if(!hot.mouse.in(last_screen))
 		return;

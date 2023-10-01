@@ -77,6 +77,7 @@
     <Text Include="rules\SkillRoll.txt">
       <Filter>Data</Filter>
     </Text>
+    <Text Include="locale\ru\Quest.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classi.h">

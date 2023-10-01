@@ -5,37 +5,36 @@
 
 using namespace draw;
 
+static void paint_sprite() {
+	image((sprite*)last_object->data, 0, 0);
+}
+
 static void add_worldmap() {
-	auto p = addobject(0, 0);
-	p->data = gres("worldmap", "art/objects");
-	p->priority = 1;
+	addobject({0, 0}, gres("worldmap", "art/objects"), paint_sprite, 1);
 }
 
 static void add_monsters() {
-	auto p = addobject(764, 128);
-	p->data = gres("byakhee", "art/objects");
-	p->priority = 81;
+	//auto p = addobject(764, 128);
+	//p->data = gres("byakhee", "art/objects");
+	//p->priority = 81;
 }
 
 static void add_gates() {
-	auto p = addobject(764, 108);
-	p->data = gres("gates", "art/objects");
-	p->frame = 1;
-	p->priority = 11;
+	//auto p = addobject(764, 108);
+	//p->data = gres("gates", "art/objects");
+	//p->frame = 1;
+	//p->priority = 11;
 }
 
 static void add_characters() {
-	auto p = addobject(game.location->position.x, game.location->position.y);
-	p->data = static_cast<player*>(&game);
-	p->frame = 1;
-	p->priority = 11;
+	addobject(game.location->position, gres("characters", "art/objects"), paint_sprite, 11);
 }
 
 static void add_clues() {
 }
 
 void update_board() {
-	clearobjects();
+	clear_objects();
 	add_worldmap();
 	add_monsters();
 	add_gates();
@@ -91,11 +90,10 @@ static void main_background() {
 }
 
 static void main_finish() {
-	inputcamera();
+	input_camera();
 }
 
 void initialize_ui() {
-	object::painting = objects_paint;
 	pbackground = main_background;
 	pfinish = main_finish;
 }

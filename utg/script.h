@@ -16,13 +16,14 @@ struct script {
 	fntest		test;
 	static bool allow(variant v);
 	static bool allow(const variants& source);
-	static void run(variant v);
-	static void run(const char* id, int bonus);
-	static void run(const variants& source);
-	static void	stop();
-	static bool isrun();
 };
 void conditional_script(int bonus);
 extern variant* script_begin;
 extern variant* script_end;
 extern script* last_script;
+
+bool script_isrun();
+void script_run(variant v);
+void script_run(const variants& source);
+void script_run(const char* id, int bonus);
+void script_stop();

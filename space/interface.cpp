@@ -39,7 +39,7 @@ static void panel(const char* format) {
 	separatorv();
 }
 
-static void textcn(const char* format) {
+static void textcnx(const char* format) {
 	auto push_caret = caret;
 	caret.x += (width - textw(format)) / 2;
 	text(format);
@@ -62,7 +62,7 @@ static void headersm(const char* format) {
 	auto push_font = font;
 	fore = colors::h3;
 	font = metrics::small;
-	textcn(format);
+	textcnx(format);
 	font = push_font;
 	fore = push_fore;
 }
@@ -249,7 +249,7 @@ static void main_background() {
 }
 
 static void main_finish() {
-	drawable::inputcamera();
+	drawable::input_camera();
 }
 
 static void add_system() {

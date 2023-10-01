@@ -412,11 +412,11 @@ static void remove_all_markers() {
 }
 
 static void marker_press() {
-	auto p = (draw::object*)hot.param;
+	auto p = (object*)hot.param;
 	breakmodal((long)p->data);
 }
 
-static draw::object* add_maker(void* p, figure shape, int size, char priority = 50) {
+static object* add_maker(void* p, figure shape, int size, char priority = 50) {
 	auto pd = findobject(p);
 	if(!pd)
 		return 0;
@@ -445,9 +445,9 @@ systemi* entitya::choosesystem() const {
 }
 
 void prepare_game_ui() {
-	clearobjects();
+	clear_objects();
 	add_systems();
-	draw::setcamera(h2p({0, 0}, size));
+	setcamera(h2p({0, 0}, size));
 }
 
 void entity::focusing() const {
@@ -455,7 +455,7 @@ void entity::focusing() const {
 		return;
 	auto ps = getsystem();
 	if(ps)
-		draw::slidecamera(h2p(i2h(ps->index), size), 48);
+		slide_camera(h2p(i2h(ps->index), size), 48);
 }
 
 static void update_units(point position, const entity* location) {
@@ -497,14 +497,14 @@ void troop::updateui() {
 void update_ui() {
 	static point system_offset = {0, -6 * size / 10};
 	troop::updateui();
-	waitall();
+	wait_all();
 	for(auto& e : bsdata<object>()) {
 		if(bsdata<planeti>::have(e.data))
 			update_units(e, (entity*)e.data);
 		else if(bsdata<systemi>::have(e.data))
 			update_units(e + system_offset, (entity*)e.data);
 	}
-	waitall();
+	wait_all();
 }
 
 static void main_background() {
@@ -513,7 +513,7 @@ static void main_background() {
 }
 
 static void main_finish() {
-	inputcamera();
+	input_camera();
 }
 
 static void empthy_scene() {

@@ -18,8 +18,11 @@ static point p2h(point v) {
 	return draw::p2h(v, size);
 }
 
+static void paint_tile() {
+}
+
 void scenariotilei::updateui() const {
-	auto p = draw::findobject(this);
+	auto p = findobject(this);
 	if(p)
 		return;
 	auto ps = bsdata<tilei>::find(type);
@@ -30,7 +33,7 @@ void scenariotilei::updateui() const {
 		} else {
 			ps->creating(position, inverse);
 			auto pt = h2p(position) - ps->offset;
-			p = draw::addobject(pt.x, pt.y);
+			p = addobject(pt, (void*)this, paint_tile);
 			p->data = this;
 			//p->resource = draw::getres(type, "art/tiles");
 			p->priority = ps->priority;
@@ -47,28 +50,26 @@ void scenariotilei::updateui() const {
 }
 
 void gamei::focusing(point pt) {
-	draw::focusing(h2p(pt));
+	::focusing(h2p(pt));
 }
 
 void creaturei::updateui() const {
-	auto p = draw::findobject(this);
+	auto p = findobject(this);
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		p = draw::addobject(pt.x, pt.y);
-		p->data = this;
+		addobject(pt, (void*)this, ftpaint<creaturei>, 4);
 		//p->resource = draw::getres(getid(), "art/creatures");
-		p->priority = 4;
-		splashscreen(500);
+		splash_screen(500);
 	}
 }
 
 void decoration::updateui() const {
-	auto p = draw::findobject(this);
+	auto p = findobject(this);
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		p = draw::addobject(pt.x, pt.y);
+		p = addobject(pt, (void*)this, ftpaint<decoration>);
 		p->data = this;
 		//p->resource = draw::getres(parent->id, "art/tiles");
 		p->priority = 4;
@@ -78,7 +79,7 @@ void decoration::updateui() const {
 static draworder* last_order;
 
 void ordermove(void* object, point hp, int time, bool depended) {
-	auto p = draw::findobject(object);
+	auto p = findobject(object);
 	if(!p)
 		return;
 	auto pt = h2p(hp);
@@ -88,8 +89,11 @@ void ordermove(void* object, point hp, int time, bool depended) {
 	last_order = po;
 }
 
+static void paint_string() {
+}
+
 static draworder* floatstring(point pt, color fc, const char* format) {
-	auto pb = draw::addobject(pt.x, pt.y);
+	auto pb = addobject(pt, (void*)format, paint_string, 101);
 	//pb->string = szdup(format);
 	//pb->font = metrics::h1;
 	//pb->fore = fc;
@@ -285,7 +289,7 @@ indext indexable::choosemove() {
 	an.add((void*)Blocked, getnm("EndMove"));
 	//auto push_event = object::afterpaintall;
 	//object::afterpaintall = paint_moverange;
-	splashscreen(500);
+	splash_screen(500);
 	auto result = an.choose();
 	//object::afterpaintall = push_event;
 	return (indext)(int)result;
@@ -307,7 +311,7 @@ creaturei* creaturea::choose(const char* title) const {
 	answers an;
 	//auto push_event = object::afterpaintall;
 	//object::afterpaintall = paint_targets;
-	splashscreen(500);
+	splash_screen(500);
 	auto result = (creaturei*)an.choose(title, getnm("Cancel"), 1);
 	//object::afterpaintall = push_event;
 	return result;

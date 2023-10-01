@@ -173,7 +173,7 @@ static void standart_answers() {
 
 static bool standart_apply() {
 	if(bsdata<actioncard>::have(choose_result))
-		script::run(((actioncard*)choose_result)->use);
+		script_run(((actioncard*)choose_result)->use);
 	else if(bsdata<script>::have(choose_result))
 		((script*)choose_result)->proc(0);
 	else
@@ -272,16 +272,16 @@ static void apply_secondanary_ability(strategyi& e) {
 	if(player->ishuman()) {
 		if(!draw::yesno(getnm("ApplySecondanaryStrategy"), e.getname()))
 			return;
-		script::run(e.secondary);
+		script_run(e.secondary);
 	} else {
 		if(d100() < 50)
-			script::run(e.secondary);
+			script_run(e.secondary);
 	}
 }
 
 static void apply_primary_ability(strategyi& e) {
 	player->use_strategy = true;
-	script::run(e.primary);
+	script_run(e.primary);
 	auto push_player = player;
 	for(auto pa : players) {
 		if(pa == push_player)
@@ -332,7 +332,7 @@ static void ask_movement() {
 static void apply_movement() {
 	if(bsdata<troop>::have(choose_result)) {
 		pushvalue push(last_troop, (troop*)choose_result);
-		script::run("ChooseMoveOption", 0);
+		script_run("ChooseMoveOption", 0);
 	}
 }
 static void ai_movement() {
@@ -665,7 +665,7 @@ static void apply_invasion_planet() {
 		auto push_last = last_planet;
 		auto push_result = choose_result;
 		last_planet = (planeti*)choose_result;
-		script::run("ChooseInvasion", 0);
+		script_run("ChooseInvasion", 0);
 		choose_result = push_result;
 		last_planet = push_last;
 		update_control();
@@ -1125,7 +1125,7 @@ static void for_each_player(int bonus) {
 	auto push = players;
 	for(auto p : push) {
 		player = p;
-		script::run(v);
+		script_run(v);
 	}
 	player = push_last;
 }
@@ -1135,7 +1135,7 @@ static void for_each_troop(int bonus) {
 	auto push = querry;
 	for(auto p : push) {
 		last_troop = (troop*)p;
-		script::run(v);
+		script_run(v);
 	}
 }
 
@@ -1146,7 +1146,7 @@ static void for_each_planet(int bonus) {
 	for(auto p : push) {
 		last_planet = p->getplanet();
 		if(last_planet)
-			script::run(v);
+			script_run(v);
 	}
 	last_planet = push_last;
 }
@@ -1162,7 +1162,7 @@ void playeri::apply(const variants& source) {
 	auto push_header = answers::header;
 	player = this;
 	answers::header = player->getname();
-	script::run(source);
+	script_run(source);
 	answers::header = push_header;
 	player = push_player;
 }

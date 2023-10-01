@@ -45,10 +45,10 @@ static void questrun(int index) {
 	while(last_quest) {
 		player->act(last_quest->text);
 		if(last_quest->tags)
-			script::run(last_quest->tags);
+			script_run(last_quest->tags);
 		auto p = choose_answers(0);
 		if(p->tags)
-			script::run(p->tags);
+			script_run(p->tags);
 		last_quest = last_questlist->find(p->next);
 		answers::console->clear();
 	}

@@ -28,7 +28,7 @@ void creature::create(const monsteri* pm) {
 		return;
 	player = bsdata<creature>::add();
 	player->clear();
-	script::run(pm->abilities);
+	script_run(pm->abilities);
 	player->basic.setability("Level", pm->level);
 	player->basic.creating();
 	player->setavatar(pm->id);

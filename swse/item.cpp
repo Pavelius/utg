@@ -9,35 +9,35 @@ static int d100() {
 	return rand() % 100;
 }
 
-static int random_count(const itemvariety* p) {
-	auto pe = p->elements + sizeof(itemvariety::elements) / sizeof(itemvariety::elements[0]);
-	auto count = 0;
-	for(auto pb = p->elements; pb < pe && *pb; pb++)
-		count++;
-	return count;
-}
-
-static int find_upgrade(const itemvariety* p, const itemstat* upgrade) {
-	if(!upgrade)
-		return 0;
-	auto pe = p->elements + sizeof(itemvariety::elements) / sizeof(itemvariety::elements[0]);
-	auto count = 0;
-	for(auto pb = p->elements; pb < pe && *pb; pb++) {
-		if(*pb == upgrade)
-			return count + 1;
-		count++;
-	}
-	return 0;
-}
-
-static int random_upgrade(const itemvariety* p, int level) {
-	if(!p)
-		return 0;
-	auto count = random_count(p);
-	if(!count)
-		return 0;
-	return 1 + rand() % count;
-}
+//static int random_count(const itemvariety* p) {
+//	auto pe = p->elements + sizeof(itemvariety::elements) / sizeof(itemvariety::elements[0]);
+//	auto count = 0;
+//	for(auto pb = p->elements; pb < pe && *pb; pb++)
+//		count++;
+//	return count;
+//}
+//
+//static int find_upgrade(const itemvariety* p, const itemstat* upgrade) {
+//	if(!upgrade)
+//		return 0;
+//	auto pe = p->elements + sizeof(itemvariety::elements) / sizeof(itemvariety::elements[0]);
+//	auto count = 0;
+//	for(auto pb = p->elements; pb < pe && *pb; pb++) {
+//		if(*pb == upgrade)
+//			return count + 1;
+//		count++;
+//	}
+//	return 0;
+//}
+//
+//static int random_upgrade(const itemvariety* p, int level) {
+//	if(!p)
+//		return 0;
+//	auto count = random_count(p);
+//	if(!count)
+//		return 0;
+//	return 1 + rand() % count;
+//}
 
 int item::getcost() const {
 	return geti().cost;

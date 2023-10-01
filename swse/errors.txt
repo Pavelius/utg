@@ -1,10 +1,9 @@
 ﻿In file `rules/Items.txt`:
- Line 6: Not found requisit `feat`
- Line 8: Not found requisit `feat`
- Line 10: Not found requisit `feat`
- Line 13: Not found requisit `feat`
- Line 16: Not found requisit `feat`
- Line 18: Not found requisit `feat`
- Line 21: Not found requisit `feat`
- Line 23: Not found requisit `feat`
- Line 25: Not found requisit `feat`
+ Line 6: Expected token `(`
+ Line 6: Expected line feed
+In file `rules/Advance.txt`:
+ Line 8: Can't find variant `Lightsaber`
+In file `rules/SkillRoll.txt`:
+ Line 4: Can't find variant `SecurityKit`
+ Line 7: Can't find variant `ToolKit`
+ Line 9: Can't find variant `ToolKit`

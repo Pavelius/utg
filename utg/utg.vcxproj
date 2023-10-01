@@ -159,7 +159,9 @@
     <ClCompile Include="compiler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="drawable.cpp" />
+    <ClCompile Include="drawable.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="querry.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
@@ -255,7 +257,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="assign.h" />
-    <ClInclude Include="drawable.h" />
+    <ClInclude Include="drawable.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="flagux.h" />
     <ClInclude Include="querry.h" />
     <ClInclude Include="stringlist.h" />

@@ -61,7 +61,6 @@ int	main(int argc, char *argv[]) {
 	answers::console = &sb;
 	answers::prompt = sb.begin();
 	answers::resid = "treasure";
-	draw::object::initialize();
 	return draw::start(starting, initialize);
 }
 

@@ -34,5 +34,5 @@ struct collection : collectiona {
 	T*		pick() { return (T*)collectiona::pick(); }
 	T*		random() const { return (T*)collectiona::random(); }
 	void	select() { collectiona::select(bsdata<T>::source); }
-	void	select(fnvisible proc) { collectiona::select(bsdata<T>::source, proc); }
+	void	select(fnvisible proc) { collectiona::select(bsdata<T>::source, proc, true); }
 };

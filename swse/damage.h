@@ -1,7 +1,7 @@
 #pragma once
 #include "nameable.h"
 
-enum damages : unsigned char {
+enum damage_s : unsigned char {
 	Bludgeon, Slashing, Piercing, Energy, Ion,
 };
 struct damagei : nameable {

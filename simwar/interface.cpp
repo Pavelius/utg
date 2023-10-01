@@ -7,7 +7,6 @@
 #include "draw_strategy.h"
 #include "game.h"
 #include "player.h"
-#include "widget.h"
 
 using namespace draw;
 
@@ -43,14 +42,6 @@ static color getplayercolor(playeri* p) {
 	if(!p)
 		return player_colors[0];
 	return player_colors[p - bsdata<playeri>::elements + 1];
-}
-
-static void textcn(const char* format) {
-	auto push_caret = caret;
-	caret.x -= (textw(format) + 1) / 2;
-	caret.y -= (texth() + 1) / 2;
-	text(format);
-	caret = push_caret;
 }
 
 static void textcn(const char* format, unsigned flags) {
@@ -305,22 +296,11 @@ void provincei::paint() const {
 	}
 }
 
-static void add_widget(const char* id, unsigned char priority, bool absolute_position = true) {
-	auto pm = bsdata<widget>::find(id);
-	if(!pm)
-		return;
-	auto p = addobject(0, 0);
-	p->data = pm;
+static void add_widget(fnevent proc, unsigned char priority, bool absolute_position = true) {
+	auto p = addobject({0, 0}, proc, proc);
 	p->priority = priority;
 	if(absolute_position)
 		p->set(drawable::AbsolutePosition);
-}
-
-static void object_painting(const object* p) {
-	if(bsdata<widget>::have(p->data))
-		((widget*)p->data)->paint();
-	else if(bsdata<provincei>::have(p->data))
-		((provincei*)p->data)->paint();
 }
 
 static void remove_object(array& source) {
@@ -330,13 +310,16 @@ static void remove_object(array& source) {
 	}
 }
 
+static void province_paint() {
+	((provincei*)last_object->data)->paint();
+}
+
 void update_provinces_ui() {
 	remove_object(bsdata<provincei>::source);
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
-		auto p = addobject(e.position.x, e.position.y);
-		p->data = &e;
+		auto p = addobject(e.position, &e, province_paint);
 		p->priority = 1;
 	}
 }
@@ -347,14 +330,11 @@ static void ui_background() {
 }
 
 static void ui_finish() {
-	inputcamera();
+	input_camera();
 }
 
 void ui_initialize() {
-	object::painting = object_painting;
-	object::initialize();
-	widget::add("BackgroundMap", background_map);
-	add_widget("BackgroundMap", 0, false);
+	add_widget(background_map, 0, false);
 	pbackground = ui_background;
 	pfinish = ui_finish;
 }

@@ -41,9 +41,9 @@ static void initialize_scene() {
 	province = bsdata<provincei>::find("CapeBrumal");
 	province->player = player;
 	player->upgrade[Lore] += 50;
-	script::run(player->start);
+	script_run(player->start);
 	game.initialize();
-	script::run("UpdatePlayer");
+	script_run("UpdatePlayer");
 }
 
 static void start_game() {

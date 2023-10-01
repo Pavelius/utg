@@ -18,7 +18,7 @@ static point camera_drag;
 
 long distance(point from, point to);
 
-object* draw::last_object;
+object* last_object;
 
 static void remove_depends(const draworder* p) {
 	for(auto& e : bsdata<draworder>()) {
@@ -119,7 +119,7 @@ void object::clear() {
 	data = 0;
 }
 
-void draw::splashscreen(unsigned milliseconds) {
+void splash_screen(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
 	screenshoot another;
@@ -159,7 +159,7 @@ static void sortobjects(object** pb, size_t count) {
 	qsort(pb, count, sizeof(pb[0]), compare);
 }
 
-void draw::paint_objects() {
+void paint_objects() {
 	static object* source[max_object_count];
 	auto push_caret = caret;
 	auto push_clip = clipping;
@@ -178,7 +178,7 @@ void draw::paint_objects() {
 	caret = push_caret;
 }
 
-void* draw::chooseobject() {
+void* choose_object() {
 	draw::scene(paint_objects);
 	return (void*)getresult();
 }
@@ -190,23 +190,23 @@ static void paintobjectsshowmode() {
 		execute(buttoncancel);
 }
 
-void draw::showobjects() {
+void show_objects() {
 	draw::scene(paintobjectsshowmode);
 }
 
-object*	draw::addobject(point screen, void* data, fnevent painting) {
+object*	addobject(point screen, const void* data, fnevent painting, unsigned char priority) {
 	auto p = bsdata<object>::add();
 	p->x = screen.x; p->y = screen.y;
 	p->painting = painting;
 	p->data = data;
 	p->flags = 0;
 	p->frame = 0;
-	p->priority = 64;
+	p->priority = priority;
 	p->alpha = 255;
 	return p;
 }
 
-object* draw::findobject(const void* p) {
+object* findobject(const void* p) {
 	for(auto& e : bsdata<object>()) {
 		if(e.data == p)
 			return &e;
@@ -214,7 +214,7 @@ object* draw::findobject(const void* p) {
 	return 0;
 }
 
-void draw::clearobjects() {
+void clear_objects() {
 	bsdata<object>::source.clear();
 }
 
@@ -275,11 +275,11 @@ static point getcameraorigin(point v) {
 	return v;
 }
 
-void draw::setcamera(point v) {
+void setcamera(point v) {
 	camera = getcameraorigin(v);
 }
 
-void draw::inputcamera() {
+void input_camera() {
 	const int step = 32;
 	if(!hot.mouse.in(objects_screen))
 		return;
@@ -306,17 +306,17 @@ void draw::inputcamera() {
 	}
 }
 
-bool draw::mouseinobjects() {
+bool mouseinobjects() {
 	return hot.mouse.in(objects_screen);
 }
 
-bool draw::cameravisible(point goal, int border) {
+bool cameravisible(point goal, int border) {
 	rect rc = {camera.x, camera.y, camera.x + objects_screen.width(), camera.y + objects_screen.height()};
 	rc.offset(-border);
 	return goal.in(rc);
 }
 
-void draw::slidecamera(point goal, int step) {
+void slide_camera(point goal, int step) {
 	goal = getcameraorigin(goal);
 	auto start = camera;
 	auto maxds = distance(start, goal);
@@ -335,12 +335,12 @@ void draw::slidecamera(point goal, int step) {
 	}
 }
 
-void draw::focusing(point goal) {
+void focusing(point goal) {
 	if(!cameravisible(goal))
-		slidecamera(goal);
+		slide_camera(goal);
 }
 
-void draw::waitall() {
+void wait_all() {
 	start_timer();
 	while(bsdata<draworder>::source.count > 0 && ismodal()) {
 		update_timestamp();
@@ -352,7 +352,7 @@ void draw::waitall() {
 	}
 }
 
-void draw::draworder::wait() {
+void draworder::wait() {
 	if(!(*this))
 		return;
 	start_timer();

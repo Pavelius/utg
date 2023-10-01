@@ -206,9 +206,9 @@ static void strategy_phase() {
 		player = p;
 		answers::header = player->getname();
 		answers::resid = player->getid();
-		script::run("FocusHomeSystem", 0);
+		script_run("FocusHomeSystem", 0);
 		if(!player->strategy)
-			script::run("ChooseStrategy", 0);
+			script_run("ChooseStrategy", 0);
 	}
 	players_sort_by_initiative();
 }

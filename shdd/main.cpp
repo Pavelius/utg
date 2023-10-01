@@ -21,7 +21,7 @@ static void starting() {
 	auto pn = bsdata<listi>::find("MainScript");
 	if(!pn)
 		return;
-	script::run(pn->elements);
+	script_run(pn->elements);
 }
 
 static void initialize() {

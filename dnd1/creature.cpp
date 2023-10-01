@@ -29,7 +29,7 @@ template<> void fnscript<itemi>(int index, int value) {
 static void apply_wear(const variants& source) {
 	pushvalue push_modifier(modifier, Permanent);
 	for(auto v : source)
-		script::run(v);
+		script_run(v);
 }
 
 static void apply_advance(variant type, int level) {
@@ -194,7 +194,7 @@ static void update_equipment() {
 	for(auto& e : player->equipment()) {
 		if(!e)
 			continue;
-		script::run(e.geti().wearing);
+		script_run(e.geti().wearing);
 		auto pi = e.getpower();
 		if(!pi)
 			continue;

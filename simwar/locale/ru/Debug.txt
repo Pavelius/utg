@@ -1,3 +1,1 @@
-﻿Province position(313 340) landscape(Plains)
-Province position(306 651) landscape(Plains)
-Province position(285 882) landscape(Plains)
+﻿Province position(511 381) landscape(Plains)

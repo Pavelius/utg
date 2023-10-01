@@ -99,7 +99,7 @@ static void apply_script() {
 	if(!last_quest)
 		return;
 	result = last_quest->next;
-	script::run(last_quest->tags);
+	script_run(last_quest->tags);
 }
 
 static void choose_quest_result() {
@@ -171,14 +171,14 @@ void quest::run(int index) {
 		an.clear();
 		apply_header();
 		apply_text();
-		script::run(last_quest->tags);
+		script_run(last_quest->tags);
 		add_quest_answers();
 		auto pv = an.choose(0, 0, 1);
 		if(!pv)
 			break;
 		else if(bsdata<quest>::source.have(pv)) {
 			last_quest = (quest*)pv; result = last_quest->next;
-			script::run(last_quest->tags);
+			script_run(last_quest->tags);
 			last_quest = findprompt(result);
 		}
 	}
@@ -276,7 +276,7 @@ static void choose_action_querry(const char* id, const char* cancel) {
 	pushvalue push(answers::interactive, isplayer());
 	last_choose_result = an.choose(choose_title(id), choose_cancel(cancel));
 	if(!last_choose_result) {
-		script::stop();
+		script_stop();
 		return;
 	}
 	if(bsdata<planeti>::have(last_choose_result))
@@ -296,7 +296,7 @@ static void choose_action_querry(int bonus) {
 			return;
 	}
 	if(last_action)
-		script::run(last_action->effect);
+		script_run(last_action->effect);
 }
 
 static void update_ship_enviroment() {

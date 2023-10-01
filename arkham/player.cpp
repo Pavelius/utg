@@ -178,8 +178,11 @@ void player::leavestreet() {
 		movement(location->neightboard[0]);
 }
 
-static draw::object* getobject(const void* pv) {
-	auto ps = draw::findobject(pv);
+static void paint_player() {
+}
+
+static object* getobject(const void* pv) {
+	auto ps = findobject(pv);
 	if(ps)
 		return ps;
 	if(pv == static_cast<player*>(&game)) {
@@ -189,8 +192,8 @@ static draw::object* getobject(const void* pv) {
 			n = bsdata<investigator>::elements[p->investigator_index].location;
 		if(!n)
 			return 0;
-		draw::setcamera(n->position);
-		ps = draw::addobject(n->position.x, n->position.y);
+		setcamera(n->position);
+		ps = addobject(n->position, &game, paint_player);
 		//ps->resource = draw::getres("characters");
 		ps->frame = p->investigator_index;
 		ps->data = p;

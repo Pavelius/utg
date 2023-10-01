@@ -22,16 +22,16 @@ static void add_camera() {
 }
 
 static void add_seamap() {
-	auto p = draw::addobject(192, 203);
+	//auto p = addobject(192, 203);
 	//p->resource = draw::getres("seamap");
-	p->priority = 10;
+	//p->priority = 10;
 }
 
 static void add_warning(point pt) {
-	auto p = draw::addobject(pt.x - 16, pt.y + 12);
+	//auto p = addobject(pt.x - 16, pt.y + 12);
 	//p->resource = draw::getres("tiles");
-	p->priority = 21;
-	p->frame = 36;
+	//p->priority = 21;
+	//p->frame = 36;
 }
 
 static void add_you_ship() {
@@ -39,28 +39,28 @@ static void add_you_ship() {
 	if(index == Blocked)
 		return;
 	auto pt = i2s(index);
-	marker_object = draw::addobject(pt.x, pt.y);
+	//marker_object = addobject(pt);
 	//marker_object->resource = draw::getres("tiles");
-	marker_object->frame = 31;
-	marker_object->priority = 29;
+	//marker_object->frame = 31;
+	//marker_object->priority = 29;
 }
 
 static void add_tile(point pt, const sprite* resource, int frame, const void* data) {
-	auto p = draw::addobject(pt.x, pt.y);
+	//auto p = addobject(pt);
 	//p->resource = resource;
-	p->frame = frame;
+	//p->frame = frame;
 	//p->size = 2 * size / 3;
-	p->priority = 20;
-	p->data = (void*)data;
+	//p->priority = 20;
+	//p->data = (void*)data;
 	//p->fore = colors::border;
 }
 
 static void add_select(point pt, indext data) {
-	auto p = draw::addobject(pt.x, pt.y);
+	//auto p = addobject(pt, (void*)data);
 	//p->size = 2 * size / 3;
-	p->priority = 30;
+	//p->priority = 30;
 	//p->shape = figure::Circle;
-	p->data = (void*)data;
+	//p->data = (void*)data;
 	//p->fore = colors::button;
 	//p->set(object::Hilite);
 }
@@ -73,33 +73,33 @@ static void add_select(indext index) {
 
 void oceani::showseamap() {
 	createobjects();
-	showobjects();
+	show_objects();
 }
 
 void oceani::showindecies() {
 	char temp[4096]; stringbuilder sb(temp);
-	clearobjects();
+	clear_objects();
 	add_camera();
 	add_seamap();
 	for(short y = 0; y < map_y; y++) {
 		for(short x = 0; x < map_x; x++) {
 			auto i = getindex(x, y);
 			auto pt = draw::fh2p({x, y}, size);
-			auto p = draw::addobject(pt.x, pt.y);
+			//auto p = addobject(pt);
 			//p->size = 2 * size / 3;
-			p->priority = 20;
+			//p->priority = 20;
 			//p->string = sb.get();
 			sb.add("%1i", i);
 			sb.addsz();
 			//p->fore = colors::border;
 		}
 	}
-	chooseobject();
+	choose_object();
 }
 
 void oceani::createobjects() {
 	marker_object = 0;
-	clearobjects();
+	clear_objects();
 	add_camera();
 	add_you_ship();
 	add_seamap();
@@ -119,7 +119,7 @@ void oceani::createobjects() {
 }
 
 indext oceani::choose(const char* title) const {
-	int pv = (int)chooseobject();
+	int pv = (int)choose_object();
 	if(!pv)
 		return Blocked;
 	return pv - 1;
@@ -171,13 +171,13 @@ void oceani::addpossiblemove(int range) const {
 }
 
 void oceani::showsplash() {
-	splashscreen(appear_pause);
+	splash_screen(appear_pause);
 }
 
 indext oceani::chooseroute(const char* title, int range) const {
 	createobjects();
 	addpossiblemove(range);
-	splashscreen(appear_pause);
+	splash_screen(appear_pause);
 	auto result = choose(0);
 	if(result == Blocked)
 		return Blocked;
@@ -221,7 +221,7 @@ bool tilei::moveto(indext goal, int bonus) {
 	auto p = findobject(this);
 	if(!p)
 		return false;
-	splashscreen(appear_pause);
+	splash_screen(appear_pause);
 	while(count-- > 0 && bonus-- > 0) {
 		index = path[count];
 		p->move(i2s(index), appear_pause);

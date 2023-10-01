@@ -49,7 +49,7 @@ static void test_game() {
 	//game.add(Insight, 1);
 	generate_systems();
 	generate_planets();
-	script::run("StartScript");
+	script_run("StartScript");
 	draw::setnext(play_player_turn);
 	draw::start();
 }

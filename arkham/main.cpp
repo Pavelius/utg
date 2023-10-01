@@ -79,7 +79,6 @@ int main(int argc, char* argv[]) {
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG
-	draw::object::initialize();
 	initialize_ui();
 	return draw::strategy(main_menu, initialization);
 }

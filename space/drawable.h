@@ -14,7 +14,7 @@ struct drawable {
 	static void		dowait();
 	void			focusing() const;
 	static rect		getscreen(int offset);
-	static void		inputcamera();
+	static void		input_camera();
 	void			paint() const;
 	static void		paintall();
 	static fnpaint	painting;
