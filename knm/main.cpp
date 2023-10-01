@@ -1,9 +1,17 @@
 #include "crt.h"
-#include "draw.h"
 #include "draw_strategy.h"
+#include "list.h"
+#include "script.h"
+
+static void run_function(const char* id) {
+	auto p = bsdata<listi>::find(id);
+	if(!p)
+		return;
+	script_run(p->elements);
+}
 
 static void start_game() {
-
+	run_function("GameTurn");
 }
 
 static void initialize() {

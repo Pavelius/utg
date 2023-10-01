@@ -1,0 +1,24 @@
+#Strategy
+
+Leadership
+Diplomacy
+Politics
+Construction
+Trade
+Warfare
+Technology
+GatherPower
+
+#List
+
+StrategyPhase 
+ elements SelectPlayersByKing ForEachPlayer ChooseStrategy PickStrategy
+
+ActionPhase
+
+StatusPhase
+
+AgendaPhase
+
+GameTurn
+ elements StrategyPhase ActionPhase StatusPhase AgendaPhase

@@ -1,1 +1,8 @@
-﻿
+﻿Construction: 
+Diplomacy: 
+GatherPower: 
+Leadership: 
+Politics: 
+Technology: 
+Trade: 
+Warfare: 

@@ -10,9 +10,6 @@
     <Filter Include="locale">
       <UniqueIdentifier>{8b1bc70b-e779-45d3-bf2c-46c838bcccf0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="locale\ru">
-      <UniqueIdentifier>{83fabdf1-434c-4465-afad-ff945ccf0ed0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity.h">
@@ -46,6 +43,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="filter.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="playera.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,6 +89,9 @@
     <ClCompile Include="entitya.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="playera.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -100,10 +103,13 @@
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>locale\ru</Filter>
+    <Text Include="rules\Strategies.txt">
+      <Filter>data</Filter>
     </Text>
-    <Text Include="rules\Strategy.txt">
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Players.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>

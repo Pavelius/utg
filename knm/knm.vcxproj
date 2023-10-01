@@ -147,6 +147,7 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
     <ClInclude Include="filter.h" />
+    <ClInclude Include="playera.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="taga.h" />
     <ClInclude Include="player.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playera.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -178,7 +180,8 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Strategy.txt" />
+    <Text Include="rules\Players.txt" />
+    <Text Include="rules\Strategies.txt" />
     <Text Include="rules\Units.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

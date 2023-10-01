@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "filter.h"
 #include "player.h"
+#include "playera.h"
 #include "pushvalue.h"
 #include "script.h"
 #include "list.h"
@@ -16,13 +17,14 @@ static void addan(entity& e) {
 
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
-	return p->player != 0;
+	return p->player == 0;
 }
 
 static void choose_strategy(fnvisible proc, int bonus) {
 	auto keep = (bonus >= 0);
+	an.clear();
 	for(auto& e : bsdata<strategyi>()) {
-		if(proc(&e)!=keep)
+		if(proc(&e) != keep)
 			continue;
 		addan(e);
 	}
@@ -31,15 +33,20 @@ static void choose_strategy(fnvisible proc, int bonus) {
 
 static void select_players(fnvisible proc, int bonus) {
 	auto keep = (bonus >= 0);
-	for(auto& e : bsdata<playeri>()) {
-		if(proc(&e) != keep)
-			continue;
-		addan(e);
+	if(proc) {
+		for(auto& e : bsdata<playeri>()) {
+			if(proc(&e) != keep)
+				continue;
+			players.add(&e);
+		}
+	} else {
+		for(auto& e : bsdata<playeri>())
+			players.add(&e);
 	}
 }
 
 BSDATA(filteri) = {
 	{"ChooseStrategy", no_player, choose_strategy},
-	{"SelectPlayersByKing", no_player, choose_strategy},
+	{"SelectPlayersByKing", 0, select_players},
 };
 BSDATAF(filteri)
