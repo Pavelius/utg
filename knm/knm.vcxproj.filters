@@ -4,6 +4,15 @@
     <Filter Include="logic">
       <UniqueIdentifier>{b6eb339b-5f01-4fbc-a708-a75a99dcd5c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{c64842cc-3ac0-447e-8385-462673a83702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{8b1bc70b-e779-45d3-bf2c-46c838bcccf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale\ru">
+      <UniqueIdentifier>{83fabdf1-434c-4465-afad-ff945ccf0ed0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity.h">
@@ -15,6 +24,30 @@
     <ClInclude Include="unit.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="army.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="troop.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="entitya.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="taga.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="strategy.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="filter.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -23,5 +56,55 @@
     <ClCompile Include="metadata.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="unit.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="army.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="information.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="filter.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="strategy.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="entitya.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="rules\Basic.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Units.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="rules\Strategy.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

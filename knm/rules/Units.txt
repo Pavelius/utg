@@ -1,0 +1,9 @@
+#Unit
+
+Pikemens
+ abilities Cost(1)
+ combat Strenght Melee+2 Strenght+1
+Archers
+ combat Strenght Shoot+2 Shoot+2
+Cavalry
+ combat Strenght Melee+3 Messy+1 Strenght+2

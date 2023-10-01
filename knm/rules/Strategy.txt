@@ -1,0 +1,7 @@
+#List
+
+StrategyPhase 
+ elements SelectPlayersByKing
+
+GameTurn
+ elements StrategyPhase ActionPhase StatusPhase AgendaPhase

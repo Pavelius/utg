@@ -3,12 +3,22 @@
 
 BSDATA(abilityi) = {
 	{"Cost"},
-	{"CostCount"},
+	{"Strenght"},
 	{"Melee"},
-	{"MeleeShield"},
 	{"Shoot"},
-	{"ShootShield"},
+	{"Messy"},
+	{"MeleeDefence"},
+	{"ShootDefence"},
 	{"Production"},
 	{"Reinforcement"},
+	{"Resources"},
+	{"Influence"},
+	{"Trade"},
+	{"Champion"},
+	{"General"},
+	{"Hero"},
+	{"Lore"},
+	{"Fame"},
+	{"Goods"},
 };
-assert_enum(abilityi, Reinforcement);
+assert_enum(abilityi, Goods);

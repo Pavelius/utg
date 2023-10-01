@@ -143,12 +143,43 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="army.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="entitya.h" />
+    <ClInclude Include="filter.h" />
+    <ClInclude Include="strategy.h" />
+    <ClInclude Include="taga.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="tag.h" />
+    <ClInclude Include="troop.h" />
     <ClInclude Include="unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="army.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="entitya.cpp" />
+    <ClCompile Include="filter.cpp" />
+    <ClCompile Include="information.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="strategy.cpp" />
+    <ClCompile Include="tag.cpp" />
+    <ClCompile Include="unit.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\utg\utg.vcxproj">
+      <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Strategy.txt" />
+    <Text Include="rules\Units.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
