@@ -1,2 +1,2 @@
-﻿In file `rules/Strategies.txt`:
- Line 1: Not find data type for `Strategy`
+﻿In file `rules/Units.txt`:
+ Line 12: Not found requisit `tags`

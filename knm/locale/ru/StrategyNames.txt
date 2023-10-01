@@ -1,0 +1,8 @@
+Construction: Строительство
+Diplomacy: Дипломатия
+GatherPower: Укрепление власти
+Leadership: Призыв героев
+Politics: Политика
+Technology: Исследования
+Trade: Торговля
+Warfare: Война

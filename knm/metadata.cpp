@@ -5,6 +5,7 @@
 #include "player.h"
 #include "script.h"
 #include "strategy.h"
+#include "tag.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -25,10 +26,14 @@ BSMETA(strategyi) = {
 	BSREQ(id),
 	BSREQ(primary), BSREQ(secondary),
 	{}};
+BSMETA(tagi) = {
+	BSREQ(id),
+	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
 	BSDST(abilities, abilityi),
 	BSREQ(combat),
+	BSFLG(tags, tagi),
 	{}};
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},

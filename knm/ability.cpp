@@ -9,7 +9,7 @@ BSDATA(abilityi) = {
 	{"Messy"},
 	{"MeleeDefence"},
 	{"ShootDefence"},
-	{"Production"},
+	{"Recruit"},
 	{"Reinforcement"},
 	{"Resources"},
 	{"Influence"},
