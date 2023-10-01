@@ -46,10 +46,6 @@ template<> void fnscript<planeti>(int index, int bonus) {
 	last_planet = bsdata<planeti>::elements + index;
 }
 
-template<> void fnscript<actionstatei>(int index, int bonus) {
-	last_action_state = (actionstate_s)index;
-}
-
 template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship = bsdata<ship>::addz();
 	last_ship->type = index;
@@ -70,7 +66,7 @@ static void add_quest_answers() {
 			continue;
 		if(!pa->isanswer())
 			continue;
-		if(!script::allow(pa->tags))
+		if(!script_allow(pa->tags))
 			continue;
 		an.add(pa, pa->text);
 	}
@@ -185,13 +181,11 @@ void quest::run(int index) {
 }
 
 static void add_variable(int bonus) {
-	if((int)bsdata<variable>::source.getcount() >= variable_id)
-		return;
-	bsdata<variable>::elements[variable_id].value += bonus;
+	last_variable->value += bonus;
 }
 
 static void set_variable(int bonus) {
-	variable_id = bonus;
+	last_variable->value = bonus;
 }
 
 static void pass_hours(int bonus) {

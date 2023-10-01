@@ -30,6 +30,9 @@ template<> void fnscript<materiali>(int index, int value) {
 	}
 }
 
+template<> void fnscript<monsteri>(int index, int value) {
+}
+
 static int getmaximum(variant v) {
 
 }

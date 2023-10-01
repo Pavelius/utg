@@ -8,7 +8,7 @@ LandToPlanet
 #Action state(ShipOnPlanet)
 
 VisitDocks
- effect PassHours+2
+ effect PassHours+2 YouInDocks SetState
 VisitGoverment
  effect PassHours+2
 VisitMarket
@@ -21,3 +21,7 @@ FlyToOrbit
 BuyOrSellCommodities
 BuyOrSellEquipment
 BlackMarketOperation
+
+#Action state(YouInDocks)
+
+RepairShip

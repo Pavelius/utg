@@ -7,7 +7,7 @@
 enum actionstate_s : unsigned char {
 	NoActionState,
 	ShipOnOrbit, ShipOnPlanet,
-	YouOnMarket
+	YouInDocks, YouOnMarket
 };
 struct actionstatei : nameable {
 	actionstate_s	cancel_state;

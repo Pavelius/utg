@@ -24,7 +24,7 @@ template<> void fnscript<listi>(int value, int bonus) {
 	script_run(bsdata<listi>::elements[value].elements);
 }
 template<> bool fntest<listi>(int value, int bonus) {
-	return script::allow(bsdata<listi>::elements[value].elements);
+	return script_allow(bsdata<listi>::elements[value].elements);
 }
 
 void conditional_script(int bonus) {
@@ -63,14 +63,14 @@ void script_run(const variants& source) {
 	script_begin = push_begin;
 }
 
-bool script::allow(variant v) {
+bool script_allow(variant v) {
 	auto& ei = bsdata<varianti>::elements[v.type];
 	return ei.ptest ? ei.ptest(v.value, v.counter) : true;
 }
 
-bool script::allow(const variants& source) {
+bool script_allow(const variants& source) {
 	for(auto v : source) {
-		if(!allow(v))
+		if(!script_allow(v))
 			return false;
 	}
 	return true;

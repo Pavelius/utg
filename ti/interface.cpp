@@ -363,13 +363,12 @@ static void paint_planet() {
 }
 
 static void add_planet(planeti* ps, point pt, int index) {
-	auto p = addobject(pt, ps, paint_planet);
-	p->priority = 2;
-	p->frame = ps->frame;
+	unsigned char flags = 0;
 	switch(index) {
-	case 1: p->flags |= ImageMirrorH; break;
-	case 2: p->flags |= ImageMirrorV; break;
+	case 1: flags |= ImageMirrorH; break;
+	case 2: flags |= ImageMirrorV; break;
 	}
+	addobject(pt, ps, paint_planet, ps->frame, 22, 0xFF, flags);
 }
 
 static void add_planets(point pt, const systemi* ps) {
@@ -388,8 +387,7 @@ static void add_planets(point pt, const systemi* ps) {
 }
 
 static void add_system(systemi* ps, point pt) {
-	auto p = addobject(pt, ps, ftpaint<systemi>);
-	p->priority = 3;
+	auto p = addobject(pt, ps, ftpaint<systemi>, 0, 23);
 	add_planets(pt, ps);
 }
 
@@ -425,9 +423,7 @@ static object* add_maker(void* p, figure shape, int size, char priority = 50) {
 	pm->size = size;
 	pm->fore = colors::green;
 	pm->data = p;
-	auto ps = addobject(*pd, pm, ftpaint<marker>);
-	ps->priority = priority;
-	return ps;
+	return addobject(pd->position, pm, ftpaint<marker>, 0, priority);
 }
 
 void entity::clear() {
@@ -471,14 +467,12 @@ static void update_units(point position, const entity* location) {
 	auto y = position.y - (total_height - button_height) / 2;
 	for(auto pt : source) {
 		auto p = findobject(pt);
-		if(!p) {
-			p = addobject({(short)x, (short)y}, (troop*)pt, ftpaint<troop>);
-			p->priority = 15;
-		}
-		if(p->x != x || p->y != y) {
+		if(!p)
+			p = addobject({(short)x, (short)y}, (troop*)pt, ftpaint<troop>, 0, 30);
+		if(p->position.x != x || p->position.y != y) {
 			auto po = p->addorder(1000);
-			po->x = x;
-			po->y = y;
+			po->position.x = x;
+			po->position.y = y;
 		}
 		y += button_height;
 	}
@@ -500,9 +494,9 @@ void update_ui() {
 	wait_all();
 	for(auto& e : bsdata<object>()) {
 		if(bsdata<planeti>::have(e.data))
-			update_units(e, (entity*)e.data);
+			update_units(e.position, (entity*)e.data);
 		else if(bsdata<systemi>::have(e.data))
-			update_units(e + system_offset, (entity*)e.data);
+			update_units(e.position + system_offset, (entity*)e.data);
 	}
 	wait_all();
 }

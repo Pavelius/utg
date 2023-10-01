@@ -5,29 +5,20 @@
 
 using namespace draw;
 
-static void paint_sprite() {
-	image((sprite*)last_object->data, 0, 0);
-}
-
 static void add_worldmap() {
-	addobject({0, 0}, gres("worldmap", "art/objects"), paint_sprite, 1);
+	addobject({0, 0}, gres("worldmap", "art/objects"), paint_sprite, 10);
 }
 
 static void add_monsters() {
-	//auto p = addobject(764, 128);
-	//p->data = gres("byakhee", "art/objects");
-	//p->priority = 81;
+	addobject({764, 128}, gres("byakhee", "art/objects"), paint_sprite, 81);
 }
 
 static void add_gates() {
-	//auto p = addobject(764, 108);
-	//p->data = gres("gates", "art/objects");
-	//p->frame = 1;
-	//p->priority = 11;
+	addobject({764, 108}, gres("gates", "art/objects"), paint_sprite, 21);
 }
 
 static void add_characters() {
-	addobject(game.location->position, gres("characters", "art/objects"), paint_sprite, 11);
+	addobject(game.location->position, gres("characters", "art/objects"), paint_sprite, 91);
 }
 
 static void add_clues() {
@@ -74,14 +65,6 @@ void status_info() {
 	}
 	caret = push_caret;
 	caret.y += texth() + metrics::border*2 + metrics::padding;
-}
-
-static void objects_paint(const object* pointer) {
-	auto pd = pointer->data;
-	if(&game==pd)
-		image(gres("characters", "art/objects"), game.investigator_index, 0);
-	else
-		image((sprite*)pd, pointer->frame, 0);
 }
 
 static void main_background() {

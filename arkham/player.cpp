@@ -193,11 +193,7 @@ static object* getobject(const void* pv) {
 		if(!n)
 			return 0;
 		setcamera(n->position);
-		ps = addobject(n->position, &game, paint_player);
-		//ps->resource = draw::getres("characters");
-		ps->frame = p->investigator_index;
-		ps->data = p;
-		ps->priority = 100;
+		addobject(n->position, p, paint_player, p->investigator_index, 100);
 	}
 	return ps;
 }

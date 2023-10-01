@@ -36,18 +36,6 @@ void monsteri::paint() const {
 	circle(32);
 }
 
-static void paint_room() {
-	((roomi*)last_object->data)->paint();
-}
-
-static void paint_creature() {
-	((creature*)last_object->data)->paint();
-}
-
-static void paint_monster() {
-	((monsteri*)last_object->data)->paint();
-}
-
 static void paint_selected_border() {
 	auto push_fore = fore;
 	fore = colors::button;
@@ -140,39 +128,26 @@ static draworder* modify(object* po) {
 	return po->addorder(1000);
 }
 
-static void update_rooms() {
-	for(auto& e : bsdata<roomi>()) {
-		auto pd = findobject(&e);
-		auto ps = e.getscreen();
-		if(!pd) {
-			pd = addobject(ps, &e, paint_room);
-			auto po = modify(pd);
-			po->alpha = 255;
-		} else if(ps != *pd) {
-			auto po = modify(pd);
-			copy(*po, ps);
-			po->x = ps.x;
-			po->y = ps.y;
-		}
+static void update_object(void* object, point pt, fnevent paint, int priority) {
+	auto pd = findobject(object);
+	if(!pd) {
+		pd = addobject(pt, object, paint, 0, priority, 0);
+		auto po = modify(pd);
+		po->alpha = 255;
+	} else if(pt != pd->position) {
+		auto po = modify(pd);
+		po->position = pt;
 	}
 }
 
+static void update_rooms() {
+	for(auto& e : bsdata<roomi>())
+		update_object(&e, e.getscreen(), ftpaint<roomi>, 21);
+}
+
 static void update_creatures() {
-	for(auto& e : bsdata<creature>()) {
-		auto pd = findobject(&e);
-		auto ps = e.getscreenc();
-		if(!pd) {
-			pd = addobject(ps, &e, paint_creature);
-			pd->priority = 10;
-			auto po = modify(pd);
-			po->alpha = 255;
-		} else if(ps != *pd) {
-			auto po = modify(pd);
-			copy(*po, ps);
-			po->x = ps.x;
-			po->y = ps.y;
-		}
-	}
+	for(auto& e : bsdata<creature>())
+		update_object(&e, e.getscreenc(), ftpaint<creature>, 30);
 }
 
 void update_ui() {

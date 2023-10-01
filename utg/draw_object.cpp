@@ -27,10 +27,17 @@ static void remove_depends(const draworder* p) {
 	}
 }
 
+static void remove_dead_objects() {
+	auto ps = bsdata<object>::begin();
+	for(auto& e : bsdata<object>()) {
+		if(!e)
+			continue;
+		*ps = e;
+	}
+}
+
 point drawable::getscreen() const {
-	if(is(AbsolutePosition))
-		return {x, y};
-	return point{x, y} - camera;
+	return isabsolute() ? position : position - camera;
 }
 
 void draworder::clear() {
@@ -87,11 +94,11 @@ void draworder::update() {
 	int n = timestamp - tick_start;
 	if(n >= m)
 		n = m;
-	parent->x = (short)calculate(start.x, x, n, m);
-	parent->y = (short)calculate(start.y, y, n, m);
+	parent->position.x = (short)calculate(start.position.x, position.x, n, m);
+	parent->position.y = (short)calculate(start.position.y, position.y, n, m);
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
 	if(n == m) {
-		if(is(AutoClear))
+		if(priority==0) // Special case - destroy parent object if order is 0
 			parent->clear();
 		clear();
 	}
@@ -119,6 +126,10 @@ void object::clear() {
 	data = 0;
 }
 
+void paint_sprite() {
+	image((sprite*)last_object->data, last_object->param, last_object->flags);
+}
+
 void splash_screen(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
@@ -137,6 +148,8 @@ void object::paint() const {
 static size_t getobjects(object** pb, object** pe) {
 	auto ps = pb;
 	for(auto& e : bsdata<object>()) {
+		if(!e)
+			continue;
 		if(ps < pe)
 			*ps++ = &e;
 	}
@@ -150,9 +163,11 @@ static int compare(const void* v1, const void* v2) {
 	auto a2 = p2->priority / 10;
 	if(a1 != a2)
 		return a1 - a2;
-	if(p1->y != p2->y)
-		return p1->y - p2->y;
-	return p1->x - p2->x;
+	if(p1->position.y != p2->position.y)
+		return p1->position.y - p2->position.y;
+	if(p1->priority!= p2->priority)
+		return p1->priority - p2->priority;
+	return p1->position.x - p2->position.x;
 }
 
 static void sortobjects(object** pb, size_t count) {
@@ -183,7 +198,7 @@ void* choose_object() {
 	return (void*)getresult();
 }
 
-static void paintobjectsshowmode() {
+static void paint_objects_show_mode() {
 	if(hot.key == KeyEscape)
 		execute(buttoncancel);
 	if(!hot.pressed && hot.key == MouseLeft)
@@ -191,18 +206,18 @@ static void paintobjectsshowmode() {
 }
 
 void show_objects() {
-	draw::scene(paintobjectsshowmode);
+	draw::scene(paint_objects_show_mode);
 }
 
-object*	addobject(point screen, const void* data, fnevent painting, unsigned char priority) {
+object*	addobject(point screen, const void* data, fnevent painting, unsigned char param, unsigned char priority, unsigned char alpha, unsigned char flags) {
 	auto p = bsdata<object>::add();
-	p->x = screen.x; p->y = screen.y;
+	p->position = screen;
 	p->painting = painting;
 	p->data = data;
-	p->flags = 0;
-	p->frame = 0;
+	p->param = param;
 	p->priority = priority;
-	p->alpha = 255;
+	p->alpha = alpha;
+	p->flags = flags;
 	return p;
 }
 
@@ -260,7 +275,7 @@ static void moving(point& result, point goal, int step, int corrent) {
 }
 
 void drawable::move(point goal, int speed, int correct) {
-	moving(*this, goal, speed, correct);
+	moving(position, goal, speed, correct);
 }
 
 static point getcameraorigin(point v) {
@@ -323,6 +338,7 @@ void slide_camera(point goal, int step) {
 	if(!maxds)
 		return;
 	auto curds = 0;
+	remove_dead_objects();
 	while(curds < maxds && ismodal()) {
 		curds += step;
 		if(curds > maxds)
@@ -349,6 +365,7 @@ void wait_all() {
 		doredraw();
 		waitcputime(1);
 		remove_orders();
+		remove_dead_objects();
 	}
 }
 
@@ -363,5 +380,6 @@ void draworder::wait() {
 		doredraw();
 		waitcputime(1);
 		remove_orders();
+		remove_dead_objects();
 	}
 }

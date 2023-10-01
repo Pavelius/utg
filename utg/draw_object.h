@@ -1,5 +1,4 @@
 #include "point.h"
-#include "rect.h"
 
 #pragma once
 
@@ -7,14 +6,13 @@ extern point objects_mouse;
 
 typedef void(*fnevent)();
 
-struct drawable : point {
-	enum { AbsolutePosition, AutoClear };
+struct drawable {
+	point			position;
 	unsigned char	alpha, priority, param, flags;
+	constexpr explicit operator bool() const { return priority != 0; }
 	point			getscreen() const;
-	bool			is(int v) const { return (flags & (1 << v)) != 0; }
+	bool			isabsolute() const { return priority < 10; }
 	void			move(point goal, int speed, int correct = 0);
-	void			set(point v) { x = v.x; y = v.y; }
-	void			set(int v) { flags |= (1 << v); }
 };
 struct draworder : drawable {
 	struct object*	parent;
@@ -29,8 +27,8 @@ struct draworder : drawable {
 };
 struct object : drawable {
 	const void*		data;
-	unsigned short	frame;
 	fnevent			painting;
+	constexpr explicit operator bool() const { return painting != 0; }
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			clear();
 	void			paint() const;
@@ -51,9 +49,11 @@ void splash_screen(unsigned milliseconds);
 void show_objects();
 void wait_all();
 
-object* addobject(point screen, const void* data, fnevent painting, unsigned char priority = 10);
+object* addobject(point screen, const void* data, fnevent painting, unsigned char param, unsigned char priority = 21, unsigned char alpha = 0xFF, unsigned char flags = 0);
 object* findobject(const void* p);
 
 void* choose_object();
+
+void paint_sprite();
 
 template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
