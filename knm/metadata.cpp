@@ -3,6 +3,7 @@
 #include "filter.h"
 #include "list.h"
 #include "player.h"
+#include "province.h"
 #include "script.h"
 #include "strategy.h"
 #include "tag.h"
@@ -10,6 +11,7 @@
 #include "unit.h"
 
 BSDATAC(playeri, 32)
+BSDATAC(provincei, 128)
 BSDATAC(strategyi, 8)
 BSDATAC(troopi, 128 * 8)
 
@@ -21,6 +23,10 @@ BSMETA(filteri) = {
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
+	{}};
+BSMETA(provincei) = {
+	BSREQ(id),
+	BSREQ(player),
 	{}};
 BSMETA(strategyi) = {
 	BSREQ(id),

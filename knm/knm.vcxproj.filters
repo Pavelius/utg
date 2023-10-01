@@ -48,6 +48,9 @@
     <ClInclude Include="playera.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="province.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -90,6 +93,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="playera.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="province.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

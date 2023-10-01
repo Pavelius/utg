@@ -1,18 +1,51 @@
+#List
+
+ApplyTradeRoute
+BecameSpeaker
+ConstructBuilding
+ elements SelectYourProvincies
+DiplomaticTreaty
+ elements SelectYourProvincies
+DoubleProvinceResources
+ elements SelectYourProvincies
+PredictLaws
+RecruitTroopsInHomeland
+RefreshTrade
+RemoveActivityToken
+ScorePublicGoal
+GainFameIfControlCapital
+
 #Strategy
 
 Leadership
+ primary AddLeaders+3 PayForLeaders+2
+ secondary PayForLeaders+2
 Diplomacy
+ primary DiplomaticTreaty DoubleProvinceResources
+ secondary PayHero DoubleProvinceResources
 Politics
+ primary BecameSpeaker PredictLaws+2 AddActions+2
+ secondary PayHero AddActions+2
 Construction
+ primary ConstructBuilding ConstructBuilding
+ secondary PayHero ConstructBuilding
 Trade
+ primary AddGoods+3 RefreshTrade ApplyTradeRoute
+ secondary PayHero RefreshTrade
 Warfare
+ primary RemoveActivityToken AddLeaders+1
+ secondary PayHero RecruitTroopsInHomeland
 Technology
+ primary AddResearch+10 PayResearch+1
+ secondary PayHero RecruitTroopsInHomeland
 GatherPower
+ primary ScorePublicGoal GainFameIfControlCapital
+ secondary PayHero AddResearch+2 PayResearch+2
 
 #List
 
 StrategyPhase 
- elements SelectPlayersByKing ForEachPlayer ChooseStrategy PickStrategy
+ elements SelectPlayersBySpeaker ForEachPlayer ChooseStrategy PickStrategy
 
 ActionPhase
 

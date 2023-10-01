@@ -1,7 +1,9 @@
 #include "answers.h"
+#include "entitya.h"
 #include "filter.h"
 #include "player.h"
 #include "playera.h"
+#include "province.h"
 #include "pushvalue.h"
 #include "script.h"
 #include "list.h"
@@ -18,6 +20,11 @@ static void addan(entity& e) {
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
+}
+
+static bool filter_player(const void* object) {
+	auto p = (entity*)object;
+	return p->player == player;
 }
 
 static void choose_strategy(fnvisible proc, int bonus) {
@@ -45,8 +52,18 @@ static void select_players(fnvisible proc, int bonus) {
 	}
 }
 
+static void select_provincies(fnvisible proc, int bonus) {
+	auto keep = (bonus >= 0);
+	for(auto& e : bsdata<provincei>()) {
+		if(proc(&e) != keep)
+			continue;
+		querry.add(&e);
+	}
+}
+
 BSDATA(filteri) = {
 	{"ChooseStrategy", no_player, choose_strategy},
-	{"SelectPlayersByKing", 0, select_players},
+	{"SelectPlayersBySpeaker", 0, select_players},
+	{"SelectYourProvincies", filter_player, select_provincies},
 };
 BSDATAF(filteri)

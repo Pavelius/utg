@@ -1,2 +1,5 @@
-﻿In file `rules/Units.txt`:
- Line 12: Not found requisit `tags`
+﻿In file `rules/Strategies.txt`:
+ Line 23: Can't find variant `PredictLaws`
+ Line 29: Can't find variant `RefreshTrade`
+ Line 29: Can't find variant `ApplyTradeRoute`
+ Line 30: Can't find variant `RefreshTrade`

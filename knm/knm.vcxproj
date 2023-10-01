@@ -148,6 +148,7 @@
     <ClInclude Include="entitya.h" />
     <ClInclude Include="filter.h" />
     <ClInclude Include="playera.h" />
+    <ClInclude Include="province.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="taga.h" />
     <ClInclude Include="player.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playera.cpp" />
+    <ClCompile Include="province.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
     <ClCompile Include="tag.cpp" />
