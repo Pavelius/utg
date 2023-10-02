@@ -27,6 +27,11 @@ static bool filter_player(const void* object) {
 	return p->player == player;
 }
 
+static bool filter_province(const void* object) {
+	auto p = (entity*)object;
+	return p->getprovince() == province;
+}
+
 static void choose_strategy(fnvisible proc, int bonus) {
 	auto keep = (bonus >= 0);
 	an.clear();

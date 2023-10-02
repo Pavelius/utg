@@ -1,8 +1,10 @@
 #include "answers.h"
 #include "army.h"
 #include "crt.h"
+#include "entitya.h"
 #include "player.h"
 #include "playera.h"
+#include "province.h"
 #include "pushvalue.h"
 #include "script.h"
 #include "strategy.h"
@@ -18,9 +20,9 @@ static void pay_hero(int bonus) {
 }
 
 static void add_leaders(int bonus) {
-	player->add(Hero, 1);
-	player->add(Champion, 1);
-	player->add(General, 1);
+	player->add(Tactic, 1);
+	player->add(Army, 1);
+	player->add(Strategy, 1);
 }
 
 static void add_actions(int bonus) {
@@ -62,6 +64,17 @@ static void for_each_player(int bonus) {
 	script_stop();
 }
 
+static void for_each_province(int bonus) {
+	pushvalue push(province);
+	pushvalue push_querry(querry);
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	for(auto p : push_querry.value) {
+		province = static_cast<provincei*>(p);
+		script_run(commands);
+	}
+	script_stop();
+}
+
 BSDATA(script) = {
 	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
@@ -70,6 +83,7 @@ BSDATA(script) = {
 	{"AttackerMove", attacker_move},
 	{"DefenderMove", defender_move},
 	{"ForEachPlayer", for_each_player},
+	{"ForEachProvince", for_each_province},
 	{"PayForLeaders", pay_for_leaders},
 	{"PayHero", pay_hero},
 	{"PayResearch", pay_research},

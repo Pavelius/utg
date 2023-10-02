@@ -3,12 +3,11 @@
 #pragma once
 
 enum ability_s : unsigned char {
-	Cost,
-	Strenght, Melee, Shoot, Messy,
-	MeleeDefence, ShootDefence,
-	Recruit, Reinforcement,
+	Cost, Recruit, Limit,
+	Strenght, Combat,
+	LightDamage, HeavyDamage, CriticalDamage, Shoots,
 	Resources, Influence, Trade,
-	Champion, General, Hero,
+	Tactic, Army, Strategy,
 	Lore, Fame, Goods,
 };
 struct abilityi : nameable {

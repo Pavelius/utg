@@ -1,12 +1,12 @@
 #Unit
 
 Pikemens
- abilities Cost(1) Recruit(2)
- combat Strenght Melee+2 Strenght+1
+ abilities Cost(1) Recruit(2) Army(3) Strenght(1) Combat(2) LightDamage(1) Tactic(1)
 Archers
- abilities Cost(1) Recruit(2)
- combat Strenght Shoot+2 Shoot+2
+ abilities Cost(1) Recruit(2) Army(2) Strenght(1) Combat(2) LightDamage(1) Shoots(1)
+Swordmans
+ abilities Cost(1) Recruit(1) Army(1) Strenght(1) Combat(3) LightDamage(1) HeavyDamage(1) Limit(6)
+ tags Armored
 Cavalry
- abilities Cost(1) Recruit(1)
- combat Strenght Melee+3 Strenght+1
- tags Fast
+ abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(3) LightDamage(2) HeavyDamage(1) Limit(4)
+ tags Fast Tought Armored
