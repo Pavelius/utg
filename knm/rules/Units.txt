@@ -8,5 +8,11 @@ Swordmans
  abilities Cost(1) Recruit(1) Army(1) Strenght(1) Combat(3) LightDamage(1) HeavyDamage(1) Limit(6)
  tags Armored
 Cavalry
- abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(3) LightDamage(2) HeavyDamage(1) Limit(4)
+ abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(4) LightDamage(2) HeavyDamage(1) Limit(4)
+ tags Fast Tought
+Paladins
+ abilities Cost(4) Recruit(1) Army(1) Strenght(1) Combat(5) LightDamage(3) HeavyDamage(2) Limit(2)
  tags Fast Tought Armored
+WarMachine
+ abilities Cost(6) Recruit(1) Army(1) Strenght(2) Combat(6) LightDamage(2) HeavyDamage(4) Limit(1)
+ tags Tought Armored
