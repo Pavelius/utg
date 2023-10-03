@@ -1,7 +1,7 @@
 Construction: Строительство
 Diplomacy: Дипломатия
-GatherPower: Укрепление власти
-Leadership: Призыв героев
+GatherPower: Власть
+Leadership: Лидерство
 Politics: Политика
 Technology: Исследования
 Trade: Торговля

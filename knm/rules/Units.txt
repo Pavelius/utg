@@ -5,9 +5,9 @@ Pikemens
 Archers
  abilities Cost(1) Recruit(1) Army(2) Strenght(1) Combat(2) Damage(1) Shoots(2)
 Swordmans
- abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(4)
+ abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(6)
 Cavalry
- abilities Cost(3) Recruit(1) Army(1) Strenght(1) Combat(4) Damage(1) Shield(1) Limit(6)
+ abilities Cost(3) Recruit(1) Army(1) Strenght(1) Combat(4) Damage(1) Shield(1) Limit(4)
  tags Fast
 WarMachine
  abilities Cost(5) Recruit(1) Army(1) Strenght(2) Combat(6) Damage(2) Shield(2) Limit(2)
