@@ -42,9 +42,6 @@
     <ClInclude Include="strategy.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="filter.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="playera.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -83,9 +80,6 @@
     <ClCompile Include="player.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="filter.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="strategy.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -122,6 +116,9 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\StrategyNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\PlayerNames.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

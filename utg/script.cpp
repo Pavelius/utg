@@ -14,9 +14,9 @@ template<> void fnscript<script>(int value, int bonus) {
 	last_script->proc(bonus);
 }
 template<> bool fntest<script>(int value, int bonus) {
-	auto p = bsdata<script>::elements + value;
-	if(p->test)
-		return p->test(bonus);
+	last_script = bsdata<script>::elements + value;
+	if(last_script->test)
+		return last_script->test(bonus);
 	return true;
 }
 
@@ -32,6 +32,11 @@ void conditional_script(int bonus) {
 		return;
 	if(!last_script->test(bonus))
 		script_stop();
+}
+
+bool choosing_script(int bonus) {
+	last_script->proc(bonus);
+	return true;
 }
 
 void script_stop() {

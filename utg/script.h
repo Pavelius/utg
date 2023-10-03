@@ -16,6 +16,7 @@ extern variant* script_begin;
 extern variant* script_end;
 extern script* last_script;
 
+bool choosing_script(int bonus);
 bool script_allow(variant v);
 bool script_allow(const variants& source);
 bool script_isrun();

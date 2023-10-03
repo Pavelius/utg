@@ -1,3 +1,5 @@
+ChooseStrategy: Выбор стратегии
+
 Construction: Строительство
 Diplomacy: Дипломатия
 GatherPower: Власть

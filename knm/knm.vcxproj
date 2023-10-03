@@ -146,7 +146,6 @@
     <ClInclude Include="army.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
-    <ClInclude Include="filter.h" />
     <ClInclude Include="playera.h" />
     <ClInclude Include="province.h" />
     <ClInclude Include="strategy.h" />
@@ -161,7 +160,6 @@
     <ClCompile Include="army.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="entitya.cpp" />
-    <ClCompile Include="filter.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
@@ -182,6 +180,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
+    <Text Include="locale\ru\PlayerNames.txt" />
     <Text Include="locale\ru\StrategyNames.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />
