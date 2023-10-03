@@ -121,5 +121,8 @@
     <Text Include="locale\ru\PlayerNames.txt">
       <Filter>locale</Filter>
     </Text>
+    <Text Include="locale\ru\StrategyDescriptions.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

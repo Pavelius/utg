@@ -42,7 +42,7 @@ BSDATA(varianti) = {
 	{"Player", VAR(playeri, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Strategy", VAR(strategyi, 1)},
+	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };
 BSDATAF(varianti);

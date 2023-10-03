@@ -1,14 +1,14 @@
 #List
 
 ApplyTradeRoute
-BecameSpeaker
+ClaimSpeaker
 ConstructBuilding
  elements SelectYourProvincies
 DiplomaticTreaty
  elements SelectYourProvincies
 DoubleProvinceResources
  elements SelectYourProvincies
-PredictLaws
+LookLaws
 RecruitTroopsInHomeland
 RefreshTrade
 RemoveActivityToken
@@ -18,13 +18,13 @@ GainFameIfControlCapital
 #Strategy
 
 Leadership
- primary AddLeaders+3 PayForLeaders+2
- secondary PayForLeaders+2
+ primary AddLeaders+3 PayForLeaders+3
+ secondary PayForLeaders+3
 Diplomacy
  primary DiplomaticTreaty DoubleProvinceResources
  secondary PayHero DoubleProvinceResources
 Politics
- primary BecameSpeaker PredictLaws+2 AddActions+2
+ primary ClaimSpeaker LookLaws+2 AddActions+2
  secondary PayHero AddActions+2
 Construction
  primary ConstructBuilding ConstructBuilding
@@ -36,11 +36,11 @@ Warfare
  primary RemoveActivityToken AddLeaders+1
  secondary PayHero RecruitTroopsInHomeland
 Technology
- primary AddResearch+10 PayResearch+1
- secondary PayHero RecruitTroopsInHomeland
+ primary AddResearch+10 PayResearch
+ secondary PayHero AddResearch+4 PayResearch
 GatherPower
  primary ScorePublicGoal GainFameIfControlCapital
- secondary PayHero AddResearch+2 PayResearch+2
+ secondary PayHero AddSecretGoal+1
 
 #List
 

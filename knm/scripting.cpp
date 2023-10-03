@@ -63,6 +63,9 @@ static void add_actions(int bonus) {
 static void add_research(int bonus) {
 }
 
+static void add_secret_goal(int bonus) {
+}
+
 static void add_goods(int bonus) {
 }
 
@@ -141,6 +144,7 @@ BSDATA(script) = {
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
 	{"AddResearch", add_research},
+	{"AddSecretGoal", add_secret_goal},
 	{"ChooseStrategy", choose_strategy},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachProvince", for_each_province},

@@ -181,6 +181,7 @@
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
     <Text Include="locale\ru\PlayerNames.txt" />
+    <Text Include="locale\ru\StrategyDescriptions.txt" />
     <Text Include="locale\ru\StrategyNames.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />

@@ -1,5 +1,8 @@
 ChooseStrategy: Выбор стратегии
 
+PrimaryAbility: Основная способность
+SecondaryAbility: Вторичная способность
+
 Construction: Строительство
 Diplomacy: Дипломатия
 GatherPower: Власть
