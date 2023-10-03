@@ -25,15 +25,12 @@ void armyi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-void armyi::damage(ability_s type, int chance, int count, int chance_critical) {
+void armyi::damage(ability_s type, int chance, int count) {
 	for(auto i = 0; i < count; i++) {
 		auto result = d10();
 		if(result > chance)
 			continue;
-		if(d10() <= chance_critical)
-			add(CriticalDamage, 1);
-		else
-			add(type, 1);
+		add(type, 1);
 	}
 }
 
@@ -44,31 +41,48 @@ static void getunits(entitya& destination, entitya& source) {
 	destination.distinct();
 }
 
-int	armyi::getcount(entity* type) const {
-	auto result = 0;
-	for(auto p : troops) {
-		if(p->getunit() == type)
-			result++;
-	}
-	return result;
+void armyi::engage(ability_s type) {
+	for(auto p : troops)
+		damage(type, p->get(Combat), p->get(type));
 }
 
-void armyi::engage(armyi& enemy, ability_s attack_type, ability_s damage_type) {
-	entitya units;
-	getunits(units, troops);
-	for(auto p : units) {
-		auto count = getcount(p);
-		if(!count)
-			continue;
-		enemy.damage(damage_type, p->get(Combat), p->get(attack_type) * count, 1);
-	}
-}
-
-void armyi::engage(armyi& enemy) {
-	engage(enemy, LightDamage, LightDamage);
-	engage(enemy, HeavyDamage, HeavyDamage);
+void armyi::engage() {
+	engage(Shoots);
+	engage(Damage);
 }
 
 void armyi::sort() {
 	troops.sort(compare_units);
+}
+
+void armyi::resist(int& hits) {
+	if(abilities[Shield] > 0) {
+		if(abilities[Shield] > hits) {
+			abilities[Shield] -= hits;
+			hits = 0;
+		} else {
+			hits -= abilities[Shield];
+			abilities[Shield] = 0;
+		}
+	}
+}
+
+void armyi::prepare(ability_s type) {
+	abilities[type] = 0;
+	for(auto p : troops)
+		add(type, p->get(type));
+}
+
+void armyi::suffer(int hits) {
+	resist(hits);
+	if(hits <= 0)
+		return;
+	auto ps = troops.begin();
+	for(auto p : troops) {
+		if(hits <= 0)
+			*ps++ = p;
+		else
+			casualty.add(p);
+	}
+	troops.count = ps - troops.begin();
 }

@@ -11,6 +11,7 @@
 #include "unit.h"
 
 template<> void fnscript<abilityi>(int value, int counter) {
+	player->abilities[value] += counter;
 }
 
 template<> void fnscript<uniti>(int value, int counter) {
@@ -34,13 +35,13 @@ static void add_research(int bonus) {
 static void add_goods(int bonus) {
 }
 
-static void attacker_move(int bonus) {
-	attacker.engage(defender);
-	defender.engage(attacker);
-}
-
-static void defender_move(int bonus) {
-	defender.engage(attacker);
+static void combat_round(int bonus) {
+	attacker.prepare(Shield);
+	defender.prepare(Shield);
+	attacker.engage(Damage);
+	defender.engage(Damage);
+	defender.suffer(attacker.get(Damage));
+	attacker.suffer(defender.get(Damage));
 }
 
 static void pick_strategy(int bonus) {
@@ -80,8 +81,6 @@ BSDATA(script) = {
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
 	{"AddResearch", add_research},
-	{"AttackerMove", attacker_move},
-	{"DefenderMove", defender_move},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachProvince", for_each_province},
 	{"PayForLeaders", pay_for_leaders},

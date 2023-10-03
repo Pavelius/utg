@@ -1,2 +1,3 @@
 ﻿In file `rules/Units.txt`:
- Line 6: Not found field `Shots` in dataset `abilities`
+ Line 6: Not found field `Shoots` in dataset `abilities`
+ Line 9: Not found identifier `Armored`

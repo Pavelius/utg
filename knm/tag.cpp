@@ -3,8 +3,6 @@
 #include "taga.h"
 
 BSDATA(tagi) = {
-	{"Armored"},
-	{"Tought"},
 	{"Fast"},
 	{"Fly"},
 };
