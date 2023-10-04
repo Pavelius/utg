@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"
@@ -15,21 +16,16 @@
 
 using namespace draw;
 
+const int hms = 8;
+inline point i2h(short unsigned i) { return {(short)(i % hms), (short)(i / hms)}; }
+inline short unsigned h2i(point v) { return v.y * hms + v.x; }
+
 const int button_height = 20;
 const int size = 256;
 const int player_avatar_size = 32;
 const int indicator_width = 48;
 const int tech_padding = 16;
 
-//static color player_colors[] = {
-//	{40, 40, 40},
-//	{97, 189, 79},
-//	{242, 214, 0},
-//	{255, 159, 26},
-//	{235, 90, 70},
-//	{195, 119, 224},
-//	{0, 121, 191},
-//};
 static color tech_colors[] = {
 	{40, 40, 40},
 	{227, 91, 110},
@@ -295,13 +291,13 @@ static color getplayercolor(playeri* p) {
 	return p->fore;// player_colors[origin_players.find(p) + 1];
 }
 
-//void troop::paint() const {
-//	auto push_color = fore;
-//	fore = getplayercolor(player);
-//	buttonback(43, this);
-//	fore = push_color;
-//	textcn(getname());
-//}
+void troopi::paint() const {
+	auto push_color = fore;
+	fore = getplayercolor(player);
+	buttonback(43, this);
+	fore = push_color;
+	textcn(getname());
+}
 
 static void windowed(const char* format) {
 	rectpush push;
@@ -379,7 +375,7 @@ static void textvalue(figure shape, int v) {
 //	}
 //	addobject(pt, ps, paint_planet, ps->frame, 22, 0xFF, flags);
 //}
-//
+
 //static void add_planets(point pt, const systemi* ps) {
 //	auto index = 0;
 //	entitya planets;
@@ -394,60 +390,56 @@ static void textvalue(figure shape, int v) {
 //		index++;
 //	}
 //}
-//
-//static void add_system(systemi* ps, point pt) {
-//	auto p = addobject(pt, ps, ftpaint<systemi>, 0, 23);
-//	add_planets(pt, ps);
-//}
-//
-//static void add_systems() {
-//	auto push_interactive = answers::interactive;
-//	for(auto& e : bsdata<systemi>()) {
-//		if(!e.isplay())
-//			continue;
-//		add_system(&e, draw::h2p(i2h(e.index), size));
-//	}
-//	answers::interactive = push_interactive;
-//}
 
-//static void remove_all_markers() {
-//	for(auto& e : bsdata<object>()) {
-//		if(bsdata<marker>::have(e.data))
-//			e.clear();
-//	}
-//	bsdata<marker>::source.clear();
-//}
+static void add_province(provincei* ps, point pt) {
+	addobject(pt, ps, ftpaint<provincei>, 0, 23);
+	//add_planets(pt, ps);
+}
+
+static void add_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		add_province(&e, draw::h2p(i2h(e.index), size));
+	}
+}
+
+static void remove_all_markers() {
+	for(auto& e : bsdata<object>()) {
+		if(bsdata<marker>::have(e.data))
+			e.clear();
+	}
+	bsdata<marker>::source.clear();
+}
 
 static void marker_press() {
 	auto p = (object*)hot.param;
 	breakmodal((long)p->data);
 }
 
-//static object* add_maker(void* p, figure shape, int size, char priority = 50) {
-//	auto pd = findobject(p);
-//	if(!pd)
-//		return 0;
-//	auto pm = bsdata<marker>::add();
-//	pm->shape = shape;
-//	pm->size = size;
-//	pm->fore = colors::green;
-//	pm->data = p;
-//	return addobject(pd->position, pm, ftpaint<marker>, 0, priority);
-//}
+static object* add_maker(void* p, figure shape, int size, char priority = 50) {
+	auto pd = findobject(p);
+	if(!pd)
+		return 0;
+	auto pm = bsdata<marker>::add();
+	pm->shape = shape;
+	pm->size = size;
+	pm->fore = colors::green;
+	pm->data = p;
+	return addobject(pd->position, pm, ftpaint<marker>, 0, priority);
+}
 
-//systemi* entitya::choosesystem() const {
-//	draw::pause();
-//	for(auto p : *this)
-//		add_maker(p, figure::Circle, size / 3);
-//	answers an;
-//	auto result = an.choose(0, getnm("Cancel"), 1);
-//	remove_all_markers();
-//	return (systemi*)result;
-//}
+provincei* entitya::chooseprovince() const {
+	//draw::pause();
+	for(auto p : *this)
+		add_maker(p, figure::Circle, size / 3);
+	answers an;
+	auto result = an.choose(0, getnm("Cancel"), 1);
+	remove_all_markers();
+	return (provincei*)result;
+}
 
 void prepare_game_ui() {
 	clear_objects();
-//	add_systems();
+	add_provinces();
 	setcamera(h2p({0, 0}, size));
 }
 
@@ -566,13 +558,13 @@ static void rectbc(color v, bool mark, void* hilite_item) {
 //			caret.x += width + tech_padding;
 //	}
 //}
-//
+
 //static void faction_technology_paint() {
 //	rectpush push;
 //	width = 128;
 //	height = texth() * 3;
 //}
-//
+
 //static void tech_scene() {
 //	strategy_background();
 //	caret.y += 8;
@@ -583,7 +575,7 @@ static void rectbc(color v, bool mark, void* hilite_item) {
 //	caret.y += (texth() * 3 + 24) * 4 + tech_padding * 3 + 8;
 //	texth2cw(getnm("UnitUpgradedTechnologies"));
 //}
-//
+
 //void tech_selection() {
 //	pushvalue p1(pbackground, empthy_scene);
 //	pushvalue p2(pfinish, empthy_scene);

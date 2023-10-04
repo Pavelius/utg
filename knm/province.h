@@ -7,3 +7,5 @@ struct provincei : entity {
 	void		paint() const;
 };
 extern provincei* province;
+
+void initialize_province();

@@ -12,3 +12,5 @@ struct playeri : entity {
 	int			getsummary(ability_s v) const;
 };
 extern playeri*	player;
+
+void prepare_game_ui();

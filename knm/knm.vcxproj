@@ -194,6 +194,7 @@
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />
+    <Text Include="rules\Provinces.txt" />
     <Text Include="rules\Strategies.txt" />
     <Text Include="rules\Units.txt" />
   </ItemGroup>
