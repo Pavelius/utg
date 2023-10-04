@@ -152,7 +152,7 @@ static void status(const char* id, int value, int maximum, const void* object) {
 
 static void status(ability_s v) {
 	switch(v) {
-	case Fame: case Goods:
+	case Fame: case Goods: case Resources: case Influence:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
 		break;
 	default:

@@ -1,6 +1,7 @@
 #include "crt.h"
 #include "entity.h"
 #include "player.h"
+#include "province.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -27,5 +28,13 @@ int entity::get(ability_s v) const {
 uniti* entity::getunit() const {
 	if(bsdata<troopi>::have(this))
 		return ((uniti*)id);
+	return 0;
+}
+
+provincei* entity::getprovince() const {
+	if(bsdata<provincei>::have(this))
+		return static_cast<provincei*>(const_cast<entity*>(this));
+	else if(bsdata<provincei>::have(location))
+		return static_cast<provincei*>(const_cast<entity*>(location));
 	return 0;
 }

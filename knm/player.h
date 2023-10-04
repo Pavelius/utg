@@ -9,6 +9,6 @@ struct playeri : entity {
 	abilitya	current;
 	color		fore, border;
 	int			getmaximum(ability_s v) const;
-	int			getprovincesummary(ability_s v) const;
+	int			getsummary(ability_s v) const;
 };
 extern playeri*	player;
