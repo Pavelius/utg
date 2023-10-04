@@ -17,6 +17,7 @@ BSDATA(abilityi) = {
 	{"Army"},
 	{"Lore"},
 	{"Fame"},
+	{"Commodities"},
 	{"Goods"},
 };
 assert_enum(abilityi, Goods);

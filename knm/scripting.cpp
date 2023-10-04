@@ -11,8 +11,7 @@
 #include "unit.h"
 
 struct pushtitle {
-	const char* header;
-	const char* resid;
+	const char *header, *resid;
 	pushtitle(const char* id) : header(answers::header), resid(answers::resid) {
 		answers::header = getnm(id);
 		answers::resid = player->id;
@@ -23,8 +22,11 @@ struct pushtitle {
 	}
 };
 
+static char log_text[260];
+static stringbuilder log(log_text);
+
 template<> void fnscript<abilityi>(int value, int counter) {
-	player->abilities[value] += counter;
+	player->current.abilities[value] += counter;
 }
 
 template<> void fnscript<uniti>(int value, int counter) {
@@ -37,6 +39,15 @@ static void addan(entity& e) {
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
+}
+
+static bool filter_activated(const void* object) {
+	auto p = (entity*)object;
+	return p->is(player);
+}
+
+static void filter_activated_querry(int bonus) {
+	querry.match(filter_activated, bonus >= 0);
 }
 
 static bool filter_player(const void* object) {
@@ -53,8 +64,8 @@ static void pay_hero(int bonus) {
 }
 
 static void add_leaders(int bonus) {
-	player->add(Tactic, 2);
-	player->add(Army, 1);
+	player->current.add(Tactic, 2);
+	player->current.add(Army, 1);
 }
 
 static void add_actions(int bonus) {
@@ -108,13 +119,12 @@ static void select_players(int bonus) {
 		players.add(&e);
 }
 
-static void select_your_provincies(int bonus) {
+static void select_provincies(int bonus) {
 	querry.collectiona::select(bsdata<provincei>::source, filter_player, bonus >= 0);
 }
 
-static void select_your_provincies(fnvisible proc, int bonus) {
-	for(auto& e : bsdata<provincei>())
-		querry.add(&e);
+static void select_your_provincies(int bonus) {
+	querry.collectiona::select(bsdata<provincei>::source, filter_player, bonus >= 0);
 }
 
 static void for_each_player(int bonus) {
@@ -146,6 +156,7 @@ BSDATA(script) = {
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"ChooseStrategy", choose_strategy},
+	{"FilterActivated", filter_activated_querry},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachProvince", for_each_province},
 	{"PayForLeaders", pay_for_leaders},
@@ -153,6 +164,7 @@ BSDATA(script) = {
 	{"PayResearch", pay_research},
 	{"PickStrategy", pick_strategy},
 	{"SelectPlayersBySpeaker", select_players},
-	{"SelectYourProvincies", select_your_provincies},
+	{"SelectProvinces", select_provincies},
+	{"SelectProvincesYouControl", select_your_provincies},
 };
 BSDATAF(script)

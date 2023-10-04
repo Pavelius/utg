@@ -3,13 +3,14 @@
 ApplyTradeRoute
 ClaimSpeaker
 ConstructBuilding
- elements SelectYourProvincies
+ elements SelectProvincesYouControl
 DiplomaticTreaty
- elements SelectYourProvincies
+ elements SelectProvincesYouControl
 DoubleProvinceResources
- elements SelectYourProvincies
+ elements SelectProvincesYouControl
 LookLaws
 RecruitTroopsInHomeland
+ elements SelectProvincesYouControl
 RefreshTrade
 RemoveActivityToken
 ScorePublicGoal

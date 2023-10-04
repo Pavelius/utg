@@ -3,6 +3,7 @@
 #include "taga.h"
 
 BSDATA(tagi) = {
+	{"Used"},
 	{"Fast"},
 	{"Fly"},
 };

@@ -1,1 +1,10 @@
 AppTitle: Рыцари и Маги
+
+Army: Армия
+Commodities: Золото
+Fame: Слава
+Goods: Товары
+Gold: Золото
+InfluenceShort: Вли
+ResourcesShort: Рес
+Tactic: Герои

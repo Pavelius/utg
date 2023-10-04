@@ -17,4 +17,6 @@ struct entity : nameable, taga {
 	playeri*		getplayer() const { return player; }
 	provincei*		getprovince() const;
 	uniti*			getunit() const;
+	bool			is(const playeri* v) const;
+	void			set(const playeri* v);
 };

@@ -1,2 +1,4 @@
 ﻿In file `rules/Strategies.txt`:
- Line 43: Can't find variant `AddSecretGoal`
+ Line 6: Can't find variant `SelectYourProvincies`
+ Line 8: Can't find variant `SelectYourProvincies`
+ Line 10: Can't find variant `SelectYourProvincies`

@@ -3,9 +3,6 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
-void status_info() {
-}
-
 static void add_head(stringbuilder& sb, const char* id) {
 	sb.addn("###%1", getnm(id));
 }

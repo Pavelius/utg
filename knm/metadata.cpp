@@ -1,4 +1,6 @@
 #include "bsreq.h"
+#include "card.h"
+#include "component.h"
 #include "crt.h"
 #include "list.h"
 #include "player.h"
@@ -9,12 +11,23 @@
 #include "troop.h"
 #include "unit.h"
 
+BSDATAC(cardi, 512)
 BSDATAC(playeri, 32)
 BSDATAC(provincei, 128)
 BSDATAC(strategyi, 8)
 BSDATAC(troopi, 128 * 8)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(cardi) = {
+	BSREQ(id),
+	BSENM(type, componenti),
+	BSREQ(player),
+	BSFLG(tags, tagi),
+	BSREQ(effect),
+	{}};
+BSMETA(componenti) = {
 	BSREQ(id),
 	{}};
 BSMETA(playeri) = {
@@ -39,6 +52,7 @@ BSMETA(uniti) = {
 	{}};
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Card", VAR(cardi, 1)},
 	{"Player", VAR(playeri, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},

@@ -4,6 +4,6 @@
 #pragma once
 
 struct strategyi : entity {
-	variants		primary, secondary;
+	variants	primary, secondary;
 };
 extern strategyi* last_strategy;

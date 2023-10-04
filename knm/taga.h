@@ -1,7 +1,7 @@
 #pragma once
 
 enum tag_s : unsigned char {
-	Fast, Fly,
+	Used, Fast, Fly,
 };
 struct taga {
 	unsigned	tags;

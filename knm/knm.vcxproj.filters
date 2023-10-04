@@ -48,6 +48,12 @@
     <ClInclude Include="province.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="card.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="component.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -92,6 +98,15 @@
     <ClCompile Include="province.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="card.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="component.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -123,6 +138,9 @@
     </Text>
     <Text Include="locale\ru\StrategyDescriptions.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Actions.txt">
+      <Filter>data</Filter>
     </Text>
   </ItemGroup>
 </Project>

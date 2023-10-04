@@ -2,4 +2,5 @@
 
 #pragma once
 
-struct tagi : nameable {};
+struct componenti : nameable {
+};
