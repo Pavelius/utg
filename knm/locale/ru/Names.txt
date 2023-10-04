@@ -5,6 +5,6 @@ Commodities: Золото
 Fame: Слава
 Goods: Товары
 Gold: Золото
-InfluenceShort: Вли
-ResourcesShort: Рес
+Influence: Влияние
+Resources: Ресурсы
 Tactic: Герои

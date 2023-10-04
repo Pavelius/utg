@@ -5,7 +5,8 @@ playeri* player;
 
 int	playeri::getmaximum(ability_s v) const {
 	switch(v) {
-	case Trade: return 3;
+	case Goods: return 3;
+	case Fame: return 10;
 	default: return 100;
 	}
 }

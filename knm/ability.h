@@ -5,14 +5,14 @@
 enum ability_s : unsigned char {
 	Cost, Recruit, Limit,
 	Strenght, Combat, Damage, Shoots, Shield,
-	Resources, Influence, Trade,
+	Resources, Influence, Goods,
 	Tactic, Army,
-	Lore, Fame, Commodities, Goods,
+	Lore, Fame, Gold,
 };
 struct abilityi : nameable {
 };
 struct abilitya {
-	char		abilities[Goods + 1];
+	char		abilities[Gold + 1];
 	void		add(ability_s v, int i) { abilities[v] += i; }
 	int			get(ability_s v) const { return abilities[v]; }
 };

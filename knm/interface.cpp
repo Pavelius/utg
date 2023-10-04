@@ -1,12 +1,14 @@
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"
+#include "draw_marker.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "entitya.h"
 #include "pushvalue.h"
 #include "player.h"
 #include "playera.h"
+#include "province.h"
 #include "script.h"
 #include "troop.h"
 #include "unit.h"
@@ -15,6 +17,8 @@ using namespace draw;
 
 const int button_height = 20;
 const int size = 256;
+const int player_avatar_size = 32;
+const int indicator_width = 48;
 const int tech_padding = 16;
 
 //static color player_colors[] = {
@@ -104,7 +108,7 @@ static void status(const char* id, const char* value, const void* object) {
 	auto push_caret = caret;
 	auto push_width = width;
 	auto push_height = height;
-	width = 44;
+	width = indicator_width;
 	height = 32 + 4;
 	if(ishilite(object)) {
 		if(bsdata<script>::have(object)) {
@@ -116,7 +120,7 @@ static void status(const char* id, const char* value, const void* object) {
 	fore = colors::border;
 	line(caret.x, caret.y + 40);
 	caret = push_caret;
-	font = metrics::small;
+	font = metrics::h3;
 	fore = colors::h3;
 	textcnw(name);
 	caret.y += texth();
@@ -127,7 +131,7 @@ static void status(const char* id, const char* value, const void* object) {
 	font = push_font;
 	caret = push_caret;
 	width = push_width;
-	caret.x += 44;
+	caret.x += indicator_width;
 	push_caret = caret;
 	fore = colors::border;
 	line(caret.x, caret.y + 40);
@@ -148,8 +152,8 @@ static void status(const char* id, int value, int maximum, const void* object) {
 
 static void status(ability_s v) {
 	switch(v) {
-	case Fame:
-		status(bsdata<abilityi>::elements[v].id, player->get(v), 10, bsdata<abilityi>::elements + v);
+	case Fame: case Goods:
+		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
 		break;
 	default:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), bsdata<abilityi>::elements + v);
@@ -159,16 +163,13 @@ static void status(ability_s v) {
 
 static void show_indicators() {
 	static ability_s source_tokes[] = {Tactic, Army};
-	static ability_s source_goods[] = {Goods, Commodities};
+	static ability_s source_goods[] = {Resources, Influence, Gold, Goods};
 	static ability_s source_score[] = {Fame};
 	for(auto v : source_tokes)
 		status(v);
 	caret.x += 2;
 	for(auto v : source_goods)
 		status(v);
-	caret.x += 2;
-	status(getnmsh("Resources"), player->getprovincesummary(Resources), bsdata<abilityi>::elements + Resources);
-	status(getnmsh("Influence"), player->getprovincesummary(Influence), bsdata<abilityi>::elements + Influence);
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
@@ -189,7 +190,7 @@ void status_info() {
 	caret.y += 4 * 2 + 32;
 }
 
-static void space_hexagon() {
+static void paint_hexagon() {
 	auto push_size = fsize; fsize = size;
 	auto push_fore = fore; fore = colors::border;
 	hexagon();
@@ -212,21 +213,33 @@ static void paint_special(int index, int frame) {
 //	}
 //}
 
-//void systemi::paint() const {
-//	special_paint(special, special_index);
-//	space_hexagon();
-//	auto push_caret = caret;
-//	caret.y -= size - 24;
-//	auto res = gres("races_small");
-//	for(auto p : players) {
-//		if(isactivated(p)) {
-//			image(res, getbsi(p), 0);
-//			caret.x += 30;
-//			caret.y += 16;
-//		}
-//	}
-//	caret = push_caret;
-//}
+static void paint_player_marker(const playeri* p) {
+	auto push_fore = fore; fore = p->fore;
+	auto push_alpha = alpha; alpha /= 3;
+	circlef(player_avatar_size / 2);
+	alpha = push_alpha;
+	circle(player_avatar_size / 2);
+	fore = push_fore;
+}
+
+static void paint_player_markers(const provincei* province) {
+	auto push_caret = caret;
+	caret.y -= size - 24;
+	for(auto p : players) {
+		if(province->is(p)) {
+			paint_player_marker(p);
+			caret.x += 30;
+			caret.y += 16;
+		}
+	}
+	caret = push_caret;
+}
+
+void provincei::paint() const {
+	//special_paint(special, special_index);
+	paint_hexagon();
+	paint_player_markers(this);
+}
 
 static void texthd(const char* format) {
 	auto push_caret = caret;

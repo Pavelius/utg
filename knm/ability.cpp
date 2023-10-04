@@ -12,12 +12,11 @@ BSDATA(abilityi) = {
 	{"Shield"},
 	{"Resources"},
 	{"Influence"},
-	{"Trade"},
+	{"Goods"},
 	{"Tactic"},
 	{"Army"},
 	{"Lore"},
 	{"Fame"},
-	{"Commodities"},
-	{"Goods"},
+	{"Gold"},
 };
-assert_enum(abilityi, Goods);
+assert_enum(abilityi, Gold);

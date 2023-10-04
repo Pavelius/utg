@@ -54,6 +54,9 @@
     <ClInclude Include="component.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="draw_marker.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -107,6 +110,9 @@
     <ClCompile Include="component.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="draw_marker.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -141,6 +147,9 @@
     </Text>
     <Text Include="rules\Actions.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\AbilityDescriptions.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>
