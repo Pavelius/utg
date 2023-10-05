@@ -183,6 +183,12 @@ static void choose_input(int bonus) {
 	apply_input();
 }
 
+static void choose_querry(int bonus) {
+	an.clear();
+	input_querry(bonus);
+	choose_input(bonus);
+}
+
 static void make_action(int bonus) {
 	pushtitle push("MakeAction");
 	an.clear();
@@ -196,6 +202,10 @@ static void choose_strategy(int bonus) {
 static void select_players(int bonus) {
 	for(auto& e : bsdata<playeri>())
 		players.add(&e);
+}
+
+static void select_strategy(int bonus) {
+	querry.collectiona::select(bsdata<strategyi>::source, no_player, bonus >= 0);
 }
 
 static void select_provincies(int bonus) {
@@ -269,6 +279,7 @@ BSDATA(script) = {
 	{"ClearInput", clear_input},
 	{"ChooseStrategy", choose_strategy},
 	{"ChooseInput", choose_input},
+	{"ChooseQuerry", choose_querry},
 	{"EndRound", end_round},
 	{"EsteblishControl", establish_control},
 	{"InputQuerry", input_querry},
@@ -282,5 +293,6 @@ BSDATA(script) = {
 	{"SelectPlayersBySpeaker", select_players},
 	{"SelectProvinces", select_provincies},
 	{"SelectProvincesYouControl", select_your_provincies},
+	{"SelectStrategy", select_strategy},
 };
 BSDATAF(script)

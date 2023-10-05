@@ -51,7 +51,7 @@ GatherPower
 #List
 
 StrategyPhase 
- elements SelectPlayersBySpeaker ForEachPlayer ClearInput ChooseStrategy PickStrategy
+ elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
  elements SelectPlayersBySpeaker ForEachPlayer MakeAction
 StatusPhase
