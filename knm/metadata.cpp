@@ -1,6 +1,6 @@
 #include "bsreq.h"
+#include "boardpart.h"
 #include "card.h"
-#include "component.h"
 #include "crt.h"
 #include "list.h"
 #include "player.h"
@@ -20,15 +20,15 @@ BSDATAC(troopi, 128 * 8)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
+BSMETA(boardparti) = {
+	BSREQ(id),
+	{}};
 BSMETA(cardi) = {
 	BSREQ(id),
-	BSENM(type, componenti),
 	BSREQ(player),
+	BSREF(location, boardparti),
 	BSFLG(tags, tagi),
 	BSREQ(effect),
-	{}};
-BSMETA(componenti) = {
-	BSREQ(id),
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),

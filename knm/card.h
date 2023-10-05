@@ -3,11 +3,10 @@
 
 #pragma once
 
-enum component_s : unsigned char {
-	ActionCard, CombatCard, PlayerAction,
-};
 struct cardi : entity {
-	component_s		type;
+	const char*		trigger;
 	unsigned char	count;
-	variants		effect;
+	variants		effect, wearing;
+	bool			usedeck() const { return count != 0; }
 };
+extern cardi* last_card;

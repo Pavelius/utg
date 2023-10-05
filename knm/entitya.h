@@ -9,4 +9,4 @@ struct entitya : collection<entity> {
 	provincei*	chooseprovince() const;
 	int			gettotal(ability_s v) const;
 };
-extern entitya querry;
+extern entitya querry, players;

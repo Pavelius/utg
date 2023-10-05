@@ -42,19 +42,19 @@
     <ClInclude Include="strategy.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="playera.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="province.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="card.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="component.h">
+    <ClInclude Include="draw_marker.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="draw_marker.h">
+    <ClInclude Include="boardpart.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="pushtitle.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,9 +95,6 @@
     <ClCompile Include="entitya.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="playera.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="province.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -107,10 +104,10 @@
     <ClCompile Include="card.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="component.cpp">
+    <ClCompile Include="draw_marker.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="draw_marker.cpp">
+    <ClCompile Include="boardpart.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,9 +141,6 @@
     </Text>
     <Text Include="locale\ru\StrategyDescriptions.txt">
       <Filter>locale</Filter>
-    </Text>
-    <Text Include="rules\Actions.txt">
-      <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\AbilityDescriptions.txt">
       <Filter>locale</Filter>

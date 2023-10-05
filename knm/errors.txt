@@ -1,4 +1,2 @@
 ﻿In file `rules/Strategies.txt`:
- Line 6: Can't find variant `SelectYourProvincies`
- Line 8: Can't find variant `SelectYourProvincies`
- Line 10: Can't find variant `SelectYourProvincies`
+ Line 76: Can't find variant `EstablishControl`

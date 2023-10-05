@@ -15,7 +15,7 @@
 #include "unit_type.h"
 
 entitya			querry, onboard;
-static playera	players;
+static entitya	players;
 static answers	an;
 static char		sb_temp[512];
 static stringbuilder sb(sb_temp);

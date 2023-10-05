@@ -5,16 +5,19 @@
 #include "troop.h"
 #include "unit.h"
 
-bool entity::is(const playeri* v) const {
+bool entity::is(const entity* v) const {
 	if(!v)
 		return false;
-	return (tags & ((0x80000000) >> getbsi(v))) != 0;
+	if(bsdata<playeri>::have(v))
+		return (tags & ((0x80000000) >> getbsi((playeri*)v))) != 0;
+	return false;
 }
 
-void entity::set(const playeri* v) {
+void entity::set(const entity* v) {
 	if(!v)
 		return;
-	tags |= ((0x80000000) >> getbsi(v));
+	if(bsdata<playeri>::have(v))
+		tags |= ((0x80000000) >> getbsi((playeri*)v));
 }
 
 int entity::get(ability_s v) const {

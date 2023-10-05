@@ -1,6 +1,6 @@
 #include "entitya.h"
 
-entitya querry;
+entitya querry, players;
 
 int	entitya::gettotal(ability_s v) const {
 	auto result = 0;

@@ -1,5 +1,7 @@
 #List
 
+ActivateProvince
+ elements SelectProvinces FilterActivated-1
 ApplyTradeRoute
 ClaimSpeaker
 ConstructBuilding
@@ -9,6 +11,9 @@ DiplomaticTreaty
 DoubleProvinceResources
  elements SelectProvincesYouControl
 LookLaws
+MakeAction
+MoveTroops
+RecruitTroops
 RecruitTroopsInHomeland
  elements SelectProvincesYouControl
 RefreshTrade
@@ -46,13 +51,32 @@ GatherPower
 #List
 
 StrategyPhase 
- elements SelectPlayersBySpeaker ForEachPlayer ChooseStrategy PickStrategy
-
+ elements SelectPlayersBySpeaker ForEachPlayer ClearInput ChooseStrategy PickStrategy
 ActionPhase
-
+ elements SelectPlayersBySpeaker ForEachPlayer MakeAction
 StatusPhase
-
 AgendaPhase
 
 GameTurn
  elements StrategyPhase ActionPhase StatusPhase AgendaPhase
+
+ChooseBattleTactic
+DestroyEnemyBuildings
+PrepareTroopsForBattle
+HailOfArrows
+CombatRound
+RemoveCasualty
+RetreatLooser
+
+ApplyCombat
+ elements PrepareTroopsForBattle ChooseBattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
+
+#Card location(PlayerAction)
+
+TacticAction
+ effect ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
+PassAction
+ effect EndRound
+
+TroopReinforsment player(MiddleKindom)
+ effect PayHero SelectProvincesYouControl

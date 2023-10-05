@@ -144,13 +144,13 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="army.h" />
+    <ClInclude Include="boardpart.h" />
     <ClInclude Include="card.h" />
-    <ClInclude Include="component.h" />
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
-    <ClInclude Include="playera.h" />
     <ClInclude Include="province.h" />
+    <ClInclude Include="pushtitle.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="taga.h" />
     <ClInclude Include="player.h" />
@@ -161,8 +161,8 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="army.cpp" />
+    <ClCompile Include="boardpart.cpp" />
     <ClCompile Include="card.cpp" />
-    <ClCompile Include="component.cpp" />
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="entitya.cpp" />
@@ -171,7 +171,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="playera.cpp" />
     <ClCompile Include="province.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
@@ -191,7 +190,6 @@
     <Text Include="locale\ru\PlayerNames.txt" />
     <Text Include="locale\ru\StrategyDescriptions.txt" />
     <Text Include="locale\ru\StrategyNames.txt" />
-    <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />

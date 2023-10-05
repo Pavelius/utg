@@ -8,7 +8,6 @@
 #include "entitya.h"
 #include "pushvalue.h"
 #include "player.h"
-#include "playera.h"
 #include "province.h"
 #include "script.h"
 #include "troop.h"
@@ -68,7 +67,7 @@ static void show_players() {
 	auto push_alpha = alpha;
 	alpha = 32;
 	for(auto p : players) {
-		image(res, getbsi(p), 0);
+		//image(res, getbsi((playeri*)p), 0);
 		if(ishilite(16)) {
 			hilite_object = p;
 			hilite_size = 17;
@@ -82,7 +81,7 @@ static void show_players() {
 		auto p = players[pi];
 		auto push_x1 = caret.x;
 		caret.x = push_x + 32 * pi;
-		image(res, getbsi(p), 0);
+		//image(res, getbsi(p), 0);
 		auto push_fore = fore;
 		caret.x = push_x1;
 	}
@@ -223,7 +222,7 @@ static void paint_player_markers(const provincei* province) {
 	caret.y -= size - 24;
 	for(auto p : players) {
 		if(province->is(p)) {
-			paint_player_marker(p);
+			paint_player_marker((playeri*)p);
 			caret.x += 30;
 			caret.y += 16;
 		}
