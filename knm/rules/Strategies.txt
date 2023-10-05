@@ -11,7 +11,6 @@ DiplomaticTreaty
 DoubleProvinceResources
  elements SelectProvincesYouControl
 LookLaws
-MakeAction
 MoveTroops
 RecruitTroops
 RecruitTroopsInHomeland
@@ -23,28 +22,28 @@ GainFameIfControlCapital
 
 #Strategy
 
-Leadership
+Leadership initiative(1)
  primary AddLeaders+3 PayForLeaders+3
  secondary PayForLeaders+3
-Diplomacy
+Diplomacy initiative(2)
  primary DiplomaticTreaty DoubleProvinceResources
  secondary PayHero DoubleProvinceResources
-Politics
+Politics initiative(3)
  primary ClaimSpeaker LookLaws+2 AddActions+2
  secondary PayHero AddActions+2
-Construction
+Construction initiative(4)
  primary ConstructBuilding ConstructBuilding
  secondary PayHero ConstructBuilding
-Trade
+Trade initiative(5)
  primary AddGoods+3 RefreshTrade ApplyTradeRoute
  secondary PayHero RefreshTrade
-Warfare
+Warfare initiative(6)
  primary RemoveActivityToken AddLeaders+1
  secondary PayHero RecruitTroopsInHomeland
-Technology
+Technology initiative(7)
  primary AddResearch+10 PayResearch
  secondary PayHero AddResearch+4 PayResearch
-GatherPower
+GatherPower initiative(8)
  primary ScorePublicGoal GainFameIfControlCapital
  secondary PayHero AddSecretGoal+1
 
@@ -53,7 +52,7 @@ GatherPower
 StrategyPhase 
  elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
- elements SelectPlayersBySpeaker ForEachPlayer MakeAction
+ elements SelectPlayers ForEachPlayer MakeAction
 StatusPhase
 AgendaPhase
 
@@ -71,10 +70,10 @@ RetreatLooser
 ApplyCombat
  elements PrepareTroopsForBattle ChooseBattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
 
-#Card location(PlayerAction)
+#Card trigger(MakeAction)
 
 TacticAction
- effect ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
+ effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
 PassAction
  effect EndRound
 

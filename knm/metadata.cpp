@@ -26,7 +26,7 @@ BSMETA(boardparti) = {
 BSMETA(cardi) = {
 	BSREQ(id),
 	BSREQ(player),
-	BSREF(location, boardparti),
+	BSREQ(trigger),
 	BSFLG(tags, tagi),
 	BSREQ(effect),
 	{}};
@@ -39,6 +39,7 @@ BSMETA(provincei) = {
 	{}};
 BSMETA(strategyi) = {
 	BSREQ(id),
+	BSREQ(initiative),
 	BSREQ(primary), BSREQ(secondary),
 	{}};
 BSMETA(tagi) = {
@@ -53,7 +54,7 @@ BSMETA(uniti) = {
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Card", VAR(cardi, 1)},
-	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Player", VAR(playeri, 1)},
 	{"Province", VAR(provincei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},

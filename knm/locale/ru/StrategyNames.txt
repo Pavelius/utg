@@ -1,5 +1,9 @@
 StrategyPhase: Выбор стратегии
 ChooseStrategy: Выбор стратегии
+MakeAction: Выполнить действие
+PassAction: Закончить ход
+TacticAction: Тактическое действие
+TroopReinforsment: Местное ополчение
 
 PrimaryAbility: Основная способность
 SecondaryAbility: Вторичная способность
