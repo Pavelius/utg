@@ -107,7 +107,7 @@ static int getone(int v) {
 }
 
 static void pay(ability_s v, int bonus) {
-	if(player->current.abilities[v]>=bonus)
+	if(player->current.abilities[v] >= bonus)
 		player->current.abilities[v] -= bonus;
 }
 
@@ -120,6 +120,24 @@ static bool pay_hero_allow(int bonus) {
 }
 static void pay_hero(int bonus) {
 	pay(Tactic, getone(bonus));
+}
+
+static void pay_ability(const char* id, ability_s v, ability_s currency, int cost, int maximum_cap) {
+	pushtitle push_title(id);
+	an.clear();
+	for(auto i = 1; i <= maximum_cap; i++) {
+		auto total = cost * i;
+		auto value = player->get(v);
+		if(value < total)
+			break;
+		an.add((void*)i, getdescription("PayResource"),
+			bsdata<abilityi>::elements[v].getname(),
+			bsdata<abilityi>::elements[currency].getname(),
+			i, total);
+	}
+	auto n = (int)an.choose(0, getdescription("PayCancel"), 1);
+	player->current.add(v, n);
+	player->current.add(currency, -cost * n);
 }
 
 static void add_leaders(int bonus) {
@@ -162,6 +180,7 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
+	pay_ability("PayLeaders", Tactic, Influence, 2, 3);
 }
 
 static void pay_research(int bonus) {
