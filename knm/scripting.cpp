@@ -72,6 +72,26 @@ static void apply_input() {
 	}
 }
 
+static void clear_input(int bonus) {
+	an.clear();
+}
+
+static void input_querry(int bonus) {
+	for(auto p : querry)
+		add_input(*p);
+}
+
+static void choose_input(int bonus) {
+	pushtitle push(last_list->id);
+	apply_input();
+}
+
+static void choose_querry(int bonus) {
+	an.clear();
+	input_querry(bonus);
+	choose_input(bonus);
+}
+
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
@@ -140,6 +160,19 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int cos
 	player->current.add(currency, -cost * n);
 }
 
+static void recruit_units(int bonus) {
+	entitya recruit;
+	while(true) {
+		clear_input(0);
+		auto total = player->get(Resources) + player->get(Goods);
+		for(auto p : player->troops) {
+			if(total >= p->get(Cost))
+				an.add(p, getdescription("RecruitUnitCost"), p->get(Cost));
+		}
+		apply_input();
+	}
+}
+
 static void add_leaders(int bonus) {
 	if(!bonus)
 		bonus = 1;
@@ -184,26 +217,6 @@ static void pay_for_leaders(int bonus) {
 }
 
 static void pay_research(int bonus) {
-}
-
-static void clear_input(int bonus) {
-	an.clear();
-}
-
-static void input_querry(int bonus) {
-	for(auto p : querry)
-		add_input(*p);
-}
-
-static void choose_input(int bonus) {
-	pushtitle push(last_list->id);
-	apply_input();
-}
-
-static void choose_querry(int bonus) {
-	an.clear();
-	input_querry(bonus);
-	choose_input(bonus);
 }
 
 static void apply_primary_strategy(int bonus) {

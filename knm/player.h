@@ -5,12 +5,14 @@
 #pragma once
 
 struct provincei;
+struct uniti;
 
 struct playeri : entity {
 	int			initiative;
 	abilitya	current;
 	color		fore, border;
 	provincei*	homeland;
+	uniti*		troops[5];
 	int			getmaximum(ability_s v) const;
 	int			getsummary(ability_s v) const;
 };

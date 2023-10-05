@@ -1,9 +1,2 @@
-﻿In file `rules/Strategies.txt`:
- Line 25: Not found requisit `priority`
- Line 28: Not found requisit `priority`
- Line 31: Not found requisit `priority`
- Line 34: Not found requisit `priority`
- Line 37: Not found requisit `priority`
- Line 40: Not found requisit `priority`
- Line 43: Not found requisit `priority`
- Line 46: Not found requisit `priority`
+﻿In file `rules/Players.txt`:
+ Line 4: Not found requisit `troops`

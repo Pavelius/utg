@@ -1,4 +1,5 @@
 #Player
 
 MiddleKindom
+ troops Pikemens Archers Swordmans Cavalry WarMachine
 OrcHorde
