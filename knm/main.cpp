@@ -8,10 +8,11 @@
 void initialize_ui();
 
 static void run_function(const char* id) {
-	auto p = bsdata<listi>::find(id);
-	if(!p)
-		return;
-	script_run(p->elements);
+	auto push_list = last_list;
+	last_list = bsdata<listi>::find(id);
+	if(last_list)
+		script_run(last_list->elements);
+	last_list = push_list;
 }
 
 static void start_game() {

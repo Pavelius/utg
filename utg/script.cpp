@@ -5,26 +5,29 @@
 BSMETA(script) = {
 	BSREQ(id),
 	{}};
-variant*	script_begin;
-variant*	script_end;
-script*		last_script;
+variant* script_begin;
+variant* script_end;
+script*	last_script;
 
-template<> void fnscript<script>(int value, int bonus) {
-	last_script = bsdata<script>::elements + value;
-	last_script->proc(bonus);
-}
 template<> bool fntest<script>(int value, int bonus) {
 	last_script = bsdata<script>::elements + value;
 	if(last_script->test)
 		return last_script->test(bonus);
 	return true;
 }
-
-template<> void fnscript<listi>(int value, int bonus) {
-	script_run(bsdata<listi>::elements[value].elements);
+template<> void fnscript<script>(int value, int bonus) {
+	last_script = bsdata<script>::elements + value;
+	last_script->proc(bonus);
 }
+
 template<> bool fntest<listi>(int value, int bonus) {
 	return script_allow(bsdata<listi>::elements[value].elements);
+}
+template<> void fnscript<listi>(int value, int bonus) {
+	auto push_list = last_list;
+	last_list = bsdata<listi>::elements + value;
+	script_run(last_list->elements);
+	last_list = push_list;
 }
 
 void conditional_script(int bonus) {

@@ -136,6 +136,7 @@ public:
 	void*							addu(const void* element, unsigned count);
 	const char*						addus(const char* element, unsigned count);
 	char*							begin() const { return (char*)data; }
+	void							create(const void* source, unsigned count);
 	void							change(unsigned offset, int size);
 	void							clear();
 	char*							end() const { return (char*)data + size * count; }
@@ -159,13 +160,13 @@ public:
 	void*							ptrs(int index) const { return (((unsigned)index) < count) ? (char*)data + size * index : 0; }
 	template<class T> slice<T> records() const { return slice<T>((T*)data, count); }
 	void							remove(int index, int elements_count = 1);
+	void							reserve(unsigned count);
 	void							shift(int i1, int i2, size_t c1, size_t c2);
 	void							setcount(unsigned value) { count = value; }
 	void							setup(size_t size);
 	void							sort(int i1, int i2, pcompare compare, void* param);
 	void							sort(pcompare compare, void* param) { sort(-1, -1, compare, param); }
 	void							swap(int i1, int i2);
-	void							reserve(unsigned count);
 };
 template<class T> class vector : public array {
 public:

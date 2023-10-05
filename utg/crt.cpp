@@ -328,11 +328,15 @@ void array::reserve(unsigned count) {
 		return;
 	if(data && count < getmaximum())
 		return;
-	count_maximum = rmoptimal(count);
-	if(data)
-		data = realloc(data, count_maximum * size);
-	else
-		data = malloc(count_maximum * size);
+	auto n = rmoptimal(count);
+	if(data) {
+		auto p = realloc(data, n * size);
+		if(!p)
+			return; // Need exeption
+		data = p;
+	} else
+		data = malloc(n * size);
+	count_maximum = n;
 }
 
 static bool matchstring(const char* v1, const char* v2, size_t size) {
@@ -494,6 +498,12 @@ void array::shrink(unsigned offset, size_t delta) {
 	size = new_size;
 }
 
+void array::create(const void* source, unsigned count) {
+	reserve(count);
+	memcpy(data, source, count * size);
+	this->count = count;
+}
+
 void array::grow(unsigned offset, size_t delta) {
 	if(!delta)
 		return;
@@ -501,9 +511,12 @@ void array::grow(unsigned offset, size_t delta) {
 		return;
 	auto new_size = size + delta;
 	auto new_size_bytes = count_maximum * new_size;
-	if(data)
-		data = realloc(data, new_size_bytes);
-	else
+	if(data) {
+		auto p = realloc(data, new_size_bytes);
+		if(!p)
+			return; // Run exeption
+		data = p;
+	} else
 		data = malloc(new_size_bytes);
 	auto p1 = (char*)data + new_size * count;
 	auto p2 = (char*)data + size * count;

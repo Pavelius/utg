@@ -6,3 +6,5 @@ BSMETA(listi) = {
 	BSREQ(elements),
 	{}};
 BSDATAC(listi, 256)
+
+listi* last_list;

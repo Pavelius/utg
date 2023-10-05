@@ -14,7 +14,6 @@
 
 static char log_text[260];
 static stringbuilder log(log_text);
-static listi* last_list;
 
 template<> void fnscript<abilityi>(int value, int counter) {
 	player->current.abilities[value] += counter;
@@ -87,11 +86,13 @@ static void apply_input() {
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
 	else if(bsdata<cardi>::have(result)) {
-		last_card = (cardi*)result;
+		auto push = last_card; last_card = (cardi*)result;
 		script_run(last_card->effect);
+		last_card = push;
 	} else if(bsdata<listi>::have(result)) {
-		last_list = (listi*)result;
+		auto push_list = last_list; last_list = (listi*)result;
 		script_run(((listi*)result)->elements);
+		last_list = push_list;
 	}
 }
 
@@ -180,6 +181,7 @@ static void input_querry(int bonus) {
 }
 
 static void choose_input(int bonus) {
+	pushtitle push(last_list->id);
 	apply_input();
 }
 
@@ -249,10 +251,10 @@ static void end_round(int bonus) {
 }
 
 static void for_each_player(int bonus) {
-	pushvalue push_players(players);
+	entityv push_players(players);
 	pushvalue push_player(player);
 	variants commands; commands.set(script_begin, script_end - script_begin);
-	for(auto p : push_players.value) {
+	for(auto p : push_players) {
 		player = (playeri*)p;
 		script_run(commands);
 	}

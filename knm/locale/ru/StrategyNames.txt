@@ -1,3 +1,4 @@
+StrategyPhase: Выбор стратегии
 ChooseStrategy: Выбор стратегии
 
 PrimaryAbility: Основная способность
