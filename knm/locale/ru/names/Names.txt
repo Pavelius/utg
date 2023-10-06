@@ -8,3 +8,5 @@ Gold: Золото
 Influence: Влияние
 Resources: Ресурсы
 Tactic: Герои
+
+Cancel: Отмена

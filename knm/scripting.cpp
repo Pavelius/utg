@@ -321,7 +321,7 @@ static void select_strategy(int bonus) {
 }
 
 static void select_provincies(int bonus) {
-	querry.collectiona::select(bsdata<provincei>::source, filter_player, bonus >= 0);
+	querry.collectiona::select(bsdata<provincei>::source);
 }
 
 static void select_your_provincies(int bonus) {

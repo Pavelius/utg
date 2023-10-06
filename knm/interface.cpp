@@ -396,9 +396,8 @@ static void add_province(provincei* ps, point pt) {
 }
 
 static void add_provinces() {
-	for(auto& e : bsdata<provincei>()) {
+	for(auto& e : bsdata<provincei>())
 		add_province(&e, draw::h2p(i2h(e.index), size));
-	}
 }
 
 static void marker_press() {
@@ -410,7 +409,16 @@ static void paint_province_marker() {
 	auto push_fore = fore;
 	auto push_alpha = alpha;
 	fore = colors::green;
-	alpha = 64;
+	alpha = 16;
+	if(ishilite(size / 3, last_object->data)) {
+		if(hot.pressed)
+			alpha = 32;
+		else
+			alpha = 42;
+		hot.cursor = cursor::Hand;
+		if(hot.key == MouseLeft && !hot.pressed)
+			execute(marker_press, (long)last_object);
+	}
 	circlef(size / 3);
 	alpha = 255;
 	circle(size / 3);
@@ -430,7 +438,10 @@ static void remove_all_markers() {
 }
 
 static object* add_maker(void* object) {
-	return 0;
+	auto pm = findobject(object);
+	if(!pm)
+		return 0;
+	return addobject(pm->position, pm, paint_province_marker, 0, 50);
 }
 
 provincei* entitya::chooseprovince() const {
