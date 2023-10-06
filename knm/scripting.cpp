@@ -103,6 +103,7 @@ static void choose_querry(int bonus) {
 }
 
 static void choose_province(int bonus) {
+	pushtitle push(last_list->id);
 	province = querry.chooseprovince();
 }
 

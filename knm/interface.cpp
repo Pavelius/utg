@@ -33,6 +33,9 @@ static color tech_colors[] = {
 	{249, 238, 106},
 };
 
+static void empthy_scene() {
+}
+
 static point system_position(point caret, int index) {
 	switch(index) {
 	case 1: return caret + point{size / 3, -2 * size / 3};
@@ -437,21 +440,18 @@ static void remove_all_markers() {
 	remove_all(paint_province_marker);
 }
 
-static object* add_maker(void* object) {
+static void add_maker(void* object) {
 	auto pm = findobject(object);
-	if(!pm)
-		return 0;
-	return addobject(pm->position, pm, paint_province_marker, 0, 50);
+	if(pm)
+		addobject(pm->position, pm, paint_province_marker, 0, 50);
 }
 
 provincei* entitya::chooseprovince() const {
-	//draw::pause();
 	for(auto p : *this)
 		add_maker(p);
-	answers an;
-	auto result = an.choose(0, getnm("Cancel"), 1);
+	scene();
 	remove_all_markers();
-	return (provincei*)result;
+	return (provincei*)getresult();
 }
 
 void prepare_game_ui() {
@@ -519,9 +519,6 @@ static void main_background() {
 
 static void main_finish() {
 	input_camera();
-}
-
-static void empthy_scene() {
 }
 
 static void textct(const char* format) {

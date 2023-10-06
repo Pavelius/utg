@@ -1,3 +1,4 @@
+ActivateProvince: Активация провинции
 StrategyPhase: Выбор стратегии
 ChooseStrategy: Выбор стратегии
 MakeAction: Выполнить действие
