@@ -1,4 +1,6 @@
 #Province
 
 DarkForest
+ abilities Resources(2) Influence(1)
 GreenPlains
+ abilities Resources(1) Influence(2)

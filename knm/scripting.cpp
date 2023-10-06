@@ -18,6 +18,7 @@ static stringbuilder	log(log_text);
 static char				console_text[512];
 static stringbuilder	console(console_text);
 static entitya			recruit;
+static int				need_pay;
 
 template<> void fnscript<abilityi>(int value, int counter) {
 	player->current.abilities[value] += counter;
@@ -54,8 +55,7 @@ static void add_strategy_cards() {
 	}
 }
 
-static void apply_input() {
-	auto result = an.choose();
+static void apply_input(void* result) {
 	if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
 	else if(bsdata<playeri>::have(result))
@@ -66,14 +66,18 @@ static void apply_input() {
 		auto push = last_card; last_card = (cardi*)result;
 		script_run(last_card->effect);
 		last_card = push;
-	} else if(bsdata<listi>::have(result)) {
-		auto push_list = last_list; last_list = (listi*)result;
-		script_run(((listi*)result)->elements);
-		last_list = push_list;
-	} else if(bsdata<abilityi>::have(result)) {
+	} else if(bsdata<listi>::have(result))
+		((listi*)result)->run();
+	else if(bsdata<abilityi>::have(result)) {
 		auto v = (ability_s)((abilityi*)result - bsdata<abilityi>::elements);
-		player->current.add(v, 1);
-	}
+		player->current.abilities[v] += 1;
+	} else
+		((fnevent)result)();
+}
+
+static void apply_input() {
+	auto result = an.choose();
+	apply_input(result);
 }
 
 static void clear_input(int bonus) {
@@ -162,8 +166,8 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int cos
 			i, total);
 	}
 	auto n = (int)an.choose(0, getdescription("PayCancel"), 1);
-	player->current.add(v, n);
-	player->current.add(currency, -cost * n);
+	player->current.abilities[v] += n;
+	player->current.abilities[currency] -= cost * n;
 }
 
 static void recruit_reset() {
@@ -171,23 +175,31 @@ static void recruit_reset() {
 }
 
 static void recruit_troops(int army_used, int army_maximum, int build_troops_maximum, int maximum_cost) {
-	recruit.clear();
+	pushtitle push_title(last_script->id);
+	recruit_reset();
 	while(true) {
 		clear_input(0);
+		auto troops_count = recruit.getcount();
 		auto troops_cost = recruit.gettotal(Cost);
-		auto troops_army = (army_used + recruit.gettotal(Army) + 9) / 10;
-		console.addn(getnm("AllowBuildTroops"), recruit.getcount(), build_troops_maximum);
-		console.addn(getnm("AllowBuildArmy"), troops_army, army_maximum);
+		auto troops_army = army_used + recruit.gettotal(Army);
+		auto troops_army_maximum = army_maximum * 10;
+		console.addn(getnm("AllowBuildTroops"), troops_count, build_troops_maximum);
+		console.addn(getnm("AllowBuildArmy"), (troops_army + 9) / 10, army_maximum);
 		console.addn(getnm("AllowCredit"), troops_cost, maximum_cost);
 		if(recruit) {
-			console.add("---");
+			console.addn("---");
 			for(auto p : recruit)
-				console.add(getdescription("RecruitTroopPrompt"), p->getname(), p->get(Cost));
+				console.addn(getnm("RecruitUnitCost"), p->getname(), p->get(Cost));
 		}
 		auto total = maximum_cost - troops_cost;
-		for(auto p : player->troops) {
-			if(total >= p->get(Cost))
-				an.add(p, getdescription("RecruitUnitCost"), p->get(Cost));
+		if(troops_count < build_troops_maximum) {
+			for(auto p : player->troops) {
+				if(troops_army + p->get(Army) > troops_army_maximum)
+					continue;
+				if(total < p->get(Cost))
+					continue;
+				an.add(p, getnm("RecruitUnitCost"), p->getname(), p->get(Cost));
+			}
 		}
 		if(recruit)
 			an.add(recruit_reset, getnm("RecruitReset"));
@@ -197,8 +209,9 @@ static void recruit_troops(int army_used, int army_maximum, int build_troops_max
 		else if(bsdata<uniti>::have(p))
 			recruit.add(p);
 		else
-			((fnevent)p)();
+			apply_input(p);
 	}
+	console.clear();
 }
 
 static int get_troops(ability_s v, provincei* province, playeri* player) {

@@ -58,7 +58,7 @@ AgendaPhase
 GameTurn
  elements StrategyPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
- elements SelectPlayers ForEachPlayer Army+3 Tactic+3
+ elements SelectPlayers ForEachPlayer Army+3 Tactic+3 Resources+4 Influence+2
 GameStart
  elements PreparePlayers GameTurn
 
@@ -76,7 +76,7 @@ ApplyCombat
 #Card trigger(MakeAction)
 
 TacticAction
- effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
+ effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops+2
 PassAction
  effect EndRound
 

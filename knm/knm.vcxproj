@@ -184,13 +184,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\AbilityDescriptions.txt" />
-    <Text Include="locale\ru\Names.txt" />
-    <Text Include="locale\ru\NamesNewbe.txt" />
-    <Text Include="locale\ru\PlayerNames.txt" />
-    <Text Include="locale\ru\StrategyDescriptions.txt" />
-    <Text Include="locale\ru\StrategyNames.txt" />
-    <Text Include="locale\ru\Units.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
+    <Text Include="locale\ru\names\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\Players.txt" />
+    <Text Include="locale\ru\names\Strategy.txt" />
+    <Text Include="locale\ru\names\Units.txt" />
+    <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
+    <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />

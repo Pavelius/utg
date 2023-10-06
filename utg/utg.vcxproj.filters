@@ -45,7 +45,7 @@
     <ClCompile Include="crt_file.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="crt_translate.cpp">
+    <ClCompile Include="crt_locale.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="dice.cpp">

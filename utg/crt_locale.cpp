@@ -108,20 +108,20 @@ static void savel(const char* url, array& source, bool only_empthy) {
 	}
 }
 
-static void setfile(array& source, const char* id, const char* locale, bool write_mode, bool required, bool only_empthy) {
+static void setfile(array& source, const char* folder, const char* id, const char* locale, bool write_mode, bool required, bool only_empthy) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.clear(); sb.addlocalefile(id);
+	sb.clear(); sb.addlocalefile(folder, id, 0);
 	if(write_mode)
 		savel(temp, source, only_empthy);
 	else
 		readl(temp, source, required);
 }
 
-static void setlist(array& source, const char* id, const char* locale) {
+static void setlist(array& source, const char* folder, const char* locale) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.clear(); sb.addlocaleurl();
+	sb.clear(); sb.addlocaleurl(); sb.add("/%1/", folder);
 	char filter[260]; stringbuilder sf(filter);
-	sf.add("*%1.txt", id);
+	sf.add("*.txt");
 	for(io::file::find find(temp); find; find.next()) {
 		auto pn = find.name();
 		if(pn[0] == '.')
@@ -134,7 +134,7 @@ static void setlist(array& source, const char* id, const char* locale) {
 }
 
 static void deinitialize() {
-	setfile(source_name, "NamesNewbe", main_locale, true, false, true);
+	setfile(source_name, "names", "NamesNewbe", main_locale, true, false, true);
 }
 
 static void check(array& source, const char* locale, const char* url) {
@@ -159,10 +159,10 @@ void initialize_translation(const char* locale) {
 	if(main_locale[0])
 		return;
 	copy_locale(locale);
-	setfile(source_name, "Names", main_locale, false, true, false);
-	setlist(source_name, "Names", main_locale);
-	setfile(source_text, "Descriptions", main_locale, false, false, false);
-	setlist(source_text, "Descriptions", main_locale);
+	setfile(source_name, "names", "Names", main_locale, false, true, false);
+	setlist(source_name, "names", main_locale);
+	setfile(source_text, "tips", "Descriptions", main_locale, false, false, false);
+	setlist(source_text, "tips", main_locale);
 	atexit(deinitialize);
 }
 

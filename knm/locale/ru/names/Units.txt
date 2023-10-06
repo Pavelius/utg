@@ -1,0 +1,17 @@
+AllowBuildArmy: Размер армии в провинции %1i/%2i.
+AllowBuildTroops: Построено войск %1i/%2i.
+AllowCredit: Потрачено золота и ресурсов %1i/%2i.
+CheckOut: Закончить найм
+RecruitReset: Отменить заказ
+RecruitTroops: Найм войск
+RecruitUnitCost: %1 (Цена %2i)
+
+Archers: Лучники
+Cavalry: Кавалерия
+Pikemens: Копейщики
+Swordmans: Мечники
+
+Goblins: Гоблины
+Ogres: Огры
+Orcs: Орки
+Wargs: Волки

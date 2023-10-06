@@ -3,3 +3,4 @@
 MiddleKindom
  troops Pikemens Archers Swordmans Cavalry WarMachine
 OrcHorde
+ troops Goblins Wargs Orcs Ogres Giant

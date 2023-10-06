@@ -3,23 +3,14 @@
 #include "list.h"
 #include "province.h"
 #include "player.h"
-#include "script.h"
 
 void initialize_ui();
 void initialize_script();
 
-static void run_function(const char* id) {
-	auto push_list = last_list;
-	last_list = bsdata<listi>::find(id);
-	if(last_list)
-		script_run(last_list->elements);
-	last_list = push_list;
-}
-
 static void start_game() {
 	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
-	run_function("GameStart");
+	run_command("GameStart");
 }
 
 static void initialize() {

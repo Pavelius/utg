@@ -1,13 +1,25 @@
 #Unit
 
 Pikemens
- abilities Cost(1) Recruit(2) Army(2) Strenght(1) Combat(2) Damage(1)
+ abilities Cost(1) Army(5) Strenght(1) Combat(2) Damage(1)
 Archers
- abilities Cost(1) Recruit(1) Army(2) Strenght(1) Combat(2) Damage(1) Shoots(2)
+ abilities Cost(2) Army(5) Strenght(1) Combat(2) Damage(1) Shoots(2)
 Swordmans
- abilities Cost(2) Recruit(1) Army(1) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(6)
+ abilities Cost(3) Army(10) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(6)
 Cavalry
- abilities Cost(3) Recruit(1) Army(1) Strenght(1) Combat(4) Damage(1) Shield(1) Limit(4)
+ abilities Cost(4) Army(10) Strenght(1) Combat(5) Damage(1) Shield(1) Limit(4)
  tags Fast
 WarMachine
- abilities Cost(5) Recruit(1) Army(1) Strenght(2) Combat(6) Damage(2) Shield(2) Limit(2)
+ abilities Cost(8) Army(10) Strenght(2) Combat(7) Damage(2) Shield(2) Limit(2)
+
+Goblins
+ abilities Cost(1) Army(3) Strenght(1) Combat(1) Damage(1)
+Wargs
+ abilities Cost(2) Army(10) Strenght(1) Combat(4) Damage(1)
+ tags Fast
+Orcs
+ abilities Cost(3) Army(10) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(8)
+Ogres
+ abilities Cost(4) Army(10) Strenght(2) Combat(5) Damage(1) Shield(1) Limit(3)
+Giant
+ abilities Cost(8) Army(10) Strenght(2) Combat(7) Damage(2) Shield(3) Limit(1)

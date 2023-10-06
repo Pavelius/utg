@@ -123,8 +123,8 @@ const char* log::skipwscr(const char* p) {
 	return p;
 }
 
-void log::readloc(fnread proc, const char* id) {
+void log::readloc(fnread proc, const char* folder, const char* id) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(id, "txt");
+	sb.addlocalefile(id, id, "txt");
 	proc(temp);
 }

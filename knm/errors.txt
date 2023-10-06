@@ -1,2 +1,5 @@
-﻿In file `rules/Strategies.txt`:
- Line 53: Can't find variant `Heroes`
+﻿In file `Names.txt`:
+Goblins: Define translate
+Ogres: Define translate
+Orcs: Define translate
+Wargs: Define translate

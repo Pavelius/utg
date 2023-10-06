@@ -3,7 +3,6 @@
 
 BSDATA(abilityi) = {
 	{"Cost"},
-	{"Recruit"},
 	{"Limit"},
 	{"Strenght"},
 	{"Combat"},

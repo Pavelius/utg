@@ -25,6 +25,10 @@ int entity::get(ability_s v) const {
 		return ((uniti*)id)->abilities[v];
 	else if(bsdata<playeri>::have(this))
 		return ((playeri*)this)->current.abilities[v];
+	else if(bsdata<uniti>::have(this))
+		return ((uniti*)this)->get(v);
+	else if(bsdata<provincei>::have(this))
+		return ((provincei*)this)->abilities[v];
 	return 0;
 }
 

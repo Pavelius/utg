@@ -176,7 +176,7 @@
     <ClCompile Include="color.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_file.cpp" />
-    <ClCompile Include="crt_translate.cpp" />
+    <ClCompile Include="crt_locale.cpp" />
     <ClCompile Include="dataset.cpp" />
     <ClCompile Include="datasource.cpp" />
     <ClCompile Include="dice.cpp" />

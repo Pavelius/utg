@@ -242,14 +242,17 @@ void stringbuilder::setlocale(const char* id) {
 	sb.add(id);
 }
 
-void stringbuilder::addlocaleurl() {
-	add("locale/%1", current_locale);
+void stringbuilder::addlocaleurl(const char* folder) {
+	add("locale/%1/", current_locale);
+	if(folder)
+		add("%1/", folder);
 }
 
-void stringbuilder::addlocalefile(const char* name, const char* ext) {
+void stringbuilder::addlocalefile(const char* folder, const char* name, const char* ext) {
+	addlocaleurl(folder);
 	if(!ext)
 		ext = "txt";
-	add("locale/%1/%2.%3", current_locale, name, ext);
+	add("%1.%2", name, ext);
 }
 
 const char* stringbuilder::getbycount(const char* id, int count) {
