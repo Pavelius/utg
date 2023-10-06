@@ -148,5 +148,8 @@
     <Text Include="rules\Provinces.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="locale\ru\Units.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

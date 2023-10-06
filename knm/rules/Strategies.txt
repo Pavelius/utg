@@ -12,7 +12,6 @@ DoubleProvinceResources
  elements SelectProvincesYouControl
 LookLaws
 MoveTroops
-RecruitTroops
 RecruitTroopsInHomeland
  elements SelectProvincesYouControl
 RefreshTrade
@@ -58,6 +57,10 @@ AgendaPhase
 
 GameTurn
  elements StrategyPhase ActionPhase StatusPhase AgendaPhase
+PreparePlayers
+ elements SelectPlayers ForEachPlayer Army+3 Tactic+3
+GameStart
+ elements PreparePlayers GameTurn
 
 ChooseBattleTactic
 DestroyEnemyBuildings

@@ -1,0 +1,1 @@
+AllowBuildTroops: Построено войск %1i/%2i.

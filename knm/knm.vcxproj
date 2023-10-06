@@ -190,6 +190,7 @@
     <Text Include="locale\ru\PlayerNames.txt" />
     <Text Include="locale\ru\StrategyDescriptions.txt" />
     <Text Include="locale\ru\StrategyNames.txt" />
+    <Text Include="locale\ru\Units.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />

@@ -8,6 +8,7 @@ struct provincei;
 struct entitya : collection<entity> {
 	provincei*	chooseprovince() const;
 	int			gettotal(ability_s v) const;
+	int			getarmy() const;
 };
 struct entityv : vector<entity*> {
 	entityv() : vector<entity*>() {}

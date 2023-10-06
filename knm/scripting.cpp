@@ -10,10 +10,14 @@
 #include "pushvalue.h"
 #include "script.h"
 #include "strategy.h"
+#include "troop.h"
 #include "unit.h"
 
-static char log_text[260];
-static stringbuilder log(log_text);
+static char				log_text[1024];
+static stringbuilder	log(log_text);
+static char				console_text[512];
+static stringbuilder	console(console_text);
+static entitya			recruit;
 
 template<> void fnscript<abilityi>(int value, int counter) {
 	player->current.abilities[value] += counter;
@@ -74,6 +78,8 @@ static void apply_input() {
 
 static void clear_input(int bonus) {
 	an.clear();
+	if(an.console)
+		an.console->clear();
 }
 
 static void input_querry(int bonus) {
@@ -160,17 +166,53 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int cos
 	player->current.add(currency, -cost * n);
 }
 
-static void recruit_units(int bonus) {
-	entitya recruit;
+static void recruit_reset() {
+	recruit.clear();
+}
+
+static void recruit_troops(int army_used, int army_maximum, int build_troops_maximum, int maximum_cost) {
+	recruit.clear();
 	while(true) {
 		clear_input(0);
-		auto total = player->get(Resources) + player->get(Goods);
+		auto troops_cost = recruit.gettotal(Cost);
+		auto troops_army = (army_used + recruit.gettotal(Army) + 9) / 10;
+		console.addn(getnm("AllowBuildTroops"), recruit.getcount(), build_troops_maximum);
+		console.addn(getnm("AllowBuildArmy"), troops_army, army_maximum);
+		console.addn(getnm("AllowCredit"), troops_cost, maximum_cost);
+		if(recruit) {
+			console.add("---");
+			for(auto p : recruit)
+				console.add(getdescription("RecruitTroopPrompt"), p->getname(), p->get(Cost));
+		}
+		auto total = maximum_cost - troops_cost;
 		for(auto p : player->troops) {
 			if(total >= p->get(Cost))
 				an.add(p, getdescription("RecruitUnitCost"), p->get(Cost));
 		}
-		apply_input();
+		if(recruit)
+			an.add(recruit_reset, getnm("RecruitReset"));
+		auto p = (uniti*)an.choose(getdescription("RecruitWhatTroop"), getnm("CheckOut"), 1);
+		if(!p)
+			break; // Check out;
+		else if(bsdata<uniti>::have(p))
+			recruit.add(p);
+		else
+			((fnevent)p)();
 	}
+}
+
+static int get_troops(ability_s v, provincei* province, playeri* player) {
+	auto result = 0;
+	for(auto& e : bsdata<troopi>()) {
+		if(e.getprovince() == province && e.player == player)
+			result += e.get(v);
+	}
+	return result;
+}
+
+static void recruit_troops(int bonus) {
+	auto army_used = get_troops(Army, province, player);
+	recruit_troops(army_used, player->get(Army), province->get(Resources) + bonus, player->get(Resources) + player->get(Gold));
 }
 
 static void add_leaders(int bonus) {
@@ -240,6 +282,7 @@ static void make_action(int bonus) {
 }
 
 static void select_players_speaker(int bonus) {
+	players.clear();
 	for(auto& e : bsdata<playeri>()) {
 		if(e.is(Used))
 			continue;
@@ -322,6 +365,11 @@ static void for_each_province(int bonus) {
 	script_stop();
 }
 
+void initialize_script() {
+	answers::console = &console;
+	answers::prompt = console.begin();
+}
+
 BSDATA(script) = {
 	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
@@ -344,6 +392,7 @@ BSDATA(script) = {
 	{"PayHero", pay_hero, pay_hero_allow},
 	{"PayResearch", pay_research},
 	{"PickStrategy", pick_strategy},
+	{"RecruitTroops", recruit_troops},
 	{"SelectPlayers", select_players},
 	{"SelectPlayersBySpeaker", select_players_speaker},
 	{"SelectProvinces", select_provincies},

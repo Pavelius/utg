@@ -1,2 +1,2 @@
-﻿In file `rules/Players.txt`:
- Line 4: Not found requisit `troops`
+﻿In file `rules/Strategies.txt`:
+ Line 53: Can't find variant `Heroes`

@@ -6,6 +6,7 @@
 #include "script.h"
 
 void initialize_ui();
+void initialize_script();
 
 static void run_function(const char* id) {
 	auto push_list = last_list;
@@ -17,7 +18,8 @@ static void run_function(const char* id) {
 
 static void start_game() {
 	prepare_game_ui();
-	run_function("GameTurn");
+	province = bsdata<provincei>::elements + 0;
+	run_function("GameStart");
 }
 
 static void initialize() {
@@ -28,6 +30,7 @@ int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	srand(505);
 	initialize_ui();
+	initialize_script();
 	return draw::strategy(start_game, initialize);
 }
 
