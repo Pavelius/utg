@@ -9,6 +9,7 @@ struct entitya : collection<entity> {
 	provincei*	chooseprovince() const;
 	int			gettotal(ability_s v) const;
 	int			getarmy() const;
+	void		select(const entity* object);
 };
 struct entityv : vector<entity*> {
 	entityv() : vector<entity*>() {}

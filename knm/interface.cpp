@@ -401,35 +401,42 @@ static void add_provinces() {
 	}
 }
 
-static void remove_all_markers() {
-	for(auto& e : bsdata<object>()) {
-		if(bsdata<marker>::have(e.data))
-			e.clear();
-	}
-	bsdata<marker>::source.clear();
-}
-
 static void marker_press() {
 	auto p = (object*)hot.param;
 	breakmodal((long)p->data);
 }
 
-static object* add_maker(void* p, figure shape, int size, char priority = 50) {
-	auto pd = findobject(p);
-	if(!pd)
-		return 0;
-	auto pm = bsdata<marker>::add();
-	pm->shape = shape;
-	pm->size = size;
-	pm->fore = colors::green;
-	pm->data = p;
-	return addobject(pd->position, pm, ftpaint<marker>, 0, priority);
+static void paint_province_marker() {
+	auto push_fore = fore;
+	auto push_alpha = alpha;
+	fore = colors::green;
+	alpha = 64;
+	circlef(size / 3);
+	alpha = 255;
+	circle(size / 3);
+	alpha = push_alpha;
+	fore = push_fore;
+}
+
+static void remove_all(fnevent proc) {
+	for(auto& e : bsdata<object>()) {
+		if(e.painting==proc)
+			e.clear();
+	}
+}
+
+static void remove_all_markers() {
+	remove_all(paint_province_marker);
+}
+
+static object* add_maker(void* object) {
+	return 0;
 }
 
 provincei* entitya::chooseprovince() const {
 	//draw::pause();
 	for(auto p : *this)
-		add_maker(p, figure::Circle, size / 3);
+		add_maker(p);
 	answers an;
 	auto result = an.choose(0, getnm("Cancel"), 1);
 	remove_all_markers();
@@ -442,37 +449,37 @@ void prepare_game_ui() {
 	setcamera(h2p({0, 0}, size));
 }
 
-//void entity::focusing() const {
-//	if(!this)
-//		return;
-//	auto ps = getsystem();
-//	if(ps)
-//		slide_camera(h2p(i2h(ps->index), size), 48);
-//}
+void entity::focusing() const {
+	if(!this)
+		return;
+	auto ps = getprovince();
+	if(ps)
+		slide_camera(h2p(i2h(ps->index), size), 48);
+}
 
-//static void update_units(point position, const entity* location) {
-//	if(!location)
-//		return;
-//	entitya source;
-//	source.select(location);
-//	source.sortunit();
-//	if(!source)
-//		return;
-//	auto total_height = button_height * source.getcount();
-//	auto x = position.x;
-//	auto y = position.y - (total_height - button_height) / 2;
-//	for(auto pt : source) {
-//		auto p = findobject(pt);
-//		if(!p)
-//			p = addobject({(short)x, (short)y}, (troop*)pt, ftpaint<troop>, 0, 30);
-//		if(p->position.x != x || p->position.y != y) {
-//			auto po = p->addorder(1000);
-//			po->position.x = x;
-//			po->position.y = y;
-//		}
-//		y += button_height;
-//	}
-//}
+static void update_units(point position, const entity* location) {
+	if(!location)
+		return;
+	entitya source;
+	source.select(location);
+	//source.sortunit();
+	if(!source)
+		return;
+	auto total_height = button_height * source.getcount();
+	auto x = position.x;
+	auto y = position.y - (total_height - button_height) / 2;
+	for(auto pt : source) {
+		auto p = findobject(pt);
+		if(!p)
+			p = addobject({(short)x, (short)y}, (troopi*)pt, ftpaint<troopi>, 0, 30);
+		if(p->position.x != x || p->position.y != y) {
+			auto po = p->addorder(1000);
+			po->position.x = x;
+			po->position.y = y;
+		}
+		y += button_height;
+	}
+}
 
 //void troop::updateui() {
 //	for(auto& e : bsdata<troop>()) {
@@ -484,18 +491,15 @@ void prepare_game_ui() {
 //	}
 //}
 
-//void update_ui() {
-//	static point system_offset = {0, -6 * size / 10};
-//	troop::updateui();
-//	wait_all();
-//	for(auto& e : bsdata<object>()) {
-//		if(bsdata<planeti>::have(e.data))
-//			update_units(e.position, (entity*)e.data);
-//		else if(bsdata<systemi>::have(e.data))
-//			update_units(e.position + system_offset, (entity*)e.data);
-//	}
-//	wait_all();
-//}
+void update_ui() {
+	static point system_offset = {0, -6 * size / 10};
+	wait_all();
+	for(auto& e : bsdata<object>()) {
+		if(bsdata<provincei>::have(e.data))
+			update_units(e.position + system_offset, (entity*)e.data);
+	}
+	wait_all();
+}
 
 static void main_background() {
 	strategy_background();

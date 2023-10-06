@@ -57,6 +57,9 @@
     <ClInclude Include="pushtitle.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="structure.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">

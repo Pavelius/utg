@@ -21,6 +21,7 @@ struct draworder : drawable {
 	unsigned long	tick_start, tick_stop;
 	explicit operator bool() const { return parent != 0; }
 	void			clear();
+	void			finish();
 	void			setduration(int v) { tick_stop = tick_start + v; }
 	void			update();
 	void			wait();
@@ -41,6 +42,7 @@ bool mouseinobjects();
 
 void clear_objects();
 void input_camera();
+void instant_all();
 void focusing(point goal);
 void paint_objects();
 void setcamera(point v);

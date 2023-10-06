@@ -102,6 +102,10 @@ static void choose_querry(int bonus) {
 	choose_input(bonus);
 }
 
+static void choose_province(int bonus) {
+	province = querry.chooseprovince();
+}
+
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
@@ -393,6 +397,7 @@ BSDATA(script) = {
 	{"ApplySecondaryStrategy", apply_secondary_strategy},
 	{"ClearInput", clear_input},
 	{"ChooseInput", choose_input},
+	{"ChooseProvince", choose_province},
 	{"ChooseQuerry", choose_querry},
 	{"EndRound", end_round},
 	{"EsteblishControl", establish_control},

@@ -7,6 +7,7 @@
 #include "province.h"
 #include "script.h"
 #include "strategy.h"
+#include "structure.h"
 #include "tag.h"
 #include "troop.h"
 #include "unit.h"
@@ -14,6 +15,7 @@
 BSDATAC(cardi, 512)
 BSDATAC(playeri, 32)
 BSDATAC(provincei, 128)
+BSDATAC(structure, 256)
 BSDATAC(strategyi, 8)
 BSDATAC(troopi, 128 * 8)
 

@@ -152,6 +152,7 @@
     <ClInclude Include="province.h" />
     <ClInclude Include="pushtitle.h" />
     <ClInclude Include="strategy.h" />
+    <ClInclude Include="structure.h" />
     <ClInclude Include="taga.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="tag.h" />

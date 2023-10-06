@@ -83,6 +83,14 @@ static int calculate(int v1, int v2, int n, int m) {
 	return v1 + (v2 - v1) * n / m;
 }
 
+void draworder::finish() {
+	parent->position = position;
+	parent->alpha = alpha;
+	if(priority == 0) // Special case - destroy parent object if order is 0
+		parent->clear();
+	clear();
+}
+
 void draworder::update() {
 	if(depend || tick_start > timestamp)
 		return;
@@ -367,6 +375,16 @@ void wait_all() {
 		remove_orders();
 		remove_dead_objects();
 	}
+}
+
+void instant_all() {
+	for(auto& e : bsdata<draworder>()) {
+		if(!e)
+			continue;
+		e.finish();
+	}
+	remove_orders();
+	remove_dead_objects();
 }
 
 void draworder::wait() {
