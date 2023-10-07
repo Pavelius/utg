@@ -1,12 +1,15 @@
+#include "ability.h"
 #include "entity.h"
 #include "variant.h"
 
 #pragma once
 
-struct cardi : entity {
+struct cardi : entity, abilitya {
 	const char*		trigger;
 	unsigned char	count;
-	variants		effect, wearing;
+	variants		effect, target;
 	bool			usedeck() const { return count != 0; }
 };
-extern cardi* last_card;
+struct card : entity {
+};
+extern card* last_card;

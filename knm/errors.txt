@@ -1,2 +1,3 @@
-﻿In file `Names.txt`:
-ChooseProvinceYouControl: Define translate
+﻿In file `rules/Strategies.txt`:
+ Line 25: Can't find variant `FilterUsed`
+ Line 69: Can't find variant `FilterUsed`

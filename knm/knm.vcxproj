@@ -196,10 +196,12 @@
     <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
     <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Laws.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />
     <Text Include="rules\Strategies.txt" />
     <Text Include="rules\Structures.txt" />
+    <Text Include="rules\Tactics.txt" />
     <Text Include="rules\Units.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

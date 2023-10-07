@@ -1,0 +1,20 @@
+#Card trigger(Laws) count(1)
+
+ArmyRegulation
+ target SelectProvinces Forest
+DeepMining
+ target SelectProvinces Forest
+DemilitarizedZone
+ target SelectProvinces
+MinisterOfExploration trigger(EstablishControl)
+ target SelectPlayers
+ effect Gold+1
+MinisterOfIndustry trigger(BuildFortress)
+ target SelectPlayers
+ effect RecruitTroops
+MinisterOfCommerce
+ target SelectPlayers
+MinisterOfPeace trigger(BattleTactic)
+ target SelectPlayers
+MinisterOfPolicy trigger(StatusPhase)
+ target SelectPlayers

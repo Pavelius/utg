@@ -13,6 +13,7 @@
 #include "script.h"
 #include "strategy.h"
 #include "structure.h"
+#include "tag.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -67,6 +68,19 @@ template<> void fnscript<abilityi>(int value, int counter) {
 template<> void fnscript<uniti>(int value, int counter) {
 }
 
+static bool have_tag(const void* object, int value) {
+	auto p = (entity*)object;
+	return p->is((tag_s)value);
+}
+
+template<> void fnscript<tagi>(int value, int counter) {
+	querry.match(have_tag, value, counter >= 0);
+}
+template<> bool fntest<tagi>(int value, int counter) {
+	fnscript<tagi>(value, counter);
+	return querry.getcount() != 0;
+}
+
 static void add_input(nameable& e) {
 	an.add(&e, e.getname());
 }
@@ -104,9 +118,9 @@ static void apply_input(void* result) {
 		player = (playeri*)result;
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
-	else if(bsdata<cardi>::have(result)) {
-		auto push = last_card; last_card = (cardi*)result;
-		script_run(last_card->effect);
+	else if(bsdata<card>::have(result)) {
+		auto push = last_card; last_card = (card*)result;
+		script_run(last_card->getcard()->effect);
 		last_card = push;
 	} else if(bsdata<listi>::have(result))
 		((listi*)result)->run();
@@ -380,6 +394,10 @@ static void add_leaders(int bonus) {
 	}
 }
 
+static void add_start(int bonus) {
+	script_run(player->start);
+}
+
 static void add_actions(int bonus) {
 }
 
@@ -411,7 +429,14 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
-	pay_ability("PayForLeaders", Tactic, Influence, 2, 3);
+	pay_ability(last_script->id, Tactic, Influence, 2, 3);
+}
+
+static bool allow_pay_goods(int bonus) {
+	return player->current.abilities[Goods] >= bonus;
+}
+static void pay_goods(int bonus) {
+	player->current.abilities[Goods] -= bonus;
 }
 
 static void pay_research(int bonus) {
@@ -621,7 +646,6 @@ BSDATA(filteri) = {
 	{"FilterHomeland", filter_homeland},
 	{"FilterPlayer", filter_player},
 	{"FilterSpeaker", filter_speaker},
-	{"FilterUsed", filter_used},
 };
 BSDATAF(filteri);
 BSDATA(script) = {
@@ -634,6 +658,7 @@ BSDATA(script) = {
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
+	{"AddStart", add_start},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
@@ -645,6 +670,7 @@ BSDATA(script) = {
 	{"InputQuerry", input_querry},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
+	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
 	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
 	{"PayResearch", pay_research},

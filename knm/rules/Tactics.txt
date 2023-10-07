@@ -1,0 +1,12 @@
+#Card trigger(MakeAction) count(1)
+
+ForestFolkSupport count(2)
+ effect SelectProvinces Forest ForEachProvince AddProvinceInfluence
+PlentyHarvest count(2)
+ effect SelectProvinces Plains ForEachProvince AddProvinceResources
+FocusedResearch
+ effect PayGoods+4 AddResearch+10
+FrontlineDeployment
+ effect ChooseProvinceYouControl Archers+2 Pikemens+1
+Insubordination
+ effect SelectPlayers FilterPlayer-1 ChooseQuerry Tactic-1

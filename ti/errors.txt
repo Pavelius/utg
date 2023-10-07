@@ -1,11 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 66: Not find data type for `UnitUpgrade`
-In file `locale/ru/Speech.txt`:
- Line 1: Unknown variant identifier `Leadership`
- Line 4: Unknown variant identifier `Diplomacy`
- Line 7: Unknown variant identifier `Politics`
- Line 10: Unknown variant identifier `Construction`
- Line 13: Unknown variant identifier `Trade`
- Line 16: Unknown variant identifier `Warfare`
- Line 19: Unknown variant identifier `Technology`
- Line 22: Unknown variant identifier `Imperial`
+﻿Can't find file 'locale/ru/names/Names.txt'

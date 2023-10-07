@@ -1,8 +1,9 @@
 #include "ability.h"
+#include "card.h"
 #include "entitya.h"
 #include "troop.h"
 
-entitya querry;
+entitya querry, tactics;
 
 int	entitya::gettotal(ability_s v) const {
 	auto result = 0;
@@ -26,4 +27,14 @@ void entitya::select(const entity* object) {
 		*ps++ = &e;
 	}
 	count = ps - data;
+}
+
+void entitya::createdeck() {
+	clear();
+	for(auto& e : bsdata<cardi>()) {
+		if(!e.usedeck())
+			continue;
+		for(auto i = 0; i < e.count; i++)
+			add(&e);
+	}
 }

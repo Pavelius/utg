@@ -1,3 +1,3 @@
 #include "card.h"
 
-cardi* last_card;
+card* last_card;

@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "draw_strategy.h"
+#include "entitya.h"
 #include "list.h"
 #include "province.h"
 #include "player.h"
@@ -11,6 +12,8 @@ static void start_game() {
 	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
 	speaker = bsdata<playeri>::elements + 0;
+	tactics.createdeck();
+	tactics.shuffle();
 	run_command("GamePlay");
 }
 

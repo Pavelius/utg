@@ -15,7 +15,7 @@
 #include "unit_type.h"
 
 entitya			querry, onboard;
-static entitya	players;
+static playera	players;
 static answers	an;
 static char		sb_temp[512];
 static stringbuilder sb(sb_temp);
@@ -165,7 +165,7 @@ static void standart_answers() {
 			continue;
 		if(!e.isallow())
 			continue;
-		if(!script::allow(e.use))
+		if(!script_allow(e.use))
 			continue;
 		an.add(&e, e.getname());
 	}
@@ -267,7 +267,7 @@ static void choose_command_token(int bonus) {
 }
 
 static void apply_secondanary_ability(strategyi& e) {
-	if(!script::allow(e.secondary))
+	if(!script_allow(e.secondary))
 		return;
 	if(player->ishuman()) {
 		if(!draw::yesno(getnm("ApplySecondanaryStrategy"), e.getname()))
@@ -1102,7 +1102,7 @@ void playeri::event(const char* id) {
 			continue;
 		if(!equal(p->trigger, id))
 			continue;
-		if(!script::allow(p->use))
+		if(!script_allow(p->use))
 			continue;
 		an.add(p, p->getname());
 	}

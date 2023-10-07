@@ -22,7 +22,7 @@ RecruitTroopsInHomeland
 RefreshConsumables
  elements SelectPlayers ForEachPlayer RefreshResources RefreshInfluence
 RefreshPlayers
- elements SelectPlayers FilterUsed ForEachPlayer PlayerUsed-1
+ elements SelectPlayers Used ForEachPlayer PlayerUsed-1
 RemoveActivityToken
  elements SelectProvinces FilterActivated ChooseProvince ActivityToken-1
 RemoveActivityAllTokens
@@ -66,7 +66,7 @@ StartYear
 PlanningPhase 
  elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
- elements Repeat SelectPlayers FilterUsed-1 IfNoQuerryBreak ForEachPlayer MakeAction
+ elements Repeat SelectPlayers Used-1 IfNoQuerryBreak ForEachPlayer MakeAction
 StatusPhase
  elements RemoveStrategicCards RemoveActivityAllTokens
 AgendaPhase
@@ -74,13 +74,13 @@ AgendaPhase
 GameTurn
  elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
- elements SelectPlayers ForEachPlayer Army+3 Tactic+3
+ elements SelectPlayers ForEachPlayer AddStart
 GameStart
  elements PreparePlayers
 GamePlay
  elements GameStart Repeat GameTurn
 
-ChooseBattleTactic
+BattleTactic
 DestroyEnemyBuildings
 PrepareTroopsForBattle
 HailOfArrows
@@ -89,7 +89,7 @@ RemoveCasualty
 RetreatLooser
 
 ApplyCombat
- elements PrepareTroopsForBattle ChooseBattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
+ elements PrepareTroopsForBattle BattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
 
 #Card trigger(MakeAction)
 

@@ -6,6 +6,7 @@
 enum ability_s : unsigned char;
 enum tag_s : unsigned char;
 
+struct cardi;
 struct playeri;
 struct provincei;
 struct uniti;
@@ -16,6 +17,7 @@ struct entity : nameable, taga {
 	void			focusing() const;
 	int				get(ability_s v) const;
 	int				getbonus(ability_s v) const;
+	cardi*			getcard() const;
 	playeri*		getplayer() const;
 	provincei*		getprovince() const;
 	uniti*			getunit() const;

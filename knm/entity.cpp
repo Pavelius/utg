@@ -100,3 +100,9 @@ int	entity::getbonus(ability_s v) const {
 	}
 	return result;
 }
+
+cardi* entity::getcard() const {
+	if(bsdata<card>::have(this))
+		return (cardi*)id;
+	return 0;
+}

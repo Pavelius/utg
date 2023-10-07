@@ -15,6 +15,7 @@
 
 NOBSDATA(color)
 
+BSDATAC(card, 1024)
 BSDATAC(cardi, 512)
 BSDATAC(playeri, 32)
 BSDATAC(provincei, 128)
@@ -31,10 +32,13 @@ BSMETA(boardparti) = {
 	{}};
 BSMETA(cardi) = {
 	BSREQ(id),
+	BSREQ(count),
 	BSREQ(player),
 	BSREQ(trigger),
 	BSFLG(tags, tagi),
 	BSREQ(effect),
+	BSREQ(target),
+	BSDST(abilities, abilityi),
 	{}};
 BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
@@ -82,7 +86,7 @@ BSDATA(varianti) = {
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
 	{"Structure", VAR(structurei, 1), ftinfo<structurei>},
-	{"Tag", VAR(tagi, 1)},
+	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>, fntest<tagi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };
 BSDATAF(varianti);

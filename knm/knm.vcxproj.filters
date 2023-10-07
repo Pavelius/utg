@@ -166,5 +166,11 @@
     <Text Include="rules\Structures.txt">
       <Filter>rules</Filter>
     </Text>
+    <Text Include="rules\Tactics.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Laws.txt">
+      <Filter>rules</Filter>
+    </Text>
   </ItemGroup>
 </Project>
