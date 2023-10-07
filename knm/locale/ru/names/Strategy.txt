@@ -10,6 +10,7 @@ PayForLeaders: Найм лидеров
 TacticAction: Тактическое действие
 TroopReinforsment: Местное ополчение
 
+Effect: Эффект
 PrimaryAbility: Основная способность
 SecondaryAbility: Вторичная способность
 

@@ -74,7 +74,7 @@ BSMETA(uniti) = {
 	{}};
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
-	{"Card", VAR(cardi, 1)},
+	{"Card", VAR(cardi, 1), ftinfo<cardi>},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Player", VAR(playeri, 1)},

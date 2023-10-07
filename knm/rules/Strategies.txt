@@ -5,6 +5,8 @@ ActivateProvince
 ApplyTradeRoute
 ClaimSpeaker
  elements SelectPlayers FilterSpeaker-1
+ChooseProvinceYouControl
+ elements SelectProvincesYouControl ChooseProvince
 ConstructBuilding
  elements SelectProvincesYouControl ChooseProvince
 DiplomaticTreaty
@@ -97,4 +99,4 @@ PassAction
  effect EndRound
 
 TroopReinforsment player(MiddleKindom)
- effect PayHero SelectProvincesYouControl ChooseProvince
+ effect PayHero ChooseProvinceYouControl Pikemens+2
