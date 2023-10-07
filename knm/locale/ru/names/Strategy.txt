@@ -1,5 +1,7 @@
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+DiplomaticTreaty: Дипломатическая неприкосновенность
+DoubleProvinceResources: Дополнительные ресурсы
 PlanningPhase: Выбор стратегии на год
 ChooseStrategy: Выбор стратегии
 MakeAction: Выполнить действие

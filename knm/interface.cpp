@@ -25,6 +25,7 @@ const int player_avatar_size = 32;
 const int player_marker_size = 16;
 const int indicator_width = 48;
 const int tech_padding = 16;
+const char* message_string;
 
 static color tech_colors[] = {
 	{40, 40, 40},
@@ -449,7 +450,7 @@ static void paint_green_marker() {
 
 static void remove_all(fnevent proc) {
 	for(auto& e : bsdata<object>()) {
-		if(e.painting==proc)
+		if(e.painting == proc)
 			e.clear();
 	}
 }
@@ -526,9 +527,35 @@ void update_ui() {
 	wait_all();
 }
 
+static void transparent_window() {
+	rectpush push;
+	auto push_alpha = alpha;
+	auto push_fore = fore;
+	setoffset(-metrics::border, -metrics::border);
+	fore = colors::form;
+	alpha = 128;
+	rectf();
+	alpha = push_alpha;
+	fore = colors::border;
+	rectb();
+	fore = push_fore;
+}
+
+static void paint_message_string() {
+	if(!message_string)
+		return;
+	rectpush push;
+	textfs(message_string);
+	caret.x = (getwidth() - width) / 2;
+	caret.y += metrics::border * 3;
+	transparent_window();
+	textf(message_string);
+}
+
 static void main_background() {
 	strategy_background();
 	paint_objects();
+	paint_message_string();
 }
 
 static void main_finish() {

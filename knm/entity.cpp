@@ -22,6 +22,13 @@ void entity::set(const entity* v) {
 		tags |= ((0x80000000) >> getbsi((playeri*)v));
 }
 
+void entity::remove(const entity* v) {
+	if(!v)
+		return;
+	if(bsdata<playeri>::have(v))
+		tags &= ~((0x80000000) >> getbsi((playeri*)v));
+}
+
 int entity::get(ability_s v) const {
 	if(bsdata<troopi>::have(this))
 		return ((uniti*)id)->abilities[v];

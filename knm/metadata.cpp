@@ -42,6 +42,7 @@ BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(troops),
 	BSREQ(homeland),
+	BSREQ(start),
 	BSREQ(fore),
 	{}};
 BSMETA(provincei) = {

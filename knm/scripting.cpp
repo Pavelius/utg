@@ -16,12 +16,18 @@
 #include "troop.h"
 #include "unit.h"
 
+extern const char* message_string;
+
 static char				log_text[1024];
 static stringbuilder	actions_log(log_text);
 static char				console_text[512];
 static stringbuilder	console(console_text);
 static entitya			recruit;
 static int				need_pay;
+
+static int getone(int v) {
+	return v ? v : 1;
+}
 
 static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
 	if(!format || format[0] == 0)
@@ -151,6 +157,7 @@ static void choose_querry(int bonus) {
 
 static void choose_province(int bonus) {
 	pushtitle push(last_list->id);
+	pushvalue push_message(message_string, get_title(last_list->id, bonus));
 	province = querry.chooseprovince();
 }
 
@@ -204,6 +211,27 @@ static void refresh_influence(int bonus) {
 	refresh_ability(Influence);
 }
 
+static void add_consumbale(ability_s v, int bonus) {
+	bonus = getone(bonus);
+	auto total = province->get(v) + province->getbonus(v);
+	player->add(v, total * bonus);
+}
+
+static void add_province_consumables(int bonus) {
+	add_consumbale(Resources, bonus);
+	add_consumbale(Influence, bonus);
+	add_consumbale(Goods, bonus);
+}
+
+static void set_activity_token(int bonus) {
+	if(!player)
+		return;
+	if(bonus >= 0)
+		province->set(player);
+	else
+		province->remove(player);
+}
+
 static void add_player_tag(int bonus) {
 	if(bonus >= 0)
 		player->set(last_tag);
@@ -214,10 +242,6 @@ static void add_player_tag(int bonus) {
 static void remove_strategy(int bonus) {
 	logging(last_strategy->player, get_script_log(), last_strategy->getname());
 	last_strategy->player = 0;
-}
-
-static int getone(int v) {
-	return v ? v : 1;
 }
 
 static void pay(ability_s v, int bonus) {
@@ -538,6 +562,7 @@ BSDATA(script) = {
 	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
+	{"AddProvinceConsumables", add_province_consumables},
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
@@ -571,6 +596,7 @@ BSDATA(script) = {
 	{"SelectProvinces", select_provincies},
 	{"SelectProvincesYouControl", select_your_provincies},
 	{"SelectStrategy", select_strategy},
+	{"SetActivityToken", set_activity_token},
 	{"WhileAllowPlay", while_allow_play},
 };
 BSDATAF(script)

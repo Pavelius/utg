@@ -23,4 +23,6 @@ struct entity : nameable, taga {
 	bool			is(tag_s v) const { return taga::is(v); }
 	void			set(const entity* v);
 	void			set(tag_s v) { taga::set(v); }
+	void			remove(const entity* v);
+	void			remove(tag_s v) { taga::remove(v); }
 };

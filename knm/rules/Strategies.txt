@@ -7,9 +7,9 @@ ClaimSpeaker
 ConstructBuilding
  elements SelectProvincesYouControl
 DiplomaticTreaty
- elements SelectProvincesYouControl
+ elements SelectProvincesYouControl ChooseProvince SelectPlayersAll ForEachPlayer SetActivityToken
 DoubleProvinceResources
- elements SelectProvincesYouControl
+ elements SelectProvincesYouControl ChooseProvince ForEachProvince AddProvinceConsumables
 LookLaws
 MoveTroops
 RecruitTroopsInHomeland
@@ -66,7 +66,7 @@ AgendaPhase
 GameTurn
  elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
- elements SelectPlayers ForEachPlayer Army+3 Tactic+3 Resources+10 Influence+10
+ elements SelectPlayers ForEachPlayer Army+3 Tactic+3
 GameStart
  elements PreparePlayers GameTurn
 GamePlay
