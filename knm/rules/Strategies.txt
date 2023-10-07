@@ -14,8 +14,9 @@ LookLaws
 MoveTroops
 RecruitTroopsInHomeland
  elements SelectProvincesYouControl
-RefreshTrade
 RemoveActivityToken
+RemoveStrategicCards
+ elements SelectStrategy-1 ForEachStrategy RemoveStrategy
 ScorePublicGoal
 GainFameIfControlCapital
 
@@ -26,25 +27,25 @@ Leadership initiative(1)
  secondary PayForLeaders+3
 Diplomacy initiative(2)
  primary DiplomaticTreaty DoubleProvinceResources
- secondary PayHero DoubleProvinceResources
+ secondary PayHeroYesNo DoubleProvinceResources
 Politics initiative(3)
  primary ClaimSpeaker LookLaws+2 AddActions+2
- secondary PayHero AddActions+2
+ secondary PayHeroYesNo AddActions+2
 Construction initiative(4)
  primary ConstructBuilding ConstructBuilding
- secondary PayHero ConstructBuilding
+ secondary PayHeroYesNo ConstructBuilding
 Trade initiative(5)
  primary AddGoods+3 RefreshTrade ApplyTradeRoute
- secondary PayHero RefreshTrade
+ secondary PayHeroYesNo RefreshTrade
 Warfare initiative(6)
  primary RemoveActivityToken AddLeaders+1
- secondary PayHero RecruitTroopsInHomeland
+ secondary PayHeroYesNo RecruitTroopsInHomeland
 Technology initiative(7)
  primary AddResearch+10 PayResearch
- secondary PayHero AddResearch+4 PayResearch
+ secondary PayHeroYesNo AddResearch+4 PayResearch
 GatherPower initiative(8)
  primary ScorePublicGoal GainFameIfControlCapital
- secondary PayHero AddSecretGoal+1
+ secondary PayHeroYesNo AddSecretGoal+1
 
 #List
 
@@ -53,14 +54,17 @@ StrategyPhase
 ActionPhase
  elements SelectPlayers ForEachPlayer MakeAction
 StatusPhase
+ elements RemoveStrategicCards
 AgendaPhase
 
 GameTurn
  elements StrategyPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
- elements SelectPlayers ForEachPlayer Army+3 Tactic+3 Resources+4 Influence+2
+ elements SelectPlayers ForEachPlayer Army+3 Tactic+3 Resources+10 Influence+10
 GameStart
  elements PreparePlayers GameTurn
+GamePlay
+ elements WhileAllowPlay GameTurn
 
 ChooseBattleTactic
 DestroyEnemyBuildings
@@ -81,4 +85,4 @@ PassAction
  effect EndRound
 
 TroopReinforsment player(MiddleKindom)
- effect PayHero SelectProvincesYouControl
+ effect PayHero SelectProvincesYouControl ChooseProvince

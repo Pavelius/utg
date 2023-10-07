@@ -9,4 +9,6 @@ Influence: Влияние
 Resources: Ресурсы
 Tactic: Герои
 
+Yes: Да
+No: Нет
 Cancel: Отмена

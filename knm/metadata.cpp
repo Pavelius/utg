@@ -15,6 +15,7 @@
 BSDATAC(cardi, 512)
 BSDATAC(playeri, 32)
 BSDATAC(provincei, 128)
+BSDATAC(structurei, 8)
 BSDATAC(structure, 256)
 BSDATAC(strategyi, 8)
 BSDATAC(troopi, 128 * 8)
@@ -46,6 +47,10 @@ BSMETA(strategyi) = {
 	BSREQ(initiative),
 	BSREQ(primary), BSREQ(secondary),
 	{}};
+BSMETA(structurei) = {
+	BSREQ(id),
+	BSDST(abilities, abilityi),
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -63,6 +68,7 @@ BSDATA(varianti) = {
 	{"Province", VAR(provincei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
+	{"Structure", VAR(structurei, 1), ftinfo<structurei>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };
 BSDATAF(varianti);

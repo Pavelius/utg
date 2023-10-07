@@ -4,11 +4,11 @@
     <Filter Include="logic">
       <UniqueIdentifier>{b6eb339b-5f01-4fbc-a708-a75a99dcd5c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="data">
-      <UniqueIdentifier>{c64842cc-3ac0-447e-8385-462673a83702}</UniqueIdentifier>
-    </Filter>
     <Filter Include="locale">
       <UniqueIdentifier>{8b1bc70b-e779-45d3-bf2c-46c838bcccf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rules">
+      <UniqueIdentifier>{c64842cc-3ac0-447e-8385-462673a83702}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,25 +113,28 @@
     <ClCompile Include="boardpart.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="pushtitle.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Units.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="errors.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Strategies.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Players.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Provinces.txt">
-      <Filter>data</Filter>
+      <Filter>rules</Filter>
     </Text>
     <Text Include="locale\ru\names\Names.txt">
       <Filter>locale</Filter>
@@ -153,6 +156,9 @@
     </Text>
     <Text Include="locale\ru\tips\StrategyDescriptions.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Structures.txt">
+      <Filter>rules</Filter>
     </Text>
   </ItemGroup>
 </Project>

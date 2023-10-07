@@ -290,7 +290,7 @@ static void buttonback(int size, const void* data) {
 }
 
 static color getplayercolor(playeri* p) {
-	return p->fore;// player_colors[origin_players.find(p) + 1];
+	return p->fore;
 }
 
 void troopi::paint() const {
@@ -365,10 +365,6 @@ static void textvalue(figure shape, int v) {
 //		image(gres("races_small", "art/objects"), getbsi(player), 0);
 //}
 
-//static void paint_planet() {
-//	((planeti*)last_object->data)->paint(last_object->flags);
-//}
-
 //static void add_planet(planeti* ps, point pt, int index) {
 //	unsigned char flags = 0;
 //	switch(index) {
@@ -408,12 +404,13 @@ static void marker_press() {
 	breakmodal((long)p->data);
 }
 
-static void paint_province_marker() {
+static void paint_green_marker() {
 	auto push_fore = fore;
 	auto push_alpha = alpha;
 	fore = colors::green;
 	alpha = 16;
-	if(ishilite(size / 3, last_object->data)) {
+	auto radius = last_object->param;
+	if(ishilite(radius - 4, last_object->data)) {
 		if(hot.pressed)
 			alpha = 32;
 		else
@@ -422,9 +419,9 @@ static void paint_province_marker() {
 		if(hot.key == MouseLeft && !hot.pressed)
 			execute(marker_press, (long)last_object);
 	}
-	circlef(size / 3);
+	circlef(radius);
 	alpha = 255;
-	circle(size / 3);
+	circle(radius);
 	alpha = push_alpha;
 	fore = push_fore;
 }
@@ -436,21 +433,17 @@ static void remove_all(fnevent proc) {
 	}
 }
 
-static void remove_all_markers() {
-	remove_all(paint_province_marker);
-}
-
-static void add_maker(void* object) {
+static void add_maker(void* object, fnevent proc, int size) {
 	auto pm = findobject(object);
 	if(pm)
-		addobject(pm->position, pm, paint_province_marker, 0, 50);
+		addobject(pm->position, pm, proc, size, 50);
 }
 
 provincei* entitya::chooseprovince() const {
 	for(auto p : *this)
-		add_maker(p);
+		add_maker(p, paint_green_marker, size / 3);
 	scene();
-	remove_all_markers();
+	remove_all(paint_green_marker);
 	return (provincei*)getresult();
 }
 

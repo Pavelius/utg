@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-ActivateProvince: Define translate
+﻿In file `rules/Strategies.txt`:
+ Line 19: Can't find variant `REmoveStrategy`

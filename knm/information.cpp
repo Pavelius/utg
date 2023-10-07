@@ -1,10 +1,22 @@
 #include "crt.h"
 #include "strategy.h"
 #include "stringbuilder.h"
+#include "structure.h"
 #include "variant.h"
 
 static void add_head(stringbuilder& sb, const char* id) {
 	sb.addn("###%1", getnm(id));
+}
+
+static void add_value(stringbuilder& sb, const char* id, int bonus) {
+	if(!bonus)
+		return;
+	sb.adds("%1%+2i", getnm(id), bonus);
+}
+
+static void add_value(stringbuilder& sb, abilitya& source) {
+	for(auto i = (ability_s)0; i <= Goods; i = (ability_s)(i + 1))
+		add_value(sb, bsdata<abilityi>::elements[i].getname(), source.abilities[i]);
 }
 
 static void add_script(stringbuilder& sb, const char* id, int bonus) {
@@ -31,4 +43,9 @@ template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
 	auto p = (strategyi*)object;
 	add_ability(sb, p->primary, "PrimaryAbility");
 	add_ability(sb, p->secondary, "SecondaryAbility");
+}
+
+template<> void ftinfo<structurei>(const void* object, stringbuilder& sb) {
+	auto p = (structurei*)object;
+	add_value(sb, *p);
 }

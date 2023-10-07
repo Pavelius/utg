@@ -83,5 +83,6 @@ typedef const char* (*fntext)(const void* object, stringbuilder& sb);
 typedef void (*fnstatus)(const void* object, stringbuilder& sb);
 typedef void (*fnprint)(stringbuilder& sb);
 const char* str(const char* format, ...);
+const char* stw(const char* w1, const char* w2, const char* w3 = 0);
 
 template<typename T> void ftinfo(const void* object, stringbuilder& sb);

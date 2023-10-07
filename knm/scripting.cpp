@@ -2,6 +2,7 @@
 #include "army.h"
 #include "card.h"
 #include "crt.h"
+#include "draw.h"
 #include "entitya.h"
 #include "list.h"
 #include "player.h"
@@ -10,18 +11,49 @@
 #include "pushvalue.h"
 #include "script.h"
 #include "strategy.h"
+#include "structure.h"
 #include "troop.h"
 #include "unit.h"
 
 static char				log_text[1024];
-static stringbuilder	log(log_text);
+static stringbuilder	actions_log(log_text);
 static char				console_text[512];
 static stringbuilder	console(console_text);
 static entitya			recruit;
 static int				need_pay;
 
+static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
+	if(!format || format[0] == 0)
+		return;
+	if(separator)
+		actions_log.addsep(separator);
+	if(player)
+		actions_log.add("[%1]: ", player->getname());
+	actions_log.addv(format, format_param);
+}
+
+static void logging(const char* format, ...) {
+	loggingv(0, format, xva_start(format));
+}
+
+static void logging(const playeri* player, const char* format, ...) {
+	loggingv(player, format, xva_start(format));
+}
+
+static const char* get_log(const char* id) {
+	return getdescription(stw(id, "Log"));
+}
+
+static const char* get_script_log() {
+	return get_log(last_script->id);
+}
+
 template<> void fnscript<abilityi>(int value, int counter) {
 	player->current.abilities[value] += counter;
+	if(counter > 0)
+		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
+	else
+		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 }
 
 template<> void fnscript<uniti>(int value, int counter) {
@@ -75,8 +107,18 @@ static void apply_input(void* result) {
 		((fnevent)result)();
 }
 
-static void apply_input() {
-	auto result = an.choose();
+static const char* get_title(const char* id, int count = 0) {
+	static char temp[260];
+	auto title = getdescription(stw(id, "Ask"));
+	if(!title)
+		return 0;
+	stringbuilder sb(temp); sb.clear();
+	sb.add(title, count);
+	return temp;
+}
+
+static void apply_input(int count = 0) {
+	auto result = an.choose(get_title(last_id, count));
 	apply_input(result);
 }
 
@@ -137,6 +179,15 @@ static bool filter_province(const void* object) {
 	return p->getprovince() == province;
 }
 
+static void refresh_trade(int bonus) {
+	player->set(Goods, player->getmaximum(Goods));
+}
+
+static void remove_strategy(int bonus) {
+	logging(last_strategy->player, get_script_log(), last_strategy->getname());
+	last_strategy->player = 0;
+}
+
 static int getone(int v) {
 	return v ? v : 1;
 }
@@ -154,25 +205,39 @@ static bool pay_hero_allow(int bonus) {
 	return allow_pay(Tactic, getone(bonus));
 }
 static void pay_hero(int bonus) {
-	pay(Tactic, getone(bonus));
+	bonus = getone(bonus);
+	pay(Tactic, bonus);
+}
+
+static void pay_hero_yesno(int bonus) {
+	if(draw::yesno(getdescription("StrategySecondaryAsk"), last_strategy->getname()))
+		pay_hero(bonus);
+	else
+		script_stop();
 }
 
 static void pay_ability(const char* id, ability_s v, ability_s currency, int cost, int maximum_cap) {
 	pushtitle push_title(id);
 	an.clear();
+	auto choose_prompt = getdescription(stw(id, "Answer"));
+	if(!choose_prompt)
+		choose_prompt = getdescription("PayResource");
+	auto choose_cancel = getdescription(stw(id, "Cancel"));
+	if(!choose_cancel)
+		choose_cancel = getdescription("PayResourceCancel");
 	for(auto i = 1; i <= maximum_cap; i++) {
 		auto total = cost * i;
-		auto value = player->get(v);
+		auto value = player->get(currency);
 		if(value < total)
 			break;
-		an.add((void*)i, getdescription("PayResource"),
+		an.add((void*)i, choose_prompt,
 			bsdata<abilityi>::elements[v].getname(),
 			bsdata<abilityi>::elements[currency].getname(),
 			i, total);
 	}
-	auto n = (int)an.choose(0, getdescription("PayCancel"), 1);
-	player->current.abilities[v] += n;
-	player->current.abilities[currency] -= cost * n;
+	auto i = (int)an.choose(get_title(id), choose_cancel, 0);
+	player->current.abilities[v] += i;
+	player->current.abilities[currency] -= cost * i;
 }
 
 static void recruit_reset() {
@@ -241,7 +306,7 @@ static void add_leaders(int bonus) {
 		an.clear();
 		add_input(bsdata<abilityi>::elements[Tactic]);
 		add_input(bsdata<abilityi>::elements[Army]);
-		apply_input();
+		apply_input(bonus);
 		bonus--;
 	}
 }
@@ -273,19 +338,33 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
-	pay_ability("PayLeaders", Tactic, Influence, 2, 3);
+	pay_ability("PayForLeaders", Tactic, Influence, 2, 3);
 }
 
 static void pay_research(int bonus) {
 }
 
-static void apply_primary_strategy(int bonus) {
+static void apply_primary_strategy() {
 	last_strategy->set(Used);
 	script_run(last_strategy->primary);
 }
 
-static void apply_secondary_strategy(int bonus) {
-	script_run(last_strategy->secondary);
+static void execute_action(const char* id, const variants& source) {
+	pushtitle push(id);
+	script_run(source);
+}
+
+static void execute_action(const playeri* p, const char* id, const variants& source) {
+	pushvalue push(player, const_cast<playeri*>(p));
+	execute_action(id, source);
+}
+
+static void apply_secondary_strategy() {
+	for(auto p : players) {
+		if(p == player)
+			continue;
+		execute_action(static_cast<playeri*>(p), last_strategy->id, last_strategy->secondary);
+	}
 }
 
 static void make_action(int bonus) {
@@ -295,8 +374,10 @@ static void make_action(int bonus) {
 	add_input_cards("MakeAction");
 	add_strategy_cards();
 	apply_input();
-	if(last_strategy)
-		apply_primary_strategy(0);
+	if(last_strategy) {
+		apply_primary_strategy();
+		apply_secondary_strategy();
+	}
 }
 
 static void select_players_speaker(int bonus) {
@@ -327,6 +408,18 @@ static void select_provincies(int bonus) {
 
 static void select_your_provincies(int bonus) {
 	querry.collectiona::select(bsdata<provincei>::source, filter_player, bonus >= 0);
+}
+
+static void select_province_structures(int bonus) {
+	querry.collectiona::select(bsdata<structure>::source, filter_province, bonus >= 0);
+}
+
+static void* group_id(const void* object) {
+	return (void*)((entity*)object)->id;
+}
+
+static void group_structure_type(int bonus) {
+	querry.group(group_id);
 }
 
 static void establish_control(int bonus) {
@@ -383,6 +476,24 @@ static void for_each_province(int bonus) {
 	script_stop();
 }
 
+static void for_each_strategy(int bonus) {
+	pushvalue push(last_strategy);
+	pushvalue push_querry(querry);
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	for(auto p : push_querry.value) {
+		last_strategy = static_cast<strategyi*>(p);
+		script_run(commands);
+	}
+	script_stop();
+}
+
+static void while_allow_play(int bonus) {
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	while(!draw::isnext())
+		script_run(commands);
+	script_stop();
+}
+
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -394,8 +505,6 @@ BSDATA(script) = {
 	{"AddLeaders", add_leaders},
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
-	{"ApplyPrimaryStrategy", apply_primary_strategy},
-	{"ApplySecondaryStrategy", apply_secondary_strategy},
 	{"ClearInput", clear_input},
 	{"ChooseInput", choose_input},
 	{"ChooseProvince", choose_province},
@@ -405,17 +514,23 @@ BSDATA(script) = {
 	{"FilterActivated", filter_activated_querry},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachProvince", for_each_province},
+	{"ForEachStrategy", for_each_strategy},
 	{"InputQuerry", input_querry},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders},
 	{"PayHero", pay_hero, pay_hero_allow},
+	{"PayHeroYesNo", pay_hero_yesno, pay_hero_allow},
 	{"PayResearch", pay_research},
 	{"PickStrategy", pick_strategy},
 	{"RecruitTroops", recruit_troops},
+	{"RefreshTrade", refresh_trade},
+	{"RemoveStrategy", remove_strategy},
 	{"SelectPlayers", select_players},
 	{"SelectPlayersBySpeaker", select_players_speaker},
+	{"SelectProvinceStructures", select_province_structures},
 	{"SelectProvinces", select_provincies},
 	{"SelectProvincesYouControl", select_your_provincies},
 	{"SelectStrategy", select_strategy},
+	{"WhileAllowPlay", while_allow_play},
 };
 BSDATAF(script)

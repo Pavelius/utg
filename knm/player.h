@@ -15,6 +15,8 @@ struct playeri : entity {
 	uniti*		troops[5];
 	int			getmaximum(ability_s v) const;
 	int			getsummary(ability_s v) const;
+	void		set(ability_s v, int i) { current.abilities[v] = i; }
+	void		set(tag_s v) { entity::set(v); }
 };
 extern playeri*	player;
 

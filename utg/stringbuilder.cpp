@@ -830,6 +830,17 @@ const char* str(const char* format, ...) {
 	return temp;
 }
 
+const char* stw(const char* w1, const char* w2, const char* w3) {
+	static char temp[260]; stringbuilder sb(temp);
+	if(w1)
+		sb.addv(w1, 0);
+	if(w2)
+		sb.addv(w2, 0);
+	if(w3)
+		sb.addv(w3, 0);
+	return temp;
+}
+
 void stringbuilder::trimr() {
 	while(p > pb && (p[-1] == ' ' || p[-1] == '\t' || p[-1] == '\n')) {
 		p[-1] = 0;

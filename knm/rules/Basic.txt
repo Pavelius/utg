@@ -2,3 +2,4 @@
 #include "rules/Players.txt"
 #include "rules/Strategies.txt"
 #include "rules/Provinces.txt"
+#include "rules/Structures.txt"

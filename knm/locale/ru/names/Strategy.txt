@@ -1,8 +1,10 @@
 ActivateProvince: Активация провинции
+AddLeaders: Призыв лидеров
 StrategyPhase: Выбор стратегии
 ChooseStrategy: Выбор стратегии
 MakeAction: Выполнить действие
 PassAction: Закончить ход
+PayForLeaders: Найм лидеров
 TacticAction: Тактическое действие
 TroopReinforsment: Местное ополчение
 

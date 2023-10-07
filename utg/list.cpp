@@ -7,7 +7,7 @@ BSMETA(listi) = {
 	{}};
 BSDATAC(listi, 256)
 
-listi* last_list;
+listi*	last_list;
 
 void script_run(const variants& source);
 

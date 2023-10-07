@@ -173,6 +173,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
+    <ClCompile Include="pushtitle.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -196,6 +197,7 @@
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />
     <Text Include="rules\Strategies.txt" />
+    <Text Include="rules\Structures.txt" />
     <Text Include="rules\Units.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
