@@ -1,4 +1,5 @@
 #include "crt.h"
+#include "card.h"
 #include "entity.h"
 #include "player.h"
 #include "province.h"
@@ -56,6 +57,20 @@ int	entity::getbonus(ability_s v) const {
 	if(bsdata<provincei>::have(this)) {
 		for(auto& e : bsdata<structure>()) {
 			if(e.getprovince() == this)
+				result += e.get(v);
+		}
+	} else if(bsdata<playeri>::have(this)) {
+		for(auto& e : bsdata<provincei>()) {
+			if(e.player == this)
+				result += e.get(v);
+		}
+		for(auto& e : bsdata<structure>()) {
+			auto p = e.getprovince();
+			if(p && p->player==this)
+				result += e.get(v);
+		}
+		for(auto& e : bsdata<cardi>()) {
+			if(e.location && e.player == this)
 				result += e.get(v);
 		}
 	}

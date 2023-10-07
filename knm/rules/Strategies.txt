@@ -14,6 +14,10 @@ LookLaws
 MoveTroops
 RecruitTroopsInHomeland
  elements SelectProvincesYouControl
+RefreshCosnsumables
+ elements SelectPlayersAll ForEachPlayer RefreshResources RefreshInfluence
+RefreshPlayers
+ elements SelectPlayersAll ForEachPlayer Used AddPlayerTag-1
 RemoveActivityToken
 RemoveStrategicCards
  elements SelectStrategy-1 ForEachStrategy RemoveStrategy
@@ -49,7 +53,9 @@ GatherPower initiative(8)
 
 #List
 
-StrategyPhase 
+StartYear
+ elements RefreshPlayers RefreshCosnsumables
+PlanningPhase 
  elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
  elements SelectPlayers ForEachPlayer MakeAction
@@ -58,7 +64,7 @@ StatusPhase
 AgendaPhase
 
 GameTurn
- elements StrategyPhase ActionPhase StatusPhase AgendaPhase
+ elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
  elements SelectPlayers ForEachPlayer Army+3 Tactic+3 Resources+10 Influence+10
 GameStart

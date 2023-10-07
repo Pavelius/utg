@@ -5,7 +5,7 @@ DarkCitadel
 
 #Player
 
-MiddleKindom homeland(CityGriffonHeart)
+MiddleKindom homeland(CityGriffonHeart) fore(0 121 191)
  troops Pikemens Archers Swordmans Cavalry WarMachine
-OrcHorde homeland(DarkCitadel)
+OrcHorde homeland(DarkCitadel) fore(235 90 70)
  troops Goblins Wargs Orcs Ogres Giant

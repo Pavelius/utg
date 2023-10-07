@@ -9,3 +9,4 @@ struct taga {
 	void		set(tag_s v) { tags |= (1 << v); }
 	void		remove(tag_s v) { tags &= ~(1 << v); }
 };
+extern tag_s last_tag;

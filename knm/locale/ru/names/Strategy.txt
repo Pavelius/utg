@@ -1,6 +1,6 @@
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
-StrategyPhase: Выбор стратегии
+PlanningPhase: Выбор стратегии на год
 ChooseStrategy: Выбор стратегии
 MakeAction: Выполнить действие
 PassAction: Закончить ход

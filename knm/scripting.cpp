@@ -12,6 +12,7 @@
 #include "script.h"
 #include "strategy.h"
 #include "structure.h"
+#include "tag.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -54,6 +55,10 @@ template<> void fnscript<abilityi>(int value, int counter) {
 		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 	else
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
+}
+
+template<> void fnscript<tagi>(int value, int counter) {
+	last_tag = (tag_s)value;
 }
 
 template<> void fnscript<uniti>(int value, int counter) {
@@ -183,8 +188,27 @@ static bool filter_province(const void* object) {
 	return p->getprovince() == province;
 }
 
+static void refresh_ability(ability_s v) {
+	player->set(v, player->getmaximum(v));	
+}
+
 static void refresh_trade(int bonus) {
-	player->set(Goods, player->getmaximum(Goods));
+	refresh_ability(Goods);
+}
+
+static void refresh_resources(int bonus) {
+	refresh_ability(Resources);
+}
+
+static void refresh_influence(int bonus) {
+	refresh_ability(Influence);
+}
+
+static void add_player_tag(int bonus) {
+	if(bonus >= 0)
+		player->set(last_tag);
+	else
+		player->remove(last_tag);
 }
 
 static void remove_strategy(int bonus) {
@@ -405,6 +429,10 @@ static void select_players(int bonus) {
 	sort_players();
 }
 
+static void select_players_all(int bonus) {
+	players.collectiona::select(bsdata<playeri>::source);
+}
+
 static void select_strategy(int bonus) {
 	querry.collectiona::select(bsdata<strategyi>::source, no_player, bonus >= 0);
 }
@@ -512,6 +540,7 @@ BSDATA(script) = {
 	{"AddLeaders", add_leaders},
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
+	{"AddPlayerTag", add_player_tag},
 	{"ClearInput", clear_input},
 	{"ChooseInput", choose_input},
 	{"ChooseHomeland", choose_homeland},
@@ -531,9 +560,12 @@ BSDATA(script) = {
 	{"PayResearch", pay_research},
 	{"PickStrategy", pick_strategy},
 	{"RecruitTroops", recruit_troops},
+	{"RefreshInfluence", refresh_influence},
+	{"RefreshResources", refresh_resources},
 	{"RefreshTrade", refresh_trade},
 	{"RemoveStrategy", remove_strategy},
 	{"SelectPlayers", select_players},
+	{"SelectPlayersAll", select_players_all},
 	{"SelectPlayersBySpeaker", select_players_speaker},
 	{"SelectProvinceStructures", select_province_structures},
 	{"SelectProvinces", select_provincies},

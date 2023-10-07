@@ -22,6 +22,7 @@ inline short unsigned h2i(point v) { return v.y * hms + v.x; }
 const int button_height = 20;
 const int size = 256;
 const int player_avatar_size = 32;
+const int player_marker_size = 16;
 const int indicator_width = 48;
 const int tech_padding = 16;
 
@@ -59,6 +60,23 @@ static void texth2cg(const char* format) {
 	auto push_fore = fore;
 	fore = fore.mix(colors::window, 64);
 	texth2c(format);
+	fore = push_fore;
+}
+
+static void paint_banner() {
+	auto push_fore = fore;
+	fore.lighten();
+	circlef(player_marker_size);
+	fore = push_fore;
+	circle(player_marker_size);
+}
+
+static void paint_banner(const playeri* player) {
+	if(!player)
+		return;
+	auto push_fore = fore;
+	fore = player->fore;
+	paint_banner();
 	fore = push_fore;
 }
 
@@ -237,6 +255,7 @@ static void paint_player_markers(const provincei* province) {
 
 void provincei::paint() const {
 	//special_paint(special, special_index);
+	paint_banner(player);
 	paint_hexagon();
 	paint_player_markers(this);
 }
