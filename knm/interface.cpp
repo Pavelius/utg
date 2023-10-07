@@ -458,7 +458,7 @@ static void remove_all(fnevent proc) {
 static void add_maker(void* object, fnevent proc, int size) {
 	auto pm = findobject(object);
 	if(pm)
-		addobject(pm->position, pm, proc, size, 50);
+		addobject(pm->position, object, proc, size, 50);
 }
 
 provincei* entitya::chooseprovince() const {
@@ -469,9 +469,9 @@ provincei* entitya::chooseprovince() const {
 		return 0;
 	for(auto p : *this)
 		add_maker(p, paint_green_marker, size / 3);
-	scene();
+	auto result = (provincei*)scene(0);
 	remove_all(paint_green_marker);
-	return (provincei*)getresult();
+	return result;
 }
 
 void prepare_game_ui() {

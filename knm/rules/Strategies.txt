@@ -1,24 +1,24 @@
 #List
 
 ActivateProvince
- elements SelectProvinces FilterActivated-1 ChooseProvince
+ elements SelectProvinces FilterActivated-1 ChooseProvince ActivityToken
 ApplyTradeRoute
 ClaimSpeaker
- elements SelectPlayers FilterSpeaker-1
+ elements SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
 ChooseProvinceYouControl
- elements SelectProvincesYouControl ChooseProvince
+ elements SelectProvinces FilterPlayer ChooseProvince
 ConstructBuilding
- elements SelectProvincesYouControl ChooseProvince
+ elements SelectProvinces FilterPlayer ChooseProvince
 DiplomaticTreaty
- elements SelectProvincesYouControl ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
+ elements SelectProvinces FilterPlayer ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
 DoubleProvinceResources
- elements SelectProvincesYouControl ChooseProvince AddProvinceConsumables
+ elements SelectProvinces FilterPlayer ChooseProvince AddProvinceConsumables
 LookLaws
 MoveTroops
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland
- elements SelectProvincesYouControl FilterHomeland ForEachProvince RecruitTroops
+ elements SelectProvinces FilterPlayer FilterHomeland ForEachProvince RecruitTroops
 RefreshConsumables
  elements SelectPlayers ForEachPlayer RefreshResources RefreshInfluence
 RefreshPlayers
@@ -94,7 +94,7 @@ ApplyCombat
 #Card trigger(MakeAction)
 
 TacticAction
- effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops+2
+ effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
 PassAction
  effect EndRound
 

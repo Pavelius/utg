@@ -96,7 +96,9 @@ static void add_strategy_cards() {
 }
 
 static void apply_input(void* result) {
-	if(bsdata<provincei>::have(result))
+	if(!result) {
+		// Nothing to do
+	} else if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
 	else if(bsdata<playeri>::have(result))
 		player = (playeri*)result;
@@ -156,10 +158,8 @@ static void choose_province(int bonus) {
 	pushtitle push(last_list->id);
 	pushvalue push_message(message_string, get_title(last_list->id, bonus));
 	province = querry.chooseprovince();
-}
-
-static void choose_homeland(int bonus) {
-	province = player->homeland;
+	if(!province)
+		script_stop();
 }
 
 static bool no_player(const void* object) {
@@ -204,7 +204,7 @@ static int compare_player_priority(const void* v1, const void* v2) {
 }
 
 static void refresh_ability(ability_s v) {
-	player->set(v, player->getmaximum(v));	
+	player->set(v, player->getmaximum(v));
 }
 
 static void refresh_trade(int bonus) {
@@ -261,7 +261,11 @@ static bool allow_pay(ability_s v, int bonus) {
 	return player->current.abilities[v] >= bonus;
 }
 
-static bool pay_hero_allow(int bonus) {
+static bool allow_pay_for_leaders(int bonus) {
+	return allow_pay(Influence, bonus);
+}
+
+static bool allow_pay_hero(int bonus) {
 	return allow_pay(Tactic, getone(bonus));
 }
 static void pay_hero(int bonus) {
@@ -355,10 +359,10 @@ static int get_troops(ability_s v, provincei* province, playeri* player) {
 
 static void recruit_troops(int bonus) {
 	auto army_used = get_troops(Army, province, player);
-	recruit_troops(army_used,
-		player->get(Army),
-		province->get(Resources) + province->getbonus(Recruit) + bonus,
-		player->get(Resources) + player->get(Gold));
+	auto army_cap = player->get(Army);
+	auto recruit_value = province->get(Resources) + province->getbonus(Recruit) + bonus;
+	auto payment_value = player->get(Resources) + player->get(Gold);
+	recruit_troops(army_used, army_cap, recruit_value, payment_value);
 }
 
 static void add_leaders(int bonus) {
@@ -393,6 +397,10 @@ static void combat_round(int bonus) {
 	defender.engage(Damage);
 	defender.suffer(attacker.get(Damage));
 	attacker.suffer(defender.get(Damage));
+}
+
+static void pick_speaker(int bonus) {
+	speaker = player;
 }
 
 static void pick_strategy(int bonus) {
@@ -581,6 +589,26 @@ static void repeat_statement(int bonus) {
 	script_stop();
 }
 
+static bool allow_script(int bonus) {
+	last_script->proc(bonus);
+	return true;
+}
+
+static bool allow_select(int bonus) {
+	allow_script(bonus);
+	return querry.getcount() != 0;
+}
+
+static bool allow_for_each(int bonus) {
+	script_stop();
+	return querry.getcount() != 0;
+}
+
+static bool allow_choose(int bonus) {
+	script_stop();
+	return querry.getcount() != 0;
+}
+
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -603,23 +631,21 @@ BSDATA(script) = {
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
-	{"ClearInput", clear_input},
-	{"ChooseInput", choose_input},
-	{"ChooseHomeland", choose_homeland},
-	{"ChooseProvince", choose_province},
-	{"ChooseQuerry", choose_querry},
+	{"ChooseProvince", choose_province, allow_choose},
+	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
-	{"ForEachPlayer", for_each_player},
-	{"ForEachProvince", for_each_province},
-	{"ForEachStrategy", for_each_strategy},
+	{"ForEachPlayer", for_each_player, allow_for_each},
+	{"ForEachProvince", for_each_province, allow_for_each},
+	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
 	{"MakeAction", make_action},
-	{"PayForLeaders", pay_for_leaders},
-	{"PayHero", pay_hero, pay_hero_allow},
-	{"PayHeroYesNo", pay_hero_yesno, pay_hero_allow},
+	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
+	{"PayHero", pay_hero, allow_pay_hero},
+	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
 	{"PayResearch", pay_research},
+	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
 	{"PlayerUsed", player_used},
 	{"RecruitTroops", recruit_troops},
@@ -628,11 +654,10 @@ BSDATA(script) = {
 	{"RefreshTrade", refresh_trade},
 	{"RemoveStrategy", remove_strategy},
 	{"Repeat", repeat_statement},
-	{"SelectPlayers", select_players},
-	{"SelectPlayersBySpeaker", select_players_speaker},
-	{"SelectProvinceStructures", select_province_structures},
-	{"SelectProvinces", select_provincies},
-	{"SelectProvincesYouControl", select_your_provincies},
-	{"SelectStrategy", select_strategy},
+	{"SelectPlayers", select_players, allow_select},
+	{"SelectPlayersBySpeaker", select_players_speaker, allow_select},
+	{"SelectProvinceStructures", select_province_structures, allow_select},
+	{"SelectProvinces", select_provincies, allow_select},
+	{"SelectStrategy", select_strategy, allow_select},
 };
 BSDATAF(script)

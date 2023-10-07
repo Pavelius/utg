@@ -33,7 +33,7 @@ RecruitTroopsInHomeland: Наймите войска в столице.
 RefreshTrade: Обновите свои товары до макимума.
 RemoveActivityToken: Уберите жетон активности с любой провинции.
 ScorePublicGoal: Отметьте прямо сейчас общую цель, если вы удовлетворите ее требованиям.
-StrategySecondaryAsk: Хотите потратить героя, чтобы выполнить вторичную способность стратегии [%1]?
+StrategySecondaryAsk: Потратить героя, чтобы выполнить вторичную способность [%1]?
 StandartAsk: Осталось %1i.
 
 RemoveStrategyLog: 

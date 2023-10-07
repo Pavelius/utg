@@ -10,6 +10,7 @@ void initialize_script();
 static void start_game() {
 	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
+	speaker = bsdata<playeri>::elements + 0;
 	run_command("GamePlay");
 }
 
