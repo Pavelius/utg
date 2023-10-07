@@ -9,10 +9,14 @@ int	playeri::getmaximum(ability_s v) const {
 	switch(v) {
 	case Goods:
 		return 3 + getsummary(v);
-	case Fame: return 10;
+	case Lore:
+		return 10;
+	case Fame:
+		return 10;
 	case Resources: case Influence:
 		return getsummary(v);
-	default: return 100;
+	default:
+		return 100;
 	}
 }
 

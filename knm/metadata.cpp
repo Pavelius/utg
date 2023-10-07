@@ -36,6 +36,7 @@ BSMETA(cardi) = {
 BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(troops),
+	BSREQ(homeland),
 	{}};
 BSMETA(provincei) = {
 	BSREQ(id),

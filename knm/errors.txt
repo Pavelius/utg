@@ -1,2 +1,3 @@
-﻿In file `rules/Strategies.txt`:
- Line 19: Can't find variant `REmoveStrategy`
+﻿In file `rules/Players.txt`:
+ Line 8: Not found requisit `homeland`
+ Line 10: Not found requisit `homeland`

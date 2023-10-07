@@ -6,6 +6,7 @@ Fame: Слава
 Goods: Товары
 Gold: Золото
 Influence: Влияние
+Lore: Развитие
 Resources: Ресурсы
 Tactic: Герои
 

@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "province.h"
+#include "structure.h"
 
 provincei* province;
 

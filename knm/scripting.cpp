@@ -149,6 +149,10 @@ static void choose_province(int bonus) {
 	province = querry.chooseprovince();
 }
 
+static void choose_homeland(int bonus) {
+	province = player->homeland;
+}
+
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
@@ -295,7 +299,10 @@ static int get_troops(ability_s v, provincei* province, playeri* player) {
 
 static void recruit_troops(int bonus) {
 	auto army_used = get_troops(Army, province, player);
-	recruit_troops(army_used, player->get(Army), province->get(Resources) + bonus, player->get(Resources) + player->get(Gold));
+	recruit_troops(army_used,
+		player->get(Army),
+		province->get(Resources) + province->getbonus(Recruit) + bonus,
+		player->get(Resources) + player->get(Gold));
 }
 
 static void add_leaders(int bonus) {
@@ -507,6 +514,7 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"ClearInput", clear_input},
 	{"ChooseInput", choose_input},
+	{"ChooseHomeland", choose_homeland},
 	{"ChooseProvince", choose_province},
 	{"ChooseQuerry", choose_querry},
 	{"EndRound", end_round},

@@ -4,6 +4,7 @@
 BSDATA(abilityi) = {
 	{"Cost"},
 	{"Limit"},
+	{"Recruit"},
 	{"Strenght"},
 	{"Combat"},
 	{"Damage"},

@@ -3,7 +3,7 @@
 #pragma once
 
 enum ability_s : unsigned char {
-	Cost, Limit,
+	Cost, Limit, Recruit,
 	Strenght, Combat, Damage, Shoots, Shield,
 	Resources, Influence, Goods,
 	Tactic, Army,

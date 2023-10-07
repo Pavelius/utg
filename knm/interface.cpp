@@ -150,7 +150,7 @@ static void status(const char* id, int value, int maximum, const void* object) {
 
 static void status(ability_s v) {
 	switch(v) {
-	case Fame: case Goods: case Resources: case Influence:
+	case Fame: case Goods: case Resources: case Influence: case Lore:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
 		break;
 	default:
@@ -171,6 +171,8 @@ static void show_indicators() {
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
+	caret.x += 2;
+	status(Lore);
 	caret.x += 2;
 	//status(getnmsh("ActionCards"), player->getactioncards(), bsdata<script>::find("ShowActionCards"));
 	//status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));

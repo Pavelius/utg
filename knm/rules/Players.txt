@@ -1,6 +1,11 @@
+#Province
+
+CityGriffonHeart
+DarkCitadel
+
 #Player
 
-MiddleKindom
+MiddleKindom homeland(CityGriffonHeart)
  troops Pikemens Archers Swordmans Cavalry WarMachine
-OrcHorde
+OrcHorde homeland(DarkCitadel)
  troops Goblins Wargs Orcs Ogres Giant

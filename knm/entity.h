@@ -15,6 +15,7 @@ struct entity : nameable, taga {
 	entity*			location;
 	void			focusing() const;
 	int				get(ability_s v) const;
+	int				getbonus(ability_s v) const;
 	playeri*		getplayer() const { return player; }
 	provincei*		getprovince() const;
 	uniti*			getunit() const;
