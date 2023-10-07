@@ -27,7 +27,7 @@ PayForLeadersCancel: Никого не нанимать
 PayResearch: Получите одно очко исследований за каждый [1] потраченный ресурс.
 PayResource: Получить %3i, заплатив %4i %2
 PayResourceCancel: Ничего не покупать
-PlaceTroops: Разместите отряд %1 в количестве %2i штук.
+PlaceTroops: Разместите отряд %2 в количестве %1i штук.
 RecruitTroops: Наймите войска в активной провинции.
 RecruitTroopsInHomeland: Наймите войска в столице.
 RefreshTrade: Обновите свои товары до макимума.

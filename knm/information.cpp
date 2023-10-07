@@ -29,13 +29,16 @@ static void add_script(stringbuilder& sb, const char* id, int bonus) {
 	sb.add(p, bonus);
 }
 
-static void add_unit(stringbuilder& sb, int value, int bonus) {
-	auto p = getdescription("PlaceTroops");
+static void add_script(stringbuilder& sb, const char* id, const char* name, int bonus) {
+	auto p = getdescription(id);
 	if(!p)
 		return;
-	auto& ei = bsdata<uniti>::elements[value];
 	sb.addn("- ");
-	sb.add(p, ei.getname(), bonus);
+	sb.add(p, bonus, name);
+}
+
+static void add_unit(stringbuilder& sb, int value, int bonus) {
+	add_script(sb, "PlaceTroops", bsdata<uniti>::elements[value].getname(), bonus);
 }
 
 static void add_script(stringbuilder& sb, const variants& source) {

@@ -225,10 +225,12 @@ static void add_consumbale(ability_s v, int bonus) {
 	player->add(v, total * bonus);
 }
 
-static void add_province_consumables(int bonus) {
-	add_consumbale(Resources, bonus);
+static void add_province_influence(int bonus) {
 	add_consumbale(Influence, bonus);
-	add_consumbale(Goods, bonus);
+}
+
+static void add_province_resource(int bonus) {
+	add_consumbale(Resources, bonus);
 }
 
 static void activity_token(int bonus) {
@@ -627,7 +629,8 @@ BSDATA(script) = {
 	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
-	{"AddProvinceConsumables", add_province_consumables},
+	{"AddProvinceInfluence", add_province_influence},
+	{"AddProvinceResources", add_province_resource},
 	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},

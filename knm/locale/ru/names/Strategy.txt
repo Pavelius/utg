@@ -1,5 +1,6 @@
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+ClaimSpeaker: Назначение спикера 
 DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
 PlanningPhase: Выбор стратегии на год
