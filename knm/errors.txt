@@ -1,3 +1,2 @@
-﻿In file `rules/Strategies.txt`:
- Line 25: Can't find variant `FilterUsed`
- Line 69: Can't find variant `FilterUsed`
+﻿In file `Names.txt`:
+DemilitarizedZone: Define translate

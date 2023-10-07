@@ -4,8 +4,11 @@
 
 #pragma once
 
+enum deck_s : unsigned char;
+
 struct cardi : entity, abilitya {
 	const char*		trigger;
+	deck_s			type;
 	unsigned char	count;
 	variants		effect, target;
 	bool			usedeck() const { return count != 0; }

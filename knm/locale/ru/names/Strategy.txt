@@ -6,11 +6,14 @@ DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
 PlanningPhase: Выбор стратегии на год
 ChooseStrategy: Выбор стратегии
+LookLaws: Посмотреть законы
 MakeAction: Выполнить действие
 PassAction: Закончить ход
 PayForLeaders: Найм лидеров
 TacticAction: Тактическое действие
 TroopReinforsment: Местное ополчение
+ToTheBottom: Вниз колоды
+ToTheTop: Наверх колоды
 
 Effect: Эффект
 PrimaryAbility: Основная способность

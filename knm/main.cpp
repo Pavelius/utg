@@ -1,4 +1,5 @@
 #include "crt.h"
+#include "deck.h"
 #include "draw_strategy.h"
 #include "entitya.h"
 #include "list.h"
@@ -8,12 +9,16 @@
 void initialize_ui();
 void initialize_script();
 
+static void initialize_decks() {
+	for(auto& e : bsdata<decki>())
+		e.create();
+}
+
 static void start_game() {
 	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
 	speaker = bsdata<playeri>::elements + 0;
-	tactics.createdeck();
-	tactics.shuffle();
+	initialize_decks();
 	run_command("GamePlay");
 }
 

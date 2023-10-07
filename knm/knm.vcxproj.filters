@@ -63,6 +63,9 @@
     <ClInclude Include="filter.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="deck.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -122,6 +125,9 @@
     <ClCompile Include="filter.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="deck.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -171,6 +177,9 @@
     </Text>
     <Text Include="rules\Laws.txt">
       <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Tactics.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

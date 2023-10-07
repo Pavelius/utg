@@ -2,6 +2,7 @@
 #include "army.h"
 #include "card.h"
 #include "crt.h"
+#include "deck.h"
 #include "draw.h"
 #include "entitya.h"
 #include "filter.h"
@@ -419,6 +420,14 @@ static void combat_round(int bonus) {
 	attacker.suffer(defender.get(Damage));
 }
 
+static card* pickcard(deck_s type) {
+	return (card*)bsdata<decki>::elements[type].cards.pick();
+}
+
+static void putcard(deck_s type, entity* p, bool to_the_top = false) {
+	bsdata<decki>::elements[type].cards.add(p);
+}
+
 static void pick_speaker(int bonus) {
 	speaker = player;
 }
@@ -475,6 +484,25 @@ static void make_action(int bonus) {
 	if(last_strategy) {
 		apply_primary_strategy();
 		apply_secondary_strategy();
+	}
+}
+
+static void look_laws(int bonus) {
+	pushtitle push(last_script->id);
+	adat<entity*, 16> source;
+	for(auto i = 0; i < bonus; i++)
+		source.add(pickcard(TacticsDeck));
+	while(source.getcount() > 0) {
+		an.clear();
+		for(auto p : source)
+			an.add(p, p->getname());
+		auto result = (entity*)an.choose(get_title(last_id), 0, 0);
+		source.remove(0);
+		an.clear();
+		an.add((void*)1, getnm("ToTheTop"));
+		an.add((void*)2, getnm("ToTheBottom"));
+		auto index = (long)an.choose(0, 0, 0);
+		putcard(TacticsDeck, result);
 	}
 }
 
@@ -668,6 +696,7 @@ BSDATA(script) = {
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
+	{"LookLaws", look_laws},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},

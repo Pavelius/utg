@@ -3,7 +3,7 @@
 #include "entitya.h"
 #include "troop.h"
 
-entitya querry, tactics;
+entitya querry;
 
 int	entitya::gettotal(ability_s v) const {
 	auto result = 0;
@@ -29,12 +29,8 @@ void entitya::select(const entity* object) {
 	count = ps - data;
 }
 
-void entitya::createdeck() {
-	clear();
-	for(auto& e : bsdata<cardi>()) {
-		if(!e.usedeck())
-			continue;
-		for(auto i = 0; i < e.count; i++)
-			add(&e);
-	}
+entity*	entitya::pick() {
+	auto result = (entity*)data[0];
+	remove(0, 1);
+	return result;
 }

@@ -13,7 +13,6 @@ DiplomaticTreaty
  elements SelectProvinces FilterPlayer ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
 DoubleProvinceResources
  elements SelectProvinces FilterPlayer ChooseProvince AddProvinceResources AddProvinceInfluence
-LookLaws
 MoveTroops
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction

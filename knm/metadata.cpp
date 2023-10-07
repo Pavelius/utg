@@ -2,6 +2,7 @@
 #include "boardpart.h"
 #include "card.h"
 #include "crt.h"
+#include "deck.h"
 #include "filter.h"
 #include "list.h"
 #include "player.h"
@@ -43,6 +44,9 @@ BSMETA(cardi) = {
 BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
+BSMETA(decki) = {
+	BSREQ(id),
+	{}};
 BSMETA(filteri) = {
 	BSREQ(id),
 	{}};
@@ -79,6 +83,7 @@ BSMETA(uniti) = {
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Card", VAR(cardi, 1), ftinfo<cardi>},
+	{"Deck", VAR(decki, 1)},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Player", VAR(playeri, 1)},
