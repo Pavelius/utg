@@ -149,6 +149,7 @@
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
+    <ClInclude Include="filter.h" />
     <ClInclude Include="province.h" />
     <ClInclude Include="pushtitle.h" />
     <ClInclude Include="strategy.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="entitya.cpp" />
+    <ClCompile Include="filter.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />

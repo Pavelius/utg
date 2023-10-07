@@ -88,25 +88,25 @@ static void show_players() {
 	auto res = gres("races_small");
 	auto push_alpha = alpha;
 	alpha = 32;
-	for(auto p : players) {
+	for(auto& e : bsdata<playeri>()) {
 		//image(res, getbsi((playeri*)p), 0);
 		if(ishilite(16)) {
-			hilite_object = p;
+			hilite_object = &e;
 			hilite_size = 17;
 			hilite_position = caret;
 		}
 		caret.x += 32;
 	}
 	alpha = push_alpha;
-	auto pi = players.find(player);
-	if(pi != -1) {
-		auto p = players[pi];
-		auto push_x1 = caret.x;
-		caret.x = push_x + 32 * pi;
-		//image(res, getbsi(p), 0);
-		auto push_fore = fore;
-		caret.x = push_x1;
-	}
+	//auto pi = players.find(player);
+	//if(pi != -1) {
+	//	auto p = players[pi];
+	//	auto push_x1 = caret.x;
+	//	caret.x = push_x + 32 * pi;
+	//	//image(res, getbsi(p), 0);
+	//	auto push_fore = fore;
+	//	caret.x = push_x1;
+	//}
 	caret.y = push_y;
 	caret.x -= 16;
 }
@@ -244,9 +244,9 @@ static void paint_player_marker(const playeri* p) {
 static void paint_player_markers(const provincei* province) {
 	auto push_caret = caret;
 	caret.y -= size - 24;
-	for(auto p : players) {
-		if(province->is(p)) {
-			paint_player_marker((playeri*)p);
+	for(auto& e : bsdata<playeri>()) {
+		if(province->is(&e)) {
+			paint_player_marker((playeri*)&e);
 			caret.x += 30;
 			caret.y += 16;
 		}
@@ -462,6 +462,11 @@ static void add_maker(void* object, fnevent proc, int size) {
 }
 
 provincei* entitya::chooseprovince() const {
+	auto total_count = getcount();
+	if(total_count == 1)
+		return (provincei*)data[0];
+	else if(total_count == 0)
+		return 0;
 	for(auto p : *this)
 		add_maker(p, paint_green_marker, size / 3);
 	scene();

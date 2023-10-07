@@ -4,21 +4,27 @@ ActivateProvince
  elements SelectProvinces FilterActivated-1 ChooseProvince
 ApplyTradeRoute
 ClaimSpeaker
+ elements SelectPlayers FilterSpeaker-1
 ConstructBuilding
- elements SelectProvincesYouControl
+ elements SelectProvincesYouControl ChooseProvince
 DiplomaticTreaty
- elements SelectProvincesYouControl ChooseProvince SelectPlayersAll ForEachPlayer SetActivityToken
+ elements SelectProvincesYouControl ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
 DoubleProvinceResources
- elements SelectProvincesYouControl ChooseProvince ForEachProvince AddProvinceConsumables
+ elements SelectProvincesYouControl ChooseProvince AddProvinceConsumables
 LookLaws
 MoveTroops
+ResolvePlayerActions
+ elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland
- elements SelectProvincesYouControl
-RefreshCosnsumables
- elements SelectPlayersAll ForEachPlayer RefreshResources RefreshInfluence
+ elements SelectProvincesYouControl FilterHomeland ForEachProvince RecruitTroops
+RefreshConsumables
+ elements SelectPlayers ForEachPlayer RefreshResources RefreshInfluence
 RefreshPlayers
- elements SelectPlayersAll ForEachPlayer Used AddPlayerTag-1
+ elements SelectPlayers FilterUsed ForEachPlayer PlayerUsed-1
 RemoveActivityToken
+ elements SelectProvinces FilterActivated ChooseProvince ActivityToken-1
+RemoveActivityAllTokens
+ elements SelectPlayers ForEachPlayer SelectProvinces FilterActivated ForEachProvince ActivityToken-1
 RemoveStrategicCards
  elements SelectStrategy-1 ForEachStrategy RemoveStrategy
 ScorePublicGoal
@@ -54,13 +60,13 @@ GatherPower initiative(8)
 #List
 
 StartYear
- elements RefreshPlayers RefreshCosnsumables
+ elements RefreshPlayers RefreshConsumables
 PlanningPhase 
  elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
- elements SelectPlayers ForEachPlayer MakeAction
+ elements Repeat SelectPlayers FilterUsed-1 IfNoQuerryBreak ForEachPlayer MakeAction
 StatusPhase
- elements RemoveStrategicCards
+ elements RemoveStrategicCards RemoveActivityAllTokens
 AgendaPhase
 
 GameTurn
@@ -68,9 +74,9 @@ GameTurn
 PreparePlayers
  elements SelectPlayers ForEachPlayer Army+3 Tactic+3
 GameStart
- elements PreparePlayers GameTurn
+ elements PreparePlayers
 GamePlay
- elements WhileAllowPlay GameTurn
+ elements GameStart Repeat GameTurn
 
 ChooseBattleTactic
 DestroyEnemyBuildings

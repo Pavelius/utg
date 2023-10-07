@@ -21,6 +21,6 @@ struct playeri : entity {
 	void		set(tag_s v) { entity::set(v); }
 	void		remove(tag_s v) { entity::remove(v); }
 };
-extern playeri*	player;
+extern playeri *player, *speaker;
 
 void prepare_game_ui();

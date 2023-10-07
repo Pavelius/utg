@@ -2,7 +2,7 @@
 #include "entitya.h"
 #include "troop.h"
 
-entitya querry, players;
+entitya querry;
 
 int	entitya::gettotal(ability_s v) const {
 	auto result = 0;

@@ -59,6 +59,23 @@ provincei* entity::getprovince() const {
 	return 0;
 }
 
+playeri* entity::getplayer() const {
+	if(bsdata<playeri>::have(this))
+		return static_cast<playeri*>(const_cast<entity*>(this));
+	return player;
+}
+
+bool entity::ishomeland() const {
+	auto p = getprovince();
+	if(!p)
+		return p;
+	for(auto& e : bsdata<playeri>()) {
+		if(e.homeland == p)
+			return true;
+	}
+	return false;
+}
+
 int	entity::getbonus(ability_s v) const {
 	auto result = 0;
 	if(bsdata<provincei>::have(this)) {

@@ -2,6 +2,7 @@
 #include "boardpart.h"
 #include "card.h"
 #include "crt.h"
+#include "filter.h"
 #include "list.h"
 #include "player.h"
 #include "province.h"
@@ -38,6 +39,9 @@ BSMETA(cardi) = {
 BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
+BSMETA(filteri) = {
+	BSREQ(id),
+	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
 	BSREQ(troops),
@@ -71,13 +75,14 @@ BSMETA(uniti) = {
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Card", VAR(cardi, 1)},
+	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Player", VAR(playeri, 1)},
 	{"Province", VAR(provincei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
 	{"Structure", VAR(structurei, 1), ftinfo<structurei>},
-	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>},
+	{"Tag", VAR(tagi, 1)},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };
 BSDATAF(varianti);

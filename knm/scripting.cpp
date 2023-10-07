@@ -4,6 +4,7 @@
 #include "crt.h"
 #include "draw.h"
 #include "entitya.h"
+#include "filter.h"
 #include "list.h"
 #include "player.h"
 #include "province.h"
@@ -12,7 +13,6 @@
 #include "script.h"
 #include "strategy.h"
 #include "structure.h"
-#include "tag.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -24,6 +24,7 @@ static char				console_text[512];
 static stringbuilder	console(console_text);
 static entitya			recruit;
 static int				need_pay;
+static bool				need_break;
 
 static int getone(int v) {
 	return v ? v : 1;
@@ -61,10 +62,6 @@ template<> void fnscript<abilityi>(int value, int counter) {
 		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 	else
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
-}
-
-template<> void fnscript<tagi>(int value, int counter) {
-	last_tag = (tag_s)value;
 }
 
 template<> void fnscript<uniti>(int value, int counter) {
@@ -175,24 +172,35 @@ static bool filter_activated(const void* object) {
 	return p->is(player);
 }
 
-static int compare_player_priority(const void* v1, const void* v2) {
-	auto p1 = *((playeri**)v1);
-	auto p2 = *((playeri**)v2);
-	return p1->initiative - p2->initiative;
-}
-
-static void filter_activated_querry(int bonus) {
-	querry.match(filter_activated, bonus >= 0);
+static bool filter_used(const void* object) {
+	auto p = (entity*)object;
+	return p->is(Used);
 }
 
 static bool filter_player(const void* object) {
 	auto p = (entity*)object;
-	return p->player == player;
+	return p->getplayer() == player;
+}
+
+static bool filter_speaker(const void* object) {
+	auto p = (entity*)object;
+	return p->getplayer() == speaker;
+}
+
+static bool filter_homeland(const void* object) {
+	auto p = (entity*)object;
+	return p->ishomeland();
 }
 
 static bool filter_province(const void* object) {
 	auto p = (entity*)object;
 	return p->getprovince() == province;
+}
+
+static int compare_player_priority(const void* v1, const void* v2) {
+	auto p1 = *((playeri**)v1);
+	auto p2 = *((playeri**)v2);
+	return p1->initiative - p2->initiative;
 }
 
 static void refresh_ability(ability_s v) {
@@ -223,7 +231,7 @@ static void add_province_consumables(int bonus) {
 	add_consumbale(Goods, bonus);
 }
 
-static void set_activity_token(int bonus) {
+static void activity_token(int bonus) {
 	if(!player)
 		return;
 	if(bonus >= 0)
@@ -415,10 +423,10 @@ static void execute_action(const playeri* p, const char* id, const variants& sou
 }
 
 static void apply_secondary_strategy() {
-	for(auto p : players) {
-		if(p == player)
+	for(auto& e : bsdata<playeri>()) {
+		if(&e == player)
 			continue;
-		execute_action(static_cast<playeri*>(p), last_strategy->id, last_strategy->secondary);
+		execute_action(&e, last_strategy->id, last_strategy->secondary);
 	}
 }
 
@@ -436,25 +444,21 @@ static void make_action(int bonus) {
 }
 
 static void select_players_speaker(int bonus) {
-	players.clear();
+	querry.clear();
 	for(auto& e : bsdata<playeri>()) {
 		if(e.is(Used))
 			continue;
-		players.add(&e);
+		querry.add(&e);
 	}
 }
 
 static void sort_players() {
-	players.sort(compare_player_priority);
+	querry.sort(compare_player_priority);
 }
 
 static void select_players(int bonus) {
-	select_players_speaker(bonus);
+	querry.collectiona::select(bsdata<playeri>::source);
 	sort_players();
-}
-
-static void select_players_all(int bonus) {
-	players.collectiona::select(bsdata<playeri>::source);
 }
 
 static void select_strategy(int bonus) {
@@ -488,6 +492,13 @@ static void establish_control(int bonus) {
 		province->player = 0;
 }
 
+static void player_used(int bonus) {
+	if(bonus >= 0)
+		player->set(Used);
+	else
+		player->remove(Used);
+}
+
 static strategyi* find_strategy(const playeri* player) {
 	for(auto& e : bsdata<strategyi>()) {
 		if(e.player == player)
@@ -513,8 +524,24 @@ static void end_round(int bonus) {
 	player->set(Used);
 }
 
+static bool is_allow_actions() {
+	for(auto& e : bsdata<playeri>()) {
+		if(!e.is(Used))
+			return true;
+	}
+	return false;
+}
+
+static void if_no_querry_break(int bonus) {
+	auto result_true = (querry.getcount() == 0);
+	if(result_true == (bonus >= 0)) {
+		need_break = true;
+		script_stop();
+	}
+}
+
 static void for_each_player(int bonus) {
-	entityv push_players(players);
+	entityv push_players(querry);
 	pushvalue push_player(player);
 	variants commands; commands.set(script_begin, script_end - script_begin);
 	for(auto p : push_players) {
@@ -546,9 +573,10 @@ static void for_each_strategy(int bonus) {
 	script_stop();
 }
 
-static void while_allow_play(int bonus) {
+static void repeat_statement(int bonus) {
 	variants commands; commands.set(script_begin, script_end - script_begin);
-	while(!draw::isnext())
+	pushvalue push_break(need_break, false);
+	while(!need_break)
 		script_run(commands);
 	script_stop();
 }
@@ -558,7 +586,16 @@ void initialize_script() {
 	answers::prompt = console.begin();
 }
 
+BSDATA(filteri) = {
+	{"FilterActivated", filter_activated},
+	{"FilterHomeland", filter_homeland},
+	{"FilterPlayer", filter_player},
+	{"FilterSpeaker", filter_speaker},
+	{"FilterUsed", filter_used},
+};
+BSDATAF(filteri);
 BSDATA(script) = {
+	{"ActivityToken", activity_token},
 	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
@@ -571,12 +608,12 @@ BSDATA(script) = {
 	{"ChooseHomeland", choose_homeland},
 	{"ChooseProvince", choose_province},
 	{"ChooseQuerry", choose_querry},
-	{"EndRound", end_round},
+	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
-	{"FilterActivated", filter_activated_querry},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachProvince", for_each_province},
 	{"ForEachStrategy", for_each_strategy},
+	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders},
@@ -584,19 +621,18 @@ BSDATA(script) = {
 	{"PayHeroYesNo", pay_hero_yesno, pay_hero_allow},
 	{"PayResearch", pay_research},
 	{"PickStrategy", pick_strategy},
+	{"PlayerUsed", player_used},
 	{"RecruitTroops", recruit_troops},
 	{"RefreshInfluence", refresh_influence},
 	{"RefreshResources", refresh_resources},
 	{"RefreshTrade", refresh_trade},
 	{"RemoveStrategy", remove_strategy},
+	{"Repeat", repeat_statement},
 	{"SelectPlayers", select_players},
-	{"SelectPlayersAll", select_players_all},
 	{"SelectPlayersBySpeaker", select_players_speaker},
 	{"SelectProvinceStructures", select_province_structures},
 	{"SelectProvinces", select_provincies},
 	{"SelectProvincesYouControl", select_your_provincies},
 	{"SelectStrategy", select_strategy},
-	{"SetActivityToken", set_activity_token},
-	{"WhileAllowPlay", while_allow_play},
 };
 BSDATAF(script)

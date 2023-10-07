@@ -16,11 +16,12 @@ struct entity : nameable, taga {
 	void			focusing() const;
 	int				get(ability_s v) const;
 	int				getbonus(ability_s v) const;
-	playeri*		getplayer() const { return player; }
+	playeri*		getplayer() const;
 	provincei*		getprovince() const;
 	uniti*			getunit() const;
 	bool			is(const entity* v) const;
 	bool			is(tag_s v) const { return taga::is(v); }
+	bool			ishomeland() const;
 	void			set(const entity* v);
 	void			set(tag_s v) { taga::set(v); }
 	void			remove(const entity* v);

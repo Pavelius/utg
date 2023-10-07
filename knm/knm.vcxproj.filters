@@ -60,6 +60,9 @@
     <ClInclude Include="structure.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="filter.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -114,6 +117,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="pushtitle.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="filter.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

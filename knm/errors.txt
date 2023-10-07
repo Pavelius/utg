@@ -1,3 +1,2 @@
-﻿In file `Names.txt`:
-DiplomaticTreaty: Define translate
-DoubleProvinceResources: Define translate
+﻿In file `rules/Strategies.txt`:
+ Line 49: Can't find variant `RemoveActivityToken`

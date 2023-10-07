@@ -7,5 +7,7 @@ DarkCitadel
 
 MiddleKindom homeland(CityGriffonHeart) fore(0 121 191)
  troops Pikemens Archers Swordmans Cavalry WarMachine
+ start Tactic+2 Army+3
 OrcHorde homeland(DarkCitadel) fore(235 90 70)
  troops Goblins Wargs Orcs Ogres Giant
+ start Tactic+2 Army+4

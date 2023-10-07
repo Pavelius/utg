@@ -4,6 +4,7 @@
 #include "structure.h"
 
 playeri* player;
+playeri* speaker;
 
 int	playeri::getmaximum(ability_s v) const {
 	switch(v) {

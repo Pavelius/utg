@@ -15,4 +15,4 @@ struct entityv : vector<entity*> {
 	entityv() : vector<entity*>() {}
 	entityv(const collection<entity>& source) : vector<entity*>() { create(source.data, source.getcount()); }
 };
-extern entitya querry, players;
+extern entitya querry;
