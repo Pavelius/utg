@@ -1,2 +1,3 @@
 ForestFolkSupport: Поддержка лесного народа
+FrontlineDeployment: Военный лорд
 DemilitarizedZone: Демилитаризированная зона

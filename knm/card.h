@@ -4,17 +4,19 @@
 
 #pragma once
 
-enum deck_s : unsigned char;
+struct decki;
 
 struct cardi : entity, abilitya {
 	const char*		trigger;
-	deck_s			type;
 	unsigned char	count;
 	variants		effect, target;
+	decki*			getdeck() const { return (decki*)location; }
 	void			play();
 	bool			usedeck() const { return count != 0; }
 };
 struct card : entity {
+	cardi*			getcomponent() const { return (cardi*)id; }
+	void			discard(bool to_the_top = false);
 	void			play();
 };
 extern cardi* last_component;

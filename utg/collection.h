@@ -5,10 +5,12 @@
 struct collectiona : adat<void*, 256> {
 	typedef void* fngroup(const void* object);
 	typedef int fncompare(const void* v1, const void* v2);
+	void	add(void* p) { if(p) *adat<void*, 256>::add() = p; }
 	void*	choose(fngetname proc, const char* title, const char* cancel, bool autochoose) const;
 	bool	chooseu(fngetname proc, const char* title, const char* cancel) const;
 	void	distinct();
 	void	group(fngroup proc);
+	void	insert(int index, void* object);
 	bool	have(const void* object) { return indexof(object) != -1; }
 	void	match(fnvisible proc, bool keep);
 	void	match(fnallow proc, int param, bool keep);

@@ -68,6 +68,15 @@ template<> void fnscript<abilityi>(int value, int counter) {
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 }
 
+static int structure_count() {
+	auto result = 0;
+	for(auto& e : bsdata<structure>()) {
+		if(e.id && e.location == province)
+			result++;
+	}
+	return result;
+}
+
 static void add_troop(uniti* type) {
 	auto p = bsdata<troopi>::add();
 	p->id = (const char*)type;
@@ -114,6 +123,13 @@ template<> bool fntest<tagi>(int value, int counter) {
 	return querry.getcount() != 0;
 }
 
+template<> void fnscript<decki>(int value, int counter) {
+	last_deck = bsdata<decki>::elements + value;
+	querry.clear();
+	for(auto i = 0; i < counter; i++)
+		querry.add(last_deck->cards.pick());
+}
+
 static void add_input(nameable& e) {
 	an.add(&e, e.getname());
 }
@@ -142,7 +158,7 @@ static void add_strategy_cards() {
 	}
 }
 
-static void apply_input(void* result) {
+static void apply_input(void* result, bool play_card = true) {
 	if(!result) {
 		// Nothing to do
 	} else if(bsdata<provincei>::have(result))
@@ -153,11 +169,17 @@ static void apply_input(void* result) {
 		last_strategy = (strategyi*)result;
 	else if(bsdata<troopi>::have(result))
 		last_troop = (troopi*)result;
-	else if(bsdata<card>::have(result))
-		((card*)result)->play();
-	else if(bsdata<cardi>::have(result))
-		((cardi*)result)->play();
-	else if(bsdata<listi>::have(result))
+	else if(bsdata<card>::have(result)) {
+		if(play_card)
+			((card*)result)->play();
+		else
+			last_card = (card*)result;
+	} else if(bsdata<cardi>::have(result)) {
+		if(play_card)
+			((cardi*)result)->play();
+		else
+			last_component = (cardi*)result;
+	} else if(bsdata<listi>::have(result))
 		((listi*)result)->run();
 	else if(bsdata<abilityi>::have(result)) {
 		auto v = (ability_s)((abilityi*)result - bsdata<abilityi>::elements);
@@ -211,9 +233,24 @@ static void choose_province(int bonus) {
 		script_stop();
 }
 
+static void choose_card(int bonus) {
+	pushtitle push(last_list->id);
+	an.clear();
+	input_querry(bonus);
+	auto result = an.choose(get_title(last_id));
+	apply_input(result, false);
+	if(!last_card && !last_component)
+		script_stop();
+}
+
 static bool no_player(const void* object) {
 	auto p = (entity*)object;
 	return p->player == 0;
+}
+
+static bool filter_valid(const void* object) {
+	auto p = (entity*)object;
+	return p->id != 0;
 }
 
 static bool filter_activated(const void* object) {
@@ -243,7 +280,7 @@ static bool filter_homeland(const void* object) {
 
 static bool filter_province(const void* object) {
 	auto p = (entity*)object;
-	return p->getprovince() == province;
+	return p->id && p->getprovince() == province;
 }
 
 static int compare_player_priority(const void* v1, const void* v2) {
@@ -317,11 +354,10 @@ static bool allow_pay_for_leaders(int bonus) {
 }
 
 static bool allow_pay_hero(int bonus) {
-	return allow_pay(Tactic, getone(bonus));
+	return allow_pay(Hero, getone(bonus));
 }
 static void pay_hero(int bonus) {
-	bonus = getone(bonus);
-	pay(Tactic, bonus);
+	pay(Hero, getone(bonus));
 }
 
 static void pay_hero_yesno(int bonus) {
@@ -409,9 +445,12 @@ static int get_troops(ability_s v, provincei* province, playeri* player) {
 }
 
 static void recruit_troops(int bonus) {
+	auto recruit_value = province->get(Recruit) + province->getbonus(Recruit);
+	if(!recruit_value)
+		return;
+	recruit_value += province->get(Resources) + province->getbonus(Resources) + bonus;
 	auto army_used = get_troops(Army, province, player);
 	auto army_cap = player->get(Army);
-	auto recruit_value = province->get(Resources) + province->getbonus(Recruit) + bonus;
 	auto payment_value = player->get(Resources) + player->get(Gold);
 	recruit_troops(army_used, army_cap, recruit_value, payment_value);
 }
@@ -422,7 +461,7 @@ static void add_leaders(int bonus) {
 	pushtitle push("AddLeaders");
 	while(bonus > 0) {
 		an.clear();
-		add_input(bsdata<abilityi>::elements[Tactic]);
+		add_input(bsdata<abilityi>::elements[Hero]);
 		add_input(bsdata<abilityi>::elements[Army]);
 		apply_input(bonus);
 		bonus--;
@@ -462,10 +501,6 @@ static card* pickcard(deck_s type) {
 	return (card*)bsdata<decki>::elements[type].cards.pick();
 }
 
-static void putcard(deck_s type, entity* p, bool to_the_top = false) {
-	bsdata<decki>::elements[type].cards.add(p);
-}
-
 static void pick_speaker(int bonus) {
 	speaker = player;
 }
@@ -476,7 +511,7 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
-	pay_ability(last_script->id, Tactic, Influence, 2, 3);
+	pay_ability(last_script->id, Hero, Influence, 2, 3);
 }
 
 static bool allow_pay_goods(int bonus) {
@@ -525,22 +560,22 @@ static void make_action(int bonus) {
 	}
 }
 
-static void look_laws(int bonus) {
-	pushtitle push(last_script->id);
-	adat<entity*, 16> source;
-	for(auto i = 0; i < bonus; i++)
-		source.add(pickcard(TacticsDeck));
-	while(source.getcount() > 0) {
-		an.clear();
-		for(auto p : source)
-			an.add(p, p->getname());
-		auto result = (entity*)an.choose(get_title(last_id), 0, 0);
-		source.remove(0);
-		an.clear();
-		an.add((void*)1, getnm("ToTheTop"));
-		an.add((void*)2, getnm("ToTheBottom"));
-		auto index = (long)an.choose(0, 0, 0);
-		putcard(TacticsDeck, result);
+static int choose_case(const char* v1, const char* v2, const char* v3 = 0) {
+	an.clear();
+	if(v1)
+		an.add((void*)1, getnm(v1));
+	if(v2)
+		an.add((void*)2, getnm(v2));
+	if(v3)
+		an.add((void*)3, getnm(v3));
+	return (long)an.choose(0, 0, 0);
+}
+
+static void choose_cards_discard(int bonus) {
+	while(bonus > 0) {
+		choose_querry(0);
+		auto index = choose_case("ToTheTop", "ToTheBottom");
+		last_card->discard(index == 1);
 	}
 }
 
@@ -568,10 +603,6 @@ static void select_strategy(int bonus) {
 
 static void select_provincies(int bonus) {
 	querry.collectiona::select(bsdata<provincei>::source);
-}
-
-static void select_your_provincies(int bonus) {
-	querry.collectiona::select(bsdata<provincei>::source, filter_player, bonus >= 0);
 }
 
 static void select_province_structures(int bonus) {
@@ -742,6 +773,7 @@ BSDATA(script) = {
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
 	{"ApplyTrigger", apply_trigger},
+	{"ChooseCardsDiscard", choose_cards_discard},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
@@ -751,7 +783,6 @@ BSDATA(script) = {
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
-	{"LookLaws", look_laws},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},

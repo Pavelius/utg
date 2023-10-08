@@ -5,10 +5,10 @@ Commodities: Золото
 Fame: Слава
 Goods: Товары
 Gold: Золото
+Hero: Герои
 Influence: Влияние
 Lore: Развитие
 Resources: Ресурсы
-Tactic: Герои
 
 Combat: Сражение
 Cost: Цена

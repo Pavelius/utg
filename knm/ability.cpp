@@ -13,7 +13,7 @@ BSDATA(abilityi) = {
 	{"Resources"},
 	{"Influence"},
 	{"Goods"},
-	{"Tactic"},
+	{"Hero"},
 	{"Army"},
 	{"Lore"},
 	{"Fame"},

@@ -46,6 +46,10 @@ static point province_points[8] = {
 static void empthy_scene() {
 }
 
+static color getplayercolor(const playeri* p) {
+	return p->fore;
+}
+
 static point system_position(point caret, int index) {
 	switch(index) {
 	case 1: return caret + point{size / 3, -2 * size / 3};
@@ -69,20 +73,6 @@ static void texth2cg(const char* format) {
 	auto push_fore = fore;
 	fore = fore.mix(colors::window, 64);
 	texth2c(format);
-	fore = push_fore;
-}
-
-static void paint_banner() {
-	auto r = gres("buildings", "art/fonts");
-	image(r, 4, 0);
-}
-
-static void paint_banner(const playeri* player) {
-	if(!player)
-		return;
-	auto push_fore = fore;
-	fore = player->fore;
-	paint_banner();
 	fore = push_fore;
 }
 
@@ -184,7 +174,7 @@ static void status(ability_s v) {
 }
 
 static void show_indicators() {
-	static ability_s source_tokes[] = {Tactic, Army};
+	static ability_s source_tokes[] = {Hero, Army};
 	static ability_s source_goods[] = {Resources, Influence, Gold, Goods};
 	static ability_s source_score[] = {Fame};
 	for(auto v : source_tokes)
@@ -237,13 +227,30 @@ static void paint_special(int index, int frame) {
 //	}
 //}
 
-static void paint_player_marker(const playeri* p) {
-	auto push_fore = fore; fore = p->fore;
-	auto push_alpha = alpha; alpha /= 3;
-	circlef(player_avatar_size / 2);
-	alpha = push_alpha;
-	circle(player_avatar_size / 2);
+static void paint_player_banner() {
+	auto r = gres("buildings", "art/fonts");
+	image(r, 4, 0);
+}
+
+static void paint_player_banner(const playeri* player) {
+	if(!player)
+		return;
+	auto push_fore = fore;
+	fore = player->fore;
+	paint_player_banner();
 	fore = push_fore;
+}
+
+static void paint_player_marker(const playeri* p) {
+	auto push_alpha = alpha; alpha = 128;
+	paint_player_banner(p);
+	alpha = push_alpha;
+	//auto push_fore = fore; fore = getplayercolor(p);
+	//auto push_alpha = alpha; alpha /= 3;
+	//circlef(player_avatar_size / 2);
+	//alpha = push_alpha;
+	//circle(player_avatar_size / 2);
+	//fore = push_fore;
 }
 
 static void paint_player_markers(const provincei* province) {
@@ -259,19 +266,19 @@ static void paint_player_markers(const provincei* province) {
 	caret = push_caret;
 }
 
+void provincei::paint() const {
+	//special_paint(special, special_index);
+	paint_player_banner(player);
+	paint_hexagon();
+	paint_player_markers(this);
+	//paint_debug_mouse();
+}
+
 static void paint_debug_mouse() {
 	if(ishilite(2 * size / 3)) {
 		point pt = hot.mouse - caret;
 		tips_sb.add("Mouse %1i, %2i", pt.x, pt.y);
 	}
-}
-
-void provincei::paint() const {
-	//special_paint(special, special_index);
-	paint_banner(player);
-	paint_hexagon();
-	paint_player_markers(this);
-	//paint_debug_mouse();
 }
 
 static void texthd(const char* format) {
@@ -322,10 +329,6 @@ static void buttonback(int size, const void* data) {
 		//if(hot.key == MouseLeft && !hot.pressed)
 		//	execute(buttonparam, (long)data);
 	}
-}
-
-static color getplayercolor(playeri* p) {
-	return p->fore;
 }
 
 void troopi::paint() const {

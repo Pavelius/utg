@@ -1,4 +1,5 @@
 #include "card.h"
+#include "deck.h"
 #include "script.h"
 
 cardi* last_component;
@@ -17,4 +18,16 @@ void card::play() {
 	auto push = last_card; last_card = this;
 	p->play();
 	last_card = push;
+}
+
+void card::discard(bool to_the_top) {
+	player = 0;
+	location = 0;
+	auto deck = getcomponent()->getdeck();
+	if(deck) {
+		if(to_the_top)
+			deck->cards.insert(0, this);
+		else
+			deck->cards.add(this);
+	}
 }

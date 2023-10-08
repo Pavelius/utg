@@ -9,3 +9,4 @@ struct decki : entity {
 	entitya		cards;
 	void		create();
 };
+extern decki* last_deck;

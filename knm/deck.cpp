@@ -9,11 +9,13 @@ BSDATA(decki) = {
 };
 assert_enum(decki, SecretObjectivesDeck)
 
-static void add_cards(entitya& cards, deck_s type) {
+decki* last_deck;
+
+static void add_cards(entitya& cards, const decki* type) {
 	for(auto& e : bsdata<cardi>()) {
 		if(!e.usedeck())
 			continue;
-		if(e.type != type)
+		if(e.location != type)
 			continue;
 		for(auto i = 0; i < e.count; i++)
 			cards.add(&e);
@@ -22,6 +24,6 @@ static void add_cards(entitya& cards, deck_s type) {
 
 void decki::create() {
 	cards.clear();
-	add_cards(cards, (deck_s)getbsi(this));
+	add_cards(cards, this);
 	cards.shuffle();
 }

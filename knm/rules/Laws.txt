@@ -1,9 +1,9 @@
-#Card trigger(Laws) count(1)
+#Card location(LawsDeck) count(1)
 
 ArmyRegulation
  target SelectProvinces Forest
 DeepMining
- target SelectProvinces Forest
+ target SelectProvinces Mountains
 DemilitarizedZone
  target SelectProvinces
 MinisterOfExploration trigger(EstablishControl)

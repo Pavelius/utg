@@ -1,2 +1,2 @@
-﻿In file `rules/Players.txt`:
- Line 5: Can't find variant `Swordmens`
+﻿In file `rules/Strategies.txt`:
+ Line 43: Can't find variant `LookLaws`

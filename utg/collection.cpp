@@ -18,6 +18,13 @@ static bool exist(void** pb, void** pe, const void* v) {
 	return false;
 }
 
+void collectiona::insert(int index, void* object) {
+	if(count >= getmaximum())
+		return;
+	memmove(data + index, data + index + count, (count - index) * sizeof(data[0]));
+	data[index] = object;
+}
+
 void collectiona::distinct() {
 	auto ps = data;
 	for(auto p : *this) {
