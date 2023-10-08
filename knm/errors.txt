@@ -1,3 +1,2 @@
-﻿In file `rules/Units.txt`:
- Line 23: Expected token `)`
- Line 23: Expected line feed
+﻿In file `rules/Players.txt`:
+ Line 5: Can't find variant `Swordmens`

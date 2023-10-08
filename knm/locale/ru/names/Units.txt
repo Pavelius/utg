@@ -10,6 +10,7 @@ Archers: Лучники
 Cavalry: Кавалерия
 Pikemens: Копейщики
 Swordmans: Мечники
+WarMachine: Баллиста
 
 Goblins: Гоблины
 Ogres: Огры
