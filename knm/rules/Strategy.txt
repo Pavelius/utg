@@ -4,7 +4,7 @@ ActivateProvince
  elements SelectProvinces FilterActivated-1 ChooseProvince ActivityToken
 ApplyTradeRoute
 ClaimSpeaker
- elements SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
+ elements PushPlayer SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
 ChooseProvinceYouControl
  elements SelectProvinces FilterPlayer ChooseProvince
 ConstructBuilding
@@ -15,7 +15,7 @@ DoubleProvinceResources
  elements SelectProvinces FilterPlayer ChooseProvince AddProvinceResources AddProvinceInfluence
 MoveTroops
 LookLaws
- elements LawsDeck+2 ChooseCardsDiscard
+ elements LawsDeck+2 ChooseCardsDiscard+2
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland

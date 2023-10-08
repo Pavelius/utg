@@ -21,7 +21,7 @@ static bool exist(void** pb, void** pe, const void* v) {
 void collectiona::insert(int index, void* object) {
 	if(count >= getmaximum())
 		return;
-	memmove(data + index, data + index + count, (count - index) * sizeof(data[0]));
+	memmove(data + index + 1, data + index, (count - index - 1) * sizeof(data[0]));
 	data[index] = object;
 }
 

@@ -11,6 +11,15 @@ assert_enum(decki, SecretObjectivesDeck)
 
 decki* last_deck;
 
+static card* add_card(const cardi* type) {
+	auto p = bsdata<card>::add();
+	p->id = (const char*)type;
+	p->player = 0;
+	p->tags = 0;
+	p->location = type->getdeck();
+	return p;
+}
+
 static void add_cards(entitya& cards, const decki* type) {
 	for(auto& e : bsdata<cardi>()) {
 		if(!e.usedeck())
@@ -18,7 +27,7 @@ static void add_cards(entitya& cards, const decki* type) {
 		if(e.location != type)
 			continue;
 		for(auto i = 0; i < e.count; i++)
-			cards.add(&e);
+			cards.add(add_card(&e));
 	}
 }
 

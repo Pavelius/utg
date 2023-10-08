@@ -1,2 +1,3 @@
-﻿In file `rules/Strategies.txt`:
- Line 43: Can't find variant `LookLaws`
+﻿In file `Names.txt`:
+MinisterOfCommerce: Define translate
+MinisterOfPolicy: Define translate

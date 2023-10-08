@@ -130,7 +130,11 @@ template<> void fnscript<decki>(int value, int counter) {
 		querry.add(last_deck->cards.pick());
 }
 
-static void add_input(nameable& e) {
+static void add_input(entity& e) {
+	an.add(&e, e.getname());
+}
+
+static void add_nameable(nameable& e) {
 	an.add(&e, e.getname());
 }
 
@@ -461,8 +465,8 @@ static void add_leaders(int bonus) {
 	pushtitle push("AddLeaders");
 	while(bonus > 0) {
 		an.clear();
-		add_input(bsdata<abilityi>::elements[Hero]);
-		add_input(bsdata<abilityi>::elements[Army]);
+		add_nameable(bsdata<abilityi>::elements[Hero]);
+		add_nameable(bsdata<abilityi>::elements[Army]);
 		apply_input(bonus);
 		bonus--;
 	}
@@ -573,9 +577,11 @@ static int choose_case(const char* v1, const char* v2, const char* v3 = 0) {
 
 static void choose_cards_discard(int bonus) {
 	while(bonus > 0) {
-		choose_querry(0);
+		choose_card(0);
 		auto index = choose_case("ToTheTop", "ToTheBottom");
+		querry.remove(last_card);
 		last_card->discard(index == 1);
+		bonus--;
 	}
 }
 
@@ -713,6 +719,13 @@ static void repeat_statement(int bonus) {
 	script_stop();
 }
 
+static void push_player(int bonus) {
+	pushvalue push(player);
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	script_run(commands);
+	script_stop();
+}
+
 static void apply_trigger(int bonus) {
 	if(!last_list)
 		return;
@@ -792,6 +805,7 @@ BSDATA(script) = {
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
 	{"PlayerUsed", player_used},
+	{"PushPlayer", push_player},
 	{"RecruitTroops", recruit_troops},
 	{"RefreshInfluence", refresh_influence},
 	{"RefreshResources", refresh_resources},

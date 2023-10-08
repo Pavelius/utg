@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\names\Laws.txt" />
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="locale\ru\names\Players.txt" />
@@ -205,7 +206,7 @@
     <Text Include="rules\Laws.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />
-    <Text Include="rules\Strategies.txt" />
+    <Text Include="rules\Strategy.txt" />
     <Text Include="rules\Structures.txt" />
     <Text Include="rules\Tactics.txt" />
     <Text Include="rules\Units.txt" />

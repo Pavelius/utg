@@ -10,6 +10,8 @@
 const char*	entity::getname() const {
 	if(bsdata<troopi>::have(this))
 		return getunit()->getname();
+	else if(bsdata<card>::have(this))
+		return getcomponent()->getname();
 	return nameable::getname();
 }
 

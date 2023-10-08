@@ -148,7 +148,7 @@
     <Text Include="errors.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="rules\Strategies.txt">
+    <Text Include="rules\Strategy.txt">
       <Filter>rules</Filter>
     </Text>
     <Text Include="rules\Players.txt">
@@ -191,6 +191,9 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\names\Structures.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Laws.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>
