@@ -8,5 +8,4 @@ struct structurei : entity, abilitya {
 	int			get(ability_s v) const { return abilities[v]; }
 };
 struct structure : entity {
-	char		index;
 };

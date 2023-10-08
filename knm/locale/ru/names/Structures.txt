@@ -1,0 +1,4 @@
+City: Город
+Fortress: Крепость
+Mine: Шахта
+Temple: Храм

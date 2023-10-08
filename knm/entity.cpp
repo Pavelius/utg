@@ -7,6 +7,12 @@
 #include "troop.h"
 #include "unit.h"
 
+const char*	entity::getname() const {
+	if(bsdata<troopi>::have(this))
+		return getunit()->getname();
+	return nameable::getname();
+}
+
 bool entity::is(const entity* v) const {
 	if(!v)
 		return false;

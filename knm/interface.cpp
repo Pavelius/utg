@@ -319,8 +319,8 @@ static void buttonback(int size, const void* data) {
 	rectb();
 	if(data && ishilite()) {
 		hilite_object = data;
-		if(hot.key == MouseLeft && !hot.pressed)
-			execute(buttonparam, (long)data);
+		//if(hot.key == MouseLeft && !hot.pressed)
+		//	execute(buttonparam, (long)data);
 	}
 }
 
@@ -376,6 +376,7 @@ static void paint_structure() {
 	fore = p->player->fore;
 	image(caret.x, caret.y, r, i, 0);
 	fore = push_fore;
+	ishilite(16, last_object->data);
 }
 
 //void planeti::paint(unsigned flags) const {
@@ -521,9 +522,9 @@ static void update_units(point position, const entity* location) {
 	//source.sortunit();
 	if(!source)
 		return;
-	auto total_height = button_height * source.getcount();
+	//auto total_height = button_height * source.getcount();
 	auto x = position.x;
-	auto y = position.y - (total_height - button_height) / 2;
+	auto y = position.y;
 	for(auto pt : source) {
 		auto p = findobject(pt);
 		if(!p)

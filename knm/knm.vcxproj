@@ -182,6 +182,7 @@
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +196,7 @@
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="locale\ru\names\Players.txt" />
     <Text Include="locale\ru\names\Strategy.txt" />
+    <Text Include="locale\ru\names\Structures.txt" />
     <Text Include="locale\ru\names\Tactics.txt" />
     <Text Include="locale\ru\names\Units.txt" />
     <Text Include="locale\ru\tips\AbilityDescriptions.txt" />

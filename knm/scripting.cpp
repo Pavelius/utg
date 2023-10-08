@@ -68,7 +68,23 @@ template<> void fnscript<abilityi>(int value, int counter) {
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 }
 
+static void add_troop(uniti* type) {
+	auto p = bsdata<troopi>::add();
+	p->id = (const char*)type;
+	p->location = province;
+	p->player = player;
+}
+
+static void add_structure(structurei* type) {
+	auto p = bsdata<structure>::add();
+	p->id = (const char*)type;
+	p->location = province;
+	p->player = player;
+}
+
 template<> void fnscript<uniti>(int value, int counter) {
+	for(auto i = 0; i < counter; i++)
+		add_troop(bsdata<uniti>::elements + value);
 }
 
 static int count_structures() {
@@ -78,15 +94,6 @@ static int count_structures() {
 			result++;
 	}
 	return result;
-}
-
-static void add_structure(structurei* ps) {
-	auto index = count_structures();
-	auto p = bsdata<structure>::add();
-	p->id = (const char*)ps;
-	p->location = province;
-	p->player = player;
-	p->index = index;
 }
 
 template<> void fnscript<structurei>(int value, int counter) {
@@ -144,6 +151,8 @@ static void apply_input(void* result) {
 		player = (playeri*)result;
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
+	else if(bsdata<troopi>::have(result))
+		last_troop = (troopi*)result;
 	else if(bsdata<card>::have(result))
 		((card*)result)->play();
 	else if(bsdata<cardi>::have(result))
@@ -677,7 +686,7 @@ static void apply_trigger(int bonus) {
 	if(!last_list)
 		return;
 	auto id = last_list->id;
-	// Standart component trigger
+	// Standart component trigger (autouse)
 	for(auto& e : bsdata<cardi>()) {
 		if(e.usedeck() || !e.trigger)
 			continue;

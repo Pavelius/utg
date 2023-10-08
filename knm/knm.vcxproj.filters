@@ -134,6 +134,9 @@
     <ClCompile Include="main_util.cpp">
       <Filter>util</Filter>
     </ClCompile>
+    <ClCompile Include="troop.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -185,6 +188,9 @@
       <Filter>rules</Filter>
     </Text>
     <Text Include="locale\ru\names\Tactics.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Structures.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

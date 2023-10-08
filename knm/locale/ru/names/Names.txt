@@ -10,6 +10,15 @@ Lore: Развитие
 Resources: Ресурсы
 Tactic: Герои
 
+Combat: Сражение
+Cost: Цена
+Damage: Урон
+Limit: Лимит
+Recruit: Найм
+Shield: Защита
+Shoots: Обстрел
+Strenght: Сила
+
 Yes: Да
 No: Нет
 Cancel: Отмена

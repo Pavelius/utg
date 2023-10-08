@@ -15,3 +15,5 @@ Goblins: Гоблины
 Ogres: Огры
 Orcs: Орки
 Wargs: Волки
+Trolls: Тролли
+Giant: Великан

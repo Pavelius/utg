@@ -327,6 +327,10 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 				flags |= TextUscope;
 				fore = colors::special;
 				break;
+			case ' ':
+				p++;
+				fore = colors::special;
+				break;
 			default:
 				fore = colors::special;
 				break;

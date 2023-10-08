@@ -18,6 +18,7 @@ struct entity : nameable, taga {
 	int				get(ability_s v) const;
 	int				getbonus(ability_s v) const;
 	cardi*			getcomponent() const;
+	const char*		getname() const;
 	playeri*		getplayer() const;
 	provincei*		getprovince() const;
 	uniti*			getunit() const;

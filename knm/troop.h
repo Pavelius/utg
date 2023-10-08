@@ -5,3 +5,4 @@
 struct troopi : entity {
 	void		paint() const;
 };
+extern troopi* last_troop;

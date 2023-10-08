@@ -396,8 +396,8 @@ const char* stringbuilder::readformat(const char* src, const char* vl) {
 			src++;
 			adduint((unsigned)(((long*)vl)[pn - 1]), pnp, 16);
 		} else {
-			if(((char**)vl)[pn - 1]) {
-				auto p1 = ((char**)vl)[pn - 1];
+			auto p1 = ((char**)vl)[pn - 1];
+			if(p1) {
 				switch(padeg) {
 				case '$': addof(p1); break;
 				case '@': addto(p1); break;

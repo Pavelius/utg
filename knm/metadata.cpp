@@ -77,8 +77,12 @@ BSMETA(structurei) = {
 	BSDST(abilities, abilityi),
 	BSREQ(avatar),
 	{}};
+BSMETA(structure) = {
+	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
+	{}};
+BSMETA(troopi) = {
 	{}};
 BSMETA(uniti) = {
 	BSREQ(id),
@@ -97,7 +101,9 @@ BSDATA(varianti) = {
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
 	{"Structure", VAR(structurei, 1), ftinfo<structurei>, 0, fnscript<structurei>},
+	{"StructureObject", VAR(structure, 0), ftinfo<structure>},
 	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>, fntest<tagi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
+	{"UnitObject", VAR(troopi, 0), ftinfo<troopi>},
 };
 BSDATAF(varianti);
