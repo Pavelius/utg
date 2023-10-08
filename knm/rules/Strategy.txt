@@ -2,6 +2,8 @@
 
 ActivateProvince
  elements SelectProvinces FilterActivated-1 ChooseProvince ActivityToken
+AddTactics
+ elements TacticsDeck+1 PickCards
 ApplyTradeRoute
 ClaimSpeaker
  elements PushPlayer SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
@@ -42,8 +44,8 @@ Diplomacy initiative(2)
  primary DiplomaticTreaty DoubleProvinceResources
  secondary PayHeroYesNo DoubleProvinceResources
 Politics initiative(3)
- primary ClaimSpeaker LookLaws+2 AddActions+2
- secondary PayHeroYesNo AddActions+2
+ primary ClaimSpeaker LookLaws AddTactics+2
+ secondary PayHeroYesNo AddTactics+2
 Construction initiative(4)
  primary ConstructBuilding ConstructBuilding
  secondary PayHeroYesNo ConstructBuilding

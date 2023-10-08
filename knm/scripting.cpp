@@ -60,6 +60,12 @@ static const char* get_script_log() {
 	return get_log(last_script->id);
 }
 
+void reapeated_list(int value, int counter) {
+	counter = getone(counter);
+	for(auto i = 0; i < counter; i++)
+		fnscript<listi>(value, 0);
+}
+
 template<> void fnscript<abilityi>(int value, int counter) {
 	player->current.abilities[value] += counter;
 	if(counter > 0)
@@ -160,6 +166,12 @@ static void add_strategy_cards() {
 			continue;
 		add_input(e);
 	}
+}
+
+static void pick_cards(int bonus) {
+	for(auto p : querry)
+		p->pick(player);
+	querry.clear();
 }
 
 static void apply_input(void* result, bool play_card = true) {
@@ -480,7 +492,8 @@ static void add_start(int bonus) {
 	update_ui();
 }
 
-static void add_actions(int bonus) {
+static void player_cards(int bonus) {
+
 }
 
 static void add_research(int bonus) {
@@ -776,7 +789,6 @@ BSDATA(filteri) = {
 BSDATAF(filteri);
 BSDATA(script) = {
 	{"ActivityToken", activity_token},
-	{"AddActions", add_actions},
 	{"AddGoods", add_goods},
 	{"AddLeaders", add_leaders},
 	{"AddProvinceInfluence", add_province_influence},
@@ -802,6 +814,7 @@ BSDATA(script) = {
 	{"PayHero", pay_hero, allow_pay_hero},
 	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
 	{"PayResearch", pay_research},
+	{"PickCards", pick_cards},
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
 	{"PlayerUsed", player_used},

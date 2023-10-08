@@ -118,3 +118,10 @@ cardi* entity::getcomponent() const {
 		return (cardi*)id;
 	return 0;
 }
+
+void entity::pick(playeri* v) {
+	if(bsdata<card>::have(this)) {
+		player = v;
+		location = 0;
+	}
+}

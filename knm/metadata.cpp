@@ -14,6 +14,8 @@
 #include "troop.h"
 #include "unit.h"
 
+void reapeated_list(int value, int counter);
+
 NOBSDATA(color)
 NOBSDATA(point)
 
@@ -96,7 +98,7 @@ BSDATA(varianti) = {
 	{"Card", VAR(cardi, 1), ftinfo<cardi>},
 	{"Deck", VAR(decki, 1), 0, 0, fnscript<decki>},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
-	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
+	{"List", VAR(listi, 1), 0, 0, reapeated_list, fntest<listi>},
 	{"Player", VAR(playeri, 1)},
 	{"Province", VAR(provincei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
