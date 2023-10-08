@@ -68,6 +68,7 @@ BSMETA(provincei) = {
 	BSREQ(id),
 	BSREQ(player),
 	BSREQ(points),
+	BSFLG(tags, tagi),
 	BSDST(abilities, abilityi),
 	{}};
 BSMETA(strategyi) = {

@@ -34,6 +34,24 @@ static int getone(int v) {
 	return v ? v : 1;
 }
 
+static int count_structures(const provincei* province) {
+	auto result = 0;
+	for(auto& e : bsdata<structure>()) {
+		if(e.location == province)
+			result++;
+	}
+	return result;
+}
+
+static int count_structures(const provincei* province, const structurei* type) {
+	auto result = 0;
+	for(auto& e : bsdata<structure>()) {
+		if((structurei*)e.id == type && e.location == province)
+			result++;
+	}
+	return result;
+}
+
 static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
 	if(!format || format[0] == 0)
 		return;
@@ -74,15 +92,6 @@ template<> void fnscript<abilityi>(int value, int counter) {
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 }
 
-static int structure_count() {
-	auto result = 0;
-	for(auto& e : bsdata<structure>()) {
-		if(e.id && e.location == province)
-			result++;
-	}
-	return result;
-}
-
 static void add_troop(uniti* type) {
 	auto p = bsdata<troopi>::add();
 	p->id = (const char*)type;
@@ -100,15 +109,6 @@ static void add_structure(structurei* type) {
 template<> void fnscript<uniti>(int value, int counter) {
 	for(auto i = 0; i < counter; i++)
 		add_troop(bsdata<uniti>::elements + value);
-}
-
-static int count_structures() {
-	auto result = 0;
-	for(auto& e : bsdata<structure>()) {
-		if(e.location == province)
-			result++;
-	}
-	return result;
 }
 
 template<> void fnscript<structurei>(int value, int counter) {
@@ -183,6 +183,8 @@ static void apply_input(void* result, bool play_card = true) {
 		player = (playeri*)result;
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
+	else if(bsdata<structurei>::have(result))
+		last_structure = (structurei*)result;
 	else if(bsdata<troopi>::have(result))
 		last_troop = (troopi*)result;
 	else if(bsdata<card>::have(result)) {
@@ -297,6 +299,30 @@ static bool filter_homeland(const void* object) {
 static bool filter_province(const void* object) {
 	auto p = (entity*)object;
 	return p->id && p->getprovince() == province;
+}
+
+static bool filter_structure_limit(const void* object) {
+	if(bsdata<structurei>::have(object)) {
+		auto p = (structurei*)object;
+		auto limit_in_province = p->abilities[LimitInProvince];
+		if(limit_in_province) {
+			auto count = count_structures(province, p);
+			if(count >= limit_in_province)
+				return false;
+		}
+	}
+	return true;
+}
+
+static bool filter_province_limit(const void* object) {
+	auto p = (provincei*)object;
+	auto limit = p->abilities[Limit];
+	if(limit) {
+		auto count = count_structures(p);
+		if(limit >= count)
+			return false;
+	}
+	return true;
 }
 
 static int compare_player_priority(const void* v1, const void* v2) {
@@ -620,6 +646,10 @@ static void select_strategy(int bonus) {
 	querry.collectiona::select(bsdata<strategyi>::source, no_player, bonus >= 0);
 }
 
+static void select_structures(int bonus) {
+	querry.collectiona::select(bsdata<structurei>::source);
+}
+
 static void select_provincies(int bonus) {
 	querry.collectiona::select(bsdata<provincei>::source);
 }
@@ -634,6 +664,11 @@ static void* group_id(const void* object) {
 
 static void group_structure_type(int bonus) {
 	querry.group(group_id);
+}
+
+static void build_structure(int bonus) {
+	add_structure(last_structure);
+	update_ui();
 }
 
 static void establish_control(int bonus) {
@@ -784,7 +819,9 @@ BSDATA(filteri) = {
 	{"FilterActivated", filter_activated},
 	{"FilterHomeland", filter_homeland},
 	{"FilterPlayer", filter_player},
+	{"FilterProvinceLimit", filter_province_limit},
 	{"FilterSpeaker", filter_speaker},
+	{"FilterStructureLimit", filter_structure_limit},
 };
 BSDATAF(filteri);
 BSDATA(script) = {
@@ -798,6 +835,7 @@ BSDATA(script) = {
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
 	{"ApplyTrigger", apply_trigger},
+	{"BuildStructure", build_structure},
 	{"ChooseCardsDiscard", choose_cards_discard},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
@@ -830,5 +868,6 @@ BSDATA(script) = {
 	{"SelectProvinceStructures", select_province_structures, allow_select},
 	{"SelectProvinces", select_provincies, allow_select},
 	{"SelectStrategy", select_strategy, allow_select},
+	{"SelectStructures", select_structures, allow_select},
 };
 BSDATAF(script)

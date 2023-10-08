@@ -7,6 +7,7 @@ Goods: Товары
 Gold: Золото
 Hero: Герои
 Influence: Влияние
+LimitInProvince: Лимит в провинции
 Lore: Развитие
 Resources: Ресурсы
 

@@ -1,3 +1,2 @@
-﻿In file `rules/Strategy.txt`:
- Line 47: Can't find variant `AddTactics`
- Line 48: Can't find variant `AddTactics`
+﻿In file `Names.txt`:
+LimitInProvince: Define translate

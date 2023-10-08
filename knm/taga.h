@@ -2,7 +2,7 @@
 
 enum tag_s : unsigned char {
 	Used, Fast, Fly,
-	Forest, Mountains, Plains,
+	Forest, Mountains, Farmlands,
 };
 struct taga {
 	unsigned	tags;

@@ -2,6 +2,8 @@ ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
 ChooseProvinceYouControl: Выбор вашей провинции
 ClaimSpeaker: Назначение спикера 
+ConstructBuilding: Постройка объектов
+ConstructBuildingInProvince: Выбор объекта постройки
 DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
 PlanningPhase: Выбор стратегии на год

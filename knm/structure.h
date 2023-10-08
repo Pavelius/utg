@@ -9,3 +9,4 @@ struct structurei : entity, abilitya {
 };
 struct structure : entity {
 };
+extern structurei* last_structure;

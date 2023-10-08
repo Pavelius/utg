@@ -9,8 +9,10 @@ ClaimSpeaker
  elements PushPlayer SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
 ChooseProvinceYouControl
  elements SelectProvinces FilterPlayer ChooseProvince
+ConstructBuildingInProvince
+ elements SelectStructures FilterStructureLimit ChooseQuerry BuildStructure
 ConstructBuilding
- elements SelectProvinces FilterPlayer ChooseProvince
+ elements SelectProvinces FilterPlayer FilterProvinceLimit ChooseProvince ConstructBuildingInProvince
 DiplomaticTreaty
  elements SelectProvinces FilterPlayer ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
 DoubleProvinceResources

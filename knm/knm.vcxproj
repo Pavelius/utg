@@ -181,6 +181,7 @@
     <ClCompile Include="pushtitle.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
+    <ClCompile Include="structure.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />

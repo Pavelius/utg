@@ -6,9 +6,11 @@ OrcHorde
 #Province
 
 DarkForest
- abilities Resources(2) Influence(1)
+ abilities Resources(2) Influence(1) Limit(2)
+ tags Forest
 GreenPlains
- abilities Resources(1) Influence(2)
+ abilities Resources(1) Influence(2) Limit(3)
+ tags Farmlands
 
 CityGriffonHeart player(MiddleKindom)
  abilities Resources(2) Influence(4)

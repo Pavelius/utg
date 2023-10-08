@@ -73,12 +73,12 @@ static void add_value_unit(stringbuilder& sb, ability_s i, int bonus, int bonus2
 }
 
 static void add_value(stringbuilder& sb, abilitya& source) {
-	for(auto i = (ability_s)0; i <= Goods; i = (ability_s)(i + 1))
+	for(auto i = (ability_s)0; i <= Gold; i = (ability_s)(i + 1))
 		add_value(sb, bsdata<abilityi>::elements[i].id, source.abilities[i]);
 }
 
 static void add_value(stringbuilder& sb, abilitya& source, const char* prefix) {
-	for(auto i = (ability_s)0; i <= Goods; i = (ability_s)(i + 1))
+	for(auto i = (ability_s)0; i <= Gold; i = (ability_s)(i + 1))
 		add_value(sb, prefix, bsdata<abilityi>::elements[i].id, source.abilities[i]);
 }
 
@@ -144,15 +144,14 @@ template<> void ftinfo<cardi>(const void* object, stringbuilder& sb) {
 
 template<> void ftinfo<structurei>(const void* object, stringbuilder& sb) {
 	auto p = (structurei*)object;
-	add_value(sb, *p);
+	add_head(sb, p->id);
+	add_line(sb);
+	add_value(sb, *p, "Structure");
 }
 
 template<> void ftinfo<structure>(const void* object, stringbuilder& sb) {
 	auto p = (structure*)object;
-	auto pi = ((structurei*)p->id);
-	add_head(sb, pi->id);
-	add_line(sb);
-	add_value(sb, *pi, "Structure");
+	ftinfo<structurei>(p->id, sb);
 }
 
 template<> void ftinfo<uniti>(const void* object, stringbuilder& sb) {

@@ -10,6 +10,6 @@ BSDATA(tagi) = {
 	{"Fly"},
 	{"Forest"},
 	{"Mountains"},
-	{"Plains"},
+	{"Farmlands"},
 };
-assert_enum(tagi, Plains)
+assert_enum(tagi, Farmlands)

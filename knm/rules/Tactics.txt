@@ -3,7 +3,7 @@
 ForestFolkSupport count(2)
  effect SelectProvinces Forest ForEachProvince Influence+1
 PlentyHarvest count(2)
- effect SelectProvinces Plains ForEachProvince Resources+1
+ effect SelectProvinces Farmlands ForEachProvince Resources+1
 GemsMining
  effect SelectProvinces Mountains ForEachProvince Gold+1
 FocusedResearch

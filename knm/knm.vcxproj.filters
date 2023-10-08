@@ -137,6 +137,9 @@
     <ClCompile Include="troop.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="structure.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
