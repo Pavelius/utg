@@ -15,6 +15,7 @@
 #include "unit.h"
 
 NOBSDATA(color)
+NOBSDATA(point)
 
 BSDATAC(card, 1024)
 BSDATAC(cardi, 512)
@@ -57,9 +58,13 @@ BSMETA(playeri) = {
 	BSREQ(start),
 	BSREQ(fore),
 	{}};
+BSMETA(point) = {
+	BSREQ(x), BSREQ(y),
+	{}};
 BSMETA(provincei) = {
 	BSREQ(id),
 	BSREQ(player),
+	BSREQ(points),
 	BSDST(abilities, abilityi),
 	{}};
 BSMETA(strategyi) = {
@@ -70,6 +75,7 @@ BSMETA(strategyi) = {
 BSMETA(structurei) = {
 	BSREQ(id),
 	BSDST(abilities, abilityi),
+	BSREQ(avatar),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -90,7 +96,7 @@ BSDATA(varianti) = {
 	{"Province", VAR(provincei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
-	{"Structure", VAR(structurei, 1), ftinfo<structurei>},
+	{"Structure", VAR(structurei, 1), ftinfo<structurei>, 0, fnscript<structurei>},
 	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>, fntest<tagi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 };

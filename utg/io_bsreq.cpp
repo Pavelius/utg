@@ -325,6 +325,21 @@ static void read_array(void* object, const bsreq* req) {
 	}
 }
 
+static void read_data_line(void* object, const bsreq* req) {
+	auto index = 0;
+	while(allowparse && isvalue()) {
+		valuei v;
+		read_value(v, req + index);
+		write_value(object, req + index, 0, v);
+		index++;
+	}
+}
+
+static void read_adat(void* object, const bsreq* type) {
+	auto pd = (adat<char>*)object;
+	read_data_line(pd->data + (pd->count++) * type->size, type->type);
+}
+
 static void read_dictionary(void* object, const bsreq* type, int level, bool need_linefeed = true) {
 	while(allowparse && ischa(*p)) {
 		readid();
@@ -354,7 +369,10 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 					skiplinefeed();
 				} else if(req->is(KindScalar) && req->count > 0)
 					read_dictionary(req->ptr(object), req->type, level + 1, false);
-				else {
+				else if(req->is(KindADat)) {
+					read_adat(req->ptr(object), req);
+					skiplinefeed();
+				} else {
 					read_array(object, req);
 					skiplinefeed();
 				}

@@ -36,6 +36,13 @@ static color tech_colors[] = {
 	{249, 238, 106},
 };
 
+static point province_points[8] = {
+	{-100, 120},
+	{100, 120},
+	{-80, -120},
+	{80, -120},
+};
+
 static void empthy_scene() {
 }
 
@@ -255,11 +262,19 @@ static void paint_player_markers(const provincei* province) {
 	caret = push_caret;
 }
 
+static void paint_debug_mouse() {
+	if(ishilite(2 * size / 3)) {
+		point pt = hot.mouse - caret;
+		tips_sb.add("Mouse %1i, %2i", pt.x, pt.y);
+	}
+}
+
 void provincei::paint() const {
 	//special_paint(special, special_index);
 	paint_banner(player);
 	paint_hexagon();
 	paint_player_markers(this);
+	//paint_debug_mouse();
 }
 
 static void texthd(const char* format) {
@@ -358,9 +373,7 @@ static void paint_structure() {
 	auto p = (structure*)last_object->data;
 	if(!p->player)
 		return;
-	auto i = getbsi(p);
-	if(i == 0xFFFF)
-		return;
+	auto i = ((structurei*)p->id)->avatar;
 	auto r = gres("buildings", "art/fonts");
 	auto push_fore = fore;
 	fore = p->player->fore;
@@ -530,19 +543,16 @@ static void update_units(point position, const entity* location) {
 static void update_buildings(point position, const entity* location) {
 	if(!location)
 		return;
-	auto x = position.x - 64;
-	auto y = position.y - 64;
+	auto index = 0;
 	for(auto& e : bsdata<structure>()) {
 		if(e.location != location)
 			continue;
+		point np = position + province_points[index++];
 		auto p = findobject(&e);
 		if(!p)
-			p = addobject({(short)x, (short)y}, &e, paint_structure, 0, 20);
-		if(p->position.x != x || p->position.y != y) {
-			auto po = p->addorder(1000);
-			po->position.x = x;
-			po->position.y = y;
-		}
+			p = addobject(np, &e, paint_structure, 0, 20);
+		else
+			p->position = np;
 	}
 }
 

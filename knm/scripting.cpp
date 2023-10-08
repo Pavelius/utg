@@ -28,6 +28,8 @@ static entitya			recruit;
 static int				need_pay;
 static bool				need_break;
 
+void update_ui();
+
 static int getone(int v) {
 	return v ? v : 1;
 }
@@ -69,11 +71,22 @@ template<> void fnscript<abilityi>(int value, int counter) {
 template<> void fnscript<uniti>(int value, int counter) {
 }
 
+static int count_structures() {
+	auto result = 0;
+	for(auto& e : bsdata<structure>()) {
+		if(e.location == province)
+			result++;
+	}
+	return result;
+}
+
 static void add_structure(structurei* ps) {
+	auto index = count_structures();
 	auto p = bsdata<structure>::add();
 	p->id = (const char*)ps;
 	p->location = province;
 	p->player = player;
+	p->index = index;
 }
 
 template<> void fnscript<structurei>(int value, int counter) {
@@ -412,6 +425,7 @@ static void add_start(int bonus) {
 	province = player->homeland;
 	script_run(player->start);
 	province = push_province;
+	update_ui();
 }
 
 static void add_actions(int bonus) {
@@ -619,21 +633,21 @@ static void if_no_querry_break(int bonus) {
 }
 
 static void for_each_player(int bonus) {
-	entityv push_players(querry);
-	pushvalue push_player(player);
+	entityv push_querry(querry);
+	pushvalue push(player);
 	variants commands; commands.set(script_begin, script_end - script_begin);
-	for(auto p : push_players) {
-		player = (playeri*)p;
+	for(auto p : push_querry) {
+		player = static_cast<playeri*>(p);
 		script_run(commands);
 	}
 	script_stop();
 }
 
 static void for_each_province(int bonus) {
+	entityv push_querry(querry);
 	pushvalue push(province);
-	pushvalue push_querry(querry);
 	variants commands; commands.set(script_begin, script_end - script_begin);
-	for(auto p : push_querry.value) {
+	for(auto p : push_querry) {
 		province = static_cast<provincei*>(p);
 		script_run(commands);
 	}
@@ -641,10 +655,10 @@ static void for_each_province(int bonus) {
 }
 
 static void for_each_strategy(int bonus) {
+	entityv push_querry(querry);
 	pushvalue push(last_strategy);
-	pushvalue push_querry(querry);
 	variants commands; commands.set(script_begin, script_end - script_begin);
-	for(auto p : push_querry.value) {
+	for(auto p : push_querry) {
 		last_strategy = static_cast<strategyi*>(p);
 		script_run(commands);
 	}

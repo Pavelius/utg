@@ -1,12 +1,15 @@
 #include "ability.h"
+#include "crt.h"
 #include "entity.h"
+#include "point.h"
 
 #pragma once
 
 struct provincei : entity, abilitya {
-	short		index;
-	void		paint() const;
-	int			get(ability_s v) const { return abilities[v]; }
+	short			index;
+	adat<point,8>	points;
+	void			paint() const;
+	int				get(ability_s v) const { return abilities[v]; }
 };
 extern provincei* province;
 

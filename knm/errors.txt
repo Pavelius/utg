@@ -1,2 +1,5 @@
-﻿In file `Names.txt`:
-DemilitarizedZone: Define translate
+﻿In file `rules/Provinces.txt`:
+ Line 10: Unknown type in requisit `number`
+ Line 10: Unknown type in requisit `number`
+ Line 11: Unknown type in requisit `number`
+ Line 11: Unknown type in requisit `number`
