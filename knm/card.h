@@ -11,8 +11,11 @@ struct cardi : entity, abilitya {
 	deck_s			type;
 	unsigned char	count;
 	variants		effect, target;
+	void			play();
 	bool			usedeck() const { return count != 0; }
 };
 struct card : entity {
+	void			play();
 };
-extern card* last_component;
+extern cardi* last_component;
+extern card* last_card;

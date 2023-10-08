@@ -73,11 +73,8 @@ static void texth2cg(const char* format) {
 }
 
 static void paint_banner() {
-	auto push_fore = fore;
-	fore.lighten();
-	circlef(player_marker_size);
-	fore = push_fore;
-	circle(player_marker_size);
+	auto r = gres("buildings", "art/fonts");
+	image(r, 4, 0);
 }
 
 static void paint_banner(const playeri* player) {

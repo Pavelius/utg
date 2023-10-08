@@ -144,11 +144,11 @@ static void apply_input(void* result) {
 		player = (playeri*)result;
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
-	else if(bsdata<card>::have(result)) {
-		auto push = last_component; last_component = (card*)result;
-		script_run(last_component->getcomponent()->effect);
-		last_component = push;
-	} else if(bsdata<listi>::have(result))
+	else if(bsdata<card>::have(result))
+		((card*)result)->play();
+	else if(bsdata<cardi>::have(result))
+		((cardi*)result)->play();
+	else if(bsdata<listi>::have(result))
 		((listi*)result)->run();
 	else if(bsdata<abilityi>::have(result)) {
 		auto v = (ability_s)((abilityi*)result - bsdata<abilityi>::elements);
@@ -673,6 +673,22 @@ static void repeat_statement(int bonus) {
 	script_stop();
 }
 
+static void apply_trigger(int bonus) {
+	if(!last_list)
+		return;
+	auto id = last_list->id;
+	// Standart component trigger
+	for(auto& e : bsdata<cardi>()) {
+		if(e.usedeck() || !e.trigger)
+			continue;
+		if(e.player != player)
+			continue;
+		if(strcmp(e.trigger, id) != 0)
+			continue;
+		script_run(e.effect);
+	}
+}
+
 static bool allow_script(int bonus) {
 	last_script->proc(bonus);
 	return true;
@@ -716,6 +732,7 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
+	{"ApplyTrigger", apply_trigger},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
