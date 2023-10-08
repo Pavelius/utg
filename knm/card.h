@@ -15,4 +15,4 @@ struct cardi : entity, abilitya {
 };
 struct card : entity {
 };
-extern card* last_card;
+extern card* last_component;

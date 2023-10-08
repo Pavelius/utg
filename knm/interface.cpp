@@ -10,6 +10,7 @@
 #include "player.h"
 #include "province.h"
 #include "script.h"
+#include "structure.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -353,6 +354,20 @@ static void textvalue(figure shape, int v) {
 	textvalue(shape, temp);
 }
 
+static void paint_structure() {
+	auto p = (structure*)last_object->data;
+	if(!p->player)
+		return;
+	auto i = getbsi(p);
+	if(i == 0xFFFF)
+		return;
+	auto r = gres("buildings", "art/fonts");
+	auto push_fore = fore;
+	fore = p->player->fore;
+	image(caret.x, caret.y, r, i, 0);
+	fore = push_fore;
+}
+
 //void planeti::paint(unsigned flags) const {
 //	auto push_caret = caret;
 //	auto push_fore = fore;
@@ -512,6 +527,25 @@ static void update_units(point position, const entity* location) {
 	}
 }
 
+static void update_buildings(point position, const entity* location) {
+	if(!location)
+		return;
+	auto x = position.x - 64;
+	auto y = position.y - 64;
+	for(auto& e : bsdata<structure>()) {
+		if(e.location != location)
+			continue;
+		auto p = findobject(&e);
+		if(!p)
+			p = addobject({(short)x, (short)y}, &e, paint_structure, 0, 20);
+		if(p->position.x != x || p->position.y != y) {
+			auto po = p->addorder(1000);
+			po->position.x = x;
+			po->position.y = y;
+		}
+	}
+}
+
 //void troop::updateui() {
 //	for(auto& e : bsdata<troop>()) {
 //		if(e)
@@ -526,8 +560,10 @@ void update_ui() {
 	static point system_offset = {0, -6 * size / 10};
 	wait_all();
 	for(auto& e : bsdata<object>()) {
-		if(bsdata<provincei>::have(e.data))
+		if(bsdata<provincei>::have(e.data)) {
 			update_units(e.position + system_offset, (entity*)e.data);
+			update_buildings(e.position, (entity*)e.data);
+		}
 	}
 	wait_all();
 }

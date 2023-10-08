@@ -10,6 +10,9 @@
     <Filter Include="rules">
       <UniqueIdentifier>{c64842cc-3ac0-447e-8385-462673a83702}</UniqueIdentifier>
     </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{bf4a9551-7692-4ec6-93d5-b8dc2bfe1cb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entity.h">
@@ -127,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="deck.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

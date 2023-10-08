@@ -80,7 +80,11 @@ int	entity::getbonus(ability_s v) const {
 	auto result = 0;
 	if(bsdata<provincei>::have(this)) {
 		for(auto& e : bsdata<structure>()) {
-			if(e.getprovince() == this)
+			if(e.location == this)
+				result += e.get(v);
+		}
+		for(auto& e : bsdata<card>()) {
+			if(e.location == this)
 				result += e.get(v);
 		}
 	} else if(bsdata<playeri>::have(this)) {
@@ -90,18 +94,18 @@ int	entity::getbonus(ability_s v) const {
 		}
 		for(auto& e : bsdata<structure>()) {
 			auto p = e.getprovince();
-			if(p && p->player==this)
+			if(p && p->player == this)
 				result += e.get(v);
 		}
-		for(auto& e : bsdata<cardi>()) {
-			if(e.location && e.player == this)
+		for(auto& e : bsdata<card>()) {
+			if(e.player == this || (e.location && e.location->player==this))
 				result += e.get(v);
 		}
 	}
 	return result;
 }
 
-cardi* entity::getcard() const {
+cardi* entity::getcomponent() const {
 	if(bsdata<card>::have(this))
 		return (cardi*)id;
 	return 0;

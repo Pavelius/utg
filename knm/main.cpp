@@ -9,6 +9,10 @@
 void initialize_ui();
 void initialize_script();
 
+#ifdef _DEBUG
+void util_main();
+#endif // _DEBUG
+
 static void initialize_decks() {
 	for(auto& e : bsdata<decki>())
 		e.create();
@@ -24,6 +28,9 @@ static void start_game() {
 
 static void initialize() {
 	initialize_province();
+#ifdef _DEBUG
+	util_main();
+#endif // _DEBUG
 }
 
 int main(int argc, char* argv[]) {

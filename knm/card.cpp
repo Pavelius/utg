@@ -1,3 +1,3 @@
 #include "card.h"
 
-card* last_card;
+card* last_component;

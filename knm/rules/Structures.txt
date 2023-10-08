@@ -1,9 +1,9 @@
 #Structure
 
 Fortress
- abilities Strenght(2)
+ abilities Strenght(2) Recruit(2)
 Mine
- abilities Resources(2)
+ abilities Resources(1)
 City
  abilities Goods(1) Influence(1)
 Temple

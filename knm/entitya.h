@@ -11,7 +11,7 @@ struct entitya : collection<entity> {
 	provincei*	chooseprovince() const;
 	int			gettotal(ability_s v) const;
 	int			getarmy() const;
-	entity*		pick();
+	entity*		pick() { return (entity*)collectiona::pick(); }
 	void		select(const entity* object);
 };
 struct entityv : vector<entity*> {

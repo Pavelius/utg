@@ -28,9 +28,3 @@ void entitya::select(const entity* object) {
 	}
 	count = ps - data;
 }
-
-entity*	entitya::pick() {
-	auto result = (entity*)data[0];
-	remove(0, 1);
-	return result;
-}

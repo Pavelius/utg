@@ -69,6 +69,18 @@ template<> void fnscript<abilityi>(int value, int counter) {
 template<> void fnscript<uniti>(int value, int counter) {
 }
 
+static void add_structure(structurei* ps) {
+	auto p = bsdata<structure>::add();
+	p->id = (const char*)ps;
+	p->location = province;
+	p->player = player;
+}
+
+template<> void fnscript<structurei>(int value, int counter) {
+	for(auto i = 0; i < counter; i++)
+		add_structure(bsdata<structurei>::elements + value);
+}
+
 static bool have_tag(const void* object, int value) {
 	auto p = (entity*)object;
 	return p->is((tag_s)value);
@@ -120,9 +132,9 @@ static void apply_input(void* result) {
 	else if(bsdata<strategyi>::have(result))
 		last_strategy = (strategyi*)result;
 	else if(bsdata<card>::have(result)) {
-		auto push = last_card; last_card = (card*)result;
-		script_run(last_card->getcard()->effect);
-		last_card = push;
+		auto push = last_component; last_component = (card*)result;
+		script_run(last_component->getcomponent()->effect);
+		last_component = push;
 	} else if(bsdata<listi>::have(result))
 		((listi*)result)->run();
 	else if(bsdata<abilityi>::have(result)) {
@@ -396,7 +408,10 @@ static void add_leaders(int bonus) {
 }
 
 static void add_start(int bonus) {
+	auto push_province = province;
+	province = player->homeland;
 	script_run(player->start);
+	province = push_province;
 }
 
 static void add_actions(int bonus) {
