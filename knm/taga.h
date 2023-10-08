@@ -1,8 +1,8 @@
 #pragma once
 
 enum tag_s : unsigned char {
-	Used, Fast, Fly,
-	Forest, Mountains, Farmlands,
+	Used, Infantry, Fast, Fly,
+	Forest, Mountains, Farmlands, Sea
 };
 struct taga {
 	unsigned	tags;

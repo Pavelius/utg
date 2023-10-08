@@ -146,6 +146,14 @@ static varianti* find_type(const char* id) {
 	return 0;
 }
 
+static const varianti* find_type(const array* source) {
+	for(auto& e : bsdata<varianti>()) {
+		if(e.source == source)
+			return &e;
+	}
+	return 0;
+}
+
 static const bsreq* find_requisit(const bsreq* type, const char* id) {
 	if(!type)
 		return 0;
@@ -216,7 +224,11 @@ static void read_value(valuei& e, const bsreq* req) {
 			else {
 				e.number = req->source->find(temp, shift);
 				if(e.number == -1) {
-					log::error(p, "Not found identifier `%1`", temp);
+					auto type = find_type(req->source);
+					if(type)
+						log::error(p, "Not found %2 identifier `%1`", temp, type->id);
+					else
+						log::error(p, "Not found identifier `%1`", temp);
 					e.number = 0;
 				} else
 					e.data = req->source->ptr(e.number);

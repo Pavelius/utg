@@ -160,6 +160,7 @@
     <ClInclude Include="tag.h" />
     <ClInclude Include="troop.h" />
     <ClInclude Include="unit.h" />
+    <ClInclude Include="upgrade.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />
+    <ClCompile Include="upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
@@ -211,6 +213,7 @@
     <Text Include="rules\Structures.txt" />
     <Text Include="rules\Tactics.txt" />
     <Text Include="rules\Units.txt" />
+    <Text Include="rules\Upgrades.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

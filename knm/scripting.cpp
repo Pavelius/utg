@@ -528,7 +528,8 @@ static void add_research(int bonus) {
 static void add_secret_goal(int bonus) {
 }
 
-static void add_goods(int bonus) {
+static void add_gold(int bonus) {
+	player->current.abilities[Gold] += bonus;
 }
 
 static void combat_round(int bonus) {
@@ -790,6 +791,9 @@ static void apply_trigger(int bonus) {
 	}
 }
 
+static void kill_enemy_infantry(int bonus) {
+}
+
 static bool allow_script(int bonus) {
 	last_script->proc(bonus);
 	return true;
@@ -826,7 +830,7 @@ BSDATA(filteri) = {
 BSDATAF(filteri);
 BSDATA(script) = {
 	{"ActivityToken", activity_token},
-	{"AddGoods", add_goods},
+	{"AddGold", add_gold},
 	{"AddLeaders", add_leaders},
 	{"AddProvinceInfluence", add_province_influence},
 	{"AddProvinceResources", add_province_resource},
@@ -846,6 +850,7 @@ BSDATA(script) = {
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
+	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},

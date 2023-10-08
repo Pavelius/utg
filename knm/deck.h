@@ -3,7 +3,7 @@
 #pragma once
 
 enum deck_s : unsigned char {
-	TacticsDeck, LawsDeck, ObjectivesDeck, SecretObjectivesDeck
+	TacticsDeck, LawsDeck, ObjectivesDeck, SecretObjectivesDeck, UpgradesDeck
 };
 struct decki : entity {
 	entitya		cards;

@@ -69,6 +69,9 @@
     <ClInclude Include="deck.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="upgrade.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -140,6 +143,9 @@
     <ClCompile Include="structure.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="upgrade.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -198,6 +204,9 @@
     </Text>
     <Text Include="locale\ru\names\Laws.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Upgrades.txt">
+      <Filter>rules</Filter>
     </Text>
   </ItemGroup>
 </Project>

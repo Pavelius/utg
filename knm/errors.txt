@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-LimitInProvince: Define translate
+﻿In file `rules/Strategy.txt`:
+ Line 89: Not found requisit `effect`

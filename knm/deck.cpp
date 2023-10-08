@@ -2,12 +2,13 @@
 #include "deck.h"
 
 BSDATA(decki) = {
-	{"TacticsDeck"},
 	{"LawsDeck"},
 	{"ObjectivesDeck"},
 	{"SecretObjectivesDeck"},
+	{"TacticsDeck"},
+	{"UpgradesDeck"},
 };
-assert_enum(decki, SecretObjectivesDeck)
+assert_enum(decki, UpgradesDeck)
 
 decki* last_deck;
 

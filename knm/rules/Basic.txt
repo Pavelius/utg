@@ -5,3 +5,4 @@
 #include "rules/Strategy.txt"
 #include "rules/Tactics.txt"
 #include "rules/Laws.txt"
+#include "rules/Upgrades.txt"

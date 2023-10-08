@@ -52,7 +52,7 @@ Construction initiative(4)
  primary ConstructBuilding ConstructBuilding
  secondary PayHeroYesNo ConstructBuilding
 Trade initiative(5)
- primary AddGoods+3 RefreshTrade ApplyTradeRoute
+ primary AddGold+3 RefreshTrade ApplyTradeRoute
  secondary PayHeroYesNo RefreshTrade
 Warfare initiative(6)
  primary RemoveActivityToken AddLeaders+1
@@ -85,16 +85,17 @@ GameStart
 GamePlay
  elements GameStart Repeat GameTurn
 
+BeforeCombat
+ elements ApplyTrigger
 BattleTactic
 DestroyEnemyBuildings
-PrepareTroopsForBattle
 HailOfArrows
 CombatRound
 RemoveCasualty
 RetreatLooser
 
 ApplyCombat
- elements PrepareTroopsForBattle BattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
+ elements BeforeCombat BattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
 
 #Card trigger(MakeAction)
 

@@ -13,6 +13,7 @@
 #include "tag.h"
 #include "troop.h"
 #include "unit.h"
+#include "upgrade.h"
 
 void reapeated_list(int value, int counter);
 
@@ -27,6 +28,7 @@ BSDATAC(structurei, 8)
 BSDATAC(structure, 256)
 BSDATAC(strategyi, 8)
 BSDATAC(troopi, 128 * 8)
+BSDATAC(upgradei, 32)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -94,6 +96,13 @@ BSMETA(uniti) = {
 	BSREQ(combat),
 	BSFLG(tags, tagi),
 	{}};
+BSMETA(upgradei) = {
+	BSREQ(id),
+	BSREQ(player),
+	BSDST(abilities, abilityi),
+	BSREQ(trigger),
+	BSREQ(effect),
+	{}};
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Card", VAR(cardi, 1), ftinfo<cardi>},
@@ -109,5 +118,6 @@ BSDATA(varianti) = {
 	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>, fntest<tagi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitObject", VAR(troopi, 0), ftinfo<troopi>},
+	{"Upgrade", VAR(upgradei, 1)},
 };
 BSDATAF(varianti);

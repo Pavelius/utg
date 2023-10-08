@@ -12,3 +12,5 @@ FrontlineDeployment
  effect ChooseProvinceYouControl Archers+2 Pikemens+1
 Insubordination
  effect SelectPlayers FilterPlayer-1 ChooseQuerry Hero-1
+Plague
+ effect SelectPlayers FilterPlayer-1 ChooseQuerry Army-1
