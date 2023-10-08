@@ -96,9 +96,10 @@ int	entity::getbonus(ability_s v) const {
 				result += e.get(v);
 		}
 	} else if(bsdata<playeri>::have(this)) {
+		auto p = (playeri*)this;
 		for(auto& e : bsdata<provincei>()) {
 			if(e.player == this)
-				result += e.get(v);
+				result += e.abilities[v];
 		}
 		for(auto& e : bsdata<structure>()) {
 			auto p = e.getprovince();
@@ -108,6 +109,10 @@ int	entity::getbonus(ability_s v) const {
 		for(auto& e : bsdata<card>()) {
 			if(e.player == this || (e.location && e.location->player==this))
 				result += e.get(v);
+		}
+		for(auto& e : bsdata<upgradei>()) {
+			if(p->isupgrade(&e))
+				result += e.abilities[v];
 		}
 	}
 	return result;

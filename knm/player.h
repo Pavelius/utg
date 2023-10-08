@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "color.h"
 #include "entity.h"
+#include "upgrade.h"
 #include "variant.h"
 
 #pragma once
@@ -8,7 +9,7 @@
 struct provincei;
 struct uniti;
 
-struct playeri : entity {
+struct playeri : entity, upgradea {
 	int			initiative;
 	abilitya	current;
 	color		fore, border;
