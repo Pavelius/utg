@@ -1,3 +1,4 @@
 ﻿In file `Names.txt`:
 DarkCitadel: Define translate
+DarkForest: Define translate
 GreenPlains: Define translate

@@ -1,2 +1,5 @@
 CityGriffonHeart: Город Сердце Гриффона
+DarkCitadel: Темная цитадель
+DarkForest: Темный лес
+GreenPlains: Зеленые равнины
 WhiteTower: Белая башня

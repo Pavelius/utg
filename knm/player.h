@@ -15,6 +15,7 @@ struct playeri : entity, upgradea {
 	color		fore, border;
 	provincei*	homeland;
 	uniti*		troops[5];
+	abilitya	bonus[5];
 	variants	start;
 	void		add(ability_s v, int i) { current.abilities[v] += i; }
 	int			getmaximum(ability_s v) const;
