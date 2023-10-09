@@ -2,10 +2,13 @@
 
 Pikemens
  abilities Cost(1) Army(5) Strenght(1) Combat(3) Damage(1)
+ tags Infantry
 Archers
- abilities Cost(2) Army(5) Strenght(1) Combat(3) Damage(1) Shoots(2)
+ abilities Cost(2) Army(5) Strenght(1) Combat(3) Damage(1) Shoots(1)
+ tags Infantry
 Swordmans
  abilities Cost(3) Army(10) Strenght(1) Combat(3) Damage(1) Shield(1) Limit(6)
+ tags Infantry
 Cavalry
  abilities Cost(4) Army(10) Strenght(1) Combat(5) Damage(2) Shield(1) Limit(4)
  tags Fast
@@ -14,6 +17,7 @@ WarMachine
 
 Orcs
  abilities Cost(1) Army(5) Strenght(1) Combat(3) Damage(1)
+ tags Infantry
 Wargs
  abilities Cost(2) Army(10) Strenght(1) Combat(4) Damage(1)
  tags Fast
@@ -24,3 +28,19 @@ Trolls
 Giant
  abilities Cost(10) Army(10) Strenght(2) Combat(6) Damage(3) Shield(1) Limit(1)
  tags Fast
+
+Skeletons
+ abilities Cost(1) Army(3) Strenght(1) Combat(2) Damage(1)
+ tags Infantry
+Ghouls
+ abilities Cost(2) Army(10) Strenght(2) Combat(3) Damage(1)
+ tags Infantry
+Necromancer
+ abilities Cost(3) Army(10) Strenght(1) Combat(4) Damage(1) Limit(6)
+ tags AnimateSkeletons
+Knights
+ abilities Cost(6) Army(10) Strenght(2) Combat(7) Damage(2) Limit(2)
+ tags Fast
+Lich
+ abilities Cost(10) Army(10) Strenght(2) Combat(6) Damage(3) Shield(1) Shoots(3) Limit(1)
+ tags AnimateSkeletons

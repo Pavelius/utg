@@ -9,7 +9,6 @@ typedef void(*fnevent)();
 struct drawable {
 	point			position;
 	unsigned char	alpha, priority, param, flags;
-	constexpr explicit operator bool() const { return priority != 0; }
 	point			getscreen() const;
 	bool			isabsolute() const { return priority < 10; }
 	void			move(point goal, int speed, int correct = 0);

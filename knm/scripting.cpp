@@ -79,6 +79,24 @@ static const char* get_script_log() {
 	return get_log(last_script->id);
 }
 
+static void wave_hostile() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			continue;
+		if(!area.isvalid(e.position))
+			continue;
+		area.setblock(e.position, 0xFF);
+	}
+}
+
+static void wave_clear() {
+	area.clearpath();
+}
+
+static void wave_proceed() {
+	area.makewave(province->position);
+}
+
 void reapeated_list(int value, int counter) {
 	counter = getone(counter);
 	for(auto i = 0; i < counter; i++)
@@ -86,10 +104,11 @@ void reapeated_list(int value, int counter) {
 }
 
 template<> void fnscript<abilityi>(int value, int counter) {
+	last_ability = (ability_s)value;
 	player->current.abilities[value] += counter;
 	if(counter > 0)
 		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
-	else
+	else if(counter < 0)
 		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
 }
 
@@ -334,6 +353,14 @@ static bool filter_province_limit(const void* object) {
 			return false;
 	}
 	return true;
+}
+
+static bool filter_move_range(const void* object) {
+	auto p = (entity*)object;
+	if(!p->id)
+		return false;
+	auto pv = p->getprovince();
+	return false;
 }
 
 static int compare_player_priority(const void* v1, const void* v2) {
@@ -601,6 +628,14 @@ static void apply_secondary_strategy() {
 	}
 }
 
+static void move_troops(int bonus) {
+	while(true) {
+		wave_clear();
+		wave_hostile();
+		wave_proceed();
+	}
+}
+
 static void make_action(int bonus) {
 	pushtitle push("MakeAction");
 	pushvalue push_strategy(last_strategy, (strategyi*)0);
@@ -831,6 +866,21 @@ static bool allow_choose(int bonus) {
 	return querry.getcount() != 0;
 }
 
+//static unsigned char getdirection(short unsigned index, int direction) {
+//	if(index == areai::Blocked)
+//		return areai::Blocked;
+//	auto hex = getdirection(i2h(index), direction);
+//	if(hex.x < 0 || hex.y < 0 || hex.x >= hms || hex.y >= hms)
+//		return Blocked;
+//	return h2i(hex);
+//}
+//
+//static void initialize_pathfinding() {
+//	pathfind::maxcount = hms * hms;
+//	pathfind::maxdir = 6;
+//	pathfind::to = getdirection;
+//}
+
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -872,6 +922,7 @@ BSDATA(script) = {
 	{"InputQuerry", input_querry},
 	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
+	{"MoveTroops", move_troops},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},

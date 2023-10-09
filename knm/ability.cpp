@@ -11,6 +11,7 @@ BSDATA(abilityi) = {
 	{"Damage"},
 	{"Shoots"},
 	{"Shield"},
+	{"Move"},
 	{"Resources"},
 	{"Influence"},
 	{"Goods"},
@@ -21,3 +22,5 @@ BSDATA(abilityi) = {
 	{"Gold"},
 };
 assert_enum(abilityi, Gold);
+
+ability_s last_ability;

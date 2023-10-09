@@ -27,6 +27,16 @@ static point getwave() {
 	return index;
 }
 
+point areai::getdirection(point hex, int direction) {
+	static point evenr_directions[2][6] = {
+		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
+		{{+1, 0}, {0, -1}, {-1, -1}, {-1, 0}, {-1, +1}, {0, +1}},
+	};
+	auto parity = hex.y & 1;
+	auto offset = evenr_directions[parity][direction];
+	return hex + offset;
+}
+
 void areai::blockzero() {
 	point m;
 	for(m.y = 0; m.y < mps; m.y++)
@@ -42,6 +52,10 @@ void areai::clear() {
 	for(m.y = 0; m.y < mps; m.y++)
 		for(m.x = 0; m.x < mps; m.x++)
 			set(m, Blocked);
+}
+
+unsigned char areai::getblock(point m) {
+	return movement_rate[m];
 }
 
 void areai::clearpath() {
@@ -70,8 +84,8 @@ unsigned areai::getpath(point start, point goal, point* result, unsigned maximum
 	*pb++ = goal;
 	while(pb < pe) {
 		auto next = curr;
-		for(auto d : all_directions) {
-			auto i1 = curr + d;
+		for(auto i = 0; i < 6; i++) {
+			auto i1 = getdirection(curr, i);
 			if(!isvalid(i1))
 				continue;
 			if(i1 == start) {
@@ -106,8 +120,8 @@ void areai::makewavex() {
 	while(pop_counter != push_counter) {
 		auto m = getwave();
 		auto cost = movement_rate[m] + 1;
-		for(auto d : all_directions) {
-			auto m1 = m + d;
+		for(auto i = 0; i < 6; i++) {
+			auto m1 = getdirection(m, i);
 			if(!isvalid(m1))
 				continue;
 			auto c1 = movement_rate[m1];

@@ -9,6 +9,7 @@ BSDATA(tagi) = {
 	{"Infantry"},
 	{"Fast"},
 	{"Fly"},
+	{"AnimateSkeletons"},
 	{"Forest"},
 	{"Mountains"},
 	{"Farmlands"},

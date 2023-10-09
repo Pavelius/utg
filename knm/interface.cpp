@@ -267,19 +267,16 @@ static void paint_player_markers(const provincei* province) {
 	caret = push_caret;
 }
 
+static void paint_debug_mouse(const provincei* p) {
+	textcn(str("%1i, %2i", p->position.x, p->position.y));
+}
+
 void provincei::paint() const {
 	//special_paint(special, special_index);
 	paint_player_banner(player);
 	paint_hexagon();
 	paint_player_markers(this);
-	//paint_debug_mouse();
-}
-
-static void paint_debug_mouse() {
-	if(ishilite(2 * size / 3)) {
-		point pt = hot.mouse - caret;
-		tips_sb.add("Mouse %1i, %2i", pt.x, pt.y);
-	}
+	//paint_debug_mouse(this);
 }
 
 static void texthd(const char* format) {
@@ -441,17 +438,11 @@ static void paint_structure() {
 //	}
 //}
 
-static void add_province(provincei* ps, point pt) {
-	addobject(pt, ps, ftpaint<provincei>, 0, 23);
-	//add_planets(pt, ps);
-}
-
-static void update_provinces() {
-	for(auto& e : bsdata<provincei>()) {
-		if(!area.isvalid(e.position))
-			continue;
-		add_province(&e, draw::h2p(e.position, size));
-	}
+template<> void updateui<provincei>(provincei* p) {
+	auto pt = draw::h2p(p->position, size);
+	auto ps = findobject(p);
+	if(!ps)
+		ps = addobject(pt, p, ftpaint<provincei>, 0, 23);
 }
 
 static void marker_press() {
@@ -505,12 +496,6 @@ provincei* entitya::chooseprovince() const {
 	auto result = (provincei*)scene(0);
 	remove_all(paint_green_marker);
 	return result;
-}
-
-void prepare_game_ui() {
-	clear_objects();
-	update_provinces();
-	setcamera(h2p({0, 0}, size));
 }
 
 void entity::focusing() const {
@@ -570,6 +555,12 @@ static void update_buildings(point position, const entity* location) {
 //			p->clear();
 //	}
 //}
+
+void prepare_game_ui() {
+	clear_objects();
+	for(auto& e : bsdata<provincei>())
+		updateui(&e);
+}
 
 void update_ui() {
 	static point system_offset = {0, -6 * size / 10};

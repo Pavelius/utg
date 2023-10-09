@@ -7,9 +7,12 @@ enum direction_s : unsigned char;
 struct areai : anymap<unsigned char, 8> {
 	static void			blockrange(int range);
 	static void			blockzero();
+	void				blockhostile();
 	void				clear();
 	static void			clearpath();
+	static unsigned char getblock(point s);
 	static direction_s	getdirection(point s, point d);
+	static point		getdirection(point s, int d);
 	point				getnext(point start, point goal) const;
 	point				getnext(point start, direction_s d) const;
 	unsigned			getpath(point start, point goal, point* result, unsigned maximum) const;

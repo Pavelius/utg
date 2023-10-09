@@ -7,8 +7,10 @@
 #include "province.h"
 #include "player.h"
 
+void prepare_game_ui();
 void initialize_ui();
 void initialize_script();
+void update_ui();
 
 #ifdef _DEBUG
 void util_main();
@@ -21,15 +23,16 @@ static void initialize_decks() {
 
 static void start_game() {
 	area.clear();
-	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
 	speaker = bsdata<playeri>::elements + 0;
+	initialize_province();
 	initialize_decks();
+	prepare_game_ui();
+	update_ui();
 	run_command("GamePlay");
 }
 
 static void initialize() {
-	initialize_province();
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG

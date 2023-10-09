@@ -32,8 +32,9 @@ static void remove_dead_objects() {
 	for(auto& e : bsdata<object>()) {
 		if(!e)
 			continue;
-		*ps = e;
+		*ps++ = e;
 	}
+	bsdata<object>::source.count = ps - bsdata<object>::elements;
 }
 
 point drawable::getscreen() const {

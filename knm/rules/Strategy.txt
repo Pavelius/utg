@@ -17,7 +17,6 @@ DiplomaticTreaty
  elements SelectProvinces FilterPlayer ChooseProvince SelectPlayers FilterPlayer-1 ForEachPlayer ActivityToken
 DoubleProvinceResources
  elements SelectProvinces FilterPlayer ChooseProvince AddProvinceResources AddProvinceInfluence
-MoveTroops
 LookLaws
  elements LawsDeck+2 ChooseCardsDiscard+2
 ResolvePlayerActions
