@@ -7,7 +7,6 @@ tag_s last_tag;
 BSDATA(tagi) = {
 	{"Used"},
 	{"Infantry"},
-	{"Fast"},
 	{"Fly"},
 	{"AnimateSkeletons"},
 	{"Forest"},

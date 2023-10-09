@@ -19,6 +19,8 @@ DoubleProvinceResources
  elements SelectProvinces FilterPlayer ChooseProvince AddProvinceResources AddProvinceInfluence
 LookLaws
  elements LawsDeck+2 ChooseCardsDiscard+2
+MoveTroops
+ elements ChooseMovement
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland

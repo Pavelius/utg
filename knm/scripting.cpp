@@ -25,7 +25,7 @@ static char				log_text[1024];
 static stringbuilder	actions_log(log_text);
 static char				console_text[512];
 static stringbuilder	console(console_text);
-static entitya			recruit;
+static entitya			recruit, movement;
 static int				need_pay;
 static bool				need_break;
 
@@ -95,6 +95,12 @@ static void wave_clear() {
 
 static void wave_proceed() {
 	area.makewave(province->position);
+}
+
+static void make_wave() {
+	wave_clear();
+	wave_hostile();
+	wave_proceed();
 }
 
 void reapeated_list(int value, int counter) {
@@ -306,6 +312,11 @@ static bool filter_activated(const void* object) {
 	return p->is(player);
 }
 
+static bool filter_province_activated(const void* object) {
+	auto p = (entity*)object;
+	return p->getprovince()->is(player);
+}
+
 static bool filter_used(const void* object) {
 	auto p = (entity*)object;
 	return p->is(Used);
@@ -359,8 +370,13 @@ static bool filter_move_range(const void* object) {
 	auto p = (entity*)object;
 	if(!p->id)
 		return false;
-	auto pv = p->getprovince();
-	return false;
+	auto move = p->get(Move);
+	if(!move)
+		return false;
+	auto range = area.getblock(p->getprovince()->position);
+	if(range == 0xFF)
+		return false;
+	return move >= range;
 }
 
 static int compare_player_priority(const void* v1, const void* v2) {
@@ -628,12 +644,50 @@ static void apply_secondary_strategy() {
 	}
 }
 
-static void move_troops(int bonus) {
+static void cancel_movement() {
+	movement.clear();
+}
+
+static void choose_movement() {
+	movement.clear();
 	while(true) {
-		wave_clear();
-		wave_hostile();
-		wave_proceed();
+		make_wave();
+		querry.collectiona::select(bsdata<troopi>::source, filter_move_range, true);
+		querry.match(filter_province_activated, false);
+		clear_input(0);
+		for(auto p : querry) {
+			if(movement.find(p) != -1)
+				continue;
+			an.add(p, "%1 (%2)", p->getname(), p->getprovince()->getname());
+		}
+		for(auto p : movement) {
+			if(!console)
+				console.add("###%1", province->getname());
+			console.addn("%1 (%2)", p->getname(), p->getprovince()->getname());
+		}
+		if(console)
+			an.add(cancel_movement, getnm("ResetMovement"));
+		auto result = an.choose(get_title(last_id), getnm("ApplyMove"), 0);
+		if(!result)
+			break;
+		else if(bsdata<troopi>::have(result))
+			movement.add(result);
+		else
+			((fnevent)result)();
 	}
+	console.clear();
+}
+
+static void apply_movement() {
+	for(auto p : movement)
+		p->location = province;
+	update_ui();
+}
+
+static void choose_movement(int bonus) {
+	pushtitle push(last_list->id);
+	choose_movement();
+	apply_movement();
 }
 
 static void make_action(int bonus) {
@@ -908,6 +962,7 @@ BSDATA(script) = {
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
 	{"ChooseCardsDiscard", choose_cards_discard},
+	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
@@ -922,7 +977,6 @@ BSDATA(script) = {
 	{"InputQuerry", input_querry},
 	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
-	{"MoveTroops", move_troops},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},

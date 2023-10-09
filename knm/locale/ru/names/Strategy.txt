@@ -1,6 +1,9 @@
+ActionPhase: Фаза действий
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+ApplyMove: Подтвердить передвижение
 ChooseProvinceYouControl: Выбор вашей провинции
+ChooseStrategy: Выбор стратегии
 ClaimSpeaker: Назначение спикера 
 ConstructBuilding: Постройка объектов
 ConstructBuildingInProvince: Выбор объекта постройки
@@ -8,9 +11,10 @@ DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
 PayResearch: Инвестиции в развитие
 PlanningPhase: Выбор стратегии на год
-ChooseStrategy: Выбор стратегии
+ResetMovement: Сбросить выбор
 LookLaws: Посмотреть законы
 MakeAction: Выполнить действие
+MoveTroops: Передвижение войск
 PassAction: Закончить ход
 PayForLeaders: Найм лидеров
 TacticAction: Тактическое действие

@@ -214,5 +214,8 @@
     <Text Include="rules\Upgrades.txt">
       <Filter>rules</Filter>
     </Text>
+    <Text Include="locale\ru\names\Provinces.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

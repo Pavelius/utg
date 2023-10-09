@@ -1,2 +1,3 @@
-﻿In file `rules/Strategy.txt`:
- Line 43: Can't find variant `TestNoControl1Capital`
+﻿In file `Names.txt`:
+DarkCitadel: Define translate
+GreenPlains: Define translate
