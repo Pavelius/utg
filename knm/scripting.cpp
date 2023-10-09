@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "army.h"
+#include "area.h"
 #include "card.h"
 #include "crt.h"
 #include "deck.h"
@@ -136,6 +137,15 @@ template<> void fnscript<decki>(int value, int counter) {
 		querry.add(last_deck->cards.pick());
 }
 
+static void focus_player(int bonus) {
+	if(player->homeland)
+		player->homeland->focusing();
+}
+
+static void focus_province(int bonus) {
+	province->focusing();
+}
+
 static void add_input(entity& e) {
 	an.add(&e, e.getname());
 }
@@ -204,6 +214,7 @@ static void apply_input(void* result, bool play_card = true) {
 		player->current.abilities[v] += 1;
 	} else
 		((fnevent)result)();
+	update_ui();
 }
 
 static const char* get_title(const char* id, int count = 0) {
@@ -409,7 +420,7 @@ static void pay_hero_yesno(int bonus) {
 		script_stop();
 }
 
-static void pay_ability(const char* id, ability_s v, ability_s currency, int cost, int maximum_cap) {
+static void pay_ability(const char* id, ability_s v, ability_s currency, int gain, int cost, int maximum_cap) {
 	pushtitle push_title(id);
 	an.clear();
 	auto choose_prompt = getdescription(stw(id, "Answer"));
@@ -419,17 +430,18 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int cos
 	if(!choose_cancel)
 		choose_cancel = getdescription("PayResourceCancel");
 	for(auto i = 1; i <= maximum_cap; i++) {
-		auto total = cost * i;
+		auto cost_total = cost * i;
 		auto value = player->get(currency);
-		if(value < total)
+		if(value < cost_total)
 			break;
+		auto gain_total = i * gain;
 		an.add((void*)i, choose_prompt,
 			bsdata<abilityi>::elements[v].getname(),
 			bsdata<abilityi>::elements[currency].getname(),
-			i, total);
+			gain_total, cost_total);
 	}
 	auto i = (int)an.choose(get_title(id), choose_cancel, 0);
-	player->current.abilities[v] += i;
+	player->current.abilities[v] += gain * i;
 	player->current.abilities[currency] -= cost * i;
 }
 
@@ -518,11 +530,8 @@ static void add_start(int bonus) {
 	update_ui();
 }
 
-static void player_cards(int bonus) {
-
-}
-
 static void add_research(int bonus) {
+	player->current.abilities[Lore] += bonus;
 }
 
 static void add_secret_goal(int bonus) {
@@ -555,7 +564,7 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
-	pay_ability(last_script->id, Hero, Influence, 2, 3);
+	pay_ability(last_script->id, Hero, Influence, 1, bonus, 3);
 }
 
 static bool allow_pay_goods(int bonus) {
@@ -566,6 +575,7 @@ static void pay_goods(int bonus) {
 }
 
 static void pay_research(int bonus) {
+	pay_ability(last_script->id, Lore, Resources, bonus, 1, 5);
 }
 
 static void apply_primary_strategy() {
@@ -594,6 +604,7 @@ static void apply_secondary_strategy() {
 static void make_action(int bonus) {
 	pushtitle push("MakeAction");
 	pushvalue push_strategy(last_strategy, (strategyi*)0);
+	focus_player(0);
 	an.clear();
 	add_input_cards("MakeAction");
 	add_strategy_cards();
@@ -717,6 +728,12 @@ static bool is_allow_actions() {
 			return true;
 	}
 	return false;
+}
+
+static void if_control_capital(int bonus) {
+	auto result_true = (bsdata<provincei>::elements[0].player == player);
+	if(result_true != (bonus >= 0))
+		script_stop();
 }
 
 static void if_no_querry_break(int bonus) {
@@ -845,9 +862,12 @@ BSDATA(script) = {
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
+	{"FocusPlayer", focus_player},
+	{"FocusProvince", focus_province},
 	{"ForEachPlayer", for_each_player, allow_for_each},
 	{"ForEachProvince", for_each_province, allow_for_each},
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
+	{"IfControlCapital", if_control_capital},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"InputQuerry", input_querry},
 	{"KillEnemyInfantry", kill_enemy_infantry},

@@ -1,2 +1,2 @@
 ﻿In file `rules/Strategy.txt`:
- Line 89: Not found requisit `effect`
+ Line 43: Can't find variant `TestNoControl1Capital`

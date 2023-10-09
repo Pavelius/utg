@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="area.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="boardpart.h" />
     <ClInclude Include="card.h" />
@@ -164,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
+    <ClCompile Include="area.cpp" />
     <ClCompile Include="army.cpp" />
     <ClCompile Include="boardpart.cpp" />
     <ClCompile Include="card.cpp" />

@@ -244,6 +244,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="advancement.h" />
     <ClInclude Include="answers.h" />
+    <ClInclude Include="anymap.h" />
     <ClInclude Include="archive.h" />
     <ClInclude Include="avatarable.h" />
     <ClInclude Include="banner.h" />

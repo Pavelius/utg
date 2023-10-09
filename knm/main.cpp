@@ -1,3 +1,4 @@
+#include "area.h"
 #include "crt.h"
 #include "deck.h"
 #include "draw_strategy.h"
@@ -19,6 +20,7 @@ static void initialize_decks() {
 }
 
 static void start_game() {
+	area.clear();
 	prepare_game_ui();
 	province = bsdata<provincei>::elements + 0;
 	speaker = bsdata<playeri>::elements + 0;

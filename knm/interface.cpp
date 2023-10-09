@@ -1,4 +1,5 @@
 #include "answers.h"
+#include "area.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"
@@ -445,9 +446,12 @@ static void add_province(provincei* ps, point pt) {
 	//add_planets(pt, ps);
 }
 
-static void add_provinces() {
-	for(auto& e : bsdata<provincei>())
-		add_province(&e, draw::h2p(i2h(e.index), size));
+static void update_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		if(!area.isvalid(e.position))
+			continue;
+		add_province(&e, draw::h2p(e.position, size));
+	}
 }
 
 static void marker_press() {
@@ -505,7 +509,7 @@ provincei* entitya::chooseprovince() const {
 
 void prepare_game_ui() {
 	clear_objects();
-	add_provinces();
+	update_provinces();
 	setcamera(h2p({0, 0}, size));
 }
 
@@ -514,7 +518,7 @@ void entity::focusing() const {
 		return;
 	auto ps = getprovince();
 	if(ps)
-		slide_camera(h2p(i2h(ps->index), size), 48);
+		slide_camera(h2p(ps->position, size), 48);
 }
 
 static void update_units(point position, const entity* location) {

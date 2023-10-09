@@ -72,6 +72,9 @@
     <ClInclude Include="upgrade.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="area.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp">
@@ -144,6 +147,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="upgrade.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="area.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,7 +6,7 @@
 #pragma once
 
 struct provincei : entity, abilitya {
-	short			index;
+	point			position;
 	adat<point,8>	points;
 	void			paint() const;
 	int				get(ability_s v) const { return abilities[v]; }

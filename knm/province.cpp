@@ -5,7 +5,11 @@
 provincei* province;
 
 void initialize_province() {
-	auto result = 0;
 	for(auto& e : bsdata<provincei>())
-		e.index = result++;
+		e.position = {-1000, -1000};
+	bsdata<provincei>::elements[0].position = {3, 3};
+	bsdata<provincei>::elements[1].position = {2, 3};
+	bsdata<provincei>::elements[2].position = {4, 3};
+	bsdata<provincei>::elements[3].position = {2, 4};
+	bsdata<provincei>::elements[4].position = {3, 4};
 }

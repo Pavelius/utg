@@ -1,7 +1,7 @@
 #List
 
 ActivateProvince
- elements SelectProvinces FilterActivated-1 ChooseProvince ActivityToken
+ elements SelectProvinces FilterActivated-1 ChooseProvince FocusProvince ActivityToken
 AddTactics
  elements TacticsDeck+1 PickCards
 ApplyTradeRoute
@@ -35,7 +35,12 @@ RemoveActivityAllTokens
 RemoveStrategicCards
  elements SelectStrategy-1 ForEachStrategy RemoveStrategy
 ScorePublicGoal
+TestControlCapital
+ elements IfControlCapital Fame+1
+TestNoControlCapital
+ elements IfControlCapital-1 AddSecretGoal+1
 GainFameIfControlCapital
+ elements TestControlCapital TestNoControlCapital
 
 #Strategy
 
@@ -58,8 +63,8 @@ Warfare initiative(6)
  primary RemoveActivityToken AddLeaders+1
  secondary PayHeroYesNo RecruitTroopsInHomeland
 Technology initiative(7)
- primary AddResearch+10 PayResearch
- secondary PayHeroYesNo AddResearch+4 PayResearch
+ primary AddResearch+10 PayResearch+2
+ secondary PayHeroYesNo AddResearch+4 PayResearch+2
 GatherPower initiative(8)
  primary ScorePublicGoal GainFameIfControlCapital
  secondary PayHeroYesNo AddSecretGoal+1
@@ -69,7 +74,7 @@ GatherPower initiative(8)
 StartYear
  elements RefreshPlayers RefreshConsumables
 PlanningPhase 
- elements SelectPlayersBySpeaker ForEachPlayer SelectStrategy ChooseQuerry PickStrategy
+ elements SelectPlayersBySpeaker ForEachPlayer FocusPlayer SelectStrategy ChooseQuerry PickStrategy
 ActionPhase
  elements Repeat SelectPlayers Used-1 IfNoQuerryBreak ForEachPlayer MakeAction
 StatusPhase

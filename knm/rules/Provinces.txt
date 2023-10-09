@@ -5,6 +5,9 @@ OrcHorde
 
 #Province
 
+WhiteTower
+ abilities Resources(1) Influence(5) Limit(3)
+
 DarkForest
  abilities Resources(2) Influence(1) Limit(2)
  tags Forest
@@ -13,6 +16,6 @@ GreenPlains
  tags Farmlands
 
 CityGriffonHeart player(MiddleKindom)
- abilities Resources(2) Influence(4)
+ abilities Resources(2) Influence(4) Limit(3)
 DarkCitadel player(OrcHorde)
- abilities Resources(5) Influence(1)
+ abilities Resources(5) Influence(1) Limit(3)

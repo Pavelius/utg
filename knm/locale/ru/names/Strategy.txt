@@ -6,6 +6,7 @@ ConstructBuilding: Постройка объектов
 ConstructBuildingInProvince: Выбор объекта постройки
 DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
+PayResearch: Инвестиции в развитие
 PlanningPhase: Выбор стратегии на год
 ChooseStrategy: Выбор стратегии
 LookLaws: Посмотреть законы

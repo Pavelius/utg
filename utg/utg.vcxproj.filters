@@ -533,5 +533,8 @@
     <ClInclude Include="banner.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="anymap.h">
+      <Filter>Support</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
