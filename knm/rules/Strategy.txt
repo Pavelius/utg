@@ -94,11 +94,11 @@ GamePlay
 BeforeCombat
  elements ApplyTrigger
 BattleTactic
-DestroyEnemyBuildings
 HailOfArrows
 CombatRound
 RemoveCasualty
 RetreatLooser
+DestroyEnemyBuildings
 
 ApplyCombat
  elements BeforeCombat BattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings

@@ -13,6 +13,7 @@ struct entitya : collection<entity> {
 	int			getarmy() const;
 	entity*		pick() { return (entity*)collectiona::pick(); }
 	void		select(const entity* object);
+	void		sortunits();
 };
 struct entityv : vector<entity*> {
 	entityv() : vector<entity*>() {}

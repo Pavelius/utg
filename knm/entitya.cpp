@@ -1,9 +1,24 @@
 #include "ability.h"
 #include "card.h"
 #include "entitya.h"
+#include "unit.h"
 #include "troop.h"
 
 entitya querry;
+
+static int compare_units(const void* v1, const void* v2) {
+	auto p1 = (*((entity**)v1))->getunit();
+	auto p2 = (*((entity**)v2))->getunit();
+	if(p1->abilities[Cost] != p2->abilities[Cost])
+		return p1->abilities[Cost] - p2->abilities[Cost];
+	if(p1->abilities[Army] != p2->abilities[Army])
+		return p2->abilities[Army] - p2->abilities[Army];
+	return p1 - p2;
+}
+
+void entitya::sortunits() {
+	sort(compare_units);
+}
 
 int	entitya::gettotal(ability_s v) const {
 	auto result = 0;

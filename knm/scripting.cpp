@@ -24,7 +24,7 @@ extern const char* message_string;
 static char				log_text[1024];
 static stringbuilder	actions_log(log_text);
 static char				console_text[512];
-static stringbuilder	console(console_text);
+stringbuilder			console(console_text);
 static entitya			recruit, movement;
 static int				need_pay;
 static bool				need_break;
@@ -587,8 +587,8 @@ static void add_gold(int bonus) {
 static void combat_round(int bonus) {
 	attacker.prepare(Shield);
 	defender.prepare(Shield);
-	attacker.engage(Damage);
-	defender.engage(Damage);
+	attacker.engage(Damage, 0);
+	defender.engage(Damage, 0);
 	defender.suffer(attacker.get(Damage));
 	attacker.suffer(defender.get(Damage));
 }
@@ -811,6 +811,11 @@ static void end_round(int bonus) {
 	player->set(Used);
 }
 
+static void attack_milita(int bonus) {
+	auto count = count_structures(province);
+	attacker.damage(Damage, 1 + bonus, count);
+}
+
 static bool is_allow_actions() {
 	for(auto& e : bsdata<playeri>()) {
 		if(!e.is(Used))
@@ -920,21 +925,6 @@ static bool allow_choose(int bonus) {
 	return querry.getcount() != 0;
 }
 
-//static unsigned char getdirection(short unsigned index, int direction) {
-//	if(index == areai::Blocked)
-//		return areai::Blocked;
-//	auto hex = getdirection(i2h(index), direction);
-//	if(hex.x < 0 || hex.y < 0 || hex.x >= hms || hex.y >= hms)
-//		return Blocked;
-//	return h2i(hex);
-//}
-//
-//static void initialize_pathfinding() {
-//	pathfind::maxcount = hms * hms;
-//	pathfind::maxdir = 6;
-//	pathfind::to = getdirection;
-//}
-
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -959,6 +949,7 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
+	{"AttackMilita", attack_milita},
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
 	{"ChooseCardsDiscard", choose_cards_discard},

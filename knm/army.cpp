@@ -5,16 +5,29 @@
 #include "variant.h"
 #include "unit.h"
 
-armyi	attacker, defender;
+extern stringbuilder	console;
+static const char*		last_header;
+static const char*		last_list_start;
+armyi					attacker, defender;
+armyi*					last_army;
 
-static int compare_units(const void* v1, const void* v2) {
-	auto p1 = (*((entity**)v1))->getunit();
-	auto p2 = (*((entity**)v2))->getunit();
-	if(p1->abilities[Cost] != p2->abilities[Cost])
-		return p1->abilities[Cost] - p2->abilities[Cost];
-	if(p1->abilities[Army] != p2->abilities[Army])
-		return p2->abilities[Army] - p2->abilities[Army];
-	return p1 - p2;
+static void add_header(const char* id, const char* format) {
+	if(equal(last_header, id))
+		return;
+	console.addn(format, last_header);
+}
+
+static void add_start_list() {
+	last_list_start = console.get();
+}
+
+static void add_next(const char* format) {
+	if(last_list_start && last_list_start[0])
+		console.add(format);
+}
+
+static void add_end() {
+	last_list_start = 0;
 }
 
 inline int d10() {
@@ -26,12 +39,23 @@ void armyi::clear() {
 }
 
 void armyi::damage(ability_s type, int chance, int count) {
+	if(chance < 1)
+		chance = 1;
+	else if(chance > 9)
+		chance = 9;
+	auto need_roll = 10 - chance;
+	add_start_list();
 	for(auto i = 0; i < count; i++) {
+		add_next(", ");
 		auto result = d10();
-		if(result > chance)
+		if(result < need_roll) {
+			console.add("[~%1i]", result);
 			continue;
+		}
+		console.add("[%1i]", result);
 		add(type, 1);
 	}
+	add_end();
 }
 
 static void getunits(entitya& destination, entitya& source) {
@@ -41,18 +65,12 @@ static void getunits(entitya& destination, entitya& source) {
 	destination.distinct();
 }
 
-void armyi::engage(ability_s type) {
-	for(auto p : troops)
-		damage(type, p->get(Combat), p->get(type));
-}
-
-void armyi::engage() {
-	engage(Shoots);
-	engage(Damage);
-}
-
-void armyi::sort() {
-	troops.sort(compare_units);
+void armyi::engage(ability_s type, int skill) {
+	last_header = 0;
+	for(auto p : troops) {
+		add_header(p->getname(), "%1: ");
+		damage(type, p->get(Combat) + skill, p->get(type));
+	}
 }
 
 void armyi::resist(int& hits) {
