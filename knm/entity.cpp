@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "card.h"
+#include "draw_object.h"
 #include "entity.h"
 #include "player.h"
 #include "province.h"
@@ -8,6 +9,9 @@
 #include "unit.h"
 
 void entity::clear() {
+	auto p = findobject(this);
+	if(p)
+		p->clear();
 	memset(this, 0, sizeof(*this));
 }
 

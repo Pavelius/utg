@@ -1,6 +1,7 @@
 ActionPhase: Фаза действий
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+ApplyCombat: Битва
 ApplyMove: Подтвердить передвижение
 ChooseProvinceYouControl: Выбор вашей провинции
 ChooseStrategy: Выбор стратегии

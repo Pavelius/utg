@@ -529,17 +529,6 @@ static void update_units(point position, const entity* location) {
 	}
 }
 
-static void delete_units() {
-	for(auto& e : bsdata<object>()) {
-		if(bsdata<troopi>::have(e.data)) {
-			auto p = (troopi*)e.data;
-			if(p->id)
-				continue;
-			e.clear();
-		}
-	}
-}
-
 static void update_buildings(point position, const entity* location) {
 	if(!location)
 		return;
@@ -574,7 +563,6 @@ void prepare_game_ui() {
 
 void update_ui() {
 	static point system_offset = {0, -6 * size / 10};
-	delete_units();
 	wait_all();
 	for(auto& e : bsdata<object>()) {
 		if(bsdata<provincei>::have(e.data)) {

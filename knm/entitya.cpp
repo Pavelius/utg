@@ -1,14 +1,17 @@
 #include "ability.h"
 #include "card.h"
 #include "entitya.h"
-#include "unit.h"
+#include "player.h"
 #include "troop.h"
+#include "unit.h"
 
 entitya querry;
 
 static int compare_units(const void* v1, const void* v2) {
 	auto p1 = (*((entity**)v1))->getunit();
 	auto p2 = (*((entity**)v2))->getunit();
+	if(p1->player != p2->player)
+		return p1->player - p2->player;
 	if(p1->abilities[Cost] != p2->abilities[Cost])
 		return p1->abilities[Cost] - p2->abilities[Cost];
 	if(p1->abilities[Army] != p2->abilities[Army])
