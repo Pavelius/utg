@@ -542,6 +542,8 @@ static int get_troops(ability_s v, provincei* province, playeri* player) {
 }
 
 static void recruit_troops(int bonus) {
+	if(player != province->player)
+		return;
 	auto recruit_value = province->get(Recruit) + province->getbonus(Recruit);
 	if(!recruit_value)
 		return;
@@ -816,6 +818,60 @@ static void attack_milita(int bonus) {
 	attacker.damage(Damage, 1 + bonus, count);
 }
 
+static bool filter_player_province(const void* object) {
+	auto p = (entity*)object;
+	return p->player == player && p->location == province;
+}
+
+static void add_units(entitya& source, playeri* v) {
+	pushvalue push(player, v);
+	source.collectiona::select(bsdata<troopi>::source, filter_player_province, true);
+}
+
+static void prepare_army(int bonus) {
+	if(player == province->player) {
+		script_stop();
+		return;
+	}
+	attacker.clear();
+	defender.clear();
+	add_units(attacker.troops, player);
+	add_units(defender.troops, province->player);
+	attacker.prepare(Shield);
+	defender.prepare(Shield);
+	attacker.troops.sortunits();
+	defender.troops.sortunits();
+	if(!attacker.troops || !defender.troops)
+		script_stop();
+}
+
+static void show_battle_result() {
+	if(!console)
+		return;
+	pushtitle header(last_list->id);
+	draw::pause();
+	attacker.applycasualty();
+	attacker.clear();
+	defender.applycasualty();
+	defender.clear();
+	update_ui();
+}
+
+static void melee_clash(int bonus) {
+	console.clear();
+	if(attacker.troops) {
+		console.addn("---");
+		attacker.engage(Damage, 0);
+	}
+	if(defender.troops) {
+		console.addn("---");
+		defender.engage(Damage, 0);
+	}
+	attacker.suffer(defender.abilities[Damage]);
+	defender.suffer(attacker.abilities[Damage]);
+	show_battle_result();
+}
+
 static bool is_allow_actions() {
 	for(auto& e : bsdata<playeri>()) {
 		if(!e.is(Used))
@@ -968,6 +1024,7 @@ BSDATA(script) = {
 	{"InputQuerry", input_querry},
 	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
+	{"MeleeClash", melee_clash},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
@@ -977,6 +1034,7 @@ BSDATA(script) = {
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
 	{"PlayerUsed", player_used},
+	{"PrepareArmy", prepare_army},
 	{"PushPlayer", push_player},
 	{"RecruitTroops", recruit_troops},
 	{"RefreshInfluence", refresh_influence},

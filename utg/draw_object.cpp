@@ -113,6 +113,12 @@ void draworder::update() {
 	}
 }
 
+void object::disappear(int milliseconds) {
+	auto po = addorder(1000);
+	po->alpha = 0;
+	po->priority = 0;
+}
+
 draworder* object::addorder(int milliseconds, draworder* depend) {
 	auto p = bsdata<draworder>::addz();
 	if(depend) {

@@ -91,17 +91,18 @@ GameStart
 GamePlay
  elements GameStart Repeat GameTurn
 
+AttackerResult
 BeforeCombat
  elements ApplyTrigger
 BattleTactic
+DefenderResult
 HailOfArrows
-CombatRound
-RemoveCasualty
-RetreatLooser
-DestroyEnemyBuildings
+// RemoveCasualty
+// RetreatLooser
+// DestroyEnemyBuildings
 
 ApplyCombat
- elements BeforeCombat BattleTactic HailOfArrows CombatRound RemoveCasualty RetreatLooser DestroyEnemyBuildings
+ elements PrepareArmy BeforeCombat BattleTactic HailOfArrows MeleeClash AttackerResult DefenderResult
 
 #Card trigger(MakeAction)
 

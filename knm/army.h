@@ -7,6 +7,7 @@ struct armyi : abilitya {
 	entitya		troops;
 	entitya		casualty;
 	void		add(ability_s v, int i) { abilities[v] += i; }
+	void		applycasualty();
 	void		clear();
 	void		damage(ability_s type, int chance, int count = 1);
 	void		engage(ability_s type, int chance);

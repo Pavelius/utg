@@ -30,6 +30,7 @@ struct object : drawable {
 	fnevent			painting;
 	constexpr explicit operator bool() const { return painting != 0; }
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
+	void			disappear(int milliseconds);
 	void			clear();
 	void			paint() const;
 };

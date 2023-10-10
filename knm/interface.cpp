@@ -511,10 +511,9 @@ static void update_units(point position, const entity* location) {
 		return;
 	entitya source;
 	source.select(location);
-	//source.sortunit();
+	source.sortunits();
 	if(!source)
 		return;
-	//auto total_height = button_height * source.getcount();
 	auto x = position.x;
 	auto y = position.y;
 	for(auto pt : source) {
@@ -527,6 +526,17 @@ static void update_units(point position, const entity* location) {
 			po->position.y = y;
 		}
 		y += button_height;
+	}
+}
+
+static void delete_units() {
+	for(auto& e : bsdata<object>()) {
+		if(bsdata<troopi>::have(e.data)) {
+			auto p = (troopi*)e.data;
+			if(p->id)
+				continue;
+			e.clear();
+		}
 	}
 }
 
@@ -564,6 +574,7 @@ void prepare_game_ui() {
 
 void update_ui() {
 	static point system_offset = {0, -6 * size / 10};
+	delete_units();
 	wait_all();
 	for(auto& e : bsdata<object>()) {
 		if(bsdata<provincei>::have(e.data)) {

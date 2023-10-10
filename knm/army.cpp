@@ -14,10 +14,8 @@ armyi*					last_army;
 static void add_header(const char* id, const char* format) {
 	if(equal(last_header, id))
 		return;
-	console.addn(format, last_header);
-}
-
-static void add_start_list() {
+	last_header = id;
+	console.addn(format, getnm(last_header));
 	last_list_start = console.get();
 }
 
@@ -26,12 +24,13 @@ static void add_next(const char* format) {
 		console.add(format);
 }
 
-static void add_end() {
-	last_list_start = 0;
-}
-
 inline int d10() {
 	return 1 + rand() % 10;
+}
+
+void armyi::applycasualty() {
+	for(auto p : casualty)
+		p->clear();
 }
 
 void armyi::clear() {
@@ -44,7 +43,6 @@ void armyi::damage(ability_s type, int chance, int count) {
 	else if(chance > 9)
 		chance = 9;
 	auto need_roll = 10 - chance;
-	add_start_list();
 	for(auto i = 0; i < count; i++) {
 		add_next(", ");
 		auto result = d10();
@@ -55,7 +53,6 @@ void armyi::damage(ability_s type, int chance, int count) {
 		console.add("[%1i]", result);
 		add(type, 1);
 	}
-	add_end();
 }
 
 static void getunits(entitya& destination, entitya& source) {
@@ -67,8 +64,9 @@ static void getunits(entitya& destination, entitya& source) {
 
 void armyi::engage(ability_s type, int skill) {
 	last_header = 0;
+	last_list_start = 0;
 	for(auto p : troops) {
-		add_header(p->getname(), "%1: ");
+		add_header(p->getunit()->getid(), "%1: ");
 		damage(type, p->get(Combat) + skill, p->get(type));
 	}
 }
@@ -99,8 +97,10 @@ void armyi::suffer(int hits) {
 	for(auto p : troops) {
 		if(hits <= 0)
 			*ps++ = p;
-		else
+		else {
 			casualty.add(p);
+			hits--;
+		}
 	}
 	troops.count = ps - troops.begin();
 }

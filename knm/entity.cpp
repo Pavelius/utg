@@ -7,6 +7,10 @@
 #include "troop.h"
 #include "unit.h"
 
+void entity::clear() {
+	memset(this, 0, sizeof(*this));
+}
+
 const char*	entity::getname() const {
 	if(bsdata<troopi>::have(this))
 		return getunit()->getname();

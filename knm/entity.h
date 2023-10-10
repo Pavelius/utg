@@ -14,6 +14,7 @@ struct uniti;
 struct entity : nameable, taga {
 	playeri*		player;
 	entity*			location; // Can be province, board area, deck, something else
+	void			clear();
 	void			focusing() const;
 	int				get(ability_s v) const;
 	int				getbonus(ability_s v) const;
