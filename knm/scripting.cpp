@@ -815,7 +815,7 @@ static void end_round(int bonus) {
 
 static void attack_milita(int bonus) {
 	auto count = count_structures(province);
-	attacker.damage(Damage, 1 + bonus, count);
+	attacker.damage(1 + bonus, count);
 }
 
 static bool filter_player_province(const void* object) {
@@ -843,6 +843,8 @@ static void prepare_army(int bonus) {
 	defender.troops.sortunits();
 	if(!attacker.troops || !defender.troops)
 		script_stop();
+	attacker.prepare(Shield);
+	defender.prepare(Shield);
 }
 
 static void show_battle_result() {
@@ -857,16 +859,17 @@ static void show_battle_result() {
 	update_ui();
 }
 
+static void attack_army(armyi& source) {
+	if(source.troops) {
+		console.addn("---");
+		source.engage(Damage, 0);
+	}
+}
+
 static void melee_clash(int bonus) {
 	console.clear();
-	if(attacker.troops) {
-		console.addn("---");
-		attacker.engage(Damage, 0);
-	}
-	if(defender.troops) {
-		console.addn("---");
-		defender.engage(Damage, 0);
-	}
+	attack_army(attacker);
+	attack_army(defender);
 	attacker.suffer(defender.abilities[Damage]);
 	defender.suffer(attacker.abilities[Damage]);
 	show_battle_result();

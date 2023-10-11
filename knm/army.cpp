@@ -37,7 +37,7 @@ void armyi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-void armyi::damage(ability_s type, int chance, int count) {
+void armyi::damage(int chance, int count) {
 	if(chance < 1)
 		chance = 1;
 	else if(chance > 9)
@@ -47,11 +47,11 @@ void armyi::damage(ability_s type, int chance, int count) {
 		add_next(", ");
 		auto result = d10();
 		if(result < need_roll) {
-			console.add("[~%1i]", result);
+			console.add("%1i", result);
 			continue;
 		}
 		console.add("[%1i]", result);
-		add(type, 1);
+		add(Damage, 1);
 	}
 }
 
@@ -67,7 +67,7 @@ void armyi::engage(ability_s type, int skill) {
 	last_list_start = 0;
 	for(auto p : troops) {
 		add_header(p->getunit()->getid(), "%1: ");
-		damage(type, p->get(Combat) + skill, p->get(type));
+		damage(p->get(Combat) + skill, p->get(type));
 	}
 }
 

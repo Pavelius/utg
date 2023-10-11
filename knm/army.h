@@ -9,8 +9,8 @@ struct armyi : abilitya {
 	void		add(ability_s v, int i) { abilities[v] += i; }
 	void		applycasualty();
 	void		clear();
-	void		damage(ability_s type, int chance, int count = 1);
-	void		engage(ability_s type, int chance);
+	void		damage(int chance, int count = 1);
+	void		engage(ability_s type, int skill = 0);
 	int			get(ability_s v) const { return abilities[v]; }
 	void		prepare(ability_s type);
 	void		resist(int& hits);

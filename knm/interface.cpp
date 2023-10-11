@@ -22,6 +22,7 @@ inline point i2h(short unsigned i) { return {(short)(i % hms), (short)(i / hms)}
 inline short unsigned h2i(point v) { return v.y * hms + v.x; }
 
 const int button_height = 20;
+const int button_width = 43;
 const int size = 256;
 const int player_avatar_size = 32;
 const int player_marker_size = 16;
@@ -332,7 +333,7 @@ static void buttonback(int size, const void* data) {
 void troopi::paint() const {
 	auto push_color = fore;
 	fore = getplayercolor(player);
-	buttonback(43, this);
+	buttonback(button_width, this);
 	fore = push_color;
 	textcn(getname());
 }
@@ -514,9 +515,18 @@ static void update_units(point position, const entity* location) {
 	source.sortunits();
 	if(!source)
 		return;
-	auto x = position.x;
+	auto y0 = position.y;
+	auto n = source.getplayercount();
+	auto x = position.x - (n - 1) * (button_width * 2 + 2) / 2;
 	auto y = position.y;
+	playeri* nv = 0;
 	for(auto pt : source) {
+		if(pt->player != nv) {
+			if(nv)
+				x += button_width * 2 + 2;
+			y = y0;
+			nv = pt->player;
+		}
 		auto p = findobject(pt);
 		if(!p)
 			p = addobject({(short)x, (short)y}, (troopi*)pt, ftpaint<troopi>, 0, 30);
