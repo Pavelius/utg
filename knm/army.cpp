@@ -1,6 +1,7 @@
 #include "army.h"
 #include "crt.h"
 #include "entitya.h"
+#include "player.h"
 #include "pushvalue.h"
 #include "variant.h"
 #include "unit.h"
@@ -9,7 +10,7 @@ extern stringbuilder	console;
 static const char*		last_header;
 static const char*		last_list_start;
 armyi					attacker, defender;
-armyi*					last_army;
+armyi					*last_army, *winner_army;
 
 static void add_header(const char* id, const char* format) {
 	if(equal(last_header, id))
@@ -35,6 +36,10 @@ void armyi::applycasualty() {
 
 void armyi::clear() {
 	memset(this, 0, sizeof(*this));
+}
+
+int	armyi::getstrenght() const {
+	return troops.gettotal(Strenght) + get(Strenght);
 }
 
 void armyi::damage(int chance, int count) {
@@ -103,4 +108,10 @@ void armyi::suffer(int hits) {
 		}
 	}
 	troops.count = ps - troops.begin();
+}
+
+void armyi::select(const entity* location, playeri* player) {
+	this->player = player;
+	troops.select(location, player);
+	troops.sortunits();
 }

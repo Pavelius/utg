@@ -91,7 +91,10 @@ GameStart
 GamePlay
  elements GameStart Repeat GameTurn
 
+DestroyEnemyStructures
+ elements SelectProvinceStructures DestroyQuerry
 AttackerResult
+ elements IfWinBattle DestroyEnemyStructures
 BeforeCombat
  elements ApplyTrigger
 BattleTactic

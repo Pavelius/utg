@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-ApplyCombat: Define translate
+﻿In file `rules/Strategy.txt`:
+ Line 95: Can't find variant `DestroyQuerry`

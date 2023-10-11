@@ -48,11 +48,24 @@ int	entitya::getplayercount() const {
 	return result;
 }
 
-void entitya::select(const entity* object) {
+void entitya::select(const entity* location) {
 	auto ps = data;
 	auto pe = endof();
 	for(auto& e : bsdata<troopi>()) {
-		if(e.location != object)
+		if(e.location != location)
+			continue;
+		if(ps >= pe)
+			break;
+		*ps++ = &e;
+	}
+	count = ps - data;
+}
+
+void entitya::select(const entity* location, const entity* player) {
+	auto ps = data;
+	auto pe = endof();
+	for(auto& e : bsdata<troopi>()) {
+		if(e.location != location || e.player != player)
 			continue;
 		if(ps >= pe)
 			break;

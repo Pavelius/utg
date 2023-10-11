@@ -3,7 +3,10 @@
 
 #pragma once
 
+struct playeri;
+
 struct armyi : abilitya {
+	playeri*	player;
 	entitya		troops;
 	entitya		casualty;
 	void		add(ability_s v, int i) { abilities[v] += i; }
@@ -12,9 +15,11 @@ struct armyi : abilitya {
 	void		damage(int chance, int count = 1);
 	void		engage(ability_s type, int skill = 0);
 	int			get(ability_s v) const { return abilities[v]; }
+	int			getstrenght() const;
 	void		prepare(ability_s type);
 	void		resist(int& hits);
+	void		select(const entity* location, playeri* player);
 	void		suffer(int hits);
 };
 extern armyi	attacker, defender;
-extern armyi*	last_army;
+extern armyi	*last_army, *winner_army;

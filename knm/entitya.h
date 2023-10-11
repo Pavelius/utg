@@ -13,7 +13,8 @@ struct entitya : collection<entity> {
 	int			gettotal(ability_s v) const;
 	int			getplayercount() const;
 	entity*		pick() { return (entity*)collectiona::pick(); }
-	void		select(const entity* object);
+	void		select(const entity* location);
+	void		select(const entity* location, const entity* player);
 	void		sortunits();
 };
 struct entityv : vector<entity*> {

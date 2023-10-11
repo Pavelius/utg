@@ -5,6 +5,7 @@
 #include "crt.h"
 #include "deck.h"
 #include "draw.h"
+#include "draw_object.h"
 #include "entitya.h"
 #include "filter.h"
 #include "list.h"
@@ -271,6 +272,16 @@ static void input_querry(int bonus) {
 static void choose_input(int bonus) {
 	pushtitle push(last_list->id);
 	apply_input();
+}
+
+static void destroy_querry(int bonus) {
+	for(auto p : querry) {
+		auto po = findobject(p);
+		if(po)
+			po->clear();
+		p->clear();
+	}
+	update_ui();
 }
 
 static void choose_querry(int bonus) {
@@ -824,8 +835,8 @@ static bool filter_player_province(const void* object) {
 }
 
 static void add_units(entitya& source, playeri* v) {
-	pushvalue push(player, v);
-	source.collectiona::select(bsdata<troopi>::source, filter_player_province, true);
+	source.select(province, v);
+	source.sortunits();
 }
 
 static void prepare_army(int bonus) {
@@ -835,16 +846,21 @@ static void prepare_army(int bonus) {
 	}
 	attacker.clear();
 	defender.clear();
-	add_units(attacker.troops, player);
-	add_units(defender.troops, province->player);
-	attacker.prepare(Shield);
-	defender.prepare(Shield);
-	attacker.troops.sortunits();
-	defender.troops.sortunits();
+	attacker.select(province, player);
+	defender.select(province, province->player);
 	if(!attacker.troops || !defender.troops)
 		script_stop();
 	attacker.prepare(Shield);
 	defender.prepare(Shield);
+}
+
+static void determine_winner() {
+	auto a = attacker.getstrenght();
+	auto d = defender.getstrenght();
+	if(a >= d)
+		winner_army = &attacker;
+	else
+		winner_army = &defender;
 }
 
 static void show_battle_result() {
@@ -853,8 +869,9 @@ static void show_battle_result() {
 	pushtitle header(last_list->id);
 	draw::pause();
 	attacker.applycasualty();
-	attacker.clear();
 	defender.applycasualty();
+	determine_winner();
+	attacker.clear();
 	defender.clear();
 	update_ui();
 }
@@ -895,6 +912,13 @@ static void if_no_querry_break(int bonus) {
 		need_break = true;
 		script_stop();
 	}
+}
+
+static void if_win_battle(int bonus) {
+	last_army = winner_army;
+	auto result_true = (last_army == &attacker);
+	if(result_true != (bonus >= 0))
+		script_stop();
 }
 
 static void for_each_player(int bonus) {
@@ -1015,6 +1039,7 @@ BSDATA(script) = {
 	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
+	{"DestroyQuerry", destroy_querry},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
 	{"FocusPlayer", focus_player},
@@ -1024,6 +1049,7 @@ BSDATA(script) = {
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"IfControlCapital", if_control_capital},
 	{"IfNoQuerryBreak", if_no_querry_break},
+	{"IfWinBattle", if_win_battle},
 	{"InputQuerry", input_querry},
 	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
