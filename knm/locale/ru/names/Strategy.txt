@@ -18,6 +18,7 @@ MakeAction: Выполнить действие
 MoveTroops: Передвижение войск
 PassAction: Закончить ход
 PayForLeaders: Найм лидеров
+RetreatTroops: Отступление войск
 TacticAction: Тактическое действие
 TroopReinforsment: Местное ополчение
 ToTheBottom: Вниз колоды

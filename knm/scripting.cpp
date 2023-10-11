@@ -82,7 +82,7 @@ static const char* get_script_log() {
 
 static void wave_hostile() {
 	for(auto& e : bsdata<provincei>()) {
-		if(e.player == player)
+		if(e.player == player || !e.player)
 			continue;
 		if(!area.isvalid(e.position))
 			continue;
@@ -274,12 +274,10 @@ static void choose_input(int bonus) {
 	apply_input();
 }
 
-static void destroy_querry(int bonus) {
-	for(auto p : querry) {
-		auto po = findobject(p);
-		if(po)
-			po->clear();
-		p->clear();
+static void destroy_structures(int bonus) {
+	for(auto& e : bsdata<structure>()) {
+		if(e.location == province)
+			e.clear();
 	}
 	update_ui();
 }
@@ -388,6 +386,11 @@ static bool filter_move_range(const void* object) {
 	if(range == 0xFF)
 		return false;
 	return move >= range;
+}
+
+static bool filter_neightboard(const void* object) {
+	auto p = (entity*)object;
+	return area.getblock(p->getprovince()->position) <= 1;
 }
 
 static int compare_player_priority(const void* v1, const void* v2) {
@@ -691,8 +694,8 @@ static void choose_movement() {
 	console.clear();
 }
 
-static void apply_movement() {
-	for(auto p : movement)
+static void apply_movement(const entitya& source) {
+	for(auto p : source)
 		p->location = province;
 	update_ui();
 }
@@ -700,7 +703,7 @@ static void apply_movement() {
 static void choose_movement(int bonus) {
 	pushtitle push(last_list->id);
 	choose_movement();
-	apply_movement();
+	apply_movement(movement);
 }
 
 static void make_action(int bonus) {
@@ -715,6 +718,10 @@ static void make_action(int bonus) {
 		apply_primary_strategy();
 		apply_secondary_strategy();
 	}
+}
+
+static void make_wave(int bonus) {
+	make_wave();
 }
 
 static int choose_case(const char* v1, const char* v2, const char* v3 = 0) {
@@ -839,21 +846,6 @@ static void add_units(entitya& source, playeri* v) {
 	source.sortunits();
 }
 
-static void prepare_army(int bonus) {
-	if(player == province->player) {
-		script_stop();
-		return;
-	}
-	attacker.clear();
-	defender.clear();
-	attacker.select(province, player);
-	defender.select(province, province->player);
-	if(!attacker.troops || !defender.troops)
-		script_stop();
-	attacker.prepare(Shield);
-	defender.prepare(Shield);
-}
-
 static void determine_winner() {
 	auto a = attacker.getstrenght();
 	auto d = defender.getstrenght();
@@ -861,6 +853,22 @@ static void determine_winner() {
 		winner_army = &attacker;
 	else
 		winner_army = &defender;
+}
+
+static void prepare_army(int bonus) {
+	winner_army = 0;
+	attacker.clear();
+	defender.clear();
+	if(player == province->player) {
+		script_stop();
+		return;
+	}
+	attacker.select(province, player);
+	defender.select(province, province->player);
+	if(!attacker.troops || !defender.troops)
+		script_stop();
+	attacker.prepare(Shield);
+	defender.prepare(Shield);
 }
 
 static void show_battle_result() {
@@ -871,8 +879,6 @@ static void show_battle_result() {
 	attacker.applycasualty();
 	defender.applycasualty();
 	determine_winner();
-	attacker.clear();
-	defender.clear();
 	update_ui();
 }
 
@@ -916,7 +922,7 @@ static void if_no_querry_break(int bonus) {
 
 static void if_win_battle(int bonus) {
 	last_army = winner_army;
-	auto result_true = (last_army == &attacker);
+	auto result_true = (!last_army || last_army == &attacker);
 	if(result_true != (bonus >= 0))
 		script_stop();
 }
@@ -969,6 +975,77 @@ static void push_player(int bonus) {
 	script_stop();
 }
 
+static void push_province(int bonus) {
+	pushvalue push(province);
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	script_run(commands);
+	script_stop();
+}
+
+static void current_province(int bonus) {
+	if(bonus >= 0) {
+		if(querry.find(province) == -1)
+			querry.add(province);
+	} else {
+		auto pi = querry.find(province);
+		if(pi!=-1)
+			querry.remove(pi, 1);
+	}
+}
+
+static void move_troops(const playeri* player, const provincei* start, provincei* destination) {
+	for(auto& e : bsdata<troopi>()) {
+		if(e.player == player && e.getprovince() == start)
+			e.location = destination;
+	}
+	update_ui();
+}
+
+static void destory_troops(const playeri* player, const provincei* start) {
+	for(auto& e : bsdata<troopi>()) {
+		if(e.player == player && e.getprovince() == start)
+			e.clear();
+	}
+	update_ui();
+}
+
+static playeri* get_looser() {
+	if(winner_army == &attacker)
+		return defender.player;
+	else if(winner_army == &defender)
+		return attacker.player;
+	return 0;
+}
+
+static armyi* get_looser_army() {
+	if(winner_army == &attacker)
+		return &defender;
+	else if(winner_army == &defender)
+		return &attacker;
+	return 0;
+}
+
+static void retreat_troops(int bonus) {
+	pushvalue push_player(player, get_looser());
+	if(!player || !get_looser_army()->troops)
+		return;
+	pushvalue push(province);
+	pushtitle push_title(last_script->id);
+	auto start_province = province;
+	make_wave();
+	select_provincies(0);
+	querry.match(filter_neightboard, true);
+	current_province(-1);
+	if(querry) {
+		choose_province(0);
+		if(province) {
+			move_troops(player, push.value, province);
+			activity_token(0);
+		}
+	} else
+		destory_troops(player, province);
+}
+
 static void apply_trigger(int bonus) {
 	if(!last_list)
 		return;
@@ -983,9 +1060,6 @@ static void apply_trigger(int bonus) {
 			continue;
 		script_run(e.effect);
 	}
-}
-
-static void kill_enemy_infantry(int bonus) {
 }
 
 static bool allow_script(int bonus) {
@@ -1008,6 +1082,11 @@ static bool allow_choose(int bonus) {
 	return querry.getcount() != 0;
 }
 
+static bool allow_and_stop(int bonus) {
+	script_stop();
+	return true;
+}
+
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -1018,6 +1097,7 @@ BSDATA(filteri) = {
 	{"FilterHomeland", filter_homeland},
 	{"FilterPlayer", filter_player},
 	{"FilterProvinceLimit", filter_province_limit},
+	{"FilterNeightboard", filter_neightboard},
 	{"FilterSpeaker", filter_speaker},
 	{"FilterStructureLimit", filter_structure_limit},
 };
@@ -1039,7 +1119,8 @@ BSDATA(script) = {
 	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
-	{"DestroyQuerry", destroy_querry},
+	{"CurrentProvince", current_province},
+	{"DestroyStructures", destroy_structures},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
 	{"FocusPlayer", focus_player},
@@ -1051,9 +1132,10 @@ BSDATA(script) = {
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"IfWinBattle", if_win_battle},
 	{"InputQuerry", input_querry},
-	{"KillEnemyInfantry", kill_enemy_infantry},
 	{"MakeAction", make_action},
+	{"MakeWave", make_wave},
 	{"MeleeClash", melee_clash},
+	{"NoConditions", script_none, allow_and_stop},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
@@ -1065,12 +1147,14 @@ BSDATA(script) = {
 	{"PlayerUsed", player_used},
 	{"PrepareArmy", prepare_army},
 	{"PushPlayer", push_player},
+	{"PushProvince", push_province},
 	{"RecruitTroops", recruit_troops},
 	{"RefreshInfluence", refresh_influence},
 	{"RefreshResources", refresh_resources},
 	{"RefreshTrade", refresh_trade},
 	{"RemoveStrategy", remove_strategy},
 	{"Repeat", repeat_statement},
+	{"RetreatTroops", retreat_troops},
 	{"SelectPlayers", select_players, allow_select},
 	{"SelectPlayersBySpeaker", select_players_speaker, allow_select},
 	{"SelectProvinceStructures", select_province_structures, allow_select},

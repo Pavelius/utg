@@ -12,4 +12,3 @@ PathfinderGuild // You can move throught enemy province
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
 SpikedDefenceMoat trigger(BeforeCombat)
- effect KillEnemyInfantry

@@ -30,6 +30,9 @@ template<> void fnscript<listi>(int value, int bonus) {
 	last_list = push_list;
 }
 
+void script_none(int bonus) {
+}
+
 void conditional_script(int bonus) {
 	if(!last_script->test)
 		return;

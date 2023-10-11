@@ -1,2 +1,2 @@
-﻿In file `rules/Strategy.txt`:
- Line 95: Can't find variant `DestroyQuerry`
+﻿In file `Names.txt`:
+RetreatTroops: Define translate

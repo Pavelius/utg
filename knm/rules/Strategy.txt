@@ -81,6 +81,8 @@ ActionPhase
 StatusPhase
  elements RemoveStrategicCards RemoveActivityAllTokens
 AgendaPhase
+Retreat
+ elements MakeWave SelectProvinces FilterNeightboard+1 CurrentProvince-1 ChooseProvince
 
 GameTurn
  elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
@@ -91,26 +93,19 @@ GameStart
 GamePlay
  elements GameStart Repeat GameTurn
 
-DestroyEnemyStructures
- elements SelectProvinceStructures DestroyQuerry
-AttackerResult
- elements IfWinBattle DestroyEnemyStructures
 BeforeCombat
  elements ApplyTrigger
 BattleTactic
 DefenderResult
 HailOfArrows
-// RemoveCasualty
-// RetreatLooser
-// DestroyEnemyBuildings
 
 ApplyCombat
- elements PrepareArmy BeforeCombat BattleTactic HailOfArrows MeleeClash AttackerResult DefenderResult
+ elements PrepareArmy BeforeCombat BattleTactic HailOfArrows MeleeClash RetreatTroops
 
 #Card trigger(MakeAction)
 
 TacticAction
- effect PayHero ActivateProvince MoveTroops ApplyCombat EsteblishControl RecruitTroops
+ effect PayHero ActivateProvince NoConditions MoveTroops ApplyCombat IfWinBattle DestroyStructures EsteblishControl RecruitTroops
 PassAction
  effect EndRound
 
