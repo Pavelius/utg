@@ -380,8 +380,8 @@ void wait_all() {
 		doredraw();
 		waitcputime(1);
 		remove_orders();
-		remove_dead_objects();
 	}
+	remove_dead_objects();
 }
 
 void instant_all() {
@@ -405,6 +405,6 @@ void draworder::wait() {
 		doredraw();
 		waitcputime(1);
 		remove_orders();
-		remove_dead_objects();
 	}
+	remove_dead_objects();
 }
