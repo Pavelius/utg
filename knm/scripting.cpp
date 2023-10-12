@@ -1103,6 +1103,9 @@ static bool allow_and_stop(int bonus) {
 	return true;
 }
 
+static void open_tactic(int bonus) {
+}
+
 void initialize_script() {
 	answers::console = &console;
 	answers::prompt = console.begin();
@@ -1152,6 +1155,7 @@ BSDATA(script) = {
 	{"MakeWave", make_wave},
 	{"MeleeClash", melee_clash},
 	{"NoConditions", script_none, allow_and_stop},
+	{"OpenTactic", open_tactic},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},

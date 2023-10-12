@@ -118,6 +118,18 @@ static const char* getnmsh(const char* id) {
 	return pn;
 }
 
+static void open_script() {
+	auto p = (script*)hot.object;
+	p->proc(0);
+}
+
+static void hilite_button() {
+	pushvalue push_fore(fore, colors::button);
+	pushvalue push_alpha(alpha, (unsigned char)(hot.pressed ? 16 : 32));
+	pushvalue push_height(height, height + 4);
+	rectf();
+}
+
 static void status(const char* id, const char* value, const void* object) {
 	auto name = getnmsh(id);
 	auto push_fore = fore;
@@ -129,9 +141,9 @@ static void status(const char* id, const char* value, const void* object) {
 	height = 32 + 4;
 	if(ishilite(object)) {
 		if(bsdata<script>::have(object)) {
-			pushvalue push_alpha(alpha, (unsigned char)32);
-			pushvalue push_height(height, height + 4);
-			rectf();
+			hilite_button();
+			if(hot.key == MouseLeft && !hot.pressed)
+				execute(open_script, 0, 0, object);
 		}
 	}
 	fore = colors::border;
@@ -175,7 +187,7 @@ static void status(ability_s v) {
 	case Tactic:
 		status(bsdata<abilityi>::elements[v].id,
 			count_cards(player, bsdata<decki>::elements + TacticsDeck), player->getmaximum(v),
-			bsdata<abilityi>::elements + v);
+			bsdata<script>::find("OpenTactic"));
 		break;
 	default:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), bsdata<abilityi>::elements + v);
