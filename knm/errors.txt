@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
-RemoveActivityToken: Define translate
+AdventurersGuild: Define translate
+ArtisantGuild: Define translate

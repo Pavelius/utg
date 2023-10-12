@@ -355,6 +355,11 @@ static bool filter_used(const void* object) {
 	return p->is(Used);
 }
 
+bool filter_player_upgrade(const void* object) {
+	auto p = (upgradei*)object;
+	return player->isupgrade(p);
+}
+
 static bool filter_player(const void* object) {
 	auto p = (entity*)object;
 	return p->getplayer() == player;

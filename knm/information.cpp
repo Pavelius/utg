@@ -5,6 +5,7 @@
 #include "structure.h"
 #include "troop.h"
 #include "unit.h"
+#include "upgrade.h"
 #include "variant.h"
 
 static void add_line(stringbuilder& sb) {
@@ -12,6 +13,8 @@ static void add_line(stringbuilder& sb) {
 }
 
 static void add_head(stringbuilder& sb, const char* id) {
+	if(!id)
+		return;
 	sb.addn("###%1", getnm(id));
 }
 
@@ -131,6 +134,12 @@ static void add_ability(stringbuilder& sb, const variants& source, const char* i
 	add_script(sb, source);
 }
 
+static void add_textinfo(stringbuilder& sb, const char* id) {
+	auto p = getdescription(id);
+	if(p)
+		sb.addn(p);
+}
+
 template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
 	auto p = (strategyi*)object;
 	add_ability(sb, p->primary, "PrimaryAbility");
@@ -164,4 +173,18 @@ template<> void ftinfo<uniti>(const void* object, stringbuilder& sb) {
 template<> void ftinfo<troopi>(const void* object, stringbuilder& sb) {
 	auto p = (troopi*)object;
 	ftinfo<uniti>(p->id, sb);
+}
+
+template<> void ftinfo<upgradei>(const void* object, stringbuilder& sb) {
+	auto p = (upgradei*)object;
+	add_head(sb, p->id);
+	add_textinfo(sb, p->id);
+}
+
+const char* getinform(const void* object) {
+	static char temp[512];
+	stringbuilder sb(temp); sb.clear();
+	if(bsdata<upgradei>::have(object))
+		ftinfo<upgradei>(object, sb);
+	return temp;
 }

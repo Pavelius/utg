@@ -204,8 +204,10 @@
     <Text Include="locale\ru\names\Structures.txt" />
     <Text Include="locale\ru\names\Tactics.txt" />
     <Text Include="locale\ru\names\Units.txt" />
+    <Text Include="locale\ru\names\Upgrade.txt" />
     <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
     <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
+    <Text Include="locale\ru\tips\UpgradeDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Laws.txt" />
     <Text Include="rules\Players.txt" />

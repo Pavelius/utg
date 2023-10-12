@@ -25,6 +25,8 @@ inline point i2h(short unsigned i) { return {(short)(i % hms), (short)(i / hms)}
 inline short unsigned h2i(point v) { return v.y * hms + v.x; }
 
 int count_cards(const playeri* player, const entity* location);
+bool filter_player_upgrade(const void* object);
+const char* getinform(const void* object);
 
 const int button_height = 20;
 const int button_width = 43;
@@ -125,6 +127,8 @@ static const char* getnmsh(const char* id) {
 static void show_widget_scene() {
 	while(show_widget && ismodal()) {
 		paintstart();
+		caret.x += metrics::padding + metrics::border;
+		caret.y += metrics::padding + metrics::border;
 		show_widget->proc();
 		paintfinish();
 		domodal();
@@ -683,43 +687,55 @@ static void textct(const char* format) {
 	texta(format, AlignCenterCenter);
 }
 
-static void rectbc(color v, bool mark, const void* hilite_item) {
+static void tips_text(const entity* p, fnstatus proc) {
+	char temp[512]; stringbuilder sb(temp);
+	proc(p, sb);
+	
+}
+
+static void window_frame(color v, const entity* pe, const char* format) {
 	rectpush push;
 	auto push_fore = fore;
 	fore = v;
 	auto push_alpha = alpha;
-	alpha = 16;
-	if(mark)
-		alpha += 64;
-	if(ishilite(hilite_item)) {
-		alpha += 16;
-		if(hot.pressed)
-			alpha -= 32;
-	}
+	alpha = 192;
+	//if(ishilite(pe)) {
+	//	alpha -= 32;
+	//	if(hot.pressed)
+	//		alpha += 64;
+	//}
 	rectf();
 	alpha = push_alpha;
 	rectb();
-	if(mark) {
-		setoffset(3, 3);
-		rectb();
-	}
 	fore = push_fore;
+	setoffset(metrics::border, metrics::border);
+	if(format)
+		textf(format);
 }
 
-static void paint_deck(const entity* location) {
-	for(auto& e : bsdata<card>()) {
-		if(e.player != player || e.location != location)
-			continue;
-		rectbc(colors::green, false, &e);
-	}
+static void window_frame(color v, const entity* pe) {
+	window_frame(v, pe, getinform(pe));
 }
 
 static void tactic_form() {
-	paint_deck(bsdata<decki>::elements + TacticsDeck);
+}
+
+static void paint_querry() {
+	rectpush push; width = 280; height = 100;
+	auto origin = caret;
+	for(auto p : querry) {
+		window_frame(colors::window, p);
+		caret.y += height + metrics::border;
+		if(caret.y + height > clipping.y2) {
+			caret.x = origin.x += width + metrics::border;
+			caret.y = origin.y;
+		}
+	}
 }
 
 static void open_upgrades() {
-	paint_deck(bsdata<decki>::elements + TacticsDeck);
+	querry.collectiona::select(bsdata<upgradei>::source, filter_player_upgrade, true);
+	paint_querry();
 }
 
 //static void tech_paint(tech_s i) {

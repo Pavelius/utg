@@ -1,4 +1,5 @@
 #include "crt.h"
+#include "player.h"
 #include "province.h"
 #include "structure.h"
 
@@ -12,4 +13,6 @@ void initialize_province() {
 	bsdata<provincei>::elements[2].position = {4, 3};
 	bsdata<provincei>::elements[3].position = {2, 4};
 	bsdata<provincei>::elements[4].position = {3, 4};
+	bsdata<playeri>::elements[0].upgrades |= 1|2;
+	bsdata<playeri>::elements[0].upgrades |= 2;
 }

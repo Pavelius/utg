@@ -1,0 +1,2 @@
+AdventurersGuild: Гильдия приключенцев
+ArtisantGuild: Гильдия ремесленников
