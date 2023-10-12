@@ -1,15 +1,14 @@
-#include "datasource.h"
 #include "stringbuilder.h"
 
 #pragma once
 
 namespace draw {
-struct guii : datasource {
+struct guii {
 	const char*	id;
 	const char*	title;
 	const char*	value;
-	void*		object;
-	int			number, index, column;
+	void*		data;
+	int			index, number;
 	bool		focused, hilighted, checked, disabled;
 	unsigned	key, flags;
 	fntext		pgetname;

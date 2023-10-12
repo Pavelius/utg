@@ -5,8 +5,9 @@
 
 using namespace draw;
 
-static int list_maximum, list_perpage;
+static int	list_maximum, list_perpage;
 static int* list_current;
+datasource	list_data;
 
 sprite* metrics::list = (sprite*)loadb("art/tool/tree.pma");
 
@@ -101,7 +102,7 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 	auto push_clip = clipping;
 	setclipall();
 	gui.hilighted = ishilite();
-	list_maximum = gui.count;
+	list_maximum = list_data.count;
 	list_input(current, origin, list_perpage, perline);
 	auto push_height = height;
 	height = perline;
@@ -115,11 +116,11 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 		if(ishilite() && hot.key == MouseLeft && hot.pressed)
 			execute(cbsetint, gui.index, 0, &current);
 		auto push_value = gui.value;
-		gui.object = gui.ptr(gui.index);
+		gui.data = list_data.ptr(gui.index);
 		auto push_caret = caret;
 		if(gui.pgetname) {
 			sb.clear();
-			gui.value = gui.pgetname(gui.object, sb);
+			gui.value = gui.pgetname(gui.data, sb);
 		}
 		prow();
 		caret = push_caret;

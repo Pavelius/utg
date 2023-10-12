@@ -1,3 +1,5 @@
+#include "datasource.h"
+
 #pragma once
 
 struct sprite;
@@ -12,3 +14,4 @@ void			showactive();
 void			showbackground();
 void			showborder();
 }
+extern datasource list_data;

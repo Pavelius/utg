@@ -1,0 +1,2 @@
+﻿AppTitle: Компилятор
+ErrorNotFoundRule: Не найдено правило `%1`

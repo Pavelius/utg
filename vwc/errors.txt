@@ -1,3 +1,2 @@
-﻿In file `rules/lexer_c2.txt`:
- Line 41: Expected token `#`
- Line 41: Expected identifier
+﻿In file `Names.txt`:
+AppTitle: Define translate

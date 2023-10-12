@@ -38,14 +38,14 @@
     <Text Include="rules\Basic.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
     <Text Include="rules\lexer_c2.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

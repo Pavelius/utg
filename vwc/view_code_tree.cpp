@@ -23,7 +23,7 @@ static bool symbol_visible(const void* object) {
 }
 
 void update_code_tree() {
-	symbols.collectiona::select(last_package->symbols, symbol_visible);
+	symbols.collectiona::select(last_package->symbols, symbol_visible, true);
 }
 
 static int get_icon(symbol* p) {
@@ -65,10 +65,10 @@ static void code_tree_widget() {
 
 void view_code_tree() {
 	auto push = gui;
-	gui.data = symbols.data;
-	gui.size = sizeof(symbol*);
-	gui.count = symbols.getcount();
-	gui.mask = 0;
+	list_data.data = symbols.data;
+	list_data.size = sizeof(symbol*);
+	list_data.count = symbols.getcount();
+	list_data.mask = 0;
 	gui.pgetname = main_getname;
 	code_tree_widget();
 	gui = push;

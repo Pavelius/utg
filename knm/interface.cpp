@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "area.h"
+#include "card.h"
 #include "deck.h"
 #include "draw.h"
 #include "draw_figure.h"
@@ -15,6 +16,7 @@
 #include "structure.h"
 #include "troop.h"
 #include "unit.h"
+#include "widget.h"
 
 using namespace draw;
 
@@ -32,6 +34,8 @@ const int player_marker_size = 16;
 const int indicator_width = 48;
 const int tech_padding = 16;
 const char* message_string;
+
+static widget* show_widget;
 
 static color tech_colors[] = {
 	{40, 40, 40},
@@ -118,14 +122,40 @@ static const char* getnmsh(const char* id) {
 	return pn;
 }
 
-static void open_script() {
-	auto p = (script*)hot.object;
-	p->proc(0);
+static void show_widget_scene() {
+	while(show_widget && ismodal()) {
+		paintstart();
+		show_widget->proc();
+		paintfinish();
+		domodal();
+	}
+}
+
+static void open_widget() {
+	if(show_widget) {
+		auto p = (widget*)hot.object;
+		if(show_widget == p)
+			show_widget = 0;
+		else
+			show_widget = p;
+	} else {
+		auto push = show_widget;
+		show_widget = (widget*)hot.object;
+		show_widget_scene();
+		show_widget = push;
+	}
 }
 
 static void hilite_button() {
 	pushvalue push_fore(fore, colors::button);
 	pushvalue push_alpha(alpha, (unsigned char)(hot.pressed ? 16 : 32));
+	pushvalue push_height(height, height + 4);
+	rectf();
+}
+
+static void marked_button() {
+	pushvalue push_fore(fore, colors::active);
+	pushvalue push_alpha(alpha, (unsigned char)64);
 	pushvalue push_height(height, height + 4);
 	rectf();
 }
@@ -139,11 +169,13 @@ static void status(const char* id, const char* value, const void* object) {
 	auto push_height = height;
 	width = indicator_width;
 	height = 32 + 4;
+	if(object && show_widget == object)
+		marked_button();
 	if(ishilite(object)) {
-		if(bsdata<script>::have(object)) {
+		if(bsdata<widget>::have(object)) {
 			hilite_button();
 			if(hot.key == MouseLeft && !hot.pressed)
-				execute(open_script, 0, 0, object);
+				execute(open_widget, 0, 0, object);
 		}
 	}
 	fore = colors::border;
@@ -181,13 +213,18 @@ static void status(const char* id, int value, int maximum, const void* object) {
 
 static void status(ability_s v) {
 	switch(v) {
-	case Fame: case Goods: case Resources: case Influence: case Lore:
+	case Fame: case Goods: case Resources: case Influence:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
+		break;
+	case Lore:
+		status(bsdata<abilityi>::elements[v].id,
+			player->get(v), player->getmaximum(v),
+			bsdata<widget>::find("UpgradesForm"));
 		break;
 	case Tactic:
 		status(bsdata<abilityi>::elements[v].id,
 			count_cards(player, bsdata<decki>::elements + TacticsDeck), player->getmaximum(v),
-			bsdata<script>::find("OpenTactic"));
+			bsdata<widget>::find("TacticForm"));
 		break;
 	default:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), bsdata<abilityi>::elements + v);
@@ -646,7 +683,7 @@ static void textct(const char* format) {
 	texta(format, AlignCenterCenter);
 }
 
-static void rectbc(color v, bool mark, void* hilite_item) {
+static void rectbc(color v, bool mark, const void* hilite_item) {
 	rectpush push;
 	auto push_fore = fore;
 	fore = v;
@@ -667,6 +704,22 @@ static void rectbc(color v, bool mark, void* hilite_item) {
 		rectb();
 	}
 	fore = push_fore;
+}
+
+static void paint_deck(const entity* location) {
+	for(auto& e : bsdata<card>()) {
+		if(e.player != player || e.location != location)
+			continue;
+		rectbc(colors::green, false, &e);
+	}
+}
+
+static void tactic_form() {
+	paint_deck(bsdata<decki>::elements + TacticsDeck);
+}
+
+static void open_upgrades() {
+	paint_deck(bsdata<decki>::elements + TacticsDeck);
 }
 
 //static void tech_paint(tech_s i) {
@@ -716,3 +769,9 @@ void initialize_ui() {
 	pbackground = main_background;
 	pfinish = main_finish;
 }
+
+BSDATA(widget) = {
+	{"UpgradesForm", open_upgrades},
+	{"TacticForm", tactic_form},
+};
+BSDATAF(widget)
