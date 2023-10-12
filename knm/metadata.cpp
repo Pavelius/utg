@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "boardpart.h"
 #include "card.h"
 #include "crt.h"
 #include "deck.h"
@@ -31,9 +30,6 @@ BSDATAC(troopi, 128 * 8)
 BSDATAC(upgradei, 32)
 
 BSMETA(abilityi) = {
-	BSREQ(id),
-	{}};
-BSMETA(boardparti) = {
 	BSREQ(id),
 	{}};
 BSMETA(cardi) = {

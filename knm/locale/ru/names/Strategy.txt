@@ -13,6 +13,7 @@ DoubleProvinceResources: Дополнительные ресурсы
 PayResearch: Инвестиции в развитие
 PlanningPhase: Выбор стратегии на год
 ResetMovement: Сбросить выбор
+Retreat: Отступление
 LookLaws: Посмотреть законы
 MakeAction: Выполнить действие
 MoveTroops: Передвижение войск

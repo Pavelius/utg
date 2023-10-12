@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "area.h"
+#include "deck.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"
@@ -20,6 +21,8 @@ using namespace draw;
 const int hms = 8;
 inline point i2h(short unsigned i) { return {(short)(i % hms), (short)(i / hms)}; }
 inline short unsigned h2i(point v) { return v.y * hms + v.x; }
+
+int count_cards(const playeri* player, const entity* location);
 
 const int button_height = 20;
 const int button_width = 43;
@@ -169,6 +172,11 @@ static void status(ability_s v) {
 	case Fame: case Goods: case Resources: case Influence: case Lore:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
 		break;
+	case Tactic:
+		status(bsdata<abilityi>::elements[v].id,
+			count_cards(player, bsdata<decki>::elements + TacticsDeck), player->getmaximum(v),
+			bsdata<abilityi>::elements + v);
+		break;
 	default:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), bsdata<abilityi>::elements + v);
 		break;
@@ -189,6 +197,8 @@ static void show_indicators() {
 		status(v);
 	caret.x += 2;
 	status(Lore);
+	caret.x += 2;
+	status(Tactic);
 	caret.x += 2;
 	//status(getnmsh("ActionCards"), player->getactioncards(), bsdata<script>::find("ShowActionCards"));
 	//status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));

@@ -16,6 +16,8 @@ int	playeri::getmaximum(ability_s v) const {
 		return 10;
 	case Resources: case Influence:
 		return getbonus(v);
+	case Tactic:
+		return 6;
 	default:
 		return 100;
 	}

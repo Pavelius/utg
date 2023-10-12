@@ -1,2 +1,2 @@
 ﻿In file `Names.txt`:
-RetreatTroops: Define translate
+Retreat: Define translate

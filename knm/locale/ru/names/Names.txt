@@ -10,6 +10,7 @@ Influence: Влияние
 LimitInProvince: Лимит в провинции
 Lore: Развитие
 Resources: Ресурсы
+Tactic: Тактика
 
 Combat: Сражение
 Cost: Цена

@@ -54,9 +54,6 @@
     <ClInclude Include="draw_marker.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="boardpart.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="pushtitle.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -123,9 +120,6 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="draw_marker.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="boardpart.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="pushtitle.cpp">

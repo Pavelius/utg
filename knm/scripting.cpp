@@ -36,6 +36,21 @@ static int getone(int v) {
 	return v ? v : 1;
 }
 
+int count_cards(const playeri* player, const entity* location) {
+	auto result = 0;
+	for(auto& e : bsdata<card>()) {
+		if(!e)
+			continue;
+		if(e.player != player)
+			continue;
+		auto p = e.getcomponent();
+		if(!p || !p->usedeck() || p->location != location)
+			continue;
+		result++;
+	}
+	return result;
+}
+
 static int count_structures(const provincei* province) {
 	auto result = 0;
 	for(auto& e : bsdata<structure>()) {
@@ -49,6 +64,15 @@ static int count_structures(const provincei* province, const structurei* type) {
 	auto result = 0;
 	for(auto& e : bsdata<structure>()) {
 		if((structurei*)e.id == type && e.location == province)
+			result++;
+	}
+	return result;
+}
+
+static int count_units(const provincei* province, const playeri* player) {
+	auto result = 0;
+	for(auto& e : bsdata<troopi>()) {
+		if(e.location == province && e.player == player)
 			result++;
 	}
 	return result;
@@ -274,9 +298,9 @@ static void choose_input(int bonus) {
 	apply_input();
 }
 
-static void destroy_structures(int bonus) {
+static void destroy_enemy_structures(int bonus) {
 	for(auto& e : bsdata<structure>()) {
-		if(e.location == province)
+		if(e.location == province && e.player != player)
 			e.clear();
 	}
 	update_ui();
@@ -988,7 +1012,7 @@ static void current_province(int bonus) {
 			querry.add(province);
 	} else {
 		auto pi = querry.find(province);
-		if(pi!=-1)
+		if(pi != -1)
 			querry.remove(pi, 1);
 	}
 }
@@ -1009,14 +1033,6 @@ static void destory_troops(const playeri* player, const provincei* start) {
 	update_ui();
 }
 
-static playeri* get_looser() {
-	if(winner_army == &attacker)
-		return defender.player;
-	else if(winner_army == &defender)
-		return attacker.player;
-	return 0;
-}
-
 static armyi* get_looser_army() {
 	if(winner_army == &attacker)
 		return &defender;
@@ -1026,11 +1042,11 @@ static armyi* get_looser_army() {
 }
 
 static void retreat_troops(int bonus) {
-	pushvalue push_player(player, get_looser());
-	if(!player || !get_looser_army()->troops)
+	auto looser = get_looser_army();
+	if(!looser || !looser->player || !looser->troops)
 		return;
 	pushvalue push(province);
-	pushtitle push_title(last_script->id);
+	pushvalue push_player(player, looser->player);
 	auto start_province = province;
 	make_wave();
 	select_provincies(0);
@@ -1120,7 +1136,7 @@ BSDATA(script) = {
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"CurrentProvince", current_province},
-	{"DestroyStructures", destroy_structures},
+	{"DestroyEnemyStructures", destroy_enemy_structures},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
 	{"FocusPlayer", focus_player},
