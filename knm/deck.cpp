@@ -2,10 +2,10 @@
 #include "deck.h"
 
 BSDATA(decki) = {
+	{"TacticsDeck"},
 	{"LawsDeck"},
 	{"ObjectivesDeck"},
 	{"SecretObjectivesDeck"},
-	{"TacticsDeck"},
 	{"UpgradesDeck"},
 };
 assert_enum(decki, UpgradesDeck)
@@ -36,4 +36,9 @@ void decki::create() {
 	cards.clear();
 	add_cards(cards, this);
 	cards.shuffle();
+}
+
+void initialize_decks() {
+	for(auto& e : bsdata<decki>())
+		e.create();
 }

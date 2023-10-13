@@ -210,6 +210,7 @@
     <Text Include="locale\ru\tips\UpgradeDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Laws.txt" />
+    <Text Include="rules\Objectives.txt" />
     <Text Include="rules\Players.txt" />
     <Text Include="rules\Provinces.txt" />
     <Text Include="rules\Strategy.txt" />

@@ -22,13 +22,13 @@
 
 extern const char* message_string;
 
-static char				log_text[1024];
-static stringbuilder	actions_log(log_text);
-static char				console_text[512];
-stringbuilder			console(console_text);
-static entitya			recruit, movement;
-static int				need_pay;
-static bool				need_break;
+static char			log_text[1024];
+static stringbuilder actions_log(log_text);
+static char			console_text[512];
+stringbuilder		console(console_text);
+static entitya		recruit, movement;
+static bool			need_break;
+static int			last_value;
 
 void update_ui();
 
@@ -422,6 +422,30 @@ static bool filter_neightboard(const void* object) {
 	return area.getblock(p->getprovince()->position) <= 1;
 }
 
+static void* get_province(const void* object) {
+	return ((entity*)object)->getprovince();
+}
+
+static void group_province(int bonus) {
+	querry.group(get_province);
+}
+
+static void set_value(int bonus) {
+	last_value = bonus;
+}
+
+static void add_value(int bonus) {
+	last_value += bonus;
+}
+
+static void set_value_querry_count(int bonus) {
+	last_value = querry.getcount() + bonus;
+}
+
+static void set_province_capital(int bonus) {
+	province = bsdata<provincei>::elements;
+}
+
 static int compare_player_priority(const void* v1, const void* v2) {
 	auto p1 = *((playeri**)v1);
 	auto p2 = *((playeri**)v2);
@@ -666,6 +690,20 @@ static void pay_research(int bonus) {
 	pay_ability(last_script->id, Lore, Resources, bonus, 1, 5);
 }
 
+static bool allow_pay_resources(int bonus) {
+	return allow_pay(Resources, getone(bonus));
+}
+static void pay_resources(int bonus) {
+	pay(Resources, getone(bonus));
+}
+
+static bool allow_pay_gold(int bonus) {
+	return allow_pay(Gold, getone(bonus));
+}
+static void pay_gold(int bonus) {
+	pay(Gold, getone(bonus));
+}
+
 static void apply_primary_strategy() {
 	last_strategy->set(Used);
 	script_run(last_strategy->primary);
@@ -764,6 +802,10 @@ static int choose_case(const char* v1, const char* v2, const char* v3 = 0) {
 	return (long)an.choose(0, 0, 0);
 }
 
+static void put_card_on_table(int bonus) {
+	last_card->location = 0;
+}
+
 static void choose_cards_discard(int bonus) {
 	while(bonus > 0) {
 		choose_card(0);
@@ -790,6 +832,10 @@ static void sort_players() {
 static void select_players(int bonus) {
 	querry.collectiona::select(bsdata<playeri>::source);
 	sort_players();
+}
+
+static void select_player_troops(int bonus) {
+	querry.collectiona::select(bsdata<troopi>::source, filter_player, true);
 }
 
 static void select_strategy(int bonus) {
@@ -954,6 +1000,17 @@ static void if_win_battle(int bonus) {
 	auto result_true = (!last_army || last_army == &attacker);
 	if(result_true != (bonus >= 0))
 		script_stop();
+}
+
+static void for_each_card(int bonus) {
+	entityv push_querry(querry);
+	pushvalue push(player);
+	variants commands; commands.set(script_begin, script_end - script_begin);
+	for(auto p : push_querry) {
+		last_card = static_cast<card*>(p);
+		script_run(commands);
+	}
+	script_stop();
 }
 
 static void for_each_player(int bonus) {
@@ -1136,9 +1193,11 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
+	{"AddValue", add_value},
 	{"AttackMilita", attack_milita},
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
+	{"PutCardOnTable", put_card_on_table},
 	{"ChooseCardsDiscard", choose_cards_discard},
 	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
@@ -1149,9 +1208,11 @@ BSDATA(script) = {
 	{"EsteblishControl", establish_control},
 	{"FocusPlayer", focus_player},
 	{"FocusProvince", focus_province},
+	{"ForEachCard", for_each_card, allow_for_each},
 	{"ForEachPlayer", for_each_player, allow_for_each},
 	{"ForEachProvince", for_each_province, allow_for_each},
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
+	{"GroupProvince", group_province, allow_select},
 	{"IfControlCapital", if_control_capital},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"IfWinBattle", if_win_battle},
@@ -1162,10 +1223,12 @@ BSDATA(script) = {
 	{"NoConditions", script_none, allow_and_stop},
 	{"OpenTactic", open_tactic},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},
+	{"PayGold", pay_gold, allow_pay_gold},
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
 	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
 	{"PayResearch", pay_research},
+	{"PayResources", pay_resources, allow_pay_resources},
 	{"PickCards", pick_cards},
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
@@ -1182,9 +1245,13 @@ BSDATA(script) = {
 	{"RetreatTroops", retreat_troops},
 	{"SelectPlayers", select_players, allow_select},
 	{"SelectPlayersBySpeaker", select_players_speaker, allow_select},
+	{"SelectPlayerTroops", select_player_troops, allow_select},
 	{"SelectProvinceStructures", select_province_structures, allow_select},
 	{"SelectProvinces", select_provincies, allow_select},
 	{"SelectStrategy", select_strategy, allow_select},
 	{"SelectStructures", select_structures, allow_select},
+	{"SetProvinceCapital", set_province_capital, allow_script},
+	{"SetValue", set_value, allow_script},
+	{"SetValueQuerryCount", set_value_querry_count, allow_script},
 };
 BSDATAF(script)

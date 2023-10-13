@@ -73,3 +73,20 @@ void entitya::select(const entity* location, const entity* player) {
 	}
 	count = ps - data;
 }
+
+void entitya::select(const entity* deck, const entity* location, const entity* player) {
+	auto ps = data;
+	auto pe = endof();
+	for(auto& e : bsdata<card>()) {
+		if(!e)
+			continue;
+		if(e.player != player || e.location != location)
+			continue;
+		if(e.getcomponent()->location != deck)
+			continue;
+		if(ps >= pe)
+			break;
+		*ps++ = &e;
+	}
+	count = ps - data;
+}

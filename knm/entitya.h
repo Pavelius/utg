@@ -3,8 +3,7 @@
 
 #pragma once
 
-enum deck_s : unsigned char;
-
+struct decki;
 struct provincei;
 
 struct entitya : collection<entity> {
@@ -15,6 +14,7 @@ struct entitya : collection<entity> {
 	entity*		pick() { return (entity*)collectiona::pick(); }
 	void		select(const entity* location);
 	void		select(const entity* location, const entity* player);
+	void		select(const entity* deck, const entity* location, const entity* player);
 	void		sortunits();
 };
 struct entityv : vector<entity*> {

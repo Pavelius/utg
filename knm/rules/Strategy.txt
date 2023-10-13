@@ -88,8 +88,10 @@ GameTurn
  elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
 PreparePlayers
  elements SelectPlayers ForEachPlayer AddStart
+PreparePublicObjectives
+ elements ObjectivesDeck+1 ForEachCard PutCardOnTable
 GameStart
- elements PreparePlayers
+ elements PreparePlayers PreparePublicObjectives
 GamePlay
  elements GameStart Repeat GameTurn
 

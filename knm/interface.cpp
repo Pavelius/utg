@@ -217,8 +217,13 @@ static void status(const char* id, int value, int maximum, const void* object) {
 
 static void status(ability_s v) {
 	switch(v) {
-	case Fame: case Goods: case Resources: case Influence:
+	case Goods: case Resources: case Influence:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
+		break;
+	case Fame:
+		status(bsdata<abilityi>::elements[v].id,
+			player->get(v), player->getmaximum(v),
+			bsdata<widget>::find("OpenObjectives"));
 		break;
 	case Lore:
 		status(bsdata<abilityi>::elements[v].id,
@@ -733,6 +738,11 @@ static void paint_querry() {
 	}
 }
 
+static void open_objectives() {
+	querry.select(bsdata<decki>::elements + ObjectivesDeck, 0, 0);
+	paint_querry();
+}
+
 static void open_upgrades() {
 	querry.collectiona::select(bsdata<upgradei>::source, filter_player_upgrade, true);
 	paint_querry();
@@ -788,6 +798,7 @@ void initialize_ui() {
 
 BSDATA(widget) = {
 	{"UpgradesForm", open_upgrades},
+	{"OpenObjectives", open_objectives},
 	{"TacticForm", tactic_form},
 };
 BSDATAF(widget)

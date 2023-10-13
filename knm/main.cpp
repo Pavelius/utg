@@ -8,6 +8,7 @@
 #include "player.h"
 
 void prepare_game_ui();
+void initialize_decks();
 void initialize_ui();
 void initialize_script();
 void update_ui();
@@ -15,11 +16,6 @@ void update_ui();
 #ifdef _DEBUG
 void util_main();
 #endif // _DEBUG
-
-static void initialize_decks() {
-	for(auto& e : bsdata<decki>())
-		e.create();
-}
 
 static void start_game() {
 	area.clear();
