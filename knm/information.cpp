@@ -148,7 +148,8 @@ template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
 
 template<> void ftinfo<cardi>(const void* object, stringbuilder& sb) {
 	auto p = (cardi*)object;
-	add_ability(sb, p->effect, "Effect");
+	add_head(sb, p->id);
+	add_textinfo(sb, p->id);
 }
 
 template<> void ftinfo<structurei>(const void* object, stringbuilder& sb) {
@@ -181,10 +182,17 @@ template<> void ftinfo<upgradei>(const void* object, stringbuilder& sb) {
 	add_textinfo(sb, p->id);
 }
 
+template<> void ftinfo<card>(const void* object, stringbuilder& sb) {
+	auto p = (card*)object;
+	ftinfo<cardi>(p->id, sb);
+}
+
 const char* getinform(const void* object) {
 	static char temp[512];
 	stringbuilder sb(temp); sb.clear();
 	if(bsdata<upgradei>::have(object))
 		ftinfo<upgradei>(object, sb);
+	else if(bsdata<card>::have(object))
+		ftinfo<card>(object, sb);
 	return temp;
 }

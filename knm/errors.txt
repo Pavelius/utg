@@ -1,2 +1,2 @@
-﻿In file `rules/Objectives.txt`:
- Line 8: Can't find variant `SetProvinceCapitan`
+﻿In file `Names.txt`:
+ErectAMonument: Define translate
