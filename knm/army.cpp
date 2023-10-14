@@ -12,6 +12,15 @@ static const char*		last_list_start;
 armyi					attacker, defender;
 armyi					*last_army, *winner_army;
 
+static void add_header() {
+	if(!last_header)
+		return;
+	if(!last_army)
+		return;
+	console.addn(last_header, last_army->player->getname());
+	last_header = 0;
+}
+
 static void add_next(const char* format) {
 	if(last_list_start && last_list_start[0])
 		console.add(format);
@@ -19,6 +28,10 @@ static void add_next(const char* format) {
 
 inline int d10() {
 	return 1 + rand() % 10;
+}
+
+void armyi::setheader(const char* format) {
+	last_header = format;
 }
 
 void armyi::applycasualty() {
@@ -53,8 +66,9 @@ void armyi::damage(int chance, int count) {
 }
 
 void armyi::engage(const char* name, int chance, int count) {
-	if(!count)
+	if(count <= 0)
 		return;
+	add_header();
 	console.addn("%1: ", name);
 	last_list_start = console.get();
 	damage(chance, count);

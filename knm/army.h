@@ -20,6 +20,7 @@ struct armyi : abilitya {
 	int			getstrenght() const { return getsummary(Strenght); }
 	void		prepare(ability_s type);
 	void		resist(int& hits);
+	static void setheader(const char* format);
 	void		select(const entity* location, playeri* player);
 	void		suffer(int hits);
 };

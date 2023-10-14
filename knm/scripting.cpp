@@ -81,24 +81,25 @@ static int count_units(const provincei* province, const playeri* player) {
 static void apply_trigger(int bonus) {
 	if(!last_list)
 		return;
-	auto id = last_list->id;
+	const char* id_list = last_list ? last_list->id : 0;
+	const char* id_script = last_script ? last_script->id : 0;
 	// Standart component trigger (autouse)
 	for(auto& e : bsdata<cardi>()) {
 		if(e.usedeck() || !e.trigger)
 			continue;
 		if(e.player != player)
 			continue;
-		if(strcmp(e.trigger, id) != 0)
-			continue;
-		script_run(e.effect);
+		if((id_list && strcmp(e.trigger, id_list) == 0)
+			|| (id_script && strcmp(e.trigger, id_script) == 0))
+			script_run(e.effect);
 	}
 	// Upgrade trigger (autouse)
 	for(auto& e : bsdata<upgradei>()) {
 		if(!e.trigger || !player->isupgrade(&e))
 			continue;
-		if(strcmp(e.trigger, id) != 0)
-			continue;
-		script_run(e.effect);
+		if((id_list && strcmp(e.trigger, id_list) == 0)
+			|| (id_script && strcmp(e.trigger, id_script) == 0))
+			script_run(e.effect);
 	}
 }
 
@@ -682,15 +683,6 @@ static void add_gold(int bonus) {
 	player->current.abilities[Gold] += bonus;
 }
 
-static void combat_round(int bonus) {
-	attacker.prepare(Shield);
-	defender.prepare(Shield);
-	attacker.engage(Damage, 0);
-	defender.engage(Damage, 0);
-	defender.suffer(attacker.get(Damage));
-	attacker.suffer(defender.get(Damage));
-}
-
 static card* pickcard(deck_s type) {
 	return (card*)bsdata<decki>::elements[type].cards.pick();
 }
@@ -992,15 +984,12 @@ static void apply_casualty(int bonus) {
 }
 
 static void attack_army(armyi& source, ability_s type, bool milita_attack = false) {
-	if(!source.troops.gettotal(type) && !(milita_attack && source.getsummary(Milita) > 0))
-		return;
 	pushvalue push_player(player, source.player);
 	pushvalue push_army(last_army, &source);
-	console.addn("###");
-	console.add(source.player->getname());
+	source.setheader("###%1");
 	apply_trigger(0);
-	if(milita_attack && source.get(Milita))
-		source.engage("Milita", 2, source.get(Milita));
+	if(milita_attack)
+		source.engage(getnm("Milita"), 2, source.get(Milita));
 	source.engage(type, 0);
 }
 
