@@ -1,10 +1,10 @@
 #Structure
 
 Fortress avatar(0)
- abilities Strenght(2) Recruit(2) LimitInProvince(1)
+ abilities Strenght(2) Milita(1) LimitInProvince(1)
 Mine avatar(2)
  abilities Resources(1) LimitInProvince(1)
 City avatar(1)
- abilities Goods(1) Influence(1) LimitInProvince(1)
+ abilities Recruit(2) Influence(1) LimitInProvince(1)
 Temple avatar(3)
  abilities Lore(2) LimitInProvince(1)

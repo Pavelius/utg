@@ -6,6 +6,8 @@ RecruitReset: Отменить заказ
 RecruitTroops: Найм войск
 RecruitUnitCost: %1 (Цена %2i)
 
+Milita: Ополчение
+
 Archers: Лучники
 Cavalry: Кавалерия
 Pikemens: Копейщики

@@ -92,6 +92,14 @@ static void apply_trigger(int bonus) {
 			continue;
 		script_run(e.effect);
 	}
+	// Upgrade trigger (autouse)
+	for(auto& e : bsdata<upgradei>()) {
+		if(!e.trigger || !player->isupgrade(&e))
+			continue;
+		if(strcmp(e.trigger, id) != 0)
+			continue;
+		script_run(e.effect);
+	}
 }
 
 static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
@@ -181,6 +189,11 @@ template<> void fnscript<uniti>(int value, int counter) {
 template<> void fnscript<structurei>(int value, int counter) {
 	for(auto i = 0; i < counter; i++)
 		add_structure(bsdata<structurei>::elements + value);
+}
+
+template<> void fnscript<upgradei>(int value, int counter) {
+	if(counter >= 0)
+		player->setupgrade(bsdata<upgradei>::elements + value);
 }
 
 static bool have_tag(const void* object, int value) {
@@ -414,7 +427,7 @@ static bool filter_province_limit(const void* object) {
 	auto limit = p->abilities[Limit];
 	if(limit) {
 		auto count = count_structures(p);
-		if(limit >= count)
+		if(count >= limit)
 			return false;
 	}
 	return true;
@@ -924,8 +937,11 @@ static void end_round(int bonus) {
 }
 
 static void attack_milita(int bonus) {
-	auto count = count_structures(province);
-	attacker.damage(1 + bonus, count);
+	defender.engage("Milita", bonus, count_structures(province));
+}
+
+static void attack_hirelings(int bonus) {
+	attacker.engage("Hirelings", 2, bonus);
 }
 
 static bool filter_player_province(const void* object) {
@@ -957,6 +973,7 @@ static void prepare_army(int bonus) {
 	}
 	attacker.select(province, player);
 	defender.select(province, province->player);
+	defender.abilities[Milita] += province->get(Milita) + province->getbonus(Milita);
 	if(!attacker.troops || !defender.troops)
 		script_stop();
 	attacker.prepare(Shield);
@@ -974,16 +991,17 @@ static void apply_casualty(int bonus) {
 	update_ui();
 }
 
-static void attack_army(armyi& source, ability_s type) {
-	if(source.troops && source.troops.gettotal(type) > 0) {
-		console.addn("###");
-		console.add(source.player->getname());
-		auto push_player = player;
-		player = source.player;
-		apply_trigger(0);
-		source.engage(type, 0);
-		player = push_player;
-	}
+static void attack_army(armyi& source, ability_s type, bool milita_attack = false) {
+	if(!source.troops.gettotal(type) && !(milita_attack && source.getsummary(Milita) > 0))
+		return;
+	pushvalue push_player(player, source.player);
+	pushvalue push_army(last_army, &source);
+	console.addn("###");
+	console.add(source.player->getname());
+	apply_trigger(0);
+	if(milita_attack && source.get(Milita))
+		source.engage("Milita", 2, source.get(Milita));
+	source.engage(type, 0);
 }
 
 static void hail_arrows(int bonus) {
@@ -1000,10 +1018,14 @@ static void melee_clash(int bonus) {
 	pushtitle header(last_script->id, last_script->id);
 	console.clear();
 	attack_army(attacker, Damage);
-	attack_army(defender, Damage);
+	attack_army(defender, Damage, true);
 	attacker.suffer(defender.abilities[Damage]);
 	defender.suffer(attacker.abilities[Damage]);
 	apply_casualty(0);
+}
+
+static void add_structure_milita(int bonus) {
+	last_army->abilities[Milita] += count_structures(province) + bonus;
 }
 
 static bool is_allow_actions() {
@@ -1210,7 +1232,9 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
+	{"AddStructureMilita", add_structure_milita},
 	{"AddValue", add_value},
+	{"AttackHirelings", attack_hirelings},
 	{"AttackMilita", attack_milita},
 	{"ApplyCasualty", apply_casualty},
 	{"ApplyTrigger", apply_trigger},

@@ -58,6 +58,7 @@ BSMETA(playeri) = {
 	BSREQ(homeland),
 	BSREQ(start),
 	BSREQ(fore),
+	BSFLG(upgrades, upgradei),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -114,6 +115,6 @@ BSDATA(varianti) = {
 	{"Tag", VAR(tagi, 1), 0, 0, fnscript<tagi>, fntest<tagi>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitObject", VAR(troopi, 0), ftinfo<troopi>},
-	{"Upgrade", VAR(upgradei, 1)},
+	{"Upgrade", VAR(upgradei, 1), 0, 0, fnscript<upgradei>},
 };
 BSDATAF(varianti);

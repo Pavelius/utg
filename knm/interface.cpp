@@ -722,9 +722,6 @@ static void window_frame(color v, const entity* pe) {
 	window_frame(v, pe, getinform(pe));
 }
 
-static void tactic_form() {
-}
-
 static void paint_querry() {
 	rectpush push; width = 280; height = 100;
 	auto origin = caret;
@@ -740,6 +737,11 @@ static void paint_querry() {
 
 static void open_objectives() {
 	querry.select(bsdata<decki>::elements + ObjectivesDeck, 0, 0);
+	paint_querry();
+}
+
+static void tactic_form() {
+	querry.select(bsdata<decki>::elements + TacticsDeck, 0, player);
 	paint_querry();
 }
 

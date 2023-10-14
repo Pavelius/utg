@@ -1,3 +1,5 @@
+GemsMining: Добыча драгоценных камней
+Insubordination: Неподчинение
 ForestFolkSupport: Поддержка лесного народа
 FrontlineDeployment: Военный лорд
 DemilitarizedZone: Демилитаризированная зона

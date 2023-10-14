@@ -7,10 +7,11 @@
 struct listi;
 
 struct upgradei : entity, abilitya {
-	listi*		trigger;
+	const char*	trigger;
 	variants	effect;
 };
 struct upgradea {
 	unsigned	upgrades;
 	bool		isupgrade(const upgradei* v) const;
+	void		setupgrade(const upgradei* v);
 };

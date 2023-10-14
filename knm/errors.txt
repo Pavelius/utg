@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-ErectAMonument: Define translate
+﻿In file `rules/Upgrades.txt`:
+ Line 13: Can't find variant `AddTactics`

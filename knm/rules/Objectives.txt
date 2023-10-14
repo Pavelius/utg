@@ -1,8 +1,8 @@
 #Card location(ObjectivesDeck) trigger(StatusPhase) count(1)
 
 ErectAMonument
- effect PayResources+8
+ effect PayResources+8 SetValue+1
 NegotiateTradeRoutes
- effect PayGold+5
+ effect PayGold+5 SetValue+1
 IntimidateCouncil
  effect PushProvince SetProvinceCapital SelectPlayerTroops GroupProvince FilterNeightboard SetValueQuerryCount

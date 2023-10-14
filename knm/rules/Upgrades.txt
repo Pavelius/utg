@@ -11,4 +11,5 @@ NecromancyGuild // After win battle create one skeleton unit
 PathfinderGuild // You can move throught enemy province
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
-FightersGuild
+FightersGuild trigger(MeleeClash)
+ effect AddStructureMilita

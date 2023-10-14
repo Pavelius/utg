@@ -8,7 +8,7 @@ GemsMining
  effect SelectProvinces Mountains ForEachProvince Gold+1
 FocusedResearch
  effect PayGoods+4 AddResearch+10
-FrontlineDeployment
+LocalLord count(2)
  effect ChooseProvinceYouControl Archers+2 Pikemens+1
 Insubordination
  effect SelectPlayers FilterPlayer-1 ChooseQuerry Hero-1

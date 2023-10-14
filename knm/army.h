@@ -16,7 +16,8 @@ struct armyi : abilitya {
 	void		engage(ability_s type, int skill = 0);
 	void		engage(const char* id, int chance, int count);
 	int			get(ability_s v) const { return abilities[v]; }
-	int			getstrenght() const;
+	int			getsummary(ability_s v) const;
+	int			getstrenght() const { return getsummary(Strenght); }
 	void		prepare(ability_s type);
 	void		resist(int& hits);
 	void		select(const entity* location, playeri* player);

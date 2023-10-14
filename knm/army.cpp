@@ -30,8 +30,8 @@ void armyi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-int	armyi::getstrenght() const {
-	return troops.gettotal(Strenght) + get(Strenght);
+int	armyi::getsummary(ability_s v) const {
+	return troops.gettotal(v) + get(v);
 }
 
 void armyi::damage(int chance, int count) {
