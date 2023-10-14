@@ -8,5 +8,5 @@ template<> void fnscript<filteri>(int value, int bonus) {
 
 template<> bool fntest<filteri>(int value, int bonus) {
 	fnscript<filteri>(value, bonus);
-	return querry.getcount() != 0;
+	return querry.collectiona::getcount() != 0;
 }

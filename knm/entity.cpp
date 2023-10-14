@@ -138,3 +138,11 @@ void entity::pick(playeri* v) {
 		location = 0;
 	}
 }
+
+void* get_province(const void* object) {
+	return ((entity*)object)->getprovince();
+}
+
+void* get_unit(const void* object) {
+	return (entity*)((entity*)object)->id;
+}

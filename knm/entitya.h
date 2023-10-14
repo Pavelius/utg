@@ -9,6 +9,7 @@ struct provincei;
 struct entitya : collection<entity> {
 	provincei*	chooseprovince() const;
 	int			getarmy() const;
+	int			gettotal(const entity* unit) const;
 	int			gettotal(ability_s v) const;
 	int			getplayercount() const;
 	entity*		pick() { return (entity*)collectiona::pick(); }

@@ -4,7 +4,7 @@ Pikemens
  abilities Cost(1) Army(5) Strenght(1) Combat(3) Damage(1) Move(1)
  tags Infantry
 Archers
- abilities Cost(2) Army(5) Strenght(1) Combat(3) Damage(1) Move(1) Shoots(1)
+ abilities Cost(2) Army(5) Strenght(1) Combat(2) Damage(1) Move(1) Shoots(1)
  tags Infantry
 Swordmans
  abilities Cost(3) Army(10) Strenght(1) Combat(3) Damage(1) Move(1) Shield(1) Limit(6)
@@ -22,7 +22,7 @@ Wargs
 Ogres
  abilities Cost(4) Army(10) Strenght(1) Combat(5) Damage(1) Move(1) Shield(1) Limit(3)
 Trolls
- abilities Cost(6) Army(10) Strenght(2) Combat(6) Damage(2) Move(1) Shield(1) Shoots(3) Limit(2)
+ abilities Cost(6) Army(10) Strenght(2) Combat(5) Damage(2) Move(1) Shield(1) Shoots(2) Limit(2)
 Giant
  abilities Cost(10) Army(10) Strenght(2) Combat(6) Damage(3) Move(1) Shield(1) Limit(1)
 

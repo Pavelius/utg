@@ -78,6 +78,22 @@ static int count_units(const provincei* province, const playeri* player) {
 	return result;
 }
 
+static void apply_trigger(int bonus) {
+	if(!last_list)
+		return;
+	auto id = last_list->id;
+	// Standart component trigger (autouse)
+	for(auto& e : bsdata<cardi>()) {
+		if(e.usedeck() || !e.trigger)
+			continue;
+		if(e.player != player)
+			continue;
+		if(strcmp(e.trigger, id) != 0)
+			continue;
+		script_run(e.effect);
+	}
+}
+
 static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
 	if(!format || format[0] == 0)
 		return;
@@ -422,12 +438,12 @@ static bool filter_neightboard(const void* object) {
 	return area.getblock(p->getprovince()->position) <= 1;
 }
 
-static void* get_province(const void* object) {
-	return ((entity*)object)->getprovince();
-}
-
 static void group_province(int bonus) {
 	querry.group(get_province);
+}
+
+static void group_unit(int bonus) {
+	querry.group(get_unit);
 }
 
 static void set_value(int bonus) {
@@ -868,9 +884,10 @@ static void build_structure(int bonus) {
 }
 
 static void establish_control(int bonus) {
-	if(bonus >= 0)
-		province->player = player;
-	else
+	if(bonus >= 0) {
+		if(count_units(province, player) > 0)
+			province->player = player;
+	} else
 		province->player = 0;
 }
 
@@ -946,31 +963,47 @@ static void prepare_army(int bonus) {
 	defender.prepare(Shield);
 }
 
-static void show_battle_result() {
-	if(!console)
-		return;
-	pushtitle header(last_list->id);
-	draw::pause();
+static void apply_casualty(int bonus) {
+	if(console) {
+		draw::pause(getnm("ApplyCasualty"));
+		console.clear();
+	}
 	attacker.applycasualty();
 	defender.applycasualty();
 	determine_winner();
 	update_ui();
 }
 
-static void attack_army(armyi& source) {
-	if(source.troops) {
-		console.addn("---");
-		source.engage(Damage, 0);
+static void attack_army(armyi& source, ability_s type) {
+	if(source.troops && source.troops.gettotal(type) > 0) {
+		console.addn("###");
+		console.add(source.player->getname());
+		auto push_player = player;
+		player = source.player;
+		apply_trigger(0);
+		source.engage(type, 0);
+		player = push_player;
 	}
 }
 
-static void melee_clash(int bonus) {
+static void hail_arrows(int bonus) {
+	pushtitle header(last_script->id, last_script->id);
 	console.clear();
-	attack_army(attacker);
-	attack_army(defender);
+	attack_army(attacker, Shoots);
+	attack_army(defender, Shoots);
 	attacker.suffer(defender.abilities[Damage]);
 	defender.suffer(attacker.abilities[Damage]);
-	show_battle_result();
+	apply_casualty(0);
+}
+
+static void melee_clash(int bonus) {
+	pushtitle header(last_script->id, last_script->id);
+	console.clear();
+	attack_army(attacker, Damage);
+	attack_army(defender, Damage);
+	attacker.suffer(defender.abilities[Damage]);
+	defender.suffer(attacker.abilities[Damage]);
+	apply_casualty(0);
 }
 
 static bool is_allow_actions() {
@@ -1124,22 +1157,6 @@ static void retreat_troops(int bonus) {
 		destory_troops(player, province);
 }
 
-static void apply_trigger(int bonus) {
-	if(!last_list)
-		return;
-	auto id = last_list->id;
-	// Standart component trigger (autouse)
-	for(auto& e : bsdata<cardi>()) {
-		if(e.usedeck() || !e.trigger)
-			continue;
-		if(e.player != player)
-			continue;
-		if(strcmp(e.trigger, id) != 0)
-			continue;
-		script_run(e.effect);
-	}
-}
-
 static bool allow_script(int bonus) {
 	last_script->proc(bonus);
 	return true;
@@ -1195,6 +1212,7 @@ BSDATA(script) = {
 	{"AddStart", add_start},
 	{"AddValue", add_value},
 	{"AttackMilita", attack_milita},
+	{"ApplyCasualty", apply_casualty},
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
 	{"PutCardOnTable", put_card_on_table},
@@ -1213,6 +1231,8 @@ BSDATA(script) = {
 	{"ForEachProvince", for_each_province, allow_for_each},
 	{"ForEachStrategy", for_each_strategy, allow_for_each},
 	{"GroupProvince", group_province, allow_select},
+	{"GroupUnit", group_unit, allow_select},
+	{"HailOfArrows", hail_arrows},
 	{"IfControlCapital", if_control_capital},
 	{"IfNoQuerryBreak", if_no_querry_break},
 	{"IfWinBattle", if_win_battle},

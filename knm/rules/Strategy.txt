@@ -99,7 +99,6 @@ BeforeCombat
  elements ApplyTrigger
 BattleTactic
 DefenderResult
-HailOfArrows
 Retreat
  elements RetreatTroops
 

@@ -36,6 +36,15 @@ int	entitya::getarmy() const {
 	return (gettotal(Army) + 9) / 10;
 }
 
+int	entitya::gettotal(const entity* type) const {
+	auto result = 0;
+	for(auto p : *this) {
+		if((entity*)p->id == type)
+			result++;
+	}
+	return result;
+}
+
 int	entitya::getplayercount() const {
 	playeri* nv = 0;
 	auto result = 0;

@@ -1,8 +1,10 @@
 ActionPhase: Фаза действий
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+ApplyCasualty: Понести потери
 ApplyCombat: Битва
 ApplyMove: Подтвердить передвижение
+Casualty: Потери %1: 
 ChooseProvinceYouControl: Выбор вашей провинции
 ChooseStrategy: Выбор стратегии
 ClaimSpeaker: Назначение спикера 
@@ -10,12 +12,15 @@ ConstructBuilding: Постройка объектов
 ConstructBuildingInProvince: Выбор объекта постройки
 DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
+HailOfArrows: Обстрел врага
+MeleeClash: Ближний бой
 PayResearch: Инвестиции в развитие
 PlanningPhase: Выбор стратегии на год
 ResetMovement: Сбросить выбор
 Retreat: Отступление
 LookLaws: Посмотреть законы
 MakeAction: Выполнить действие
+MakeMelee: Атака %1
 MoveTroops: Передвижение войск
 PassAction: Закончить ход
 PayForLeaders: Найм лидеров

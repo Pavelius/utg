@@ -555,7 +555,7 @@ static void add_maker(void* object, fnevent proc, int size) {
 }
 
 provincei* entitya::chooseprovince() const {
-	auto total_count = getcount();
+	auto total_count = count;
 	if(total_count == 1)
 		return (provincei*)data[0];
 	else if(total_count == 0)

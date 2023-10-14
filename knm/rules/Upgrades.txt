@@ -7,8 +7,8 @@ MerchantsGuild trigger(StatusPhase)
  abilities Goods(1)
  effect AddGold+1
 NavigatorGuild // You can move throught/into the water province
-NecromancyGuild // After win battle create one infantry unit 
+NecromancyGuild // After win battle create one skeleton unit 
 PathfinderGuild // You can move throught enemy province
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
-SpikedDefenceMoat trigger(BeforeCombat)
+FightersGuild
