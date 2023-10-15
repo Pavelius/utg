@@ -6,5 +6,6 @@ GemsMining: Добыча драгоценных камней
 Insubordination: Неподчинение
 LightingAttack: Неожиданное нападение
 LocalLord: Местный лорд
+Plague: Чума
 PlentyHarvest: Щедрый урожай
 TacticalRetreat: Отступление

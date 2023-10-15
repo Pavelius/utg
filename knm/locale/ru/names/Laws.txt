@@ -1,4 +1,5 @@
 ArmyRegulation: Ограничение армии
 MinisterOfCommerce: Министр комерции
 MinisterOfIndustry: Министр производства
+MinisterOfPeace: Министр мира
 MinisterOfPolicy: Министр политики

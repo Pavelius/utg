@@ -230,15 +230,30 @@ static void add_nameable(nameable& e) {
 	an.add(&e, e.getname());
 }
 
-static void add_input_cards(const char* trigger) {
+static void add_component_cards(const char* trigger) {
 	for(auto& e : bsdata<cardi>()) {
-		if(e.player && e.player != player)
+		if((e.player && e.player != player) || e.usedeck())
 			continue;
-		if(e.usedeck())
-			continue;
-		if(strcmp(e.trigger, trigger) != 0)
+		if(!e.trigger || strcmp(e.trigger, trigger) != 0)
 			continue;
 		if(!script_allow(e.effect))
+			continue;
+		add_input(e);
+	}
+}
+
+static void add_tactic_cards(const char* trigger) {
+	for(auto& e : bsdata<card>()) {
+		if(e.player != player)
+			continue;
+		auto p = e.getcomponent();
+		if(!p)
+			continue;
+		if(!p->usedeck())
+			continue;
+		if(!p->trigger || strcmp(p->trigger, trigger) != 0)
+			continue;
+		if(!script_allow(p->effect))
 			continue;
 		add_input(e);
 	}
@@ -803,7 +818,8 @@ static void make_action(int bonus) {
 	pushvalue push_strategy(last_strategy, (strategyi*)0);
 	focus_player(0);
 	an.clear();
-	add_input_cards("MakeAction");
+	add_component_cards("MakeAction");
+	add_tactic_cards("MakeAction");
 	add_strategy_cards();
 	apply_input();
 	if(last_strategy) {
