@@ -15,12 +15,12 @@ using namespace pathfind;
 
 namespace {
 struct pointline {
-	point	position;
-	char	count;
+	point				position;
+	char				count;
 };
 struct galaxymap {
-	slice<pointline> tiles;
-	point	start[6];
+	slice<pointline>	tiles;
+	point				start[6];
 };
 }
 

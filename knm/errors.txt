@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-Plague: Define translate
+﻿In file `rules/Units.txt`:
+ Line 43: Not found field `limit` in dataset `abilities`

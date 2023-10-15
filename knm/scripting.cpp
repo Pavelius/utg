@@ -32,6 +32,52 @@ static int				last_value;
 
 void update_ui();
 
+namespace {
+struct pointline {
+	point				position;
+	char				count;
+};
+struct realmi {
+	slice<pointline>	tiles;
+	point				start[6];
+};
+}
+
+static pointline players6[] = {
+	{{2, 0}, 2},
+	{{1, 1}, 5},
+	{{0, 2}, 6},
+	{{1, 3}, 2},
+	{{4, 3}, 2},
+	{{0, 4}, 6},
+	{{1, 5}, 5},
+	{{2, 6}, 2},
+};
+static realmi galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
+
+static void create_realm(const realmi& source) {
+	auto tile_index = 0;
+	for(auto& e : source.tiles) {
+		auto index = e.position;
+		for(auto i = 0; i < e.count; i++) {
+			((provincei*)querry[tile_index++])->position = index;
+			index.x++;
+		}
+	}
+	bsdata<provincei>::elements[0].position = {3, 3};
+}
+
+static void assign_starting_positions() {
+	auto index = 0;
+	auto& positions = galaxy6.start;
+	for(auto& e : bsdata<playeri>()) {
+		auto ps = e.homeland;
+		if(!ps)
+			continue;
+		ps->position = positions[index++];
+	}
+}
+
 static int getone(int v) {
 	return v ? v : 1;
 }
@@ -77,7 +123,7 @@ static int count_units(const provincei* province, const playeri* player) {
 }
 
 static void apply_trigger(int bonus) {
-	if(!last_list)
+	if(!last_id)
 		return;
 	// Standart component trigger (autouse)
 	for(auto& e : bsdata<cardi>()) {
@@ -148,9 +194,12 @@ static void make_wave() {
 }
 
 void reapeated_list(int value, int counter) {
+	auto push = last_id;
+	last_id = bsdata<listi>::elements[value].id;
 	counter = getone(counter);
 	for(auto i = 0; i < counter; i++)
 		fnscript<listi>(value, 0);
+	last_id = push;
 }
 
 template<> void fnscript<abilityi>(int value, int counter) {
@@ -812,7 +861,7 @@ static void choose_movement(int bonus) {
 }
 
 static void make_action(int bonus) {
-	pushtitle push("MakeAction");
+	pushtitle push(last_script->id);
 	pushvalue push_strategy(last_strategy, (strategyi*)0);
 	focus_player(0);
 	an.clear();
@@ -966,7 +1015,7 @@ static void add_units(entitya& source, playeri* v) {
 
 static void determine_winner() {
 	auto a = attacker.getstrenght();
-	auto d = defender.getstrenght();
+	auto d = defender.getstrenght() + province->get(Strenght) + province->getbonus(Strenght);
 	if(a >= d)
 		winner_army = &attacker;
 	else
@@ -996,7 +1045,9 @@ static void apply_casualty(int bonus) {
 		console.clear();
 	}
 	attacker.applycasualty();
+	attacker.casualty.clear();
 	defender.applycasualty();
+	defender.casualty.clear();
 	determine_winner();
 	update_ui();
 }
@@ -1017,6 +1068,7 @@ static void hail_arrows(int bonus) {
 	attack_army(attacker, Shoots);
 	attack_army(defender, Shoots);
 	attacker.suffer(defender.abilities[Damage]);
+	defender.abilities[Damage] = 0;
 	defender.suffer(attacker.abilities[Damage]);
 	apply_casualty(0);
 }
@@ -1027,7 +1079,9 @@ static void melee_clash(int bonus) {
 	attack_army(attacker, Damage);
 	attack_army(defender, Damage, true);
 	attacker.suffer(defender.abilities[Damage]);
-	defender.suffer(attacker.abilities[Damage]);
+	defender.abilities[Damage] = 0;
+	defender.suffer(attacker.abilities[Damage]); 
+	attacker.abilities[Damage] = 0;
 	apply_casualty(0);
 }
 

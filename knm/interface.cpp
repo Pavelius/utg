@@ -340,8 +340,14 @@ static void paint_debug_mouse(const provincei* p) {
 	textcn(str("%1i, %2i", p->position.x, p->position.y));
 }
 
+static void paint_background() {
+	auto pi = gres("terrain", "art/objects");
+	image(pi, 0, 0);
+}
+
 void provincei::paint() const {
 	//special_paint(special, special_index);
+	paint_background();
 	paint_player_banner(player);
 	paint_hexagon();
 	paint_player_markers(this);
