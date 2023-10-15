@@ -1,2 +1,2 @@
-﻿In file `rules/Units.txt`:
- Line 43: Not found field `limit` in dataset `abilities`
+﻿In file `Names.txt`:
+ChooseTacticsPrompt: Define translate

@@ -4,9 +4,12 @@ AddLeaders: Призыв лидеров
 ApplyCasualty: Понести потери
 ApplyCombat: Битва
 ApplyMove: Подтвердить передвижение
+ApplyTactics: Подтвердить тактику
+BattleTactic: Выбор тактики
 Casualty: Потери %1: 
 ChooseProvinceYouControl: Выбор вашей провинции
 ChooseStrategy: Выбор стратегии
+ChooseTacticsPrompt: %1 выбрали следующую тактику
 ClaimSpeaker: Назначение спикера 
 ConstructBuilding: Постройка объектов
 ConstructBuildingInProvince: Выбор объекта постройки

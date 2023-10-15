@@ -81,8 +81,6 @@ ActionPhase
 StatusPhase
  elements RemoveStrategicCards RemoveActivityAllTokens
 AgendaPhase
-// Retreat
-//  elements MakeWave SelectProvinces FilterNeightboard+1 CurrentProvince-1 ChooseProvince
 
 GameTurn
  elements StartYear PlanningPhase ActionPhase StatusPhase AgendaPhase
@@ -98,6 +96,7 @@ GamePlay
 BeforeCombat
  elements ApplyTrigger
 BattleTactic
+ elements AttackerArmy ChooseTactics DefenderArmy ChooseTactics
 DefenderResult
 Retreat
  elements RetreatTroops

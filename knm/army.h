@@ -9,6 +9,7 @@ struct armyi : abilitya {
 	playeri*	player;
 	entitya		troops;
 	entitya		casualty;
+	entitya		tactics;
 	void		add(ability_s v, int i) { abilities[v] += i; }
 	void		applycasualty();
 	void		clear();

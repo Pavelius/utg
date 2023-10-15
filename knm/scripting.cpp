@@ -1085,6 +1085,50 @@ static void melee_clash(int bonus) {
 	apply_casualty(0);
 }
 
+static void choose_tactics(int bonus) {
+	auto push_id = last_list->id;
+	pushvalue push_player(player, last_army->player);
+	pushtitle header(last_list->id);
+	while(true) {
+		console.clear();
+		clear_input(0);
+		if(last_army->tactics) {
+			console.addn(getnm("ChooseTacticsPrompt"), last_army->player->getname());
+			for(auto p : last_army->tactics)
+				console.addn(p->getname());
+		}
+		for(auto& e : bsdata<card>()) {
+			if(e.player != player)
+				continue;
+			auto p = e.getcomponent();
+			if(!p)
+				continue;
+			if(!p->usedeck())
+				continue;
+			if(!p->trigger || strcmp(p->trigger, push_id) != 0)
+				continue;
+			if(last_army->tactics.find(&e) != -1)
+				continue;
+			if(!script_allow(p->effect))
+				continue;
+			add_input(e);
+		}
+		auto result = an.choose(get_title(last_id), getnm("ApplyTactics"), 0);
+		if(!result)
+			break;
+		else if(bsdata<card>::have(result))
+			last_army->tactics.add(result);
+	}
+}
+
+static void attacker_army(int bonus) {
+	last_army = &attacker;
+}
+
+static void defender_army(int bonus) {
+	last_army = &defender;
+}
+
 static void add_structure_milita(int bonus) {
 	last_army->abilities[Milita] += count_structures(province) + bonus;
 }
@@ -1296,6 +1340,7 @@ BSDATA(script) = {
 	{"AddStart", add_start},
 	{"AddStructureMilita", add_structure_milita},
 	{"AddValue", add_value},
+	{"AttackerArmy", attacker_army},
 	{"AttackHirelings", attack_hirelings},
 	{"AttackMilita", attack_milita},
 	{"ApplyCasualty", apply_casualty},
@@ -1305,8 +1350,10 @@ BSDATA(script) = {
 	{"ChooseCardsDiscard", choose_cards_discard},
 	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
+	{"ChooseTactics", choose_tactics, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"CurrentProvince", current_province},
+	{"DefenderArmy", defender_army},
 	{"DestroyEnemyStructures", destroy_enemy_structures},
 	{"EndRound", end_round, allow_end_round},
 	{"EsteblishControl", establish_control},
