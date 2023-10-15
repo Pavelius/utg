@@ -2,7 +2,7 @@
 
 MiddleKindom homeland(CityGriffonHeart) fore(0 121 191)
  troops Pikemens Archers Swordmans Cavalry WarMachine
- start Hero+2 Army+3 City+1 Pikemens+2 Archers+2 Swordmans+1 AddTactics+2
+ start Hero+2 Army+3 City+1 Pikemens+2 Archers+2 Swordmans+1
 OrcHorde homeland(DarkCitadel) fore(235 90 70)
  troops Orcs Wargs Ogres Trolls Giant
  upgrades FightersGuild

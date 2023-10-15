@@ -22,13 +22,13 @@
 
 extern const char* message_string;
 
-static char			log_text[1024];
-static stringbuilder actions_log(log_text);
-static char			console_text[512];
-stringbuilder		console(console_text);
-static entitya		recruit, movement;
-static bool			need_break;
-static int			last_value;
+static char				log_text[1024];
+static stringbuilder	actions_log(log_text);
+static char				console_text[512];
+stringbuilder			console(console_text);
+static entitya			recruit, movement;
+static bool				need_break;
+static int				last_value;
 
 void update_ui();
 
@@ -39,9 +39,7 @@ static int getone(int v) {
 int count_cards(const playeri* player, const entity* location) {
 	auto result = 0;
 	for(auto& e : bsdata<card>()) {
-		if(!e)
-			continue;
-		if(e.player != player)
+		if(!e || e.player != player)
 			continue;
 		auto p = e.getcomponent();
 		if(!p || !p->usedeck() || p->location != location)

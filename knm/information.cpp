@@ -75,6 +75,7 @@ static void add_value_unit(stringbuilder& sb, ability_s i, int bonus, int bonus2
 		sb.addn(p, get_ten_times(bonus));
 		break;
 	case Combat:
+	case Shoots:
 		sb.addn(p, bonus, get_times("Times", bonus2));
 		break;
 	default:
@@ -98,6 +99,10 @@ static void add_value_unit(stringbuilder& sb, abilitya& source) {
 		switch(i) {
 		case Combat:
 			add_value_unit(sb, i, source.abilities[i], source.abilities[Damage]);
+			break;
+		case Shoots:
+			if(source.abilities[i])
+				add_value_unit(sb, i, source.abilities[Combat], source.abilities[i]);
 			break;
 		default:
 			add_value_unit(sb, i, source.abilities[i]);
