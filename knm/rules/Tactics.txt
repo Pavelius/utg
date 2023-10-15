@@ -1,11 +1,11 @@
 #Card location(TacticsDeck) trigger(MakeAction) count(1)
 
 ForestFolkSupport count(2)
- effect SelectProvinces Forest ForEachProvince Influence+1
+ effect SelectProvinces FilterPlayer Forest ForEachProvince Influence+1
 PlentyHarvest count(2)
- effect SelectProvinces Farmlands ForEachProvince Resources+1
+ effect SelectProvinces FilterPlayer Farmlands ForEachProvince Resources+2
 GemsMining
- effect SelectProvinces Mountains ForEachProvince Gold+1
+ effect SelectProvinces FilterPlayer Mountains ForEachProvince Gold+1
 FocusedResearch
  effect PayGoods+4 AddResearch+10
 LocalLord count(2)
@@ -14,3 +14,10 @@ Insubordination
  effect SelectPlayers FilterPlayer-1 ChooseQuerry Hero-1
 Plague
  effect SelectPlayers FilterPlayer-1 ChooseQuerry Army-1
+
+#Card location(TacticsDeck) trigger(BattleTactic) count(2)
+
+Ambush count(4)
+TacticalRetreat
+LightingAttack count(3)
+ effect Strenght+2

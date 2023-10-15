@@ -18,6 +18,14 @@ static void add_head(stringbuilder& sb, const char* id) {
 	sb.addn("###%1", getnm(id));
 }
 
+static void add_head(stringbuilder& sb, const char* id, const char* trigger) {
+	auto pd = getdescription(stw("Type", trigger));
+	if(!pd)
+		add_head(sb, id);
+	else
+		sb.addn("###%1 (%2)", getnm(id), pd);
+}
+
 static void add_value(stringbuilder& sb, const char* id, int bonus) {
 	if(!bonus)
 		return;
@@ -134,10 +142,13 @@ static void add_ability(stringbuilder& sb, const variants& source, const char* i
 	add_script(sb, source);
 }
 
-static void add_textinfo(stringbuilder& sb, const char* id) {
+static bool add_textinfo(stringbuilder& sb, const char* id) {
 	auto p = getdescription(id);
-	if(p)
+	if(p) {
 		sb.addn(p);
+		return true;
+	}
+	return false;
 }
 
 template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
@@ -148,8 +159,10 @@ template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
 
 template<> void ftinfo<cardi>(const void* object, stringbuilder& sb) {
 	auto p = (cardi*)object;
-	add_head(sb, p->id);
-	add_textinfo(sb, p->id);
+	add_head(sb, p->id, p->trigger);
+	if(add_textinfo(sb, p->id))
+		return;
+	add_ability(sb, p->effect, 0);
 }
 
 template<> void ftinfo<structurei>(const void* object, stringbuilder& sb) {

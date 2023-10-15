@@ -1,5 +1,10 @@
-GemsMining: Добыча драгоценных камней
-Insubordination: Неподчинение
+Ambush: Засада
+DemilitarizedZone: Демилитаризированная зона
 ForestFolkSupport: Поддержка лесного народа
 FrontlineDeployment: Военный лорд
-DemilitarizedZone: Демилитаризированная зона
+GemsMining: Добыча драгоценных камней
+Insubordination: Неподчинение
+LightingAttack: Неожиданное нападение
+LocalLord: Местный лорд
+PlentyHarvest: Щедрый урожай
+TacticalRetreat: Отступление

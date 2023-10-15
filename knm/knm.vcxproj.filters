@@ -226,5 +226,8 @@
     <Text Include="locale\ru\tips\ObjectivesDescriptions.txt">
       <Filter>locale</Filter>
     </Text>
+    <Text Include="locale\ru\tips\TacticsDescription.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

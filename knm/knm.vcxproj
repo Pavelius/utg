@@ -209,6 +209,7 @@
     <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
     <Text Include="locale\ru\tips\ObjectivesDescriptions.txt" />
     <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
+    <Text Include="locale\ru\tips\TacticsDescription.txt" />
     <Text Include="locale\ru\tips\UpgradeDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Laws.txt" />
