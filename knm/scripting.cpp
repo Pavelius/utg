@@ -81,24 +81,20 @@ static int count_units(const provincei* province, const playeri* player) {
 static void apply_trigger(int bonus) {
 	if(!last_list)
 		return;
-	const char* id_list = last_list ? last_list->id : 0;
-	const char* id_script = last_script ? last_script->id : 0;
 	// Standart component trigger (autouse)
 	for(auto& e : bsdata<cardi>()) {
 		if(e.usedeck() || !e.trigger)
 			continue;
 		if(e.player != player)
 			continue;
-		if((id_list && strcmp(e.trigger, id_list) == 0)
-			|| (id_script && strcmp(e.trigger, id_script) == 0))
+		if(strcmp(e.trigger, last_id) == 0)
 			script_run(e.effect);
 	}
 	// Upgrade trigger (autouse)
 	for(auto& e : bsdata<upgradei>()) {
 		if(!e.trigger || !player->isupgrade(&e))
 			continue;
-		if((id_list && strcmp(e.trigger, id_list) == 0)
-			|| (id_script && strcmp(e.trigger, id_script) == 0))
+		if(strcmp(e.trigger, last_id) == 0)
 			script_run(e.effect);
 	}
 }
@@ -683,6 +679,14 @@ static void add_gold(int bonus) {
 	player->current.abilities[Gold] += bonus;
 }
 
+static void add_army(int bonus) {
+	if(bonus == 100)
+		bonus = last_value;
+	else
+		bonus = -last_value;
+	last_army->abilities[last_ability] += bonus;
+}
+
 static card* pickcard(deck_s type) {
 	return (card*)bsdata<decki>::elements[type].cards.pick();
 }
@@ -1213,6 +1217,7 @@ BSDATA(filteri) = {
 BSDATAF(filteri);
 BSDATA(script) = {
 	{"ActivityToken", activity_token},
+	{"AddArmy", add_army},
 	{"AddGold", add_gold},
 	{"AddLeaders", add_leaders},
 	{"AddProvinceInfluence", add_province_influence},

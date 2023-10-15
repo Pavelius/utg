@@ -17,6 +17,9 @@ Infantry: Пехота
 Fighter: Истребители
 WarSun: Звезда смерти
 CMorranNorr: К'Морран
+Genesis: Генезис
+
+SpaceCannon: Космическая пушка
 
 Abyz: Абиз
 AbyzSystem: Система Абиз

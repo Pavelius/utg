@@ -205,40 +205,37 @@
     <Text Include="rules\Objectives.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
+    <Text Include="locale\ru\names\AbilityNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
+    <Text Include="locale\ru\names\ActionCardNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
+    <Text Include="locale\ru\names\Names.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\NamesSh.txt">
+    <Text Include="locale\ru\names\NamesNewbe.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\Speech.txt">
+    <Text Include="locale\ru\names\NamesSh.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\TechNames.txt">
+    <Text Include="locale\ru\names\StrategyNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\AbilityNames.txt">
+    <Text Include="locale\ru\names\TechNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\TechDescriptions.txt">
+    <Text Include="locale\ru\tips\AbilityDescriptions.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\AbilityDescriptions.txt">
+    <Text Include="locale\ru\tips\Descriptions.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\StrategyNames.txt">
+    <Text Include="locale\ru\tips\StrategyDescriptions.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\StrategyDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\ActionCardNames.txt">
+    <Text Include="locale\ru\tips\TechDescriptions.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
