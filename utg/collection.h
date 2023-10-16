@@ -6,6 +6,7 @@ struct collectiona : adat<void*, 256> {
 	typedef void* fngroup(const void* object);
 	typedef int fncompare(const void* v1, const void* v2);
 	void	add(void* p) { if(p) *adat<void*, 256>::add() = p; }
+	void	add(const collectiona& source);
 	void*	choose(fngetname proc, const char* title, const char* cancel, bool autochoose) const;
 	bool	chooseu(fngetname proc, const char* title, const char* cancel) const;
 	void	distinct();

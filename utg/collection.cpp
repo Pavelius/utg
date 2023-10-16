@@ -18,6 +18,11 @@ static bool exist(void** pb, void** pe, const void* v) {
 	return false;
 }
 
+void collectiona::add(const collectiona& source) {
+	for(auto p : source)
+		add(p);
+}
+
 void collectiona::insert(int index, void* object) {
 	if(count >= getmaximum())
 		return;

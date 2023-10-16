@@ -8,7 +8,7 @@ struct decki;
 
 struct cardi : entity, abilitya {
 	const char*		trigger;
-	unsigned char	count;
+	char			count, priority;
 	variants		effect, target;
 	decki*			getdeck() const { return (decki*)location; }
 	void			play();

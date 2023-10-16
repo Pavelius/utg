@@ -1321,6 +1321,27 @@ static void destory_troops(const playeri* player, const provincei* start) {
 	update_ui();
 }
 
+static int compare_cards(const void* v1, const void* v2) {
+	auto e1 = *((entity**)v1);
+	auto e2 = *((entity**)v2);
+	auto p1 = e1->getcomponent();
+	auto p2 = e2->getcomponent();
+	if(p1->priority != p2->priority)
+		return p1->priority - p2->priority;
+	if(e1->player != e2->player)
+		return (e1->player == attacker.player) ? 1 : -1;
+	return p1 - p2;
+}
+
+static void play_tactics(int bonus) {
+	querry = attacker.tactics;
+	querry.add(defender.tactics);
+	querry.sort(compare_cards);
+	for(auto p : querry) {
+
+	}
+}
+
 static armyi* get_looser_army() {
 	if(winner_army == &attacker)
 		return &defender;

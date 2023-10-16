@@ -16,6 +16,7 @@ struct entitya : collection<entity> {
 	void		select(const entity* location);
 	void		select(const entity* location, const entity* player);
 	void		select(const entity* deck, const entity* location, const entity* player);
+	void		sortcards();
 	void		sortunits();
 };
 struct entityv : vector<entity*> {
