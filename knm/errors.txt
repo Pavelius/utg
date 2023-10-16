@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-ResetList: Define translate
+﻿In file `rules/Strategy.txt`:
+ Line 99: Can't find variant `SetArmyTactic`

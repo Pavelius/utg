@@ -1116,10 +1116,13 @@ static void choose_querry_list(int bonus) {
 		console.clear();
 		clear_input(0);
 		if(choosing) {
-			console.addn("###");
-			console.add(getnm(stw(last_id, "Choosed")), player->getname(), province->getname());
-			for(auto p : choosing)
-				console.addn(p->getname());
+			auto pd = getdescription(stw(last_id, "Choosed"));
+			if(pd) {
+				console.addn("###");
+				console.add(pd, player->getname(), province->getname());
+				for(auto p : choosing)
+					console.addn(p->getname());
+			}
 		} else {
 			auto p = getdescription(stw(last_id, "Empthy"));
 			if(p)
@@ -1178,12 +1181,18 @@ static void choose_tactics(int bonus) {
 	}
 }
 
+static void set_army_tactics(int bonus) {
+	last_army->tactics = querry;
+}
+
 static void attacker_army(int bonus) {
 	last_army = &attacker;
+	player = last_army->player;
 }
 
 static void defender_army(int bonus) {
 	last_army = &defender;
+	player = last_army->player;
 }
 
 static void add_structure_milita(int bonus) {
@@ -1330,6 +1339,7 @@ static void retreat_troops(int bonus) {
 	make_wave();
 	select_provincies(0);
 	querry.match(filter_neightboard, true);
+	querry.collectiona::match(filter_player, true);
 	current_province(-1);
 	if(querry) {
 		choose_province(0);
@@ -1464,6 +1474,7 @@ BSDATA(script) = {
 	{"SelectProvinces", select_provincies, allow_select},
 	{"SelectStrategy", select_strategy, allow_select},
 	{"SelectStructures", select_structures, allow_select},
+	{"SetArmyTactics", set_army_tactics},
 	{"SetProvinceCapital", set_province_capital, allow_script},
 	{"SetValue", set_value, allow_script},
 	{"SetValueQuerryCount", set_value_querry_count, allow_script},

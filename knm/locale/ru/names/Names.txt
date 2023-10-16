@@ -25,3 +25,4 @@ Yes: Да
 No: Нет
 Cancel: Отмена
 Continue: Продолжить
+ResetList: Сбросить список
