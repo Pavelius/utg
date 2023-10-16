@@ -1,11 +1,13 @@
 ActionPhase: Фаза действий
 ActivateProvince: Активация провинции
 AddLeaders: Призыв лидеров
+ApplyBattleTactic: Применить выбранную тактику
 ApplyCasualty: Понести потери
 ApplyCombat: Битва
 ApplyMove: Подтвердить передвижение
 ApplyTactics: Подтвердить тактику
 BattleTactic: Выбор тактики
+BattleTacticChoosed: %1 использует в бою
 Casualty: Потери %1: 
 ChooseProvinceYouControl: Выбор вашей провинции
 ChooseStrategy: Выбор стратегии

@@ -26,7 +26,7 @@ static char				log_text[1024];
 static stringbuilder	actions_log(log_text);
 static char				console_text[512];
 stringbuilder			console(console_text);
-static entitya			recruit, movement;
+static entitya			choosing;
 static bool				need_break;
 static int				last_value;
 
@@ -357,11 +357,11 @@ static void apply_input(void* result, bool play_card = true) {
 
 static const char* get_title(const char* id, int count = 0) {
 	static char temp[260];
-	auto title = getdescription(stw(id, "Ask"));
+	stringbuilder sb(temp); sb.clear(); sb.add("%1Ask", id);
+	auto title = getdescription(temp);
 	if(!title)
 		return 0;
-	stringbuilder sb(temp); sb.clear();
-	sb.add(title, count);
+	sb.clear(); sb.add(title, count);
 	return temp;
 }
 
@@ -451,6 +451,26 @@ bool filter_player_upgrade(const void* object) {
 static bool filter_player(const void* object) {
 	auto p = (entity*)object;
 	return p->getplayer() == player;
+}
+
+static bool filter_tactic_cards(const void* object) {
+	auto p = (entity*)object;
+	if(p->player != player)
+		return false;
+	auto pc = p->getcomponent();
+	if(!pc)
+		return false;
+	if(pc->location != bsdata<decki>::elements + TacticsDeck)
+		return false;
+	return true;
+}
+
+static bool filter_trigger(const void* object) {
+	auto p = (entity*)object;
+	auto pc = p->getcomponent();
+	if(!pc || !pc->trigger)
+		return false;
+	return strcmp(pc->trigger, last_id) == 0;
 }
 
 static bool filter_speaker(const void* object) {
@@ -643,25 +663,25 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int gai
 	player->current.abilities[currency] -= cost * i;
 }
 
-static void recruit_reset() {
-	recruit.clear();
+static void choosing_reset() {
+	choosing.clear();
 }
 
 static void recruit_troops(int army_used, int army_maximum, int build_troops_maximum, int maximum_cost) {
 	pushtitle push_title(last_script->id);
-	recruit_reset();
+	choosing_reset();
 	while(true) {
 		clear_input(0);
-		auto troops_count = recruit.getcount();
-		auto troops_cost = recruit.gettotal(Cost);
-		auto troops_army = army_used + recruit.gettotal(Army);
+		auto troops_count = choosing.getcount();
+		auto troops_cost = choosing.gettotal(Cost);
+		auto troops_army = army_used + choosing.gettotal(Army);
 		auto troops_army_maximum = army_maximum * 10;
 		console.addn(getnm("AllowBuildTroops"), troops_count, build_troops_maximum);
 		console.addn(getnm("AllowBuildArmy"), (troops_army + 9) / 10, army_maximum);
 		console.addn(getnm("AllowCredit"), troops_cost, maximum_cost);
-		if(recruit) {
+		if(choosing) {
 			console.addn("---");
-			for(auto p : recruit)
+			for(auto p : choosing)
 				console.addn(getnm("RecruitUnitCost"), p->getname(), p->get(Cost));
 		}
 		auto total = maximum_cost - troops_cost;
@@ -674,13 +694,13 @@ static void recruit_troops(int army_used, int army_maximum, int build_troops_max
 				an.add(p, getnm("RecruitUnitCost"), p->getname(), p->get(Cost));
 			}
 		}
-		if(recruit)
-			an.add(recruit_reset, getnm("RecruitReset"));
+		if(choosing)
+			an.add(choosing_reset, getnm("RecruitReset"));
 		auto p = (uniti*)an.choose(getdescription("RecruitWhatTroop"), getnm("CheckOut"), 1);
 		if(!p)
 			break; // Check out;
 		else if(bsdata<uniti>::have(p))
-			recruit.add(p);
+			choosing.add(p);
 		else
 			apply_input(p);
 	}
@@ -815,22 +835,22 @@ static void apply_secondary_strategy() {
 }
 
 static void cancel_movement() {
-	movement.clear();
+	choosing.clear();
 }
 
 static void choose_movement() {
-	movement.clear();
+	choosing.clear();
 	while(true) {
 		make_wave();
 		querry.collectiona::select(bsdata<troopi>::source, filter_move_range, true);
 		querry.match(filter_province_activated, false);
 		clear_input(0);
 		for(auto p : querry) {
-			if(movement.find(p) != -1)
+			if(choosing.find(p) != -1)
 				continue;
 			an.add(p, "%1 (%2)", p->getname(), p->getprovince()->getname());
 		}
-		for(auto p : movement) {
+		for(auto p : choosing) {
 			if(!console)
 				console.add("###%1", province->getname());
 			console.addn("%1 (%2)", p->getname(), p->getprovince()->getname());
@@ -841,7 +861,7 @@ static void choose_movement() {
 		if(!result)
 			break;
 		else if(bsdata<troopi>::have(result))
-			movement.add(result);
+			choosing.add(result);
 		else
 			((fnevent)result)();
 	}
@@ -857,7 +877,7 @@ static void apply_movement(const entitya& source) {
 static void choose_movement(int bonus) {
 	pushtitle push(last_list->id);
 	choose_movement();
-	apply_movement(movement);
+	apply_movement(choosing);
 }
 
 static void make_action(int bonus) {
@@ -911,6 +931,10 @@ static void select_players_speaker(int bonus) {
 			continue;
 		querry.add(&e);
 	}
+}
+
+static void select_player_tactic_cards(int bonus) {
+	querry.collectiona::select(bsdata<card>::source, filter_tactic_cards, bonus >= 0);
 }
 
 static void sort_players() {
@@ -1080,9 +1104,42 @@ static void melee_clash(int bonus) {
 	attack_army(defender, Damage, true);
 	attacker.suffer(defender.abilities[Damage]);
 	defender.abilities[Damage] = 0;
-	defender.suffer(attacker.abilities[Damage]); 
+	defender.suffer(attacker.abilities[Damage]);
 	attacker.abilities[Damage] = 0;
 	apply_casualty(0);
+}
+
+static void choose_querry_list(int bonus) {
+	pushtitle header(last_list->id);
+	entitya choosing;
+	while(true) {
+		console.clear();
+		clear_input(0);
+		if(choosing) {
+			console.addn("###");
+			console.add(getnm(stw(last_id, "Choosed")), player->getname(), province->getname());
+			for(auto p : choosing)
+				console.addn(p->getname());
+		} else {
+			auto p = getdescription(stw(last_id, "Empthy"));
+			if(p)
+				console.add(p, player->getname(), province->getname());
+		}
+		for(auto p : querry) {
+			if(choosing.find(p)==-1)
+				add_input(*p);
+		}
+		if(choosing)
+			an.add((void*)1, getnm("ResetList"));
+		auto result = an.choose(get_title(last_id), getnm(stw("Apply", last_id)), 0);
+		if(!result)
+			break;
+		else if(result == (void*)1)
+			choosing.clear();
+		else if(bsdata<card>::have(result))
+			choosing.add(result);
+	}
+	querry = choosing;
 }
 
 static void choose_tactics(int bonus) {
@@ -1321,6 +1378,8 @@ BSDATA(filteri) = {
 	{"FilterActivated", filter_activated},
 	{"FilterHomeland", filter_homeland},
 	{"FilterPlayer", filter_player},
+	{"FilterTacticCards", filter_player},
+	{"FilterTrigger", filter_trigger},
 	{"FilterProvinceLimit", filter_province_limit},
 	{"FilterNeightboard", filter_neightboard},
 	{"FilterSpeaker", filter_speaker},
@@ -1352,6 +1411,7 @@ BSDATA(script) = {
 	{"ChooseProvince", choose_province, allow_choose},
 	{"ChooseTactics", choose_tactics, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
+	{"ChooseQuerryList", choose_querry_list, allow_choose},
 	{"CurrentProvince", current_province},
 	{"DefenderArmy", defender_army},
 	{"DestroyEnemyStructures", destroy_enemy_structures},
@@ -1398,6 +1458,7 @@ BSDATA(script) = {
 	{"RetreatTroops", retreat_troops},
 	{"SelectPlayers", select_players, allow_select},
 	{"SelectPlayersBySpeaker", select_players_speaker, allow_select},
+	{"SelectPlayerTacticCards", select_player_tactic_cards, allow_select},
 	{"SelectPlayerTroops", select_player_troops, allow_select},
 	{"SelectProvinceStructures", select_province_structures, allow_select},
 	{"SelectProvinces", select_provincies, allow_select},
