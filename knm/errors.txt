@@ -1,2 +1,2 @@
-﻿In file `rules/Strategy.txt`:
- Line 99: Can't find variant `SetArmyTactic`
+﻿In file `Names.txt`:
+PlayerUseTactic: Define translate

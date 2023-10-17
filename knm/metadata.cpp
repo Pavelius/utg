@@ -41,6 +41,7 @@ BSMETA(cardi) = {
 	BSFLG(tags, tagi),
 	BSREQ(effect),
 	BSREQ(target),
+	BSREQ(priority),
 	BSDST(abilities, abilityi),
 	{}};
 BSMETA(color) = {

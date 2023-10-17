@@ -98,7 +98,7 @@ BeforeCombat
 BattleTactic
  elements SelectPlayerTacticCards FilterTrigger ChooseQuerryList SetArmyTactics
 ChooseBattleTactic
- elements PushPlayer AttackerArmy BattleTactic DefenderArmy BattleTactic
+ elements PushPlayer AttackerArmy BattleTactic DefenderArmy BattleTactic PlayTactics
 DefenderResult
 Retreat
  elements RetreatTroops

@@ -15,9 +15,11 @@ Insubordination
 Plague
  effect SelectPlayers FilterPlayer-1 ChooseQuerry Army-1
 
-#Card location(TacticsDeck) trigger(BattleTactic) count(2)
+#Card location(TacticsDeck) trigger(BattleTactic) count(2) priority(4)
 
-Ambush count(4)
-TacticalRetreat
+Ambush count(4) priority(3)
+ effect RemoveEnemyTactics
+TacticalRetreat priority(2)
+ effect RetreatTroopsTactic
 LightingAttack count(3)
- effect Strenght+2
+ effect Strenght AddArmy+2

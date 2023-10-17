@@ -17,6 +17,7 @@ void card::play() {
 		return;
 	auto push = last_card; last_card = this;
 	p->play();
+	discard();
 	last_card = push;
 }
 

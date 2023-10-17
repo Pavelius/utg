@@ -9,3 +9,5 @@ LocalLord: Местный лорд
 Plague: Чума
 PlentyHarvest: Щедрый урожай
 TacticalRetreat: Отступление
+
+PlayerUseTactic: %2 применили тактику [%1].

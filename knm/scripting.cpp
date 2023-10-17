@@ -29,6 +29,7 @@ stringbuilder			console(console_text);
 static entitya			choosing;
 static bool				need_break;
 static int				last_value;
+static card				**card_begin, **card_end;
 
 void update_ui();
 
@@ -141,6 +142,21 @@ static void apply_trigger(int bonus) {
 		if(strcmp(e.trigger, last_id) == 0)
 			script_run(e.effect);
 	}
+}
+
+static armyi* get_player_army() {
+	if(player == attacker.player)
+		return &attacker;
+	else
+		return &defender;
+}
+
+static armyi* get_looser_army() {
+	if(winner_army == &attacker)
+		return &defender;
+	else if(winner_army == &defender)
+		return &attacker;
+	return 0;
 }
 
 static void loggingv(const playeri* player, const char* format, const char* format_param, char separator = '\n') {
@@ -1333,29 +1349,43 @@ static int compare_cards(const void* v1, const void* v2) {
 	return p1 - p2;
 }
 
+static void play_tactic(card* p) {
+	pushvalue push_player(player, p->player);
+	pushvalue push_army(last_army, get_player_army());
+	console.clear();
+	console.add(getnm("PlayerUseTactic"), p->getname(), player->getname(), province->getname());
+	p->play();
+	draw::pause();
+	p->discard();
+	update_ui();
+}
+
 static void play_tactics(int bonus) {
 	querry = attacker.tactics;
 	querry.add(defender.tactics);
 	querry.sort(compare_cards);
-	for(auto p : querry) {
+	card_begin = (card**)querry.begin();
+	card_end = (card**)querry.end();
+	while(card_begin < card_end)
+		play_tactic(*card_begin++);
+	if(!attacker.troops || !defender.troops)
+		script_stop();
+	determine_winner();
+}
 
+static void remove_enemy_tactics(int bonus) {
+	auto p = card_begin;
+	auto ps = card_begin;
+	while(p < card_end) {
+		if((*p)->player == player)
+			*ps++ = *p;
+		p++;
 	}
+	card_end = ps;
 }
 
-static armyi* get_looser_army() {
-	if(winner_army == &attacker)
-		return &defender;
-	else if(winner_army == &defender)
-		return &attacker;
-	return 0;
-}
-
-static void retreat_troops(int bonus) {
-	auto looser = get_looser_army();
-	if(!looser || !looser->player || !looser->troops)
-		return;
+static void retreat_troops_tactic(int bonus) {
 	pushvalue push(province);
-	pushvalue push_player(player, looser->player);
 	auto start_province = province;
 	make_wave();
 	select_provincies(0);
@@ -1370,6 +1400,16 @@ static void retreat_troops(int bonus) {
 		}
 	} else
 		destory_troops(player, province);
+	get_player_army()->troops.clear();
+}
+
+static void retreat_troops(int bonus) {
+	auto looser = get_looser_army();
+	if(!looser || !looser->player || !looser->troops)
+		return;
+	pushvalue push(province);
+	pushvalue push_player(player, looser->player);
+	retreat_troops_tactic(bonus);
 }
 
 static bool allow_script(int bonus) {
@@ -1477,6 +1517,7 @@ BSDATA(script) = {
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
 	{"PlayerUsed", player_used},
+	{"PlayTactics", play_tactics},
 	{"PrepareArmy", prepare_army},
 	{"PushPlayer", push_player},
 	{"PushProvince", push_province},
@@ -1485,8 +1526,10 @@ BSDATA(script) = {
 	{"RefreshResources", refresh_resources},
 	{"RefreshTrade", refresh_trade},
 	{"RemoveStrategy", remove_strategy},
+	{"RemoveEnemyTactics", remove_enemy_tactics},
 	{"Repeat", repeat_statement},
 	{"RetreatTroops", retreat_troops},
+	{"RetreatTroopsTactic", retreat_troops_tactic},
 	{"SelectPlayers", select_players, allow_select},
 	{"SelectPlayersBySpeaker", select_players_speaker, allow_select},
 	{"SelectPlayerTacticCards", select_player_tactic_cards, allow_select},
