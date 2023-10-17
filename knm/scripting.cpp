@@ -1352,10 +1352,14 @@ static int compare_cards(const void* v1, const void* v2) {
 static void play_tactic(card* p) {
 	pushvalue push_player(player, p->player);
 	pushvalue push_army(last_army, get_player_army());
+	pushtitle push_title(p->getcomponent()->id);
 	console.clear();
-	console.add(getnm("PlayerUseTactic"), p->getname(), player->getname(), province->getname());
-	p->play();
+	auto pd = getdescription(stw(p->getcomponent()->id, "Use"));
+	if(!pd)
+		pd = getdescription("PlayerTacticUse");
+	console.add(pd, p->getname(), player->getname(), province->getname());
 	draw::pause();
+	p->play();
 	p->discard();
 	update_ui();
 }
