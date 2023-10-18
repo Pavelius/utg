@@ -28,7 +28,7 @@ static void character_generation() {
 
 static void initialize() {
 	quest::initialize();
-	stringlist::read("locale/ru/CharacterNames.txt");
+	stringlist::read("locale/ru/other/CharacterNames.txt");
 	quest::read("rules/Quest.txt");
 }
 

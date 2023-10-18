@@ -65,7 +65,7 @@ void quest::run(int index) {
 				continue;
 			if(!pa->isanswer())
 				continue;
-			if(!script::allow(pa->tags))
+			if(!script_allow(pa->tags))
 				continue;
 			an.add(pa, pa->text);
 		}

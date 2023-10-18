@@ -85,22 +85,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="errors.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Quest.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\CharacterNames.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>
