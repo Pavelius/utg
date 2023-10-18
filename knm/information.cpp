@@ -1,5 +1,8 @@
+#include "army.h"
 #include "card.h"
 #include "crt.h"
+#include "player.h"
+#include "province.h"
 #include "strategy.h"
 #include "stringbuilder.h"
 #include "structure.h"
@@ -7,6 +10,27 @@
 #include "unit.h"
 #include "upgrade.h"
 #include "variant.h"
+
+namespace {
+struct entitydatai {
+	const char*		id;
+	void**			data;
+};
+}
+static entitydatai entity_data[] = {
+	{"Army", (void**)&last_army},
+	{"Card", (void**)&last_card},
+	{"Player", (void**)&player},
+	{"Province", (void**)&province},
+};
+
+static entity* find_variable(const char* id) {
+	for(auto& e : entity_data) {
+		if(strcmp(e.id, id) == 0)
+			return (entity*)(*e.data);
+	}
+	return 0;
+}
 
 static void add_line(stringbuilder& sb) {
 	sb.addn("---");
@@ -213,4 +237,18 @@ const char* getinform(const void* object) {
 	else if(bsdata<card>::have(object))
 		ftinfo<card>(object, sb);
 	return temp;
+}
+
+static bool add_entity(const char* identifier, stringbuilder& sb) {
+	auto pv = find_variable(identifier);
+	if(!pv)
+		return false;
+	sb.add(pv->getname());
+	return true;
+}
+
+void game_var_identifier(stringbuilder& sb, const char* identifier) {
+	if(add_entity(identifier, sb))
+		return;
+	stringbuilder::defidentifier(sb, identifier);
 }

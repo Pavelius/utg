@@ -1349,29 +1349,32 @@ static int compare_cards(const void* v1, const void* v2) {
 	return p1 - p2;
 }
 
-static void play_tactic(card* p) {
-	pushvalue push_player(player, p->player);
+static void play_tactic() {
+	pushvalue push_player(player, last_card->player);
 	pushvalue push_army(last_army, get_player_army());
-	pushtitle push_title(p->getcomponent()->id);
+	pushtitle push_title(last_card->getcomponent()->id);
 	console.clear();
-	auto pd = getdescription(stw(p->getcomponent()->id, "Use"));
+	auto pd = getdescription(stw(last_card->getcomponent()->id, "Use"));
 	if(!pd)
 		pd = getdescription("PlayerTacticUse");
-	console.add(pd, p->getname(), player->getname(), province->getname());
+	console.add(pd);
 	draw::pause();
-	p->play();
-	p->discard();
+	last_card->play();
+	last_card->discard();
 	update_ui();
 }
 
 static void play_tactics(int bonus) {
+	pushvalue push_card(last_card);
 	querry = attacker.tactics;
 	querry.add(defender.tactics);
 	querry.sort(compare_cards);
 	card_begin = (card**)querry.begin();
 	card_end = (card**)querry.end();
-	while(card_begin < card_end)
-		play_tactic(*card_begin++);
+	while(card_begin < card_end) {
+		last_card = *card_begin++;
+		play_tactic();
+	}
 	if(!attacker.troops || !defender.troops)
 		script_stop();
 	determine_winner();

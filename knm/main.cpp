@@ -13,6 +13,8 @@ void initialize_ui();
 void initialize_script();
 void update_ui();
 
+void game_var_identifier(stringbuilder& sb, const char* identifier);
+
 #ifdef _DEBUG
 void util_main();
 #endif // _DEBUG
@@ -32,6 +34,7 @@ static void initialize() {
 #ifdef _DEBUG
 	util_main();
 #endif // _DEBUG
+	stringbuilder::custom = game_var_identifier;
 }
 
 int main(int argc, char* argv[]) {
