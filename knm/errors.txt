@@ -1,2 +1,2 @@
-﻿In file `rules/Tactics.txt`:
- Line 10: Can't find variant `AddResearch`
+﻿In file `Names.txt`:
+AddUpgrade: Define translate

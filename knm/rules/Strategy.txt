@@ -5,7 +5,7 @@ ActivateProvince
 AddTactics
  elements TacticsDeck+1 PickCards
 AddUpgrade
- elements SelectUpgrade FilterAllowedUpgrade ChooseQuerry UpgradePlayer
+ elements SelectUpgrade-1 FilterAllowedUpgrade ChooseQuerry UpgradePlayer
 ApplyTradeRoute
 ClaimSpeaker
  elements PushPlayer SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker

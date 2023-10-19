@@ -11,6 +11,7 @@ LimitInProvince: Лимит в провинции
 Lore: Развитие
 Resources: Ресурсы
 Tactic: Тактика
+Upgrade: Развитие
 
 Combat: Сражение
 Cost: Цена

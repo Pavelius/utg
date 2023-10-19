@@ -164,14 +164,15 @@ static void marked_button() {
 	rectf();
 }
 
-static void status(const char* id, const char* value, const void* object) {
+static void status(const char* id, const char* value, const void* object, int additional_width = 0) {
 	auto name = getnmsh(id);
 	auto push_fore = fore;
 	auto push_font = font;
 	auto push_caret = caret;
 	auto push_width = width;
 	auto push_height = height;
-	width = indicator_width;
+	additional_width += indicator_width;
+	width = additional_width;
 	height = 32 + 4;
 	if(object && show_widget == object)
 		marked_button();
@@ -196,7 +197,7 @@ static void status(const char* id, const char* value, const void* object) {
 	font = push_font;
 	caret = push_caret;
 	width = push_width;
-	caret.x += indicator_width;
+	caret.x += additional_width;
 	push_caret = caret;
 	fore = colors::border;
 	line(caret.x, caret.y + 40);
@@ -205,9 +206,9 @@ static void status(const char* id, const char* value, const void* object) {
 	height = push_height;
 }
 
-static void status(const char* id, int value, const void* object) {
+static void status(const char* id, int value, const void* object, int additional_width = 0) {
 	char temp[32]; stringbuilder sb(temp);
-	sb.add("%1i", value); status(id, temp, object);
+	sb.add("%1i", value); status(id, temp, object, additional_width);
 }
 
 static void status(const char* id, int value, int maximum, const void* object) {
@@ -225,8 +226,6 @@ static void status(ability_s v) {
 			player->get(v), player->getmaximum(v),
 			bsdata<widget>::find("OpenObjectives"));
 		break;
-	//case Lore:
-	//	break;
 	case Tactic:
 		status(bsdata<abilityi>::elements[v].id,
 			count_cards(player, bsdata<decki>::elements + TacticsDeck), player->getmaximum(v),
@@ -251,12 +250,10 @@ static void show_indicators() {
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status("Upgrades", 0, 0, bsdata<widget>::find("UpgradesForm"));
-	caret.x += 2;
 	status(Tactic);
 	caret.x += 2;
-	//status(getnmsh("ActionCards"), player->getactioncards(), bsdata<script>::find("ShowActionCards"));
-	//status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));
+	status("Upgrade", player->getupgradecount(), bsdata<widget>::find("UpgradesForm"), 8);
+	caret.x += 2;
 }
 
 void status_info() {

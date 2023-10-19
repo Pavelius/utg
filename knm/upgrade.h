@@ -14,6 +14,7 @@ struct upgradei : entity, abilitya {
 };
 struct upgradea {
 	unsigned	upgrades;
+	int			getupgradecount() const;
 	bool		isupgrade(const upgradei* v) const;
 	bool		isupgradeallow(const upgradei* v) const;
 	void		setupgrade(const upgradei* v);
