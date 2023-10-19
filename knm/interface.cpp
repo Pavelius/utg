@@ -343,7 +343,7 @@ void provincei::paint() const {
 	//special_paint(special, special_index);
 	paint_background();
 	paint_player_banner(player);
-	paint_hexagon();
+	//paint_hexagon();
 	paint_player_markers(this);
 	//paint_debug_mouse(this);
 }

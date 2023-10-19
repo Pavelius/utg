@@ -115,7 +115,7 @@ ApplyCombat
 #Card trigger(MakeAction)
 
 TacticAction
- effect PayHero ActivateProvince NoConditions MoveTroops ApplyCombat IfWinBattle DestroyEnemyStructures EsteblishControl RecruitTroops
+ effect PayHero ActivateProvince NoConditions MoveTroops ApplyCombat IfWinBattle DestroyEnemyStructures EsteblishControl RecruitTroops ApplyPayResources
 PassAction
  effect EndRound
 

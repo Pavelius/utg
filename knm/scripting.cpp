@@ -28,7 +28,7 @@ static char				console_text[512];
 stringbuilder			console(console_text);
 static entitya			choosing;
 static bool				need_break;
-static int				last_value;
+static int				last_value, last_pay;
 static card				**card_begin, **card_end;
 
 void update_ui();
@@ -644,6 +644,8 @@ static void pay(ability_s v, int bonus) {
 }
 
 static void pay_plus_good(ability_s v, int& bonus) {
+	if(bonus < 0)
+		bonus = 0;
 	if(player->current.abilities[v] >= bonus) {
 		player->current.abilities[v] -= bonus;
 		bonus = 0;
@@ -711,24 +713,37 @@ static void choosing_reset() {
 	choosing.clear();
 }
 
+static void apply_pay(ability_s v, int bonus) {
+	last_pay -= bonus;
+	pay_plus_good(v, last_pay);
+}
+
+static void apply_pay_resources(int bonus) {
+	apply_pay(Resources, bonus);
+}
+
 static void recruit_troops(int army_used, int army_maximum, int build_troops_maximum, int maximum_cost) {
 	pushtitle push_title(last_script->id);
 	choosing_reset();
+	last_pay = 0;
 	while(true) {
 		clear_input(0);
 		auto troops_count = choosing.getcount();
-		auto troops_cost = choosing.gettotal(Cost);
+		last_pay = choosing.gettotal(Cost);
+		last_pay -= player->getarmy(Tools);
+		if(last_pay < 0)
+			last_pay = 0;
 		auto troops_army = army_used + choosing.gettotal(Army);
 		auto troops_army_maximum = army_maximum * 10;
 		console.addn(getnm("AllowBuildTroops"), troops_count, build_troops_maximum);
 		console.addn(getnm("AllowBuildArmy"), (troops_army + 9) / 10, army_maximum);
-		console.addn(getnm("AllowCredit"), troops_cost, maximum_cost);
+		console.addn(getnm("AllowCredit"), last_pay, maximum_cost);
 		if(choosing) {
 			console.addn("---");
 			for(auto p : choosing)
 				console.addn(getnm("RecruitUnitCost"), p->getname(), p->get(Cost));
 		}
-		auto total = maximum_cost - troops_cost;
+		auto total = maximum_cost - last_pay;
 		if(troops_count < build_troops_maximum) {
 			for(auto p : player->troops) {
 				if(troops_army + p->get(Army) > troops_army_maximum)
@@ -1103,11 +1118,15 @@ static void determine_winner() {
 }
 
 static void prepare_ability(ability_s v) {
-	attacker.abilities[v] += attacker.player->getarmy(v);
-	defender.abilities[v] += defender.player->getarmy(v);
+	if(attacker.player)
+		attacker.abilities[v] += attacker.player->getarmy(v);
+	if(defender.player)
+		defender.abilities[v] += defender.player->getarmy(v);
 }
 
 static void prepare_ability_if_valid(armyi& source, ability_s v) {
+	if(!source.player)
+		return;
 	if(source.abilities[v] > 0 && v < sizeof(source.abilities) / sizeof(source.abilities[0]))
 		source.abilities[v] += source.player->getarmy(v);
 }
@@ -1531,6 +1550,7 @@ BSDATA(script) = {
 	{"AttackHirelings", attack_hirelings},
 	{"AttackMilita", attack_milita},
 	{"ApplyCasualty", apply_casualty},
+	{"ApplyPayResources", apply_pay_resources},
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
 	{"PutCardOnTable", put_card_on_table},
