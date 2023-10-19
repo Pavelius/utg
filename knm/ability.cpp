@@ -19,7 +19,6 @@ BSDATA(abilityi) = {
 	{"Hero"},
 	{"Army"},
 	{"Tactic"},
-	{"Lore"},
 	{"Fame"},
 	{"Gold"},
 };

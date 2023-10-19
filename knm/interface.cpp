@@ -225,11 +225,8 @@ static void status(ability_s v) {
 			player->get(v), player->getmaximum(v),
 			bsdata<widget>::find("OpenObjectives"));
 		break;
-	case Lore:
-		status(bsdata<abilityi>::elements[v].id,
-			player->get(v), player->getmaximum(v),
-			bsdata<widget>::find("UpgradesForm"));
-		break;
+	//case Lore:
+	//	break;
 	case Tactic:
 		status(bsdata<abilityi>::elements[v].id,
 			count_cards(player, bsdata<decki>::elements + TacticsDeck), player->getmaximum(v),
@@ -254,7 +251,7 @@ static void show_indicators() {
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status(Lore);
+	status("Upgrades", 0, 0, bsdata<widget>::find("UpgradesForm"));
 	caret.x += 2;
 	status(Tactic);
 	caret.x += 2;

@@ -7,7 +7,7 @@ enum ability_s : unsigned char {
 	Strenght, Combat, Damage, Shoots, Shield, Milita, Move,
 	Resources, Influence, Goods,
 	Hero, Army, Tactic,
-	Lore, Fame, Gold,
+	Fame, Gold,
 };
 struct abilityi : nameable {
 };

@@ -4,6 +4,8 @@ ActivateProvince
  elements SelectProvinces FilterActivated-1 ChooseProvince FocusProvince ActivityToken
 AddTactics
  elements TacticsDeck+1 PickCards
+AddUpgrade
+ elements SelectUpgrade FilterAllowedUpgrade ChooseQuerry UpgradePlayer
 ApplyTradeRoute
 ClaimSpeaker
  elements PushPlayer SelectPlayers FilterSpeaker-1 ChooseQuerry PickSpeaker
@@ -21,6 +23,10 @@ LookLaws
  elements LawsDeck+2 ChooseCardsDiscard+2
 MoveTroops
  elements ChooseMovement
+PayUpgradePrimary
+ elements PayResourcesCost+6 AddUpgrade
+PayUpgradeSecondanary
+ elements PayResourcesCost+4 AddUpgrade
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland
@@ -64,8 +70,8 @@ Warfare initiative(6)
  primary RemoveActivityToken AddLeaders+1
  secondary PayHeroYesNo RecruitTroopsInHomeland
 Technology initiative(7)
- primary AddResearch+10 PayResearch+2
- secondary PayHeroYesNo AddResearch+4 PayResearch+2
+ primary AddUpgrade PayUpgradePrimary
+ secondary PayHeroYesNo PayUpgradeSecondanary
 GatherPower initiative(8)
  primary ScorePublicGoal GainFameIfControlCapital
  secondary PayHeroYesNo AddSecretGoal+1

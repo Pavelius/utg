@@ -1,2 +1,1 @@
-﻿In file `rules/Actions.txt`:
- Line 25: Not found identifier `VisitDocks`
+﻿Can't find file 'locale/ru/names/Names.txt'

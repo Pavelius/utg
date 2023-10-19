@@ -363,6 +363,8 @@ static void apply_input(void* result, bool play_card = true) {
 			last_component = (cardi*)result;
 	} else if(bsdata<listi>::have(result))
 		((listi*)result)->run();
+	else if(bsdata<upgradei>::have(result))
+		last_upgrade = (upgradei*)result;
 	else if(bsdata<abilityi>::have(result)) {
 		auto v = (ability_s)((abilityi*)result - bsdata<abilityi>::elements);
 		player->current.abilities[v] += 1;
@@ -447,6 +449,11 @@ static bool filter_valid(const void* object) {
 static bool filter_activated(const void* object) {
 	auto p = (entity*)object;
 	return p->is(player);
+}
+
+static bool filter_allowed_upgrade(const void* object) {
+	auto p = (upgradei*)object;
+	return player->isupgradeallow(p);
 }
 
 static bool filter_province_activated(const void* object) {
@@ -558,6 +565,10 @@ static void set_value(int bonus) {
 	last_value = bonus;
 }
 
+static void upgrade_player(int bonus) {
+	player->setupgrade(last_upgrade);
+}
+
 static void add_value(int bonus) {
 	last_value += bonus;
 }
@@ -630,6 +641,23 @@ static void remove_strategy(int bonus) {
 static void pay(ability_s v, int bonus) {
 	if(player->current.abilities[v] >= bonus)
 		player->current.abilities[v] -= bonus;
+}
+
+static void pay_plus_good(ability_s v, int& bonus) {
+	if(player->current.abilities[v] >= bonus) {
+		player->current.abilities[v] -= bonus;
+		bonus = 0;
+	} else {
+		bonus -= player->current.abilities[v];
+		player->current.abilities[v] = 0;
+	}
+	if(player->current.abilities[Gold] >= bonus) {
+		player->current.abilities[Gold] -= bonus;
+		bonus = 0;
+	} else {
+		bonus -= player->current.abilities[Gold];
+		player->current.abilities[Gold] = 0;
+	}
 }
 
 static bool allow_pay(ability_s v, int bonus) {
@@ -766,10 +794,6 @@ static void add_start(int bonus) {
 	update_ui();
 }
 
-static void add_research(int bonus) {
-	player->current.abilities[Lore] += bonus;
-}
-
 static void add_secret_goal(int bonus) {
 }
 
@@ -809,8 +833,12 @@ static void pay_goods(int bonus) {
 	player->current.abilities[Goods] -= bonus;
 }
 
-static void pay_research(int bonus) {
-	pay_ability(last_script->id, Lore, Resources, bonus, 1, 5);
+static bool allow_pay_resource_cost(int bonus) {
+	return (player->current.abilities[Resources] + player->current.abilities[Goods]) >= bonus;
+}
+static void pay_resource_cost(int bonus) {
+	if(allow_pay_resource_cost(bonus))
+		pay_plus_good(Resources, bonus);
 }
 
 static bool allow_pay_resources(int bonus) {
@@ -972,6 +1000,10 @@ static void select_strategy(int bonus) {
 
 static void select_structures(int bonus) {
 	querry.collectiona::select(bsdata<structurei>::source);
+}
+
+static void select_upgrade(int bonus) {
+	querry.collectiona::select(bsdata<upgradei>::source, filter_player_upgrade, bonus >= 0);
 }
 
 static void select_provincies(int bonus) {
@@ -1454,6 +1486,7 @@ void initialize_script() {
 
 BSDATA(filteri) = {
 	{"FilterActivated", filter_activated},
+	{"FilterAllowedUpgrade", filter_allowed_upgrade},
 	{"FilterHomeland", filter_homeland},
 	{"FilterPlayer", filter_player},
 	{"FilterTacticCards", filter_player},
@@ -1471,7 +1504,6 @@ BSDATA(script) = {
 	{"AddLeaders", add_leaders},
 	{"AddProvinceInfluence", add_province_influence},
 	{"AddProvinceResources", add_province_resource},
-	{"AddResearch", add_research},
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
@@ -1518,8 +1550,8 @@ BSDATA(script) = {
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
 	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
-	{"PayResearch", pay_research},
 	{"PayResources", pay_resources, allow_pay_resources},
+	{"PayResourcesCost", pay_resource_cost, allow_pay_resource_cost},
 	{"PickCards", pick_cards},
 	{"PickSpeaker", pick_speaker},
 	{"PickStrategy", pick_strategy},
@@ -1545,9 +1577,11 @@ BSDATA(script) = {
 	{"SelectProvinces", select_provincies, allow_select},
 	{"SelectStrategy", select_strategy, allow_select},
 	{"SelectStructures", select_structures, allow_select},
+	{"SelectUpgrade", select_upgrade, allow_select},
 	{"SetArmyTactics", set_army_tactics},
 	{"SetProvinceCapital", set_province_capital, allow_script},
 	{"SetValue", set_value, allow_script},
 	{"SetValueQuerryCount", set_value_querry_count, allow_script},
+	{"UpgradePlayer", upgrade_player},
 };
 BSDATAF(script)

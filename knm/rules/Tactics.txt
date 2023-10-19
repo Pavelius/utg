@@ -7,7 +7,7 @@ PlentyHarvest count(2)
 GemsMining
  effect SelectProvinces FilterPlayer Mountains ForEachProvince Gold+1
 FocusedResearch
- effect PayGoods+4 AddResearch+10
+ effect PayGoods+4 AddUpgrade
 LocalLord count(2)
  effect ChooseProvinceYouControl Archers+2 Pikemens+1
 Insubordination

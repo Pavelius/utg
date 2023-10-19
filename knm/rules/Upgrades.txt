@@ -9,6 +9,7 @@ MerchantsGuild trigger(StatusPhase)
 NavigatorGuild // You can move throught/into the water province
 NecromancyGuild // After win battle create one skeleton unit 
 PathfinderGuild // You can move throught enemy province
+ required AdventurersGuild
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
 FightersGuild trigger(MeleeClash)

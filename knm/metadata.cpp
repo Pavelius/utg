@@ -100,6 +100,7 @@ BSMETA(upgradei) = {
 	BSDST(abilities, abilityi),
 	BSREQ(trigger),
 	BSREQ(effect),
+	BSFLG(required, upgradei),
 	{}};
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},

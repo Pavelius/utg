@@ -197,11 +197,9 @@ static void background_map() {
 	image(pi, 0, 0);
 }
 
-static void add_widget(fnevent proc, unsigned char priority, bool absolute_position = true) {
-	auto p = addobject({0, 0}, proc, proc);
+static void add_widget(fnevent proc, unsigned char priority) {
+	auto p = addobject({0, 0}, proc, proc, 0, priority);
 	p->priority = priority;
-	if(absolute_position)
-		p->set(drawable::AbsolutePosition);
 }
 
 static void object_painting(const object* p) {
@@ -216,5 +214,5 @@ void ui_initialize() {
 	widget::add("Separator", separator);
 	widget::add("SkillBox", skill_box_widget);
 	add_widget(character_sheet, 50);
-	add_widget(background_map, 0, false);
+	add_widget(background_map, 0);
 }

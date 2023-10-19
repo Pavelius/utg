@@ -11,7 +11,7 @@ static void add_elements(answers& an, const variants& elements) {
 			add_elements(an, bsdata<listi>::elements[v.value].elements);
 		else if(v.iskind<modifieri>())
 			fnscript<modifieri>(v.value, v.counter);
-		else if(script::allow(v))
+		else if(script_allow(v))
 			an.add(v.getpointer(), v.getname());
 	}
 }

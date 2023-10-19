@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-PlayerUseTactic: Define translate
+﻿In file `rules/Tactics.txt`:
+ Line 10: Can't find variant `AddResearch`
