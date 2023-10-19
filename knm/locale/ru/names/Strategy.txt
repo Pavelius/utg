@@ -43,6 +43,6 @@ Diplomacy: Дипломатия
 GatherPower: Власть
 Leadership: Лидерство
 Politics: Политика
-Technology: Исследования
+Technology: Развитие
 Trade: Торговля
 Warfare: Война

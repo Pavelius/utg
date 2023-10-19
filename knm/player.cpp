@@ -20,3 +20,7 @@ int	playeri::getmaximum(ability_s v) const {
 		return 100;
 	}
 }
+
+int	playeri::getarmy(ability_s v) const {
+	return current.abilities[v] + getupgrade(v);
+}

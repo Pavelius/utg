@@ -14,7 +14,7 @@ struct armyi : abilitya {
 	void		applycasualty();
 	void		clear();
 	void		damage(int chance, int count = 1);
-	void		engage(ability_s type, int skill = 0);
+	void		engage(ability_s type);
 	void		engage(const char* id, int chance, int count);
 	int			get(ability_s v) const { return abilities[v]; }
 	int			getsummary(ability_s v) const;

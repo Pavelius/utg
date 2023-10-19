@@ -837,6 +837,14 @@ static bool allow_pay_resource_cost(int bonus) {
 	return (player->current.abilities[Resources] + player->current.abilities[Goods]) >= bonus;
 }
 static void pay_resource_cost(int bonus) {
+	if(!allow_pay_resource_cost(bonus) || !draw::yesno(getnm("DoYouWishPayFor"), bonus)) {
+		script_stop();
+		return;
+	}
+	pay_plus_good(Resources, bonus);
+}
+
+static void need_resources(int bonus) {
 	if(allow_pay_resource_cost(bonus))
 		pay_plus_good(Resources, bonus);
 }
@@ -1094,6 +1102,16 @@ static void determine_winner() {
 		winner_army = &defender;
 }
 
+static void prepare_ability(ability_s v) {
+	attacker.abilities[v] += attacker.player->getarmy(v);
+	defender.abilities[v] += defender.player->getarmy(v);
+}
+
+static void prepare_ability_if_valid(armyi& source, ability_s v) {
+	if(source.abilities[v] > 0 && v < sizeof(source.abilities) / sizeof(source.abilities[0]))
+		source.abilities[v] += source.player->getarmy(v);
+}
+
 static void prepare_army(int bonus) {
 	winner_army = 0;
 	attacker.clear();
@@ -1109,6 +1127,10 @@ static void prepare_army(int bonus) {
 		script_stop();
 	attacker.prepare(Shield);
 	defender.prepare(Shield);
+	prepare_ability(Combat);
+	prepare_ability(Shoots);
+	prepare_ability(Shield);
+	prepare_ability(Strenght);
 }
 
 static void apply_casualty(int bonus) {
@@ -1131,7 +1153,7 @@ static void attack_army(armyi& source, ability_s type, bool milita_attack = fals
 	apply_trigger(0);
 	if(milita_attack)
 		source.engage(getnm("Milita"), 2, source.get(Milita));
-	source.engage(type, 0);
+	source.engage(type);
 }
 
 static void hail_arrows(int bonus) {
@@ -1241,10 +1263,6 @@ static void attacker_army(int bonus) {
 static void defender_army(int bonus) {
 	last_army = &defender;
 	player = last_army->player;
-}
-
-static void add_structure_milita(int bonus) {
-	last_army->abilities[Milita] += count_structures(province) + bonus;
 }
 
 static bool is_allow_actions() {
@@ -1409,6 +1427,7 @@ static void play_tactics(int bonus) {
 	}
 	if(!attacker.troops || !defender.troops)
 		script_stop();
+	prepare_ability_if_valid(defender, Milita);
 	determine_winner();
 }
 
@@ -1507,7 +1526,6 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
-	{"AddStructureMilita", add_structure_milita},
 	{"AddValue", add_value},
 	{"AttackerArmy", attacker_army},
 	{"AttackHirelings", attack_hirelings},
@@ -1543,6 +1561,7 @@ BSDATA(script) = {
 	{"MakeAction", make_action},
 	{"MakeWave", make_wave},
 	{"MeleeClash", melee_clash},
+	{"NeedResources", need_resources, allow_pay_resource_cost},
 	{"NoConditions", script_none, allow_and_stop},
 	{"OpenTactic", open_tactic},
 	{"PayForLeaders", pay_for_leaders, allow_pay_for_leaders},

@@ -26,7 +26,7 @@ MoveTroops
 PayUpgradePrimary
  elements PayResourcesCost+6 AddUpgrade
 PayUpgradeSecondanary
- elements PayResourcesCost+4 AddUpgrade
+ elements NeedResources+4 AddUpgrade
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
 RecruitTroopsInHomeland

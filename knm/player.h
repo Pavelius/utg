@@ -18,6 +18,7 @@ struct playeri : entity, upgradea {
 	abilitya	bonus[5];
 	variants	start;
 	void		add(ability_s v, int i) { current.abilities[v] += i; }
+	int			getarmy(ability_s v) const;
 	int			getmaximum(ability_s v) const;
 	void		set(ability_s v, int i) { current.abilities[v] = i; }
 	void		set(tag_s v) { entity::set(v); }

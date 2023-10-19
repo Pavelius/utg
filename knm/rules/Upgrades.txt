@@ -3,14 +3,27 @@
 ArtisantGuild // Reduce cost of production
 AdventurersGuild trigger(StatusPhase)
  effect Hero+1
+ required ArtisantGuild
 MerchantsGuild trigger(StatusPhase)
  abilities Goods(1)
  effect AddGold+1
+
 NavigatorGuild // You can move throught/into the water province
-NecromancyGuild // After win battle create one skeleton unit 
 PathfinderGuild // You can move throught enemy province
- required AdventurersGuild
+ required NavigatorGuild
+
+FightersGuild
+ abilities Milita(1)
+ArmorersGuild
+ abilities Shield(1)
+ required FightersGuild
+AltarOfWar
+ abilities Combat(1)
+ required ArmorersGuild
+
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
-FightersGuild trigger(MeleeClash)
- effect AddStructureMilita
+HirelingsGuild // Can hire up to 3 hirelings
+ required TheivesGuild
+NecromancyGuild // After win battle create one skeleton unit
+ required HirelingsGuild

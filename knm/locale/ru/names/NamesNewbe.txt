@@ -1,6 +1,1 @@
-﻿AddUpgrade: 
-MerchantsGuild: 
-NavigatorGuild: 
-NecromancyGuild: 
-PathfinderGuild: 
-TheivesGuild: 
+﻿

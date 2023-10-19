@@ -74,14 +74,16 @@ void armyi::engage(const char* name, int chance, int count) {
 	damage(chance, count);
 }
 
-void armyi::engage(ability_s type, int skill) {
+void armyi::engage(ability_s type) {
 	entitya querry = troops;
 	querry.group(get_unit);
+	auto skill = get(Combat);
 	for(auto p : querry)
 		engage(p->getname(), p->get(Combat) + skill, troops.gettotal(p) * p->get(type));
 }
 
 void armyi::resist(int& hits) {
+	auto shileds = get(Shield);
 	if(abilities[Shield] > 0) {
 		if(abilities[Shield] > hits) {
 			abilities[Shield] -= hits;
