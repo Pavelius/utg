@@ -103,18 +103,20 @@ GamePlay
 
 BeforeCombat
  elements ApplyTrigger
+AfterWinBattle
+ elements PushPlayer WinnerArmy ApplyTrigger
 PlayersBeforeCombat
  elements PushPlayer AttackerArmy BeforeCombat DefenderArmy BeforeCombat
 BattleTactic
  elements SelectPlayerTacticCards FilterTrigger ChooseQuerryList SetArmyTactics
-ChooseBattleTactic
+PlayersBattleTactic
  elements PushPlayer AttackerArmy BattleTactic DefenderArmy BattleTactic PlayTactics
 DefenderResult
 Retreat
  elements RetreatTroops
 
 ApplyCombat
- elements PrepareArmy PlayersBeforeCombat ChooseBattleTactic HailOfArrows MeleeClash Retreat
+ elements PrepareArmy PlayersBeforeCombat PlayersBattleTactic HailOfArrows MeleeClash Retreat AfterWinBattle
 
 #Card trigger(MakeAction)
 

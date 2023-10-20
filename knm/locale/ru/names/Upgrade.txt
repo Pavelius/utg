@@ -6,7 +6,7 @@ FightersGuild: Гильдия воинов
 HirelingsGuild: Гильдия наемников
 MerchantsGuild: Гильдия торговцев
 NavigatorGuild: Гильдия мореплавателей
-NecromancersGuild: Гильдия некромансеров
+NecromancyGuild: Гильдия некромансеров
 TheivesGuild: Гильдия воров
 
 AddUpgrade: Новое развитие

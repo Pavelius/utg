@@ -28,5 +28,6 @@ TheivesGuild trigger(StatusPhase)
 HirelingsGuild trigger(BeforeCombat)
  effect PayHirelings+3
  required TheivesGuild
-NecromancyGuild // After win battle create one skeleton unit
+NecromancyGuild trigger(AfterWinBattle)
+ effect Skeletons+1
  required HirelingsGuild

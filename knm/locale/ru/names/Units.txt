@@ -20,3 +20,5 @@ Orcs: Орки
 Wargs: Волки
 Trolls: Тролли
 Giant: Великан
+
+Skeletons: Скелеты

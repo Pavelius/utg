@@ -1156,8 +1156,10 @@ static void prepare_army(int bonus) {
 	attacker.select(province, player);
 	defender.select(province, province->player);
 	defender.abilities[Milita] += province->get(Milita) + province->getbonus(Milita);
-	if(!attacker.troops || !defender.troops)
+	if(!attacker.troops || !defender.troops) {
 		script_stop();
+		return;
+	}
 	attacker.prepare(Shield);
 	defender.prepare(Shield);
 	prepare_ability(Combat);
@@ -1303,6 +1305,13 @@ static void defender_army(int bonus) {
 	player = last_army->player;
 }
 
+static void winner_army_script(int bonus) {
+	if(!winner_army)
+		return;
+	last_army = winner_army;
+	player = last_army->player;
+}
+
 static bool is_allow_actions() {
 	for(auto& e : bsdata<playeri>()) {
 		if(!e.is(Used))
@@ -1330,6 +1339,11 @@ static void if_win_battle(int bonus) {
 	auto result_true = (!last_army || last_army == &attacker);
 	if(result_true != (bonus >= 0))
 		script_stop();
+}
+
+static void winner_player(int bonus) {
+	if(winner_army)
+		player = winner_army->player;
 }
 
 static void for_each_card(int bonus) {
@@ -1643,5 +1657,6 @@ BSDATA(script) = {
 	{"SetValue", set_value, allow_script},
 	{"SetValueQuerryCount", set_value_querry_count, allow_script},
 	{"UpgradePlayer", upgrade_player},
+	{"WinnerArmy", winner_army_script},
 };
 BSDATAF(script)
