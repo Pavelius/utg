@@ -10,6 +10,7 @@ MerchantsGuild trigger(StatusPhase)
  effect AddGold+1
 
 NavigatorGuild // You can move throught/into the water province
+Stables // Activate one of your provinces and move units with +1 to movement
 PathfinderGuild // You can move throught enemy province
  required NavigatorGuild
 
