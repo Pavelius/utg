@@ -23,7 +23,7 @@ struct armyi : abilitya {
 	void		resist(int& hits);
 	static void setheader(const char* format);
 	void		select(const entity* location, playeri* player);
-	void		suffer(int hits);
+	void		suffer(int hits, bool shield_save = true);
 };
 extern armyi	attacker, defender;
 extern armyi	*last_army, *winner_army;

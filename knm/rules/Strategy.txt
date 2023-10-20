@@ -44,6 +44,7 @@ RemoveActivityAllTokens
 RemoveStrategicCards
  elements SelectStrategy-1 ForEachStrategy RemoveStrategy
 ScorePublicGoal
+ elements SelectPublicGoals FilterScoredObjective ChooseQuerry
 TestControlCapital
  elements IfControlCapital Fame+1
 TestNoControlCapital

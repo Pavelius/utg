@@ -101,8 +101,9 @@ void armyi::prepare(ability_s type) {
 		add(type, p->get(type));
 }
 
-void armyi::suffer(int hits) {
-	resist(hits);
+void armyi::suffer(int hits, bool shield_save) {
+	if(shield_save)
+		resist(hits);
 	if(hits <= 0)
 		return;
 	auto ps = troops.begin();

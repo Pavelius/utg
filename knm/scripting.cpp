@@ -158,6 +158,13 @@ static armyi* get_player_army() {
 		return &defender;
 }
 
+static armyi* get_enemy_army() {
+	if(player == attacker.player)
+		return &defender;
+	else
+		return &attacker;
+}
+
 static armyi* get_looser_army() {
 	if(winner_army == &attacker)
 		return &defender;
@@ -542,6 +549,11 @@ static bool filter_province_limit(const void* object) {
 	return true;
 }
 
+static bool filter_scored_objectives(const void* object) {
+	auto p = (card*)object;
+	return !p->is(player) && script_allow(p->getcomponent()->effect);
+}
+
 static bool filter_move_range(const void* object) {
 	auto p = (entity*)object;
 	if(!p->id)
@@ -838,6 +850,15 @@ static void add_army(int bonus) {
 	last_army->abilities[last_ability] += bonus;
 }
 
+static void add_enemy_casualty(int bonus) {
+	auto enemy = get_enemy_army();
+	if(!enemy)
+		return;
+	enemy->suffer(bonus, false);
+	enemy->applycasualty();
+	update_ui();
+}
+
 static card* pickcard(deck_s type) {
 	return (card*)bsdata<decki>::elements[type].cards.pick();
 }
@@ -1057,6 +1078,10 @@ static void* group_id(const void* object) {
 
 static void group_structure_type(int bonus) {
 	querry.group(group_id);
+}
+
+static void select_public_goals(int bonus) {
+	querry.select(bsdata<decki>::elements + ObjectivesDeck, 0, 0);
 }
 
 static void build_structure(int bonus) {
@@ -1320,6 +1345,12 @@ static bool is_allow_actions() {
 	return false;
 }
 
+static void if_attacker(int bonus) {
+	auto result_true = (attacker.player == player);
+	if(result_true != (bonus >= 0))
+		script_stop();
+}
+
 static void if_control_capital(int bonus) {
 	auto result_true = (bsdata<provincei>::elements[0].player == player);
 	if(result_true != (bonus >= 0))
@@ -1332,6 +1363,12 @@ static void if_no_querry_break(int bonus) {
 		need_break = true;
 		script_stop();
 	}
+}
+
+static void if_structures(int bonus) {
+	auto result_true = count_structures(province) > 0;
+	if(result_true != (bonus >= 0))
+		script_stop();
 }
 
 static void if_win_battle(int bonus) {
@@ -1559,24 +1596,26 @@ BSDATA(filteri) = {
 	{"FilterActivated", filter_activated},
 	{"FilterAllowedUpgrade", filter_allowed_upgrade},
 	{"FilterHomeland", filter_homeland},
+	{"FilterNeightboard", filter_neightboard},
 	{"FilterPlayer", filter_player},
+	{"FilterProvinceLimit", filter_province_limit},
+	{"FilterScoredObjective", filter_scored_objectives},
+	{"FilterStructureLimit", filter_structure_limit},
+	{"FilterSpeaker", filter_speaker},
 	{"FilterTacticCards", filter_player},
 	{"FilterTrigger", filter_trigger},
-	{"FilterProvinceLimit", filter_province_limit},
-	{"FilterNeightboard", filter_neightboard},
-	{"FilterSpeaker", filter_speaker},
-	{"FilterStructureLimit", filter_structure_limit},
 };
 BSDATAF(filteri);
 BSDATA(script) = {
 	{"ActivityToken", activity_token},
 	{"AddArmy", add_army},
+	{"AddEnemyCasualty", add_enemy_casualty},
 	{"AddGold", add_gold},
 	{"AddLeaders", add_leaders},
+	{"AddPlayerTag", add_player_tag},
 	{"AddProvinceInfluence", add_province_influence},
 	{"AddProvinceResources", add_province_resource},
 	{"AddSecretGoal", add_secret_goal},
-	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
 	{"AddTroops", add_troops},
 	{"AddValue", add_value},
@@ -1608,8 +1647,10 @@ BSDATA(script) = {
 	{"GroupProvince", group_province, allow_select},
 	{"GroupUnit", group_unit, allow_select},
 	{"HailOfArrows", hail_arrows},
+	{"IfAttacker", if_attacker},
 	{"IfControlCapital", if_control_capital},
 	{"IfNoQuerryBreak", if_no_querry_break},
+	{"IfStructures", if_structures},
 	{"IfWinBattle", if_win_battle},
 	{"InputQuerry", input_querry},
 	{"MakeAction", make_action},
@@ -1649,6 +1690,7 @@ BSDATA(script) = {
 	{"SelectPlayerTroops", select_player_troops, allow_select},
 	{"SelectProvinceStructures", select_province_structures, allow_select},
 	{"SelectProvinces", select_provincies, allow_select},
+	{"SelectPublicGoals", select_public_goals, allow_select},
 	{"SelectStrategy", select_strategy, allow_select},
 	{"SelectStructures", select_structures, allow_select},
 	{"SelectUpgrade", select_upgrade, allow_select},

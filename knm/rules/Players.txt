@@ -6,5 +6,5 @@ MiddleKindom homeland(CityGriffonHeart) fore(0 121 191)
  upgrades HirelingsGuild NecromancyGuild
 OrcHorde homeland(DarkCitadel) fore(235 90 70)
  troops Orcs Wargs Ogres Trolls Giant
- upgrades FightersGuild NecromancyGuild
+ upgrades FightersGuild NecromancyGuild StoneWalls
  start Hero+2 Army+4 City+1 Fortress+1 Orcs+2 Wargs+3 AddTactics+3
