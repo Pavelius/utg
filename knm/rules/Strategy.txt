@@ -27,10 +27,12 @@ PayUpgradePrimary
  elements PayResourcesCost+6 AddUpgrade
 PayUpgradeSecondanary
  elements NeedResources+4 AddUpgrade
+RecruitTroops
+ elements RecruitTroopsInProvince Resources ApplyPay AddTroops
+RecruitTroopsInHomeland
+ elements SelectProvinces FilterPlayer FilterHomeland ChooseProvince RecruitTroops
 ResolvePlayerActions
  elements SelectPlayers ForEachPlayer MakeAction
-RecruitTroopsInHomeland
- elements SelectProvinces FilterPlayer FilterHomeland ForEachProvince RecruitTroops
 RefreshConsumables
  elements SelectPlayers ForEachPlayer RefreshResources RefreshInfluence
 RefreshPlayers
@@ -101,6 +103,8 @@ GamePlay
 
 BeforeCombat
  elements ApplyTrigger
+PlayersBeforeCombat
+ elements PushPlayer AttackerArmy BeforeCombat DefenderArmy BeforeCombat
 BattleTactic
  elements SelectPlayerTacticCards FilterTrigger ChooseQuerryList SetArmyTactics
 ChooseBattleTactic
@@ -110,12 +114,12 @@ Retreat
  elements RetreatTroops
 
 ApplyCombat
- elements PrepareArmy BeforeCombat ChooseBattleTactic HailOfArrows MeleeClash Retreat
+ elements PrepareArmy PlayersBeforeCombat ChooseBattleTactic HailOfArrows MeleeClash Retreat
 
 #Card trigger(MakeAction)
 
 TacticAction
- effect PayHero ActivateProvince NoConditions MoveTroops ApplyCombat IfWinBattle DestroyEnemyStructures EsteblishControl RecruitTroops ApplyPayResources
+ effect PayHero ActivateProvince NoConditions MoveTroops ApplyCombat IfWinBattle DestroyEnemyStructures EsteblishControl RecruitTroops
 PassAction
  effect EndRound
 

@@ -144,6 +144,13 @@ static void apply_trigger(int bonus) {
 	}
 }
 
+static bool allow_pay(ability_s v, int bonus) {
+	auto total = player->current.abilities[Gold];
+	if(v != Gold)
+		total += player->current.abilities[v];
+	return total >= bonus;
+}
+
 static armyi* get_player_army() {
 	if(player == attacker.player)
 		return &attacker;
@@ -646,12 +653,14 @@ static void pay(ability_s v, int bonus) {
 static void pay_plus_good(ability_s v, int& bonus) {
 	if(bonus < 0)
 		bonus = 0;
-	if(player->current.abilities[v] >= bonus) {
-		player->current.abilities[v] -= bonus;
-		bonus = 0;
-	} else {
-		bonus -= player->current.abilities[v];
-		player->current.abilities[v] = 0;
+	if(v != Gold) {
+		if(player->current.abilities[v] >= bonus) {
+			player->current.abilities[v] -= bonus;
+			bonus = 0;
+		} else {
+			bonus -= player->current.abilities[v];
+			player->current.abilities[v] = 0;
+		}
 	}
 	if(player->current.abilities[Gold] >= bonus) {
 		player->current.abilities[Gold] -= bonus;
@@ -660,10 +669,6 @@ static void pay_plus_good(ability_s v, int& bonus) {
 		bonus -= player->current.abilities[Gold];
 		player->current.abilities[Gold] = 0;
 	}
-}
-
-static bool allow_pay(ability_s v, int bonus) {
-	return player->current.abilities[v] >= bonus;
 }
 
 static bool allow_pay_for_leaders(int bonus) {
@@ -684,7 +689,7 @@ static void pay_hero_yesno(int bonus) {
 		script_stop();
 }
 
-static void pay_ability(const char* id, ability_s v, ability_s currency, int gain, int cost, int maximum_cap) {
+static void pay_ability(const char* id, ability_s v, ability_s currency, int gain, int cost, int maximum_cap, abilitya& gainer, abilitya& payer) {
 	pushtitle push_title(id);
 	an.clear();
 	auto choose_prompt = getdescription(stw(id, "Answer"));
@@ -705,8 +710,12 @@ static void pay_ability(const char* id, ability_s v, ability_s currency, int gai
 			gain_total, cost_total);
 	}
 	auto i = (int)an.choose(get_title(id), choose_cancel, 0);
-	player->current.abilities[v] += gain * i;
-	player->current.abilities[currency] -= cost * i;
+	gainer.abilities[v] += gain * i;
+	payer.abilities[currency] -= cost * i;
+}
+
+static void pay_hirelings(int bonus) {
+	pay_ability(last_script->id, Hirelings, Gold, 1, 1, bonus, *last_army, player->current);
 }
 
 static void choosing_reset() {
@@ -718,13 +727,12 @@ static void apply_pay(ability_s v, int bonus) {
 	pay_plus_good(v, last_pay);
 }
 
-static void apply_pay_resources(int bonus) {
-	apply_pay(Resources, bonus);
+static void apply_pay(int bonus) {
+	apply_pay(last_ability, bonus);
 }
 
 static void recruit_troops(int army_used, int army_maximum, int build_troops_maximum, int maximum_cost) {
-	pushtitle push_title(last_script->id);
-	choosing_reset();
+	pushtitle push_title("RecruitTroops");
 	last_pay = 0;
 	while(true) {
 		clear_input(0);
@@ -766,6 +774,11 @@ static void recruit_troops(int army_used, int army_maximum, int build_troops_max
 	console.clear();
 }
 
+static void add_troops(int bonus) {
+	for(auto p : choosing)
+		add_troop((uniti*)p);
+}
+
 static int get_troops(ability_s v, provincei* province, playeri* player) {
 	auto result = 0;
 	for(auto& e : bsdata<troopi>()) {
@@ -775,7 +788,8 @@ static int get_troops(ability_s v, provincei* province, playeri* player) {
 	return result;
 }
 
-static void recruit_troops(int bonus) {
+static void recruit_troops_in_province(int bonus) {
+	choosing_reset();
 	if(player != province->player)
 		return;
 	auto recruit_value = province->get(Recruit) + province->getbonus(Recruit);
@@ -838,7 +852,7 @@ static void pick_strategy(int bonus) {
 }
 
 static void pay_for_leaders(int bonus) {
-	pay_ability(last_script->id, Hero, Influence, 1, bonus, 3);
+	pay_ability(last_script->id, Hero, Influence, 1, bonus, 3, player->current, player->current);
 }
 
 static bool allow_pay_goods(int bonus) {
@@ -849,7 +863,7 @@ static void pay_goods(int bonus) {
 }
 
 static bool allow_pay_resource_cost(int bonus) {
-	return (player->current.abilities[Resources] + player->current.abilities[Goods]) >= bonus;
+	return allow_pay(Resources, bonus);
 }
 static void pay_resource_cost(int bonus) {
 	if(!allow_pay_resource_cost(bonus) || !draw::yesno(getnm("DoYouWishPayFor"), bonus)) {
@@ -1165,13 +1179,15 @@ static void apply_casualty(int bonus) {
 	update_ui();
 }
 
-static void attack_army(armyi& source, ability_s type, bool milita_attack = false) {
+static void attack_army(armyi& source, ability_s type, bool milita_attack = false, bool hirelings_attack = false) {
 	pushvalue push_player(player, source.player);
 	pushvalue push_army(last_army, &source);
 	source.setheader("###%1");
 	apply_trigger(0);
 	if(milita_attack)
-		source.engage(getnm("Milita"), 2, source.get(Milita));
+		source.engage(getnm("Milita"), 2 + source.get(Combat), source.get(Milita));
+	if(hirelings_attack)
+		source.engage(getnm("Hirelings"), 3 + source.get(Combat), source.get(Hirelings));
 	source.engage(type);
 }
 
@@ -1183,14 +1199,17 @@ static void hail_arrows(int bonus) {
 	attacker.suffer(defender.abilities[Damage]);
 	defender.abilities[Damage] = 0;
 	defender.suffer(attacker.abilities[Damage]);
+	attacker.abilities[Damage] = 0;
 	apply_casualty(0);
 }
 
 static void melee_clash(int bonus) {
 	pushtitle header(last_script->id, last_script->id);
 	console.clear();
-	attack_army(attacker, Damage);
-	attack_army(defender, Damage, true);
+	attack_army(attacker, Damage, false, true);
+	attack_army(defender, Damage, true, true);
+	attacker.abilities[Hirelings] = 0;
+	defender.abilities[Hirelings] = 0;
 	attacker.suffer(defender.abilities[Damage]);
 	defender.abilities[Damage] = 0;
 	defender.suffer(attacker.abilities[Damage]);
@@ -1218,7 +1237,7 @@ static void choose_querry_list(int bonus) {
 				console.add(p, player->getname(), province->getname());
 		}
 		for(auto p : querry) {
-			if(choosing.find(p)==-1)
+			if(choosing.find(p) == -1)
 				add_input(*p);
 		}
 		if(choosing)
@@ -1545,12 +1564,13 @@ BSDATA(script) = {
 	{"AddSecretGoal", add_secret_goal},
 	{"AddPlayerTag", add_player_tag},
 	{"AddStart", add_start},
+	{"AddTroops", add_troops},
 	{"AddValue", add_value},
 	{"AttackerArmy", attacker_army},
 	{"AttackHirelings", attack_hirelings},
 	{"AttackMilita", attack_milita},
 	{"ApplyCasualty", apply_casualty},
-	{"ApplyPayResources", apply_pay_resources},
+	{"ApplyPay", apply_pay},
 	{"ApplyTrigger", apply_trigger},
 	{"BuildStructure", build_structure},
 	{"PutCardOnTable", put_card_on_table},
@@ -1589,6 +1609,7 @@ BSDATA(script) = {
 	{"PayGoods", pay_goods, allow_pay_goods},
 	{"PayHero", pay_hero, allow_pay_hero},
 	{"PayHeroYesNo", pay_hero_yesno, allow_pay_hero},
+	{"PayHirelings", pay_hirelings, allow_pay_hero},
 	{"PayResources", pay_resources, allow_pay_resources},
 	{"PayResourcesCost", pay_resource_cost, allow_pay_resource_cost},
 	{"PickCards", pick_cards},
@@ -1599,7 +1620,7 @@ BSDATA(script) = {
 	{"PrepareArmy", prepare_army},
 	{"PushPlayer", push_player},
 	{"PushProvince", push_province},
-	{"RecruitTroops", recruit_troops},
+	{"RecruitTroopsInProvince", recruit_troops_in_province},
 	{"RefreshInfluence", refresh_influence},
 	{"RefreshResources", refresh_resources},
 	{"RefreshTrade", refresh_trade},

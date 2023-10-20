@@ -18,6 +18,7 @@ DiplomaticTreaty: Дипломатическая неприкосновенность
 DoubleProvinceResources: Дополнительные ресурсы
 HailOfArrows: Обстрел врага
 MeleeClash: Ближний бой
+PayHirelings: Оплатить наемников
 PayResearch: Инвестиции в развитие
 PlanningPhase: Выбор стратегии на год
 ResetMovement: Сбросить выбор

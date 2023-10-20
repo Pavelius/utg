@@ -4,7 +4,7 @@
 
 enum ability_s : unsigned char {
 	Cost, Limit, LimitInProvince, Recruit, Tools,
-	Strenght, Combat, Damage, Shoots, Shield, Milita, Move,
+	Strenght, Combat, Damage, Shoots, Shield, Hirelings, Milita, Move,
 	Resources, Influence, Goods,
 	Hero, Army, Tactic,
 	Fame, Gold,

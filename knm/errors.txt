@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
-ArmorersGuild: Define translate
+Hirelings: Define translate
+PayHirelings: Define translate

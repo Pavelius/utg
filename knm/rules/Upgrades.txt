@@ -1,6 +1,7 @@
 #Upgrade
 
-ArtisantGuild // Reduce cost of production
+ArtisantGuild
+ abilities Tools(1)
 AdventurersGuild trigger(StatusPhase)
  effect Hero+1
  required ArtisantGuild
@@ -23,7 +24,8 @@ AltarOfWar
 
 TheivesGuild trigger(StatusPhase)
  effect AddTactics
-HirelingsGuild // Can hire up to 3 hirelings
+HirelingsGuild trigger(BeforeCombat)
+ effect PayHirelings+3
  required TheivesGuild
 NecromancyGuild // After win battle create one skeleton unit
  required HirelingsGuild

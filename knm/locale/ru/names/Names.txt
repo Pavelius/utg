@@ -9,6 +9,7 @@ Hero: Герои
 Influence: Влияние
 LimitInProvince: Лимит в провинции
 Lore: Развитие
+Hirelings: Наемники
 Resources: Ресурсы
 Tactic: Тактика
 Upgrade: Развитие
