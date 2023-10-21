@@ -271,7 +271,7 @@ static void correct_camera(point result, int offs) {
 	}
 }
 
-static void moving(point& result, point goal, int step, int corrent) {
+static void moving(point& result, point goal, int step, int corrent, fnevent pscene) {
 	auto start = result;
 	auto maxds = distance(start, goal);
 	auto curds = 0;
@@ -280,7 +280,7 @@ static void moving(point& result, point goal, int step, int corrent) {
 		result.y = (short)(start.y + (goal.y - start.y) * curds / maxds);
 		if(corrent)
 			correct_camera(result, corrent);
-		paintstart();
+		pscene();
 		doredraw();
 		waitcputime(1);
 		curds += step;
@@ -290,8 +290,10 @@ static void moving(point& result, point goal, int step, int corrent) {
 	result = goal;
 }
 
-void drawable::move(point goal, int speed, int correct) {
-	moving(position, goal, speed, correct);
+void drawable::move(point goal, int speed, int correct, fnevent pscene) {
+	if(!pscene)
+		pscene = paintstart;
+	moving(position, goal, speed, correct, pscene);
 }
 
 static point getcameraorigin(point v) {

@@ -82,6 +82,18 @@ static void add_select(indext index) {
 	add_select(fh2p({x, y}, size), index + 1);
 }
 
+static void paint_objects_show_mode() {
+	paint_objects();
+	if(hot.key == KeyEscape)
+		execute(buttoncancel);
+	if(!hot.pressed && hot.key == MouseLeft)
+		execute(buttoncancel);
+}
+
+static void show_objects() {
+	draw::scene(paint_objects_show_mode);
+}
+
 void oceani::showseamap() {
 	createobjects();
 	show_objects();
@@ -195,7 +207,7 @@ indext oceani::chooseroute(const char* title, int range) const {
 	if(result == Blocked)
 		return Blocked;
 	if(marker_object)
-		marker_object->move(i2s(result), 2);
+		marker_object->move(i2s(result), 2, 0, paint_objects);
 	return result;
 }
 

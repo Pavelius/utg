@@ -11,7 +11,7 @@ struct drawable {
 	unsigned char	alpha, priority, param, flags;
 	point			getscreen() const;
 	bool			isabsolute() const { return priority < 10; }
-	void			move(point goal, int speed, int correct = 0);
+	void			move(point goal, int speed, int correct = 0, fnevent scene = 0);
 };
 struct draworder : drawable {
 	struct object*	parent;
