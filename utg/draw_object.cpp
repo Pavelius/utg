@@ -145,6 +145,18 @@ void paint_sprite() {
 	image((sprite*)last_object->data, last_object->param, last_object->flags);
 }
 
+static void paint_objects_show_mode() {
+	paint_objects();
+	if(hot.key == KeyEscape)
+		execute(buttoncancel);
+	if(!hot.pressed && hot.key == MouseLeft)
+		execute(buttoncancel);
+}
+
+void show_objects() {
+	draw::scene(paint_objects_show_mode);
+}
+
 void splash_screen(unsigned milliseconds) {
 	screenshoot push;
 	paintstart();
@@ -211,17 +223,6 @@ void paint_objects() {
 void* choose_object() {
 	draw::scene(paint_objects);
 	return (void*)getresult();
-}
-
-static void paint_objects_show_mode() {
-	if(hot.key == KeyEscape)
-		execute(buttoncancel);
-	if(!hot.pressed && hot.key == MouseLeft)
-		execute(buttoncancel);
-}
-
-void show_objects() {
-	draw::scene(paint_objects_show_mode);
 }
 
 object*	addobject(point screen, const void* data, fnevent painting, unsigned char param, unsigned char priority, unsigned char alpha, unsigned char flags) {

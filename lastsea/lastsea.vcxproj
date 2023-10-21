@@ -154,7 +154,7 @@
     <ClCompile Include="chest.cpp" />
     <ClCompile Include="counters.cpp" />
     <ClCompile Include="goal.cpp" />
-    <ClCompile Include="script.cpp" />
+    <ClCompile Include="scripting.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />

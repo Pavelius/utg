@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "draw.h"
 #include "draw_object.h"
 #include "main.h"
 #include "log.h"
@@ -71,8 +72,13 @@ void initialize_information_widgets();
 
 void initialize_script();
 
+static void custom_background() {
+	paint_objects();
+}
+
 static void initialize_widgets() {
 	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
+	draw::pbackground = custom_background;
 }
 
 int main(int argc, char* argv[]) {

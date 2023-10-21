@@ -30,7 +30,7 @@
     <ClCompile Include="npcname.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
-    <ClCompile Include="script.cpp">
+    <ClCompile Include="scripting.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="tag.cpp">

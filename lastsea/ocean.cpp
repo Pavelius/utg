@@ -1,13 +1,14 @@
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_hexagon.h"
+#include "screenshoot.h"
 #include "main.h"
 
 using namespace pathfind;
 using namespace draw;
 
-const int size = 42;
-const int appear_pause = 600;
+const int size = 43;
+const int appear_pause = 1000;
 
 static object* marker_object;
 
@@ -21,48 +22,58 @@ static void add_camera() {
 	draw::camera = {-220, -90};
 }
 
+static void paint_resource() {
+	auto pi = (sprite*)last_object->data;
+	image(pi, last_object->param, last_object->flags);
+}
+
+static void paint_tile() {
+	auto pi = gres("tiles");
+	image(pi, last_object->param, last_object->flags);
+	if(ishilite(size / 2)) {
+		hilite_type = figure::None;
+		hilite_object = last_object->data;
+	}
+}
+
+static void paint_selection() {
+	auto figure_size = size / 2;
+	auto push_fore = fore;
+	fore = colors::button;
+	circle(figure_size);
+	if(ishilite(figure_size)) {
+		hot.cursor = cursor::Hand;
+		fore = colors::active;
+		circle(figure_size - 2);
+		hilite_type = figure::None;
+		hilite_object = last_object->data;
+		if(hot.key == MouseLeft && hot.pressed)
+			execute(buttonparam, (long)hilite_object, 0, 0);
+	}
+	fore = push_fore;
+}
+
 static void add_seamap() {
-	//auto p = addobject(192, 203);
-	//p->resource = draw::getres("seamap");
-	//p->priority = 10;
+	addobject({-70, -62}, (void*)draw::gres("seamap"), paint_resource, 0, 10);
 }
 
 static void add_warning(point pt) {
-	//auto p = addobject(pt.x - 16, pt.y + 12);
-	//p->resource = draw::getres("tiles");
-	//p->priority = 21;
-	//p->frame = 36;
+	addobject(pt + point{-16, -12}, 0, paint_tile, 36, 21);
+}
+
+static void add_tile(point pt, int frame, const void* data) {
+	addobject(pt, data, paint_tile, frame, 20);
 }
 
 static void add_you_ship() {
 	auto index = game.getmarker();
 	if(index == Blocked)
 		return;
-	auto pt = i2s(index);
-	//marker_object = addobject(pt);
-	//marker_object->resource = draw::getres("tiles");
-	//marker_object->frame = 31;
-	//marker_object->priority = 29;
-}
-
-static void add_tile(point pt, const sprite* resource, int frame, const void* data) {
-	//auto p = addobject(pt);
-	//p->resource = resource;
-	//p->frame = frame;
-	//p->size = 2 * size / 3;
-	//p->priority = 20;
-	//p->data = (void*)data;
-	//p->fore = colors::border;
+	marker_object = addobject(i2s(index), 0, paint_tile, 31, 29);
 }
 
 static void add_select(point pt, indext data) {
-	//auto p = addobject(pt, (void*)data);
-	//p->size = 2 * size / 3;
-	//p->priority = 30;
-	//p->shape = figure::Circle;
-	//p->data = (void*)data;
-	//p->fore = colors::button;
-	//p->set(object::Hilite);
+	addobject(pt, (void*)data, paint_selection, 0, 30);
 }
 
 static void add_select(indext index) {
@@ -103,7 +114,6 @@ void oceani::createobjects() {
 	add_camera();
 	add_you_ship();
 	add_seamap();
-	auto tiles = draw::gres("tiles");
 	for(auto& e : bsdata<tilei>()) {
 		if(e.is(Discarded))
 			continue;
@@ -112,7 +122,7 @@ void oceani::createobjects() {
 		auto x = getx(e.index);
 		auto y = gety(e.index);
 		auto pt = draw::fh2p({x, y}, size);
-		add_tile(pt, tiles, e.frame, &e);
+		add_tile(pt, e.frame, &e);
 		if(e.is(StopMovement))
 			add_warning(pt);
 	}
@@ -171,7 +181,10 @@ void oceani::addpossiblemove(int range) const {
 }
 
 void oceani::showsplash() {
-	splash_screen(appear_pause);
+	screenshoot push;
+	paint_objects();
+	screenshoot another;
+	push.blend(another, appear_pause);
 }
 
 indext oceani::chooseroute(const char* title, int range) const {
