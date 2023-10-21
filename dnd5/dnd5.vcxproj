@@ -186,14 +186,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\CharacterNames.txt" />
-    <Text Include="locale\ru\ItemNames.txt" />
-    <Text Include="locale\ru\LanguageNames.txt" />
-    <Text Include="locale\ru\Names.txt" />
-    <Text Include="locale\ru\NamesNewbe.txt" />
-    <Text Include="locale\ru\OptionNames.txt" />
-    <Text Include="locale\ru\SkillNames.txt" />
-    <Text Include="locale\ru\SpellNames.txt" />
+    <Text Include="locale\ru\names\ItemNames.txt" />
+    <Text Include="locale\ru\names\LanguageNames.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
+    <Text Include="locale\ru\names\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\OptionNames.txt" />
+    <Text Include="locale\ru\names\SkillNames.txt" />
+    <Text Include="locale\ru\names\SpellNames.txt" />
     <Text Include="rules\CharacterGenerate.txt" />
     <Text Include="rules\ClassCleric.txt" />
     <Text Include="rules\ClassFighter.txt" />

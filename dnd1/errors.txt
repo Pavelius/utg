@@ -1,2 +1,1 @@
-﻿In file `locale/ru/NameCharacters.txt`:
- Line 0: Expected symbol line feed
+﻿Can't find file 'locale/ru/names/Names.txt'

@@ -1,6 +1,6 @@
 #Advance
 
-0/*Test*/ CharacterGenerate ChooseGender choose(1)
+0 CharacterGenerate ChooseGender choose(1)
  elements Male Female
 0 CharacterGenerate ChooseRace choose(1)
  elements Dwarf Elf
