@@ -1,4 +1,6 @@
 #include "main.h"
+#include "strprint.h"
+#include "stringact.h"
 #include "widget.h"
 
 static const char* history_source[] = {
@@ -350,7 +352,107 @@ static void listofguns() {
 	}
 }
 
+static void addvname(stringbuilder& sb, variant v, int padeg = 0) {
+	if(!v)
+		return;
+	if(v.type == Group && v.value <= 1) {
+		game.friends[v.value].getname(sb);
+		return;
+	}
+	auto pv = (groupvaluei*)v;
+	if(pv) {
+		switch(padeg) {
+		case 1: sb.addby(pv->name); break;
+		case 2: sb.addof(pv->name); break;
+		default: sb.add(pv->name); break;
+		}
+	}
+}
+
+static void show_values(stringbuilder& sb, const player& source) {
+	auto index = 0;
+	for(auto v : source.values) {
+		if(v) {
+			sb.addn("* ");
+			sb.add(game.getclass().types[index].getname());
+			sb.add(": ");
+			addvname(sb, v);
+		}
+		index++;
+	}
+	sb.addsep('\n');
+}
+
+static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
+	for(auto& e : game.getfriends()) {
+		sb.addn(padding);
+		if(hilite)
+			sb.add("[");
+		e.getname(sb);
+		if(hilite)
+			sb.add("]");
+		sb.add(separator);
+	}
+}
+
+static void show_values(stringbuilder& sb) {
+	show_values(sb, game);
+}
+
+static void show_crew(stringbuilder& sb) {
+	show_crew(sb, "\n", "* ", true);
+}
+
+static void show_value_1(stringbuilder& sb) {
+	addvname(sb, game.values[0], 0);
+}
+
+static void show_value_2(stringbuilder& sb) {
+	addvname(sb, game.values[1], 0);
+}
+
+static void show_value_3(stringbuilder& sb) {
+	addvname(sb, game.values[2], 0);
+}
+
+static void show_value_4(stringbuilder& sb) {
+	addvname(sb, game.values[3], 0);
+}
+
+static void show_value_5(stringbuilder& sb) {
+	addvname(sb, game.values[4], 0);
+}
+
+static void show_class(stringbuilder& sb) {
+	sb.add(getnm(game.getclass().id));
+}
+
+static void show_name(stringbuilder& sb) {
+	game.getactive().getname(sb);
+}
+
+static void custom_string(stringbuilder& sb, const char* identifier) {
+	if(print_identifier(sb, identifier))
+		return;
+	act_identifier(sb, identifier);
+}
+
+BSDATA(strprinti) = {
+	{"Class", show_class},
+	{"name", show_name},
+	{"ShowCrew", show_crew},
+	{"ShowValues", show_values},
+	{"Value1", show_value_1},
+	{"Value2", show_value_2},
+	{"Value3", show_value_3},
+	{"Value4", show_value_4},
+	{"Value5", show_value_5},
+	{"герой", show_name},
+};
+BSDATAF(strprinti)
+
 void initialize_information_widgets() {
+	stringbuilder::custom = custom_string;
 	widget::add("ListOfGoals", listofgoals);
 	widget::add("ListOfGuns", listofguns);
 	widget::add("ListOfCharacters", listofcharacters);

@@ -13,6 +13,9 @@
     <Filter Include="Утилиты">
       <UniqueIdentifier>{0e43fa4e-0562-433e-93d3-c77360e333ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Текст">
+      <UniqueIdentifier>{c55b0f95-a920-47f4-96da-803d58b9bcd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -121,8 +124,11 @@
     <Text Include="rules\CombatCards.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Данные</Filter>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>Текст</Filter>
+    </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>Текст</Filter>
     </Text>
   </ItemGroup>
 </Project>

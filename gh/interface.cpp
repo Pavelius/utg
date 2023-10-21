@@ -33,12 +33,7 @@ void scenariotilei::updateui() const {
 		} else {
 			ps->creating(position, inverse);
 			auto pt = h2p(position) - ps->offset;
-			p = addobject(pt, (void*)this, paint_tile);
-			p->data = this;
-			//p->resource = draw::getres(type, "art/tiles");
-			p->priority = ps->priority;
-			if(inverse)
-				p->flags = ImageMirrorH | ImageMirrorV;
+			p = addobject(pt, (void*)this, paint_tile, 0, ps->priority, 255, inverse ? (ImageMirrorH | ImageMirrorV) : 0);
 		}
 	}
 	auto pm = bsdata<monsteri>::find(type);
@@ -69,10 +64,8 @@ void decoration::updateui() const {
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		p = addobject(pt, (void*)this, ftpaint<decoration>);
-		p->data = this;
+		p = addobject(pt, (void*)this, ftpaint<decoration>, 0, 4);
 		//p->resource = draw::getres(parent->id, "art/tiles");
-		p->priority = 4;
 	}
 }
 
@@ -84,8 +77,7 @@ void ordermove(void* object, point hp, int time, bool depended) {
 		return;
 	auto pt = h2p(hp);
 	auto po = p->addorder(time, depended ? last_order : 0);
-	po->x = pt.x;
-	po->y = pt.y;
+	po->position = pt;
 	last_order = po;
 }
 
@@ -100,10 +92,10 @@ static draworder* floatstring(point pt, color fc, const char* format) {
 	pb->alpha = 0;
 	pb->priority = 101;
 	auto po = pb->addorder(500);
-	po->y -= size;
+	po->position.y -= size;
 	po->start.alpha = 255;
 	po->alpha = 255;
-	po->set(draworder::AutoClear);
+	po->autoclean();
 	return po;
 }
 
@@ -116,8 +108,8 @@ void indexable::fixattack(indexable& enemy) const {
 	auto p2 = findobject(&enemy);
 	if(!p1 || !p2)
 		return;
-	auto dx = p2->x - p1->x;
-	auto dy = p2->y - p1->y;
+	auto dx = p2->position.x - p1->position.x;
+	auto dy = p2->position.y - p1->position.y;
 	auto dz = isqrt(dx * dx + dy * dy);
 	if(!dz)
 		return;
@@ -125,13 +117,13 @@ void indexable::fixattack(indexable& enemy) const {
 	auto push_position = *p1;
 	// Move enemy
 	po = p1->addorder(150);
-	po->x += calculate(size / 3, dx, dz);
-	po->y += calculate(size / 3, dy, dz);
+	po->position.x += calculate(size / 3, dx, dz);
+	po->position.y += calculate(size / 3, dy, dz);
 	po->wait();
 	// Move back from enemy
 	po = p1->addorder(250);
-	po->x = push_position.x;
-	po->y = push_position.y;
+	po->position.x = push_position.position.x;
+	po->position.y = push_position.position.y;
 }
 
 static void fixvalue(point hex, int value, color fore) {
@@ -151,7 +143,7 @@ void indexable::disappear() const {
 		return;
 	auto po = p1->addorder(350);
 	po->alpha = 0;
-	po->set(draworder::AutoClear);
+	po->autoclean();
 }
 
 void indexable::fixmove(point hex) const {
@@ -160,8 +152,7 @@ void indexable::fixmove(point hex) const {
 		return;
 	auto pt = h2p(hex); focusing(pt);
 	auto po = p1->addorder(400);
-	po->x = pt.x;
-	po->y = pt.y;
+	po->position = pt;
 	po->wait();
 }
 
@@ -535,9 +526,7 @@ void creaturei::paint() const {
 		active_hexagon();
 }
 
-static void painting(const object* ps) {
-	if(bsdata<creaturei>::have(ps->data))
-		((creaturei*)ps->data)->paint();
+void decoration::paint() const {
 }
 
 static void tips() {

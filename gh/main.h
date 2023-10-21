@@ -206,9 +206,8 @@ struct activecardi {
 	duration_s			duration;
 	creaturei*			target;
 	playercardi*		card;
-	char				uses;
+	char				uses, bonus;
 	action_s			type;
-	char				bonus;
 	action_s			discard_action;
 	constexpr explicit operator bool() const { return duration != Instant; }
 	static activecardi*	add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source);
@@ -319,9 +318,6 @@ struct creaturea : adat<creaturei*> {
 	void				sort();
 	void				sortbymove();
 };
-namespace draw {
-void					waitall();
-}
 struct gamei : public location {
 	char				elements[Dark + 1];
 	combatdeck			combat;
@@ -343,3 +339,5 @@ namespace pathfind {
 void					blockwalls();
 }
 extern gamei			game;
+
+void wait_all();

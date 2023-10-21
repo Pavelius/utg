@@ -1,4 +1,9 @@
 ﻿Air: Воздух
+Dark: Тьма
+Earth: Земля
+Fire: Огонь
+Ice: Холод
+
 AppTitle: Мрачная гавань
 Attack: Атака
 BalancedMeasure: Взвешенный подход
@@ -14,11 +19,9 @@ ChooseGender: Выберите пол вашего персонажа
 ChooseInitiative: С какой инициативой вы бедете действовать?
 Circle: Круг
 Close: Закрыть
-Dark: Тьма
 Decoy: Приманка
 Disarmed: Обезоружeн
 Discard: Сбросить
-Earth: Земля
 EnchancementField: Силовое поле
 EndMove: Закончить движение
 EnemyAttackYouInsteadNearestAlly: Враг атакует вас вместо союзника, если вы находитесь рядом с союзником
@@ -27,7 +30,6 @@ Exit: Выход
 Experience: Опыт
 EyeForAnEye: Око за око
 Female: Женщина
-Fire: Огонь
 Flamethrower: Огнемет
 GainCoins: %1i монет
 GainExpForRetaliate: Опыт 1 за каждое отражение
@@ -39,7 +41,6 @@ Hits: Хиты
 HookGun: Крюкомет
 HotKey: Горячая клавиша
 Human: Человек
-Ice: Холод
 IfIce: Если есть Лед
 Immobilize: Обездвижен
 Initiative: Инициатива

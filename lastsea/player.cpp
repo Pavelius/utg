@@ -1,100 +1,6 @@
 #include "main.h"
 #include "stringact.h"
 
-static void addvname(stringbuilder& sb, variant v, int padeg = 0) {
-	if(!v)
-		return;
-	if(v.type == Group && v.value <= 1) {
-		game.friends[v.value].getname(sb);
-		return;
-	}
-	auto pv = (groupvaluei*)v;
-	if(pv) {
-		switch(padeg) {
-		case 1: sb.addby(pv->name); break;
-		case 2: sb.addof(pv->name); break;
-		default: sb.add(pv->name); break;
-		}
-	}
-}
-
-static void show_values(stringbuilder& sb, const player& source) {
-	auto index = 0;
-	for(auto v : source.values) {
-		if(v) {
-			sb.addn("* ");
-			sb.add(game.getclass().types[index].getname());
-			sb.add(": ");
-			addvname(sb, v);
-		}
-		index++;
-	}
-	sb.addsep('\n');
-}
-
-static void show_crew(stringbuilder& sb, const char* separator, const char* padding, bool hilite) {
-	for(auto& e : game.getfriends()) {
-		sb.addn(padding);
-		if(hilite)
-			sb.add("[");
-		e.getname(sb);
-		if(hilite)
-			sb.add("]");
-		sb.add(separator);
-	}
-}
-
-//class player::string : public stringact {
-//	const player& source;
-//	void addidentifier(const char* identifier) override {
-//		if(equal(identifier, "герой"))
-//			source.getactive().getname(*this);
-//		else if(equal(identifier, "Value1"))
-//			addvname(*this, source.values[0]);
-//		else if(equal(identifier, "ByValue1"))
-//			addvname(*this, source.values[0], 1);
-//		else if(equal(identifier, "OfValue1"))
-//			addvname(*this, source.values[0], 2);
-//		else if(equal(identifier, "Value2"))
-//			addvname(*this, source.values[1]);
-//		else if(equal(identifier, "ByValue2"))
-//			addvname(*this, source.values[1], 1);
-//		else if(equal(identifier, "OfValue2"))
-//			addvname(*this, source.values[1], 2);
-//		else if(equal(identifier, "Value3"))
-//			addvname(*this, source.values[2]);
-//		else if(equal(identifier, "ByValue3"))
-//			addvname(*this, source.values[2], 1);
-//		else if(equal(identifier, "OfValue3"))
-//			addvname(*this, source.values[2], 2);
-//		else if(equal(identifier, "Value4"))
-//			addvname(*this, source.values[3]);
-//		else if(equal(identifier, "ByValue4"))
-//			addvname(*this, source.values[3], 1);
-//		else if(equal(identifier, "OfValue4"))
-//			addvname(*this, source.values[3], 2);
-//		else if(equal(identifier, "Value5"))
-//			addvname(*this, source.values[4]);
-//		else if(equal(identifier, "ByValue5"))
-//			addvname(*this, source.values[4], 1);
-//		else if(equal(identifier, "OfValue5"))
-//			addvname(*this, source.values[4], 2);
-//		else if(equal(identifier, "Class"))
-//			add(getnm(source.getclass().id));
-//		else if(equal(identifier, "ShowCrew"))
-//			show_crew(*this, "\n", "* ", true);
-//		else if(equal(identifier, "ShowValues"))
-//			show_values(*this, source);
-//		else
-//			stringact::addidentifier(identifier);
-//	}
-//public:
-//	string(const player& source, const stringbuilder& sb) :
-//		source(source),
-//		stringact(sb, source.getactive().getname(), source.getgender()) {
-//	}
-//};
-
 static void* ask(answers& an, const char* id) {
 	if(!id)
 		return an.choose(0);
@@ -146,7 +52,7 @@ void player::choosename() {
 void player::actn(stringbuilder& sbs, const char* format, const char* format_param, bool add_sep) const {
 	if(add_sep)
 		sbs.addsep('\n');
-	sbs.addv(format, format_param);
+	stract(sbs, getgender(), getname(), format, format_param);
 }
 
 void player::generate() {

@@ -209,7 +209,7 @@ void creaturei::apply(variants source) {
 			p = getmodifiers(p + 1, pe, modifiers);
 			apply(type);
 			addexperience(modifiers[Experience]);
-			draw::waitall();
+			wait_all();
 		} else if(p->iskind<elementi>()) {
 			game.set((element_s)p->value);
 			p = getmodifiers(p + 1, pe, modifiers);
