@@ -54,13 +54,13 @@ static void read_quests() {
 		if(e.type == Street || e.type==Special)
 			continue;
 		auto pb = bsdata<quest>::end();
-		sb.clear(); sb.addlocalefile(e.id);
+		sb.clear(); sb.addlocalefile("locations", e.id, "txt");
 		quest::read(temp);
 		auto pe = bsdata<quest>::end();
 		e.encounters = quests(pb, pe - pb);
 	}
 	auto pb = bsdata<quest>::end();
-	sb.clear(); sb.addlocalefile("Other");
+	sb.clear(); sb.addlocalefile("locations", "Other", "txt");
 	quest::read(temp);
 	auto pe = bsdata<quest>::end();
 	game.quest_other = quests(pb, pe - pb);

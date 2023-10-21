@@ -207,7 +207,7 @@ void player::movement(locationi* pv, bool animation) {
 			ps->move(pv->position, 16, 32);
 			ps->priority = order;
 		} else
-			ps->set(pv->position);
+			ps->position = pv->position;
 	}
 	location = pv;
 }

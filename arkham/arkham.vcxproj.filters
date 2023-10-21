@@ -88,109 +88,97 @@
     <Text Include="rules\Monsters.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Worldmap.txt">
       <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\TrainStation.txt">
-      <Filter>Encounters</Filter>
-    </Text>
-    <Text Include="locale\ru\Newspaper.txt">
-      <Filter>Encounters</Filter>
-    </Text>
-    <Text Include="locale\ru\ArkhamAsylum.txt">
-      <Filter>Encounters</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesOf.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesPl.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\HistoricalSociety.txt">
-      <Filter>Encounters</Filter>
     </Text>
     <Text Include="rules\Investigators.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\TheWitchHouse.txt">
+    <Text Include="locale\ru\locations\Abyss.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\CuriositieShoppe.txt">
+    <Text Include="locale\ru\locations\AdministrationBuilding.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\BankOfArkham.txt">
+    <Text Include="locale\ru\locations\ArkhamAsylum.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\VelmasDiner.txt">
+    <Text Include="locale\ru\locations\BankOfArkham.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\MasBoardingHouse.txt">
+    <Text Include="locale\ru\locations\BlackCave.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\SilverTwilightLodge.txt">
+    <Text Include="locale\ru\locations\CuriositieShoppe.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\AdministrationBuilding.txt">
+    <Text Include="locale\ru\locations\GeneralStore.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\Other.txt">
+    <Text Include="locale\ru\locations\Graveyard.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\UnvisitedIsle.txt">
+    <Text Include="locale\ru\locations\HibbsRoadhouse.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\IndependenceSquare.txt">
+    <Text Include="locale\ru\locations\HistoricalSociety.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="locale\ru\Library.txt">
+    <Text Include="locale\ru\locations\IndependenceSquare.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\StMarysHospital.txt">
+    <Text Include="locale\ru\locations\Library.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\ScienceBuilding.txt">
+    <Text Include="locale\ru\locations\MasBoardingHouse.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\HibbsRoadhouse.txt">
+    <Text Include="locale\ru\locations\Newspaper.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\Graveyard.txt">
+    <Text Include="locale\ru\locations\Other.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\Woods.txt">
+    <Text Include="locale\ru\locations\PoliceStation.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\GeneralStore.txt">
+    <Text Include="locale\ru\locations\RiverDocks.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\TheUnnamable.txt">
+    <Text Include="locale\ru\locations\ScienceBuilding.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\PoliceStation.txt">
+    <Text Include="locale\ru\locations\SilverTwilightLodge.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\RiverDocks.txt">
+    <Text Include="locale\ru\locations\SouthChurch.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\BlackCave.txt">
+    <Text Include="locale\ru\locations\StMarysHospital.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\SouthChurch.txt">
+    <Text Include="locale\ru\locations\TheDreamlands.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\YeOldeMagickShoppe.txt">
+    <Text Include="locale\ru\locations\TheUnnamable.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\Abyss.txt">
+    <Text Include="locale\ru\locations\TheWitchHouse.txt">
       <Filter>Encounters</Filter>
     </Text>
-    <Text Include="locale\ru\TheDreamlands.txt">
+    <Text Include="locale\ru\locations\TrainStation.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\locations\UnvisitedIsle.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\locations\VelmasDiner.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\locations\Woods.txt">
+      <Filter>Encounters</Filter>
+    </Text>
+    <Text Include="locale\ru\locations\YeOldeMagickShoppe.txt">
       <Filter>Encounters</Filter>
     </Text>
   </ItemGroup>
