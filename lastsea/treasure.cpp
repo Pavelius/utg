@@ -51,26 +51,16 @@ void treasurei::setowner(const void* object) {
 	}
 }
 
-treasurei* treasurei::find(const char* id) {
-	if(!id)
-		return 0;
-	for(auto& e : bsdata<treasurei>()) {
-		if(equal(e.id, id))
-			return &e;
-	}
-	return 0;
-}
-
 treasurei* treasurei::pickstory(int number) {
 	char temp[32]; stringbuilder sb(temp);
 	sb.add("Story%1i", number);
-	return find(temp);
+	return bsdata<treasurei>::find(temp);
 }
 
 treasurei* treasurei::pickvaluable(int number) {
 	char temp[32]; stringbuilder sb(temp);
 	sb.add("Treasure%1i", number);
-	return find(temp);
+	return bsdata<treasurei>::find(temp);
 }
 
 void treasurei::gaining() const {

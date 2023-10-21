@@ -185,7 +185,6 @@ struct treasurei {
 	variants		gain, loss, use;
 	short unsigned	owner;
 	void			apply() const;
-	static treasurei* find(const char* id);
 	void			gaining() const;
 	bool			is(tag_s v) const { return tags.is(v); }
 	bool			isactive() const { return owner != 0xFFFF; }
