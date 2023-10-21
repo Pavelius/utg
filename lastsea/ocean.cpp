@@ -69,11 +69,11 @@ static void add_you_ship() {
 	auto index = game.getmarker();
 	if(index == Blocked)
 		return;
-	marker_object = addobject(i2s(index), 0, paint_tile, 31, 29);
+	marker_object = addobject(i2s(index), 0, paint_tile, 31, 31);
 }
 
 static void add_select(point pt, indext data) {
-	addobject(pt, (void*)data, paint_selection, 0, 30);
+	addobject(pt, (void*)data, paint_selection, 0, 40);
 }
 
 static void add_select(indext index) {
@@ -193,16 +193,13 @@ void oceani::addpossiblemove(int range) const {
 }
 
 void oceani::showsplash() {
-	screenshoot push;
-	paint_objects();
-	screenshoot another;
-	push.blend(another, appear_pause);
+	splash_screen(appear_pause, paint_objects);
 }
 
 indext oceani::chooseroute(const char* title, int range) const {
 	createobjects();
 	addpossiblemove(range);
-	splash_screen(appear_pause);
+	splash_screen(appear_pause, paint_objects);
 	auto result = choose(0);
 	if(result == Blocked)
 		return Blocked;
@@ -246,7 +243,7 @@ bool tilei::moveto(indext goal, int bonus) {
 	auto p = findobject(this);
 	if(!p)
 		return false;
-	splash_screen(appear_pause);
+	splash_screen(appear_pause, paint_objects);
 	while(count-- > 0 && bonus-- > 0) {
 		index = path[count];
 		p->move(i2s(index), appear_pause);

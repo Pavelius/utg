@@ -157,9 +157,11 @@ void show_objects() {
 	draw::scene(paint_objects_show_mode);
 }
 
-void splash_screen(unsigned milliseconds) {
+void splash_screen(unsigned milliseconds, fnevent proc) {
+	if(!proc)
+		proc = paintstart;
 	screenshoot push;
-	paintstart();
+	proc();
 	screenshoot another;
 	push.blend(another, milliseconds);
 }

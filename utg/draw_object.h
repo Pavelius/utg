@@ -48,7 +48,7 @@ void focusing(point goal);
 void paint_objects();
 void setcamera(point v);
 void slide_camera(point v, int step = 16);
-void splash_screen(unsigned milliseconds);
+void splash_screen(unsigned milliseconds, fnevent proc = 0);
 void show_objects();
 void wait_all();
 
