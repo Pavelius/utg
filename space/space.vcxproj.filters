@@ -136,24 +136,6 @@
     <Text Include="rules\Galaxy.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Локализация</Filter>
-    </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Локализация</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Локализация</Filter>
-    </Text>
-    <Text Include="locale\ru\MonthNames.txt">
-      <Filter>Локализация</Filter>
-    </Text>
-    <Text Include="locale\ru\PlanetNames.txt">
-      <Filter>Локализация</Filter>
-    </Text>
-    <Text Include="locale\ru\AbilityNames.txt">
-      <Filter>Локализация</Filter>
-    </Text>
     <Text Include="locale\ru\Quest.txt">
       <Filter>Локализация</Filter>
     </Text>
@@ -172,10 +154,22 @@
     <Text Include="rules\Actions.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\ActionNames.txt">
+    <Text Include="locale\ru\names\AbilityNames.txt">
       <Filter>Локализация</Filter>
     </Text>
-    <Text Include="locale\ru\AbilityDescriptions.txt">
+    <Text Include="locale\ru\names\ActionNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\names\MonthNames.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\names\PlanetNames.txt">
       <Filter>Локализация</Filter>
     </Text>
   </ItemGroup>

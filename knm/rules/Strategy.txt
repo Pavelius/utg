@@ -81,6 +81,9 @@ GatherPower initiative(8)
 
 #List
 
+PlayersScorePublicGoal
+ elements SelectPlayersBySpeaker ForEachPlayer ScorePublicGoal
+
 StartYear
  elements RefreshPlayers RefreshConsumables
 PlanningPhase 
@@ -88,7 +91,7 @@ PlanningPhase
 ActionPhase
  elements Repeat SelectPlayers Used-1 IfNoQuerryBreak ForEachPlayer MakeAction
 StatusPhase
- elements RemoveStrategicCards RemoveActivityAllTokens
+ elements RemoveStrategicCards RemoveActivityAllTokens PlayersScorePublicGoal
 AgendaPhase
 
 GameTurn

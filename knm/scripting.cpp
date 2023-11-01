@@ -232,13 +232,40 @@ void reapeated_list(int value, int counter) {
 	last_id = push;
 }
 
+static void use_ability_or_gold(ability_s v, int value) {
+	if(player->current.abilities[v] >= value)
+		player->current.abilities[v] -= value;
+	else {
+		value -= player->current.abilities[v];
+		player->current.abilities[v] = 0;
+		player->current.abilities[Gold] -= value;
+	}
+}
+
+static void use_ability(ability_s v, int& value) {
+	while(value > 0 && v) {
+		if(player->current.abilities[v] >= value) {
+			player->current.abilities[v] -= value;
+			logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[v].getname(), value);
+			value = 0;
+		} else {
+			value -= player->current.abilities[v];
+			logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[v].getname(), player->current.abilities[v]);
+			player->current.abilities[v] = 0;
+		}
+		v = bsdata<abilityi>::elements[v].payoff;
+	}
+}
+
 template<> void fnscript<abilityi>(int value, int counter) {
 	last_ability = (ability_s)value;
-	player->current.abilities[value] += counter;
-	if(counter > 0)
+	if(counter > 0) {
+		player->current.abilities[value] += counter;
 		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
-	else if(counter < 0)
-		logging(player, get_log("DecreaseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
+	} else if(counter < 0) {
+		counter = -counter;
+		use_ability(last_ability, counter);
+	}
 }
 
 static void add_troop(uniti* type) {

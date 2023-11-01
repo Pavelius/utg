@@ -22,6 +22,9 @@ static entitydatai entity_data[] = {
 	{"Card", (void**)&last_card},
 	{"Player", (void**)&player},
 	{"Province", (void**)&province},
+	{"Strategy", (void**)&last_strategy},
+	{"Troop", (void**)&last_troop},
+	{"Unit", (void**)&last_unit},
 };
 
 static entity* find_variable(const char* id) {

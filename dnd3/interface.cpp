@@ -28,12 +28,14 @@ void creature::paint() const {
 	auto pa = gres(avatar, "art/avatars");
 	imager(caret.x, caret.y, pa, 0, 32);
 	circle(32);
+	if(ishilite(32, last_object))
+		hot.cursor = cursor::Hand;
 }
 
 void monsteri::paint() const {
 	auto pa = gres(id, "art/avatars");
 	imager(caret.x, caret.y, pa, 0, 32);
-	circle(32);
+	//circle(32);
 }
 
 static void paint_selected_border() {
@@ -108,8 +110,13 @@ static void add_current_object() {
 static void put_selected_object() {
 	if(!current_object)
 		return;
-	if(mouseinobjects() && hot.key==MouseLeft && hot.pressed)
+	if(mouseinobjects() && hot.key==KeySpace)
 		execute(add_current_object);
+}
+
+static void drag_selected_object() {
+	if(hilite_object) {
+	}
 }
 
 static void ui_finish() {

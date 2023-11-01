@@ -1,12 +1,8 @@
 #include "stringbuilder.h"
+#include "strprint.h"
 #include "ship.h"
 #include "planet.h"
 #include "variant.h"
-
-struct stringproc {
-	const char*	id;
-	fnprint		proc;
-};
 
 static void add_header(stringbuilder& sb, const char* name) {
 	sb.addn("###%1", name);
@@ -34,16 +30,13 @@ static void ship_text(stringbuilder& sb) {
 		sb.add(getnm("NoShip"));
 }
 
-BSDATA(stringproc) = {
+BSDATA(strprinti) = {
 	{"Planet", planet_text},
 };
-BSDATAF(stringproc)
+BSDATAF(strprinti)
 
-void stringbuilder_proc(stringbuilder& sb, const char* id) {
-	auto pf = bsdata<stringproc>::find(id);
-	if(pf) {
-		pf->proc(sb);
+void stringbuilder_proc(stringbuilder& sb, const char* identifier) {
+	if(print_identifier(sb, identifier))
 		return;
-	}
-	sb.defidentifier(sb, id);
+	stringbuilder::defidentifier(sb, identifier);
 }

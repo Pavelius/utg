@@ -326,6 +326,7 @@ void input_camera() {
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseLeft:
+	//case MouseRight:
 		if(hot.pressed && !hot.hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;

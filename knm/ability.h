@@ -10,6 +10,7 @@ enum ability_s : unsigned char {
 	Fame, Gold,
 };
 struct abilityi : nameable {
+	ability_s	payoff;
 };
 struct abilitya {
 	char		abilities[Gold + 1];
