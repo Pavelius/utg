@@ -10,6 +10,8 @@ BSDATA(modulei) = {
 	{"Damage"},
 	{"Effect"},
 	{"Bonus"},
+	{"Insight"},
+	{"Problem"},
 	{"Crew"},
 	{"Engine"},
 	{"Hull"},

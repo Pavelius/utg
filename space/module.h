@@ -6,7 +6,7 @@
 
 enum module_s : unsigned char {
 	ShardCannons, LaserBeams, RocketLaunchers, LightWeapon, HeavyWeapon,
-	Damage, Bonus, Effect,
+	Damage, Bonus, Effect, Insight, Problem,
 	Crew, Hull, Engine, Sensors, Shield, Armor,
 	Foods, Medicaments, Technics, Luxury, Minerals, Alchogols, Weapons, Drugs,
 	Credits,
@@ -16,6 +16,7 @@ struct modulei : nameable {
 };
 struct modulea {
 	char		modules[Credits + 1];
+	int			get(module_s v) const { return modules[v]; }
 };
 extern module_s	last_module;
 extern modulea	inflict, suffer;

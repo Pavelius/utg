@@ -37,6 +37,10 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->update();
 }
 
+static int d12() {
+	return 1 + (rand() % 12);
+}
+
 static void add_quest_answers() {
 	if(!last_quest)
 		return;
@@ -98,33 +102,33 @@ static void choose_quest_result() {
 }
 
 static void make_roll(int bonus) {
-	//char temp[260]; stringbuilder sb(temp);
-	//if(game.get(Problem) > 0) {
-	//	change_ability(Problem, -1);
-	//	rolled[1] = 1 + (rand() % 12);
-	//} else
-	//	rolled[1] = 0;
-	//while(true) {
-	//	rolled[0] = 1 + (rand() % 12);
-	//	if(rolled[1] && rolled[0] > rolled[1])
-	//		iswap(rolled[0], rolled[1]);
-	//	result = rolled[0] + value;
-	//	sb.clear();
-	//	if(rolled[1])
-	//		sb.add(getnm("YouRolledProblem"), rolled[0], rolled[1], value, result);
-	//	else
-	//		sb.add(getnm("YouRolled"), rolled[0], rolled[1], value, result);
-	//	an.clear();
-	//	if(game.get(Insight) > 0)
-	//		an.add(bsdata<abilityi>::elements + Insight, getnm("UseInside"));
-	//	auto p = an.choose(temp, getnm("AcceptResult"), 1);
-	//	if(!p)
-	//		break;
-	//	if(bsdata<abilityi>::have(p)) {
-	//		change_ability((ability_s)((abilityi*)p - bsdata<abilityi>::elements), -1);
-	//		continue;
-	//	}
-	//}
+	char temp[260]; stringbuilder sb(temp);
+	if(game.get(Problem) > 0) {
+		change_ability(Problem, -1);
+		rolled[1] = d12();
+	} else
+		rolled[1] = 0;
+	while(true) {
+		rolled[0] = d12();
+		if(rolled[1] && rolled[0] > rolled[1])
+			iswap(rolled[0], rolled[1]);
+		result = rolled[0] + bonus;
+		sb.clear();
+		if(rolled[1])
+			sb.add(getnm("YouRolledProblem"), rolled[0], rolled[1], bonus, result);
+		else
+			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
+		an.clear();
+		if(game.get(Insight) > 0)
+			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
+		auto p = an.choose(temp, getnm("AcceptResult"), 1);
+		if(!p)
+			break;
+		if(bsdata<modulei>::have(p)) {
+			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
+			continue;
+		}
+	}
 }
 
 static void roll(int bonus) {
