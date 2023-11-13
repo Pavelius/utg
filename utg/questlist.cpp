@@ -9,15 +9,13 @@ BSMETA(questlist) = {
 BSDATAC(questlist, 128)
 questlist* last_questlist;
 
-void questlist::read(const char* id) {
-	char temp[260]; stringbuilder sb(temp);
-	sb.addlocaleurl();
-	sb.add("/");
-	sb.add("%1.txt", id);
+void questlist::read(const char* url) {
+	char temp[260];
+	szfnamewe(temp, url);
 	auto p = bsdata<questlist>::add();
-	p->id = szdup(id);
+	p->id = szdup(temp);
 	auto q1 = bsdata<quest>::end();
-	quest::read(temp);
+	quest::read(url);
 	p->elements.set(q1, bsdata<quest>::end() - q1);
 }
 

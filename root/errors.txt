@@ -1,2 +1,3 @@
-﻿In file `Names.txt`:
+﻿Can't find file 'locale/ru/names/Names.txt'
+In file `Names.txt`:
 Fox: Define translate

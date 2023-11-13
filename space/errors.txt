@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-RepairShip: Define translate
+﻿In file `locale/ru/actions/BasicMoves.txt`:
+ Line 1: Can't find variant `SufferHarm`

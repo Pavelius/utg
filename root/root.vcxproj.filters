@@ -118,14 +118,17 @@
     <Text Include="rules\MoveConcept.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Descriptions.txt">
+    <Text Include="locale\ru\names\Names.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
+    <Text Include="locale\ru\names\NamesNewbe.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
+    <Text Include="locale\ru\names\NamesOf.txt">
       <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\moves\BasicMoves.txt">
+      <Filter>Data</Filter>
     </Text>
   </ItemGroup>
 </Project>

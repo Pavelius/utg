@@ -1,29 +1,15 @@
 #include "crt.h"
 #include "module.h"
 
-//BSDATA(weaponi) = {
-//	{"ShardCannonI"},
-//	{"ShardCannonII"},
-//	{"ShardCannonIII"},
-//	{"ShardCannonIV"},
-//	{"ShardCannonV"},
-//	{"BeamLaserI"},
-//	{"BeamLaserII"},
-//	{"BeamLaserIII"},
-//	{"BeamLaserIV"},
-//	{"BeamLaserV"},
-//	{"RocketI"},
-//	{"RocketII"},
-//	{"RocketIII"},
-//	{"RocketIV"},
-//	{"RocketV"},
-//};
-//assert_enum(weaponi, RocketV)
-
 BSDATA(modulei) = {
 	{"ShardCannons"},
 	{"LaserBeams"},
 	{"RocketLaunchers"},
+	{"LightWeapon"},
+	{"HeavyWeapon"},
+	{"Damage"},
+	{"Effect"},
+	{"Bonus"},
 	{"Crew"},
 	{"Engine"},
 	{"Hull"},
@@ -41,6 +27,10 @@ BSDATA(modulei) = {
 	{"Credits"},
 };
 assert_enum(modulei, Credits)
+
+module_s	last_module;
+modulea		inflict, suffer;
+modulea*	last_modules;
 
 inline int d100() {
 	return rand() % 100;

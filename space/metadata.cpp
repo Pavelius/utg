@@ -22,9 +22,6 @@ BSDATAC(systemi, 32)
 BSDATAC(ship, 1024)
 BSDATAC(shipi, 256)
 
-BSMETA(abilityi) = {
-	BSREQ(id),
-	{}};
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSENM(state, actionstatei),

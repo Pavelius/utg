@@ -6,6 +6,7 @@
 #include "log.h"
 #include "planet.h"
 #include "quest.h"
+#include "questlist.h"
 #include "script.h"
 #include "ship.h"
 
@@ -54,6 +55,10 @@ static void test_game() {
 	draw::start();
 }
 
+static void game_initializa() {
+	log::readlocfolder(questlist::read, "actions", "*.txt");
+}
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::initialize();
@@ -61,7 +66,7 @@ int main(int argc, char* argv[]) {
 	answers::prompt = console;
 	stringbuilder::custom = stringbuilder_proc;
 	initialize_interface();
-	return draw::strategy(test_game, 0);
+	return draw::strategy(test_game, game_initializa);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

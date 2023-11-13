@@ -191,6 +191,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\actions\BasicMoves.txt" />
+    <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\names\AbilityNames.txt" />
     <Text Include="locale\ru\names\ActionNames.txt" />
     <Text Include="locale\ru\names\MonthNames.txt" />

@@ -1,8 +1,8 @@
-#include "ability.h"
+#include "module.h"
 
 #pragma once
 
-struct missioni {
+struct missioni : modulea {
 	void		beforemove();
 	void		clear();
 };

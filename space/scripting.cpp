@@ -1,5 +1,4 @@
 #include "answers.h"
-#include "ability.h"
 #include "condition.h"
 #include "collection.h"
 #include "crt.h"
@@ -14,32 +13,14 @@
 #include "variable.h"
 
 static answers an;
-static int result, value, variable_id, rolled[2];
+static int result, variable_id, rolled[2];
 static void* last_choose_result;
 static collection<ship> ships;
-static int last_hits, last_damage;
+static int last_hits, last_damage, last_value;
 
 static void change_ability(module_s v, int bonus) {
-	if(!bonus)
-		return;
-	//if(bsdata<abilityi>::elements[v].is(NegativeState)) {
-	//	if(bonus > 0)
-	//		draw::warning(getnm("IncreaseAbility"), bsdata<abilityi>::elements[v].getname(), bonus);
-	//	else
-	//		draw::information(getnm("DecreaseAbility"), bsdata<abilityi>::elements[v].getname(), -bonus);
-	//} else {
-		//if(bonus > 0)
-		//	draw::information(getnm("IncreaseAbility"), bsdata<abilityi>::elements[v].getname(), bonus);
-		//else
-		//	draw::warning(getnm("DecreaseAbility"), bsdata<abilityi>::elements[v].getname(), -bonus);
-	//}
-	//game.add(v, bonus);
-}
-
-template<> void fnscript<abilityi>(int index, int bonus) {
-	//ability = (module_s)index;
-	//value = game.get(ability);
-	//change_ability(ability, bonus);
+	last_module = v;
+	game.modules[last_module] += bonus;
 }
 
 template<> void fnscript<planeti>(int index, int bonus) {
@@ -188,6 +169,14 @@ static void set_variable(int bonus) {
 	last_variable->value = bonus;
 }
 
+static void add_value(int bonus) {
+	last_value += bonus;
+}
+
+static void set_value(int bonus) {
+	last_value = bonus;
+}
+
 static void pass_hours(int bonus) {
 	last_ship->wait(bonus * 60);
 }
@@ -234,6 +223,10 @@ static void choose_action(actionstate_s state) {
 }
 
 static void update_planets() {
+}
+
+static void add_effect(int bonus) {
+	game.modules[last_module] += game.modules[Effect] * bonus;
 }
 
 static void set_player(int bonus) {
@@ -291,6 +284,14 @@ static void choose_action_querry(int bonus) {
 	}
 	if(last_action)
 		script_run(last_action->effect);
+}
+
+static void set_inflict(int bonus) {
+	last_modules = &inflict;
+}
+
+static void set_suffer(int bonus) {
+	last_modules = &suffer;
 }
 
 static void update_ship_enviroment() {
@@ -375,13 +376,17 @@ BSDATA(querryi) = {
 BSDATAF(querryi)
 
 BSDATA(script) = {
+	{"AddEffect", add_effect},
 	{"MoveTo", move_to},
-	{"Next", jump_next},
+	{"Inflict", set_inflict},
+	{"Suffer", set_suffer},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
 	{"SetPlayer", set_player},
 	{"SetState", set_state},
+	{"SetValue", set_value},
 	{"SetVariable", set_variable},
+	{"Value", add_value},
 	{"Variable", add_variable},
 };
 BSDATAF(script)

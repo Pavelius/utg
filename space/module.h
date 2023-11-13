@@ -5,7 +5,8 @@
 #pragma once
 
 enum module_s : unsigned char {
-	ShardCannons, LaserBeams, RocketLaunchers,
+	ShardCannons, LaserBeams, RocketLaunchers, LightWeapon, HeavyWeapon,
+	Damage, Bonus, Effect,
 	Crew, Hull, Engine, Sensors, Shield, Armor,
 	Foods, Medicaments, Technics, Luxury, Minerals, Alchogols, Weapons, Drugs,
 	Credits,
@@ -13,6 +14,12 @@ enum module_s : unsigned char {
 struct modulei : nameable {
 	short		weight, cost;
 };
+struct modulea {
+	char		modules[Credits + 1];
+};
+extern module_s	last_module;
+extern modulea	inflict, suffer;
+extern modulea*	last_modules;
 
 int apply_percent(int value, int percent);
 int roll_damage(int count, int minimum, int maximum);

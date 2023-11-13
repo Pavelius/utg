@@ -128,3 +128,22 @@ void log::readloc(fnread proc, const char* folder, const char* id) {
 	sb.addlocalefile(id, id, "txt");
 	proc(temp);
 }
+
+void log::readlocfolder(fnread proc, const char* folder, const char* filter) {
+	char temp2[260]; stringbuilder s2(temp2);
+	char temp[260]; stringbuilder sb(temp);
+	sb.addlocaleurl(folder);
+	for(io::file::find find(temp); find; find.next()) {
+		auto pn = find.name();
+		if(!pn || pn[0] == '.')
+			continue;
+		if(filter) {
+			if(!szpmatch(pn, filter))
+				continue;
+		}
+		s2.clear();
+		s2.add(temp);
+		s2.add(pn);
+		proc(temp2);
+	}
+}

@@ -1,6 +1,6 @@
 #pragma once
 
 struct riski {
-	const char* id;
-	int	page;
+	const char*		id;
+	int				page;
 };
