@@ -13,14 +13,19 @@
 #include "variable.h"
 
 static answers an;
-static int result, variable_id, rolled[2];
+static int result;
 static void* last_choose_result;
 static collection<ship> ships;
 static int last_hits, last_damage, last_value;
 
 static void change_ability(module_s v, int bonus) {
 	last_module = v;
-	game.modules[last_module] += bonus;
+	last_modules->modules[last_module] += bonus;
+}
+
+template<> void fnscript<modulei>(int index, int bonus) {
+	last_module = (module_s)index;
+	last_modules->modules[last_module] += bonus;
 }
 
 template<> void fnscript<planeti>(int index, int bonus) {
@@ -39,6 +44,42 @@ template<> void fnscript<shipi>(int index, int bonus) {
 
 static int d12() {
 	return 1 + (rand() % 12);
+}
+
+static void make_roll(int bonus) {
+	int		rolled[2];
+	char	temp[260]; stringbuilder sb(temp);
+	if(last_modules->get(Problem) > 0) {
+		change_ability(Problem, -1);
+		rolled[1] = d12();
+	} else
+		rolled[1] = 0;
+	auto need_reroll = true;
+	while(true) {
+		if(need_reroll) {
+			rolled[0] = d12();
+			if(rolled[1] && rolled[0] > rolled[1])
+				iswap(rolled[0], rolled[1]);
+			result = rolled[0] + bonus;
+			need_reroll = false;
+		}
+		sb.clear();
+		if(rolled[1])
+			sb.add(getnm("YouRolledProblem"), rolled[0], rolled[1], bonus, result);
+		else
+			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
+		an.clear();
+		if(last_modules->get(Insight) > 0)
+			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
+		auto p = an.choose(temp, getnm("AcceptResult"), 1);
+		if(!p)
+			break;
+		if(bsdata<modulei>::have(p)) {
+			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
+			need_reroll = true;
+			continue;
+		}
+	}
 }
 
 static void add_quest_answers() {
@@ -101,38 +142,8 @@ static void choose_quest_result() {
 	last_quest = pr;
 }
 
-static void make_roll(int bonus) {
-	char temp[260]; stringbuilder sb(temp);
-	if(game.get(Problem) > 0) {
-		change_ability(Problem, -1);
-		rolled[1] = d12();
-	} else
-		rolled[1] = 0;
-	while(true) {
-		rolled[0] = d12();
-		if(rolled[1] && rolled[0] > rolled[1])
-			iswap(rolled[0], rolled[1]);
-		result = rolled[0] + bonus;
-		sb.clear();
-		if(rolled[1])
-			sb.add(getnm("YouRolledProblem"), rolled[0], rolled[1], bonus, result);
-		else
-			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
-		an.clear();
-		if(game.get(Insight) > 0)
-			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
-		auto p = an.choose(temp, getnm("AcceptResult"), 1);
-		if(!p)
-			break;
-		if(bsdata<modulei>::have(p)) {
-			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
-			continue;
-		}
-	}
-}
-
 static void roll(int bonus) {
-	make_roll(bonus);
+	make_roll(last_modules->get(last_module) + bonus);
 	choose_quest_result();
 	apply_text();
 	apply_script();
@@ -381,15 +392,16 @@ BSDATAF(querryi)
 
 BSDATA(script) = {
 	{"AddEffect", add_effect},
-	{"MoveTo", move_to},
 	{"Inflict", set_inflict},
-	{"Suffer", set_suffer},
+	{"MoveTo", move_to},
+	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
 	{"SetPlayer", set_player},
 	{"SetState", set_state},
 	{"SetValue", set_value},
 	{"SetVariable", set_variable},
+	{"Suffer", set_suffer},
 	{"Value", add_value},
 	{"Variable", add_variable},
 };

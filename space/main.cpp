@@ -47,10 +47,12 @@ static void generate_systems() {
 
 static void test_game() {
 	game.setdate(3000, 4, 15);
-	//game.add(Insight, 1);
+	game.add(Insight, 1);
 	generate_systems();
 	generate_planets();
 	script_run("StartScript");
+	last_modules = &game;
+	quest::run(1);
 	draw::setnext(play_player_turn);
 	draw::start();
 }

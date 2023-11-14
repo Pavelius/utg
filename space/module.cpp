@@ -7,6 +7,7 @@ BSDATA(modulei) = {
 	{"RocketLaunchers"},
 	{"LightWeapon"},
 	{"HeavyWeapon"},
+	{"Exploration"},
 	{"Damage"},
 	{"Effect"},
 	{"Bonus"},

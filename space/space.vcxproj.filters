@@ -136,9 +136,6 @@
     <Text Include="rules\Galaxy.txt">
       <Filter>Данные</Filter>
     </Text>
-    <Text Include="locale\ru\Quest.txt">
-      <Filter>Локализация</Filter>
-    </Text>
     <Text Include="rules\Modules.txt">
       <Filter>Данные</Filter>
     </Text>
@@ -169,13 +166,13 @@
     <Text Include="locale\ru\names\PlanetNames.txt">
       <Filter>Локализация</Filter>
     </Text>
-    <Text Include="locale\ru\actions\BasicMoves.txt">
-      <Filter>Локализация</Filter>
-    </Text>
     <Text Include="rules\Weapons.txt">
       <Filter>Логика</Filter>
     </Text>
     <Text Include="locale\ru\Moves.txt">
+      <Filter>Локализация</Filter>
+    </Text>
+    <Text Include="locale\ru\actions\Quest.txt">
       <Filter>Локализация</Filter>
     </Text>
   </ItemGroup>

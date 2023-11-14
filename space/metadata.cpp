@@ -86,7 +86,7 @@ BSDATA(varianti) = {
 	{"ActionState", VAR(actionstatei, 1), 0, 0, fnscript<actionstatei>},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
-	{"Module", VAR(modulei, 1)},
+	{"Module", VAR(modulei, 1), 0, 0, fnscript<modulei>},
 	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},
 	{"PlanetResource", VAR(planetri, 1)},
 	{"Querry", VAR(querryi, 1), 0, 0, fnscript<querryi>},
