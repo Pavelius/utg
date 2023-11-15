@@ -44,7 +44,7 @@ static void print_answers(const quest* pb) {
 			break;
 		if(!p->text)
 			continue;
-		if(p->tags && !script::allow(p->tags))
+		if(p->tags && !script_allow(p->tags))
 			continue;
 		an.add(p, p->text);
 	}

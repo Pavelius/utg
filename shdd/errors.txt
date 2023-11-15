@@ -1,2 +1,1 @@
-﻿In file `rules/Area.txt`:
- Line 1: Not find data type for `Area`
+﻿Can't find file 'Combat'

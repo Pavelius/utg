@@ -47,8 +47,8 @@ static int d12() {
 }
 
 static void make_roll(int bonus) {
-	int		rolled[2];
-	char	temp[260]; stringbuilder sb(temp);
+	int	rolled[2];
+	char temp[260]; stringbuilder sb(temp);
 	if(last_modules->get(Problem) > 0) {
 		change_ability(Problem, -1);
 		rolled[1] = d12();

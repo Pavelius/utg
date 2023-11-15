@@ -444,10 +444,6 @@ static bool read_import() {
 		error(p, "Can't find data descriptor `%1`", temp);
 		return false;
 	}
-	if(!pn) {
-		error(p, "Can't find data descriptor `%1`", temp);
-		return false;
-	}
 	if(!pn->pread) {
 		error(p, "Not defined reading procedure in data descriptor `%1`", temp);
 		return false;

@@ -25,7 +25,7 @@ static void starting() {
 }
 
 static void initialize() {
-	log::readloc(groupname::read, "Players");
+	log::readloc(groupname::read, 0, "Players");
 }
 
 static const char* getavatarst(const void* p) {

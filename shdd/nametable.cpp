@@ -80,7 +80,7 @@ static void read_content(const char* url) {
 
 void nametable::read(const char* id) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(id, "txt");
+	sb.addlocalefile(0, id, "txt");
 	auto ps = bsdata<nametable>::add();
 	ps->id = szdup(id);
 	auto p1 = bsdata<nametable::element>::end();

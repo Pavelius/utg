@@ -178,9 +178,6 @@
     <Text Include="rules\Spells.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
     <Text Include="locale\ru\Talks.txt">
       <Filter>locale\ru</Filter>
     </Text>
@@ -190,22 +187,7 @@
     <Text Include="locale\ru\Treasure0.txt">
       <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
-    <Text Include="locale\ru\AbilitityNames.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
-    <Text Include="locale\ru\ClassNames.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
     <Text Include="locale\ru\Players.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
-    <Text Include="locale\ru\ItemNames.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
-    <Text Include="locale\ru\AreaNames.txt">
       <Filter>locale\ru</Filter>
     </Text>
     <Text Include="rules\Area.txt">

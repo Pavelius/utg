@@ -4,7 +4,7 @@
 #include "property.h"
 #include "quest.h"
 
-BSDATAC(quest, 4096)
+BSDATAC(quest, 256*8)
 
 int quest::prop_image;
 int quest::prop_header;

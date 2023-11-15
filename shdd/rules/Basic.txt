@@ -4,7 +4,7 @@
 #include "rules/Monsters.txt"
 #include "rules/Area.txt"
 
-#import Quest "Combat"
+#import Quest "locale/ru/Combat.txt"
 #import RollTable "Treasure0"
 
 #List

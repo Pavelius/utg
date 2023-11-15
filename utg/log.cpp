@@ -125,7 +125,7 @@ const char* log::skipwscr(const char* p) {
 
 void log::readloc(fnread proc, const char* folder, const char* id) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(id, id, "txt");
+	sb.addlocalefile(folder, id, "txt");
 	proc(temp);
 }
 
