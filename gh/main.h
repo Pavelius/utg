@@ -4,17 +4,17 @@
 #include "condition.h"
 #include "crt.h"
 #include "deck.h"
+#include "duration.h"
+#include "element.h"
 #include "flagable.h"
 #include "gender.h"
 #include "menu.h"
+#include "nameable.h"
 #include "pathfind.h"
 #include "point.h"
 #include "script.h"
 #include "variant.h"
 
-enum duration_s : unsigned char {
-	Instant, Infinite, Round, Use
-};
 enum area_s : unsigned char {
 	NoArea, Slash, Circle, Ray, Splash, Spray,
 };
@@ -42,9 +42,6 @@ enum state_s : unsigned char {
 	Disarmed, Immobilize, Wound, Muddle, Poison, Invisibility, Stun, Strenght,
 	Jump, Fly, Mirrored, Hostile, Elite,
 };
-enum element_s : unsigned char {
-	Fire, Ice, Air, Earth, Light, Dark, AnyElement,
-};
 enum tile_s : unsigned char {
 	Corridor, Coin,
 };
@@ -58,9 +55,6 @@ inline point			i2h(pathfind::indext i) { return {(short)(i % hms), (short)(i / h
 inline pathfind::indext	h2i(point v) { return v.y * hms + v.x; }
 struct playeri;
 class creaturei;
-struct nameable {
-	const char*			id;
-};
 struct actioni {
 	typedef void (*fnevent)(int bonus);
 	const char*			id;
@@ -130,12 +124,6 @@ struct monsterdeck : nameable, deck {
 	const monstercardi* current() { return count ? bsdata<monstercardi>::elements + data[0] : 0; }
 };
 struct cardtypei {
-	const char*			id;
-};
-struct durationi {
-	const char*			id;
-};
-struct elementi {
 	const char*			id;
 };
 struct feati {

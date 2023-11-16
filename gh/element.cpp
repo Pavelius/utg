@@ -1,4 +1,5 @@
-#include "main.h"
+#include "bsreq.h"
+#include "element.h"
 
 BSDATA(elementi) = {
 	{"Fire"},

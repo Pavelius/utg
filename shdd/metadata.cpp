@@ -106,7 +106,7 @@ BSDATA(varianti) = {
 	{"Ancestry", VAR(racei, 1)},
 	{"Area", VAR(areai, 1)},
 	{"Class", VAR(classi, 1)},
-	{"Consumable", VAR(consumablei, 1)},
+	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
 	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"ItemObject", VAR(item, 0), ftstatus<item>},

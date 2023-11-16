@@ -1,4 +1,5 @@
-#include "main.h"
+#include "bsreq.h"
+#include "duration.h"
 
 BSDATA(durationi) = {
 	{"Instant"},

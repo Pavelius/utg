@@ -86,6 +86,9 @@ static void play_quest() {
 	}
 }
 
+template<> void fnscript<consumablei>(int value, int bonus) {
+}
+
 template<> void fnscript<questlist>(int value, int bonus) {
 	last_questlist = bsdata<questlist>::elements + value;
 	last_quest = last_questlist->find(bonus);

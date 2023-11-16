@@ -27,6 +27,12 @@
     <ClInclude Include="script.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="element.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
+    <ClInclude Include="duration.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp">
