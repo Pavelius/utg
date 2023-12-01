@@ -14,10 +14,12 @@ using namespace draw;
 void check_translation();
 void initialize_code();
 void initialize_interface();
+void initialize_pixels();
 void initialize_translation(const char* locale);
 void set_dark_theme();
 bool test_code();
 void view_code_tree();
+void view_pixels();
 void update_code_tree();
 
 static void clear_fill() {
@@ -34,6 +36,9 @@ static void mainscene() {
 	width = 200;
 	height = height - metrics::padding * 2 - 1;
 	view_code_tree();
+	caret.x += width + metrics::padding * 2 - 1;
+	width = getwidth() - caret.x - metrics::padding * 2 - 1;
+	view_pixels();
 }
 
 static void mainstart() {
@@ -53,6 +58,7 @@ int main(int argc, char* argv[]) {
 	initialize_translation("ru");
 	check_translation();
 	initialize_code();
+	initialize_pixels();
 	if(log::geterrors())
 		return -1;
 	awindow.flags = WFResize | WFMinmax;

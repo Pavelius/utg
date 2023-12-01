@@ -19,6 +19,9 @@
     <ClCompile Include="code_operation.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="view_pixel.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">

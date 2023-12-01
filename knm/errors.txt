@@ -1,2 +1,2 @@
-﻿In file `rules/Strategy.txt`:
- Line 77: Can't find variant `ScorePublicGoal`
+﻿In file `Names.txt`:
+StoneWalls: Define translate
