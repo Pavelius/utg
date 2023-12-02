@@ -2635,10 +2635,11 @@ void draw::strokeactive() {
 }
 
 void draw::strokeline() {
-	rectpush push;
+	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::border;
 	line(caret.x + width, caret.y);
+	caret = push_caret;
 	fore = push_fore;
 }
 

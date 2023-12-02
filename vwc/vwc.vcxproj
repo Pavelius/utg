@@ -153,6 +153,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="test_code.cpp" />
     <ClCompile Include="view_pixel.cpp" />
+    <ClCompile Include="view_statusbar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="viewpackage.h" />
+    <ClInclude Include="view_statusbar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,6 +22,9 @@
     <ClCompile Include="view_pixel.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="view_statusbar.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -58,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="viewpackage.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="view_statusbar.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

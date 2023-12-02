@@ -7,15 +7,18 @@
 #include "draw_gui.h"
 #include "draw_list.h"
 #include "log.h"
+#include "view_statusbar.h"
 
 using namespace code;
 using namespace draw;
 
+void before_modal_statusbar();
 void check_translation();
 void initialize_code();
 void initialize_interface();
 void initialize_pixels();
 void initialize_translation(const char* locale);
+void paint_statusbar();
 void set_dark_theme();
 bool test_code();
 void view_code_tree();
@@ -29,8 +32,17 @@ static void clear_fill() {
 	fore = push_fore;
 }
 
+static void main_before_modal() {
+	before_modal_statusbar();
+}
+
+static void main_tips() {
+	tips_statusbar();
+}
+
 static void mainscene() {
 	clear_fill();
+	paint_statusbar();
 	caret.x = metrics::padding;
 	caret.y = metrics::padding + 1;
 	width = 200;
@@ -66,6 +78,8 @@ int main(int argc, char* argv[]) {
 	metrics::padding = 3;
 	fore = colors::text;
 	initialize(getnm("AppTitle"));
+	pbeforemodal = main_before_modal;
+	ptips = main_tips;
 	setnext(mainstart);
 	start();
 }

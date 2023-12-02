@@ -1,11 +1,14 @@
+#include "crt.h"
 #include "draw.h"
 #include "pushvalue.h"
+#include "view_statusbar.h"
 
 using namespace draw;
 
 static surface	source;
 static color	pallette[256];
-static point	origin;
+static point	origin, current_pixel;
+point			pixel_position;
 static unsigned char pixel_index;
 static int		pixel_size = 4, pixel_index_hilite;
 
@@ -25,7 +28,9 @@ static void draw_pixel() {
 	rectf();
 	if(ishilite()) {
 		pixel_index_hilite = pixel_index;
+		pixel_position = current_pixel;
 		paint_hilite_index();
+		status(getnm("PixelPosition"), pixel_position.x, pixel_position.y, pixel_index_hilite);
 	}
 	fore = push_fore;
 	caret.x += width + 1;
@@ -47,24 +52,27 @@ static void control_pixels() {
 }
 
 void view_pixels() {
+	pushvalue push_clip(clipping);
+	setclipall();
 	control_pixels();
 	rectpush push;
 	pushvalue push_index(pixel_index);
 	auto x2 = caret.x + push.width;
 	auto y2 = caret.y + push.height;
 	pixel_index_hilite = -1;
-	auto n = origin;
+	pixel_position.x = -1; pixel_position.y = -1;
+	current_pixel = origin;
 	width = pixel_size; height = pixel_size;
-	while(n.y < source.height && caret.y < y2) {
-		n.x = origin.x;
-		while(n.x < source.width && caret.x < x2) {
-			pixel_index = *source.ptr(n.x, n.y);
+	while(current_pixel.y < source.height && caret.y < y2) {
+		current_pixel.x = origin.x;
+		while(current_pixel.x < source.width && caret.x < x2) {
+			pixel_index = *source.ptr(current_pixel.x, current_pixel.y);
 			draw_pixel();
-			n.x++;
+			current_pixel.x++;
 		}
 		caret.y += height + 1;
 		caret.x = push.caret.x;
-		n.y++;
+		current_pixel.y++;
 	}
 }
 

@@ -236,6 +236,7 @@ inline void				setclipall() { setclip({caret.x, caret.y, caret.x + width, caret.
 void					setoffset(int x, int y);
 void					setpos(int x, int y);
 void					setpos(int x, int y, int width, int height);
+inline void				setpos(const rect& v) { setpos(v.x1, v.y1, v.width(), v.height()); }
 void					settimer(unsigned milleseconds);
 const char*				skiptr(const char* string);
 void					stroke(int x, int y, const sprite* e, int id, int flags, unsigned char thin = 1, unsigned char* koeff = 0);
