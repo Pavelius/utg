@@ -3,6 +3,9 @@
 
 BSDATA(enviroment_typei) = {
 	{"Wilderness"},
+	{"Room"},
+	{"House"},
+	{"Street"},
 	{"Village"},
 	{"Towm"},
 	{"City"},

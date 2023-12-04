@@ -1,0 +1,55 @@
+﻿Alert: Бдительный
+GuardsHonor: Доверие стражи
+Independent: Независимый
+OpenMinded: Открытый
+SteadyPaw: Золотые лапы
+
+Bigpaw: Большелапый
+Bitter: Пессимист
+Bodyguard: Телохранитель
+Bold: Безрассудный
+Brave: Храбрый
+Calm: Спокойный
+Clever: Умный
+Compassionate: Отзывчивый
+Cunning: Хитрый
+Curious: Любопытный
+DeepEar: Острый слух
+Defender: Защитник
+Determined: Решительный
+Driven: НЕприклонный
+EarlyRiser: Жаворонок
+Extrovert: Экстраверт
+Fat: Толстый
+Fearful: Боязливый
+Fearless: Безстрашный
+Fiery: Пылкий
+Generous: Щедрый
+Graceful: Грациозный
+Innocent: Невинный
+Jaded: Черствый
+Leader: Лидер
+Longtail: Длиннохвостый
+Lost: Топографический кретин
+NaturalBearings: Путешественник
+Nimble: Проворный
+Nocturnal: Сова
+Oldfur: Седошкурый
+QuickWitted: Сообразительный
+Quiet: Тихий
+Scarred: Покрытый шрамами
+SharpEyed: Зоркий
+Sharptooth: Острозубый
+Short: Мелкий
+Skeptical: Скептический
+Skinny: Худой
+Stoic: Стойкий
+Stubborn: Упрямый
+Suspicious: Недоверчивый
+Tall: Высокий
+Thoughtful: Вдумчивый
+Tough: Крепкий
+WeatherSense: Метеочувствительный
+WiseTrait: Мудрый
+WolfsSnout: Волчий нюх
+Young: Юный

@@ -4,7 +4,7 @@
 #pragma once
 
 enum enviroment_type_s : unsigned char {
-	Wilderness, Village, Towm, City,
+	Wilderness, Room, House, Street, Village, Towm, City,
 };
 struct enviroment_typei : nameable {
 };

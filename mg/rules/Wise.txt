@@ -6,8 +6,8 @@ MammalsWise
 PredatorWise
 CoastWise
 ForestWise
-LakeWise
-RockyTerrainWise
+LakeWise subject(Lake)
+RockyTerrainWise subject(Rocks)
 SwampWise
 TallGrassWise
 CraftWise

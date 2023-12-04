@@ -121,12 +121,6 @@
     <Text Include="rules\Animal.txt">
       <Filter>Basic</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\SkillNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
     <Text Include="locale\ru\NamesNewbe.txt">
       <Filter>Locale</Filter>
     </Text>
@@ -136,19 +130,28 @@
     <Text Include="rules\Wise.txt">
       <Filter>Basic</Filter>
     </Text>
-    <Text Include="locale\ru\CityNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\WiseNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
     <Text Include="rules\Traits.txt">
       <Filter>Basic</Filter>
     </Text>
-    <Text Include="locale\ru\TraitNames.txt">
+    <Text Include="locale\ru\names\CityNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\NatureQuest.txt">
+    <Text Include="locale\ru\names\ItemNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\SkillNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\TraitNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\WiseNames.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

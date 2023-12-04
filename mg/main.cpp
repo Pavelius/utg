@@ -3,6 +3,7 @@
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "hero.h"
+#include "log.h"
 #include "groupname.h"
 #include "pushvalue.h"
 #include "questlist.h"
@@ -42,7 +43,7 @@ static void initialize() {
 	bsreq::read("rules/Wise.txt");
 	bsreq::read("rules/Traits.txt");
 	quest::initialize();
-	questlist::read("NatureQuest");
+	log::readlocfolder(questlist::read, "start", "*.txt");
 }
 
 static const char* getavatarst(const void* p) {
@@ -60,7 +61,7 @@ int	main(int argc, char *argv[]) {
 	draw::heroes_isplayer = isplayer;
 	answers::console = &sb;
 	answers::prompt = sb.begin();
-	answers::resid = "treasure";
+	answers::resid = "hamlet";
 	return draw::start(starting, initialize);
 }
 

@@ -51,9 +51,19 @@ static void control_pixels() {
 	}
 }
 
+static void center_paint() {
+	auto mx = (pixel_size + 1) * source.width;
+	auto my = (pixel_size + 1) * source.height;
+	if(mx < width)
+		caret.x += (width - mx) / 2;
+	if(my < height)
+		caret.y += (height - my) / 2;
+}
+
 void view_pixels() {
 	pushvalue push_clip(clipping);
 	setclipall();
+	center_paint();
 	control_pixels();
 	rectpush push;
 	pushvalue push_index(pixel_index);

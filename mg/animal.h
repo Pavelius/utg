@@ -3,8 +3,7 @@
 
 #pragma once
 
-struct animali {
-	const char*		id;
+struct animali : nameable {
 	gender_s		gender;
 	char			nature;
 	skilla			skills;
