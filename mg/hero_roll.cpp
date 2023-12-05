@@ -4,11 +4,13 @@
 #include "pushvalue.h"
 #include "rang.h"
 #include "roll.h"
+#include "result.h"
 #include "wise.h"
 
 static answers			an;
 static skill_s			skill;
-static int				base_dices, bonus_dices, bonus_success, obstacle, opponent_dices, persona_used;
+static int				base_dices, obstacle, disposition;
+static int				opponent_disposition, opponent_result;
 static bool				tag_nature;
 static adat<char, 32>	dices;
 static adat<rolli, 32>	actions, helps;
@@ -146,7 +148,7 @@ static void add_wise_help() {
 static void add_persona_dices() {
 	if(!player->getskill(Persona))
 		return;
-	if(persona_used >= 3)
+	if(player->skills_pass[Persona] >= 3)
 		return;
 	auto pa = actions.add();
 	pa->option = PersonaAddDice;
@@ -195,19 +197,20 @@ static void fix_roll_result() {
 }
 
 static void fix_prepare_roll() {
-	auto total_dices = base_dices + bonus_dices;
+	auto total_dices = base_dices + player->skills[Bonus];
 	auto pdn = getnm("Dice");
+	auto psn = getnm("Success");
 	sb.addn("[%1] тестирует навык [%2]", player->getname(), bsdata<skilli>::elements[skill].getname());
-	if(bonus_dices > 0)
-		sb.adds("c бонусом в [%1i] %-*2", bonus_dices, pdn);
-	else if(bonus_dices < 0)
-		sb.adds("cо штрафом в %1i %-*2", -bonus_dices, pdn);
-	if(bonus_success != 0) {
-		if(bonus_dices != 0)
+	if(player->skills[Bonus] > 0)
+		sb.adds("c бонусом в [%1i] %-*2", player->skills[Bonus], pdn);
+	else if(player->skills[Bonus] < 0)
+		sb.adds("cо штрафом в %1i %-*2", -player->skills[Bonus], pdn);
+	if(player->skills[Success] != 0) {
+		if(player->skills[Bonus] != 0)
 			sb.adds("и");
 		else
 			sb.adds("с");
-		sb.adds("[%1i] %-*2 в случае удачи", bonus_success, getnm("Success"));
+		sb.adds("[%1i] %-*2 в случае удачи", player->skills[Success], getnm("Success"));
 	}
 	sb.add(".");
 	for(auto& e : helps) {
@@ -225,9 +228,9 @@ static void fix_prepare_roll() {
 	else
 		sb.adds("Бросьте [%1i] %-*2", total_dices, pdn);
 	if(opponent) {
-		sb.adds("при этом [%1] будет кидать [%2i] %-*3",
+		opponent->act("при этом [%1] имеет [%2i] %-*3",
 			opponent->getname(),
-			opponent_dices, pdn);
+			opponent_result, psn);
 	} else if(obstacle)
 		sb.adds("против сложности [%1i]", obstacle);
 	sb.add(".");
@@ -239,13 +242,13 @@ static void resolve_action(void* p) {
 		int count;
 		switch(pa->option) {
 		case HelpDice: case IAmWise:
-			bonus_dices++;
+			player->skills[Bonus]++;
 			break;
 		case TraitsHelp:
 			if(player->gettrait((trait_s)getbsi((traiti*)pa->action)) >= 3)
-				bonus_success++;
+				player->skills[Success]++;
 			else {
-				bonus_dices++;
+				player->skills[Bonus]++;
 				player->usetrait((trait_s)getbsi((traiti*)pa->action));
 			}
 			break;
@@ -264,12 +267,12 @@ static void resolve_action(void* p) {
 			break;
 		case PersonaAddDice:
 			player->setskill(Persona, player->getskill(Persona) - 1);
-			persona_used++;
-			bonus_dices++;
+			player->skills_pass[Persona]++;
+			player->skills[Bonus]++;
 			break;
 		case PersonaAddNatureDice:
 			player->setskill(Persona, player->getskill(Persona) - 1);
-			bonus_dices += player->getskill(Nature);
+			player->skills[Bonus] += player->getskill(Nature);
 			tag_nature = true;
 			break;
 		}
@@ -278,7 +281,7 @@ static void resolve_action(void* p) {
 }
 
 static void prepare_roll() {
-	persona_used = 0;
+	player->skills_pass[Persona] = 0;
 	tag_nature = false;
 	base_dices = player->getskill(skill);
 	helps.clear();
@@ -301,7 +304,7 @@ static void prepare_roll() {
 
 static void make_roll() {
 	dices.clear();
-	add_dices(base_dices + bonus_dices);
+	add_dices(base_dices + player->skills[Bonus]);
 	auto pb = sb.get();
 	while(true) {
 		an.clear(); sb.set(pb);
@@ -313,6 +316,11 @@ static void make_roll() {
 		resolve_action(p);
 	}
 	sb.set(pb);
+}
+
+static void opponent_roll(int count) {
+	add_dices(count);
+	opponent_result = dice_result(4);
 }
 
 void hero::roll(skill_s tested_skill) {

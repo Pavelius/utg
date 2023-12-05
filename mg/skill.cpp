@@ -43,5 +43,7 @@ BSDATA(skilli) = {
 	{"Weaver"},
 	{"Persona"},
 	{"Fate"},
+	{"Success"},
+	{"Bonus"},
 };
-assert_enum(skilli, Fate)
+assert_enum(skilli, Bonus)
