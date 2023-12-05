@@ -121,9 +121,6 @@
     <Text Include="rules\Animal.txt">
       <Filter>Basic</Filter>
     </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Locale</Filter>
-    </Text>
     <Text Include="locale\ru\Mouseguards.txt">
       <Filter>Locale</Filter>
     </Text>

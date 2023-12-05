@@ -6,12 +6,12 @@
 #include "roll.h"
 #include "wise.h"
 
-static answers	an;
-static skill_s	skill;
-static int		base_dices, bonus_dices, bonus_success, obstacle, opponent_dices, persona_used;
-static bool		tag_nature;
-static adat<char, 32> dices;
-static adat<rolli, 32> actions, helps;
+static answers			an;
+static skill_s			skill;
+static int				base_dices, bonus_dices, bonus_success, obstacle, opponent_dices, persona_used;
+static bool				tag_nature;
+static adat<char, 32>	dices;
+static adat<rolli, 32>	actions, helps;
 
 static int compare_dice_result(const void* v1, const void* v2) {
 	return *((char*)v2) - *((char*)v1);

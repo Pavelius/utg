@@ -15,13 +15,15 @@ template<> void fnscript<traiti>(int index, int bonus) {
 		player->settrait(i, player->gettrait(i) + 1);
 }
 
-static const quest* choose_answers(const char* header) {
+static const quest* choose_answers(const char* header, bool skip_marked = true) {
 	an.clear();
 	auto index = last_quest->index;
 	auto pb = last_quest + 1;
 	for(auto pe = last_questlist->elements.end(); pb < pe; pb++) {
 		if(pb->index != index)
 			break;
+		if(skip_marked && marked.find(pb) != -1)
+			continue;
 		an.add(pb, pb->text);
 	}
 	return (quest*)an.choose(header);
