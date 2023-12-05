@@ -1,6 +1,7 @@
 #include "animal.h"
 #include "bsreq.h"
 #include "condition.h"
+#include "conflict.h"
 #include "enviroment.h"
 #include "item.h"
 #include "list.h"
@@ -28,6 +29,13 @@ BSMETA(animali) = {
 	BSREQ(id),
 	BSENM(gender, genderi),
 	BSREQ(nature),
+	{}};
+BSMETA(conflicti) = {
+	BSREQ(id),
+	BSENM(roll, skilli),
+	BSENM(base, skilli),
+	BSDSN(skills, skills, skilli),
+	BSDSN(alternate, skills, skilli),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
@@ -74,6 +82,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Action", VAR(actioni, 1)},
 	{"Animal", VAR(animali, 1)},
+	{"Conflict", VAR(conflicti, 1)},
 	{"Enviroment", VAR(enviromenti, 1)},
 	{"Hero", VAR(hero, 1), ftstatus<hero>, hero::getproperty},
 	{"Item", VAR(itemi, 1)},

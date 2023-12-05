@@ -136,6 +136,11 @@ Sprucetuck type(City)
  skills Scientist Loremouse
  traits Inquisitive Rational
 
+#Conflict
+
+Argument base(Health) roll(Fighter) skills(Persuader Persuader Persuader Persuader) alternate(Persuader Persuader Deceiver Deceiver)
+Fight base(Health) roll(Fighter) skills(Fighter Fighter Nature Nature) alternate(Fighter Fighter Nature Nature)
+
 #Menu
 
 General source(Hero)

@@ -60,6 +60,9 @@
     <ClCompile Include="information.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="conflict.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -108,6 +111,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="natureable.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="conflict.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

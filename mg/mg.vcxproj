@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="conflict.cpp" />
     <ClCompile Include="enviroment.cpp" />
     <ClCompile Include="hero_roll.cpp" />
     <ClCompile Include="information.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animal.h" />
     <ClInclude Include="condition.h" />
+    <ClInclude Include="conflict.h" />
     <ClInclude Include="hero.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="enviroment.h" />
