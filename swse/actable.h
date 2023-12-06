@@ -1,6 +1,7 @@
-#pragma once
 #include "gender.h"
 #include "variant.h"
+
+#pragma once
 
 class actable {
 	variant			kind;

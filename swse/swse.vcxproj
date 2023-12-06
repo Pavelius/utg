@@ -169,9 +169,11 @@
     <Text Include="locale\ru\Quest.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Classes.txt" />
     <Text Include="rules\Feats.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\SkillRoll.txt" />
+    <Text Include="rules\Skills.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />

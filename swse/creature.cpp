@@ -50,11 +50,9 @@ static void update_ability() {
 }
 
 void creature::update() {
-	auto push_player = player;
-	player = this;
+	pushvalue push_player(player, this);
 	clear_creature(abilities, basic.abilities);
 	update_ability();
-	player = push_player;
 }
 
 int	creature::getlevel() const {
@@ -76,9 +74,8 @@ void creature::clear() {
 }
 
 void creature::add(class_s v) {
-	auto push_player = player; player = this;
+	pushvalue push_player(player, this);
 	advance_creature(++classes[v], bsdata<classi>::elements + v);
-	player = push_player;
 }
 
 void creature::create(class_s type, gender_s gender) {

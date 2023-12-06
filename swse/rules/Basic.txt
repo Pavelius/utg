@@ -1,51 +1,6 @@
-#Skill
-
-Acrobatics ability(Dexterity)
-Climb ability(Strenght)
-Deception ability(Charisma)
-Endurance ability(Constitution)
-GatherInformation ability(Charisma)
-Initiative ability(Dexterity)
-Jump ability(Strenght)
-Mechanics ability(Intellegence)
-Perception ability(Wisdow)
-Persuasion ability(Charisma)
-Pilot ability(Dexterity)
-Ride ability(Dexterity)
-Stealth ability(Dexterity)
-Survival ability(Wisdow)
-Swim ability(Strenght)
-TreatInjury ability(Wisdow)
-UseComputer ability(Intellegence)
-UseTheForce ability(Charisma)
-
-Bureaucracy ability(Intellegence)
-GalacticLore ability(Intellegence)
-LifeSciences ability(Intellegence)
-PhysicalSciences ability(Intellegence)
-SocialSciences ability(Intellegence)
-Tactics ability(Intellegence)
-Technology ability(Intellegence)
-
-#Class
-
-Jedi hd(10) force(5)
- skills Acrobatics Endurance Initiative Jump\
-  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
-  Technology Mechanics Perception Pilot UseTheForce
-Noble hd(6) force(5) skill(6)
- skills Deception GatherInformation Initiative\
-  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
-  Perception Persuasion Pilot Ride TreatInjury UseComputer
-Scoundrell hd(6) force(5) skill(4)
- skills Acrobatics Deception GatherInformation Initiative\
-  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
-  Mechanics Perception Persuasion Pilot Stealth UseComputer
-Scout hd(8) force(5) skill(5)
- skills Climb Endurance Initiative\
-  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
-  Mechanics Perception Pilot Ride Stealth Survival Swim
-Soldier hd(10) force(5) skill(3)
- skills Climb Endurance Initiative Jump\
-  Tactics\
-  Mechanics Perception Pilot Swim TreatInjury UseComputer
+#include "rules/Skills.txt"
+#include "rules/Classes.txt"
+#include "rules/Feats.txt"
+#include "rules/Items.txt"
+#include "rules/Advance.txt"
+#include "rules/SkillRoll.txt"

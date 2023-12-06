@@ -1,4 +1,5 @@
 #pragma once
+
 #include "nameable.h"
 
 enum ability_s : unsigned char {

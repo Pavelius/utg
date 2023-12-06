@@ -4,16 +4,12 @@
 #include "draw_utg.h"
 
 static void initialize() {
-	bsreq::read("rules/Feats.txt");
-	bsreq::read("rules/Items.txt");
-	bsreq::read("rules/Advance.txt");
-	bsreq::read("rules/SkillRoll.txt");
 }
 
 static void generate_character() {
 	creature player;
-	answers an;
 	player.create(Jedi, Male);
+	an.clear();
 	an.add(0, "Test");
 	an.choose();
 }

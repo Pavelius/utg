@@ -1,0 +1,22 @@
+#Class
+
+Jedi hd(10) force(5)
+ skills Acrobatics Endurance Initiative Jump\
+  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
+  Technology Mechanics Perception Pilot UseTheForce
+Noble hd(6) force(5) skill(6)
+ skills Deception GatherInformation Initiative\
+  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
+  Perception Persuasion Pilot Ride TreatInjury UseComputer
+Scoundrell hd(6) force(5) skill(4)
+ skills Acrobatics Deception GatherInformation Initiative\
+  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
+  Mechanics Perception Persuasion Pilot Stealth UseComputer
+Scout hd(8) force(5) skill(5)
+ skills Climb Endurance Initiative\
+  Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\
+  Mechanics Perception Pilot Ride Stealth Survival Swim
+Soldier hd(10) force(5) skill(3)
+ skills Climb Endurance Initiative Jump\
+  Tactics\
+  Mechanics Perception Pilot Swim TreatInjury UseComputer

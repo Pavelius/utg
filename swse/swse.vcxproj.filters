@@ -1,135 +1,146 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Logic">
+    <Filter Include="locale">
+      <UniqueIdentifier>{62c78375-d7a6-4d24-ba37-2b6e51eecdd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
       <UniqueIdentifier>{77840b26-50c0-4e5c-8a3b-094abb1218e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data">
+    <Filter Include="data">
       <UniqueIdentifier>{03e68074-4a06-4e06-adcb-9e659f5d4cce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="metadata.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="actable.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="value.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="ability.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="creature.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="scripting.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="modifier.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="wear.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="item.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="size.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="damage.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="state.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="skillroll.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="wearable.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="forcepower.cpp">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Items.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="errors.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Advance.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Feats.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\SkillRoll.txt">
-      <Filter>Data</Filter>
+      <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\Quest.txt" />
+    <Text Include="locale\ru\Quest.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Skills.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Classes.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classi.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="skill.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="actable.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="creature.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="valuei.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="modifier.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="advance.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="wear.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="item.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="feat.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="size.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="damage.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="state.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="skillroll.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="wearable.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="forcepower.h">
-      <Filter>Logic</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
