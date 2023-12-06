@@ -9,8 +9,7 @@
 
 static answers			an;
 static skill_s			skill;
-static int				base_dices, obstacle, disposition;
-static int				opponent_disposition, opponent_result;
+static int				base_dices, obstacle, disposition, opponent_disposition;
 static bool				tag_nature;
 static adat<char, 32>	dices;
 static adat<rolli, 32>	actions, helps;
@@ -230,7 +229,7 @@ static void fix_prepare_roll() {
 	if(opponent) {
 		opponent->act("при этом [%1] имеет [%2i] %-*3",
 			opponent->getname(),
-			opponent_result, psn);
+			opponent->skills[Success], psn);
 	} else if(obstacle)
 		sb.adds("против сложности [%1i]", obstacle);
 	sb.add(".");
@@ -318,9 +317,10 @@ static void make_roll() {
 	sb.set(pb);
 }
 
-static void opponent_roll(int count) {
-	add_dices(count);
-	opponent_result = dice_result(4);
+void opponent_roll() {
+	add_dices(opponent->skills[Bonus]);
+	opponent->skills[Success] = dice_result(4);
+	opponent->skills[Bonus] = 0;
 }
 
 void hero::roll(skill_s tested_skill) {
@@ -328,4 +328,11 @@ void hero::roll(skill_s tested_skill) {
 	pushvalue push_skill(skill, tested_skill);
 	prepare_roll();
 	make_roll();
+}
+
+void hero::roll(skill_s tested_skill, skill_s opponent_skill, creature* opponent_hero) {
+	pushvalue push_opponent(opponent, opponent_hero);
+	opponent->skills[Bonus] += opponent->getskill(opponent_skill);
+	opponent_roll();
+	roll(tested_skill);
 }

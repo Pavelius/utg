@@ -10,9 +10,10 @@
 #include "roll.h"
 #include "wise.h"
 
-hero			*player, *opponent;
-heroa			party;
-static answers	an;
+hero				*player;
+creature			*opponent;
+heroa				party;
+static answers		an;
 
 void questrun(const char* id);
 

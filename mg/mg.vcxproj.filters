@@ -66,6 +66,9 @@
     <ClCompile Include="result.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="animal.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">

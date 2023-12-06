@@ -8,3 +8,4 @@ struct animali : nameable {
 	char			nature;
 	skilla			skills;
 };
+void create_animal(const char* id);

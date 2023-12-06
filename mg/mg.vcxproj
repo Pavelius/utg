@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="animal.cpp" />
     <ClCompile Include="conflict.cpp" />
     <ClCompile Include="enviroment.cpp" />
     <ClCompile Include="hero_roll.cpp" />
