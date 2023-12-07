@@ -11,7 +11,8 @@ enum ability_s : unsigned char {
 	GamblingCheck,
 	HyperdrivenPerDay, RerollAttackPerDay, SecondWindPerDay,
 	ForcePoints, ForcePointsPerEncounter,
-	LastAbility = ForcePointsPerEncounter
+	InitiativeResult, Relation,
+	LastAbility = Relation
 };
 struct abilityi : nameable {
 };

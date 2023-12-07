@@ -1,1 +1,1 @@
-﻿Can't find file 'locale/ru/names/Names.txt'
+﻿Can't find file 'rules/Prototype.txt'

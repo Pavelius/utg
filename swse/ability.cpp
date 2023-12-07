@@ -27,6 +27,8 @@ BSDATA(abilityi) = {
 	{"SecondWindPerDay"},
 	{"ForcePoints"},
 	{"ForcePointsPerEncounter"},
+	{"InitiativeResult"},
+	{"Relation"},
 };
 assert_enum(abilityi, LastAbility)
 

@@ -4,3 +4,4 @@
 #include "rules/Items.txt"
 #include "rules/Advance.txt"
 #include "rules/SkillRoll.txt"
+#include "rules/Prototype.txt"

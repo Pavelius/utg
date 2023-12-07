@@ -60,6 +60,9 @@
     <ClCompile Include="forcepower.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="prototype.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -87,6 +90,9 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="rules\Classes.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Prototype.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>
@@ -140,6 +146,12 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="forcepower.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="relation.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="prototype.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

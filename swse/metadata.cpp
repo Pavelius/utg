@@ -7,6 +7,7 @@
 #include "dice.h"
 #include "item.h"
 #include "modifier.h"
+#include "prototype.h"
 #include "script.h"
 #include "size.h"
 #include "skillroll.h"
@@ -64,6 +65,10 @@ BSMETA(itemi) = {
 BSMETA(modifieri) = {
 	BSREQ(id),
 	{}};
+BSMETA(prototypei) = {
+	BSREQ(id),
+	BSREQ(tags),
+	{}};
 BSMETA(sizei) = {
 	BSREQ(id),
 	{}};
@@ -94,6 +99,7 @@ BSDATA(varianti) = {
 	{"Feat", VAR(feati, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
+	{"Prototype", VAR(prototypei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Size", VAR(sizei, 1)},
 	{"Skill", VAR(skilli, 1)},

@@ -17,9 +17,6 @@ struct itemstat : nameable {
 	char			size;
 	variants		dress;
 };
-//struct itemvariety : nameable {
-//	const itemstat*	elements[15];
-//};
 struct itemi : itemstat {
 	short			count;
 	short			avatar;

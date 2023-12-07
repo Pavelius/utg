@@ -4,7 +4,7 @@
 #include "pushvalue.h"
 #include "script.h"
 
-creature *player;
+creature *player, *opponent;
 collection<creature> creatures;
 
 static void advance_creature(int level, variant object) {
@@ -82,4 +82,29 @@ void creature::create(class_s type, gender_s gender) {
 	clear();
 	setgender(gender);
 	add(type);
+}
+
+relation_s creature::getrelation() const {
+	auto r = get(Relation);
+	if(r < -50)
+		return Hostile;
+	else if(r < -20)
+		return Unfriendly;
+	else if(r < 20)
+		return Neutrality;
+	else if(r < 50)
+		return Friendly;
+	else
+		return Helpful;
+}
+
+static relation_s getmorale(relation_s v) {
+	switch(v) {
+	case Helpful: case Friendly: case Neutrality: return Friendly;
+	default: return Hostile;
+	}
+}
+
+bool creature::isenemy(const creature* p) const {
+	return getmorale(getrelation()) != getmorale(p->getrelation());
 }
