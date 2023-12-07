@@ -10,7 +10,7 @@ enum ability_s : unsigned char {
 	GamblingCheck,
 	HyperdrivenPerDay, RerollAttackPerDay, SecondWindPerDay,
 	ForcePoints, ForcePointsPerEncounter,
-	Reaction, SwiftAction, MoveAction, StandartAction,
+	Reaction, SwiftAction, MoveAction, StandartAction, FullRoundAction,
 	InitiativeResult, Relation,
 	LastAbility = Relation
 };
@@ -19,6 +19,5 @@ struct abilityi : nameable {
 struct abilityable {
 	char		abilities[LastAbility + 1];
 	void		clear();
-	ability_s	getuse(ability_s v) const;
-	bool		isallow(ability_s v) const { return getuse(v) != Strenght; }
+	bool		isallow(ability_s v, int count = 1) const;
 };

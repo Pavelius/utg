@@ -1,2 +1,2 @@
 ﻿In file `rules/Actions.txt`:
- Line 12: Not found requisit `upgrade`
+ Line 37: Not found Ability identifier `Swift2Action`

@@ -5,6 +5,6 @@
 enum ability_s : unsigned char;
 
 struct actioni : feati {
-	ability_s		type;
+	variant			type;
 	const char*		getprompt() const;
 };

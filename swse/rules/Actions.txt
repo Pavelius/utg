@@ -17,15 +17,32 @@ Grapple
 #Action type(MoveAction)
 
 Move
-DrawMeleeWeaponQuick
+DrawMeleeWeaponQuick type(SwiftAction)
 DrawMeleeWeapon upgrade(DrawMeleeWeaponQuick)
-DrawRangedWeaponQuick
+DrawRangedWeaponQuick type(SwiftAction)
 DrawRangedWeapon upgrade(DrawRangedWeaponQuick)
-DrawThrownWeaponQuick
+DrawThrownWeaponQuick type(SwiftAction)
 DrawThrownWeapon upgrade(DrawThrownWeaponQuick)
 HolsterWeaponQuick
 HolsterWeapon upgrade(HolsterWeaponQuick)
 ReloadWeapon
 OpenDoor
 DrawBackpackItem
-StandUp
+StandUpActrobatics type(SwiftAction)
+StandUp upgrade(StandUpActrobatics)
+Withdraw
+
+#Action type(SwiftAction)
+
+Aim type(SwiftAction+2)
+CatchSecondWind
+DropItemInHands
+FallProne
+Recover type(SwiftAction+3)
+SwitchWeaponToAutoFire
+
+#Action type(FullRoundAction)
+
+CoupDeGrace
+FullAttack
+Run

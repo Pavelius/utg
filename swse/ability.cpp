@@ -29,6 +29,7 @@ BSDATA(abilityi) = {
 	{"SwiftAction"},
 	{"MoveAction"},
 	{"StandartAction"},
+	{"FullRoundAction"},
 	{"InitiativeResult"},
 	{"Relation"},
 };
@@ -38,27 +39,13 @@ void abilityable::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-ability_s abilityable::getuse(ability_s v) const {
+bool abilityable::isallow(ability_s v, int count) const {
 	switch(v) {
 	case SwiftAction:
-		if(abilities[SwiftAction] > 0)
-			return SwiftAction;
-		if(abilities[MoveAction] > 0)
-			return MoveAction;
-		if(abilities[StandartAction] > 0)
-			return StandartAction;
-		return {};
+		return (abilities[SwiftAction] + abilities[MoveAction] + abilities[StandartAction]) >= count;
 	case MoveAction:
-		if(abilities[MoveAction] > 0)
-			return MoveAction;
-		if(abilities[StandartAction] > 0)
-			return StandartAction;
-		return {};
+		return (abilities[MoveAction] + abilities[StandartAction]) >= count;
 	default:
-		if(abilities[v] > 0)
-			return v;
-		return {};
+		return abilities[v] >= count;
 	}
 }
-
-void useaction(ability_s v);
