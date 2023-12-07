@@ -1,5 +1,6 @@
 #include "rules/Skills.txt"
 #include "rules/Classes.txt"
+#include "rules/Actions.txt"
 #include "rules/Feats.txt"
 #include "rules/Items.txt"
 #include "rules/Advance.txt"

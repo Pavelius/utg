@@ -1,1 +1,2 @@
-﻿Can't find file 'rules/Prototype.txt'
+﻿In file `rules/Actions.txt`:
+ Line 12: Not found requisit `upgrade`

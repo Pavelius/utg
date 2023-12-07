@@ -26,6 +26,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	relation_s		getrelation() const;
 	bool			is(state_s v) const { return states.is(v); }
 	bool			is(relation_s v) const { return getrelation()==v; }
+	bool			isfeat(int v) const { return feats.is(v); }
 	bool			isenemy(const creature* p) const;
 	bool			istrain(skill_s v) const { return skills_train.is(v); }
 	bool			isweararmor() const { return wears[Torso].operator bool(); }

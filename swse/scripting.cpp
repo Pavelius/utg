@@ -1,4 +1,6 @@
 #include "ability.h"
+#include "action.h"
+#include "answers.h"
 #include "creature.h"
 #include "list.h"
 #include "modifier.h"
@@ -14,6 +16,24 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
 	}
+}
+
+static bool allow(variant v) {
+	if(v.iskind<abilityi>())
+		return player->abilities[v.value] >= v.counter;
+	else if(v.iskind<feati>())
+		return player->isfeat(v.value);
+	else if(v.iskind<script>())
+		return fntest<script>(v.value, v.counter);
+	return true;
+}
+
+static bool allow(const variants& source) {
+	for(auto v : source) {
+		if(!allow(v))
+			return false;
+	}
+	return true;
 }
 
 static bool allow_combat() {
@@ -37,6 +57,18 @@ static bool allow_make_melee_attack(int bonus) {
 }
 static void make_melee_attack(int bonus) {
 
+}
+
+static void add_actions() {
+	for(auto& e : bsdata<actioni>()) {
+		if(e.upgrade) {
+			if(e.upgrade.iskind<feati>() && player->isfeat(e.upgrade.value))
+				continue;
+		}
+		if(!allow(e.prerequisit))
+			continue;
+		an.add(&e, e.getprompt());
+	}
 }
 
 BSDATA(script) = {

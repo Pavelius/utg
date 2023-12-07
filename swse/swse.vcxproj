@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="damage.cpp" />
     <ClCompile Include="forcepower.cpp" />
@@ -168,6 +169,7 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Quest.txt" />
+    <Text Include="rules\Actions.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Classes.txt" />
@@ -180,6 +182,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
+    <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="classi.h" />
     <ClInclude Include="creature.h" />

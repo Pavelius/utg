@@ -1,0 +1,31 @@
+#Action type(StandartAction)
+
+AttackWithRangedWeapon
+AttackWithMeleeWeapon
+AidAnotherAlly
+AttackObject
+Charge
+Disarm
+FightDefencivelyAcrobatics
+ prerequisit Acrobatics
+FightDefencivelyAcrobaticsNoAttack
+ prerequisit Acrobatics
+FightDefencively upgrade(FightDefencivelyAcrobatics)
+Grab
+Grapple
+
+#Action type(MoveAction)
+
+Move
+DrawMeleeWeaponQuick
+DrawMeleeWeapon upgrade(DrawMeleeWeaponQuick)
+DrawRangedWeaponQuick
+DrawRangedWeapon upgrade(DrawRangedWeaponQuick)
+DrawThrownWeaponQuick
+DrawThrownWeapon upgrade(DrawThrownWeaponQuick)
+HolsterWeaponQuick
+HolsterWeapon upgrade(HolsterWeaponQuick)
+ReloadWeapon
+OpenDoor
+DrawBackpackItem
+StandUp

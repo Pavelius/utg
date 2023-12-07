@@ -1,4 +1,5 @@
 #include "ability.h"
+#include "action.h"
 #include "advance.h"
 #include "bsreq.h"
 #include "classi.h"
@@ -26,6 +27,13 @@ BSDATAC(skillroll, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
+	{}};
+BSMETA(actioni) = {
+	BSREQ(id),
+	BSENM(type, abilityi),
+	BSREQ(prerequisit),
+	BSREQ(effect),
+	BSREQ(upgrade),
 	{}};
 BSMETA(advancei) = {
 	BSREQ(level),
@@ -90,6 +98,7 @@ BSMETA(weari) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Action", VAR(actioni, 1)},
 	{"Advance", VAR(advancei, 3)},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0)},
