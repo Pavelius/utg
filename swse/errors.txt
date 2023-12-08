@@ -1,7 +1,4 @@
 ﻿In file `Names.txt`:
-Aim: Define translate
-DrawBackpackItem: Define translate
-DrawMeleeWeaponQuick: Define translate
-StandUp: Define translate
-StandUpActrobatics: Define translate
-Withdraw: Define translate
+FallProne: Define translate
+Recover: Define translate
+SwitchWeaponToAutoFire: Define translate

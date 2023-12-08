@@ -9,6 +9,7 @@
 #include "skill.h"
 
 static void* last_answer;
+static const char* last_id;
 static int last_roll;
 
 template<> void fnscript<modifieri>(int value, int bonus) {
@@ -114,6 +115,30 @@ static bool allow_combat() {
 	return false;
 }
 
+static bool is_enemy(const void* object) {
+	return player->isenemy((creature*)object);
+}
+
+static void filter_enemy(int bonus) {
+	opponents.match(is_enemy, bonus >= 0);
+}
+
+static void choose_close_enemy(int bonus) {
+	opponents = creatures;
+	opponents.match(is_enemy, bonus >= 0);
+	opponent = opponents.choose(0);
+	if(!opponent)
+		script_stop();
+}
+
+static void choose_near_enemy(int bonus) {
+	opponents = creatures;
+	opponents.match(is_enemy, bonus >= 0);
+	opponent = opponents.choose(0);
+	if(!opponent)
+		script_stop();
+}
+
 static void choose_creature(int bonus) {
 	player = creatures.choose(0, getnm("Cancel"));
 }
@@ -150,34 +175,65 @@ static void select_creatures(int bonus) {
 	opponents = creatures;
 }
 
-static bool is_enemy(const void* object) {
-	return player->isenemy((creature*)object);
-}
-
-static void filter_enemy(int bonus) {
-	opponents.match(is_enemy, bonus >= 0);
-}
-
-static bool if_hands_item(int bonus) {
+static bool if_ready_wear(int bonus) {
 	if(player->hands != last_wear)
 		return false;
 	return player->wears[player->hands].operator bool();
 }
-static void hands_item(int bonus) {
+static bool if_ready_weapon(int bonus) {
+	if(!(player->hands == MeleeWeapon || player->hands == RangedWeapon))
+		return false;
+	return player->wears[player->hands].operator bool();
+}
+static bool if_ready_item(int bonus) {
+	if(player->hands == Backpack)
+		return false;
+	return player->wears[player->hands].operator bool();
+}
+static void ready_item(int bonus) {
 	last_item = player->wears + player->hands;
 }
 
 static bool if_unarmed(int bonus) {
-	return player->hands == MeleeWeapon && !player->wears[MeleeWeapon].operator bool();
+	return player->hands == Backpack;
 }
-static void ready_unarmed(int bonus) {
+static void unarmed(int bonus) {
 	last_item = 0;
 }
 
-static void make_melee_attack(int bonus) {
+static void add_format(const char* format, const char separator = ' ') {
+	if(!answers::console)
+		return;
+	answers::console->addsep(separator);
+	answers::console->addv(format, 0);
 }
 
-static void make_range_attack(int bonus) {
+static bool fix_message(stringbuilder& sb, const char* p1, const char* p2) {
+	sb.clear();
+	sb.add(last_id);
+	sb.add(p1);
+	sb.add(p2);
+	auto p = getdescription(sb);
+	if(!p)
+		return false;
+	add_format(p);
+	return true;
+}
+
+static void fix_action(bool success) {
+	char temp[128]; stringbuilder sb(temp);
+	if(fix_message(sb, success ? "Success" : "Fail", 0))
+		return;
+}
+
+static void make_attack(int bonus) {
+	roll20(bonus);
+	if(last_roll < opponent->get(Reflex)) {
+		fix_action(false);
+		script_stop();
+		return;
+	}
+	fix_action(true);
 }
 
 static bool answers_have(const void* p) {
@@ -209,8 +265,12 @@ static void ask_answer() {
 }
 
 static void apply_answers() {
-	if(bsdata<actioni>::have(last_answer))
-		script_run(((actioni*)last_answer)->effect);
+	pushvalue push_id(last_id);
+	if(bsdata<actioni>::have(last_answer)) {
+		auto p = (actioni*)last_answer;
+		last_id = p->id;
+		script_run(p->effect);
+	}
 }
 
 static void make_actions() {
@@ -237,13 +297,18 @@ void one_combat_round() {
 }
 
 BSDATA(script) = {
+	{"ChooseCloseEnemy", choose_close_enemy, if_choose_creature},
 	{"ChooseCreature", choose_creature},
+	{"ChooseNearEnemy", choose_near_enemy, if_choose_creature},
 	{"ChooseOpponent", choose_opponent, if_choose_creature},
 	{"FilterEnemy", filter_enemy, choosing_script},
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
-	{"HandsItem", hands_item, if_hands_item},
-	{"ReadyUnarmed", ready_unarmed, if_unarmed},
+	{"MakeAttack", make_attack},
+	{"ReadyItem", ready_item, if_ready_item},
+	{"ReadyWeapon", ready_item, if_ready_weapon},
+	{"ReadyWear", ready_item, if_ready_wear},
 	{"SelectCreatures", select_creatures, choosing_script},
+	{"Unarmed", unarmed, if_unarmed},
 };
 BSDATAF(script)

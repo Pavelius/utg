@@ -1,24 +1,15 @@
-#List
-
-ChooseCloseEnemy
- elements SelectCreatures FilterEnemy ChooseOpponent
-ChooseNearEnemy
- elements SelectCreatures FilterEnemy ChooseOpponent
-ChooseFarEnemy
- elements SelectCreatures FilterEnemy ChooseOpponent
-
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon HandsItem ChooseCloseEnemy
+ effect StandartAction-1 RangedWeapon ReadyWear ChooseCloseEnemy MakeAttack
 AttackWithMeleeWeapon
- effect StandartAction-1 MeleeWeapon HandsItem ChooseNearEnemy
+ effect StandartAction-1 MeleeWeapon ReadyWear ChooseNearEnemy MakeAttack
 AidAnotherAlly
  effect StandartAction-1
 AttackObject
- effect StandartAction-1
+ effect StandartAction-1 ReadyWeapon
 Charge
- effect StandartAction-1
+ effect StandartAction-1 MeleeWeapon ReadyWear
 Disarm
  effect StandartAction-1
 FightDefencivelyAcrobatics
@@ -26,20 +17,20 @@ FightDefencivelyAcrobatics
 FightDefencivelyAcrobaticsNoAttack
  effect StandartAction-1 Acrobatics IfTrained
 FightDefencively upgrade(FightDefencivelyAcrobatics)
- effect StandartAction-1
+ effect StandartAction-1 MeleeWeapon ReadyWear
 Grab
- effect StandartAction-1
+ effect StandartAction-1 Unarmed
 Grapple
- effect StandartAction-1
+ effect StandartAction-1 Unarmed
 
 Move
  effect MoveAction-1
-DrawMeleeWeaponQuick
+DrawWeaponQuick
  effect SwiftAction-1
-DrawMeleeWeapon upgrade(DrawMeleeWeaponQuick)
+DrawWeapon upgrade(DrawWeaponQuick)
  effect MoveAction-1
 ReloadWeapon
- effect MoveAction-1
+ effect MoveAction-1 ReadyWeapon
 OpenDoor
  effect MoveAction-1
 DrawBackpackItem
@@ -52,17 +43,17 @@ Withdraw
  effect MoveAction-1
 
 Aim
- effect SwiftAction-2
+ effect SwiftAction-2 RangedWeapon ReadyWear
 CatchSecondWind
  effect SwiftAction-1
 DropItemInHands
- effect SwiftAction-1
+ effect SwiftAction-1 ReadyItem
 FallProne
  effect SwiftAction-1
 Recover
  effect SwiftAction-3
 SwitchWeaponToAutoFire
- effect SwiftAction-1
+ effect SwiftAction-1 ReadyWeapon
 
 CoupDeGrace
  effect FullRoundAction-1

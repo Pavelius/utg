@@ -6,18 +6,21 @@ Charge: Набросится на врага
 CoupDeGrace: Прикончить врага
 Disarm: Обезаружить
 DrawBackpackItem: Достать предмет из рюкзака
-DrawMeleeWeaponQuick: Выхватить оружие
-DrawMeleeWeapon: Достать оружие
+DrawWeapon: Достать оружие
+DrawWeaponQuick: Выхватить оружие
 DropItemInHands: Бросить предмет из рук на землю
+FallProne: Залечь
 FightDefencively: Сражаться в защитной стойке
 FullAttack: Атаковать всеми возможными способами
 Grab: Схватить
 Grapple: Удушающий прием
 Move: Двигаться
 OpenDoor: Открыть дверь
+Recover: Прийти в чувства
 ReloadWeapon: Перезарядить оружие
 Run: Бежать
 StandUpActrobatics: Вскочить на ноги
-Withdraw: Отступать назад
+SwitchWeaponToAutoFire: Переключиться в автоматический режим стрельбы
+Withdraw: Отступить из ближнего боя
 
 WhatYouDo: Что будете делать?
