@@ -158,6 +158,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="placeable.cpp" />
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="size.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="damage.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="forcepower.h" />
+    <ClInclude Include="placeable.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="area.h" />
@@ -202,6 +204,7 @@
     <ClInclude Include="skill.h" />
     <ClInclude Include="skillroll.h" />
     <ClInclude Include="state.h" />
+    <ClInclude Include="typeable.h" />
     <ClInclude Include="valuei.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />

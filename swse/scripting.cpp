@@ -295,6 +295,13 @@ static void add_actions() {
 	}
 }
 
+static bool test_actions() {
+	auto p = bsdata<actioni>::find("Aid");
+	if(!p)
+		return false;
+	return allow_effect(p->effect);
+}
+
 static void ask_answer() {
 	last_answer = (void*)an.choose(getnm("WhatYouDo"));
 }
@@ -327,6 +334,7 @@ void one_combat_round() {
 	for(auto p : creatures) {
 		player = p;
 		before_combat_round();
+		test_actions();
 		make_actions();
 	}
 }

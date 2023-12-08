@@ -2,14 +2,12 @@
 
 #include "collection.h"
 #include "nameable.h"
+#include "placeable.h"
+#include "typeable.h"
 
 struct areai : nameable {
 };
-struct area {
-	unsigned short	type, parent;
-	void			addlink(const area* to);
-	const areai&	geti() const;
-	area*			getparent() const;
-	void			setparent(area* v);
+struct area : typeable<areai>, placeable {
+	void	addlink(const area* to);
 };
 extern collection<area> areas;

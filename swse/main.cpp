@@ -1,4 +1,5 @@
 #include "ability.h"
+#include "area.h"
 #include "bsreq.h"
 #include "creature.h"
 #include "draw_utg.h"
@@ -8,7 +9,15 @@ void one_combat_round();
 static void initialize() {
 }
 
+static bool test_area() {
+	area a1 = {};
+	auto n = a1.geti().id;
+	return n != 0;
+}
+
 static void generate_character() {
+	//if(!test_area())
+	//	return;
 	create_hero(Jedi, Male);
 	add_creatures();
 	add_item("Quarterstaff");

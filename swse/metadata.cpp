@@ -43,7 +43,7 @@ BSMETA(advancei) = {
 	{}};
 BSMETA(area) = {
 	BSENM(type, areai),
-	BSREQ(parent),
+	BSREQ(place),
 	{}};
 BSMETA(areai) = {
 	BSREQ(id),

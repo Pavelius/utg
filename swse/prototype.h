@@ -4,5 +4,6 @@
 #include "variant.h"
 
 struct prototypei : nameable {
-	variants	tags;
+	short unsigned	basic;
+	variants		tags;
 };

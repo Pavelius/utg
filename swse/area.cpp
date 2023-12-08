@@ -10,18 +10,6 @@ BSDATAC(arealink, 4096)
 
 collection<area> areas;
 
-area* area::getparent() const {
-	return getbs<area>(parent);
-}
-
-void area::setparent(area* v) {
-	parent = getbsi(v);
-}
-
-const areai& area::geti() const {
-	return bsdata<areai>::elements[type];
-}
-
 static arealink* find_link(short unsigned p1, short unsigned p2) {
 	for(auto& e : bsdata<arealink>()) {
 		if((e.from == p1 && e.to == p2) || (e.from == p2 && e.to == p1))

@@ -5,13 +5,13 @@ AttackWithRangedWeapon
 AttackWithMeleeWeapon
  effect StandartAction-1 MeleeWeapon ReadyWear SelectEnemies FilterRange+2 MakeAttack
 AidAnotherAlly
- effect StandartAction-1
+ effect StandartAction-1 SelectEnemies-1
 AttackObject
  effect StandartAction-1 ReadyWeapon
 Charge
  effect StandartAction-1 MeleeWeapon ReadyWear
 Disarm
- effect StandartAction-1
+ effect StandartAction-1 SelectEnemies
 FightDefencivelyAcrobatics
  effect StandartAction-1 Acrobatics IfTrained
 FightDefencivelyAcrobaticsNoAttack
@@ -19,9 +19,9 @@ FightDefencivelyAcrobaticsNoAttack
 FightDefencively upgrade(FightDefencivelyAcrobatics)
  effect StandartAction-1 MeleeWeapon ReadyWear
 Grab
- effect StandartAction-1 Unarmed
+ effect StandartAction-1 Unarmed SelectEnemies FilterRange
 Grapple
- effect StandartAction-1 Unarmed
+ effect StandartAction-1 Unarmed SelectEnemies FilterRange
 
 Move
  effect MoveAction-1

@@ -6,6 +6,7 @@
 #include "feat.h"
 #include "list.h"
 #include "size.h"
+#include "typeable.h"
 #include "wear.h"
 #include "variant.h"
 
@@ -31,8 +32,7 @@ struct itemi : itemstat {
 	bool			iscountable() const { return count != 0; }
 	bool			ismelee() const { return wear == MeleeWeapon; }
 };
-class item {
-	unsigned short	type;
+class item : typeable<itemi> {
 	unsigned char	count, ammocount;
 public:
 	explicit operator bool() const { return type != 0; }
@@ -43,7 +43,6 @@ public:
 	void			damage() {}
 	int				get(unsigned fo) const;
 	short unsigned	getkind() const { return type; }
-	const itemi&	geti() const { return bsdata<itemi>::elements[type]; }
 	void			getinfo(stringbuilder& sb) const;
 	int				getcost() const;
 	int				getcostall() const;
