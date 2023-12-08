@@ -1,4 +1,6 @@
 #pragma once
+
+#include "collection.h"
 #include "damage.h"
 #include "dice.h"
 #include "feat.h"
@@ -59,3 +61,4 @@ public:
 	void			use() { setcount(getcount() - 1); }
 };
 extern item *last_item;
+extern collection<item> items;

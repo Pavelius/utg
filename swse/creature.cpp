@@ -103,6 +103,12 @@ bool creature::isenemy(const creature* p) const {
 	return getmorale(getrelation()) != getmorale(p->getrelation());
 }
 
+creature* creature::getenemy() const {
+	if(enemy_id != -1)
+		return bsdata<creature>::elements + enemy_id;
+	return 0;
+}
+
 void create_hero(class_s type, gender_s gender) {
 	player = bsdata<creature>::add();
 	player->clear();

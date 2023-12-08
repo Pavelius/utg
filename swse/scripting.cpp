@@ -11,6 +11,7 @@
 static void* last_answer;
 static const char* last_id;
 static int last_roll;
+static int match_range;
 
 template<> void fnscript<modifieri>(int value, int bonus) {
 	modifier = (modifier_s)value;
@@ -119,8 +120,28 @@ static bool is_enemy(const void* object) {
 	return player->isenemy((creature*)object);
 }
 
+static bool is_range(const void* object) {
+	return player->getrange((creature*)object) <= match_range;
+}
+
 static void filter_enemy(int bonus) {
 	opponents.match(is_enemy, bonus >= 0);
+}
+
+static void filter_range(int bonus) {
+	auto push = match_range;
+	match_range = bonus;
+	opponents.match(is_range, true);
+	match_range = push;
+}
+
+static void select_enemies(int bonus) {
+	opponents = creatures;
+	opponents.match(is_enemy, bonus >= 0);
+}
+
+static bool allow_opponents(int bonus) {
+	return opponents.getcount() != 0;
 }
 
 static void choose_close_enemy(int bonus) {
@@ -155,9 +176,7 @@ static bool if_train(int bonus) {
 
 static bool if_choose_creature(int bonus) {
 	last_script->proc(bonus);
-	if(!opponents)
-		return false;
-	return true;
+	return (opponent != 0) == (bonus >= 0);
 }
 
 static bool if_full_round_action(int bonus) {
@@ -226,7 +245,14 @@ static void fix_action(bool success) {
 		return;
 }
 
+static bool prepare_opponent() {
+	opponent = opponents.choose(getnm("ChooseEnemy"));
+	return opponent != 0;
+}
+
 static void make_attack(int bonus) {
+	if(!prepare_opponent())
+		return;
 	roll20(bonus);
 	if(last_roll < opponent->get(Reflex)) {
 		fix_action(false);
@@ -244,7 +270,15 @@ static bool answers_have(const void* p) {
 	return false;
 }
 
+static bool allow_effect(const variants& source) {
+	last_wear = Backpack;
+	last_item = 0;
+	return script_allow(source);
+}
+
 static void add_actions() {
+	pushvalue push_wear(last_wear);
+	pushvalue push_item(last_item);
 	for(auto& e : bsdata<actioni>()) {
 		if(e.upgrade) {
 			if(e.upgrade.iskind<feati>() && player->isfeat(e.upgrade.value))
@@ -252,7 +286,7 @@ static void add_actions() {
 			else if(e.upgrade.iskind<actioni>() && answers_have(bsdata<actioni>::elements + e.upgrade.value))
 				continue;
 		}
-		if(!script_allow(e.effect))
+		if(!allow_effect(e.effect))
 			continue;
 		an.add(&e, e.getprompt());
 		if(an.getcount() > 16)
@@ -302,13 +336,14 @@ BSDATA(script) = {
 	{"ChooseNearEnemy", choose_near_enemy, if_choose_creature},
 	{"ChooseOpponent", choose_opponent, if_choose_creature},
 	{"FilterEnemy", filter_enemy, choosing_script},
+	{"FilterRange", filter_range, allow_opponents},
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
 	{"MakeAttack", make_attack},
 	{"ReadyItem", ready_item, if_ready_item},
 	{"ReadyWeapon", ready_item, if_ready_weapon},
 	{"ReadyWear", ready_item, if_ready_wear},
-	{"SelectCreatures", select_creatures, choosing_script},
+	{"SelectEnemies", select_enemies, allow_opponents},
 	{"Unarmed", unarmed, if_unarmed},
 };
 BSDATAF(script)

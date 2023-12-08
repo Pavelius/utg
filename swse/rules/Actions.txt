@@ -1,9 +1,9 @@
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon ReadyWear ChooseCloseEnemy MakeAttack
+ effect StandartAction-1 RangedWeapon ReadyWear SelectEnemies FilterRange MakeAttack
 AttackWithMeleeWeapon
- effect StandartAction-1 MeleeWeapon ReadyWear ChooseNearEnemy MakeAttack
+ effect StandartAction-1 MeleeWeapon ReadyWear SelectEnemies FilterRange+2 MakeAttack
 AidAnotherAlly
  effect StandartAction-1
 AttackObject
