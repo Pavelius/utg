@@ -1,1 +1,9 @@
-﻿
+﻿Charge: 
+DrawMeleeWeaponQuick: 
+DrawRangedWeapon: 
+DrawRangedWeaponQuick: 
+DrawThrownWeapon: 
+DrawThrownWeaponQuick: 
+FightDefencivelyAcrobatics: 
+FightDefencivelyAcrobaticsNoAttack: 
+HolsterWeaponQuick: 

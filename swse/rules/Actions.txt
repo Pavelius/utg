@@ -1,15 +1,15 @@
 #Action type(StandartAction)
 
 AttackWithRangedWeapon
+ effect RangedWeapon HandsItem
 AttackWithMeleeWeapon
+ effect MeleeWeapon HandsItem
 AidAnotherAlly
 AttackObject
 Charge
 Disarm
 FightDefencivelyAcrobatics
- prerequisit Acrobatics
 FightDefencivelyAcrobaticsNoAttack
- prerequisit Acrobatics
 FightDefencively upgrade(FightDefencivelyAcrobatics)
 Grab
 Grapple

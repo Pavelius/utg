@@ -1,2 +1,10 @@
-﻿In file `rules/Actions.txt`:
- Line 37: Not found Ability identifier `Swift2Action`
+﻿In file `Names.txt`:
+AttackWithMeleeWeapon: Define translate
+AttackWithRangedWeapon: Define translate
+Charge: Define translate
+DrawMeleeWeaponQuick: Define translate
+DrawRangedWeapon: Define translate
+DrawRangedWeaponQuick: Define translate
+DrawThrownWeaponQuick: Define translate
+FightDefencivelyAcrobatics: Define translate
+FightDefencivelyAcrobaticsNoAttack: Define translate

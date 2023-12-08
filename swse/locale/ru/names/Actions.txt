@@ -1,0 +1,12 @@
+﻿AidAnotherAlly: Помочь своему союзнику
+AttackObject: Атаковать объект
+Disarm: Обезаружить
+DrawMeleeWeapon: Достать оружие
+FightDefencively: Сражаться в защитной стойке
+Grab: Схватить
+Grapple: Удушающий прием
+Move: Двигаться
+OpenDoor: Открыть дверь
+ReloadWeapon: Перезарядить оружие
+
+WhatYouDo: Что будете делать?

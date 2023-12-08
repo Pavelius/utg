@@ -27,7 +27,7 @@ struct itemi : itemstat {
 	bool operator==(const itemi& v) const { return this == &v; }
 	int				getindex() const { return this - bsdata<itemi>::elements; }
 	bool			iscountable() const { return count != 0; }
-	bool			ismelee() const { return wear == MeleeWeapon || wear == MeleeWeaponOffhand; }
+	bool			ismelee() const { return wear == MeleeWeapon; }
 };
 class item {
 	unsigned short	type;

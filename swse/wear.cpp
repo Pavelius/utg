@@ -1,6 +1,8 @@
 #include "crt.h"
 #include "wear.h"
 
+wear_s last_wear;
+
 BSDATA(weari) = {
 	{"Backpack"},
 	{"Potion"},
@@ -19,7 +21,6 @@ BSDATA(weari) = {
 	{"Backpack14"},
 	{"BackpackLast"},
 	{"MeleeWeapon"},
-	{"MeleeWeaponOffhand"},
 	{"RangedWeapon"},
 	{"Head"},
 	{"Torso"},

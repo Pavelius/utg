@@ -78,12 +78,6 @@ void creature::add(class_s v) {
 	advance_creature(++classes[v], bsdata<classi>::elements + v);
 }
 
-void creature::create(class_s type, gender_s gender) {
-	clear();
-	setgender(gender);
-	add(type);
-}
-
 relation_s creature::getrelation() const {
 	auto r = get(Relation);
 	if(r < -50)
@@ -107,4 +101,15 @@ static relation_s getmorale(relation_s v) {
 
 bool creature::isenemy(const creature* p) const {
 	return getmorale(getrelation()) != getmorale(p->getrelation());
+}
+
+void create_hero(class_s type, gender_s gender) {
+	player = bsdata<creature>::add();
+	player->clear();
+	player->setgender(gender);
+	player->add(type);
+}
+
+void add_creatures() {
+	creatures.add(player);
 }

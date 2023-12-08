@@ -4,6 +4,7 @@
 #pragma once
 
 struct wearable : actable {
+	wear_s			hands;
 	item			wears[Elbows + 1];
 	int				money;
 	void			addcoins(unsigned v);

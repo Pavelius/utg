@@ -101,6 +101,12 @@
     <Text Include="rules\Actions.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Actions.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classi.h">

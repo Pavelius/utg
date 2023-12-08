@@ -31,7 +31,6 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	BSENM(type, abilityi),
-	BSREQ(prerequisit),
 	BSREQ(effect),
 	BSREQ(upgrade),
 	{}};
@@ -109,10 +108,11 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Prototype", VAR(prototypei, 1)},
-	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Size", VAR(sizei, 1)},
 	{"Skill", VAR(skilli, 1)},
 	{"SkillRoll", VAR(skillroll, 1)},
+	{"Wear", VAR(weari, 1), 0, 0, fnscript<weari>, fntest<weari>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

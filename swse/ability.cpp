@@ -35,6 +35,8 @@ BSDATA(abilityi) = {
 };
 assert_enum(abilityi, LastAbility)
 
+ability_s last_ability;
+
 void abilityable::clear() {
 	memset(this, 0, sizeof(*this));
 }

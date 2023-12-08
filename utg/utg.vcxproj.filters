@@ -288,6 +288,9 @@
     <ClCompile Include="strprint.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="draw_imager.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

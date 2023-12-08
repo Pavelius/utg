@@ -3,15 +3,18 @@
 #include "creature.h"
 #include "draw_utg.h"
 
+void one_combat_round();
+
 static void initialize() {
 }
 
 static void generate_character() {
-	creature player;
-	player.create(Jedi, Male);
-	an.clear();
-	an.add(0, "Test");
-	an.choose();
+	create_hero(Jedi, Male);
+	add_creatures();
+	player->setability(Relation, -100);
+	create_hero(Scoundrell, Female);
+	add_creatures();
+	one_combat_round();
 }
 
 int main(int argc, char* argv[]) {
