@@ -150,6 +150,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
+    <ClCompile Include="area.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="damage.cpp" />
     <ClCompile Include="forcepower.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="forcepower.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="modifier.h" />
+    <ClInclude Include="area.h" />
     <ClInclude Include="prototype.h" />
     <ClInclude Include="relation.h" />
     <ClInclude Include="size.h" />

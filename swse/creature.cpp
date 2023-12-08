@@ -119,3 +119,11 @@ void create_hero(class_s type, gender_s gender) {
 void add_creatures() {
 	creatures.add(player);
 }
+
+void add_item(const char* id) {
+	auto pi = bsdata<itemi>::find(id);
+	if(!pi)
+		return;
+	item it; it.create(pi);
+	player->equip(it);
+}

@@ -69,6 +69,9 @@
     <ClCompile Include="skill.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="area.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -170,6 +173,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="area.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

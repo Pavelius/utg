@@ -11,8 +11,10 @@ static void initialize() {
 static void generate_character() {
 	create_hero(Jedi, Male);
 	add_creatures();
+	add_item("Quarterstaff");
 	player->setability(Relation, -100);
 	create_hero(Scoundrell, Female);
+	add_item("Pistol");
 	add_creatures();
 	one_combat_round();
 }

@@ -38,4 +38,5 @@ extern creature *player, *opponent;
 extern collection<creature> creatures, opponents;
 
 void add_creatures();
+void add_item(const char* id);
 void create_hero(class_s type, gender_s gender);
