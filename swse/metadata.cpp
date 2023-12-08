@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "action.h"
 #include "advance.h"
+#include "area.h"
 #include "bsreq.h"
 #include "classi.h"
 #include "crt.h"
@@ -39,6 +40,13 @@ BSMETA(advancei) = {
 	BSREQ(object),
 	BSREQ(id),
 	BSREQ(elements),
+	{}};
+BSMETA(area) = {
+	BSENM(type, areai),
+	BSREQ(parent),
+	{}};
+BSMETA(areai) = {
+	BSREQ(id),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
@@ -99,6 +107,8 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>, fntest<abilityi>},
 	{"Action", VAR(actioni, 1)},
 	{"Advance", VAR(advancei, 3)},
+	{"Area", VAR(areai, 1)},
+	{"AreaObject", VAR(area, 0)},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0)},
 	{"Feat", VAR(feati, 1)},

@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "action.h"
 #include "answers.h"
+#include "area.h"
 #include "creature.h"
 #include "list.h"
 #include "modifier.h"
