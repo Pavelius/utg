@@ -160,6 +160,7 @@
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="size.cpp" />
+    <ClCompile Include="skill.cpp" />
     <ClCompile Include="skillroll.cpp" />
     <ClCompile Include="state.cpp" />
     <ClCompile Include="value.cpp" />

@@ -10,7 +10,7 @@ enum ability_s : unsigned char {
 	GamblingCheck,
 	HyperdrivenPerDay, RerollAttackPerDay, SecondWindPerDay,
 	ForcePoints, ForcePointsPerEncounter,
-	Reaction, SwiftAction, MoveAction, StandartAction, FullRoundAction,
+	Reaction, SwiftAction, MoveAction, StandartAction,
 	InitiativeResult, Relation,
 	LastAbility = Relation
 };

@@ -96,7 +96,7 @@ BSMETA(weari) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>, fntest<abilityi>},
 	{"Action", VAR(actioni, 1)},
 	{"Advance", VAR(advancei, 3)},
 	{"Class", VAR(classi, 1)},
@@ -110,7 +110,7 @@ BSDATA(varianti) = {
 	{"Prototype", VAR(prototypei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Size", VAR(sizei, 1)},
-	{"Skill", VAR(skilli, 1)},
+	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>, fntest<skilli>},
 	{"SkillRoll", VAR(skillroll, 1)},
 	{"Wear", VAR(weari, 1), 0, 0, fnscript<weari>, fntest<weari>},
 	{"Widget", VAR(widget, 1)},

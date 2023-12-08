@@ -6,6 +6,7 @@
 #include "modifier.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "skill.h"
 
 static void* last_answer;
 static int last_roll;
@@ -19,6 +20,14 @@ template<> void fnscript<weari>(int value, int bonus) {
 }
 template<> bool fntest<weari>(int value, int bonus) {
 	fnscript<weari>(value, bonus);
+	return true;
+}
+
+template<> void fnscript<skilli>(int value, int bonus) {
+	last_skill = (skill_s)value;
+}
+template<> bool fntest<skilli>(int value, int bonus) {
+	fnscript<skilli>(value, bonus);
 	return true;
 }
 
@@ -58,11 +67,32 @@ static void add_ability(int value, int bonus) {
 		player->abilities[value] += bonus;
 }
 
+static bool allow_reduce_ability(int value, int bonus) {
+	switch(value) {
+	case MoveAction: return (player->abilities[MoveAction] + player->abilities[StandartAction]) >= -bonus;
+	case SwiftAction: return (player->abilities[SwiftAction] + player->abilities[MoveAction] + player->abilities[StandartAction]) >= -bonus;
+	default: return player->abilities[value] >= -bonus;
+	}
+}
+
+static bool test_ability(int value, int bonus) {
+	if(bonus < 0)
+		return allow_reduce_ability(value, bonus);
+	return true;
+}
+
 template<> void fnscript<abilityi>(int value, int bonus) {
 	last_ability = (ability_s)value;
 	switch(modifier) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: add_ability(value, bonus); break;
+	}
+}
+template<> bool fntest<abilityi>(int value, int bonus) {
+	last_ability = (ability_s)value;
+	switch(modifier) {
+	case Permanent: return allow_reduce_ability(value, bonus);
+	default: return allow_reduce_ability(value, bonus);
 	}
 }
 
@@ -89,7 +119,43 @@ static void choose_creature(int bonus) {
 }
 
 static void choose_opponent(int bonus) {
-	opponent = creatures.choose(0);
+	opponent = opponents.choose(0);
+	if(!opponent)
+		script_stop();
+}
+
+static bool if_train(int bonus) {
+	return player->istrain(last_skill) == (bonus >= 0);
+}
+
+static bool if_choose_creature(int bonus) {
+	last_script->proc(bonus);
+	if(!opponents)
+		return false;
+	return true;
+}
+
+static bool if_full_round_action(int bonus) {
+	return player->abilities[SwiftAction] > 0
+		&& player->abilities[MoveAction] > 0
+		&& player->abilities[StandartAction] > 0;
+}
+static void full_round_action(int bonus) {
+	player->abilities[SwiftAction] = 0;
+	player->abilities[MoveAction] = 0;
+	player->abilities[StandartAction] = 0;
+}
+
+static void select_creatures(int bonus) {
+	opponents = creatures;
+}
+
+static bool is_enemy(const void* object) {
+	return player->isenemy((creature*)object);
+}
+
+static void filter_enemy(int bonus) {
+	opponents.match(is_enemy, bonus >= 0);
 }
 
 static bool if_hands_item(int bonus) {
@@ -114,10 +180,20 @@ static void make_melee_attack(int bonus) {
 static void make_range_attack(int bonus) {
 }
 
+static bool answers_have(const void* p) {
+	for(auto& e : an) {
+		if(e.value == p)
+			return true;
+	}
+	return false;
+}
+
 static void add_actions() {
 	for(auto& e : bsdata<actioni>()) {
 		if(e.upgrade) {
 			if(e.upgrade.iskind<feati>() && player->isfeat(e.upgrade.value))
+				continue;
+			else if(e.upgrade.iskind<actioni>() && answers_have(bsdata<actioni>::elements + e.upgrade.value))
 				continue;
 		}
 		if(!script_allow(e.effect))
@@ -144,18 +220,30 @@ static void make_actions() {
 	apply_answers();
 }
 
+static void before_combat_round() {
+	player->abilities[Reaction] = 1;
+	player->abilities[SwiftAction] = 1;
+	player->abilities[MoveAction] = 1;
+	player->abilities[StandartAction] = 1;
+}
+
 void one_combat_round() {
 	pushvalue push(player);
 	for(auto p : creatures) {
 		player = p;
+		before_combat_round();
 		make_actions();
 	}
 }
 
 BSDATA(script) = {
 	{"ChooseCreature", choose_creature},
-	{"ChooseOpponent", choose_opponent},
+	{"ChooseOpponent", choose_opponent, if_choose_creature},
+	{"FilterEnemy", filter_enemy, choosing_script},
+	{"FullRoundAction", full_round_action, if_full_round_action},
+	{"IfTrained", conditional_script, if_train},
 	{"HandsItem", hands_item, if_hands_item},
 	{"ReadyUnarmed", ready_unarmed, if_unarmed},
+	{"SelectCreatures", select_creatures, choosing_script},
 };
 BSDATAF(script)

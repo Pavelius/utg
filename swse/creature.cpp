@@ -5,7 +5,7 @@
 #include "script.h"
 
 creature *player, *opponent;
-collection<creature> creatures;
+collection<creature> creatures, opponents;
 
 static void advance_creature(int level, variant object) {
 	for(auto& e : bsdata<advancei>()) {

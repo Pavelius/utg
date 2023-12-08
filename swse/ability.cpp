@@ -29,7 +29,6 @@ BSDATA(abilityi) = {
 	{"SwiftAction"},
 	{"MoveAction"},
 	{"StandartAction"},
-	{"FullRoundAction"},
 	{"InitiativeResult"},
 	{"Relation"},
 };

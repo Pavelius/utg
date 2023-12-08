@@ -32,7 +32,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	void			update();
 };
 extern creature *player, *opponent;
-extern collection<creature> creatures;
+extern collection<creature> creatures, opponents;
 
 void add_creatures();
 void create_hero(class_s type, gender_s gender);

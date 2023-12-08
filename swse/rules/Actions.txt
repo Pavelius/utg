@@ -1,48 +1,72 @@
-#Action type(StandartAction)
+#List
+
+ChooseCloseEnemy
+ elements SelectCreatures FilterEnemy ChooseOpponent
+ChooseNearEnemy
+ elements SelectCreatures FilterEnemy ChooseOpponent
+ChooseFarEnemy
+ elements SelectCreatures FilterEnemy ChooseOpponent
+
+#Action
 
 AttackWithRangedWeapon
- effect RangedWeapon HandsItem
+ effect StandartAction-1 RangedWeapon HandsItem ChooseCloseEnemy
 AttackWithMeleeWeapon
- effect MeleeWeapon HandsItem
+ effect StandartAction-1 MeleeWeapon HandsItem ChooseNearEnemy
 AidAnotherAlly
+ effect StandartAction-1
 AttackObject
+ effect StandartAction-1
 Charge
+ effect StandartAction-1
 Disarm
+ effect StandartAction-1
 FightDefencivelyAcrobatics
+ effect StandartAction-1 Acrobatics IfTrained
 FightDefencivelyAcrobaticsNoAttack
+ effect StandartAction-1 Acrobatics IfTrained
 FightDefencively upgrade(FightDefencivelyAcrobatics)
+ effect StandartAction-1
 Grab
+ effect StandartAction-1
 Grapple
-
-#Action type(MoveAction)
+ effect StandartAction-1
 
 Move
-DrawMeleeWeaponQuick type(SwiftAction)
+ effect MoveAction-1
+DrawMeleeWeaponQuick
+ effect SwiftAction-1
 DrawMeleeWeapon upgrade(DrawMeleeWeaponQuick)
-DrawRangedWeaponQuick type(SwiftAction)
-DrawRangedWeapon upgrade(DrawRangedWeaponQuick)
-DrawThrownWeaponQuick type(SwiftAction)
-DrawThrownWeapon upgrade(DrawThrownWeaponQuick)
-HolsterWeaponQuick
-HolsterWeapon upgrade(HolsterWeaponQuick)
+ effect MoveAction-1
 ReloadWeapon
+ effect MoveAction-1
 OpenDoor
+ effect MoveAction-1
 DrawBackpackItem
-StandUpActrobatics type(SwiftAction)
+ effect MoveAction-1
+StandUpActrobatics
+ effect SwiftAction-1
 StandUp upgrade(StandUpActrobatics)
+ effect MoveAction-1
 Withdraw
+ effect MoveAction-1
 
-#Action type(SwiftAction)
-
-Aim type(SwiftAction+2)
+Aim
+ effect SwiftAction-2
 CatchSecondWind
+ effect SwiftAction-1
 DropItemInHands
+ effect SwiftAction-1
 FallProne
-Recover type(SwiftAction+3)
+ effect SwiftAction-1
+Recover
+ effect SwiftAction-3
 SwitchWeaponToAutoFire
-
-#Action type(FullRoundAction)
+ effect SwiftAction-1
 
 CoupDeGrace
+ effect FullRoundAction-1
 FullAttack
+ effect FullRoundAction-1
 Run
+ effect FullRoundAction-1

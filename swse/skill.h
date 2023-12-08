@@ -20,3 +20,4 @@ struct skilli : nameable {
 	char	ability;
 	featf	reroll;
 };
+extern skill_s last_skill;
