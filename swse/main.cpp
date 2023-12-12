@@ -9,6 +9,13 @@ void one_combat_round();
 static void initialize() {
 }
 
+static void initialize_answers() {
+	static char console_text[2048];
+	static stringbuilder console(console_text);
+	answers::resid = "start";
+	answers::console = &console;
+}
+
 static bool test_area() {
 	area a1 = {};
 	auto n = a1.geti().id;
@@ -16,8 +23,7 @@ static bool test_area() {
 }
 
 static void generate_character() {
-	//if(!test_area())
-	//	return;
+	add_area("Hangar");
 	create_hero(Jedi, Male);
 	add_creatures();
 	add_item("Quarterstaff");
@@ -30,7 +36,7 @@ static void generate_character() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	answers::resid = "start";
+	initialize_answers();
 	return draw::start(generate_character, initialize);
 }
 

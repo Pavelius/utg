@@ -9,6 +9,7 @@ BSDATAC(area, 2048)
 BSDATAC(arealink, 4096)
 
 collection<area> areas;
+area* last_area;
 
 static arealink* find_link(short unsigned p1, short unsigned p2) {
 	for(auto& e : bsdata<arealink>()) {
@@ -29,4 +30,12 @@ void area::addlink(const area* to) {
 		p->from = p1;
 		p->to = p2;
 	}
+}
+
+void add_area(const char* id) {
+	auto pi = bsdata<areai>::add();
+	if(!pi)
+		return;
+	last_area = bsdata<area>::add();
+	last_area->type = getbsi(pi);
 }

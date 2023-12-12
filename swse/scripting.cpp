@@ -142,6 +142,7 @@ static void select_enemies(int bonus) {
 }
 
 static bool allow_opponents(int bonus) {
+	last_script->proc(bonus);
 	return opponents.getcount() != 0;
 }
 
@@ -195,27 +196,26 @@ static void select_creatures(int bonus) {
 	opponents = creatures;
 }
 
-static bool if_ready_wear(int bonus) {
-	if(player->hands != last_wear)
-		return false;
-	return player->wears[player->hands].operator bool();
+static bool if_ready_item(int bonus) {
+	return player->wears[Hands].operator bool();
+}
+static bool if_melee_weapon(int bonus) {
+	auto& ei = player->wears[Hands].geti();
+	return !ei.ranged && ei.isweapon();
+}
+static bool if_ranged_weapon(int bonus) {
+	auto& ei = player->wears[Hands].geti();
+	return ei.ranged && ei.isweapon();
 }
 static bool if_ready_weapon(int bonus) {
-	if(!(player->hands == MeleeWeapon || player->hands == RangedWeapon))
-		return false;
-	return player->wears[player->hands].operator bool();
-}
-static bool if_ready_item(int bonus) {
-	if(player->hands == Backpack)
-		return false;
-	return player->wears[player->hands].operator bool();
+	return player->wears[Hands].geti().isweapon();
 }
 static void ready_item(int bonus) {
-	last_item = player->wears + player->hands;
+	last_item = player->wears + Hands;
 }
 
 static bool if_unarmed(int bonus) {
-	return player->hands == Backpack;
+	return !player->wears[Hands].operator bool();
 }
 static void unarmed(int bonus) {
 	last_item = 0;
@@ -278,9 +278,11 @@ static bool allow_effect(const variants& source) {
 }
 
 static void add_actions() {
+	pushvalue push_action(last_action);
 	pushvalue push_wear(last_wear);
 	pushvalue push_item(last_item);
 	for(auto& e : bsdata<actioni>()) {
+		last_action = &e;
 		if(e.upgrade) {
 			if(e.upgrade.iskind<feati>() && player->isfeat(e.upgrade.value))
 				continue;
@@ -349,9 +351,10 @@ BSDATA(script) = {
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
 	{"MakeAttack", make_attack},
+	{"MeleeWeapon", ready_item, if_melee_weapon},
+	{"RangedWeapon", ready_item, if_ranged_weapon},
 	{"ReadyItem", ready_item, if_ready_item},
 	{"ReadyWeapon", ready_item, if_ready_weapon},
-	{"ReadyWear", ready_item, if_ready_wear},
 	{"SelectEnemies", select_enemies, allow_opponents},
 	{"Unarmed", unarmed, if_unarmed},
 };

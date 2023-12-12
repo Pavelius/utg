@@ -43,7 +43,6 @@ BSMETA(advancei) = {
 	{}};
 BSMETA(area) = {
 	BSENM(type, areai),
-	BSREQ(place),
 	{}};
 BSMETA(areai) = {
 	BSREQ(id),
@@ -71,6 +70,7 @@ BSMETA(itemi) = {
 	BSENM(hit, damagei),
 	BSREQ(damage), BSREQ(stun),
 	BSENM(size, sizei),
+	BSREQ(ranged),
 	BSENM(wear, weari),
 	BSENM(proficiency, feati),
 	BSENM(focus, feati),

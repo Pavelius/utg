@@ -124,6 +124,7 @@ void add_item(const char* id) {
 	auto pi = bsdata<itemi>::find(id);
 	if(!pi)
 		return;
+	last_item = 0;
 	item it; it.create(pi);
 	player->equip(it);
 }

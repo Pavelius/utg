@@ -2,26 +2,26 @@
 
 NoItem
 
-Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(MeleeWeapon)\
+Club size(Small) cost(15) weight(50) hit(Bludgeon) damage(1 8) wear(Hands)\
  proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
-Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(MeleeWeapon)\
+Knife size(Tiny) cost(25) weight(100) hit(Bludgeon) damage(1 4) wear(Hands)\
  proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
-Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(MeleeWeapon)\
- proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
-
-Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(RangedWeapon)\
+Quarterstaff size(Large) cost(65) weight(180) hit(Bludgeon) damage(1 6) wear(Hands)\
  proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
 
-BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(RangedWeapon)\
+Bow size(Medium) cost(300) weight(100) hit(Piercing) damage(1 6) wear(Hands) ranged(1)\
+ proficiency(WeaponProficiencySimpleWeapons) focus(WeaponFocusSimpleWeapons)
+
+BlasterPistol size(Small) cost(500) weight(100) hit(Energy) damage(3 6) wear(Hands) ranged(1)\
  proficiency(WeaponProficiencyPistols) focus(WeaponFocusPistols)
-HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(RangedWeapon)\
+HeavyBlasterPistol size(Medium) cost(750) weight(130) hit(Energy) damage(3 8) wear(Hands) ranged(1)\
  proficiency(WeaponProficiencyPistols) focus(WeaponFocusPistols)
 
-Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(MeleeWeapon)\
+Lightsaber size(Medium) cost(3000) weight(100) hit(Energy) damage(2 8) wear(Hands)\
  proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
-ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(MeleeWeapon)\
+ShortLightsaber size(Small) cost(2500) weight(50) hit(Energy) damage(2 6) wear(Hands)\
  proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
-DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(MeleeWeapon)\
+DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8) wear(Hands)\
  proficiency(WeaponProficiencyLightsabers) focus(WeaponFocusLightsabers)
 
 SecurityKit

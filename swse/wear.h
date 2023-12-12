@@ -4,8 +4,7 @@
 
 enum wear_s : unsigned char {
 	Backpack, Potion, BackpackLast = Backpack + 15,
-	MeleeWeapon, RangedWeapon,
-	Head, Torso, Backward, Elbows,
+	Head, Torso, Backward, Hands, Elbows,
 };
 struct weari : nameable {
 };

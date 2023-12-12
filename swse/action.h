@@ -11,3 +11,4 @@ struct actioni : nameable {
 	variants		effect;
 	const char*		getprompt() const;
 };
+extern actioni* last_action;

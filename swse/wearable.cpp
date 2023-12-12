@@ -47,7 +47,7 @@ void wearable::additem(item& v) {
 }
 
 void wearable::equip(item& v) {
-	for(auto i = MeleeWeapon; i <= Elbows; i = (wear_s)(i + 1)) {
+	for(auto i = Head; i <= Elbows; i = (wear_s)(i + 1)) {
 		if(wears[i])
 			continue;
 		if(!v.is(i))
@@ -77,7 +77,7 @@ const char* wearable::getwearname(wear_s id) const {
 	auto it = wears[id];
 	if(it)
 		return it.getfullname();
-	if(id == MeleeWeapon)
+	if(id == Hands)
 		return getnm("Fist");
 	return 0;
 }

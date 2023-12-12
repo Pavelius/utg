@@ -1,15 +1,15 @@
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon ReadyWear SelectEnemies FilterRange MakeAttack
+ effect StandartAction-1 RangedWeapon SelectEnemies FilterRange MakeAttack
 AttackWithMeleeWeapon
- effect StandartAction-1 MeleeWeapon ReadyWear SelectEnemies FilterRange+2 MakeAttack
+ effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange+2 MakeAttack
 AidAnotherAlly
  effect StandartAction-1 SelectEnemies-1
 AttackObject
  effect StandartAction-1 ReadyWeapon
 Charge
- effect StandartAction-1 MeleeWeapon ReadyWear
+ effect StandartAction-1 MeleeWeapon
 Disarm
  effect StandartAction-1 SelectEnemies
 FightDefencivelyAcrobatics
@@ -17,7 +17,7 @@ FightDefencivelyAcrobatics
 FightDefencivelyAcrobaticsNoAttack
  effect StandartAction-1 Acrobatics IfTrained
 FightDefencively upgrade(FightDefencivelyAcrobatics)
- effect StandartAction-1 MeleeWeapon ReadyWear
+ effect StandartAction-1 MeleeWeapon
 Grab
  effect StandartAction-1 Unarmed SelectEnemies FilterRange
 Grapple
@@ -43,7 +43,7 @@ Withdraw
  effect MoveAction-1
 
 Aim
- effect SwiftAction-2 RangedWeapon ReadyWear
+ effect SwiftAction-2 RangedWeapon
 CatchSecondWind
  effect SwiftAction-1
 DropItemInHands

@@ -1,4 +1,10 @@
-﻿In file `Names.txt`:
-FallProne: Define translate
-Recover: Define translate
-SwitchWeaponToAutoFire: Define translate
+﻿In file `rules/Items.txt`:
+ Line 5: Not found Wear identifier `MeleeWeapon`
+ Line 7: Not found Wear identifier `MeleeWeapon`
+ Line 9: Not found Wear identifier `MeleeWeapon`
+ Line 12: Not found Wear identifier `RangedWeapon`
+ Line 15: Not found Wear identifier `RangedWeapon`
+ Line 17: Not found Wear identifier `RangedWeapon`
+ Line 20: Not found Wear identifier `MeleeWeapon`
+ Line 22: Not found Wear identifier `MeleeWeapon`
+ Line 24: Not found Wear identifier `MeleeWeapon`

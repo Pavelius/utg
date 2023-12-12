@@ -20,11 +20,10 @@ BSDATA(weari) = {
 	{"Backpack13"},
 	{"Backpack14"},
 	{"BackpackLast"},
-	{"MeleeWeapon"},
-	{"RangedWeapon"},
 	{"Head"},
 	{"Torso"},
 	{"Backward"},
+	{"Hands"},
 	{"Elbows"},
 };
 assert_enum(weari, Elbows)
