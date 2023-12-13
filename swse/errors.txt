@@ -1,3 +1,2 @@
 ﻿In file `rules/Actions.txt`:
- Line 37: Can't find variant `Prone`
- Line 39: Can't find variant `Prone`
+ Line 57: Can't find variant `Helpless`

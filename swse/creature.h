@@ -14,7 +14,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	abilityable		basic;
 	featf			feats;
 	statef			states;
-	short			enemy_id;
+	unsigned short	enemy_id;
 	void			add(class_s v);
 	void			clear();
 	int				get(ability_s v) const { return abilities[v]; }

@@ -4,7 +4,7 @@
 #pragma once
 
 enum state_s : unsigned char {
-	Concealment, Flatfooted, Immobilized, Prone, PermanentConditions,
+	Concealment, Flatfooted, Immobilized, Prone, PermanentConditions, Helpless,
 };
 typedef flagable<4> statef;
 struct statei : nameable {

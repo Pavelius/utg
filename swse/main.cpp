@@ -5,6 +5,7 @@
 #include "draw_utg.h"
 
 void one_combat_round();
+void initialize_printer();
 
 static void initialize_answers() {
 	static char console_text[2048];
@@ -15,6 +16,7 @@ static void initialize_answers() {
 
 static void initialize() {
 	initialize_answers();
+	initialize_printer();
 }
 
 static bool test_area() {
@@ -37,7 +39,7 @@ static void generate_character() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	initialize_answers();
+	initialize();
 	return draw::start(generate_character);
 }
 

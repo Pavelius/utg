@@ -9,5 +9,6 @@ BSDATA(statei) = {
 	{"Immobilized"}, 
 	{"Prone"},
 	{"PermanentConditions"},
+	{"Helpless"},
 };
-assert_enum(statei, PermanentConditions)
+assert_enum(statei, Helpless)

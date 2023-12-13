@@ -14,11 +14,16 @@ static void print_hands(stringbuilder& sb) {
 }
 
 BSDATA(strprinti) = {
-	{"hands", print_hands}
+	{"Hands", print_hands}
 };
+BSDATAF(strprinti)
 
 static void main_custom(stringbuilder& sb, const char* identifier) {
 	if(print_identifier(sb, identifier))
 		return;
 	act_identifier(sb, identifier);
+}
+
+void initialize_printer() {
+	stringbuilder::custom = main_custom;
 }

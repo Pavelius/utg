@@ -1,7 +1,7 @@
 ﻿AidAnotherAlly: Помочь своему союзнику
 Aim: Прицелиться
 AttackObject: Атаковать объект
-AttackWithMeleeWeapon: Нанести удар оружием ближнего боя
+AttackWithMeleeWeapon: Нанести удар %~Hands
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
 ChooseEnemy: Выбрать врага
@@ -10,7 +10,7 @@ Disarm: Обезаружить
 DrawBackpackItem: Достать предмет из рюкзака
 DrawWeapon: Достать оружие
 DrawWeaponQuick: Выхватить оружие
-DropItemInHands: Бросить предмет из рук на землю
+DropItemInHands: Бросить %-Hands на землю
 FallProne: Залечь
 FightDefencively: Сражаться в защитной стойке
 FullAttack: Атаковать всеми возможными способами
@@ -19,7 +19,7 @@ Grapple: Удушающий прием
 Move: Двигаться
 OpenDoor: Открыть дверь
 Recover: Прийти в чувства
-ReloadWeapon: Перезарядить оружие
+ReloadWeapon: Перезарядить %-Hands
 Run: Бежать
 StandUpActrobatics: Вскочить на ноги
 SwitchWeaponToAutoFire: Переключиться в автоматический режим стрельбы

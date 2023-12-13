@@ -29,8 +29,6 @@ DrawWeapon upgrade(DrawWeaponQuick)
  effect MoveAction-1
 ReloadWeapon
  effect MoveAction-1 ReadyWeapon
-OpenDoor
- effect MoveAction-1
 DrawBackpackItem
  effect MoveAction-1
 StandUpActrobatics
@@ -38,24 +36,24 @@ StandUpActrobatics
 StandUp upgrade(StandUpActrobatics)
  effect MoveAction-1 Prone ApplyState-1
 Withdraw
- effect MoveAction-1
+ effect MoveAction-1 IfMeleeFight
 
 Aim
  effect SwiftAction-2 RangedWeapon
 CatchSecondWind
- effect SwiftAction-1
+ effect SwiftAction-1 SecondWindPerDay-1
 DropItemInHands
  effect SwiftAction-1 ReadyItem
 FallProne
  effect SwiftAction-1 Prone ApplyState
 Recover
- effect SwiftAction-3
+ effect SwiftAction-3 ConditionTrack-1
 SwitchWeaponToAutoFire
  effect SwiftAction-1 ReadyWeapon
 
 CoupDeGrace
- effect FullRoundAction-1
+ effect FullRoundAction-1 SelectEnemies Helpless FilterState
 FullAttack
  effect FullRoundAction-1
 Run
- effect FullRoundAction-1
+ effect FullRoundAction-1 IfMeleeFight-1

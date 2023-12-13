@@ -132,6 +132,9 @@ static bool is_player(const void* object) {
 static bool is_range(const void* object) {
 	return player->getrange((creature*)object) > 0;
 }
+static bool is_state(const void* object) {
+	return ((creature*)object)->is(last_state);
+}
 
 static void filter_armed(int bonus) {
 	opponents.match(is_armed, bonus >= 0);
@@ -144,6 +147,9 @@ static void filter_you(int bonus) {
 }
 static void filter_range(int bonus) {
 	opponents.match(is_range, true);
+}
+static void filter_state(int bonus) {
+	opponents.match(is_state, true);
 }
 
 static void select_enemies(int bonus) {
@@ -184,6 +190,10 @@ static void choose_opponent(int bonus) {
 
 static bool if_train(int bonus) {
 	return player->istrain(last_skill) == (bonus >= 0);
+}
+
+static bool if_melee_fight(int bonus) {
+	return player->ismeleefight() == (bonus >= 0);
 }
 
 static bool if_choose_creature(int bonus) {
@@ -366,9 +376,11 @@ BSDATA(script) = {
 	{"FilterArmed", filter_armed, allow_opponents},
 	{"FilterEnemy", filter_enemy, allow_opponents},
 	{"FilterRange", filter_range, allow_opponents},
+	{"FilterState", filter_state, allow_opponents},
 	{"FilterYou", filter_you, allow_opponents},
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
+	{"IfMeleeFight", conditional_script, if_melee_fight},
 	{"MakeAttack", make_attack},
 	{"MeleeWeapon", ready_item, if_melee_weapon},
 	{"RangedWeapon", ready_item, if_ranged_weapon},

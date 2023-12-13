@@ -125,6 +125,9 @@
     <Text Include="locale\ru\names\Names.txt">
       <Filter>locale</Filter>
     </Text>
+    <Text Include="locale\ru\names\Items.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="classi.h">

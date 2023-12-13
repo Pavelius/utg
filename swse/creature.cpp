@@ -71,6 +71,7 @@ int	creature::gethlevel() const {
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
+	enemy_id = 0xFFFF;
 }
 
 void creature::add(class_s v) {
@@ -103,8 +104,16 @@ bool creature::isenemy(const creature* p) const {
 	return getmorale(getrelation()) != getmorale(p->getrelation());
 }
 
+bool creature::ismeleefight() const {
+	for(auto p : creatures) {
+		if(p->getenemy() == this && p->getrange(this) == 0)
+			return true;
+	}
+	return false;
+}
+
 creature* creature::getenemy() const {
-	if(enemy_id != -1)
+	if(enemy_id != 0xFFFF)
 		return bsdata<creature>::elements + enemy_id;
 	return 0;
 }
