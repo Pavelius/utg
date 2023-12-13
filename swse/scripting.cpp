@@ -106,10 +106,15 @@ static int roll20() {
 	return 1 + rand() % 20;
 }
 
-void roll20(int bonus) {
+bool roll20(int bonus, int dc) {
 	auto n = roll20();
-	last_roll = roll20() + bonus;
-	answers::console->add("[{%1i%+2i=%3i}]", n, bonus, last_roll);
+	last_roll = n + bonus;
+	auto result = last_roll >= dc;
+	if(result)
+		answers::console->add("[{%1i%+2i=%3i}]", n, bonus, last_roll);
+	else
+		answers::console->add("[-{%1i%+2i=%3i}]", n, bonus, last_roll);
+	return result;
 }
 
 static bool allow_combat() {
@@ -135,6 +140,9 @@ static bool is_range(const void* object) {
 static bool is_state(const void* object) {
 	return ((creature*)object)->is(last_state);
 }
+static bool is_weapon(const void* object) {
+	return ((item*)object)->geti().isweapon();
+}
 
 static void filter_armed(int bonus) {
 	opponents.match(is_armed, bonus >= 0);
@@ -146,10 +154,13 @@ static void filter_you(int bonus) {
 	opponents.match(is_player, bonus >= 0);
 }
 static void filter_range(int bonus) {
-	opponents.match(is_range, true);
+	opponents.match(is_range, bonus >= 0);
 }
 static void filter_state(int bonus) {
 	opponents.match(is_state, true);
+}
+static void filter_weapon(int bonus) {
+	items.match(is_weapon, bonus >= 0);
 }
 
 static void select_enemies(int bonus) {
@@ -157,9 +168,26 @@ static void select_enemies(int bonus) {
 	opponents.match(is_enemy, bonus >= 0);
 }
 
+static void select_items(int bonus) {
+	auto pb = player->wears + Backpack;
+	auto pe = player->wears + BackpackLast;
+	auto ps = items.begin();
+	while(pb < pe) {
+		if(*pb)
+			*ps++ = pb;
+		pb++;
+	}
+	items.count = ps - items.begin();
+}
+
 static bool allow_opponents(int bonus) {
 	last_script->proc(bonus);
 	return opponents.getcount() != 0;
+}
+
+static bool allow_items(int bonus) {
+	last_script->proc(bonus);
+	return items.getcount() != 0;
 }
 
 static void choose_close_enemy(int bonus) {
@@ -284,8 +312,8 @@ static bool prepare_opponent() {
 static void make_attack(int bonus) {
 	if(!prepare_opponent())
 		return;
-	roll20(bonus);
-	if(last_roll < opponent->get(Reflex)) {
+	bonus += player->getbonus(Strenght);
+	if(roll20(bonus, opponent->get(Reflex))) {
 		fix_action(false);
 		script_stop();
 		return;
@@ -307,6 +335,19 @@ static bool allow_effect(const variants& source) {
 	return script_allow(source);
 }
 
+void test_action(const char* id) {
+	auto pi = bsdata<actioni>::find(id);
+	if(!pi)
+		return;
+	for(auto v : pi->effect) {
+		if(v.counter)
+			an.console->addn("%1%+2i", v.getid(), v.counter);
+		else
+			an.console->addn(v.getid(), v.counter);
+		an.console->add(script_allow(v) ? " pass" : " miss");
+	}
+}
+
 static void add_actions() {
 	pushvalue push_action(last_action);
 	pushvalue push_wear(last_wear);
@@ -325,13 +366,6 @@ static void add_actions() {
 		if(an.getcount() > 16)
 			break;
 	}
-}
-
-static bool test_actions() {
-	auto p = bsdata<actioni>::find("Aid");
-	if(!p)
-		return false;
-	return allow_effect(p->effect);
 }
 
 static void ask_answer() {
@@ -366,7 +400,7 @@ void one_combat_round() {
 	for(auto p : creatures) {
 		player = p;
 		before_combat_round();
-		test_actions();
+		//test_action("AttackWithMeleeWeapon");
 		make_actions();
 	}
 }
@@ -378,6 +412,7 @@ BSDATA(script) = {
 	{"FilterRange", filter_range, allow_opponents},
 	{"FilterState", filter_state, allow_opponents},
 	{"FilterYou", filter_you, allow_opponents},
+	{"FilterWeapon", filter_weapon, allow_opponents},
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
 	{"IfMeleeFight", conditional_script, if_melee_fight},
@@ -387,6 +422,7 @@ BSDATA(script) = {
 	{"ReadyItem", ready_item, if_ready_item},
 	{"ReadyWeapon", ready_item, if_ready_weapon},
 	{"SelectEnemies", select_enemies, allow_opponents},
+	{"SelectItems", select_items, allow_items},
 	{"Unarmed", unarmed, if_unarmed},
 };
 BSDATAF(script)

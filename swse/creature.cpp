@@ -118,11 +118,42 @@ creature* creature::getenemy() const {
 	return 0;
 }
 
+static int compare_int(const void* v1, const void* v2) {
+	return *((int*)v2) - *((int*)v1);
+}
+
+static int roll_dices(int c, int d, int b, int k) {
+	static int result[16];
+	if(c > (int)(sizeof(result) / sizeof(result[0])))
+		c = sizeof(result) / sizeof(result[0]);
+	for(auto i = 0; i < c; i++)
+		result[i] = rand() % d;
+	qsort(result, c, sizeof(result[0]), compare_int);
+	if(k) {
+		if(c > k)
+			c = k;
+	}
+	for(auto i = 0; i < c; i++)
+		b += result[i];
+	return b;
+}
+
+static int roll4d6m() {
+	return roll_dices(4, 6, 0, 3);
+}
+
+static void random_ability() {
+	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+		player->basic.abilities[i] = roll4d6m();
+}
+
 void create_hero(class_s type, gender_s gender) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->setgender(gender);
+	random_ability();
 	player->add(type);
+	player->update();
 }
 
 void add_creatures() {

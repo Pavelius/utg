@@ -1,13 +1,13 @@
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon SelectEnemies FilterRange+1 MakeAttack
+ effect StandartAction-1 RangedWeapon SelectEnemies FilterRange MakeAttack
 AttackWithMeleeWeapon
  effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange-1 MakeAttack
 AidAnotherAlly
  effect StandartAction-1 SelectEnemies-1 FilterYou-1
 Charge
- effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange-1
+ effect StandartAction-1 IfMeleeFight-1 MeleeWeapon SelectEnemies FilterRange-1
 Disarm
  effect StandartAction-1 SelectEnemies FilterArmed
 FightDefencivelyAcrobatics
@@ -24,13 +24,13 @@ Grapple
 Move
  effect MoveAction-1
 DrawWeaponQuick
- effect SwiftAction-1
+ effect SwiftAction-1 SelectItems FilterWeapon
 DrawWeapon upgrade(DrawWeaponQuick)
- effect MoveAction-1
+ effect MoveAction-1 SelectItems FilterWeapon
 ReloadWeapon
  effect MoveAction-1 ReadyWeapon
 DrawBackpackItem
- effect MoveAction-1
+ effect MoveAction-1 SelectItems FilterWeapon-1
 StandUpActrobatics
  effect Acrobatics IfTrained SwiftAction-1 Prone ApplyState-1
 StandUp upgrade(StandUpActrobatics)

@@ -1,7 +1,7 @@
 ﻿AidAnotherAlly: Помочь своему союзнику
 Aim: Прицелиться
 AttackObject: Атаковать объект
-AttackWithMeleeWeapon: Нанести удар %~Hands
+AttackWithMeleeWeapon: Нанести удар %-~Hands
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
 ChooseEnemy: Выбрать врага

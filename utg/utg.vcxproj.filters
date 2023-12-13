@@ -25,6 +25,9 @@
     <Filter Include="Scripting">
       <UniqueIdentifier>{aa9db02c-a318-4378-9a8f-f70ff6dabd90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Templates">
+      <UniqueIdentifier>{3a5d5b1d-e310-4a15-ba32-d5447c65ad60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="answers.cpp">
@@ -544,6 +547,9 @@
     </ClInclude>
     <ClInclude Include="strprint.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="tmpfunct.h">
+      <Filter>Templates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
