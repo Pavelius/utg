@@ -6,14 +6,15 @@
 
 void one_combat_round();
 
-static void initialize() {
-}
-
 static void initialize_answers() {
 	static char console_text[2048];
 	static stringbuilder console(console_text);
 	answers::resid = "start";
 	answers::console = &console;
+}
+
+static void initialize() {
+	initialize_answers();
 }
 
 static bool test_area() {
@@ -37,7 +38,7 @@ static void generate_character() {
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	initialize_answers();
-	return draw::start(generate_character, initialize);
+	return draw::start(generate_character);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

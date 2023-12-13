@@ -1,50 +1,4 @@
-﻿AppearSeveral: Внезапно переди появилось несколько %-$1.
-AppearSingle: Внезапно переди появилcя %1.
-AppTitle: Драконы и Подземелья
-AttackMelee: Атаковать %$1
-ContinueBattle: Продолжить битву
-CharacterGeneration: Создание персонажа
-ChargeEnemy: С криком наброситься на врага
-ChooseClass: Выбирайте класс
-ChooseLook: Выбирайте внешний вид вашего персонажа:
-ChooseTarget: Укажите цель
-Combat: Бой
-Cost: Стоимость
-Damage: Урон
-DoNotAdjust: Сейчас все иделально
-From: Из
-General: Общие
-HitMelee: %герой нанес%ла удар мечем.
-HP: Хиты
-IncreaseAndLower: Увеличить [%1] на 1 еденицу, но понизить [%2] на 2 еденицы
-Items: Предметы
-Kg: кг
-LeaveItHere: Оставить это здесь
-Level: Уровень
-LoseGame: Вы проиграли. Игра закончена.
-MissMelee: %герой нанес%ла удар мечем, но промазал%а.
-No: Нет
-Pieces: шт.
-RerollAbilityAgain: Перебросить атрибуты еще раз
-RollRandomAbilities: У вашего персонажа буду следующие атрибуты:
-Saves: Спасброски
-TakeThisAbility: Взять эти атрибуты
-YouMayAdjustAbility: Вы [%1] и можете модифицировать некоторые свои атрибуты.
-Weight: Вес
-WhatToDo: Что будет делать [%герой]?
-WhatToDoYou: Что будете делать?
-WhatItemToTake: Какие вещи хотите взять?
-WinBattle: Закончить битву и собрать трофеи.
-Use: Использовать
-
-Monster: Монстер
-Cleric: Клерик
-Dwarf: Гном
-Elf: Эльф
-Fighter: Воин
-Halfling: Хоббит
-Theif: Вор
-Wizard: Волшебник
+﻿AppTitle: Звездные войны
 
 Charisma: Харизма
 Constitution: Телосложение
@@ -52,5 +6,3 @@ Dexterity: Ловкость
 Intellect: Интеллект
 Strenght: Сила
 Wisdow: Мудрость
-
-Skeleton: Скелет

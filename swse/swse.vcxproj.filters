@@ -75,6 +75,9 @@
     <ClCompile Include="placeable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="printer.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -117,6 +120,9 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\names\Areas.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

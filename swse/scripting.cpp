@@ -12,7 +12,6 @@
 static void* last_answer;
 static const char* last_id;
 static int last_roll;
-static int match_range;
 
 template<> void fnscript<modifieri>(int value, int bonus) {
 	modifier = (modifier_s)value;
@@ -99,6 +98,10 @@ template<> bool fntest<abilityi>(int value, int bonus) {
 	}
 }
 
+template<> void fnscript<statei>(int value, int bonus) {
+	last_state = (state_s)value;
+}
+
 static int roll20() {
 	return 1 + rand() % 20;
 }
@@ -117,23 +120,30 @@ static bool allow_combat() {
 	return false;
 }
 
+static bool is_armed(const void* object) {
+	return ((creature*)object)->wears[Hands].operator bool();
+}
 static bool is_enemy(const void* object) {
 	return player->isenemy((creature*)object);
 }
-
+static bool is_player(const void* object) {
+	return player == object;
+}
 static bool is_range(const void* object) {
-	return player->getrange((creature*)object) <= match_range;
+	return player->getrange((creature*)object) > 0;
 }
 
+static void filter_armed(int bonus) {
+	opponents.match(is_armed, bonus >= 0);
+}
 static void filter_enemy(int bonus) {
 	opponents.match(is_enemy, bonus >= 0);
 }
-
+static void filter_you(int bonus) {
+	opponents.match(is_player, bonus >= 0);
+}
 static void filter_range(int bonus) {
-	auto push = match_range;
-	match_range = bonus;
 	opponents.match(is_range, true);
-	match_range = push;
 }
 
 static void select_enemies(int bonus) {
@@ -219,6 +229,16 @@ static bool if_unarmed(int bonus) {
 }
 static void unarmed(int bonus) {
 	last_item = 0;
+}
+
+static bool allow_apply_state(int bonus) {
+	return player->is(last_state) != (bonus >= 0);
+}
+static void apply_state(int bonus) {
+	if(bonus>=0)
+		player->states.set(last_state);
+	else
+		player->states.remove(last_state);
 }
 
 static void add_format(const char* format, const char separator = ' ') {
@@ -342,12 +362,11 @@ void one_combat_round() {
 }
 
 BSDATA(script) = {
-	{"ChooseCloseEnemy", choose_close_enemy, if_choose_creature},
-	{"ChooseCreature", choose_creature},
-	{"ChooseNearEnemy", choose_near_enemy, if_choose_creature},
-	{"ChooseOpponent", choose_opponent, if_choose_creature},
-	{"FilterEnemy", filter_enemy, choosing_script},
+	{"ApplyState", apply_state, allow_apply_state},
+	{"FilterArmed", filter_armed, allow_opponents},
+	{"FilterEnemy", filter_enemy, allow_opponents},
 	{"FilterRange", filter_range, allow_opponents},
+	{"FilterYou", filter_you, allow_opponents},
 	{"FullRoundAction", full_round_action, if_full_round_action},
 	{"IfTrained", conditional_script, if_train},
 	{"MakeAttack", make_attack},

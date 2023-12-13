@@ -1,8 +1,10 @@
 ﻿AidAnotherAlly: Помочь своему союзнику
 Aim: Прицелиться
 AttackObject: Атаковать объект
+AttackWithMeleeWeapon: Нанести удар оружием ближнего боя
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
+ChooseEnemy: Выбрать врага
 CoupDeGrace: Прикончить врага
 Disarm: Обезаружить
 DrawBackpackItem: Достать предмет из рюкзака

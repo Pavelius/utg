@@ -159,6 +159,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="placeable.cpp" />
+    <ClCompile Include="printer.cpp" />
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="size.cpp" />
@@ -173,6 +174,7 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\names\Actions.txt" />
     <Text Include="locale\ru\names\Areas.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="locale\ru\Quest.txt" />
     <Text Include="rules\Actions.txt" />

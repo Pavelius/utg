@@ -1,17 +1,15 @@
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon SelectEnemies FilterRange MakeAttack
+ effect StandartAction-1 RangedWeapon SelectEnemies FilterRange+1 MakeAttack
 AttackWithMeleeWeapon
- effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange+2 MakeAttack
+ effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange-1 MakeAttack
 AidAnotherAlly
- effect StandartAction-1 SelectEnemies-1
-AttackObject
- effect StandartAction-1 ReadyWeapon
+ effect StandartAction-1 SelectEnemies-1 FilterYou-1
 Charge
- effect StandartAction-1 MeleeWeapon
+ effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange-1
 Disarm
- effect StandartAction-1 SelectEnemies
+ effect StandartAction-1 SelectEnemies FilterArmed
 FightDefencivelyAcrobatics
  effect StandartAction-1 Acrobatics IfTrained
 FightDefencivelyAcrobaticsNoAttack
@@ -36,9 +34,9 @@ OpenDoor
 DrawBackpackItem
  effect MoveAction-1
 StandUpActrobatics
- effect SwiftAction-1
+ effect Acrobatics IfTrained SwiftAction-1 Prone ApplyState-1
 StandUp upgrade(StandUpActrobatics)
- effect MoveAction-1
+ effect MoveAction-1 Prone ApplyState-1
 Withdraw
  effect MoveAction-1
 
@@ -49,7 +47,7 @@ CatchSecondWind
 DropItemInHands
  effect SwiftAction-1 ReadyItem
 FallProne
- effect SwiftAction-1
+ effect SwiftAction-1 Prone ApplyState
 Recover
  effect SwiftAction-3
 SwitchWeaponToAutoFire

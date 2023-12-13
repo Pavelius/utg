@@ -13,6 +13,7 @@
 #include "script.h"
 #include "size.h"
 #include "skillroll.h"
+#include "state.h"
 #include "wear.h"
 #include "draw_utg.h"
 
@@ -99,6 +100,9 @@ BSMETA(skillroll) = {
 	BSREQ(bonuses), BSREQ(required),
 	BSREQ(dc),
 	{}};
+BSMETA(statei) = {
+	BSREQ(id),
+	{}};
 BSMETA(weari) = {
 	BSREQ(id),
 	{}};
@@ -122,6 +126,7 @@ BSDATA(varianti) = {
 	{"Size", VAR(sizei, 1)},
 	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>, fntest<skilli>},
 	{"SkillRoll", VAR(skillroll, 1)},
+	{"State", VAR(statei, 1), 0, 0, fnscript<statei>},
 	{"Wear", VAR(weari, 1), 0, 0, fnscript<weari>, fntest<weari>},
 	{"Widget", VAR(widget, 1)},
 };

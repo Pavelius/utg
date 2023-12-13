@@ -9,3 +9,4 @@ enum state_s : unsigned char {
 typedef flagable<4> statef;
 struct statei : nameable {
 };
+extern state_s last_state;
