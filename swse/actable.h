@@ -10,6 +10,7 @@ class actable {
 public:
 	static void		actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s female, char separator);
 	void			act(const char* format, ...) const;
+	bool			actid(const char* id, const char* id_action = 0) const;
 	variant			getkind() const { return kind; }
 	const char*		getname() const;
 	static const char* getname(const void* object) { return ((actable*)object)->getname(); }

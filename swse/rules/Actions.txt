@@ -45,7 +45,7 @@ CatchSecondWind
 DropItemInHands
  effect SwiftAction-1 ReadyItem
 FallProne
- effect SwiftAction-1 Prone ApplyState
+ effect SwiftAction-1 IfMeleeFight-1 Prone ApplyState
 Recover
  effect SwiftAction-3 ConditionTrack-1
 SwitchWeaponToAutoFire

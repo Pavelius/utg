@@ -72,6 +72,7 @@ int	creature::gethlevel() const {
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 	enemy_id = 0xFFFF;
+	setnoname();
 }
 
 void creature::add(class_s v) {
@@ -98,6 +99,10 @@ static relation_s getmorale(relation_s v) {
 	case Helpful: case Friendly: case Neutrality: return Friendly;
 	default: return Hostile;
 	}
+}
+
+void creature::setenemy(const creature* p) {
+	enemy_id = getbsi(p);
 }
 
 bool creature::isenemy(const creature* p) const {

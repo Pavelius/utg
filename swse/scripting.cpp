@@ -11,7 +11,7 @@
 
 static void* last_answer;
 static const char* last_id;
-static int last_roll;
+static int last_roll, pure_roll, critical_roll;
 
 template<> void fnscript<modifieri>(int value, int bonus) {
 	modifier = (modifier_s)value;
@@ -107,13 +107,22 @@ static int roll20() {
 }
 
 bool roll20(int bonus, int dc) {
-	auto n = roll20();
-	last_roll = n + bonus;
+	critical_roll = 0;
+	pure_roll = roll20();
+	last_roll = pure_roll + bonus;
 	auto result = last_roll >= dc;
+	if(pure_roll == 1) {
+		critical_roll = -1;
+		result = false;
+	}
+	if(pure_roll == 20) {
+		critical_roll = 1;
+		result = true;
+	}
 	if(result)
-		answers::console->add("[{%1i%+2i=%3i}]", n, bonus, last_roll);
+		answers::console->addn("[{%1i%+2i=%3i}]", pure_roll, bonus, last_roll);
 	else
-		answers::console->add("[-{%1i%+2i=%3i}]", n, bonus, last_roll);
+		answers::console->addn("[-{%1i%+2i=%3i}]", pure_roll, bonus, last_roll);
 	return result;
 }
 
@@ -313,10 +322,15 @@ static void make_attack(int bonus) {
 	if(!prepare_opponent())
 		return;
 	bonus += player->getbonus(Strenght);
+	player->setenemy(opponent);
 	if(roll20(bonus, opponent->get(Reflex))) {
+		player->actid(last_action->id);
 		fix_action(false);
 		script_stop();
 		return;
+	} else {
+		if(!player->actid(last_action->id, "Miss"))
+			player->actid(last_action->id);
 	}
 	fix_action(true);
 }
@@ -375,9 +389,9 @@ static void ask_answer() {
 static void apply_answers() {
 	pushvalue push_id(last_id);
 	if(bsdata<actioni>::have(last_answer)) {
-		auto p = (actioni*)last_answer;
-		last_id = p->id;
-		script_run(p->effect);
+		last_action = (actioni*)last_answer;
+		last_id = last_action->id;
+		script_run(last_action->effect);
 	}
 }
 

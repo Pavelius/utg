@@ -32,6 +32,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	bool			ismeleefight() const;
 	bool			istrain(skill_s v) const { return skills_train.is(v); }
 	bool			isweararmor() const { return wears[Torso].operator bool(); }
+	void			setenemy(const creature* p);
 	void			update();
 };
 extern creature *player, *opponent;

@@ -25,4 +25,6 @@ StandUpActrobatics: Вскочить на ноги
 SwitchWeaponToAutoFire: Переключиться в автоматический режим стрельбы
 Withdraw: Отступить из ближнего боя
 
+ActionAttackWithMeleeWeapon: %герой нанес%ла удар %-~Hands.
+
 WhatYouDo: Что будете делать?
