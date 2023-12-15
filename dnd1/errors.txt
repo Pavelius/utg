@@ -1,2 +1,5 @@
-﻿In file `Names.txt`:
-AttackRange: Define translate
+﻿In file `rules/Monsters.txt`:
+ Line 4: Can't find variant `Undead`
+ Line 6: Can't find variant `Undead`
+ Line 6: Can't find variant `Slow`
+ Line 9: Can't find variant `SunSensitive`

@@ -150,6 +150,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
     <ClInclude Include="advance.h" />
+    <ClInclude Include="attackable.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
+    <ClCompile Include="attackable.cpp" />
     <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creaturea.cpp" />
@@ -186,7 +188,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
-    <ClCompile Include="monster.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="rolldice.cpp" />
     <ClCompile Include="scripting.cpp" />

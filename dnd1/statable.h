@@ -1,10 +1,12 @@
 #include "ability.h"
 #include "class.h"
+#include "feat.h"
 
 #pragma once
 
 struct statable {
 	char			abilities[IllusionCopies + 1];
+	featable		feats;
 	void			add(ability_s i, int v) { abilities[i] += v; }
 	void			applybest(ability_s v);
 	void			applyminimal(class_s v);

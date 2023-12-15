@@ -2,6 +2,8 @@
 #include "creature.h"
 #include "draw_utg.h"
 #include "game.h"
+#include "modifier.h"
+#include "pushvalue.h"
 #include "rolldice.h"
 #include "script.h"
 #include "spell.h"
@@ -16,7 +18,28 @@ template<> void fnscript<rolldice>(int index, int bonus) {
 	bonus += last_roll;
 	last_roll_raw = bsdata<rolldice>::elements[index].value.roll();
 	last_roll = last_roll_raw + bonus;
-	output("[{%1i%+2i=%3i}]", last_roll_raw, bonus, last_roll);
+}
+
+template<> void fnscript<abilityi>(int index, int value) {
+	switch(modifier) {
+	case Permanent: player->basic.abilities[index] += value; break;
+	default: player->abilities[index] += value; break;
+	}
+}
+
+template<> void fnscript<itemi>(int index, int value) {
+	auto count = value ? value : 1;
+	item it; it.create(index, count);
+	player->equip(it);
+	if(it)
+		player->additem(it);
+}
+
+template<> void fnscript<feati>(int index, int value) {
+	switch(modifier) {
+	case Permanent: player->basic.feats.set(index, value >= 0); break;
+	default: player->feats.set(index, value >= 0); break;
+	}
 }
 
 static bool rolld20(int bonus, int dc) {
@@ -48,6 +71,10 @@ static void melee_attack(int bonus) {
 		opponent->damage(xrand(1, 6));
 	} else
 		player->actn(getnm("MissMelee"));
+}
+
+static bool is_fight_melee(int bonus) {
+	return player->is(EngageMelee) == (bonus >= 0);
 }
 
 static void clear_console() {
@@ -98,12 +125,12 @@ creature* choose_target() {
 	return (creature*)an.choose(getnm("ChooseTarget"));
 }
 
-static void create_monsters(const monsteri* pm, int count, feat_s feat) {
+static void add_monsters(const monsteri* pm, int count, feat_s feat) {
+	pushvalue push_player(player);
 	for(auto i = 0; i < count; i++) {
-		auto p = bsdata<creature>::add();
-		p->create(*pm);
+		add_creature(*pm);
 		if(feat)
-			p->set(feat);
+			player->set(feat);
 	}
 	if(count > 1)
 		output(getnm("AppearSeveral"), pm->getname());
@@ -114,7 +141,7 @@ static void create_monsters(const monsteri* pm, int count, feat_s feat) {
 static void random_encounter(const monsteri* pm) {
 	if(!pm)
 		return;
-	create_monsters(pm, pm->dungeon.roll(), Enemy);
+	add_monsters(pm, pm->dungeon.roll(), Enemy);
 }
 
 void random_encounter(const char* id) {
@@ -288,6 +315,7 @@ static void all_saves(int bonus) {
 }
 
 BSDATA(script) = {
+	{"FightingMelee", script_none, is_fight_melee},
 	{"Saves", all_saves},
 };
 BSDATAF(script)

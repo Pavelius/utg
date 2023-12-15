@@ -4,6 +4,7 @@
 #include "creature.h"
 #include "crt.h"
 #include "draw_utg.h"
+#include "gender.h"
 
 namespace draw {
 extern int tab_pixels;

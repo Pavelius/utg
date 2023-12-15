@@ -81,6 +81,9 @@
     <ClInclude Include="advance.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="attackable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -143,9 +146,6 @@
     <ClCompile Include="interface.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="monster.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="rolldice.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -153,6 +153,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="timeable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="attackable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

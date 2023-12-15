@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "creature.h"
 
 void creaturea::select() {

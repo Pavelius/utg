@@ -1,4 +1,5 @@
 #include "advance.h"
+#include "answers.h"
 #include "creature.h"
 #include "modifier.h"
 #include "ongoing.h"
@@ -11,31 +12,20 @@ creaturea creatures;
 
 inline int d6() { return 1 + rand() % 6; }
 
-template<> void fnscript<abilityi>(int index, int value) {
-	switch(modifier) {
-	case Permanent: player->basic.abilities[index] += value; break;
-	default: player->abilities[index] += value; break;
-	}
-}
-
-template<> void fnscript<itemi>(int index, int value) {
-	auto count = value ? value : 1;
-	item it; it.create(index, count);
-	player->equip(it);
-	if(it)
-		player->additem(it);
-}
-
-static void apply_wear(const variants& source) {
+static void add_permanent(const variants& source) {
 	pushvalue push_modifier(modifier, Permanent);
-	for(auto v : source)
-		script_run(v);
+	script_run(source);
+}
+
+static void add_temporary(const variants& source) {
+	pushvalue push_modifier(modifier, NoModifier);
+	script_run(source);
 }
 
 static void apply_advance(variant type, int level) {
 	for(auto& e : bsdata<advancei>()) {
 		if(e.type == type && e.level==level)
-			apply_wear(e.elements);
+			add_permanent(e.elements);
 	}
 }
 
@@ -188,18 +178,20 @@ bool creature::isready() const {
 
 static void update_start() {
 	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SavePoison + 1));
+	player->feats.add(player->basic.feats);
 }
 
 static void update_equipment() {
+	pushvalue push_modifier(modifier, NoModifier);
 	for(auto& e : player->equipment()) {
 		if(!e)
 			continue;
-		script_run(e.geti().wearing);
+		add_temporary(e.geti().wearing);
 		auto pi = e.getpower();
 		if(!pi)
 			continue;
 		if(pi->wearing)
-			apply_wear(pi->wearing);
+			add_temporary(pi->wearing);
 	}
 }
 
@@ -276,15 +268,16 @@ void creature::create(class_s type, gender_s gender) {
 	finish();
 }
 
-void creature::create(const struct monsteri& v) {
-	clear();
-	this->type = Monster;
-	this->gender = Male;
+void add_creature(const struct monsteri& v) {
+	player = bsdata<creature>::add();
+	player->clear();
+	player->type = Monster;
+	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
-		basic.abilities[i] = 10;
-	this->feats = v.feats;
-	name = getnm(v.id);
-	finish();
+		player->basic.abilities[i] = 10;
+	add_permanent(v.feats);
+	player->name = getnm(v.id);
+	player->finish();
 }
 
 void creature::drink(spell_s spell) {

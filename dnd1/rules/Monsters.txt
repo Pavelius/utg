@@ -1,12 +1,9 @@
 #Monster
 
 Skeleton dungeon(1 4) wilderness(1 8)
- abilities Level(1) AC(7)
- feats Undead
+ feats Level+1 AC+7 Undead
 Zombie
- abilities Level(2) AC(8)
- feats Undead Slow
+ feats Level+2 AC+8 Undead Slow
 
 Orc
- abilities Level(1) AC(6)
- feats SunSensitive
+ feats Level+1 AC+6 SunSensitive

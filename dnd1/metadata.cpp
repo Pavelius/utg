@@ -2,6 +2,7 @@
 #include "bsreq.h"
 #include "item.h"
 #include "game.h"
+#include "gender.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
@@ -68,8 +69,7 @@ BSMETA(itemi::weaponi) = {
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),
-	BSDST(abilities, abilityi),
-	BSFLG(feats, feati),
+	BSREQ(feats),
 	BSREQ(dungeon),
 	BSREQ(wilderness),
 	{}};
@@ -97,6 +97,7 @@ BSDATA(varianti) = {
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
 	{"Dice", VAR(rolldice, 1)},
+	{"Feat", VAR(feati, 1), 0, 0, fnscript<feati>},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"ItemPower", VAR(itempoweri, 1)},

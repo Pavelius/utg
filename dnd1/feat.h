@@ -8,7 +8,7 @@ enum feat_s : unsigned char {
 	SunSensitive, Slow, NormalWeaponImmunity,
 	Blunt, Martial, TwoHanded,
 	WearLeather, WearIron, WearLarge, WearShield,
-	Undead, Summoned, Player, Enemy,
+	EngageMelee, Undead, Summoned, Player, Enemy,
 };
 struct feati : nameable {
 };

@@ -16,7 +16,7 @@ struct itempoweri : nameable {
 struct itemi : nameable {
 	struct weaponi {
 		dice	damage;
-		short 	ammunition;
+		itemi* 	ammunition;
 	};
 	const char*	unidentified;
 	int			cost, weight, count;

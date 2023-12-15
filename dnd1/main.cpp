@@ -27,7 +27,6 @@ static void starting() {
 
 void initialize_str();
 void initialize_ui();
-void update_monsters_stats();
 
 static void initializing() {
 	bsreq::read("rules/Items.txt");
@@ -35,7 +34,6 @@ static void initializing() {
 	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
 	initialize_str();
-	update_monsters_stats();
 }
 
 static const char* getavatarst(const void* p) {

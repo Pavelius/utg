@@ -1,4 +1,5 @@
 #include "actable.h"
+#include "attackable.h"
 #include "avatarable.h"
 #include "chooseoption.h"
 #include "monster.h"
@@ -8,10 +9,9 @@
 
 #pragma once
 
-struct creature : actable, spellable, statable, avatarable, wearable {
+struct creature : actable, attackable, spellable, statable, avatarable, wearable {
 	class_s			type;
 	statable		basic;
-	featable		feats;
 	spellf			active_spells, known_spells;
 	creature*		enemy;
 	char			initiative;
@@ -22,7 +22,6 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			clear();
 	void			cast(spell_s spell);
 	void			create(class_s type, gender_s gender);
-	void			create(const struct monsteri& v);
 	void			damage(int value);
 	void			dispell(spell_s effect);
 	void			drink(spell_s effect);
@@ -60,3 +59,5 @@ struct creaturea : adat<creature*, 32> {
 	void			select();
 };
 extern creaturea creatures, targets;
+
+void add_creature(const struct monsteri& v);
