@@ -3,10 +3,10 @@
 Skeleton dungeon(1 4) wilderness(1 8)
  abilities Level(1) AC(7)
  feats Undead
-Orc
- abilities Level(1) AC(6)
- feats SunSensitive
-
 Zombie
  abilities Level(2) AC(8)
  feats Undead Slow
+
+Orc
+ abilities Level(1) AC(6)
+ feats SunSensitive

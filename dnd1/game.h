@@ -4,12 +4,7 @@
 
 #pragma once
 
-struct scene {
-	creature*		choosetarget() const;
-	void			encounter(const monsteri* p);
-	void			rollinitiative();
-};
-struct gamei : timeable, scene {
+struct gamei : timeable {
 	reaction_s		reaction;
 	bool			party_surprised, monster_surprised;
 	void			initialize();
@@ -18,4 +13,6 @@ struct gamei : timeable, scene {
 	void			rollsurprise();
 };
 extern gamei		game;
-void				combat_mode();
+
+void combat_mode();
+void random_encounter(const char* id);

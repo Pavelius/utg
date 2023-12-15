@@ -54,6 +54,9 @@ Strenght: Сила
 Wisdow: Мудрость
 
 AC: AC
-THAC0: THAC0
+MeleeToHit: THAC0
+MeleeDamage: Урон
+
+SaveSpells: Спасброски
 
 Skeleton: Скелет

@@ -10,7 +10,7 @@ extern int tab_pixels;
 }
 
 BSDATA(classi) = {
-	{"Monster", ToHit, {}, 0, 8},
+	{"Monster", MeleeToHit, {}, 0, 8},
 	{"Cleric", Wisdow, {}, 1, 6},
 	{"Dwarf", Strenght, {0, 0, 9, 0, 0, 0}, 0, 8},
 	{"Elf", Dexterity, {0, 0, 0, 9, 0, 0}, 0, 6},

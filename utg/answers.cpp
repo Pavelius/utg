@@ -61,11 +61,11 @@ void answers::clear() {
 	sc.clear();
 }
 
-void draw::pause() {
+void pause() {
 	pause(getnm("Continue"));
 }
 
-void draw::pause(const char* title, ...) {
+void pause(const char* title, ...) {
 	if(answers::console) {
 		if(!(*answers::console))
 			return;
@@ -77,13 +77,13 @@ void draw::pause(const char* title, ...) {
 		answers::console->clear();
 }
 
-void draw::pausenc(const char* title, ...) {
+void pausenc(const char* title, ...) {
 	char temp[260]; stringbuilder sb(temp);
 	answers an; sb.addv(title, xva_start(title));
 	an.choose(0, temp, true);
 }
 
-bool draw::yesnov(const char* title, const char* title_param) {
+bool yesnov(const char* title, const char* title_param) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.addv(title, title_param);
 	answers an;
@@ -93,11 +93,11 @@ bool draw::yesnov(const char* title, const char* title_param) {
 	return an.choose(temp);
 }
 
-bool draw::yesno(const char* title, ...) {
+bool yesno(const char* title, ...) {
 	return yesnov(title, xva_start(title));
 }
 
-void draw::information(const char* format, ...) {
+void information(const char* format, ...) {
 	if(!answers::console)
 		return;
 	answers::console->addn("[+");
@@ -105,7 +105,7 @@ void draw::information(const char* format, ...) {
 	answers::console->add("]");
 }
 
-void draw::warning(const char* format, ...) {
+void warning(const char* format, ...) {
 	if(!answers::console)
 		return;
 	answers::console->addn("[-");
@@ -113,7 +113,7 @@ void draw::warning(const char* format, ...) {
 	answers::console->add("]");
 }
 
-void draw::output(const char* format, ...) {
+void output(const char* format, ...) {
 	if(!answers::console)
 		return;
 	answers::console->addx("\n", format, xva_start(format));
@@ -129,7 +129,7 @@ static const char* find_separator(const char* pb) {
 	return 0;
 }
 
-void draw::message(const char* format, const char* header) {
+void message(const char* format, const char* header) {
 	if(!format)
 		return;
 	answers an;

@@ -1,7 +1,7 @@
 #Menu
 
 General source(Creature)
- elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC THAC0 Damage Separator Saves
+ elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC MeleeToHit MeleeDamage Separator SaveSpells
 Items source(Creature)
  elements EquipmentList
 Combat mode(Combat)

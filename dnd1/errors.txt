@@ -1,1 +1,2 @@
-﻿Can't find file 'locale/ru/names/Names.txt'
+﻿In file `Names.txt`:
+AttackRange: Define translate

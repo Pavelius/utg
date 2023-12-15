@@ -46,7 +46,7 @@ public:
 	void				sort();
 };
 extern answers an;
-namespace draw {
+
 void information(const char* format, ...);
 void message(const char* format, const char* header = 0);
 void output(const char* format, ...);
@@ -56,4 +56,3 @@ void pausenc(const char* title, ...);
 bool yesno(const char* title, ...);
 bool yesnov(const char* title, const char* title_param);
 void warning(const char* format, ...);
-}

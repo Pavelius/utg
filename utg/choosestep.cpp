@@ -17,7 +17,7 @@ static void add_choose_options(stringbuilder& sb) {
 }
 
 void choosestep::run() const {
-	draw::pause();
+	pause();
 	auto push_last = laststep;
 	laststep = this;
 	if(pbefore)
@@ -55,7 +55,7 @@ void choosestep::run() const {
 	stop = push_stop;
 	if(pafter)
 		pafter();
-	draw::pause();
+	pause();
 	laststep = push_last;
 }
 

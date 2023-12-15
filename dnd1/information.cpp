@@ -58,13 +58,13 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 	auto p = (creature*)object;
 	if(id.iskind<abilityi>()) {
 		switch(id.value) {
-		case Damage:
+		case MeleeDamage:
 			print(sb, p->getdamage(MeleeWeapon));
 			break;
 		case HP:
 			sb.add("%1i %-From %2i", p->abilities[HP], p->abilities[HPMax]);
 			break;
-		case ToHit:
+		case MeleeToHit:
 			sb.add("%1i", 19 - p->abilities[id.value] - p->abilities[MeleeToHit]);
 			break;
 		case AC:
@@ -74,7 +74,7 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 		case Intellect: case Wisdow: case Charisma:
 			sb.add("%1i", p->abilities[id.value]);
 			break;
-		case Saves:
+		case SaveSpells:
 			sb.add("%1i/%2i/%3i/%4i/%5i", p->get(SaveDeath), p->get(SaveWands), p->get(SaveParalize), p->get(SaveBreathWeapon), p->get(SaveSpells));
 			break;
 		default:

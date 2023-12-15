@@ -116,9 +116,6 @@
     <ClCompile Include="creaturea.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="class.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -155,11 +152,11 @@
     <ClCompile Include="modifier.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="timeable.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Basic.txt">
       <Filter>data</Filter>
     </Text>
@@ -175,12 +172,6 @@
     <Text Include="rules\RandomGems.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\ItemNames.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="locale\ru\Moves.txt">
       <Filter>locale</Filter>
     </Text>
@@ -189,6 +180,15 @@
     </Text>
     <Text Include="errors.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\names\ItemNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

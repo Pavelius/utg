@@ -3,9 +3,7 @@
 
 #pragma once
 
-enum dice_s : unsigned char {
-	D6, D8, D10
-};
 struct rolldice : nameable {
 	dice	value;
 };
+extern int last_roll, last_roll_raw;

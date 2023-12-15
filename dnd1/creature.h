@@ -51,7 +51,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			update_finish();
 	void			use(item& it);
 };
-extern creature* player;
+extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {
 	creature*		choose(const char* title, bool random = false) const;
 	void			match(feat_s v, bool keep);

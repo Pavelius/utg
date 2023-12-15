@@ -189,10 +189,10 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="rolldice.cpp" />
-    <ClCompile Include="scene.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="statable.cpp" />
+    <ClCompile Include="timeable.cpp" />
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />
@@ -200,11 +200,11 @@
   <ItemGroup>
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Dungeons.txt" />
-    <Text Include="locale\ru\ItemNames.txt" />
     <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\NameCharacters.txt" />
-    <Text Include="locale\ru\Names.txt" />
-    <Text Include="locale\ru\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\ItemNames.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
+    <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />

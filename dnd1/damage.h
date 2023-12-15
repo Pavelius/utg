@@ -4,5 +4,5 @@
 #pragma once
 
 struct damagei : nameable {
-	feat_s			immunity;
+	feat_s	immunity, resistance;
 };

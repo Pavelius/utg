@@ -113,9 +113,9 @@ void creature::choose(const slice<chooseoption>& options) {
 	actv(sb, getnm("WhatToDo"), 0, 0);
 	const char* enemy_name = enemy ? enemy->getname() : 0;
 	if(is(Enemy))
-		chooseoption::chooser(options, temp, enemy_name);
+		chooser(options, temp, enemy_name);
 	else
-		chooseoption::choose(options, temp, enemy_name);
+		::choose(options, temp, enemy_name);
 	player = push_last;
 }
 
@@ -208,24 +208,18 @@ static void update_spells() {
 
 void creature::update_finish() {
 	// Basic values
-	abilities[ToHit] += getattackbonus(bsdata<classi>::elements[type].tohit, abilities[Level]);
+	auto thac0 = getattackbonus(bsdata<classi>::elements[type].tohit, abilities[Level]);
 	// Depended values
-	abilities[MeleeToHit] += abilities[ToHit] + getbonus(Strenght);
-	abilities[MeleeDamage] += abilities[Damage] + getbonus(Strenght);
-	abilities[RangedToHit] += abilities[ToHit] + getbonus(Dexterity);
-	abilities[RangedDamage] += abilities[Damage];
+	abilities[MeleeToHit] += thac0 + getbonus(Strenght);
+	abilities[MeleeDamage] += getbonus(Strenght);
+	abilities[RangedToHit] += thac0 + getbonus(Dexterity);
 	abilities[AC] += getbonus(Dexterity);
 	abilities[Speed] += getbonush(Dexterity);
 	abilities[HPMax] += getbonus(Constitution) * abilities[Level];
-	// Saves
-	if(is(BestowCurse))
-		abilities[Saves] -= 2;
-	abilities[SaveDeath] += abilities[Saves] + getbonus(Constitution);
-	abilities[SavePoison] += abilities[Saves] + getbonus(Constitution);
-	abilities[SaveWands] += abilities[Saves] + getbonush(Dexterity);
-	abilities[SaveParalize] += abilities[Saves];
-	abilities[SaveBreathWeapon] += abilities[Saves];
-	abilities[SaveSpells] += abilities[Saves] + getbonus(Wisdow);
+	abilities[SaveDeath] += getbonus(Constitution);
+	abilities[SavePoison] += getbonus(Constitution);
+	abilities[SaveWands] += getbonush(Dexterity);
+	abilities[SaveSpells] += getbonus(Wisdow);
 	// Finale saves transformation
 	for(auto i = SaveDeath; i <= SavePoison; i = (ability_s)(i + 1)) {
 		abilities[i] = getsave(type, i, abilities[Level]) - abilities[i];
@@ -260,7 +254,6 @@ void creature::finish() {
 
 dice creature::getdamage(wear_s v) const {
 	auto r = wears[v].getdamage();
-	r.b += abilities[Damage];
 	switch(v) {
 	case MeleeWeapon: r.b += abilities[MeleeDamage]; break;
 	case RangedWeapon: r.b += abilities[RangedDamage]; break;

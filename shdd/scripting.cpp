@@ -212,13 +212,13 @@ static void single_attack_enemy(ability_s attack, ability_s attack_damage, int a
 	auto to_hit = roll_result + player->get(attack);
 	auto ac = opponent->get(AC);
 	if(critical_miss || to_hit < ac) {
-		player->act("PlayerMiss");
+		player->act(getnm("PlayerMiss"));
 		return;
 	}
 	auto damage = player->getdamage(attack).roll();
 	if(critical_hit)
 		damage *= 2;
-	player->act("PlayerHit");
+	player->act(getnm("PlayerHit"));
 	opponent->damage(damage);
 	special_attack(weapon);
 }

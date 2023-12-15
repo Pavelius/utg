@@ -14,11 +14,10 @@ static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 }
 
 static void starting() {
-	bsref<itemi> test = bsdata<itemi>::elements + 2;
 	auto p1 = create_player(Fighter, Male, Player);
 	auto p2 = create_player(Fighter, Male, Player);
 	answers::header = "Большой зал";
-	game.encounter(bsdata<monsteri>::find("Skeleton"));
+	random_encounter("Skeleton");
 	creatures.select();
 	//treasure loot;
 	//loot.generate('A');
