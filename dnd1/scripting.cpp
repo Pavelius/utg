@@ -43,11 +43,9 @@ template<> void fnscript<feati>(int index, int value) {
 }
 
 static bool rolld20(int bonus, int dc) {
-	bonus += last_roll;
 	last_roll_raw = xrand(1, 20);
 	last_roll = last_roll_raw + bonus;
 	critical_roll = 0;
-	output("[{%1i%+2i=%3i}]", last_roll_raw, bonus, last_roll);
 	if(last_roll_raw == 20)
 		critical_roll = 1;
 	else if(last_roll_raw == 1)
@@ -55,22 +53,29 @@ static bool rolld20(int bonus, int dc) {
 	return last_roll >= dc || (critical_roll == 1);
 }
 
-static bool make_attack(ability_s attack, int ac, int bonus) {
+static void make_attack(const char* id, int bonus, ability_s attack, ability_s damage, wear_s weapon) {
 	if(player->is(Invisibility))
 		player->dispell(Invisibility);
-	return rolld20(bonus, 10 + ac);
+	auto ac = opponent->get(AC);
+	if(rolld20(bonus, 10 + ac, true)) {
+		information("{%1i%+2i=%3i}", last_roll_raw, bonus, last_roll);
+		player->actid("Hit", id, ' ');
+		auto& hands = player->wears[weapon];
+		auto result = hands.getdamage().roll();
+		result += player->get(damage);
+		opponent->damage(result);
+	} else {
+		warning("{%1i%+2i=%3i}", last_roll_raw, bonus, last_roll);
+		player->actid("Miss", id, ' ');
+	}
 }
 
 static void melee_attack(int bonus) {
-	auto ac = opponent->get(AC);
-	if(make_attack(MeleeToHit, ac, 0)) {
-		player->actn(getnm("HitMelee"));
-		auto& weapon = player->wears[MeleeWeapon];
-		auto result = weapon.getdamage().roll();
-		result += player->get(MeleeDamage);
-		opponent->damage(xrand(1, 6));
-	} else
-		player->actn(getnm("MissMelee"));
+	make_attack("Melee", bonus, MeleeToHit, MeleeDamage, MeleeWeapon);
+}
+
+static void range_attack(int bonus) {
+	make_attack("Ranged", bonus, RangedToHit, RangedDamage, RangedWeapon);
 }
 
 static bool is_fight_melee(int bonus) {
@@ -80,13 +85,6 @@ static bool is_fight_melee(int bonus) {
 static void clear_console() {
 	if(answers::console)
 		answers::console->clear();
-}
-
-static void update_enemies() {
-	for(auto p : creatures) {
-		if(p->enemy && !p->enemy->isready())
-			p->enemy = 0;
-	}
 }
 
 void select_enemies(int bonus) {
@@ -150,45 +148,49 @@ void random_encounter(const char* id) {
 
 static void random_melee_angry(size_t count) {
 	select_enemies(0);
-	targets.matchenemy(false);
+	targets.match(EngageMelee, false);
 	zshuffle(targets.data, targets.count);
 	if(count > targets.count)
 		count = targets.count;
 	for(size_t i = 0; i < count; i++)
-		targets.data[i]->setenemy(player);
+		targets.data[i]->set(EngageMelee);
 }
 
 static void choose_player_enemy() {
-	if(!player->enemy) {
-		select_enemies(0);
-		auto pe = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
-		player->setenemy(pe); pe->setenemy(player);
-		random_melee_angry(xrand(1, 2));
+	select_enemies(0);
+	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
+	if(opponent) {
+		player->set(EngageMelee);
+		opponent->set(EngageMelee);
+		if(rand() % 2)
+			random_melee_angry(1);
 	}
 }
 
 static bool attack_melee(bool run) {
-	if(!player->enemy)
+	select_enemies(0);
+	if(!targets)
 		return false;
 	if(run) {
-		player->meleeattack();
-		update_enemies();
+		choose_player_enemy();
+		melee_attack(0);
 	}
 	return true;
 }
 
 static bool attack_range(bool run) {
-	if(!player->enemy)
+	select_enemies(0);
+	if(!targets)
 		return false;
 	if(run) {
-		player->meleeattack();
-		update_enemies();
+		opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
+		range_attack(0);
 	}
 	return true;
 }
 
 static bool charge(bool run) {
-	if(player->enemy)
+	if(player->is(EngageMelee))
 		return false;
 	select_enemies(0);
 	if(!targets)
@@ -197,8 +199,7 @@ static bool charge(bool run) {
 		choose_player_enemy();
 		player->add(MeleeToHit, 1);
 		player->add(AC, -1);
-		player->meleeattack();
-		update_enemies();
+		melee_attack(0);
 	}
 	return true;
 }
@@ -249,7 +250,7 @@ static void combat_round() {
 	static chooseoption combat_options[] = {
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
-		{"AttackRange", attack_range},
+		//{"AttackRange", attack_range},
 		{"DrinkPotion", drink_potion},
 	};
 	for(auto p : creatures) {

@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "feat.h"
 #include "draw_utg.h"
 
 using namespace draw;
@@ -26,16 +27,28 @@ static void backpack_list() {
 		paint_items((creature*)focus_object, false);
 }
 
+static void feats(stringbuilder& sb, const creature* p, const slice<feat_s>& source) {
+	for(auto v : source) {
+		if(p->is(v))
+			sb.adds(bsdata<feati>::elements[v].getname());
+	}
+}
+
 static void combatant_list() {
 	char temp[260]; stringbuilder sb(temp);
 	for(auto p : creatures) {
 		sb.clear();
-		if(!p->isready())
+		auto ready = p->isready();
+		if(!ready)
 			sb.add("[~%1]", p->getname());
 		else if(p->is(Enemy))
 			sb.add("[-%1]", p->getname());
 		else
 			sb.add(p->getname());
+		if(ready) {
+			static feat_s source[] = {EngageMelee};
+			feats(sb, p, source);
+		}
 		label(temp, 0, p);
 	}
 }

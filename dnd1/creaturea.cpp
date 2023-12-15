@@ -21,16 +21,6 @@ void creaturea::match(feat_s v, bool keep) {
 	count = ps - data;
 }
 
-void creaturea::matchenemy(bool keep) {
-	auto ps = begin();
-	for(auto p : *this) {
-		if((p->enemy != 0) != keep)
-			continue;
-		*ps++ = p;
-	}
-	count = ps - data;
-}
-
 void creaturea::matchready(bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {

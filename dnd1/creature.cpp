@@ -7,7 +7,7 @@
 #include "script.h"
 #include "stringlist.h"
 
-creature* player;
+creature *player, *opponent;
 creaturea creatures;
 
 inline int d6() { return 1 + rand() % 6; }
@@ -64,30 +64,6 @@ bool creature::attack(ability_s attack, int ac, int bonus) {
 	return r >= (10 + ac);
 }
 
-void creature::rangeattack(creature* enemy) {
-	auto ac = enemy->get(AC);
-	auto& weapon = wears[RangedWeapon];
-	if(attack(RangedToHit, ac, 0)) {
-		actn(getnm("HitRange"));
-		auto result = weapon.getdamage().roll();
-		result += get(RangedDamage);
-		enemy->damage(result);
-	} else
-		actn(getnm("MissRange"));
-}
-
-void creature::meleeattack() {
-	auto ac = enemy->get(AC);
-	auto& weapon = wears[MeleeWeapon];
-	if(attack(MeleeToHit, ac, 0)) {
-		actn(getnm("HitMelee"));
-		auto result = weapon.getdamage().roll();
-		result += get(MeleeDamage);
-		enemy->damage(xrand(1, 6));
-	} else
-		actn(getnm("MissMelee"));
-}
-
 feat_s creature::getenemyfeat() const {
 	if(is(Player))
 		return Enemy;
@@ -97,16 +73,14 @@ feat_s creature::getenemyfeat() const {
 }
 
 void creature::choose(const slice<chooseoption>& options) {
-	auto push_last = player;
-	player = this;
+	pushvalue push_player(player, this);
 	char temp[260]; stringbuilder sb(temp);
 	actv(sb, getnm("WhatToDo"), 0, 0);
-	const char* enemy_name = enemy ? enemy->getname() : 0;
+	const char* enemy_name = 0;
 	if(is(Enemy))
 		chooser(options, temp, enemy_name);
 	else
 		::choose(options, temp, enemy_name);
-	player = push_last;
 }
 
 const char* creature::randomname(class_s type, gender_s gender) {
@@ -148,10 +122,6 @@ void creature::dispell(spell_s effect) {
 	auto p = find_bonus(this, effect);
 	if(p)
 		p->clear();
-}
-
-void creature::setenemy(creature* v) {
-	enemy = v;
 }
 
 void creature::damage(int value) {

@@ -13,7 +13,6 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	class_s			type;
 	statable		basic;
 	spellf			active_spells, known_spells;
-	creature*		enemy;
 	char			initiative;
 	unsigned		experience;
 	bool			apply(spell_s, int level, bool run);
@@ -39,13 +38,10 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isready() const;
 	void			levelup();
-	void			meleeattack();
 	void			raiselevel();
-	void			rangeattack(creature* enemy);
 	static const char* randomname(class_s type, gender_s gender);
 	static const char* randomavatar(class_s type, gender_s gender);
 	void			set(feat_s v) { feats.set(v); }
-	void			setenemy(creature* v);
 	void			update();
 	void			update_finish();
 	void			use(item& it);
@@ -54,7 +50,6 @@ extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {
 	creature*		choose(const char* title, bool random = false) const;
 	void			match(feat_s v, bool keep);
-	void			matchenemy(bool keep);
 	void			matchready(bool keep);
 	void			select();
 };

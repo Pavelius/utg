@@ -18,6 +18,17 @@ void actable::actn(const char* format, ...) const {
 	actv(*answers::console, format, xva_start(format), '\n');
 }
 
+bool actable::actid(const char* prefix, const char* suffix, char separator) const {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(prefix);
+	sb.add(suffix);
+	auto format = getnme(temp);
+	if(!format)
+		return false;
+	actv(*answers::console, format, 0, separator);
+	return true;
+}
+
 void initialize_str() {
 	stringbuilder::custom = act_identifier;
 }

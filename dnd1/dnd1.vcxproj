@@ -203,6 +203,7 @@
     <Text Include="locale\ru\Dungeons.txt" />
     <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\NameCharacters.txt" />
+    <Text Include="locale\ru\names\Feats.txt" />
     <Text Include="locale\ru\names\ItemNames.txt" />
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
