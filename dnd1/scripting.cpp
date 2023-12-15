@@ -57,7 +57,7 @@ static void make_attack(const char* id, int bonus, ability_s attack, ability_s d
 	if(player->is(Invisibility))
 		player->dispell(Invisibility);
 	auto ac = opponent->get(AC);
-	if(rolld20(bonus, 10 + ac, true)) {
+	if(rolld20(bonus, 10 + ac)) {
 		information("{%1i%+2i=%3i}", last_roll_raw, bonus, last_roll);
 		player->actid("Hit", id, ' ');
 		auto& hands = player->wears[weapon];
