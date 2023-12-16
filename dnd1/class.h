@@ -7,4 +7,5 @@ struct classi : nameable {
 	char		minimal[6];
 	char		hd, magic;
 	unsigned	experience[20];
+	unsigned	allow;
 };

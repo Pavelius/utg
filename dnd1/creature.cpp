@@ -32,6 +32,10 @@ void creature::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
+const classi& creature::geti() const {
+	return bsdata<classi>::elements[type];
+}
+
 void creature::raiselevel() {
 	auto n = basic.get(Level);
 	auto d = bsdata<classi>::elements[type].hd;
@@ -55,7 +59,7 @@ void creature::levelup() {
 	while(true) {
 		auto next_level = basic.get(Level) + 1;
 		auto next_experience = get_experience(type, next_level);
-		if((next_level>1 && !next_experience) || (next_experience && experience < next_experience))
+		if((next_level > 1 && !next_experience) || (next_experience && experience < next_experience))
 			break;
 		basic.add(Level, 1);
 		raiselevel();
@@ -287,4 +291,18 @@ void creature::drink(spell_s spell) {
 }
 
 void creature::use(item& it) {
+}
+
+bool creature::isallow(const item& it) const {
+	static variant last_item = "Shield";
+	auto index = getbsi(&it.geti());
+	if(index >= last_item.value)
+		return true;
+	return (geti().allow & (1 << index)) != 0;
+}
+
+void creature::equip(item& v) {
+	if(!isallow(v))
+		return;
+	wearable::equip(v);
 }

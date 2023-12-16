@@ -19,32 +19,42 @@ DefendingWeapon magic(1)
 NoItem
 
 BattleAxe cost(7) weight(50) wear(MeleeWeapon) damage(1 8)
- flags Martial Slow TwoHanded
+ flags Slow TwoHanded
  powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 Club cost(3) weight(50) wear(MeleeWeapon) damage(1 4)
- flags Martial Blunt
+ flags Blunt
  powers Magical1 Magical2
 Dagger cost(3) weight(10) wear(MeleeWeapon) damage(1 4)
  powers Magical1 Magical2 Magical3
 Halberd cost(7) weight(150) wear(MeleeWeapon) damage(1 10)
- flags Martial Slow TwoHanded WearLarge
+ flags Slow TwoHanded
  powers Magical1 Magical2 Magical3
 HandAxe cost(4) weight(30) wear(MeleeWeapon) damage(1 6)
- flags Martial
  powers Magical1 Magical2 Magical3
+Javelin cost(1) weight(20) wear(ThrownWeapon) damage(1 4)
 Mace cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
- flags Martial Blunt
+ flags Blunt
  powers Magical1 Magical2 Magical3
+ShortSword cost(7) weight(30) wear(MeleeWeapon) damage(1 6)
+Staff cost(2) weight(40) wear(MeleeWeapon) damage(1 6)
+ flags Slow TwoHanded
 Sword cost(10) weight(60) wear(MeleeWeapon) damage(1 8)
- flags Martial
+ powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
+TwoHandedSword cost(15) weight(150) wear(MeleeWeapon) damage(1 10)
+ flags Slow TwoHanded
+Warhammer cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
+ flags Blunt
  powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 
 Arrow wear(Ammunition) cost(5) count(30)
 Bolt wear(Ammunition) cost(5) count(20)
+Stone wear(Ammunition) count(10)
 
 Crossbow cost(30) weight(50) wear(RangedWeapon) damage(1 6 1) ammunition(Bolt)
  flags Martial Slow TwoHanded
 ShortBow cost(25) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
+ flags Martial TwoHanded
+Sling cost(2) weight(20) wear(RangedWeapon) damage(1 4) ammunition(Stone)
  flags Martial TwoHanded
 LongBow cost(40) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
  flags Martial TwoHanded WearLarge

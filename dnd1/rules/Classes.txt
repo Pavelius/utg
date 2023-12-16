@@ -1,26 +1,47 @@
 #Class
 
 Monster prime(MeleeToHit)
+ allow LeatherArmor ChainArmor PlateArmor Shield\
+  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
+  Crossbow ShortBow Sling LongBow
 
-Cleric prime(Wisdow) hd(6)
+Cleric prime(Wisdow) hd(6) magic(0)
  experience 1500 3000 6000 12000 25000 50000 100000 200000 300000 400000 500000 600000 700000
+ allow LeatherArmor ChainArmor PlateArmor Shield\
+  Club Mace Staff Warhammer Sling
 
 Dwarf prime(Strenght) hd(8)
  minimal Constitution(9)
  experience 2200 4400 8800 17000 35000 70000 140000 270000 400000 530000 660000
+ allow LeatherArmor ChainArmor PlateArmor Shield\
+  BattleAxe Club Dagger HandAxe Javelin Mace ShortSword Staff Sword Warhammer\
+  Crossbow ShortBow Sling
 
-Elf hd(6)
+Elf hd(6) magic(1)
  minimal Intellect(9)
  experience 4000 8000 16000 32000 64000 120000 250000 400000 600000
+ allow LeatherArmor ChainArmor PlateArmor Shield\
+  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
+  Crossbow ShortBow Sling LongBow
 
 Fighter hd(8)
  experience 2000 4000 8000 16000 32000 64000 120000 240000 360000 480000 600000 720000 840000
+ allow LeatherArmor ChainArmor PlateArmor Shield\
+  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
+  Crossbow ShortBow Sling LongBow
 
 Halfling prime(Dexterity) hd(6)
  experience 2000 4000 8000 16000 32000 64000 120000
+ allow LeatherArmor ChainArmor Shield\
+  Club Dagger HandAxe Javelin Mace ShortSword Staff Sword\
+  ShortBow Sling
 
 Theif prime(Dexterity) hd(4)
  experience 1200 2400 4800 9600 20000 40000 80000 160000 280000 400000 520000 640000 760000
+ allow LeatherArmor\
+  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
+  Crossbow ShortBow Sling LongBow
 
-MagicUser prime(Intellect) hd(4)
+MagicUser prime(Intellect) hd(4) magic(1)
  experience 2500 5000 10000 20000 40000 80000 150000 300000 450000 600000 750000 900000 1050000
+ allow Dagger Staff

@@ -24,7 +24,9 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			dispell(spell_s effect);
 	void			drink(spell_s effect);
 	void			enchant(spell_s, unsigned rounds);
+	void			equip(item& v);
 	void			generate();
+	const classi&	geti() const;
 	dice			getdamage(wear_s v) const;
 	feat_s			getenemyfeat() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
@@ -33,6 +35,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			heal(int value) {}
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
+	bool			isallow(const item& it) const;
 	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isready() const;
 	void			levelup();

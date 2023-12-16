@@ -40,6 +40,8 @@ BSMETA(classi) = {
 	BSDST(minimal, abilityi),
 	BSENM(prime, abilityi),
 	BSREQ(experience),
+	BSREQ(magic),
+	BSFLG(allow, itemi),
 	{}};
 BSMETA(creature) = {
 	BSDST(abilities, abilityi),

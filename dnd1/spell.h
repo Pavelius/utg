@@ -18,7 +18,7 @@ enum spell_s : unsigned char {
 };
 typedef flagable<8> spellf;
 struct spelli : nameable {
-	char		level[3];
+	char		level[4];
 	duration_s	duration;
 	range_s		range;
 	dice		effect;
