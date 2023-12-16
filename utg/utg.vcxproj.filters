@@ -551,5 +551,8 @@
     <ClInclude Include="tmpfunct.h">
       <Filter>Templates</Filter>
     </ClInclude>
+    <ClInclude Include="typeable.h">
+      <Filter>Templates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -208,7 +208,6 @@
     <ClInclude Include="skill.h" />
     <ClInclude Include="skillroll.h" />
     <ClInclude Include="state.h" />
-    <ClInclude Include="typeable.h" />
     <ClInclude Include="valuei.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />

@@ -35,6 +35,7 @@ Shield: Щит
 BattleAxe: Секира
 Club: Дубина
 Dagger: Кинжал
+HandAxe: Топор
 Sword: Меч
 
 ShortBow: Лук

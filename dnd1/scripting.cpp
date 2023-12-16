@@ -175,7 +175,7 @@ static void roll_initiative() {
 static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 	pushvalue push_player(player);
 	for(auto i = 0; i < count; i++) {
-		add_creature(*pm);
+		add_creature(pm);
 		if(feat)
 			player->set(feat);
 	}

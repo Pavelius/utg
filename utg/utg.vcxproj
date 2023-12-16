@@ -329,6 +329,7 @@
     <ClInclude Include="rect.h" />
     <ClInclude Include="stringact.h" />
     <ClInclude Include="stringbuilder.h" />
+    <ClInclude Include="typeable.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="widget.h" />
     <ClInclude Include="win.h" />

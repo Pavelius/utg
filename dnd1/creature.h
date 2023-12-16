@@ -56,7 +56,7 @@ struct creaturea : adat<creature*, 32> {
 extern creaturea creatures, targets;
 
 void add_creature(const classi* pi, gender_s gender);
-void add_creature(const struct monsteri& v);
+void add_creature(const monsteri* pi);
 void finish_creature();
 
 const char* random_avatar(const classi* pi, gender_s gender);

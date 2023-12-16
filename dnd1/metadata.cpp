@@ -3,12 +3,14 @@
 #include "bsreq.h"
 #include "creature.h"
 #include "gender.h"
+#include "itemlay.h"
 #include "list.h"
 #include "menu.h"
 #include "modifier.h"
 #include "monster.h"
 #include "ongoing.h"
 #include "randomizer.h"
+#include "scenery.h"
 #include "script.h"
 #include "widget.h"
 
@@ -21,9 +23,11 @@ BSDATAC(classi, 16)
 BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
 BSDATAC(itemi, 256)
+BSDATAC(itemlay, 4096)
 BSDATAC(itempoweri, 64)
 BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
+BSDATAC(scenery, 2048)
 
 BSMETA(abilityi) = {
 	BSREQ(id),

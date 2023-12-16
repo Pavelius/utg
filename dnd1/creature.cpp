@@ -270,15 +270,15 @@ void add_creature(const classi* pi, gender_s gender) {
 	finish_creature();
 }
 
-void add_creature(const struct monsteri& v) {
+void add_creature(const monsteri* pi) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		player->basic.abilities[i] = 10;
-	memcpy(player->attacks, v.attacks, sizeof(player->attacks));
-	add_permanent(v.feats);
-	player->name = getnm(v.id);
+	memcpy(player->attacks, pi->attacks, sizeof(player->attacks));
+	add_permanent(pi->feats);
+	player->name = getnm(pi->id);
 	finish_creature();
 }
 

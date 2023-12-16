@@ -159,6 +159,7 @@
     <ClInclude Include="duration.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="itemlay.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="feat.cpp" />
+    <ClCompile Include="itemlay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />

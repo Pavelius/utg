@@ -1,7 +1,11 @@
-#include "nameable.h"
-
 #pragma once
+
+#include "nameable.h"
+#include "typeable.h"
 
 struct sceneryi : nameable {
 };
-extern sceneryi* scene;
+struct scenery : typeable<sceneryi> {
+	char		temperature, rainess;
+};
+extern scenery* scene;

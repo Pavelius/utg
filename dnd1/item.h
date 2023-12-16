@@ -1,11 +1,12 @@
+#pragma once
+
 #include "collection.h"
 #include "dice.h"
 #include "feat.h"
 #include "list.h"
+#include "typeable.h"
 #include "variant.h"
 #include "wear.h"
-
-#pragma once
 
 struct itempoweri : nameable {
 	char		magic;
@@ -24,8 +25,7 @@ struct itemi : nameable {
 	itempoweri*	powers[16];
 	bool		is(feat_s v) const { return flags.is(v); }
 };
-class item {
-	unsigned short type;
+class item : public typeable<itemi> {
 	union {
 		unsigned char flags;
 		struct {
@@ -52,12 +52,9 @@ public:
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
 	void		damage();
-	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	int			getcost() const;
 	int			getcount() const;
 	dice		getdamage() const;
-	const char*	getname() const { return geti().getname(); }
-	static const char* getname(const void* object) { return ((item*)object)->getname(); }
 	const itempoweri* getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;

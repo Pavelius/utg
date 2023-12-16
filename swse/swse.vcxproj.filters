@@ -196,8 +196,5 @@
     <ClInclude Include="placeable.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="typeable.h">
-      <Filter>logic</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
