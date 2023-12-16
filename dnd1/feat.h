@@ -5,7 +5,7 @@
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	SunSensitive, Slow, NormalWeaponImmunity,
+	SunSensitive, Slow, Small, Large, NormalWeaponImmunity,
 	Blunt, Martial, TwoHanded,
 	WearLeather, WearIron, WearLarge, WearShield,
 	EngageMelee, Surprised, Prone, Undead, Summoned, Player, Enemy,

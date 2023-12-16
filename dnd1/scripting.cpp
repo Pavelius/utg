@@ -92,6 +92,8 @@ static void make_attack(const char* id, int bonus, ability_s attack, ability_s d
 	if(player->is(Invisibility))
 		player->dispell(Invisibility);
 	auto ac = opponent->get(AC);
+	if(opponent->is(Small) && player->is(Large))
+		ac += 2;
 	last_item = player->wears + weapon;
 	if(rolld20(bonus, 10 + ac, true)) {
 		player->actid("Hit", id, ' ');
@@ -161,7 +163,7 @@ static int compare_initiative(const void* v1, const void* v2) {
 
 static void roll_initiative() {
 	for(auto p : creatures)
-		p->initiative = xrand(1, 6) + p->getbonush(Dexterity);
+		p->initiative = xrand(1, 6) + p->get(Speed);
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
 }
 

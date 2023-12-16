@@ -194,21 +194,13 @@ void creature::update_finish() {
 	abilities[SavePoison] += getbonus(Constitution);
 	abilities[SaveWands] += getbonush(Dexterity);
 	abilities[SaveSpells] += getbonus(Wisdow);
-	// Finale saves transformation
-	for(auto i = SaveDeath; i <= SavePoison; i = (ability_s)(i + 1)) {
-		abilities[i] = getsave(type, i, abilities[Level]) - abilities[i];
-		if(abilities[i] < 2)
-			abilities[i] = 2;
-		else if(abilities[i] > 20)
-			abilities[i] = 20;
-	}
 	// Feats depends
 	if(is(EngageMelee))
 		abilities[ACRanged] += 4;
 	if(is(Prone)) {
 		abilities[MeleeToHit] -= 2;
-		abilities[ACRanged] += 4;
 		abilities[AC] -= 2;
+		abilities[ACRanged] += 4;
 	}
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
@@ -256,7 +248,6 @@ void add_creature(class_s type, gender_s gender) {
 	player->basic.applyminimal(type);
 	player->name = random_name(type, gender);
 	player->setavatar(random_avatar(type, gender));
-	apply_advance(pi, 1);
 	finish_creature();
 }
 

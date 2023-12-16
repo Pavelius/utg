@@ -9,6 +9,8 @@ BSDATA(feati) = {
 	{"StrenghtDrain"},
 	{"SunSensitive"},
 	{"Slow"},
+	{"Small"},
+	{"Large"},
 	{"NormalWeaponImmunity"},
 	{"Blunt"},
 	{"Martial"},

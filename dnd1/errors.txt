@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-AttackUnarmed: Define translate
+﻿In file `rules/Advance.txt`:
+ Line 9: Can't find variant `Initiative`

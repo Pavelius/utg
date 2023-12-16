@@ -13,37 +13,6 @@ static unsigned dwarf_experience[] = {
 	0, 0, 2200, 4400, 8800, 17000, 35000, 70000, 140000, 270000,
 	400000, 530000, 660000,
 };
-static char cleric_saves[][5] = {
-	{11, 12, 14, 16, 15},
-	{11, 12, 14, 16, 15},
-	{11, 12, 14, 16, 15},
-	{11, 12, 14, 16, 15},
-	{11, 12, 14, 16, 15},
-	{9, 10, 12, 14, 12},
-	{9, 10, 12, 14, 12},
-	{9, 10, 12, 14, 12},
-	{9, 10, 12, 14, 12},
-	{6, 7, 9, 11, 9},
-	{6, 7, 9, 11, 9},
-	{6, 7, 9, 11, 9},
-	{6, 7, 9, 11, 9},
-	{3, 5, 7, 8, 7},
-};
-static char fighter_saves[][5] = {
-	{12, 13, 14, 15, 16},
-	{12, 13, 14, 15, 16},
-	{12, 13, 14, 15, 16},
-	{10, 11, 12, 13, 14},
-	{10, 11, 12, 13, 14},
-	{10, 11, 12, 13, 14},
-	{8, 9, 10, 10, 12},
-	{8, 9, 10, 10, 12},
-	{8, 9, 10, 10, 12},
-	{6, 7, 8, 8, 10},
-	{6, 7, 8, 8, 10},
-	{6, 7, 8, 8, 10},
-	{4, 5, 6, 5, 8},
-};
 static int ability_bonus[] = {
 	-4, -4, -4, -3, -2, -2, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 2, 2, 3
@@ -56,6 +25,18 @@ static int attack_bonus[3][15] = {
 	{-1, 0, 0, 0, 2, 2, 2, 5, 5, 5, 7, 7, 7, 9, 9},
 	{-1, 0, 0, 0, 0, 2, 2, 2, 2, 5, 5, 5, 5, 7, 7},
 	{-1, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
+};
+static int elf_spells[10][5] = {
+	{1, 0, 0, 0, 0},
+	{2, 0, 0, 0, 0},
+	{2, 1, 0, 0, 0},
+	{2, 2, 0, 0, 0},
+	{2, 2, 1, 0, 0},
+	{2, 2, 2, 0, 0},
+	{3, 2, 2, 1, 0},
+	{3, 3, 2, 2, 0},
+	{3, 3, 3, 2, 1},
+	{3, 3, 3, 3, 2},
 };
 
 int statable::getattackbonus(int type, int level) {
@@ -78,12 +59,10 @@ unsigned statable::getexperience(class_s type, int level) {
 	}
 }
 
-char statable::getsave(class_s type, ability_s save, int level) {
-	if(save == SavePoison)
-		save = SaveDeath;
+char statable::getspells(class_s type, int spell_level, int level) {
 	switch(type) {
-	case Cleric: return maptbl(cleric_saves, level)[save - SaveDeath];
-	default: return maptbl(cleric_saves, level)[save - SaveDeath];
+	case Elf: return maptbl(elf_spells, level)[spell_level - 1];
+	default: return 0;
 	}
 }
 

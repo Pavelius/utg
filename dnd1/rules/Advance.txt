@@ -1,0 +1,36 @@
+#Advance
+
+Dwarf 1 Equipment
+ elements BattleAxe ChainArmor
+
+Fighter 1 Equipment
+ elements Sword Shield ChainArmor LongBow
+Fighter 1 SavingThrows
+ elements SaveDeath+8 SaveWands+7 SaveParalize+6 SaveBreathWeapon+5 SaveSpells+4
+Fighter 4 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+2 SaveSpells+2
+Fighter 7 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+3 SaveSpells+2
+Fighter 10 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+2 SaveSpells+2
+Fighter 13 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+3 SaveSpells+2
+
+Halfling 1 DefenciveBonuses
+ elements Small
+Halfling 1 Hidding
+ elements HideInShadows+16 HideUndergrowth+90
+Halfling 1 InitiativeBonus
+ elements Speed+1
+Halfling 1 MissileAttackBonus
+ elements RangedToHit+1
+Halfling 1 ListeningAtDoor
+ elements HearNoise+16
+Halfling 1 Equipment
+ elements Dagger LeatherArmor ShortBow
+Halfling 1 SavingThrows
+ elements SaveDeath+12 SaveWands+11 SaveParalize+10 SaveBreathWeapon+7 SaveSpells+8
+Halfling 4 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+3 SaveSpells+2
+Halfling 7 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+3 SaveSpells+2

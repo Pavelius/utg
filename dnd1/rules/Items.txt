@@ -107,10 +107,3 @@ YellowPotion cost(100) weight(10) wear(Potion)
 
 Jewelry
  elements IronRing SilverRing GoldenRing LeadAmulet CoralAmulet SilverAmulet GoldAmulet
-
-#Advance
-
-Dwarf 1 Equipment
- elements BattleAxe ChainArmor
-Fighter 1 Equipment
- elements Sword Shield ChainArmor LongBow

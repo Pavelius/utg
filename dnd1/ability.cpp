@@ -25,6 +25,7 @@ BSDATA(abilityi) = {
 	{"MoveSilently"},
 	{"OpenLocks"},
 	{"PickPockets"},
+	{"HideUndergrowth"},
 	{"SaveDeath"},
 	{"SaveWands"},
 	{"SaveParalize"},

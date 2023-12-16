@@ -18,7 +18,7 @@ static void starting() {
 	add_creature(Fighter, Male, Player);
 	add_creature(Fighter, Male, Player);
 	add_creature(Fighter, Male, Player);
-	add_creature(Fighter, Male, Player);
+	add_creature(Halfling, Female, Player);
 	answers::header = "Большой зал";
 	random_encounter("Skeleton");
 	creatures.select();
@@ -32,8 +32,6 @@ void initialize_str();
 void initialize_ui();
 
 static void initializing() {
-	bsreq::read("rules/Items.txt");
-	bsreq::read("rules/Monsters.txt");
 	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
 	initialize_str();

@@ -9,6 +9,7 @@ enum ability_s : unsigned char {
 	HPMax,
 	Speed, Search,
 	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
+	HideUndergrowth,
 	SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
 	HP, IllusionCopies,
 };
