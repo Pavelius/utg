@@ -1,4 +1,4 @@
-﻿NoItem: Кулаки
+﻿NoItem: Рука
 
 CP: Медная монета
 SP: Серебрянная монета
@@ -31,4 +31,8 @@ SilverRing: Серебрянное кольцо
 ChainArmor: Кольчуга
 LeatherArmor: Кожанная броня
 Shield: Щит
+
 Sword: Меч
+LongBow: Длинный лук
+
+Arrow: Стрелы

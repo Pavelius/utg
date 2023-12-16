@@ -1,7 +1,6 @@
 ﻿AppearSeveral: Внезапно переди появилось несколько %-$1.
 AppearSingle: Внезапно переди появилcя %1.
 AppTitle: Драконы и Подземелья
-AttackMelee: Атаковать %$1
 ContinueBattle: Продолжить битву
 CharacterGeneration: Создание персонажа
 ChargeEnemy: С криком наброситься на врага
@@ -14,7 +13,6 @@ Damage: Урон
 DoNotAdjust: Сейчас все иделально
 From: Из
 General: Общие
-HitMelee: %герой нанес%ла удар мечем.
 HP: Хиты
 IncreaseAndLower: Увеличить [%1] на 1 еденицу, но понизить [%2] на 2 еденицы
 Items: Предметы
@@ -22,7 +20,6 @@ Kg: кг
 LeaveItHere: Оставить это здесь
 Level: Уровень
 LoseGame: Вы проиграли. Игра закончена.
-MissMelee: %герой нанес%ла удар мечем, но промазал%а.
 No: Нет
 Pieces: шт.
 RerollAbilityAgain: Перебросить атрибуты еще раз

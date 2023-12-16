@@ -15,8 +15,8 @@ struct itempoweri : nameable {
 };
 struct itemi : nameable {
 	struct weaponi {
-		dice	damage;
-		itemi* 	ammunition;
+		dice			damage;
+		const itemi*	ammunition;
 	};
 	const char*	unidentified;
 	int			cost, weight, count;
@@ -46,17 +46,14 @@ class item {
 		};
 	};
 public:
-	explicit operator bool() const { return type != 0; }
-	item() = default;
 	item(const char* id);
 	item(const itemi* pi);
+	item() = default;
+	explicit operator bool() const { return type != 0; }
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
-	//void		create(unsigned short type, int count);
-	//void		create(const char* id, int count);
-	//void		create(const itemi* pi, int count);
 	void		damage();
 	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	int			getcost() const;

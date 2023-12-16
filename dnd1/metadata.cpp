@@ -69,7 +69,7 @@ BSMETA(itemi) = {
 	{}};
 BSMETA(itemi::weaponi) = {
 	BSREQ(damage),
-	BSENM(ammunition, itemi),
+	BSREQ(ammunition),
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),

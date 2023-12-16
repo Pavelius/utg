@@ -36,10 +36,13 @@ template<> void fnscript<abilityi>(int index, int value) {
 }
 
 template<> void fnscript<itemi>(int index, int value) {
-	item it(bsdata<itemi>::elements + index);
+	auto pi = bsdata<itemi>::elements + index;
+	item it(pi);
 	player->equip(it);
 	if(it)
 		player->additem(it);
+	if(pi->weapon.ammunition)
+		fnscript<itemi>(pi->weapon.ammunition - bsdata<itemi>::elements, 0);
 }
 
 template<> void fnscript<feati>(int index, int value) {
@@ -375,7 +378,7 @@ static void surprise_roll(int bonus) {
 
 static void combat_round() {
 	static chooseoption combat_options[] = {
-		{"AttackRange", attack_range},
+		{"AttackRanged", attack_range},
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
 		{"DrinkPotion", drink_potion},
