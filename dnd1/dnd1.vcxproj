@@ -152,6 +152,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="attackable.h" />
+    <ClInclude Include="calendar.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
@@ -161,13 +162,13 @@
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
+    <ClInclude Include="print.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
-    <ClInclude Include="rolldice.h" />
+    <ClInclude Include="roll.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
-    <ClInclude Include="timeable.h" />
     <ClInclude Include="treasure.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="attackable.cpp" />
+    <ClCompile Include="calendar.cpp" />
     <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creaturea.cpp" />
@@ -187,12 +189,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="print.cpp" />
     <ClCompile Include="range.cpp" />
-    <ClCompile Include="rolldice.cpp" />
+    <ClCompile Include="reaction.cpp" />
+    <ClCompile Include="roll.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="statable.cpp" />
-    <ClCompile Include="timeable.cpp" />
     <ClCompile Include="treasure.cpp" />
     <ClCompile Include="wear.cpp" />
     <ClCompile Include="wearable.cpp" />

@@ -4,13 +4,12 @@
 #include "modifier.h"
 #include "ongoing.h"
 #include "pushvalue.h"
+#include "roll.h"
 #include "script.h"
 #include "stringlist.h"
 
 creature *player, *opponent;
 creaturea creatures;
-
-inline int d6() { return 1 + rand() % 6; }
 
 static void add_permanent(const variants& source) {
 	pushvalue push_modifier(modifier, Permanent);
@@ -138,8 +137,11 @@ void creature::damage(int value) {
 	abilities[HP] = hp;
 	if(isready())
 		act("%герой получил%а [%1i] урона.", value);
-	else
+	else {
+		set(Prone);
+		feats.remove(EngageMelee);
 		act("%герой получил%а [%1i] урона и упал%а на землю.", value);
+	}
 }
 
 bool creature::isready() const {

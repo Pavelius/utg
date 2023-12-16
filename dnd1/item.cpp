@@ -1,10 +1,7 @@
 #include "item.h"
+#include "roll.h"
 
 item* last_item;
-
-static int d100() {
-	return rand() % 100;
-}
 
 void itema::select(const slice<item>& source) {
 	for(auto& e : source) {

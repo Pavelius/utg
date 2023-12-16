@@ -54,9 +54,6 @@
     <ClInclude Include="monster.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="timeable.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="damage.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -69,7 +66,7 @@
     <ClInclude Include="room.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="rolldice.h">
+    <ClInclude Include="roll.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="modifier.h">
@@ -82,6 +79,12 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="calendar.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,16 +146,22 @@
     <ClCompile Include="interface.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="rolldice.cpp">
+    <ClCompile Include="roll.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="modifier.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="timeable.cpp">
+    <ClCompile Include="attackable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="attackable.cpp">
+    <ClCompile Include="calendar.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="reaction.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,7 +5,8 @@
 #include "gender.h"
 #include "modifier.h"
 #include "pushvalue.h"
-#include "rolldice.h"
+#include "print.h"
+#include "roll.h"
 #include "reaction.h"
 #include "script.h"
 #include "spell.h"
@@ -16,17 +17,6 @@ itema items;
 spella spells;
 static spell_s last_spell;
 static int critical_roll;
-static reaction_s reaction;
-
-static int d6() {
-	return 1 + rand() % 6;
-}
-
-template<> void fnscript<rolldice>(int index, int bonus) {
-	bonus += last_roll;
-	last_roll_raw = bsdata<rolldice>::elements[index].value.roll();
-	last_roll = last_roll_raw + bonus;
-}
 
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
@@ -57,52 +47,12 @@ static void clear_console() {
 		answers::console->clear();
 }
 
-static void printv(char separator, const char* format, const char* format_param) {
-	if(!answers::console)
-		return;
-	if(separator)
-		answers::console->addsep(separator);
-	answers::console->addv(format, format_param);
-}
-
-static void print(char separator, const char* format, ...) {
-	printv(separator, format, xva_start(format));
-}
-
-static void printn(const char* format, ...) {
-	printv('\n', format, xva_start(format));
-}
-
-static void prints(const char* format, ...) {
-	printv(' ', format, xva_start(format));
-}
-
 static void print(const item& it, char separator, const char* format, ...) {
 	if(!answers::console)
 		return;
 	if(separator)
 		answers::console->addsep(separator);
 	stract(*answers::console, Male, it.getname(), format, xva_start(format));
-}
-
-static bool rolld20(int bonus, int dc, bool fix_roll = false) {
-	last_roll_raw = xrand(1, 20);
-	last_roll = last_roll_raw + bonus;
-	critical_roll = 0;
-	if(last_roll_raw == 20)
-		critical_roll = 1;
-	else if(last_roll_raw == 1)
-		critical_roll = -1;
-	auto result = (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
-	if(critical_roll == -1)
-		printn("[-{%1i}]", last_roll);
-	else if(critical_roll == 1)
-		printn("[+{%1i}]", last_roll);
-	else if(result)
-		printn("[{%1i}]", last_roll);
-	else
-		printn("[~{%1i}]", last_roll);
-	return (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
 }
 
 static void damage_item() {

@@ -1,7 +1,7 @@
 #List
 
 CombatantStatuses
- elements EngageMelee Surprised
+ elements Surprised EngageMelee Prone
 
 #Menu
 

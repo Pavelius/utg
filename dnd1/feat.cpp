@@ -19,6 +19,7 @@ BSDATA(feati) = {
 	{"WearShield"},
 	{"EngageMelee"},
 	{"Surprised"},
+	{"Prone"},
 	{"Undead"},
 	{"Summoned"},
 	{"Player"},

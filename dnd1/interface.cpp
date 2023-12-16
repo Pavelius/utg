@@ -52,14 +52,19 @@ static void combatant_list() {
 	for(auto p : creatures) {
 		sb.clear();
 		auto ready = p->isready();
-		if(!ready)
-			sb.add("[~%1]", p->getname());
-		else if(p->is(Enemy))
-			sb.add("[-%1]", p->getname());
-		else
-			sb.add(p->getname());
-		if(ready && pcol)
+		bool close_scope = false;
+		if(!ready) {
+			sb.add("[~");
+			close_scope = true;
+		} else if(p->is(Enemy)) {
+			sb.add("[-");
+			close_scope = true;
+		}
+		sb.add(p->getname());
+		if(pcol)
 			feats(sb, p, pcol->elements);
+		if(close_scope)
+			sb.add("]");
 		label(temp, 0, p);
 	}
 }
