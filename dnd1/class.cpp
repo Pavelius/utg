@@ -119,7 +119,7 @@ void creature::generate() {
 	choose_class();
 	adjust_ability_scores();
 	choose_avatar();
-	player->finish();
+	finish_creature();
 	answers::header = push_header;
 	player = push_player;
 }

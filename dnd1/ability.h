@@ -5,7 +5,7 @@
 enum ability_s : unsigned char {
 	Strenght, Dexterity, Constitution, Intellect, Wisdow, Charisma,
 	MeleeToHit, MeleeDamage, RangedToHit, RangedDamage,
-	AC, Level,
+	AC, ACRanged, Level,
 	HPMax,
 	Speed, Search,
 	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,

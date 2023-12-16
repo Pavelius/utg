@@ -82,16 +82,26 @@ void creature::choose(const slice<chooseoption>& options) {
 		::choose(options, temp, enemy_name);
 }
 
-const char* creature::randomname(class_s type, gender_s gender) {
+const char* random_name(class_s type, gender_s gender) {
 	return stringlist::getname(stringlist::random(str("%1%2",
 		bsdata<classi>::elements[type].getid(),
 		bsdata<genderi>::elements[gender].id)));
 }
 
-const char* creature::randomavatar(class_s type, gender_s gender) {
+static bool allow_avatar(const char* avatar) {
+	for(auto& e : bsdata<creature>()) {
+		if(!e)
+			continue;
+		if(equal(e.avatar, avatar))
+			return false;
+	}
+	return true;
+}
+
+const char* random_avatar(class_s type, gender_s gender) {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
-	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*", 6);
+	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*", 6, allow_avatar);
 	answers::interactive = push_interactive;
 	return result;
 }
@@ -184,10 +194,6 @@ void creature::update_finish() {
 	abilities[SavePoison] += getbonus(Constitution);
 	abilities[SaveWands] += getbonush(Dexterity);
 	abilities[SaveSpells] += getbonus(Wisdow);
-	if(is(Prone)) {
-		abilities[MeleeToHit] -= 2;
-		abilities[AC] -= 2;
-	}
 	// Finale saves transformation
 	for(auto i = SaveDeath; i <= SavePoison; i = (ability_s)(i + 1)) {
 		abilities[i] = getsave(type, i, abilities[Level]) - abilities[i];
@@ -195,6 +201,14 @@ void creature::update_finish() {
 			abilities[i] = 2;
 		else if(abilities[i] > 20)
 			abilities[i] = 20;
+	}
+	// Feats depends
+	if(is(EngageMelee))
+		abilities[ACRanged] += 4;
+	if(is(Prone)) {
+		abilities[MeleeToHit] -= 2;
+		abilities[ACRanged] += 4;
+		abilities[AC] -= 2;
 	}
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
@@ -214,10 +228,10 @@ void creature::update() {
 	update_finish();
 }
 
-void creature::finish() {
-	levelup();
-	update();
-	abilities[HP] = get(HPMax);
+void finish_creature() {
+	player->levelup();
+	player->update();
+	player->abilities[HP] = player->get(HPMax);
 }
 
 dice creature::getdamage(wear_s v) const {
@@ -229,21 +243,21 @@ dice creature::getdamage(wear_s v) const {
 	return r;
 }
 
-void creature::create(class_s type, gender_s gender) {
-	pushvalue push_player(player, this);
+void add_creature(class_s type, gender_s gender) {
 	auto pi = bsdata<classi>::elements + type;
-	clear();
-	this->type = type;
-	this->gender = gender;
-	attacks[0].count = 1;
-	attacks[0].damage = {1, 2};
-	basic.rollability();
-	basic.applybest(pi->prime);
-	basic.applyminimal(type);
-	name = randomname(type, gender);
-	setavatar(randomavatar(type, gender));
+	player = bsdata<creature>::add();
+	player->clear();
+	player->type = type;
+	player->gender = gender;
+	player->attacks[0].count = 1;
+	player->attacks[0].damage = {1, 2};
+	player->basic.rollability();
+	player->basic.applybest(pi->prime);
+	player->basic.applyminimal(type);
+	player->name = random_name(type, gender);
+	player->setavatar(random_avatar(type, gender));
 	apply_advance(pi, 1);
-	finish();
+	finish_creature();
 }
 
 void add_creature(const struct monsteri& v) {
@@ -256,7 +270,7 @@ void add_creature(const struct monsteri& v) {
 	memcpy(player->attacks, v.attacks, sizeof(player->attacks));
 	add_permanent(v.feats);
 	player->name = getnm(v.id);
-	player->finish();
+	finish_creature();
 }
 
 void creature::drink(spell_s spell) {

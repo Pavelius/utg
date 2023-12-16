@@ -9,16 +9,16 @@
 void combat_mode();
 void random_encounter(const char* id);
 
-static creature* create_player(class_s type, gender_s gender, feat_s feat) {
-	auto p = bsdata<creature>::add();
-	p->create(type, gender);
-	p->set(feat);
-	return p;
+static void add_creature(class_s type, gender_s gender, feat_s feat) {
+	add_creature(type, gender);
+	player->set(feat);
 }
 
 static void starting() {
-	auto p1 = create_player(Fighter, Male, Player);
-	auto p2 = create_player(Fighter, Male, Player);
+	add_creature(Fighter, Male, Player);
+	add_creature(Fighter, Male, Player);
+	add_creature(Fighter, Male, Player);
+	add_creature(Fighter, Male, Player);
 	answers::header = "Большой зал";
 	random_encounter("Skeleton");
 	creatures.select();

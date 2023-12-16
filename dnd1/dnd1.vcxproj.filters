@@ -164,6 +164,9 @@
     <ClCompile Include="print.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

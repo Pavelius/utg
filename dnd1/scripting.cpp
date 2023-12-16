@@ -161,7 +161,7 @@ static int compare_initiative(const void* v1, const void* v2) {
 
 static void roll_initiative() {
 	for(auto p : creatures)
-		p->initiative = xrand(1, 6);
+		p->initiative = xrand(1, 6) + p->getbonush(Dexterity);
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
 }
 

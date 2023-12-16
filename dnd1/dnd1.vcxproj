@@ -189,6 +189,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="reaction.cpp" />

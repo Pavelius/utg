@@ -13,6 +13,7 @@ BSDATA(abilityi) = {
 	{"RangedToHit"},
 	{"RangedDamage"},
 	{"AC"},
+	{"ACRanged"},
 	{"Level"},
 	{"HPMax"},
 	{"Speed"},

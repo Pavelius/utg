@@ -20,12 +20,10 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			choose(const slice<chooseoption>& options);
 	void			clear();
 	void			cast(spell_s spell);
-	void			create(class_s type, gender_s gender);
 	void			damage(int value);
 	void			dispell(spell_s effect);
 	void			drink(spell_s effect);
 	void			enchant(spell_s, unsigned rounds);
-	void			finish();
 	void			generate();
 	dice			getdamage(wear_s v) const;
 	feat_s			getenemyfeat() const;
@@ -39,8 +37,6 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			isready() const;
 	void			levelup();
 	void			raiselevel();
-	static const char* randomname(class_s type, gender_s gender);
-	static const char* randomavatar(class_s type, gender_s gender);
 	void			set(feat_s v) { feats.set(v); }
 	void			update();
 	void			update_finish();
@@ -56,4 +52,9 @@ struct creaturea : adat<creature*, 32> {
 };
 extern creaturea creatures, targets;
 
+void add_creature(class_s type, gender_s gender);
 void add_creature(const struct monsteri& v);
+void finish_creature();
+
+const char* random_avatar(class_s type, gender_s gender);
+const char* random_name(class_s type, gender_s gender);
