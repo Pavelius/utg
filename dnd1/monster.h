@@ -5,7 +5,7 @@
 
 #pragma once
 
-struct monsteri : nameable {
+struct monsteri : nameable, attackable {
 	dice		dungeon, wilderness;
 	variants	feats;
 };

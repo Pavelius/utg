@@ -11,6 +11,7 @@
 #include "script.h"
 #include "widget.h"
 
+NOBSDATA(attacki)
 NOBSDATA(dice)
 NOBSDATA(itemi::weaponi)
 
@@ -29,6 +30,10 @@ BSMETA(abilityi) = {
 	{}};
 BSMETA(actioni) = {
 	BSREQ(id),
+	{}};
+BSMETA(attacki) = {
+	BSREQ(count),
+	BSREQ(damage),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
@@ -75,6 +80,7 @@ BSMETA(monsteri) = {
 	BSREQ(feats),
 	BSREQ(dungeon),
 	BSREQ(wilderness),
+	BSREQ(attacks),
 	{}};
 BSMETA(rangei) = {
 	BSREQ(id),

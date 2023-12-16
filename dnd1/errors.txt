@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 4: Can't find variant `Proned`
+﻿In file `Names.txt`:
+AttackUnarmed: Define translate

@@ -231,6 +231,8 @@ void creature::create(class_s type, gender_s gender) {
 	clear();
 	this->type = type;
 	this->gender = gender;
+	attacks[0].count = 1;
+	attacks[0].damage = {1, 2};
 	basic.rollability();
 	basic.applybest(pi->prime);
 	basic.applyminimal(type);
@@ -247,6 +249,7 @@ void add_creature(const struct monsteri& v) {
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		player->basic.abilities[i] = 10;
+	memcpy(player->attacks, v.attacks, sizeof(player->attacks));
 	add_permanent(v.feats);
 	player->name = getnm(v.id);
 	player->finish();

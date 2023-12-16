@@ -110,7 +110,26 @@ static void make_attack(const char* id, int bonus, ability_s attack, ability_s d
 		if(critical_roll)
 			damage_item();
 	}
-	update_melee_fight();
+}
+
+static void unarmed_attack(int bonus, dice damage) {
+	auto ac = opponent->get(AC);
+	if(rolld20(bonus, 10 + ac, true)) {
+		player->actid("HitUnarmed", 0, ' ');
+		int result = 0;
+		if(critical_roll)
+			result = damage.maximum();
+		result += damage.roll();
+		opponent->damage(result);
+		if(critical_roll && opponent->isready()) {
+			pushvalue push_item(last_item, opponent->wears + Torso);
+			damage_item();
+		}
+	} else {
+		player->actid("MissUnarmed", 0, ' ');
+		if(critical_roll)
+			player->set(Prone);
+	}
 }
 
 static void melee_attack(int bonus) {
@@ -200,7 +219,22 @@ static void enter_melee_combat() {
 	}
 }
 
+static bool is_item_ready(wear_s type) {
+	if(!player->wears[type] || player->wears[type].isbroken())
+		return false;
+	auto ammo = player->wears[type].geti().weapon.ammunition;
+	if(ammo) {
+		if(!player->wears[Ammunition])
+			return false;
+		if(&player->wears[Ammunition].geti() != ammo)
+			return false;
+	}
+	return true;
+}
+
 static bool attack_melee(bool run) {
+	if(!is_item_ready(MeleeWeapon))
+		return false;
 	select_enemies();
 	targets.match(EngageMelee, true);
 	if(!targets)
@@ -213,17 +247,27 @@ static bool attack_melee(bool run) {
 	return true;
 }
 
-static bool is_item_ready(wear_s type) {
-	if(!player->wears[type])
+static bool attack_unarmed(bool run) {
+	if(is_item_ready(MeleeWeapon))
 		return false;
-	if(player->wears[type].isbroken())
+	select_enemies();
+	if(!targets)
 		return false;
-	auto ammo = player->wears[type].geti().weapon.ammunition;
-	if(ammo) {
-		if(!player->wears[Ammunition])
-			return false;
-		if(&player->wears[Ammunition].geti()!=ammo)
-			return false;
+	if(run) {
+		if(player->is(Invisibility))
+			player->dispell(Invisibility);
+		for(auto& e : player->attacks) {
+			if(!e.count)
+				continue;
+			for(auto i = 0; i < e.count; i++) {
+				select_enemies();
+				if(!targets)
+					return true;
+				choose_target();
+				enter_melee_combat();
+				unarmed_attack(0, e.damage);
+			}
+		}
 	}
 	return true;
 }
@@ -244,6 +288,8 @@ static bool attack_range(bool run) {
 }
 
 static bool charge(bool run) {
+	if(!is_item_ready(MeleeWeapon))
+		return false;
 	if(player->is(EngageMelee))
 		return false;
 	select_enemies();
@@ -331,6 +377,7 @@ static void combat_round() {
 		{"AttackRanged", attack_range},
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
+		{"AttackUnarmed", attack_unarmed},
 		{"DrinkPotion", drink_potion},
 		{"ReadScroll", read_scroll},
 	};
@@ -343,6 +390,7 @@ static void combat_round() {
 		}
 		p->update();
 		p->choose(combat_options);
+		update_melee_fight();
 	}
 }
 

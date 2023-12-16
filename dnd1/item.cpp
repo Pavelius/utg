@@ -91,8 +91,7 @@ void item::addname(stringbuilder& sb) const {
 }
 
 dice item::getdamage() const {
-	auto& r = geti().weapon.damage;
-	return r ? r : dice{1, 2};
+	return geti().weapon.damage;
 }
 
 int	item::getweight() const {
