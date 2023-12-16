@@ -68,7 +68,7 @@ void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
 			sb.add("%1i %-From %2i", p->abilities[HP], p->abilities[HPMax]);
 			break;
 		case MeleeToHit:
-			sb.add("%1i", 19 - p->abilities[id.value] - p->abilities[MeleeToHit]);
+			sb.add("%1i", 19 - p->abilities[id.value]);
 			break;
 		case AC:
 			sb.add("%1i", 9 - p->abilities[id.value]);

@@ -10,6 +10,7 @@ using namespace draw;
 array*		draw::heroes;
 fngetname	draw::heroes_getavatar;
 fnvisible	draw::heroes_isplayer;
+fngetint	draw::heroes_getfade;
 const void*	draw::focus_object;
 int			draw::title_width = 220;
 static point hide_separator;
@@ -432,6 +433,22 @@ static void strokered() {
 	fore = push_fore;
 }
 
+static void rect_fade(int percent, color fill_fore) {
+	if(percent >= 100)
+		return;
+	else if(percent <= 0)
+		percent = 0;
+	rectpush push;
+	auto push_alpha = alpha; alpha = 160;
+	auto push_fore = fore; fore = fill_fore;
+	auto dy = percent * height / 100;
+	height -= dy;
+	caret.y += dy;
+	rectf();
+	fore = push_fore;
+	alpha = push_alpha;
+}
+
 void draw::avatar(int index, const void* object, const char* id, fnevent press_event, bool right_line) {
 	auto p = gres(id, utg::url_avatars);
 	if(!p)
@@ -439,6 +456,8 @@ void draw::avatar(int index, const void* object, const char* id, fnevent press_e
 	width = p->get(0).sx;
 	height = p->get(0).sy;
 	image(caret.x, caret.y, p, 0, 0);
+	if(heroes_getfade)
+		rect_fade(heroes_getfade(object), color(87, 0, 13));
 	hiliting(object);
 	strokeout(focus_object==object ? strokeactive : strokeborder);
 	if(control_hilited)

@@ -13,10 +13,12 @@
 typedef flagable<4> flaga;
 
 namespace draw {
+typedef int(*fngetint)(const void* object);
 extern const void* focus_object;
 extern array* heroes;
 extern fngetname heroes_getavatar;
 extern fnvisible heroes_isplayer;
+extern fngetint heroes_getfade;
 extern const void* hilite_object;
 extern int title_width;
 void avatar(int index, const void* object, const char* id, fnevent press_event);

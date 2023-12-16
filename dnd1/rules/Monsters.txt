@@ -1,10 +1,10 @@
 #Monster
 
 Skeleton dungeon(1 4) wilderness(1 8)
- feats Level+1 AC+7 Undead
+ feats Level+1 AC+3 Undead
  attacks count(1) damage(1 6)
 Zombie
- feats Level+2 AC+8 Undead Slow
+ feats Level+2 AC+2 Undead Slow
 
 Orc
- feats Level+1 AC+6 SunSensitive
+ feats Level+1 AC+4 SunSensitive

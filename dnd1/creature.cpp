@@ -184,6 +184,10 @@ void creature::update_finish() {
 	abilities[SavePoison] += getbonus(Constitution);
 	abilities[SaveWands] += getbonush(Dexterity);
 	abilities[SaveSpells] += getbonus(Wisdow);
+	if(is(Prone)) {
+		abilities[MeleeToHit] -= 2;
+		abilities[AC] -= 2;
+	}
 	// Finale saves transformation
 	for(auto i = SaveDeath; i <= SavePoison; i = (ability_s)(i + 1)) {
 		abilities[i] = getsave(type, i, abilities[Level]) - abilities[i];

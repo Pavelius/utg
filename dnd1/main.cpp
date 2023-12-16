@@ -46,13 +46,21 @@ static const char* getavatarst(const void* p) {
 }
 
 static bool isplayer(const void* p) {
-	return p==player;
+	return p == player;
+}
+
+static int get_fade(const void* object) {
+	auto p = (creature*)object;
+	auto hp = p->get(HP);
+	auto hpm = p->get(HPMax);
+	return hp * 100 / hpm;
 }
 
 int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;
+	draw::heroes_getfade = get_fade;
 	srand(getcputime());
 	//srand(1123);
 	answers::resid = "meet";
