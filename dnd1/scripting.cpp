@@ -6,6 +6,7 @@
 #include "modifier.h"
 #include "pushvalue.h"
 #include "print.h"
+#include "randomizer.h"
 #include "roll.h"
 #include "reaction.h"
 #include "script.h"
@@ -40,6 +41,10 @@ template<> void fnscript<feati>(int index, int value) {
 	case Permanent: player->basic.feats.set(index, value >= 0); break;
 	default: player->feats.set(index, value >= 0); break;
 	}
+}
+
+template<> void fnscript<randomizeri>(int index, int value) {
+	script_run(single(bsdata<randomizeri>::elements[index].random()));
 }
 
 static void clear_console() {
@@ -235,6 +240,8 @@ static bool is_item_ready(wear_s type) {
 }
 
 static bool attack_melee(bool run) {
+	if(!player->is(EngageMelee))
+		return false;
 	if(!is_item_ready(MeleeWeapon))
 		return false;
 	select_enemies();

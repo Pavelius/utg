@@ -23,7 +23,7 @@ static void starting() {
 	add_creature("Fighter", Male, Player);
 	add_creature("Halfling", Female, Player);
 	answers::header = "Большой зал";
-	random_encounter("Skeleton");
+	random_encounter("Orc");
 	creatures.select();
 	//treasure loot;
 	//loot.generate('A');

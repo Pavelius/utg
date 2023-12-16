@@ -166,7 +166,7 @@
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
     <ClInclude Include="roll.h" />
-    <ClInclude Include="room.h" />
+    <ClInclude Include="scenery.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="treasure.h" />

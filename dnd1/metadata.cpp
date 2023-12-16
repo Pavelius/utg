@@ -8,6 +8,7 @@
 #include "modifier.h"
 #include "monster.h"
 #include "ongoing.h"
+#include "randomizer.h"
 #include "script.h"
 #include "widget.h"
 
@@ -84,6 +85,10 @@ BSMETA(monsteri) = {
 	BSREQ(wilderness),
 	BSREQ(attacks),
 	{}};
+BSMETA(randomizeri) = {
+	BSREQ(id),
+	BSREQ(chance),
+	{}};
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
@@ -112,6 +117,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(monsteri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
+	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Spell", VAR(spelli, 1)},
 	{"Widget", VAR(widget, 1)},
 };

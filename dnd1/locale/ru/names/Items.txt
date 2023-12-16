@@ -32,8 +32,11 @@ ChainArmor: Кольчуга
 LeatherArmor: Кожанная броня
 Shield: Щит
 
+BattleAxe: Секира
+Club: Дубина
 Dagger: Кинжал
 Sword: Меч
+
 ShortBow: Лук
 LongBow: Длинный лук
 

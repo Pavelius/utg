@@ -1,5 +1,6 @@
 #include "actable.h"
 #include "answers.h"
+#include "creature.h"
 #include "stringact.h"
 
 void actable::actv(stringbuilder& sbo, const char* format, const char* format_param, char separator) const {
@@ -29,6 +30,20 @@ bool actable::actid(const char* prefix, const char* suffix, char separator) cons
 	return true;
 }
 
+static bool act_weapon(stringbuilder& sb, const char* id) {
+	if(equal(id, "melee")) {
+		sb.add(player->wears[MeleeWeapon].getname());
+		return true;
+	}
+	return false;
+}
+
+static void main_act_identifier(stringbuilder& sb, const char* id) {
+	if(act_weapon(sb, id))
+		return;
+	act_identifier(sb, id);
+}
+
 void initialize_str() {
-	stringbuilder::custom = act_identifier;
+	stringbuilder::custom = main_act_identifier;
 }

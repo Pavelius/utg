@@ -1,3 +1,10 @@
-﻿In file `rules/Classes.txt`:
- Line 7: Not found Item identifier `Staff`
- Line 7: Not found Item identifier `Warhammer`
+﻿In file `rules/Items.txt`:
+ Line 55: Not found Feat identifier `Martial`
+ Line 57: Not found Feat identifier `Martial`
+ Line 59: Not found Feat identifier `Martial`
+ Line 61: Not found Feat identifier `Martial`
+ Line 61: Not found Feat identifier `WearLarge`
+ Line 64: Not found Feat identifier `WearLeather`
+ Line 68: Not found Feat identifier `WearIron`
+ Line 72: Not found Feat identifier `WearIron`
+ Line 76: Not found Feat identifier `WearShield`

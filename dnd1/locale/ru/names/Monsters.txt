@@ -1,1 +1,2 @@
-﻿Skeleton: Скелет
+﻿Orc: Орк
+Skeleton: Скелет

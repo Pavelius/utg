@@ -36,6 +36,7 @@ Mace cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
  flags Blunt
  powers Magical1 Magical2 Magical3
 ShortSword cost(7) weight(30) wear(MeleeWeapon) damage(1 6)
+Spear cost(3) weight(30) wear(MeleeWeapon) damage(1 6)
 Staff cost(2) weight(40) wear(MeleeWeapon) damage(1 6)
  flags Slow TwoHanded
 Sword cost(10) weight(60) wear(MeleeWeapon) damage(1 8)
@@ -51,28 +52,24 @@ Bolt wear(Ammunition) cost(5) count(20)
 Stone wear(Ammunition) count(10)
 
 Crossbow cost(30) weight(50) wear(RangedWeapon) damage(1 6 1) ammunition(Bolt)
- flags Martial Slow TwoHanded
+ flags Slow TwoHanded
 ShortBow cost(25) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
- flags Martial TwoHanded
+ flags TwoHanded
 Sling cost(2) weight(20) wear(RangedWeapon) damage(1 4) ammunition(Stone)
- flags Martial TwoHanded
+ flags TwoHanded
 LongBow cost(40) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
- flags Martial TwoHanded WearLarge
+ flags TwoHanded
 
 LeatherArmor cost(20) weight(200) wear(Torso)
- flags WearLeather
  wearing AC+2
  powers MagicArmor1 MagicArmor2
 ChainArmor cost(40) weight(400) wear(Torso)
- flags WearIron
  wearing AC+4
  powers MagicArmor1 MagicArmor2
 PlateArmor cost(60) weight(500) wear(Torso)
- flags WearIron
  wearing AC+6
  powers MagicArmor1 MagicArmor2
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
- flags WearShield
  wearing AC+1
  powers MagicArmor1 MagicArmor2
 

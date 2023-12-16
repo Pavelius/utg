@@ -63,7 +63,7 @@
     <ClInclude Include="creature.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="room.h">
+    <ClInclude Include="scenery.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="roll.h">
