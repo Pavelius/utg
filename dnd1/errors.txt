@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
-EngageMelee: Define translate
+DamageItem: Define translate
+NoItem: Define translate

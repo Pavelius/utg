@@ -21,10 +21,10 @@ void creaturea::match(feat_s v, bool keep) {
 	count = ps - data;
 }
 
-void creaturea::matchready(bool keep) {
+void creaturea::match(creaturea::fnproc proc, bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {
-		if(p->isready() != keep)
+		if((p->*proc)() != keep)
 			continue;
 		*ps++ = p;
 	}

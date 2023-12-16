@@ -1,3 +1,4 @@
+#include "action.h"
 #include "collection.h"
 #include "creature.h"
 #include "draw_utg.h"
@@ -42,7 +43,31 @@ template<> void fnscript<feati>(int index, int value) {
 	}
 }
 
-static bool rolld20(int bonus, int dc) {
+static void clear_console() {
+	if(answers::console)
+		answers::console->clear();
+}
+
+static void printv(char separator, const char* format, const char* format_param) {
+	if(!answers::console)
+		return;
+	answers::console->addsep(separator);
+	answers::console->addv(format, format_param);
+}
+
+static void print(char separator, const char* format, ...) {
+	printv(separator, format, xva_start(format));
+}
+
+static void printn(const char* format, ...) {
+	printv('\n', format, xva_start(format));
+}
+
+static void prints(const char* format, ...) {
+	printv(' ', format, xva_start(format));
+}
+
+static bool rolld20(int bonus, int dc, bool fix_roll = false) {
 	last_roll_raw = xrand(1, 20);
 	last_roll = last_roll_raw + bonus;
 	critical_roll = 0;
@@ -50,24 +75,74 @@ static bool rolld20(int bonus, int dc) {
 		critical_roll = 1;
 	else if(last_roll_raw == 1)
 		critical_roll = -1;
-	return last_roll >= dc || (critical_roll == 1);
+	auto result = (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
+	if(critical_roll == -1)
+		printn("[-{%1i}]", last_roll);
+	else if(critical_roll == 1)
+		printn("[+{%1i}]", last_roll);
+	else if(result)
+		printn("[{%1i}]", last_roll);
+	else
+		printn("[~{%1i}]", last_roll);
+	return (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
+}
+
+static void damage_item() {
+	last_item->damage();
+	if(!last_item->operator bool())
+		prints(getnm("DamageItem"), last_item->getname());
+}
+
+static bool is_melee_fight() {
+	feat_s feat = {};
+	for(auto p : creatures) {
+		if(!p->isready() || !p->is(EngageMelee))
+			continue;
+		feat_s t = {};
+		if(p->is(Enemy))
+			t = Enemy;
+		else if(p->is(Player))
+			t = Player;
+		else
+			continue;
+		if(!feat)
+			feat = t;
+		else if(feat != t)
+			return true;
+	}
+	return false;
+}
+
+static void update_melee_fight() {
+	if(is_melee_fight())
+		return;
+	for(auto p : creatures)
+		p->feats.remove(EngageMelee);
 }
 
 static void make_attack(const char* id, int bonus, ability_s attack, ability_s damage, wear_s weapon) {
 	if(player->is(Invisibility))
 		player->dispell(Invisibility);
 	auto ac = opponent->get(AC);
-	if(rolld20(bonus, 10 + ac)) {
-		information("{%1i%+2i=%3i}", last_roll_raw, bonus, last_roll);
+	last_item = player->wears + weapon;
+	if(rolld20(bonus, 10 + ac, true)) {
 		player->actid("Hit", id, ' ');
-		auto& hands = player->wears[weapon];
-		auto result = hands.getdamage().roll();
+		int result = 0;
+		if(critical_roll)
+			result = last_item->getdamage().maximum();
+		result += last_item->getdamage().roll();
 		result += player->get(damage);
 		opponent->damage(result);
+		if(critical_roll && opponent->isready()) {
+			pushvalue push_item(last_item, opponent->wears + Torso);
+			damage_item();
+		}
 	} else {
-		warning("{%1i%+2i=%3i}", last_roll_raw, bonus, last_roll);
 		player->actid("Miss", id, ' ');
+		if(critical_roll)
+			damage_item();
 	}
+	update_melee_fight();
 }
 
 static void melee_attack(int bonus) {
@@ -78,30 +153,17 @@ static void range_attack(int bonus) {
 	make_attack("Ranged", bonus, RangedToHit, RangedDamage, RangedWeapon);
 }
 
-static bool is_fight_melee(int bonus) {
-	return player->is(EngageMelee) == (bonus >= 0);
-}
-
-static void clear_console() {
-	if(answers::console)
-		answers::console->clear();
-}
-
-void select_enemies(int bonus) {
+void select_enemies() {
 	targets.clear();
 	if(player->is(Player)) {
 		targets = creatures;
 		targets.match(Enemy, true);
-		targets.matchready(true);
+		targets.match(&creature::isready, true);
 	} else if(player->is(Enemy)) {
 		targets = creatures;
 		targets.match(Player, true);
-		targets.matchready(true);
+		targets.match(&creature::isready, true);
 	}
-}
-static bool allow_targets(int bonus) {
-	last_script->proc(bonus);
-	return targets.getcount() != 0;
 }
 
 static int compare_initiative(const void* v1, const void* v2) {
@@ -110,17 +172,10 @@ static int compare_initiative(const void* v1, const void* v2) {
 	return p1->initiative - p2->initiative;
 }
 
-void roll_initiative() {
+static void roll_initiative() {
 	for(auto p : creatures)
 		p->initiative = xrand(1, 6);
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
-}
-
-creature* choose_target() {
-	answers an;
-	for(auto p : targets)
-		an.add(p, p->getname());
-	return (creature*)an.choose(getnm("ChooseTarget"));
 }
 
 static void add_monsters(const monsteri* pm, int count, feat_s feat) {
@@ -146,44 +201,60 @@ void random_encounter(const char* id) {
 	random_encounter(bsdata<monsteri>::find(id));
 }
 
-static void random_melee_angry(size_t count) {
-	select_enemies(0);
+static void random_melee_angry(int bonus) {
+	select_enemies();
 	targets.match(EngageMelee, false);
 	zshuffle(targets.data, targets.count);
-	if(count > targets.count)
-		count = targets.count;
-	for(size_t i = 0; i < count; i++)
+	if(bonus > (int)targets.count)
+		bonus = targets.count;
+	for(auto i = 0; i < bonus; i++)
 		targets.data[i]->set(EngageMelee);
 }
 
-static void choose_player_enemy() {
-	select_enemies(0);
+static void choose_target() {
 	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
-	if(opponent) {
+}
+
+static void choose_item() {
+	if(player->is(Enemy))
+		last_item = items.random();
+	else
+		last_item = items.choose(getnm("ChooseItem"));
+}
+
+static void enter_melee_combat() {
+	if(!opponent)
+		return;
+	if(!opponent->is(EngageMelee) || !player->is(EngageMelee)) {
 		player->set(EngageMelee);
 		opponent->set(EngageMelee);
-		if(rand() % 2)
-			random_melee_angry(1);
+		random_melee_angry(1);
 	}
 }
 
 static bool attack_melee(bool run) {
-	select_enemies(0);
+	select_enemies();
+	targets.match(EngageMelee, true);
 	if(!targets)
 		return false;
 	if(run) {
-		choose_player_enemy();
+		choose_target();
+		enter_melee_combat();
 		melee_attack(0);
 	}
 	return true;
 }
 
 static bool attack_range(bool run) {
-	select_enemies(0);
+	if(!player->wears[RangedWeapon])
+		return false;
+	if(player->is(EngageMelee))
+		return false;
+	select_enemies();
 	if(!targets)
 		return false;
 	if(run) {
-		opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
+		choose_target();
 		range_attack(0);
 	}
 	return true;
@@ -192,11 +263,12 @@ static bool attack_range(bool run) {
 static bool charge(bool run) {
 	if(player->is(EngageMelee))
 		return false;
-	select_enemies(0);
+	select_enemies();
 	if(!targets)
 		return false;
 	if(run) {
-		choose_player_enemy();
+		choose_target();
+		enter_melee_combat();
 		player->add(MeleeToHit, 1);
 		player->add(AC, -1);
 		melee_attack(0);
@@ -204,14 +276,27 @@ static bool charge(bool run) {
 	return true;
 }
 
-static bool drink_potion(bool run) {
+static bool use_item(wear_s type, bool run) {
 	items.select(player->allitems());
-	items.match(Potion, false);
+	items.match(type, true);
 	if(!items)
 		return false;
 	if(run) {
+		choose_item();
+		if(last_item) {
+			script_run(last_item->geti().use);
+			last_item->clear();
+		}
 	}
-	return false;
+	return true;
+}
+
+static bool drink_potion(bool run) {
+	return use_item(Potion, run);
+}
+
+static bool read_scroll(bool run) {
+	return use_item(Scroll, run);
 }
 
 static bool prepare_spells(bool run) {
@@ -250,8 +335,9 @@ static void combat_round() {
 	static chooseoption combat_options[] = {
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
-		//{"AttackRange", attack_range},
+		{"AttackRange", attack_range},
 		{"DrinkPotion", drink_potion},
+		{"ReadScroll", read_scroll},
 	};
 	for(auto p : creatures) {
 		if(!p->isready())
@@ -264,7 +350,7 @@ static void combat_round() {
 static bool lose_game(bool run) {
 	targets = creatures;
 	targets.match(Player, true);
-	targets.matchready(true);
+	targets.match(&creature::isready, true);
 	if(targets)
 		return false;
 	if(run)
@@ -275,7 +361,7 @@ static bool lose_game(bool run) {
 static bool win_battle(bool run) {
 	targets = creatures;
 	targets.match(Enemy, true);
-	targets.matchready(true);
+	targets.match(&creature::isready, true);
 	if(targets)
 		return false;
 	if(run)
@@ -316,7 +402,6 @@ static void all_saves(int bonus) {
 }
 
 BSDATA(script) = {
-	{"FightingMelee", script_none, is_fight_melee},
 	{"Saves", all_saves},
 };
 BSDATAF(script)

@@ -1,3 +1,4 @@
+#include "action.h"
 #include "advance.h"
 #include "bsreq.h"
 #include "item.h"
@@ -16,6 +17,7 @@ NOBSDATA(dice)
 NOBSDATA(itemi::weaponi)
 
 BSDATAC(advancei, 256)
+BSDATAC(actioni, 256)
 BSDATAC(classi, 16)
 BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
@@ -25,6 +27,9 @@ BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
 
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(actioni) = {
 	BSREQ(id),
 	{}};
 BSMETA(classi) = {
@@ -93,6 +98,7 @@ BSMETA(weari) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Action", VAR(actioni, 1)},
 	{"Advance", VAR(advancei, 3)},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},

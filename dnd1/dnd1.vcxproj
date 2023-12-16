@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="actable.h" />
+    <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="attackable.h" />
     <ClInclude Include="class.h" />

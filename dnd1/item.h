@@ -33,8 +33,8 @@ class item {
 		unsigned char flags;
 		struct {
 			unsigned char identified : 1;
-			unsigned char personal : 1;
 			unsigned char cursed : 1;
+			unsigned char personal : 1;
 		};
 	};
 	union {
@@ -59,6 +59,7 @@ public:
 	int			getcount() const;
 	dice		getdamage() const;
 	const char*	getname() const { return geti().getname(); }
+	static const char* getname(const void* object) { return ((item*)object)->getname(); }
 	const itempoweri* getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
@@ -70,3 +71,4 @@ struct itema : collection<item> {
 	void		match(wear_s v, bool keep);
 	void		select(const slice<item>& source);
 };
+extern item* last_item;

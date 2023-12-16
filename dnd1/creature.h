@@ -48,9 +48,10 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 };
 extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {
+	typedef bool (creature::*fnproc)() const;
 	creature*		choose(const char* title, bool random = false) const;
 	void			match(feat_s v, bool keep);
-	void			matchready(bool keep);
+	void			match(fnproc proc, bool keep);
 	void			select();
 };
 extern creaturea creatures, targets;

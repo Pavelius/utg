@@ -1,10 +1,23 @@
 #include "item.h"
 
+item* last_item;
+
+static int d100() {
+	return rand() % 100;
+}
+
 void itema::select(const slice<item>& source) {
 	for(auto& e : source) {
 		if(e)
 			add(&e);
 	}
+}
+
+void item::damage() {
+	if(d100() < 50)
+		return;
+	if(broken < 3)
+		broken++;
 }
 
 void itema::match(wear_s wear, bool keep) {

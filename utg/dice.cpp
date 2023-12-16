@@ -9,3 +9,9 @@ int dice::roll() const {
 		r += 1 + rand() % d;
 	return r;
 }
+
+int dice::maximum() const {
+	if(!d)
+		return c;
+	return c * d + b;
+}

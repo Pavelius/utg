@@ -84,6 +84,9 @@
     <ClInclude Include="attackable.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="action.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
