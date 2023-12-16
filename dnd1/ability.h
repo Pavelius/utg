@@ -11,6 +11,7 @@ enum ability_s : unsigned char {
 	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
 	HideUndergrowth,
 	SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
+	SpellLevel1, SpellLevel2, SpellLevel3, SpellLevel4, SpellLevel5,
 	HP, IllusionCopies,
 };
 struct abilityi : nameable {

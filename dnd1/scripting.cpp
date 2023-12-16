@@ -31,8 +31,8 @@ template<> void fnscript<itemi>(int index, int value) {
 	player->equip(it);
 	if(it)
 		player->additem(it);
-	if(pi->weapon.ammunition)
-		fnscript<itemi>(pi->weapon.ammunition - bsdata<itemi>::elements, 0);
+	if(pi->ammunition)
+		fnscript<itemi>(pi->ammunition - bsdata<itemi>::elements, 0);
 }
 
 template<> void fnscript<feati>(int index, int value) {
@@ -224,7 +224,7 @@ static void enter_melee_combat() {
 static bool is_item_ready(wear_s type) {
 	if(!player->wears[type] || player->wears[type].isbroken())
 		return false;
-	auto ammo = player->wears[type].geti().weapon.ammunition;
+	auto ammo = player->wears[type].geti().ammunition;
 	if(ammo) {
 		if(!player->wears[Ammunition])
 			return false;

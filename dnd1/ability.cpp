@@ -32,6 +32,11 @@ BSDATA(abilityi) = {
 	{"SaveBreathWeapon"},
 	{"SaveSpells"},
 	{"SavePoison"},
+	{"SpellLevel1"},
+	{"SpellLevel2"},
+	{"SpellLevel3"},
+	{"SpellLevel4"},
+	{"SpellLevel5"},
 	{"HP"},
 	{"IllusionCopies"},
 };

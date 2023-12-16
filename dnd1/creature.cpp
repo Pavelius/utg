@@ -23,7 +23,7 @@ static void add_temporary(const variants& source) {
 
 static void apply_advance(variant type, int level) {
 	for(auto& e : bsdata<advancei>()) {
-		if(e.type == type && e.level==level)
+		if(e.type == type && e.level == level)
 			add_permanent(e.elements);
 	}
 }
@@ -44,8 +44,19 @@ void creature::raiselevel() {
 	apply_advance(bsdata<classi>::elements + type, n);
 }
 
+static unsigned get_experience(unsigned char type, int level) {
+	auto p = bsdata<classi>::elements + type;
+	if(level <= 1)
+		return 0;
+	return maptbl(p->experience, level - 2);
+}
+
 void creature::levelup() {
-	while(getexperience(type, basic.get(Level) + 1) <= experience) {
+	while(true) {
+		auto next_level = basic.get(Level) + 1;
+		auto next_experience = get_experience(type, next_level);
+		if((next_level>1 && !next_experience) || (next_experience && experience < next_experience))
+			break;
 		basic.add(Level, 1);
 		raiselevel();
 	}
@@ -82,9 +93,9 @@ void creature::choose(const slice<chooseoption>& options) {
 		::choose(options, temp, enemy_name);
 }
 
-const char* random_name(class_s type, gender_s gender) {
+const char* random_name(const classi* pi, gender_s gender) {
 	return stringlist::getname(stringlist::random(str("%1%2",
-		bsdata<classi>::elements[type].getid(),
+		pi->getid(),
 		bsdata<genderi>::elements[gender].id)));
 }
 
@@ -98,10 +109,10 @@ static bool allow_avatar(const char* avatar) {
 	return true;
 }
 
-const char* random_avatar(class_s type, gender_s gender) {
+const char* random_avatar(const classi* pi, gender_s gender) {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
-	auto result = avatarable::choose(0, gender==Female ? "f*.*" : "m*.*", 6, allow_avatar);
+	auto result = avatarable::choose(0, gender == Female ? "f*.*" : "m*.*", 6, allow_avatar);
 	answers::interactive = push_interactive;
 	return result;
 }
@@ -181,12 +192,10 @@ static void update_spells() {
 }
 
 void creature::update_finish() {
-	// Basic values
-	auto thac0 = getattackbonus(bsdata<classi>::elements[type].tohit, abilities[Level]);
 	// Depended values
-	abilities[MeleeToHit] += thac0 + getbonus(Strenght);
+	abilities[MeleeToHit] += getbonus(Strenght);
 	abilities[MeleeDamage] += getbonus(Strenght);
-	abilities[RangedToHit] += thac0 + getbonus(Dexterity);
+	abilities[RangedToHit] += getbonus(Dexterity);
 	abilities[AC] += getbonus(Dexterity);
 	abilities[Speed] += getbonush(Dexterity);
 	abilities[HPMax] += getbonus(Constitution) * abilities[Level];
@@ -235,26 +244,31 @@ dice creature::getdamage(wear_s v) const {
 	return r;
 }
 
-void add_creature(class_s type, gender_s gender) {
-	auto pi = bsdata<classi>::elements + type;
+static void apply_minimal(const classi* pi) {
+	for(auto i = 0; i < 6; i++) {
+		if(player->basic.abilities[i] < pi->minimal[i])
+			player->basic.abilities[i] = pi->minimal[i];
+	}
+}
+
+void add_creature(const classi* pi, gender_s gender) {
 	player = bsdata<creature>::add();
 	player->clear();
-	player->type = type;
+	player->type = pi - bsdata<classi>::elements;
 	player->gender = gender;
 	player->attacks[0].count = 1;
 	player->attacks[0].damage = {1, 2};
 	player->basic.rollability();
 	player->basic.applybest(pi->prime);
-	player->basic.applyminimal(type);
-	player->name = random_name(type, gender);
-	player->setavatar(random_avatar(type, gender));
+	player->name = random_name(pi, gender);
+	apply_minimal(pi);
+	player->setavatar(random_avatar(pi, gender));
 	finish_creature();
 }
 
 void add_creature(const struct monsteri& v) {
 	player = bsdata<creature>::add();
 	player->clear();
-	player->type = Monster;
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		player->basic.abilities[i] = 10;

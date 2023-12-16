@@ -217,5 +217,8 @@
     <Text Include="rules\Advance.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="rules\Classes.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

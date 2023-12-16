@@ -14,13 +14,10 @@ struct itempoweri : nameable {
 	variants	wearing; // Additional wearing effect
 };
 struct itemi : nameable {
-	struct weaponi {
-		dice			damage;
-		const itemi*	ammunition;
-	};
-	const char*	unidentified;
-	int			cost, weight, count;
-	weaponi		weapon;
+	unsigned	cost, weight, count;
+	itemi*		basic;
+	dice		damage;
+	itemi*		ammunition;
 	wear_s		wear;
 	featable	flags;
 	variants	use, wearing;

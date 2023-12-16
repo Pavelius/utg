@@ -3,6 +3,45 @@
 Dwarf 1 Equipment
  elements BattleAxe ChainArmor
 
+Elf 1 SavingThrows
+ elements SaveDeath+8 SaveWands+7 SaveParalize+7 SaveBreathWeapon+5 SaveSpells+5
+Elf 4 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+2 SaveSpells+3
+Elf 7 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+3 SaveSpells+2
+Elf 10 SavingThrows
+ elements SaveDeath+2 SaveWands+2 SaveParalize+2 SaveBreathWeapon+2 SaveSpells+2
+Elf 1 SpellCasting
+ elements SpellLevel1+1
+Elf 2 SpellCasting
+ elements SpellLevel1+1
+Elf 3 SpellCasting
+ elements SpellLevel2+1
+Elf 4 SpellCasting
+ elements SpellLevel2+1
+Elf 5 SpellCasting
+ elements SpellLevel3+1
+Elf 6 SpellCasting
+ elements SpellLevel3+1
+Elf 7 SpellCasting
+ elements SpellLevel1+1 SpellLevel4+1
+Elf 8 SpellCasting
+ elements SpellLevel2+1 SpellLevel4+1
+Elf 9 SpellCasting
+ elements SpellLevel3+1 SpellLevel5+1
+Elf 10 SpellCasting
+ elements SpellLevel4+1 SpellLevel5+1
+Elf 1 ListeningAtDoor
+ elements HearNoise+16
+Elf 1 DetectSecretDoors
+ elements Search+16
+Elf 4 THAC0
+ elements MeleeToHit+2 RangedToHit+2
+Elf 7 THAC0
+ elements MeleeToHit+3 RangedToHit+3
+Elf 10 THAC0
+ elements MeleeToHit+2 RangedToHit+2
+
 Fighter 1 Equipment
  elements Sword Shield ChainArmor LongBow
 Fighter 1 SavingThrows

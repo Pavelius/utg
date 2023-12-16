@@ -13,7 +13,6 @@
 
 NOBSDATA(attacki)
 NOBSDATA(dice)
-NOBSDATA(itemi::weaponi)
 
 BSDATAC(advancei, 256)
 BSDATAC(actioni, 256)
@@ -37,6 +36,10 @@ BSMETA(attacki) = {
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
+	BSREQ(hd),
+	BSDST(minimal, abilityi),
+	BSENM(prime, abilityi),
+	BSREQ(experience),
 	{}};
 BSMETA(creature) = {
 	BSDST(abilities, abilityi),
@@ -66,14 +69,11 @@ BSMETA(itemi) = {
 	BSREQ(cost), BSREQ(weight), BSREQ(count),
 	BSFLG(flags, feati),
 	BSENM(wear, weari),
-	BSREQ(weapon),
+	BSREQ(damage),
+	BSREQ(ammunition),
 	BSREQ(use),
 	BSREQ(wearing),
 	BSREQ(powers),
-	{}};
-BSMETA(itemi::weaponi) = {
-	BSREQ(damage),
-	BSREQ(ammunition),
 	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),

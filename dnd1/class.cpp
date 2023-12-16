@@ -10,18 +10,6 @@ namespace draw {
 extern int tab_pixels;
 }
 
-BSDATA(classi) = {
-	{"Monster", MeleeToHit, {}, 0, 8},
-	{"Cleric", Wisdow, {}, 1, 6},
-	{"Dwarf", Strenght, {0, 0, 9, 0, 0, 0}, 0, 8},
-	{"Elf", Dexterity, {0, 0, 0, 9, 0, 0}, 0, 6},
-	{"Fighter", Strenght, {}, 0, 8},
-	{"Halfling", Dexterity, {0, 9, 9, 0, 0, 0}, 0, 6},
-	{"Theif", Dexterity, {}, 1, 4},
-	{"Wizard", Intellect, {}, 2, 4},
-};
-assert_enum(classi, Wizard)
-
 static avatarable last_avatar;
 
 static void add_abilitites() {
@@ -88,7 +76,7 @@ static void choose_class() {
 		an.add(&e, getnm(e.id));
 	}
 	auto p = (classi*)an.choose(getnm("ChooseClass"));
-	player->type = (class_s)(p - bsdata<classi>::elements);
+	player->type = p - bsdata<classi>::elements;
 	draw::tab_pixels = push_tabs;
 	answers::console->clear();
 }

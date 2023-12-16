@@ -215,6 +215,7 @@
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Classes.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
     <Text Include="rules\RandomGems.txt" />

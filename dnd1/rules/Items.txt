@@ -18,6 +18,54 @@ DefendingWeapon magic(1)
 
 NoItem
 
+BattleAxe cost(7) weight(50) wear(MeleeWeapon) damage(1 8)
+ flags Martial Slow TwoHanded
+ powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
+Club cost(3) weight(50) wear(MeleeWeapon) damage(1 4)
+ flags Martial Blunt
+ powers Magical1 Magical2
+Dagger cost(3) weight(10) wear(MeleeWeapon) damage(1 4)
+ powers Magical1 Magical2 Magical3
+Halberd cost(7) weight(150) wear(MeleeWeapon) damage(1 10)
+ flags Martial Slow TwoHanded WearLarge
+ powers Magical1 Magical2 Magical3
+HandAxe cost(4) weight(30) wear(MeleeWeapon) damage(1 6)
+ flags Martial
+ powers Magical1 Magical2 Magical3
+Mace cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
+ flags Martial Blunt
+ powers Magical1 Magical2 Magical3
+Sword cost(10) weight(60) wear(MeleeWeapon) damage(1 8)
+ flags Martial
+ powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
+
+Arrow wear(Ammunition) cost(5) count(30)
+Bolt wear(Ammunition) cost(5) count(20)
+
+Crossbow cost(30) weight(50) wear(RangedWeapon) damage(1 6 1) ammunition(Bolt)
+ flags Martial Slow TwoHanded
+ShortBow cost(25) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
+ flags Martial TwoHanded
+LongBow cost(40) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
+ flags Martial TwoHanded WearLarge
+
+LeatherArmor cost(20) weight(200) wear(Torso)
+ flags WearLeather
+ wearing AC+2
+ powers MagicArmor1 MagicArmor2
+ChainArmor cost(40) weight(400) wear(Torso)
+ flags WearIron
+ wearing AC+4
+ powers MagicArmor1 MagicArmor2
+PlateArmor cost(60) weight(500) wear(Torso)
+ flags WearIron
+ wearing AC+6
+ powers MagicArmor1 MagicArmor2
+Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
+ flags WearShield
+ wearing AC+1
+ powers MagicArmor1 MagicArmor2
+
 CP cost(1) count(100)
 SP cost(1) count(10)
 EP cost(1) count(5)
@@ -39,64 +87,6 @@ CoralAmulet cost(600) weight(8)
 SilverAmulet cost(1000) weight(4)
 GoldAmulet cost(1600) weight(5)
 
-BattleAxe cost(7) weight(50) wear(MeleeWeapon)
- flags Martial Slow TwoHanded
- weapon damage(1 8)
- powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
-Club cost(3) weight(50) wear(MeleeWeapon)
- flags Martial Blunt
- weapon damage(1 4)
- powers Magical1 Magical2
-Dagger cost(3) weight(10) wear(MeleeWeapon)
- weapon damage(1 4)
- powers Magical1 Magical2 Magical3
-Halberd cost(7) weight(150) wear(MeleeWeapon)
- flags Martial Slow TwoHanded WearLarge
- weapon damage(1 10)
- powers Magical1 Magical2 Magical3
-HandAxe cost(4) weight(30) wear(MeleeWeapon)
- flags Martial
- weapon damage(1 6)
- powers Magical1 Magical2 Magical3
-Mace cost(5) weight(30) wear(MeleeWeapon)
- flags Martial Blunt
- weapon damage(1 6)
- powers Magical1 Magical2 Magical3
-Sword cost(10) weight(60) wear(MeleeWeapon)
- flags Martial
- weapon damage(1 8)
- powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
-
-Arrow wear(Ammunition) cost(5) count(30)
-Bolt wear(Ammunition) cost(5) count(20)
-
-Crossbow cost(30) weight(50) wear(RangedWeapon)
- flags Martial Slow TwoHanded
- weapon damage(1 6 1)
-ShortBow cost(25) weight(30) wear(RangedWeapon)
- flags Martial TwoHanded
- weapon damage(1 6) ammunition(Arrow)
-LongBow cost(40) weight(30) wear(RangedWeapon)
- flags Martial TwoHanded WearLarge
- weapon damage(1 6) ammunition(Arrow)
-
-LeatherArmor cost(20) weight(200) wear(Torso)
- flags WearLeather
- wearing AC+2
- powers MagicArmor1 MagicArmor2
-ChainArmor cost(40) weight(400) wear(Torso)
- flags WearIron
- wearing AC+4
- powers MagicArmor1 MagicArmor2
-PlateArmor cost(60) weight(500) wear(Torso)
- flags WearIron
- wearing AC+6
- powers MagicArmor1 MagicArmor2
-Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
- flags WearShield
- wearing AC+1
- powers MagicArmor1 MagicArmor2
-
 AquaPotion cost(10) weight(10) wear(Potion)
 BlackPotion cost(50) weight(10) wear(Potion)
 BluePotion cost(60) weight(10) wear(Potion)
@@ -106,4 +96,4 @@ YellowPotion cost(100) weight(10) wear(Potion)
 #List
 
 Jewelry
- elements IronRing SilverRing GoldenRing LeadAmulet CoralAmulet SilverAmulet GoldAmulet
+ elements SilverRing GoldenRing SilverAmulet GoldAmulet

@@ -10,7 +10,7 @@
 #pragma once
 
 struct creature : actable, attackable, spellable, statable, avatarable, wearable {
-	class_s			type;
+	unsigned char	type;
 	statable		basic;
 	spellf			active_spells, known_spells;
 	char			initiative;
@@ -52,9 +52,9 @@ struct creaturea : adat<creature*, 32> {
 };
 extern creaturea creatures, targets;
 
-void add_creature(class_s type, gender_s gender);
+void add_creature(const classi* pi, gender_s gender);
 void add_creature(const struct monsteri& v);
 void finish_creature();
 
-const char* random_avatar(class_s type, gender_s gender);
-const char* random_name(class_s type, gender_s gender);
+const char* random_avatar(const classi* pi, gender_s gender);
+const char* random_name(const classi* pi, gender_s gender);
