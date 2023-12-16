@@ -1,10 +1,13 @@
 #include "bsref.h"
 #include "bsreq.h"
+#include "creature.h"
 #include "stringlist.h"
 #include "draw_object.h"
 #include "draw_utg.h"
-#include "game.h"
 #include "generator.h"
+
+void combat_mode();
+void random_encounter(const char* id);
 
 static creature* create_player(class_s type, gender_s gender, feat_s feat) {
 	auto p = bsdata<creature>::add();
@@ -52,8 +55,6 @@ int main(int argc, char* argv[]) {
 	draw::heroes_isplayer = isplayer;
 	srand(getcputime());
 	//srand(1123);
-	answers::console = &utg::sb;
-	answers::prompt = utg::sb.begin();
 	answers::resid = "meet";
 	initialize_ui();
 	return draw::start(starting, initializing);

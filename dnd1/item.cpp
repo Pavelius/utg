@@ -13,13 +13,6 @@ void itema::select(const slice<item>& source) {
 	}
 }
 
-void item::damage() {
-	if(d100() < 50)
-		return;
-	if(broken < 3)
-		broken++;
-}
-
 void itema::match(wear_s wear, bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {
@@ -30,20 +23,28 @@ void itema::match(wear_s wear, bool keep) {
 	count = ps - begin();
 }
 
-void item::create(const char* id, int count) {
-	create(bsdata<itemi>::find(id), count);
+item::item(const char* id) {
+	item(bsdata<itemi>::find(id));
 }
 
-void item::create(const itemi* pi, int count) {
-	if(!pi)
-		return;
-	create(pi - bsdata<itemi>::elements, pi->count ? pi->count * count : count);
-}
-
-void item::create(unsigned short type, int count) {
+item::item(const itemi* pi) {
 	clear();
-	this->type = type;
-	setcount(count);
+	if(pi) {
+		type = pi - bsdata<itemi>::elements;
+		if(pi->count)
+			setcount(pi->count);
+	}
+}
+
+void item::damage() {
+	if(d100() < 50)
+		return;
+	if(iscountable())
+		setcount(getcount() - 1);
+	else {
+		if(broken < 3)
+			broken++;
+	}
 }
 
 int item::getcount() const {

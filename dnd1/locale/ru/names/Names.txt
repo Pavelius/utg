@@ -59,4 +59,4 @@ MeleeDamage: Урон
 
 SaveSpells: Спасброски
 
-Skeleton: Скелет
+DamageItem: %герой был%а сломан%а.

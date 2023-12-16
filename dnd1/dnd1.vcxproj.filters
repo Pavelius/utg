@@ -12,9 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="ability.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="metadata.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="creature.cpp">
@@ -187,9 +181,6 @@
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\ItemNames.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="locale\ru\names\Names.txt">
       <Filter>locale</Filter>
     </Text>
@@ -197,6 +188,15 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\names\Feats.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Actions.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Monsters.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Items.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

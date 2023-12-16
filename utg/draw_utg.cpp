@@ -581,6 +581,7 @@ void initialize_translation(const char* locale);
 
 int draw::start(fnevent proc, fnevent afterread) {
 	initialize_png();
+	answers::console = &utg::sb;
 	if(!utg::callback::getstatus)
 		utg::callback::getstatus = utg::getstatus;
 	if(!proc)

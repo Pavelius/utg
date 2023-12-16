@@ -41,18 +41,22 @@ class item {
 		unsigned char count;
 		struct {
 			unsigned char power : 4;
-			unsigned char broken : 4;
+			unsigned char broken : 2;
+			unsigned char charges : 2;
 		};
 	};
 public:
 	explicit operator bool() const { return type != 0; }
+	item() = default;
+	item(const char* id);
+	item(const itemi* pi);
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
-	void		create(unsigned short type, int count);
-	void		create(const char* id, int count);
-	void		create(const itemi* pi, int count);
+	//void		create(unsigned short type, int count);
+	//void		create(const char* id, int count);
+	//void		create(const itemi* pi, int count);
 	void		damage();
 	const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	int			getcost() const;
@@ -63,8 +67,10 @@ public:
 	const itempoweri* getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
+	bool		isbroken() const { return !iscountable() && broken >= 3; }
 	bool		iscursed() const { return cursed != 0; }
-	bool		iscountable() const { return geti().powers != 0; }
+	bool		iscountable() const { return geti().powers[0] == 0; }
+	bool		isready() const;
 	void		setcount(int v);
 };
 struct itema : collection<item> {

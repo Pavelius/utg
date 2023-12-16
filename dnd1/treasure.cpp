@@ -41,7 +41,8 @@ static void add_coins(treasure& result, const char* id, const treasurei::coini& 
 	auto count = e.range.roll();
 	if(e.multiplier)
 		count = count * e.multiplier;
-	item it; it.create(pi, count);
+	item it(pi);
+	it.setcount(count);
 	result.add(it);
 }
 
@@ -55,10 +56,8 @@ static void add_gems(treasure& result, const treasurei::coini& e) {
 		count = count * e.multiplier;
 	for(auto i = 0; i < count; i++) {
 		auto value = random_value("RandomGems");
-		if(value.iskind<itemi>()) {
-			item it; it.create(value.value, 1);
-			result.add(it);
-		}
+		if(value.iskind<itemi>())
+			result.add(bsdata<itemi>::elements + value.value);
 	}
 }
 
@@ -75,10 +74,8 @@ static void add_jewelry(treasure& result, const treasurei::coini& e) {
 		return;
 	for(auto i = 0; i < count; i++) {
 		auto value = random_list_value(jewelry);
-		if(value.iskind<itemi>()) {
-			item it; it.create(value.value, 1);
-			result.add(it);
-		}
+		if(value.iskind<itemi>())
+			result.add(bsdata<itemi>::elements + value.value);
 	}
 }
 

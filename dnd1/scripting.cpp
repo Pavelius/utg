@@ -2,18 +2,25 @@
 #include "collection.h"
 #include "creature.h"
 #include "draw_utg.h"
-#include "game.h"
+#include "gender.h"
 #include "modifier.h"
 #include "pushvalue.h"
 #include "rolldice.h"
+#include "reaction.h"
 #include "script.h"
 #include "spell.h"
+#include "stringact.h"
 
 creaturea targets;
 itema items;
 spella spells;
 static spell_s last_spell;
 static int critical_roll;
+static reaction_s reaction;
+
+static int d6() {
+	return 1 + rand() % 6;
+}
 
 template<> void fnscript<rolldice>(int index, int bonus) {
 	bonus += last_roll;
@@ -29,8 +36,7 @@ template<> void fnscript<abilityi>(int index, int value) {
 }
 
 template<> void fnscript<itemi>(int index, int value) {
-	auto count = value ? value : 1;
-	item it; it.create(index, count);
+	item it(bsdata<itemi>::elements + index);
 	player->equip(it);
 	if(it)
 		player->additem(it);
@@ -51,7 +57,8 @@ static void clear_console() {
 static void printv(char separator, const char* format, const char* format_param) {
 	if(!answers::console)
 		return;
-	answers::console->addsep(separator);
+	if(separator)
+		answers::console->addsep(separator);
 	answers::console->addv(format, format_param);
 }
 
@@ -65,6 +72,14 @@ static void printn(const char* format, ...) {
 
 static void prints(const char* format, ...) {
 	printv(' ', format, xva_start(format));
+}
+
+static void print(const item& it, char separator, const char* format, ...) {
+	if(!answers::console)
+		return;
+	if(separator)
+		answers::console->addsep(separator);
+	stract(*answers::console, Male, it.getname(), format, xva_start(format));
 }
 
 static bool rolld20(int bonus, int dc, bool fix_roll = false) {
@@ -90,7 +105,7 @@ static bool rolld20(int bonus, int dc, bool fix_roll = false) {
 static void damage_item() {
 	last_item->damage();
 	if(!last_item->operator bool())
-		prints(getnm("DamageItem"), last_item->getname());
+		print(*last_item, ' ', getnm("DamageItem"), last_item->getname());
 }
 
 static bool is_melee_fight() {
@@ -186,9 +201,9 @@ static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 			player->set(feat);
 	}
 	if(count > 1)
-		output(getnm("AppearSeveral"), pm->getname());
+		printn(getnm("AppearSeveral"), pm->getname());
 	else
-		output(getnm("AppearSingle"), pm->getname());
+		printn(getnm("AppearSingle"), pm->getname());
 }
 
 static void random_encounter(const monsteri* pm) {
@@ -245,10 +260,25 @@ static bool attack_melee(bool run) {
 	return true;
 }
 
-static bool attack_range(bool run) {
-	if(!player->wears[RangedWeapon])
+static bool is_item_ready(wear_s type) {
+	if(!player->wears[type])
 		return false;
+	if(player->wears[type].isbroken())
+		return false;
+	auto ammo = player->wears[type].geti().weapon.ammunition;
+	if(ammo) {
+		if(!player->wears[Ammunition])
+			return false;
+		if(&player->wears[Ammunition].geti()!=ammo)
+			return false;
+	}
+	return true;
+}
+
+static bool attack_range(bool run) {
 	if(player->is(EngageMelee))
+		return false;
+	if(!is_item_ready(RangedWeapon))
 		return false;
 	select_enemies();
 	if(!targets)
@@ -331,17 +361,33 @@ static chooseoption camp_options[] = {
 	{"PrepareSpells", prepare_spells},
 };
 
+static void main_menu() {
+}
+
+static void surprise_roll(int bonus) {
+	for(auto p : creatures) {
+		auto result = d6();
+		auto need_surprise = 2;
+		if(result <= 2)
+			p->set(Surprised);
+	}
+}
+
 static void combat_round() {
 	static chooseoption combat_options[] = {
+		{"AttackRange", attack_range},
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
-		{"AttackRange", attack_range},
 		{"DrinkPotion", drink_potion},
 		{"ReadScroll", read_scroll},
 	};
 	for(auto p : creatures) {
 		if(!p->isready())
 			continue;
+		if(p->is(Surprised)) {
+			p->feats.remove(Surprised);
+			continue;
+		}
 		p->update();
 		p->choose(combat_options);
 	}
@@ -354,7 +400,7 @@ static bool lose_game(bool run) {
 	if(targets)
 		return false;
 	if(run)
-		draw::setnext(game.mainmenu);
+		draw::setnext(main_menu);
 	return true;
 }
 
@@ -365,7 +411,7 @@ static bool win_battle(bool run) {
 	if(targets)
 		return false;
 	if(run)
-		draw::setnext(game.mainmenu);
+		draw::setnext(main_menu);
 	return true;
 }
 
@@ -393,6 +439,22 @@ void combat_mode() {
 	menu::current_mode = push_mode;
 }
 
+static void reaction_roll(int bonus) {
+	if(player)
+		bonus += player->getbonus(Charisma);
+	auto r = d6() + d6() + bonus;
+	if(r <= 2)
+		reaction = Hostile;
+	else if(r <= 5)
+		reaction = Unfriendly;
+	else if(r <= 8)
+		reaction = Unfriendly;
+	else if(r <= 11)
+		reaction = Unfriendly;
+	else
+		reaction = Friendly;
+}
+
 static void all_saves(int bonus) {
 	player->add(SaveDeath, bonus);
 	player->add(SaveWands, bonus);
@@ -402,6 +464,8 @@ static void all_saves(int bonus) {
 }
 
 BSDATA(script) = {
+	{"ReactionRoll", reaction_roll},
+	{"SurpriseRoll", surprise_roll},
 	{"Saves", all_saves},
 };
 BSDATAF(script)
