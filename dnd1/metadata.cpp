@@ -25,11 +25,11 @@ BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
 BSDATAC(itemi, 256)
 BSDATAC(itemlay, 4096)
-BSDATAC(itempoweri, 64)
 BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
 BSDATAC(scenery, 2048)
+BSDATAC(sceneryi, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -67,13 +67,6 @@ BSMETA(durationi) = {
 BSMETA(feati) = {
 	BSREQ(id),
 	{}};
-BSMETA(itempoweri) = {
-	BSREQ(id),
-	BSREQ(magic),
-	BSREQ(condition),
-	BSREQ(damage),
-	BSREQ(wearing),
-	{}};
 BSMETA(itemi) = {
 	BSREQ(id),
 	BSREQ(cost), BSREQ(weight), BSREQ(count),
@@ -106,6 +99,9 @@ BSMETA(racei) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
+BSMETA(sceneryi) = {
+	BSREQ(id),
+	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
@@ -126,7 +122,6 @@ BSDATA(varianti) = {
 	{"Feat", VAR(feati, 1), 0, 0, fnscript<feati>},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
-	{"ItemPower", VAR(itempoweri, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(monsteri, 1), 0, 0, fnscript<modifieri>},

@@ -1,51 +1,27 @@
-#ItemPower
-
-Magical1 magic(1)
-Magical2 magic(2)
-Magical3 magic(3)
-MagicArmor1 magic(1)
- wearing AC+1
-MagicArmor2 magic(2)
- wearing AC+2
-MagicArmor3 magic(3)
- wearing AC+3
-FlamingWeapon magic(2) damage(1 6)
-FrozenWeapon magic(2) damage(1 6)
-DefendingWeapon magic(1)
- wearing AC+2
-
 #Item
 
 NoItem
 
 BattleAxe cost(7) weight(50) wear(MeleeWeapon) damage(1 8)
  flags Slow TwoHanded
- powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 Club cost(3) weight(50) wear(MeleeWeapon) damage(1 4)
  flags Blunt
- powers Magical1 Magical2
 Dagger cost(3) weight(10) wear(MeleeWeapon) damage(1 4)
- powers Magical1 Magical2 Magical3
 Halberd cost(7) weight(150) wear(MeleeWeapon) damage(1 10)
  flags Slow TwoHanded
- powers Magical1 Magical2 Magical3
 HandAxe cost(4) weight(30) wear(MeleeWeapon) damage(1 6)
- powers Magical1 Magical2 Magical3
 Javelin cost(1) weight(20) wear(ThrownWeapon) damage(1 4)
 Mace cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
  flags Blunt
- powers Magical1 Magical2 Magical3
 ShortSword cost(7) weight(30) wear(MeleeWeapon) damage(1 6)
 Spear cost(3) weight(30) wear(MeleeWeapon) damage(1 6)
 Staff cost(2) weight(40) wear(MeleeWeapon) damage(1 6)
  flags Slow TwoHanded
 Sword cost(10) weight(60) wear(MeleeWeapon) damage(1 8)
- powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 TwoHandedSword cost(15) weight(150) wear(MeleeWeapon) damage(1 10)
  flags Slow TwoHanded
 Warhammer cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
  flags Blunt
- powers Magical1 Magical2 Magical3 DefendingWeapon FlamingWeapon FrozenWeapon
 
 Arrow wear(Ammunition) cost(5) count(30)
 Bolt wear(Ammunition) cost(5) count(20)
@@ -62,16 +38,12 @@ LongBow cost(40) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
 
 LeatherArmor cost(20) weight(200) wear(Torso)
  wearing AC+2
- powers MagicArmor1 MagicArmor2
 ChainArmor cost(40) weight(400) wear(Torso)
  wearing AC+4
- powers MagicArmor1 MagicArmor2
 PlateArmor cost(60) weight(500) wear(Torso)
  wearing AC+6
- powers MagicArmor1 MagicArmor2
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  wearing AC+1
- powers MagicArmor1 MagicArmor2
 
 CP cost(1) count(100)
 SP cost(1) count(10)

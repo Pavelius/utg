@@ -176,6 +176,9 @@
     <ClCompile Include="itemlay.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="scenery.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

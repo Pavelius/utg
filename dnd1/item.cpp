@@ -36,12 +36,10 @@ item::item(const itemi* pi) {
 bool item::damage() {
 	if(d100() < 50)
 		return false;
-	if(iscountable())
+	if(getcount() > 1)
 		setcount(getcount() - 1);
-	else {
-		if(!broken)
-			broken = 1;
-	}
+	else if(!broken)
+		broken = 1;
 	return true;
 }
 
@@ -103,11 +101,4 @@ int	item::getweight() const {
 int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
-}
-
-const itempoweri* item::getpower() const {
-	auto& ei = geti();
-	if(!ei.powers[0] || !power)
-		return 0;
-	return ei.powers[power - 1];
 }

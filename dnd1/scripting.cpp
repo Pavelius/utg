@@ -98,6 +98,16 @@ static bool is_melee_fight() {
 	return false;
 }
 
+static bool have_feats(feat_s v) {
+	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
+		if(p->is(v))
+			return true;
+	}
+	return false;
+}
+
 static void update_melee_fight() {
 	if(is_melee_fight())
 		return;
@@ -431,6 +441,8 @@ static void combat_round() {
 		{"RunAway", run_away},
 	};
 	for(auto p : creatures) {
+		if(!have_feats(Enemy) || !have_feats(Player))
+			break;
 		if(!p->isready())
 			continue;
 		if(p->is(Surprised)) {
@@ -465,9 +477,13 @@ static void group_experience(int bonus) {
 	}
 }
 
-static void loot_creature(creature* p) {
-	p->clear();
-	creatures.remove(p);
+static void drop_loot(creature* p) {
+	for(auto& e : p->allitems()) {
+		if(!e)
+			continue;
+		if(e.iscursed() || e.ismagic() || (d100() < 20))
+			e.drop();
+	}
 }
 
 static void killed_enemy_loot(int bonus) {
@@ -476,7 +492,8 @@ static void killed_enemy_loot(int bonus) {
 	for(auto p : creatures) {
 		if(p->is(Enemy) && p->get(HP) <= 0) {
 			reward += p->getaward();
-			loot_creature(p);
+			drop_loot(p);
+			p->remove();
 		}
 	}
 	group_experience(reward);

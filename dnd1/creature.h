@@ -44,6 +44,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			isready() const;
 	void			levelup();
 	void			raiselevel();
+	void			remove();
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
 	void			update();

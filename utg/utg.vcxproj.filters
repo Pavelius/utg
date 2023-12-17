@@ -554,5 +554,8 @@
     <ClInclude Include="typeable.h">
       <Filter>Templates</Filter>
     </ClInclude>
+    <ClInclude Include="parentable.h">
+      <Filter>Templates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

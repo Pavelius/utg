@@ -197,6 +197,7 @@
     <ClCompile Include="range.cpp" />
     <ClCompile Include="reaction.cpp" />
     <ClCompile Include="roll.cpp" />
+    <ClCompile Include="scenery.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="statable.cpp" />

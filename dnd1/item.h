@@ -8,12 +8,6 @@
 #include "variant.h"
 #include "wear.h"
 
-struct itempoweri : nameable {
-	char		magic;
-	dice		damage; // Additional damage
-	variant		condition; // For weapon when hit - race or alignment for additional damage
-	variants	wearing; // Additional wearing effect
-};
 struct itemi : nameable {
 	unsigned	cost, weight, count;
 	itemi*		basic;
@@ -21,8 +15,7 @@ struct itemi : nameable {
 	itemi*		ammunition;
 	wear_s		wear;
 	featable	flags;
-	variants	use, wearing;
-	itempoweri*	powers[16];
+	variants	use, wearing, powers;
 	bool		is(feat_s v) const { return flags.is(v); }
 };
 class item : public typeable<itemi> {
@@ -31,17 +24,10 @@ class item : public typeable<itemi> {
 		struct {
 			unsigned char identified : 1;
 			unsigned char cursed : 1;
-			unsigned char personal : 1;
-		};
-	};
-	union {
-		unsigned char count;
-		struct {
-			unsigned char power : 4;
 			unsigned char broken : 1;
-			unsigned char charges : 2;
 		};
 	};
+	unsigned char count;
 public:
 	item(const char* id);
 	item(const itemi* pi);
@@ -52,15 +38,17 @@ public:
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
 	bool		damage();
+	void		drop();
 	int			getcost() const;
 	int			getcount() const;
 	dice		getdamage() const;
-	const itempoweri* getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
-	bool		isbroken() const { return !iscountable() && broken != 0; }
+	bool		isbroken() const { return broken != 0; }
+	bool		iscountable() const { return true; }
 	bool		iscursed() const { return cursed != 0; }
-	bool		iscountable() const { return geti().powers[0] == 0; }
+	bool		isidentified() const { return identified != 0; }
+	bool		ismagic() const { return false; }
 	bool		isready() const;
 	void		setcount(int v);
 };

@@ -110,6 +110,11 @@ void creature::raiselevel() {
 	apply_advance(bsdata<classi>::elements + type, n);
 }
 
+void creature::remove() {
+	clear();
+	creatures.remove(this);
+}
+
 static unsigned get_experience(unsigned char type, int level) {
 	auto p = bsdata<classi>::elements + type;
 	if(level <= 1)
@@ -245,11 +250,6 @@ static void update_equipment() {
 		if(!e)
 			continue;
 		add_temporary(e.geti().wearing);
-		auto pi = e.getpower();
-		if(!pi)
-			continue;
-		if(pi->wearing)
-			add_temporary(pi->wearing);
 	}
 }
 

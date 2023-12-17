@@ -1,2 +1,11 @@
-﻿In file `Names.txt`:
+﻿In file `rules/Items.txt`:
+ Line 41: Can't find variant `MagicArmor1`
+ Line 41: Can't find variant `MagicArmor2`
+ Line 44: Can't find variant `MagicArmor1`
+ Line 44: Can't find variant `MagicArmor2`
+ Line 47: Can't find variant `MagicArmor1`
+ Line 47: Can't find variant `MagicArmor2`
+ Line 50: Can't find variant `MagicArmor1`
+ Line 50: Can't find variant `MagicArmor2`
+In file `Names.txt`:
 Continue: Define translate
