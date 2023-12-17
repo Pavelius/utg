@@ -8,6 +8,9 @@ struct chooseoption {
 	const char*		id;
 	fntest			proc;
 };
-void choosev(const slice<chooseoption>& options, const char* title, const char* format_param, bool random);
+extern chooseoption* last_option;
 void choose(const slice<chooseoption>& options, const char* title, ...);
+void choosef(const slice<chooseoption>& options);
 void chooser(const slice<chooseoption>& options, const char* title, ...);
+void choosev(const slice<chooseoption>& options, const char* title, const char* format_param, bool random);
+

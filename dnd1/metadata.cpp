@@ -9,6 +9,7 @@
 #include "modifier.h"
 #include "monster.h"
 #include "ongoing.h"
+#include "race.h"
 #include "randomizer.h"
 #include "scenery.h"
 #include "script.h"
@@ -27,6 +28,7 @@ BSDATAC(itemlay, 4096)
 BSDATAC(itempoweri, 64)
 BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
+BSDATAC(racei, 32)
 BSDATAC(scenery, 2048)
 
 BSMETA(abilityi) = {
@@ -93,6 +95,10 @@ BSMETA(randomizeri) = {
 	BSREQ(id),
 	BSREQ(chance),
 	{}};
+BSMETA(racei) = {
+	BSREQ(id),
+	BSFLG(hate, racei),
+	{}};
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
@@ -121,6 +127,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(monsteri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
+	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Spell", VAR(spelli, 1)},
 	{"Widget", VAR(widget, 1)},

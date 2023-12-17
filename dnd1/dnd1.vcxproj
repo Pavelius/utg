@@ -164,6 +164,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="print.h" />
+    <ClInclude Include="race.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
     <ClInclude Include="roll.h" />
@@ -220,6 +221,7 @@
     <Text Include="rules\Classes.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
+    <Text Include="rules\Races.txt" />
     <Text Include="rules\RandomGems.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

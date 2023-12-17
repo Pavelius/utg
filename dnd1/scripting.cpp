@@ -47,6 +47,10 @@ template<> void fnscript<randomizeri>(int index, int value) {
 	script_run(single(bsdata<randomizeri>::elements[index].random()));
 }
 
+static void fix_action() {
+	player->actid(last_option->id, "Action");
+}
+
 static void clear_console() {
 	if(answers::console)
 		answers::console->clear();
@@ -148,16 +152,9 @@ static void range_attack(int bonus) {
 }
 
 void select_enemies() {
-	targets.clear();
-	if(player->is(Player)) {
-		targets = creatures;
-		targets.match(Enemy, true);
-		targets.match(&creature::isready, true);
-	} else if(player->is(Enemy)) {
-		targets = creatures;
-		targets.match(Player, true);
-		targets.match(&creature::isready, true);
-	}
+	targets = creatures;
+	targets.matchenemy(true);
+	targets.matchready(true);
 }
 
 static int compare_initiative(const void* v1, const void* v2) {
@@ -365,6 +362,39 @@ static bool cast_spells(bool run) {
 	return true;
 }
 
+static bool retreat_melee(bool run) {
+	if(!player->is(EngageMelee))
+		return false;
+	creaturea source = creatures;
+	source.matchally(true);
+	source.matchyou(false);
+	source.match(&creature::isready, true);
+	source.match(EngageMelee, true);
+	if(!source)
+		return false;
+	if(run) {
+		fix_action();
+		player->feats.remove(EngageMelee);
+	}
+	return true;
+}
+
+static void remove_player() {
+	if(player->is(Summoned))
+		player->clear();
+	creatures.remove(player);
+}
+
+static bool run_away(bool run) {
+	if(player->is(EngageMelee))
+		return false;
+	if(run) {
+		fix_action();
+		remove_player();
+	}
+	return true;
+}
+
 static chooseoption camp_options[] = {
 	{"PrepareSpells", prepare_spells},
 };
@@ -389,6 +419,8 @@ static void combat_round() {
 		{"AttackUnarmed", attack_unarmed},
 		{"DrinkPotion", drink_potion},
 		{"ReadScroll", read_scroll},
+		{"Retreat", retreat_melee},
+		{"RunAway", run_away},
 	};
 	for(auto p : creatures) {
 		if(!p->isready())
@@ -398,7 +430,7 @@ static void combat_round() {
 			continue;
 		}
 		p->update();
-		p->choose(combat_options);
+		p->choose(combat_options, true);
 		update_melee_fight();
 	}
 }

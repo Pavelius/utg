@@ -86,14 +86,17 @@ feat_s creature::getenemyfeat() const {
 	return Undead;
 }
 
-void creature::choose(const slice<chooseoption>& options) {
+void creature::choose(const slice<chooseoption>& options, bool enemy_choose_first) {
 	pushvalue push_player(player, this);
 	char temp[260]; stringbuilder sb(temp);
 	actv(sb, getnm("WhatToDo"), 0, 0);
 	const char* enemy_name = 0;
-	if(is(Enemy))
-		chooser(options, temp, enemy_name);
-	else
+	if(is(Enemy)) {
+		if(enemy_choose_first)
+			choosef(options);
+		else
+			chooser(options, temp, enemy_name);
+	} else
 		::choose(options, temp, enemy_name);
 }
 
@@ -167,6 +170,10 @@ void creature::damage(int value) {
 		feats.remove(EngageMelee);
 		act("%герой получил%а [%1i] урона и упал%а на землю.", value);
 	}
+}
+
+bool creature::isplayer() const {
+	return this == player;
 }
 
 bool creature::isready() const {

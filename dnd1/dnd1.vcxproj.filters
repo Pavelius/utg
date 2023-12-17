@@ -90,6 +90,9 @@
     <ClInclude Include="itemlay.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="race.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -224,6 +227,9 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="rules\Classes.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Races.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>

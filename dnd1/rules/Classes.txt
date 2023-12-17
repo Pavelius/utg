@@ -1,6 +1,6 @@
 #Class
 
-Monster prime(MeleeToHit)
+Monster hd(8)
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
@@ -17,14 +17,14 @@ Dwarf prime(Strenght) hd(8)
   BattleAxe Club Dagger HandAxe Javelin Mace ShortSword Spear Staff Sword Warhammer\
   Crossbow ShortBow Sling
 
-Elf hd(6) magic(1)
+Elf prime(Intellect) hd(6) magic(1)
  minimal Intellect(9)
  experience 4000 8000 16000 32000 64000 120000 250000 400000 600000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Spear Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
-Fighter hd(8)
+Fighter prime(Strenght) hd(8)
  experience 2000 4000 8000 16000 32000 64000 120000 240000 360000 480000 600000 720000 840000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Spear Staff Sword TwoHandedSword Warhammer\

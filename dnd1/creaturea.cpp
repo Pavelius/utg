@@ -21,6 +21,20 @@ void creaturea::match(feat_s v, bool keep) {
 	count = ps - data;
 }
 
+void creaturea::matchenemy(bool keep) {
+	if(player->is(Enemy))
+		match(Player, keep);
+	else
+		match(Enemy, keep);
+}
+
+void creaturea::matchally(bool keep) {
+	if(player->is(Enemy))
+		match(Enemy, keep);
+	else
+		match(Player, keep);
+}
+
 void creaturea::match(creaturea::fnproc proc, bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {
