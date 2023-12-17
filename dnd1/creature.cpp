@@ -260,6 +260,13 @@ static void add_language(const racei* pm) {
 	player->languages.set(getbsi(pm));
 }
 
+static void add_hits_by_level() {
+	dice d = {};
+	d.c = player->basic.get(Level);
+	d.d = player->geti().hd;
+	player->basic.abilities[HPMax] = d.roll();
+}
+
 void add_creature(const classi* pi, gender_s gender) {
 	player = bsdata<creature>::add();
 	player->clear();
@@ -285,6 +292,7 @@ void add_creature(const monsteri* pi) {
 		player->basic.abilities[i] = 10;
 	memcpy(player->attacks, pi->attacks, sizeof(player->attacks));
 	add_permanent(pi->feats);
+	add_hits_by_level();
 	add_language(pi->origin);
 	if(player->basic.get(Intellect)>=6 && d100() < 20)
 		add_language(bsdata<racei>::elements);

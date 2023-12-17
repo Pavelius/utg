@@ -15,4 +15,5 @@ enum ability_s : unsigned char {
 	HP, IllusionCopies,
 };
 struct abilityi : nameable {
+	char		multiplier;
 };
