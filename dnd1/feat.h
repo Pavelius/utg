@@ -7,7 +7,7 @@ enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
 	SunSensitive, Slow, Small, Large, NormalWeaponImmunity,
 	Blunt, TwoHanded,
-	EngageMelee, Surprised, Prone, Undead, Summoned, Player, Enemy,
+	EngageMelee, Surprised, Panic, Prone, Unholy, Summoned, Player, Enemy,
 };
 struct feati : nameable {
 };

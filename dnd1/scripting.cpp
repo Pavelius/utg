@@ -505,9 +505,15 @@ static void all_saves(int bonus) {
 	player->add(SaveSpells, bonus);
 }
 
+static void undead_features(int bonus) {
+	player->set(PoisonImmunity);
+	player->set(Unholy);
+}
+
 BSDATA(script) = {
 	{"ReactionRoll", reaction_roll},
-	{"SurpriseRoll", surprise_roll},
 	{"Saves", all_saves},
+	{"SurpriseRoll", surprise_roll},
+	{"Undead", undead_features},
 };
 BSDATAF(script)

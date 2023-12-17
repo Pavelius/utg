@@ -9,5 +9,7 @@
 struct monsteri : nameable, attackable {
 	dice		dungeon, wilderness;
 	variants	feats;
+	racei*		origin;
+	monsteri*	basic;
 };
 extern monsteri* encountered_monster;

@@ -78,14 +78,6 @@ bool creature::attack(ability_s attack, int ac, int bonus) {
 	return r >= (10 + ac);
 }
 
-feat_s creature::getenemyfeat() const {
-	if(is(Player))
-		return Enemy;
-	else if(is(Enemy))
-		return Player;
-	return Undead;
-}
-
 void creature::choose(const slice<chooseoption>& options, bool enemy_choose_first) {
 	pushvalue push_player(player, this);
 	char temp[260]; stringbuilder sb(temp);
@@ -262,6 +254,12 @@ static void apply_minimal(const classi* pi) {
 	}
 }
 
+static void add_language(const racei* pm) {
+	if(!pm)
+		return;
+	player->languages.set(getbsi(pm));
+}
+
 void add_creature(const classi* pi, gender_s gender) {
 	player = bsdata<creature>::add();
 	player->clear();
@@ -274,6 +272,8 @@ void add_creature(const classi* pi, gender_s gender) {
 	player->name = random_name(pi, gender);
 	apply_minimal(pi);
 	player->setavatar(random_avatar(pi, gender));
+	add_language(pi->origin);
+	add_language(bsdata<racei>::elements);
 	finish_creature();
 }
 
@@ -285,6 +285,9 @@ void add_creature(const monsteri* pi) {
 		player->basic.abilities[i] = 10;
 	memcpy(player->attacks, pi->attacks, sizeof(player->attacks));
 	add_permanent(pi->feats);
+	add_language(pi->origin);
+	if(player->basic.get(Intellect)>=6 && d100() < 20)
+		add_language(bsdata<racei>::elements);
 	player->name = getnm(pi->id);
 	finish_creature();
 }

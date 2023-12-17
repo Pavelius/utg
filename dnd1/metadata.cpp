@@ -37,6 +37,10 @@ BSMETA(abilityi) = {
 BSMETA(actioni) = {
 	BSREQ(id),
 	{}};
+BSMETA(advancei) = {
+	BSREQ(type), BSREQ(level), BSREQ(id),
+	BSREQ(elements),
+	{}};
 BSMETA(attacki) = {
 	BSREQ(count),
 	BSREQ(damage),
@@ -49,6 +53,7 @@ BSMETA(classi) = {
 	BSREQ(experience),
 	BSREQ(magic),
 	BSFLG(allow, itemi),
+	BSREQ(origin),
 	{}};
 BSMETA(creature) = {
 	BSDST(abilities, abilityi),
@@ -58,10 +63,6 @@ BSMETA(dice) = {
 	{}};
 BSMETA(durationi) = {
 	BSREQ(id),
-	{}};
-BSMETA(advancei) = {
-	BSREQ(type), BSREQ(level), BSREQ(id),
-	BSREQ(elements),
 	{}};
 BSMETA(feati) = {
 	BSREQ(id),
@@ -90,6 +91,8 @@ BSMETA(monsteri) = {
 	BSREQ(dungeon),
 	BSREQ(wilderness),
 	BSREQ(attacks),
+	BSREQ(origin),
+	BSREQ(basic),
 	{}};
 BSMETA(randomizeri) = {
 	BSREQ(id),
@@ -129,6 +132,7 @@ BSDATA(varianti) = {
 	{"Monster", VAR(monsteri, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
+	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Spell", VAR(spelli, 1)},
 	{"Widget", VAR(widget, 1)},
 };

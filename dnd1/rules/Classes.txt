@@ -5,43 +5,43 @@ Monster hd(8)
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
-Cleric prime(Wisdow) hd(6) magic(0)
+Cleric prime(Wisdow) hd(6) magic(0) origin(Humans)
  experience 1500 3000 6000 12000 25000 50000 100000 200000 300000 400000 500000 600000 700000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   Club Mace Staff Warhammer Sling
 
-Dwarf prime(Strenght) hd(8)
+Dwarf prime(Strenght) hd(8) origin(Dwarvish)
  minimal Constitution(9)
  experience 2200 4400 8800 17000 35000 70000 140000 270000 400000 530000 660000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger HandAxe Javelin Mace ShortSword Spear Staff Sword Warhammer\
   Crossbow ShortBow Sling
 
-Elf prime(Intellect) hd(6) magic(1)
+Elf prime(Intellect) hd(6) magic(1) origin(Elvish)
  minimal Intellect(9)
  experience 4000 8000 16000 32000 64000 120000 250000 400000 600000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Spear Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
-Fighter prime(Strenght) hd(8)
+Fighter prime(Strenght) hd(8) origin(Humans)
  experience 2000 4000 8000 16000 32000 64000 120000 240000 360000 480000 600000 720000 840000
  allow LeatherArmor ChainArmor PlateArmor Shield\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Spear Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
-Halfling prime(Dexterity) hd(6)
+Halfling prime(Dexterity) hd(6) origin(Halflings)
  experience 2000 4000 8000 16000 32000 64000 120000
  allow LeatherArmor ChainArmor Shield\
   Club Dagger HandAxe Javelin Mace ShortSword Spear Staff Sword\
   ShortBow Sling
 
-Theif prime(Dexterity) hd(4)
+Theif prime(Dexterity) hd(4) origin(Humans)
  experience 1200 2400 4800 9600 20000 40000 80000 160000 280000 400000 520000 640000 760000
  allow LeatherArmor\
   BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Spear Staff Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
-MagicUser prime(Intellect) hd(4) magic(1)
+MagicUser prime(Intellect) hd(4) magic(1) origin(Humans)
  experience 2500 5000 10000 20000 40000 80000 150000 300000 450000 600000 750000 900000 1050000
  allow Dagger Staff

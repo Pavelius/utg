@@ -1,7 +1,7 @@
 #Random
 
 OrcishWeapons
- chance BattleAxe HandAxe Club Spear Sword
+ chance BattleAxe+2 HandAxe Club Spear Sword
 
 #Monster
 

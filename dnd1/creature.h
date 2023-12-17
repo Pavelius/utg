@@ -15,6 +15,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	spellf			active_spells, known_spells;
 	char			initiative;
 	unsigned		experience;
+	raceable		languages;
 	bool			apply(spell_s, int level, bool run);
 	bool			attack(ability_s attack, int ac, int bonus);
 	void			choose(const slice<chooseoption>& options, bool enemy_choose_first = false);
@@ -28,7 +29,6 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			generate();
 	const classi&	geti() const;
 	dice			getdamage(wear_s v) const;
-	feat_s			getenemyfeat() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
