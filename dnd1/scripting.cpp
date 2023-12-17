@@ -455,7 +455,12 @@ static void combat_round() {
 	}
 }
 
-static void add_experience(int bonus) {
+static void personal_experience(int bonus) {
+	auto prime = player->get(player->geti().prime);
+	if(prime >= 16)
+		bonus = bonus * 110 / 100;
+	else if(prime >= 13)
+		bonus = bonus * 105 / 100;
 	player->experience += bonus;
 	player->levelup();
 }
@@ -472,7 +477,7 @@ static void group_experience(int bonus) {
 	for(auto p : creatures) {
 		if(p->is(Player) && p->get(HP) > 0) {
 			player = p;
-			add_experience(median);
+			personal_experience(median);
 		}
 	}
 }

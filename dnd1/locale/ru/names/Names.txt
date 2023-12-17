@@ -8,6 +8,7 @@ ChooseClass: Выбирайте класс
 ChooseLook: Выбирайте внешний вид вашего персонажа:
 ChooseTarget: Укажите цель
 Combat: Бой
+Continue: Продолжить
 Cost: Стоимость
 Damage: Урон
 DoNotAdjust: Сейчас все иделально

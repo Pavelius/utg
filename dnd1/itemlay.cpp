@@ -9,10 +9,31 @@ static itemlay* new_itemlay() {
 	return bsdata<itemlay>::add();
 }
 
-void item::drop() {
+static void add_existing(variant parent, item& it) {
+	if(!it.iscountable())
+		return;
+	for(auto& e : bsdata<itemlay>()) {
+		if(e.parent == parent) {
+			e.add(it);
+			if(!it)
+				break;
+		}
+	}
+}
+
+static void add_newstock(variant parent, item& it) {
 	auto p = new_itemlay();
-	*((item*)p) = *this;
+	*((item*)p) = it;
 	p->parent = scene;
-	clear();
+	it.clear();
+}
+
+void add_container(variant parent, item& it) {
+	add_existing(parent, it);
+	add_newstock(parent, it);
+}
+
+void item::drop() {
+	add_container(scene, *this);
 }
 
