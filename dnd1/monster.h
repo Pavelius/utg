@@ -11,5 +11,6 @@ struct monsteri : nameable, attackable {
 	variants	feats;
 	racei*		origin;
 	monsteri*	basic;
+	char		treasure[8];
 };
 extern monsteri* encountered_monster;

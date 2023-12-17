@@ -63,6 +63,15 @@ static void apply_advance(variant type, int level) {
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
+	leader = 0xFFFF;
+}
+
+creature* creature::getleader() const {
+	return getbs<creature>(leader);
+}
+
+void creature::setleader(const creature* pv) {
+	leader = getbsi(pv);
 }
 
 const classi& creature::geti() const {

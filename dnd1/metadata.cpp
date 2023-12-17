@@ -93,6 +93,7 @@ BSMETA(monsteri) = {
 	BSREQ(attacks),
 	BSREQ(origin),
 	BSREQ(basic),
+	BSREQ(treasure),
 	{}};
 BSMETA(randomizeri) = {
 	BSREQ(id),

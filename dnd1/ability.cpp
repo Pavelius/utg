@@ -15,6 +15,7 @@ BSDATA(abilityi) = {
 	{"AC"},
 	{"ACRanged"},
 	{"Level"},
+	{"Morale"},
 	{"HPMax"},
 	{"Speed", 16},
 	{"Search", 16},

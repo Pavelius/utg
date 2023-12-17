@@ -11,5 +11,5 @@ Skeleton dungeon(3 4) wilderness(3 10)
 Zombie dungeon(2 4) wilderness(4 6)
  feats Level+2 AC+1 Undead Slow
 
-Orc dungeon(2 4) wilderness(1 6 0 10)
+Orc dungeon(2 4) wilderness(1 6 0 10) treasure("D")
  feats Level+1 AC+3 SunSensitive OrcishWeapons

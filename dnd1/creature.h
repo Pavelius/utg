@@ -11,6 +11,7 @@
 
 struct creature : actable, attackable, spellable, statable, avatarable, wearable {
 	unsigned char	type;
+	unsigned short	leader;
 	statable		basic;
 	spellf			active_spells, known_spells;
 	char			initiative;
@@ -30,6 +31,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	const classi&	geti() const;
 	int				getaward() const;
 	dice			getdamage(wear_s v) const;
+	creature*		getleader() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
@@ -43,6 +45,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			levelup();
 	void			raiselevel();
 	void			set(feat_s v) { feats.set(v); }
+	void			setleader(const creature* pv);
 	void			update();
 	void			update_finish();
 	void			use(item& it);
