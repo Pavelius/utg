@@ -11,6 +11,39 @@
 creature *player, *opponent;
 creaturea creatures;
 
+static int exp_base_award[] = {
+	5,
+	10, 20, 35, 75, 175,
+	275, 450, 650, 900, 900,
+	1100, 1100, 1350, 1350, 1350,
+	1350, 2000, 2000, 2000, 2000,
+	2500,
+};
+static int exp_base_award_plus[] = {
+	5,
+	15, 25, 50, 125, 225,
+	350, 450, 650, 900, 900,
+	1100, 1100, 1350, 1350, 1350,
+	1350, 2000, 2000, 2000, 2000,
+	2500,
+};
+static int exp_bonus_award[] = {
+	1,
+	3, 5, 15, 50, 125,
+	225, 400, 550, 700, 700,
+	800, 800, 950, 950, 950,
+	950, 1150, 1150, 1150, 1150,
+	2000,
+};
+static int exp_bonus_award_plus[] = {
+	1,
+	4, 10, 25, 75, 175,
+	300, 400, 550, 700, 700,
+	800, 800, 950, 950, 950,
+	950, 1150, 1150, 1150, 1150,
+	2000,
+};
+
 static void add_permanent(const variants& source) {
 	pushvalue push_modifier(modifier, Permanent);
 	script_run(source);
@@ -34,6 +67,26 @@ void creature::clear() {
 
 const classi& creature::geti() const {
 	return bsdata<classi>::elements[type];
+}
+
+int get_feats_ability_count(const creature* player) {
+	return 0;
+}
+
+int creature::getaward() const {
+	auto n = get(Level);
+	auto m = getbonus(Constitution);
+	auto r = 0;
+	if(m > 0)
+		r += maptbl(exp_base_award_plus, n);
+	else
+		r += maptbl(exp_base_award, n);
+	auto f = get_feats_ability_count(this);
+	if(m > 0)
+		r += f * maptbl(exp_bonus_award_plus, n);
+	else
+		r += f * maptbl(exp_bonus_award, n);
+	return r;
 }
 
 void creature::raiselevel() {
@@ -66,17 +119,17 @@ void creature::levelup() {
 	}
 }
 
-bool creature::attack(ability_s attack, int ac, int bonus) {
-	if(is(Invisibility))
-		dispell(Invisibility);
-	auto d = 1 + (rand() % 20);
-	auto r = d + bonus + abilities[attack];
-	if(d == 1)
-		return false;
-	if(d == 20)
-		return true;
-	return r >= (10 + ac);
-}
+//bool creature::attack(ability_s attack, int ac, int bonus) {
+//	if(is(Invisibility))
+//		dispell(Invisibility);
+//	auto d = 1 + (rand() % 20);
+//	auto r = d + bonus + abilities[attack];
+//	if(d == 1)
+//		return false;
+//	if(d == 20)
+//		return true;
+//	return r >= (10 + ac);
+//}
 
 void creature::choose(const slice<chooseoption>& options, bool enemy_choose_first) {
 	pushvalue push_player(player, this);
@@ -267,8 +320,16 @@ static void add_hits_by_level() {
 	player->basic.abilities[HPMax] = d.roll();
 }
 
+static creature* new_creature() {
+	for(auto& e : bsdata<creature>()) {
+		if(!e.basic.abilities[Strenght] && e.basic.abilities[HP] <= 0)
+			return &e;
+	}
+	return bsdata<creature>::add();
+}
+
 void add_creature(const classi* pi, gender_s gender) {
-	player = bsdata<creature>::add();
+	player = new_creature();
 	player->clear();
 	player->type = pi - bsdata<classi>::elements;
 	player->gender = gender;
@@ -285,7 +346,7 @@ void add_creature(const classi* pi, gender_s gender) {
 }
 
 void add_creature(const monsteri* pi) {
-	player = bsdata<creature>::add();
+	player = new_creature();
 	player->clear();
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))

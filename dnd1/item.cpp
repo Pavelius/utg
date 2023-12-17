@@ -33,15 +33,16 @@ item::item(const itemi* pi) {
 	}
 }
 
-void item::damage() {
+bool item::damage() {
 	if(d100() < 50)
-		return;
+		return false;
 	if(iscountable())
 		setcount(getcount() - 1);
 	else {
-		if(broken < 3)
-			broken++;
+		if(!broken)
+			broken = 1;
 	}
+	return true;
 }
 
 int item::getcount() const {

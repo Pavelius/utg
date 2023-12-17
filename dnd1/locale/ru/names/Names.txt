@@ -55,5 +55,3 @@ MeleeToHit: THAC0
 MeleeDamage: Урон
 
 SaveSpells: Спасброски
-
-DamageItem: %герой был%а сломан%а.

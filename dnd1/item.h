@@ -38,7 +38,7 @@ class item : public typeable<itemi> {
 		unsigned char count;
 		struct {
 			unsigned char power : 4;
-			unsigned char broken : 2;
+			unsigned char broken : 1;
 			unsigned char charges : 2;
 		};
 	};
@@ -51,14 +51,14 @@ public:
 	void		addname(stringbuilder& sb) const;
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
-	void		damage();
+	bool		damage();
 	int			getcost() const;
 	int			getcount() const;
 	dice		getdamage() const;
 	const itempoweri* getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
-	bool		isbroken() const { return !iscountable() && broken >= 3; }
+	bool		isbroken() const { return !iscountable() && broken != 0; }
 	bool		iscursed() const { return cursed != 0; }
 	bool		iscountable() const { return geti().powers[0] == 0; }
 	bool		isready() const;

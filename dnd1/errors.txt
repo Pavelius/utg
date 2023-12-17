@@ -1,3 +1,2 @@
-﻿In file `rules/Monsters.txt`:
- Line 9: Can't find variant `Undead`
- Line 12: Can't find variant `Undead`
+﻿In file `Names.txt`:
+Continue: Define translate

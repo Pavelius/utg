@@ -47,6 +47,15 @@ template<> void fnscript<randomizeri>(int index, int value) {
 	script_run(single(bsdata<randomizeri>::elements[index].random()));
 }
 
+static int player_count() {
+	auto result = 0;
+	for(auto p : creatures) {
+		if(p->is(Player) && p->get(HP) > 0)
+			result++;
+	}
+	return result;
+}
+
 static void fix_action() {
 	player->actid(last_option->id, "Action");
 }
@@ -65,9 +74,8 @@ static void print(const item& it, char separator, const char* format, ...) {
 }
 
 static void damage_item() {
-	last_item->damage();
-	if(!last_item->operator bool())
-		print(*last_item, ' ', getnm("DamageItem"), last_item->getname());
+	if(last_item->damage())
+		print(*last_item, ' ', getnm("ItemBroken"), last_item->getname());
 }
 
 static bool is_melee_fight() {
@@ -435,6 +443,45 @@ static void combat_round() {
 	}
 }
 
+static void add_experience(int bonus) {
+	player->experience += bonus;
+	player->levelup();
+}
+
+static void group_experience(int bonus) {
+	if(bonus <= 0)
+		return;
+	auto count = player_count();
+	if(!count)
+		return;
+	auto median = (bonus + count - 1) / count;
+	printn(getnm("GroupExperienceAward"), bonus);
+	pushvalue push(player);
+	for(auto p : creatures) {
+		if(p->is(Player) && p->get(HP) > 0) {
+			player = p;
+			add_experience(median);
+		}
+	}
+}
+
+static void loot_creature(creature* p) {
+	p->clear();
+	creatures.remove(p);
+}
+
+static void killed_enemy_loot(int bonus) {
+	auto reward = 0;
+	pushvalue push(player);
+	for(auto p : creatures) {
+		if(p->is(Enemy) && p->get(HP) <= 0) {
+			reward += p->getaward();
+			loot_creature(p);
+		}
+	}
+	group_experience(reward);
+}
+
 static bool lose_game(bool run) {
 	targets = creatures;
 	targets.match(Player, true);
@@ -452,16 +499,20 @@ static bool win_battle(bool run) {
 	targets.match(&creature::isready, true);
 	if(targets)
 		return false;
-	if(run)
+	if(run) {
+		killed_enemy_loot(0);
+		pause();
 		draw::setnext(main_menu);
+	}
 	return true;
 }
 
 static bool continue_battle(bool run) {
 	if(win_battle(false) || lose_game(false))
 		return false;
-	if(run)
+	if(run) {
 		clear_console();
+	}
 	return true;
 }
 
