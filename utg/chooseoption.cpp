@@ -8,6 +8,19 @@ static void apply_option() {
 		last_option->proc(true);
 }
 
+static chooseoption* find_option(const slice<chooseoption>& options, const char* id) {
+	for(auto& e : options) {
+		if(equal(e.id, id))
+			return &e;
+	}
+	return 0;
+}
+
+void useopt(const slice<chooseoption>& options, const char* id) {
+	last_option = find_option(options, id);
+	apply_option();
+}
+
 void choosev(const slice<chooseoption>& options, const char* title, const char* format_param, bool random) {
 	answers an;
 	for(auto& e : options) {

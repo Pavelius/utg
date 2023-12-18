@@ -10,9 +10,8 @@
 
 struct itemi : nameable {
 	unsigned	cost, weight, count;
-	itemi*		basic;
 	dice		damage;
-	itemi*		ammunition;
+	itemi		*ammunition, *basic;
 	wear_s		wear;
 	featable	flags;
 	variants	use, wearing, powers;
@@ -53,7 +52,11 @@ public:
 	void		setcount(int v);
 };
 struct itema : collection<item> {
+	typedef bool(item::*fntest)() const;
 	void		match(wear_s v, bool keep);
+	void		match(fntest v, bool keep);
 	void		select(const slice<item>& source);
+	void		select(variant container);
 };
+extern itema items;
 extern item* last_item;

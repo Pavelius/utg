@@ -133,17 +133,10 @@ void creature::levelup() {
 	}
 }
 
-//bool creature::attack(ability_s attack, int ac, int bonus) {
-//	if(is(Invisibility))
-//		dispell(Invisibility);
-//	auto d = 1 + (rand() % 20);
-//	auto r = d + bonus + abilities[attack];
-//	if(d == 1)
-//		return false;
-//	if(d == 20)
-//		return true;
-//	return r >= (10 + ac);
-//}
+void creature::use(const char* id, const slice<chooseoption>& options) {
+	pushvalue push(player, this);
+	useopt(options, id);
+}
 
 void creature::choose(const slice<chooseoption>& options, bool enemy_choose_first) {
 	pushvalue push_player(player, this);

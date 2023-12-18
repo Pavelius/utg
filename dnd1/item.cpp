@@ -20,6 +20,16 @@ void itema::match(wear_s wear, bool keep) {
 	count = ps - begin();
 }
 
+void itema::match(fntest proc, bool keep) {
+	auto ps = begin();
+	for(auto p : *this) {
+		if(((p->*proc)()) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - begin();
+}
+
 item::item(const char* id) {
 	item(bsdata<itemi>::find(id));
 }

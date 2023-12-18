@@ -9,6 +9,7 @@
 #include "randomizer.h"
 #include "roll.h"
 #include "reaction.h"
+#include "scenery.h"
 #include "script.h"
 #include "spell.h"
 #include "stringact.h"
@@ -430,7 +431,7 @@ static void surprise_roll(int bonus) {
 }
 
 static void combat_round() {
-	static chooseoption combat_options[] = {
+	static chooseoption options[] = {
 		{"AttackRanged", attack_range},
 		{"ChargeEnemy", charge},
 		{"AttackMelee", attack_melee},
@@ -441,16 +442,24 @@ static void combat_round() {
 		{"RunAway", run_away},
 	};
 	for(auto p : creatures) {
+		if(draw::isnext())
+			break;
 		if(!have_feats(Enemy) || !have_feats(Player))
 			break;
 		if(!p->isready())
 			continue;
+		if(p->is(Panic)) {
+			p->feats.remove(Panic);
+			p->feats.remove(EngageMelee);
+			p->use("RunAway", options);
+			continue;
+		}
 		if(p->is(Surprised)) {
 			p->feats.remove(Surprised);
 			continue;
 		}
 		p->update();
-		p->choose(combat_options, true);
+		p->choose(options, true);
 		update_melee_fight();
 	}
 }
@@ -486,7 +495,7 @@ static void drop_loot(creature* p) {
 	for(auto& e : p->allitems()) {
 		if(!e)
 			continue;
-		if(e.iscursed() || e.ismagic() || (d100() < 20))
+		if(e.iscursed() || e.ismagic() || (d100() < 30))
 			e.drop();
 	}
 }
@@ -583,9 +592,19 @@ static void undead_features(int bonus) {
 	player->set(Unholy);
 }
 
+static void select_items(int bonus) {
+	items.select(scene);
+}
+
+static void select_backpack(int bonus) {
+	items.select(player->backpack());
+}
+
 BSDATA(script) = {
 	{"ReactionRoll", reaction_roll},
 	{"Saves", all_saves},
+	{"SelectBackpack", select_backpack},
+	{"SelectItems", select_items},
 	{"SurpriseRoll", surprise_roll},
 	{"Undead", undead_features},
 };

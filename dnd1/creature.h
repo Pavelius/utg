@@ -50,6 +50,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			update();
 	void			update_finish();
 	void			use(item& it);
+	void			use(const char* id, const slice<chooseoption>& options);
 };
 extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {
