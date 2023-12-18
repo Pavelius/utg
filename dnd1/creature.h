@@ -23,9 +23,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			clear();
 	void			cast(spell_s spell);
 	void			damage(int value);
-	void			dispell(spell_s effect);
 	void			drink(spell_s effect);
-	void			enchant(spell_s, unsigned rounds);
 	void			equip(item& v);
 	void			generate();
 	const classi&	geti() const;

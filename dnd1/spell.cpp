@@ -2,6 +2,7 @@
 #include "creature.h"
 #include "scenery.h"
 #include "spell.h"
+#include "ongoing.h"
 
 BSDATA(spelli) = {
 	{"CauseLightWound", {1}, Instant, OneEnemy, {1, 6, 1}},
@@ -64,6 +65,14 @@ assert_enum(spelli, DeathPoison)
 
 spell_s spell;
 
+static void dispelling(const slice<spell_s>& source, variant owner) {
+	for(auto v : source) {
+		if(!v)
+			break;
+		dispell(owner, v);
+	}
+}
+
 bool spelli::isevil() const {
 	switch(range) {
 	case OneEnemy:
@@ -99,9 +108,11 @@ bool creature::apply(spell_s id, int level, bool run) {
 		break;
 	default:
 		if(ei.duration != Instant && ei.duration != PermanentDuration)
-			enchant(id, getduration(ei.duration, level));
+			enchant(this, id, getduration(ei.duration, level));
 		break;
 	}
+	if(run)
+		dispelling(ei.dispell, this);
 	return true;
 }
 
@@ -123,9 +134,15 @@ bool item::apply(spell_s id, int level, bool run) {
 bool scenery::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	switch(id) {
-	case Light:
+	case CureLightWound:
+		break;
+	default:
+		if(ei.duration != Instant && ei.duration != PermanentDuration)
+			enchant(this, id, getduration(ei.duration, level));
 		break;
 	}
+	if(run)
+		dispelling(ei.dispell, this);
 	return true;
 }
 

@@ -9,3 +9,5 @@ struct ongoing {
 	unsigned	rounds;
 	void		clear() { memset(this, 0, sizeof(*this)); }
 };
+void dispell(variant onwer, spell_s effect);
+void enchant(variant owner, spell_s effect, unsigned rounds);

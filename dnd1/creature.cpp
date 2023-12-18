@@ -176,33 +176,6 @@ const char* random_avatar(const classi* pi, gender_s gender) {
 	return result;
 }
 
-static ongoing* find_bonus(variant owner, spell_s effect) {
-	for(auto& e : bsdata<ongoing>()) {
-		if(e.owner == owner && e.effect == effect)
-			return &e;
-	}
-	return 0;
-}
-
-void creature::enchant(spell_s effect, unsigned rounds) {
-	auto current_round = 0;
-	rounds += current_round;
-	auto p = find_bonus(this, effect);
-	if(!p) {
-		p = bsdata<ongoing>::add();
-		p->owner = this;
-		p->effect = effect;
-		p->rounds = rounds;
-	} else if(p->rounds < rounds)
-		p->rounds = rounds;
-}
-
-void creature::dispell(spell_s effect) {
-	auto p = find_bonus(this, effect);
-	if(p)
-		p->clear();
-}
-
 void creature::damage(int value) {
 	if(value <= 0)
 		return;
@@ -365,7 +338,7 @@ void add_creature(const monsteri* pi) {
 void creature::drink(spell_s spell) {
 	auto& ei = bsdata<spelli>::elements[spell];
 	if(ei.isdurable())
-		enchant(spell, (6 + d6()) * 10);
+		enchant(this, spell, (6 + d6()) * 10);
 	else
 		apply(spell, 10, true);
 }

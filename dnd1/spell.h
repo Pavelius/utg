@@ -25,6 +25,7 @@ struct spelli : nameable {
 	dice		effect;
 	spell_s		dispell[4], mass_effect;
 	dice		hds;
+	void		dispelling() const;
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;
 };
