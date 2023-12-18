@@ -3,12 +3,15 @@
 unsigned start_year, current_round;
 
 int getyear() {
+	return 0;
 }
 
 int getmonth() {
+	return 0;
 }
 
 int getdayofweek() {
+	return 0;
 }
 
 void add_hours(unsigned v) {
