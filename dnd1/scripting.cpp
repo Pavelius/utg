@@ -17,7 +17,6 @@
 creaturea targets;
 itema items;
 spella spells;
-static spell_s last_spell;
 static int critical_roll;
 
 template<> void fnscript<abilityi>(int index, int value) {
@@ -117,8 +116,6 @@ static void update_melee_fight() {
 }
 
 static void make_attack(const char* id, int bonus, ability_s attack, ability_s damage, wear_s weapon) {
-	if(player->is(Invisibility))
-		player->dispell(Invisibility);
 	auto ac = opponent->get(AC);
 	if(opponent->is(Small) && player->is(Large))
 		ac += 2;
@@ -225,6 +222,10 @@ static void choose_target() {
 	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
 }
 
+static void choose_target(int bonus) {
+	choose_target();
+}
+
 static void choose_item() {
 	if(player->is(Enemy))
 		last_item = items.random();
@@ -279,8 +280,6 @@ static bool attack_unarmed(bool run) {
 	if(!targets)
 		return false;
 	if(run) {
-		if(player->is(Invisibility))
-			player->dispell(Invisibility);
 		for(auto& e : player->attacks) {
 			if(!e.count)
 				continue;
@@ -364,10 +363,7 @@ static bool prepare_spells(bool run) {
 }
 
 static void choose_spell() {
-	answers an;
-	for(auto spell : spells)
-		an.add((void*)spell, bsdata<spelli>::elements[spell].getname());
-	last_spell = (spell_s)(int)an.choose(getnm("ChooseSpellToCast"));
+	last_spell = spells.choose(getnm("ChooseSpellToCast"));
 }
 
 static bool cast_spells(bool run) {
@@ -376,7 +372,7 @@ static bool cast_spells(bool run) {
 		return false;
 	if(run) {
 		choose_spell();
-		player->cast(last_spell);
+		//player->cast(last_spell);
 	}
 	return true;
 }
@@ -592,6 +588,14 @@ static void undead_features(int bonus) {
 	player->set(Unholy);
 }
 
+static void select_allies(int bonus) {
+	targets = creatures;
+	if(player->is(Player))
+		targets.match(Player, bonus >= 0);
+	else if(player->is(Enemy))
+		targets.match(Enemy, bonus >= 0);
+}
+
 static void select_items(int bonus) {
 	items.select(scene);
 }
@@ -600,11 +604,61 @@ static void select_backpack(int bonus) {
 	items.select(player->backpack());
 }
 
+static void filter_alive(int bonus) {
+	targets.match(&creature::isalive, bonus >= 0);
+}
+
+static void filter_broken(int bonus) {
+	items.match(&item::isbroken, bonus >= 0);
+}
+
+static void filter_identified(int bonus) {
+	items.match(&item::isidentified, bonus >= 0);
+}
+
+static void filter_cursed(int bonus) {
+	items.match(&item::iscursed, bonus >= 0);
+}
+
+static void filter_you(int bonus) {
+	targets.match(&creature::isplayer, bonus >= 0);
+}
+
+static void filter_wounded(int bonus) {
+	targets.match(&creature::iswounded, bonus >= 0);
+}
+
+static bool targets_filter(int bonus) {
+	last_script->proc(bonus);
+	return targets.getcount();
+}
+
+static bool items_filter(int bonus) {
+	last_script->proc(bonus);
+	return targets.getcount();
+}
+
+static bool condition_passed(int bonus) {
+	script_stop();
+	return true;
+}
+
+static void heal(int bonus) {
+}
+
 BSDATA(script) = {
+	{"ChooseTarget", choose_target, condition_passed},
+	{"FilterAlive", filter_alive, targets_filter},
+	{"FilterBroken", filter_cursed, items_filter},
+	{"FilterCursed", filter_cursed, items_filter},
+	{"FilterIdentified", filter_identified, items_filter},
+	{"FilterYou", filter_you, targets_filter},
+	{"FilterWounded", filter_wounded, targets_filter},
 	{"ReactionRoll", reaction_roll},
 	{"Saves", all_saves},
-	{"SelectBackpack", select_backpack},
-	{"SelectItems", select_items},
+	{"SelectAllies", select_backpack, targets_filter},
+	{"SelectBackpack", select_backpack, items_filter},
+	{"SelectItems", select_items, items_filter},
 	{"SurpriseRoll", surprise_roll},
 	{"Undead", undead_features},
 };

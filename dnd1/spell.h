@@ -1,3 +1,4 @@
+#include "collection.h"
 #include "dice.h"
 #include "duration.h"
 #include "flagable.h"
@@ -28,10 +29,10 @@ struct spelli : nameable {
 	bool		isevil() const;
 };
 struct spellable {
-	unsigned char spells[LastSpell + 1];
+	unsigned char spells[128];
 };
-struct spella : adat<spell_s> {
+struct spella : collection<spelli> {
 	void		select(const spellf& source);
 	void		select(const spellable& source);
 };
-extern spell_s spell;
+extern spelli* last_spell;

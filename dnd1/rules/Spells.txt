@@ -1,0 +1,4 @@
+#Spell
+
+CureLightWounds level(1)
+ use SelectAllies FilterAlive FilterYou-1 FilterWounded ChooseTarget

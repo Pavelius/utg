@@ -39,9 +39,11 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;
+	bool			isalive() const { return get(HP) > 0; }
 	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isplayer() const;
 	bool			isready() const;
+	bool			iswounded() const;
 	void			levelup();
 	void			raiselevel();
 	void			remove();

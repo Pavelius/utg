@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-Continue: Define translate
+﻿In file `rules/Spells.txt`:
+ Line 4: Not found requisit `use`

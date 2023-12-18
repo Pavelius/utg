@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "creature.h"
+#include "scenery.h"
 #include "spell.h"
 
 BSDATA(spelli) = {
@@ -7,13 +8,14 @@ BSDATA(spelli) = {
 	{"CauseFear", {1}, Hour2, OneEnemy},
 	{"CureLightWound", {1}, Instant, CasterOrAlly, {1, 6, 1}},
 	{"Darkness", {1, 1}, Hour2, Enviroment},
-	{"DetectEvil", {1}, Hour, OneRandomItem},
-	{"DetectMagic", {1, 1}, Turn2, OneRandomItem},
+	{"DetectEvil", {1}, Instant, OneRandomItem},
+	{"DetectMagic", {1, 1}, Instant, OneRandomItem},
 	{"Light", {1, 1}, Hour2, Enviroment},
 	{"ProtectionFromEvil", {1, 1}, Hour2, Caster},
 	{"PurifyFoodAndWater", {1}, PermanentDuration, OneItem},
 	{"RemoveFear", {1}, Instant, CasterOrAlly, {}, {CauseFear}},
 	{"ResistCold", {1}, Hour, CasterOrAlly},
+	//
 	{"CharmPerson", {0, 1}, Instant, OneEnemy},
 	{"FloatingDisc", {0, 1}, Hour, Caster},
 	{"HoldPortal", {0, 1}, Turn2d6, OneObject},
@@ -103,26 +105,50 @@ bool creature::apply(spell_s id, int level, bool run) {
 	return true;
 }
 
+bool item::apply(spell_s id, int level, bool run) {
+	auto& ei = bsdata<spelli>::elements[id];
+	switch(id) {
+	case DetectEvil:
+		if(!iscursed() || isidentified())
+			return false;
+		if(run) {
+			identified = 1;
+			player->actid(ei.id, "Success");
+		}
+		break;
+	}
+	return true;
+}
+
+bool scenery::apply(spell_s id, int level, bool run) {
+	auto& ei = bsdata<spelli>::elements[id];
+	switch(id) {
+	case Light:
+		break;
+	}
+	return true;
+}
+
 void spella::select(const spellf& source) {
 	auto ps = begin();
-	auto pe = endof();
-	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+	auto pe = (spelli**)endof();
+	for(auto i = 0; i <= 127; i++) {
 		if(source.is(i)) {
 			if(ps < pe)
-				*ps = i;
+				*ps = bsdata<spelli>::elements + i;
 		}
 	}
-	count = ps - data;
+	count = ps - begin();
 }
 
 void spella::select(const spellable& source) {
 	auto ps = begin();
-	auto pe = endof();
-	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+	auto pe = (spelli**)endof();
+	for(auto i = 0; i <= 127; i++) {
 		if(source.spells[i]) {
 			if(ps < pe)
-				*ps = i;
+				*ps = bsdata<spelli>::elements + i;
 		}
 	}
-	count = ps - data;
+	count = ps - begin();
 }

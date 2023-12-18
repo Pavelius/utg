@@ -8,6 +8,8 @@
 #include "variant.h"
 #include "wear.h"
 
+enum spell_s : unsigned char;
+
 struct itemi : nameable {
 	unsigned	cost, weight, count;
 	dice		damage;
@@ -34,6 +36,7 @@ public:
 	explicit operator bool() const { return type != 0; }
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
+	bool		apply(spell_s id, int level, bool run);
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
 	bool		damage();

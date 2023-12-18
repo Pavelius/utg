@@ -30,6 +30,7 @@ BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
 BSDATAC(scenery, 2048)
 BSDATAC(sceneryi, 128)
+BSDATAC(spelli, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),

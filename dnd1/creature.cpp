@@ -232,6 +232,10 @@ bool creature::isready() const {
 	return get(HP) > 0;
 }
 
+bool creature::iswounded() const {
+	return get(HP) < get(HPMax);
+}
+
 static void update_start() {
 	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SavePoison + 1));
 	player->feats.add(player->basic.feats);
@@ -272,11 +276,6 @@ void creature::update_finish() {
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];
-	// Special spell effect on AC
-	if(is(GaseousForm) && abilities[AC] < 11)
-		abilities[AC] = 11;
-	if(is(Shield) && abilities[AC] < 6)
-		abilities[AC] = 6;
 }
 
 void creature::update() {

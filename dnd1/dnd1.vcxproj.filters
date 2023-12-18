@@ -235,5 +235,8 @@
     <Text Include="rules\Races.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="rules\Spells.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>
