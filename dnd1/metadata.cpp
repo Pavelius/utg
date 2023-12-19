@@ -16,7 +16,6 @@
 #include "widget.h"
 
 NOBSDATA(attacki)
-NOBSDATA(dice)
 NOBSDATA(interval)
 
 BSDATAC(advancei, 256)
@@ -59,9 +58,6 @@ BSMETA(classi) = {
 	{}};
 BSMETA(creature) = {
 	BSDST(abilities, abilityi),
-	{}};
-BSMETA(dice) = {
-	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
 BSMETA(durationi) = {
 	BSREQ(id),

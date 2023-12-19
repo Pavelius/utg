@@ -1,5 +1,5 @@
 #include "collection.h"
-#include "dice.h"
+#include "interval.h"
 #include "duration.h"
 #include "flagable.h"
 #include "nameable.h"
@@ -22,9 +22,9 @@ struct spelli : nameable {
 	char		level[4];
 	duration_s	duration;
 	range_s		range;
-	dice		effect;
+	interval	effect;
 	spell_s		dispell[4], mass_effect;
-	dice		hds;
+	interval	hds;
 	void		dispelling() const;
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;

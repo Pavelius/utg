@@ -139,7 +139,7 @@ static void make_attack(const char* id, int bonus, ability_s attack, ability_s d
 	}
 }
 
-static void unarmed_attack(int bonus, dice damage) {
+static void unarmed_attack(int bonus, interval damage) {
 	auto ac = opponent->get(AC);
 	if(rolld20(bonus, 10 + ac, true)) {
 		player->actid("HitUnarmed", 0, ' ');

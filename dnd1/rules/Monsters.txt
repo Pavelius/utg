@@ -5,11 +5,11 @@ OrcishWeapons
 
 #Monster
 
-Skeleton dungeon(3 4) wilderness(3 10)
+Skeleton dungeon(3 12) wilderness(3 30)
  feats Level+1 AC+2 Undead
  attacks count(1) damage(1 6)
-Zombie dungeon(2 4) wilderness(4 6)
+Zombie dungeon(2 8) wilderness(4 24)
  feats Level+2 AC+1 Undead Slow
 
-Orc dungeon(2 4) wilderness(1 6 0 10) treasure("D")
+Orc dungeon(2 8) wilderness(10 60) treasure("D")
  feats Level+1 AC+3 SunSensitive OrcishWeapons

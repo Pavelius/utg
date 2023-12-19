@@ -294,9 +294,9 @@ static void add_language(const racei* pm) {
 }
 
 static void add_hits_by_level() {
-	dice d = {};
-	d.c = player->basic.get(Level);
-	d.d = player->geti().hd;
+	interval d = {};
+	d.min = player->basic.get(Level);
+	d.max = d.min * player->geti().hd;
 	player->basic.abilities[HPMax] = d.roll();
 }
 

@@ -5,9 +5,9 @@
 #include "ongoing.h"
 
 BSDATA(spelli) = {
-	{"CauseLightWound", {1}, Instant, OneEnemy, {1, 6, 1}},
+	{"CauseLightWound", {1}, Instant, OneEnemy, {2, 7}},
 	{"CauseFear", {1}, Hour2, OneEnemy},
-	{"CureLightWound", {1}, Instant, CasterOrAlly, {1, 6, 1}},
+	{"CureLightWound", {1}, Instant, CasterOrAlly, {2, 7}},
 	{"Darkness", {1, 1}, Hour2, Enviroment},
 	{"DetectEvil", {1}, Instant, OneRandomItem},
 	{"DetectMagic", {1, 1}, Instant, OneRandomItem},
@@ -20,7 +20,7 @@ BSDATA(spelli) = {
 	{"CharmPerson", {0, 1}, Instant, OneEnemy},
 	{"FloatingDisc", {0, 1}, Hour, Caster},
 	{"HoldPortal", {0, 1}, Turn2d6, OneObject},
-	{"MagicMissile", {0, 1}, Instant, OneEnemy, {1, 6, 1}},
+	{"MagicMissile", {0, 1}, Instant, OneEnemy, {2, 7}},
 	{"ReadLanguages", {0, 1}, Turn2, Caster},
 	{"ReadMagic", {0, 1}, Turn, Caster},
 	{"Shield", {0, 1}, Turn2, Caster},

@@ -1,11 +1,11 @@
 #include "damage.h"
-#include "dice.h"
+#include "interval.h"
 
 #pragma once
 
 struct attacki {
 	unsigned char	count;
-	dice			damage;
+	interval		damage;
 	explicit operator bool() const { return count != 0; }
 };
 struct attackable {
