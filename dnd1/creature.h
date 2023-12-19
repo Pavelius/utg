@@ -13,7 +13,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	unsigned char	type;
 	unsigned short	leader;
 	statable		basic;
-	spellf			active_spells, known_spells;
+	spellf			active_spells, permanent_spells, known_spells;
 	char			initiative;
 	unsigned		experience;
 	raceable		languages;
@@ -21,7 +21,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			attack(ability_s attack, int ac, int bonus);
 	void			choose(const slice<chooseoption>& options, bool enemy_choose_first = false);
 	void			clear();
-	void			cast(spell_s spell);
+	bool			cast(spell_s spell, int level, bool run);
 	void			damage(int value);
 	void			drink(spell_s effect);
 	void			equip(item& v);
@@ -37,7 +37,10 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;
+	bool			isallowspell() const { return const_cast<creature*>(this)->apply(last_spell, last_level, false); }
 	bool			isalive() const { return get(HP) > 0; }
+	bool			isally() const;
+	bool			isenemy() const;
 	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isplayer() const;
 	bool			isready() const;

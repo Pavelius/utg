@@ -3,11 +3,10 @@
 #pragma once
 
 enum range_s : unsigned char {
-	Caster, CasterOrAlly, OneEnemy, SomeEnemies,
+	Caster, CasterOrAlly, OneAlly, OneEnemy, SomeEnemies,
 	AllAlly, AllEnemies,
-	OneItem, OneRandomItem, AllCasterItems, AllPartyItems,
-	Enviroment, OneObject, OneRandomObject,
-	EncounterReaction,
+	OneItem, OneAllyItem, AllCasterItems, AllAllyItems,
+	Enviroment, OneObject, OneRandomObject
 };
 struct rangei : nameable {
 };

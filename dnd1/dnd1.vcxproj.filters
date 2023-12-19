@@ -84,9 +84,6 @@
     <ClInclude Include="calendar.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="print.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="itemlay.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -165,9 +162,6 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="reaction.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="print.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="monster.cpp">

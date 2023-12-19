@@ -201,6 +201,14 @@ bool creature::isplayer() const {
 	return this == player;
 }
 
+bool creature::isenemy() const {
+	return player->is(Player) ? is(Enemy) : is(Player);
+}
+
+bool creature::isally() const {
+	return player->is(Player) ? is(Player) : is(Enemy);
+}
+
 bool creature::isready() const {
 	return get(HP) > 0;
 }
@@ -224,6 +232,7 @@ static void update_equipment() {
 }
 
 static void update_spells() {
+	player->active_spells = player->permanent_spells;
 }
 
 void creature::update_finish() {
@@ -344,7 +353,7 @@ void add_creature(const monsteri* pi) {
 void creature::drink(spell_s spell) {
 	auto& ei = bsdata<spelli>::elements[spell];
 	if(ei.isdurable())
-		enchant(this, spell, (6 + d6()) * 10);
+		enchant(this, this, spell, (6 + d6()) * 10);
 	else
 		apply(spell, 10, true);
 }

@@ -1,5 +1,5 @@
+#include "actable.h"
 #include "crt.h"
-#include "print.h"
 #include "roll.h"
 
 int last_roll_raw, last_roll, critical_roll;

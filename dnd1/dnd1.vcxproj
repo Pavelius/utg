@@ -163,7 +163,6 @@
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
-    <ClInclude Include="print.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
@@ -194,7 +193,6 @@
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="ongoing.cpp" />
-    <ClCompile Include="print.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="reaction.cpp" />
     <ClCompile Include="roll.cpp" />

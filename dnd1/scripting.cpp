@@ -5,7 +5,6 @@
 #include "gender.h"
 #include "modifier.h"
 #include "pushvalue.h"
-#include "print.h"
 #include "randomizer.h"
 #include "roll.h"
 #include "reaction.h"
@@ -65,17 +64,9 @@ static void clear_console() {
 		answers::console->clear();
 }
 
-static void print(const item& it, char separator, const char* format, ...) {
-	if(!answers::console)
-		return;
-	if(separator)
-		answers::console->addsep(separator);
-	stract(*answers::console, Male, it.getname(), format, xva_start(format));
-}
-
 static void damage_item() {
 	if(last_item->damage())
-		print(*last_item, ' ', getnm("ItemBroken"), last_item->getname());
+		last_item->act(' ', getnm("ItemBroken"), last_item->getname());
 }
 
 static bool is_melee_fight() {
@@ -218,7 +209,7 @@ static void random_melee_angry(int bonus) {
 		targets.data[i]->set(EngageMelee);
 }
 
-static void choose_target() {
+void choose_target() {
 	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
 }
 
@@ -363,7 +354,7 @@ static bool prepare_spells(bool run) {
 }
 
 static void choose_spell() {
-	last_spell = spells.choose(getnm("ChooseSpellToCast"));
+	last_spell = (spell_s)(spells.choose(getnm("ChooseSpellToCast")) - bsdata<spelli>::elements);
 }
 
 static bool cast_spells(bool run) {

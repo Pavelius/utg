@@ -1,4 +1,14 @@
 #Spell
 
-CureLightWounds level(1)
- use SelectAllies FilterAlive FilterYou-1 FilterWounded ChooseTarget
+CureLightWounds level(1) range(CasterOrAlly) effect(2 7)
+CauseLightWounds level(1) range(OneEnemy) effect(2 7) reversed(CureLightWounds)
+DetectEvil level(1) range(AllAllyItems) count(1)
+DetectMagic level(1) range(AllAllyItems) count(1)
+Light level(1) duration(Turn12) range(Enviroment)
+LightBlinding level(1) range(OneEnemy) alternate(Light) save_negates(SaveSpells)
+Darkness level(1) duration(Turn12) range(Enviroment) reversed(Light)
+ProtectionFromEvil level(1) duration(Turn12) range(Caster)
+PuryfyFoodAndDrink level(1) range(OneAllyItem)
+RemoveFear level(1) range(OneAllyItem)
+CauseFear level(1) duration(Turn2) range(OneEnemy) save_negates(SaveSpells)
+ResistCold level(1) range(AllAlly)

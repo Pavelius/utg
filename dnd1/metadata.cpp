@@ -109,6 +109,12 @@ BSMETA(spelli) = {
 	BSREQ(effect),
 	BSENM(duration, durationi),
 	BSENM(range, rangei),
+	BSENM(dispell, spelli),
+	BSENM(save_negates, abilityi),
+	BSENM(save_halves, abilityi),
+	BSREQ(count),
+	BSENM(reversed, spelli),
+	BSENM(alternate, spelli),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),

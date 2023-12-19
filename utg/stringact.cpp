@@ -32,21 +32,21 @@ static gender_change_string player_gender[] = {
 };
 }
 
-static bool apply_name(const char* identifier, stringbuilder& sb) {
-	if(!act_name)
+bool apply_name(const char* identifier, stringbuilder& sb, const char* name) {
+	if(!name)
 		return false;
 	if(equal(identifier, "герой") || equal(identifier, "name"))
-		sb.add(act_name);
+		sb.add(name);
 	else if(equal(identifier, "героя"))
-		sb.addof(act_name);
+		sb.addof(name);
 	else if(equal(identifier, "герою"))
-		sb.addto(act_name);
+		sb.addto(name);
 	else
 		return false;
 	return true;
 }
 
-static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
+bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
 	for(auto& e : player_gender) {
 		if(strcmp(e.female, identifier) != 0)
 			continue;
@@ -61,22 +61,22 @@ static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gen
 	return false;
 }
 
-void act_identifier(stringbuilder& sb, const char* identifier) {
-	if(apply_name(identifier, sb))
-		return;
-	if(apply_gender(identifier, sb, act_gender))
-		return;
-	if(apply_list(identifier, sb))
-		return;
-	stringbuilder::defidentifier(sb, identifier);
-}
-
-void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param) {
-	auto push_name = act_name;
-	auto push_gender = act_gender;
-	act_name = name;
-	act_gender = gender;
-	sb.addv(format, format_param);
-	act_gender = push_gender;
-	act_name = push_name;
-}
+//void act_identifier(stringbuilder& sb, const char* identifier) {
+//	if(apply_name(identifier, sb, act_name))
+//		return;
+//	if(apply_gender(identifier, sb, act_gender))
+//		return;
+//	if(apply_list(identifier, sb))
+//		return;
+//	stringbuilder::defidentifier(sb, identifier);
+//}
+//
+//void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param) {
+//	auto push_name = act_name;
+//	auto push_gender = act_gender;
+//	act_name = name;
+//	act_gender = gender;
+//	sb.addv(format, format_param);
+//	act_gender = push_gender;
+//	act_name = push_name;
+//}

@@ -34,6 +34,7 @@ public:
 	item(const itemi* pi);
 	item() = default;
 	explicit operator bool() const { return type != 0; }
+	void		act(char separator, const char* format, ...) const;
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
 	bool		apply(spell_s id, int level, bool run);
@@ -46,6 +47,7 @@ public:
 	interval	getdamage() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
+	bool		isallowspell() const;
 	bool		isbroken() const { return broken != 0; }
 	bool		iscountable() const { return true; }
 	bool		iscursed() const { return cursed != 0; }

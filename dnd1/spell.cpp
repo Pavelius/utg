@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "creature.h"
+#include "pushvalue.h"
 #include "scenery.h"
 #include "spell.h"
 #include "ongoing.h"
@@ -9,8 +10,8 @@ BSDATA(spelli) = {
 	{"CauseFear", {1}, Hour2, OneEnemy},
 	{"CureLightWound", {1}, Instant, CasterOrAlly, {2, 7}},
 	{"Darkness", {1, 1}, Hour2, Enviroment},
-	{"DetectEvil", {1}, Instant, OneRandomItem},
-	{"DetectMagic", {1, 1}, Instant, OneRandomItem},
+	{"DetectEvil", {1}, Instant, AllAllyItems},
+	{"DetectMagic", {1, 1}, Instant, AllAllyItems},
 	{"Light", {1, 1}, Hour2, Enviroment},
 	{"ProtectionFromEvil", {1, 1}, Hour2, Caster},
 	{"PurifyFoodAndWater", {1}, PermanentDuration, OneItem},
@@ -46,7 +47,7 @@ BSDATA(spelli) = {
 	{"ResistFire", {2, 0}, Hour, CasterOrAlly},
 	{"Silence15Radius", {2, 0}, Hour2, Enviroment},
 	{"SnakeCharm", {2, 0}, Turn1d4p1, SomeEnemies},
-	{"SpeakWithAnimals", {2, 0}, Hour, EncounterReaction},
+	{"SpeakWithAnimals", {2, 0}, Hour, Enviroment},
 	{"BestowCurse", {3, 4}, PermanentDuration, OneEnemy},
 	{"CauseDisease", {3, 0}, PermanentDuration, OneEnemy},
 	{"CureDisease", {3, 0}, Instant, CasterOrAlly, {}, {CauseDisease, Blindness}},
@@ -63,7 +64,10 @@ BSDATA(spelli) = {
 };
 assert_enum(spelli, DeathPoison)
 
-spell_s spell;
+void choose_target();
+
+spell_s	last_spell;
+int		last_level;
 
 static void dispelling(const slice<spell_s>& source, variant owner) {
 	for(auto v : source) {
@@ -71,6 +75,64 @@ static void dispelling(const slice<spell_s>& source, variant owner) {
 			break;
 		dispell(owner, v);
 	}
+}
+
+static bool cast_on_target(bool run, unsigned maximum_count, bool random) {
+	targets.match(&creature::isallowspell, true);
+	if(!targets)
+		return false;
+	if(random)
+		zshuffle(targets.begin(), targets.count);
+	if(maximum_count) {
+		if(targets.count > maximum_count)
+			targets.count = maximum_count;
+	}
+	if(run) {
+		for(auto p : targets)
+			p->apply(last_spell, last_level, run);
+	}
+	return true;
+}
+
+static bool cast_on_target(bool run) {
+	targets.match(&creature::isallowspell, true);
+	if(!targets)
+		return false;
+	if(run) {
+		pushvalue push(opponent);
+		choose_target();
+		opponent->apply(last_spell, last_level, run);
+	}
+	return true;
+}
+
+static bool cast_on_item(bool run, unsigned maximum_count, bool random) {
+	items.match(&item::isallowspell, true);
+	if(!items)
+		return false;
+	if(random)
+		zshuffle(items.begin(), items.count);
+	if(maximum_count) {
+		if(items.count > maximum_count)
+			items.count = maximum_count;
+	}
+	if(run) {
+		for(auto p : items)
+			p->apply(last_spell, last_level, run);
+	}
+	return true;
+}
+
+static bool cast_on_item(bool run) {
+	items.match(&item::isallowspell, true);
+	if(!items)
+		return false;
+	if(run) {
+		pushvalue push(last_item);
+		last_item = items.choose(getnm(str(bsdata<spelli>::elements[last_spell].id, "Target")));
+		last_item->apply(last_spell, last_level, run);
+	}
+	return true;
 }
 
 bool spelli::isevil() const {
@@ -85,11 +147,11 @@ bool spelli::isevil() const {
 }
 
 static int getduration(duration_s d, int level) {
-	auto r1 = bsdata<durationi>::elements[d].from;
-	auto r2 = bsdata<durationi>::elements[d].to;
-	if(r2 == 0)
-		return r1;
-	return xrand(r1, r2);
+	return bsdata<durationi>::elements[d].roll();
+}
+
+bool item::isallowspell() const {
+	return const_cast<item*>(this)->apply(last_spell, last_level, false);
 }
 
 bool creature::apply(spell_s id, int level, bool run) {
@@ -108,7 +170,7 @@ bool creature::apply(spell_s id, int level, bool run) {
 		break;
 	default:
 		if(ei.duration != Instant && ei.duration != PermanentDuration)
-			enchant(this, id, getduration(ei.duration, level));
+			enchant(player, this, id, getduration(ei.duration, level));
 		break;
 	}
 	if(run)
@@ -138,12 +200,79 @@ bool scenery::apply(spell_s id, int level, bool run) {
 		break;
 	default:
 		if(ei.duration != Instant && ei.duration != PermanentDuration)
-			enchant(this, id, getduration(ei.duration, level));
+			enchant(player, this, id, getduration(ei.duration, level));
 		break;
 	}
 	if(run)
 		dispelling(ei.dispell, this);
 	return true;
+}
+
+bool creature::cast(spell_s spell, int level, bool run) {
+	pushvalue push_spell(last_spell, spell);
+	pushvalue push_level(last_level, level);
+	auto& ei = bsdata<spelli>::elements[last_spell];
+	switch(ei.range) {
+	case Caster:
+		return apply(last_spell, last_level, true);
+	case CasterOrAlly:
+		targets = creatures;
+		targets.matchally(true);
+		targets.match(&creature::isplayer, false);
+		return cast_on_target(run);
+	case OneAlly:
+		targets = creatures;
+		targets.matchally(true);
+		return cast_on_target(run);
+	case OneEnemy:
+		targets = creatures;
+		targets.matchenemy(true);
+		return cast_on_target(run);
+	case SomeEnemies:
+		targets = creatures;
+		targets.matchenemy(true);
+		return cast_on_target(run, xrand(2, 4), true);
+	case AllAlly:
+		targets = creatures;
+		targets.matchally(true);
+		return cast_on_target(run, 0, false);
+	case AllEnemies:
+		targets = creatures;
+		targets.matchenemy(true);
+		return cast_on_target(run, 0, false);
+	case OneItem:
+		items.clear();
+		items.select(player->backpack());
+		return cast_on_item(run);
+	case OneAllyItem:
+		items.clear();
+		for(auto p : creatures) {
+			if(p->isally())
+				items.select(player->backpack());
+		}
+		return cast_on_item(run);
+	case AllCasterItems:
+		items.clear();
+		items.select(player->backpack());
+		return cast_on_item(run, 0, false);
+	case AllAllyItems:
+		items.clear();
+		for(auto p : creatures) {
+			if(p->isally())
+				items.select(player->backpack());
+		}
+		return cast_on_item(run, ei.count.roll(), ei.count);
+	case Enviroment:
+		if(!scene)
+			return false;
+		return scene->apply(last_spell, last_level, run);
+	case OneObject:
+		return false;
+	case OneRandomObject:
+		return false;
+	default:
+		return false;
+	}
 }
 
 void spella::select(const spellf& source) {

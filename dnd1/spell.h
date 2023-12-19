@@ -7,6 +7,8 @@
 
 #pragma once
 
+enum ability_s : unsigned char;
+
 enum spell_s : unsigned char {
 	CauseLightWound, CauseFear, CureLightWound, Darkness, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
@@ -25,7 +27,11 @@ struct spelli : nameable {
 	interval	effect;
 	spell_s		dispell[4], mass_effect;
 	interval	hds;
+	interval	count;
+	ability_s	save_negates, save_halves;
+	spell_s		reversed, alternate;
 	void		dispelling() const;
+	spell_s		getbasic() const { return reversed ? reversed : alternate; }
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;
 };
@@ -36,4 +42,5 @@ struct spella : collection<spelli> {
 	void		select(const spellf& source);
 	void		select(const spellable& source);
 };
-extern spelli* last_spell;
+extern spell_s last_spell;
+extern int last_level;
