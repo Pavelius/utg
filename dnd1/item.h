@@ -1,7 +1,7 @@
 #pragma once
 
 #include "collection.h"
-#include "dice.h"
+#include "interval.h"
 #include "feat.h"
 #include "list.h"
 #include "typeable.h"
@@ -12,7 +12,7 @@ enum spell_s : unsigned char;
 
 struct itemi : nameable {
 	unsigned	cost, weight, count;
-	dice		damage;
+	interval	damage;
 	itemi		*ammunition, *basic;
 	wear_s		wear;
 	featable	flags;
@@ -43,7 +43,7 @@ public:
 	void		drop();
 	int			getcost() const;
 	int			getcount() const;
-	dice		getdamage() const;
+	interval	getdamage() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		isbroken() const { return broken != 0; }

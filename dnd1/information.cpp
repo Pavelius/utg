@@ -1,16 +1,10 @@
 #include "creature.h"
 
-static void print(stringbuilder& sb, const dice& v) {
-	auto min = v.c + v.b;
-	if(min < 1)
-		min = 1;
-	auto max = v.c * v.d + v.b;
-	if(max < min)
-		max = min;
-	if(max == min)
-		sb.add("%1i", max);
+static void print(stringbuilder& sb, const interval& v) {
+	if(!v.max)
+		sb.add("%1i", v.max);
 	else
-		sb.add("%1i-%2i", min, max);
+		sb.add("%1i-%2i", v.min, v.max);
 }
 
 static void print_weight(stringbuilder& sb, int coins) {

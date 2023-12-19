@@ -265,11 +265,17 @@ void finish_creature() {
 	player->abilities[HP] = player->get(HPMax);
 }
 
-dice creature::getdamage(wear_s v) const {
+interval creature::getdamage(wear_s v) const {
 	auto r = wears[v].getdamage();
 	switch(v) {
-	case MeleeWeapon: r.b += abilities[MeleeDamage]; break;
-	case RangedWeapon: r.b += abilities[RangedDamage]; break;
+	case MeleeWeapon:
+		r.min += abilities[MeleeDamage];
+		r.max += abilities[MeleeDamage];
+		break;
+	case RangedWeapon:
+		r.min += abilities[RangedDamage];
+		r.max += abilities[RangedDamage];
+		break;
 	}
 	return r;
 }

@@ -17,6 +17,7 @@
 
 NOBSDATA(attacki)
 NOBSDATA(dice)
+NOBSDATA(interval)
 
 BSDATAC(advancei, 256)
 BSDATAC(actioni, 256)
@@ -67,6 +68,9 @@ BSMETA(durationi) = {
 	{}};
 BSMETA(feati) = {
 	BSREQ(id),
+	{}};
+BSMETA(interval) = {
+	BSREQ(min), BSREQ(max),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),

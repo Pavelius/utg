@@ -27,7 +27,7 @@ Arrow wear(Ammunition) cost(5) count(30)
 Bolt wear(Ammunition) cost(5) count(20)
 Stone wear(Ammunition) count(10)
 
-Crossbow cost(30) weight(50) wear(RangedWeapon) damage(1 6 1) ammunition(Bolt)
+Crossbow cost(30) weight(50) wear(RangedWeapon) damage(2 7) ammunition(Bolt)
  flags Slow TwoHanded
 ShortBow cost(25) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
  flags TwoHanded

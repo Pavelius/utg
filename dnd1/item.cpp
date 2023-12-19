@@ -101,7 +101,7 @@ void item::addname(stringbuilder& sb) const {
 		sb.adds("%1i%Pieces", count);
 }
 
-dice item::getdamage() const {
+interval item::getdamage() const {
 	return geti().damage;
 }
 

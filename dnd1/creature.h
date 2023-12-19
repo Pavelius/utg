@@ -28,7 +28,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			generate();
 	const classi&	geti() const;
 	int				getaward() const;
-	dice			getdamage(wear_s v) const;
+	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	void			getstatus(stringbuilder& sb) const;
