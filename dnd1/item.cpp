@@ -1,6 +1,8 @@
 #include "item.h"
 #include "roll.h"
 
+static_assert(sizeof(item) == 4, "Struct `item` must be 4 bytes");
+
 item* last_item;
 
 void itema::select(const slice<item>& source) {
@@ -72,8 +74,8 @@ void item::add(item& v) {
 	if(iscountable())
 		return;
 	unsigned n1 = count + v.count + 1;
-	if(n1 >= 0xFF) {
-		count = 0xFF;
+	if(n1 >= 0xFFFF) {
+		count = 0xFFFF;
 		v.count = n1 - count - 1;
 	} else {
 		count = n1;

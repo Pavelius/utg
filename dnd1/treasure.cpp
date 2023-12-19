@@ -1,24 +1,24 @@
 #include "draw_utg.h"
+#include "interval.h"
 #include "generator.h"
 #include "treasure.h"
 
 struct treasurei {
 	struct coini {
-		char	percent;
-		dice	range;
-		short	multiplier;
+		char		percent;
+		interval	range;
 	};
-	char		symbol;
-	coini		cp, sp, ep, gp, pp, gems, jewelry, magic;
+	char	symbol;
+	coini	cp, sp, ep, gp, pp, gems, jewelry, magic;
 };
 
 BSDATA(treasurei) = {
-	{'A', {25, {1, 6}, 1000}, {30, {1, 6}, 1000}, {20, {1, 4}, 1000}, {35, {2, 6}, 1000}, {25, {1, 2}, 1000}, {50, {6, 6}}, {50, {6, 6}}, {30, {3}}},
-	{'B', {50, {1, 8}, 1000}, {25, {1, 6}, 1000}, {25, {1, 4}, 1000}, {25, {1, 3}, 1000}, {}, {25, {1, 6}}, {25, {1, 6}}, {10, {1}}},
-	{'C', {20, {1, 12}, 1000}, {30, {1, 4}, 1000}, {10, {1, 4}, 1000}, {}, {}, {25, {1, 4}}, {25, {1, 4}}, {10, {2}}},
-	{'D', {10, {1, 8}, 1000}, {15, {1, 12}, 1000}, {}, {60, {1, 6}, 1000}, {}, {30, {1, 8}}, {30, {1, 8}}, {15, {2}}},
-	{'E', {5, {1, 10}, 1000}, {30, {1, 12}, 1000}, {25, {1, 4}, 1000}, {25, {1, 8}, 1000}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
-	{'F', {}, {10, {1, 12}, 1000}, {25, {1, 4}, 1000}, {25, {1, 8}, 1000}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
+	{'A', {25, {1000, 6000}}, {30, {1000, 6000}}, {20, {1000, 4000}}, {35, {2000, 12000}}, {25, {1000, 2000}}, {50, {6, 36}}, {50, {6, 36}}, {30, {3}}},
+	{'B', {50, {1000, 8000}}, {25, {1000, 6000}}, {25, {1000, 4000}}, {25, {1000, 3000}}, {}, {25, {1, 6}}, {25, {1, 6}}, {10, {1}}},
+	{'C', {20, {1000, 12000}}, {30, {1000, 4000}}, {10, {1000, 4000}}, {}, {}, {25, {1, 4}}, {25, {1, 4}}, {10, {2}}},
+	{'D', {10, {1000, 8000}}, {15, {1000, 12000}}, {}, {60, {1000, 6000}}, {}, {30, {1, 8}}, {30, {1, 8}}, {15, {2}}},
+	{'E', {5, {1000, 10000}}, {30, {1000, 12000}}, {25, {1000, 4000}}, {25, {1000, 8000}}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
+	{'F', {}, {10, {1000, 12000}}, {25, {1000, 4000}}, {25, {1000, 8000}}, {}, {10, {1, 10}}, {10, {1, 10}}, {25, {3}}},
 };
 BSDATAF(treasurei)
 
@@ -39,8 +39,6 @@ static void add_coins(treasure& result, const char* id, const treasurei::coini& 
 			return;
 	}
 	auto count = e.range.roll();
-	if(e.multiplier)
-		count = count * e.multiplier;
 	item it(pi);
 	it.setcount(count);
 	result.add(it);
@@ -52,8 +50,6 @@ static void add_gems(treasure& result, const treasurei::coini& e) {
 			return;
 	}
 	auto count = e.range.roll();
-	if(e.multiplier)
-		count = count * e.multiplier;
 	for(auto i = 0; i < count; i++) {
 		auto value = random_value("RandomGems");
 		if(value.iskind<itemi>())
@@ -67,8 +63,6 @@ static void add_jewelry(treasure& result, const treasurei::coini& e) {
 			return;
 	}
 	auto count = e.range.roll();
-	if(e.multiplier)
-		count = count * e.multiplier;
 	variant jewelry = "Jewelry";
 	if(!jewelry)
 		return;

@@ -3,9 +3,9 @@
 template<typename T>
 struct bsdata;
 
-template<typename T>
+template<typename T, typename V = short unsigned>
 struct typeable {
-	short unsigned		type;
+	V					type;
 	constexpr explicit operator bool() const { return type != 0; }
 	constexpr const T&	geti() const { return bsdata<T>::elements[type]; }
 	const char*			getname() const { return geti().getname(); }

@@ -19,7 +19,7 @@ struct itemi : nameable {
 	variants	use, wearing, powers;
 	bool		is(feat_s v) const { return flags.is(v); }
 };
-class item : public typeable<itemi> {
+class item : public typeable<itemi, unsigned char> {
 	union {
 		unsigned char flags;
 		struct {
@@ -28,7 +28,7 @@ class item : public typeable<itemi> {
 			unsigned char broken : 1;
 		};
 	};
-	unsigned char count;
+	unsigned short count;
 public:
 	item(const char* id);
 	item(const itemi* pi);

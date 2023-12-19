@@ -294,6 +294,9 @@
     <ClCompile Include="draw_imager.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="interval.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

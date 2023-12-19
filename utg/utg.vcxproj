@@ -163,6 +163,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="draw_imager.cpp" />
+    <ClCompile Include="interval.cpp" />
     <ClCompile Include="querry.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
