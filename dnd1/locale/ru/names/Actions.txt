@@ -2,6 +2,7 @@
 AttackRanged: Стрелять из лука
 AttackMelee: Атаковать %-~melee ближайшего врага
 AttackUnarmed: Атаковать врага голыми руками
+CastSpell: Создать заклинание [%1]
 GroupExperienceAward: Партия получила [%1i] опыта.
 HitMelee: %герой нанес%ла удар %-~melee.
 HitRanged: %герой выстрелил%а из лука.

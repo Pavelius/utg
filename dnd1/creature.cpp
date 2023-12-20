@@ -103,9 +103,10 @@ void creature::raiselevel() {
 	auto n = basic.get(Level);
 	auto d = bsdata<classi>::elements[type].hd;
 	if(d) {
-		auto r = rand() % d;
+		auto r = 1 + rand() % d;
 		while(n == 1 && type && r <= 2)
 			r = rand() % d;
+		r += basic.getbonus(Constitution);
 		basic.abilities[HPMax] += r;
 	}
 	apply_advance(bsdata<classi>::elements + type, n);
@@ -200,7 +201,7 @@ bool creature::iswounded() const {
 }
 
 static void update_start() {
-	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SavePoison + 1));
+	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SpellLevel5 + 1));
 	player->feats.add(player->basic.feats);
 }
 
@@ -219,6 +220,29 @@ static void update_spells() {
 	for(auto& e : bsdata<ongoing>()) {
 		if(e.owner == owner)
 			player->active_spells.set(e.effect);
+	}
+}
+
+static void random_prepare_spells() {
+	player->prepared.clear();
+	for(auto level = 1; level <= 6; level++) {
+		auto number = player->getspells(level);
+		if(!number)
+			continue;
+		spella known_spells;
+		known_spells.select(player->known_spells);
+		known_spells.match(player->geti().magic, level, true);
+		if(!known_spells)
+			continue;
+		known_spells.shuffle();
+		auto index = 0;
+		while(number-- > 0) {
+			auto pi = known_spells[index];
+			player->prepared.spells[getbsi(pi)]++;
+			index++;
+			if(index >= (int)known_spells.count)
+				index = 0;
+		}
 	}
 }
 
@@ -275,6 +299,8 @@ void finish_creature() {
 	player->levelup();
 	player->update();
 	player->abilities[HP] = player->get(HPMax);
+	random_prepare_spells();
+	player->rest();
 }
 
 interval creature::getdamage(wear_s v) const {
@@ -320,7 +346,7 @@ static creature* new_creature() {
 	return bsdata<creature>::add();
 }
 
-void add_creature(const classi* pi, gender_s gender) {
+void add_creature(const classi* pi, gender_s gender, int level) {
 	player = new_creature();
 	player->clear();
 	player->type = pi - bsdata<classi>::elements;
@@ -334,6 +360,7 @@ void add_creature(const classi* pi, gender_s gender) {
 	player->setavatar(random_avatar(pi, gender));
 	add_language(pi->origin);
 	add_language(bsdata<racei>::elements);
+	player->experience = get_experience(player->type, level);
 	finish_creature();
 }
 
@@ -376,4 +403,13 @@ void creature::equip(item& v) {
 	if(!isallow(v))
 		return;
 	wearable::equip(v);
+}
+
+void creature::rest() {
+	*static_cast<spellable*>(this) = prepared;
+}
+
+int	creature::getspells(int level) const {
+	auto n = (ability_s)(SpellLevel1 + level - 1);
+	return get(n);
 }

@@ -11,19 +11,19 @@ void combat_mode();
 void random_encounter(const char* id);
 void spell_initialize();
 
-static void add_creature(const char* id, gender_s gender, feat_s feat) {
+static void add_creature(const char* id, gender_s gender, feat_s feat, int level) {
 	auto pi = bsdata<classi>::find(id);
 	if(!pi)
 		return;
-	add_creature(pi, gender);
+	add_creature(pi, gender, level);
 	player->set(feat);
 }
 
 static void starting() {
-	add_creature("Fighter", Male, Player);
-	add_creature("Fighter", Male, Player);
-	add_creature("Fighter", Male, Player);
-	add_creature("Halfling", Female, Player);
+	add_creature("Fighter", Male, Player, 1);
+	add_creature("Fighter", Male, Player, 1);
+	add_creature("Cleric", Male, Player, 2);
+	add_creature("Halfling", Female, Player, 1);
 	answers::header = "Большой зал";
 	random_encounter("Orc");
 	creatures.select();

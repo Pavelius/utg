@@ -163,15 +163,19 @@ bool item::isallowspell() const {
 
 bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
-	if(ei.range == OneEnemyTouch)
-		set(EngageMelee);
 	if(run) {
+		if(ei.range == OneEnemyTouch)
+			set(EngageMelee);
 		if(save(id))
 			return false;
 	}
-	auto count = ei.count.roll();
+	auto count = run ? ei.count.roll() : ei.count.maximum();
 	switch(id) {
 	case CureLightWound:
+		if(is(Unholy))
+			return false;
+		if(!iswounded())
+			return false;
 		if(run)
 			heal(count);
 		break;
@@ -206,10 +210,18 @@ bool item::apply(spell_s id, int level, bool run) {
 			return false;
 		if(run) {
 			identified = 1;
-			player->actid(ei.id, "Success");
+			identified_magic = 1;
 		}
 		break;
+	case DetectMagic:
+		if(isidentified() || (!ismagic() && !iscursed()))
+			return false;
+		if(run)
+			identified_magic = 1;
+		break;
 	}
+	if(run)
+		actid(ei.id, "Apply");
 	return true;
 }
 
@@ -252,11 +264,11 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	case CasterOrAlly:
 		targets = creatures;
 		targets.matchally(true);
-		targets.match(&creature::isplayer, false);
 		return cast_on_target(run);
 	case OneAlly:
 		targets = creatures;
 		targets.matchally(true);
+		targets.matchyou(false);
 		return cast_on_target(run);
 	case OneEnemy:
 		targets = creatures;
@@ -314,10 +326,10 @@ bool creature::cast(spell_s spell, int level, bool run) {
 void spella::select(const spellf& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = 0; i <= 127; i++) {
+	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i+1)) {
 		if(source.is(i)) {
 			if(ps < pe)
-				*ps = bsdata<spelli>::elements + i;
+				*ps++ = bsdata<spelli>::elements + i;
 		}
 	}
 	count = ps - begin();
@@ -326,11 +338,39 @@ void spella::select(const spellf& source) {
 void spella::select(const spellable& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = 0; i <= 127; i++) {
+	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
 		if(source.spells[i]) {
 			if(ps < pe)
-				*ps = bsdata<spelli>::elements + i;
+				*ps++ = bsdata<spelli>::elements + i;
 		}
 	}
 	count = ps - begin();
+}
+
+void spella::select(int magic, int level) {
+	auto ps = begin();
+	auto pe = (spelli**)endof();
+	for(auto& ei : bsdata<spelli>()) {
+		if(ei.alternate || ei.reversed)
+			continue;
+		if(ei.level[magic] != level)
+			continue;
+		if(ps < pe)
+			*ps++ = &ei;
+	}
+	count = ps - begin();
+}
+
+void spella::match(int magic, int level, bool keep) {
+	auto ps = begin();
+	for(auto p : *this) {
+		if((p->level[magic] == level) != keep)
+			continue;
+		*ps++ = p;
+	}
+	count = ps - begin();
+}
+
+void spellable::clear() {
+	memset(this, 0, sizeof(*this));
 }

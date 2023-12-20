@@ -3,6 +3,7 @@
 #include "creature.h"
 #include "draw_utg.h"
 #include "gender.h"
+#include "itemlay.h"
 #include "modifier.h"
 #include "pushvalue.h"
 #include "randomizer.h"
@@ -44,6 +45,13 @@ template<> void fnscript<feati>(int index, int value) {
 
 template<> void fnscript<randomizeri>(int index, int value) {
 	script_run(single(bsdata<randomizeri>::elements[index].random()));
+}
+
+template<> void fnscript<spelli>(int index, int value) {
+	switch(modifier) {
+	case Known: player->known_spells.set(index); break;
+	default: break;
+	}
 }
 
 void choose_target() {
@@ -340,10 +348,13 @@ static void attack_charge(int bonus) {
 //}
 
 static void add_spells_options() {
-	for(auto i = CauseLightWound; i <= LastSpell; i = (spell_s)(i + 1)) {
+	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
 		if(!player->get(i))
 			continue;
 		auto p = bsdata<spelli>::elements + i;
+		auto n = player->get(Level);
+		if(!player->cast(i, n, false))
+			continue;
 		an.add(p, getnm("CastSpell"), p->getname());
 	}
 }
@@ -429,28 +440,50 @@ static void drop_loot(creature* p) {
 	}
 }
 
-static void killed_enemy_loot(int bonus) {
+static void killed_enemy_loot() {
 	auto reward = 0;
 	pushvalue push(player);
+	creaturea bodies;
 	for(auto p : creatures) {
 		if(p->is(Enemy) && p->get(HP) <= 0) {
 			reward += p->getaward();
 			drop_loot(p);
-			p->remove();
+			bodies.add(p);
 		}
 	}
+	// Separate collection `for each` is remove from `creatures` correctly.
+	for(auto p : bodies)
+		p->remove();
 	group_experience(reward);
 }
 
-static bool lose_game(bool run) {
-	targets = creatures;
-	targets.match(Player, true);
-	targets.match(&creature::isready, true);
-	if(targets)
-		return false;
-	if(run)
-		draw::setnext(main_menu);
-	return true;
+static void add_items(const char* format) {
+	for(auto p : items)
+		an.add(p, format, p->getname());
+}
+
+static void take_item(item& ei) {
+}
+
+static void take_items() {
+	while(!draw::isnext() && items) {
+		an.clear();
+		add_items("TakeItem");
+		last_option = an.choose(getnm("WhatToDo"), getnm("LeaveThisItems"), 1);
+		if(!last_option)
+			break;
+		else if(bsdata<itemlay>::have(last_option))
+			take_item(*((item*)last_option));
+	}
+}
+
+static void loot_items() {
+	if(!items)
+		prints(getnm("LootEnemyFails"));
+	else {
+		prints(getnm("LootEnemySuccess"));
+		take_items();
+	}
 }
 
 static bool allow_lose_game(int bonus) {
@@ -464,20 +497,6 @@ static void lose_game(int bonus) {
 	draw::setnext(main_menu);
 }
 
-static bool win_battle(bool run) {
-	targets = creatures;
-	targets.match(Enemy, true);
-	targets.match(&creature::isready, true);
-	if(targets)
-		return false;
-	if(run) {
-		killed_enemy_loot(0);
-		pause();
-		draw::setnext(main_menu);
-	}
-	return true;
-}
-
 static bool allow_win_battle(int bonus) {
 	targets = creatures;
 	targets.match(Enemy, true);
@@ -486,18 +505,10 @@ static bool allow_win_battle(int bonus) {
 }
 
 static void win_battle(int bonus) {
-	killed_enemy_loot(0);
+	clear_console();
+	killed_enemy_loot();
 	pause();
 	draw::setnext(main_menu);
-}
-
-static bool continue_battle(bool run) {
-	if(win_battle(false) || lose_game(false))
-		return false;
-	if(run) {
-		clear_console();
-	}
-	return true;
 }
 
 static bool allow_continue_battle(int bonus) {
@@ -588,7 +599,7 @@ void combat_mode() {
 	auto push_mode = menu::current_mode;
 	menu::current_mode = "Combat";
 	roll_initiative();
-	while(!draw::isnext() && continue_battle(false)) {
+	while(!draw::isnext() && allow_continue_battle(0)) {
 		combat_round();
 		choose_options("CombatTurn");
 	}

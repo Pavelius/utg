@@ -96,7 +96,19 @@ bool item::canequip(wear_s v) const {
 void item::addname(stringbuilder& sb) const {
 	auto count = getcount();
 	auto name = getnm(geti().id);
-	sb.add(name);
+	if(broken)
+		sb.adds(getnm("Broken"));
+	if(identified && identified_magic) {
+		if(iscursed())
+			sb.adds(getnm("Cursed"));
+	} else if(identified_magic) {
+		if(iscursed() || ismagic())
+			sb.adds(getnm("Magical"));
+	}
+	sb.adds(name);
+	if(identified) {
+		// TODO: powern name, like 'of defence'
+	}
 	if(count > 1)
 		sb.adds("%1i%Pieces", count);
 }

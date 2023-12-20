@@ -38,6 +38,7 @@ BSDATA(abilityi) = {
 	{"SpellLevel3"},
 	{"SpellLevel4"},
 	{"SpellLevel5"},
+	{"SpellLevel6"},
 	{"HP"},
 	{"IllusionCopies"},
 };

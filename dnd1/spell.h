@@ -37,10 +37,13 @@ struct spelli : nameable {
 };
 struct spellable {
 	unsigned char spells[DeathSpell + 1];
+	void		clear();
 };
 struct spella : collection<spelli> {
 	void		select(const spellf& source);
 	void		select(const spellable& source);
+	void		select(int magic, int level);
+	void		match(int magic, int level, bool keep);
 };
 extern spell_s last_spell;
 extern int last_level;

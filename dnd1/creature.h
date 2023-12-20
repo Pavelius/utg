@@ -12,6 +12,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	unsigned char	type;
 	unsigned short	leader;
 	statable		basic;
+	spellable		prepared;
 	spellf			active_spells, known_spells;
 	char			initiative;
 	unsigned		experience;
@@ -31,6 +32,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
+	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
 	void			heal(int value) {}
@@ -48,6 +50,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			levelup();
 	void			raiselevel();
 	void			remove();
+	void			rest();
 	bool			save(spell_s id) const;
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
@@ -69,7 +72,7 @@ struct creaturea : adat<creature*, 32> {
 };
 extern creaturea creatures, targets;
 
-void add_creature(const classi* pi, gender_s gender);
+void add_creature(const classi* pi, gender_s gender, int level = 1);
 void add_creature(const monsteri* pi);
 void finish_creature();
 

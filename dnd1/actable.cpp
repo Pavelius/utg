@@ -56,6 +56,17 @@ void item::act(char separator, const char* format, ...) const {
 	answers::console->add(format, xva_start(format));
 }
 
+bool item::actid(const char* id, const char* suffix, char separator) const {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(id);
+	sb.add(suffix);
+	auto format = getnme(temp);
+	if(!format)
+		return false;
+	act(separator, format);
+	return true;
+}
+
 static bool apply_items(const char* id, stringbuilder& sb) {
 	if(equal(id, "melee")) {
 		sb.add(player->wears[MeleeWeapon].getname());

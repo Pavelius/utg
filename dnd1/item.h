@@ -24,6 +24,7 @@ class item : public typeable<itemi, unsigned char> {
 		unsigned char flags;
 		struct {
 			unsigned char identified : 1;
+			unsigned char identified_magic : 1;
 			unsigned char cursed : 1;
 			unsigned char broken : 1;
 		};
@@ -35,6 +36,7 @@ public:
 	item() = default;
 	explicit operator bool() const { return type != 0; }
 	void		act(char separator, const char* format, ...) const;
+	bool		actid(const char* id, const char* p1, char separator = ' ') const;
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
 	bool		apply(spell_s id, int level, bool run);

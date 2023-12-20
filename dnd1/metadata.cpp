@@ -78,6 +78,9 @@ BSMETA(itemi) = {
 	BSREQ(wearing),
 	BSREQ(powers),
 	{}};
+BSMETA(modifieri) = {
+	BSREQ(id),
+	{}};
 BSMETA(monsteri) = {
 	BSREQ(id),
 	BSREQ(feats),
@@ -128,12 +131,12 @@ BSDATA(varianti) = {
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
-	{"Modifier", VAR(monsteri, 1), 0, 0, fnscript<modifieri>},
+	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Spell", VAR(spelli, 1), 0, 0},
+	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

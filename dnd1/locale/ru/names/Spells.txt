@@ -1,2 +1,3 @@
 ﻿CauseFearApply: Внезапно %героя охватило животное чуство страха.
 CauseLightWoundApply: %герой почувствовал%а себя лучше, исцелив %1i ран.
+PurifyFoodAndWater: Очистить еду и воду
