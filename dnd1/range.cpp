@@ -6,7 +6,7 @@ BSDATA(rangei) = {
 	{"CasterOrAlly"},
 	{"OneAlly"},
 	{"OneEnemy"},
-	{"SomeEnemies"},
+	{"OneEnemyTouch"},
 	{"AllAlly"},
 	{"AllEnemies"},
 	{"OneItem"},

@@ -215,6 +215,7 @@
     <Text Include="locale\ru\names\Monsters.txt" />
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\Spells.txt" />
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />

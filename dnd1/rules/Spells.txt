@@ -1,13 +1,13 @@
 #Spell
 
-Blinding level(1) range(OneEnemy) alternate(Light) save_negates(SaveSpells)
 CauseFear level(1) duration(Turn2) range(OneEnemy) save_negates(SaveSpells) reversed(RemoveFear)
-CauseLightWound level(1) range(OneEnemy) effect(2 7) reversed(CureLightWound)
-CureLightWound level(1) range(CasterOrAlly) effect(2 7)
+CauseLightWound level(1) range(OneEnemy) count(2 7) reversed(CureLightWound)
+CureLightWound level(1) range(CasterOrAlly) count(2 7)
 Darkness level(1) duration(Turn12) range(Enviroment) reversed(Light)
-DetectEvil level(1) range(AllAllyItems) count(1)
-DetectMagic level(1) range(AllAllyItems) count(1)
+DetectEvil level(1) range(AllAllyItems) targets(1)
+DetectMagic level(1) range(AllAllyItems) targets(1)
 Light level(1) duration(Turn12) range(Enviroment)
+LightBlindness level(1) range(OneEnemy) alternate(Light) save_negates(SaveSpells) enchant(Blindness)
 ProtectionFromEvil level(1) duration(Turn12) range(Caster)
 PurifyFoodAndWater level(1) range(OneAllyItem)
 RemoveFear level(1) range(OneAllyItem)

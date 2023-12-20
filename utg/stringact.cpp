@@ -1,9 +1,6 @@
 #include "crt.h"
-#include "stringact.h"
+#include "gender.h"
 #include "stringlist.h"
-
-const char	*act_name, *act_enemy_name;
-gender_s	act_gender, act_enemy_gender;
 
 bool apply_list(const char* identifier, stringbuilder& sb);
 
@@ -32,7 +29,7 @@ static gender_change_string player_gender[] = {
 };
 }
 
-bool apply_name(const char* identifier, stringbuilder& sb, const char* name) {
+static bool apply_name(const char* identifier, stringbuilder& sb, const char* name) {
 	if(!name)
 		return false;
 	if(equal(identifier, "герой") || equal(identifier, "name"))
@@ -46,7 +43,7 @@ bool apply_name(const char* identifier, stringbuilder& sb, const char* name) {
 	return true;
 }
 
-bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
+static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
 	for(auto& e : player_gender) {
 		if(strcmp(e.female, identifier) != 0)
 			continue;
@@ -58,6 +55,14 @@ bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
 			sb.add(e.male);
 		return true;
 	}
+	return false;
+}
+
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender) {
+	if(apply_name(identifier, sb, name))
+		return true;
+	if(apply_gender(identifier, sb, gender))
+		return true;
 	return false;
 }
 

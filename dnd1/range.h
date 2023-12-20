@@ -3,7 +3,8 @@
 #pragma once
 
 enum range_s : unsigned char {
-	Caster, CasterOrAlly, OneAlly, OneEnemy, SomeEnemies,
+	Caster, CasterOrAlly, OneAlly,
+	OneEnemy, OneEnemyTouch,
 	AllAlly, AllEnemies,
 	OneItem, OneAllyItem, AllCasterItems, AllAllyItems,
 	Enviroment, OneObject, OneRandomObject

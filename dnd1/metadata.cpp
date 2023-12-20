@@ -105,15 +105,13 @@ BSMETA(sceneryi) = {
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
-	BSREQ(effect),
+	BSREQ(count), BSREQ(targets),
 	BSENM(duration, durationi),
 	BSENM(range, rangei),
 	BSENM(dispell, spelli),
 	BSENM(save_negates, abilityi),
 	BSENM(save_halves, abilityi),
-	BSREQ(count),
-	BSENM(reversed, spelli),
-	BSENM(alternate, spelli),
+	BSENM(reversed, spelli), BSENM(alternate, spelli), BSENM(enchant, spelli),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),

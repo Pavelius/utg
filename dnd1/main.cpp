@@ -1,6 +1,7 @@
 #include "bsref.h"
 #include "bsreq.h"
 #include "creature.h"
+#include "gender.h"
 #include "stringlist.h"
 #include "draw_object.h"
 #include "draw_utg.h"
@@ -8,6 +9,7 @@
 
 void combat_mode();
 void random_encounter(const char* id);
+void spell_initialize();
 
 static void add_creature(const char* id, gender_s gender, feat_s feat) {
 	auto pi = bsdata<classi>::find(id);
@@ -37,6 +39,7 @@ void initialize_ui();
 static void initializing() {
 	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
+	spell_initialize();
 	initialize_str();
 }
 

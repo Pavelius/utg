@@ -3,15 +3,16 @@
 #include "creature.h"
 #include "gender.h"
 #include "pushvalue.h"
-#include "stringact.h"
 
 bool apply_list(const char* identifier, stringbuilder& sb);
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
 
 void actable::actv(stringbuilder& sbo, const char* format, const char* format_param, char separator) const {
 	if(!answers::interactive)
 		return;
 	if(separator)
 		sbo.addsep(separator);
+	pushvalue push(player, static_cast<creature*>(const_cast<actable*>(this)));
 	sbo.addv(format, format_param);
 }
 
@@ -30,15 +31,14 @@ bool actable::actid(const char* prefix, const char* suffix, char separator) cons
 	auto format = getnme(temp);
 	if(!format)
 		return false;
+	pushvalue push(player, static_cast<creature*>(const_cast<actable*>(this)));
 	actv(*answers::console, format, 0, separator);
 	return true;
 }
 
 static void item_identifier(stringbuilder& sb, const char* id) {
 	if(last_item) {
-		if(apply_name(id, sb, last_item->getname()))
-			return;
-		if(apply_gender(id, sb, Male))
+		if(apply_action(id, sb, last_item->getname(), Male))
 			return;
 	}
 	if(apply_list(id, sb))
@@ -56,7 +56,7 @@ void item::act(char separator, const char* format, ...) const {
 	answers::console->add(format, xva_start(format));
 }
 
-static bool act_weapon(stringbuilder& sb, const char* id) {
+static bool apply_items(const char* id, stringbuilder& sb) {
 	if(equal(id, "melee")) {
 		sb.add(player->wears[MeleeWeapon].getname());
 		return true;
@@ -65,12 +65,10 @@ static bool act_weapon(stringbuilder& sb, const char* id) {
 }
 
 static void main_act_identifier(stringbuilder& sb, const char* id) {
-	if(act_weapon(sb, id))
-		return;
 	if(player) {
-		if(apply_name(id, sb, player->getname()))
+		if(apply_items(id, sb))
 			return;
-		if(apply_gender(id, sb, player->gender))
+		if(apply_action(id, sb, player->getname(), player->gender))
 			return;
 	}
 	if(apply_list(id, sb))

@@ -7,14 +7,13 @@
 
 BSDATA(spelli) = {
 	{"CauseLightWound"},
-	{"CauseFear"},
 	{"CureLightWound"},
 	{"DetectEvil"},
 	{"DetectMagic"},
-	{"Light"}, {"Blinding"}, {"Darkness"},
+	{"Light"}, {"LightBlindness"}, {"Darkness"},
 	{"ProtectionFromEvil"},
 	{"PurifyFoodAndWater"},
-	{"RemoveFear"},
+	{"RemoveFear"}, {"CauseFear"},
 	{"ResistCold"},	//
 	{"CharmPerson"},
 	{"FloatingDisc"},
@@ -66,6 +65,13 @@ void choose_target();
 
 spell_s	last_spell;
 int		last_level;
+
+void spell_initialize() {
+	for(auto& e : bsdata<spelli>()) {
+		if(!e.enchant)
+			e.enchant = (spell_s)getbse(e);
+	}
+}
 
 static void dispelling(const spelli::spella& source, variant owner) {
 	for(auto v : source)
@@ -130,10 +136,16 @@ static bool cast_on_item(bool run) {
 	return true;
 }
 
+ability_s spelli::getsave() const {
+	if(save_negates)
+		return save_negates;
+	return save_halves;
+}
+
 bool spelli::isevil() const {
 	switch(range) {
 	case OneEnemy:
-	case SomeEnemies:
+	case OneEnemyTouch:
 	case AllEnemies:
 		return true;
 	default:
@@ -151,25 +163,32 @@ bool item::isallowspell() const {
 
 bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
+	if(run) {
+		if(save(id))
+			return false;
+	}
+	auto count = ei.count.roll();
 	switch(id) {
 	case CureLightWound:
 		if(run)
-			heal(ei.effect.roll());
+			heal(count);
 		break;
 	case MirrorImages:
 		if(run) {
-			auto n = basic.abilities[IllusionCopies] + ei.effect.roll();
+			auto n = basic.abilities[IllusionCopies] + count;
 			if(abilities[IllusionCopies] < n)
 				abilities[IllusionCopies] = n;
 		}
 		break;
 	default:
-		if(ei.duration != Instant && ei.duration != PermanentDuration)
-			enchant(player, this, id, getduration(ei.duration, level));
+		if(ei.duration != Instant)
+			enchant(player, this, ei.enchant, getduration(ei.duration, level));
 		break;
 	}
-	if(run)
+	if(run) {
+		actid(ei.id, "Apply");
 		dispelling(ei.dispell, this);
+	}
 	return true;
 }
 
@@ -203,6 +222,13 @@ bool scenery::apply(spell_s id, int level, bool run) {
 	return true;
 }
 
+static void set_caster_melee() {
+	if(player->is(EngageMelee)) {
+		player->actid("EngageMelee", "Action");
+		player->set(EngageMelee);
+	}
+}
+
 bool creature::cast(spell_s spell, int level, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
@@ -223,18 +249,20 @@ bool creature::cast(spell_s spell, int level, bool run) {
 		targets = creatures;
 		targets.matchenemy(true);
 		return cast_on_target(run);
-	case SomeEnemies:
+	case OneEnemyTouch:
+		set_caster_melee();
 		targets = creatures;
 		targets.matchenemy(true);
-		return cast_on_target(run, xrand(2, 4), true);
+		targets.match(EngageMelee, true);
+		return cast_on_target(run);
 	case AllAlly:
 		targets = creatures;
 		targets.matchally(true);
-		return cast_on_target(run, 0, false);
+		return cast_on_target(run, ei.targets.roll(), ei.targets);
 	case AllEnemies:
 		targets = creatures;
 		targets.matchenemy(true);
-		return cast_on_target(run, 0, false);
+		return cast_on_target(run, ei.targets.roll(), ei.targets);
 	case OneItem:
 		items.clear();
 		items.select(player->backpack());
@@ -249,14 +277,14 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	case AllCasterItems:
 		items.clear();
 		items.select(player->backpack());
-		return cast_on_item(run, 0, false);
+		return cast_on_item(run, ei.targets.roll(), ei.targets);
 	case AllAllyItems:
 		items.clear();
 		for(auto p : creatures) {
 			if(p->isally())
 				items.select(player->backpack());
 		}
-		return cast_on_item(run, ei.count.roll(), ei.count);
+		return cast_on_item(run, ei.targets.roll(), ei.targets);
 	case Enviroment:
 		if(!scene)
 			return false;

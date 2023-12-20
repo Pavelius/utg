@@ -13,7 +13,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	unsigned char	type;
 	unsigned short	leader;
 	statable		basic;
-	spellf			active_spells, permanent_spells, known_spells;
+	spellf			active_spells, known_spells;
 	char			initiative;
 	unsigned		experience;
 	raceable		languages;
@@ -48,6 +48,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			levelup();
 	void			raiselevel();
 	void			remove();
+	bool			save(spell_s id) const;
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
 	void			update();

@@ -1,6 +1,7 @@
 #include "advance.h"
 #include "answers.h"
 #include "creature.h"
+#include "gender.h"
 #include "modifier.h"
 #include "ongoing.h"
 #include "pushvalue.h"
@@ -232,7 +233,28 @@ static void update_equipment() {
 }
 
 static void update_spells() {
-	player->active_spells = player->permanent_spells;
+	variant owner = player;
+	player->active_spells.clear();
+	for(auto& e : bsdata<ongoing>()) {
+		if(e.owner == owner)
+			player->active_spells.set(e.effect);
+	}
+}
+
+bool creature::save(spell_s spell) const {
+	auto& ei = bsdata<spelli>::elements[spell];
+	auto id = ei.getsave();
+	if(!id)
+		return false; // No save variant;
+	auto n = get(id);
+	auto result = rolld20(n, 20, false);
+	if(result) {
+		// If save success alway show message
+		if(!actid(ei.id, "SaveSuccess", ' '))
+			actid("Common", "SaveSuccess", ' ');
+	} else
+		actid(ei.id, "SaveFailed", ' ');
+	return result;
 }
 
 void creature::update_finish() {

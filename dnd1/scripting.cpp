@@ -11,7 +11,6 @@
 #include "scenery.h"
 #include "script.h"
 #include "spell.h"
-#include "stringact.h"
 
 creaturea targets;
 itema items;

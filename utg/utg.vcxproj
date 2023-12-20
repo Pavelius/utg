@@ -329,7 +329,6 @@
     <ClInclude Include="my_initialize_list.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="rect.h" />
-    <ClInclude Include="stringact.h" />
     <ClInclude Include="stringbuilder.h" />
     <ClInclude Include="typeable.h" />
     <ClInclude Include="variant.h" />

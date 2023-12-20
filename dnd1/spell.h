@@ -10,7 +10,7 @@
 enum ability_s : unsigned char;
 
 enum spell_s : unsigned char {
-	CauseLightWound, CauseFear, CureLightWound, DetectEvil, DetectMagic, Light, Blinding, Darkness, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
+	CauseLightWound, CureLightWound, DetectEvil, DetectMagic, Light, LightBlindness, Darkness, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, CauseFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
 	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
 	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,
@@ -25,14 +25,13 @@ struct spelli : nameable {
 	char		level[4];
 	duration_s	duration;
 	range_s		range;
-	interval	effect;
+	interval	count, targets;
 	spella		dispell;
-	interval	hds;
-	interval	count;
 	ability_s	save_negates, save_halves;
-	spell_s		reversed, alternate;
+	spell_s		reversed, alternate, enchant;
 	void		dispelling() const;
 	spell_s		getbasic() const { return reversed ? reversed : alternate; }
+	ability_s	getsave() const;
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;
 };
