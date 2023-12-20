@@ -479,9 +479,10 @@ static void take_item(item& ei) {
 
 static void take_items() {
 	while(!draw::isnext() && items) {
+		items.select(scene);
 		an.clear();
 		add_items(getnm("TakeItem"));
-		last_option = an.choose(getnm("WhatToDoGroup"), getnm("LeaveThisItems"), 1);
+		last_option = an.choose(getnm("WhatToDoGroup"), getnm("LeaveThisItems"), 0);
 		if(!last_option)
 			break;
 		else if(bsdata<itemlay>::have(last_option))

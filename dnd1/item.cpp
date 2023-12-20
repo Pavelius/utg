@@ -71,7 +71,7 @@ void item::setcount(int v) {
 void item::add(item& v) {
 	if(type != v.type || flags != v.flags)
 		return;
-	if(iscountable())
+	if(!iscountable())
 		return;
 	unsigned n1 = count + v.count + 1;
 	if(n1 >= 0xFFFF) {

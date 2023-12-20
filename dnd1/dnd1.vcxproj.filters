@@ -235,5 +235,8 @@
     <Text Include="locale\ru\names\Spells.txt">
       <Filter>locale</Filter>
     </Text>
+    <Text Include="locale\ru\speech\Adventures.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

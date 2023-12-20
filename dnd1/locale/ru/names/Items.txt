@@ -36,9 +36,12 @@ BattleAxe: Секира
 Club: Дубина
 Dagger: Кинжал
 HandAxe: Топор
+Spear: Копье
 Sword: Меч
 
 ShortBow: Лук
 LongBow: Длинный лук
 
 Arrow: Стрелы
+Bolt: Болты
+Stone: Камень

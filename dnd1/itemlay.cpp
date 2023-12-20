@@ -39,6 +39,14 @@ void add_container(variant parent, item& it) {
 	add_newstock(parent, it);
 }
 
+item* find_container(variant parent) {
+	for(auto& e : bsdata<itemlay>()) {
+		if(e.parent == parent)
+			return &e;
+	}
+	return 0;
+}
+
 void itema::select(variant container) {
 	auto ps = begin();
 	for(auto& e : bsdata<itemlay>()) {

@@ -1,6 +1,7 @@
 #include "calendar.h"
 #include "draw.h"
 #include "itemlay.h"
+#include "actable.h"
 #include "scenery.h"
 #include "ongoing.h"
 
@@ -29,12 +30,7 @@ void scenery::enter() {
 }
 
 bool scenery::haveitems() const {
-	variant v = this;
-	for(auto& e : bsdata<itemlay>()) {
-		if(e.parent == v)
-			return true;
-	}
-	return false;
+	return find_container(this) != 0;
 }
 
 void scenery::update() {

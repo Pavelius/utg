@@ -3,6 +3,7 @@
 #include "creature.h"
 #include "gender.h"
 #include "pushvalue.h"
+#include "stringlist.h"
 
 bool apply_list(const char* identifier, stringbuilder& sb);
 bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
