@@ -163,6 +163,8 @@ bool item::isallowspell() const {
 
 bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
+	if(ei.range == OneEnemyTouch)
+		set(EngageMelee);
 	if(run) {
 		if(save(id))
 			return false;
@@ -172,6 +174,10 @@ bool creature::apply(spell_s id, int level, bool run) {
 	case CureLightWound:
 		if(run)
 			heal(count);
+		break;
+	case CauseLightWound:
+		if(run)
+			damage(count);
 		break;
 	case MirrorImages:
 		if(run) {
@@ -223,16 +229,23 @@ bool scenery::apply(spell_s id, int level, bool run) {
 }
 
 static void set_caster_melee() {
-	if(player->is(EngageMelee)) {
-		player->actid("EngageMelee", "Action");
-		player->set(EngageMelee);
-	}
 }
 
 bool creature::cast(spell_s spell, int level, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
 	auto& ei = bsdata<spelli>::elements[last_spell];
+	if(run) {
+		// First fix melee engage
+		if(ei.range == OneEnemyTouch) {
+			if(!player->is(EngageMelee)) {
+				player->actid("CastTouchSpell", "Action");
+				player->set(EngageMelee);
+			}
+		}
+		// Second fix spell casting
+		actid(ei.id, "Cast");
+	}
 	switch(ei.range) {
 	case Caster:
 		return apply(last_spell, last_level, true);

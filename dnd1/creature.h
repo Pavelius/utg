@@ -1,7 +1,6 @@
 #include "actable.h"
 #include "attackable.h"
 #include "avatarable.h"
-#include "chooseoption.h"
 #include "monster.h"
 #include "spell.h"
 #include "statable.h"
@@ -19,13 +18,14 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	raceable		languages;
 	bool			apply(spell_s, int level, bool run);
 	bool			attack(ability_s attack, int ac, int bonus);
-	void			choose(const slice<chooseoption>& options, bool enemy_choose_first = false);
 	void			clear();
 	bool			cast(spell_s spell, int level, bool run);
 	void			damage(int value);
 	void			drink(spell_s effect);
 	void			equip(item& v);
 	void			generate();
+	int				get(ability_s v) const { return statable::get(v); }
+	int				get(spell_s v) const { return spells[v]; }
 	const classi&	geti() const;
 	int				getaward() const;
 	interval		getdamage(wear_s v) const;
@@ -54,7 +54,6 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			update();
 	void			update_finish();
 	void			use(item& it);
-	void			use(const char* id, const slice<chooseoption>& options);
 };
 extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {

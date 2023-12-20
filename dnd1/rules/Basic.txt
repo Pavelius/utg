@@ -9,6 +9,10 @@
 
 CombatantStatuses
  elements Surprised EngageMelee Prone
+CombatRound
+ elements AttackRanged AttackCharge AttackMelee AttackUnarmed RetreatMelee RunAway
+CombatTurn
+ elements WinBattle LoseGame ContinueBattle
 
 #Menu
 

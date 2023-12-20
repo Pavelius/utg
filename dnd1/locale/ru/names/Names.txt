@@ -3,7 +3,6 @@ AppearSingle: Внезапно переди появилcя %1.
 AppTitle: Драконы и Подземелья
 ContinueBattle: Продолжить битву
 CharacterGeneration: Создание персонажа
-ChargeEnemy: С криком наброситься на врага
 ChooseClass: Выбирайте класс
 ChooseLook: Выбирайте внешний вид вашего персонажа:
 ChooseTarget: Укажите цель

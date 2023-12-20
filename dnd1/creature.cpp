@@ -134,25 +134,6 @@ void creature::levelup() {
 	}
 }
 
-void creature::use(const char* id, const slice<chooseoption>& options) {
-	pushvalue push(player, this);
-	useopt(options, id);
-}
-
-void creature::choose(const slice<chooseoption>& options, bool enemy_choose_first) {
-	pushvalue push_player(player, this);
-	char temp[260]; stringbuilder sb(temp);
-	actv(sb, getnm("WhatToDo"), 0, 0);
-	const char* enemy_name = 0;
-	if(is(Enemy)) {
-		if(enemy_choose_first)
-			choosef(options);
-		else
-			chooser(options, temp, enemy_name);
-	} else
-		::choose(options, temp, enemy_name);
-}
-
 const char* random_name(const classi* pi, gender_s gender) {
 	return stringlist::getname(stringlist::random(str("%1%2",
 		pi->getid(),

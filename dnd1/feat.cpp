@@ -16,7 +16,6 @@ BSDATA(feati) = {
 	{"TwoHanded"},
 	{"EngageMelee"},
 	{"Surprised"},
-	{"Panic"},
 	{"Prone"},
 	{"Unholy"},
 	{"Summoned"},

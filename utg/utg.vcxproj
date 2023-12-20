@@ -167,7 +167,9 @@
     <ClCompile Include="querry.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
-    <ClCompile Include="chooseoption.cpp" />
+    <ClCompile Include="chooseoption.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="choosestep.cpp" />
     <ClCompile Include="code_lexer.cpp" />
     <ClCompile Include="code_package.cpp" />
@@ -270,7 +272,9 @@
     <ClInclude Include="querry.h" />
     <ClInclude Include="stringlist.h" />
     <ClInclude Include="chooselist.h" />
-    <ClInclude Include="chooseoption.h" />
+    <ClInclude Include="chooseoption.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="choosestep.h" />
     <ClInclude Include="code_command.h" />
     <ClInclude Include="code_lexer.h" />

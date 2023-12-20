@@ -36,7 +36,7 @@ struct spelli : nameable {
 	bool		isevil() const;
 };
 struct spellable {
-	unsigned char spells[128];
+	unsigned char spells[DeathSpell + 1];
 };
 struct spella : collection<spelli> {
 	void		select(const spellf& source);

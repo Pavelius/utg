@@ -16,6 +16,7 @@ creaturea targets;
 itema items;
 spella spells;
 static int critical_roll;
+static void* last_option;
 
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
@@ -45,6 +46,10 @@ template<> void fnscript<randomizeri>(int index, int value) {
 	script_run(single(bsdata<randomizeri>::elements[index].random()));
 }
 
+void choose_target() {
+	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
+}
+
 static int player_count() {
 	auto result = 0;
 	for(auto p : creatures) {
@@ -54,8 +59,8 @@ static int player_count() {
 	return result;
 }
 
-static void fix_action() {
-	player->actid(last_option->id, "Action");
+static void fix_action(const char* id) {
+	player->actid(id, "Action");
 }
 
 static void clear_console() {
@@ -208,10 +213,6 @@ static void random_melee_angry(int bonus) {
 		targets.data[i]->set(EngageMelee);
 }
 
-void choose_target() {
-	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
-}
-
 static void choose_target(int bonus) {
 	choose_target();
 }
@@ -246,128 +247,108 @@ static bool is_item_ready(wear_s type) {
 	return true;
 }
 
-static bool attack_melee(bool run) {
+static bool allow_attack_melee(int bonus) {
 	if(!player->is(EngageMelee))
 		return false;
 	if(!is_item_ready(MeleeWeapon))
 		return false;
 	select_enemies();
 	targets.match(EngageMelee, true);
-	if(!targets)
-		return false;
-	if(run) {
-		choose_target();
-		enter_melee_combat();
-		melee_attack(0);
-	}
-	return true;
+	return targets.operator bool();
 }
 
-static bool attack_unarmed(bool run) {
+static void attack_melee(int bonus) {
+	if(!allow_attack_melee(bonus))
+		return;
+	choose_target();
+	enter_melee_combat();
+	melee_attack(bonus);
+}
+
+static bool allow_attack_unarmed(int bonus) {
 	if(is_item_ready(MeleeWeapon))
 		return false;
 	select_enemies();
-	if(!targets)
-		return false;
-	if(run) {
-		for(auto& e : player->attacks) {
-			if(!e.count)
-				continue;
-			for(auto i = 0; i < e.count; i++) {
-				select_enemies();
-				if(!targets)
-					return true;
-				choose_target();
-				enter_melee_combat();
-				unarmed_attack(0, e.damage);
-			}
-		}
-	}
-	return true;
+	return targets.operator bool();
 }
 
-static bool attack_range(bool run) {
+static void attack_unarmed(int bonus) {
+	if(!allow_attack_unarmed(bonus))
+		return;
+	for(auto& e : player->attacks) {
+		if(!e.count)
+			continue;
+		for(auto i = 0; i < e.count; i++) {
+			select_enemies();
+			if(!targets)
+				return;
+			choose_target();
+			enter_melee_combat();
+			unarmed_attack(0, e.damage);
+		}
+	}
+}
+
+static bool allow_attack_ranged(int bonus) {
 	if(player->is(EngageMelee))
 		return false;
 	if(!is_item_ready(RangedWeapon))
 		return false;
 	select_enemies();
-	if(!targets)
-		return false;
-	if(run) {
-		choose_target();
-		range_attack(0);
-	}
-	return true;
+	return targets.operator bool();
 }
 
-static bool charge(bool run) {
+static void attack_ranged(int bonus) {
+	if(!allow_attack_ranged(bonus))
+		return;
+	choose_target();
+	range_attack(0);
+}
+
+static bool allow_attack_charge(int bonus) {
 	if(!is_item_ready(MeleeWeapon))
 		return false;
 	if(player->is(EngageMelee))
 		return false;
 	select_enemies();
-	if(!targets)
-		return false;
-	if(run) {
-		choose_target();
-		enter_melee_combat();
-		player->add(MeleeToHit, 1);
-		player->add(AC, -1);
-		melee_attack(0);
+	return targets.operator bool();
+}
+
+static void attack_charge(int bonus) {
+	if(!allow_attack_charge(bonus))
+		return;
+	choose_target();
+	enter_melee_combat();
+	player->add(MeleeToHit, 1);
+	player->add(AC, -1);
+	melee_attack(0);
+}
+
+//static bool use_item(wear_s type, bool run) {
+//	items.select(player->allitems());
+//	items.match(type, true);
+//	if(!items)
+//		return false;
+//	if(run) {
+//		choose_item();
+//		if(last_item) {
+//			script_run(last_item->geti().use);
+//			last_item->clear();
+//		}
+//	}
+//	return true;
+//}
+
+static void add_spells_options() {
+	for(auto i = CauseLightWound; i <= LastSpell; i = (spell_s)(i + 1)) {
+		if(!player->get(i))
+			continue;
+		auto p = bsdata<spelli>::elements + i;
+		an.add(p, getnm("CastSpell"), p->getname());
 	}
-	return true;
 }
 
-static bool use_item(wear_s type, bool run) {
-	items.select(player->allitems());
-	items.match(type, true);
-	if(!items)
-		return false;
-	if(run) {
-		choose_item();
-		if(last_item) {
-			script_run(last_item->geti().use);
-			last_item->clear();
-		}
-	}
-	return true;
-}
-
-static bool drink_potion(bool run) {
-	return use_item(Potion, run);
-}
-
-static bool read_scroll(bool run) {
-	return use_item(Scroll, run);
-}
-
-static bool prepare_spells(bool run) {
-	spells.select(player->known_spells);
-	if(!spells)
-		return false;
-	if(run) {
-
-	}
-	return true;
-}
-
-static void choose_spell() {
-	last_spell = (spell_s)(spells.choose(getnm("ChooseSpellToCast")) - bsdata<spelli>::elements);
-}
-
-static bool cast_spells(bool run) {
-	spells.select(*player);
-	if(!spells)
-		return false;
-	if(run) {
-		choose_spell();
-		//player->cast(last_spell);
-	}
-	return true;
-}
-
-static bool retreat_melee(bool run) {
+static bool allow_retreat_melee(int bonus) {
 	if(!player->is(EngageMelee))
 		return false;
 	creaturea source = creatures;
@@ -375,13 +356,12 @@ static bool retreat_melee(bool run) {
 	source.matchyou(false);
 	source.match(&creature::isready, true);
 	source.match(EngageMelee, true);
-	if(!source)
-		return false;
-	if(run) {
-		fix_action();
-		player->feats.remove(EngageMelee);
-	}
-	return true;
+	return source.operator bool();
+}
+
+static void retreat_melee(int bonus) {
+	fix_action("Retreat");
+	player->feats.remove(EngageMelee);
 }
 
 static void remove_player() {
@@ -390,19 +370,16 @@ static void remove_player() {
 	creatures.remove(player);
 }
 
-static bool run_away(bool run) {
+static bool allow_run_away(int bonus) {
 	if(player->is(EngageMelee))
 		return false;
-	if(run) {
-		fix_action();
-		remove_player();
-	}
 	return true;
 }
 
-static chooseoption camp_options[] = {
-	{"PrepareSpells", prepare_spells},
-};
+static void run_away(int bonus) {
+	fix_action("RunAway");
+	remove_player();
+}
 
 static void main_menu() {
 }
@@ -413,40 +390,6 @@ static void surprise_roll(int bonus) {
 		auto need_surprise = 2;
 		if(result <= 2)
 			p->set(Surprised);
-	}
-}
-
-static void combat_round() {
-	static chooseoption options[] = {
-		{"AttackRanged", attack_range},
-		{"ChargeEnemy", charge},
-		{"AttackMelee", attack_melee},
-		{"AttackUnarmed", attack_unarmed},
-		{"DrinkPotion", drink_potion},
-		{"ReadScroll", read_scroll},
-		{"Retreat", retreat_melee},
-		{"RunAway", run_away},
-	};
-	for(auto p : creatures) {
-		if(draw::isnext())
-			break;
-		if(!have_feats(Enemy) || !have_feats(Player))
-			break;
-		if(!p->isready())
-			continue;
-		if(p->is(Panic)) {
-			p->feats.remove(Panic);
-			p->feats.remove(EngageMelee);
-			p->use("RunAway", options);
-			continue;
-		}
-		if(p->is(Surprised)) {
-			p->feats.remove(Surprised);
-			continue;
-		}
-		p->update();
-		p->choose(options, true);
-		update_melee_fight();
 	}
 }
 
@@ -510,6 +453,17 @@ static bool lose_game(bool run) {
 	return true;
 }
 
+static bool allow_lose_game(int bonus) {
+	targets = creatures;
+	targets.match(Player, true);
+	targets.match(&creature::isready, true);
+	return !targets.operator bool();
+}
+
+static void lose_game(int bonus) {
+	draw::setnext(main_menu);
+}
+
 static bool win_battle(bool run) {
 	targets = creatures;
 	targets.match(Enemy, true);
@@ -524,6 +478,19 @@ static bool win_battle(bool run) {
 	return true;
 }
 
+static bool allow_win_battle(int bonus) {
+	targets = creatures;
+	targets.match(Enemy, true);
+	targets.match(&creature::isready, true);
+	return !targets.operator bool();
+}
+
+static void win_battle(int bonus) {
+	killed_enemy_loot(0);
+	pause();
+	draw::setnext(main_menu);
+}
+
 static bool continue_battle(bool run) {
 	if(win_battle(false) || lose_game(false))
 		return false;
@@ -533,18 +500,97 @@ static bool continue_battle(bool run) {
 	return true;
 }
 
+static bool allow_continue_battle(int bonus) {
+	if(allow_win_battle(bonus) || allow_lose_game(bonus))
+		return false;
+	return true;
+}
+
+static void continue_battle(int bonus) {
+	clear_console();
+}
+
+static void add_options(const char* id) {
+	auto pc = bsdata<listi>::find(id);
+	if(!pc)
+		return;
+	for(auto v : pc->elements) {
+		if(!script_allow(v))
+			continue;
+		an.add(v.getpointer(), v.getname());
+	}
+}
+
+static void choose_option() {
+	last_option = an.choose(0);
+}
+
+static void what_you_do(bool enemy_first_choose) {
+	last_option = 0;
+	if(!an)
+		return;
+	if(player->is(Enemy)) {
+		if(enemy_first_choose)
+			last_option = an.begin();
+		else
+			last_option = an.random();
+	} else {
+		char temp[260]; stringbuilder sb(temp);
+		player->actv(sb, getnm("WhatToDo"), 0, 0);
+		last_option = an.choose(temp);
+	}
+}
+
+static void apply_option() {
+	if(bsdata<script>::have(last_option))
+		((script*)last_option)->proc(0);
+	else if(bsdata<spelli>::have(last_option))
+		player->cast((spell_s)getbsi((spelli*)last_option), player->get(Level), true);
+}
+
+static void choose_options(const char* id) {
+	an.clear();
+	add_options(id);
+	choose_option();
+	apply_option();
+}
+
+static void combat_round() {
+	pushvalue push(player);
+	for(auto p : creatures) {
+		if(draw::isnext())
+			break;
+		if(!have_feats(Enemy) || !have_feats(Player))
+			break;
+		if(!p->isready())
+			continue;
+		player = p;
+		if(player->is(CauseFear)) {
+			player->feats.remove(EngageMelee);
+			remove_player();
+			continue;
+		}
+		if(player->is(Surprised)) {
+			p->feats.remove(Surprised);
+			continue;
+		}
+		player->update();
+		an.clear();
+		add_options("CombatRound");
+		add_spells_options();
+		what_you_do(true);
+		apply_option();
+		update_melee_fight();
+	}
+}
+
 void combat_mode() {
-	static chooseoption options[] = {
-		{"LoseGame", lose_game},
-		{"WinBattle", win_battle},
-		{"ContinueBattle", continue_battle},
-	};
 	auto push_mode = menu::current_mode;
 	menu::current_mode = "Combat";
 	roll_initiative();
 	while(!draw::isnext() && continue_battle(false)) {
 		combat_round();
-		choose(options, 0);
+		choose_options("CombatTurn");
 	}
 	menu::current_mode = push_mode;
 }
@@ -637,19 +683,28 @@ static void heal(int bonus) {
 }
 
 BSDATA(script) = {
+	{"AttackCharge", attack_charge, allow_attack_charge},
+	{"AttackMelee", attack_melee, allow_attack_melee},
+	{"AttackRanged", attack_ranged, allow_attack_ranged},
+	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
 	{"ChooseTarget", choose_target, condition_passed},
+	{"ContinueBattle", continue_battle, allow_continue_battle},
 	{"FilterAlive", filter_alive, targets_filter},
 	{"FilterBroken", filter_cursed, items_filter},
 	{"FilterCursed", filter_cursed, items_filter},
 	{"FilterIdentified", filter_identified, items_filter},
 	{"FilterYou", filter_you, targets_filter},
 	{"FilterWounded", filter_wounded, targets_filter},
+	{"LoseGame", lose_game, allow_lose_game},
 	{"ReactionRoll", reaction_roll},
+	{"RetreatMelee", retreat_melee, allow_retreat_melee},
+	{"RunAway", run_away, allow_run_away},
 	{"Saves", all_saves},
 	{"SelectAllies", select_backpack, targets_filter},
 	{"SelectBackpack", select_backpack, items_filter},
 	{"SelectItems", select_items, items_filter},
 	{"SurpriseRoll", surprise_roll},
 	{"Undead", undead_features},
+	{"WinBattle", win_battle, allow_win_battle},
 };
 BSDATAF(script)
