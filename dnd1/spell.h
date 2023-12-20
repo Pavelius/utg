@@ -21,11 +21,12 @@ enum spell_s : unsigned char {
 };
 typedef flagable<8> spellf;
 struct spelli : nameable {
+	typedef adat<spell_s, 8> spella;
 	char		level[4];
 	duration_s	duration;
 	range_s		range;
 	interval	effect;
-	spell_s		dispell[4], mass_effect;
+	spella		dispell;
 	interval	hds;
 	interval	count;
 	ability_s	save_negates, save_halves;

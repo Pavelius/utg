@@ -67,12 +67,9 @@ void choose_target();
 spell_s	last_spell;
 int		last_level;
 
-static void dispelling(const slice<spell_s>& source, variant owner) {
-	for(auto v : source) {
-		if(!v)
-			break;
+static void dispelling(const spelli::spella& source, variant owner) {
+	for(auto v : source)
 		dispell(owner, v);
-	}
 }
 
 static bool cast_on_target(bool run, unsigned maximum_count, bool random) {
