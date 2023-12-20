@@ -2,6 +2,7 @@
 #include "bsreq.h"
 #include "creature.h"
 #include "gender.h"
+#include "scenery.h"
 #include "stringlist.h"
 #include "draw_object.h"
 #include "draw_utg.h"
@@ -20,6 +21,7 @@ static void add_creature(const char* id, gender_s gender, feat_s feat, int level
 }
 
 static void starting() {
+	scene = bsdata<scenery>::add();
 	add_creature("Fighter", Male, Player, 1);
 	add_creature("Fighter", Male, Player, 1);
 	add_creature("Cleric", Male, Player, 2);

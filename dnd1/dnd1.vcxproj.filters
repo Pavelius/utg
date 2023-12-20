@@ -45,9 +45,6 @@
     <ClInclude Include="item.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="treasure.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="statable.h">
       <Filter>logic</Filter>
     </ClInclude>

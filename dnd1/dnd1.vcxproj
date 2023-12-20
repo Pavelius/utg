@@ -170,7 +170,6 @@
     <ClInclude Include="scenery.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
-    <ClInclude Include="treasure.h" />
     <ClInclude Include="wear.h" />
     <ClInclude Include="wearable.h" />
   </ItemGroup>

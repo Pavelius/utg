@@ -19,6 +19,9 @@ spella spells;
 static int critical_roll;
 static void* last_option;
 
+void generate_lair_treasure(const char* symbols);
+void generate_treasure(const char* symbols, int group_count);
+
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
 	case Permanent: player->basic.abilities[index] += value; break;
@@ -455,21 +458,30 @@ static void killed_enemy_loot() {
 	for(auto p : bodies)
 		p->remove();
 	group_experience(reward);
+	// Add individual and group treasure
+	generate_treasure("T", bodies.getcount());
 }
 
 static void add_items(const char* format) {
 	for(auto p : items)
-		an.add(p, format, p->getname());
+		an.add(p, format, p->getnamef());
 }
 
 static void take_item(item& ei) {
+	for(auto p : creatures) {
+		if(!p->is(Player))
+			continue;
+		p->additem(ei);
+		if(!ei)
+			break;
+	}
 }
 
 static void take_items() {
 	while(!draw::isnext() && items) {
 		an.clear();
-		add_items("TakeItem");
-		last_option = an.choose(getnm("WhatToDo"), getnm("LeaveThisItems"), 1);
+		add_items(getnm("TakeItem"));
+		last_option = an.choose(getnm("WhatToDoGroup"), getnm("LeaveThisItems"), 1);
 		if(!last_option)
 			break;
 		else if(bsdata<itemlay>::have(last_option))
@@ -478,6 +490,7 @@ static void take_items() {
 }
 
 static void take_loot() {
+	items.select(scene);
 	if(!items) {
 		prints(getnm("LootEnemyFails"));
 		pause();

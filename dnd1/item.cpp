@@ -126,3 +126,10 @@ int item::getcost() const {
 	auto& ei = geti();
 	return getcount() * ei.cost / (ei.count ? ei.count : 1);
 }
+
+const char*	item::getnamef() const {
+	static char temp[260];
+	stringbuilder sb(temp);
+	addname(sb);
+	return temp;
+}

@@ -105,6 +105,10 @@ BSMETA(rangei) = {
 BSMETA(sceneryi) = {
 	BSREQ(id),
 	{}};
+BSMETA(scenery) = {
+	BSREQ(type),
+	BSREQ(parent),
+	{}};
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
@@ -135,6 +139,7 @@ BSDATA(varianti) = {
 	{"Monster", VAR(monsteri, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
+	{"Scene", VAR(scenery, 2), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>},
 	{"Widget", VAR(widget, 1)},

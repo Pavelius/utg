@@ -10,6 +10,8 @@ static itemlay* new_itemlay() {
 }
 
 static void add_existing(variant parent, item& it) {
+	if(!parent)
+		return;
 	if(!it.iscountable())
 		return;
 	for(auto& e : bsdata<itemlay>()) {
@@ -29,6 +31,10 @@ static void add_newstock(variant parent, item& it) {
 }
 
 void add_container(variant parent, item& it) {
+	if(!parent) {
+		it.clear();
+		return;
+	}
 	add_existing(parent, it);
 	add_newstock(parent, it);
 }

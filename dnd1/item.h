@@ -47,6 +47,7 @@ public:
 	int			getcost() const;
 	int			getcount() const;
 	interval	getdamage() const;
+	const char*	getnamef() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		isallowspell() const;
