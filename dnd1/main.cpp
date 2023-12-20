@@ -58,6 +58,7 @@ static int get_fade(const void* object) {
 }
 
 int main(int argc, char* argv[]) {
+	auto i = bsdata<spelli>::source.getcount();
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;

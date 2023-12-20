@@ -1,2 +1,2 @@
 ﻿In file `rules/Spells.txt`:
- Line 12: Not found Spell identifier `CauseFear`
+ Line 12: Can't find 'PuryfyFoodAndDrink' in existing enumerator

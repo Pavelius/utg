@@ -3,7 +3,8 @@
 
 BSDATAC(conditioni, 128)
 BSMETA(conditioni) = {
-	BSREQ(id), BSREQ(param)
+	BSREQ(id),
+	BSREQ(param)
 };
 
 conditioni* conditioni::add(const char* id, fnproc proc, int param) {

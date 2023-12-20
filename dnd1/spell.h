@@ -10,7 +10,7 @@
 enum ability_s : unsigned char;
 
 enum spell_s : unsigned char {
-	CauseLightWound, CauseFear, CureLightWound, Darkness, DetectEvil, DetectMagic, Light, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
+	CauseLightWound, CauseFear, CureLightWound, DetectEvil, DetectMagic, Light, Blinding, Darkness, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, ResistCold,
 	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
 	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
 	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,

@@ -30,7 +30,6 @@ BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
 BSDATAC(scenery, 2048)
 BSDATAC(sceneryi, 128)
-BSDATAC(spelli, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -136,7 +135,7 @@ BSDATA(varianti) = {
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Spell", VAR(spelli, 1)},
+	{"Spell", VAR(spelli, 1), 0, 0},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

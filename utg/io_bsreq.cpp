@@ -406,6 +406,8 @@ static void* read_object(const bsreq* type, array* source, int key_count, int le
 		object = find_object(source, type, keys, key_count);
 	}
 	if(!object) {
+		if(!source->isgrowable() && source->getcount() == source->getmaximum())
+			log::error(p, "Can't find '%1' in existing enumerator", keys[0].text);
 		object = source->add();
 		clear_object(object, type);
 		fill_object(object, type, keys, key_count);
