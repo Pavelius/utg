@@ -13,13 +13,15 @@ bool rolld20(int bonus, int dc, bool fix_roll) {
 	else if(last_roll_raw == 1)
 		critical_roll = -1;
 	auto result = (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
-	if(critical_roll == -1)
-		printn("[-{%1i}]", last_roll);
-	else if(critical_roll == 1)
-		printn("[+{%1i}]", last_roll);
-	else if(result)
-		printn("[{%1i}]", last_roll);
-	else
-		printn("[~{%1i}]", last_roll);
+	if(fix_roll) {
+		if(critical_roll == -1)
+			printn("[-{%1i}]", last_roll);
+		else if(critical_roll == 1)
+			printn("[+{%1i}]", last_roll);
+		else if(result)
+			printn("[{%1i}]", last_roll);
+		else
+			printn("[~{%1i}]", last_roll);
+	}
 	return (critical_roll == -1) ? false : last_roll >= dc || (critical_roll == 1);
 }

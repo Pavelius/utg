@@ -18,7 +18,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	unsigned		experience;
 	raceable		languages;
 	bool			apply(spell_s, int level, bool run);
-	bool			attack(ability_s attack, int ac, int bonus);
+	//bool			attack(ability_s attack, int ac, int bonus);
 	void			clear();
 	bool			cast(spell_s spell, int level, bool run);
 	void			damage(int value);
@@ -47,11 +47,12 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			isplayer() const;
 	bool			isready() const;
 	bool			iswounded() const;
+	void			kill();
 	void			levelup();
 	void			raiselevel();
 	void			remove();
 	void			rest();
-	bool			save(spell_s id) const;
+	bool			save(spell_s id, int& count) const;
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
 	void			update();

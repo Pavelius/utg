@@ -201,7 +201,7 @@ bool creature::iswounded() const {
 }
 
 static void update_start() {
-	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SpellLevel5 + 1));
+	memcpy(player->abilities, player->basic.abilities, sizeof(player->abilities[0]) * (SpellLevel6 + 1));
 	player->feats.add(player->basic.feats);
 }
 
@@ -246,13 +246,12 @@ static void random_prepare_spells() {
 	}
 }
 
-bool creature::save(spell_s spell) const {
+bool creature::save(spell_s spell, int& count) const {
 	auto& ei = bsdata<spelli>::elements[spell];
 	auto id = ei.getsave();
 	if(!id)
 		return false; // No save variant;
-	auto n = get(id);
-	auto result = rolld20(n, 20, false);
+	auto result = rolld20(get(id), 20, false);
 	if(result) {
 		// If save success alway show message
 		if(!actid(ei.id, "SaveSuccess", ' '))
@@ -412,4 +411,8 @@ void creature::rest() {
 int	creature::getspells(int level) const {
 	auto n = (ability_s)(SpellLevel1 + level - 1);
 	return get(n);
+}
+
+void creature::kill() {
+	abilities[HP] = 0;
 }

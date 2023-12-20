@@ -3,9 +3,9 @@
 Cleric 1 Equipment
  elements Mace Shield LeatherArmor
 Cleric 2 SpellCasting
- elements SpellLevel1+1
+ elements SpellLevel1+1 SpellLevel6+1
 Cleric 2 Spells
- elements Known CureLightWound // DetectEvil DetectMagic Light ProtectionFromEvil PurifyFoodAndWater RemoveFear ResistCold
+ elements Known CureLightWound DeathSpell // DetectEvil DetectMagic Light ProtectionFromEvil PurifyFoodAndWater RemoveFear ResistCold
 
 Dwarf 1 Equipment
  elements BattleAxe ChainArmor

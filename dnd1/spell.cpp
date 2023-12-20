@@ -78,19 +78,31 @@ static void dispelling(const spelli::spella& source, variant owner) {
 		dispell(owner, v);
 }
 
-static bool cast_on_target(bool run, unsigned maximum_count, bool random) {
+static bool cast_on_target(bool run, int maximum_count, bool random, bool use_hit_dices) {
 	targets.match(&creature::isallowspell, true);
 	if(!targets)
 		return false;
 	if(random)
 		zshuffle(targets.begin(), targets.count);
-	if(maximum_count) {
-		if(targets.count > maximum_count)
+	if(maximum_count && !use_hit_dices) {
+		if((int)targets.count > maximum_count)
 			targets.count = maximum_count;
 	}
 	if(run) {
-		for(auto p : targets)
-			p->apply(last_spell, last_level, run);
+		if(use_hit_dices) {
+			for(auto p : targets) {
+				if(maximum_count <= 0)
+					break;
+				p->apply(last_spell, last_level, run);
+				auto level = p->get(Level);
+				if(!level)
+					level = 1;
+				maximum_count -= level;
+			}
+		} else {
+			for(auto p : targets)
+				p->apply(last_spell, last_level, run);
+		}
 	}
 	return true;
 }
@@ -147,6 +159,7 @@ bool spelli::isevil() const {
 	case OneEnemy:
 	case OneEnemyTouch:
 	case AllEnemies:
+	case AllEnemiesHD:
 		return true;
 	default:
 		return false;
@@ -163,13 +176,13 @@ bool item::isallowspell() const {
 
 bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
+	auto count = run ? ei.count.roll() : ei.count.maximum();
 	if(run) {
 		if(ei.range == OneEnemyTouch)
 			set(EngageMelee);
-		if(save(id))
+		if(save(id, count))
 			return false;
 	}
-	auto count = run ? ei.count.roll() : ei.count.maximum();
 	switch(id) {
 	case CureLightWound:
 		if(is(Unholy))
@@ -189,6 +202,14 @@ bool creature::apply(spell_s id, int level, bool run) {
 			if(abilities[IllusionCopies] < n)
 				abilities[IllusionCopies] = n;
 		}
+		break;
+	case DeathSpell:
+		if(is(Unholy))
+			return false;
+		if(get(Level) > 7)
+			return false;
+		if(run)
+			kill();
 		break;
 	default:
 		if(ei.duration != Instant)
@@ -283,11 +304,15 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	case AllAlly:
 		targets = creatures;
 		targets.matchally(true);
-		return cast_on_target(run, ei.targets.roll(), ei.targets);
+		return cast_on_target(run, ei.targets.roll(), ei.targets, false);
 	case AllEnemies:
 		targets = creatures;
 		targets.matchenemy(true);
-		return cast_on_target(run, ei.targets.roll(), ei.targets);
+		return cast_on_target(run, ei.targets.roll(), ei.targets, false);
+	case AllEnemiesHD:
+		targets = creatures;
+		targets.matchenemy(true);
+		return cast_on_target(run, ei.targets.roll(), ei.targets, true);
 	case OneItem:
 		items.clear();
 		items.select(player->backpack());

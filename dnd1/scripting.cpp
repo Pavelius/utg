@@ -477,10 +477,11 @@ static void take_items() {
 	}
 }
 
-static void loot_items() {
-	if(!items)
+static void take_loot() {
+	if(!items) {
 		prints(getnm("LootEnemyFails"));
-	else {
+		pause();
+	} else {
 		prints(getnm("LootEnemySuccess"));
 		take_items();
 	}
@@ -507,7 +508,7 @@ static bool allow_win_battle(int bonus) {
 static void win_battle(int bonus) {
 	clear_console();
 	killed_enemy_loot();
-	pause();
+	take_loot();
 	draw::setnext(main_menu);
 }
 

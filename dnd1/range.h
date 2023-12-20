@@ -5,7 +5,7 @@
 enum range_s : unsigned char {
 	Caster, CasterOrAlly, OneAlly,
 	OneEnemy, OneEnemyTouch,
-	AllAlly, AllEnemies,
+	AllAlly, AllEnemies, AllEnemiesHD,
 	OneItem, OneAllyItem, AllCasterItems, AllAllyItems,
 	Enviroment, OneObject, OneRandomObject
 };
