@@ -348,6 +348,11 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	}
 }
 
+void creature::use(spell_s spell) {
+	if(spells[spell])
+		spells[spell]--;
+}
+
 void spella::select(const spellf& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();

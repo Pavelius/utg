@@ -553,11 +553,24 @@ static void what_you_do(bool enemy_first_choose) {
 	}
 }
 
+static void apply_spell_options() {
+	if(bsdata<spelli>::have(last_option)) {
+		auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
+		player->cast(spell, player->get(Level), true);
+		player->use(spell);
+	}
+}
+
+static void apply_script_options() {
+	if(bsdata<script>::have(last_option)) {
+		auto p = last_option; last_option = 0;
+		((script*)p)->proc(0);
+	}
+}
+
 static void apply_option() {
-	if(bsdata<script>::have(last_option))
-		((script*)last_option)->proc(0);
-	else if(bsdata<spelli>::have(last_option))
-		player->cast((spell_s)getbsi((spelli*)last_option), player->get(Level), true);
+	apply_script_options();
+	apply_spell_options();
 }
 
 static void choose_options(const char* id) {

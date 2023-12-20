@@ -21,6 +21,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	//bool			attack(ability_s attack, int ac, int bonus);
 	void			clear();
 	bool			cast(spell_s spell, int level, bool run);
+	bool			castsp(spell_s spell, int level, bool run);
 	void			damage(int value);
 	void			drink(spell_s effect);
 	void			equip(item& v);
@@ -31,6 +32,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	int				getaward() const;
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
+	int				getlevel(spell_s spell) const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;
@@ -58,6 +60,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	void			update();
 	void			update_finish();
 	void			use(item& it);
+	void			use(spell_s spell);
 };
 extern creature *player, *opponent;
 struct creaturea : adat<creature*, 32> {

@@ -416,3 +416,7 @@ int	creature::getspells(int level) const {
 void creature::kill() {
 	abilities[HP] = 0;
 }
+
+int	creature::getlevel(spell_s spell) const {
+	return bsdata<spelli>::elements[spell].level[geti().magic];
+}
