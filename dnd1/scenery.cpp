@@ -22,6 +22,10 @@ static void update_spells() {
 	}
 }
 
+bool scenery::is(spell_s v) const {
+	return scenery_spells.is(v);
+}
+
 void scenery::enter() {
 	if(next_scene)
 		return;

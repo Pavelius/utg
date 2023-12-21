@@ -199,9 +199,6 @@
     <Text Include="rules\Monsters.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\NameCharacters.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Items.txt">
       <Filter>data</Filter>
     </Text>
@@ -257,6 +254,9 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\speech\Adventures.txt">
+      <Filter>speech</Filter>
+    </Text>
+    <Text Include="locale\ru\speech\Characters.txt">
       <Filter>speech</Filter>
     </Text>
   </ItemGroup>

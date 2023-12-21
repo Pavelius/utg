@@ -10,6 +10,12 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 bool apply_list(const char* identifier, stringbuilder& sb);
 bool apply_speech(const char* id, stringbuilder& sb);
 
+const char* actable::getname() const {
+	if(name != -1)
+		return speech_name(name);
+	return type.getname();
+}
+
 void actable::actv(stringbuilder& sbo, const char* format, const char* format_param, char separator) const {
 	if(!answers::interactive)
 		return;

@@ -1,16 +1,19 @@
 #pragma once
 
+#include "variant.h"
+
 class stringbuilder;
 enum gender_s : unsigned char;
 
 struct actable {
-	const char*		name;
+	variant			type;
+	int				name;
 	gender_s		gender;
 	void			act(const char* format, ...) const;
 	bool			actid(const char* prefix, const char* suffix, char separator = '\n') const;
 	void			actn(const char* format, ...) const;
 	void			actv(stringbuilder& sb, const char* format, const char* format_param, char separator) const;
-	const char*		getname() const { return name; }
+	const char*		getname() const;
 };
 
 void print(char separator, const char* format, ...);

@@ -9,7 +9,6 @@
 #pragma once
 
 struct creature : actable, attackable, spellable, statable, avatarable, wearable {
-	unsigned char	type;
 	unsigned short	leader;
 	statable		basic;
 	spellable		prepared;
@@ -44,6 +43,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			isallowspell() const { return const_cast<creature*>(this)->apply(last_spell, last_level, false); }
 	bool			isalive() const { return get(HP) > 0; }
 	bool			isally() const;
+	bool			ischaracter() const;
 	bool			isenemy() const;
 	bool			isknown(spell_s v) const { return known_spells.is(v); }
 	bool			isplayer() const;
@@ -81,4 +81,4 @@ void add_creature(const monsteri* pi);
 void finish_creature();
 
 const char* random_avatar(const classi* pi, gender_s gender);
-const char* random_name(const classi* pi, gender_s gender);
+int random_name(const classi* pi, gender_s gender);

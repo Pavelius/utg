@@ -55,6 +55,31 @@ const char* speech_getid(int index) {
 	return bsdata<speechv2>::elements[index].id;
 }
 
+const char* speech_name(int index) {
+	return ((speechv2::element*)bsdata<speechv2::element>::source.ptr(index))->name;
+}
+
+int speech_first(const char* id) {
+	auto p = bsdata<speechv2>::find(id);
+	if(!p || !p->source)
+		return -1;
+	return p->source.start;
+}
+
+int speech_count(const char* id) {
+	auto p = bsdata<speechv2>::find(id);
+	if(!p || !p->source)
+		return -1;
+	return p->source.count;
+}
+
+int speech_random(const char* id) {
+	auto p = bsdata<speechv2>::find(id);
+	if(!p || !p->source)
+		return -1;
+	return p->source.start + (rand() % p->source.size());
+}
+
 const char* speech_get(const char* id) {
 	auto p = bsdata<speechv2>::find(id);
 	if(!p || !p->source)

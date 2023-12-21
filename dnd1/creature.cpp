@@ -7,7 +7,7 @@
 #include "pushvalue.h"
 #include "roll.h"
 #include "script.h"
-#include "stringlist.h"
+#include "speech.h"
 
 creature *player, *opponent;
 creaturea creatures;
@@ -65,6 +65,7 @@ static void apply_advance(variant type, int level) {
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 	leader = 0xFFFF;
+	name = -1;
 }
 
 creature* creature::getleader() const {
@@ -76,7 +77,9 @@ void creature::setleader(const creature* pv) {
 }
 
 const classi& creature::geti() const {
-	return bsdata<classi>::elements[type];
+	if(type.iskind<classi>())
+		return bsdata<classi>::elements[type.value];
+	return bsdata<classi>::elements[0];
 }
 
 int get_feats_ability_count(const creature* player) {
@@ -99,17 +102,26 @@ int creature::getaward() const {
 	return r;
 }
 
+bool creature::ischaracter() const {
+	return type.iskind<classi>();
+}
+
 void creature::raiselevel() {
+	auto pc = &geti();
 	auto n = basic.get(Level);
-	auto d = bsdata<classi>::elements[type].hd;
+	auto d = pc->hd;
 	if(d) {
 		auto r = 1 + rand() % d;
-		while(n == 1 && type && r <= 2)
-			r = rand() % d;
+		if(ischaracter() && n==1) {
+			while(r <= 2)
+				r = rand() % d;
+		}
 		r += basic.getbonus(Constitution);
+		if(r < 1)
+			r = 1;
 		basic.abilities[HPMax] += r;
 	}
-	apply_advance(bsdata<classi>::elements + type, n);
+	apply_advance(type, n);
 }
 
 void creature::remove() {
@@ -117,17 +129,16 @@ void creature::remove() {
 	creatures.remove(this);
 }
 
-static unsigned get_experience(unsigned char type, int level) {
-	auto p = bsdata<classi>::elements + type;
+static unsigned get_experience(const classi& ei, int level) {
 	if(level <= 1)
 		return 0;
-	return maptbl(p->experience, level - 2);
+	return maptbl(ei.experience, level - 2);
 }
 
 void creature::levelup() {
 	while(true) {
 		auto next_level = basic.get(Level) + 1;
-		auto next_experience = get_experience(type, next_level);
+		auto next_experience = get_experience(geti(), next_level);
 		if((next_level > 1 && !next_experience) || (next_experience && experience < next_experience))
 			break;
 		basic.add(Level, 1);
@@ -135,10 +146,8 @@ void creature::levelup() {
 	}
 }
 
-const char* random_name(const classi* pi, gender_s gender) {
-	return stringlist::getname(stringlist::random(str("%1%2",
-		pi->getid(),
-		bsdata<genderi>::elements[gender].id)));
+int random_name(const classi* pi, gender_s gender) {
+	return speech_random(str("%1%2", pi->getid(), bsdata<genderi>::elements[gender].id));
 }
 
 static bool allow_avatar(const char* avatar) {
@@ -348,7 +357,7 @@ static creature* new_creature() {
 void add_creature(const classi* pi, gender_s gender, int level) {
 	player = new_creature();
 	player->clear();
-	player->type = pi - bsdata<classi>::elements;
+	player->type = pi;
 	player->gender = gender;
 	player->attacks[0].count = 1;
 	player->attacks[0].damage = {1, 2};
@@ -359,13 +368,14 @@ void add_creature(const classi* pi, gender_s gender, int level) {
 	player->setavatar(random_avatar(pi, gender));
 	add_language(pi->origin);
 	add_language(bsdata<racei>::elements);
-	player->experience = get_experience(player->type, level);
+	player->experience = get_experience(player->geti(), level);
 	finish_creature();
 }
 
 void add_creature(const monsteri* pi) {
 	player = new_creature();
 	player->clear();
+	player->type = pi;
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		player->basic.abilities[i] = 10;
@@ -375,7 +385,6 @@ void add_creature(const monsteri* pi) {
 	add_language(pi->origin);
 	if(player->basic.get(Intellect)>=6 && d100() < 20)
 		add_language(bsdata<racei>::elements);
-	player->name = getnm(pi->id);
 	finish_creature();
 }
 

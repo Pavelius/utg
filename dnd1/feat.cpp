@@ -14,6 +14,8 @@ BSDATA(feati) = {
 	{"NormalWeaponImmunity"},
 	{"Blunt"},
 	{"TwoHanded"},
+	{"Burned"},
+	{"Frozen"},
 	{"EngageMelee"},
 	{"Surprised"},
 	{"Prone"},

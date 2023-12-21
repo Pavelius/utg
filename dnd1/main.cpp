@@ -3,7 +3,6 @@
 #include "creature.h"
 #include "gender.h"
 #include "scenery.h"
-#include "stringlist.h"
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "generator.h"
@@ -43,7 +42,6 @@ void initialize_str();
 void initialize_ui();
 
 static void initializing() {
-	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
 	speech_initialize();
 	spell_initialize();

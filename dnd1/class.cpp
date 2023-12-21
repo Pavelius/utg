@@ -26,7 +26,7 @@ static bool isallow(const char* minimal) {
 }
 
 static void add_adjust(answers& an, ability_s a) {
-	auto& ei = bsdata<classi>::elements[player->type];
+	auto& ei = player->geti();
 	if(ei.prime == a)
 		return;
 	if(player->basic.abilities[ei.prime] >= 18)
@@ -44,7 +44,7 @@ static void adjust_ability_scores() {
 	answers an;
 	auto push_tabs = draw::tab_pixels; draw::tab_pixels = 36;
 	while(!draw::isnext()) {
-		auto& ei = bsdata<classi>::elements[player->type]; an.clear();
+		auto& ei = player->geti(); an.clear();
 		answers::console->clear();
 		answers::console->addn(getnm("YouMayAdjustAbility"), getnm(ei.id));
 		add_abilitites();
