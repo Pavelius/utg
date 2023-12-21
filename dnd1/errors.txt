@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-Spear: Define translate
+﻿In file `rules/Classes.txt`:
+ Line 53: Not found Organization identifier `WizardCouncil`

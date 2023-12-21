@@ -160,9 +160,11 @@
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="itemlay.h" />
+    <ClInclude Include="leaderable.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
+    <ClInclude Include="organization.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
@@ -192,6 +194,7 @@
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="ongoing.cpp" />
+    <ClCompile Include="organization.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="reaction.cpp" />
     <ClCompile Include="roll.cpp" />
@@ -222,6 +225,7 @@
     <Text Include="rules\Classes.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
+    <Text Include="rules\Organizations.txt" />
     <Text Include="rules\Races.txt" />
     <Text Include="rules\RandomGems.txt" />
     <Text Include="rules\Spells.txt" />

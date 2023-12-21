@@ -1,0 +1,12 @@
+#Organization
+
+MiddleKindom
+ allies ElvenKindom
+ enemies Horde Rebels
+ElvenKindom
+ allies ElvenKindom
+ enemies Horde
+Rebels
+ enemies MiddleKindom ElvenKindom Horde MerchantsGuild
+Horde
+ enemies MiddleKindom ElvenKindom DwarvenKindom

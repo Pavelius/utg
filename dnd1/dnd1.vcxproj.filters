@@ -87,6 +87,12 @@
     <ClInclude Include="race.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="organization.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="leaderable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -173,6 +179,9 @@
     <ClCompile Include="ongoing.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="organization.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -237,6 +246,9 @@
     </Text>
     <Text Include="locale\ru\speech\Adventures.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\Organizations.txt">
+      <Filter>data</Filter>
     </Text>
   </ItemGroup>
 </Project>

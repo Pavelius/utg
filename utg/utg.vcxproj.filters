@@ -557,5 +557,8 @@
     <ClInclude Include="parentable.h">
       <Filter>Templates</Filter>
     </ClInclude>
+    <ClInclude Include="ownerable.h">
+      <Filter>Templates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

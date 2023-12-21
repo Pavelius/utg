@@ -26,6 +26,9 @@ static void starting() {
 	add_creature("Fighter", Male, Player, 1);
 	add_creature("Cleric", Male, Player, 2);
 	add_creature("Halfling", Female, Player, 1);
+	creatures.select();
+	start_game_organization();
+	start_game_reputation();
 	answers::header = "Большой зал";
 	random_encounter("Orc");
 	creatures.select();

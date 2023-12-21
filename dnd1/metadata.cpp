@@ -9,6 +9,7 @@
 #include "modifier.h"
 #include "monster.h"
 #include "ongoing.h"
+#include "organization.h"
 #include "race.h"
 #include "randomizer.h"
 #include "scenery.h"
@@ -53,6 +54,7 @@ BSMETA(classi) = {
 	BSREQ(experience),
 	BSREQ(magic),
 	BSFLG(allow, itemi),
+	BSFLG(reputation, organizationi),
 	BSREQ(origin),
 	{}};
 BSMETA(creature) = {
@@ -90,6 +92,14 @@ BSMETA(monsteri) = {
 	BSREQ(origin),
 	BSREQ(basic),
 	BSREQ(treasure),
+	{}};
+BSMETA(organizationi) = {
+	BSREQ(id),
+	BSFLG(allies, organizationi), BSFLG(enemies, organizationi),
+	BSDST(abilities, orgstati),
+	{}};
+BSMETA(orgstati) = {
+	BSREQ(id),
 	{}};
 BSMETA(randomizeri) = {
 	BSREQ(id),
@@ -137,6 +147,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
+	{"Organization", VAR(organizationi, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Scene", VAR(scenery, 2), 0, 0},
