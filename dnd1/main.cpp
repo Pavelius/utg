@@ -7,6 +7,7 @@
 #include "draw_object.h"
 #include "draw_utg.h"
 #include "generator.h"
+#include "speech.h"
 
 void combat_mode();
 void random_encounter(const char* id);
@@ -44,6 +45,7 @@ void initialize_ui();
 static void initializing() {
 	stringlist::read("locale/ru/NameCharacters.txt");
 	generatori::read("rules/RandomGems.txt");
+	speech_initialize();
 	spell_initialize();
 	initialize_str();
 }

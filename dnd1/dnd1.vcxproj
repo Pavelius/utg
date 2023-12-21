@@ -170,6 +170,7 @@
     <ClInclude Include="reaction.h" />
     <ClInclude Include="roll.h" />
     <ClInclude Include="scenery.h" />
+    <ClInclude Include="speech.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="wear.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="roll.cpp" />
     <ClCompile Include="scenery.cpp" />
     <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="speech.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="treasure.cpp" />

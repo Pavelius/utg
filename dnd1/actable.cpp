@@ -3,10 +3,12 @@
 #include "creature.h"
 #include "gender.h"
 #include "pushvalue.h"
+#include "speech.h"
 #include "stringlist.h"
 
-bool apply_list(const char* identifier, stringbuilder& sb);
 bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+bool apply_list(const char* identifier, stringbuilder& sb);
+bool apply_speech(const char* id, stringbuilder& sb);
 
 void actable::actv(stringbuilder& sbo, const char* format, const char* format_param, char separator) const {
 	if(!answers::interactive)
@@ -25,13 +27,16 @@ void actable::actn(const char* format, ...) const {
 	actv(*answers::console, format, xva_start(format), '\n');
 }
 
-bool actable::actid(const char* prefix, const char* suffix, char separator) const {
+bool actable::actid(const char* id, const char* suffix, char separator) const {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add(prefix);
+	sb.add(id);
 	sb.add(suffix);
 	auto format = getnme(temp);
-	if(!format)
-		return false;
+	if(!format) {
+		format = speech_get(temp);
+		if(!format)
+			return false;
+	}
 	pushvalue push(player, static_cast<creature*>(const_cast<actable*>(this)));
 	actv(*answers::console, format, 0, separator);
 	return true;
@@ -42,6 +47,8 @@ static void item_identifier(stringbuilder& sb, const char* id) {
 		if(apply_action(id, sb, last_item->getname(), Male))
 			return;
 	}
+	if(apply_speech(id, sb))
+		return;
 	if(apply_list(id, sb))
 		return;
 	stringbuilder::defidentifier(sb, id);
@@ -83,6 +90,8 @@ static void main_act_identifier(stringbuilder& sb, const char* id) {
 		if(apply_action(id, sb, player->getname(), player->gender))
 			return;
 	}
+	if(apply_speech(id, sb))
+		return;
 	if(apply_list(id, sb))
 		return;
 	stringbuilder::defidentifier(sb, id);
@@ -110,13 +119,16 @@ void prints(const char* format, ...) {
 	printv(' ', format, xva_start(format));
 }
 
-bool printa(const char* id, const char* s1, char separator) {
+bool printa(const char* id, const char* suffix, char separator) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(id);
-	sb.add(s1);
+	sb.add(suffix);
 	auto format = getnme(temp);
-	if(!format)
-		return false;
+	if(!format) {
+		format = speech_get(temp);
+		if(!format)
+			return false;
+	}
 	printv(separator, format, 0);
 	return true;
 }

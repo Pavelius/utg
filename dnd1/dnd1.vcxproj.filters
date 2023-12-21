@@ -10,6 +10,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{0e0f3bf1-1a54-46be-82a5-6bbdeb5b4730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="speech">
+      <UniqueIdentifier>{9024af33-2aa7-4555-8511-e8ed003fa8be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">
@@ -91,6 +94,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="leaderable.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="speech.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -182,6 +188,9 @@
     <ClCompile Include="organization.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="speech.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -244,11 +253,11 @@
     <Text Include="locale\ru\names\Spells.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\speech\Adventures.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Organizations.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\speech\Adventures.txt">
+      <Filter>speech</Filter>
     </Text>
   </ItemGroup>
 </Project>
