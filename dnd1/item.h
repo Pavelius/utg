@@ -27,6 +27,7 @@ class item : public typeable<itemi, unsigned char> {
 			unsigned char identified_magic : 1;
 			unsigned char cursed : 1;
 			unsigned char broken : 1;
+			unsigned char power : 4;
 		};
 	};
 	unsigned short count;
@@ -48,6 +49,7 @@ public:
 	int			getcount() const;
 	interval	getdamage() const;
 	const char*	getnamef() const;
+	variant		getpower() const;
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		isallowspell() const;
@@ -55,7 +57,7 @@ public:
 	bool		iscountable() const { return true; }
 	bool		iscursed() const { return cursed != 0; }
 	bool		isidentified() const { return identified != 0; }
-	bool		ismagic() const { return false; }
+	bool		ismagic() const { return power != 0; }
 	bool		isready() const;
 	void		setcount(int v);
 };

@@ -5,7 +5,7 @@
 #include "scenery.h"
 #include "draw_object.h"
 #include "draw_utg.h"
-#include "generator.h"
+#include "scenery.h"
 #include "speech.h"
 
 void combat_mode();
@@ -21,7 +21,7 @@ static void add_creature(const char* id, gender_s gender, feat_s feat, int level
 }
 
 static void starting() {
-	scene = bsdata<scenery>::add();
+	add_scene("Forest");
 	add_creature("Fighter", Male, Player, 1);
 	add_creature("Fighter", Male, Player, 1);
 	add_creature("Cleric", Male, Player, 2);
@@ -29,20 +29,19 @@ static void starting() {
 	creatures.select();
 	start_game_organization();
 	start_game_reputation();
-	answers::header = "Большой зал";
-	random_encounter("Orc");
-	creatures.select();
+	//answers::header = "Большой зал";
+	//random_encounter("Orc");
 	//treasure loot;
 	//loot.generate('A');
 	//loot.take();
-	combat_mode();
+	//combat_mode();
+	scene->enter();
 }
 
 void initialize_str();
 void initialize_ui();
 
 static void initializing() {
-	generatori::read("rules/RandomGems.txt");
 	speech_initialize();
 	spell_initialize();
 	initialize_str();

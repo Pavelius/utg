@@ -112,8 +112,12 @@ BSMETA(racei) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
+BSMETA(scenefi) = {
+	BSREQ(id),
+	{}};
 BSMETA(sceneryi) = {
 	BSREQ(id),
+	BSFLG(traits, scenefi),
 	{}};
 BSMETA(scenery) = {
 	BSREQ(type),
@@ -151,6 +155,8 @@ BSDATA(varianti) = {
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Scene", VAR(scenery, 2), 0, 0},
+	{"SceneFlags", VAR(scenefi, 1), 0, 0},
+	{"Scenery", VAR(sceneryi, 1), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>},
 	{"Widget", VAR(widget, 1)},

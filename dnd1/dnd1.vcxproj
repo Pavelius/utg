@@ -160,7 +160,6 @@
     <ClInclude Include="feat.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="itemlay.h" />
-    <ClInclude Include="leaderable.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
@@ -218,6 +217,7 @@
     <Text Include="locale\ru\names\Monsters.txt" />
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\Scenery.txt" />
     <Text Include="locale\ru\names\Spells.txt" />
     <Text Include="locale\ru\speech\Adventures.txt" />
     <Text Include="locale\ru\speech\Characters.txt" />
@@ -229,7 +229,7 @@
     <Text Include="rules\Monsters.txt" />
     <Text Include="rules\Organizations.txt" />
     <Text Include="rules\Races.txt" />
-    <Text Include="rules\RandomGems.txt" />
+    <Text Include="rules\Scenery.txt" />
     <Text Include="rules\Spells.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

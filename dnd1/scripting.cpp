@@ -350,18 +350,6 @@ static void attack_charge(int bonus) {
 //	return true;
 //}
 
-static void add_spells_options() {
-	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
-		if(!player->get(i))
-			continue;
-		auto p = bsdata<spelli>::elements + i;
-		auto n = player->get(Level);
-		if(!player->cast(i, n, false))
-			continue;
-		an.add(p, getnm("CastSpell"), p->getname());
-	}
-}
-
 static bool allow_retreat_melee(int bonus) {
 	if(!player->is(EngageMelee))
 		return false;
@@ -567,11 +555,23 @@ static void what_you_do(bool enemy_first_choose) {
 	}
 }
 
-static void apply_spell_options() {
-	if(bsdata<spelli>::have(last_option)) {
-		auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
-		player->cast(spell, player->get(Level), true);
-		player->use(spell);
+static void apply_scene_spells(int bonus) {
+	if(bonus == 0) {
+		for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+			if(!player->get(i))
+				continue;
+			auto p = bsdata<spelli>::elements + i;
+			auto n = player->get(Level);
+			if(!player->cast(i, n, false))
+				continue;
+			an.add(p, getnm("CastSpell"), p->getname());
+		}
+	} else {
+		if(bsdata<spelli>::have(last_option)) {
+			auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
+			player->cast(spell, player->get(Level), true);
+			player->use(spell);
+		}
 	}
 }
 
@@ -584,7 +584,7 @@ static void apply_script_options() {
 
 static void apply_option() {
 	apply_script_options();
-	apply_spell_options();
+	apply_scene_spells(1);
 }
 
 static void choose_options(const char* id) {
@@ -616,7 +616,7 @@ static void combat_round() {
 		player->update();
 		an.clear();
 		add_options("CombatRound");
-		add_spells_options();
+		apply_scene_spells(0);
 		what_you_do(true);
 		apply_option();
 		update_melee_fight();

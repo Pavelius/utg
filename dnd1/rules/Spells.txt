@@ -14,3 +14,5 @@ RemoveFear level(1) range(OneAllyItem)
 ResistCold level(1) range(AllAlly)
 
 DeathSpell level(6) range(AllEnemiesHD) targets(4 24) save_negates(SaveDeath)
+
+ItemRepair range(AllAllyItems) targets(1)

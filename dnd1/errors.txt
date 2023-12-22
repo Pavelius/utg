@@ -1,2 +1,2 @@
-﻿In file `rules/Classes.txt`:
- Line 53: Not found Organization identifier `WizardCouncil`
+﻿In file `rules/Scenery.txt`:
+ Line 4: Not found requisit `traits`

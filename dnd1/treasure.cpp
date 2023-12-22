@@ -1,6 +1,6 @@
 #include "draw_utg.h"
 #include "item.h"
-#include "generator.h"
+#include "randomizer.h"
 #include "roll.h"
 
 struct treasurei {
@@ -61,7 +61,7 @@ static void add_gems(const treasurei::coini& e) {
 	}
 	auto count = e.range.roll();
 	for(auto i = 0; i < count; i++) {
-		auto value = random_value("RandomGems");
+		auto value = single("RandomGems");
 		if(value.iskind<itemi>()) {
 			item it(bsdata<itemi>::elements + value.value);
 			it.drop();
@@ -75,11 +75,8 @@ static void add_jewelry(const treasurei::coini& e) {
 			return;
 	}
 	auto count = e.range.roll();
-	variant jewelry = "Jewelry";
-	if(!jewelry)
-		return;
 	for(auto i = 0; i < count; i++) {
-		auto value = random_list_value(jewelry);
+		auto value = single("Jewelry");
 		if(value.iskind<itemi>()) {
 			item it(bsdata<itemi>::elements + value.value);
 			it.drop();

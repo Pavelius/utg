@@ -45,11 +45,11 @@ PlateArmor cost(60) weight(500) wear(Torso)
 Shield cost(10) weight(100) wear(MeleeWeaponOffhand)
  wearing AC+1
 
-CP cost(1) count(100)
-SP cost(1) count(10)
-EP cost(1) count(5)
-GP cost(1)
-PP cost(10)
+CP cost(1) count(100) weight(1)
+SP cost(1) count(10) weight(1)
+EP cost(1) count(5) weight(1)
+GP cost(1) weight(1)
+PP cost(10) weight(1)
 
 OrnamentalStones cost(10)
 SemiPreciousStones cost(50)
@@ -76,3 +76,8 @@ YellowPotion cost(100) weight(10) wear(Potion)
 
 Jewelry
  elements SilverRing GoldenRing SilverAmulet GoldAmulet
+
+#Random
+
+RandomGems
+ chance OrnamentalStones+4 SemiPreciousStones+5 FancyStones+6 PreciousStones+4 GemStones+1

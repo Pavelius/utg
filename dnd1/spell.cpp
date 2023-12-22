@@ -54,6 +54,7 @@ BSDATA(spelli) = {
 	{"FlameBlade"},
 	{"AntiMagicShell"},
 	{"DeathSpell"},
+	{"ItemRepair"}, // Some effective actions
 	{"ShrinkSize"}, // Special spell effects
 	{"GrowthSize"},
 	{"GaseousForm"},
@@ -240,6 +241,12 @@ bool item::apply(spell_s id, int level, bool run) {
 		if(run)
 			identified_magic = 1;
 		break;
+	case ItemRepair:
+		if(!isbroken())
+			return false;
+		if(run)
+			broken = 0;
+		break;
 	}
 	if(run)
 		actid(ei.id, "Apply");
@@ -264,24 +271,20 @@ bool scenery::apply(spell_s id, int level, bool run) {
 static void set_caster_melee() {
 }
 
-bool creature::cast(spell_s spell, int level, bool run) {
+bool spell_effect(spell_s spell, int level, range_s range, const interval& target, const char* suffix, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
-	auto& ei = bsdata<spelli>::elements[last_spell];
 	if(run) {
 		// First fix melee engage
-		if(ei.range == OneEnemyTouch) {
-			if(!player->is(EngageMelee)) {
-				player->actid("CastTouchSpell", "Action");
-				player->set(EngageMelee);
-			}
-		}
+		if(range == OneEnemyTouch)
+			player->set(EngageMelee);
 		// Second fix spell casting
-		actid(ei.id, "Cast");
+		if(suffix)
+			player->actid(bsdata<spelli>::elements[spell].id, suffix);
 	}
-	switch(ei.range) {
+	switch(range) {
 	case Caster:
-		return apply(last_spell, last_level, true);
+		return player->apply(last_spell, last_level, true);
 	case CasterOrAlly:
 		targets = creatures;
 		targets.matchally(true);
@@ -304,15 +307,15 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	case AllAlly:
 		targets = creatures;
 		targets.matchally(true);
-		return cast_on_target(run, ei.targets.roll(), ei.targets, false);
+		return cast_on_target(run, target.roll(), target, false);
 	case AllEnemies:
 		targets = creatures;
 		targets.matchenemy(true);
-		return cast_on_target(run, ei.targets.roll(), ei.targets, false);
+		return cast_on_target(run, target.roll(), target, false);
 	case AllEnemiesHD:
 		targets = creatures;
 		targets.matchenemy(true);
-		return cast_on_target(run, ei.targets.roll(), ei.targets, true);
+		return cast_on_target(run, target.roll(), target, true);
 	case OneItem:
 		items.clear();
 		items.select(player->backpack());
@@ -327,14 +330,14 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	case AllCasterItems:
 		items.clear();
 		items.select(player->backpack());
-		return cast_on_item(run, ei.targets.roll(), ei.targets);
+		return cast_on_item(run, target.roll(), target);
 	case AllAllyItems:
 		items.clear();
 		for(auto p : creatures) {
 			if(p->isally())
 				items.select(player->backpack());
 		}
-		return cast_on_item(run, ei.targets.roll(), ei.targets);
+		return cast_on_item(run, target.roll(), target);
 	case Enviroment:
 		if(!scene)
 			return false;
@@ -346,6 +349,11 @@ bool creature::cast(spell_s spell, int level, bool run) {
 	default:
 		return false;
 	}
+}
+
+bool creature::cast(spell_s spell, int level, bool run) {
+	auto& ei = bsdata<spelli>::elements[spell];
+	return spell_effect(spell, level, ei.range, ei.targets, "Cast", run);
 }
 
 void creature::use(spell_s spell) {

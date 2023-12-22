@@ -17,6 +17,7 @@ enum spell_s : unsigned char {
 	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
 	AntiMagicShell, DeathSpell,
 	LastSpell = DeathSpell,
+	ItemRepair,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 typedef flagable<8> spellf;
@@ -47,3 +48,5 @@ struct spella : collection<spelli> {
 };
 extern spell_s last_spell;
 extern int last_level;
+
+bool spell_effect(spell_s spell, int level, range_s range, const interval& target, const char* suffix, bool run);

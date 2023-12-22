@@ -1,0 +1,24 @@
+#Scenery
+
+Forest
+ traits Outdoor
+Plain
+Desert
+Swamp
+Hills
+Mountain
+River
+Lake
+Sea
+
+Crypt
+Tomb
+Dungeon
+Caverns
+Mine
+Stronghold
+Ruins
+
+SmallRoom
+LargeRoom
+Corridor

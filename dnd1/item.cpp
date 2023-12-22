@@ -107,7 +107,11 @@ void item::addname(stringbuilder& sb) const {
 	}
 	sb.adds(name);
 	if(identified) {
-		// TODO: powern name, like 'of defence'
+		auto power = getpower();
+		if(power.type)
+			sb.adds(power.getname());
+		else
+			sb.adds("%+1i", power.counter);
 	}
 	if(count > 1)
 		sb.adds("%1i%Pieces", count);
@@ -132,4 +136,10 @@ const char*	item::getnamef() const {
 	stringbuilder sb(temp);
 	addname(sb);
 	return temp;
+}
+
+variant item::getpower() const {
+	if(!power)
+		return {};
+	return geti().powers.begin()[power - 1];
 }

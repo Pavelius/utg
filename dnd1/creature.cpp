@@ -6,6 +6,7 @@
 #include "ongoing.h"
 #include "pushvalue.h"
 #include "roll.h"
+#include "scenery.h"
 #include "script.h"
 #include "speech.h"
 
@@ -290,6 +291,8 @@ void creature::update_finish() {
 		abilities[AC] -= 2;
 		abilities[ACRanged] += 4;
 	}
+	if(is(SunSensitive) && scene->is(SunSensitive))
+		abilities[MeleeToHit] -= 2;
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];

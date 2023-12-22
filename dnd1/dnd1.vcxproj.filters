@@ -93,9 +93,6 @@
     <ClInclude Include="organization.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="leaderable.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="speech.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -202,9 +199,6 @@
     <Text Include="rules\Items.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="rules\RandomGems.txt">
-      <Filter>data</Filter>
-    </Text>
     <Text Include="locale\ru\Moves.txt">
       <Filter>locale</Filter>
     </Text>
@@ -258,6 +252,12 @@
     </Text>
     <Text Include="locale\ru\speech\Characters.txt">
       <Filter>speech</Filter>
+    </Text>
+    <Text Include="rules\Scenery.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Scenery.txt">
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>
