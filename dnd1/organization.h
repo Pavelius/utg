@@ -5,7 +5,7 @@
 #include "ownerable.h"
 
 enum orgstat_s : unsigned char {
-	Reputation, Influence,
+	Reputation, Influence, Sleeping
 };
 enum organization_s : unsigned char {
 	MiddleKindom, Rebels, Horde, DwarvenKindom, ElvenKindom,

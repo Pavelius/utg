@@ -5,6 +5,8 @@
 #include "scenery.h"
 #include "draw_object.h"
 #include "draw_utg.h"
+#include "log.h"
+#include "questlist.h"
 #include "scenery.h"
 #include "speech.h"
 
@@ -45,6 +47,7 @@ static void initializing() {
 	speech_initialize();
 	spell_initialize();
 	initialize_str();
+	questlist_initialize();
 }
 
 static const char* getavatarst(const void* p) {

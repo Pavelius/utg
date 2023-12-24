@@ -1,2 +1,2 @@
 ﻿In file `rules/Scenery.txt`:
- Line 4: Not found requisit `traits`
+ Line 4: Can't find variant `HuntPrey`

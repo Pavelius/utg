@@ -17,9 +17,8 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	unsigned		experience;
 	raceable		languages;
 	bool			apply(spell_s, int level, bool run);
-	//bool			attack(ability_s attack, int ac, int bonus);
 	void			clear();
-	bool			cast(spell_s spell, int level, bool run);
+	bool			cast(spell_s spell, bool run);
 	bool			castsp(spell_s spell, int level, bool run);
 	void			damage(int value);
 	void			drink(spell_s effect);
@@ -81,4 +80,8 @@ void add_creature(const monsteri* pi);
 void finish_creature();
 
 const char* random_avatar(const classi* pi, gender_s gender);
+
+int get_average(ability_s v);
+int get_maximal(ability_s v);
+int get_minimal(ability_s v);
 int random_name(const classi* pi, gender_s gender);

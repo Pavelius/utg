@@ -432,3 +432,43 @@ void creature::kill() {
 int	creature::getlevel(spell_s spell) const {
 	return bsdata<spelli>::elements[spell].level[geti().magic];
 }
+
+int get_average(ability_s v) {
+	auto total = 0;
+	auto count = 0;
+	for(auto p : creatures) {
+		if(!p->isready() || !p->is(Player))
+			continue;
+		total += p->get(v);
+		count++;
+	}
+	if(!count)
+		return 0;
+	return total / count;
+}
+
+int get_minimal(ability_s v) {
+	auto total = 0;
+	for(auto p : creatures) {
+		if(!p->isready() || !p->is(Player))
+			continue;
+		auto n = p->get(v);
+		if(total < n)
+			continue;
+		total = n;
+	}
+	return total;
+}
+
+int get_maximal(ability_s v) {
+	auto total = 0;
+	for(auto p : creatures) {
+		if(!p->isready() || !p->is(Player))
+			continue;
+		auto n = p->get(v);
+		if(total > n)
+			continue;
+		total = n;
+	}
+	return total;
+}

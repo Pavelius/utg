@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "bsreq.h"
+#include "log.h"
 #include "pushvalue.h"
 #include "questlist.h"
 
@@ -29,4 +30,8 @@ const quest* questlist::find(int index, const quest* pb) const {
 			return pb;
 	}
 	return 0;
+}
+
+void questlist_initialize() {
+	log::readlocfolder(questlist::read, "quests", "*.txt");
 }

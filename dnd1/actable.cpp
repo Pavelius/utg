@@ -4,7 +4,8 @@
 #include "gender.h"
 #include "pushvalue.h"
 #include "speech.h"
-#include "stringlist.h"
+#include "scenery.h"
+#include "stringvar.h"
 
 bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
 bool apply_list(const char* identifier, stringbuilder& sb);
@@ -48,16 +49,20 @@ bool actable::actid(const char* id, const char* suffix, char separator) const {
 	return true;
 }
 
+static void def_identifier(stringbuilder& sb, const char* id) {
+	if(apply_speech(id, sb))
+		return;
+	if(stringvar_identifier(sb, id))
+		return;
+	stringbuilder::defidentifier(sb, id);
+}
+
 static void item_identifier(stringbuilder& sb, const char* id) {
 	if(last_item) {
 		if(apply_action(id, sb, last_item->getname(), Male))
 			return;
 	}
-	if(apply_speech(id, sb))
-		return;
-	if(apply_list(id, sb))
-		return;
-	stringbuilder::defidentifier(sb, id);
+	def_identifier(sb, id);
 }
 
 void item::act(char separator, const char* format, ...) const {
@@ -96,11 +101,7 @@ static void main_act_identifier(stringbuilder& sb, const char* id) {
 		if(apply_action(id, sb, player->getname(), player->gender))
 			return;
 	}
-	if(apply_speech(id, sb))
-		return;
-	if(apply_list(id, sb))
-		return;
-	stringbuilder::defidentifier(sb, id);
+	def_identifier(sb, id);
 }
 
 void printv(char separator, const char* format, const char* format_param) {
@@ -142,3 +143,12 @@ bool printa(const char* id, const char* suffix, char separator) {
 void initialize_str() {
 	stringbuilder::custom = main_act_identifier;
 }
+
+static void get_scenename(stringbuilder& sb) {
+	sb.add(scene->getname());
+}
+
+BSDATA(stringvari) = {
+	{"scenename", get_scenename}
+};
+BSDATAF(stringvari)

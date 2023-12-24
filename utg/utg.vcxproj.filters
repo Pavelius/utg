@@ -288,7 +288,7 @@
     <ClCompile Include="banner.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="strprint.cpp">
+    <ClCompile Include="stringvar.cpp">
       <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="draw_imager.cpp">
@@ -545,7 +545,7 @@
     <ClInclude Include="anymap.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="strprint.h">
+    <ClInclude Include="stringvar.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="tmpfunct.h">

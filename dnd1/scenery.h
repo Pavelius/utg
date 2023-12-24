@@ -5,19 +5,14 @@
 #include "parentable.h"
 #include "spell.h"
 #include "typeable.h"
+#include "variant.h"
 
-enum scene_f : unsigned char {
-	Outdoor,
+struct scenei : nameable {
+	variant		actions;
+	variants	elements;
+	char		encounter_chance;
 };
-
-struct scenefi : nameable {
-};
-struct sceneryi : nameable {
-	flagable<4>	traits;
-	featable	flags;
-	bool		is(scene_f v) const { return traits.is(v); }
-};
-struct scenery : typeable<sceneryi>, parentable<scenery> {
+struct scenery : typeable<scenei>, parentable<scenery> {
 	featable	flags;
 	bool		apply(spell_s id, int level, bool run);
 	void		clear();
@@ -25,7 +20,6 @@ struct scenery : typeable<sceneryi>, parentable<scenery> {
 	bool		haveitems() const;
 	bool		is(feat_s v) const { return flags.is(v); }
 	bool		is(spell_s v) const;
-	bool		is(scene_f v) const { return geti().is(v); }
 	void		set(feat_s v) { flags.set(v); }
 	void		remove(feat_s v) { flags.remove(v); }
 	void		update();

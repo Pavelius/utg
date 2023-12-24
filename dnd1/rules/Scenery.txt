@@ -1,8 +1,12 @@
-#Scenery
+#List
 
-Forest
- traits Outdoor
+AdventureScene
+ elements ItemRepair HuntPrey
+
+#SceneType
+
 Plain
+Forest actions(AdventureScene)
 Desert
 Swamp
 Hills
@@ -10,7 +14,6 @@ Mountain
 River
 Lake
 Sea
-
 Crypt
 Tomb
 Dungeon
@@ -18,7 +21,6 @@ Caverns
 Mine
 Stronghold
 Ruins
-
 SmallRoom
 LargeRoom
 Corridor

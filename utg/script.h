@@ -27,3 +27,5 @@ void script_run(variant v);
 void script_run(const variants& source);
 void script_run(const char* id, int bonus);
 void script_stop();
+
+variants script_body();

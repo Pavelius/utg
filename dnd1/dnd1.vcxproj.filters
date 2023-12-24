@@ -13,6 +13,9 @@
     <Filter Include="speech">
       <UniqueIdentifier>{9024af33-2aa7-4555-8511-e8ed003fa8be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="quest">
+      <UniqueIdentifier>{0577768b-9914-4aca-82b1-165abd792f14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">
@@ -199,12 +202,6 @@
     <Text Include="rules\Items.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\Moves.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\Dungeons.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
@@ -216,9 +213,6 @@
     </Text>
     <Text Include="locale\ru\names\Feats.txt">
       <Filter>locale</Filter>
-    </Text>
-    <Text Include="rules\Actions.txt">
-      <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\names\Monsters.txt">
       <Filter>locale</Filter>
@@ -253,11 +247,14 @@
     <Text Include="locale\ru\speech\Characters.txt">
       <Filter>speech</Filter>
     </Text>
-    <Text Include="rules\Scenery.txt">
-      <Filter>data</Filter>
-    </Text>
     <Text Include="locale\ru\names\Scenery.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\quest\Adventures.txt">
+      <Filter>quest</Filter>
+    </Text>
+    <Text Include="rules\Scenery.txt">
+      <Filter>data</Filter>
     </Text>
   </ItemGroup>
 </Project>

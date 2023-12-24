@@ -209,8 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\Dungeons.txt" />
-    <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\names\Actions.txt" />
     <Text Include="locale\ru\names\Feats.txt" />
     <Text Include="locale\ru\names\Items.txt" />
@@ -219,9 +217,9 @@
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="locale\ru\names\Scenery.txt" />
     <Text Include="locale\ru\names\Spells.txt" />
+    <Text Include="locale\ru\quest\Adventures.txt" />
     <Text Include="locale\ru\speech\Adventures.txt" />
     <Text Include="locale\ru\speech\Characters.txt" />
-    <Text Include="rules\Actions.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Classes.txt" />

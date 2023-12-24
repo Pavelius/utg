@@ -29,8 +29,8 @@ BSDATAC(itemlay, 4096)
 BSDATAC(monsteri, 128)
 BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
+BSDATAC(scenei, 64)
 BSDATAC(scenery, 2048)
-BSDATAC(sceneryi, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -112,15 +112,12 @@ BSMETA(racei) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
-BSMETA(scenefi) = {
+BSMETA(scenei) = {
 	BSREQ(id),
-	{}};
-BSMETA(sceneryi) = {
-	BSREQ(id),
-	BSFLG(traits, scenefi),
+	BSREQ(actions), BSREQ(elements),
 	{}};
 BSMETA(scenery) = {
-	BSREQ(type),
+	BSENM(type, scenei),
 	BSREQ(parent),
 	{}};
 BSMETA(spelli) = {
@@ -154,11 +151,10 @@ BSDATA(varianti) = {
 	{"Organization", VAR(organizationi, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
+	{"SceneType", VAR(scenei, 1), 0, 0},
 	{"Scene", VAR(scenery, 2), 0, 0},
-	{"SceneFlags", VAR(scenefi, 1), 0, 0},
-	{"Scenery", VAR(sceneryi, 1), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
-	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>},
+	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>, fntest<spelli>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

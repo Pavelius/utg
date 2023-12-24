@@ -86,3 +86,10 @@ bool script_allow(const variants& source) {
 	}
 	return true;
 }
+
+variants script_body() {
+	auto s1 = bsdata<variant>::source.indexof(script_begin);
+	if(s1 == -1)
+		return {};
+	return variants(s1, script_end - script_begin);
+}

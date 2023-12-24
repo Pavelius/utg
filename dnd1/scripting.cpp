@@ -50,9 +50,16 @@ template<> void fnscript<randomizeri>(int index, int value) {
 	script_run(single(bsdata<randomizeri>::elements[index].random()));
 }
 
+template<> bool fntest<spelli>(int index, int value) {
+	switch(modifier) {
+	case NoModifier: return spell_effect((spell_s)index, player->get(Level), 0, false);
+	default: return true;
+	}
+}
 template<> void fnscript<spelli>(int index, int value) {
 	switch(modifier) {
 	case Known: player->known_spells.set(index); break;
+	case NoModifier: spell_effect((spell_s)index, player->get(Level), 0, true); break;
 	default: break;
 	}
 }
@@ -524,19 +531,22 @@ static void continue_battle(int bonus) {
 	clear_console();
 }
 
-static void add_options(const char* id) {
-	auto pc = bsdata<listi>::find(id);
-	if(!pc)
-		return;
-	for(auto v : pc->elements) {
-		if(!script_allow(v))
-			continue;
-		an.add(v.getpointer(), v.getname());
+static void add_options(variant source) {
+	if(source.iskind<listi>()) {
+		auto pc = bsdata<listi>::elements + source.value;
+		for(auto v : pc->elements) {
+			if(!script_allow(v))
+				continue;
+			an.add(v.getpointer(), v.getname());
+		}
 	}
 }
 
 static void choose_option() {
-	last_option = an.choose(0);
+	if(an)
+		last_option = an.choose(0);
+	else
+		pause();
 }
 
 static void what_you_do(bool enemy_first_choose) {
@@ -555,21 +565,40 @@ static void what_you_do(bool enemy_first_choose) {
 	}
 }
 
+static void apply_scene_actions(variant v) {
+	if(v.iskind<listi>()) {
+		for(auto e : bsdata<listi>::elements[v.value].elements)
+			apply_scene_actions(e);
+	} else if(v.iskind<script>()) {
+		auto p = bsdata<script>::elements + v.value;
+		if(p->test && p->test(0))
+			an.add(p, getnm(p->id));
+	} else if(v.iskind<spelli>()) {
+		auto p = bsdata<spelli>::elements + v.value;
+		if(spell_effect((spell_s)v.value, player->get(Level), 0, false))
+			an.add(p, p->getname());
+	}
+}
+
+static void apply_scene_actions(int bonus) {
+	if(bonus == 0)
+		apply_scene_actions(scene->geti().actions);
+}
+
 static void apply_scene_spells(int bonus) {
 	if(bonus == 0) {
 		for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
 			if(!player->get(i))
 				continue;
 			auto p = bsdata<spelli>::elements + i;
-			auto n = player->get(Level);
-			if(!player->cast(i, n, false))
+			if(!player->cast(i, false))
 				continue;
 			an.add(p, getnm("CastSpell"), p->getname());
 		}
 	} else {
 		if(bsdata<spelli>::have(last_option)) {
 			auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
-			player->cast(spell, player->get(Level), true);
+			player->cast(spell, true);
 			player->use(spell);
 		}
 	}
@@ -587,9 +616,9 @@ static void apply_option() {
 	apply_scene_spells(1);
 }
 
-static void choose_options(const char* id) {
+void choose_options(variant source) {
 	an.clear();
-	add_options(id);
+	add_options(source);
 	choose_option();
 	apply_option();
 }
@@ -623,7 +652,7 @@ static void combat_round() {
 	}
 }
 
-void combat_mode() {
+void combat_mode(int bonus) {
 	auto push_mode = menu::current_mode;
 	menu::current_mode = "Combat";
 	roll_initiative();
@@ -721,12 +750,28 @@ static bool condition_passed(int bonus) {
 static void heal(int bonus) {
 }
 
+static void for_each_creature(int bonus) {
+	auto source = creatures;
+	pushvalue push(player);
+	variants commands = script_body();
+	for(auto p : source) {
+		player = p;
+		script_run(commands);
+	}
+	script_stop();
+}
+
+static void hunt_prey(int bonus) {
+
+}
+
 BSDATA(script) = {
 	{"AttackCharge", attack_charge, allow_attack_charge},
 	{"AttackMelee", attack_melee, allow_attack_melee},
 	{"AttackRanged", attack_ranged, allow_attack_ranged},
 	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
 	{"ChooseTarget", choose_target, condition_passed},
+	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle, allow_continue_battle},
 	{"FilterAlive", filter_alive, targets_filter},
 	{"FilterBroken", filter_cursed, items_filter},
@@ -734,6 +779,8 @@ BSDATA(script) = {
 	{"FilterIdentified", filter_identified, items_filter},
 	{"FilterYou", filter_you, targets_filter},
 	{"FilterWounded", filter_wounded, targets_filter},
+	{"ForEachCreature", for_each_creature, targets_filter},
+	{"HuntPrey", hunt_prey},
 	{"LoseGame", lose_game, allow_lose_game},
 	{"ReactionRoll", reaction_roll},
 	{"RetreatMelee", retreat_melee, allow_retreat_melee},

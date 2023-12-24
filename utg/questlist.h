@@ -9,3 +9,5 @@ struct questlist {
 	static void		read(const char* id);
 };
 extern questlist* last_questlist;
+
+void questlist_initialize();

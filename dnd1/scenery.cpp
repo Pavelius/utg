@@ -1,31 +1,56 @@
 #include "answers.h"
+#include "actable.h"
 #include "calendar.h"
 #include "creature.h"
 #include "draw.h"
 #include "itemlay.h"
-#include "actable.h"
-#include "scenery.h"
 #include "ongoing.h"
+#include "roll.h"
+#include "scenery.h"
 
 scenery* scene;
-static scenery* next_scene;
-static spellf scenery_spells;
+static scenery*	next_scene;
+static spellf	scenery_spells;
+static int		current_milles_distance;
+static bool		party_surprised, monster_surprised;
 
-BSDATA(scenefi) = {
-	{"Outdoor"},
-};
-assert_enum(scenefi, Outdoor)
+void choose_options(variant source);
+
+static monsteri* get_random_monster() {
+}
+
+static void print(const char* id) {
+	printa(scene->geti().id, id);
+}
+
+static void scene_adventure() {
+	print("Adventure");
+}
+
+static void check_random_encounter() {
+	if(draw::isnext())
+		return;
+	// Random encounter roll
+	if(d100() >= scene->geti().encounter_chance)
+		return;
+	// Surprise initialize
+	party_surprised = false;
+	monster_surprised = false;
+}
 
 static void play_scene() {
 	scene = next_scene; next_scene = 0;
 	answers::header = scene->getname();
 	answers::resid = scene->geti().getid();
+	if(printa(scene->geti().getid(), "Enter"))
+		pause();
 	while(!draw::isnext()) {
-		auto id = scene->geti().getid();
-		printa(id, "Adventure");
-		printa(id, "FindCamp");
-		printa(id, "Camp");
 		scene->update();
+		scene_adventure();
+		check_random_encounter();
+		//printa(id, "FindCamp");
+		//printa(id, "Camp");
+		choose_options(scene->geti().actions);
 		pause();
 	}
 }
@@ -42,7 +67,6 @@ static void update_spells() {
 void scenery::clear() {
 	memset(this, 0, sizeof(*this));
 	parent = 0xFFFF;
-	type = 0xFFFF;
 }
 
 bool scenery::is(spell_s v) const {
@@ -68,6 +92,6 @@ void scenery::update() {
 void add_scene(const char* id) {
 	scene = bsdata<scenery>::add();
 	scene->clear();
-	scene->type = getbsi(bsdata<sceneryi>::find(id));
-	scene->flags = scene->geti().flags;
+	scene->type = getbsi(bsdata<scenei>::find(id));
+	//scene->flags = scene->geti().flags;
 }

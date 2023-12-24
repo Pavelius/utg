@@ -50,3 +50,4 @@ extern spell_s last_spell;
 extern int last_level;
 
 bool spell_effect(spell_s spell, int level, range_s range, const interval& target, const char* suffix, bool run);
+bool spell_effect(spell_s spell, int level, const char* suffix, bool run);

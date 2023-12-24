@@ -351,9 +351,14 @@ bool spell_effect(spell_s spell, int level, range_s range, const interval& targe
 	}
 }
 
-bool creature::cast(spell_s spell, int level, bool run) {
+bool spell_effect(spell_s spell, int level, const char* suffix, bool run) {
 	auto& ei = bsdata<spelli>::elements[spell];
-	return spell_effect(spell, level, ei.range, ei.targets, "Cast", run);
+	return spell_effect(spell, player->get(Level), ei.range, ei.targets, suffix, run);
+}
+
+bool creature::cast(spell_s spell, bool run) {
+	auto& ei = bsdata<spelli>::elements[spell];
+	return spell_effect(spell, get(Level), ei.range, ei.targets, "Cast", run);
 }
 
 void creature::use(spell_s spell) {
