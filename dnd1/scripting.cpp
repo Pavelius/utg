@@ -22,10 +22,18 @@ static void* last_option;
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
+static int getbonus(int bonus) {
+	switch(bonus) {
+	case 101: return last_roll;
+	case -101: return -last_roll;
+	default: return bonus;
+	}
+}
+
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
-	case Permanent: player->basic.abilities[index] += value; break;
-	default: player->abilities[index] += value; break;
+	case Permanent: player->basic.abilities[index] += getbonus(value); break;
+	default: player->abilities[index] += getbonus(value); break;
 	}
 }
 
@@ -106,16 +114,6 @@ static bool is_melee_fight() {
 		if(!feat)
 			feat = t;
 		else if(feat != t)
-			return true;
-	}
-	return false;
-}
-
-static bool have_feats(feat_s v) {
-	for(auto p : creatures) {
-		if(!p->isready())
-			continue;
-		if(p->is(v))
 			return true;
 	}
 	return false;
@@ -762,17 +760,121 @@ static void for_each_creature(int bonus) {
 }
 
 static void hunt_prey(int bonus) {
+}
 
+static gender_s random_gender() {
+	if(d100() < 40)
+		return Female;
+	return Male;
+}
+
+static int aligment_chance[] = {-1, 0, 1};
+
+static int random_alignment() {
+	return maprnd(aligment_chance);
+}
+
+static const classi* random_class(const char* id) {
+	variant v = single(id);
+	if(v.iskind<classi>())
+		return bsdata<classi>::elements + v.value;
+	return 0;
+}
+
+static int random_morale(int alignment) {
+	switch(alignment) {
+	case -1: return xrand(-30, -10);
+	case 1: return xrand(10, 30);
+	default: return xrand(-9, 9);
+	}
+}
+
+static void add_character(const classi* pc, int level, int alignment, creature* leader = 0) {
+	if(!pc)
+		return;
+	add_creature(pc, random_gender(), level);
+	player->basic.abilities[Morale] = random_morale(alignment);
+	player->setleader(leader);
+}
+
+static void add_followers(const classi* pc, int alignment, interval count, interval level) {
+	auto n = count.roll();
+	auto leader = player;
+	pushvalue push_player(player);
+	for(auto i = 0; i < n; i++)
+		add_character(pc, level.roll(), alignment, leader);
+}
+
+static void add_followers(const char* class_id, int alignment, interval count, interval level) {
+	auto n = count.roll();
+	auto leader = player;
+	pushvalue push_player(player);
+	for(auto i = 0; i < n; i++)
+		add_character(random_class(class_id), level.roll(), alignment, leader);
+}
+
+static void cleric_high_level(int bonus) {
+	auto cleric_class = bsdata<classi>::find("Cleric");
+	auto fighter_class = bsdata<classi>::find("Fighter");
+	if(!cleric_class || !fighter_class)
+		return;
+	pushvalue push(player);
+	auto alignment = random_alignment();
+	add_character(cleric_class, d6() + 6, alignment);
+	if(!player)
+		return;
+	add_followers(cleric_class, alignment, {1, 4}, {2, 5});
+	add_followers(fighter_class, alignment, {1, 3}, {1, 6});
+}
+
+static void fighter_high_level(int bonus) {
+	auto fighter_class = bsdata<classi>::find("Fighter");
+	if(!fighter_class)
+		return;
+	pushvalue push(player);
+	auto alignment = random_alignment();
+	add_character(fighter_class, d4() + 6, alignment);
+	if(!player)
+		return;
+	add_followers("RandomClass", alignment, {2, 8}, {3, 6});
+}
+
+static void magic_user_high_level(int bonus) {
+	auto magic_user_class = bsdata<classi>::find("MagicUser");
+	auto fighter_class = bsdata<classi>::find("Fighter");
+	if(!magic_user_class || !fighter_class)
+		return;
+	pushvalue push(player);
+	auto alignment = random_alignment();
+	add_character(magic_user_class, d4() + 6, alignment);
+	if(!player)
+		return;
+	add_followers(magic_user_class, alignment, {1, 4}, {1, 3});
+	add_followers(fighter_class, alignment, {1, 4}, {2, 5});
+}
+
+static void adventurers_basic(int bonus) {
+	pushvalue push(player); player = 0;
+	add_followers("RandomClass", random_alignment(), {5, 8}, {1, 3});
+}
+
+static void adventurers_expert(int bonus) {
+	pushvalue push(player); player = 0;
+	add_followers("RandomClass", random_alignment(), {4, 9}, {3, 8});
 }
 
 BSDATA(script) = {
+	{"AdventurersBasic", adventurers_basic},
+	{"AdventurersExpert", adventurers_expert},
 	{"AttackCharge", attack_charge, allow_attack_charge},
 	{"AttackMelee", attack_melee, allow_attack_melee},
 	{"AttackRanged", attack_ranged, allow_attack_ranged},
 	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
 	{"ChooseTarget", choose_target, condition_passed},
+	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle, allow_continue_battle},
+	{"FighterHightLevel", fighter_high_level},
 	{"FilterAlive", filter_alive, targets_filter},
 	{"FilterBroken", filter_cursed, items_filter},
 	{"FilterCursed", filter_cursed, items_filter},
@@ -782,6 +884,7 @@ BSDATA(script) = {
 	{"ForEachCreature", for_each_creature, targets_filter},
 	{"HuntPrey", hunt_prey},
 	{"LoseGame", lose_game, allow_lose_game},
+	{"MagicUserHightLevel", magic_user_high_level},
 	{"ReactionRoll", reaction_roll},
 	{"RetreatMelee", retreat_melee, allow_retreat_melee},
 	{"RunAway", run_away, allow_run_away},

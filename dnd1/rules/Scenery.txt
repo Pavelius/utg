@@ -6,7 +6,7 @@ AdventureScene
 #SceneType
 
 Plain
-Forest actions(AdventureScene)
+Forest actions(AdventureScene) encounter_chance(20) encounter(WildernessGroup)
 Desert
 Swamp
 Hills

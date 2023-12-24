@@ -7,6 +7,7 @@ BSDATA(feati) = {
 	{"PetrifyingGaze"},
 	{"PoisonImmunity"},
 	{"StrenghtDrain"},
+	{"Stampede"},
 	{"SunSensitive"},
 	{"Slow"},
 	{"Small"},

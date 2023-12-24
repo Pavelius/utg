@@ -66,6 +66,9 @@ BSMETA(durationi) = {
 BSMETA(feati) = {
 	BSREQ(id),
 	{}};
+BSMETA(groupi) = {
+	BSREQ(id),
+	{}};
 BSMETA(interval) = {
 	BSREQ(min), BSREQ(max),
 	{}};
@@ -115,6 +118,8 @@ BSMETA(rangei) = {
 BSMETA(scenei) = {
 	BSREQ(id),
 	BSREQ(actions), BSREQ(elements),
+	BSREQ(encounter_chance),
+	BSENM(encounter, groupi),
 	{}};
 BSMETA(scenery) = {
 	BSENM(type, scenei),

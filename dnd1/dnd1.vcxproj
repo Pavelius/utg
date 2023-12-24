@@ -151,6 +151,7 @@
     <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
+    <ClInclude Include="alignment.h" />
     <ClInclude Include="attackable.h" />
     <ClInclude Include="calendar.h" />
     <ClInclude Include="class.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="damage.h" />
     <ClInclude Include="duration.h" />
     <ClInclude Include="feat.h" />
+    <ClInclude Include="group.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="itemlay.h" />
     <ClInclude Include="modifier.h" />
@@ -184,6 +186,7 @@
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creaturea.cpp" />
     <ClCompile Include="duration.cpp" />
+    <ClCompile Include="group.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="item.cpp" />

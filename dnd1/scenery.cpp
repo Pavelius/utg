@@ -5,18 +5,42 @@
 #include "draw.h"
 #include "itemlay.h"
 #include "ongoing.h"
+#include "randomizer.h"
 #include "roll.h"
 #include "scenery.h"
+#include "script.h"
 
 scenery* scene;
-static scenery*	next_scene;
-static spellf	scenery_spells;
-static int		current_milles_distance;
-static bool		party_surprised, monster_surprised;
+static scenery*		next_scene;
+static spellf		scenery_spells;
+static int			current_milles_distance;
+static bool			party_surprised, monster_surprised;
 
 void choose_options(variant source);
 
-static monsteri* get_random_monster() {
+bool have_feats(feat_s v, bool keep) {
+	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
+		if(p->is(v) == keep)
+			return true;
+	}
+	return false;
+}
+
+static bool random_monsters_setup() {
+	encountered_monster = 0;
+	variant v = single(stw(scene->geti().id, "EncounterTable"));
+	if(!v)
+		return false;
+	if(v.iskind<script>())
+		bsdata<script>::elements[v.value].proc(0);
+	else if(v.iskind<monsteri>())
+		encountered_monster = bsdata<monsteri>::elements + v.value;
+	if(encountered_monster) {
+		auto count = encountered_monster->getcount(WildernessGroup);
+	}
+	return have_feats(Player, false);
 }
 
 static void print(const char* id) {
@@ -31,9 +55,10 @@ static void check_random_encounter() {
 	if(draw::isnext())
 		return;
 	// Random encounter roll
-	if(d100() >= scene->geti().encounter_chance)
+	//if(d100() >= scene->geti().encounter_chance)
+	//	return;
+	if(!random_monsters_setup())
 		return;
-	// Surprise initialize
 	party_surprised = false;
 	monster_surprised = false;
 }

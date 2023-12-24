@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nameable.h"
+#include "group.h"
 #include "feat.h"
 #include "parentable.h"
 #include "spell.h"
@@ -10,6 +11,7 @@
 struct scenei : nameable {
 	variant		actions;
 	variants	elements;
+	group_s		encounter;
 	char		encounter_chance;
 };
 struct scenery : typeable<scenei>, parentable<scenery> {
@@ -27,3 +29,5 @@ struct scenery : typeable<scenei>, parentable<scenery> {
 extern scenery* scene;
 
 void add_scene(const char* id);
+
+bool have_feats(feat_s v, bool keep = true);
