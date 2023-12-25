@@ -25,9 +25,8 @@ class item : public typeable<itemi, unsigned char> {
 		struct {
 			unsigned char identified : 1;
 			unsigned char identified_magic : 1;
-			unsigned char cursed : 1;
-			unsigned char broken : 1;
-			unsigned char power : 4;
+			unsigned char broken : 2;
+			unsigned char power : 4; // 0 - is not magical
 		};
 	};
 	unsigned short count;
@@ -53,9 +52,9 @@ public:
 	void		getstatus(stringbuilder& sb) const;
 	int			getweight() const;
 	bool		isallowspell() const;
-	bool		isbroken() const { return broken != 0; }
+	bool		isbroken() const { return broken >= 3; }
 	bool		iscountable() const { return true; }
-	bool		iscursed() const { return cursed != 0; }
+	bool		iscursed() const { return getpower().counter < 0; }
 	bool		isidentified() const { return identified != 0; }
 	bool		ismagic() const { return power != 0; }
 	bool		isready() const;

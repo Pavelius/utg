@@ -54,7 +54,9 @@ BSDATA(spelli) = {
 	{"FlameBlade"},
 	{"AntiMagicShell"},
 	{"DeathSpell"},
-	{"ItemRepair"}, // Some effective actions
+	{"AnkhegAcidSquirt"}, // Some effective actions
+	{"BeetleOilOfPain"},
+	{"ItemRepair"},
 	{"ShrinkSize"}, // Special spell effects
 	{"GrowthSize"},
 	{"GaseousForm"},
@@ -77,6 +79,14 @@ void spell_initialize() {
 static void dispelling(const spelli::spella& source, variant owner) {
 	for(auto v : source)
 		dispell(owner, v);
+}
+
+static bool allow_dispelling(const spelli::spella& source, const creature* player) {
+	for(auto v : source) {
+		if(player->is(v))
+			return true;
+	}
+	return false;
 }
 
 static bool cast_on_target(bool run, int maximum_count, bool random, bool use_hit_dices) {
@@ -188,7 +198,7 @@ bool creature::apply(spell_s id, int level, bool run) {
 	case CureLightWound:
 		if(is(Unholy))
 			return false;
-		if(!iswounded())
+		if(!iswounded() && !allow_dispelling(ei.dispell, this))
 			return false;
 		if(run)
 			heal(count);

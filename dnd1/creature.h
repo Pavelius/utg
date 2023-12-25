@@ -1,4 +1,5 @@
 #include "actable.h"
+#include "alignment.h"
 #include "attackable.h"
 #include "avatarable.h"
 #include "monster.h"
@@ -10,6 +11,7 @@
 
 struct creature : actable, attackable, spellable, statable, avatarable, wearable {
 	unsigned short	leader;
+	alignment_s		alignment;
 	statable		basic;
 	spellable		prepared;
 	spellf			active_spells, known_spells;

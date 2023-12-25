@@ -16,6 +16,7 @@ BSDATA(durationi) = {
 	{"Hour"},
 	{"Hour2"},
 	{"Hour8"},
+	{"Day1"},
 	{"Concentration"},
 	{"PermanentDuration"},
 };

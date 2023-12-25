@@ -15,9 +15,10 @@ Stag wilderness(3 30)
  feats Level+3 AC+2 Stampede
  attacks count(1) damage(1 6)
 
-Bandit dungeon(1 8) wilderness(3 10) treasure("AU")
+Bandit dungeon(1 8) wilderness(3 30) treasure("AU")
  feats Level+1 AC+3
-Berserker
+Berserker dungeon(1 6) wilderness(3 30) treasure("BP")
+ feats Level+1 AC+2 Constitution+3 BattleRage Neutral
 Brigand
 Merchant
 Noble
@@ -25,24 +26,31 @@ Nomad
 Trader
 
 Ankheg dungeon(1 6) wilderness(1 6) treasure("C")
- feats RandomLevel3+8 AC+7 Burrowing
+ feats RandomLevel3+8 AC+7 Intellect-10 Movement+4 Burrowing
  attacks id(Bite) count(1) damage(3 18) hit(AcidDamage)
- attacks id(AcidSquirt) count(1) damage(4 32) use_per_day(1)
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
- feats Level+6 AC+5
+ feats Level+6 AC+5 Intellect-10 Movement+2
  attacks id(Bite) count(1) damage(1 10)
  attacks id(PetrificationGaze) count(1)
 BearGrizzly dungeon(1) wilderness(1 4) treasure("U")
- feats Level+5 AC+3
- attacks id(Claws) count(2) damage(1 4)
+ feats Level+5 AC+3 Intellect-10 Neutral
+ attacks id(Claws) count(2) damage(1 4) hit(BearHug)
  attacks id(Bite) count(1) damage(1 8)
 BeetleFire dungeon(1 8) wilderness(2 12)
- feats Level+1 AC+5 FireGland+2
+ feats Level+1 AC+5 Intellect-10 Constitution+6 FireGland+2 Neutral
  attacks id(Bite) count(1) damage(2 8)
-BeetleOil
-BeetleTiger
-BinkingDog
-Boar
+BeetleOil dungeon(1 8) wilderness(2 12)
+ feats Level+2 AC+5 Intellect-10 Neutral Neutral
+ attacks id(Bite) count(1) damage(1 6) hit(BeetleOilOfPain)
+BeetleTiger dungeon(1 6) wilderness(2 8)
+ feats Level+3 AC+5 Intellect-10 Constitution+6 Movement+5 Neutral
+ attacks id(Bite) count(1) damage(2 12)
+BinkingDog dungeon(1 6) wilderness(1 6) treasure("T")
+ feats Level+4 AC+4 Movement+4 Intellect+4 Morale+6 Blink Lawful
+ attacks id(Bite) count(1) damage(1 6)
+Boar dungeon(1 6) wilderness(1 6)
+ feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral
+ attacks id(Tusk) count(1) damage(2 4)
 Bulette
 CatPanther
 CatTiger

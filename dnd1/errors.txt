@@ -1,3 +1,8 @@
 ﻿In file `rules/Monsters.txt`:
- Line 33: Can't find variant `Petrification`
- Line 34: Can't find variant `Petrification`
+ Line 21: Can't find variant `Neutral`
+ Line 36: Can't find variant `Neutral`
+ Line 40: Can't find variant `Neutral`
+ Line 43: Can't find variant `Neutral`
+ Line 43: Can't find variant `Neutral`
+ Line 46: Can't find variant `Neutral`
+ Line 49: Can't find variant `Lawful`

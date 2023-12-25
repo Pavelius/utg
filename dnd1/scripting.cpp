@@ -36,6 +36,10 @@ template<> void fnscript<abilityi>(int index, int value) {
 	}
 }
 
+template<> void fnscript<alignmenti>(int index, int value) {
+	player->alignment = (alignment_s)index;
+}
+
 template<> void fnscript<itemi>(int index, int value) {
 	auto pi = bsdata<itemi>::elements + index;
 	item it(pi);
@@ -890,6 +894,9 @@ static void acid_damage(int bonus) {
 	opponent->set(Corrosed);
 }
 
+static void bear_hug(int bonus) {
+}
+
 BSDATA(script) = {
 	{"AcidDamage", acid_damage},
 	{"AdventurersBasic", adventurers_basic},
@@ -898,6 +905,7 @@ BSDATA(script) = {
 	{"AttackMelee", attack_melee, allow_attack_melee},
 	{"AttackRanged", attack_ranged, allow_attack_ranged},
 	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
+	{"BearHug", bear_hug},
 	{"ChooseTarget", choose_target, condition_passed},
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},

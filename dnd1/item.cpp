@@ -46,12 +46,12 @@ item::item(const itemi* pi) {
 }
 
 bool item::damage() {
-	if(d100() < 50)
-		return false;
-	if(getcount() > 1)
+	if(broken < 3)
+		broken++;
+	else if(getcount() > 1)
 		setcount(getcount() - 1);
-	else if(!broken)
-		broken = 1;
+	else
+		return false;
 	return true;
 }
 
@@ -98,7 +98,7 @@ void item::addname(stringbuilder& sb) const {
 	auto name = getnm(geti().id);
 	if(broken)
 		sb.adds(getnm("Broken"));
-	if(identified && identified_magic) {
+	if(identified) {
 		if(iscursed())
 			sb.adds(getnm("Cursed"));
 	} else if(identified_magic) {

@@ -292,6 +292,10 @@ void creature::update_finish() {
 	}
 	if(is(SunSensitive) && scene->is(SunSensitive))
 		abilities[MeleeToHit] -= 2;
+	if(is(BeetleOilOfPain)) {
+		abilities[MeleeToHit] -= 2;
+		abilities[RangedToHit] -= 2;
+	}
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];

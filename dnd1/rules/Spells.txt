@@ -1,7 +1,7 @@
 #Spell
 
 CauseFear level(1) duration(Turn2) range(OneEnemy) save_negates(SaveSpells) reversed(RemoveFear)
-CauseLightWound level(1) range(OneEnemy) count(2 7) reversed(CureLightWound)
+CauseLightWound level(1) range(OneEnemy) count(2 7) reversed(CureLightWound) dispell(BeetleOilOfPain)
 CureLightWound level(1) range(CasterOrAlly) count(2 7)
 Darkness level(1) duration(Turn12) range(Enviroment) reversed(Light)
 DetectEvil level(1) range(AllAllyItems) targets(1)
@@ -15,4 +15,6 @@ ResistCold level(1) range(AllAlly)
 
 DeathSpell level(6) range(AllEnemiesHD) targets(4 24) save_negates(SaveDeath)
 
+AnkhegAcidSquirt range(OneEnemy) count(4 32) save_halves(SaveBreathWeapon)
+BeetleOilOfPain range(OneEnemy) duration(Day1)
 ItemRepair range(AllAllyItems) targets(1)

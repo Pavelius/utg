@@ -181,6 +181,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="actable.cpp" />
+    <ClCompile Include="alignment.cpp" />
     <ClCompile Include="attackable.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="class.cpp" />

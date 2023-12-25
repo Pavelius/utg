@@ -17,7 +17,7 @@ enum spell_s : unsigned char {
 	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
 	AntiMagicShell, DeathSpell,
 	LastSpell = DeathSpell,
-	ItemRepair,
+	AnkhegAcidSquirt, BeetleOilOfPain, ItemRepair,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 typedef flagable<8> spellf;

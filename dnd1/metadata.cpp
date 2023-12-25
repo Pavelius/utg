@@ -1,5 +1,6 @@
 #include "action.h"
 #include "advance.h"
+#include "alignment.h"
 #include "bsreq.h"
 #include "creature.h"
 #include "gender.h"
@@ -41,6 +42,9 @@ BSMETA(actioni) = {
 BSMETA(advancei) = {
 	BSREQ(type), BSREQ(level), BSREQ(id),
 	BSREQ(elements),
+	{}};
+BSMETA(alignmenti) = {
+	BSREQ(id),
 	{}};
 BSMETA(attacki) = {
 	BSREQ(id),
@@ -148,6 +152,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Action", VAR(actioni, 1)},
 	{"Advance", VAR(advancei, 3)},
+	{"Alignment", VAR(alignmenti, 1), 0, 0, fnscript<alignmenti>},
 	{"Class", VAR(classi, 1)},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
 	{"Feat", VAR(feati, 1), 0, 0, fnscript<feati>},

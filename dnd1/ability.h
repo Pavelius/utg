@@ -7,7 +7,7 @@ enum ability_s : unsigned char {
 	MeleeToHit, MeleeDamage, RangedToHit, RangedDamage,
 	AC, ACRanged, Level, Morale,
 	HPMax,
-	Speed, Search,
+	Speed, Movement, Search,
 	ClimbWalls, FindOrRemoveTraps, HearNoise, HideInShadows, MoveSilently, OpenLocks, PickPockets,
 	HideUndergrowth,
 	SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,

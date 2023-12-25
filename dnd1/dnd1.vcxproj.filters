@@ -102,10 +102,10 @@
     <ClInclude Include="group.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="alignment.h">
+    <ClInclude Include="groupsize.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="groupsize.h">
+    <ClInclude Include="alignment.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -204,6 +204,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="groupsize.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="alignment.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
