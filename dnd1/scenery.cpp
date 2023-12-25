@@ -5,18 +5,38 @@
 #include "draw.h"
 #include "itemlay.h"
 #include "ongoing.h"
+#include "pushvalue.h"
 #include "randomizer.h"
 #include "roll.h"
 #include "scenery.h"
 #include "script.h"
+#include "speech.h"
 
 scenery* scene;
 static scenery*		next_scene;
 static spellf		scenery_spells;
-static int			current_milles_distance;
+static int			current_milles_distance, encountered_count;
 static bool			party_surprised, monster_surprised;
 
 void choose_options(variant source);
+
+static int group_size(int count) {
+	if(count <= 1)
+		return 0;
+	else if(count <= 3)
+		return 1;
+	else if(count <= 7)
+		return 2;
+	else
+		return 3;
+}
+
+static const char* phrase(const char* id, int param) {
+	auto p = speech_find(id);
+	if(!p)
+		return 0;
+	return speech_get(p, param);
+}
 
 bool have_feats(feat_s v, bool keep) {
 	for(auto p : creatures) {
@@ -28,6 +48,22 @@ bool have_feats(feat_s v, bool keep) {
 	return false;
 }
 
+static void add_monster(const monsteri* pc) {
+	pushvalue push(player);
+	add_creature(pc);
+	if(player) {
+		creatures.add(player);
+		encountered.add(player);
+	}
+}
+
+static void add_monsters() {
+	encountered_count = encountered_monster->getcount(WildernessGroup);
+	for(auto i = 0; i < encountered_count; i++)
+		add_monster(encountered_monster);
+	script_run(encountered_monster->wilderness_group);
+}
+
 static bool random_monsters_setup() {
 	encountered_monster = 0;
 	variant v = single(stw(scene->geti().id, "EncounterTable"));
@@ -37,9 +73,8 @@ static bool random_monsters_setup() {
 		bsdata<script>::elements[v.value].proc(0);
 	else if(v.iskind<monsteri>())
 		encountered_monster = bsdata<monsteri>::elements + v.value;
-	if(encountered_monster) {
-		auto count = encountered_monster->getcount(WildernessGroup);
-	}
+	if(encountered_monster)
+		add_monsters();
 	return have_feats(Player, false);
 }
 
@@ -49,6 +84,10 @@ static void print(const char* id) {
 
 static void scene_adventure() {
 	print("Adventure");
+}
+
+static void look_monsters() {
+	printn(speech_get("LookGroup"), phrase("GroupSize", group_size(encountered_count)));
 }
 
 static void check_random_encounter() {
@@ -61,6 +100,7 @@ static void check_random_encounter() {
 		return;
 	party_surprised = false;
 	monster_surprised = false;
+	look_monsters();
 }
 
 static void play_scene() {

@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-HuntPrey: Define translate
+﻿In file `rules/Monsters.txt`:
+ Line 29: Can't find variant `AcidDamage`

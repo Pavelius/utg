@@ -5,32 +5,6 @@ OrcishWeapons
 
 #Monster
 
-Bandit
-Berserker
-Brigand
-Merchant
-Noble
-Nomad
-Trader
-
-BearGrizzly
-Boar
-CatPanther
-CatTiger
-DogWild
-FrogMutant
-FrogPoisonous
-Hawk
-LizardGecko
-LizardTuatara
-SnakePitViper
-SpiderCrab
-SpiderPhase
-ToadPoisonous
-Unicorn
-Wolf
-WolfDire
-
 Goat wilderness(3 30)
  feats Level+1 AC+2 Stampede
  attacks count(1) damage(1 4)
@@ -41,29 +15,158 @@ Stag wilderness(3 30)
  feats Level+3 AC+2 Stampede
  attacks count(1) damage(1 6)
 
+Bandit dungeon(1 8) wilderness(3 10) treasure("AU")
+ feats Level+1 AC+3
+Berserker
+Brigand
+Merchant
+Noble
+Nomad
+Trader
+
+Ankheg dungeon(1 6) wilderness(1 6) treasure("C")
+ feats RandomLevel3+8 AC+7 Burrowing
+ attacks count(1) damage(3 18) use(AcidDamage)
+Basilisk
+BearGrizzly
+BeetleFire
+BeetleOil
+BeetleTiger
+BinkingDog
+Boar
+Bulette
+CatPanther
+CatTiger
+Catoblepas
+Centaur
+CentipedeGiant
+Chimera
+Cockatrice
+Couatl
+DogWild
+DragonBlack
+DragonBlue
+DragonBrass
+DragonBronze
+DragonCooper
+DragonGold
+DragonGreen
+DragonRed
+DragonSilver
+DragonWhite
+DriverAnt
+FlainSnail
+FrogMutant
+FrogPoisonous
+Hydra
+Gargoyle
+GasSpore
+Ghost
+GibberlingMouther
+Gorgon
+Griffon
+Jackalwere
+Hawk
+HawkGiant
+Hipogriff
+KillerBee
+Lamia
+Leucrocotta
+LizardGecko
+LizardTuatara
+Manticore
+MantisGiant
+Medusa
+Nightmare
+Otyugh
+OwlBear
+Pegasus
+Peryton
+Rhadogessa
+Phoenix
+Pixie
+PseudoDragon
+RobberFly
+RocSmall
+Roper
+RotGrub
+ScorpionGiant
+ShamblingMound
+SlitheringTracker
+SlugGiant
+SnakePitViper
+Sphinx
+SpiderAranea
+SpiderBalackWidow
+SpiderCrab
+SpiderPhase
+SpiderTarantella
+Sprite
+Stirge
+ToadPoisonous
+Treant
+Unicorn
+VioletFungus
+WarpBeast
+WaspGiant
+Werebear
+Wereboar
+Wererat
+Weretiger
+Werewolf
+WillOWisp
+Wolf
+WolfDire
+Wyvern
+
+Brownie
+Bugbear
+Cyclops
+Dryad
+ElfFolk
+Ettin
+GiantHill
+Gnoll
+Goblin
+Gullygug
+HagBlack
+Hobgoblin
+Leprechaunt
+Mutoid
+Orc dungeon(2 8) wilderness(10 60) treasure("D")
+ feats Level+1 AC+3 SunSensitive OrcishWeapons
+Orge
+Satyr
+Thoul
+Troll
+
 Skeleton dungeon(3 12) wilderness(3 30)
  feats Level+1 AC+2 Undead
  attacks count(1) damage(1 6)
 Zombie dungeon(2 8) wilderness(4 24)
  feats Level+2 AC+1 Undead Slow
 
-Orc dungeon(2 8) wilderness(10 60) treasure("D")
- feats Level+1 AC+3 SunSensitive OrcishWeapons
-
 #Random
 
 HerdAnimal
  chance Goat+2 Stag+2 Moose
 
+AnyDragon
+ chance Chimera DragonBlack DragonBlue DragonBrass DragonBronze DragonCooper DragonGold DragonGreen DragonRed DragonSilver DragonWhite Hydra+2 PseudoDragon Wyvern Basilisk
+AnyFlyer
+ chance Cockatrice Couatl Gargoyle Griffon HawkGiant Hipogriff KillerBee MantisGiant Nightmare Pegasus Peryton Phoenix Pixie PseudoDragon RobberFly RocSmall Sphinx Sprite Stirge WaspGiant
+AnyInsect
+ chance Ankheg BeetleFire BeetleOil BeetleTiger CentipedeGiant DriverAnt+2 FlainSnail KillerBee MantisGiant Rhadogessa RobberFly RotGrub ScorpionGiant SlugGiant SpiderBalackWidow SpiderCrab SpiderPhase SpiderTarantella WaspGiant
+AnyUnusual
+ chance Basilisk BinkingDog Bulette Catoblepas Centaur Gorgon Jackalwere Lamia Leucrocotta Werebear Wereboar Wererat Weretiger Werewolf Medusa Otyugh Roper ShamblingMound Treant WarpBeast
+
 ForestAnimal
  chance BearGrizzly Boar CatPanther CatTiger DogWild FrogMutant FrogPoisonous Hawk HerdAnimal LizardGecko LizardTuatara SnakePitViper SpiderCrab+2 SpiderPhase ToadPoisonous Unicorn Wolf+2 WolfDire
-ForestDragon
-ForestFlyer
 ForestHuman
  chance Bandit+3 AdventurersBasic+2 Berserker+2 Brigand+2 AdventurersExpert+2 ClericHightLevel FighterHightLevel MagicUserHightLevel Merchant+3 Noble+2 Nomad+2 Trader
 ForestHumanoid
-ForestInsect
+ chance Brownie Bugbear Cyclops Dryad ElfFolk Ettin GiantHill Gnoll Goblin Gullygug HagBlack Hobgoblin Leprechaunt Mutoid Orge+2 Orc Satyr Thoul Troll
 ForestMonster
-ForestUnusual
+ chance Catoblepas Centaur Cockatrice GasSpore Ghost GibberlingMouther Manticore Otyugh OwlBear Peryton PseudoDragon Roper ShamblingMound SlitheringTracker SpiderAranea Treant VioletFungus WillOWisp Wyvern
 ForestEncounterTable
- chance ForestAnimal ForestDragon ForestFlyer ForestHuman ForestHumanoid ForestInsect ForestMonster ForestUnusual
+ chance ForestAnimal AnyDragon AnyFlyer ForestHuman ForestHumanoid AnyInsect ForestMonster AnyUnusual

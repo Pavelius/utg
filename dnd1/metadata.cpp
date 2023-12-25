@@ -45,6 +45,7 @@ BSMETA(advancei) = {
 BSMETA(attacki) = {
 	BSREQ(count),
 	BSREQ(damage),
+	BSREQ(use),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),
@@ -91,9 +92,10 @@ BSMETA(monsteri) = {
 	BSREQ(feats),
 	BSREQ(dungeon),
 	BSREQ(wilderness),
+	BSREQ(dungeon_group), BSREQ(dungeon_lair),
+	BSREQ(wilderness_group), BSREQ(wilderness_lair),
 	BSREQ(attacks),
 	BSREQ(origin),
-	BSREQ(basic),
 	BSREQ(treasure),
 	{}};
 BSMETA(organizationi) = {

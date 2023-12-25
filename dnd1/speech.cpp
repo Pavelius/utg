@@ -6,7 +6,7 @@
 
 using namespace log;
 
-struct speechv2 {
+struct speech {
 	struct element {
 		const char*	name;
 	};
@@ -15,12 +15,14 @@ struct speechv2 {
 	elementa	source;
 };
 
-BSDATAD(speechv2::element)
-BSDATAC(speechv2, 1024)
+BSDATAD(speech::element)
+BSDATAC(speech, 1024)
 
-BSMETA(speechv2) = {
+BSMETA(speech) = {
 	BSREQ(id),
 	{}};
+
+unsigned char* speech_params;
 
 void speech_read(const char* url) {
 	auto p = log::read(url);
@@ -32,59 +34,67 @@ void speech_read(const char* url) {
 		if(!checksym(p, '#'))
 			break;
 		p = readidn(p + 1, sb);
-		auto pr = bsdata<speechv2>::add();
+		auto pr = bsdata<speech>::add();
 		pr->id = szdup(temp);
 		if(!checksym(p, '\n'))
 			break;
 		p = skipwscr(p);
-		auto psb = bsdata<speechv2::element>::source.count;
+		auto psb = bsdata<speech::element>::source.count;
 		while(allowparse && *p && *p != '#') {
 			sb.clear();
 			p = sb.psstrlf(skipwscr(p));
 			p = skipwscr(p);
-			speechv2::element e = {szdup(temp)};
-			bsdata<speechv2::element>::source.add(&e);
+			speech::element e = {szdup(temp)};
+			bsdata<speech::element>::source.add(&e);
 		}
-		if(psb != bsdata<speechv2::element>::source.count)
-			pr->source.set((speechv2::element*)bsdata<speechv2::element>::source.ptr(psb), bsdata<speechv2::element>::source.count - psb);
+		if(psb != bsdata<speech::element>::source.count)
+			pr->source.set((speech::element*)bsdata<speech::element>::source.ptr(psb), bsdata<speech::element>::source.count - psb);
 	}
 	log::close();
 }
 
 const char* speech_getid(int index) {
-	return bsdata<speechv2>::elements[index].id;
+	return bsdata<speech>::elements[index].id;
 }
 
 const char* speech_name(int index) {
-	return ((speechv2::element*)bsdata<speechv2::element>::source.ptr(index))->name;
+	return ((speech::element*)bsdata<speech::element>::source.ptr(index))->name;
 }
 
-int speech_first(const char* id) {
-	auto p = bsdata<speechv2>::find(id);
+const speech* speech_find(const char* id) {
+	return bsdata<speech>::find(id);
+}
+
+int speech_first(const speech* p) {
 	if(!p || !p->source)
 		return -1;
 	return p->source.start;
 }
 
-int speech_count(const char* id) {
-	auto p = bsdata<speechv2>::find(id);
+int speech_count(const speech* p) {
 	if(!p || !p->source)
 		return -1;
 	return p->source.count;
 }
 
 int speech_random(const char* id) {
-	auto p = bsdata<speechv2>::find(id);
+	auto p = bsdata<speech>::find(id);
 	if(!p || !p->source)
 		return -1;
 	return p->source.start + (rand() % p->source.size());
 }
 
 const char* speech_get(const char* id) {
-	auto p = bsdata<speechv2>::find(id);
+	auto p = bsdata<speech>::find(id);
 	if(!p || !p->source)
 		return 0;
-	auto n = rand() % p->source.size();
+	auto n = (speech_params ? *speech_params++ : rand()) % p->source.size();
+	return p->source.begin()[n].name;
+}
+
+const char* speech_get(const speech* p, int n) {
+	if(!p || !p->source)
+		return 0;
 	return p->source.begin()[n].name;
 }
 

@@ -11,7 +11,6 @@
 #include "speech.h"
 
 creature *player, *opponent;
-creaturea creatures;
 
 static int exp_base_award[] = {
 	5,

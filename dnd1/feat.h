@@ -5,9 +5,9 @@
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	Stampede,
+	Stampede, Burrowing,
 	SunSensitive, Slow, Small, Large, NormalWeaponImmunity,
-	Blunt, TwoHanded, Burned, Frozen,
+	Blunt, TwoHanded, Burned, Frozen, Corrosed,
 	EngageMelee, Surprised, Prone, Unholy, Summoned, Player, Enemy,
 };
 struct feati : nameable {

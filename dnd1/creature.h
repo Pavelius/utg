@@ -71,9 +71,10 @@ struct creaturea : adat<creature*, 32> {
 	void			matchenemy(bool keep);
 	void			matchready(bool keep) { match(&creature::isready, keep); }
 	void			matchyou(bool keep) { match(&creature::isplayer, keep); }
+	creature*		random() const;
 	void			select();
 };
-extern creaturea creatures, targets;
+extern creaturea creatures, targets, encountered;
 
 void add_creature(const classi* pi, gender_s gender, int level = 1);
 void add_creature(const monsteri* pi);

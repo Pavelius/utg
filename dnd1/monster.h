@@ -8,9 +8,8 @@
 
 struct monsteri : nameable, attackable {
 	interval	dungeon, wilderness;
-	variants	feats;
+	variants	feats, dungeon_group, dungeon_lair, wilderness_group, wilderness_lair;
 	racei*		origin;
-	monsteri*	basic;
 	char		treasure[8];
 	interval	getcount(group_s v) const;
 };

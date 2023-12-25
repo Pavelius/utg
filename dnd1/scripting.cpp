@@ -13,7 +13,6 @@
 #include "script.h"
 #include "spell.h"
 
-creaturea targets;
 itema items;
 spella spells;
 static int critical_roll;
@@ -631,6 +630,11 @@ static void combat_round() {
 		if(!p->isready())
 			continue;
 		player = p;
+		if(player->is(Corrosed)) {
+			player->damage(rollint(1, 3));
+			if(!p->isready())
+				continue;
+		}
 		if(player->is(CauseFear)) {
 			player->feats.remove(EngageMelee);
 			remove_player();
@@ -863,7 +867,31 @@ static void adventurers_expert(int bonus) {
 	add_followers("RandomClass", random_alignment(), {4, 9}, {3, 8});
 }
 
+static void apply_leader() {
+	for(auto p : encountered) {
+		if(!p->getleader())
+			p->setleader(player);
+	}
+}
+
+static void make_leader(int bonus) {
+	player = encountered.random();
+	player->basic.abilities[HP] = player->get(Level) * player->geti().hd;
+	player->basic.abilities[MeleeDamage] += bonus;
+	player->basic.abilities[RangedDamage] += bonus;
+	apply_leader();
+}
+
+static void random_level3(int bonus) {
+	player->basic.abilities[Level] = rollint(3, bonus);
+}
+
+static void acid_damage(int bonus) {
+	opponent->set(Corrosed);
+}
+
 BSDATA(script) = {
+	{"AcidDamage", acid_damage},
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
 	{"AttackCharge", attack_charge, allow_attack_charge},
@@ -885,6 +913,8 @@ BSDATA(script) = {
 	{"HuntPrey", hunt_prey},
 	{"LoseGame", lose_game, allow_lose_game},
 	{"MagicUserHightLevel", magic_user_high_level},
+	{"MakeLeader", make_leader},
+	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},
 	{"RetreatMelee", retreat_melee, allow_retreat_melee},
 	{"RunAway", run_away, allow_run_away},

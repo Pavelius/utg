@@ -1,6 +1,8 @@
 #include "answers.h"
 #include "creature.h"
 
+creaturea creatures, encountered, targets;
+
 void creaturea::select() {
 	auto ps = begin();
 	auto pe = endof();
@@ -54,4 +56,8 @@ creature* creaturea::choose(const char* title, bool random) const {
 	for(auto p : *this)
 		an.add(p, p->getname());
 	return (creature*)an.choose(title, 0, 2);
+}
+
+creature* creaturea::random() const {
+	return count ? data[rand() % count] : 0;
 }
