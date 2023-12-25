@@ -26,10 +26,19 @@ Trader
 
 Ankheg dungeon(1 6) wilderness(1 6) treasure("C")
  feats RandomLevel3+8 AC+7 Burrowing
- attacks count(1) damage(3 18) use(AcidDamage)
-Basilisk
-BearGrizzly
-BeetleFire
+ attacks id(Bite) count(1) damage(3 18) hit(AcidDamage)
+ attacks id(AcidSquirt) count(1) damage(4 32) use_per_day(1)
+Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
+ feats Level+6 AC+5
+ attacks id(Bite) count(1) damage(1 10)
+ attacks id(PetrificationGaze) count(1)
+BearGrizzly dungeon(1) wilderness(1 4) treasure("U")
+ feats Level+5 AC+3
+ attacks id(Claws) count(2) damage(1 4)
+ attacks id(Bite) count(1) damage(1 8)
+BeetleFire dungeon(1 8) wilderness(2 12)
+ feats Level+1 AC+5 FireGland+2
+ attacks id(Bite) count(1) damage(2 8)
 BeetleOil
 BeetleTiger
 BinkingDog

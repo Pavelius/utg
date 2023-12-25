@@ -5,7 +5,7 @@
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	Stampede, Burrowing,
+	Defensive, Stampede, Burrowing,
 	SunSensitive, Slow, Small, Large, NormalWeaponImmunity,
 	Blunt, TwoHanded, Burned, Frozen, Corrosed,
 	EngageMelee, Surprised, Prone, Unholy, Summoned, Player, Enemy,

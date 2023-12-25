@@ -5,9 +5,11 @@
 #pragma once
 
 struct attacki {
+	const char*		id;
 	unsigned char	count;
 	interval		damage;
-	variants		use;
+	variants		hit;
+	char			use_per_day;
 	explicit operator bool() const { return count != 0; }
 };
 struct attackable {

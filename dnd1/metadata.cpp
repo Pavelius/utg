@@ -43,9 +43,11 @@ BSMETA(advancei) = {
 	BSREQ(elements),
 	{}};
 BSMETA(attacki) = {
+	BSREQ(id),
 	BSREQ(count),
 	BSREQ(damage),
-	BSREQ(use),
+	BSREQ(use_per_day),
+	BSREQ(hit),
 	{}};
 BSMETA(classi) = {
 	BSREQ(id),

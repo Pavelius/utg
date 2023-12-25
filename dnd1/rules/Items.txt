@@ -72,6 +72,8 @@ BluePotion cost(60) weight(10) wear(Potion)
 GreenPotion cost(70) weight(10) wear(Potion)
 YellowPotion cost(100) weight(10) wear(Potion)
 
+FireGland cost(5) weight(1)
+
 #List
 
 Jewelry
