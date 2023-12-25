@@ -73,6 +73,7 @@ GreenPotion cost(70) weight(10) wear(Potion)
 YellowPotion cost(100) weight(10) wear(Potion)
 
 FireGland cost(5) weight(1)
+NeckPlates cost(100) weight(50)
 
 #List
 

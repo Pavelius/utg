@@ -2,6 +2,8 @@
 
 OrcishWeapons
  chance BattleAxe+2 HandAxe Club Spear Sword
+CentaurWeapons
+ chance Bow Club
 
 #Monster
 
@@ -51,11 +53,21 @@ BinkingDog dungeon(1 6) wilderness(1 6) treasure("T")
 Boar dungeon(1 6) wilderness(1 6)
  feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral
  attacks id(Tusk) count(1) damage(2 4)
-Bulette
-CatPanther
-CatTiger
-Catoblepas
-Centaur
+Bulette wilderness(1 2)
+ feats Level+9 AC+9 Movement+5 Intellect-10 Morale+11 Large Leap Neutral NeckPlates+3
+ attacks id(Bite) count(1) damage(4 48)
+ attacks id(Claws) count(2) damage(3 18)
+CatPanther dungeon(1 2) wilderness(1 6) treasure("U")
+ feats Level+4 AC+5 Movement+7 Intellect-9 Morale+8 Neutral
+ attacks id(Claws) count(2) damage(1 4)
+ attacks id(Bite) count(1) damage(1 8)
+CatTiger dungeon(1) wilderness(1 3) treasure("U")
+ feats Level+6 AC+3 Movement+7 Intellect-9 Morale+9 SurpriseEnemy Neutral
+ attacks id(Claws) count(2) damage(1 6)
+ attacks id(Bite) count(1) damage(2 12)
+Catoblepas wilderness(1 3) treasure("C")
+ feats Level+7 AC+2 Movement+2 Intellect-9 Morale+8 DeathGaze Neutral
+ attacks id(Tail) count(1) damage(1 6) hit(StunningBlow)
 CentipedeGiant
 Chimera
 Cockatrice
@@ -138,6 +150,9 @@ Wyvern
 
 Brownie
 Bugbear
+Centaur wilderness(2 20) treasure("A")
+ feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons
+ attacks id(Hoof) count(2) damage(1 6)
 Cyclops
 Dryad
 ElfFolk
