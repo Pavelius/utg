@@ -1,5 +1,6 @@
 #pragma once
 
+#include "attackable.h"
 #include "collection.h"
 #include "interval.h"
 #include "feat.h"
@@ -10,9 +11,8 @@
 
 enum spell_s : unsigned char;
 
-struct itemi : nameable {
+struct itemi : attacki {
 	unsigned	cost, weight, count;
-	interval	damage;
 	itemi		*ammunition, *basic;
 	wear_s		wear;
 	featable	flags;
@@ -57,6 +57,7 @@ public:
 	bool		iscursed() const { return getpower().counter < 0; }
 	bool		isidentified() const { return identified != 0; }
 	bool		ismagic() const { return power != 0; }
+	bool		isnatural() const { return geti().weight==0; }
 	bool		isready() const;
 	void		setcount(int v);
 };

@@ -1,16 +1,16 @@
 #include "damage.h"
 #include "interval.h"
+#include "nameable.h"
 #include "variant.h"
 
 #pragma once
 
-struct attacki {
-	const char*		id;
-	unsigned char	count;
+struct attacki : nameable {
+	unsigned char	number;
 	interval		damage;
 	variants		hit;
-	char			use_per_day;
-	explicit operator bool() const { return count != 0; }
+	explicit operator bool() const { return number != 0; }
+	constexpr bool	isweapon() const { return number != 0; }
 };
 struct attackable {
 	attacki			attacks[4];

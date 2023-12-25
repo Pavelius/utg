@@ -2,38 +2,38 @@
 
 NoItem
 
-BattleAxe cost(7) weight(50) wear(MeleeWeapon) damage(1 8)
+BattleAxe cost(7) weight(50) wear(MeleeWeapon) number(1) damage(1 8)
  flags Slow TwoHanded
-Club cost(3) weight(50) wear(MeleeWeapon) damage(1 4)
+Club cost(3) weight(50) wear(MeleeWeapon) number(1) damage(1 4)
  flags Blunt
-Dagger cost(3) weight(10) wear(MeleeWeapon) damage(1 4)
-Halberd cost(7) weight(150) wear(MeleeWeapon) damage(1 10)
+Dagger cost(3) weight(10) wear(MeleeWeapon) number(1) damage(1 4)
+Halberd cost(7) weight(150) wear(MeleeWeapon) number(1) damage(1 10)
  flags Slow TwoHanded
-HandAxe cost(4) weight(30) wear(MeleeWeapon) damage(1 6)
-Javelin cost(1) weight(20) wear(ThrownWeapon) damage(1 4)
-Mace cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
+HandAxe cost(4) weight(30) wear(MeleeWeapon) number(1) damage(1 6)
+Javelin cost(1) weight(20) wear(ThrownWeapon) number(1) damage(1 4)
+Mace cost(5) weight(30) wear(MeleeWeapon) number(1) damage(1 6)
  flags Blunt
-ShortSword cost(7) weight(30) wear(MeleeWeapon) damage(1 6)
-Spear cost(3) weight(30) wear(MeleeWeapon) damage(1 6)
-Staff cost(2) weight(40) wear(MeleeWeapon) damage(1 6)
+ShortSword cost(7) weight(30) wear(MeleeWeapon) number(1) damage(1 6)
+Spear cost(3) weight(30) wear(MeleeWeapon) number(1) damage(1 6)
+Staff cost(2) weight(40) wear(MeleeWeapon) number(1) damage(1 6)
  flags Slow TwoHanded
-Sword cost(10) weight(60) wear(MeleeWeapon) damage(1 8)
-TwoHandedSword cost(15) weight(150) wear(MeleeWeapon) damage(1 10)
+Sword cost(10) weight(60) wear(MeleeWeapon) number(1) damage(1 8)
+TwoHandedSword cost(15) weight(150) wear(MeleeWeapon) number(1) damage(1 10)
  flags Slow TwoHanded
-Warhammer cost(5) weight(30) wear(MeleeWeapon) damage(1 6)
+Warhammer cost(5) weight(30) wear(MeleeWeapon) number(1) damage(1 6)
  flags Blunt
 
 Arrow wear(Ammunition) cost(5) count(30)
 Bolt wear(Ammunition) cost(5) count(20)
 Stone wear(Ammunition) count(10)
 
-Crossbow cost(30) weight(50) wear(RangedWeapon) damage(2 7) ammunition(Bolt)
+Crossbow cost(30) weight(50) wear(RangedWeapon) number(1) damage(2 7) ammunition(Bolt)
  flags Slow TwoHanded
-ShortBow cost(25) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
+ShortBow cost(25) weight(30) wear(RangedWeapon) number(1) damage(1 6) ammunition(Arrow)
  flags TwoHanded
-Sling cost(2) weight(20) wear(RangedWeapon) damage(1 4) ammunition(Stone)
+Sling cost(2) weight(20) wear(RangedWeapon) number(1) damage(1 4) ammunition(Stone)
  flags TwoHanded
-LongBow cost(40) weight(30) wear(RangedWeapon) damage(1 6) ammunition(Arrow)
+LongBow cost(40) weight(30) wear(RangedWeapon) number(1) damage(1 6) ammunition(Arrow)
  flags TwoHanded
 
 LeatherArmor cost(20) weight(200) wear(Torso)
@@ -74,6 +74,33 @@ YellowPotion cost(100) weight(10) wear(Potion)
 
 FireGland cost(5) weight(1)
 NeckPlates cost(100) weight(50)
+
+Bite1d3 wear(Head) number(1) damage(1 3)
+Bite1d6 wear(Head) number(1) damage(1 6)
+Bite1d8 wear(Head) number(1) damage(1 8)
+Bite1d10 wear(Head) number(1) damage(1 10)
+Bite2d4 wear(Head) number(1) damage(2 8)
+Bite2d6 wear(Head) number(1) damage(2 12)
+Bite3d6 wear(Head) number(1) damage(3 18)
+Bite4d12 wear(Head) number(1) damage(4 48)
+
+Claws1d3 wear(MeleeWeapon) number(2) damage(1 3)
+Claws1d4 wear(MeleeWeapon) number(2) damage(1 4)
+Claws1d6 wear(MeleeWeapon) number(2) damage(1 6)
+Claws3d6 wear(MeleeWeapon) number(2) damage(3 18)
+
+Gore1d4 wear(Head) number(1) damage(1 4)
+Gore1d6 wear(Head) number(1) damage(1 6)
+Gore1d8 wear(Head) number(1) damage(1 8)
+
+Hoofs1d6 wear(Legs) number(1) damage(1 6)
+
+Slam1d6 wear(MeleeWeapon) number(1) damage(1 6)
+Slam1d8 wear(MeleeWeapon) number(1) damage(1 6)
+
+Tail1d6 wear(Torso) number(1) damage(1 6)
+
+Tusk2d4 wear(Head) number(1) damage(2 8)
 
 #List
 

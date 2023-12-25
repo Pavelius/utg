@@ -3,24 +3,29 @@
 OrcishWeapons
  chance BattleAxe+2 HandAxe Club Spear Sword
 CentaurWeapons
- chance Bow Club
+ chance LongBow Club
+MartialWeapon
+ chance HandAxe Sword
+MartialWeaponAndShield
+ chance MartialWeapon Shield
+TwoHandedWeapon
+ chance BattleAxe TwoHandedSword
+BerserkersWeapon
+ chance MartialWeapon MartialWeaponAndShield TwoHandedWeapon
 
 #Monster
 
 Goat wilderness(3 30)
- feats Level+1 AC+2 Stampede
- attacks count(1) damage(1 4)
+ feats Level+1 AC+2 Stampede Gore1d4
 Moose wilderness(3 30)
- feats Level+4 AC+2 Stampede
- attacks count(1) damage(1 8)
+ feats Level+4 AC+2 Stampede Gore1d8
 Stag wilderness(3 30)
- feats Level+3 AC+2 Stampede
- attacks count(1) damage(1 6)
+ feats Level+3 AC+2 Stampede Gore1d6
 
 Bandit dungeon(1 8) wilderness(3 30) treasure("AU")
  feats Level+1 AC+3
 Berserker dungeon(1 6) wilderness(3 30) treasure("BP")
- feats Level+1 AC+2 Constitution+3 BattleRage Neutral
+ feats Level+1 AC+2 Constitution+3 BattleRage Neutral BerserkersWeapon
 Brigand
 Merchant
 Noble
@@ -28,51 +33,38 @@ Nomad
 Trader
 
 Ankheg dungeon(1 6) wilderness(1 6) treasure("C")
- feats RandomLevel3+8 AC+7 Intellect-10 Movement+4 Burrowing
- attacks id(Bite) count(1) damage(3 18) hit(AcidDamage)
+ feats RandomLevel3+8 AC+7 Intellect-10 Movement+4 Bite3d6 AcidDamage Burrowing
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
- feats Level+6 AC+5 Intellect-10 Movement+2
- attacks id(Bite) count(1) damage(1 10)
- attacks id(PetrificationGaze) count(1)
+ feats Level+6 AC+5 Intellect-10 Movement+2 Bite1d10 PetrifyingGaze
 BearGrizzly dungeon(1) wilderness(1 4) treasure("U")
- feats Level+5 AC+3 Intellect-10 Neutral
- attacks id(Claws) count(2) damage(1 4) hit(BearHug)
- attacks id(Bite) count(1) damage(1 8)
+ feats Level+5 AC+3 Intellect-10 Large Neutral Claws1d4 Bite1d8 BearHug
 BeetleFire dungeon(1 8) wilderness(2 12)
- feats Level+1 AC+5 Intellect-10 Constitution+6 FireGland+2 Neutral
- attacks id(Bite) count(1) damage(2 8)
+ feats Level+1 AC+5 Intellect-10 Constitution+6 Neutral Bite2d4 FireGland+2
 BeetleOil dungeon(1 8) wilderness(2 12)
- feats Level+2 AC+5 Intellect-10 Neutral Neutral
- attacks id(Bite) count(1) damage(1 6) hit(BeetleOilOfPain)
+ feats Level+2 AC+5 Intellect-10 Neutral Bite1d6
 BeetleTiger dungeon(1 6) wilderness(2 8)
- feats Level+3 AC+5 Intellect-10 Constitution+6 Movement+5 Neutral
- attacks id(Bite) count(1) damage(2 12)
+ feats Level+3 AC+5 Intellect-10 Constitution+6 Movement+5 Neutral Bite2d6
 BinkingDog dungeon(1 6) wilderness(1 6) treasure("T")
- feats Level+4 AC+4 Movement+4 Intellect+4 Morale+6 Blink Lawful
- attacks id(Bite) count(1) damage(1 6)
+ feats Level+4 AC+4 Movement+4 Intellect+4 Morale+6 Blink Lawful Bite1d6
 Boar dungeon(1 6) wilderness(1 6)
- feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral
- attacks id(Tusk) count(1) damage(2 4)
+ feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral Tusk2d4
 Bulette wilderness(1 2)
- feats Level+9 AC+9 Movement+5 Intellect-10 Morale+11 Large Leap Neutral NeckPlates+3
- attacks id(Bite) count(1) damage(4 48)
- attacks id(Claws) count(2) damage(3 18)
+ feats Level+9 AC+9 Movement+5 Intellect-10 Morale+11 Large Leap Neutral Bite4d12 Claws3d6 NeckPlates+3
 CatPanther dungeon(1 2) wilderness(1 6) treasure("U")
- feats Level+4 AC+5 Movement+7 Intellect-9 Morale+8 Neutral
- attacks id(Claws) count(2) damage(1 4)
- attacks id(Bite) count(1) damage(1 8)
+ feats Level+4 AC+5 Movement+7 Intellect-9 Morale+8 Neutral Claws1d4 Bite1d8
 CatTiger dungeon(1) wilderness(1 3) treasure("U")
- feats Level+6 AC+3 Movement+7 Intellect-9 Morale+9 SurpriseEnemy Neutral
- attacks id(Claws) count(2) damage(1 6)
- attacks id(Bite) count(1) damage(2 12)
+ feats Level+6 AC+3 Movement+7 Intellect-9 Morale+9 SurpriseEnemy Neutral Claws1d6 Bite2d6
 Catoblepas wilderness(1 3) treasure("C")
- feats Level+7 AC+2 Movement+2 Intellect-9 Morale+8 DeathGaze Neutral
- attacks id(Tail) count(1) damage(1 6) hit(StunningBlow)
-CentipedeGiant
-Chimera
+ feats Level+7 AC+2 Movement+2 Intellect-9 Morale+8 DeathGaze StunningBlow Neutral Tail1d6
+CentipedeGiant dungeon(2 8) wilderness(1 8)
+ feats Level-1 AC+0 Movement+2 Intellect-10 Morale+7
+Chimera dungeon(1 2) wilderness(1 4) treasure("F")
+ feats Level+9 AC+5 Movement+4 Fly Intellect-10 Morale+9 Chaotic ConeOfFire+3
 Cockatrice
-Couatl
-DogWild
+Couatl dungeon(1 4) wilderness(1 4) treasure("BI")
+ feats Level+5 AC+5 Movement+2 Fly Intellect+2 Morale+9 Lawful Bite1d3 ShapeChanging
+DogWild dungeon(2 12) wilderness(3 18)
+ feats Level+2 AC+2 Movement+6 Intellect-10 Morale+6 Neutral Bite1d6
 DragonBlack
 DragonBlue
 DragonBrass
@@ -90,7 +82,6 @@ FrogPoisonous
 Hydra
 Gargoyle
 GasSpore
-Ghost
 GibberlingMouther
 Gorgon
 Griffon
@@ -151,8 +142,7 @@ Wyvern
 Brownie
 Bugbear
 Centaur wilderness(2 20) treasure("A")
- feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons
- attacks id(Hoof) count(2) damage(1 6)
+ feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons Hoofs1d6
 Cyclops
 Dryad
 ElfFolk
@@ -172,9 +162,9 @@ Satyr
 Thoul
 Troll
 
+Ghost
 Skeleton dungeon(3 12) wilderness(3 30)
- feats Level+1 AC+2 Undead
- attacks count(1) damage(1 6)
+ feats Level+1 AC+2 Undead Slam1d6
 Zombie dungeon(2 8) wilderness(4 24)
  feats Level+2 AC+1 Undead Slow
 

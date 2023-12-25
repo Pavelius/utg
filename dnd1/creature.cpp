@@ -365,7 +365,7 @@ void add_creature(const classi* pi, gender_s gender, int level) {
 	player->clear();
 	player->type = pi;
 	player->gender = gender;
-	player->attacks[0].count = 1;
+	player->attacks[0].number = 1;
 	player->attacks[0].damage = {1, 2};
 	player->basic.rollability();
 	player->basic.applybest(pi->prime);
@@ -385,7 +385,6 @@ void add_creature(const monsteri* pi) {
 	player->gender = Male;
 	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
 		player->basic.abilities[i] = 10;
-	memcpy(player->attacks, pi->attacks, sizeof(player->attacks));
 	add_permanent(pi->feats);
 	add_hits_by_level();
 	add_language(pi->origin);

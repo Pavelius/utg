@@ -35,6 +35,7 @@ Shield: Щит
 BattleAxe: Секира
 Club: Дубина
 Dagger: Кинжал
+Mace: Булава
 HandAxe: Топор
 Spear: Копье
 Sword: Меч

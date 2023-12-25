@@ -6,7 +6,7 @@
 
 #pragma once
 
-struct monsteri : nameable, attackable {
+struct monsteri : nameable {
 	interval	dungeon, wilderness;
 	variants	feats, dungeon_group, dungeon_lair, wilderness_group, wilderness_lair;
 	racei*		origin;

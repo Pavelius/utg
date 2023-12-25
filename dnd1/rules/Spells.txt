@@ -17,4 +17,5 @@ DeathSpell level(6) range(AllEnemiesHD) targets(4 24) save_negates(SaveDeath)
 
 AnkhegAcidSquirt range(OneEnemy) count(4 32) save_halves(SaveBreathWeapon)
 BeetleOilOfPain range(OneEnemy) duration(Day1)
+ConeOfFire range(AllEnemies) targets(2 4) count(3 6) save_halves(SaveBreathWeapon)
 ItemRepair range(AllAllyItems) targets(1)

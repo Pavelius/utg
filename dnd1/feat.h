@@ -5,7 +5,9 @@
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	Blink, DeathGaze, Defensive, Stampede, Burrowing, BattleRage, StunningBlow, SurpriseEnemy,
+	AcidDamage, Blink, DeathGaze, Defensive, Stampede,
+	Burrowing, Fly, ShapeChanging,
+	BattleRage, PetrificationGaze, StunningBlow, SurpriseEnemy,
 	SunSensitive, Slow, Small, Large, Leap, NormalWeaponImmunity,
 	Blunt, TwoHanded, Burned, Frozen, Corrosed,
 	EngageMelee, Surprised, Prone, Unholy, Summoned, Player, Enemy,

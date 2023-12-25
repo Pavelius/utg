@@ -48,9 +48,8 @@ BSMETA(alignmenti) = {
 	{}};
 BSMETA(attacki) = {
 	BSREQ(id),
-	BSREQ(count),
+	BSREQ(number),
 	BSREQ(damage),
-	BSREQ(use_per_day),
 	BSREQ(hit),
 	{}};
 BSMETA(classi) = {
@@ -84,6 +83,7 @@ BSMETA(itemi) = {
 	BSREQ(cost), BSREQ(weight), BSREQ(count),
 	BSFLG(flags, feati),
 	BSENM(wear, weari),
+	BSREQ(number),
 	BSREQ(damage),
 	BSREQ(ammunition),
 	BSREQ(use),
@@ -100,7 +100,6 @@ BSMETA(monsteri) = {
 	BSREQ(wilderness),
 	BSREQ(dungeon_group), BSREQ(dungeon_lair),
 	BSREQ(wilderness_group), BSREQ(wilderness_lair),
-	BSREQ(attacks),
 	BSREQ(origin),
 	BSREQ(treasure),
 	{}};

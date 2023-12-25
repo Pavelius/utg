@@ -56,6 +56,7 @@ BSDATA(spelli) = {
 	{"DeathSpell"},
 	{"AnkhegAcidSquirt"}, // Some effective actions
 	{"BeetleOilOfPain"},
+	{"ConeOfFire"},
 	{"ItemRepair"},
 	{"ShrinkSize"}, // Special spell effects
 	{"GrowthSize"},

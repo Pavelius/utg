@@ -295,9 +295,9 @@ static void attack_unarmed(int bonus) {
 	if(!allow_attack_unarmed(bonus))
 		return;
 	for(auto& e : player->attacks) {
-		if(!e.count)
+		if(!e.number)
 			continue;
-		for(auto i = 0; i < e.count; i++) {
+		for(auto i = 0; i < e.number; i++) {
 			select_enemies();
 			if(!targets)
 				return;
@@ -898,7 +898,6 @@ static void bear_hug(int bonus) {
 }
 
 BSDATA(script) = {
-	{"AcidDamage", acid_damage},
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
 	{"AttackCharge", attack_charge, allow_attack_charge},
