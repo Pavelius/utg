@@ -65,16 +65,20 @@ Couatl dungeon(1 4) wilderness(1 4) treasure("BI")
  feats Level+5 AC+5 Movement+2 Fly Intellect+2 Morale+9 Lawful Bite1d3 ShapeChanging
 DogWild dungeon(2 12) wilderness(3 18)
  feats Level+2 AC+2 Movement+6 Intellect-10 Morale+6 Neutral Bite1d6
-DragonBlack
-DragonBlue
-DragonBrass
-DragonBronze
-DragonCooper
-DragonGold
-DragonGreen
-DragonRed
-DragonSilver
-DragonWhite
+DragonBlack dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+7 AC+7 Movement+3 Strenght+3 Morale+8 Large Chaotic Claws1d4 Bite2d10 Chance+20 SpellLevel1+4
+DragonBlue dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+9 AC+9 Movement+3 Strenght+3 Morale+8 Large Neutral Claws1d6 Bite3d10 Chance+40 SpellLevel1+4 SpellLevel2+4
+DragonBrass dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+7 AC+8 Movement+3 Strenght+3 Morale+8 Large Neutral Claws1d4 Bite3d6 Chance+20 SpellLevel1+4
+DragonBronze dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+9 AC+9 Movement+3 Strenght+3 Morale+8 Large Lawful ShapeChanging Claws1d6 Bite3d8 Chance+40 SpellLevel1+4
+DragonCooper dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+DragonGold dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+DragonGreen dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+DragonRed dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+DragonSilver dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+DragonWhite dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
 DriverAnt
 FlainSnail
 FrogMutant

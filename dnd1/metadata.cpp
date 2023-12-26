@@ -102,6 +102,7 @@ BSMETA(monsteri) = {
 	BSREQ(wilderness_group), BSREQ(wilderness_lair),
 	BSREQ(origin),
 	BSREQ(treasure),
+	BSREQ(magic),
 	{}};
 BSMETA(organizationi) = {
 	BSREQ(id),

@@ -18,6 +18,7 @@ spella spells;
 static int critical_roll;
 static void* last_option;
 
+void apply_advance(const char* id, variant type, int level);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
@@ -890,11 +891,24 @@ static void random_level3(int bonus) {
 	player->basic.abilities[Level] = rollint(3, bonus);
 }
 
-static void acid_damage(int bonus) {
-	opponent->set(Corrosed);
+static void apply_caster(variant type, int level) {
+	for(auto i = 1; i <= level; i++) {
+		apply_advance("SpellCasting", type, i);
+		apply_advance("Spells", type, i);
+	}
 }
 
-static void bear_hug(int bonus) {
+static void cleric_caster(int bonus) {
+	apply_caster("Cleric", bonus);
+}
+
+static void magic_user_caster(int bonus) {
+	apply_caster("MagicUser", bonus);
+}
+
+static void apply_chance(int bonus) {
+	if(d100() > bonus)
+		script_stop();
 }
 
 BSDATA(script) = {
@@ -904,8 +918,9 @@ BSDATA(script) = {
 	{"AttackMelee", attack_melee, allow_attack_melee},
 	{"AttackRanged", attack_ranged, allow_attack_ranged},
 	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
-	{"BearHug", bear_hug},
+	{"Chance", apply_chance},
 	{"ChooseTarget", choose_target, condition_passed},
+	{"ClericCaster", cleric_caster},
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle, allow_continue_battle},
@@ -919,6 +934,7 @@ BSDATA(script) = {
 	{"ForEachCreature", for_each_creature, targets_filter},
 	{"HuntPrey", hunt_prey},
 	{"LoseGame", lose_game, allow_lose_game},
+	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
 	{"MakeLeader", make_leader},
 	{"RandomLevel3", random_level3},

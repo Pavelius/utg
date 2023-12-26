@@ -16,6 +16,7 @@ BSDATA(feati) = {
 	{"Fly"},
 	{"ShapeChanging"},
 	{"BattleRage"},
+	{"BearHug"},
 	{"PetrificationGaze"},
 	{"StunningBlow"},
 	{"SurpriseEnemy"},

@@ -55,9 +55,16 @@ static void add_temporary(const variants& source) {
 	script_run(source);
 }
 
-static void apply_advance(variant type, int level) {
+void apply_advance(variant type, int level) {
 	for(auto& e : bsdata<advancei>()) {
 		if(e.type == type && e.level == level)
+			add_permanent(e.elements);
+	}
+}
+
+void apply_advance(const char* id, variant type, int level) {
+	for(auto& e : bsdata<advancei>()) {
+		if(e.type == type && e.level == level && equal(e.id, id))
 			add_permanent(e.elements);
 	}
 }
