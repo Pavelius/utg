@@ -130,6 +130,27 @@ static void update_melee_fight() {
 		p->feats.remove(EngageMelee);
 }
 
+static bool isw(feat_s v) {
+	if(player->is(v))
+		return true;
+	if(last_item) {
+		if(last_item->geti().is(v))
+			return true;
+		auto power = last_item->getpower();
+		if(power.iskind<feati>() && power.value == v)
+			return true;
+	}
+	return false;
+}
+
+static bool is_mighty_weapon() {
+	if(last_item)
+		return last_item->ismagic();
+	if(player->type == 0)
+		return player->get(Level) >= 5;
+	return false;
+}
+
 static void make_attack(const char* id, int bonus, ability_s attack, ability_s damage, wear_s weapon) {
 	auto ac = opponent->get(AC);
 	if(opponent->is(Small) && player->is(Large))
@@ -143,6 +164,16 @@ static void make_attack(const char* id, int bonus, ability_s attack, ability_s d
 		result += last_item->getdamage().roll();
 		result += player->get(damage);
 		opponent->damage(result);
+		if(opponent->is(NormalWeaponImmunity) && !is_mighty_weapon())
+			result = 0;
+		else if(result < 1)
+			result = 1;
+		if(!result) {
+			opponent->actid("DamageHasNoEffect", 0, ' ');
+			return;
+		}
+		if(isw(AcidDamage))
+			opponent->set(Corrosed);
 		if(critical_roll && opponent->isready()) {
 			pushvalue push_item(last_item, opponent->wears + Torso);
 			damage_item();
@@ -911,6 +942,9 @@ static void apply_chance(int bonus) {
 		script_stop();
 }
 
+static void die_after_attack(int bonus) {
+}
+
 BSDATA(script) = {
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
@@ -924,6 +958,7 @@ BSDATA(script) = {
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle, allow_continue_battle},
+	{"DieAfterAttack", die_after_attack},
 	{"FighterHightLevel", fighter_high_level},
 	{"FilterAlive", filter_alive, targets_filter},
 	{"FilterBroken", filter_cursed, items_filter},

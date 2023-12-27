@@ -6,12 +6,8 @@ CentaurWeapons
  chance LongBow Club
 MartialWeapon
  chance HandAxe Sword
-MartialWeaponAndShield
- chance MartialWeapon Shield
 TwoHandedWeapon
  chance BattleAxe TwoHandedSword
-BerserkersWeapon
- chance MartialWeapon MartialWeaponAndShield TwoHandedWeapon
 
 #Monster
 
@@ -22,22 +18,18 @@ Moose wilderness(3 30)
 Stag wilderness(3 30)
  feats Level+3 AC+2 Stampede Gore1d6
 
-Bandit dungeon(1 8) wilderness(3 30) treasure("AU")
+Bandit dungeon(1 8) wilderness(3 30) treasure("AU") origin(Humans)
  feats Level+1 AC+3
-Berserker dungeon(1 6) wilderness(3 30) treasure("BP")
- feats Level+1 AC+2 Constitution+3 BattleRage Neutral BerserkersWeapon
+Berserker dungeon(1 6) wilderness(3 30) treasure("BP") origin(Humans)
+ feats Level+1 AC+2 Constitution+3 BattleRage Neutral MartialWeapon Spear
 Brigand
 Merchant
 Noble
 Nomad
 Trader
 
-Ankheg dungeon(1 6) wilderness(1 6) treasure("C")
- feats RandomLevel3+8 AC+7 Intellect-10 Movement+4 Bite3d6 AcidDamage Burrowing
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
  feats Level+6 AC+5 Intellect-10 Movement+2 Bite1d10 PetrifyingGaze
-BearGrizzly dungeon(1) wilderness(1 4) treasure("U")
- feats Level+5 AC+3 Intellect-10 Large Neutral Claws1d4 Bite1d8 BearHug
 BeetleFire dungeon(1 8) wilderness(2 12)
  feats Level+1 AC+5 Intellect-10 Constitution+6 Neutral Bite2d4 FireGland+2
 BeetleOil dungeon(1 8) wilderness(2 12)
@@ -48,121 +40,87 @@ BinkingDog dungeon(1 6) wilderness(1 6) treasure("T")
  feats Level+4 AC+4 Movement+4 Intellect+4 Morale+6 Blink Lawful Bite1d6
 Boar dungeon(1 6) wilderness(1 6)
  feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral Tusk2d4
-Bulette wilderness(1 2)
- feats Level+9 AC+9 Movement+5 Intellect-10 Morale+11 Large Leap Neutral Bite4d12 Claws3d6 NeckPlates+3
 CatPanther dungeon(1 2) wilderness(1 6) treasure("U")
  feats Level+4 AC+5 Movement+7 Intellect-9 Morale+8 Neutral Claws1d4 Bite1d8
 CatTiger dungeon(1) wilderness(1 3) treasure("U")
  feats Level+6 AC+3 Movement+7 Intellect-9 Morale+9 SurpriseEnemy Neutral Claws1d6 Bite2d6
-Catoblepas wilderness(1 3) treasure("C")
- feats Level+7 AC+2 Movement+2 Intellect-9 Morale+8 DeathGaze StunningBlow Neutral Tail1d6
-CentipedeGiant dungeon(2 8) wilderness(1 8)
- feats Level-1 AC+0 Movement+2 Intellect-10 Morale+7
 Chimera dungeon(1 2) wilderness(1 4) treasure("F")
  feats Level+9 AC+5 Movement+4 Fly Intellect-10 Morale+9 Chaotic ConeOfFire+3
 Cockatrice
-Couatl dungeon(1 4) wilderness(1 4) treasure("BI")
- feats Level+5 AC+5 Movement+2 Fly Intellect+2 Morale+9 Lawful Bite1d3 ShapeChanging
 DogWild dungeon(2 12) wilderness(3 18)
  feats Level+2 AC+2 Movement+6 Intellect-10 Morale+6 Neutral Bite1d6
 DragonBlack dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
  feats Level+7 AC+7 Movement+3 Strenght+3 Morale+8 Large Chaotic Claws1d4 Bite2d10 Chance+20 SpellLevel1+4
 DragonBlue dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
  feats Level+9 AC+9 Movement+3 Strenght+3 Morale+8 Large Neutral Claws1d6 Bite3d10 Chance+40 SpellLevel1+4 SpellLevel2+4
-DragonBrass dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
- feats Level+7 AC+8 Movement+3 Strenght+3 Morale+8 Large Neutral Claws1d4 Bite3d6 Chance+20 SpellLevel1+4
-DragonBronze dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
- feats Level+9 AC+9 Movement+3 Strenght+3 Morale+8 Large Lawful ShapeChanging Claws1d6 Bite3d8 Chance+40 SpellLevel1+4
-DragonCooper dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
 DragonGold dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+11 AC+11 Movement+3 Morale+10 Large Lawful ShapeChanging Claws2d4 Bite6d6 SpellLevel1+4 SpellLevel2+4 SpellLevel3+4
 DragonGreen dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+8 AC+8 Movement+3 Morale+8 Large Chaotic Claws1d6 Bite3d8 Chance+30 SpellLevel1+3 SpellLevel2+3
 DragonRed dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
-DragonSilver dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
+ feats Level+10 AC+10 Movement+3 Morale+8 Large Chaotic Claws1d8 Bite4d8 Chance+30 SpellLevel1+3 SpellLevel2+3 SpellLevel3+3
 DragonWhite dungeon(1 4) wilderness(1 4) treasure("H") magic(1)
-DriverAnt
-FlainSnail
-FrogMutant
-FrogPoisonous
-Hydra
-Gargoyle
-GasSpore
-GibberlingMouther
-Gorgon
+ feats Level+6 AC+6 Movement+3 Morale+8 Large Neutral Claws1d4 Bite2d8 Chance+10 SpellLevel1+3
+DriverAnt dungeon(2 8) wilderness(4 24) treasure("U")
+ feats Level+4 AC+6 Movement+6 Intellect-10 Morale+7 Large Neutral Claws1d4 Bite2d8 Chance+10 SpellLevel1+3
+Gargoyle dungeon(1 6) wilderness(2 8) treasure("C")
+ feats Level+4 AC+4 Movement+3 Intellect-10 Morale+11 Large Chaotic NormalWeaponImmunity CharmImmunity Claws1d3 Bite1d6
+Gorgon dungeon(1 2) wilderness(1 4) treasure("E")
+ feats Level+8 AC+7 Movement+4 Intellect-10 Morale+8 Large Chaotic Gore2d6 PetrifyingBreath
 Griffon
+ feats Level+7 AC+4 Movement+4 Fly Intellect-10 Morale+8 Large Neutral Claws1d4 Bite2d8
+Hydra
 Jackalwere
 Hawk
-HawkGiant
-Hipogriff
-KillerBee
-Lamia
-Leucrocotta
-LizardGecko
-LizardTuatara
-Manticore
-MantisGiant
+ feats Level+1 AC+1 Movement+16 Fly Intellect-10 Morale+7 Neutral Talons1d2
+HawkGiant wilderness(1 6)
+ feats Level+3 AC+3 Movement+15 Fly Intellect-10 Constitution+6 Morale+8 Neutral Talons1d6
+Hipogriff wilderness(2 16)
+ feats AC+4 Level+3 Claws1d6 Bite1d10 Movement+6 Fly Intellect-10 Constitution+3 Morale+8 Neutral
+KillerBee dungeon(1 6) wilderness(5 30)
+ feats AC+2 Level+0 Claws1d6 Movement+5 Fly Intellect-10 Morale+9 Neutral DeathPoison InflictWound
+LizardGecko dungeon(1 6) wilderness(1 10) treasure("U")
+ feats AC+4 Level+3 Bite1d6 Movement+4 Intellect-10 Morale+7 Neutral
+LizardTuatara dungeon(1 2) wilderness(1 4) treasure("V")
+ feats AC+5 Level+6 Claws1d4 Bite2d6 Movement+3 Intellect-10 Morale+6 Neutral
 Medusa
-Nightmare
-Otyugh
-OwlBear
 Pegasus
-Peryton
 Rhadogessa
-Phoenix
 Pixie
-PseudoDragon
 RobberFly
 RocSmall
-Roper
-RotGrub
 ScorpionGiant
-ShamblingMound
-SlitheringTracker
-SlugGiant
 SnakePitViper
-Sphinx
-SpiderAranea
 SpiderBalackWidow
 SpiderCrab
-SpiderPhase
 SpiderTarantella
 Sprite
 Stirge
-ToadPoisonous
 Treant
 Unicorn
-VioletFungus
 WarpBeast
-WaspGiant
 Werebear
 Wereboar
 Wererat
 Weretiger
 Werewolf
-WillOWisp
 Wolf
 WolfDire
 Wyvern
 
-Brownie
 Bugbear
 Centaur wilderness(2 20) treasure("A")
  feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons Hoofs1d6
 Cyclops
 Dryad
 ElfFolk
-Ettin
 GiantHill
 Gnoll
 Goblin
-Gullygug
-HagBlack
 Hobgoblin
-Leprechaunt
-Mutoid
 Orc dungeon(2 8) wilderness(10 60) treasure("D")
  feats Level+1 AC+3 SunSensitive OrcishWeapons
 Orge
-Satyr
 Thoul
 Troll
 
@@ -178,21 +136,19 @@ HerdAnimal
  chance Goat+2 Stag+2 Moose
 
 AnyDragon
- chance Chimera DragonBlack DragonBlue DragonBrass DragonBronze DragonCooper DragonGold DragonGreen DragonRed DragonSilver DragonWhite Hydra+2 PseudoDragon Wyvern Basilisk
+ chance Chimera DragonBlack DragonBlue DragonGold DragonGreen DragonRed DragonWhite Hydra+2 Wyvern Basilisk
 AnyFlyer
- chance Cockatrice Couatl Gargoyle Griffon HawkGiant Hipogriff KillerBee MantisGiant Nightmare Pegasus Peryton Phoenix Pixie PseudoDragon RobberFly RocSmall Sphinx Sprite Stirge WaspGiant
+ chance Cockatrice Gargoyle Griffon HawkGiant Hipogriff KillerBee Pegasus Pixie RobberFly RocSmall Sprite Stirge
 AnyInsect
- chance Ankheg BeetleFire BeetleOil BeetleTiger CentipedeGiant DriverAnt+2 FlainSnail KillerBee MantisGiant Rhadogessa RobberFly RotGrub ScorpionGiant SlugGiant SpiderBalackWidow SpiderCrab SpiderPhase SpiderTarantella WaspGiant
+ chance BeetleFire BeetleOil BeetleTiger DriverAnt+2 KillerBee Rhadogessa RobberFly ScorpionGiant SpiderBalackWidow SpiderCrab SpiderTarantella
 AnyUnusual
- chance Basilisk BinkingDog Bulette Catoblepas Centaur Gorgon Jackalwere Lamia Leucrocotta Werebear Wereboar Wererat Weretiger Werewolf Medusa Otyugh Roper ShamblingMound Treant WarpBeast
+ chance Basilisk BinkingDog Centaur Gorgon Werebear Wereboar Wererat Weretiger Werewolf Medusa Treant WarpBeast
 
 ForestAnimal
- chance BearGrizzly Boar CatPanther CatTiger DogWild FrogMutant FrogPoisonous Hawk HerdAnimal LizardGecko LizardTuatara SnakePitViper SpiderCrab+2 SpiderPhase ToadPoisonous Unicorn Wolf+2 WolfDire
+ chance Boar CatPanther CatTiger Hawk HerdAnimal LizardGecko LizardTuatara SnakePitViper SpiderCrab Unicorn Wolf WolfDire
 ForestHuman
- chance Bandit+3 AdventurersBasic+2 Berserker+2 Brigand+2 AdventurersExpert+2 ClericHightLevel FighterHightLevel MagicUserHightLevel Merchant+3 Noble+2 Nomad+2 Trader
+ chance AdventurersBasic Bandit+2 Berserker Brigand+3 AdventurersExpert ClericHightLevel FighterHightLevel MagicUserHightLevel Merchant
 ForestHumanoid
- chance Brownie Bugbear Cyclops Dryad ElfFolk Ettin GiantHill Gnoll Goblin Gullygug HagBlack Hobgoblin Leprechaunt Mutoid Orge+2 Orc Satyr Thoul Troll
-ForestMonster
- chance Catoblepas Centaur Cockatrice GasSpore Ghost GibberlingMouther Manticore Otyugh OwlBear Peryton PseudoDragon Roper ShamblingMound SlitheringTracker SpiderAranea Treant VioletFungus WillOWisp Wyvern
+ chance Bugbear Cyclops Dryad ElfFolk GiantHill Gnoll Goblin Hobgoblin Orge Orc Thoul Troll
 ForestEncounterTable
- chance ForestAnimal AnyDragon AnyFlyer ForestHuman ForestHumanoid AnyInsect ForestMonster AnyUnusual
+ chance ForestAnimal+2 AnyDragon AnyFlyer ForestHuman ForestHumanoid AnyInsect AnyUnusual

@@ -139,7 +139,6 @@ const char*	item::getnamef() const {
 }
 
 variant item::getpower() const {
-	if(!power)
-		return {};
-	return geti().powers.begin()[power - 1];
+	auto pe = geti().powers;
+	return pe ? pe->elements.begin()[power] : variant();
 }

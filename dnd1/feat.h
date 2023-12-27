@@ -4,12 +4,12 @@
 #pragma once
 
 enum feat_s : unsigned char {
-	EnergyDrain, Paralysis, PetrifyingGaze, PoisonImmunity, StrenghtDrain,
-	AcidDamage, Blink, DeathGaze, Defensive, Stampede,
-	Burrowing, Fly, ShapeChanging,
-	BattleRage, BearHug, PetrificationGaze, StunningBlow, SurpriseEnemy,
+	EnergyDrain, Paralysis, PetrifyingBreath, PetrifyingGaze, PoisonImmunity, CharmImmunity, StrenghtDrain,
+	AcidDamage, Blink, ChargeDouble, DeathGaze, Defensive, Stampede,
+	Burrowing, Fly, ShapeChanging, InflictWound,
+	BattleRage, BearHug, StunningBlow, SurpriseEnemy,
 	SunSensitive, Slow, Small, Large, Leap, NormalWeaponImmunity,
-	Blunt, TwoHanded, Burned, Frozen, Corrosed,
+	Blunt, TwoHanded, Burned, Frozen, Corrosed, Wounded,
 	EngageMelee, Surprised, Prone, Unholy, Summoned, Player, Enemy,
 };
 struct feati : nameable {

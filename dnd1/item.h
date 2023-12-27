@@ -16,7 +16,8 @@ struct itemi : attacki {
 	itemi		*ammunition, *basic;
 	wear_s		wear;
 	featable	flags;
-	variants	use, wearing, powers;
+	listi*		powers;
+	variants	use, wearing;
 	bool		is(feat_s v) const { return flags.is(v); }
 };
 class item : public typeable<itemi, unsigned char> {
@@ -56,7 +57,7 @@ public:
 	bool		iscountable() const { return true; }
 	bool		iscursed() const { return getpower().counter < 0; }
 	bool		isidentified() const { return identified != 0; }
-	bool		ismagic() const { return power != 0; }
+	bool		ismagic() const { return getpower().counter != 0; }
 	bool		isnatural() const { return geti().weight==0; }
 	bool		isready() const;
 	void		setcount(int v);
