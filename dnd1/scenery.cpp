@@ -87,8 +87,19 @@ static void scene_adventure() {
 	print("Adventure");
 }
 
+static const char* get_monster_pluar() {
+	static char temp[260]; stringbuilder sb(temp);
+	auto pe = getnme(stw(encountered_monster->id, "Pluar"));
+	if(pe)
+		return pe;
+	pe = getnm(encountered_monster->id);
+	sb.addpl(getnm(encountered_monster->id));
+	return temp;
+}
+
 static void look_monsters() {
 	printn(speech_get("LookGroup"), phrase("GroupSize", group_size(encountered_count)));
+	prints(speech_get("LookGroupDetail"), get_monster_pluar());
 }
 
 static void check_random_encounter() {

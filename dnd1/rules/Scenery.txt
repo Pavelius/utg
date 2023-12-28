@@ -24,3 +24,4 @@ Ruins
 SmallRoom
 LargeRoom
 Corridor
+Cart

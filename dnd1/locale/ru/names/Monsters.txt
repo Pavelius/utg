@@ -1,2 +1,9 @@
-﻿Orc: Орк
+﻿Goat: Козел
+
+Berserker: Берсеркер
+Human: Человек
+HumanPluar: Люди
+Medusa: Медуза
+Merchant: Купец
+Orc: Орк
 Skeleton: Скелет

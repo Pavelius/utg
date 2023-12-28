@@ -803,6 +803,19 @@ void stringbuilder::addto(const char* s) {
 	add(s, map, "у");
 }
 
+void stringbuilder::addpl(const char* s) {
+	static grammar map[] = {
+		{"а", "ы"},
+		{"ел", "лы"},
+		{"ец", "цы"},
+		{"и", "и"},
+		{"к", "ки"},
+		{"я", "и"},
+		{}
+	};
+	add(s, map, "ы");
+}
+
 int stringbuilder::getgender(const char* s) {
 	static genderi source[] = {
 		{"а", 1},

@@ -16,6 +16,7 @@ struct scenei : nameable {
 };
 struct scenery : typeable<scenei>, parentable<scenery> {
 	featable	flags;
+	char		count;
 	bool		apply(spell_s id, int level, bool run);
 	void		clear();
 	void		enter();

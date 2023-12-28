@@ -1,2 +1,2 @@
-﻿In file `rules/Monsters.txt`:
- Line 134: Can't find variant `Sting1d6`
+﻿In file `Names.txt`:
+BinkingDog: Define translate

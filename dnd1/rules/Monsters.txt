@@ -32,7 +32,7 @@ Cyclops dungeon(1) wilderness(1 4) treasure("E")
 Dryad wilderness(1 6) treasure("D")
  feats AC+4 Level+2 Movement+4 Morale+6 Neutral DryadCharmMagic+3
 ElfFolk magic(1)
- feats AC+4 Level+1 Sword Bow Constitution+3 Movement+4 Morale+8 Neutral SpellLevel1+1
+ feats AC+4 Level+1 Sword LongBow Constitution+3 Movement+4 Morale+8 Neutral SpellLevel1+1
 GiantHill
 Gnoll
 Goblin
