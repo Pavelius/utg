@@ -23,10 +23,32 @@ Bandit dungeon(1 8) wilderness(3 30) treasure("AU") origin(Humans)
 Berserker dungeon(1 6) wilderness(3 30) treasure("BP") origin(Humans)
  feats Level+1 AC+2 Constitution+3 BattleRage Neutral MartialWeapon Spear
 Brigand
-Merchant
+Bugbear dungeon(2 4) wilderness(5 20) treasure("B")
+ feats AC+4 Level+3 Mace Strenght+3 Constitution+3 Movement+3 Morale+9 Chaotic SurpriseEnemy
+Centaur wilderness(2 20) treasure("A")
+ feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons Hoofs1d6
+Cyclops dungeon(1) wilderness(1 4) treasure("E")
+ feats AC+4 Level+13 HugeClub Intellect-5 Movement+3 Morale+9 Chaotic MeleeToHit-2 RangedToHit-2
+Dryad wilderness(1 6) treasure("D")
+ feats AC+4 Level+2 Movement+4 Morale+6 Neutral DryadCharmMagic+3
+ElfFolk magic(1)
+ feats AC+4 Level+1 Sword Bow Constitution+3 Movement+4 Morale+8 Neutral SpellLevel1+1
+GiantHill
+Gnoll
+Goblin
+Hobgoblin
+Merchant wilderness(1 20)
+ feats Sword Dagger LeatherArmor Movement+4 Morale+8 Neutral FighterGuards+4
 Noble
+ feats Dagger Movement+4 Morale+8 Neutral
 Nomad
+Orc dungeon(2 8) wilderness(10 60) treasure("D")
+ feats Level+1 AC+3 SunSensitive OrcishWeapons
+Orge dungeon(1 6) wilderness(2 12) treasure("C")
+ feats AC+4 Level+4 Constitution+3 GreatClub Movement+3 Morale+10 Chaotic
+Thoul
 Trader
+Troll
 
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
  feats Level+6 AC+5 Intellect-10 Movement+2 Bite1d10 PetrifyingGaze
@@ -131,23 +153,7 @@ Wolf dungeon(2 12) wilderness(3 18)
 WolfDire dungeon(1 4) wilderness(2 8)
  feats AC+3 Level+4 Bite2d4 Constitution+3 Movement+5 Morale+8 Neutral
 Wyvern dungeon(1 2) wilderness(1 6) treasure("E")
- feats AC+6 Level+7 Bite2d8 Sting1d6 Movement+16 Fly Morale+9 Chaotic DeathPoison
-
-Bugbear
-Centaur wilderness(2 20) treasure("A")
- feats Level+4 AC+4 Movement+180 Morale+8 Neutral CentaurWeapons Hoofs1d6
-Cyclops
-Dryad
-ElfFolk
-GiantHill
-Gnoll
-Goblin
-Hobgoblin
-Orc dungeon(2 8) wilderness(10 60) treasure("D")
- feats Level+1 AC+3 SunSensitive OrcishWeapons
-Orge
-Thoul
-Troll
+ feats AC+6 Level+7 Bite2d8 Sting1d6 Movement+16 Fly Morale+9 Chaotic Large DeathPoison
 
 Ghost
 Skeleton dungeon(3 12) wilderness(3 30)

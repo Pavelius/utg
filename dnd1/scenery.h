@@ -27,6 +27,7 @@ struct scenery : typeable<scenei>, parentable<scenery> {
 	void		update();
 };
 extern scenery* scene;
+extern int		encountered_count;
 
 void add_scene(const char* id);
 

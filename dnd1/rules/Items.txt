@@ -123,6 +123,11 @@ Tentacles2d4 wear(MeleeWeapon) number(2) damage(2 8)
 
 Tusk2d4 wear(Head) number(1) damage(2 8)
 
+GreatClub cost(100) weight(250) wear(MeleeWeapon) number(1) damage(1 10)
+ flags Blunt
+HugeClub cost(200) weight(1000) wear(MeleeWeapon) number(1) damage(3 30)
+ flags Blunt
+
 #List
 
 Jewelry

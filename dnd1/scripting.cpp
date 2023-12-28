@@ -945,6 +945,13 @@ static void apply_chance(int bonus) {
 static void die_after_attack(int bonus) {
 }
 
+static void fighter_guards(int bonus) {
+	if(!bonus)
+		return;
+	for(auto i = 0; i < encountered_count; i++) {
+	}
+}
+
 BSDATA(script) = {
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
@@ -959,6 +966,7 @@ BSDATA(script) = {
 	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle, allow_continue_battle},
 	{"DieAfterAttack", die_after_attack},
+	{"FighterGuards", fighter_guards},
 	{"FighterHightLevel", fighter_high_level},
 	{"FilterAlive", filter_alive, targets_filter},
 	{"FilterBroken", filter_cursed, items_filter},

@@ -20,4 +20,5 @@ AnimateTree
 AnkhegAcidSquirt range(OneEnemy) count(4 32) save_halves(SaveBreathWeapon)
 BeetleOilOfPain range(OneEnemy) duration(Day1)
 ConeOfFire range(AllEnemies) targets(2 4) count(3 6) save_halves(SaveBreathWeapon)
+DryadCharmMagic range(OneEnemy) save_negates(SaveSpells)
 ItemRepair range(AllAllyItems) targets(1)

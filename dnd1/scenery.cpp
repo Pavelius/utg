@@ -15,7 +15,8 @@
 scenery* scene;
 static scenery*	next_scene;
 static spellf	scenery_spells;
-static int		current_milles_distance, encountered_count;
+static int		current_milles_distance;
+int				encountered_count;
 static bool		party_surprised, monster_surprised;
 
 void choose_options(variant source);
