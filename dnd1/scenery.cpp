@@ -13,10 +13,10 @@
 #include "speech.h"
 
 scenery* scene;
-static scenery*		next_scene;
-static spellf		scenery_spells;
-static int			current_milles_distance, encountered_count;
-static bool			party_surprised, monster_surprised;
+static scenery*	next_scene;
+static spellf	scenery_spells;
+static int		current_milles_distance, encountered_count;
+static bool		party_surprised, monster_surprised;
 
 void choose_options(variant source);
 
@@ -58,7 +58,7 @@ static void add_monster(const monsteri* pc) {
 }
 
 static void add_monsters() {
-	encountered_count = encountered_monster->getcount(WildernessGroup);
+	encountered_count = encountered_monster->getcount(WildernessGroup).roll();
 	for(auto i = 0; i < encountered_count; i++)
 		add_monster(encountered_monster);
 	script_run(encountered_monster->wilderness_group);

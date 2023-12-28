@@ -10,7 +10,7 @@
 #pragma once
 
 struct creature : actable, attackable, spellable, statable, avatarable, wearable {
-	unsigned short	leader;
+	unsigned short	leader, tight;
 	alignment_s		alignment;
 	statable		basic;
 	spellable		prepared;
@@ -30,6 +30,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	int				get(spell_s v) const { return spells[v]; }
 	const classi&	geti() const;
 	int				getaward() const;
+	creature*		getcontact() const;
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
 	int				getlevel(spell_s spell) const;
@@ -58,6 +59,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	bool			save(spell_s id, int& count) const;
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
+	void			setcontact(const creature* pv);
 	void			update();
 	void			update_finish();
 	void			use(item& it);

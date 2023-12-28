@@ -83,6 +83,14 @@ void creature::setleader(const creature* pv) {
 	leader = getbsi(pv);
 }
 
+creature* creature::getcontact() const {
+	return getbs<creature>(tight);
+}
+
+void creature::setcontact(const creature* pv) {
+	tight = getbsi(pv);
+}
+
 const classi& creature::geti() const {
 	if(type.iskind<classi>())
 		return bsdata<classi>::elements[type.value];

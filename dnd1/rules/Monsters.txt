@@ -70,7 +70,6 @@ Gorgon dungeon(1 2) wilderness(1 4) treasure("E")
 Griffon
  feats Level+7 AC+4 Movement+4 Fly Intellect-10 Morale+8 Large Neutral Claws1d4 Bite2d8
 Hydra
-Jackalwere
 Hawk
  feats Level+1 AC+1 Movement+16 Fly Intellect-10 Morale+7 Neutral Talons1d2
 HawkGiant wilderness(1 6)
@@ -83,30 +82,56 @@ LizardGecko dungeon(1 6) wilderness(1 10) treasure("U")
  feats AC+4 Level+3 Bite1d6 Movement+4 Intellect-10 Morale+7 Neutral
 LizardTuatara dungeon(1 2) wilderness(1 4) treasure("V")
  feats AC+5 Level+6 Claws1d4 Bite2d6 Movement+3 Intellect-10 Morale+6 Neutral
-Medusa
-Pegasus
-Rhadogessa
-Pixie
-RobberFly
-RocSmall
-ScorpionGiant
-SnakePitViper
-SpiderBalackWidow
-SpiderCrab
-SpiderTarantella
-Sprite
-Stirge
-Treant
-Unicorn
-WarpBeast
-Werebear
-Wereboar
-Wererat
-Weretiger
-Werewolf
-Wolf
-WolfDire
-Wyvern
+Medusa dungeon(1 3) wilderness(1 4) treasure("F")
+ feats AC+1 Level+4 Bite1d6 Movement+3 Morale+8 Chaotic PetrifyingGaze DeathPoison
+Pegasus wilderness(1 12)
+ feats AC+3 Level+2 Hoofs1d6 Constitution+6 Intellect-10 Movement+8 Fly Morale+8 Lawful
+Pixie dungeon(2 8) wilderness(10 40) treasure("RS")
+ feats AC+6 Level+1 Dagger Movement+3 Fly Morale+7 Neutral
+Rhadogessa dungeon(1 4) wilderness(1 6) treasure("U")
+ feats AC+4 Level+4 Bite2d8 Constitution+6 Intellect-10 Movement+5 Cling Large Morale+8 Neutral
+RobberFly dungeon(1 6) wilderness(2 12) treasure("U")
+ feats AC+3 Level+2 Bite1d8 Intellect-10 Movement+3 Fly Morale+8 Neutral PoisonImmunity SurpriseEnemy
+RocSmall wilderness(1 12) treasure("I")
+ feats AC+5 Level+6 Bite2d6 Intellect-8 Strenght+3 Movement+16 Fly Morale+9 Lawful Swoop
+ScorpionGiant dungeon(1 6) wilderness(1 6) treasure("V")
+ feats AC+7 Level+4 Claws1d10 Sting1d4 Intellect-10 Movement+5 Morale+11 Chaotic DeathPoison
+SnakePitViper dungeon(1 8) wilderness(1 8)
+ feats AC+3 Level+2 Bite1d4 Intellect-10 Movement+3 Morale+7 Neutral Quick DeathPoison
+SpiderBalackWidow dungeon(1 3) wilderness(1 3) treasure("U")
+ feats AC+3 Level+3 Bite2d6 Intellect-10 Movement+2 Morale+8 Neutral DeathPoison
+SpiderCrab dungeon(1 4) wilderness(1 4) treasure("U")
+ feats AC+2 Level+2 Bite1d8 Intellect-10 Movement+4 Morale+7 Neutral DeathPoison SurpriseEnemy
+SpiderTarantella dungeon(1 3) wilderness(1 3) treasure("U")
+ feats AC+4 Level+4 Bite1d8 Intellect-10 Movement+4 Morale+8 Neutral DancePoison
+Sprite dungeon(3 18) wilderness(5 40) treasure("S")
+ feats AC+4 Level+0 Movement+5 Fly Morale+7 Neutral
+Stirge dungeon(1 10) wilderness(3 36) treasure("L")
+ feats AC+2 Level+1 Intellect-10 Movement+5 Fly Morale+9 Neutral Dive BloodSucking
+Treant wilderness(1 8) treasure("C")
+ feats AC+7 Level+8 Claws2d6 Movement+2 Morale+9 Lawful SurpriseEnemy AnimateTree+2
+AnimatedTree
+ feats AC+7 Level+8 Claws2d6 Intellect-10 Movement+2 Morale+9 Lawful
+Unicorn dungeon(1 6) wilderness(1 8)
+ feats AC+7 Level+4 Hoofs1d8 Horn1d8 Movement+8 Morale+7 Lawful Teleport+1
+WarpBeast dungeon(1 4) wilderness(1 4) treasure("D")
+ feats AC+5 Level+6 Hoofs1d8 Tentacles2d4 Intellect-5 Movement+5 Morale+8 Neutral Saves+2 Blink
+Werebear dungeon(1 4) wilderness(1 4) treasure("C")
+ feats AC+7 Level+6 Claws2d4 Bite2d8 Movement+4 Morale+10 Neutral BearHug NormalWeaponImmunity
+Wereboar dungeon(1 4) wilderness(2 8) treasure("C")
+ feats AC+5 Level+4 Bite2d6 Movement+5 Constitution+3 Morale+9 Neutral BattleRage NormalWeaponImmunity
+Wererat dungeon(1 8) wilderness(2 16) treasure("C")
+ feats AC+2 Level+3 Bite1d4 Movement+4 Morale+8 Chaotic SurpriseEnemy NormalWeaponImmunity
+Weretiger dungeon(1 4) wilderness(1 4) treasure("C")
+ feats AC+6 Level+5 Claws1d6 Movement+5 Morale+9 Neutral SurpriseEnemy NormalWeaponImmunity
+Werewolf dungeon(1 6) wilderness(2 16) treasure("C")
+ feats AC+4 Level+4 Bite2d4 Movement+6 Morale+8 Chaotic NormalWeaponImmunity
+Wolf dungeon(2 12) wilderness(3 18)
+ feats AC+2 Level+2 Bite1d6 Constitution+6 Movement+5 Morale+6 Neutral
+WolfDire dungeon(1 4) wilderness(2 8)
+ feats AC+3 Level+4 Bite2d4 Constitution+3 Movement+5 Morale+8 Neutral
+Wyvern dungeon(1 2) wilderness(1 6) treasure("E")
+ feats AC+6 Level+7 Bite2d8 Sting1d6 Movement+16 Fly Morale+9 Chaotic DeathPoison
 
 Bugbear
 Centaur wilderness(2 20) treasure("A")

@@ -53,8 +53,10 @@ BSDATA(spelli) = {
 	{"RemoveCurse"},
 	{"FlameBlade"},
 	{"AntiMagicShell"},
+	{"Teleport"},
 	{"DeathSpell"},
-	{"AnkhegAcidSquirt"}, // Some effective actions
+	{"AnimateTree"}, // Some effective actions
+	{"AnkhegAcidSquirt"},
 	{"BeetleOilOfPain"},
 	{"ConeOfFire"},
 	{"ItemRepair"},

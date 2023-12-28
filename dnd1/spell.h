@@ -15,9 +15,9 @@ enum spell_s : unsigned char {
 	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
 	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,
 	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
-	AntiMagicShell, DeathSpell,
+	AntiMagicShell, Teleport, DeathSpell,
 	LastSpell = DeathSpell,
-	AnkhegAcidSquirt, BeetleOilOfPain, ConeOfFire, ItemRepair,
+	AnimateTree, AnkhegAcidSquirt, BeetleOilOfPain, ConeOfFire, ItemRepair,
 	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
 };
 typedef flagable<8> spellf;

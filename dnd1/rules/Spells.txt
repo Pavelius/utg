@@ -13,8 +13,10 @@ PurifyFoodAndWater level(1) range(OneAllyItem)
 RemoveFear level(1) range(OneAllyItem)
 ResistCold level(1) range(AllAlly)
 
+Teleport
 DeathSpell level(6) range(AllEnemiesHD) targets(4 24) save_negates(SaveDeath)
 
+AnimateTree
 AnkhegAcidSquirt range(OneEnemy) count(4 32) save_halves(SaveBreathWeapon)
 BeetleOilOfPain range(OneEnemy) duration(Day1)
 ConeOfFire range(AllEnemies) targets(2 4) count(3 6) save_halves(SaveBreathWeapon)
