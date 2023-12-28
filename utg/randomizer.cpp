@@ -43,3 +43,9 @@ variant single(variant v) {
 		v = bsdata<randomizeri>::elements[v.value].random();
 	return v;
 }
+
+variant single(variant v, int bonus) {
+	while(v.iskind<randomizeri>())
+		v = bsdata<randomizeri>::elements[v.value].random(bonus);
+	return v;
+}

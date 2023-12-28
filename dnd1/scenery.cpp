@@ -7,6 +7,7 @@
 #include "ongoing.h"
 #include "pushvalue.h"
 #include "randomizer.h"
+#include "reaction.h"
 #include "roll.h"
 #include "scenery.h"
 #include "script.h"
@@ -49,6 +50,26 @@ bool have_feats(feat_s v, bool keep) {
 	return false;
 }
 
+bool have_feats(feat_s side, feat_s v, bool keep) {
+	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
+		if(!p->is(side))
+			continue;
+		if(p->is(v) == keep)
+			return true;
+	}
+	return false;
+}
+
+static bool is_monster(feat_s v) {
+	for(auto p : encountered) {
+		if(p->is(v))
+			return true;
+	}
+	return false;
+}
+
 static void add_monster(const monsteri* pc) {
 	pushvalue push(player);
 	add_creature(pc);
@@ -67,6 +88,7 @@ static void add_monsters() {
 
 static bool random_monsters_setup() {
 	encountered_monster = 0;
+	encountered.clear();
 	variant v = single(stw(scene->geti().id, "EncounterTable"));
 	if(!v)
 		return false;
@@ -88,6 +110,8 @@ static void scene_adventure() {
 }
 
 static const char* get_monster_pluar() {
+	if(!encountered_monster)
+		return "";
 	static char temp[260]; stringbuilder sb(temp);
 	auto pe = getnme(stw(encountered_monster->id, "Pluar"));
 	if(pe)
@@ -102,6 +126,30 @@ static void look_monsters() {
 	prints(speech_get("LookGroupDetail"), get_monster_pluar());
 }
 
+static bool surprise_side(int bonus) {
+	last_roll = d6() + bonus;
+	return last_roll <= 2;
+}
+
+static void random_surprise() {
+	auto party_bonus = 0;
+	if(have_feats(Enemy, SurpriseEnemy, true))
+		party_bonus -= 2;
+	party_surprised = surprise_side(party_bonus);
+	monster_surprised = surprise_side(0);
+}
+
+static void make_ambush() {
+	printn(speech_get("AnyMonsterWildernessAmbush"));
+}
+
+static void random_reaction() {
+	auto result = single("MonsterReaction");
+	if(!result.iskind<reactioni>())
+		return;
+	reaction = (reaction_s)result.value;
+}
+
 static void check_random_encounter() {
 	if(draw::isnext())
 		return;
@@ -110,9 +158,12 @@ static void check_random_encounter() {
 	//	return;
 	if(!random_monsters_setup())
 		return;
-	party_surprised = false;
-	monster_surprised = false;
-	look_monsters();
+	random_surprise();
+	random_reaction();
+	if(party_surprised && !monster_surprised)
+		make_ambush();
+	else
+		look_monsters();
 }
 
 static void play_scene() {

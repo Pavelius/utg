@@ -13,6 +13,7 @@
 #include "organization.h"
 #include "race.h"
 #include "randomizer.h"
+#include "reaction.h"
 #include "scenery.h"
 #include "script.h"
 #include "widget.h"
@@ -123,6 +124,9 @@ BSMETA(racei) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
+BSMETA(reactioni) = {
+	BSREQ(id),
+	{}};
 BSMETA(scenei) = {
 	BSREQ(id),
 	BSREQ(actions), BSREQ(elements),
@@ -165,6 +169,7 @@ BSDATA(varianti) = {
 	{"Organization", VAR(organizationi, 1)},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
+	{"Reaction", VAR(reactioni, 1)},
 	{"SceneType", VAR(scenei, 1), 0, 0},
 	{"Scene", VAR(scenery, 2), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
