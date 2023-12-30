@@ -1,7 +1,1 @@
-﻿Basilisk: 
-BinkingDog: 
-Bugbear: 
-DragonWhite: 
-KillerBee: 
-Pegasus: 
-Troll: 
+﻿

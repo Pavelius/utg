@@ -13,6 +13,11 @@ void creaturea::select() {
 	count = ps - data;
 }
 
+void creaturea::set(feat_s v) {
+	for(auto p : *this)
+		p->set(v);
+}
+
 void creaturea::match(feat_s v, bool keep) {
 	auto ps = begin();
 	for(auto p : *this) {

@@ -71,7 +71,7 @@ void apply_advance(const char* id, variant type, int level) {
 
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
-	leader = 0xFFFF;
+	leader = tight = 0xFFFF;
 	name = -1;
 }
 

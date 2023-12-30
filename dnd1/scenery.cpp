@@ -18,9 +18,11 @@ static scenery*	next_scene;
 static spellf	scenery_spells;
 static int		current_milles_distance;
 int				encountered_count;
-static bool		party_surprised, monster_surprised;
 
 void choose_options(variant source);
+void combat_mode(int bonus);
+bool have_feats(feat_s side, feat_s v, bool keep);
+void reaction_roll(int bonus);
 
 static int group_size(int count) {
 	if(count <= 1)
@@ -40,34 +42,12 @@ static const char* phrase(const char* id, int param) {
 	return speech_get(p, param);
 }
 
-bool have_feats(feat_s v, bool keep) {
+static void set_feat(bool party, feat_s v) {
 	for(auto p : creatures) {
-		if(!p->isready())
+		if(p->is(Player) != party)
 			continue;
-		if(p->is(v) == keep)
-			return true;
+		p->set(v);
 	}
-	return false;
-}
-
-bool have_feats(feat_s side, feat_s v, bool keep) {
-	for(auto p : creatures) {
-		if(!p->isready())
-			continue;
-		if(!p->is(side))
-			continue;
-		if(p->is(v) == keep)
-			return true;
-	}
-	return false;
-}
-
-static bool is_monster(feat_s v) {
-	for(auto p : encountered) {
-		if(p->is(v))
-			return true;
-	}
-	return false;
 }
 
 static void add_monster(const monsteri* pc) {
@@ -126,28 +106,14 @@ static void look_monsters() {
 	prints(speech_get("LookGroupDetail"), get_monster_pluar());
 }
 
-static bool surprise_side(int bonus) {
-	last_roll = d6() + bonus;
-	return last_roll <= 2;
-}
-
-static void random_surprise() {
-	auto party_bonus = 0;
-	if(have_feats(Enemy, SurpriseEnemy, true))
-		party_bonus -= 2;
-	party_surprised = surprise_side(party_bonus);
-	monster_surprised = surprise_side(0);
-}
-
 static void make_ambush() {
 	printn(speech_get("AnyMonsterWildernessAmbush"));
+	set_feat(false, Enemy);
+	combat_mode(0);
 }
 
 static void random_reaction() {
-	auto result = single("MonsterReaction");
-	if(!result.iskind<reactioni>())
-		return;
-	reaction = (reaction_s)result.value;
+	reaction_roll(0);
 }
 
 static void check_random_encounter() {
@@ -158,12 +124,26 @@ static void check_random_encounter() {
 	//	return;
 	if(!random_monsters_setup())
 		return;
-	random_surprise();
+	//random_surprise();
 	random_reaction();
-	if(party_surprised && !monster_surprised)
-		make_ambush();
-	else
-		look_monsters();
+	//if(party_surprised && !monster_surprised)
+	//	make_ambush();
+	//else if(reaction <= Unfriendly) {
+	//	set_feat(false, Enemy);
+	//	combat_mode(0);
+	//} else
+	//	look_monsters();
+}
+
+static void clean_ecnounter() {
+	creaturea removes;
+	for(auto p : creatures) {
+		if(p->is(Player))
+			continue;
+		removes.add(p);
+	}
+	for(auto p : removes)
+		p->remove();
 }
 
 static void play_scene() {
@@ -180,6 +160,7 @@ static void play_scene() {
 		//printa(id, "Camp");
 		choose_options(scene->geti().actions);
 		pause();
+		clean_ecnounter();
 	}
 }
 

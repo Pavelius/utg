@@ -2,11 +2,17 @@
 
 AdventureScene
  elements ItemRepair HuntPrey
+CombatantStatuses
+ elements Surprised EngageMelee Prone
+CombatRound
+ elements AttackRanged AttackCharge AttackMelee AttackUnarmed RetreatMelee RunAway
+CombatTurn
+ elements WinBattle LoseGame ContinueBattle
 
 #SceneType
 
 Plain
-Forest actions(AdventureScene) encounter_chance(20) encounter(WildernessGroup)
+Forest actions(AdventureScene) encounter_chance(30) encounter(WildernessGroup)
 Desert
 Swamp
 Hills

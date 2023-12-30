@@ -77,6 +77,7 @@ struct creaturea : adat<creature*, 32> {
 	void			matchyou(bool keep) { match(&creature::isplayer, keep); }
 	creature*		random() const;
 	void			select();
+	void			set(feat_s v);
 };
 extern creaturea creatures, targets, encountered;
 

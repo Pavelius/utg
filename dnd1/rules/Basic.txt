@@ -7,15 +7,6 @@
 #include "rules/Scenery.txt"
 #include "rules/Organizations.txt"
 
-#List
-
-CombatantStatuses
- elements Surprised EngageMelee Prone
-CombatRound
- elements AttackRanged AttackCharge AttackMelee AttackUnarmed RetreatMelee RunAway
-CombatTurn
- elements WinBattle LoseGame ContinueBattle
-
 #Menu
 
 General source(Creature)

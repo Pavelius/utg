@@ -17,6 +17,7 @@ itema items;
 spella spells;
 static int critical_roll;
 static void* last_option;
+static bool	party_surprised, monster_surprised;
 
 void apply_advance(const char* id, variant type, int level);
 void generate_lair_treasure(const char* symbols);
@@ -101,6 +102,28 @@ static void clear_console() {
 static void damage_item() {
 	if(last_item->damage())
 		last_item->act(' ', getnm("ItemBroken"), last_item->getname());
+}
+
+bool have_feats(feat_s v, bool keep) {
+	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
+		if(p->is(v) == keep)
+			return true;
+	}
+	return false;
+}
+
+bool have_feats(feat_s side, feat_s v, bool keep) {
+	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
+		if(!p->is(side))
+			continue;
+		if(p->is(v) == keep)
+			return true;
+	}
+	return false;
 }
 
 static bool is_melee_fight() {
@@ -244,6 +267,13 @@ static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 		printn(getnm("AppearSingle"), pm->getname());
 }
 
+static void add_monsters() {
+	if(encountered_monster) {
+		encountered_count = encountered_monster->getcount(WildernessGroup);
+		add_monsters(encountered_monster, encountered_count, Enemy);
+	}
+}
+
 static void random_encounter(const monsteri* pm) {
 	if(!pm)
 		return;
@@ -252,6 +282,21 @@ static void random_encounter(const monsteri* pm) {
 
 void random_encounter(const char* id) {
 	random_encounter(bsdata<monsteri>::find(id));
+}
+
+static void random_encounter(int bonus) {
+	encountered_monster = 0;
+	encountered_count = 0;
+	reaction = UnknownReaction;
+	variant v = single(stw(scene->geti().id, "EncounterTable"));
+	if(!v)
+		return;
+	if(v.iskind<script>())
+		bsdata<script>::elements[v.value].proc(0);
+	else if(v.iskind<monsteri>())
+		encountered_monster = bsdata<monsteri>::elements + v.value;
+	if(encountered_monster)
+		add_monsters();
 }
 
 static void random_melee_angry(int bonus) {
@@ -391,6 +436,8 @@ static void attack_charge(int bonus) {
 //}
 
 static bool allow_retreat_melee(int bonus) {
+	if(player->is(Enemy))
+		return false; // NPC and Enemies not use this options
 	if(!player->is(EngageMelee))
 		return false;
 	creaturea source = creatures;
@@ -413,6 +460,8 @@ static void remove_player() {
 }
 
 static bool allow_run_away(int bonus) {
+	if(player->is(Enemy))
+		return false; // NPC don't use this options. They use morale roll.
 	if(player->is(EngageMelee))
 		return false;
 	return true;
@@ -430,7 +479,7 @@ static void surprise_roll(int bonus) {
 	for(auto p : creatures) {
 		auto result = d6();
 		auto need_surprise = 2;
-		if(result <= 2)
+		if(result <= need_surprise)
 			p->set(Surprised);
 	}
 }
@@ -582,16 +631,13 @@ static void choose_option() {
 		pause();
 }
 
-static void what_you_do(bool enemy_first_choose) {
+static void what_you_do() {
 	last_option = 0;
 	if(!an)
 		return;
-	if(player->is(Enemy)) {
-		if(enemy_first_choose)
-			last_option = an.begin();
-		else
-			last_option = an.random();
-	} else {
+	if(player->is(Enemy))
+		last_option = an.random();
+	else {
 		char temp[260]; stringbuilder sb(temp);
 		player->actv(sb, getnm("WhatToDo"), 0, 0);
 		last_option = an.choose(temp);
@@ -684,7 +730,7 @@ static void combat_round() {
 		an.clear();
 		add_options("CombatRound");
 		apply_scene_spells(0);
-		what_you_do(true);
+		what_you_do();
 		apply_option();
 		update_melee_fight();
 	}
@@ -701,7 +747,53 @@ void combat_mode(int bonus) {
 	menu::current_mode = push_mode;
 }
 
-static void reaction_roll(int bonus) {
+static void combat_mode_scene() {
+	combat_mode(0);
+}
+
+static void step_mode_scene() {
+}
+
+static bool surprise_side(int bonus) {
+	last_roll = d6() + bonus;
+	return last_roll <= 2;
+}
+
+static void random_surprise() {
+	auto party_bonus = 0;
+	if(have_feats(Enemy, SurpriseEnemy, true))
+		party_bonus -= 2;
+	party_surprised = surprise_side(party_bonus);
+	monster_surprised = surprise_side(0);
+}
+
+static void reaction_mode(int bonus) {
+	switch(reaction) {
+	case Hostile:
+		if(party_surprised) {
+		}
+		break;
+	case Unfriendly:
+		if(party_surprised)
+			draw::setnext(combat_mode_scene);
+		else {
+
+		}
+		break;
+	case NeutralReaction:
+		if(party_surprised)
+			draw::setnext(step_mode_scene);
+		break;
+	case Indifferent:
+		draw::setnext(step_mode_scene);
+		break;
+	case Friendly:
+		draw::setnext(step_mode_scene);
+		break;
+	}
+}
+
+void reaction_roll(int bonus) {
 	if(player)
 		bonus += player->getbonus(Charisma);
 	auto r = d6() + d6() + bonus;
@@ -980,6 +1072,7 @@ BSDATA(script) = {
 	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
 	{"MakeLeader", make_leader},
+	{"RandomEncounter", random_encounter},
 	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},
 	{"RetreatMelee", retreat_melee, allow_retreat_melee},
