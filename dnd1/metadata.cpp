@@ -129,7 +129,7 @@ BSMETA(reactioni) = {
 	{}};
 BSMETA(scenei) = {
 	BSREQ(id),
-	BSREQ(actions), BSREQ(elements),
+	BSREQ(actions), BSREQ(elements), BSREQ(script),
 	BSREQ(encounter_chance),
 	BSENM(encounter, groupi),
 	{}};
@@ -162,7 +162,7 @@ BSDATA(varianti) = {
 	{"Feat", VAR(feati, 1), 0, 0, fnscript<feati>},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
-	{"List", VAR(listi, 1)},
+	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},

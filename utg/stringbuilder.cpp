@@ -764,6 +764,14 @@ void stringbuilder::addof(const char* s) {
 	add(s, map, "а");
 }
 
+void stringbuilder::addofpl(const char* s) {
+	static grammar map[] = {
+		{"би", "би"},
+		{"ь", "ей"},
+		{}};
+	add(s, map, "ов");
+}
+
 void stringbuilder::addnounf(const char* s) {
 	static grammar map[] = {
 		{"ий", "ая"},

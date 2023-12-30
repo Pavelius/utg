@@ -75,6 +75,12 @@ void creature::clear() {
 	name = -1;
 }
 
+const monsteri*	creature::getmonster() const {
+	if(type.iskind<monsteri>())
+		return bsdata<monsteri>::elements + type.value;
+	return 0;
+}
+
 creature* creature::getleader() const {
 	return getbs<creature>(leader);
 }

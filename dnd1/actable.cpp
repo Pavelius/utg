@@ -144,11 +144,50 @@ void initialize_str() {
 	stringbuilder::custom = main_act_identifier;
 }
 
+static int group_size(int count) {
+	if(count <= 1)
+		return 0;
+	else if(count <= 3)
+		return 1;
+	else if(count <= 7)
+		return 2;
+	else
+		return 3;
+}
+
+static const char* phrase(const char* id, int param) {
+	auto p = speech_find(id);
+	if(!p)
+		return 0;
+	return speech_get(p, param);
+}
+
 static void get_scenename(stringbuilder& sb) {
 	sb.add(scene->getname());
 }
 
+static void get_monster(stringbuilder& sb) {
+	if(encountered_monster)
+		sb.add(encountered_monster->getname());
+}
+
+static void get_monsters(stringbuilder& sb) {
+	if(encountered_monster) {
+		if(encountered_count > 1) {
+			auto gs = phrase("GroupSize", group_size(encountered_count));
+			if(gs) {
+				sb.add(gs);
+				sb.add(" ");
+				sb.addofpl(encountered_monster->getname());
+			}
+		} else
+			sb.addof(encountered_monster->getname());
+	}
+}
+
 BSDATA(stringvari) = {
-	{"scenename", get_scenename}
+	{"scenename", get_scenename},
+	{"monster", get_monster},
+	{"monsters", get_monsters},
 };
 BSDATAF(stringvari)

@@ -9,7 +9,7 @@
 #include "variant.h"
 
 struct scenei : nameable {
-	variant		actions;
+	variant		actions, script;
 	variants	elements;
 	group_s		encounter;
 	char		encounter_chance;

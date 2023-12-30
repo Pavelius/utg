@@ -12,12 +12,14 @@
 #include "scenery.h"
 #include "script.h"
 #include "spell.h"
+#include "statistic.h"
 
 itema items;
 spella spells;
 static int critical_roll;
 static void* last_option;
 static bool	party_surprised, monster_surprised;
+static statistica monsters;
 
 void apply_advance(const char* id, variant type, int level);
 void generate_lair_treasure(const char* symbols);
@@ -236,7 +238,54 @@ static void range_attack(int bonus) {
 	make_attack("Ranged", bonus, RangedToHit, RangedDamage, RangedWeapon);
 }
 
-void select_enemies() {
+static const monsteri* get_distinct_monster(int position) {
+	const monsteri* pm = 0;
+	for(auto p : creatures) {
+		auto cm = p->getmonster();
+		if(!cm)
+			continue;
+		if(!pm || (pm != cm)) {
+			pm = cm;
+			if(position-- == 0)
+				return pm;
+		}
+	}
+	return 0;
+}
+
+static int get_monster_count(const monsteri* monster) {
+	auto result = 0;
+	for(auto p : creatures) {
+		if(p->getmonster() == monster)
+			result++;
+	}
+	return result;
+}
+
+static int compare_statistic(const void* p1, const void* p2) {
+	auto e1 = *((statistici**)p1);
+	auto e2 = *((statistici**)p2);
+	return e1->count - e2->count;
+}
+
+static void get_monster_stasistic() {
+	monsters.clear();
+	for(auto p : creatures) {
+		if(p->is(Player))
+			continue;
+		auto pm = p->getmonster();
+		if(!pm)
+			continue;
+		monsters.add((void*)pm, 1);
+	}
+	monsters.sort(compare_statistic);
+}
+
+static void look_group() {
+	printa("LookGroup");
+}
+
+static void select_enemies() {
 	targets = creatures;
 	targets.matchenemy(true);
 	targets.matchready(true);
@@ -261,10 +310,6 @@ static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 		if(feat)
 			player->set(feat);
 	}
-	if(count > 1)
-		printn(getnm("AppearSeveral"), pm->getname());
-	else
-		printn(getnm("AppearSingle"), pm->getname());
 }
 
 static void add_monsters() {
@@ -295,8 +340,10 @@ static void random_encounter(int bonus) {
 		bsdata<script>::elements[v.value].proc(0);
 	else if(v.iskind<monsteri>())
 		encountered_monster = bsdata<monsteri>::elements + v.value;
-	if(encountered_monster)
+	if(encountered_monster) {
 		add_monsters();
+		look_group();
+	}
 }
 
 static void random_melee_angry(int bonus) {
@@ -748,7 +795,6 @@ void combat_mode(int bonus) {
 }
 
 static void combat_mode_scene() {
-	combat_mode(0);
 }
 
 static void step_mode_scene() {
@@ -767,29 +813,21 @@ static void random_surprise() {
 	monster_surprised = surprise_side(0);
 }
 
-static void reaction_mode(int bonus) {
-	switch(reaction) {
-	case Hostile:
-		if(party_surprised) {
-		}
-		break;
-	case Unfriendly:
-		if(party_surprised)
-			draw::setnext(combat_mode_scene);
-		else {
+static void prepare_scene() {
+}
 
+static void reaction_mode(int bonus) {
+	if(monster_surprised)
+		draw::setnext(prepare_scene);
+	else if(party_surprised) {
+		if(reaction==Hostile || reaction==Unfriendly)
+			combat_mode(0);
+		else {
 		}
-		break;
-	case NeutralReaction:
-		if(party_surprised)
-			draw::setnext(step_mode_scene);
-		break;
-	case Indifferent:
+	} else if(reaction==Hostile)
+		combat_mode(0);
+	else {
 		draw::setnext(step_mode_scene);
-		break;
-	case Friendly:
-		draw::setnext(step_mode_scene);
-		break;
 	}
 }
 
@@ -996,14 +1034,18 @@ static void adventurers_expert(int bonus) {
 }
 
 static void apply_leader() {
-	for(auto p : encountered) {
+	for(auto p : creatures) {
+		if(p->is(Player))
+			continue;
 		if(!p->getleader())
 			p->setleader(player);
 	}
 }
 
 static void make_leader(int bonus) {
-	player = encountered.random();
+	auto targets = creatures;
+	targets.match(Player, false);
+	player = targets.random();
 	player->basic.abilities[HP] = player->get(Level) * player->geti().hd;
 	player->basic.abilities[MeleeDamage] += bonus;
 	player->basic.abilities[RangedDamage] += bonus;

@@ -38,6 +38,7 @@ public:
 	void				addnounf(const char* s);
 	void				addnz(const char* format, unsigned count);
 	void				addof(const char* s);
+	void				addofpl(const char* s);
 	void				addpl(const char* s);
 	void				adds(const char* format, ...) { addx(' ', format, xva_start(format)); }
 	void				addsep(char separator);

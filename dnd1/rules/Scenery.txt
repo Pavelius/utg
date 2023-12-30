@@ -2,6 +2,8 @@
 
 AdventureScene
  elements ItemRepair HuntPrey
+AdventureScript
+ elements RandomEncounter
 CombatantStatuses
  elements Surprised EngageMelee Prone
 CombatRound
@@ -12,7 +14,7 @@ CombatTurn
 #SceneType
 
 Plain
-Forest actions(AdventureScene) encounter_chance(30) encounter(WildernessGroup)
+Forest actions(AdventureScene) encounter_chance(30) encounter(WildernessGroup) script(AdventureScript)
 Desert
 Swamp
 Hills

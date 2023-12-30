@@ -34,6 +34,7 @@ struct creature : actable, attackable, spellable, statable, avatarable, wearable
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
 	int				getlevel(spell_s spell) const;
+	const monsteri*	getmonster() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;
@@ -79,7 +80,7 @@ struct creaturea : adat<creature*, 32> {
 	void			select();
 	void			set(feat_s v);
 };
-extern creaturea creatures, targets, encountered;
+extern creaturea creatures, targets;
 
 void add_creature(const classi* pi, gender_s gender, int level = 1);
 void add_creature(const monsteri* pi);

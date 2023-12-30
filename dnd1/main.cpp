@@ -32,7 +32,7 @@ static void starting() {
 	start_game_organization();
 	start_game_reputation();
 	//answers::header = "Большой зал";
-	random_encounter("Orc");
+	//random_encounter("Orc");
 	//treasure loot;
 	//loot.generate('A');
 	//loot.take();

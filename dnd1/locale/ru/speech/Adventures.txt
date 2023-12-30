@@ -42,10 +42,7 @@
 Через некоторое время
 
 #LookGroup
-%ByYourWay впереди вы увидели %1.
-
-#LookGroupDetail
-Большинство из них были %1 и они неспеша двигались в вашем направлении.
+%ByYourWay впереди вы увидели %-monsters.
 
 #AnyMonsterWildernessAmbush
 Вдруг впереди вы услышали шерох.

@@ -1,6 +1,10 @@
-﻿Goat: Козел
+﻿GiantHawk: Огромный ястреб
+Goat: Козел
+Wolf: Волк
 
+Bandit: Бандит
 Berserker: Берсеркер
+BeelteOil: Нефтяной жук
 Human: Человек
 HumanPluar: Люди
 Medusa: Медуза
