@@ -25,7 +25,7 @@ void gamei::stop(const char* format) {
 		return;
 	if(!format)
 		format = getnm("Continue");
-	draw::pause(format);
+	pause(format);
 }
 
 static void add_header(const quest* ph) {
@@ -166,7 +166,7 @@ static void add_message(const char* format) {
 		memcpy(temp, format, count);
 		temp[count] = 0;
 		game.act(temp);
-		draw::pause();
+		pause();
 		utg::sb.clear();
 		format = pn;
 	}
@@ -717,9 +717,9 @@ static void bury(int bonus, int param) {
 static void end_game(int bonus, int param) {
 	game_result = param;
 	if(!param)
-		draw::pause(getnm("LostGame"));
+		pause(getnm("LostGame"));
 	else {
-		draw::pause(getnm("WinGame"));
+		pause(getnm("WinGame"));
 		auto history = game.get(History);
 		if(history >= 5)
 			game.epilog(3);
@@ -809,7 +809,7 @@ static void damage(int bonus, int param) {
 	if(bonus)
 		apply_choose(6200, bonus);
 	else
-		draw::pause();
+		pause();
 }
 
 static void add_round_bonus(int bonus, int param) {
@@ -956,7 +956,7 @@ static void zero_counters(int bonus, int param) {
 
 static void page_forward(int bonus, int param) {
 	if(param)
-		draw::pause();
+		pause();
 	apply_effect(find_forward(bonus));
 }
 

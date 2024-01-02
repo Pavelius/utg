@@ -1,13 +1,48 @@
-﻿GiantHawk: Огромный ястреб
+﻿Basilisk: Василиск
+BeetleFire: Огненный жук
+BeetleOil: Нефтяной жук
+BeetleTiger: Тигровый жук
+Boar: Кабан
+CatPanther: Пантера
+CatTiger: Тигр
+DragonBlack: Черный дракон
+DragonBlue: Голубой дракон
+DragonGold: Золотой дракон
+DragonGreen: Зеленый дракон
+DragonRed: Красный дракон
+DragonWhite: Белый дракон
+Gargoyle: Гаргулья
+GiantHawk: Огромный ястреб
 Goat: Козел
+Gorgon: Горгон
+Griffon: Гриффон
+Hydra: Гидра
+Hawk: Ястреб
+Hipogriff: Гипогрифф
+KillerBee: Пчела-убийца
+LizardGecko: Ящерица Гекко
+LizardTuatara: Ящерица Туатара
+Medusa: Медуза
+Pegasus: Пегас
+Pixie: Пикси
+RobberFly: Муха-убийца
+SnakePitViper: Гадюка
+SpiderCrab: Паук-убийца
+SpiderTarantella: Гиганский тарантул
+Unicorn: Единорог
+Wereboar: Кабан-оборотень
+Weretiger: Тигр-оборотень
 Wolf: Волк
+WolfDire: Ужасный волк
 
 Bandit: Бандит
 Berserker: Берсеркер
-BeelteOil: Нефтяной жук
+Brigand: Грабитель
+Centaur: Кентавр
 Human: Человек
 HumanPluar: Люди
 Medusa: Медуза
 Merchant: Купец
+Ogre: Огр
 Orc: Орк
 Skeleton: Скелет

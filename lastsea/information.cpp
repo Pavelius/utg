@@ -1,6 +1,5 @@
 #include "main.h"
-#include "strprint.h"
-#include "stringact.h"
+#include "stringvar.h"
 #include "widget.h"
 
 static const char* history_source[] = {
@@ -125,7 +124,7 @@ static void print_message(const char* format, const char* button, const variants
 	game.actn(utg::sb, format, 0);
 	if(tags)
 		game.apply(*tags);
-	draw::pausenc(button, game.getname());
+	pausenc(button, game.getname());
 }
 
 static void print_message_header(const char* format, const char* button) {
@@ -431,13 +430,15 @@ static void show_name(stringbuilder& sb) {
 	game.getactive().getname(sb);
 }
 
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+
 static void custom_string(stringbuilder& sb, const char* identifier) {
-	if(print_identifier(sb, identifier))
+	if(stringvar_identifier(sb, identifier))
 		return;
-	act_identifier(sb, identifier);
+	apply_action(identifier, sb, game.getname(), game.getgender());
 }
 
-BSDATA(strprinti) = {
+BSDATA(stringvari) = {
 	{"Class", show_class},
 	{"name", show_name},
 	{"ShowCrew", show_crew},
@@ -449,7 +450,7 @@ BSDATA(strprinti) = {
 	{"Value5", show_value_5},
 	{"герой", show_name},
 };
-BSDATAF(strprinti)
+BSDATAF(stringvari)
 
 void initialize_information_widgets() {
 	stringbuilder::custom = custom_string;

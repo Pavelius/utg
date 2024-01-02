@@ -178,7 +178,9 @@ static void get_monsters(stringbuilder& sb) {
 			if(gs) {
 				sb.add(gs);
 				sb.add(" ");
+				auto p = sb.get();
 				sb.addofpl(encountered_monster->getname());
+				szlower(p);
 			}
 		} else
 			sb.addof(encountered_monster->getname());

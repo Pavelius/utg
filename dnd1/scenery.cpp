@@ -51,7 +51,7 @@ static void play_scene() {
 		scene->update();
 		scene_adventure();
 		script_run(scene->geti().script);
-		choose_options(scene->geti().actions);
+		// choose_options(scene->geti().actions);
 		pause();
 		clean_ecnounter();
 	}

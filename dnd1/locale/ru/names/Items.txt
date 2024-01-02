@@ -46,3 +46,7 @@ LongBow: Длинный лук
 Arrow: Стрелы
 Bolt: Болты
 Stone: Камень
+
+Claws1d3: Когти
+Claws1d4: Когти
+Claws1d6: Когти

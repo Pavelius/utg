@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
-Cyclops: Define translate
+Cockatrice: Define translate
+Wyvern: Define translate

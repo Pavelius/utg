@@ -722,7 +722,7 @@ static void pay_hero(int bonus) {
 }
 
 static void pay_hero_yesno(int bonus) {
-	if(draw::yesno(getdescription("StrategySecondaryAsk"), last_strategy->getname()))
+	if(yesno(getdescription("StrategySecondaryAsk"), last_strategy->getname()))
 		pay_hero(bonus);
 	else
 		script_stop();
@@ -914,7 +914,7 @@ static bool allow_pay_resource_cost(int bonus) {
 	return allow_pay(Resources, bonus);
 }
 static void pay_resource_cost(int bonus) {
-	if(!allow_pay_resource_cost(bonus) || !draw::yesno(getnm("DoYouWishPayFor"), bonus)) {
+	if(!allow_pay_resource_cost(bonus) || !yesno(getnm("DoYouWishPayFor"), bonus)) {
 		script_stop();
 		return;
 	}
@@ -1222,7 +1222,7 @@ static void prepare_army(int bonus) {
 
 static void apply_casualty(int bonus) {
 	if(console) {
-		draw::pause(getnm("ApplyCasualty"));
+		pause(getnm("ApplyCasualty"));
 		console.clear();
 	}
 	attacker.applycasualty();
@@ -1524,7 +1524,7 @@ static void play_tactic() {
 	if(!pd)
 		pd = getdescription("PlayerTacticUse");
 	console.add(pd);
-	draw::pause();
+	pause();
 	last_card->play();
 	last_card->discard();
 	update_ui();

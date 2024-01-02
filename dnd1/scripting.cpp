@@ -22,6 +22,7 @@ static bool	party_surprised, monster_surprised;
 static statistica monsters;
 
 void apply_advance(const char* id, variant type, int level);
+void combat_mode(int bonus);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
@@ -126,6 +127,14 @@ bool have_feats(feat_s side, feat_s v, bool keep) {
 			return true;
 	}
 	return false;
+}
+
+static void set_all_feat(bool party, feat_s v) {
+	for(auto p : creatures) {
+		if(p->is(Player) != party)
+			continue;
+		p->set(v);
+	}
 }
 
 static bool is_melee_fight() {
@@ -307,6 +316,7 @@ static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 	pushvalue push_player(player);
 	for(auto i = 0; i < count; i++) {
 		add_creature(pm);
+		creatures.add(player);
 		if(feat)
 			player->set(feat);
 	}
@@ -314,7 +324,7 @@ static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 
 static void add_monsters() {
 	if(encountered_monster) {
-		encountered_count = encountered_monster->getcount(WildernessGroup);
+		encountered_count = encountered_monster->getcount(WildernessGroup).roll();
 		add_monsters(encountered_monster, encountered_count, Enemy);
 	}
 }
@@ -327,6 +337,120 @@ static void random_encounter(const monsteri* pm) {
 
 void random_encounter(const char* id) {
 	random_encounter(bsdata<monsteri>::find(id));
+}
+
+static void prepare_scene() {
+}
+
+static void apply_scene_actions(variant v) {
+	if(v.iskind<listi>()) {
+		for(auto e : bsdata<listi>::elements[v.value].elements)
+			apply_scene_actions(e);
+	} else if(v.iskind<script>()) {
+		auto p = bsdata<script>::elements + v.value;
+		if(p->test && p->test(0))
+			an.add(p, getnm(p->id));
+	} else if(v.iskind<spelli>()) {
+		auto p = bsdata<spelli>::elements + v.value;
+		if(spell_effect((spell_s)v.value, player->get(Level), 0, false))
+			an.add(p, p->getname());
+	}
+}
+
+static void apply_scene_actions(int bonus) {
+	if(bonus == 0)
+		apply_scene_actions(scene->geti().actions);
+}
+
+static void apply_scene_spells(int bonus) {
+	if(bonus == 0) {
+		for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+			if(!player->get(i))
+				continue;
+			auto p = bsdata<spelli>::elements + i;
+			if(!player->cast(i, false))
+				continue;
+			an.add(p, getnm("CastSpell"), p->getname());
+		}
+	} else {
+		if(bsdata<spelli>::have(last_option)) {
+			auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
+			player->cast(spell, true);
+			player->use(spell);
+		}
+	}
+}
+
+static void apply_script_options() {
+	if(bsdata<script>::have(last_option)) {
+		auto p = last_option; last_option = 0;
+		((script*)p)->proc(0);
+	}
+}
+
+static void apply_option() {
+	apply_script_options();
+	apply_scene_spells(1);
+}
+
+static void add_options(variant source) {
+	if(source.iskind<listi>()) {
+		auto pc = bsdata<listi>::elements + source.value;
+		for(auto v : pc->elements) {
+			if(!script_allow(v))
+				continue;
+			an.add(v.getpointer(), v.getname());
+		}
+	}
+}
+
+static void choose_option() {
+	if(an)
+		last_option = an.choose(0);
+	else
+		pause();
+}
+
+void choose_options(variant source) {
+	an.clear();
+	add_options(source);
+	choose_option();
+	apply_option();
+}
+
+static void step_mode_scene() {
+}
+
+static void start_combat() {
+	set_all_feat(false, Enemy);
+	combat_mode(0);
+}
+
+static void reaction_mode(int bonus) {
+	if(monster_surprised && !party_surprised)
+		choose_options("MonsterSurprisedAction");
+	else if(party_surprised && !monster_surprised) {
+		if(reaction == Hostile || reaction == Unfriendly)
+			start_combat();
+		else
+			choose_options("PlayerSurprisedAction");
+	} else if(reaction == Hostile)
+		start_combat();
+	else
+		choose_options("NoOneSurprisedAction");
+}
+
+static bool surprise_side(int bonus) {
+	last_roll = d6() + bonus;
+	return last_roll <= 2;
+}
+
+static void random_surprise() {
+	auto party_bonus = 0;
+	if(have_feats(Enemy, SurpriseEnemy, true))
+		party_bonus -= 2;
+	party_surprised = surprise_side(party_bonus);
+	monster_surprised = surprise_side(0);
 }
 
 static void random_encounter(int bonus) {
@@ -343,6 +467,8 @@ static void random_encounter(int bonus) {
 	if(encountered_monster) {
 		add_monsters();
 		look_group();
+		random_surprise();
+		reaction_mode(0);
 	}
 }
 
@@ -378,7 +504,7 @@ static void enter_melee_combat() {
 }
 
 static bool is_item_ready(wear_s type) {
-	if(!player->wears[type] || player->wears[type].isbroken())
+	if(!player->wears[type] || player->wears[type].isbroken() || player->wears[type].isnatural())
 		return false;
 	auto ammo = player->wears[type].geti().ammunition;
 	if(ammo) {
@@ -415,20 +541,34 @@ static bool allow_attack_unarmed(int bonus) {
 	return targets.operator bool();
 }
 
+static void make_melee_attack(const itemi& ei) {
+	if(!ei.isweapon())
+		return;
+	for(auto i = 0; i < ei.number; i++) {
+		select_enemies();
+		if(!targets)
+			return;
+		choose_target();
+		enter_melee_combat();
+		unarmed_attack(0, ei.damage);
+	}
+}
+
 static void attack_unarmed(int bonus) {
 	if(!allow_attack_unarmed(bonus))
 		return;
-	for(auto& e : player->attacks) {
-		if(!e.number)
-			continue;
-		for(auto i = 0; i < e.number; i++) {
-			select_enemies();
-			if(!targets)
-				return;
-			choose_target();
-			enter_melee_combat();
-			unarmed_attack(0, e.damage);
-		}
+	if(player->wears[MeleeWeapon].isnatural()) {
+		make_melee_attack(player->wears[Head].geti());
+		make_melee_attack(player->wears[MeleeWeapon].geti());
+		make_melee_attack(player->wears[Legs].geti());
+	} else {
+		static itemi unarmed[] = {
+			{"Fists", 1, 1, 2},
+			{"Boxing", 1, 1, 3},
+			{"BoxingAndKick", 1, 1, 4},
+			{"BoxingAndKick", 1, 1, 6},
+		};
+		make_melee_attack(unarmed[0]);
 	}
 }
 
@@ -467,21 +607,6 @@ static void attack_charge(int bonus) {
 	melee_attack(0);
 }
 
-//static bool use_item(wear_s type, bool run) {
-//	items.select(player->allitems());
-//	items.match(type, true);
-//	if(!items)
-//		return false;
-//	if(run) {
-//		choose_item();
-//		if(last_item) {
-//			script_run(last_item->geti().use);
-//			last_item->clear();
-//		}
-//	}
-//	return true;
-//}
-
 static bool allow_retreat_melee(int bonus) {
 	if(player->is(Enemy))
 		return false; // NPC and Enemies not use this options
@@ -501,9 +626,9 @@ static void retreat_melee(int bonus) {
 }
 
 static void remove_player() {
+	creatures.remove(player);
 	if(player->is(Summoned))
 		player->clear();
-	creatures.remove(player);
 }
 
 static bool allow_run_away(int bonus) {
@@ -660,24 +785,6 @@ static void continue_battle(int bonus) {
 	clear_console();
 }
 
-static void add_options(variant source) {
-	if(source.iskind<listi>()) {
-		auto pc = bsdata<listi>::elements + source.value;
-		for(auto v : pc->elements) {
-			if(!script_allow(v))
-				continue;
-			an.add(v.getpointer(), v.getname());
-		}
-	}
-}
-
-static void choose_option() {
-	if(an)
-		last_option = an.choose(0);
-	else
-		pause();
-}
-
 static void what_you_do() {
 	last_option = 0;
 	if(!an)
@@ -689,64 +796,6 @@ static void what_you_do() {
 		player->actv(sb, getnm("WhatToDo"), 0, 0);
 		last_option = an.choose(temp);
 	}
-}
-
-static void apply_scene_actions(variant v) {
-	if(v.iskind<listi>()) {
-		for(auto e : bsdata<listi>::elements[v.value].elements)
-			apply_scene_actions(e);
-	} else if(v.iskind<script>()) {
-		auto p = bsdata<script>::elements + v.value;
-		if(p->test && p->test(0))
-			an.add(p, getnm(p->id));
-	} else if(v.iskind<spelli>()) {
-		auto p = bsdata<spelli>::elements + v.value;
-		if(spell_effect((spell_s)v.value, player->get(Level), 0, false))
-			an.add(p, p->getname());
-	}
-}
-
-static void apply_scene_actions(int bonus) {
-	if(bonus == 0)
-		apply_scene_actions(scene->geti().actions);
-}
-
-static void apply_scene_spells(int bonus) {
-	if(bonus == 0) {
-		for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
-			if(!player->get(i))
-				continue;
-			auto p = bsdata<spelli>::elements + i;
-			if(!player->cast(i, false))
-				continue;
-			an.add(p, getnm("CastSpell"), p->getname());
-		}
-	} else {
-		if(bsdata<spelli>::have(last_option)) {
-			auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
-			player->cast(spell, true);
-			player->use(spell);
-		}
-	}
-}
-
-static void apply_script_options() {
-	if(bsdata<script>::have(last_option)) {
-		auto p = last_option; last_option = 0;
-		((script*)p)->proc(0);
-	}
-}
-
-static void apply_option() {
-	apply_script_options();
-	apply_scene_spells(1);
-}
-
-void choose_options(variant source) {
-	an.clear();
-	add_options(source);
-	choose_option();
-	apply_option();
 }
 
 static void combat_round() {
@@ -795,40 +844,6 @@ void combat_mode(int bonus) {
 }
 
 static void combat_mode_scene() {
-}
-
-static void step_mode_scene() {
-}
-
-static bool surprise_side(int bonus) {
-	last_roll = d6() + bonus;
-	return last_roll <= 2;
-}
-
-static void random_surprise() {
-	auto party_bonus = 0;
-	if(have_feats(Enemy, SurpriseEnemy, true))
-		party_bonus -= 2;
-	party_surprised = surprise_side(party_bonus);
-	monster_surprised = surprise_side(0);
-}
-
-static void prepare_scene() {
-}
-
-static void reaction_mode(int bonus) {
-	if(monster_surprised)
-		draw::setnext(prepare_scene);
-	else if(party_surprised) {
-		if(reaction==Hostile || reaction==Unfriendly)
-			combat_mode(0);
-		else {
-		}
-	} else if(reaction==Hostile)
-		combat_mode(0);
-	else {
-		draw::setnext(step_mode_scene);
-	}
 }
 
 void reaction_roll(int bonus) {
@@ -938,9 +953,9 @@ static gender_s random_gender() {
 	return Male;
 }
 
-static int aligment_chance[] = {-1, 0, 1};
+static alignment_s aligment_chance[] = {Chaotic, Neutral, Lawful};
 
-static int random_alignment() {
+static alignment_s random_alignment() {
 	return maprnd(aligment_chance);
 }
 
@@ -951,7 +966,7 @@ static const classi* random_class(const char* id) {
 	return 0;
 }
 
-static int random_morale(int alignment) {
+static int random_morale(alignment_s alignment) {
 	switch(alignment) {
 	case -1: return xrand(-30, -10);
 	case 1: return xrand(10, 30);
@@ -959,7 +974,7 @@ static int random_morale(int alignment) {
 	}
 }
 
-static void add_character(const classi* pc, int level, int alignment, creature* leader = 0) {
+static void add_character(const classi* pc, int level, alignment_s alignment, creature* leader = 0) {
 	if(!pc)
 		return;
 	add_creature(pc, random_gender(), level);
@@ -967,7 +982,7 @@ static void add_character(const classi* pc, int level, int alignment, creature* 
 	player->setleader(leader);
 }
 
-static void add_followers(const classi* pc, int alignment, interval count, interval level) {
+static void add_followers(const classi* pc, alignment_s alignment, interval count, interval level) {
 	auto n = count.roll();
 	auto leader = player;
 	pushvalue push_player(player);
@@ -975,7 +990,7 @@ static void add_followers(const classi* pc, int alignment, interval count, inter
 		add_character(pc, level.roll(), alignment, leader);
 }
 
-static void add_followers(const char* class_id, int alignment, interval count, interval level) {
+static void add_followers(const char* class_id, alignment_s alignment, interval count, interval level) {
 	auto n = count.roll();
 	auto leader = player;
 	pushvalue push_player(player);
@@ -1046,9 +1061,10 @@ static void make_leader(int bonus) {
 	auto targets = creatures;
 	targets.match(Player, false);
 	player = targets.random();
-	player->basic.abilities[HP] = player->get(Level) * player->geti().hd;
-	player->basic.abilities[MeleeDamage] += bonus;
-	player->basic.abilities[RangedDamage] += bonus;
+	if(!bonus)
+		player->basic.abilities[HP] = player->get(Level) * player->geti().hd;
+	else
+		player->basic.abilities[Level] += bonus;
 	apply_leader();
 }
 
@@ -1086,6 +1102,14 @@ static void fighter_guards(int bonus) {
 	}
 }
 
+static void make_ambush_monsters(int bonus) {
+	set_all_feat(false, Surprised);
+	start_combat();
+}
+
+static void party_run_away(int bonus) {
+}
+
 BSDATA(script) = {
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
@@ -1113,7 +1137,9 @@ BSDATA(script) = {
 	{"LoseGame", lose_game, allow_lose_game},
 	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
+	{"MakeAmbushMonsters", make_ambush_monsters},
 	{"MakeLeader", make_leader},
+	{"PartyRunAway", party_run_away},
 	{"RandomEncounter", random_encounter},
 	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},

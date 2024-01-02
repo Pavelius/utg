@@ -23,7 +23,7 @@ static void check_crew(const abilityi& e, int bonus) {
 
 static void check_history(const abilityi& e, int bonus) {
 	game.information(getnm("YouGetHistory"));
-	draw::pausenc(getnm("GloablEvent"), game.getname());
+	pausenc(getnm("GloablEvent"), game.getname());
 	game.epilog(4 + game.get(History), true);
 }
 

@@ -9,7 +9,7 @@
 
 #pragma once
 
-struct creature : actable, attackable, spellable, statable, avatarable, wearable {
+struct creature : actable, spellable, statable, avatarable, wearable {
 	unsigned short	leader, tight;
 	alignment_s		alignment;
 	statable		basic;

@@ -386,8 +386,6 @@ void add_creature(const classi* pi, gender_s gender, int level) {
 	player->clear();
 	player->type = pi;
 	player->gender = gender;
-	player->attacks[0].number = 1;
-	player->attacks[0].damage = {1, 2};
 	player->basic.rollability();
 	player->basic.applybest(pi->prime);
 	player->name = random_name(pi, gender);

@@ -1,5 +1,4 @@
 #include "main.h"
-#include "stringact.h"
 
 static void* ask(answers& an, const char* id) {
 	if(!id)
@@ -52,7 +51,7 @@ void player::choosename() {
 void player::actn(stringbuilder& sbs, const char* format, const char* format_param, bool add_sep) const {
 	if(add_sep)
 		sbs.addsep('\n');
-	stract(sbs, getgender(), getname(), format, format_param);
+	sbs.addv(format, format_param);
 }
 
 void player::generate() {
@@ -80,7 +79,7 @@ void player::choosehistory() {
 	}
 	utg::sb.clear();
 	game.script(AnswerStartGame + 1);
-	draw::pause(getnm("WhatAboutHistory"));
+	pause(getnm("WhatAboutHistory"));
 	background();
 }
 

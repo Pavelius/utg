@@ -1,8 +1,5 @@
 #Random
 
-MonsterReaction
- chance Hostile Unfriendly+3 NeutralReaction+3 Indifferent+3 Friendly
-
 OrcishWeapons
  chance BattleAxe+2 HandAxe Club Spear Sword
 CentaurWeapons

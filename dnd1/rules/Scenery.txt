@@ -10,6 +10,12 @@ CombatRound
  elements AttackRanged AttackCharge AttackMelee AttackUnarmed RetreatMelee RunAway
 CombatTurn
  elements WinBattle LoseGame ContinueBattle
+PlayerSurprisedAction
+ elements MakeAmbushMonsters PartyRunAway
+MonsterSurprisedAction
+ elements MakeAmbushMonsters PartyRunAway
+NoOneSurprisedAction
+ elements PartyRunAway
 
 #SceneType
 

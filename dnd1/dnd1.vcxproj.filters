@@ -253,9 +253,6 @@
     <Text Include="rules\Spells.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\Spells.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Organizations.txt">
       <Filter>data</Filter>
     </Text>
@@ -273,6 +270,9 @@
     </Text>
     <Text Include="rules\Scenery.txt">
       <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Spells.txt">
+      <Filter>logic</Filter>
     </Text>
   </ItemGroup>
 </Project>

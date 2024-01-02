@@ -1,1 +1,4 @@
-﻿
+﻿Chimera: 
+Cockatrice: 
+NoVariant: 
+Stag: 
