@@ -1,5 +1,5 @@
 #include "code_command.h"
-#include "code_lexer.h"
+#include "code_parser.h"
 #include "stringbuilder.h"
 
 using namespace code;
@@ -9,12 +9,10 @@ BSDATAC(rule, 1024)
 namespace {
 struct context {
 	pckh		symbol, type;
-	ast			code;
 	const char*	start;
 	unsigned	flags;
 	void clear() {
 		symbol = type = None;
-		code.clear();
 		flags = 0;
 		start = 0;
 	}
@@ -35,8 +33,6 @@ static adat<unsigned>	locals;
 static pckh	last_url;
 
 static const char* file_source;
-
-static bool command_error;
 
 const char* code::p;
 const char* code::last_identifier;
@@ -129,9 +125,8 @@ static void parse_token(const token& e);
 
 static void parse_rule(const rule& v) {
 	auto need_stop = false;
-	auto push_position = last_position;
+	auto push_position = last_position; last_position = p;
 	auto push_context = context_current;
-	last_position = p;
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
@@ -139,14 +134,9 @@ static void parse_rule(const rule& v) {
 			need_stop = true;
 		auto p1 = p;
 		parse_token(e);
-		if(command_error) {
-			command_error = false;
-			p = last_position;  // Error in command
-			break;
-		}
 		if(e.is(flag::Execute))
 			continue;
-		if(p1 == p) {
+		if(p1 >= p) {
 			// Token did not work
 			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue parse next token
 				continue;
@@ -163,10 +153,9 @@ static void parse_rule(const rule& v) {
 
 static void parse_token(const token& e) {
 	last_token = &e;
-	if(e.command) {
-		command_error = false;
+	if(e.command)
 		e.command->proc();
-	} else if(e.rule) {
+	else if(e.rule) {
 		auto p0 = p;
 		parse_rule(*e.rule);
 		if(e.is(flag::Repeat)) {
@@ -207,6 +196,101 @@ static void parse_token(const token& e) {
 		p += n;
 		skipws();
 	}
+}
+
+static rule* find_rule(const char* id) {
+	for(auto& e : rules) {
+		if(strcmp(e.id, id) == 0)
+			return &e;
+	}
+	error("Not found rule `%1`", id);
+	return 0;
+}
+
+static const char* get_param(const char* p) {
+	static char temp[260];
+	temp[0] = 0; stringbuilder sb(temp);
+	sb.psidf(p);
+	return temp;
+}
+
+static void parse_token_name(token& e, const char* p) {
+	while(*p) {
+		if(*p == '\\') {
+			p++;
+			break;
+		} else if(p[0] == ',' && p[1] == ' ') {
+			e.set(flag::ComaSeparated);
+			e.set(flag::Repeat);
+			p++;
+		} else if(p[0] == '.' && p[1] == ' ') {
+			e.set(flag::PointSeparated);
+			e.set(flag::Repeat);
+			p++;
+		} else if(*p == '^')
+			e.set(flag::Stop);
+		else if(*p == '.')
+			e.set(flag::Repeat);
+		else if(*p == '%')
+			e.set(flag::Variable);
+		else if(*p == '?')
+			e.set(flag::Condition);
+		else if(*p == '@')
+			e.set(flag::Execute);
+		else
+			break;
+		p++;
+	}
+	e.id = p;
+	// Parse parameters
+	while(true) {
+		auto p_next = zchr(p, '.');
+		if(!p_next)
+			break;
+		auto pn = get_param(p);
+		e.param = getbsi(bsdata<flagi>::find(pn));
+		if(e.param == 0xFFFF)
+			e.param = getbsi(bsdata<operationi>::find(pn));
+		if(e.param == 0xFFFF) {
+			e.param = 0;
+			error("In token `%1` not found parameter `%2`", e.id, pn);
+		}
+		p = p_next + 1;
+	}
+	e.id = p;
+}
+
+static void initialize_tokens() {
+	for(auto& r : rules) {
+		for(auto& e : r.tokens) {
+			if(!e)
+				break;
+			parse_token_name(e, e.id);
+		}
+	}
+}
+
+static void initialize_tokens_depency() {
+	for(auto& r : rules) {
+		for(auto& e : r.tokens) {
+			if(!e)
+				break;
+			if(e.is(flag::Variable)) {
+				e.rule = find_rule(e.id);
+				if(!e.rule)
+					error("In rule `%1` not found token `%2`", r.id, e.id);
+			} else if(e.is(flag::Execute)) {
+				e.command = bsdata<command>::find(e.id);
+				if(!e.command)
+					error("In rule `%1` not found command `%2`", r.id, e.id);
+			}
+		}
+	}
+}
+
+void code::initialize_rules() {
+	initialize_tokens();
+	initialize_tokens_depency();
 }
 
 void code::binary_operation(operation op) {
@@ -404,15 +488,6 @@ void code::parse_expression() {
 	}
 }
 
-static rule* find_rule(const char* id) {
-	for(auto& e : rules) {
-		if(strcmp(e.id, id) == 0)
-			return &e;
-	}
-	error("Not found rule `%1`", id);
-	return 0;
-}
-
 void code::parse(const char* source_code, const char* rule_id) {
 	if(!rule_id)
 		rule_id = "global";
@@ -445,10 +520,6 @@ static void push_context() {
 static void add_type() {
 	auto id = last_package->add(last_identifier);
 	geti().type = last_package->add(id, Modules, last_url, code::last_position - file_source, 0, 0);
-}
-
-static void add_left() {
-	geti().code.left = geti().code.right;
 }
 
 static void add_member() {
@@ -523,20 +594,21 @@ static void set_type() {
 		e.type = last_package->findsym(last_identifier, Modules);
 		if(geti().type == None) {
 			e.type = i32;
-			command_error = true;
+			p = last_position;
 		}
 	}
-}
-
-static void set_op() {
-	geti().code.type = (operation)last_token->param;
 }
 
 static void set_symbol_ast() {
 	auto& e = geti();
 	auto ps = last_package->getsym(e.symbol);
-	if(ps)
-		ps->ast = e.code.right;
+	if(ps) {
+		if(operations.getcount() == 1) {
+			ps->ast = operations.data[0];
+			operations.count--;
+		} else if(operations.getcount() > 1)
+			error("Operations stack corrupted when add symbol result");
+	}
 }
 
 static void type_reference() {
@@ -558,8 +630,6 @@ static void expression() {
 	parse_expression();
 	if(!operations)
 		error("Expected operation when parse `%1`", example(p));
-	else
-		geti().code.right = operations.data[operations.count - 1];
 }
 
 static void declaration() {
@@ -573,12 +643,30 @@ void code::setrules(rulea source) {
 	unary_rule = find_rule("unary");
 }
 
+static void add_binary() {
+	binary_operation((operation)last_token->param);
+}
+
+static void add_statement() {
+	switch(operations.getcount()) {
+	case 0: return; // Empthy statement
+	case 1: return; // One operation, statement not need
+	case 2: binary_operation(operation::Statement); break;
+	default: error("Can't add emphty statement"); break;
+	}
+}
+
+static void debug() {
+}
+
 BSDATA(command) = {
-	{"add_type", add_type},
-	{"add_left", add_left},
+	{"add_binary", add_binary},
 	{"add_member", add_member},
+	{"add_statement", add_statement},
+	{"add_type", add_type},
 	{"add_variable", add_variable},
 	{"begin_string", begin_string},
+	{"debug", debug},
 	{"identifier", identifier},
 	{"expression", expression},
 	{"declaration", declaration},
@@ -590,7 +678,6 @@ BSDATA(command) = {
 	{"set_flag", set_flag},
 	{"set_symbol_ast", set_symbol_ast},
 	{"set_url", set_url},
-	{"set_op", set_op},
 	{"set_type", set_type},
 	{"type_reference", type_reference},
 };

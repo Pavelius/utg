@@ -52,6 +52,7 @@ void string();
 void binary_operation(operation op);
 void unary_operation(operation op);
 
+void initialize_rules();
 void errorv(const char* position, const char* format, const char* format_param);
 void error(const char* format, ...);
 void parse(const char* source_code, const char* rule_id = 0);

@@ -50,7 +50,7 @@ static bool test_code() {
 	bsdata<lexer>::elements[0].activate();
 	last_package = code::openview("test");
 	last_package->write("code/test.c2b");
-	return log::geterrors() != 0;
+	return log::geterrors() == 0;
 }
 
 static void mainscene() {

@@ -23,102 +23,6 @@ void code::skip(const char* symbol) {
 		error("Expected token `%1` in `%2`", symbol, example(p));
 }
 
-static rule* find_rule(const char* id, bool need_error = false) {
-	for(auto& e : last_lexer->rules) {
-		if(strcmp(e.id, id) == 0)
-			return &e;
-	}
-	if(need_error)
-		error("Not found rule `%1`", id);
-	return 0;
-}
-
-static const char* get_param(const char* p) {
-	static char temp[260];
-	temp[0] = 0; stringbuilder sb(temp);
-	sb.psidf(p);
-	return temp;
-}
-
-static void parse_token_name(token& e, const char* p) {
-	while(*p) {
-		if(*p == '\\') {
-			p++;
-			break;
-		} else if(p[0] == ',' && p[1] == ' ') {
-			e.set(flag::ComaSeparated);
-			e.set(flag::Repeat);
-			p++;
-		} else if(p[0] == '.' && p[1] == ' ') {
-			e.set(flag::PointSeparated);
-			e.set(flag::Repeat);
-			p++;
-		} else if(*p == '^')
-			e.set(flag::Stop);
-		else if(*p == '.')
-			e.set(flag::Repeat);
-		else if(*p == '%')
-			e.set(flag::Variable);
-		else if(*p == '?')
-			e.set(flag::Condition);
-		else if(*p == '@')
-			e.set(flag::Execute);
-		else
-			break;
-		p++;
-	}
-	e.id = p;
-	// Parse parameters
-	while(true) {
-		auto p_next = zchr(p, '.');
-		if(!p_next)
-			break;
-		auto pn = get_param(p);
-		e.param = getbsi(bsdata<flagi>::find(pn));
-		if(e.param==0xFFFF)
-			e.param = getbsi(bsdata<operationi>::find(pn));
-		if(e.param == 0xFFFF) {
-			e.param = 0;
-			error("In token `%1` not found parameter `%2`", e.id, pn);
-		}
-		p = p_next + 1;
-	}
-	e.id = p;
-}
-
-static void initialize_tokens() {
-	for(auto& r : last_lexer->rules) {
-		for(auto& e : r.tokens) {
-			if(!e)
-				break;
-			parse_token_name(e, e.id);
-		}
-	}
-}
-
-static void initialize_rules() {
-	for(auto& r : last_lexer->rules) {
-		for(auto& e : r.tokens) {
-			if(!e)
-				break;
-			if(e.is(flag::Variable)) {
-				e.rule = find_rule(e.id);
-				if(!e.rule)
-					error("In rule `%1` not found token `%2`", r.id, e.id);
-			} else if(e.is(flag::Execute)) {
-				e.command = bsdata<command>::find(e.id);
-				if(!e.command)
-					error("In rule `%1` not found command `%2`", r.id, e.id);
-			}
-		}
-	}
-}
-
-static void initialize_all() {
-	initialize_tokens();
-	initialize_rules();
-}
-
 void lexer::read(const char* url) {
 	auto start_rules = bsdata<rule>::source.getcount();
 	auto start_lexer = bsdata<lexer>::source.getcount();
@@ -137,7 +41,8 @@ void lexer::read(const char* url) {
 	auto push_lexer = last_lexer;
 	last_lexer = (lexer*)bsdata<lexer>::source.ptr(start_lexer);
 	last_lexer->rules = sliceu<rule>(start_rules, end_rules - start_rules);
-	initialize_all();
+	last_lexer->activate();
+	initialize_rules();
 	last_lexer = push_lexer;
 }
 

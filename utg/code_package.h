@@ -16,7 +16,7 @@ enum class operation : unsigned char {
 	BooleanChoose, LeftIfTrue,
 	Increment, Decrement, AdressOf, Dereference, Scope,
 	Assign, If, While,
-	Number, Text, Identifier, Expression
+	Number, Text, Identifier, Statement
 };
 enum : pckh {
 	This, Systems, Modules, Pointers,

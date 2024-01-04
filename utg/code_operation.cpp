@@ -38,6 +38,6 @@ BSDATA(operationi) = {
 	{"Number"},
 	{"Text"},
 	{"Identifier"},
-	{"Expression"},
+	{"Statement"},
 };
-assert_enum(operationi, operation::Expression)
+assert_enum(operationi, operation::Statement)

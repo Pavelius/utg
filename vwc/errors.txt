@@ -1,2 +1,1 @@
-﻿ Line 26: Undefined identifier `return`
- Line 26: Undefined identifier `return`
+﻿ Line 9: Symbol `print` already defined
