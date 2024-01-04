@@ -1,4 +1,5 @@
 #include "code_package.h"
+#include "variant.h"
 
 #pragma once
 
@@ -11,6 +12,7 @@ struct token {
 	unsigned	flags;
 	const struct rule* rule;
 	const struct command* command;
+	unsigned	param;
 	constexpr explicit operator bool() const { return id != 0; }
 	bool		is(flag v) const { return (flags & (1 << (int)v)) != 0; }
 	void		set(flag v) { flags |= 1 << (int)v; }

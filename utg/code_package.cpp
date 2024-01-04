@@ -3,6 +3,14 @@
 
 using namespace code;
 
+BSDATA(flagi) = {
+	{"Standart"},
+	{"Static"},
+	{"Public"},
+	{"Function"},
+};
+assert_enum(flagi, Function)
+
 package* code::last_package;
 
 static bool isnostrictorder(operation id) {
@@ -152,4 +160,10 @@ bool package::serial(const char* url, bool write_mode) {
 
 pckh package::reference(pckh type) {
 	return add(0, Pointers, type, 0, 0, 0);
+}
+
+void ast::clear() {
+	type = operation::None;
+	left = None;
+	right = None;
 }

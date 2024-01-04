@@ -29,10 +29,17 @@ enum : pckh {
 struct operationi {
 	const char*			id;
 };
+struct flagi {
+	const char*			id;
+};
+struct typei {
+	const char*			id;
+};
 struct ast {
 	operation			type;
 	pckh				right;
 	pckh				left;
+	void				clear();
 	constexpr bool isliteral() const { return type == operation::Text; }
 	constexpr bool issymbol() const { return type == operation::Identifier; }
 	constexpr bool isnumber() const { return type == operation::Number; }

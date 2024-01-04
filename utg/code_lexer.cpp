@@ -33,6 +33,13 @@ static rule* find_rule(const char* id, bool need_error = false) {
 	return 0;
 }
 
+static const char* get_param(const char* p) {
+	static char temp[260];
+	temp[0] = 0; stringbuilder sb(temp);
+	sb.psidf(p);
+	return temp;
+}
+
 static void parse_token_name(token& e, const char* p) {
 	while(*p) {
 		if(*p == '\\') {
@@ -56,10 +63,25 @@ static void parse_token_name(token& e, const char* p) {
 			e.set(flag::Condition);
 		else if(*p == '@')
 			e.set(flag::Execute);
-		else {
+		else
 			break;
-		}
 		p++;
+	}
+	e.id = p;
+	// Parse parameters
+	while(true) {
+		auto p_next = zchr(p, '.');
+		if(!p_next)
+			break;
+		auto pn = get_param(p);
+		e.param = getbsi(bsdata<flagi>::find(pn));
+		if(e.param==0xFFFF)
+			e.param = getbsi(bsdata<operationi>::find(pn));
+		if(e.param == 0xFFFF) {
+			e.param = 0;
+			error("In token `%1` not found parameter `%2`", e.id, pn);
+		}
+		p = p_next + 1;
 	}
 	e.id = p;
 }

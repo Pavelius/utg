@@ -8,11 +8,13 @@ BSDATAC(rule, 1024)
 
 namespace {
 struct context {
-	pckh		symbol, type, ast;
+	pckh		symbol, type;
+	ast			code;
 	const char*	start;
 	unsigned	flags;
 	void clear() {
-		symbol = type = ast = None;
+		symbol = type = None;
+		code.clear();
 		flags = 0;
 		start = 0;
 	}
@@ -27,11 +29,9 @@ adat<pckh>	code::operations;
 rulea		code::rules;
 fnerror		code::perror;
 char		code::string_buffer[256 * 32];
+
 static rule	*unary_rule, *postfix_rule;
-
-static adat<unsigned> locals;
-static adat<symbol, 32> symbols;
-
+static adat<unsigned>	locals;
 static pckh	last_url;
 
 static const char* file_source;
@@ -162,6 +162,7 @@ static void parse_rule(const rule& v) {
 }
 
 static void parse_token(const token& e) {
+	last_token = &e;
 	if(e.command) {
 		command_error = false;
 		e.command->proc();
@@ -203,7 +204,6 @@ static void parse_token(const token& e) {
 		auto n = zlen(e.id);
 		if(memcmp(p, e.id, n) != 0)
 			return;
-		last_token = &e;
 		p += n;
 		skipws();
 	}
@@ -447,6 +447,10 @@ static void add_type() {
 	geti().type = last_package->add(id, Modules, last_url, code::last_position - file_source, 0, 0);
 }
 
+static void add_left() {
+	geti().code.left = geti().code.right;
+}
+
 static void add_member() {
 	auto scope = 0;
 	if(locals)
@@ -475,16 +479,8 @@ static void add_variable() {
 	operations.add(last_package->add(operation::Identifier, result));
 }
 
-static void set_static() {
-	geti().flags |= FG(Static);
-}
-
-static void set_public() {
-	geti().flags |= FG(Public);
-}
-
-static void set_function() {
-	geti().flags |= FG(Function);
+static void set_flag() {
+	geti().flags |= FG(last_token->param);
 }
 
 static void begin_string() {
@@ -532,11 +528,15 @@ static void set_type() {
 	}
 }
 
+static void set_op() {
+	geti().code.type = (operation)last_token->param;
+}
+
 static void set_symbol_ast() {
 	auto& e = geti();
 	auto ps = last_package->getsym(e.symbol);
 	if(ps)
-		ps->ast = e.ast;
+		ps->ast = e.code.right;
 }
 
 static void type_reference() {
@@ -559,7 +559,7 @@ static void expression() {
 	if(!operations)
 		error("Expected operation when parse `%1`", example(p));
 	else
-		geti().ast = operations.data[operations.count - 1];
+		geti().code.right = operations.data[operations.count - 1];
 }
 
 static void declaration() {
@@ -575,6 +575,7 @@ void code::setrules(rulea source) {
 
 BSDATA(command) = {
 	{"add_type", add_type},
+	{"add_left", add_left},
 	{"add_member", add_member},
 	{"add_variable", add_variable},
 	{"begin_string", begin_string},
@@ -586,11 +587,10 @@ BSDATA(command) = {
 	{"push_context", push_context},
 	{"push_locals", push_locals},
 	{"string", string},
-	{"set_public", set_public},
-	{"set_static", set_static},
-	{"set_function", set_function},
+	{"set_flag", set_flag},
 	{"set_symbol_ast", set_symbol_ast},
 	{"set_url", set_url},
+	{"set_op", set_op},
 	{"set_type", set_type},
 	{"type_reference", type_reference},
 };

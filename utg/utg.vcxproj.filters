@@ -294,6 +294,9 @@
     <ClCompile Include="interval.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="code_operation.cpp">
+      <Filter>Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

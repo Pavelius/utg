@@ -146,14 +146,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="code_operation.cpp" />
     <ClCompile Include="viewpackage.cpp" />
     <ClCompile Include="view_code_tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="test_code.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="view_pixel.cpp" />
     <ClCompile Include="view_statusbar.cpp" />
   </ItemGroup>
