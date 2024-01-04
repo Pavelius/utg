@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-PixelPosition: Define translate
+﻿ Line 26: Undefined identifier `return`
+ Line 26: Undefined identifier `return`

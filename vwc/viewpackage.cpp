@@ -1,6 +1,7 @@
-#include "code_rule.h"
+#include "code_parser.h"
 #include "io_stream.h"
 #include "log.h"
+#include "pushvalue.h"
 #include "stringbuilder.h"
 #include "viewpackage.h"
 
@@ -59,11 +60,9 @@ viewpackage* code::openview(const char* id) {
 			p->source = loadt(temp);
 			p->create(id);
 			log::setfile(p->source);
-			auto push_package = last_package;
-			last_package = p;
+			pushvalue push(last_package, static_cast<package*>(p));
 			code::parse(p->source, 0);
 			log::setfile(0);
-			last_package = push_package;
 		}
 	}
 	return p;

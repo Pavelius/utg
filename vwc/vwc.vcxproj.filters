@@ -39,6 +39,9 @@
     <Filter Include="code">
       <UniqueIdentifier>{274ed5c0-8e3c-4d9d-94b5-ac788c185115}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lexers">
+      <UniqueIdentifier>{d4d6bd22-b2fe-4264-8171-1b77bcea31eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -47,11 +50,11 @@
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="rules\lexer_c2.txt">
-      <Filter>data</Filter>
-    </Text>
     <Text Include="locale\ru\names\Names.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="lexers\c2.txt">
+      <Filter>lexers</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

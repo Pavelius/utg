@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "io_stream.h"
 #include "logparse.h"
 #include "pushvalue.h"
 #include "stringbuilder.h"
@@ -438,7 +439,7 @@ static bool read_identifier() {
 	return allowparse;
 }
 
-static bool read_import() {
+static bool read_import(bool whole_directory) {
 	if(!read_identifier())
 		return false;
 	auto pn = bsdata<varianti>::find(temp);
@@ -452,8 +453,18 @@ static bool read_import() {
 	}
 	if(!read_string())
 		return false;
-	pushvalue push(log::context);
-	pn->pread(szdup(temp));
+	if(whole_directory) {
+		for(io::file::find file(temp); file; file.next()) {
+			if(file.name()[0] == '.')
+				continue;
+			char url[260];
+			pushvalue push(log::context);
+			pn->pread(file.fullname(url));
+		}
+	} else {
+		pushvalue push(log::context);
+		pn->pread(temp);
+	}
 	return true;
 }
 
@@ -464,7 +475,9 @@ static bool parse_directives() {
 		bsreq::read(szdup(temp));
 		return true;
 	} else if(equal(temp, "import"))
-		return read_import();
+		return read_import(false);
+	else if(equal(temp, "importdir"))
+		return read_import(true);
 	return false;
 }
 

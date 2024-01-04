@@ -8,22 +8,27 @@
 #include "draw_list.h"
 #include "log.h"
 #include "view_statusbar.h"
+#include "viewpackage.h"
 
 using namespace code;
 using namespace draw;
 
 void before_modal_statusbar();
 void check_translation();
-void initialize_code();
 void initialize_interface();
 void initialize_pixels();
 void initialize_translation(const char* locale);
 void paint_statusbar();
 void set_dark_theme();
-bool test_code();
 void view_code_tree();
 void view_pixels();
 void update_code_tree();
+
+static void code_error(const char* position, const char* format, const char* format_param) {
+	char temp[2048]; stringbuilder sb(temp);
+	sb.addv(format, format_param);
+	log::errorv(position, temp);
+}
 
 static void clear_fill() {
 	auto push_fore = fore;
@@ -38,6 +43,14 @@ static void main_before_modal() {
 
 static void main_tips() {
 	tips_statusbar();
+}
+
+static bool test_code() {
+	code::project = "code";
+	bsdata<lexer>::elements[0].activate();
+	last_package = code::openview("test");
+	last_package->write("code/test.c2b");
+	return log::geterrors() != 0;
 }
 
 static void mainscene() {
@@ -56,8 +69,6 @@ static void mainscene() {
 static void mainstart() {
 	if(!test_code())
 		return;
-	//last_package = bsdata<package>::add();
-	//last_package->read("code/test.c2b");
 	update_code_tree();
 	draw::scene(mainscene);
 }
@@ -65,11 +76,10 @@ static void mainstart() {
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	set_dark_theme();
+	perror = code_error;
 	bsreq::read("rules/Basic.txt");
-	lexer::read("rules/lexer_c2.txt");
 	initialize_translation("ru");
 	check_translation();
-	initialize_code();
 	initialize_pixels();
 	if(log::geterrors())
 		return -1;

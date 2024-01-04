@@ -79,7 +79,7 @@ void quest::run(int index) {
 		}
 		answers::console->clear();
 	}
-	draw::pause();
+	pause();
 }
 
 BSDATA(script) = {

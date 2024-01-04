@@ -6,7 +6,7 @@ number tokens("@number")
 string tokens("@string")
 identifier tokens("@identifier")
 
-import tokens("import" "@declaration" "@set_url" ". %identifier" "?%pseudoname" ";" "@add_type")
+import tokens("import" "@declaration" "@begin_string" ". %identifier" "@set_url" "?%pseudoname" ";" "@add_type")
 pseudoname tokens("as" "%identifier")
 
 enum tokens("enum" "{" ", %enum_value" "}" ";")
@@ -31,28 +31,26 @@ call tokens("(" "?, %expression" ")")
 variable tokens("%identifier" "@add_variable")
 sizeof tokens("sizeof" "(" "%expression" ")")
 array_scope tokens("[" "%expression" "]")
-unary tokens("^%number" "%string" "%sizeof" "%variable")
 indirection tokens("\\." "%identifier")
+
+unary tokens("^%number" "%string" "%sizeof" "%variable")
 postfix tokens("^\\++" "\\--" "%indirection" "%call" "%array_scope")
+expression tokens("@expression")
+assigment tokens("%variable" "=" "%expression" ";")
+statement_expression tokens("%expression" ";")
+
+block_statements tokens("{" "@push_locals" ".?%single_statement" "@pop_locals" "}")
+single_statement tokens("^%block_statements" ";" "%statement")
+statement tokens("^%return" "%if" "%while" "%switch" "%break" "%case" "%default" "%declare_local" "%assigment" "%statement_expression")
+
+break tokens("break" ";")
+default tokens("default" ":")
+case tokens("case" "%expression" ":")
+while tokens("while" "(" "%expression" ")" "%single_statement")
+if tokens("if" "(" "%expression" ")" "%single_statement")
+switch tokens("switch" "(" "%expression" ")" "%block_statements")
+return tokens("return" "%expression" ";")
 
 #Lexer
 
 c2 files("*.c2")
- binary "||" ConditionOr
- binary "&&" ConditionAnd
- binary ">" ConditionGreater
- binary ">=" ConditionGreaterEqual
- binary "<" ConditionLess
- binary "<=" ConditionLessEqual
- binary "==" ConditionEqual
- binary "!=" ConditionNotEqual
- binary "&" BinaryAnd
- binary "|" BinaryOr
- binary "^" BinaryXor
- binary "+" BinaryPlus
- binary "-" BinaryMinus
- unary "!" UnaryNot
- unary "-" UnaryNeg
- unary "+" UnaryNop
- unary "*" UnaryDereference
- unary "&" UnaryAddressOf

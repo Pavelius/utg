@@ -1,35 +1,40 @@
 #include "code_command.h"
-#include "code_rule.h"
-#include "code_package.h"
+#include "code_lexer.h"
 #include "stringbuilder.h"
 
 using namespace code;
 
+BSDATAC(rule, 1024)
+
 namespace {
 struct context {
 	pckh		symbol, type, ast;
+	const char*	start;
 	unsigned	flags;
 	void clear() {
 		symbol = type = ast = None;
 		flags = 0;
+		start = 0;
 	}
 };
+static context	context_data[32];
+static unsigned	context_current;
 }
 
-adat<pckh>		code::operations;
-rulea			code::rules;
-fnerror			code::perror;
-char			code::string_buffer[256 * 32];
+const code::token* code::last_token;
 
-static rule		*unary_rule, *postfix_rule, *postfix_call_rule, *postfix_scope_rule, *postfix_initialize_rule;
+adat<pckh>	code::operations;
+rulea		code::rules;
+fnerror		code::perror;
+char		code::string_buffer[256 * 32];
+static rule	*unary_rule, *postfix_rule;
+
 static adat<unsigned> locals;
 static adat<symbol, 32> symbols;
 
-static context	context_data[32];
-static unsigned	context_current;
+static pckh	last_url;
 
 static const char* file_source;
-static const char* last_url;
 
 static bool command_error;
 
@@ -38,7 +43,7 @@ const char* code::last_identifier;
 const char* code::last_position;
 const char*	code::last_string;
 
-static context& getctx() {
+static context& geti() {
 	return context_data[context_current];
 }
 
@@ -399,13 +404,12 @@ void code::parse_expression() {
 	}
 }
 
-static rule* find_rule(const char* id, bool need_error = false) {
+static rule* find_rule(const char* id) {
 	for(auto& e : rules) {
 		if(strcmp(e.id, id) == 0)
 			return &e;
 	}
-	if(need_error)
-		error("Not found rule `%1`", id);
+	error("Not found rule `%1`", id);
 	return 0;
 }
 
@@ -439,9 +443,8 @@ static void push_context() {
 }
 
 static void add_type() {
-	auto id_result = last_package->add(last_url);
 	auto id = last_package->add(last_identifier);
-	getctx().type = last_package->add(id, Modules, id_result, code::last_position - file_source, 0, 0);
+	geti().type = last_package->add(id, Modules, last_url, code::last_position - file_source, 0, 0);
 }
 
 static void add_member() {
@@ -454,7 +457,7 @@ static void add_member() {
 		error("Symbol `%1` already defined", last_identifier);
 		return;
 	}
-	auto& e = getctx();
+	auto& e = geti();
 	e.symbol = last_package->add(id, This, e.type, code::last_position - file_source, e.flags, scope);
 }
 
@@ -473,23 +476,43 @@ static void add_variable() {
 }
 
 static void set_static() {
-	getctx().flags |= FG(Static);
+	geti().flags |= FG(Static);
 }
 
 static void set_public() {
-	getctx().flags |= FG(Public);
+	geti().flags |= FG(Public);
 }
 
 static void set_function() {
-	getctx().flags |= FG(Function);
+	geti().flags |= FG(Function);
+}
+
+static void begin_string() {
+	geti().start = code::p;
+}
+
+static pckh get_string(const char* id) {
+	char temp[512];
+	if(!geti().start) {
+		error("Missing `@begin_string` token in %1 naming.", id);
+		return None;
+	}
+	size_t len = code::p - geti().start, max = sizeof(temp) / sizeof(temp[0]) - 1;
+	if(len > max) {
+		error("%3 is too long. You have %1i bytes and must be %2i bytes.", len, max, id);
+		return None;
+	}
+	memcpy(temp, geti().start, len);
+	temp[len] = 0;
+	return last_package->add(temp);
 }
 
 static void set_url() {
-	last_url = code::p;
+	last_url = get_string("url");
 }
 
 static void set_type() {
-	auto& e = getctx();
+	auto& e = geti();
 	if(equal(last_identifier, "int") || equal(last_identifier, "bool"))
 		e.type = i32;
 	else if(equal(last_identifier, "char"))
@@ -502,7 +525,7 @@ static void set_type() {
 		e.type = Void;
 	else {
 		e.type = last_package->findsym(last_identifier, Modules);
-		if(getctx().type == None) {
+		if(geti().type == None) {
 			e.type = i32;
 			command_error = true;
 		}
@@ -510,14 +533,14 @@ static void set_type() {
 }
 
 static void set_symbol_ast() {
-	auto& e = getctx();
+	auto& e = geti();
 	auto ps = last_package->getsym(e.symbol);
 	if(ps)
 		ps->ast = e.ast;
 }
 
 static void type_reference() {
-	getctx().type = last_package->reference(getctx().type);
+	geti().type = last_package->reference(geti().type);
 }
 
 static void push_locals() {
@@ -536,50 +559,25 @@ static void expression() {
 	if(!operations)
 		error("Expected operation when parse `%1`", example(p));
 	else
-		getctx().ast = operations.data[operations.count - 1];
+		geti().ast = operations.data[operations.count - 1];
 }
 
 static void declaration() {
 	push_context();
-	getctx().clear();
-}
-
-static bool lazy_initialize() {
-	for(auto& r : rules) {
-		for(auto& e : r.tokens) {
-			if(!e)
-				break;
-			if(e.rule)
-				return false; // All rules initialized
-			if(e.is(flag::Variable)) {
-				e.rule = find_rule(e.id);
-				if(!e.rule)
-					error("In rule `%1` not found token `%2`", r.id, e.id);
-			} else if(e.is(flag::Execute)) {
-				e.command = bsdata<command>::find(e.id);
-				if(!e.command)
-					error("In rule `%1` not found command `%2`", r.id, e.id);
-			}
-		}
-	}
-	return true;
+	geti().clear();
 }
 
 void code::setrules(rulea source) {
 	rules = source;
-	auto first_time = lazy_initialize();
-	// Initialize common rules
-	postfix_rule = find_rule("postfix", first_time);
-	unary_rule = find_rule("unary", first_time);
-	//postfix_scope_rule = find_rule("postfix_scope", first_time);
-	//postfix_call_rule = find_rule("postfix_call", first_time);
-	//postfix_initialize_rule = find_rule("postfix_initialize", first_time);
+	postfix_rule = find_rule("postfix");
+	unary_rule = find_rule("unary");
 }
 
 BSDATA(command) = {
 	{"add_type", add_type},
 	{"add_member", add_member},
 	{"add_variable", add_variable},
+	{"begin_string", begin_string},
 	{"identifier", identifier},
 	{"expression", expression},
 	{"declaration", declaration},

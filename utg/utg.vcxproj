@@ -173,8 +173,7 @@
     <ClCompile Include="choosestep.cpp" />
     <ClCompile Include="code_lexer.cpp" />
     <ClCompile Include="code_package.cpp" />
-    <ClCompile Include="code_rule.cpp" />
-    <ClCompile Include="code_token.cpp" />
+    <ClCompile Include="code_parser.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="condition.cpp" />
     <ClCompile Include="color.cpp" />
@@ -280,7 +279,6 @@
     <ClInclude Include="code_command.h" />
     <ClInclude Include="code_lexer.h" />
     <ClInclude Include="code_package.h" />
-    <ClInclude Include="code_token.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="condition.h" />
     <ClInclude Include="counter.h" />
@@ -309,7 +307,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="nameable.h" />
     <ClInclude Include="namenpc.h" />
-    <ClInclude Include="code_rule.h" />
+    <ClInclude Include="code_parser.h" />
     <ClInclude Include="pathfind.h" />
     <ClInclude Include="property.h" />
     <ClInclude Include="pushvalue.h" />

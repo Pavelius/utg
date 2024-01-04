@@ -4,7 +4,7 @@ typedef void (*fnevent)();
 
 namespace code {
 struct command {
-	const char* id;
-	fnevent proc;
+	const char*	id;
+	fnevent		proc;
 };
 }

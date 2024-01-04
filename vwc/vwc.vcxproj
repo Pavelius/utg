@@ -89,7 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,15 +151,17 @@
     <ClCompile Include="view_code_tree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="test_code.cpp" />
+    <ClCompile Include="test_code.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="view_pixel.cpp" />
     <ClCompile Include="view_statusbar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="lexers\c2.txt" />
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="rules\Basic.txt" />
-    <Text Include="rules\lexer_c2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="code\test.c2" />

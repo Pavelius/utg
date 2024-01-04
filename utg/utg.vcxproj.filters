@@ -198,10 +198,7 @@
     <ClCompile Include="draw_answers.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="code_rule.cpp">
-      <Filter>Code</Filter>
-    </ClCompile>
-    <ClCompile Include="code_token.cpp">
+    <ClCompile Include="code_parser.cpp">
       <Filter>Code</Filter>
     </ClCompile>
     <ClCompile Include="stringa.cpp">
@@ -440,10 +437,7 @@
     <ClInclude Include="strvar.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="code_rule.h">
-      <Filter>Code</Filter>
-    </ClInclude>
-    <ClInclude Include="code_token.h">
+    <ClInclude Include="code_parser.h">
       <Filter>Code</Filter>
     </ClInclude>
     <ClInclude Include="stringa.h">

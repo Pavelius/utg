@@ -7,18 +7,12 @@
 using namespace code;
 
 BSDATAC(lexer, 32)
-BSDATAC(rule, 512)
-BSDATAC(ruleop, 512)
 BSDATAC(token, 512)
-BSDATAC(viewpackage, 512)
+BSDATAC(viewpackage, 4096)
 
 BSMETA(lexer) = {
 	BSREQ(id),
 	BSREQ(files),
-	BSREQ(rules),
-	BSREQ(binary),
-	BSREQ(unary),
-	BSREQ(postfix),
 	{}};
 BSMETA(operationi) = {
 	BSREQ(id),
@@ -27,19 +21,14 @@ BSMETA(rule) = {
 	BSREQ(id),
 	BSREQ(tokens),
 	{}};
-BSMETA(ruleop) = {
-	BSREQ(id),
-	BSENM(value, operationi),
-	{}};
 BSMETA(token) = {
 	BSREQ(id),
 	{}};
 
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Lexer", VAR(lexer, 1)},
+	{"Lexer", VAR(lexer, 1), 0, 0, 0, 0, lexer::read},
 	{"Rule", VAR(rule, 1)},
-	{"RuleOperation", VAR(ruleop, 2)},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

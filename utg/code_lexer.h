@@ -1,4 +1,4 @@
-#include "code_rule.h"
+#include "code_parser.h"
 
 #pragma once
 
@@ -7,9 +7,8 @@ struct lexer {
 	const char*	id;
 	const char*	files;
 	rulea		rules;
-	ruleopa		binary, unary, postfix;
-	ruleopa		binary_priority[10];
 	static void read(const char* url);
+	void		activate();
 };
 extern lexer* last_lexer;
 }

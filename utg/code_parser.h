@@ -1,27 +1,33 @@
 #include "code_package.h"
-#include "code_token.h"
 
 #pragma once
 
 namespace code {
-
+enum class flag : unsigned char {
+	Variable, Condition, Repeat, ComaSeparated, PointSeparated, Stop, Execute
+};
+struct token {
+	const char*	id;
+	unsigned	flags;
+	const struct rule* rule;
+	const struct command* command;
+	constexpr explicit operator bool() const { return id != 0; }
+	bool		is(flag v) const { return (flags & (1 << (int)v)) != 0; }
+	void		set(flag v) { flags |= 1 << (int)v; }
+};
+extern const token*	last_token;
+typedef token tokena[16];
 struct rule {
 	const char* id;
 	tokena		tokens;
-};
-struct ruleop {
-	const char*	id;
-	operation	value;
 };
 struct evalue {
 	operation	type;
 	long		value;
 	array*		section;
 };
-
 typedef adat<pckh> operationa;
 typedef sliceu<rule> rulea;
-typedef sliceu<ruleop> ruleopa;
 typedef void(*fnerror)(const char* position, const char* format, const char* format_param);
 
 extern char	string_buffer[256 * 32];

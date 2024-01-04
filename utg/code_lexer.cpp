@@ -6,29 +6,6 @@ using namespace code;
 
 lexer* code::last_lexer;
 
-static int getpriority(operation t) {
-	switch(t) {
-	case operation::Mul:
-	case operation::Div: case operation::DivRest:
-		return 0;
-	case operation::Plus: case operation::Minus:
-		return 1;
-	case operation::Greater: case operation::Less:
-	case operation::Equal: case operation::NotEqual:
-		return 2;
-	case operation::BinaryAnd: case operation::BinaryOr: case operation::BinaryÕîr:
-		return 3;
-	case operation::ShiftLeft: case operation::ShiftRight:
-		return 4;
-	case operation::And:
-		return 5;
-	case operation::Or:
-		return 6;
-	default:
-		return 7;
-	}
-}
-
 static bool match(const char* symbol) {
 	auto i = 0;
 	while(symbol[i]) {
@@ -44,83 +21,6 @@ static bool match(const char* symbol) {
 void code::skip(const char* symbol) {
 	if(!match(symbol))
 		error("Expected token `%1` in `%2`", symbol, example(p));
-}
-
-static operation match_operation(const ruleopa& source) {
-	for(auto& e : source) {
-		if(match(e.id))
-			return e.value;
-	}
-	return operation::None;
-}
-
-static void parse_postfix() {
-	while(true) {
-		switch(*p) {
-		case '(': // Calling
-			skip(")");
-			return; // Must return
-		case '[': // Scoping
-			skipws(1);
-			parse_expression();
-			skip("]");
-			break;
-		case '{': // Initializing
-			skipws(1);
-			parse_expression();
-			skip("}");
-			return; // Must return
-		default:
-			auto op = match_operation(last_lexer->postfix);
-			if(op == operation::None)
-				return;
-			unary_operation(op);
-			break;
-		}
-	}
-}
-
-static void parse_binary();
-
-static void parse_unary() {
-	if(*p == '(') {
-		skipws(1);
-		parse_binary();
-		skip(")");
-	} else {
-		while(true) {
-			auto op = match_operation(last_lexer->unary);
-			if(op == operation::None)
-				break;
-			parse_unary();
-			unary_operation(op);
-		}
-	}
-}
-
-static void parse_binary(int level) {
-	if(level < 0)
-		parse_unary();
-	else {
-		parse_binary(level - 1);
-		while(true) {
-			auto op = match_operation(last_lexer->binary_priority[level]);
-			if(op == operation::None)
-				break;
-			parse_binary(level - 1);
-			binary_operation(op);
-		}
-	}
-}
-
-static void parse_binary() {
-	parse_binary(7);
-}
-
-static int compare_rule(const void* pv1, const void* pv2) {
-	auto p1 = (rule*)pv1;
-	auto p2 = (rule*)pv2;
-	return strcmp(p1->id, p2->id);
 }
 
 static rule* find_rule(const char* id, bool need_error = false) {
@@ -209,7 +109,7 @@ void lexer::read(const char* url) {
 		error("Define one lexer");
 		return;
 	} else if((end_lexer - start_lexer) > 1) {
-		error("Define only one lexer in ont file");
+		error("Define only one lexer in one file");
 		return;
 	}
 	auto push_lexer = last_lexer;
@@ -217,4 +117,9 @@ void lexer::read(const char* url) {
 	last_lexer->rules = sliceu<rule>(start_rules, end_rules - start_rules);
 	initialize_all();
 	last_lexer = push_lexer;
+}
+
+void lexer::activate() {
+	last_lexer = this;
+	setrules(last_lexer->rules);
 }

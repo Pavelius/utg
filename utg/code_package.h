@@ -4,8 +4,8 @@
 #pragma once
 
 namespace code {
-typedef unsigned	pckh;
-const unsigned		None = 0xFFFFFFFF;
+typedef unsigned pckh;
+const pckh None = 0xFFFFFFFF;
 enum class operation : unsigned char {
 	None, Nop,
 	Plus, Minus, Div, Mul, DivRest,
@@ -23,7 +23,7 @@ enum : pckh {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 	TypeLiteral, TypePointer,
 };
-enum : unsigned {
+enum : pckh {
 	Standart, Static, Public, Function,
 };
 struct operationi {

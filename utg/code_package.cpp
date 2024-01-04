@@ -5,7 +5,7 @@ using namespace code;
 
 package* code::last_package;
 
-bool isnostrictorder(operation id) {
+static bool isnostrictorder(operation id) {
 	switch(id) {
 	case operation::Plus:
 	case operation::Mul:
