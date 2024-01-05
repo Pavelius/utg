@@ -171,10 +171,10 @@ static void parse_rule(const rule& v) {
 			}
 		} else {
 			auto n = zlen(e.id);
-			if(memcmp(p, e.id, n) != 0)
-				return;
-			p += n;
-			skipws();
+			if(memcmp(p, e.id, n) == 0) {
+				p += n;
+				skipws();
+			}
 		}
 		if(e.is(flag::Execute))
 			continue;

@@ -1,1 +1,4 @@
-﻿ Line 7: Can't parse `, y;`
+﻿ Line 9: Symbol `print` already defined
+ Line 9: Symbol `` already defined
+ Line 9: Expected symbol `,` when parse `() {`
+ Line 8: Can't parse `void print() {`
