@@ -19,6 +19,17 @@ struct context {
 };
 static context	context_data[32];
 static unsigned	context_current;
+struct rulectx;
+static rulectx* last;
+struct rulectx {
+	const struct token* token;
+	const struct rule& rule;
+	rulectx*	previous;
+	const char*	position;
+	unsigned	symbol;
+	rulectx(const struct rule& rule) : rule(rule), previous(last), position(last_position), symbol(context_current), token(code::last_token) { last_position = p; last = this; }
+	~rulectx() { last_position = position; context_current = symbol; code::last_token = token; last = previous; }
+};
 }
 
 const code::token* code::last_token;
@@ -122,18 +133,15 @@ void code::skipws(int n) {
 }
 
 static void parse_rule(const rule& v) {
+	rulectx push(v);
 	auto need_stop = false;
-	auto push_position = last_position;
-	auto push_context = context_current;
-	auto push_token = last_token;
-	last_position = p;
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
+		last_token = &e;
 		if(e.is(flag::Stop))
 			need_stop = true;
 		auto p1 = p;
-		last_token = &e;
 		if(e.command)
 			e.command->proc();
 		else if(e.rule) {
@@ -189,9 +197,6 @@ static void parse_rule(const rule& v) {
 		if(need_stop)
 			break;
 	}
-	last_token = push_token;
-	last_position = push_position;
-	context_current = push_context;
 }
 
 static rule* find_rule(const char* id) {
