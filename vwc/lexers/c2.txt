@@ -42,7 +42,7 @@ statement_expression tokens("%expression" ";")
 block_statements tokens("{" "@push_locals" ".?%single_statement" "@pop_locals" "}")
 single_statement tokens("^%block_statements" ";" "%statement_line")
 statement tokens("^%return" "%if" "%while" "%switch" "%break" "%case" "%default" "%declare_local" "%assigment" "%statement_expression")
-statement_line tokens("statement" "@add_statement")
+statement_line tokens("%statement" "@add_statement")
 
 break tokens("break" ";")
 default tokens("default" ":")
@@ -50,7 +50,7 @@ case tokens("case" "%expression" ":")
 while tokens("while" "@debug" "(" "%expression" ")" "%single_statement" "@While.add_binary")
 if tokens("if" "(" "%expression" ")" "%single_statement")
 switch tokens("switch" "(" "%expression" ")" "%block_statements")
-return tokens("return" "%expression" ";")
+return tokens("return" "?%expression" ";")
 
 #Lexer
 

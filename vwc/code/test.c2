@@ -24,7 +24,7 @@ void main() {
 	print();
 	if(test_switch()+10)
 		return;
-	if(x <= 5)
-		return x;
+	//if(x <= 5)
+	//	return x;
 	return 10;
 }

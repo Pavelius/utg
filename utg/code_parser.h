@@ -17,7 +17,6 @@ struct token {
 	bool		is(flag v) const { return (flags & (1 << (int)v)) != 0; }
 	void		set(flag v) { flags |= 1 << (int)v; }
 };
-extern const token*	last_token;
 typedef token tokena[16];
 struct rule {
 	const char* id;

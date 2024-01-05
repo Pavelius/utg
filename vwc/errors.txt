@@ -1,4 +1,3 @@
-﻿ Line 9: Symbol `print` already defined
- Line 9: Symbol `` already defined
- Line 9: Expected symbol `,` when parse `() {`
- Line 8: Can't parse `void print() {`
+﻿ Line 29: Can't add emphty statement
+ Line 29: Can't add emphty statement
+ Line 30: Operations stack corrupted when add symbol result

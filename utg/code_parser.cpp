@@ -27,12 +27,10 @@ struct rulectx {
 	rulectx*	previous;
 	const char*	position;
 	unsigned	symbol;
-	rulectx(const struct rule& rule) : rule(rule), previous(last), position(last_position), symbol(context_current), token(code::last_token) { last_position = p; last = this; }
-	~rulectx() { last_position = position; context_current = symbol; code::last_token = token; last = previous; }
+	rulectx(const struct rule& rule) : rule(rule), previous(last), position(last_position), symbol(context_current), token(0) { last_position = p; last = this; }
+	~rulectx() { last_position = position; context_current = symbol; last = previous; }
 };
 }
-
-const code::token* code::last_token;
 
 adat<pckh>	code::operations;
 rulea		code::rules;
@@ -138,13 +136,15 @@ static void parse_rule(const rule& v) {
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
-		last_token = &e;
+		last->token = &e;
 		if(e.is(flag::Stop))
 			need_stop = true;
 		auto p1 = p;
-		if(e.command)
+		if(e.command) {
+			// Command execute and not checked later
 			e.command->proc();
-		else if(e.rule) {
+			continue;
+		} else if(e.rule) {
 			parse_rule(*e.rule);
 			if(e.is(flag::Repeat)) {
 				auto p2 = p1;
@@ -178,14 +178,12 @@ static void parse_rule(const rule& v) {
 				}
 			}
 		} else {
-			auto n = zlen(e.id);
-			if(memcmp(p, e.id, n) == 0) {
-				p += n;
+			// Speed up by cashing string len in `param`
+			if(memcmp(p, e.id, e.param) == 0) {
+				p += e.param;
 				skipws();
 			}
 		}
-		if(e.is(flag::Execute))
-			continue;
 		if(p1 >= p) {
 			// Token did not work
 			if(need_stop || e.is(flag::Condition)) // If tokens is optional continue parse next token
@@ -284,7 +282,8 @@ static void initialize_tokens_depency() {
 				e.command = bsdata<command>::find(e.id);
 				if(!e.command)
 					error("In rule `%1` not found command `%2`", r.id, e.id);
-			}
+			} else
+				e.param = zlen(e.id);
 		}
 	}
 }
@@ -552,7 +551,7 @@ static void add_variable() {
 }
 
 static void set_flag() {
-	geti().flags |= FG(last_token->param);
+	geti().flags |= FG(last->token->param);
 }
 
 static void begin_string() {
@@ -645,7 +644,7 @@ void code::setrules(rulea source) {
 }
 
 static void add_binary() {
-	binary_operation((operation)last_token->param);
+	binary_operation((operation)last->token->param);
 }
 
 static void add_statement() {
