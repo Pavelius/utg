@@ -121,19 +121,61 @@ void code::skipws(int n) {
 	skipws();
 }
 
-static void parse_token(const token& e);
-
 static void parse_rule(const rule& v) {
 	auto need_stop = false;
-	auto push_position = last_position; last_position = p;
+	auto push_position = last_position;
 	auto push_context = context_current;
+	auto push_token = last_token;
+	last_position = p;
 	for(auto& e : v.tokens) {
 		if(!e)
 			break;
 		if(e.is(flag::Stop))
 			need_stop = true;
 		auto p1 = p;
-		parse_token(e);
+		last_token = &e;
+		if(e.command)
+			e.command->proc();
+		else if(e.rule) {
+			parse_rule(*e.rule);
+			if(e.is(flag::Repeat)) {
+				auto p2 = p1;
+				while(p > p2) {
+					p2 = p;
+					auto required = false;
+					if(e.is(flag::ComaSeparated)) {
+						if(p[0] == ',') {
+							p++; skipws();
+							required = true;
+						}
+					} else if(e.is(flag::PointSeparated)) {
+						if(p[0] == '.') {
+							p++; skipws();
+							required = true;
+						}
+					}
+					auto p3 = p;
+					parse_rule(*e.rule);
+					if(p <= p3) {
+						if(required)
+							error("Expected %1", e.id);
+					} else {
+						if(!required) {
+							if(e.is(flag::ComaSeparated))
+								error("Expected symbol `,` when parse `%1`", example(p2));
+							else if(e.is(flag::PointSeparated))
+								error("Expected symbol `.` when parse `%1`", example(p2));
+						}
+					}
+				}
+			}
+		} else {
+			auto n = zlen(e.id);
+			if(memcmp(p, e.id, n) != 0)
+				return;
+			p += n;
+			skipws();
+		}
 		if(e.is(flag::Execute))
 			continue;
 		if(p1 >= p) {
@@ -147,55 +189,9 @@ static void parse_rule(const rule& v) {
 		if(need_stop)
 			break;
 	}
+	last_token = push_token;
 	last_position = push_position;
 	context_current = push_context;
-}
-
-static void parse_token(const token& e) {
-	last_token = &e;
-	if(e.command)
-		e.command->proc();
-	else if(e.rule) {
-		auto p0 = p;
-		parse_rule(*e.rule);
-		if(e.is(flag::Repeat)) {
-			auto p2 = p0;
-			while(p2 != p) {
-				p2 = p;
-				auto required = false;
-				if(e.is(flag::ComaSeparated)) {
-					if(p[0] == ',') {
-						p++; skipws();
-						required = true;
-					}
-				} else if(e.is(flag::PointSeparated)) {
-					if(p[0] == '.') {
-						p++; skipws();
-						required = true;
-					}
-				}
-				auto p3 = p;
-				parse_rule(*e.rule);
-				if(p3 == p) {
-					if(required)
-						error("Expected %1", e.id);
-				} else {
-					if(!required) {
-						if(e.is(flag::ComaSeparated))
-							error("Expected symbol `,` when parse `%1`", example(p2));
-						else if(e.is(flag::PointSeparated))
-							error("Expected symbol `.` when parse `%1`", example(p2));
-					}
-				}
-			}
-		}
-	} else {
-		auto n = zlen(e.id);
-		if(memcmp(p, e.id, n) != 0)
-			return;
-		p += n;
-		skipws();
-	}
 }
 
 static rule* find_rule(const char* id) {
