@@ -230,6 +230,9 @@ static void paint_block(const char* id, const variants& source) {
 		else if(v.iskind<abilityi>()) {
 			auto p = bsdata<abilityi>::elements + v.value;
 			paint_block(p->id, p, player->abilities[v.value]);
+		} else if(v.iskind<consumablei>()) {
+			auto p = bsdata<consumablei>::elements + v.value;
+			paint_block(p->id, p, player->consumables[v.value]);
 		}
 	}
 	value_format = push_format;

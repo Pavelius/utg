@@ -5,9 +5,12 @@ Dexterity
 Savvy
 Tech
 
+HitsRolled
+
 #Consumable
 
 Hits
+ maximum HitsRolled Body
 
 #Group
 
@@ -50,9 +53,13 @@ DeepFieldWelder
 
 PlayerAbilities
  elements Body Dexterity Savvy Tech
+PlayerAddon
+ elements Hits
+PlayerAbilitiesRoll
+ elements Roll1d4 MinusRoll1d4
 PlayerGeneration
 
 #Panel
 
 CharacterSheet width(170)
- elements PlayerAbilities
+ elements PlayerAbilities PlayerAddon

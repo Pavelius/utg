@@ -90,6 +90,9 @@
     <ClInclude Include="advance.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="roll.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +158,9 @@
     <ClCompile Include="panel.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="roll.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -198,6 +204,9 @@
     </Text>
     <Text Include="rules\dis\Advancement.txt">
       <Filter>rules\Death in Space</Filter>
+    </Text>
+    <Text Include="rules\common\Dices.txt">
+      <Filter>rules</Filter>
     </Text>
   </ItemGroup>
 </Project>

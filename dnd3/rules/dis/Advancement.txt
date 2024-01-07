@@ -4,3 +4,7 @@ PlayerGeneration RandomAbilities
  elements RandomAbilities
 PlayerGeneration ChooseOrigin
  elements Select Origin Choose
+PlayerGeneration ChooseBackground
+ elements Select Background Choose
+PlayerGeneration RandomHits
+ elements Roll1d8 Set HitsRolled

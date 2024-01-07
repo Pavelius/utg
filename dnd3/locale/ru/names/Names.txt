@@ -21,7 +21,7 @@ Tech: Технологии
 Melee: Ближний бой
 Range: Стрельба
 
-ChooseOrigin: Выбирайте ваше происхождение
+ChooseOrigin: Выбирайте ваше [происхождение]
 
 Carbon: Астер
 Chrome: Киборг
@@ -29,3 +29,26 @@ Punk: Панк
 Solpod: Долгожитель
 VelocityCursed: Скорострел
 Void: Пустота
+
+ChooseBackground: Кем вы были до [войны]?
+
+AsteroidArcheologist: Археологист
+AsteroidDriller: Астероидный бурильщик
+Astrochemist: Астрохимик
+BountyHunter: Охотник за наживой
+DeepFieldWelder: Сварщик
+EventHorizontDriver: Пилот звездолетов
+FreightTracer: Пират
+GravitySwindler: Мошенник
+IntergalacticTraveller: Путешественник
+InterstellarSoldier: Межзвездный солдат
+IsotopCoder: Програматор изотопов
+Legionnarie: Легионером
+MonolithCultist: Сектант
+MoonOutlaw: Лунный изгой
+OrbitVagabond: Орбитальный бродяга
+StarSalvager: Звездный утилизатор
+StaticNoiseTranslator: Переводчик шума
+StationMarshal: Шериф на станции
+Technomant: Техномант
+TowTrucker: Эвакуатор

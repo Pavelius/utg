@@ -1,0 +1,15 @@
+#DiceRoll
+
+Roll1d2 c(1) d(2)
+Roll1d3 c(1) d(3)
+Roll1d4 c(1) d(4)
+Roll1d6 c(1) d(4)
+Roll1d6 c(1) d(6)
+Roll1d8 c(1) d(8)
+Roll1d10 c(1) d(10)
+Roll1d12 c(1) d(12)
+Roll1d20 c(1) d(20)
+Roll2d20b1 c(2) d(20) b(1)
+Roll2d20w1 c(2) d(20) w(1)
+
+MinusRoll1d4 c(1) d(4) m(-1)

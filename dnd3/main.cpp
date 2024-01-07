@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "creature.h"
 #include "calculator.h"
 #include "draw.h"
@@ -12,6 +13,14 @@ void update_ui();
 static void main_scene() {
 }
 
+static void add_player(point index, bool interactive) {
+	auto push = answers::interactive;
+	answers::interactive = interactive;
+	player->create();
+	player->index = index;
+	answers::interactive = push;
+}
+
 static void add_creature(point index, const char* id) {
 	player->create();
 	player->index = index;
@@ -23,7 +32,7 @@ static void add_map(point index, const char* avatar) {
 }
 
 static void test_creature() {
-	add_creature({12, 10}, "Skeleton");
+	add_player({12, 10}, false);
 	add_map({0, 0}, "hills");
 	update_ui();
 }

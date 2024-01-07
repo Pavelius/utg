@@ -144,7 +144,9 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="advance.h" />
-    <ClInclude Include="calculator.h" />
+    <ClInclude Include="calculator.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="chooseable.h" />
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
@@ -159,6 +161,7 @@
     <ClInclude Include="magic.h" />
     <ClInclude Include="resid.h" />
     <ClInclude Include="resable.h" />
+    <ClInclude Include="roll.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="skilli.h" />
     <ClInclude Include="spell.h" />
@@ -169,7 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="calculator.cpp" />
+    <ClCompile Include="calculator.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="chooseable.cpp" />
     <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />
@@ -185,6 +190,7 @@
     <ClCompile Include="range.cpp" />
     <ClCompile Include="magic.cpp" />
     <ClCompile Include="resable.cpp" />
+    <ClCompile Include="roll.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="wear.cpp" />
@@ -200,6 +206,7 @@
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\common\Dices.txt" />
     <Text Include="rules\dis\Abilities.txt" />
     <Text Include="rules\dis\Advancement.txt" />
     <Text Include="rules\dis\Core.txt" />

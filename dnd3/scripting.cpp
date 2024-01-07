@@ -7,14 +7,26 @@
 #include "list.h"
 #include "material.h"
 #include "modifier.h"
+#include "pushvalue.h"
+#include "roll.h"
 #include "script.h"
 #include "statable.h"
 
 static const char* last_id;
 static int choose_count;
 
+int calculate(statable* p, variants source);
+
+static int get_bonus(int value) {
+	return value ? value : 1;
+}
+
 template<> void fnscript<abilityi>(int index, int value) {
-	player->basic.abilities[index] += value;
+	switch(modifier) {
+	case Current: player->abilities[index] += value; break;
+	case Permanent: player->basic.abilities[index] += value; break;
+	case Calculation: result_value += player->abilities[index] * get_bonus(value); break;
+	}
 }
 
 template<> void fnscript<consumablei>(int index, int value) {
@@ -35,6 +47,10 @@ template<> void fnscript<materiali>(int index, int value) {
 		case Vulnerable: player->vulnerable &= ~FG(index); break;
 		}
 	}
+}
+
+template<> void fnscript<rolli>(int index, int value) {
+	result_value += bsdata<rolli>::elements[index].roll() + value;
 }
 
 template<> void fnscript<monsteri>(int index, int value) {
@@ -114,8 +130,12 @@ void join_party(int bonus) {
 static void apply_choose(variant v, variant type) {
 	if(type.iskind<enumgroupi>())
 		player->values[type.value] = v.value;
-	else if(type.iskind<abilityi>())
-		player->abilities[type.value] = (char)v.value;
+	else if(type.iskind<abilityi>()) {
+		switch(modifier) {
+		case Permanent: player->basic.abilities[type.value] = (char)v.value; break;
+		case Current: player->abilities[type.value] = (char)v.value; break;
+		}
+	}		
 }
 
 static void add_querry(variant type) {
@@ -140,6 +160,14 @@ static void apply_select(int bonus) {
 }
 
 static void random_abilities(int bonus) {
+	auto pa = bsdata<listi>::find("PlayerAbilities");
+	if(!pa)
+		return;
+	auto pr = bsdata<listi>::find("PlayerAbilitiesRoll");
+	if(!pr)
+		return;
+	for(auto v : pa->elements)
+		player->basic.abilities[v.value] = calculate(player, pr->elements);
 }
 
 static void* choose_prompt(const char* id) {
@@ -186,14 +214,17 @@ static void choose(int bonus) {
 }
 
 static void apply_advance(variant type) {
-	auto push_id = last_id;
+	pushvalue push_id(last_id);
+	pushvalue push_value(result_value);
+	pushvalue push_modifier(modifier);
 	for(auto& e : bsdata<advancementi>()) {
 		if(e.type == type) {
 			last_id = e.id;
+			result_value = 0;
+			modifier = Permanent;
 			script_run(e.elements);
 		}
 	}
-	last_id = push_id;
 }
 
 void creature::advance(const char* id, int bonus) {
@@ -204,6 +235,20 @@ void creature::advance(const char* id, int bonus) {
 	apply_advance(type);
 }
 
+static void set_result_number(variant v) {
+	if(v.iskind<abilityi>()) {
+		switch(modifier) {
+		case Permanent: player->basic.abilities[v.value] += result_value; break;
+		case Current: player->abilities[v.value] += result_value; break;
+		}
+	}
+		
+}
+
+static void set_value(int bonus) {
+	set_result_number(*script_begin++);
+}
+
 BSDATA(script) = {
 	{"AddRandom", add_random},
 	{"Choose", choose},
@@ -212,6 +257,7 @@ BSDATA(script) = {
 	{"Multiply", multiply},
 	{"Number", number},
 	{"RandomAbilities", random_abilities},
+	{"Set", set_value},
 	{"SetParam", set_param},
 	{"Select", apply_select},
 };

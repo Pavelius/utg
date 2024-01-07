@@ -1,7 +1,9 @@
 #include "ability.h"
 #include "crt.h"
 #include "list.h"
+#include "modifier.h"
 #include "pushvalue.h"
+#include "roll.h"
 #include "script.h"
 #include "statable.h"
 #include "numberlist.h"
@@ -27,6 +29,8 @@ int calculate(statable* p, variants source) {
 			result_value += calculate(p, bsdata<listi>::elements[v.value].elements) * v.counter;
 		} else if(v.iskind<script>())
 			bsdata<script>::elements[v.value].proc(v.counter);
+		else if(v.iskind<rolli>())
+			fnscript<rolli>(v.value, v.counter);
 		else if(v.iskind<numberlist>()) {
 			if(!v.counter)
 				v.counter = 1;
@@ -62,7 +66,6 @@ void statable::creating() {
 
 void statable::copy(const statable& v) {
 	*this = v;
-	//memcpy(this, &v, sizeof(*this));
 }
 
 bool statable::isimmunity(int material) const {

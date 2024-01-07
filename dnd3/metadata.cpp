@@ -12,6 +12,7 @@
 #include "monster.h"
 #include "numberlist.h"
 #include "panel.h"
+#include "roll.h"
 #include "room.h"
 #include "script.h"
 #include "variant.h"
@@ -25,6 +26,7 @@ BSDATAC(monsteri, 256)
 BSDATAC(materiali, 32)
 BSDATAC(paneli, 32)
 BSDATAC(roomi, 16)
+BSDATAC(rolli, 64)
 
 NOBSDATA(dice)
 NOBSDATA(weaponi)
@@ -79,6 +81,10 @@ BSMETA(paneli) = {
 BSMETA(rangei) = {
 	BSREQ(id),
 	{}};
+BSMETA(rolli) = {
+	BSREQ(id),
+	BSREQ(c), BSREQ(d), BSREQ(p), BSREQ(w), BSREQ(b), BSREQ(m),
+	{}};
 BSMETA(roomi) = {
 	BSREQ(avatar),
 	{}};
@@ -93,6 +99,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Advancement", VAR(advancementi, 2)},
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
+	{"DiceRoll", VAR(rolli, 1), 0, 0, fnscript<rolli>},
 	{"Element", VAR(enumi, 1), 0, 0},
 	{"Group", VAR(enumgroupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},

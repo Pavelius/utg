@@ -1,7 +1,2 @@
 ﻿In file `Names.txt`:
-Carbon: Define translate
-Chrome: Define translate
-Punk: Define translate
-Solpod: Define translate
-VelocityCursed: Define translate
-Void: Define translate
+PlayerAddon: Define translate
