@@ -183,10 +183,19 @@ static void paint_block(const char* id, void* object, const char* value) {
 	height = push_height;
 }
 
-static void paint_block(const char* id, void* object, int value) {
+static void check_format(const char* id) {
+	auto pn = getnme(stw(id, "Format"));
+	if(pn)
+		value_format = pn;
+}
+
+static void paint_block(const char* id, void* object, int value, int value2 = 0) {
+	auto push_format = value_format;
+	check_format(id);
 	char temp[32]; stringbuilder sb(temp);
-	sb.add(value_format, value);
+	sb.add(value_format, value, value2);
 	paint_block(id, object, temp);
+	value_format = push_format;
 }
 
 static void paint_values(const variants& elements) {
@@ -215,9 +224,7 @@ static void paint_values(const variants& elements) {
 
 static void paint_block(const char* id, const variants& source) {
 	auto push_format = value_format;
-	auto pn = getnme(stw(id, "Format"));
-	if(pn)
-		value_format = pn;
+	check_format(id);
 	for(auto v : source) {
 		if(v.iskind<paneli>()) {
 			auto p = bsdata<paneli>::elements + v.value;
@@ -232,7 +239,7 @@ static void paint_block(const char* id, const variants& source) {
 			paint_block(p->id, p, player->abilities[v.value]);
 		} else if(v.iskind<consumablei>()) {
 			auto p = bsdata<consumablei>::elements + v.value;
-			paint_block(p->id, p, player->consumables[v.value]);
+			paint_block(p->id, p, player->consumables[v.value], player->maximum.consumables[v.value]);
 		}
 	}
 	value_format = push_format;

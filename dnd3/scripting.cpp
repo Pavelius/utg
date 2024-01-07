@@ -21,10 +21,18 @@ static int get_bonus(int value) {
 	return value ? value : 1;
 }
 
+static int get_value(int value) {
+	switch(value) {
+	case 101: return result_value;
+	case -101: return -result_value;
+	default: return value;
+	}
+}
+
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
-	case Current: player->abilities[index] += value; break;
-	case Permanent: player->basic.abilities[index] += value; break;
+	case Current: player->abilities[index] += get_value(value); break;
+	case Permanent: player->basic.abilities[index] += get_value(value); break;
 	case Calculation: result_value += player->abilities[index] * get_bonus(value); break;
 	}
 }
@@ -235,18 +243,9 @@ void creature::advance(const char* id, int bonus) {
 	apply_advance(type);
 }
 
-static void set_result_number(variant v) {
-	if(v.iskind<abilityi>()) {
-		switch(modifier) {
-		case Permanent: player->basic.abilities[v.value] += result_value; break;
-		case Current: player->abilities[v.value] += result_value; break;
-		}
-	}
-		
-}
-
-static void set_value(int bonus) {
-	set_result_number(*script_begin++);
+static void minimum_value(int bonus) {
+	if(result_value < bonus)
+		result_value = bonus;
 }
 
 BSDATA(script) = {
@@ -254,10 +253,10 @@ BSDATA(script) = {
 	{"Choose", choose},
 	{"Divide", divide},
 	{"JoinParty", join_party},
+	{"Minimum", minimum_value},
 	{"Multiply", multiply},
 	{"Number", number},
 	{"RandomAbilities", random_abilities},
-	{"Set", set_value},
 	{"SetParam", set_param},
 	{"Select", apply_select},
 };

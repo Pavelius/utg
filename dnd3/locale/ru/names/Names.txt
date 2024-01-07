@@ -5,6 +5,7 @@ InitiativeCounter: Инициатива
 PlayerAbilities: Способности персонажа
 PlayerAbilitiesFormat: %+1i
 PlayerCombat: Боевые способности
+PlayerAddon: Дополнительно
 
 Str: Сила
 Dex: Ловкость
@@ -20,6 +21,9 @@ Tech: Технологии
 
 Melee: Ближний бой
 Range: Стрельба
+
+Hits: Хиты
+HitsFormat: %1i/%2i
 
 ChooseOrigin: Выбирайте ваше [происхождение]
 

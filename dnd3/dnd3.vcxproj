@@ -144,9 +144,6 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="advance.h" />
-    <ClInclude Include="calculator.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="chooseable.h" />
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
@@ -172,9 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="calculator.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="chooseable.cpp" />
     <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />

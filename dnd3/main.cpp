@@ -1,6 +1,5 @@
 #include "answers.h"
 #include "creature.h"
-#include "calculator.h"
 #include "draw.h"
 #include "draw_strategy.h"
 #include "numberlist.h"
@@ -32,7 +31,7 @@ static void add_map(point index, const char* avatar) {
 }
 
 static void test_creature() {
-	add_player({12, 10}, false);
+	add_player({12, 10}, true);
 	add_map({0, 0}, "hills");
 	update_ui();
 }

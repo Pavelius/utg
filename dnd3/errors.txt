@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
+Hits: Define translate
 PlayerAddon: Define translate

@@ -10,7 +10,7 @@ HitsRolled
 #Consumable
 
 Hits
- maximum HitsRolled Body
+ maximum HitsRolled Body Minimum+1
 
 #Group
 

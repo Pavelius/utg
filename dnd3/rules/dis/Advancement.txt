@@ -7,4 +7,4 @@ PlayerGeneration ChooseOrigin
 PlayerGeneration ChooseBackground
  elements Select Background Choose
 PlayerGeneration RandomHits
- elements Roll1d8 Set HitsRolled
+ elements Roll1d8 HitsRolled+101
