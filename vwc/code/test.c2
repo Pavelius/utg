@@ -20,11 +20,14 @@ bool test_switch() {
 	return 1;
 }
 
-void main() {
-	print();
-	if(test_switch()+10)
-		return;
-	//if(x <= 5)
-	//	return x;
-	return 10;
-}
+//void main() {
+//	print();
+//	if(test_switch()+10)
+//		return;
+//	return 10;
+//}
+//
+//void test1() {
+//	if(x <= 5)
+//		return x;
+//}

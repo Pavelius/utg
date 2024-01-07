@@ -153,6 +153,7 @@
     <ClInclude Include="modifier.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="numberlist.h" />
+    <ClInclude Include="panel.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="magic.h" />
     <ClInclude Include="resid.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="numberlist.cpp" />
+    <ClCompile Include="panel.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="magic.cpp" />
     <ClCompile Include="resable.cpp" />
@@ -194,7 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
+    <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\shdwdark\Abilities.txt" />
     <Text Include="rules\shdwdark\Core.txt" />

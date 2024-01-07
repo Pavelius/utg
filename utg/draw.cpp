@@ -1597,7 +1597,7 @@ int draw::textw(const char* string, int count) {
 	return x1;
 }
 
-void draw::text(const char* string, int count, unsigned flags) {
+void draw::textmc(const char* string, int count, unsigned flags) {
 	if(!font)
 		return;
 	auto dy = texth();
@@ -1608,7 +1608,6 @@ void draw::text(const char* string, int count, unsigned flags) {
 	const pma* pk = 0; // font->getheader("KRN");
 	const char *s1 = string;
 	const char *s2 = string + count;
-	auto push_caret = caret;
 	unsigned char s0 = 0x0;
 	if(pk) {
 		while(s1 < s2) {
@@ -1628,6 +1627,11 @@ void draw::text(const char* string, int count, unsigned flags) {
 			caret.x += textw(sm);
 		}
 	}
+}
+
+void draw::text(const char* string, int count, unsigned flags) {
+	auto push_caret = caret;
+	textmc(string, count, flags);
 	caret = push_caret;
 }
 

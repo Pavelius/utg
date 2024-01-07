@@ -8,8 +8,6 @@
 #include "pushvalue.h"
 #include "questlist.h"
 
-void initialize_str();
-
 static void set_mouse_guard(int count) {
 	static char temp[260];
 	player = bsdata<hero>::add();
@@ -55,7 +53,6 @@ static bool isplayer(const void* p) {
 }
 
 int	main(int argc, char *argv[]) {
-	initialize_str();
 	draw::heroes = bsdata<hero>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;

@@ -75,7 +75,8 @@ void statable::creating() {
 }
 
 void statable::copy(const statable& v) {
-	memcpy(this, &v, sizeof(*this));
+	*this = v;
+	//memcpy(this, &v, sizeof(*this));
 }
 
 bool statable::isimmunity(int material) const {

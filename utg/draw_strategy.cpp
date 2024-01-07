@@ -55,6 +55,7 @@ bool draw::swindow(bool hilight) {
 	fore = colors::form;
 	if(hilight && rs)
 		fore = colors::button.mix(fore, hot.pressed ? 128 : 216);
+	alpha = 220;
 	rectf();
 	alpha = push_alpha;
 	fore = colors::border;

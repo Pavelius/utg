@@ -15,7 +15,7 @@ enum class operation : unsigned char {
 	Or, And,
 	BooleanChoose, LeftIfTrue,
 	Increment, Decrement, AdressOf, Dereference, Scope,
-	Assign, If, While,
+	Assign, If, While, Return, Switch, Case, Break, Default,
 	Number, Text, Identifier, Statement
 };
 enum : pckh {

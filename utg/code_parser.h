@@ -44,10 +44,6 @@ extern const char* last_string;
 
 const char* example(const char* p);
 
-void identifier();
-void number();
-void string();
-
 void binary_operation(operation op);
 void unary_operation(operation op);
 

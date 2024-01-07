@@ -54,6 +54,10 @@ static const char* main_getname(const void* object, stringbuilder& sb) {
 	return sb.begin();
 }
 
+symbol* get_active_symbol() {
+	return symbols[current];
+}
+
 static void code_tree_widget() {
 	static int origin;
 	rectpush push;

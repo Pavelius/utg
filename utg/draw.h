@@ -212,7 +212,7 @@ inline bool				ishilite(int size) { return ishilite({caret.x-size, caret.y - siz
 void					image(int x, int y, const sprite* e, int id, int flags);
 inline void				image(const sprite* e, int id, int flags) { image(caret.x, caret.y, e, id, flags); }
 void					image(const sprite* e, int id, int flags, color* pal);
-void					imager(int xm, int ym, const sprite* p, int id, int radius);
+//void					imager(int xm, int ym, const sprite* p, int id, int radius);
 void					key2str(stringbuilder& sb, int key);
 void					line(int x, int y); // Draw line
 void					linet(int x, int y);
@@ -261,6 +261,7 @@ void					textfs(const char* string);
 int						texth();
 int						texth(const char* string, int width);
 void					texth2c(const char* format);
+void					textmc(const char* string, int count = -1, unsigned flags = 0);
 int						textw(int sym);
 int						textw(const char* string, int count = -1);
 int						textw(rect& rc, const char* string);

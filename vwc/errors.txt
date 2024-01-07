@@ -1,3 +1,5 @@
-﻿ Line 29: Can't add emphty statement
- Line 29: Can't add emphty statement
- Line 30: Operations stack corrupted when add symbol result
+﻿ Line 27: Binary operations stack corrupt in `return 10;`
+ Line 27: Can't add emphty statement
+ Line 27: Can't add emphty statement
+ Line 29: Operations stack corrupted when add symbol result
+ Line 33: Operations stack corrupted when add symbol result

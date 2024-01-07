@@ -38,7 +38,8 @@ fnerror		code::perror;
 char		code::string_buffer[256 * 32];
 
 static rule	*unary_rule, *postfix_rule;
-static adat<unsigned>	locals;
+static adat<unsigned> locals;
+static adat<unsigned> locals_ops;
 static pckh	last_url;
 
 static const char* file_source;
@@ -85,7 +86,7 @@ static void comments() {
 	}
 }
 
-void code::string() {
+static void string() {
 	if(*p == '\"') {
 		stringbuilder sb(string_buffer);
 		p = sb.psstr(p + 1, '\"');
@@ -94,7 +95,7 @@ void code::string() {
 	}
 }
 
-void code::number() {
+static void number() {
 	auto p1 = p;
 	long value = 0;
 	p = stringbuilder::read(p, value);
@@ -104,7 +105,7 @@ void code::number() {
 	}
 }
 
-void code::identifier() {
+static void identifier() {
 	auto p1 = p;
 	stringbuilder sb(string_buffer);
 	p = sb.psidf(p);
@@ -617,13 +618,16 @@ static void type_reference() {
 
 static void push_locals() {
 	locals.add(code::p - file_source);
+	locals_ops.add(operations.getcount());
 }
 
 static void pop_locals() {
 	if(!locals.count)
 		error("Closing scope bracing without opening one");
-	else
+	else {
 		locals.count--;
+		locals_ops.count--;
+	}
 }
 
 static void expression() {
@@ -647,13 +651,24 @@ static void add_binary() {
 	binary_operation((operation)last->token->param);
 }
 
+static void add_unary() {
+	unary_operation((operation)last->token->param);
+}
+
 static void add_statement() {
-	switch(operations.getcount()) {
+	auto count = operations.getcount();
+	if(locals_ops.getcount() > 0)
+		count -= locals_ops.data[locals_ops.getcount() - 1];
+	switch(count) {
 	case 0: return; // Empthy statement
 	case 1: return; // One operation, statement not need
 	case 2: binary_operation(operation::Statement); break;
 	default: error("Can't add emphty statement"); break;
 	}
+}
+
+static void add_operator() {
+	operations.add(last_package->add((operation)last->token->param, 0));
 }
 
 static void debug() {
@@ -662,8 +677,10 @@ static void debug() {
 BSDATA(command) = {
 	{"add_binary", add_binary},
 	{"add_member", add_member},
+	{"add_operator", add_operator},
 	{"add_statement", add_statement},
 	{"add_type", add_type},
+	{"add_unary", add_unary},
 	{"add_variable", add_variable},
 	{"begin_string", begin_string},
 	{"debug", debug},

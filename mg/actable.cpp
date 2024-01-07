@@ -1,10 +1,11 @@
 #include "actable.h"
 #include "answers.h"
-#include "stringact.h"
 
 static char console[1024];
 stringbuilder sb(console);
 adat<const void*, 32> marked;
+
+void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
 
 void actable::actv(stringbuilder& sa, const char* format, const char* format_param, char separator, const char* name, gender_s gender) {
 	if(!format || !format[0])
@@ -25,8 +26,4 @@ void markvalue(const void* p) {
 	if(ismarked(p))
 		return;
 	marked.add(p);
-}
-
-void initialize_str() {
-	stringbuilder::custom = act_identifier;
 }

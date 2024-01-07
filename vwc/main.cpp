@@ -7,6 +7,7 @@
 #include "draw_gui.h"
 #include "draw_list.h"
 #include "log.h"
+#include "view_source.h"
 #include "view_statusbar.h"
 #include "viewpackage.h"
 
@@ -23,6 +24,8 @@ void set_dark_theme();
 void view_code_tree();
 void view_pixels();
 void update_code_tree();
+
+symbol* get_active_symbol();
 
 static void code_error(const char* position, const char* format, const char* format_param) {
 	char temp[2048]; stringbuilder sb(temp);
@@ -63,7 +66,9 @@ static void mainscene() {
 	view_code_tree();
 	caret.x += width + metrics::padding * 2 - 1;
 	width = getwidth() - caret.x - metrics::padding * 2 - 1;
-	view_pixels();
+	code::active_symbol = get_active_symbol();
+	view_code_source();
+	//view_pixels();
 }
 
 static void mainstart() {

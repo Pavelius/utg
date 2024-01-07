@@ -86,3 +86,16 @@ Minstrel
 Scholar
 Noble
 Chirurgeon
+
+#List
+
+PlayerAbilities
+ elements Str Dex Con Int Wis Cha
+PlayerCombat
+ elements Melee Range
+
+#Panel
+
+CharacterSheet width(300)
+ elements PlayerAbilities PlayerCombat
+InitiativeCounter
