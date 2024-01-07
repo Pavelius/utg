@@ -20,7 +20,7 @@ static void auto_increment(enumi* pb, enumi* pe, variant type, int index) {
 	}
 }
 
-void enumi::initialize() {
+void initialize_enumerators() {
 	auto pe = bsdata<enumi>::end();
 	for(auto& e : bsdata<enumi>()) {
 		if(e.index)

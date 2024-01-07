@@ -6,13 +6,14 @@
 #include "room.h"
 
 void initialize_ui();
+void initialize_str();
 void update_ui();
 
 static void main_scene() {
 }
 
 static void add_creature(point index, const char* id) {
-	player->create(id);
+	player->create();
 	player->index = index;
 }
 
@@ -33,7 +34,9 @@ static void start_main() {
 }
 
 static void initialize() {
+	initialize_str();
 	initialize_ui();
+	initialize_enumerators();
 }
 
 int main(int argc, char* argv[]) {

@@ -1,5 +1,31 @@
 AppTitle: Врата Балдура
 CharacterSheet: Персонаж
-CharacterSheetTitle: Листок персонажа
 InitiativeCounter: Инициатива
-PlayerAbilities: Способности персонажа 
+
+PlayerAbilities: Способности персонажа
+PlayerAbilitiesFormat: %+1i
+PlayerCombat: Боевые способности
+
+Str: Сила
+Dex: Ловкость
+Con: Тесложение
+Int: Интеллект
+Wis: Мудрость
+Cha: Харизма
+
+Body: Тело
+Dexterity: Ловкость
+Savvy: Восприятие
+Tech: Технологии
+
+Melee: Ближний бой
+Range: Стрельба
+
+ChooseOrigin: Выбирайте ваше происхождение
+
+Carbon: Астер
+Chrome: Киборг
+Punk: Панк
+Solpod: Долгожитель
+VelocityCursed: Скорострел
+Void: Пустота

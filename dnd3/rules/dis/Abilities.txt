@@ -1,0 +1,58 @@
+#Ability
+
+Body
+Dexterity
+Savvy
+Tech
+
+#Consumable
+
+Hits
+
+#Group
+
+Origin
+Background
+
+#Element type(Origin)
+
+Carbon
+Chrome
+Punk
+Solpod
+VelocityCursed
+Void
+
+#Element type(Background)
+
+MoonOutlaw
+MonolithCultist
+EventHorizontDriver
+Technomant
+Astrochemist
+InterstellarSoldier
+OrbitVagabond
+GravitySwindler
+IntergalacticTraveller
+Legionnarie
+FreightTracer
+AsteroidDriller
+IsotopCoder
+StationMarshal
+StaticNoiseTranslator
+AsteroidArcheologist
+TowTrucker
+StarSalvager
+BountyHunter
+DeepFieldWelder
+
+#List
+
+PlayerAbilities
+ elements Body Dexterity Savvy Tech
+PlayerGeneration
+
+#Panel
+
+CharacterSheet width(170)
+ elements PlayerAbilities

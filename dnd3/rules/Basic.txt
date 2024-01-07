@@ -1,1 +1,1 @@
-#include "rules/shdwdark/Core.txt"
+#include "rules/dis/Core.txt"

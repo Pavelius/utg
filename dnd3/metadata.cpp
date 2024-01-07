@@ -1,4 +1,5 @@
 #include "ability.h"
+#include "advance.h"
 #include "bsreq.h"
 #include "chooseable.h"
 #include "creature.h"
@@ -16,6 +17,8 @@
 #include "variant.h"
 #include "widget.h"
 
+BSDATAC(advancementi, 2048)
+BSDATAC(consumablei, 8)
 BSDATAC(creature, 512)
 BSDATAC(itemi, 512)
 BSDATAC(monsteri, 256)
@@ -29,6 +32,10 @@ NOBSDATA(weaponi)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	BSREQ(creating), BSREQ(formula), BSREQ(round),
+	{}};
+BSMETA(advancementi) = {
+	BSREQ(type), BSREQ(id),
+	BSREQ(elements),
 	{}};
 BSMETA(enumi) = {
 	BSREQ(id), BSREQ(type),
@@ -66,7 +73,7 @@ BSMETA(numberlist) = {
 	{}};
 BSMETA(paneli) = {
 	BSREQ(id),
-	BSREQ(width), BSREQ(height),
+	BSREQ(width), BSREQ(height), BSREQ(column),
 	BSREQ(elements),
 	{}};
 BSMETA(rangei) = {
@@ -84,6 +91,7 @@ BSMETA(weaponi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
+	{"Advancement", VAR(advancementi, 2)},
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
 	{"Element", VAR(enumi, 1), 0, 0},
 	{"Group", VAR(enumgroupi, 1), 0, 0},
@@ -95,7 +103,6 @@ BSDATA(varianti) = {
 	{"NumberList", VAR(numberlist, 1), 0, 0},
 	{"Panel", VAR(paneli, 1), 0, 0},
 	{"Rate", VAR(magici, 1), 0, 0},
-	{"Reference", VAR(chooseablei, 1), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Widget", VAR(widget, 1)},
 };

@@ -10,13 +10,9 @@ void creature::clear() {
 }
 
 void creature::create() {
-	clear();
-	basic.abilities[0] = 14;
-	basic.abilities[1] = 13;
-	basic.abilities[2] = 13;
-	basic.abilities[3] = 13;
-	basic.abilities[4] = 13;
-	basic.abilities[5] = 13;
+	player = bsdata<creature>::add();
+	player->clear();
+	player->advance("PlayerGeneration", 0);
 }
 
 void creature::create(const char* id) {

@@ -5,7 +5,7 @@
 
 struct paneli : nameable {
 	variants	elements;
-	int			width, height;
+	int			width, height, column;
 	int			getheight() const;
 	int			getwidth() const;
 };

@@ -1,2 +1,7 @@
 ﻿In file `Names.txt`:
-PlayerCombat: Define translate
+Carbon: Define translate
+Chrome: Define translate
+Punk: Define translate
+Solpod: Define translate
+VelocityCursed: Define translate
+Void: Define translate

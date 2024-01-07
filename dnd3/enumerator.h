@@ -8,8 +8,8 @@ struct enumgroupi : nameable {
 struct enumi : nameable {
 	variant			type;
 	int				index;
-	static void		initialize();
 };
 struct enumerable {
 	short			values[32];
 };
+void initialize_enumerators();

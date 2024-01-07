@@ -8,69 +8,55 @@
 
 #define ISU(F, V) ((F & FG(V))!=0)
 
-int ability_result;
+int result_value;
 int result_param[4];
 
-void calculate(statable* p, variants source);
-
-static void calculate(statable* p, variant v) {
-	if(v.iskind<abilityi>()) {
-		if(!v.counter)
-			v.counter = 1;
-		ability_result += p->abilities[v.value] * v.counter;
-	} else if(v.iskind<listi>()) {
-		if(!v.counter)
-			v.counter = 1;
-		auto push_result = ability_result; ability_result = 0;
-		calculate(p, bsdata<listi>::elements[v.value].elements);
-		ability_result = push_result + ability_result * v.counter;
-	} else if(v.iskind<script>())
-		bsdata<script>::elements[v.value].proc(v.counter);
-	else if(v.iskind<numberlist>()) {
-		if(!v.counter)
-			v.counter = 1;
-		ability_result = bsdata<numberlist>::elements[v.value].match(ability_result) * v.counter;
-	}
-}
-
-void calculate(statable* p, variants source) {
+int calculate(statable* p, variants source) {
+	pushvalue push(result_value, 0);
 	pushvalue push_b(script_begin, source.begin());
 	pushvalue push_e(script_end, source.end());
 	while(script_begin < script_end) {
-		calculate(p, *script_begin);
+		auto v = *script_begin;
+		if(v.iskind<abilityi>()) {
+			if(!v.counter)
+				v.counter = 1;
+			result_value += p->abilities[v.value] * v.counter;
+		} else if(v.iskind<listi>()) {
+			if(!v.counter)
+				v.counter = 1;
+			result_value += calculate(p, bsdata<listi>::elements[v.value].elements) * v.counter;
+		} else if(v.iskind<script>())
+			bsdata<script>::elements[v.value].proc(v.counter);
+		else if(v.iskind<numberlist>()) {
+			if(!v.counter)
+				v.counter = 1;
+			result_value = bsdata<numberlist>::elements[v.value].match(result_value) * v.counter;
+		}
 		script_begin++;
 	}
+	return result_value;
 }
 
 void statable::update() {
 	for(auto i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++) {
 		auto& e = bsdata<abilityi>::elements[i];
-		if(e.formula) {
-			pushvalue push(ability_result, 0);
-			calculate(this, e.formula);
-			abilities[i] += ability_result;
-		}
+		if(e.formula)
+			abilities[i] += calculate(this, e.formula);
 	}
 }
 
 void statable::creating() {
 	for(auto i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++) {
 		auto& e = bsdata<abilityi>::elements[i];
-		if(e.creating) {
-			pushvalue push(ability_result, 0);
-			calculate(this, e.creating);
-			abilities[i] += ability_result;
-		}
+		if(e.creating)
+			abilities[i] += calculate(this, e.creating);
 	}
 	for(auto i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++) {
 		auto& e = bsdata<abilityi>::elements[i];
 		if(!abilities[i])
 			continue;
-		if(e.formula) {
-			pushvalue push(ability_result, 0);
-			calculate(this, e.formula);
-			abilities[i] -= ability_result;
-		}
+		if(e.formula)
+			abilities[i] -= calculate(this, e.formula);
 	}
 }
 

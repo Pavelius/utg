@@ -12,8 +12,10 @@ struct monsteri;
 
 struct creature : resable, statable, consumable, enumerable, wearable {
 	statable	basic;
+	consumable	maximum;
+	void		advance(const char* id, int bonus);
 	void		clear();
-	void		create();
+	static void	create();
 	static void	create(const char* id);
 	static void	create(const monsteri* pm);
 	void		paint() const;

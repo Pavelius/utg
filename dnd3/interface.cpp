@@ -1,3 +1,4 @@
+#include "ability.h"
 #include "collection.h"
 #include "crt.h"
 #include "creature.h"
@@ -15,11 +16,13 @@ using namespace draw;
 
 static void* current_object;
 static collectiona opened_pages;
+static int column_width;
+static const char* value_format = "%1i";
 
 void initialize_png();
 void circle_image(int xm, int ym, const sprite* e, int id, int r);
 
-bool menurd(const char* title);
+int calculate(statable* p, variants source);
 
 const int timer_seg = 1000;
 
@@ -152,9 +155,95 @@ static void set_opened() {
 		opened_pages.remove((void*)hot.object);
 }
 
+static void paint_hilite() {
+	rectpush push;
+	auto push_fore = fore;
+	auto push_alpha = alpha;
+	fore = colors::active;
+	alpha = 128;
+	caret.x -= 4; width += 4;
+	caret.y -= 1; height += 2;
+	rectf();
+	alpha = push_alpha;
+	fore = push_fore;
+}
+
+static void paint_block(const char* id, void* object, const char* value) {
+	auto push_height = height;
+	auto push_caret = caret;
+	height = texth();
+	auto hilite = ishilite();
+	if(hilite)
+		paint_hilite();
+	text(getnm(id));
+	caret.x += column_width;
+	text(value);
+	caret.y += height + 1;
+	caret.x = push_caret.x;
+	height = push_height;
+}
+
+static void paint_block(const char* id, void* object, int value) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add(value_format, value);
+	paint_block(id, object, temp);
+}
+
+static void paint_values(const variants& elements) {
+	int values[6] = {};
+	size_t list_count = elements.size();
+	abilityi* object = 0;
+	for(size_t i = 0; i < sizeof(values) / sizeof(values[0]); i++) {
+		if(i >= list_count)
+			values[i] = 0;
+		else {
+			auto v = elements.begin()[i];
+			if(v.iskind<abilityi>()) {
+				if(!object)
+					object = bsdata<abilityi>::elements + v.value;
+				values[i] = player->abilities[v.value];
+			} else if(v.iskind<listi>())
+				values[i] = calculate(player, bsdata<listi>::elements[v.value].elements);
+		}
+	}
+	if(!object)
+		return;
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(value_format, values[0], values[1], values[2], values[3], values[4], values[5]);
+	paint_block(object->id, object, temp);
+}
+
+static void paint_block(const char* id, const variants& source) {
+	auto push_format = value_format;
+	auto pn = getnme(stw(id, "Format"));
+	if(pn)
+		value_format = pn;
+	for(auto v : source) {
+		if(v.iskind<paneli>()) {
+			auto p = bsdata<paneli>::elements + v.value;
+			paint_block(p->id, p->elements);
+		}
+		else if(v.iskind<listi>()) {
+			auto p = bsdata<listi>::elements + v.value;
+			paint_values(p->elements);
+		}
+		else if(v.iskind<abilityi>()) {
+			auto p = bsdata<abilityi>::elements + v.value;
+			paint_block(p->id, p, player->abilities[v.value]);
+		}
+	}
+	value_format = push_format;
+}
+
 static void paint_bullet(listi* list, bool opened) {
-	auto w = textw("aa");
-	auto hilite = ishilite({caret.x, caret.y, caret.x + w, caret.y + texth()});
+	auto push_caret = caret;
+	auto push_fore = fore;
+	auto hilite = ishilite({caret.x, caret.y, caret.x + width, caret.y + texth()});
+	fore = colors::h3;
+	if(hilite) {
+		hot.cursor = cursor::Hand;
+		fore = colors::active;
+	}
 	if(opened) {
 		text("-");
 		if(hot.key == MouseLeft && hot.pressed && hilite)
@@ -164,21 +253,34 @@ static void paint_bullet(listi* list, bool opened) {
 		if(hot.key == MouseLeft && hot.pressed && hilite)
 			execute(set_opened, 1, 0, list);
 	}
-	caret.x += w;
+	caret.x += textw("0") * 2;
+	text(getnm(list->id));
+	fore = push_fore;
+	caret = push_caret;
 }
 
 static void paint_closed_panel(listi* list) {
 	if(!list)
 		return;
-	auto push_caret = caret;
 	auto push_height = height;
 	height = texth();
 	swindow(false);
 	paint_bullet(list, false);
-	text(getnm(list->id));
-	caret.x = push_caret.x;
 	caret.y += height + metrics::border * 2;
 	height = push_height;
+}
+
+static int paint_block_height(const char* id, const variants& source) {
+	auto push_clip = clipping;
+	auto push_caret = caret;
+	auto push_height = height;
+	caret.x = 0; caret.y = 0;
+	clipping.set(0, 0, width, 0);
+	paint_block(id, source);
+	auto result = caret.y;
+	caret = push_caret;
+	clipping = push_clip;
+	return result;
 }
 
 static void paint_open_panel(listi* list) {
@@ -186,12 +288,16 @@ static void paint_open_panel(listi* list) {
 		return;
 	auto push_caret = caret;
 	auto push_height = height;
-	height = 200;
+	auto push_width = width;
+	height = paint_block_height(list->id, list->elements) + texth() + metrics::border;
 	swindow(false);
 	paint_bullet(list, true);
-	text(getnm(list->id));
+	caret.x += texth(); width -= texth();
+	caret.y += texth() + metrics::border;
+	paint_block(list->id, list->elements);
+	caret.y += metrics::border * 2;
 	caret.x = push_caret.x;
-	caret.y += height + metrics::border * 2;
+	width = push_width;
 	height = push_height;
 }
 
@@ -210,23 +316,21 @@ static void paint_panel() {
 	if(!last_panel)
 		return;
 	rectpush push;
+	auto push_column = column_width;
 	caret.x += metrics::padding + metrics::border;
 	caret.y += metrics::padding + metrics::border;
 	height = last_panel->getheight();
 	width = last_panel->getwidth();
+	column_width = width - textw("0") * 6;
+	if(last_panel->column)
+		column_width = last_panel->column;
 	for(auto v : last_panel->elements) {
 		if(v.iskind<listi>()) {
 			paint_panel_page(bsdata<listi>::elements + v.value);
 			caret.y += metrics::padding;
 		}
 	}
-	//swindow(false);
-	//auto pn = getnme(stw(last_panel->id, "Title"));
-	//if(pn) {
-	//	//caret.y -= metrics::border;
-	//	title_text(pn);
-	//	horizontal_border();
-	//}
+	column_width = push_column;
 }
 
 void status_info() {

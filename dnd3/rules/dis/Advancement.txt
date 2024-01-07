@@ -1,0 +1,6 @@
+#Advancement
+
+PlayerGeneration RandomAbilities
+ elements RandomAbilities
+PlayerGeneration ChooseOrigin
+ elements Select Origin Choose

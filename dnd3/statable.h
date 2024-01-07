@@ -24,5 +24,5 @@ struct statable {
 	void		setability(const char* id, int value);
 	void		update();
 };
-extern int ability_result;
+extern int result_value;
 extern int result_param[4];

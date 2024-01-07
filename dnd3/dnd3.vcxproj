@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="advance.h" />
     <ClInclude Include="calculator.h" />
     <ClInclude Include="chooseable.h" />
     <ClInclude Include="consumable.h" />
@@ -199,6 +200,10 @@
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\dis\Abilities.txt" />
+    <Text Include="rules\dis\Advancement.txt" />
+    <Text Include="rules\dis\Core.txt" />
+    <Text Include="rules\dis\Items.txt" />
     <Text Include="rules\shdwdark\Abilities.txt" />
     <Text Include="rules\shdwdark\Core.txt" />
     <Text Include="rules\shdwdark\Items.txt" />

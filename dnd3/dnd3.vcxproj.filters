@@ -13,6 +13,9 @@
     <Filter Include="rules\Shadow Dark">
       <UniqueIdentifier>{b1fa4b3d-350d-481d-869a-83e99353eaa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rules\Death in Space">
+      <UniqueIdentifier>{08a68988-9ddd-4b8f-88e5-e0023789fe24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h">
@@ -82,6 +85,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="panel.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="advance.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -180,6 +186,18 @@
     </Text>
     <Text Include="locale\ru\names\NamesNewbe.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="rules\dis\Abilities.txt">
+      <Filter>rules\Death in Space</Filter>
+    </Text>
+    <Text Include="rules\dis\Core.txt">
+      <Filter>rules\Death in Space</Filter>
+    </Text>
+    <Text Include="rules\dis\Items.txt">
+      <Filter>rules\Death in Space</Filter>
+    </Text>
+    <Text Include="rules\dis\Advancement.txt">
+      <Filter>rules\Death in Space</Filter>
     </Text>
   </ItemGroup>
 </Project>
