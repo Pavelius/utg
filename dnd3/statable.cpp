@@ -27,6 +27,10 @@ int calculate(statable* p, variants source) {
 			if(!v.counter)
 				v.counter = 1;
 			result_value += calculate(p, bsdata<listi>::elements[v.value].elements) * v.counter;
+		} else if(v.iskind<formulai>()) {
+			if(!v.counter)
+				v.counter = 1;
+			result_value += calculate(p, bsdata<formulai>::elements[v.value].formula) * v.counter;
 		} else if(v.iskind<script>())
 			bsdata<script>::elements[v.value].proc(v.counter);
 		else if(v.iskind<rolli>())

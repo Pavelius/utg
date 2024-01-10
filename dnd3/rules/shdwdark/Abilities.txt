@@ -1,4 +1,4 @@
-#List
+#Formula
 
 StrBonus
 DexBonus
@@ -71,22 +71,24 @@ Scholar
 Noble
 Chirurgeon
 
-#List
+#Formula
 
 StrBonus
- elements Str AbilityBonus
+ formula Str AbilityBonus
 DexBonus
- elements Dex AbilityBonus
+ formula Dex AbilityBonus
 ConBonus
- elements Con AbilityBonus
+ formula Con AbilityBonus
 IntBonus
- elements Int AbilityBonus
+ formula Int AbilityBonus
 WisBonus
- elements Wis AbilityBonus
+ formula Wis AbilityBonus
 ChaBonus
- elements Cha AbilityBonus
+ formula Cha AbilityBonus
 HalfLevel
- elements Level Divide+2
+ formula Level Divide+2
+
+#List
 
 StrShowInfo
  elements Str StrBonus

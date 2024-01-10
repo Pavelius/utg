@@ -65,6 +65,10 @@ template<> void fnscript<rolli>(int index, int value) {
 template<> void fnscript<monsteri>(int index, int value) {
 }
 
+template<> void fnscript<formulai>(int index, int value) {
+	result_value += calculate(player, bsdata<formulai>::elements[value].formula);
+}
+
 static void set_result(variant v, int value) {
 	if(v.iskind<abilityi>())
 		player->basic.abilities[v.value] = value;

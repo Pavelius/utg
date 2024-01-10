@@ -211,8 +211,8 @@ static void paint_values(const variants& elements) {
 				if(!object)
 					object = bsdata<abilityi>::elements + v.value;
 				values[i] = player->abilities[v.value];
-			} else if(v.iskind<listi>())
-				values[i] = calculate(player, bsdata<listi>::elements[v.value].elements);
+			} else if(v.iskind<formulai>())
+				values[i] = calculate(player, bsdata<formulai>::elements[v.value].formula);
 		}
 	}
 	if(!object)

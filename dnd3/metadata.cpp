@@ -33,7 +33,7 @@ NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
-	BSREQ(formula), BSREQ(round),
+	BSREQ(formula),
 	{}};
 BSMETA(advancementi) = {
 	BSREQ(type), BSREQ(id),
@@ -48,6 +48,10 @@ BSMETA(consumablei) = {
 	{}};
 BSMETA(dice) = {
 	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
+	{}};
+BSMETA(formulai) = {
+	BSREQ(id),
+	BSREQ(formula),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(id_unidentified),
@@ -101,6 +105,7 @@ BSDATA(varianti) = {
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
 	{"DiceRoll", VAR(rolli, 1), 0, 0, fnscript<rolli>},
 	{"Element", VAR(enumi, 1), 0, 0},
+	{"Formula", VAR(formulai, 1), 0, 0, fnscript<formulai>},
 	{"Group", VAR(enumgroupi, 1), 0, 0},
 	{"Item", VAR(itemi, 1), 0, 0},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
