@@ -3,11 +3,12 @@ CharacterSheet: Персонаж
 InitiativeCounter: Инициатива
 
 PlayerAbilities: Способности персонажа
-PlayerAbilitiesFormat: %+1i
+PlayerAbilitiesFormat: %1i (бонус %+2i)
 PlayerCombat: Боевые способности
 PlayerAddon: Дополнительно
 
 Str: Сила
+StrFormat: %1i (бонус %+2i)
 Dex: Ловкость
 Con: Тесложение
 Int: Интеллект

@@ -5,6 +5,7 @@
 #include "numberlist.h"
 #include "room.h"
 
+void initialize_abilitites();
 void initialize_ui();
 void initialize_str();
 void update_ui();
@@ -21,7 +22,7 @@ static void add_player(point index, bool interactive) {
 }
 
 static void add_creature(point index, const char* id) {
-	player->create();
+	player->create(id);
 	player->index = index;
 }
 
@@ -31,7 +32,8 @@ static void add_map(point index, const char* avatar) {
 }
 
 static void test_creature() {
-	add_player({12, 10}, true);
+	//add_player({12, 10}, true);
+	add_creature({12, 10}, "Skeleton");
 	add_map({0, 0}, "hills");
 	update_ui();
 }
@@ -45,6 +47,7 @@ static void initialize() {
 	initialize_str();
 	initialize_ui();
 	initialize_enumerators();
+	initialize_abilitites();
 }
 
 int main(int argc, char* argv[]) {

@@ -59,6 +59,14 @@ void script_run(const char* id, int bonus) {
 		last_script->proc(bonus);
 }
 
+void script_list(const char* id) {
+	auto push_list = last_list;
+	last_list = bsdata<listi>::find(id);
+	if(last_list)
+		script_run(last_list->elements);
+	last_list = push_list;
+}
+
 void script_run(variant v) {
 	bsdata<varianti>::elements[v.type].pscript(v.value, v.counter);
 }

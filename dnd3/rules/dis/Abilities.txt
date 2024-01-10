@@ -61,5 +61,5 @@ PlayerGeneration
 
 #Panel
 
-CharacterSheet width(170)
+CharacterSheet width(170) column(100)
  elements PlayerAbilities PlayerAddon

@@ -33,7 +33,7 @@ NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
-	BSREQ(creating), BSREQ(formula), BSREQ(round),
+	BSREQ(formula), BSREQ(round),
 	{}};
 BSMETA(advancementi) = {
 	BSREQ(type), BSREQ(id),

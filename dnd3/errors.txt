@@ -1,3 +1,2 @@
-﻿In file `Names.txt`:
-Hits: Define translate
-PlayerAddon: Define translate
+﻿In file `rules/shdwdark/Abilities.txt`:
+ Line 13: Not found requisit `creating`

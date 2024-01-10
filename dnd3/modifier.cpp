@@ -11,7 +11,6 @@ template<> void fnscript<modifieri>(int index, int value) {
 BSDATA(modifieri) = {
 	{"Current"},
 	{"Permanent"},
-	{"Calculation"},
 	{"Resist"},
 	{"Immune"},
 	{"Vulnerable"},

@@ -10,17 +10,11 @@ ChaBonus
 #Ability
 
 Str
- creating Str Multiply+2 Number+10 AddRandom+1
 Dex
- creating Dex Multiply+2 Number+10 AddRandom+1
 Con
- creating Con Multiply+2 Number+10 AddRandom+1
 Int
- creating Int Multiply+2 Number+10 AddRandom+1
 Wis
- creating Wis Multiply+2 Number+10 AddRandom+1
 Cha
- creating Cha Multiply+2 Number+10 AddRandom+1
 
 Level
 
@@ -42,7 +36,7 @@ HP
 
 Hits
 
-#Reference
+#Group
 
 Alignment
 Background
@@ -111,6 +105,14 @@ PlayerAbilities
  elements StrShowInfo DexShowInfo ConShowInfo IntShowInfo WisShowInfo ChaShowInfo
 PlayerCombat
  elements Melee Range
+MonsterCreating
+ elements \
+  Str Multiply+2 Number+10 AddRandom+1 Set Str \
+  Dex Multiply+2 Number+10 AddRandom+1 Set Dex \
+  Con Multiply+2 Number+10 AddRandom+1 Set Con \
+  Int Multiply+2 Number+10 AddRandom+1 Set Int \
+  Wis Multiply+2 Number+10 AddRandom+1 Set Wis \
+  Cha Multiply+2 Number+10 AddRandom+1 Set Cha
 
 #Panel
 

@@ -14,7 +14,6 @@ struct statable {
 	unsigned	immunity, resistance, vulnerable;
 	unsigned	proficiency, proficiency_expert;
 	flagux<64>	flags;
-	void		creating();
 	int			getability(const char* id) const;
 	void		copy(const statable& v);
 	bool		isimmunity(int material) const;

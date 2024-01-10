@@ -4,5 +4,6 @@
 #pragma once
 
 struct abilityi : nameable {
-	variants		formula, creating, round;
+	variants		formula, round;
+	const char*		format;
 };

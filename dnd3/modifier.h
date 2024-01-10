@@ -3,7 +3,7 @@
 #pragma once
 
 enum modifier_s : unsigned char {
-	Current, Permanent, Calculation,
+	Current, Permanent,
 	Resist, Immune, Vulnerable
 };
 struct modifieri : nameable {

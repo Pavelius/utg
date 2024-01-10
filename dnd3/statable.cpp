@@ -49,21 +49,6 @@ void statable::update() {
 	}
 }
 
-void statable::creating() {
-	for(auto i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++) {
-		auto& e = bsdata<abilityi>::elements[i];
-		if(e.creating)
-			abilities[i] += calculate(this, e.creating);
-	}
-	for(auto i = 0; i < sizeof(abilities) / sizeof(abilities[0]); i++) {
-		auto& e = bsdata<abilityi>::elements[i];
-		if(!abilities[i])
-			continue;
-		if(e.formula)
-			abilities[i] -= calculate(this, e.formula);
-	}
-}
-
 void statable::copy(const statable& v) {
 	*this = v;
 }

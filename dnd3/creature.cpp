@@ -1,11 +1,23 @@
 #include "creature.h"
+#include "modifier.h"
 #include "monster.h"
+#include "pushvalue.h"
 #include "script.h"
 
 creature* player;
 creature* party[8];
 
 int calculate(statable* p, variants source);
+
+static void apply_script(const char* id) {
+	pushvalue push_modifier(modifier, Permanent);
+	script_list(id);
+}
+
+static void apply_script(const variants& elements) {
+	pushvalue push_modifier(modifier, Permanent);
+	script_run(elements);
+}
 
 static void set_maximum() {
 	for(size_t i = 0; i < sizeof(player->maximum.consumables) / sizeof(player->maximum.consumables[0]); i++)
@@ -33,9 +45,9 @@ void creature::create(const monsteri* pm) {
 		return;
 	player = bsdata<creature>::add();
 	player->clear();
-	script_run(pm->abilities);
+	apply_script(pm->abilities);
 	player->basic.setability("Level", pm->level);
-	player->basic.creating();
+	apply_script("MonsterCreating");
 	player->setavatar(pm->id);
 	player->update();
 	set_maximum();

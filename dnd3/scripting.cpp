@@ -17,10 +17,6 @@ static int choose_count;
 
 int calculate(statable* p, variants source);
 
-static int get_bonus(int value) {
-	return value ? value : 1;
-}
-
 static int get_value(int value) {
 	switch(value) {
 	case 101: return result_value;
@@ -29,11 +25,16 @@ static int get_value(int value) {
 	}
 }
 
+static void add_ability(char& result, int value) {
+	result += value;
+	result_value = result;
+}
+
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
-	case Current: player->abilities[index] += get_value(value); break;
-	case Permanent: player->basic.abilities[index] += get_value(value); break;
-	case Calculation: result_value += player->abilities[index] * get_bonus(value); break;
+	case Current: add_ability(player->abilities[index], get_value(value)); break;
+	case Permanent: add_ability(player->basic.abilities[index], get_value(value)); break;
+	default: break;
 	}
 }
 
@@ -64,8 +65,9 @@ template<> void fnscript<rolli>(int index, int value) {
 template<> void fnscript<monsteri>(int index, int value) {
 }
 
-static int getmaximum(variant v) {
-
+static void set_result(variant v, int value) {
+	if(v.iskind<abilityi>())
+		player->basic.abilities[v.value] = value;
 }
 
 static void add_random(int counter) {
@@ -84,8 +86,7 @@ static void divide(int counter) {
 }
 
 static void multiply(int counter) {
-	if(counter)
-		result_value *= counter;
+	result_value *= counter;
 }
 
 static void set_param(int counter) {
@@ -116,12 +117,12 @@ static void shrink_party() {
 
 void join_party(int bonus) {
 	if(bonus >= 0) {
-		if(in_party(player))
-			return;
-		for(auto& pv : party) {
-			if(!pv) {
-				pv = player;
-				return;
+		if(!in_party(player)) {
+			for(auto& pv : party) {
+				if(!pv) {
+					pv = player;
+					return;
+				}
 			}
 		}
 	} else {
@@ -133,17 +134,6 @@ void join_party(int bonus) {
 			}
 		}
 	}
-}
-
-static void apply_choose(variant v, variant type) {
-	if(type.iskind<enumgroupi>())
-		player->values[type.value] = v.value;
-	else if(type.iskind<abilityi>()) {
-		switch(modifier) {
-		case Permanent: player->basic.abilities[type.value] = (char)v.value; break;
-		case Current: player->abilities[type.value] = (char)v.value; break;
-		}
-	}		
 }
 
 static void add_querry(variant type) {
@@ -248,6 +238,10 @@ static void minimum_value(int bonus) {
 		result_value = bonus;
 }
 
+static void set_result(int bonus) {
+	set_result(*script_begin++, result_value);
+}
+
 BSDATA(script) = {
 	{"AddRandom", add_random},
 	{"Choose", choose},
@@ -257,6 +251,7 @@ BSDATA(script) = {
 	{"Multiply", multiply},
 	{"Number", number},
 	{"RandomAbilities", random_abilities},
+	{"Set", set_result},
 	{"SetParam", set_param},
 	{"Select", apply_select},
 };

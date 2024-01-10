@@ -281,14 +281,16 @@ static void tips() {
 	paint_tips();
 }
 
-int draw::strategy(fnevent proc, fnevent afterread) {
+int draw::strategy(fnevent proc, fnevent afterread, const char* rules_url) {
 	initialize_png();
 	if(!proc)
 		return -1;
 	set_dark_theme();
 	metrics::border = 5;
 	metrics::padding = 1;
-	bsreq::read("rules/Basic.txt");
+	if(!rules_url)
+		rules_url = "rules/Basic.txt";
+	bsreq::read(rules_url);
 	initialize_translation("ru");
 	if(afterread)
 		afterread();

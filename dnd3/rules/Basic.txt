@@ -1,2 +1,2 @@
 #include "rules/common/Dices.txt"
-#include "rules/dis/Core.txt"
+#include "rules/shdwdark/Core.txt"
