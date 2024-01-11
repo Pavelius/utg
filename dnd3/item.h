@@ -1,5 +1,5 @@
 #include "crt.h"
-#include "dice.h"
+#include "roll.h"
 #include "magic.h"
 #include "range.h"
 #include "resid.h"
@@ -14,8 +14,7 @@ struct animationi {
 	res::token		wear, thrown;
 };
 struct weaponi {
-	char			bonus, ac, magic;
-	dice			damage;
+	char			bonus, ac, magic, damage;
 	range_s			range;
 };
 struct itemi : nameable {

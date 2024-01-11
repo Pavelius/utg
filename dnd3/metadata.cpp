@@ -28,7 +28,6 @@ BSDATAC(paneli, 32)
 BSDATAC(roomi, 16)
 BSDATAC(rolli, 64)
 
-NOBSDATA(dice)
 NOBSDATA(weaponi)
 
 BSMETA(abilityi) = {
@@ -45,9 +44,6 @@ BSMETA(enumi) = {
 BSMETA(consumablei) = {
 	BSREQ(id),
 	BSREQ(maximum),
-	{}};
-BSMETA(dice) = {
-	BSREQ(c), BSREQ(d), BSREQ(b), BSREQ(m),
 	{}};
 BSMETA(formulai) = {
 	BSREQ(id),
@@ -94,7 +90,7 @@ BSMETA(roomi) = {
 	{}};
 BSMETA(weaponi) = {
 	BSREQ(bonus), BSREQ(ac), BSREQ(magic),
-	BSREQ(damage),
+	BSENM(damage, rolli),
 	BSENM(range, rangei),
 	{}};
 

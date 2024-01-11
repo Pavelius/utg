@@ -69,3 +69,12 @@ void creature::update() {
 	update_maximum();
 	player = push;
 }
+
+rolli creature::getdamage(wear_s n) const {
+	return bsdata<rolli>::elements[wears[n].geti().weapon.damage];
+}
+
+rolli creature::getdamage() const {
+	auto r = getdamage(Hands);
+	return r;
+}

@@ -23,24 +23,6 @@ void item::add(item& v) {
 
 bool item::canequip(wear_s v) const {
 	switch(v) {
-	case QuickWeapon + 2 * 0:
-	case QuickWeapon + 2 * 1:
-	case QuickWeapon + 2 * 2:
-	case QuickWeapon + 2 * 3:
-		return geti().wear == QuickWeapon;
-	case QuickOffhand + 2 * 0:
-	case QuickOffhand + 2 * 1:
-	case QuickOffhand + 2 * 2:
-	case QuickOffhand + 2 * 3:
-		return geti().wear == QuickOffhand;
-	case Quiver + 0:
-	case Quiver + 1:
-	case Quiver + 2:
-		return geti().wear == Quiver;
-	case QuickItem + 0:
-	case QuickItem + 1:
-	case QuickItem + 2:
-		return geti().wear == QuickItem;
 	case LeftFinger:
 	case RightFinger:
 		return geti().wear == LeftFinger;

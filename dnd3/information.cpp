@@ -1,6 +1,7 @@
 #include "ability.h"
 #include "creature.h"
 #include "stringbuilder.h"
+#include "stringvar.h"
 
 int calculate(statable* p, variants source);
 
@@ -29,8 +30,21 @@ static bool apply_formula(stringbuilder& sb, const char* id) {
 static void custom_string(stringbuilder& sb, const char* id) {
 	if(apply_ability(sb, id))
 		return;
+	if(stringvar_identifier(sb, id))
+		return;
+	stringbuilder::defidentifier(sb, id);
 }
 
 void initialize_str() {
 	stringbuilder::custom = custom_string;
 }
+
+static void weapon_damage(stringbuilder& sb) {
+	auto& e = player->wears[Hands];
+	bsdata<rolli>::elements[e.geti().weapon.damage].add(sb);
+}
+
+BSDATA(stringvari) = {
+	{"damage", weapon_damage},
+};
+BSDATAF(stringvari)

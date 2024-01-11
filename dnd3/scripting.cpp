@@ -13,7 +13,8 @@
 #include "statable.h"
 
 static const char* last_id;
-static int choose_count;
+static int		choose_count;
+static rolli	roll_value;
 
 int calculate(statable* p, variants source);
 

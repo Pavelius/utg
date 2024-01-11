@@ -1,5 +1,6 @@
 #include "crt.h"
 #include "roll.h"
+#include "stringbuilder.h"
 
 typedef int (*fncompare)(const void* p1, const void* p2);
 char roll_result[20];
@@ -49,4 +50,12 @@ int rolli::roll() const {
 	if(m)
 		return roll_dices(c, d, p, b, w) * m;
 	return roll_dices(c, d, p, b, w);
+}
+
+void rolli::add(stringbuilder& sb) const {
+	sb.add("%1id%2i", c, d);
+	if(p != 0)
+		sb.add("%+1i", p);
+	if(m && (m > 1 || m < -1))
+		sb.adds("x%1i", m);
 }
