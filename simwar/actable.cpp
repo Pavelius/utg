@@ -1,14 +1,9 @@
 #include "actable.h"
-#include "stringact.h"
+
+void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
 
 void actable::actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s gender) {
-	auto push_name = act_name;
-	auto push_gender = act_gender;
-	act_name = name;
-	act_gender = gender;
-	sb.addv(format, format_param);
-	act_name = push_name;
-	act_gender = push_gender;
+	stract(sb, gender, name, format, format_param);
 }
 
 void actable::act(stringbuilder& sb, const char* format, ...) const {

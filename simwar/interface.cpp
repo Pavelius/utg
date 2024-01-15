@@ -297,10 +297,8 @@ void provincei::paint() const {
 }
 
 static void add_widget(fnevent proc, unsigned char priority, bool absolute_position = true) {
-	auto p = addobject({0, 0}, proc, proc);
+	auto p = addobject({0, 0}, proc, proc, 0);
 	p->priority = priority;
-	if(absolute_position)
-		p->set(drawable::AbsolutePosition);
 }
 
 static void remove_object(array& source) {
@@ -319,7 +317,7 @@ void update_provinces_ui() {
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
-		auto p = addobject(e.position, &e, province_paint);
+		auto p = addobject(e.position, &e, province_paint, 0);
 		p->priority = 1;
 	}
 }

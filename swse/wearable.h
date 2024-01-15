@@ -4,16 +4,15 @@
 #pragma once
 
 struct wearable : actable {
-	item			wears[Elbows + 1];
+	item			wears[Hands + 1];
 	int				money;
 	void			addcoins(unsigned v);
 	void			additem(item& v);
 	slice<item>		backpack() { return slice<item>(wears + Backpack, wears + BackpackLast + 1); }
 	void			equip(item& v);
-	slice<item>		equipment() { return slice<item>(wears + Hands, wears + Elbows + 1); }
+	slice<item>		equipment() { return slice<item>(wears + Head, wears + Hands + 1); }
 	bool			isitem(unsigned short type, int count = 1) const { return getitemcount(type) >= count; }
-	bool			iswear(const void* p) const { return p >= wears && p <= wears + Elbows; }
-	slice<item>		gears() { return slice<item>(wears + Head, wears + Elbows + 1); }
+	bool			iswear(const void* p) const { return p >= wears && p <= wears + Hands; }
 	int				getitemcount(unsigned short type) const;
 	int				getmoney() const { return money; }
 	item*			getwear(wear_s id) { return wears + id; }

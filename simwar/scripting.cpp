@@ -8,6 +8,7 @@
 #include "game.h"
 #include "hero.h"
 #include "list.h"
+#include "modifier.h"
 #include "report.h"
 #include "player.h"
 #include "province.h"
@@ -488,7 +489,7 @@ static void add_building() {
 }
 
 static void remove_building(building* pb) {
-	if(!draw::yesno(getnm("DoYouWantRemoveBuilding"), pb->type->getname()))
+	if(!yesno(getnm("DoYouWantRemoveBuilding"), pb->type->getname()))
 		return;
 	pb->clear();
 }
@@ -729,7 +730,7 @@ static const char* add_hero_prompt(const heroi& e, stringbuilder& sb) {
 
 static void accept_remove_order(heroi* hero) {
 	pushvalue push_image(answers::resid, hero->province->landscape->id);
-	if(draw::yesno(getnm("DisableOrder"), hero->action->getname(), hero->province->getname()))
+	if(yesno(getnm("DisableOrder"), hero->action->getname(), hero->province->getname()))
 		remove_order(hero);
 }
 
@@ -759,7 +760,7 @@ static void show_messages(int bonus) {
 	update_player(0);
 	for(auto& e : bsdata<reporti>()) {
 		if(e.turn == game.turn && (e.reciever & (1 << (player->getindex()))) != 0)
-			draw::message(e.text, e.header);
+			message(e.text, e.header);
 	}
 }
 
@@ -779,7 +780,7 @@ void show_messages() {
 
 bool fntestlist(int index, int bonus) {
 	for(auto v : bsdata<listi>::elements[index].elements) {
-		if(script::allow(v))
+		if(script_allow(v))
 			return true;
 	}
 	return false;

@@ -58,6 +58,9 @@
     <ClCompile Include="calculation.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Логика">
@@ -119,10 +122,10 @@
     <ClInclude Include="action.h">
       <Filter>Логика</Filter>
     </ClInclude>
-    <ClInclude Include="shipable.h">
+    <ClInclude Include="calculation.h">
       <Filter>Логика</Filter>
     </ClInclude>
-    <ClInclude Include="calculation.h">
+    <ClInclude Include="modifier.h">
       <Filter>Логика</Filter>
     </ClInclude>
   </ItemGroup>
@@ -134,9 +137,6 @@
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Galaxy.txt">
-      <Filter>Данные</Filter>
-    </Text>
-    <Text Include="rules\Modules.txt">
       <Filter>Данные</Filter>
     </Text>
     <Text Include="rules\Ships.txt">

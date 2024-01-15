@@ -10,5 +10,6 @@ BSDATA(statei) = {
 	{"Prone"},
 	{"PermanentConditions"},
 	{"Helpless"},
+	{"MeleeEngaged"},
 };
-assert_enum(statei, Helpless)
+assert_enum(statei, MeleeEngaged)

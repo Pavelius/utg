@@ -1,5 +1,3 @@
 ﻿In file `Names.txt`:
-Chimera: Define translate
-Cockatrice: Define translate
-NoVariant: Define translate
-Stag: Define translate
+ScorpionGiant: Define translate
+Werewolf: Define translate

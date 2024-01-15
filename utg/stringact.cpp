@@ -66,10 +66,10 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 	return false;
 }
 
-static const char* act_name;
-static gender_s act_gender;
+const char* act_name;
+gender_s act_gender;
 
-static void act_custom(stringbuilder& sb, const char* identifier) {
+void act_custom(stringbuilder& sb, const char* identifier) {
 	apply_action(identifier, sb, act_name, act_gender);
 }
 

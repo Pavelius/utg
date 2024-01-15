@@ -67,7 +67,7 @@ static void update_timestamp() {
 	drawable_stamp_last = c;
 }
 
-void drawable::add() {
+void drawable::addobject() {
 	objects.add(this);
 }
 

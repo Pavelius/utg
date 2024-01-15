@@ -9,7 +9,7 @@ struct drawable {
 	point			position;
 	unsigned char	priority; // priority==0 for empthy object
 	explicit operator bool() const { return priority != 0; }
-	void			add();
+	void			addobject();
 	void			clear();
 	static void		dowait();
 	void			focusing() const;

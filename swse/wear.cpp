@@ -5,7 +5,6 @@ wear_s last_wear;
 
 BSDATA(weari) = {
 	{"Backpack"},
-	{"Potion"},
 	{"Backpack2"},
 	{"Backpack3"},
 	{"Backpack4"},
@@ -19,11 +18,10 @@ BSDATA(weari) = {
 	{"Backpack12"},
 	{"Backpack13"},
 	{"Backpack14"},
+	{"Backpack15"},
 	{"BackpackLast"},
 	{"Head"},
 	{"Torso"},
-	{"Backward"},
 	{"Hands"},
-	{"Elbows"},
 };
-assert_enum(weari, Elbows)
+assert_enum(weari, Hands)

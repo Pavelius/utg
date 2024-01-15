@@ -2,9 +2,15 @@
 #include "module.h"
 
 BSDATA(modulei) = {
-	{"ShardCannons"},
-	{"LaserBeams"},
-	{"RocketLaunchers"},
+	{"ShardCannons", {0, 2}},
+	{"ShardCannonsII", {0, 3}},
+	{"ShardCannonsIII", {0, 4}},
+	{"LaserBeams", {1, 5}},
+	{"LaserBeamsII", {1, 7}},
+	{"LaserBeamsIII", {1, 10}},
+	{"RocketLaunchers", {5, 10}},
+	{"RocketLaunchersII", {10, 15}},
+	{"RocketLaunchersIII", {15, 25}},
 	{"LightWeapon"},
 	{"HeavyWeapon"},
 	{"Exploration"},
@@ -24,6 +30,7 @@ BSDATA(modulei) = {
 	{"Technics"},
 	{"Luxury"},
 	{"Minerals"},
+	{"Alloys"},
 	{"Alchogols"},
 	{"Weapons"},
 	{"Drugs"},
@@ -31,6 +38,7 @@ BSDATA(modulei) = {
 };
 assert_enum(modulei, Credits)
 
+int			critical_count;
 module_s	last_module;
 modulea		inflict, suffer;
 modulea*	last_modules;
@@ -53,7 +61,7 @@ int roll_damage(int count, int minimum, int maximum) {
 }
 
 int roll_damage(int count, int minimum, int maximum, int critical, int multiplier) {
-	auto critical_count = roll_hits(count, critical);
+	critical_count = roll_hits(count, critical);
 	return roll_damage(critical_count, minimum * multiplier, maximum * multiplier)
 		+ roll_damage(count - critical_count, minimum, maximum);
 }

@@ -143,7 +143,7 @@ static void showform() {
 
 static void req_panel(module_s id) {
 	auto p = bsdata<modulei>::elements + id;
-	req_panel(p, getnmsh(p->getid()), last_ship->basic.modules[id], 32);
+	req_panel(p, getnmsh(p->getid()), player->basic.modules[id], 32);
 }
 
 void status_info(void) {
@@ -152,7 +152,7 @@ void status_info(void) {
 	height = 32;
 	showform();
 	data_panel();
-	req_panel(0, getnm("Credits"), last_ship->credits, 64);
+	req_panel(0, getnm("Credits"), player->credits, 64);
 	caret = push_caret;
 	caret.y += height;
 	height = push_height;
@@ -254,7 +254,7 @@ static void main_finish() {
 
 static void add_system() {
 	if(last_system)
-		last_system->add();
+		last_system->addobject();
 }
 
 static void add_planets() {
@@ -265,7 +265,7 @@ static void add_planets() {
 			continue;
 		if(!e.position.in(rc))
 			continue;
-		e.add();
+		e.addobject();
 	}
 }
 
@@ -279,7 +279,7 @@ static void add_system_ships() {
 			continue;
 		if(!e.position.in(rc))
 			continue;
-		e.add();
+		e.addobject();
 	}
 }
 

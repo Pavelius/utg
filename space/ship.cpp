@@ -6,12 +6,12 @@
 #include "timeable.h"
 
 BSDATA(shipclassi) = {
-	{"Fighter", 20, 20, 0, 0},
-	{"Fregate", 30, 15, 0, 10},
-	{"Destroyer", 30, 20, 0, 0},
-	{"Cruiser", 50, 15, 1, 5},
-	{"Battleship", 70, 10, 2, 0},
-	{"Carrier", 100, 5}, // Big transporter
+	{"Fighter", 100, 20, 0, 0},
+	{"Fregate", 200, 15, 0, 10},
+	{"Destroyer", 250, 20, 0, 0},
+	{"Cruiser", 300, 15, 1, 5},
+	{"Battleship", 400, 10, 2, 0},
+	{"Carrier", 400, 5}, // Big transporter
 };
 assert_enum(shipclassi, Carrier)
 
@@ -73,7 +73,7 @@ void ship::update_correction() {
 
 void ship::update() {
 	pushvalue push(last_ship, this);
-	assign<shipable>(*this, basic);
+	assign<modulea>(*this, basic);
 	update_stats();
 	update_correction();
 }

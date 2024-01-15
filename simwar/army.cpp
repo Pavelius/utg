@@ -31,7 +31,7 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 			last_army->addtotal(sb, v);
 		}
 	} else
-		act_identifier(sb, identifier);
+		stringbuilder::defidentifier(sb, identifier);
 }
 
 //static int compare_units(const void* v1, const void* v2) {

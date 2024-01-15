@@ -7,7 +7,7 @@ AttackWithMeleeWeapon
 AidAnotherAlly
  effect StandartAction-1 SelectEnemies-1 FilterYou-1
 Charge
- effect StandartAction-1 IfMeleeFight-1 MeleeWeapon SelectEnemies FilterRange-1
+ effect StandartAction-1 IfMeleeFight-1 MeleeWeapon SelectEnemies FilterRange-1 MakeAttack
 Disarm
  effect StandartAction-1 SelectEnemies FilterArmed
 FightDefencivelyAcrobatics

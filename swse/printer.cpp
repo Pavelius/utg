@@ -1,8 +1,9 @@
 #include "creature.h"
 #include "crt.h"
-#include "stringact.h"
 #include "stringbuilder.h"
-#include "strprint.h"
+#include "stringvar.h"
+
+void act_custom(stringbuilder& sb, const char* identifier);
 
 static void print_hands(stringbuilder& sb) {
 	if(!player)
@@ -13,15 +14,15 @@ static void print_hands(stringbuilder& sb) {
 		sb.add(player->wears[Hands].getname());
 }
 
-BSDATA(strprinti) = {
+BSDATA(stringvari) = {
 	{"Hands", print_hands}
 };
-BSDATAF(strprinti)
+BSDATAF(stringvari)
 
 static void main_custom(stringbuilder& sb, const char* identifier) {
-	if(print_identifier(sb, identifier))
+	if(stringvar_identifier(sb, identifier))
 		return;
-	act_identifier(sb, identifier);
+	act_custom(sb, identifier);
 }
 
 void initialize_printer() {

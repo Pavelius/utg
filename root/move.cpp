@@ -180,5 +180,5 @@ void movei::run() const {
 			choose_count--;
 		}
 	}
-	draw::pause();
+	pause();
 }

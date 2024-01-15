@@ -1,33 +1,33 @@
 #include "action.h"
 #include "moveable.h"
-#include "shipable.h"
+#include "module.h"
 
 #pragma once
 
 enum shipclass_s : unsigned char {
-	Fighter, Fregate, Destroyer, Cruiser, Battleship,
-	Carrier,
+	Fighter, Fregate, Destroyer, Cruiser, Battleship, Carrier,
 };
 
 struct planeti;
 struct shipclassi : nameable {
 	short			hull, speed, armor, shield;
 };
-struct shipi : modulei {
+struct shipi : nameable {
 	shipclass_s		kind;
 	char			size;
 	variants		elements;
 	const shipclassi& geti() const;
 };
-struct ship : moveable, shipable {
+struct ship : moveable, modulea {
 	unsigned short	type, system, homeworld;
 	short			hull, shield;
 	int				credits;
 	actionstate_s	state;
-	shipable		basic;
+	modulea			basic;
 	bool			cansee(const ship& v) const;
 	const shipi&	geti() const;
 	void			getinfo(stringbuilder& sb) const;
+	int				getmaximum(module_s v) const;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
 	int				getspeed() const { return modules[Engine]; }

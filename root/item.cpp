@@ -16,11 +16,11 @@ void item::destory() {
 	if(is(Durable)) {
 		if(wear_max) {
 			wear_max--;
-			draw::warning(getnm("ItemDurableCracked"), getname());
+			warning(getnm("ItemDurableCracked"), getname());
 			return;
 		}
 	}
-	draw::warning(getnm("ItemDestoryed"), getname());
+	warning(getnm("ItemDestoryed"), getname());
 	clear();
 }
 

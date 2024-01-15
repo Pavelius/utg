@@ -12,15 +12,13 @@
 
 enum ability_s : unsigned char;
 
-struct itemstat : nameable {
+struct itemi : nameable {
 	damage_s		hit;
 	dice			damage, stun;
 	short			weight, cost;
 	char			armor, maxdex, equipment;
 	char			size;
 	variants		dress;
-};
-struct itemi : itemstat {
 	short			count;
 	short			avatar;
 	wear_s			wear;
@@ -47,7 +45,6 @@ public:
 	int				getcost() const;
 	int				getcostall() const;
 	int				getcount() const;
-	//static const char* getnamev(const void* p) { return ((item*)p)->getfullname(); }
 	const char*		getfullname(int price_percent = 0) const;
 	int				getweight() const;
 	bool			is(wear_s v) const;

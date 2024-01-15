@@ -3,8 +3,8 @@
 #pragma once
 
 enum wear_s : unsigned char {
-	Backpack, Potion, BackpackLast = Backpack + 15,
-	Head, Torso, Backward, Hands, Elbows,
+	Backpack, BackpackLast = Backpack + 15,
+	Head, Torso, Hands,
 };
 struct weari : nameable {
 };

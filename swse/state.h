@@ -5,6 +5,7 @@
 
 enum state_s : unsigned char {
 	Concealment, Flatfooted, Immobilized, Prone, PermanentConditions, Helpless,
+	MeleeEngaged,
 };
 typedef flagable<4> statef;
 struct statei : nameable {

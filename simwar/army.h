@@ -1,4 +1,3 @@
-#include "stringact.h"
 #include "hero.h"
 #include "tactic.h"
 

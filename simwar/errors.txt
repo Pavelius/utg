@@ -1,2 +1,1 @@
-﻿In file `rules/Basic.txt`:
- Line 88: Not found requisit `gender`
+﻿Can't find file 'locale/ru/names/Names.txt'

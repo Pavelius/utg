@@ -16,16 +16,23 @@ static answers an;
 static int result;
 static void* last_choose_result;
 static collection<ship> ships;
-static int last_hits, last_damage, last_value;
+static int last_value;
+
+static void set_permanent(int bonus) {
+	last_modules = &last_ship->basic;
+}
+
+static void set_current(int bonus) {
+	last_modules = last_ship;
+}
 
 static void change_ability(module_s v, int bonus) {
-	last_module = v;
-	last_modules->modules[last_module] += bonus;
+	last_modules->modules[v] += bonus;
 }
 
 template<> void fnscript<modulei>(int index, int bonus) {
 	last_module = (module_s)index;
-	last_modules->modules[last_module] += bonus;
+	change_ability(last_module, bonus);
 }
 
 template<> void fnscript<planeti>(int index, int bonus) {
@@ -39,6 +46,8 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->position = last_planet->position;
 	last_ship->priority = 21;
 	last_ship->state = ShipOnOrbit;
+	set_permanent(0);
+	script_run(last_ship->geti().elements);
 	last_ship->update();
 }
 
@@ -147,7 +156,7 @@ static void roll(int bonus) {
 	choose_quest_result();
 	apply_text();
 	apply_script();
-	draw::pause();
+	pause();
 	last_quest = quest::findprompt(result);
 	apply_header();
 	apply_text();
@@ -397,6 +406,8 @@ BSDATA(script) = {
 	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
+	{"SetCurrent", set_current},
+	{"SetPermanent", set_permanent},
 	{"SetPlayer", set_player},
 	{"SetState", set_state},
 	{"SetValue", set_value},

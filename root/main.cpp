@@ -1,7 +1,7 @@
 #include "answers.h"
 #include "draw_utg.h"
 #include "quest.h"
-#include "stringact.h"
+//#include "stringact.h"
 #include "vagabond.h"
 
 void initialize_str();
@@ -19,8 +19,8 @@ static void generate_character() {
 static void initialize() {
 	initialize_str();
 	movei::read("rules/MoveConcept.txt");
-	act_enemy_name = getnm("Fox");
-	act_enemy_gender = Male;
+	//act_enemy_name = getnm("Fox");
+	//act_enemy_gender = Male;
 }
 
 int main(int argc, char* argv[]) {

@@ -1,11 +1,10 @@
-#include "stringact.h"
 #include "npc.h"
 
 static char	console_text[512];
 stringbuilder console(console_text);
 
 static void add_identifier(stringbuilder& sb, const char* id) {
-	act_identifier(sb, id);
+	//act_identifier(sb, id);
 }
 
 void initialize_str() {
@@ -17,5 +16,5 @@ void actable::actv(stringbuilder& sb, const char* format, const char* format_par
 		return;
 	if(add_sep)
 		sb.addsep(' ');
-	stract(sb, getgender(), getname(), format, format_param);
+	//stract(sb, getgender(), getname(), format, format_param);
 }

@@ -1,7 +1,7 @@
-#include "stringbuilder.h"
-#include "strprint.h"
-#include "ship.h"
 #include "planet.h"
+#include "stringbuilder.h"
+#include "stringvar.h"
+#include "ship.h"
 #include "variant.h"
 
 static void add_header(stringbuilder& sb, const char* name) {
@@ -26,17 +26,17 @@ static void planet_text(stringbuilder& sb) {
 }
 
 static void ship_text(stringbuilder& sb) {
-	if(!last_ship)
+	if(!player)
 		sb.add(getnm("NoShip"));
 }
 
-BSDATA(strprinti) = {
+BSDATA(stringvari) = {
 	{"Planet", planet_text},
 };
-BSDATAF(strprinti)
+BSDATAF(stringvari)
 
 void stringbuilder_proc(stringbuilder& sb, const char* identifier) {
-	if(print_identifier(sb, identifier))
+	if(stringvar_identifier(sb, identifier))
 		return;
 	stringbuilder::defidentifier(sb, identifier);
 }

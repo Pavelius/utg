@@ -9,16 +9,16 @@
 
 static void fix_chance(const char* format, const char* name, int value) {
 	if(value > 0)
-		draw::information(format, name, value);
+		information(format, name, value);
 	else
-		draw::warning(format, name, value);
+		warning(format, name, value);
 }
 
 static void fix_chancer(const char* format, const char* name, int value) {
 	if(value <= 0)
-		draw::information(format, name, value);
+		information(format, name, value);
 	else
-		draw::warning(format, name, value);
+		warning(format, name, value);
 }
 
 template<> void fnscript<abilityi>(int index, int bonus) {
@@ -40,7 +40,7 @@ template<> void fnscript<harmi>(int index, int bonus) {
 }
 
 static void add_new(const char* format) {
-	draw::pause();
+	pause();
 	answers::console->add(format);
 }
 

@@ -12,7 +12,6 @@
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
-#include "stringact.h"
 #include "stringbuilder.h"
 #include "script.h"
 
@@ -62,7 +61,6 @@ static void start_game() {
 }
 
 void initialize_game() {
-	stringbuilder::custom = act_identifier;
 }
 
 int main(int argc, char* argv[]) {
