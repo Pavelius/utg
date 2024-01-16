@@ -1,7 +1,8 @@
 ﻿#Ship kind(Fighter)
 
-Cobra size(3)
+Cobra
+ elements Hull+2
 
 #Ship kind(Carrier)
 
-Mule size(4)
+Mule

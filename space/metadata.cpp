@@ -64,7 +64,7 @@ BSMETA(script) = {
 BSMETA(shipi) = {
 	BSREQ(id),
 	BSENM(kind, shipclassi),
-	BSREQ(size),
+	BSREQ(elements),
 	{}};
 BSMETA(ship) = {
 	BSREQ(type),

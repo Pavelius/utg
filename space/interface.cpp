@@ -223,7 +223,7 @@ void ship::paint() const {
 	auto push_fore = fore;
 	fore = colors::green;
 	auto& ei = geti();
-	auto size = ei.size;
+	auto size = getpixelsize();
 	switch(ei.kind) {
 	case Carrier: show_rect(size); break;
 	default: show_marker(size); break;

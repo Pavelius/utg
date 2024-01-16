@@ -69,3 +69,27 @@ int roll_damage(int count, int minimum, int maximum, int critical, int multiplie
 int apply_percent(int value, int percent) {
 	return (percent > 0) ? value * 100 / percent : 0;
 }
+
+int get_critical(module_s v) {
+	switch(v) {
+	case ShardCannons: return 5;
+	case ShardCannonsII: return 7;
+	case ShardCannonsIII: return 10;
+	case LaserBeams: return 10;
+	case LaserBeamsII: return 15;
+	case LaserBeamsIII: return 20;
+	case RocketLaunchers: case RocketLaunchersII: case RocketLaunchersIII: return 10;
+	default: return 0;
+	}
+}
+
+int get_critical_multiplayer(module_s v) {
+	switch(v) {
+	case LaserBeams:
+	case LaserBeamsII:
+	case LaserBeamsIII:
+		return 3;
+	default:
+		return 2;
+	}
+}

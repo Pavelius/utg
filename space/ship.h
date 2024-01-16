@@ -10,11 +10,10 @@ enum shipclass_s : unsigned char {
 
 struct planeti;
 struct shipclassi : nameable {
-	short			hull, speed, armor, shield;
+	short			size, hull, speed, armor, shield;
 };
 struct shipi : nameable {
 	shipclass_s		kind;
-	char			size;
 	variants		elements;
 	const shipclassi& geti() const;
 };
@@ -30,6 +29,7 @@ struct ship : moveable, modulea {
 	int				getmaximum(module_s v) const;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
+	int				getpixelsize() const;
 	int				getspeed() const { return modules[Engine]; }
 	void			move(point position);
 	void			paint() const;

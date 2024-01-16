@@ -6,12 +6,12 @@
 #include "timeable.h"
 
 BSDATA(shipclassi) = {
-	{"Fighter", 100, 20, 0, 0},
-	{"Fregate", 200, 15, 0, 10},
-	{"Destroyer", 250, 20, 0, 0},
-	{"Cruiser", 300, 15, 1, 5},
-	{"Battleship", 400, 10, 2, 0},
-	{"Carrier", 400, 5}, // Big transporter
+	{"Fighter", 3, 100, 20, 0, 0},
+	{"Fregate", 4, 200, 15, 0, 10},
+	{"Destroyer", 4, 250, 20, 0, 0},
+	{"Cruiser", 5, 300, 15, 1, 5},
+	{"Battleship", 6, 400, 10, 2, 0},
+	{"Carrier", 6, 400, 5}, // Big transporter
 };
 assert_enum(shipclassi, Carrier)
 
@@ -22,6 +22,10 @@ ship* player;
 
 const shipclassi& shipi::geti() const {
 	return bsdata<shipclassi>::elements[kind];
+}
+
+int	ship::getpixelsize() const {
+	return geti().geti().size + basic.modules[Hull];
 }
 
 long ship::rangeto(const ship& v) const {
@@ -57,7 +61,7 @@ void ship::move(point position) {
 
 static void update_stats() {
 	auto& ei = last_ship->geti(); auto& ec = ei.geti();
-	last_ship->modules[Hull] = ec.hull * (ei.size + last_ship->modules[Hull]);
+	last_ship->modules[Hull] = ec.hull + last_ship->modules[Hull] * 10;
 	last_ship->modules[Engine] = ec.speed * (2 + last_ship->modules[Engine]); // Pixels per day
 	last_ship->modules[Sensors] = 30 * (2 + last_ship->modules[Sensors]); // Pixels for radar
 	last_ship->modules[Shield] = ec.shield + 15 * last_ship->modules[Shield];
