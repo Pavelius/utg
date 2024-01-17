@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "condition.h"
+#include "console.h"
 #include "collection.h"
 #include "crt.h"
 #include "draw.h"
@@ -15,6 +16,7 @@ static int result;
 static void* last_choose_result;
 static collection<ship> ships;
 static int last_value;
+static int target_distance;
 
 static void set_permanent(int bonus) {
 	last_modules = &player->basic;
@@ -187,6 +189,7 @@ static void roll(int bonus) {
 void run_current_quest() {
 	if(!answers::console)
 		return;
+	last_questlist = find_quest(last_quest);
 	pushvalue push_header(answers::header);
 	pushvalue push_image(answers::resid);
 	while(last_quest) {
@@ -196,6 +199,7 @@ void run_current_quest() {
 		script_run(last_quest->tags);
 		add_quest_answers();
 		auto pv = an.choose(0, 0, 1);
+		sbc.clear();
 		if(!pv)
 			break;
 		else if(bsdata<quest>::source.have(pv)) {
@@ -222,6 +226,23 @@ static void add_effect(int bonus) {
 	last_modules->modules[last_module] += last_modules->modules[Effect] * bonus;
 }
 
+static void printn(const char* format) {
+	add_console("", format, xva_start(format));
+}
+
+static void print_value(int n) {
+	auto pi = find_prompt(n);
+	if(!pi)
+		return;
+	printn(pi->text);
+}
+
+static void add_target_distance(int bonus) {
+	target_distance += bonus;
+	if(answers::interactive)
+		print_value(1000 + target_distance);
+}
+
 static void shoot_ships() {
 }
 
@@ -233,6 +254,7 @@ BSDATA(script) = {
 	{"SetCurrent", set_current},
 	{"SetPermanent", set_permanent},
 	{"SetValue", set_value},
+	{"TargetDistance", add_target_distance},
 	{"Suffer", set_suffer},
 	{"Value", add_value},
 };

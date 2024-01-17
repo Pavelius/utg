@@ -1,14 +1,19 @@
-#include "variant.h"
-
 #pragma once
 
-struct speech {
-	variant			keys[3];
-	const char*		name;
-	void			clear() { memset(this, 0, sizeof(*this)); }
-	static speech*	find(const slice<variant>& key);
-	static bool		match(variant key, const variants& values);
-	static bool		match(const slice<variant>& key, const variants& values);
-	static void		read(const char* url);
-};
-typedef adat<speech*, 32> speecha;
+struct speech;
+
+void speech_initialize();
+void speech_read(const char* url);
+
+const speech* speech_find(const char* id);
+
+int speech_count(const speech* p);
+int speech_first(const speech* p);
+int speech_random(const char* id);
+
+const char* speech_name(int index);
+const char* speech_getid(int index);
+const char* speech_get(const char* id);
+const char* speech_get(const speech* p, int n);
+
+extern unsigned char* speech_params;

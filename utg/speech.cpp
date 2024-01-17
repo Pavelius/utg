@@ -1,56 +1,30 @@
-#include "speech.h"
+#include "bsreq.h"
+#include "crt.h"
 #include "logparse.h"
+#include "nameable.h"
+#include "speech.h"
 
 using namespace log;
 
+struct speech {
+	struct element {
+		const char*	name;
+	};
+	typedef sliceu<element> elementa;
+	const char*	id;
+	elementa	source;
+};
+
+BSDATAD(speech::element)
 BSDATAC(speech, 1024)
 
-bool speech::match(variant key, const variants& values) {
-	for(auto v : values) {
-		if(!v)
-			break;
-		if(v == key)
-			return true;
-	}
-	return false;
-}
+BSMETA(speech) = {
+	BSREQ(id),
+	{}};
 
-bool speech::match(const slice<variant>& keys, const variants& values) {
-	for(auto v : keys) {
-		if(!match(v, values))
-			return false;
-	}
-	return true;
-}
+unsigned char* speech_params;
 
-speech* speech::find(const slice<variant>& keys) {
-	for(auto& e : bsdata<speech>()) {
-		if(match(keys, e.keys))
-			return &e;
-	}
-	return 0;
-}
-
-static const char* read_line(const char* p, stringbuilder& sb) {
-	sb.clear();
-	return sb.psstrlf(p);
-}
-
-static const char* read_conditions(const char* p, stringbuilder& sb, variant* pb, const variant* pe) {
-	auto count = pe - pb;
-	variant v;
-	while(ischa(p[0])) {
-		p = readval(p, sb, v);
-		if(pb >= pe)
-			log::error(p, "Too many conditions when save variant %1 (only %2i allowed)", v.getid(), count);
-		else
-			*pb++ = v;
-		p = skipws(p);
-	}
-	return p;
-}
-
-void speech::read(const char* url) {
+void speech_read(const char* url) {
 	auto p = log::read(url);
 	if(!p)
 		return;
@@ -59,14 +33,92 @@ void speech::read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
-		auto ps = bsdata<speech>::add();
-		ps->name = "Error";
-		p = read_conditions(skipws(p + 1), sb, ps->keys, ps->keys + sizeof(ps->keys) / sizeof(ps->keys[0]));
+		p = readidn(p + 1, sb);
+		auto pr = bsdata<speech>::add();
+		pr->id = szdup(temp);
 		if(!checksym(p, '\n'))
 			break;
-		p = read_line(skipwscr(p), sb);
 		p = skipwscr(p);
-		ps->name = szdup(temp);
+		auto psb = bsdata<speech::element>::source.count;
+		while(allowparse && *p && *p != '#') {
+			sb.clear();
+			p = sb.psstrlf(skipwscr(p));
+			p = skipwscr(p);
+			speech::element e = {szdup(temp)};
+			bsdata<speech::element>::source.add(&e);
+		}
+		if(psb != bsdata<speech::element>::source.count)
+			pr->source.set((speech::element*)bsdata<speech::element>::source.ptr(psb), bsdata<speech::element>::source.count - psb);
 	}
 	log::close();
+}
+
+const char* speech_getid(int index) {
+	return bsdata<speech>::elements[index].id;
+}
+
+const char* speech_name(int index) {
+	return ((speech::element*)bsdata<speech::element>::source.ptr(index))->name;
+}
+
+const speech* speech_find(const char* id) {
+	return bsdata<speech>::find(id);
+}
+
+int speech_first(const speech* p) {
+	if(!p || !p->source)
+		return -1;
+	return p->source.start;
+}
+
+int speech_count(const speech* p) {
+	if(!p || !p->source)
+		return -1;
+	return p->source.count;
+}
+
+int speech_random(const char* id) {
+	auto p = bsdata<speech>::find(id);
+	if(!p || !p->source)
+		return -1;
+	return p->source.start + (rand() % p->source.size());
+}
+
+const char* speech_get(const char* id) {
+	auto p = bsdata<speech>::find(id);
+	if(!p || !p->source)
+		return 0;
+	auto n = (speech_params ? *speech_params++ : rand()) % p->source.size();
+	return p->source.begin()[n].name;
+}
+
+const char* speech_get(const speech* p, int n) {
+	if(!p || !p->source)
+		return 0;
+	return p->source.begin()[n].name;
+}
+
+void speech_get(const char*& result, const char* id, const char* action, const char* middle, const char* postfix) {
+	if(result)
+		return;
+	char temp[64]; stringbuilder sb(temp);
+	sb.add(id);
+	sb.add(action);
+	sb.add(middle);
+	sb.add(postfix);
+	auto p = speech_get(temp);
+	if(p)
+		result = p;
+}
+
+bool apply_speech(const char* id, stringbuilder& sb) {
+	auto p = speech_get(id);
+	if(!p)
+		return false;
+	sb.add(p);
+	return true;
+}
+
+void speech_initialize() {
+	readlocfolder(speech_read, "speech", "*.txt");
 }

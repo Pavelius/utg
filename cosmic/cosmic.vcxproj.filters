@@ -55,5 +55,8 @@
     <Text Include="locale\ru\actions\Snow.txt">
       <Filter>actions</Filter>
     </Text>
+    <Text Include="locale\ru\actions\Encounter.txt">
+      <Filter>actions</Filter>
+    </Text>
   </ItemGroup>
 </Project>

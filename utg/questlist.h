@@ -10,5 +10,3 @@ struct questlist {
 };
 extern questlist*	last_questlist;
 questlist*			find_quest(const quest* p);
-
-void questlist_initialize();

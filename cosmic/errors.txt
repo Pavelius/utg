@@ -1,5 +1,3 @@
-﻿In file `locale/ru/actions/Quest.txt`:
- Line 1: Unknown property name `Header`
- Line 1: Unknown property name `Image`
- Line 6: Unknown property name `Header`
- Line 11: Unknown property name `Header`
+﻿In file `locale/ru/actions/Encounter.txt`:
+ Line 4: Can't find variant `TargetDistance`
+ Line 11: Can't find variant `TargetDistance`

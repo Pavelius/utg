@@ -412,11 +412,19 @@ static void answers_beforepaint() {
 	strokeout(strokeborder);
 	caret.x += metrics::padding; width -= metrics::padding;
 	caret.y += metrics::padding; height -= metrics::padding;
+	// Header text
 	texth2(answers::header);
+	// Main text
 	if(answers::prompt && answers::prompt[0]) {
 		textf(answers::prompt);
 		caret.y += metrics::padding;
 	}
+	// Log action information
+	if(answers::prompi && answers::prompi[0]) {
+		textf(answers::prompi);
+		caret.y += metrics::padding;
+	}
+	// Prompt information
 	if(answers::prompa) {
 		auto push_fore = fore;
 		fore = colors::h3;

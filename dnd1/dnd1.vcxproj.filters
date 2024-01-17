@@ -96,9 +96,6 @@
     <ClInclude Include="organization.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="speech.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="group.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -195,9 +192,6 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="organization.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="speech.cpp">
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="group.cpp">

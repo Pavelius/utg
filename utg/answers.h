@@ -24,6 +24,7 @@ public:
 	static char			hotkeys[20];
 	static const char*	prompt;
 	static const char*	prompa;
+	static const char*	prompi;
 	static const char*	resid;
 	static bool			show_tips;
 	answers() : sc(buffer) {}

@@ -5,4 +5,4 @@
 #List
 
 StartScript
- elements Cobra Mule Snow+1
+ elements Cobra Mule Encounter+1

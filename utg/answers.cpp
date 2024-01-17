@@ -5,6 +5,7 @@ answers* answers::last;
 const char* answers::header;
 const char* answers::prompt;
 const char* answers::prompa;
+const char* answers::prompi;
 const char* answers::resid;
 bool answers::show_tips = true;
 bool answers::interactive = true;

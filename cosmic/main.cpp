@@ -1,4 +1,5 @@
 #include "bsreq.h"
+#include "console.h"
 #include "draw_utg.h"
 #include "log.h"
 #include "quest.h"
@@ -18,6 +19,7 @@ static void initialize() {
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::initialize();
+	initialize_console();
 	return draw::start(starting, initialize);
 }
 

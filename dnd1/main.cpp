@@ -47,7 +47,6 @@ static void initializing() {
 	speech_initialize();
 	spell_initialize();
 	initialize_str();
-	questlist_initialize();
 }
 
 static const char* getavatarst(const void* p) {

@@ -36,7 +36,9 @@ questlist* find_quest(const quest* p) {
 	if(!p)
 		return 0;
 	for(auto& e : bsdata<questlist>()) {
-		if(p >= e.elements.begin() && p <= e.elements.end())
+		auto pb = e.elements.begin();
+		auto pe = e.elements.end();
+		if(p >= pb && p < pe)
 			return &e;
 	}
 	return 0;
