@@ -1,0 +1,8 @@
+﻿#include "rules/Ships.txt"
+
+#importdir Quest "locale/ru/actions"
+
+#List
+
+StartScript
+ elements Cobra Mule Snow+1

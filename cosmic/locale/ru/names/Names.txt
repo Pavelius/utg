@@ -1,0 +1,18 @@
+﻿AcceptResult: Принять результат
+AppTitle: Космические миссии
+Cancel: Отмена
+Continue: Продолжить
+Credits: Кредиты
+DecreaseAbility: Уменьшено %1 на %2i
+ErrorNotFoundRule: Не найдено правило '%1'
+ErrorParse: Ошибка при разборе
+IncreaseAbility: Увеличено %1 на %2i
+Marines: Морпехи
+Planet: Планета
+Squad: Отряд
+UseInside: Использовать знания для переброса результата
+WhatYouWantToDo: Что будете делать?
+YouRolled: Вы выбросили %1i%+3i=%1i
+
+Cobra: Кобра
+Mule: Мул

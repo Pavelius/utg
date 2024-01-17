@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{79b0a074-2fae-4454-98a7-4e7d67d64e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rules">
+      <UniqueIdentifier>{897b2ef3-b9dd-4400-94f2-9e226a60f7af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="actions">
+      <UniqueIdentifier>{6af07622-a95e-406b-b558-fd605eb2ec80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="modifier.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="module.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripting.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="ship.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="modifier.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ship.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Ships.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\actions\Snow.txt">
+      <Filter>actions</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

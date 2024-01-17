@@ -1,0 +1,5 @@
+﻿In file `locale/ru/actions/Quest.txt`:
+ Line 1: Unknown property name `Header`
+ Line 1: Unknown property name `Image`
+ Line 6: Unknown property name `Header`
+ Line 11: Unknown property name `Header`

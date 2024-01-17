@@ -32,6 +32,12 @@ const quest* questlist::find(int index, const quest* pb) const {
 	return 0;
 }
 
-void questlist_initialize() {
-	log::readlocfolder(questlist::read, "quests", "*.txt");
+questlist* find_quest(const quest* p) {
+	if(!p)
+		return 0;
+	for(auto& e : bsdata<questlist>()) {
+		if(p >= e.elements.begin() && p <= e.elements.end())
+			return &e;
+	}
+	return 0;
 }

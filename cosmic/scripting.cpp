@@ -1,0 +1,239 @@
+#include "answers.h"
+#include "condition.h"
+#include "collection.h"
+#include "crt.h"
+#include "draw.h"
+#include "pushvalue.h"
+#include "quest.h"
+#include "questlist.h"
+#include "querry.h"
+#include "script.h"
+#include "ship.h"
+
+static answers an;
+static int result;
+static void* last_choose_result;
+static collection<ship> ships;
+static int last_value;
+
+static void set_permanent(int bonus) {
+	last_modules = &player->basic;
+}
+
+static void set_inflict(int bonus) {
+	last_modules = &inflict;
+}
+
+static void set_suffer(int bonus) {
+	last_modules = &suffer;
+}
+
+static void set_current(int bonus) {
+	last_modules = player;
+}
+
+static void change_ability(module_s v, int bonus) {
+	last_modules->modules[v] += bonus;
+}
+
+template<> void fnscript<modulei>(int index, int bonus) {
+	last_module = (module_s)index;
+	change_ability(last_module, bonus);
+}
+
+template<> void fnscript<shipi>(int index, int bonus) {
+	player = bsdata<ship>::addz();
+	player->type = index;
+	set_permanent(0);
+	script_run(player->geti().elements);
+	player->update();
+}
+
+static const quest* find_prompt(const sliceu<quest>& elements, short index) {
+	for(auto& e : elements) {
+		if(e.index != index)
+			continue;
+		if(e.isanswer())
+			continue;
+		if(!script_allow(e.tags))
+			continue;
+		return &e;
+	}
+	return 0;
+}
+
+static const quest* find_prompt(short index) {
+	if(!last_questlist)
+		return 0;
+	return find_prompt(last_questlist->elements, index);
+}
+
+template<> void fnscript<questlist>(int index, int bonus) {
+	last_quest = find_prompt(bsdata<questlist>::elements[index].elements, bonus);
+}
+
+static int d12() {
+	return 1 + (rand() % 12);
+}
+
+static void make_roll(int bonus) {
+	int	rolled[2] = {};
+	char temp[260]; stringbuilder sb(temp);
+	if(last_modules->get(Problem) > 0) {
+		change_ability(Problem, -1);
+		rolled[1] = d12();
+	} else
+		rolled[1] = 0;
+	auto need_reroll = true;
+	while(true) {
+		if(need_reroll) {
+			rolled[0] = d12();
+			if(rolled[1] && rolled[0] > rolled[1])
+				iswap(rolled[0], rolled[1]);
+			result = rolled[0] + bonus;
+			need_reroll = false;
+		}
+		sb.clear();
+		if(rolled[1])
+			sb.add(getnm("YouRolledProblem"), rolled[0], rolled[1], bonus, result);
+		else
+			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
+		an.clear();
+		if(last_modules->get(Insight) > 0)
+			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
+		auto p = an.choose(temp, getnm("AcceptResult"), 1);
+		if(!p)
+			break;
+		if(bsdata<modulei>::have(p)) {
+			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
+			need_reroll = true;
+			continue;
+		}
+	}
+}
+
+static void add_quest_answers() {
+	last_questlist = find_quest(last_quest);
+	if(!last_quest || !last_questlist)
+		return;
+	auto index = last_quest->index;
+	auto pe = last_questlist->elements.end();
+	for(auto pa = last_quest + 1; pa < pe; pa++) {
+		if(pa->index != index)
+			continue;
+		if(!pa->isanswer())
+			continue;
+		if(!script_allow(pa->tags))
+			continue;
+		an.add(pa, pa->text);
+	}
+}
+
+static void apply_header() {
+	if(!last_quest)
+		return;
+	auto pn = last_quest->getheader();
+	if(pn)
+		answers::header = pn;
+	pn = last_quest->getimage();
+	if(pn)
+		answers::resid = pn;
+}
+
+static void apply_text() {
+	if(last_quest && last_quest->text) {
+		answers::console->clear();
+		answers::console->add(last_quest->text);
+	}
+}
+
+static void apply_script() {
+	result = 0;
+	if(!last_quest)
+		return;
+	result = last_quest->next;
+	script_run(last_quest->tags);
+}
+
+static void choose_quest_result() {
+	if(!last_quest)
+		return;
+	auto index = last_quest->index;
+	auto pe = bsdata<quest>::end();
+	auto pr = last_quest + 1;
+	for(auto pa = pr; pa < pe; pa++) {
+		if(pa->index != index)
+			continue;
+		if(!pa->isanswer())
+			break;
+		pr = pa;
+		if(result <= pr->next)
+			break;
+	}
+	last_quest = pr;
+}
+
+static void roll(int bonus) {
+	make_roll(last_modules->get(last_module) + bonus);
+	choose_quest_result();
+	apply_text();
+	apply_script();
+	pause();
+	last_quest = quest::findprompt(result);
+	apply_header();
+	apply_text();
+}
+
+void run_current_quest() {
+	if(!answers::console)
+		return;
+	pushvalue push_header(answers::header);
+	pushvalue push_image(answers::resid);
+	while(last_quest) {
+		an.clear();
+		apply_header();
+		apply_text();
+		script_run(last_quest->tags);
+		add_quest_answers();
+		auto pv = an.choose(0, 0, 1);
+		if(!pv)
+			break;
+		else if(bsdata<quest>::source.have(pv)) {
+			last_quest = (quest*)pv; result = last_quest->next;
+			script_run(last_quest->tags);
+			last_quest = find_prompt(result);
+		}
+	}
+}
+
+static void add_value(int bonus) {
+	last_value += bonus;
+}
+
+static void set_value(int bonus) {
+	last_value = bonus;
+}
+
+static void jump_next(int bonus) {
+	result = bonus;
+}
+
+static void add_effect(int bonus) {
+	last_modules->modules[last_module] += last_modules->modules[Effect] * bonus;
+}
+
+static void shoot_ships() {
+}
+
+BSDATA(script) = {
+	{"AddEffect", add_effect},
+	{"Inflict", set_inflict},
+	{"Next", jump_next},
+	{"Roll", roll},
+	{"SetCurrent", set_current},
+	{"SetPermanent", set_permanent},
+	{"SetValue", set_value},
+	{"Suffer", set_suffer},
+	{"Value", add_value},
+};
+BSDATAF(script)

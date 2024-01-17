@@ -1,0 +1,15 @@
+﻿#ShipClass
+
+Fighter
+ elements Hull+10 Engine+5 Crew+2
+Carrier
+ elements Hull+40 Engine+1 Crew+5
+
+#Ship type(Fighter)
+
+Cobra
+ elements Hull+2 ShardCannons+2 LaserBeams+1
+
+#Ship type(Carrier)
+
+Mule

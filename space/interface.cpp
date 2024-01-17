@@ -214,8 +214,11 @@ void systemi::paint() const {
 
 static void show_sensors(int size) {
 	auto push_fore = fore;
+	auto push_alpha = alpha;
+	alpha = 64;
 	fore = colors::blue;
 	circle(size);
+	alpha = push_alpha;
 	fore = push_fore;
 }
 
