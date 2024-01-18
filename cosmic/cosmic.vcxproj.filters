@@ -7,8 +7,20 @@
     <Filter Include="rules">
       <UniqueIdentifier>{897b2ef3-b9dd-4400-94f2-9e226a60f7af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="actions">
+    <Filter Include="locale">
+      <UniqueIdentifier>{6e40ffa7-20cb-49df-8821-55e081100b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale\ru">
+      <UniqueIdentifier>{b40d0cc1-4ad2-45b6-8868-983af53e17e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale\ru\actions">
       <UniqueIdentifier>{6af07622-a95e-406b-b558-fd605eb2ec80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale\ru\speech">
+      <UniqueIdentifier>{91c43105-203e-4286-ad9b-c5f8831655c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale\ru\names">
+      <UniqueIdentifier>{39822d7f-03d0-4100-94e8-0e933a5fd577}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +40,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="information.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +68,16 @@
       <Filter>rules</Filter>
     </Text>
     <Text Include="locale\ru\actions\Snow.txt">
-      <Filter>actions</Filter>
+      <Filter>locale\ru\actions</Filter>
     </Text>
     <Text Include="locale\ru\actions\Encounter.txt">
-      <Filter>actions</Filter>
+      <Filter>locale\ru\actions</Filter>
+    </Text>
+    <Text Include="locale\ru\speech\Encounter.txt">
+      <Filter>locale\ru\speech</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>locale\ru\names</Filter>
     </Text>
   </ItemGroup>
 </Project>

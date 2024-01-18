@@ -6,6 +6,7 @@
 #include "script.h"
 #include "ship.h"
 
+void initilize_script();
 void run_current_quest();
 
 static void starting() {
@@ -20,6 +21,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	quest::initialize();
 	initialize_console();
+	initilize_script();
 	return draw::start(starting, initialize);
 }
 

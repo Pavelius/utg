@@ -10,6 +10,8 @@
 #include "querry.h"
 #include "script.h"
 #include "ship.h"
+#include "speech.h"
+#include "stringvar.h"
 
 static answers an;
 static int result;
@@ -34,6 +36,10 @@ static void set_current(int bonus) {
 	last_modules = player;
 }
 
+static void set_opponent(int bonus) {
+	opponent = player;
+}
+
 static void change_ability(module_s v, int bonus) {
 	last_modules->modules[v] += bonus;
 }
@@ -47,6 +53,7 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	player = bsdata<ship>::addz();
 	player->type = index;
 	set_permanent(0);
+	script_run(player->geti().geti().elements);
 	script_run(player->geti().elements);
 	player->update();
 }
@@ -198,14 +205,19 @@ void run_current_quest() {
 		apply_text();
 		script_run(last_quest->tags);
 		add_quest_answers();
-		auto pv = an.choose(0, 0, 1);
-		sbc.clear();
-		if(!pv)
-			break;
-		else if(bsdata<quest>::source.have(pv)) {
-			last_quest = (quest*)pv; result = last_quest->next;
-			script_run(last_quest->tags);
-			last_quest = find_prompt(result);
+		if(an) {
+			auto pv = an.choose(0, 0, 1);
+			sbc.clear();
+			if(!pv)
+				break;
+			else if(bsdata<quest>::source.have(pv)) {
+				last_quest = (quest*)pv; result = last_quest->next;
+				script_run(last_quest->tags);
+				last_quest = find_prompt(result);
+			}
+		} else {
+			pause();
+			last_quest = 0;
 		}
 	}
 }
@@ -230,17 +242,17 @@ static void printn(const char* format) {
 	add_console("", format, xva_start(format));
 }
 
-static void print_value(int n) {
-	auto pi = find_prompt(n);
+static void print_value(const char* id, int n) {
+	auto pi = speech_find(id);
 	if(!pi)
 		return;
-	printn(pi->text);
+	printn(speech_get(pi, n));
 }
 
 static void add_target_distance(int bonus) {
 	target_distance += bonus;
 	if(answers::interactive)
-		print_value(1000 + target_distance);
+		print_value("TargetDistance", target_distance);
 }
 
 static void shoot_ships() {
@@ -253,6 +265,7 @@ BSDATA(script) = {
 	{"Roll", roll},
 	{"SetCurrent", set_current},
 	{"SetPermanent", set_permanent},
+	{"SetOpponent", set_opponent},
 	{"SetValue", set_value},
 	{"TargetDistance", add_target_distance},
 	{"Suffer", set_suffer},

@@ -6,15 +6,6 @@
 
 using namespace log;
 
-struct speech {
-	struct element {
-		const char*	name;
-	};
-	typedef sliceu<element> elementa;
-	const char*	id;
-	elementa	source;
-};
-
 BSDATAD(speech::element)
 BSDATAC(speech, 1024)
 

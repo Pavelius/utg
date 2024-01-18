@@ -9,6 +9,7 @@ struct shipclassi : nameable {
 };
 struct shipi : nameable, typeable<shipclassi> {
 	variants		elements;
+	const char*		getname() const { return nameable::getname(); }
 };
 struct ship : typeable<shipi>, modulea {
 	explicit operator bool() const { return hull != 0; }
@@ -18,6 +19,7 @@ struct ship : typeable<shipi>, modulea {
 	bool			cansee(const ship& v) const;
 	//void			getinfo(stringbuilder& sb) const;
 	int				getspeed() const { return modules[Engine]; }
+	int				getmaximum(module_s v) const;
 	void			paint() const;
 	void			update();
 };
@@ -25,3 +27,4 @@ struct ship : typeable<shipi>, modulea {
 void play_player_turn();
 
 extern ship* player;
+extern ship* opponent;

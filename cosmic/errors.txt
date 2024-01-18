@@ -1,3 +1,4 @@
-﻿In file `locale/ru/actions/Encounter.txt`:
- Line 4: Can't find variant `TargetDistance`
- Line 11: Can't find variant `TargetDistance`
+﻿In file `Names.txt`:
+RocketLaunchersII: Define translate
+RocketLaunchersIII: Define translate
+Tiger: Define translate

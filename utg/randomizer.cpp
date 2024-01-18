@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "randomizer.h"
+#include "script.h"
 
 BSMETA(randomizeri) = {
 	BSREQ(id),
@@ -48,4 +49,9 @@ variant single(variant v, int bonus) {
 	while(v.iskind<randomizeri>())
 		v = bsdata<randomizeri>::elements[v.value].random(bonus);
 	return v;
+}
+
+template<> void fnscript<randomizeri>(int index, int bonus) {
+	variant v = single(bsdata<randomizeri>::elements + index);
+	script_run(v);
 }

@@ -1,6 +1,15 @@
 #pragma once
 
-struct speech;
+#include "crt.h"
+
+struct speech {
+	struct element {
+		const char*	name;
+	};
+	typedef sliceu<element> elementa;
+	const char*		id;
+	elementa		source;
+};
 
 void speech_initialize();
 void speech_read(const char* url);

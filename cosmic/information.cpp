@@ -1,0 +1,54 @@
+#include "gender.h"
+#include "ship.h"
+#include "stringvar.h"
+
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+
+static void addcms(stringbuilder& sb, const char* name, int count) {
+	if(!count)
+		return;
+	if(sb)
+		sb.add(", ");
+	sb.add(name);
+	if(count > 1)
+		sb.adds("x%1i", count);
+}
+
+static void add_line(stringbuilder& sb, module_s f1, module_s f2) {
+	for(auto i = f1; i<=f2; i = (module_s)(i+1))
+		addcms(sb, bsdata<modulei>::elements[i].getname(), opponent->modules[i]);
+}
+
+static void main_custom(stringbuilder& sb, const char* id) {
+	if(apply_action(id, sb, player->getname(), Male))
+		return;
+	if(stringvar_identifier(sb, id))
+		return;
+	stringbuilder::defidentifier(sb, id);
+}
+
+static void opponent_class(stringbuilder& sb) {
+	sb.add(opponent->geti().geti().getname());
+}
+
+static void add_weapons(stringbuilder& sb) {
+	char temp[512]; stringbuilder sbs(temp); temp[0] = 0;
+	add_line(sbs, ShardCannons, RocketLaunchersIII);
+	if(temp[0])
+		sb.addn("[%1]: %2", getnm("Weapons"), temp);
+}
+
+static void opponent_scaner_info(stringbuilder& sb) {
+	sb.addn("[%1]: %2 %3", getnm("Class"), opponent->geti().geti().getname(), opponent->getname());
+	add_weapons(sb);
+}
+
+void initilize_script() {
+	stringbuilder::custom = main_custom;
+}
+
+BSDATA(stringvari) = {
+	{"opponent_class", opponent_class},
+	{"opponent_scaner_info", opponent_scaner_info},
+};
+BSDATAF(stringvari)

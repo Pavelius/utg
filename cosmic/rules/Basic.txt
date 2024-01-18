@@ -1,8 +1,10 @@
-﻿#include "rules/Ships.txt"
+﻿#setlocale ru
 
-#importdir Quest "locale/ru/actions"
+#include "rules/Ships.txt"
+#importloc Quest "actions"
+#importloc Speech "speech"
 
 #List
 
 StartScript
- elements Cobra Mule Encounter+1
+ elements RandomShip SetOpponent Cobra Encounter+1

@@ -155,6 +155,10 @@ static void copy_locale(const char* locale) {
 	sb.add(locale);
 }
 
+const char* getcurrentlocale() {
+	return main_locale;
+}
+
 void initialize_translation(const char* locale) {
 	if(main_locale[0])
 		return;

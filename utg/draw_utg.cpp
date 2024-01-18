@@ -616,7 +616,8 @@ int draw::start(fnevent proc, fnevent afterread) {
 	set_dark_theme();
 	initialize_widgets();
 	bsreq::read("rules/Basic.txt");
-	initialize_translation("ru");
+	if(getcurrentlocale()[0]==0)
+		initialize_translation("ru");
 	if(afterread)
 		afterread();
 	check_translation();

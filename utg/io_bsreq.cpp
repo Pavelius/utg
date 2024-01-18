@@ -439,7 +439,15 @@ static bool read_identifier() {
 	return allowparse;
 }
 
-static bool read_import(bool whole_directory) {
+static void add_locale_url() {
+	char t1[260]; stringbuilder s1(t1);
+	s1.addlocaleurl();
+	s1.add(temp);
+	stringbuilder sb(temp);
+	sb.add(t1);
+}
+
+static bool read_import(bool whole_directory, bool add_locale) {
 	if(!read_identifier())
 		return false;
 	auto pn = bsdata<varianti>::find(temp);
@@ -453,6 +461,8 @@ static bool read_import(bool whole_directory) {
 	}
 	if(!read_string())
 		return false;
+	if(add_locale)
+		add_locale_url();
 	if(whole_directory) {
 		for(io::file::find file(temp); file; file.next()) {
 			if(file.name()[0] == '.')
@@ -468,6 +478,15 @@ static bool read_import(bool whole_directory) {
 	return true;
 }
 
+void initialize_translation(const char* locale);
+
+static bool set_locale() {
+	if(!read_identifier())
+		return false;
+	initialize_translation(temp);
+	return true;
+}
+
 static bool parse_directives() {
 	if(equal(temp, "include")) {
 		if(!read_string())
@@ -475,9 +494,13 @@ static bool parse_directives() {
 		bsreq::read(szdup(temp));
 		return true;
 	} else if(equal(temp, "import"))
-		return read_import(false);
+		return read_import(false, false);
 	else if(equal(temp, "importdir"))
-		return read_import(true);
+		return read_import(true, false);
+	else if(equal(temp, "importloc"))
+		return read_import(true, true);
+	else if(equal(temp, "setlocale"))
+		return set_locale();
 	return false;
 }
 
