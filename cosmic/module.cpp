@@ -99,3 +99,25 @@ int get_creating_multiplier(module_s v) {
 	default: return 0;
 	}
 }
+
+int get_hit_chance(module_s v, int distance, int engine) {
+	switch(v) {
+	case LaserBeams: case LaserBeamsII: case LaserBeamsIII:
+		switch(distance) {
+		case 3: case 4: return 80 - (engine - 1) * 5;
+		default: return 0;
+		}
+	case RocketLaunchers: case RocketLaunchersII: case RocketLaunchersIII:
+		switch(distance) {
+		case 2: return 90 - (engine - 1) * 7;
+		case 3: return 50 - (engine - 1) * 7;
+		default: return 0;
+		}
+	case ShardCannons: case ShardCannonsII: case ShardCannonsIII:
+		switch(distance) {
+		case 4: return 90 - (engine - 1) * 5;
+		default: return 0;
+		}
+	default: return 0;
+	}
+}

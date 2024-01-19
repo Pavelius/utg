@@ -1,4 +1,5 @@
 ﻿AppTitle: Космические приключения
+Continue: Продолжить
 
 Class: Класс
 Weapons: Оружие
@@ -18,3 +19,7 @@ ShardCannonsIII: Туррель III
 LaserBeamsI: Лазер
 LaserBeamsII: Лазер II
 LaserBeamsIII: Лазер III
+
+RocketLaunchers: Ракеты
+RocketLaunchersII: Ракеты II
+RocketLaunchersIII: Ракеты III

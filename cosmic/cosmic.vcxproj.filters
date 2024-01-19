@@ -79,5 +79,8 @@
     <Text Include="locale\ru\names\Names.txt">
       <Filter>locale\ru\names</Filter>
     </Text>
+    <Text Include="locale\ru\names\Ships.txt">
+      <Filter>locale\ru\names</Filter>
+    </Text>
   </ItemGroup>
 </Project>

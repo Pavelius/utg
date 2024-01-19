@@ -31,6 +31,7 @@ int apply_percent(int value, int percent);
 int get_creating_multiplier(module_s v);
 int get_critical(module_s v);
 int get_critical_multiplayer(module_s v);
+int get_hit_chance(module_s v, int distance, int engine);
 int roll_damage(int count, int minimum, int maximum);
 int roll_damage(int count, int minimum, int maximum, int critical, int multiplier);
 int roll_hits(int count, int chance);

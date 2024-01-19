@@ -1,6 +1,7 @@
 ﻿#setlocale ru
 
 #include "rules/Ships.txt"
+
 #importloc Quest "actions"
 #importloc Speech "speech"
 

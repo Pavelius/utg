@@ -14,3 +14,15 @@
 
 #3
 Вы сменили курс и вскоре точка исчезла на вашем радаре. Ваши пути разминулись.
+
+#5 FireRockets ChangeOpponents FireRockets
+Корабли сблизились достаточно близко, чтобы сделать залп ракетами.
+6 TargetDistance+1) Подойти еще ближе.
+
+#6 FireRockets FireLasers ChangeOpponents FireRockets FireLasers
+Корабли сблизились на среднюю дистанцию.
+7 TargetDistance+1) Подойти еще ближе.
+
+#7 FireTurrets FireLasers ChangeOpponents FireTurrets FireLasers
+Корабли сблизились почти вплотную.
+7) Продолжить бой.

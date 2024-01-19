@@ -1,0 +1,9 @@
+﻿Cobra: Кобра
+Mule: Мул
+Tiger: Тигр
+Viper: Гадюка
+
+Fighter: Истребитель
+Carrier: Транспорт
+Destroyer: Эсминец
+Fregate: Фрегат

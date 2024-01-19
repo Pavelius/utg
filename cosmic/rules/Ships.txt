@@ -1,7 +1,7 @@
 ﻿#ShipClass
 
 Fighter
- elements Hull+10 Engine+5 Crew+2
+ elements Hull+6 Engine+5 Crew+2
 Carrier
  elements Hull+40 Engine+1 Crew+5
 
@@ -10,13 +10,14 @@ Carrier
 Cobra
  elements Hull+2 ShardCannons+2 LaserBeams+1
 Viper
- elements Hull+1 ShardCannons+3
+ elements Hull+1 ShardCannons+3 Crew+2
 Tiger
  elements Hull+3 ShardCannons+1 LaserBeams+1
 
 #Ship type(Carrier)
 
 Mule
+ elements ShardCannons+1
 
 #RandomList
 

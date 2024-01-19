@@ -155,6 +155,7 @@
     <Text Include="locale\ru\actions\Encounter.txt" />
     <Text Include="locale\ru\actions\Snow.txt" />
     <Text Include="locale\ru\names\Names.txt" />
+    <Text Include="locale\ru\names\Ships.txt" />
     <Text Include="locale\ru\speech\Encounter.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Ships.txt" />

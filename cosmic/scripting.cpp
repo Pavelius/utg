@@ -238,7 +238,7 @@ static void add_effect(int bonus) {
 	last_modules->modules[last_module] += last_modules->modules[Effect] * bonus;
 }
 
-static void printn(const char* format) {
+static void printn(const char* format, ...) {
 	add_console("", format, xva_start(format));
 }
 
@@ -255,11 +255,46 @@ static void add_target_distance(int bonus) {
 		print_value("TargetDistance", target_distance);
 }
 
-static void shoot_ships() {
+static void fire_weapons(module_s v) {
+	auto& ei = bsdata<modulei>::elements[v];
+	auto total_shoots = player->modules[v];
+	if(!total_shoots)
+		return;
+	auto chance_hit = get_hit_chance(v, target_distance, opponent->get(Engine));
+	auto hits = roll_hits(total_shoots, chance_hit);
+	auto damage = roll_damage(hits, ei.damage.minimum(), ei.damage.maximum(), get_critical(v), get_critical_multiplayer(v));
+	printn(getnm("ApplyDamage"), ei.getname(), hits, damage);
+	opponent->hull -= damage;
+}
+
+static void fire_lasers(int bonus) {
+	fire_weapons(LaserBeams);
+	fire_weapons(LaserBeamsII);
+	fire_weapons(LaserBeamsIII);
+}
+
+static void fire_rockets(int bonus) {
+	fire_weapons(RocketLaunchers);
+	fire_weapons(RocketLaunchersII);
+	fire_weapons(RocketLaunchersIII);
+}
+
+static void fire_turrets(int bonus) {
+	fire_weapons(LaserBeams);
+	fire_weapons(LaserBeamsII);
+	fire_weapons(LaserBeamsIII);
+}
+
+static void change_opponents(int bonus) {
+	iswap(player, opponent);
 }
 
 BSDATA(script) = {
 	{"AddEffect", add_effect},
+	{"ChangeOpponents", change_opponents},
+	{"FireLasers", fire_lasers},
+	{"FireRockets", fire_rockets},
+	{"FireTurrets", fire_turrets},
 	{"Inflict", set_inflict},
 	{"Next", jump_next},
 	{"Roll", roll},
