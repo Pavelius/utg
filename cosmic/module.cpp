@@ -47,6 +47,8 @@ inline int d100() {
 }
 
 int roll_hits(int count, int chance) {
+	if(chance <= 0)
+		return 0;
 	auto result = 0;
 	for(auto i = 0; i < count; i++) {
 		if(d100() < chance)

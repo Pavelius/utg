@@ -1,13 +1,11 @@
-#1 Header("Корабль") TargetDistance
+#1 Header("%UnknownShip") TargetDistance
 На радаре появилась красная точка, сигнализирующая появление корабля прямо впереди по курсу. %герой подош%ла к радару. Он показывал что в вашем воле зрения появляется корабль класса %opponent_class.
 3) Сменить курс в попытке избежать встречи с кораблем.
 2 TargetDistance+1) Не менять курс, Подойти поближе чтобы можно было более точно распознать корабль.
 
-#2
+#2 Header("%opponent_name")
 Когда вы подлетели поближе сканер выдал более детальную информацию по встреченному кораблю:
----
 %opponent_scaner_info
----
 4) Выйти на связь с кораблем.
 3) Сменить курс в попытке избежать встречи с кораблем.
 5 TargetDistance+1) Не менять курс и подойти на расстояние поражения ракет.
@@ -15,14 +13,15 @@
 #3
 Вы сменили курс и вскоре точка исчезла на вашем радаре. Ваши пути разминулись.
 
-#5 FireRockets ChangeOpponents FireRockets
+#5 FireWeapons ChangeOpponents FireWeapons ChangeOpponents
 Корабли сблизились достаточно близко, чтобы сделать залп ракетами.
 6 TargetDistance+1) Подойти еще ближе.
 
-#6 FireRockets FireLasers ChangeOpponents FireRockets FireLasers
+#6 FireWeapons ChangeOpponents FireWeapons ChangeOpponents
 Корабли сблизились на среднюю дистанцию.
 7 TargetDistance+1) Подойти еще ближе.
 
-#7 FireTurrets FireLasers ChangeOpponents FireTurrets FireLasers
+#7 FireWeapons ChangeOpponents FireWeapons ChangeOpponents
 Корабли сблизились почти вплотную.
 7) Продолжить бой.
+3) Пытаться бежать.

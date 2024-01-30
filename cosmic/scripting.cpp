@@ -4,6 +4,7 @@
 #include "collection.h"
 #include "crt.h"
 #include "draw.h"
+#include "list.h"
 #include "pushvalue.h"
 #include "quest.h"
 #include "questlist.h"
@@ -40,8 +41,24 @@ static void set_opponent(int bonus) {
 	opponent = player;
 }
 
+static void run_script(const char* id, const char* postfix) {
+	char temp[260]; stringbuilder sb(temp);
+	if(id)
+		sb.add(id);
+	if(postfix)
+		sb.add(postfix);
+	auto pi = bsdata<listi>::find(temp);
+	if(pi)
+		script_run(pi->elements);
+}
+
 static void change_ability(module_s v, int bonus) {
 	last_modules->modules[v] += bonus;
+	if(last_modules->modules[v] <= 0) {
+		if(last_modules == player) {
+
+		}
+	}
 }
 
 template<> void fnscript<modulei>(int index, int bonus) {
@@ -193,6 +210,11 @@ static void roll(int bonus) {
 	apply_text();
 }
 
+static void ability_script_run() {
+	if(player->hull <= 0)
+		run_script("Hull", "DropZero");
+}
+
 void run_current_quest() {
 	if(!answers::console)
 		return;
@@ -219,6 +241,7 @@ void run_current_quest() {
 			pause();
 			last_quest = 0;
 		}
+		ability_script_run();
 	}
 }
 
@@ -255,34 +278,29 @@ static void add_target_distance(int bonus) {
 		print_value("TargetDistance", target_distance);
 }
 
-static void fire_weapons(module_s v) {
+static void fire_weapon(module_s v) {
 	auto& ei = bsdata<modulei>::elements[v];
 	auto total_shoots = player->modules[v];
 	if(!total_shoots)
 		return;
 	auto chance_hit = get_hit_chance(v, target_distance, opponent->get(Engine));
+	if(chance_hit <= 0)
+		return;
 	auto hits = roll_hits(total_shoots, chance_hit);
 	auto damage = roll_damage(hits, ei.damage.minimum(), ei.damage.maximum(), get_critical(v), get_critical_multiplayer(v));
 	printn(getnm("ApplyDamage"), ei.getname(), hits, damage);
 	opponent->hull -= damage;
 }
 
-static void fire_lasers(int bonus) {
-	fire_weapons(LaserBeams);
-	fire_weapons(LaserBeamsII);
-	fire_weapons(LaserBeamsIII);
-}
-
-static void fire_rockets(int bonus) {
-	fire_weapons(RocketLaunchers);
-	fire_weapons(RocketLaunchersII);
-	fire_weapons(RocketLaunchersIII);
-}
-
 static void fire_turrets(int bonus) {
-	fire_weapons(LaserBeams);
-	fire_weapons(LaserBeamsII);
-	fire_weapons(LaserBeamsIII);
+	fire_weapon(LaserBeams);
+	fire_weapon(LaserBeamsII);
+	fire_weapon(LaserBeamsIII);
+}
+
+static void fire_weapons(int bonus) {
+	for(auto i = ShardCannons; i <= RocketLaunchersIII; i = (module_s)(i + 1))
+		fire_weapon(i);
 }
 
 static void change_opponents(int bonus) {
@@ -292,9 +310,8 @@ static void change_opponents(int bonus) {
 BSDATA(script) = {
 	{"AddEffect", add_effect},
 	{"ChangeOpponents", change_opponents},
-	{"FireLasers", fire_lasers},
-	{"FireRockets", fire_rockets},
 	{"FireTurrets", fire_turrets},
+	{"FireWeapons", fire_weapons},
 	{"Inflict", set_inflict},
 	{"Next", jump_next},
 	{"Roll", roll},

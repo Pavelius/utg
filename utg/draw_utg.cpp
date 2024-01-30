@@ -400,6 +400,14 @@ static int getcolumns(const answers& an) {
 	return 2;
 }
 
+static void paint_header() {
+	char temp[260]; stringbuilder sb(temp);
+	if(!answers::header)
+		return;
+	sb.add(answers::header);
+	texth2(temp);
+}
+
 static void answers_beforepaint() {
 	auto push_height = height;
 	setposru();
@@ -413,7 +421,7 @@ static void answers_beforepaint() {
 	caret.x += metrics::padding; width -= metrics::padding;
 	caret.y += metrics::padding; height -= metrics::padding;
 	// Header text
-	texth2(answers::header);
+	paint_header();
 	// Main text
 	if(answers::prompt && answers::prompt[0]) {
 		textf(answers::prompt);

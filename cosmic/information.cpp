@@ -31,6 +31,12 @@ static void opponent_class(stringbuilder& sb) {
 	sb.add(opponent->geti().geti().getname());
 }
 
+static void opponent_name(stringbuilder& sb) {
+	opponent_class(sb);
+	sb.add(" ");
+	sb.add(opponent->getname());
+}
+
 static void add_weapons(stringbuilder& sb) {
 	char temp[512]; stringbuilder sbs(temp); temp[0] = 0;
 	add_line(sbs, ShardCannons, RocketLaunchersIII);
@@ -49,6 +55,7 @@ void initilize_script() {
 
 BSDATA(stringvari) = {
 	{"opponent_class", opponent_class},
+	{"opponent_name", opponent_name},
 	{"opponent_scaner_info", opponent_scaner_info},
 };
 BSDATAF(stringvari)

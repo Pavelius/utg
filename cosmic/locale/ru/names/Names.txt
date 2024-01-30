@@ -1,5 +1,6 @@
 ﻿AppTitle: Космические приключения
 Continue: Продолжить
+UnknownShip: Неизвестный корабль
 
 Class: Класс
 Weapons: Оружие

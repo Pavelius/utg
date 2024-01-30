@@ -1,9 +1,9 @@
 ﻿#ShipClass
 
 Fighter
- elements Hull+6 Engine+5 Crew+2
+ elements Hull+5 Engine+5 Crew+2
 Carrier
- elements Hull+40 Engine+1 Crew+5
+ elements Hull+30 Engine+1 Crew+5
 
 #Ship type(Fighter)
 

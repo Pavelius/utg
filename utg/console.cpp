@@ -13,6 +13,8 @@ void clear_console() {
 }
 
 void add_console(const char* sym, const char* format, const char* format_param) {
+	if(sbc)
+		sbc.add("\n");
 	sbc.add("[%1", sym);
 	sbc.addv(format, format_param);
 	sbc.add("]");
