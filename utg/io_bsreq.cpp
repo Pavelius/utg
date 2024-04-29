@@ -239,6 +239,25 @@ static void read_value(valuei& e, const bsreq* req) {
 	next();
 }
 
+static char* memfind(char* start, unsigned count, const void* p1, unsigned p1_count, const void* p2, unsigned p2_count) {
+	auto pb = start;
+	auto pe = start + count - p1_count - p2_count;
+	if(pe < pb)
+		return 0;
+	auto symbol = ((char*)p1)[0];
+	auto new_count = p1_count - 1;
+	while(pb < pe) {
+		auto p = memchr(pb, symbol, pb - pe);
+		if(!p)
+			break;
+		if(memcmp((char*)p + 1, (char*)p1 + 1, new_count) == 0
+			&& memcmp((char*)p + p1_count, (char*)p2, p2_count) == 0)
+			return (char*)p;
+		pb = (char*)p + 1;
+	}
+	return 0;
+}
+
 static void write_value(void* object, const bsreq* req, int index, const valuei& v) {
 	if(!req)
 		return;

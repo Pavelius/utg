@@ -187,7 +187,7 @@ static int d100() {
 
 static void choose_complex(const char* id, const char* cancel, fnevent add_answers, fnevent apply_answers, fnevent ai_answers) {
 	pushvalue push_id(choose_id, id);
-	draw::pause();
+	pause();
 	sb.clear(); an.clear();
 	sb.add(getnm(id));
 	add_choose_options();
@@ -213,7 +213,7 @@ static void choose_complex(const char* id, const char* cancel, fnevent add_answe
 				apply_answers();
 		}
 	}
-	draw::pause();
+	pause();
 }
 
 static void choose_complex(const char* id, const char* cancel, fnevent add_answers, fnevent apply_answers, fnevent ai_answers, int options) {
@@ -270,7 +270,7 @@ static void apply_secondanary_ability(strategyi& e) {
 	if(!script_allow(e.secondary))
 		return;
 	if(player->ishuman()) {
-		if(!draw::yesno(getnm("ApplySecondanaryStrategy"), e.getname()))
+		if(!yesno(getnm("ApplySecondanaryStrategy"), e.getname()))
 			return;
 		script_run(e.secondary);
 	} else {

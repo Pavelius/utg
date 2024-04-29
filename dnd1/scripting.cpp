@@ -62,10 +62,6 @@ template<> void fnscript<feati>(int index, int value) {
 	}
 }
 
-template<> void fnscript<randomizeri>(int index, int value) {
-	script_run(single(bsdata<randomizeri>::elements[index].random()));
-}
-
 template<> bool fntest<spelli>(int index, int value) {
 	switch(modifier) {
 	case NoModifier: return spell_effect((spell_s)index, player->get(Level), 0, false);
@@ -566,7 +562,6 @@ static void attack_unarmed(int bonus) {
 			{"Fists", 1, 1, 2},
 			{"Boxing", 1, 1, 3},
 			{"BoxingAndKick", 1, 1, 4},
-			{"BoxingAndKick", 1, 1, 6},
 		};
 		make_melee_attack(unarmed[0]);
 	}

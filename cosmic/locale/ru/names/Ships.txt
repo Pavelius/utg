@@ -9,3 +9,4 @@ Destroyer: Эсминец
 Fregate: Фрегат
 
 ApplyDamage: %1 попали %2i раза и нанесли %3i урона.
+MissWeapon: %1 полностью промазало.

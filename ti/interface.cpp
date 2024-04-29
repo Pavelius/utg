@@ -431,7 +431,7 @@ void entity::clear() {
 }
 
 systemi* entitya::choosesystem() const {
-	draw::pause();
+	pause();
 	for(auto p : *this)
 		add_maker(p, figure::Circle, size / 3);
 	answers an;

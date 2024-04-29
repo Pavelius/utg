@@ -160,9 +160,9 @@ void entity::status(int type, const char* format) const {
 	if(!player->ishuman())
 		isgood = !isgood;
 	if(isgood)
-		draw::information(format, getname());
+		information(format, getname());
 	else
-		draw::warning(format, getname());
+		warning(format, getname());
 }
 
 void entity::exhaust() {
@@ -170,7 +170,7 @@ void entity::exhaust() {
 		return;
 	set(Exhaust, true);
 	if(player->ishuman())
-		draw::warning(getnm("ApplyExhaust"), getnm(id));
+		warning(getnm("ApplyExhaust"), getnm(id));
 }
 
 void entity::discard() {

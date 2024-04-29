@@ -246,7 +246,7 @@ static void repair_units() {
 				e.status(0, "%1 %-Repaired");
 		}
 	}
-	draw::pause();
+	pause();
 }
 
 static void return_strategic_cards() {

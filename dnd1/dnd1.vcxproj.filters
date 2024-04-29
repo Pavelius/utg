@@ -266,7 +266,7 @@
       <Filter>data</Filter>
     </Text>
     <Text Include="locale\ru\names\Spells.txt">
-      <Filter>logic</Filter>
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

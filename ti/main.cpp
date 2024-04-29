@@ -15,7 +15,7 @@ void util_main();
 
 static void test_speech() {
 	variant test[] = {"Leadership"};
-	auto p = speech::find(test);
+	//auto p = speech::find(test);
 }
 
 static void test_combat() {
@@ -44,7 +44,7 @@ static void start_game() {
 }
 
 static void initialize() {
-	speech::read("locale/ru/Speech.txt");
+	//speech::read("locale/ru/Speech.txt");
 }
 
 int main(int argc, char* argv[]) {

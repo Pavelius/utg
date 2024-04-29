@@ -132,7 +132,7 @@ bool start_combat(const entity* location) {
 	attacker.units.sortunit();
 	if(!attacker.units)
 		return false;
-	draw::pause();
+	pause();
 	return true;
 }
 
@@ -151,7 +151,7 @@ static void anti_fighter_barrage() {
 	auto defender_shoots = defender.roll(AntiFighterBarrage, AntiFighterBarrageCount);
 	attacker.hit(defender_shoots, NonFighter, false);
 	update_ui();
-	draw::pause();
+	pause();
 }
 
 void army::choose(const char* id) {
@@ -173,7 +173,7 @@ static void echange_harms() {
 		defender.hit(hits_attacker);
 		attacker.hit(hits_defender);
 	} else
-		draw::output(getnm("NoCasualties"));
+		output(getnm("NoCasualties"));
 	update_ui();
 }
 
@@ -196,7 +196,7 @@ static void space_combat() {
 		defender.owner->event("AfterWinSpaceCombat");
 		attacker.owner->event("AfterLoseSpaceCombat");
 	}
-	draw::pause();
+	pause();
 }
 
 void entity::startcombat() {

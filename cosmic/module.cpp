@@ -2,9 +2,9 @@
 #include "module.h"
 
 BSDATA(modulei) = {
-	{"ShardCannons", {0, 2}},
-	{"ShardCannonsII", {0, 3}},
-	{"ShardCannonsIII", {0, 4}},
+	{"ShardCannons", {1, 2}},
+	{"ShardCannonsII", {1, 3}},
+	{"ShardCannonsIII", {1, 4}},
 	{"LaserBeams", {1, 5}},
 	{"LaserBeamsII", {1, 7}},
 	{"LaserBeamsIII", {1, 10}},

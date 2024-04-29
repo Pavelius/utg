@@ -168,7 +168,7 @@ static void get_scenename(stringbuilder& sb) {
 
 static void get_monster(stringbuilder& sb) {
 	if(encountered_monster)
-		sb.add(encountered_monster->getname());
+		sb.add(encountered_monster->getlook()->getname());
 }
 
 static void get_monsters(stringbuilder& sb) {
@@ -179,11 +179,11 @@ static void get_monsters(stringbuilder& sb) {
 				sb.add(gs);
 				sb.add(" ");
 				auto p = sb.get();
-				sb.addofpl(encountered_monster->getname());
+				sb.addofpl(encountered_monster->getlook()->getname());
 				szlower(p);
 			}
 		} else
-			sb.addof(encountered_monster->getname());
+			sb.addof(encountered_monster->getlook()->getname());
 	}
 }
 

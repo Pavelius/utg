@@ -288,14 +288,11 @@ static void fire_weapon(module_s v) {
 		return;
 	auto hits = roll_hits(total_shoots, chance_hit);
 	auto damage = roll_damage(hits, ei.damage.minimum(), ei.damage.maximum(), get_critical(v), get_critical_multiplayer(v));
-	printn(getnm("ApplyDamage"), ei.getname(), hits, damage);
+	if(hits)
+		printn(getnm("ApplyDamage"), ei.getname(), hits, damage);
+	else
+		printn(getnm("MissWeapon"), ei.getname(), hits, damage);
 	opponent->hull -= damage;
-}
-
-static void fire_turrets(int bonus) {
-	fire_weapon(LaserBeams);
-	fire_weapon(LaserBeamsII);
-	fire_weapon(LaserBeamsIII);
 }
 
 static void fire_weapons(int bonus) {
@@ -310,7 +307,6 @@ static void change_opponents(int bonus) {
 BSDATA(script) = {
 	{"AddEffect", add_effect},
 	{"ChangeOpponents", change_opponents},
-	{"FireTurrets", fire_turrets},
 	{"FireWeapons", fire_weapons},
 	{"Inflict", set_inflict},
 	{"Next", jump_next},

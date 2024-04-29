@@ -11,6 +11,7 @@ DragonGold: Золотой дракон
 DragonGreen: Зеленый дракон
 DragonRed: Красный дракон
 DragonWhite: Белый дракон
+ElfFolk: Эльф
 Gargoyle: Гаргулья
 GiantHawk: Огромный ястреб
 Goat: Козел
@@ -26,6 +27,7 @@ Medusa: Медуза
 Pegasus: Пегас
 Pixie: Пикси
 RobberFly: Муха-убийца
+ScorpionGiant: Гиганский скорпион
 SnakePitViper: Гадюка
 SpiderCrab: Паук-убийца
 SpiderTarantella: Гиганский тарантул

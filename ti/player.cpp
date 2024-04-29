@@ -44,7 +44,7 @@ void playeri::add(indicator_s v, int i) {
 void playeri::setcontrol(planeti* planet) {
 	if(planet->player != this) {
 		planet->player = this;
-		draw::information(getnm("SetControlPlanet"),
+		information(getnm("SetControlPlanet"),
 			getnm(id), getnm(planet->id));
 	}
 }
@@ -140,15 +140,15 @@ void playeri::getadvance(requirement& result) const {
 
 void playeri::sayspeech(const char* id) const {
 	variant test[] = {id};
-	auto p = speech::find(test);
+	auto p = speech_get(id);
 	if(p)
-		actv(p->name, 0);
+		actv(p, 0);
 }
 
 bool playeri::askv(const char* header_id, const char* format, const char* format_param) const {
 	pushvalue push_header(answers::header, getnm(header_id));
 	pushvalue push_resid(answers::resid, id);
-	return draw::yesnov(format, format_param);
+	return yesnov(format, format_param);
 }
 
 bool playeri::ask(const char* header_id, const char* format, ...) const {
@@ -159,7 +159,7 @@ void playeri::sayv(const char* format, const char* format_param) const {
 	pushvalue push_header(answers::header, getnm(id));
 	pushvalue push_resid(answers::resid, id);
 	answers::console->addv(format, format_param);
-	draw::pause();
+	pause();
 }
 
 static int compare_players(const void* v1, const void* v2) {
