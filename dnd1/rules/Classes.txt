@@ -2,7 +2,7 @@
 
 Monster hd(8)
  allow LeatherArmor ChainArmor PlateArmor Shield\
-  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Sword TwoHandedSword Warhammer\
+  BattleAxe Club Dagger Halberd HandAxe Javelin Mace ShortSword Staff Spear Sword TwoHandedSword Warhammer\
   Crossbow ShortBow Sling LongBow
 
 Cleric prime(Wisdow) hd(6) magic(0) origin(Humans)

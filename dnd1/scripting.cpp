@@ -416,7 +416,7 @@ void choose_options(variant source) {
 static void step_mode_scene() {
 }
 
-static void start_combat() {
+void start_combat(int bonus) {
 	set_all_feat(false, Enemy);
 	combat_mode(0);
 }
@@ -425,12 +425,12 @@ static void first_look_group(const char* id) {
 	if(!encountered_monster)
 		return;
 	if(encountered_monster->is(Fly)) {
-		if(printa("Air", id))
+		if(printa("Air", id, ' '))
 			return;
 	}
-	if(printa(encountered_monster->getid(), id))
+	if(printa(encountered_monster->getid(), id, ' '))
 		return;
-	if(printa(scene->getid(), id))
+	if(printa(scene->getid(), id, ' '))
 		return;
 }
 
@@ -457,12 +457,12 @@ static void reaction_mode(int bonus) {
 	} else if(party_surprised && !monster_surprised) {
 		first_look_group("Ambush");
 		if(reaction == Hostile || reaction == Unfriendly)
-			start_combat();
+			start_combat(0);
 		else
 			choose_options("PlayerSurprisedAction");
 	} else if(reaction == Hostile) {
 		first_look_group("Appear");
-		start_combat();
+		start_combat(0);
 	} else {
 		first_look_group("Appear");
 		choose_options("NoOneSurprisedAction");
@@ -1131,7 +1131,7 @@ static void fighter_guards(int bonus) {
 
 static void make_ambush_monsters(int bonus) {
 	set_all_feat(false, Surprised);
-	start_combat();
+	start_combat(0);
 }
 
 static void party_run_away(int bonus) {
@@ -1176,6 +1176,7 @@ BSDATA(script) = {
 	{"SelectAllies", select_backpack, targets_filter},
 	{"SelectBackpack", select_backpack, items_filter},
 	{"SelectItems", select_items, items_filter},
+	{"StartCombat", start_combat},
 	{"SurpriseRoll", surprise_roll},
 	{"Undead", undead_features},
 	{"WinBattle", win_battle, allow_win_battle},

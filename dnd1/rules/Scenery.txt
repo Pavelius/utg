@@ -15,7 +15,7 @@ PlayerSurprisedAction
 MonsterSurprisedAction
  elements MakeAmbushMonsters PartyRunAway
 NoOneSurprisedAction
- elements PartyRunAway
+ elements StartCombat PartyRunAway
 
 #SceneType
 

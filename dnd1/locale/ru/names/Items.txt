@@ -47,6 +47,8 @@ Arrow: Стрелы
 Bolt: Болты
 Stone: Камень
 
+TwoHandedSword: Двуручный меч
+
 Claws1d3: Когти
 Claws1d4: Когти
 Claws1d6: Когти

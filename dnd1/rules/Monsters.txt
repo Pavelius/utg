@@ -35,7 +35,7 @@ ElfFolk magic(1)
  feats AC+4 Level+1 Sword LongBow Constitution+3 Movement+4 Morale+8 Neutral SpellLevel1+1
 GiantHill
 Gnoll dungeon(1 6) wilderness(3 18)
- feats AC+5 Level+2 TwoHandedSword Strenght+3 Movement+3 Morale+8 Chaotic
+ feats AC+5 Level+2 Spear Strenght+3 Intellect-4 Movement+3 Morale+8 Chaotic
 Goblin
 Hobgoblin
 Merchant wilderness(1 20)
