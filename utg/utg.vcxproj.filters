@@ -563,5 +563,8 @@
     <ClInclude Include="console.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="tmpflags.h">
+      <Filter>Templates</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

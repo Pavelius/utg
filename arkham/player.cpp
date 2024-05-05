@@ -307,7 +307,7 @@ void player::introduction() const {
 	if(p) {
 		auto push_header = answers::header;
 		answers::header = getnm("Introduction");
-		draw::message(p);
+		message(p);
 	}
 }
 

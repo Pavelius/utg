@@ -11,11 +11,11 @@ TwoHandedWeapon
 
 #Monster
 
-Goat wilderness(3 30)
+Goat wilderness(3 30) nature("Animal")
  feats Level+1 AC+2 Stampede Gore1d4
-Moose wilderness(3 30)
+Moose wilderness(3 30) nature("Animal")
  feats Level+4 AC+2 Stampede Gore1d8
-Stag wilderness(3 30)
+Stag wilderness(3 30) nature("Animal")
  feats Level+3 AC+2 Stampede Gore1d6
 
 Bandit dungeon(1 8) wilderness(3 30) treasure("AU") origin(Humans)
@@ -34,7 +34,8 @@ Dryad wilderness(1 6) treasure("D")
 ElfFolk magic(1)
  feats AC+4 Level+1 Sword LongBow Constitution+3 Movement+4 Morale+8 Neutral SpellLevel1+1
 GiantHill
-Gnoll
+Gnoll dungeon(1 6) wilderness(3 18)
+ feats AC+5 Level+2 TwoHandedSword Strenght+3 Movement+3 Morale+8 Chaotic
 Goblin
 Hobgoblin
 Merchant wilderness(1 20)
@@ -52,15 +53,15 @@ Troll
 
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
  feats Level+6 AC+5 Intellect-10 Movement+2 Bite1d10 PetrifyingGaze
-BeetleFire dungeon(1 8) wilderness(2 12)
+BeetleFire dungeon(1 8) wilderness(2 12) nature("Animal")
  feats Level+1 AC+5 Intellect-10 Constitution+6 Neutral Bite2d4 FireGland+2
-BeetleOil dungeon(1 8) wilderness(2 12)
+BeetleOil dungeon(1 8) wilderness(2 12) nature("Animal")
  feats Level+2 AC+5 Intellect-10 Neutral Bite1d6
-BeetleTiger dungeon(1 6) wilderness(2 8)
+BeetleTiger dungeon(1 6) wilderness(2 8) nature("Animal")
  feats Level+3 AC+5 Intellect-10 Constitution+6 Movement+5 Neutral Bite2d6
-BinkingDog dungeon(1 6) wilderness(1 6) treasure("T")
+BinkingDog dungeon(1 6) wilderness(1 6) treasure("T") nature("Animal")
  feats Level+4 AC+4 Movement+4 Intellect+4 Morale+6 Blink Lawful Bite1d6
-Boar dungeon(1 6) wilderness(1 6)
+Boar dungeon(1 6) wilderness(1 6) nature("Animal")
  feats Level+3 AC+2 Movement+5 Intellect-10 Morale+9 Neutral Tusk2d4
 CatPanther dungeon(1 2) wilderness(1 6) treasure("U")
  feats Level+4 AC+5 Movement+7 Intellect-9 Morale+8 Neutral Claws1d4 Bite1d8
@@ -87,7 +88,7 @@ DriverAnt dungeon(2 8) wilderness(4 24) treasure("U")
  feats Level+4 AC+6 Movement+6 Intellect-10 Morale+7 Large Neutral Claws1d4 Bite2d8 Chance+10 SpellLevel1+3
 Gargoyle dungeon(1 6) wilderness(2 8) treasure("C")
  feats Level+4 AC+4 Movement+3 Intellect-10 Morale+11 Large Chaotic NormalWeaponImmunity CharmImmunity Claws1d3 Bite1d6
-Gorgon dungeon(1 2) wilderness(1 4) treasure("E")
+Gorgon dungeon(1 2) wilderness(1 4) treasure("E") look(Goat) nature("Animal")
  feats Level+8 AC+7 Movement+4 Intellect-10 Morale+8 Large Chaotic Gore2d6 PetrifyingBreath
 Griffon
  feats Level+7 AC+4 Movement+4 Fly Intellect-10 Morale+8 Large Neutral Claws1d4 Bite2d8

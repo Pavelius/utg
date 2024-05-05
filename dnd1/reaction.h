@@ -3,8 +3,8 @@
 #include "nameable.h"
 
 enum reaction_s : unsigned char {
-	UnknownReaction,
-	Hostile, Unfriendly, NeutralReaction, Indifferent, Friendly
+	Indifferent,
+	Hostile, Unfriendly, NeutralReaction, Friendly
 };
 struct reactioni : nameable {
 };

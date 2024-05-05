@@ -20,6 +20,7 @@ struct scenery : typeable<scenei>, parentable<scenery> {
 	bool		apply(spell_s id, int level, bool run);
 	void		clear();
 	void		enter();
+	const char* getid() const { return geti().getid(); }
 	bool		haveitems() const;
 	bool		is(feat_s v) const { return flags.is(v); }
 	bool		is(spell_s v) const;

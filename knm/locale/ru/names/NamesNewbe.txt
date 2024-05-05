@@ -1,1 +1,4 @@
-﻿
+﻿AlchemistGuild: 
+DoYouWishPayFor: 
+Stables: 
+WizardsGuild: 

@@ -271,6 +271,7 @@
     <ClInclude Include="flagux.h" />
     <ClInclude Include="ownerable.h" />
     <ClInclude Include="parentable.h" />
+    <ClInclude Include="tmpflags.h" />
     <ClInclude Include="tmpfunct.h" />
     <ClInclude Include="querry.h" />
     <ClInclude Include="stringlist.h" />

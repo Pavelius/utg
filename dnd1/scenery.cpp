@@ -22,8 +22,8 @@ int encountered_count;
 void choose_options(variant source);
 void combat_mode(int bonus);
 
-static void print(const char* id) {
-	printa(scene->geti().id, id);
+static bool print(const char* id) {
+	return printa(scene->geti().id, id);
 }
 
 static void scene_adventure() {
@@ -51,7 +51,6 @@ static void play_scene() {
 		scene->update();
 		scene_adventure();
 		script_run(scene->geti().script);
-		// choose_options(scene->geti().actions);
 		pause();
 		clean_ecnounter();
 	}

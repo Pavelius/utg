@@ -72,8 +72,8 @@ int main(int argc, char* argv[]) {
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;
 	draw::heroes_getfade = get_fade;
-	srand(getcputime());
-	//srand(1123);
+	//srand(getcputime());
+	srand(491);
 	answers::resid = "meet";
 	initialize_ui();
 	return draw::start(starting, initializing);

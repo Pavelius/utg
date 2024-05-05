@@ -768,6 +768,7 @@ void stringbuilder::addofpl(const char* s) {
 	static grammar map[] = {
 		{"би", "би"},
 		{"ь", "ей"},
+		{"ел", "лов"},
 		{}};
 	add(s, map, "ов");
 }

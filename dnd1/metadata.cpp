@@ -28,7 +28,7 @@ BSDATAC(creature, 256)
 BSDATAC(durationi, 32)
 BSDATAC(itemi, 256)
 BSDATAC(itemlay, 4096)
-BSDATAC(monsteri, 128)
+BSDATAC(monsteri, 256)
 BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
 BSDATAC(scenei, 64)
@@ -102,6 +102,7 @@ BSMETA(monsteri) = {
 	BSREQ(dungeon_group), BSREQ(dungeon_lair),
 	BSREQ(wilderness_group), BSREQ(wilderness_lair),
 	BSREQ(origin),
+	BSREQ(look), BSREQ(nature),
 	BSREQ(treasure),
 	BSREQ(magic),
 	{}};

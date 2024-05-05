@@ -11,6 +11,48 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 bool apply_list(const char* identifier, stringbuilder& sb);
 bool apply_speech(const char* id, stringbuilder& sb);
 
+void printv(char separator, const char* format, const char* format_param, bool uppercase) {
+	if(!answers::interactive)
+		return;
+	if(!answers::console)
+		return;
+	if(separator)
+		answers::console->addsep(separator);
+	auto p = (const char*)answers::console->get();
+	answers::console->addv(format, format_param);
+	if(uppercase) {
+		auto ps = (char*)p;
+		auto sym = szget(&p, metrics::code);
+		szput(&ps, szupper(sym));
+	}
+}
+
+void print(char separator, const char* format, ...) {
+	printv(separator, format, xva_start(format), true);
+}
+
+void printn(const char* format, ...) {
+	printv('\n', format, xva_start(format), true);
+}
+
+void prints(const char* format, ...) {
+	printv(' ', format, xva_start(format), true);
+}
+
+bool printa(const char* id, const char* suffix, char separator) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(id);
+	sb.add(suffix);
+	auto format = getnme(temp);
+	if(!format) {
+		format = speech_get(temp);
+		if(!format)
+			return false;
+	}
+	printv(separator, format, 0, true);
+	return true;
+}
+
 const char* actable::getname() const {
 	if(name != -1)
 		return speech_name(name);
@@ -104,42 +146,6 @@ static void main_act_identifier(stringbuilder& sb, const char* id) {
 	def_identifier(sb, id);
 }
 
-void printv(char separator, const char* format, const char* format_param) {
-	if(!answers::interactive)
-		return;
-	if(!answers::console)
-		return;
-	if(separator)
-		answers::console->addsep(separator);
-	answers::console->addv(format, format_param);
-}
-
-void print(char separator, const char* format, ...) {
-	printv(separator, format, xva_start(format));
-}
-
-void printn(const char* format, ...) {
-	printv('\n', format, xva_start(format));
-}
-
-void prints(const char* format, ...) {
-	printv(' ', format, xva_start(format));
-}
-
-bool printa(const char* id, const char* suffix, char separator) {
-	char temp[260]; stringbuilder sb(temp);
-	sb.add(id);
-	sb.add(suffix);
-	auto format = getnme(temp);
-	if(!format) {
-		format = speech_get(temp);
-		if(!format)
-			return false;
-	}
-	printv(separator, format, 0);
-	return true;
-}
-
 void initialize_str() {
 	stringbuilder::custom = main_act_identifier;
 }
@@ -177,13 +183,18 @@ static void get_monsters(stringbuilder& sb) {
 			auto gs = phrase("GroupSize", group_size(encountered_count));
 			if(gs) {
 				sb.add(gs);
+				//if(encountered_monster->is(Large))
+				//	sb.adds("%-LargePl");
 				sb.add(" ");
 				auto p = sb.get();
 				sb.addofpl(encountered_monster->getlook()->getname());
 				szlower(p);
 			}
-		} else
+		} else {
+			auto p = sb.get();
 			sb.addof(encountered_monster->getlook()->getname());
+			szlower(p);
+		}
 	}
 }
 

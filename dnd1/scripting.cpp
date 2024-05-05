@@ -286,10 +286,6 @@ static void get_monster_stasistic() {
 	monsters.sort(compare_statistic);
 }
 
-static void look_group() {
-	printa("LookGroup");
-}
-
 static void select_enemies() {
 	targets = creatures;
 	targets.matchenemy(true);
@@ -310,11 +306,14 @@ static void roll_initiative() {
 
 static void add_monsters(const monsteri* pm, int count, feat_s feat) {
 	pushvalue push_player(player);
+	opponent = 0;
 	for(auto i = 0; i < count; i++) {
 		add_creature(pm);
 		creatures.add(player);
 		if(feat)
 			player->set(feat);
+		if(!opponent)
+			opponent = player;
 	}
 }
 
@@ -422,18 +421,52 @@ static void start_combat() {
 	combat_mode(0);
 }
 
+static void first_look_group(const char* id) {
+	if(!encountered_monster)
+		return;
+	if(encountered_monster->is(Fly)) {
+		if(printa("Air", id))
+			return;
+	}
+	if(printa(encountered_monster->getid(), id))
+		return;
+	if(printa(scene->getid(), id))
+		return;
+}
+
+static const char* getsingle(const char* id) {
+	if(encountered_count > 1)
+		return id;
+	static char temp[48]; stringbuilder sb(temp);
+	sb.add("%1Single", id);
+	return temp;
+}
+
+static void first_look_actions(const char* id) {
+	auto nature = encountered_monster->getnature();
+	pushvalue push_player(player, opponent);
+	if(printa(nature, id, ' '))
+		return;
+}
+
 static void reaction_mode(int bonus) {
-	if(monster_surprised && !party_surprised)
+	if(monster_surprised && !party_surprised) {
+		first_look_group("Rest");
+		first_look_actions(getsingle("Rest"));
 		choose_options("MonsterSurprisedAction");
-	else if(party_surprised && !monster_surprised) {
+	} else if(party_surprised && !monster_surprised) {
+		first_look_group("Ambush");
 		if(reaction == Hostile || reaction == Unfriendly)
 			start_combat();
 		else
 			choose_options("PlayerSurprisedAction");
-	} else if(reaction == Hostile)
+	} else if(reaction == Hostile) {
+		first_look_group("Appear");
 		start_combat();
-	else
+	} else {
+		first_look_group("Appear");
 		choose_options("NoOneSurprisedAction");
+	}
 }
 
 static bool surprise_side(int bonus) {
@@ -452,7 +485,7 @@ static void random_surprise() {
 static void random_encounter(int bonus) {
 	encountered_monster = 0;
 	encountered_count = 0;
-	reaction = UnknownReaction;
+	reaction = Indifferent;
 	variant v = single(stw(scene->geti().id, "EncounterTable"));
 	if(!v)
 		return;
@@ -462,7 +495,6 @@ static void random_encounter(int bonus) {
 		encountered_monster = bsdata<monsteri>::elements + v.value;
 	if(encountered_monster) {
 		add_monsters();
-		look_group();
 		random_surprise();
 		reaction_mode(0);
 	}

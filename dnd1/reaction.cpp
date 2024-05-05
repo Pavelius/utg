@@ -2,11 +2,10 @@
 #include "reaction.h"
 
 BSDATA(reactioni) = {
-	{"UnknownReaction"},
+	{"Indifferent"},
 	{"Hostile"},
 	{"Unfriendly"},
 	{"NeutralReaction"},
-	{"Indifferent"},
 	{"Friendly"},
 };
 assert_enum(reactioni, Friendly)
