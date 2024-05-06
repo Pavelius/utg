@@ -49,7 +49,8 @@ Orge dungeon(1 6) wilderness(2 12) treasure("C")
  feats AC+4 Level+4 Constitution+3 GreatClub Movement+3 Morale+10 Chaotic
 Thoul
 Trader
-Troll
+Troll dungeon(1 8) wilderness(1 8) treasure("D")
+ feats AC+5 Level+6 Constitution+4 Intellect-4 Large Regeneration Movement+4 Morale+10 Chaotic Claws1d6 Bite1d10
 
 Basilisk dungeon(1 6) wilderness(1 6) treasure("F")
  feats Level+6 AC+5 Intellect-10 Movement+2 Bite1d10 PetrifyingGaze

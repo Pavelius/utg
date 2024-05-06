@@ -11,9 +11,9 @@ CombatRound
 CombatTurn
  elements WinBattle LoseGame ContinueBattle
 PlayerSurprisedAction
- elements MakeAmbushMonsters PartyRunAway
+ elements StartCombat PartyRunAway
 MonsterSurprisedAction
- elements MakeAmbushMonsters PartyRunAway
+ elements MakeAmbushMonsters PartyRunAway+4
 NoOneSurprisedAction
  elements StartCombat PartyRunAway
 

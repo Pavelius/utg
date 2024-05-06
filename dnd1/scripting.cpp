@@ -125,6 +125,20 @@ bool have_feats(feat_s side, feat_s v, bool keep) {
 	return false;
 }
 
+static creature* get_greater(ability_s a, bool party) {
+	creature* result = 0;
+	int result_value = 0;
+	for(auto p : creatures) {
+		if(p->is(Player) != party)
+			continue;
+		if(!result || p->get(a) > result_value) {
+			result = p;
+			result_value = p->get(a);
+		}
+	}
+	return result;
+}
+
 static void set_all_feat(bool party, feat_s v) {
 	for(auto p : creatures) {
 		if(p->is(Player) != party)
@@ -421,7 +435,7 @@ void start_combat(int bonus) {
 	combat_mode(0);
 }
 
-static void first_look_group(const char* id) {
+static void encounter_action(const char* id) {
 	if(!encountered_monster)
 		return;
 	if(encountered_monster->is(Fly)) {
@@ -451,20 +465,20 @@ static void first_look_actions(const char* id) {
 
 static void reaction_mode(int bonus) {
 	if(monster_surprised && !party_surprised) {
-		first_look_group("Rest");
+		encounter_action("Rest");
 		first_look_actions(getsingle("Rest"));
 		choose_options("MonsterSurprisedAction");
 	} else if(party_surprised && !monster_surprised) {
-		first_look_group("Ambush");
+		encounter_action("Ambush");
 		if(reaction == Hostile || reaction == Unfriendly)
 			start_combat(0);
 		else
 			choose_options("PlayerSurprisedAction");
 	} else if(reaction == Hostile) {
-		first_look_group("Appear");
+		encounter_action("Appear");
 		start_combat(0);
 	} else {
-		first_look_group("Appear");
+		encounter_action("Appear");
 		choose_options("NoOneSurprisedAction");
 	}
 }
@@ -825,6 +839,11 @@ static void what_you_do() {
 	}
 }
 
+static void apply_combat_regeneration() {
+	if(player->is(Regeneration))
+		player->heal(1);
+}
+
 static void combat_round() {
 	pushvalue push(player);
 	for(auto p : creatures) {
@@ -850,6 +869,7 @@ static void combat_round() {
 			continue;
 		}
 		player->update();
+		apply_combat_regeneration();
 		an.clear();
 		add_options("CombatRound");
 		apply_scene_spells(0);
@@ -1135,6 +1155,9 @@ static void make_ambush_monsters(int bonus) {
 }
 
 static void party_run_away(int bonus) {
+	clear_console();
+	printa("PartyRunAway", "Action");
+	encounter_action("PartyRunAwaySuccess");
 }
 
 BSDATA(script) = {

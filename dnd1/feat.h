@@ -5,7 +5,7 @@
 
 enum feat_s : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingBreath, PetrifyingGaze, PoisonImmunity, CharmImmunity, StrenghtDrain,
-	AcidDamage, Blink, ChargeDouble, DeathGaze, Defensive, Stampede, BloodSucking,
+	AcidDamage, Blink, ChargeDouble, DeathGaze, Defensive, Regeneration, Stampede, BloodSucking,
 	Burrowing, Cling, Fly, ShapeChanging, InflictWound,
 	BattleRage, BearHug, StunningBlow, SurpriseEnemy, DancePoison, Dive,
 	SunSensitive, Slow, Quick, Small, Large, Leap, Swoop, NormalWeaponImmunity,

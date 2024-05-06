@@ -39,7 +39,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
-	void			heal(int value) {}
+	void			heal(int value);
 	bool			is(spell_s v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;

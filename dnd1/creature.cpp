@@ -454,6 +454,13 @@ int	creature::getlevel(spell_s spell) const {
 	return bsdata<spelli>::elements[spell].level[geti().magic];
 }
 
+void creature::heal(int value) {
+	value += get(HP);
+	if(value > get(HPMax))
+		value = get(HPMax);
+	abilities[HP] = value;
+}
+
 int get_average(ability_s v) {
 	auto total = 0;
 	auto count = 0;

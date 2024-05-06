@@ -14,6 +14,7 @@ BSDATA(feati) = {
 	{"ChargeDouble"},
 	{"DeathGaze"},
 	{"Defensive"},
+	{"Regeneration"},
 	{"Stampede"},
 	{"BloodSucking"},
 	{"Burrowing"},

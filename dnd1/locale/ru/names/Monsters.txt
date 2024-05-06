@@ -32,6 +32,7 @@ ScorpionGiant: Гиганский скорпион
 SnakePitViper: Гадюка
 SpiderCrab: Паук-убийца
 SpiderTarantella: Гиганский тарантул
+Troll: Тролль
 Unicorn: Единорог
 Wereboar: Кабан-оборотень
 Weretiger: Тигр-оборотень
