@@ -383,6 +383,8 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 	}
 	skiplinefeed();
 	if(need_linefeed) {
+		const bsreq* last_req = 0;
+		size_t index = 0;
 		while(allowparse && islevel(level + 1)) {
 			if(*p != 10 && *p != 13) {
 				readid();
@@ -399,8 +401,15 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 					else
 						read_slice(object, req, level + 1);
 					skiplinefeed();
-				} else if(req->is(KindScalar) && req->count > 0)
-					read_dictionary(req->ptr(object), req->type, level + 1, false);
+				} else if(req->is(KindScalar) && req->count > 0) {
+					auto ptr = req->ptr(object);
+					if(last_req && last_req == req) {
+						if(index > req->count)
+							index = req->count - 1;
+						ptr = req->ptr(object, index);
+					}
+					read_dictionary(ptr, req->type, level + 1, false);
+				}
 				else if(req->is(KindADat)) {
 					read_adat(req->ptr(object), req);
 					skiplinefeed();
@@ -408,6 +417,11 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 					read_array(object, req);
 					skiplinefeed();
 				}
+				if(last_req == req)
+					index++;
+				else
+					index = 0;
+				last_req = req;
 			}
 		}
 	}
