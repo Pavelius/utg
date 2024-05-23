@@ -147,6 +147,7 @@
     <ClInclude Include="element.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="script.h" />
+    <ClInclude Include="tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />

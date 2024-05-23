@@ -63,6 +63,7 @@ BSMETA(scripti) = {
 	{}};
 BSMETA(tilei) = {
 	BSREQ(id),
+	BSREQ(priority),
 	{}};
 BSMETA(speciali) = {
 	BSREQ(id),

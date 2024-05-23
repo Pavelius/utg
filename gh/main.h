@@ -13,6 +13,7 @@
 #include "pathfind.h"
 #include "point.h"
 #include "script.h"
+#include "tile.h"
 #include "variant.h"
 
 enum area_s : unsigned char {
@@ -153,16 +154,6 @@ struct monsteri : summoni {
 	char				level, elite;
 	const char*			deck;
 	const char*			getdeck() const { return deck ? deck : id; }
-};
-struct tilei {
-	const char*			id;
-	point				size; // size of field in tiles
-	int					priority;
-	point				offset; // offset to upper left tile
-	slice<point>		blocks; // blocked squares
-	void				creating(point position, bool inverse) const;
-	bool				isdecoration() const { return priority >= 4; }
-	void				updateui();
 };
 struct eventi {
 	struct action {

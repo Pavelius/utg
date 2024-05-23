@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "draw_strategy.h"
 #include "draw_hexagon.h"
 #include "draw_object.h"
 #include "main.h"
@@ -19,6 +20,14 @@ static point p2h(point v) {
 }
 
 static void paint_tile() {
+	auto p = (tilei*)last_object->data;
+	auto ps = gres(p->id, "art/tiles");
+	image(ps, 0, 0);
+}
+
+static object* add_tile(tilei* ps, point position, bool inverse) {
+	auto pt = h2p(position) - ps->offset;
+	return addobject(pt, (void*)ps, paint_tile, 0, ps->priority, 255, inverse ? (ImageMirrorH | ImageMirrorV) : 0);
 }
 
 void scenariotilei::updateui() const {
@@ -31,9 +40,8 @@ void scenariotilei::updateui() const {
 			auto pd = decoration::add(type, position);
 			pd->updateui();
 		} else {
-			ps->creating(position, inverse);
-			auto pt = h2p(position) - ps->offset;
-			p = addobject(pt, (void*)this, paint_tile, 0, ps->priority, 255, inverse ? (ImageMirrorH | ImageMirrorV) : 0);
+			creating_tile(ps, position, inverse);
+			add_tile(ps, position, inverse);
 		}
 	}
 	auto pm = bsdata<monsteri>::find(type);
@@ -64,7 +72,7 @@ void decoration::updateui() const {
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		p = addobject(pt, (void*)this, ftpaint<decoration>, 0, 4);
+		addobject(pt, (void*)this, ftpaint<decoration>, 0, 14);
 		//p->resource = draw::getres(parent->id, "art/tiles");
 	}
 }
@@ -549,8 +557,19 @@ static void overlaped_window() {
 	caret = push_caret;
 }
 
+static void main_background() {
+	strategy_background();
+	paint_objects();
+}
+
+static void main_finish() {
+	input_camera();
+}
+
 void ui_initialize() {
 	draw::ptips = tips;
+	draw::pbackground = main_background;
+	draw::pfinish = main_finish;
 	//draw::object::afterpaint = object_afterpaint;
 	//draw::object::afterpaintall = overlaped_window;
 }

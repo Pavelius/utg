@@ -1,2 +1,5 @@
 ﻿In file `rules/Scenarios.txt`:
- Line 17: Expected token `#`
+ Line 15: Not found requisit `priority`
+ Line 16: Not found requisit `priority`
+ Line 17: Not found requisit `priority`
+ Line 18: Not found requisit `priority`
