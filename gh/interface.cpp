@@ -25,6 +25,12 @@ static void paint_tile() {
 	image(ps, 0, 0);
 }
 
+static void paint_decoration() {
+	auto p = (decoration*)last_object->data;
+	auto ps = gres(p->parent->id, "art/tiles");
+	image(ps, 0, 0);
+}
+
 static object* add_tile(tilei* ps, point position, bool inverse) {
 	auto pt = h2p(position) - ps->offset;
 	return addobject(pt, (void*)ps, paint_tile, 0, ps->priority, 255, inverse ? (ImageMirrorH | ImageMirrorV) : 0);
@@ -52,10 +58,6 @@ void scenariotilei::updateui() const {
 	}
 }
 
-void gamei::focusing(point pt) {
-	::focusing(h2p(pt));
-}
-
 void creaturei::updateui() const {
 	auto p = findobject(this);
 	if(!p) {
@@ -72,9 +74,13 @@ void decoration::updateui() const {
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		addobject(pt, (void*)this, ftpaint<decoration>, 0, 14);
+		addobject(pt, (void*)this, paint_decoration, 0, 14);
 		//p->resource = draw::getres(parent->id, "art/tiles");
 	}
+}
+
+void gamei::focusing(point pt) {
+	::focusing(h2p(pt));
 }
 
 static draworder* last_order;
@@ -521,6 +527,15 @@ void status_info(void) {
 }
 
 void creaturei::paint() const {
+	const char* id = 0;
+	auto pm = getmonster();
+	if(pm)
+		id = pm->id;
+	auto pp = getplayer();
+	if(pp)
+		id = pp->id;
+	auto ps = gres(id, "art/creatures");
+	image(ps, 0, 0);
 	if(isplayer())
 		hexagon(colors::green);
 	else if(is(Elite))
@@ -532,9 +547,6 @@ void creaturei::paint() const {
 	textvalue(getcoins(), 2 * size / 3, -size / 3, colors::yellow);
 	if(active == this)
 		active_hexagon();
-}
-
-void decoration::paint() const {
 }
 
 static void tips() {

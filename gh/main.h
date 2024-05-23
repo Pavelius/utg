@@ -219,13 +219,11 @@ public:
 	void				setposition(point v) { value = h2i(v); }
 	void				setposition(pathfind::indext v) { value = v; }
 };
-class decoration : public indexable {
+struct decoration : public indexable {
 	const tilei*		parent;
-public:
 	explicit operator bool() const { return parent != 0; }
 	static decoration*	add(const char* id, point position);
 	bool				is(tile_s v) const { return (parent - bsdata<tilei>::elements) == v; }
-	void				paint() const;
 	void				updateui() const;
 };
 struct decorationa : adat<decoration*> {
