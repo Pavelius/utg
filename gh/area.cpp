@@ -1,4 +1,5 @@
-#include "main.h"
+#include "area.h"
+#include "crt.h"
 
 BSDATA(areai) = {
 	{"NoArea"},

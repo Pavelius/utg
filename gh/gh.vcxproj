@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="area.h" />
     <ClInclude Include="deck.h" />
     <ClInclude Include="duration.h" />
     <ClInclude Include="element.h" />

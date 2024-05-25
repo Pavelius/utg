@@ -1,3 +1,4 @@
+#include "area.h"
 #include "bsreq.h"
 #include "main.h"
 

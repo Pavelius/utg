@@ -5,7 +5,7 @@ using namespace pathfind;
 BSDATAC(creaturei, 128)
 
 static indext moves[hms * hms];
-creaturei* creaturei::active;
+creaturei* active_creature;
 
 static creaturei* addnew() {
 	for(auto& e : bsdata<creaturei>()) {
@@ -24,7 +24,7 @@ static monsteri* find_monster(const char* id, char elite) {
 	return 0;
 }
 
-creaturei* creaturei::add(const char* id, point position, bool elite) {
+creaturei* creaturei::add(const char* id, point position, bool elite, bool hostile) {
 	auto p = addnew();
 	p->clear();
 	if(!p->parent) {
@@ -50,6 +50,8 @@ creaturei* creaturei::add(const char* id, point position, bool elite) {
 	}
 	p->hits = p->getmaximumhp();
 	p->setposition(position);
+	if(hostile)
+		p->set(Hostile);
 	p->updateui();
 	return p;
 }
@@ -368,9 +370,9 @@ void creaturei::addexperience(int value) {
 }
 
 void creaturei::activate() {
-	if(active != this) {
+	if(active_creature != this) {
 		game.focusing(getposition());
-		active = this;
+		active_creature = this;
 	}
 }
 

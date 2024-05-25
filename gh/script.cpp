@@ -40,6 +40,9 @@ static void suffer_damage(int bonus, int param) {
 static void recover_discarded(int bonus, int param) {
 }
 
+static void loot_coins(int bonus) {
+}
+
 BSDATA(scripti) = {
 	{"AttackDouble", double_attack},	
 	{"SufferDamage", suffer_damage},

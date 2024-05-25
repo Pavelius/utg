@@ -36,6 +36,9 @@
     <ClInclude Include="tile.h">
       <Filter>Логика</Filter>
     </ClInclude>
+    <ClInclude Include="area.h">
+      <Filter>Логика</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp">

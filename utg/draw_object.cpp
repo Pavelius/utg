@@ -87,7 +87,7 @@ static int calculate(int v1, int v2, int n, int m) {
 void draworder::finish() {
 	parent->position = position;
 	parent->alpha = alpha;
-	if(priority == 0) // Special case - destroy parent object if order is 0
+	if(priority == 250) // Special case - destroy parent object if order is 0
 		parent->clear();
 	clear();
 }
@@ -107,7 +107,7 @@ void draworder::update() {
 	parent->position.y = (short)calculate(start.position.y, position.y, n, m);
 	parent->alpha = (unsigned char)calculate(start.alpha, alpha, n, m);
 	if(n == m) {
-		if(priority==0) // Special case - destroy parent object if order is 0
+		if(priority == 250) // Special case - destroy parent object if order is 0
 			parent->clear();
 		clear();
 	}
@@ -117,6 +117,7 @@ void object::disappear(int milliseconds) {
 	auto po = addorder(1000);
 	po->alpha = 0;
 	po->priority = 0;
+	po->autoclear();
 }
 
 draworder* object::addorder(int milliseconds, draworder* depend) {
@@ -197,7 +198,7 @@ static int compare(const void* v1, const void* v2) {
 		return a1 - a2;
 	if(p1->position.y != p2->position.y)
 		return p1->position.y - p2->position.y;
-	if(p1->priority!= p2->priority)
+	if(p1->priority != p2->priority)
 		return p1->priority - p2->priority;
 	return p1->position.x - p2->position.x;
 }
@@ -329,7 +330,7 @@ void input_camera() {
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseLeft:
-	//case MouseRight:
+		//case MouseRight:
 		if(hot.pressed && !hot.hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;

@@ -16,9 +16,6 @@
 #include "tile.h"
 #include "variant.h"
 
-enum area_s : unsigned char {
-	NoArea, Slash, Circle, Ray, Splash, Spray,
-};
 enum special_s : unsigned char {
 	AttackOneTarget, EnemyAttackYouInsteadNearestAlly, GainExpForRetaliate, GainExpForTarget,
 	TargetEnemyMoveThrought,
@@ -46,6 +43,10 @@ enum state_s : unsigned char {
 enum tile_s : unsigned char {
 	Corridor, Coin,
 };
+enum color_s : unsigned char {
+	ColorRed, ColorGreen, ColorBlue, ColorYellow,
+	ColorText,
+};
 typedef flagable<2> statef;
 typedef flagable<1 + TargetEnemyMoveThrought / 8> featf;
 typedef flagable<1> elementf;
@@ -60,10 +61,6 @@ struct actioni {
 	typedef void (*fnevent)(int bonus);
 	const char*			id;
 	fnevent				proc;
-};
-struct areai {
-	const char*			id;
-	point				points[16];
 };
 struct modifieri {
 	const char*			id;
@@ -235,10 +232,10 @@ class creaturei : public indexable {
 	char				level, hits;
 	statef				state;
 public:
-	static creaturei*	active;
+	//static creaturei*	active;
 	explicit operator bool() const { return parent != 0; }
 	void				activate();
-	static creaturei*	add(const char* id, point position, bool elite = false);
+	static creaturei*	add(const char* id, point position, bool elite = false, bool hostile = true);
 	void				addcoins(int value);
 	void				addexperience(int value);
 	void				apply(variants source);
@@ -286,6 +283,7 @@ public:
 	void				updateui() const;
 	void				useshield(int& attack);
 };
+extern creaturei* active_creature;
 struct creaturea : adat<creaturei*> {
 	static const creaturea* last;
 	creaturei*			choose(const char* title) const;

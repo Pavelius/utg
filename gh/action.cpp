@@ -46,8 +46,8 @@ variant* creaturei::getmodifiers(variant* p, variant* pe, char* modifiers) {
 			else
 				p = skip_condition(p, pe);
 		} else if(p->iskind<targeti>()) {
-			if(active)
-				active->apply((target_s)p->value);
+			if(active_creature)
+				active_creature->apply((target_s)p->value);
 			p++;
 		} else if(p->iskind<modifieri>()) {
 			if(modifiers)

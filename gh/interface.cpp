@@ -22,6 +22,17 @@ static point p2h(point v) {
 	return draw::p2h(v, size);
 }
 
+static color get_color(color_s v) {
+	switch(v) {
+	case ColorRed: return colors::red;
+	case ColorBlue: return colors::blue;
+	case ColorGreen: return colors::green;
+	case ColorYellow: return colors::yellow;
+	case ColorText: return colors::text;
+	default: return colors::gray;
+	}
+}
+
 static void paint_tile() {
 	auto p = (tilei*)last_object->data;
 	auto ps = gres(p->id, "art/tiles");
@@ -54,11 +65,8 @@ void scenariotilei::updateui() const {
 		}
 	}
 	auto pm = bsdata<monsteri>::find(type);
-	if(pm) {
-		auto p = creaturei::add(type, position, false);
-		p->set(Hostile);
-		p->updateui();
-	}
+	if(pm)
+		creaturei::add(type, position, false, true);
 }
 
 void creaturei::updateui() const {
@@ -66,7 +74,7 @@ void creaturei::updateui() const {
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		addobject(pt, (void*)this, ftpaint<creaturei>, 4);
+		addobject(pt, (void*)this, ftpaint<creaturei>, 0, isplayer() ? 60 : 50);
 		splash_screen(500);
 	}
 }
@@ -98,19 +106,32 @@ void ordermove(void* object, point hp, int time, bool depended) {
 }
 
 static void paint_string() {
+	auto push_fore = fore;
+	auto push_font = font;
+	font = metrics::h1;
+	fore = get_color((color_s)last_object->param);
+	text((const char*)last_object->data);
+	font = push_font;
+	fore = push_fore;
 }
 
-static draworder* floatstring(point pt, color fc, const char* format) {
-	auto pb = addobject(pt, (void*)szdup(format), paint_string, 101);
-	//pb->string = szdup(format);
-	//pb->font = metrics::h1;
-	//pb->fore = fc;
+static int text_width(sprite* f, const char* string) {
+	auto push_font = font; font = f;
+	auto r = textw(string);
+	font = push_font;
+	return r;
+}
+
+static draworder* floatstring(point pt, color_s ci, const char* format) {
+	pt.x -= text_width(metrics::h1, format);
+	auto pb = addobject(pt, (void*)szdup(format), paint_string, ci, 100);
 	pb->alpha = 0;
 	pb->priority = 101;
 	auto po = pb->addorder(500);
 	po->position.y -= size;
 	po->start.alpha = 255;
 	po->alpha = 255;
+	po->autoclear();
 	return po;
 }
 
@@ -141,7 +162,7 @@ void indexable::fixattack(indexable& enemy) const {
 	po->position.y = push_position.position.y;
 }
 
-static void fixvalue(point hex, int value, color fore) {
+static void fixvalue(point hex, int value, color_s fore) {
 	if(!value)
 		return;
 	char temp[260]; stringbuilder sb(temp); sb.add("%1i", value);
@@ -149,7 +170,7 @@ static void fixvalue(point hex, int value, color fore) {
 }
 
 void indexable::fixdamage(int value) const {
-	fixvalue(getposition(), value, colors::red);
+	fixvalue(getposition(), value, ColorRed);
 }
 
 void indexable::disappear() const {
@@ -171,17 +192,17 @@ void indexable::fixmove(point hex) const {
 }
 
 void indexable::fixexperience(int value) const {
-	fixvalue(getposition(), value, colors::blue);
+	fixvalue(getposition(), value, ColorBlue);
 }
 
 void indexable::fixgood(const char* format, ...) const {
 	char temp[260]; stringbuilder sb(temp);
 	sb.addv(format, xva_start(format));
-	floatstring(h2p(getposition()), colors::text, temp);
+	floatstring(h2p(getposition()), ColorText, temp);
 }
 
 void indexable::fixheal(int value) const {
-	fixvalue(getposition(), value, colors::green);
+	fixvalue(getposition(), value, ColorGreen);
 }
 
 static void paint_grid() {
@@ -549,7 +570,7 @@ void creaturei::paint() const {
 	textvalue(gethp(), 0, 2 * size / 3, colors::red);
 	textvalue(getexperience(), -2 * size / 3, -size / 3, colors::blue);
 	textvalue(getcoins(), 2 * size / 3, -size / 3, colors::yellow);
-	if(active == this)
+	if(active_creature == this)
 		active_hexagon();
 }
 
