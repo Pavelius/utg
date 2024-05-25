@@ -12,7 +12,7 @@ BSDATAC(draworder, max_object_count)
 
 point objects_mouse;
 
-static rect objects_screen;
+rect objects_screen;
 static unsigned long timestamp, timestamp_last;
 static point camera_drag;
 
@@ -160,10 +160,13 @@ void show_objects() {
 void splash_screen(unsigned milliseconds, fnevent proc) {
 	if(!proc)
 		proc = paintstart;
+	auto push_caret = caret;
+	caret.clear();
 	screenshoot push;
 	proc();
 	screenshoot another;
 	push.blend(another, milliseconds);
+	caret = push_caret;
 }
 
 void object::paint() const {

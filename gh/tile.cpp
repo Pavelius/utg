@@ -5,14 +5,14 @@ static point block_I1[] = {{0, 1}, {0, 3}};
 static point block_L1[] = {{0, 1}, {0, 3}, {0, 5}};
 
 BSDATA(tilei) = {
-	{"Corridor", {1, 1}, 31},
-	{"Coin", {1, 1}, 41},
-	{"G1b", {8, 3}, 11, {-304, -76}},
-	{"I1b", {6, 5}, 11, {-217, -151}, block_I1},
-	{"L1a", {5, 7}, 11, {-173, -225}, block_L1},
-	{"SpikedTrap", {1, 1}, 21},
-	{"StoneDoorH", {1, 1}, 21},
-	{"StoneDoorV", {1, 1}, 21},
+	{"Corridor", {1, 1}, 30},
+	{"Coin", {1, 1}, 40},
+	{"G1b", {8, 3}, 10, {-304, -76}},
+	{"I1b", {6, 5}, 10, {-217, -151}, block_I1},
+	{"L1a", {5, 7}, 10, {-173, -225}, block_L1},
+	{"SpikedTrap", {1, 1}, 20},
+	{"StoneDoorH", {1, 1}, 20},
+	{"StoneDoorV", {1, 1}, 20},
 };
 BSDATAF(tilei)
 

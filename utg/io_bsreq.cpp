@@ -420,7 +420,7 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 				if(last_req == req)
 					index++;
 				else
-					index = 0;
+					index = 1;
 				last_req = req;
 			}
 		}

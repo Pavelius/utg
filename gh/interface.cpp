@@ -10,6 +10,9 @@ using namespace pathfind;
 const int size = 50;
 static indext current_index;
 static bool show_movement_cost, show_hex_grid, show_hex_coor;
+static fnevent override_paint;
+
+extern rect objects_screen;
 
 static point h2p(point v) {
 	return draw::h2p(v, size);
@@ -64,7 +67,6 @@ void creaturei::updateui() const {
 		auto pt = h2p(getposition());
 		focusing(pt);
 		addobject(pt, (void*)this, ftpaint<creaturei>, 4);
-		//p->resource = draw::getres(getid(), "art/creatures");
 		splash_screen(500);
 	}
 }
@@ -74,8 +76,8 @@ void decoration::updateui() const {
 	if(!p) {
 		auto pt = h2p(getposition());
 		focusing(pt);
-		addobject(pt, (void*)this, paint_decoration, 0, 14);
-		//p->resource = draw::getres(parent->id, "art/tiles");
+		addobject(pt, (void*)this, paint_decoration, 0, parent->priority);
+		splash_screen(500);
 	}
 }
 
@@ -99,7 +101,7 @@ static void paint_string() {
 }
 
 static draworder* floatstring(point pt, color fc, const char* format) {
-	auto pb = addobject(pt, (void*)format, paint_string, 101);
+	auto pb = addobject(pt, (void*)szdup(format), paint_string, 101);
 	//pb->string = szdup(format);
 	//pb->font = metrics::h1;
 	//pb->fore = fc;
@@ -109,7 +111,6 @@ static draworder* floatstring(point pt, color fc, const char* format) {
 	po->position.y -= size;
 	po->start.alpha = 255;
 	po->alpha = 255;
-	po->autoclean();
 	return po;
 }
 
@@ -157,7 +158,6 @@ void indexable::disappear() const {
 		return;
 	auto po = p1->addorder(350);
 	po->alpha = 0;
-	po->autoclean();
 }
 
 void indexable::fixmove(point hex) const {
@@ -275,7 +275,9 @@ static void targetmarker(const void* param, color v) {
 }
 
 static void paint_moverange() {
+	auto push_clip = clipping;
 	auto push_caret = caret;
+	setclip(objects_screen);
 	rect rc = clipping; rc.offset(-32);
 	char temp[260]; stringbuilder sb(temp);
 	for(auto i = 0; i < hms * hms; i++) {
@@ -286,17 +288,18 @@ static void paint_moverange() {
 			continue;
 		movemarker(i, getmove(i));
 	}
+	clipping = push_clip;
 	caret = push_caret;
 }
 
 indext indexable::choosemove() {
 	answers an;
 	an.add((void*)Blocked, getnm("EndMove"));
-	//auto push_event = object::afterpaintall;
-	//object::afterpaintall = paint_moverange;
+	auto push_paint = override_paint;
+	override_paint = paint_moverange;
 	splash_screen(500);
 	auto result = an.choose();
-	//object::afterpaintall = push_event;
+	override_paint = push_paint;
 	return (indext)(int)result;
 }
 
@@ -314,11 +317,12 @@ static void paint_targets() {
 creaturei* creaturea::choose(const char* title) const {
 	last = this;
 	answers an;
-	//auto push_event = object::afterpaintall;
-	//object::afterpaintall = paint_targets;
+	auto push_paint = override_paint;
+	override_paint = paint_targets;
+	splash_screen(500);
 	splash_screen(500);
 	auto result = (creaturei*)an.choose(title, getnm("Cancel"), 1);
-	//object::afterpaintall = push_event;
+	override_paint = push_paint;
 	return result;
 }
 
@@ -572,6 +576,8 @@ static void overlaped_window() {
 static void main_background() {
 	strategy_background();
 	paint_objects();
+	if(override_paint)
+		override_paint();
 }
 
 static void main_finish() {
