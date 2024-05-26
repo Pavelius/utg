@@ -1310,42 +1310,6 @@ static void choose_querry_list(int bonus) {
 	querry = choosing;
 }
 
-//static void choose_tactics(int bonus) {
-//	auto push_id = last_list->id;
-//	pushvalue push_player(player, last_army->player);
-//	pushtitle header(last_list->id);
-//	while(true) {
-//		console.clear();
-//		clear_input(0);
-//		if(last_army->tactics) {
-//			console.addn(getnm("ChooseTacticsPrompt"), last_army->player->getname());
-//			for(auto p : last_army->tactics)
-//				console.addn(p->getname());
-//		}
-//		for(auto& e : bsdata<card>()) {
-//			if(e.player != player)
-//				continue;
-//			auto p = e.getcomponent();
-//			if(!p)
-//				continue;
-//			if(!p->usedeck())
-//				continue;
-//			if(!p->trigger || strcmp(p->trigger, push_id) != 0)
-//				continue;
-//			if(last_army->tactics.find(&e) != -1)
-//				continue;
-//			if(!script_allow(p->effect))
-//				continue;
-//			add_input(e);
-//		}
-//		auto result = an.choose(get_title(last_id), getnm("ApplyTactics"), 0);
-//		if(!result)
-//			break;
-//		else if(bsdata<card>::have(result))
-//			last_army->tactics.add(result);
-//	}
-//}
-
 static void set_army_tactics(int bonus) {
 	last_army->tactics = querry;
 }
@@ -1519,6 +1483,8 @@ static int compare_cards(const void* v1, const void* v2) {
 }
 
 static void play_tactic() {
+	if(!last_card->player)
+		return;
 	pushvalue push_player(player, last_card->player);
 	pushvalue push_army(last_army, get_player_army());
 	pushtitle push_title(last_card->getcomponent()->id);
@@ -1538,8 +1504,9 @@ static void play_tactics(int bonus) {
 	querry = attacker.tactics;
 	querry.add(defender.tactics);
 	querry.sort(compare_cards);
-	card_begin = (card**)querry.begin();
-	card_end = (card**)querry.end();
+	auto copy_querry = querry;
+	card_begin = (card**)copy_querry.begin();
+	card_end = (card**)copy_querry.end();
 	while(card_begin < card_end) {
 		last_card = *card_begin++;
 		play_tactic();
