@@ -32,7 +32,6 @@ struct entity : nameable, taga {
 	void			remove(const entity* v);
 	void			remove(tag_s v) { taga::remove(v); }
 };
-template<typename T> void updateui(T* p);
 
 void* get_province(const void* object);
 void* get_unit(const void* object);

@@ -1,5 +1,4 @@
-TypeMakeAction: Действие
-TypeBattleTactic: Тактика
+TypeBattleTactic: Боевая
 
 ActivateProvince: Активируйте провинцию, в которой нет вашего жетона активности. После этого разместите в ней ваш жетон активности.
 ActivateProvinceAsk: Выбирайте провинцию, которая будет активирована.

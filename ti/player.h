@@ -23,6 +23,7 @@ struct playeri : nameable {
 	variants		troops, startup;
 	bool			use_strategy;
 	bool			pass_action_phase;
+	void			activate();
 	void			actv(const char* format, const char* format_param) const;
 	void			add(indicator_s v, int i);
 	void			apply(const variants& source);
@@ -30,6 +31,7 @@ struct playeri : nameable {
 	bool			askv(const char* header_id, const char* format, const char* format_param) const;
 	void			assign(variants source);
 	bool			canbuild(const uniti* player) const;
+	void*			choose(const char* format);
 	void			event(const char* id);
 	bool			is(tech_s v) const { return tech.is(v); }
 	bool			is(racef_s v) const { return race.is(v); }

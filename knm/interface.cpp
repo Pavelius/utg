@@ -282,15 +282,6 @@ static void paint_special(int index, int frame) {
 	caret = push_caret;
 }
 
-//static void special_paint(tile_s special, int special_index) {
-//	switch(special) {
-//	case NoSpecialTile: break;
-//	case WormholeAlpha: paint_special(special_index, special - 1); break;
-//	case WormholeBeta: paint_special(special_index, special - 1); break;
-//	default: paint_special(3, special - 1); break;
-//	}
-//}
-
 static void paint_player_banner() {
 	auto r = gres("buildings", "art/fonts");
 	image(r, 4, 0);
@@ -306,15 +297,8 @@ static void paint_player_banner(const playeri* player) {
 }
 
 static void paint_player_marker(const playeri* p) {
-	auto push_alpha = alpha; alpha = 128;
+	pushvalue push_alpha(alpha, (unsigned char)128);
 	paint_player_banner(p);
-	alpha = push_alpha;
-	//auto push_fore = fore; fore = getplayercolor(p);
-	//auto push_alpha = alpha; alpha /= 3;
-	//circlef(player_avatar_size / 2);
-	//alpha = push_alpha;
-	//circle(player_avatar_size / 2);
-	//fore = push_fore;
 }
 
 static void paint_player_markers(const provincei* province) {
@@ -340,12 +324,10 @@ static void paint_background() {
 }
 
 void provincei::paint() const {
-	//special_paint(special, special_index);
 	paint_background();
 	paint_player_banner(player);
 	//paint_hexagon();
 	paint_player_markers(this);
-	//paint_debug_mouse(this);
 }
 
 static void texthd(const char* format) {
@@ -448,64 +430,6 @@ static void paint_structure() {
 	fore = push_fore;
 	ishilite(16, last_object->data);
 }
-
-//void planeti::paint(unsigned flags) const {
-//	auto push_caret = caret;
-//	auto push_fore = fore;
-//	auto multiplier = -1;
-//	if(flags & ImageMirrorH)
-//		multiplier = 1;
-//	image(gres("planets"), frame, flags);
-//	text(getname(), {0, 56}, is(Exhaust) ? texth2cg : texth2c);
-//	caret.x -= 58 * multiplier; caret.y += 42;
-//	fore = colors::blue.mix(colors::white);
-//	textvalue(figure::Circle, get(Influence));
-//	caret = push_caret;
-//	caret.x -= 73 * multiplier; caret.y += 15;
-//	fore = colors::yellow.mix(colors::black);
-//	textvalue(figure::Circle, get(Resources));
-//	if(speciality) {
-//		caret = push_caret;
-//		caret.x -= 73 * multiplier; caret.y -= 15;
-//		image(gres("tech"), speciality - 1, 0);
-//	}
-//	if(trait) {
-//		const double cos = 0.7660444431189;
-//		const double sin = 0.6427876096865;
-//		const double radius = 74.0;
-//		caret = push_caret;
-//		caret.x -= (short)(radius * cos) * multiplier; caret.y -= (short)(radius * sin);
-//		image(gres("traits"), trait - 1, 0);
-//	}
-//	fore = push_fore;
-//	caret = push_caret;
-//	if(player)
-//		image(gres("races_small", "art/objects"), getbsi(player), 0);
-//}
-
-//static void add_planet(planeti* ps, point pt, int index) {
-//	unsigned char flags = 0;
-//	switch(index) {
-//	case 1: flags |= ImageMirrorH; break;
-//	case 2: flags |= ImageMirrorV; break;
-//	}
-//	addobject(pt, ps, paint_planet, ps->frame, 22, 0xFF, flags);
-//}
-
-//static void add_planets(point pt, const systemi* ps) {
-//	auto index = 0;
-//	entitya planets;
-//	planets.selectplanets(ps);
-//	auto maximum = planets.getcount();
-//	for(auto pe : planets) {
-//		auto p = (planeti*)pe;
-//		if(maximum < 2)
-//			add_planet(p, pt, false);
-//		else if(index < 3)
-//			add_planet(p, planet_position(pt, index), index);
-//		index++;
-//	}
-//}
 
 template<> void updateui<provincei>(provincei* p) {
 	auto pt = draw::h2p(p->position, size);
@@ -623,16 +547,6 @@ static void update_buildings(point position, const entity* location) {
 	}
 }
 
-//void troop::updateui() {
-//	for(auto& e : bsdata<troop>()) {
-//		if(e)
-//			continue;
-//		auto p = findobject(&e);
-//		if(p)
-//			p->clear();
-//	}
-//}
-
 void prepare_game_ui() {
 	clear_objects();
 	for(auto& e : bsdata<provincei>())
@@ -749,49 +663,6 @@ static void open_upgrades() {
 	querry.collectiona::select(bsdata<upgradei>::source, filter_player_upgrade, true);
 	paint_querry();
 }
-
-//static void tech_paint(tech_s i) {
-//	auto& e = bsdata<techi>::elements[i];
-//	rectbc(tech_colors[e.color], player->is(i), &e);
-//	textct(e.getname());
-//}
-
-//static void basic_technology_paint() {
-//	rectpush push;
-//	width = 128;
-//	height = texth() * 3 + 24;
-//	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
-//		tech_paint(i);
-//		if((i % 4) == 3) {
-//			caret.x = push.caret.x;
-//			caret.y += height + tech_padding;
-//		} else
-//			caret.x += width + tech_padding;
-//	}
-//}
-
-//static void faction_technology_paint() {
-//	rectpush push;
-//	width = 128;
-//	height = texth() * 3;
-//}
-
-//static void tech_scene() {
-//	strategy_background();
-//	caret.y += 8;
-//	texth2cw(getnm("BasicTechnologies"));
-//	caret.x = (getwidth() - 128 * 4 - tech_padding * 3) / 2;
-//	basic_technology_paint();
-//	faction_technology_paint();
-//	caret.y += (texth() * 3 + 24) * 4 + tech_padding * 3 + 8;
-//	texth2cw(getnm("UnitUpgradedTechnologies"));
-//}
-
-//void tech_selection() {
-//	pushvalue p1(pbackground, empthy_scene);
-//	pushvalue p2(pfinish, empthy_scene);
-//	scene(tech_scene);
-//}
 
 void initialize_ui() {
 	pbackground = main_background;

@@ -59,4 +59,5 @@ void* choose_object();
 
 void paint_sprite();
 
-template<class T> void ftpaint() { ((T*)last_object->data)->paint(); }
+template<typename T> void ftpaint() { ((T*)last_object->data)->paint(); }
+template<typename T> void updateui(T* p);

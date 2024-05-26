@@ -17,6 +17,7 @@
 void reapeated_list(int value, int counter);
 
 NOBSDATA(color)
+NOBSDATA(entity)
 NOBSDATA(point)
 
 BSDATAC(card, 1024)
@@ -43,6 +44,16 @@ BSMETA(cardi) = {
 	BSREQ(target),
 	BSREQ(priority),
 	BSDST(abilities, abilityi),
+	{}};
+BSMETA(card) = {
+	BSREQ(id),
+	BSREQ(player),
+	BSREQ(location),
+	{}};
+BSMETA(entity) = {
+	BSREQ(id),
+	BSREQ(player),
+	BSREQ(location),
 	{}};
 BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
@@ -105,6 +116,7 @@ BSMETA(upgradei) = {
 BSDATA(varianti) = {
 	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Card", VAR(cardi, 1), ftinfo<cardi>},
+	{"CardInHand", VAR(card, 3), ftinfo<card>},
 	{"Deck", VAR(decki, 1), 0, 0, fnscript<decki>},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"List", VAR(listi, 1), 0, 0, reapeated_list, fntest<listi>},

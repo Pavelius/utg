@@ -261,7 +261,7 @@ static void paint_tips() {
 			tips_sb.clear();
 		} 
 	}
-	if(!tips_sb) {
+	if(hilite_object && !tips_sb) {
 		variant v = hilite_object;
 		if(!v)
 			return;

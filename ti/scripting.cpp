@@ -185,6 +185,12 @@ static int d100() {
 	return rand() % 100;
 }
 
+static void choose_player(const char* cancel_text) {
+	pushvalue push_header(answers::header, player->getname());
+	pushvalue push_resid(answers::resid, player->id);
+	choose_result = an.choose(sb_temp, cancel_text, 1);
+}
+
 static void choose_complex(const char* id, const char* cancel, fnevent add_answers, fnevent apply_answers, fnevent ai_answers) {
 	pushvalue push_id(choose_id, id);
 	pause();
@@ -198,7 +204,7 @@ static void choose_complex(const char* id, const char* cancel, fnevent add_answe
 		cancel_text = getnm(cancel);
 	choose_result = 0;
 	if(player->ishuman())
-		choose_result = an.choose(sb_temp, cancel_text, 1);
+		choose_player(cancel_text);
 	else if(ai_answers)
 		ai_answers();
 	else {
@@ -514,7 +520,7 @@ static void select_system_reach(int bonus) {
 }
 
 static void select_players(int bonus) {
-	players = players;
+	players = origin_players;
 	if(bonus < 0)
 		no_active_player(0);
 }
@@ -617,13 +623,14 @@ static void ai_invasion() {
 	planets.selectplanets(system);
 	if(!planets)
 		return;
+	auto planet_count = planets.getcount();
 	// Select all ground units in a space
 	entitya ground;
 	ground.select(player, system);
 	ground.match(GroundForces, true);
 	if(!ground)
 		return;
-	auto average = ground.getcount() / planets.getcount();
+	auto average = (ground.getcount() + planet_count - 1) / planet_count;
 	if(average < 1)
 		average = 1;
 	for(auto planet : planets) {

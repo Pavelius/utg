@@ -1,2 +1,5 @@
 ﻿In file `Names.txt`:
-StoneWalls: Define translate
+AlchemistGuild: Define translate
+DoYouWishPayFor: Define translate
+Stables: Define translate
+WizardsGuild: Define translate

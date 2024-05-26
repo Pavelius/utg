@@ -1,6 +1,7 @@
 AppTitle: Рыцари и Маги
 
 Army: Армия
+Combat: Бой
 Commodities: Золото
 Fame: Слава
 Goods: Товары

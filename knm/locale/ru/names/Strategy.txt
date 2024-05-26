@@ -30,6 +30,7 @@ MoveTroops: Передвижение войск
 PassAction: Закончить ход
 PayForLeaders: Найм лидеров
 RetreatTroops: Отступление войск
+SkipThisStep: Пропустить этот шаг
 TacticAction: Тактическое действие
 TroopReinforsment: Местное ополчение
 ToTheBottom: Вниз колоды

@@ -1296,7 +1296,10 @@ static void choose_querry_list(int bonus) {
 		}
 		if(choosing)
 			an.add((void*)1, getnm("ResetList"));
-		auto result = an.choose(get_title(last_id), getnm(stw("Apply", last_id)), 0);
+		const char* cancel_id = stw("Apply", last_id);
+		if(!choosing)
+			cancel_id = "SkipThisStep";
+		auto result = an.choose(get_title(last_id), getnm(cancel_id), 0);
 		if(!result)
 			break;
 		else if(result == (void*)1)
@@ -1307,41 +1310,41 @@ static void choose_querry_list(int bonus) {
 	querry = choosing;
 }
 
-static void choose_tactics(int bonus) {
-	auto push_id = last_list->id;
-	pushvalue push_player(player, last_army->player);
-	pushtitle header(last_list->id);
-	while(true) {
-		console.clear();
-		clear_input(0);
-		if(last_army->tactics) {
-			console.addn(getnm("ChooseTacticsPrompt"), last_army->player->getname());
-			for(auto p : last_army->tactics)
-				console.addn(p->getname());
-		}
-		for(auto& e : bsdata<card>()) {
-			if(e.player != player)
-				continue;
-			auto p = e.getcomponent();
-			if(!p)
-				continue;
-			if(!p->usedeck())
-				continue;
-			if(!p->trigger || strcmp(p->trigger, push_id) != 0)
-				continue;
-			if(last_army->tactics.find(&e) != -1)
-				continue;
-			if(!script_allow(p->effect))
-				continue;
-			add_input(e);
-		}
-		auto result = an.choose(get_title(last_id), getnm("ApplyTactics"), 0);
-		if(!result)
-			break;
-		else if(bsdata<card>::have(result))
-			last_army->tactics.add(result);
-	}
-}
+//static void choose_tactics(int bonus) {
+//	auto push_id = last_list->id;
+//	pushvalue push_player(player, last_army->player);
+//	pushtitle header(last_list->id);
+//	while(true) {
+//		console.clear();
+//		clear_input(0);
+//		if(last_army->tactics) {
+//			console.addn(getnm("ChooseTacticsPrompt"), last_army->player->getname());
+//			for(auto p : last_army->tactics)
+//				console.addn(p->getname());
+//		}
+//		for(auto& e : bsdata<card>()) {
+//			if(e.player != player)
+//				continue;
+//			auto p = e.getcomponent();
+//			if(!p)
+//				continue;
+//			if(!p->usedeck())
+//				continue;
+//			if(!p->trigger || strcmp(p->trigger, push_id) != 0)
+//				continue;
+//			if(last_army->tactics.find(&e) != -1)
+//				continue;
+//			if(!script_allow(p->effect))
+//				continue;
+//			add_input(e);
+//		}
+//		auto result = an.choose(get_title(last_id), getnm("ApplyTactics"), 0);
+//		if(!result)
+//			break;
+//		else if(bsdata<card>::have(result))
+//			last_army->tactics.add(result);
+//	}
+//}
 
 static void set_army_tactics(int bonus) {
 	last_army->tactics = querry;
@@ -1657,7 +1660,6 @@ BSDATA(script) = {
 	{"ChooseCardsDiscard", choose_cards_discard},
 	{"ChooseMovement", choose_movement},
 	{"ChooseProvince", choose_province, allow_choose},
-	{"ChooseTactics", choose_tactics, allow_choose},
 	{"ChooseQuerry", choose_querry, allow_choose},
 	{"ChooseQuerryList", choose_querry_list, allow_choose},
 	{"CurrentProvince", current_province},

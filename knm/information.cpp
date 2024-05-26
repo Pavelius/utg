@@ -228,8 +228,9 @@ template<> void ftinfo<upgradei>(const void* object, stringbuilder& sb) {
 }
 
 template<> void ftinfo<card>(const void* object, stringbuilder& sb) {
-	auto p = (card*)object;
-	ftinfo<cardi>(p->id, sb);
+	auto p = ((card*)object)->getcomponent();
+	if(p)
+		ftinfo<cardi>(p, sb);
 }
 
 const char* getinform(const void* object) {
