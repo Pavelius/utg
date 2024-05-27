@@ -147,7 +147,6 @@
     <ClCompile Include="analize.cpp" />
     <ClCompile Include="army.cpp" />
     <ClCompile Include="component.cpp" />
-    <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
@@ -182,7 +181,6 @@
     <ClInclude Include="analize.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="decka.h" />
-    <ClInclude Include="draw_marker.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
     <ClInclude Include="indicator.h" />

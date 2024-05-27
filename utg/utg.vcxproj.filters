@@ -300,6 +300,9 @@
     <ClCompile Include="console.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="draw_marker.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -565,6 +568,9 @@
     </ClInclude>
     <ClInclude Include="tmpflags.h">
       <Filter>Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_marker.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,7 +18,6 @@ struct systemi : entity {
 	bool			isplay() const;
 	void			limitcapacity();
 	static systemi*	findbyindex(short unsigned i);
-	static void		markzerocost(const playeri* player);
 	bool			movestop() const;
 	bool			movethrought() const;
 	void			paint() const;
@@ -27,3 +26,5 @@ struct systemi : entity {
 	void			setactivate(const playeri* p, bool active);
 };
 extern systemi* last_system;
+
+void mark_zero_cost(const playeri* player);

@@ -30,6 +30,7 @@ static entitya			choosing;
 static bool				need_break;
 static int				last_value, last_pay;
 static card				**card_begin, **card_end;
+static int				attacker_strenght, defender_strenght;
 
 void update_ui();
 
@@ -872,7 +873,7 @@ static void add_gold(int bonus) {
 static void add_army(int bonus) {
 	if(bonus == 100)
 		bonus = last_value;
-	else
+	else if(bonus == -100)
 		bonus = -last_value;
 	last_army->abilities[last_ability] += bonus;
 }
@@ -1175,9 +1176,9 @@ static void add_units(entitya& source, playeri* v) {
 }
 
 static void determine_winner() {
-	auto a = attacker.getstrenght();
-	auto d = defender.getstrenght() + province->get(Strenght) + province->getbonus(Strenght);
-	if(a >= d)
+	attacker_strenght = attacker.getstrenght();
+	defender_strenght = defender.getstrenght() + province->get(Strenght) + province->getbonus(Strenght);
+	if(attacker_strenght >= defender_strenght)
 		winner_army = &attacker;
 	else
 		winner_army = &defender;
@@ -1517,6 +1518,15 @@ static void play_tactics(int bonus) {
 	determine_winner();
 }
 
+static void battle_result(int bonus) {
+	auto pn = getdescription("TotalStrenght");
+	console.clear();
+	console.addn(pn, attacker.player->getname(), attacker_strenght);
+	console.addn(pn, defender.player->getname(), defender_strenght);
+	pushtitle push_title("BattleResult");
+	pause();
+}
+
 static void remove_enemy_tactics(int bonus) {
 	auto p = card_begin;
 	auto ps = card_begin;
@@ -1622,6 +1632,7 @@ BSDATA(script) = {
 	{"ApplyCasualty", apply_casualty},
 	{"ApplyPay", apply_pay},
 	{"ApplyTrigger", apply_trigger},
+	{"BattleResult", battle_result},
 	{"BuildStructure", build_structure},
 	{"PutCardOnTable", put_card_on_table},
 	{"ChooseCardsDiscard", choose_cards_discard},

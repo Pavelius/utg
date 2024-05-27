@@ -165,6 +165,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="draw_imager.cpp" />
+    <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="interval.cpp" />
     <ClCompile Include="querry.cpp" />
     <ClCompile Include="stringlist.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="drawable.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="draw_marker.h" />
     <ClInclude Include="flagux.h" />
     <ClInclude Include="ownerable.h" />
     <ClInclude Include="parentable.h" />

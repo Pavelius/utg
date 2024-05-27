@@ -286,7 +286,6 @@ void provincei::paint() const {
 		stroke_texth2(getname());
 	if(province == this)
 		paint_neighbor();
-	//paint_income(this);
 	if(input_province) {
 		if(ishilite(24, this)) {
 			hot.cursor = cursor::Hand;
@@ -308,16 +307,12 @@ static void remove_object(array& source) {
 	}
 }
 
-static void province_paint() {
-	((provincei*)last_object->data)->paint();
-}
-
 void update_provinces_ui() {
 	remove_object(bsdata<provincei>::source);
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
-		auto p = addobject(e.position, &e, province_paint, 0);
+		auto p = addobject(e.position, &e, ftpaint<provincei>, 0);
 		p->priority = 1;
 	}
 }
@@ -332,7 +327,7 @@ static void ui_finish() {
 }
 
 void ui_initialize() {
-	add_widget(background_map, 0, false);
+	add_widget(background_map, 10, false);
 	pbackground = ui_background;
 	pfinish = ui_finish;
 }

@@ -6,7 +6,7 @@
 #include "troop.h"
 #include "script.h"
 
-army*				army::last;
+army*				last_army;
 static army			attacker, defender;
 int					army::round;
 static int			hits;
@@ -140,7 +140,7 @@ void combat_continue(int bonus) {
 }
 
 void combat_reatreat(int bonus) {
-	army::last->reatreat = true;
+	last_army->reatreat = true;
 }
 
 static void anti_fighter_barrage() {
@@ -155,11 +155,9 @@ static void anti_fighter_barrage() {
 }
 
 void army::choose(const char* id) {
-	auto push_last = last; last = this;
-	auto push_player = player; player = owner;
+	pushvalue push_last(last_army, this);
+	pushvalue push_player(player, owner);
 	script_run(id, 0);
-	player = push_player;
-	last = push_last;
 }
 
 static void echange_harms() {

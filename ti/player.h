@@ -52,10 +52,7 @@ struct playeri : nameable {
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
-extern playeri*	player;
-extern playeri* speaker;
-extern playeri* human_player;
-
+extern playeri *player, *speaker, *human_player;
 extern int finale_score;
 
 int	getrate(indicator_s need, indicator_s currency, int count);

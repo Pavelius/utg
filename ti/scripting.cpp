@@ -902,7 +902,7 @@ static void filter_home_system_you(int bonus) {
 static void filter_controled(int bonus) {
 	pathfind::clearpath();
 	systemi::blockmove();
-	systemi::markzerocost(player);
+	mark_zero_cost(player);
 	pathfind::makewavex();
 	querry.matchrange(iabs(bonus), bonus >= 0);
 }

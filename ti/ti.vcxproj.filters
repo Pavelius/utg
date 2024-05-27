@@ -102,18 +102,12 @@
     <ClCompile Include="requirement.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="draw_marker.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="strategy.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="draw_marker.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="aidata.h">

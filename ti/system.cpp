@@ -144,7 +144,7 @@ void systemi::blockenemy(const playeri* player) {
 	}
 }
 
-void systemi::markzerocost(const playeri* player) {
+void mark_zero_cost(const playeri* player) {
 	for(auto& e : bsdata<systemi>()) {
 		if(!e)
 			continue;

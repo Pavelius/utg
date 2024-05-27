@@ -120,7 +120,7 @@ Retreat
  elements RetreatTroops
 
 ApplyCombat
- elements PrepareArmy PlayersBattleTactic PlayersBeforeCombat HailOfArrows MeleeClash Retreat AfterWinBattle
+ elements PrepareArmy PlayersBattleTactic PlayersBeforeCombat HailOfArrows MeleeClash BattleResult Retreat AfterWinBattle
 
 #Card trigger(MakeAction)
 

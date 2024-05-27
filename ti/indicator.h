@@ -8,7 +8,6 @@ enum indicator_s : unsigned char {
 	CommandToken, FleetToken, StrategyToken, TacticToken,
 	VictoryPoints,
 };
-
 struct indicatori : nameable {
 	void		getinfo(stringbuilder& sb) const;
 };

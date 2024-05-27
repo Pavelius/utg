@@ -7,7 +7,6 @@ struct army {
 	entitya			units;
 	char			bonuses[10];
 	bool			reatreat;
-	static army*	last;
 	static int		round;
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			choose(const char* id);
@@ -15,3 +14,4 @@ struct army {
 	void			hit(int value, tag_s v, bool keep);
 	int				roll(ability_s id, ability_s id_count) const;
 };
+extern army* last_army;

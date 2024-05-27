@@ -4,6 +4,6 @@
 #pragma once
 
 struct agendai : entity {
-	variants		target;
-	variants		yes, no;
+	variants	target;
+	variants	yes, no;
 };

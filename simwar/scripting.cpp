@@ -8,7 +8,6 @@
 #include "game.h"
 #include "hero.h"
 #include "list.h"
-#include "modifier.h"
 #include "report.h"
 #include "player.h"
 #include "province.h"
