@@ -1,0 +1,68 @@
+#List
+
+ChooseSystemToActivate
+ elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
+ChooseNewSpeaker
+ elements SelectPlayers NoSpeaker ChoosePlayer Speaker
+BuyResearchTechnology
+ elements Resources-4 ResearchTechnology+1
+GainGoods
+ elements TradeGoods+3
+ReplenishOtherPlayerCommodities
+ elements SelectPlayers-1 FilterCommodities-1 ChoosePlayer ReplenishCommodities
+TacticalInvasion
+ elements ChooseInvasionPlanet
+TacticalMove
+ elements ChooseMove
+TacticalProduce
+ elements SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
+ProduceOneUnit
+ elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
+ProduceOnePDSorDock
+ elements SelectPlanets+1 ChoosePlanet ActivateSystem ChoosePDSorDock
+ReadyExhaustPlanet
+ elements SelectPlanets+1 FilterExhaust+1 ChoosePlanet Exhaust-1
+
+ProtectYourSystem
+ elements SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayers-1 ForEachPlayer ActivateSystem
+ReadyExhaustPlanetsInSystems
+ elements SelectPlanets+1 FilterSystem Exhaust-1
+LookLawsAndChange
+PlacePDSorDocksOnPlanet
+ elements SelectPlanets+1 ChoosePlanet ChoosePDSorDock
+PlacePDSorDocksOnPlanetAndActivate
+ elements ProduceOnePDSorDock
+PlacePDSOnPlanet
+ elements SelectPlanets+1 ChoosePlanet PDS
+ReplenishOtherPlayerCommodities
+RemoveCommandTokenFromBoard
+ elements SelectSystems FilterActivated ChooseSystem ActivateSystem-1
+VictoryPointOrSecretObjective
+ elements IfControlMecatolRex VictoryPoints+1 SecretObjective+1
+
+#Strategy
+
+Leadership initiative(1)
+ primary CommandToken+3 PayCommandTokens+3
+ secondary PayCommandTokens+3
+Diplomacy initiative(2)
+ primary ProtectYourSystem ReadyExhaustPlanetsInSystems
+ secondary StrategyToken-1 ReadyExhaustPlanet+2
+Politics initiative(3)
+ primary ChooseNewSpeaker ActionCard+2 LookLawsAndChange
+ secondary StrategyToken-1 ActionCard+2
+Construction initiative(4)
+ primary PlacePDSorDocksOnPlanet PlacePDSOnPlanet
+ secondary StrategyToken-1 PlacePDSorDocksOnPlanetAndActivate
+Trade initiative(5)
+ primary TradeGoods+3 ReplenishCommodities ReplenishOtherPlayerCommodities
+ secondary StrategyToken-1 ReplenishCommodities
+Warfare initiative(6)
+ primary RemoveCommandTokenFromBoard CommandToken+1 RedistributeCommandTokens
+ secondary StrategyToken-1 ProduceOneUnit
+Technology initiative(7)
+ primary ResearchTechnology+1 BuyResearchTechnology+6
+ secondary StrategyToken-1 BuyResearchTechnology+4
+Imperial initiative(8)
+ primary ScorePublicObjective VictoryPointOrSecretObjective
+ secondary StrategyToken-1 SecretObjective+1

@@ -10,13 +10,29 @@ static void add_h3(stringbuilder& sb, const char* format, ...) {
 	sb.addv(format, xva_start(format));
 }
 
+static void add_line(stringbuilder& sb, const char* id, int value) {
+	auto nm = iabs(value);
+	auto op = value >= 0 ? "Gain" : "Lose";
+	auto ct = (nm == 1) ? "Single" : "Many";
+	auto pn = getdescription(stw(op, id, ct));
+	if(!pn)
+		pn = getdescription(stw(op, id, 0));
+	if(!pn)
+		return;
+	sb.addn("* ");
+	sb.add(pn, nm);
+}
+
 void strategyi::getinfo(stringbuilder& sb) const {
 	auto pn = getdescription(id);
 	if(!pn)
 		return;
-	add_h3(sb, getname());
-	sb.addn("---");
-	sb.addn(pn);
+	add_h3(sb, getnm("PrimaryAbility"));
+	for(auto v : primary)
+		add_line(sb, v.getid(), v.counter);
+	add_h3(sb, getnm("SecondaryAbility"));
+	for(auto v : secondary)
+		add_line(sb, v.getid(), v.counter);
 }
 
 static void addv(stringbuilder& sb, int value, const char* format) {

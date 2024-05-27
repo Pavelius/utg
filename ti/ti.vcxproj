@@ -223,6 +223,8 @@
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Objectives.txt" />
     <Text Include="rules\Planets.txt" />
+    <Text Include="rules\Players.txt" />
+    <Text Include="rules\Strategy.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

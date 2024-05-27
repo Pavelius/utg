@@ -5,3 +5,6 @@ Leadership: Лидерская стратегия
 Politics: Политическая стратегия
 Trade: Торговая стратегия
 Warfare: Военная стратегия
+
+PrimaryAbility: Первичная способность
+SecondaryAbility: Вторичная способность
