@@ -68,6 +68,24 @@ template<class T> inline void		zcat(T* p1, const T e) { p1 = zend(p1); p1[0] = e
 template<class T> inline void		zcat(T* p1, const T* p2) { zcpy(zend(p1), p2); }
 template<class T> constexpr size_t	zlen(T* p) { return zend(p) - p; }
 template<class T> inline void		zshuffle(T* p, int count) { for(int i = 0; i < count; i++) iswap(p[i], p[rand() % count]); }
+// Simple slice object
+template<class T>
+class slice {
+	T*								data;
+	size_t							count;
+public:
+	typedef T data_type;
+	constexpr slice() : data(0), count(0) {}
+	template<size_t N> constexpr slice(T(&v)[N]) : data(v), count(N) {}
+	constexpr slice(T* data, unsigned count) : data(data), count(count) {}
+	constexpr slice(T* p1, const T* p2) : data(p1), count(p2 - p1) {}
+	explicit operator bool() const { return count != 0; }
+	void operator++() { if(count) { data++; count--; } }
+	void							alloc(int count, const T* source) { data = new T[count]; this->count = count; memcpy(data, source, sizeof(T) * count); }
+	constexpr T*					begin() const { return data; }
+	constexpr T*					end() const { return data + count; }
+	constexpr unsigned				size() const { return count; }
+};
 // Storge like vector
 template<class T, size_t count_max = 128>
 struct adat {
@@ -91,28 +109,10 @@ struct adat {
 	size_t							getmaximum() const { return count_max; }
 	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
 	bool							is(const T t) const { for(auto& e : *this) if(e == t) return true; return false; }
+	slice<T>						records() const { return slice<T>((T*)data, count); }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }
 	void							remove(const T t) { remove(find(t), 1); }
 	void							remove() { if(count) count--; }
-};
-// Simple slice object
-template<class T>
-class slice {
-	T*								data;
-	size_t							count;
-public:
-	typedef T data_type;
-	constexpr slice() : data(0), count(0) {}
-	template<size_t N> constexpr slice(T(&v)[N]) : data(v), count(N) {}
-	template<int N> constexpr slice(adat<T, N>& v) : data(v), count(v.count) {}
-	constexpr slice(T* data, unsigned count) : data(data), count(count) {}
-	constexpr slice(T* p1, const T* p2) : data(p1), count(p2 - p1) {}
-	explicit operator bool() const { return count != 0; }
-	void operator++() { if(count) { data++; count--; } }
-	void							alloc(int count, const T* source) { data = new T[count]; this->count = count; memcpy(data, source, sizeof(T) * count); }
-	constexpr T*					begin() const { return data; }
-	constexpr T*					end() const { return data + count; }
-	constexpr unsigned				size() const { return count; }
 };
 // Abstract array vector
 class array {

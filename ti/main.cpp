@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "draw_strategy.h"
+#include "entitya.h"
 #include "player.h"
 #include "system.h"
 #include "speech.h"
@@ -12,11 +13,6 @@ static stringbuilder console(console_text);
 #ifdef _DEBUG
 
 void util_main();
-
-static void test_speech() {
-	variant test[] = {"Leadership"};
-	//auto p = speech::find(test);
-}
 
 static void test_combat() {
 	prepare_game();

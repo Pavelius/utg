@@ -10,14 +10,11 @@ struct systemi : entity {
 	tile_s			special;
 	unsigned short	index;
 	explicit operator bool() const;
-	static void		blockenemy(const playeri* player);
-	static void		blockmove();
 	planeti*		getbestplanet() const;
 	int				getcapacity(bool include_docks = true) const;
 	bool			isactivated(const playeri* p) const;
 	bool			isplay() const;
 	void			limitcapacity();
-	static systemi*	findbyindex(short unsigned i);
 	bool			movestop() const;
 	bool			movethrought() const;
 	void			paint() const;
@@ -27,4 +24,8 @@ struct systemi : entity {
 };
 extern systemi* last_system;
 
+void block_enemy(const playeri* player);
+void block_move();
 void mark_zero_cost(const playeri* player);
+
+systemi* find_system(short unsigned i);

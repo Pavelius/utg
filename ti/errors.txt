@@ -1,2 +1,2 @@
-﻿In file `rules/Strategy.txt`:
- Line 31: Can't find variant `Goods`
+﻿In file `Names.txt`:
+ChooseMoveOptions: Define translate

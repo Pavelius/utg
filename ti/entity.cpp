@@ -166,11 +166,11 @@ void entity::status(int type, const char* format) const {
 }
 
 void entity::exhaust() {
+	if(!this)
+		return;
 	if(is(Exhaust))
 		return;
 	set(Exhaust, true);
-	if(player->ishuman())
-		warning(getnm("ApplyExhaust"), getnm(id));
 }
 
 void entity::discard() {

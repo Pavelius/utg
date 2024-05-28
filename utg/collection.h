@@ -36,6 +36,7 @@ struct collection : collectiona {
 	T**		end() const { return (T**)data + count; }
 	T*		pick() { return (T*)collectiona::pick(); }
 	T*		random() const { return (T*)collectiona::random(); }
+	constexpr slice<T*> records() const { return {(T**)data, count}; }
 	void	select() { collectiona::select(bsdata<T>::source); }
 	void	select(fnvisible proc) { collectiona::select(bsdata<T>::source, proc, true); }
 };

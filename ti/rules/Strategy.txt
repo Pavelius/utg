@@ -1,13 +1,30 @@
 #List
 
+BuyResearchTechnology
+ elements Resources-4 ResearchTechnology+1
 ChooseSystemToActivate
  elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
 ChooseNewSpeaker
  elements SelectPlayers NoSpeaker ChoosePlayer Speaker
-BuyResearchTechnology
- elements Resources-4 ResearchTechnology+1
 GainGoods
  elements TradeGoods+3
+LookLawsAndChange
+PlacePDSOnPlanet
+ elements SelectPlanets+1 ChoosePlanet PDS
+PlacePDSorDocksOnPlanet
+ elements SelectPlanets+1 ChoosePlanet ChoosePDSorDock
+PlacePDSorDocksOnPlanetAndActivate
+ elements SelectPlanets+1 ChoosePlanet ActivateSystem ChoosePDSorDock
+ProduceOneUnit
+ elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
+ProtectYourSystem
+ elements SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayers-1 ForEachPlayer ActivateSystem
+ReadyExhaustPlanet
+ elements SelectPlanets+1 FilterExhaust+1 ChoosePlanet Exhaust-1
+ReadyExhaustPlanetsInSystems
+ elements SelectPlanets+1 FilterSystem Exhaust-1
+RemoveCommandTokenFromBoard
+ elements SelectSystems FilterActivated ChooseSystem ActivateSystem-1
 ReplenishOtherPlayerCommodities
  elements SelectPlayers-1 FilterCommodities-1 ChoosePlayer ReplenishCommodities
 TacticalInvasion
@@ -16,27 +33,6 @@ TacticalMove
  elements ChooseMove
 TacticalProduce
  elements SelectTroopActive FilterProduction FilterActivePlayer ForEachTroop ChooseProduction
-ProduceOneUnit
- elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
-ProduceOnePDSorDock
- elements SelectPlanets+1 ChoosePlanet ActivateSystem ChoosePDSorDock
-ReadyExhaustPlanet
- elements SelectPlanets+1 FilterExhaust+1 ChoosePlanet Exhaust-1
-
-ProtectYourSystem
- elements SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayers-1 ForEachPlayer ActivateSystem
-ReadyExhaustPlanetsInSystems
- elements SelectPlanets+1 FilterSystem Exhaust-1
-LookLawsAndChange
-PlacePDSorDocksOnPlanet
- elements SelectPlanets+1 ChoosePlanet ChoosePDSorDock
-PlacePDSorDocksOnPlanetAndActivate
- elements ProduceOnePDSorDock
-PlacePDSOnPlanet
- elements SelectPlanets+1 ChoosePlanet PDS
-ReplenishOtherPlayerCommodities
-RemoveCommandTokenFromBoard
- elements SelectSystems FilterActivated ChooseSystem ActivateSystem-1
 VictoryPointOrSecretObjective
  elements IfControlMecatolRex VictoryPoints+1 SecretObjective+1
 

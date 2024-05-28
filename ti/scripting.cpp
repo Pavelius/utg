@@ -14,13 +14,12 @@
 #include "unit.h"
 #include "unit_type.h"
 
-entitya			querry, onboard;
-static playera	players;
-static answers	an;
 static char		sb_temp[512];
 static stringbuilder sb(sb_temp);
+static entitya	querry, onboard;
+static playera	players;
+static answers	an;
 static int		last_value;
-static bool		if_able_mode;
 static int		choose_options;
 static bool		choose_stop;
 static void*	choose_result;
@@ -121,21 +120,21 @@ static void addscript(const char* id) {
 
 static void makewave(pathfind::indext start) {
 	pathfind::clearpath();
-	systemi::blockmove();
-	systemi::blockenemy(player);
+	block_move();
+	block_enemy(player);
 	pathfind::makewave(start);
-	systemi::blockenemy(player);
+	block_enemy(player);
 }
 
 void entitya::addreach(const systemi* system, int range) {
 	pathfind::clearpath();
-	systemi::blockmove();
+	block_move();
 	pathfind::makewave(system->index);
 	for(auto i = 0; i < pathfind::maxcount; i++) {
 		auto move = pathfind::getmove(i);
 		if(move == pathfind::Blocked || move > range)
 			continue;
-		auto ps = systemi::findbyindex(i);
+		auto ps = find_system(i);
 		if(ps && !have(ps))
 			add(ps);
 	}
@@ -385,6 +384,8 @@ static void apply_value(indicator_s v, int value) {
 		return;
 	} else if(value == 100)
 		value = last_value;
+	else if(value == -100)
+		value = -last_value;
 	auto n0 = player->get(v);
 	auto n1 = n0 + value;
 	if(n1 < 0)
@@ -398,17 +399,6 @@ static void apply_value(indicator_s v, int value) {
 		break;
 	default:
 		player->indicators[v] = n1;
-		//if(n1 < n0) {
-		//	draw::warning(getnm("LoseIndicator"),
-		//		player->getname(),
-		//		getnameshort(bsdata<indicatori>::elements[v].id),
-		//		iabs(n0 - n1));
-		//} else {
-		//	draw::information(getnm("GainIndicator"),
-		//		player->getname(),
-		//		getnameshort(bsdata<indicatori>::elements[v].id),
-		//		iabs(n0 - n1));
-		//}
 		break;
 	}
 }
@@ -517,6 +507,44 @@ static void select_system_reach(int bonus) {
 			continue;
 		querry.add(e.location);
 	}
+}
+
+static void entity_name(const void* object, stringbuilder& sb) {
+	auto p = (entity*)object;
+	sb.add(p->getname());
+	if(onboard.find((void*)object) != -1)
+		sb.adds("(%1)", getnm("Choosed"));
+}
+
+static bool apply_querry_result(void* result, int param) {
+	if(!result)
+		return false;
+	if(bsdata<script>::have(result))
+		((script*)result)->proc(param);
+	else {
+		auto find_index = onboard.find(result);
+		if(find_index == -1)
+			onboard.add(result);
+		else
+			onboard.add(result);
+	}
+	return true;
+}
+
+static void choose_querry_complex(entityar source, int count, const char* cancel, fnstatus getname, fnprint getheader) {
+	onboard.clear();
+	an.clear();
+	for(auto p : source) {
+		sb.clear(); getname(p, sb);
+		an.add(p, sb_temp);
+	}
+	sb.clear();
+	if(getheader)
+		getheader(sb);
+	auto result = an.choose(sb_temp, cancel);
+	if(!apply_querry_result(result, 0))
+		return;
+	count = onboard.getcount();
 }
 
 static void select_players(int bonus) {
@@ -868,7 +896,7 @@ static void add_neighboring(int bonus) {
 			auto ni = pathfind::to(p->index, d);
 			if(ni == pathfind::Blocked)
 				continue;
-			auto p1 = p->findbyindex(ni);
+			auto p1 = find_system(ni);
 			if(!p1)
 				continue;
 			need_correct = true;
@@ -901,7 +929,7 @@ static void filter_home_system_you(int bonus) {
 
 static void filter_controled(int bonus) {
 	pathfind::clearpath();
-	systemi::blockmove();
+	block_move();
 	mark_zero_cost(player);
 	pathfind::makewavex();
 	querry.matchrange(iabs(bonus), bonus >= 0);
@@ -913,7 +941,8 @@ static void focus_home_system(int bonus) {
 }
 
 static void exhaust(int bonus) {
-	last_planet->exhaust();
+	if(last_planet)
+		last_planet->exhaust();
 }
 
 static void filter_cruiser_or_destroyer(int bonus) {
@@ -1127,9 +1156,9 @@ static void select_system_can_shoot(int bonus) {
 }
 
 static void for_each_player(int bonus) {
-	auto v = *script_begin++;
 	auto push_last = player;
 	auto push = players;
+	auto v = *script_begin++;
 	for(auto p : push) {
 		player = p;
 		script_run(v);

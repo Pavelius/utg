@@ -126,7 +126,7 @@ bool systemi::movestop() const {
 	}
 }
 
-void systemi::blockmove() {
+void block_move() {
 	for(auto& e : bsdata<systemi>()) {
 		if(!e)
 			continue;
@@ -135,7 +135,7 @@ void systemi::blockmove() {
 	}
 }
 
-void systemi::blockenemy(const playeri* player) {
+void block_enemy(const playeri* player) {
 	for(auto& e : bsdata<systemi>()) {
 		if(!e)
 			continue;
@@ -155,7 +155,7 @@ void mark_zero_cost(const playeri* player) {
 	}
 }
 
-systemi* systemi::findbyindex(pathfind::indext i) {
+systemi* find_system(pathfind::indext i) {
 	for(auto& e : bsdata<systemi>()) {
 		if(e.index == i)
 			return &e;

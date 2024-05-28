@@ -43,4 +43,4 @@ struct entitya : public collection<entity> {
 	void			shuffle();
 	void			sortunit();
 };
-extern entitya querry;
+typedef const slice<entity*>& entityar;
