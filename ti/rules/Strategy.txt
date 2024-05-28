@@ -36,6 +36,11 @@ TacticalProduce
 VictoryPointOrSecretObjective
  elements IfControlMecatolRex VictoryPoints+1 SecretObjective+1
 
+#List
+
+ChooseStrategy
+ elements Select Strategy
+
 #Strategy
 
 Leadership initiative(1)

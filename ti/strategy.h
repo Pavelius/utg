@@ -1,10 +1,8 @@
-#include "nameable.h"
-#include "variant.h"
+#include "entity.h"
 
 #pragma once
 
-struct strategyi : nameable {
+struct strategyi : entity {
 	int			initiative;
 	variants	primary, secondary;
-	void		getinfo(stringbuilder& sb) const;
 };

@@ -84,6 +84,7 @@ public:
 	void							alloc(int count, const T* source) { data = new T[count]; this->count = count; memcpy(data, source, sizeof(T) * count); }
 	constexpr T*					begin() const { return data; }
 	constexpr T*					end() const { return data + count; }
+	void							free() { if(data) delete[](data); }
 	constexpr unsigned				size() const { return count; }
 };
 // Storge like vector

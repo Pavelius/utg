@@ -43,4 +43,8 @@ struct entitya : public collection<entity> {
 	void			shuffle();
 	void			sortunit();
 };
+struct entityd : slice<entity*> {
+	entityd(const entitya& source);
+	~entityd();
+};
 typedef const slice<entity*>& entityar;

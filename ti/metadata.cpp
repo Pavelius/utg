@@ -130,6 +130,9 @@ BSMETA(techunit) = {
 	BSREQ(replace),
 	BSREQ(required),
 	{}};
+BSMETA(varianti) = {
+	BSREQ(id),
+	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"ActionCard", VAR(actioncard, 1)},
@@ -147,5 +150,6 @@ BSDATA(varianti) = {
 	{"Troop", VAR(troop, 3), ftinfo<troop>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
+	{"Variant", VAR(varianti, 1)},
 };
 BSDATAF(varianti)

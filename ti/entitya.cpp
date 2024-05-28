@@ -391,3 +391,11 @@ void entitya::matchrange(int range, bool keep) {
 int entitya::getcap() const {
 	return getsummary(Capacity);
 }
+
+entityd::entityd(const entitya& source) {
+	alloc(source.getcount(), source.begin());
+}
+
+entityd::~entityd() {
+	free();
+}

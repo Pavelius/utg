@@ -10,5 +10,4 @@ enum ability_s : unsigned char {
 	Move, Production, Reinforcement, MaximumInOneLocation, CapacityShips, Capacity,
 };
 struct abilityi : nameable {
-	void			getinfo(stringbuilder& sb) const;
 };

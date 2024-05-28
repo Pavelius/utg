@@ -9,6 +9,5 @@ enum indicator_s : unsigned char {
 	VictoryPoints,
 };
 struct indicatori : nameable {
-	void		getinfo(stringbuilder& sb) const;
 };
 extern indicator_s last_indicator;

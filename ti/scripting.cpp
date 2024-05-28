@@ -26,6 +26,10 @@ static void*	choose_result;
 static const char* choose_id;
 static indicator_s command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
+struct commandstack : variants {
+	commandstack() { set(script_begin, script_end - script_begin); }
+};
+
 static bool is_mecatol_rex(const void* object) {
 	return object == bsdata<systemi>::elements
 		|| object == bsdata<planeti>::elements;
@@ -430,6 +434,13 @@ static void no_speaker(int bonus) {
 static void select_pds(int bonus) {
 	querry.clear();
 	querry.select(bsdata<troop>::source, is_ability, SpaceCannon, true);
+}
+
+static void select_variant(int bonus) {
+	querry.clear();
+	variant v = *script_begin++;
+	if(v.iskind<varianti>())
+		querry.select(*bsdata<varianti>::elements[v.value].source);
 }
 
 static void select_planets(int bonus) {
@@ -1180,7 +1191,7 @@ static void for_each_player(int bonus) {
 
 static void for_each_troop(int bonus) {
 	auto v = *script_begin++;
-	auto push = querry;
+	entityd push = querry;
 	for(auto p : push) {
 		last_troop = (troop*)p;
 		script_run(v);
@@ -1190,7 +1201,7 @@ static void for_each_troop(int bonus) {
 static void for_each_planet(int bonus) {
 	auto v = *script_begin++;
 	auto push_last = last_planet;
-	auto push = querry;
+	entityd push = querry;
 	for(auto p : push) {
 		last_planet = p->getplanet();
 		if(last_planet)
@@ -1302,6 +1313,7 @@ BSDATA(script) = {
 	{"ResearchTechnology", research_technology},
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
+	{"Select", select_variant},
 	{"SelectPDS", select_pds},
 	{"SelectPlanets", select_planets},
 	{"SelectPlayers", select_players},

@@ -42,7 +42,6 @@ struct playeri : nameable {
 	systemi*		gethome() const;
 	int				getindex() const;
 	int				getinitiative() const;
-	void			getinfo(stringbuilder& sb) const;
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
 	int				gettechs() const;
