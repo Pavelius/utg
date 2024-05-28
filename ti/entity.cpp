@@ -1,4 +1,5 @@
 #include "actioncard.h"
+#include "answers.h"
 #include "entity.h"
 #include "player.h"
 #include "planet.h"
@@ -137,14 +138,6 @@ int	entity::getproduction() const {
 		}
 	}
 	return result;
-}
-
-void entity::add(answers& an) {
-	auto planet = getplanet();
-	if(planet)
-		an.add(this, "%1 (%2)", getname(), planet->getname());
-	else
-		an.add(this, getname());
 }
 
 playeri* entity::getenemy() const {

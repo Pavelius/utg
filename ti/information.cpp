@@ -23,18 +23,6 @@ static void add_line(stringbuilder& sb, const char* id, int value) {
 	sb.add(pn, nm);
 }
 
-void strategyi::getinfo(stringbuilder& sb) const {
-	auto pn = getdescription(id);
-	if(!pn)
-		return;
-	add_h3(sb, getnm("PrimaryAbility"));
-	for(auto v : primary)
-		add_line(sb, v.getid(), v.counter);
-	add_h3(sb, getnm("SecondaryAbility"));
-	for(auto v : secondary)
-		add_line(sb, v.getid(), v.counter);
-}
-
 static void addv(stringbuilder& sb, int value, const char* format) {
 	sb.addn("[%1i]", value);
 	sb.adds(format);
@@ -75,31 +63,6 @@ static void add_description(stringbuilder& sb, const char* id) {
 	}
 }
 
-void techi::getinfo(stringbuilder& sb) const {
-	add_h3(sb, getname());
-	sb.addn("---");
-	sb.addn("%1 %-Tech", bsdata<colori>::elements[color].getname());
-	addreq(sb, required);
-	add_description(sb, id);
-}
-
-void playeri::getinfo(stringbuilder& sb) const {
-	add_h3(sb, getname());
-	sb.addn("---");
-	addv(this, sb, StrategyToken);
-	addv(this, sb, FleetToken);
-	addv(this, sb, TacticToken);
-	sb.addn("---");
-	addp(this, sb, Resources);
-	addp(this, sb, Influence);
-	add_description(sb, id);
-}
-
-void indicatori::getinfo(stringbuilder& sb) const {
-	add_h3(sb, getname());
-	add_description(sb, id);
-}
-
 static void addv(stringbuilder& sb, const char* format, int value, int count) {
 	if(!value)
 		return;
@@ -122,19 +85,6 @@ static void addv(stringbuilder& sb, ability_s id, int value, int count = 0) {
 	addv(sb, getnm(bsdata<abilityi>::elements[id].id), value, count);
 }
 
-void troop::getinfo(stringbuilder& sb) const {
-	add_h3(sb, getname());
-	sb.addn("---");
-	addv(sb, Combat, get(Combat), get(CombatCount));
-	addv(sb, AntiFighterBarrage, get(AntiFighterBarrage), get(AntiFighterBarrageCount));
-	addv(sb, Bombardment, get(Bombardment), get(BombardmentCount));
-	addv(sb, SpaceCannon, get(SpaceCannon), get(SpaceCannonCount));
-	addcost(sb, get(Cost), get(CostCount));
-	addv(sb, Move, get(Move));
-	addv(sb, Production, getproduction());
-	addv(sb, Capacity, get(Capacity));
-}
-
 static void add_technologies(stringbuilder& sb) {
 	for(auto i = (tech_s)0; i < IntegratedEconomy; i = (tech_s)(i + 1)) {
 		if(!player->is(i))
@@ -154,7 +104,66 @@ static void add_action_cards(stringbuilder& sb) {
 	}
 }
 
-template<> void ftstatus<script>(const void* object, stringbuilder& sb) {
+template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
+	auto p = (strategyi*)object;
+	auto pn = getdescription(p->id);
+	if(!pn)
+		return;
+	add_h3(sb, getnm("PrimaryAbility"));
+	for(auto v : p->primary)
+		add_line(sb, v.getid(), v.counter);
+	add_h3(sb, getnm("SecondaryAbility"));
+	for(auto v : p->secondary)
+		add_line(sb, v.getid(), v.counter);
+}
+
+template<> void ftinfo<techi>(const void* object, stringbuilder& sb) {
+	auto p = (techi*)object;
+	add_h3(sb, p->getname());
+	sb.addn("---");
+	sb.addn("%1 %-Tech", bsdata<colori>::elements[p->color].getname());
+	addreq(sb, p->required);
+	add_description(sb, p->id);
+}
+
+template<> void ftinfo<playeri>(const void* object, stringbuilder& sb) {
+	auto p = (playeri*)object;
+	add_h3(sb, p->getname());
+	sb.addn("---");
+	addv(p, sb, StrategyToken);
+	addv(p, sb, FleetToken);
+	addv(p, sb, TacticToken);
+	sb.addn("---");
+	addp(p, sb, Resources);
+	addp(p, sb, Influence);
+	if(p->strategy) {
+		sb.addn("---");
+		sb.add(p->strategy->getname());
+	}
+	//add_description(sb, p->id);
+}
+
+template<> void ftinfo<indicatori>(const void* object, stringbuilder& sb) {
+	auto p = (indicatori*)object;
+	add_h3(sb, p->getname());
+	add_description(sb, p->id);
+}
+
+template<> void ftinfo<troop>(const void* object, stringbuilder& sb) {
+	auto p = (troop*)object;
+	add_h3(sb, p->getname());
+	sb.addn("---");
+	addv(sb, Combat, p->get(Combat), p->get(CombatCount));
+	addv(sb, AntiFighterBarrage, p->get(AntiFighterBarrage), p->get(AntiFighterBarrageCount));
+	addv(sb, Bombardment, p->get(Bombardment), p->get(BombardmentCount));
+	addv(sb, SpaceCannon, p->get(SpaceCannon), p->get(SpaceCannonCount));
+	addcost(sb, p->get(Cost), p->get(CostCount));
+	addv(sb, Move, p->get(Move));
+	addv(sb, Production, p->getproduction());
+	addv(sb, Capacity, p->get(Capacity));
+}
+
+template<> void ftinfo<script>(const void* object, stringbuilder& sb) {
 	auto p = (script*)object;
 	if(equal(p->id, "ShowTech")) {
 		add_h3(sb, getnm("Technologies"));

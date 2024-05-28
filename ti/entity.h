@@ -1,5 +1,4 @@
 #include "ability.h"
-#include "answers.h"
 #include "indicator.h"
 #include "nameable.h"
 #include "tag.h"
@@ -21,7 +20,6 @@ struct entity : nameable {
 	entity*				location;
 	unsigned short		flags;
 	constexpr explicit operator bool() const { return id != 0; }
-	void				add(answers& an);
 	void				clear();
 	void				discard();
 	void				exhaust();

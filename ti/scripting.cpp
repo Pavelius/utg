@@ -1,4 +1,5 @@
 #include "actioncard.h"
+#include "answers.h"
 #include "army.h"
 #include "condition.h"
 #include "pathfind.h"
@@ -18,7 +19,6 @@ static char		sb_temp[512];
 static stringbuilder sb(sb_temp);
 static entitya	querry, onboard;
 static playera	players;
-static answers	an;
 static int		last_value;
 static int		choose_options;
 static bool		choose_stop;
@@ -110,6 +110,18 @@ static playeri* find_player(const strategyi& e) {
 static void add_choose_options() {
 	if(choose_options > 0)
 		sb.adds(getnm("ChooseOptions"), choose_options);
+}
+
+static void add_entity(entity* p) {
+	auto planet = p->getplanet();
+	if(planet)
+		an.add(p, "%1 (%2)", p->getname(), planet->getname());
+	else
+		an.add(p, p->getname());
+}
+
+static void select_answers(entitya& source) {
+
 }
 
 static void addscript(const char* id) {
@@ -342,7 +354,7 @@ static void apply_movement() {
 }
 static void ai_movement() {
 	entitya ships;
-	ships.select(an);
+	ships.select_answers();
 	for(auto p : ships) {
 		auto capacity = p->get(Capacity);
 		auto player = p->player;
@@ -814,7 +826,7 @@ static void ask_dock() {
 	for(auto& e : bsdata<troop>()) {
 		if(e.player != player || !e.get(Production) || e.getsystem() != last_system)
 			continue;
-		e.add(an);
+		add_entity(&e);
 	}
 }
 static void apply_dock() {

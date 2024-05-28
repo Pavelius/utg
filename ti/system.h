@@ -1,8 +1,11 @@
 #include "entity.h"
+#include "point.h"
 #include "tile.h"
 #include "variant.h"
 
 #pragma once
+
+const int hms = 8;
 
 struct systemi : entity {
 	playeri*		home;
@@ -23,6 +26,9 @@ struct systemi : entity {
 	void			setactivate(const playeri* p, bool active);
 };
 extern systemi* last_system;
+
+inline point i2h(short unsigned i) { return {(short)(i % hms), (short)(i / hms)}; }
+inline short unsigned h2i(point v) { return v.y * hms + v.x; }
 
 void block_enemy(const playeri* player);
 void block_move();

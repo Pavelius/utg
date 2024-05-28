@@ -17,8 +17,6 @@
 #include "unit_type.h"
 #include "variant.h"
 
-template<> void ftstatus<script>(const void* object, stringbuilder& sb);
-
 decka actioncards;
 
 BSDATAC(actioncard, 128)
@@ -136,17 +134,17 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"ActionCard", VAR(actioncard, 1)},
 	{"Condition", VAR(conditioni, 1)},
-	{"Indicator", VAR(indicatori, 1), ftstatus<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
+	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Objective", VAR(objectivei, 1)},
 	{"Planet", VAR(planeti, 1)},
-	{"Player", VAR(playeri, 1), ftstatus<playeri>},
-	{"Script", VAR(script, 1), ftstatus<script>, 0, fnscript<script>, fntest<script>},
-	{"Strategy", VAR(strategyi, 1), ftstatus<strategyi>},
+	{"Player", VAR(playeri, 1), ftinfo<playeri>},
+	{"Script", VAR(script, 1), ftinfo<script>, 0, fnscript<script>, fntest<script>},
+	{"Strategy", VAR(strategyi, 1), ftinfo<strategyi>},
 	{"System", VAR(systemi, 1)},
-	{"Tech", VAR(techi, 1), ftstatus<techi>},
+	{"Tech", VAR(techi, 1), ftinfo<techi>},
 	{"TechUnit", VAR(techunit, 1)},
-	{"Troop", VAR(troop, 3), ftstatus<troop>},
+	{"Troop", VAR(troop, 3), ftinfo<troop>},
 	{"Unit", VAR(uniti, 1), 0, 0, fnscript<uniti>},
 	{"UnitType", VAR(unit_typei, 1)},
 };

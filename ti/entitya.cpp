@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "entitya.h"
 #include "pathfind.h"
 #include "planet.h"
@@ -117,7 +118,7 @@ void entitya::select(array& source) {
 	collectiona::select(source, is_valid_entity, true);
 }
 
-void entitya::select(answers& an) {
+void entitya::select_answers() {
 	auto ps = data + count;
 	auto pe = endof();
 	for(auto& e : an) {
@@ -288,7 +289,7 @@ static entity* choose_ai(const entitya& source, const char* id) {
 }
 
 static entity* choose_human(const entitya& source, const char* id, const char* cancel, int choose_mode) {
-	answers an;
+	an.clear();
 	for(auto p : source)
 		an.add(p, p->getname());
 	return (entity*)an.choose(getnm(id), cancel, choose_mode);

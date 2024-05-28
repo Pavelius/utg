@@ -1,4 +1,4 @@
-#include "analize.h"
+#include "answers.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_hexagon.h"

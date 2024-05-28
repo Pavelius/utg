@@ -78,13 +78,10 @@
     <ClCompile Include="tile.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="component.cpp">
+    <ClCompile Include="actioncard.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="racef.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="analize.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="unit.cpp">
@@ -108,9 +105,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="aidata.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="tech.h">
@@ -177,9 +171,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="agenda.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="analize.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

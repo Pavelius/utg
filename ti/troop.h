@@ -5,7 +5,6 @@
 struct troop : entity {
 	flagable<1>		flags;
 	void			clear() { memset(this, 0, sizeof(*this)); }
-	void			getinfo(stringbuilder& sb) const;
 	void			hit();
 	void			paint() const;
 	void			produce(const uniti* unit) const;

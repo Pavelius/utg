@@ -144,9 +144,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="analize.cpp" />
     <ClCompile Include="army.cpp" />
-    <ClCompile Include="component.cpp" />
+    <ClCompile Include="actioncard.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
@@ -177,8 +176,6 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="actioncard.h" />
     <ClInclude Include="agenda.h" />
-    <ClInclude Include="aidata.h" />
-    <ClInclude Include="analize.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="decka.h" />
     <ClInclude Include="entity.h" />

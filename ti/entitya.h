@@ -35,7 +35,7 @@ struct entitya : public collection<entity> {
 	void			select(array& source);
 	void			select(array& source, fnvisible proc, bool keep) { collectiona::select(source, proc, keep); }
 	void			select(array& source, fnallow proc, int param, bool keep) { collectiona::select(source, proc, param, keep); }
-	void			select(answers& an);
+	void			select_answers();
 	void			select(const entity* location);
 	void			select(const playeri* player, const entity* system, unit_type_s type);
 	void			select(const playeri* player, const entity* location);

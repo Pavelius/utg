@@ -1,4 +1,5 @@
 #include "army.h"
+#include "answers.h"
 #include "player.h"
 #include "pushvalue.h"
 #include "racef.h"
