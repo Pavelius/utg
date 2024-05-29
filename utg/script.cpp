@@ -55,8 +55,13 @@ bool script_isrun() {
 
 void script_run(const char* id, int bonus) {
 	last_script = bsdata<script>::find(id);
-	if(last_script)
+	if(last_script) {
 		last_script->proc(bonus);
+		return;
+	}
+	last_list = bsdata<listi>::find(id);
+	if(last_list)
+		script_run(last_list->elements);
 }
 
 void script_list(const char* id) {

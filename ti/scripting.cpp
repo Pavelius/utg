@@ -2,6 +2,7 @@
 #include "answers.h"
 #include "army.h"
 #include "condition.h"
+#include "list.h"
 #include "pathfind.h"
 #include "pushvalue.h"
 #include "planet.h"
@@ -530,44 +531,6 @@ static void select_system_reach(int bonus) {
 			continue;
 		querry.add(e.location);
 	}
-}
-
-static void entity_name(const void* object, stringbuilder& sb) {
-	auto p = (entity*)object;
-	sb.add(p->getname());
-	if(onboard.find((void*)object) != -1)
-		sb.adds("(%1)", getnm("Choosed"));
-}
-
-static bool apply_querry_result(void* result, int param) {
-	if(!result)
-		return false;
-	if(bsdata<script>::have(result))
-		((script*)result)->proc(param);
-	else {
-		auto find_index = onboard.find(result);
-		if(find_index == -1)
-			onboard.add(result);
-		else
-			onboard.add(result);
-	}
-	return true;
-}
-
-static void choose_querry_complex(entityar source, int count, const char* cancel, fnstatus getname, fnprint getheader) {
-	onboard.clear();
-	an.clear();
-	for(auto p : source) {
-		sb.clear(); getname(p, sb);
-		an.add(p, sb_temp);
-	}
-	sb.clear();
-	if(getheader)
-		getheader(sb);
-	auto result = an.choose(sb_temp, cancel);
-	if(!apply_querry_result(result, 0))
-		return;
-	count = onboard.getcount();
 }
 
 static void select_players(int bonus) {
@@ -1178,6 +1141,11 @@ static void select_system_can_shoot(int bonus) {
 	filter_enemy_ship_system(0);
 }
 
+static void continue_execute() {
+	while(script_begin < script_end)
+		script_run(*script_begin++);
+}
+
 static void for_each_player(int bonus) {
 	auto push_last = player;
 	auto push = players;
@@ -1216,6 +1184,97 @@ static void show_action_cards(int bonus) {
 static void show_tech(int bonus) {
 }
 
+static void apply_header(int bonus) {
+	auto push_id = choose_id;
+	auto push_header = answers::header;
+	auto push_res = answers::resid;
+	if(last_list) {
+		choose_id = last_list->id;
+		answers::header = getnm(last_list->id);
+	}
+	if(player)
+		answers::resid = player->id;
+	continue_execute();
+	answers::resid = push_res;
+	answers::header = push_header;
+	choose_id = push_id;
+}
+
+static void entity_name(const void* object, stringbuilder& sb) {
+	auto p = (entity*)object;
+	sb.add(p->getname());
+}
+
+static void header_many_choose(stringbuilder& sb) {
+	if(onboard) {
+		auto pd = getdescription(stw(choose_id, "Header"));
+		if(!pd)
+			pd = getdescription(stw(choose_id, "Ask"));
+		if(pd)
+			sb.addn("###%1", pd);
+		for(auto p : onboard)
+			sb.addn(p->getname());
+	} else {
+		auto pd = getdescription(stw(choose_id, "Ask"));
+		if(pd)
+			sb.addn("###%1", pd);
+	}
+}
+
+static bool apply_many_choose() {
+	if(!choose_result)
+		return false;
+	if(bsdata<playeri>::have(choose_result)
+		|| bsdata<planeti>::have(choose_result)
+		|| bsdata<troop>::have(choose_result)
+		|| bsdata<strategyi>::have(choose_result)
+		|| bsdata<uniti>::have(choose_result) || bsdata<prototype>::have(choose_result)
+		|| bsdata<systemi>::have(choose_result)
+		|| bsdata<abilityi>::have(choose_result)) {
+		auto find_index = onboard.find(choose_result);
+		if(find_index == -1)
+			onboard.add(choose_result);
+		else
+			onboard.add(choose_result);
+	} else
+		((fnevent)choose_result)();
+	return true;
+}
+
+static void clear_onboard() {
+	onboard.clear();
+}
+
+static void choose_many(entityar source, int maximum_count, fnstatus getname, fnprint getheader) {
+	if(!choose_id || !answers::console)
+		return;
+	choose_result = 0;
+	auto cancel = getdescription(stw(choose_id, "Cancel"));
+	onboard.clear();
+	while(true) {
+		auto count = onboard.getcount();
+		an.clear();
+		for(auto p : source) {
+			if(onboard.find(p) != -1)
+				continue;
+			sb.clear(); getname(p, sb);
+			an.add(p, sb_temp);
+		}
+		if(onboard)
+			an.add(clear_onboard, getnm("ClearSelection"));
+		sb.clear(); getheader(sb);
+		auto push_promp = answers::prompt; answers::prompt = sb_temp;
+		choose_result = an.choose(0, cancel);
+		answers::prompt = push_promp;
+		if(!apply_many_choose())
+			break;
+	}
+}
+
+static void choose_many(int bonus) {
+	choose_many(querry.records(), bonus, entity_name, header_many_choose);
+}
+
 void playeri::apply(const variants& source) {
 	auto push_player = player;
 	auto push_header = answers::header;
@@ -1252,6 +1311,7 @@ BSDATA(script) = {
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"AddNeighboring", add_neighboring},
+	{"ApplyHeader", apply_header},
 	{"CancelOrder", cancel_order},
 	{"ChooseAction", choose_action},
 	{"ChooseCombatOption", choose_combat_option},
@@ -1259,6 +1319,7 @@ BSDATA(script) = {
 	{"ChooseDock", choose_dock},
 	{"ChooseInvasion", choose_invasion},
 	{"ChooseInvasionPlanet", choose_invasion_planet},
+	{"ChooseMany", choose_many},
 	{"ChooseMove", choose_movement},
 	{"ChooseMoveOption", choose_move_options},
 	{"ChoosePDSorDock", choose_pds_or_dock},

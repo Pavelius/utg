@@ -96,6 +96,7 @@ Cancel: Отмена
 CancelInvasion: Отменить высадку
 CancelMovement: Отменить движение
 CancelOrder: Отменить заказ
+ClearSelection: Очистить выбор
 ChooseAction: Выбирайте действие
 ChooseCombatOption: Выбирайте опции боя
 ChooseCommandToken: Выбирайте резевр

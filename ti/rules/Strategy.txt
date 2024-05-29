@@ -38,8 +38,8 @@ VictoryPointOrSecretObjective
 
 #List
 
-ChooseStrategy
- elements Select Strategy
+TestingScript
+ elements ApplyHeader Select Strategy ChooseMany
 
 #Strategy
 

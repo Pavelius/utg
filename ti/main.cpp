@@ -3,6 +3,7 @@
 #include "draw_strategy.h"
 #include "entitya.h"
 #include "player.h"
+#include "script.h"
 #include "system.h"
 #include "speech.h"
 #include "troop.h"
@@ -29,6 +30,10 @@ static void test_combat() {
 	system->startcombat();
 }
 
+static void test_script() {
+	script_run("TestingScript");
+}
+
 #endif // _DEBUG
 
 static void start_game() {
@@ -37,6 +42,7 @@ static void start_game() {
 #endif
 	//test_combat();
 	prepare_game();
+	test_script();
 	play_game();
 }
 
