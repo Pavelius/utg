@@ -47,7 +47,7 @@ ActionPhase
 StrategyPhase
  elements SelectPlayers+1 ForEachPlayer ChooseStrategy
 TestingScript
- elements StrategyPhase
+ elements StrategyPhase ActionPhase
 
 #Strategy
 

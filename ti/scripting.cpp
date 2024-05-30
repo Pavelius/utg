@@ -27,6 +27,7 @@ static indicator_s command_tokens[] = {TacticToken, FleetToken, StrategyToken};
 
 struct commandstack : variants {
 	commandstack() { set(script_begin, script_end - script_begin); }
+	void		restore() { script_begin = begin(); script_end = end(); }
 };
 
 static bool is_mecatol_rex(const void* object) {
@@ -398,24 +399,6 @@ static void choose_movement(int bonus) {
 	update_control();
 }
 
-static void ask_choose_strategy() {
-	for(auto& e : bsdata<strategyi>()) {
-		if(find_player(e))
-			continue;
-		an.add(&e, getnm(e.id));
-	}
-}
-static void apply_choose_strategy() {
-	if(bsdata<strategyi>::have(choose_result)) {
-		player->strategy = (strategyi*)choose_result;
-		if(player->strategy)
-			player->sayspeech(player->strategy->id);
-	}
-}
-static void choose_strategy(int bonus) {
-	choose_complex("ChooseStrategy", 0, ask_choose_strategy, apply_choose_strategy, 0);
-}
-
 static void apply_value(indicator_s v, int value) {
 	if(value == 0) {
 		// Simple get value
@@ -443,7 +426,7 @@ static void apply_value(indicator_s v, int value) {
 }
 
 static void filter_player(int bonus) {
-	querry.match(player, bonus>=0);
+	querry.match(player, bonus >= 0);
 }
 
 static void no_mecatol_rex(int bonus) {
@@ -451,7 +434,7 @@ static void no_mecatol_rex(int bonus) {
 }
 
 static void filter_speaker(int bonus) {
-	querry.match(speaker, bonus>=0);
+	querry.match(speaker, bonus >= 0);
 }
 
 static void select_pds(int bonus) {
@@ -917,6 +900,10 @@ static void add_strategy(int bonus) {
 	player->strategy = last_strategy;
 }
 
+static void set_value(int bonus) {
+	last_value = bonus;
+}
+
 static void add_neighboring(int bonus) {
 	querry.distinct();
 	for(auto pe : querry) {
@@ -1057,11 +1044,6 @@ static void action_card(int bonus) {
 	}
 }
 
-void limit_by_capacity() {
-	for(auto& e : bsdata<systemi>()) {
-	}
-}
-
 static void redistribute_command_tokens(int bonus) {
 }
 
@@ -1093,7 +1075,7 @@ static void end_turn(int bonus) {
 }
 
 static void querry_count(int bonus) {
-	last_value = querry.getcount();
+	last_value = querry.getcount() + bonus;
 }
 
 static void querry_shuffle(int bonus) {
@@ -1417,15 +1399,46 @@ static void choose_single(int bonus) {
 	choose_single(entity_name, header_single_choose);
 }
 
+static bool if_non_zero(int bonus) {
+	return last_value > 0;
+}
+static void conditional(int bonus) {
+	if(!last_script->test(bonus))
+		script_stop();
+}
+
+static void do_repeat(int bonus) {
+	commandstack stack;
+	auto push_stop = choose_stop; choose_stop = false;
+	while(!choose_stop) {
+		stack.restore();
+		continue_execute();
+	}
+	choose_stop = push_stop;
+}
+
+static void do_switch(int bonus) {
+	auto i = script_end - script_begin;
+	if(bonus > i)
+		bonus = i;
+	if(last_value > bonus)
+		last_value = bonus;
+	commandstack push;
+	script_run(script_begin[last_value]);
+	push.restore();
+	script_begin += bonus + 1;
+}
+
+static void do_break(int bonus) {
+	script_stop();
+	choose_stop = true;
+}
+
 template<> bool fntest<indicatori>(int index, int bonus) {
 	return (player->get((indicator_s)index) + bonus) >= 0;
 }
 template<> void fnscript<indicatori>(int index, int bonus) {
 	apply_value((indicator_s)index, bonus);
-}
-
-template<> bool fntest<playeri>(int index, int bonus) {
-	return player == (bsdata<playeri>::elements + index);
 }
 
 template<> void fnscript<uniti>(int index, int bonus) {
@@ -1446,6 +1459,7 @@ BSDATA(script) = {
 	{"AddSpeaker", add_speaker},
 	{"AddStrategy", add_strategy},
 	{"ApplyHeader", apply_header},
+	{"Break", do_break},
 	{"CancelOrder", cancel_order},
 	{"ChooseAction", choose_action},
 	{"ChooseCombatOption", choose_combat_option},
@@ -1460,7 +1474,6 @@ BSDATA(script) = {
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseProduction", choose_production},
-	{"ChooseStrategy", choose_strategy},
 	{"ChooseSingle", choose_single},
 	{"ChooseSystem", choose_system},
 	{"ChooseTechnology", choose_technology},
@@ -1499,6 +1512,7 @@ BSDATA(script) = {
 	{"GroupSystems", group_systems},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", play_strategy, if_play_strategy},
+	{"IfNonZero", conditional, if_non_zero},
 	{"JoinPlanetsBySystems", join_planets_by_systems},
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
@@ -1508,6 +1522,7 @@ BSDATA(script) = {
 	{"QuerryCount", querry_count},
 	{"QuerryShuffle", querry_shuffle},
 	{"RedistributeCommandTokens", redistribute_command_tokens},
+	{"Repeat", do_repeat},
 	{"ReplenishCommodities", replenish_commodities},
 	{"ResearchTechnology", research_technology},
 	{"ScorePublicObjective", score_objective},
@@ -1523,8 +1538,10 @@ BSDATA(script) = {
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
 	{"SelectTroops", select_troops},
+	{"SetValue", set_value},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
+	{"Switch", do_switch},
 	{"RetreatBattle", combat_reatreat},
 };
 BSDATAF(script);

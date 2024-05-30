@@ -62,7 +62,6 @@ bool reaction(const char* id, const playeri* need_player, const playeri* exclude
 
 void initialize_game();
 bool is_free(const entity* p);
-void limit_by_capacity();
 void play_game();
 void prepare_game();
 void prepare_game_ui();
