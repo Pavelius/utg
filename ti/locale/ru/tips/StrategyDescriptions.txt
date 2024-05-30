@@ -42,5 +42,5 @@ LoseResources: Потратьте [%1i] ресурсов.
 
 ChoosingLeadership: Мы будем следовать лидерской стратегии. Только сильный лидер сможет привести свою нацию к успеху.
 
-TestingScriptAsk: Какие стратегии вы выбераете на текущий год?
-TestingScriptHeader: Ваш выбор стратегий
+TestingScriptAsk: Какие стратегии выбераете на год?
+TestingScriptAskChoosed: Ваш выбор стратегий

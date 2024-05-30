@@ -172,3 +172,7 @@ void entity::discard() {
 	flags = 0; // Remove all players token
 	player = 0; // Clear player
 }
+
+playeri* entity::getplayer() const {
+	return player;
+}

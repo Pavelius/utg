@@ -5,7 +5,6 @@
 #include "system.h"
 #include "planet.h"
 #include "player.h"
-#include "playera.h"
 #include "strategy.h"
 #include "troop.h"
 #include "unit.h"
@@ -13,6 +12,7 @@
 playeri* player;
 playeri* speaker;
 playeri* human_player;
+playeri* players[6];
 
 int finale_score;
 
@@ -25,7 +25,13 @@ bool playeri::ishuman() const {
 }
 
 int	playeri::getindex() const {
-	return origin_players.find(const_cast<playeri*>(this));
+	auto r = 0;
+	for(auto p : players) {
+		if(p == this)
+			return r;
+		r++;
+	}
+	return -1;
 }
 
 void playeri::actv(const char* format, const char* format_param) const {
@@ -161,20 +167,6 @@ void playeri::sayv(const char* format, const char* format_param) const {
 	pushvalue push_resid(answers::resid, id);
 	answers::console->addv(format, format_param);
 	pause();
-}
-
-static int compare_players(const void* v1, const void* v2) {
-	auto p1 = *((playeri**)v1);
-	auto p2 = *((playeri**)v2);
-	auto i1 = p1->getinitiative();
-	auto i2 = p2->getinitiative();
-	if(i1 != i2)
-		return i1 - i2;
-	return getbsi(p1) - getbsi(p2);
-}
-
-void players_sort_by_initiative() {
-	qsort(players.data, players.count, sizeof(players.data[0]), compare_players);
 }
 
 int getrate(indicator_s need, indicator_s currency, int count) {

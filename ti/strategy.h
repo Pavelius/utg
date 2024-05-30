@@ -6,3 +6,4 @@ struct strategyi : entity {
 	int			initiative;
 	variants	primary, secondary;
 };
+extern strategyi* last_strategy;

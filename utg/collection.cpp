@@ -171,3 +171,8 @@ void* collectiona::pick() {
 	remove(0, 1);
 	return result;
 }
+
+void collectiona::top(int number) {
+	if(count > number)
+		count = number;
+}

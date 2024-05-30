@@ -5,7 +5,7 @@ BuyResearchTechnology
 ChooseSystemToActivate
  elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
 ChooseNewSpeaker
- elements SelectPlayers NoSpeaker ChoosePlayer Speaker
+ elements SelectPlayers FilterSpeaker-1 ChoosePlayer Speaker
 GainGoods
  elements TradeGoods+3
 LookLawsAndChange
@@ -39,7 +39,7 @@ VictoryPointOrSecretObjective
 #List
 
 TestingScript
- elements ApplyHeader Select Strategy ChooseMany
+ elements ApplyHeader Select Strategy ChooseSingle
 
 #Strategy
 

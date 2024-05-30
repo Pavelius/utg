@@ -8,7 +8,6 @@
 #include "planet.h"
 #include "planet_trait.h"
 #include "player.h"
-#include "playera.h"
 #include "script.h"
 #include "strategy.h"
 #include "system.h"
@@ -19,7 +18,6 @@
 static char		sb_temp[512];
 static stringbuilder sb(sb_temp);
 static entitya	querry, onboard;
-static playera	players;
 static int		last_value;
 static int		choose_options;
 static bool		choose_stop;
@@ -110,6 +108,20 @@ static playeri* find_player(const strategyi& e) {
 			return p;
 	}
 	return 0;
+}
+
+static int compare_players(const void* v1, const void* v2) {
+	auto p1 = *((playeri**)v1);
+	auto p2 = *((playeri**)v2);
+	auto i1 = p1->getinitiative();
+	auto i2 = p2->getinitiative();
+	if(i1 != i2)
+		return i1 - i2;
+	return getbsi(p1) - getbsi(p2);
+}
+
+static void sort_by_initiative(int bonus) {
+	querry.sort(compare_players);
 }
 
 static void add_choose_options() {
@@ -420,16 +432,16 @@ static void apply_value(indicator_s v, int value) {
 	}
 }
 
-static void no_active_player(int bonus) {
-	players.filter(player, false);
+static void filter_player(int bonus) {
+	querry.match(player, bonus>=0);
 }
 
 static void no_mecatol_rex(int bonus) {
 	querry.match(is_mecatol_rex, false);
 }
 
-static void no_speaker(int bonus) {
-	players.filter(speaker, false);
+static void filter_speaker(int bonus) {
+	querry.match(speaker, bonus>=0);
 }
 
 static void select_pds(int bonus) {
@@ -534,9 +546,11 @@ static void select_system_reach(int bonus) {
 }
 
 static void select_players(int bonus) {
-	players = origin_players;
-	if(bonus < 0)
-		no_active_player(0);
+	querry.clear();
+	for(auto p : players) {
+		if(p)
+			querry.add(p);
+	}
 }
 
 static void choose_planet(int bonus) {
@@ -550,7 +564,7 @@ static void choose_troop(int bonus) {
 }
 
 static void choose_player(int bonus) {
-	player = players.choose(0);
+	player = (playeri*)querry.choose(0);
 }
 
 static void choose_system(int bonus) {
@@ -1148,22 +1162,24 @@ static void continue_execute() {
 
 static void for_each_player(int bonus) {
 	auto push_last = player;
-	auto push = players;
 	auto v = *script_begin++;
+	entityd push = querry;
 	for(auto p : push) {
-		player = p;
+		player = static_cast<playeri*>(p);
 		script_run(v);
 	}
 	player = push_last;
 }
 
 static void for_each_troop(int bonus) {
+	auto push_troop = last_troop;
 	auto v = *script_begin++;
 	entityd push = querry;
 	for(auto p : push) {
 		last_troop = (troop*)p;
 		script_run(v);
 	}
+	last_troop = push_troop;
 }
 
 static void for_each_planet(int bonus) {
@@ -1206,24 +1222,24 @@ static void entity_name(const void* object, stringbuilder& sb) {
 }
 
 static void header_many_choose(stringbuilder& sb) {
-	if(onboard) {
-		auto pd = getdescription(stw(choose_id, "Header"));
-		if(!pd)
-			pd = getdescription(stw(choose_id, "Ask"));
-		if(pd)
-			sb.addn("###%1", pd);
-		for(auto p : onboard)
-			sb.addn(p->getname());
-	} else {
-		auto pd = getdescription(stw(choose_id, "Ask"));
-		if(pd)
-			sb.addn("###%1", pd);
+	const char* pd = 0;
+	if(onboard)
+		pd = getdescription(stw(choose_id, "AskChoosed"));
+	if(!pd)
+		pd = getdescription(stw(choose_id, "Ask"));
+	if(pd) {
+		sb.addn("###%1", pd);
+		if(choose_options) {
+			auto count = choose_options - onboard.getcount();
+			if(count > 0)
+				sb.adds(getnm("ChooseOptions"), count);
+		}
 	}
+	for(auto p : onboard)
+		sb.addn(p->getname());
 }
 
-static bool apply_many_choose() {
-	if(!choose_result)
-		return false;
+static void apply_many_choose() {
 	if(bsdata<playeri>::have(choose_result)
 		|| bsdata<planeti>::have(choose_result)
 		|| bsdata<troop>::have(choose_result)
@@ -1234,55 +1250,122 @@ static bool apply_many_choose() {
 		auto find_index = onboard.find(choose_result);
 		if(find_index == -1)
 			onboard.add(choose_result);
-		else
-			onboard.add(choose_result);
 	} else
 		((fnevent)choose_result)();
-	return true;
+}
+
+static void apply_choose() {
+	if(bsdata<strategyi>::have(choose_result))
+		last_strategy = (strategyi*)choose_result;
+	else if(bsdata<planeti>::have(choose_result))
+		last_planet = (planeti*)choose_result;
+	else if(bsdata<systemi>::have(choose_result))
+		last_system = (systemi*)choose_result;
+	else if(bsdata<playeri>::have(choose_result))
+		player = (playeri*)choose_result;
 }
 
 static void clear_onboard() {
 	onboard.clear();
 }
 
-static void choose_many(entityar source, int maximum_count, fnstatus getname, fnprint getheader) {
+static void apply_onboard_to_querry() {
+	querry = onboard;
+	choose_stop = true;
+}
+
+static void choose_many(int maximum_count, fnstatus getname, fnprint getheader) {
 	if(!choose_id || !answers::console)
 		return;
+	if(!player->ishuman()) {
+		auto ps = bsdata<script>::find(stw(choose_id, "AI"));
+		if(ps)
+			ps->proc(maximum_count);
+		else {
+			querry.shuffle();
+			querry.top(maximum_count);
+		}
+		return;
+	}
+	auto push_stop = choose_stop; choose_stop = false;
+	auto push_options_count = choose_options; choose_options = maximum_count;
 	choose_result = 0;
 	auto cancel = getdescription(stw(choose_id, "Cancel"));
 	onboard.clear();
-	while(true) {
-		auto count = onboard.getcount();
+	while(!choose_stop) {
 		an.clear();
-		for(auto p : source) {
-			if(onboard.find(p) != -1)
-				continue;
-			sb.clear(); getname(p, sb);
-			an.add(p, sb_temp);
+		auto count = onboard.getcount();
+		if(!choose_options || choose_options > count) {
+			for(auto p : querry) {
+				if(onboard.find(p) != -1)
+					continue;
+				sb.clear(); getname(p, sb);
+				an.add(p, sb_temp);
+			}
 		}
-		if(onboard)
+		if(onboard) {
 			an.add(clear_onboard, getnm("ClearSelection"));
+			if(!maximum_count || count >= maximum_count) {
+				auto pd = getdescription(stw(choose_id, "Apply"));
+				if(!pd)
+					pd = getnm("Continue");
+				an.add(apply_onboard_to_querry, pd);
+			}
+		}
 		sb.clear(); getheader(sb);
 		auto push_promp = answers::prompt; answers::prompt = sb_temp;
 		choose_result = an.choose(0, cancel);
 		answers::prompt = push_promp;
-		if(!apply_many_choose())
+		if(!choose_result) {
+			script_stop();
 			break;
+		}
+		apply_many_choose();
 	}
+	choose_options = push_options_count;
+	choose_stop = push_stop;
+}
+
+static void header_single_choose(stringbuilder& sb) {
+	auto pd = getdescription(stw(choose_id, "Ask"));
+	if(pd)
+		sb.addn("###%1", pd);
+}
+
+static void choose_single(fnstatus getname, fnprint getheader) {
+	if(!choose_id || !answers::console)
+		return;
+	choose_result = 0;
+	if(!player->ishuman()) {
+		auto ps = bsdata<script>::find(stw(choose_id, "AI"));
+		if(ps)
+			ps->proc(1);
+		else
+			choose_result = querry.random();
+		return;
+	}
+	an.clear();
+	for(auto p : querry) {
+		sb.clear(); getname(p, sb);
+		an.add(p, sb_temp);
+	}
+	auto cancel = getdescription(stw(choose_id, "Cancel"));
+	sb.clear(); getheader(sb);
+	auto push_promp = answers::prompt; answers::prompt = sb_temp;
+	choose_result = an.choose(0, cancel);
+	answers::prompt = push_promp;
+	if(!choose_result)
+		script_stop();
+	else
+		apply_choose_action();
 }
 
 static void choose_many(int bonus) {
-	choose_many(querry.records(), bonus, entity_name, header_many_choose);
+	choose_many(bonus, entity_name, header_many_choose);
 }
 
-void playeri::apply(const variants& source) {
-	auto push_player = player;
-	auto push_header = answers::header;
-	player = this;
-	answers::header = player->getname();
-	script_run(source);
-	answers::header = push_header;
-	player = push_player;
+static void choose_single(int bonus) {
+	choose_single(entity_name, header_single_choose);
 }
 
 template<> bool fntest<indicatori>(int index, int bonus) {
@@ -1327,6 +1410,7 @@ BSDATA(script) = {
 	{"ChoosePlayer", choose_player},
 	{"ChooseProduction", choose_production},
 	{"ChooseStrategy", choose_strategy},
+	{"ChooseSingle", choose_single},
 	{"ChooseSystem", choose_system},
 	{"ChooseTechnology", choose_technology},
 	{"ChooseTroop", choose_troop},
@@ -1348,8 +1432,10 @@ BSDATA(script) = {
 	{"FilterHomeSystem", filter_home_system_you},
 	{"FilterMoveStop", filter_move},
 	{"FilterPlanetTrait", filter_notrait_planet},
+	{"FilterPlayer", filter_player},
 	{"FilterPlayerControled", filter_player_controled},
 	{"FilterProduction", filter_production_ability},
+	{"FilterSpeaker", filter_speaker},
 	{"FilterSystem", filter_system},
 	{"FilterRedTechnology", filter_red_technology},
 	{"FilterTechnologySpeciality", filter_any_technology},
@@ -1364,9 +1450,7 @@ BSDATA(script) = {
 	{"JoinPlanetsBySystems", join_planets_by_systems},
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
-	{"NoActivePlayer", no_active_player},
 	{"NoMecatolRex", no_mecatol_rex},
-	{"NoSpeaker", no_speaker},
 	{"PayCommandTokens", pay_command_tokens},
 	{"QuerryCount", querry_count},
 	{"RedistributeCommandTokens", redistribute_command_tokens},
@@ -1385,6 +1469,7 @@ BSDATA(script) = {
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
 	{"SelectTroops", select_troops},
+	{"SortByInitiative", sort_by_initiative},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
 	{"Speaker", set_speaker},

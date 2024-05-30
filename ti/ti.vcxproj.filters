@@ -60,9 +60,6 @@
     <ClCompile Include="system.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="playera.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="planet_trait.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="tile.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="playera.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="planet.h">

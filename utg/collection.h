@@ -24,6 +24,7 @@ struct collectiona : adat<void*, 256> {
 	void	shuffle();
 	void	sort(fngetname proc);
 	void	sort(fncompare proc);
+	void	top(int count);
 };
 template<typename T>
 struct collection : collectiona {

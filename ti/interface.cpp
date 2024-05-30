@@ -9,7 +9,6 @@
 #include "pushvalue.h"
 #include "planet.h"
 #include "player.h"
-#include "playera.h"
 #include "script.h"
 #include "system.h"
 #include "troop.h"
@@ -81,7 +80,7 @@ static void show_players() {
 		caret.x += 32;
 	}
 	alpha = push_alpha;
-	auto pi = players.find(player);
+	auto pi = player->getindex();
 	if(pi != -1) {
 		auto p = players[pi];
 		auto push_x1 = caret.x;

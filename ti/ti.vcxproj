@@ -159,7 +159,6 @@
     <ClCompile Include="planet.cpp" />
     <ClCompile Include="planet_trait.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="playera.cpp" />
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="requirement.cpp" />
     <ClCompile Include="scripting.cpp" />
@@ -185,7 +184,6 @@
     <ClInclude Include="planet.h" />
     <ClInclude Include="planet_trait.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="playera.h" />
     <ClInclude Include="racef.h" />
     <ClInclude Include="strategy.h" />
     <ClInclude Include="system.h" />

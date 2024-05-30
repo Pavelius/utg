@@ -3,7 +3,6 @@
 #include "pathfind.h"
 #include "planet.h"
 #include "player.h"
-#include "playera.h"
 #include "point.h"
 #include "pushvalue.h"
 #include "script.h"
@@ -63,7 +62,9 @@ void initialize_game() {
 }
 
 static void assign_prototypes() {
-	for(auto p : origin_players) {
+	for(auto p : players) {
+		if(!p)
+			continue;
 		auto proto = bsdata<prototype>::elements + p->getindex();
 		for(auto& e : bsdata<uniti>()) {
 			if(e.race && e.race != p)
@@ -77,17 +78,34 @@ static void assign_prototypes() {
 	}
 }
 
+static void add_player(playeri* p) {
+	for(auto& e : players) {
+		if(e)
+			continue;
+		e = p;
+		break;
+	}
+}
+
+static int player_count() {
+	auto r = 0;
+	for(auto p : players) {
+		if(p)
+			r++;
+	}
+	return r;
+}
+
 static void assign_factions() {
-	origin_players.clear();
+	memset(players, 0, sizeof(players));
 	for(auto& e : bsdata<playeri>())
-		origin_players.add(&e);
-	human_player = origin_players[2];
-	origin_players.shuffle();
-	players = origin_players;
+		add_player(&e);
+	human_player = players[2];
+	zshuffle(players, player_count());
 }
 
 static void determine_speaker() {
-	speaker = players.data[rand() % players.count];
+	speaker = players[rand() % player_count()];
 }
 
 static void set_control(playeri* player, systemi* system) {
@@ -211,7 +229,6 @@ static void strategy_phase() {
 		if(!player->strategy)
 			script_run("ChooseStrategy", 0);
 	}
-	players_sort_by_initiative();
 }
 
 static void score_objectives() {

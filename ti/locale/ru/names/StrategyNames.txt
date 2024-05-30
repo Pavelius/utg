@@ -8,3 +8,5 @@ Warfare: Военная стратегия
 
 PrimaryAbility: Первичная способность
 SecondaryAbility: Вторичная способность
+
+TestingScript: Тестовый сценарий

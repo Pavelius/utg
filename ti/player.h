@@ -1,4 +1,5 @@
 #include "color.h"
+#include "entity.h"
 #include "nameable.h"
 #include "indicator.h"
 #include "tech.h"
@@ -13,7 +14,7 @@ struct uniti;
 
 enum racef_s : unsigned char;
 
-struct playeri : nameable {
+struct playeri : entity {
 	char			indicators[VictoryPoints + 1];
 	color			fore;
 	techa			tech, tech_used;
@@ -26,7 +27,6 @@ struct playeri : nameable {
 	void			activate();
 	void			actv(const char* format, const char* format_param) const;
 	void			add(indicator_s v, int i);
-	void			apply(const variants& source);
 	bool			ask(const char* header_id, const char* format, ...) const;
 	bool			askv(const char* header_id, const char* format, const char* format_param) const;
 	void			assign(variants source);
@@ -52,6 +52,7 @@ struct playeri : nameable {
 	void			setcontrol(planeti* p);
 };
 extern playeri *player, *speaker, *human_player;
+extern playeri *players[6];
 extern int finale_score;
 
 int	getrate(indicator_s need, indicator_s currency, int count);

@@ -31,6 +31,7 @@ struct entity : nameable {
 	playeri*			getenemy() const;
 	const char*			getname() const;
 	planeti*			getplanet() const;
+	playeri*			getplayer() const;
 	int					getproduction() const;
 	color_s				getspeciality() const;
 	int					getsumary(ability_s v) const;
