@@ -1,2 +1,2 @@
 ﻿In file `rules/Strategy.txt`:
- Line 8: Can't find variant `NoSpeaker`
+ Line 8: Can't find variant `Speaker`

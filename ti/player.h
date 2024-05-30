@@ -44,6 +44,7 @@ struct playeri : entity {
 	int				getinitiative() const;
 	int				getplanetsummary(indicator_s v) const;
 	int				getsummary(const uniti* type) const;
+	strategyi*		getstrategy() const;
 	int				gettechs() const;
 	const uniti*	getunit(int index) const;
 	void			sayv(const char* format, const char* format_param) const;
@@ -60,9 +61,9 @@ int	getrate(indicator_s need, indicator_s currency, int count);
 bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);
 
 void initialize_game();
+bool is_free(const entity* p);
 void limit_by_capacity();
 void play_game();
-void players_sort_by_initiative();
 void prepare_game();
 void prepare_game_ui();
 void update_control();

@@ -102,6 +102,16 @@ static bool is_enemy_ships_in_system(const void* object) {
 	return false;
 }
 
+static bool is_free(const void* object) {
+	if(bsdata<strategyi>::have(object)) {
+		for(auto p : players) {
+			if(p && p->strategy == object)
+				return false;
+		}
+	}
+	return true;
+}
+
 static playeri* find_player(const strategyi& e) {
 	for(auto p : players) {
 		if(p->strategy == &e)
@@ -110,7 +120,7 @@ static playeri* find_player(const strategyi& e) {
 	return 0;
 }
 
-static int compare_players(const void* v1, const void* v2) {
+static int compare_initiative(const void* v1, const void* v2) {
 	auto p1 = *((playeri**)v1);
 	auto p2 = *((playeri**)v2);
 	auto i1 = p1->getinitiative();
@@ -120,8 +130,8 @@ static int compare_players(const void* v1, const void* v2) {
 	return getbsi(p1) - getbsi(p2);
 }
 
-static void sort_by_initiative(int bonus) {
-	querry.sort(compare_players);
+static void sort_by_initiative() {
+	querry.sort(compare_initiative);
 }
 
 static void add_choose_options() {
@@ -545,11 +555,29 @@ static void select_system_reach(int bonus) {
 	}
 }
 
+static void sort_by_speaker() {
+	if(!speaker)
+		return;
+	auto maximum = querry.getcount();
+	for(auto i = 0; i < maximum; i++) {
+		auto p = querry[0];
+		if(p == speaker)
+			break;
+		memmove(querry.data, querry.data + 1, (maximum - 1) * sizeof(querry.data[0]));
+		querry.data[maximum - 1] = p;
+	}
+}
+
 static void select_players(int bonus) {
 	querry.clear();
 	for(auto p : players) {
 		if(p)
 			querry.add(p);
+	}
+	switch(bonus) {
+	case 1: sort_by_speaker(); break;
+	case 2: sort_by_initiative(); break;
+	default: break;
 	}
 }
 
@@ -885,6 +913,10 @@ static void choose_combat_option(int bonus) {
 	choose_complex("ChooseCombatOption", 0, ask_combat_option, 0, 0);
 }
 
+static void add_strategy(int bonus) {
+	player->strategy = last_strategy;
+}
+
 static void add_neighboring(int bonus) {
 	querry.distinct();
 	for(auto pe : querry) {
@@ -1001,6 +1033,10 @@ static void filter_activated(int bonus) {
 	querry.match(is_tag, bsdata<playeri>::source.indexof(player), bonus >= 0);
 }
 
+static void filter_free(int bonus) {
+	querry.match(is_free, bonus >= 0);
+}
+
 static void filter_enemy_ship_system(int bonus) {
 	querry.match(is_enemy_ships_in_system, bonus >= 0);
 }
@@ -1009,7 +1045,7 @@ static void filter_active_player(int bonus) {
 	querry.match(player, bonus != -1);
 }
 
-static void set_speaker(int bonus) {
+static void add_speaker(int bonus) {
 	speaker = player;
 }
 
@@ -1058,6 +1094,12 @@ static void end_turn(int bonus) {
 
 static void querry_count(int bonus) {
 	last_value = querry.getcount();
+}
+
+static void querry_shuffle(int bonus) {
+	querry.shuffle();
+	if(bonus > 0)
+		querry.top(bonus);
 }
 
 static void filter_move(int bonus) {
@@ -1158,6 +1200,12 @@ static void select_system_can_shoot(int bonus) {
 static void continue_execute() {
 	while(script_begin < script_end)
 		script_run(*script_begin++);
+}
+
+static void push_player(int bonus) {
+	auto push_last = player;
+	continue_execute();
+	player = push_last;
 }
 
 static void for_each_player(int bonus) {
@@ -1342,6 +1390,7 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 			ps->proc(1);
 		else
 			choose_result = querry.random();
+		apply_choose();
 		return;
 	}
 	an.clear();
@@ -1357,7 +1406,7 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 	if(!choose_result)
 		script_stop();
 	else
-		apply_choose_action();
+		apply_choose();
 }
 
 static void choose_many(int bonus) {
@@ -1394,6 +1443,8 @@ BSDATA(script) = {
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"AddNeighboring", add_neighboring},
+	{"AddSpeaker", add_speaker},
+	{"AddStrategy", add_strategy},
 	{"ApplyHeader", apply_header},
 	{"CancelOrder", cancel_order},
 	{"ChooseAction", choose_action},
@@ -1427,6 +1478,7 @@ BSDATA(script) = {
 	{"FilterCruiserOrDestroyer", filter_cruiser_or_destroyer},
 	{"FilterEnemyShipSystem", filter_enemy_ship_system},
 	{"FilterExhaust", filter_exhaust},
+	{"FilterFree", filter_free},
 	{"FilterIndustrial", filter_industrial_planet},
 	{"FilterHasardous", filter_hazardous_planet},
 	{"FilterHomeSystem", filter_home_system_you},
@@ -1452,7 +1504,9 @@ BSDATA(script) = {
 	{"MoveShip", move_ship},
 	{"NoMecatolRex", no_mecatol_rex},
 	{"PayCommandTokens", pay_command_tokens},
+	{"PushPlayer", push_player},
 	{"QuerryCount", querry_count},
+	{"QuerryShuffle", querry_shuffle},
 	{"RedistributeCommandTokens", redistribute_command_tokens},
 	{"ReplenishCommodities", replenish_commodities},
 	{"ResearchTechnology", research_technology},
@@ -1469,10 +1523,8 @@ BSDATA(script) = {
 	{"SelectTroopActive", select_troop},
 	{"SelectTroopHome", select_troop_home},
 	{"SelectTroops", select_troops},
-	{"SortByInitiative", sort_by_initiative},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
-	{"Speaker", set_speaker},
 	{"RetreatBattle", combat_reatreat},
 };
 BSDATAF(script);

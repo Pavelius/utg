@@ -182,3 +182,7 @@ int getrate(indicator_s need, indicator_s currency, int count) {
 		an.add((void*)i, getnm("RateAnswer"), pn, pc);
 	return (int)an.choose(temp);
 }
+
+strategyi* playeri::getstrategy() const {
+	return strategy;
+}

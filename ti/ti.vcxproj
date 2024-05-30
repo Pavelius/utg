@@ -163,6 +163,7 @@
     <ClCompile Include="requirement.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="racef.cpp" />
+    <ClCompile Include="strategy.cpp" />
     <ClCompile Include="system.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="tech.cpp" />

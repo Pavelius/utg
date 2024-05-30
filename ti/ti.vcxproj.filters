@@ -96,6 +96,9 @@
     <ClCompile Include="requirement.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="strategy.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="strategy.h">

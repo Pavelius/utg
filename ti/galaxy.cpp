@@ -6,6 +6,7 @@
 #include "point.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "strategy.h"
 #include "system.h"
 #include "unit.h"
 #include "troop.h"
@@ -83,6 +84,7 @@ static void add_player(playeri* p) {
 		if(e)
 			continue;
 		e = p;
+		p->player = p;
 		break;
 	}
 }
@@ -226,7 +228,7 @@ static void strategy_phase() {
 		answers::header = player->getname();
 		answers::resid = player->getid();
 		script_run("FocusHomeSystem", 0);
-		if(!player->strategy)
+		if(!player->getstrategy())
 			script_run("ChooseStrategy", 0);
 	}
 }
@@ -271,8 +273,9 @@ static void return_strategic_cards() {
 	for(auto p : players) {
 		p->use_strategy = false;
 		p->pass_action_phase = false;
-		p->strategy = 0;
 	}
+	for(auto& e : bsdata<strategyi>())
+		e.player = 0;
 }
 
 static void agenda_phase() {

@@ -136,9 +136,10 @@ template<> void ftinfo<playeri>(const void* object, stringbuilder& sb) {
 	sb.addn("---");
 	addp(p, sb, Resources);
 	addp(p, sb, Influence);
-	if(p->strategy) {
+	auto strategy = p->getstrategy();
+	if(strategy) {
 		sb.addn("---");
-		sb.add(p->strategy->getname());
+		sb.add(strategy->getname());
 	}
 	//add_description(sb, p->id);
 }
