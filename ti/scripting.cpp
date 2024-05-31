@@ -897,7 +897,10 @@ static void choose_combat_option(int bonus) {
 }
 
 static void add_strategy(int bonus) {
-	player->strategy = last_strategy;
+	if(bonus < 0)
+		player->strategy = 0;
+	else
+		player->strategy = last_strategy;
 }
 
 static void set_value(int bonus) {
@@ -1418,20 +1421,27 @@ static void do_repeat(int bonus) {
 }
 
 static void do_switch(int bonus) {
+	commandstack stack;
 	auto i = script_end - script_begin;
 	if(bonus > i)
 		bonus = i;
-	if(last_value > bonus)
-		last_value = bonus;
-	commandstack push;
+	if(last_value >= bonus)
+		last_value = bonus - 1;
 	script_run(script_begin[last_value]);
-	push.restore();
-	script_begin += bonus + 1;
+	stack.restore();
+	script_begin += bonus;
 }
 
 static void do_break(int bonus) {
 	script_stop();
 	choose_stop = true;
+}
+
+static void if_winner_break(int bonus) {
+	if(game_winner) {
+		script_stop();
+		choose_stop = true;
+	}
 }
 
 template<> bool fntest<indicatori>(int index, int bonus) {
@@ -1513,6 +1523,7 @@ BSDATA(script) = {
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", play_strategy, if_play_strategy},
 	{"IfNonZero", conditional, if_non_zero},
+	{"IfWinnerBreak", if_winner_break},
 	{"JoinPlanetsBySystems", join_planets_by_systems},
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},

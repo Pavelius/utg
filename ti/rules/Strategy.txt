@@ -38,16 +38,26 @@ VictoryPointOrSecretObjective
 
 #List
 
+DrawActionCards
+ReturnStrategyCards
+ elements ApplyHeader SelectPlayers+1 ForEachPlayer AddStrategy-1
 ChooseStrategy
  elements ApplyHeader Select Strategy FilterFree ChooseSingle AddStrategy
 DetermineSpeaker
  elements SelectPlayers QuerryShuffle+1 ForEachPlayer AddSpeaker
+
 ActionPhase
  elements SelectPlayers+2 ForEachPlayer ChooseAction
 StrategyPhase
  elements SelectPlayers+1 ForEachPlayer ChooseStrategy
+StatusPhase
+ elements DrawActionCards ReturnStrategyCards
+AgendaPhase
+
+GameTurn
+ elements Repeat IfWinnerBreak StrategyPhase ActionPhase StatusPhase AgendaPhase
 TestingScript
- elements StrategyPhase ActionPhase
+ elements GameTurn
 
 #Strategy
 

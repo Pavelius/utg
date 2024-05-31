@@ -52,7 +52,7 @@ struct playeri : entity {
 	void			set(indicator_s v, int i) { indicators[v] = i; }
 	void			setcontrol(planeti* p);
 };
-extern playeri *player, *speaker, *human_player;
+extern playeri *player, *speaker, *human_player, *game_winner;
 extern playeri *players[6];
 extern int finale_score;
 

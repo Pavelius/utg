@@ -12,6 +12,7 @@
 playeri* player;
 playeri* speaker;
 playeri* human_player;
+playeri* game_winner;
 playeri* players[6];
 
 int finale_score;
