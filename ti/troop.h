@@ -3,7 +3,6 @@
 #pragma once
 
 struct troop : entity {
-	flagable<1>		flags;
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			hit();
 	void			paint() const;

@@ -2,7 +2,7 @@
 
 TacticAction
  use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
-OrbitalDrop parent(TheFederationOfSol)
+OrbitalDrop player(TheFederationOfSol)
  use StrategyToken-1 SelectPlanets+1 ChoosePlanet Infantry+2
 PassAction
  use IfPlayStrategy ActionPhasePass

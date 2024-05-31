@@ -75,7 +75,7 @@
     <ClCompile Include="tile.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="actioncard.cpp">
+    <ClCompile Include="card.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="racef.cpp">
@@ -131,7 +131,7 @@
     <ClInclude Include="entitya.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="actioncard.h">
+    <ClInclude Include="card.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="decka.h">

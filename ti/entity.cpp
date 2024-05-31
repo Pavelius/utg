@@ -1,4 +1,4 @@
-#include "actioncard.h"
+#include "card.h"
 #include "answers.h"
 #include "entity.h"
 #include "player.h"
@@ -62,8 +62,8 @@ const char* entity::getname() const {
 const char* entity::getid() const {
 	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
 		return ((uniti*)id)->id;
-	else if(bsdata<actioncard>::have(id))
-		return ((actioncard*)id)->id;
+	else if(bsdata<card>::have(id))
+		return ((card*)id)->id;
 	else if(id)
 		return id;
 	return "";
@@ -120,9 +120,9 @@ const uniti* entity::getunit() const {
 	return 0;
 }
 
-const actioncard* entity::getactioncard() const {
-	if(bsdata<actioncard>::have(id))
-		return (actioncard*)id;
+const card* entity::getcard() const {
+	if(bsdata<card>::have(id))
+		return (card*)id;
 	return 0;
 }
 
@@ -167,7 +167,7 @@ void entity::exhaust() {
 }
 
 void entity::discard() {
-	if(bsdata<actioncard>::have(id))
+	if(bsdata<card>::have(id))
 		actioncards.add(this); // To the down of deck
 	flags = 0; // Remove all players token
 	player = 0; // Clear player

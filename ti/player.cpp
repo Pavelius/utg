@@ -101,7 +101,7 @@ int	playeri::getinitiative() const {
 int	playeri::getactioncards() const {
 	auto result = 0;
 	for(auto& e : bsdata<entity>()) {
-		auto p = e.getactioncard();
+		auto p = e.getcard();
 		if(!p)
 			continue;
 		if(e.player == this)

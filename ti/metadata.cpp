@@ -1,4 +1,4 @@
-#include "actioncard.h"
+#include "card.h"
 #include "bsreq.h"
 #include "condition.h"
 #include "list.h"
@@ -19,7 +19,7 @@
 
 decka actioncards;
 
-BSDATAC(actioncard, 128)
+BSDATAC(card, 128)
 BSDATAC(entity, 512)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
@@ -35,9 +35,9 @@ NOBSDATA(color)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(actioncard) = {
+BSMETA(card) = {
 	BSREQ(id),
-	BSREQ(parent),
+	BSREQ(player),
 	BSREQ(count),
 	BSREQ(trigger),
 	BSREQ(use),
@@ -135,7 +135,7 @@ BSMETA(varianti) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"ActionCard", VAR(actioncard, 1)},
+	{"ActionCard", VAR(card, 1)},
 	{"Condition", VAR(conditioni, 1)},
 	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},

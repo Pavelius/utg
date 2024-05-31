@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="army.cpp" />
-    <ClCompile Include="actioncard.cpp" />
+    <ClCompile Include="card.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
@@ -174,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
-    <ClInclude Include="actioncard.h" />
+    <ClInclude Include="card.h" />
     <ClInclude Include="agenda.h" />
     <ClInclude Include="army.h" />
     <ClInclude Include="decka.h" />

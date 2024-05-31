@@ -1,6 +1,6 @@
-#include "actioncard.h"
 #include "answers.h"
 #include "army.h"
+#include "card.h"
 #include "condition.h"
 #include "list.h"
 #include "pathfind.h"
@@ -197,7 +197,7 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 }
 
 static void standart_answers() {
-	for(auto& e : bsdata<actioncard>()) {
+	for(auto& e : bsdata<card>()) {
 		if(e.count)
 			continue;
 		if(strcmp(e.trigger, choose_id) != 0)
@@ -211,8 +211,8 @@ static void standart_answers() {
 }
 
 static bool standart_apply() {
-	if(bsdata<actioncard>::have(choose_result))
-		script_run(((actioncard*)choose_result)->use);
+	if(bsdata<card>::have(choose_result))
+		script_run(((card*)choose_result)->use);
 	else if(bsdata<script>::have(choose_result))
 		((script*)choose_result)->proc(0);
 	else
@@ -1113,7 +1113,7 @@ static entity* find_reaction_entity(const char* id, const playeri* need_player, 
 			continue;
 		if(e.player == exclude_player)
 			continue;
-		auto p = e.getactioncard();
+		auto p = e.getcard();
 		if(!p)
 			continue;
 		if(!equal(p->id, id))
@@ -1160,7 +1160,7 @@ void playeri::event(const char* id) {
 	for(auto& e : bsdata<entity>()) {
 		if(e.player != player)
 			continue;
-		auto p = e.getactioncard();
+		auto p = e.getcard();
 		if(!p)
 			continue;
 		if(!equal(p->trigger, id))

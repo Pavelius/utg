@@ -1,4 +1,4 @@
-#include "actioncard.h"
+#include "card.h"
 #include "player.h"
 #include "script.h"
 #include "strategy.h"
@@ -95,7 +95,7 @@ static void add_technologies(stringbuilder& sb) {
 
 static void add_action_cards(stringbuilder& sb) {
 	for(auto& e : bsdata<entity>()) {
-		auto p = e.getactioncard();
+		auto p = e.getcard();
 		if(!p)
 			continue;
 		if(e.player != player)

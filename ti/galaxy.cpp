@@ -1,5 +1,5 @@
-#include "actioncard.h"
 #include "answers.h"
+#include "card.h"
 #include "pathfind.h"
 #include "planet.h"
 #include "player.h"
@@ -197,7 +197,7 @@ static void add_card(decka& deck, void* parent) {
 
 static void create_action_card_deck() {
 	actioncards.clear();
-	for(auto& e : bsdata<actioncard>()) {
+	for(auto& e : bsdata<card>()) {
 		for(auto i = 0; i < e.count; i++)
 			add_card(actioncards, &e);
 	}

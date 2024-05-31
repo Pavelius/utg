@@ -5,7 +5,7 @@
 
 #pragma once
 
-struct actioncard;
+struct card;
 struct playeri;
 struct planeti;
 struct systemi;
@@ -18,7 +18,7 @@ enum unit_type_s : unsigned char;
 struct entity : nameable {
 	playeri*			player;
 	entity*				location;
-	unsigned short		flags;
+	unsigned			flags;
 	constexpr explicit operator bool() const { return id != 0; }
 	void				clear();
 	void				discard();
@@ -26,7 +26,7 @@ struct entity : nameable {
 	void				focusing() const;
 	int					get(ability_s v) const;
 	int					get(indicator_s v) const;
-	const actioncard*	getactioncard() const;
+	const card*			getcard() const;
 	const char*			getid() const;
 	playeri*			getenemy() const;
 	const char*			getname() const;
