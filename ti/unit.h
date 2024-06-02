@@ -28,3 +28,4 @@ private:
 struct prototype {
 	uniti			units[10];
 };
+extern uniti* last_unit;

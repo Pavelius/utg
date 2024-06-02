@@ -1,6 +1,7 @@
 #include "card.h"
 #include "bsreq.h"
 #include "condition.h"
+#include "filter.h"
 #include "list.h"
 #include "objective.h"
 #include "planet.h"
@@ -49,6 +50,9 @@ BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
 BSMETA(entity) = {
+	BSREQ(id),
+	{}};
+BSMETA(filteri) = {
 	BSREQ(id),
 	{}};
 BSMETA(indicatori) = {
@@ -137,6 +141,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"ActionCard", VAR(card, 1)},
 	{"Condition", VAR(conditioni, 1)},
+	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
 	{"Objective", VAR(objectivei, 1)},

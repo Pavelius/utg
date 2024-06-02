@@ -216,6 +216,8 @@ void prepare_game() {
 	create_action_card_deck();
 	prepare_finish();
 	prepare_game_ui();
+	update_control();
+	update_ui();
 }
 
 static void strategy_phase() {

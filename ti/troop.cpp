@@ -55,3 +55,12 @@ void troop::hit() {
 	if(destroyed)
 		clear();
 }
+
+int troop_count(const playeri* player, const uniti* unit) {
+	auto result = 0;
+	for(auto& e : bsdata<troop>()) {
+		if(e.player == player && e.getunit() == unit)
+			result++;
+	}
+	return result;
+}

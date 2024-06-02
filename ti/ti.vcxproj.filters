@@ -99,6 +99,9 @@
     <ClCompile Include="strategy.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="filter.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="strategy.h">
@@ -168,6 +171,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="agenda.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="filter.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

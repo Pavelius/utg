@@ -6,6 +6,8 @@
 #include "unit.h"
 #include "unit_type.h"
 
+uniti* last_unit;
+
 int	uniti::getweight() const { return abilities[Cost] * 2 / imax(1, (int)abilities[CostCount]); }
 
 void uniti::placement(int count, bool need_update_ui) const {

@@ -4,6 +4,8 @@ BuyResearchTechnology
  elements Resources-4 ResearchTechnology+1
 ChooseSystemToActivate
  elements SelectSystemReach FilterActivated-1 FilterMoveStop-1 ChooseSystem ActivateSystem
+ChoosePDSorDock
+ elements ApplyHeader ClearQuerry PDS AddUnitQuerry SpaceDock AddUnitQuerry FilterAddUnit ChooseSingle
 ChooseNewSpeaker
  elements ApplyHeader PushPlayer SelectPlayers FilterSpeaker-1 ChooseSingle AddSpeaker
 GainGoods
@@ -12,9 +14,9 @@ LookLawsAndChange
 PlacePDSOnPlanet
  elements SelectPlanets+1 ChoosePlanet PDS
 PlacePDSorDocksOnPlanet
- elements SelectPlanets+1 ChoosePlanet ChoosePDSorDock
+ elements ChoosePDSorDock SelectPlanets+1 FilterAddUnitPlanet ChooseSingle AddUnit
 PlacePDSorDocksOnPlanetAndActivate
- elements SelectPlanets+1 ChoosePlanet ActivateSystem ChoosePDSorDock
+ elements ChoosePDSorDock SelectPlanets+1 FilterAddUnitPlanet ChooseSingle AddUnit
 ProduceOneUnit
  elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
 ProtectYourSystem

@@ -146,6 +146,7 @@
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="army.cpp" />
     <ClCompile Include="card.cpp" />
+    <ClCompile Include="filter.cpp" />
     <ClCompile Include="galaxy.cpp" />
     <ClCompile Include="indicator.cpp" />
     <ClCompile Include="information.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="decka.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="entitya.h" />
+    <ClInclude Include="filter.h" />
     <ClInclude Include="indicator.h" />
     <ClInclude Include="objective.h" />
     <ClInclude Include="planet.h" />

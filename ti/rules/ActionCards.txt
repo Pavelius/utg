@@ -3,7 +3,7 @@
 TacticAction
  use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
 OrbitalDrop player(TheFederationOfSol)
- use StrategyToken-1 SelectPlanets+1 ChoosePlanet Infantry+2
+ use StrategyToken-1 SelectPlanets ChoosePlanet Infantry AddUnit+2
 PassAction
  use IfPlayStrategy ActionPhasePass
 
@@ -21,7 +21,7 @@ DiplomacyRider
 Disable
 DistinguishedCouncilor
 EconomicInitiative trigger(ChooseAction)
- use SelectPlanets+1 FilterCultural+1 ForEachPlanet Exhaust-1
+ use SelectPlanets+1 FilterCultural ForEachPlanet Exhaust-1
 EmergencyRepairs
 ExperimentalBattlestation
 FighterPrototype
@@ -31,7 +31,7 @@ FocusedResearch trigger(ChooseAction)
 FrontlineDeployment trigger(ChooseAction)
  use SelectPlanets+1 ChoosePlanet Infantry+3
 GhostShip trigger(ChooseAction)
- use SelectSystems FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer+1
+ use SelectSystems FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer AddUnit
 ImperialRider
 InTheSilenceOfSpace
 IndustrialInitiative trigger(ChooseAction)
@@ -56,11 +56,11 @@ RepealLaw trigger(ChooseAction)
 RiseOfAMessiah trigger(ChooseAction)
 Salvage trigger(AfterWinSpaceCombat)
 SignalJamming trigger(ChooseAction)
- use SelectTroops GroupSystems AddNeighboring FilterPlayerControled-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
+ use SelectTroops GroupSystems AddNeighboring FilterPlayer-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
 Spy trigger(ChooseAction)
 Summit
 TacticalBombardment trigger(ChooseAction)
- use SelectTroops+1 FilterProduction GroupSystems JoinPlanetsBySystems FilterPlayerControled-1 ChooseSystem SelectPlanets-1 FilterSystem Exhaust-1
+ use SelectTroops+1 FilterProduction GroupSystems JoinPlanetsBySystems FilterPlayer-1 ChooseSystem SelectPlanets-1 FilterSystem Exhaust-1
 TechnologyRider
 TradeRider
 UnexpectedAction trigger(ChooseAction)

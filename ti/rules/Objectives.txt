@@ -22,7 +22,7 @@ CentralizeGalacticTrade
 ConquerTheWeak
  condition SelectSystemOwnPlanetYouControl FilterHomeSystem-1 FilterAnyHomeSystem QuerryCount-1
 FormGalacticBrainTrust
- condition SelectPlanets+1 FilterTechnologySpeciality QuerryCount-5
+ condition SelectPlanets+1 FilterNoTechnology-1 QuerryCount-5
 FoundAGoldenAge
  condition Resources-12
 GalvanizeThePeople

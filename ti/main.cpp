@@ -43,7 +43,7 @@ static void start_game() {
 	//test_combat();
 	prepare_game();
 	test_script();
-	//play_game();
+	play_game();
 }
 
 static void initialize() {

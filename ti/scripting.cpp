@@ -2,6 +2,7 @@
 #include "army.h"
 #include "card.h"
 #include "condition.h"
+#include "filter.h"
 #include "list.h"
 #include "pathfind.h"
 #include "pushvalue.h"
@@ -35,11 +36,7 @@ static bool is_mecatol_rex(const void* object) {
 		|| object == bsdata<planeti>::elements;
 }
 
-static bool is_player_controled(const void* object) {
-	return ((entity*)object)->player == player;
-}
-
-static bool is_cruiser_or_destroyer(const void* object) {
+static bool filter_cruiser_or_destroyer(const void* object) {
 	auto index = bsdata<playeri>::source.indexof(player);
 	auto p = (troop*)object;
 	auto pu = p->getunit();
@@ -47,12 +44,12 @@ static bool is_cruiser_or_destroyer(const void* object) {
 		|| pu == (uniti*)(bsdata<prototype>::elements + 6); // Cruiser
 }
 
-static bool is_tag(const void* object, int index) {
-	return ((entity*)object)->is((tag_s)index);
+static bool filter_tag(const void* object) {
+	return ((entity*)object)->is((tag_s)last_filter->param);
 }
 
-static bool is_ability(const void* object, int index) {
-	return ((entity*)object)->get((ability_s)index) > 0;
+static bool filter_activated(const void* object) {
+	return ((entity*)object)->is((tag_s)bsdata<playeri>::source.indexof(player));
 }
 
 static bool is_ingame(const void* object) {
@@ -69,28 +66,28 @@ static bool join_systems(const void* object, int index) {
 	return ((collectiona*)index)->have(p);
 }
 
-static bool is_whormhole(const void* object) {
+static bool filter_wormhole(const void* object) {
 	auto p = ((entity*)object)->getsystem();
 	if(!p)
 		return false;
 	return p->special == WormholeAlpha || p->special == WormholeBeta;
 }
 
-static bool is_player_home_system(const void* object) {
+static bool filter_home_system(const void* object) {
 	auto p = ((entity*)object)->getsystem();
 	if(!p)
 		return false;
 	return p->home == player;
 }
 
-static bool is_any_home_system(const void* object) {
+static bool filter_home_system_any(const void* object) {
 	auto p = ((entity*)object)->getsystem();
 	if(!p)
 		return false;
 	return p->home != 0;
 }
 
-static bool is_enemy_ships_in_system(const void* object) {
+static bool filter_enemy_ships_system(const void* object) {
 	auto system = ((entity*)object)->getsystem();
 	if(!system)
 		return false;
@@ -103,7 +100,7 @@ static bool is_enemy_ships_in_system(const void* object) {
 	return false;
 }
 
-static bool is_free(const void* object) {
+static bool filter_free(const void* object) {
 	if(bsdata<strategyi>::have(object)) {
 		for(auto p : players) {
 			if(p && p->strategy == object)
@@ -425,21 +422,16 @@ static void apply_value(indicator_s v, int value) {
 	}
 }
 
-static void filter_player(int bonus) {
-	querry.match(player, bonus >= 0);
+static bool filter_player(const void* object) {
+	return ((entity*)object)->player == player;
+}
+
+static bool filter_speaker(const void* object) {
+	return ((entity*)object)->player == speaker;
 }
 
 static void no_mecatol_rex(int bonus) {
 	querry.match(is_mecatol_rex, false);
-}
-
-static void filter_speaker(int bonus) {
-	querry.match(speaker, bonus >= 0);
-}
-
-static void select_pds(int bonus) {
-	querry.clear();
-	querry.select(bsdata<troop>::source, is_ability, SpaceCannon, true);
 }
 
 static void select_variant(int bonus) {
@@ -450,7 +442,7 @@ static void select_variant(int bonus) {
 }
 
 static void select_planets(int bonus) {
-	querry.select(bsdata<planeti>::source, is_player_controled, bonus >= 0);
+	querry.select(bsdata<planeti>::source, filter_player, bonus >= 0);
 }
 
 static void select_planet_not_you_control(int bonus) {
@@ -483,7 +475,7 @@ static void select_system_own_planet(int bonus) {
 }
 
 static void select_troops(int bonus) {
-	querry.select(bsdata<troop>::source, is_player_controled, bonus >= 0);
+	querry.select(bsdata<troop>::source, filter_player, bonus >= 0);
 }
 
 static void select_troop(int bonus) {
@@ -836,34 +828,41 @@ static void choose_dock(int bonus) {
 	choose_complex("ChooseDock", 0, ask_dock, apply_dock, 0);
 }
 
-static bool allow(const uniti* pu) {
-	auto maximum_count = pu->abilities[MaximumInOneLocation];
-	if(maximum_count > 0) {
-		if(pu->type == Structures) {
+static bool filter_add_unit_maximum(const void* object) {
+	auto p = (uniti*)object;
+	auto maximum_count = p->abilities[Reinforcement];
+	if(!maximum_count)
+		return true;
+	auto count = troop_count(player, last_unit);
+	return count < maximum_count;
+}
+
+static bool filter_add_unit(const void* object) {
+	if(!filter_add_unit_maximum(object))
+		return false;
+	auto p = (uniti*)object;
+	if(p->type == Structures) {
+		auto maximum_count = p->abilities[MaximumInOneLocation];
+		for(auto& e : bsdata<planeti>()) {
+			if(e.player != player)
+				continue;
 			entitya source;
-			source.select(player, last_planet);
-			if(source.getsummary(pu) >= maximum_count)
-				return false;
+			source.select(player, &e);
+			if(source.getsummary(p) < maximum_count)
+				return true;
 		}
+		return false;
 	}
 	return true;
 }
-static void add_unit(answers& an, const char* id) {
-	auto pu = bsdata<uniti>::find(id);
-	if(!pu || !allow(pu))
-		return;
-	an.add(pu, getnm(pu->id));
-}
-static void ask_pds_or_dock() {
-	add_unit(an, "PDS");
-	add_unit(an, "SpaceDock");
-}
-static void apply_pds_or_dock() {
-	if(bsdata<uniti>::have(choose_result))
-		((uniti*)choose_result)->placement(1);
-}
-static void choose_pds_or_dock(int bonus) {
-	choose_complex("ChoosePDSorDock", 0, ask_pds_or_dock, apply_pds_or_dock, 0);
+
+static bool filter_add_unit_planet(const void* object) {
+	auto maximum_count = last_unit->abilities[MaximumInOneLocation];
+	if(!maximum_count)
+		return true;
+	entitya source;
+	source.select(player, (planeti*)object);
+	return source.getsummary(last_unit) < maximum_count;
 }
 
 static void ask_technology() {
@@ -903,6 +902,16 @@ static void add_strategy(int bonus) {
 		player->strategy = last_strategy;
 }
 
+static void add_querry_unit(int bonus) {
+	if(bonus >= 0)
+		querry.add(last_unit);
+	else
+		querry.remove(last_unit);
+}
+
+static void add_unit(int bonus) {
+}
+
 static void set_value(int bonus) {
 	last_value = bonus;
 }
@@ -936,17 +945,8 @@ static void activate_system(int bonus) {
 	}
 }
 
-static void filter_system(int bonus) {
-	if(last_system)
-		querry.match(last_system, bonus != -1);
-}
-
-static void filter_home_system_any(int bonus) {
-	querry.match(is_any_home_system, bonus >= 0);
-}
-
-static void filter_home_system_you(int bonus) {
-	querry.match(is_player_home_system, bonus >= 0);
+static bool filter_system(const void* object) {
+	return ((entity*)object)->getsystem() == last_system;
 }
 
 static void filter_controled(int bonus) {
@@ -967,12 +967,8 @@ static void exhaust(int bonus) {
 		last_planet->exhaust();
 }
 
-static void filter_cruiser_or_destroyer(int bonus) {
-	querry.match(is_cruiser_or_destroyer, bonus >= 0);
-}
-
-static void filter_wormhole(int bonus) {
-	querry.match(is_whormhole, bonus >= 0);
+static bool filter_trait(const void* object) {
+	return ((entity*)object)->gettrait() == last_filter->param;
 }
 
 static void filter_cultural_planet(int bonus) {
@@ -991,48 +987,20 @@ static void filter_notrait_planet(int bonus) {
 	querry.match(NoTrait, bonus >= 0);
 }
 
-static void filter_player_controled(int bonus) {
-	querry.match(is_player_controled, bonus >= 0);
+static bool filter_speciality(const void* object) {
+	return ((entity*)object)->getspeciality() == last_filter->param;
 }
 
-static void filter_production_ability(int bonus) {
-	querry.match(is_ability, Production, bonus >= 0);
+static bool filter_ability(const void* object) {
+	return ((entity*)object)->get((ability_s)last_filter->param) > 0;
 }
 
-static void filter_red_technology(int bonus) {
-	querry.match(Red, bonus >= 0);
+static bool filter_indicator(const void* object) {
+	return ((entity*)object)->get((ability_s)last_filter->param) > 0;
 }
 
-static void filter_any_technology(int bonus) {
-	querry.match(NoTech, bonus < 0);
-}
-
-static void filter_exhaust(int bonus) {
-	querry.match(is_tag, Exhaust, bonus >= 0);
-}
-
-static void filter_bombardment(int bonus) {
-	querry.match(is_ability, Bombardment, bonus >= 0);
-}
-
-static void filter_commodities(int bonus) {
-	querry.match(Commodities, bonus >= 0);
-}
-
-static void filter_activated(int bonus) {
-	querry.match(is_tag, bsdata<playeri>::source.indexof(player), bonus >= 0);
-}
-
-static void filter_free(int bonus) {
-	querry.match(is_free, bonus >= 0);
-}
-
-static void filter_enemy_ship_system(int bonus) {
-	querry.match(is_enemy_ships_in_system, bonus >= 0);
-}
-
-static void filter_active_player(int bonus) {
-	querry.match(player, bonus != -1);
+static bool filter_active_player(const void* object) {
+	return ((entity*)object)->getplayer() == player;
 }
 
 static void add_speaker(int bonus) {
@@ -1088,7 +1056,7 @@ static void querry_shuffle(int bonus) {
 }
 
 static void filter_move(int bonus) {
-	querry.matchmove(0, bonus != -1);
+	querry.matchmove(0, bonus >= 0);
 }
 
 static void action_phase_pass(int bonus) {
@@ -1175,12 +1143,12 @@ void playeri::event(const char* id) {
 	}
 }
 
-static void select_system_can_shoot(int bonus) {
-	select_pds(0);
-	filter_player_controled(0);
-	group_systems(0);
-	filter_enemy_ship_system(0);
-}
+//static void select_system_can_shoot(int bonus) {
+//	select_pds(0);
+//	filter_player_controled(0);
+//	group_systems(0);
+//	filter_enemy_ship_system(0);
+//}
 
 static void continue_execute() {
 	while(script_begin < script_end)
@@ -1294,6 +1262,8 @@ static void apply_choose() {
 		last_planet = (planeti*)choose_result;
 	else if(bsdata<systemi>::have(choose_result))
 		last_system = (systemi*)choose_result;
+	else if(bsdata<uniti>::have(choose_result))
+		last_unit = (uniti*)choose_result;
 	else if(bsdata<playeri>::have(choose_result))
 		player = (playeri*)choose_result;
 }
@@ -1368,6 +1338,8 @@ static void header_single_choose(stringbuilder& sb) {
 static void choose_single(fnstatus getname, fnprint getheader) {
 	if(!choose_id || !answers::console)
 		return;
+	if(!querry)
+		return;
 	choose_result = 0;
 	if(!player->ishuman()) {
 		auto ps = bsdata<script>::find(stw(choose_id, "AI"));
@@ -1377,6 +1349,11 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 			choose_result = querry.random();
 		apply_choose();
 		return;
+	} else {
+		// Human player focusing first valid systems
+		auto system_focus = querry[0]->getsystem();
+		if(system_focus)
+			system_focus->focusing();
 	}
 	an.clear();
 	for(auto p : querry) {
@@ -1444,6 +1421,18 @@ static void if_winner_break(int bonus) {
 	}
 }
 
+static void clear_querry(int bonus) {
+	querry.clear();
+}
+
+template<> void fnscript<filteri>(int index, int bonus) {
+	last_filter = bsdata<filteri>::elements + index;
+	if(last_filter->custom)
+		last_filter->custom(bonus);
+	else
+		querry.match(last_filter->proc, bonus >= 0);
+}
+
 template<> bool fntest<indicatori>(int index, int bonus) {
 	return (player->get((indicator_s)index) + bonus) >= 0;
 }
@@ -1452,15 +1441,43 @@ template<> void fnscript<indicatori>(int index, int bonus) {
 }
 
 template<> void fnscript<uniti>(int index, int bonus) {
+	last_unit = bsdata<uniti>::elements;
 	if(player)
-		bsdata<prototype>::elements[player->getindex()].units[index].placement(bonus);
+		last_unit = bsdata<prototype>::elements[player->getindex()].units + index;
 	else
-		bsdata<uniti>::elements[index].placement(bonus);
+		last_unit = bsdata<uniti>::elements + index;
 }
 
 void combat_reatreat(int bonus);
 void combat_continue(int bonus);
 
+BSDATA(filteri) = {
+	{"FilterActivated", filter_activated},
+	{"FilterActivePlayer", filter_active_player},
+	{"FilterAddUnit", filter_add_unit},
+	{"FilterAddUnitPlanet", filter_add_unit_planet},
+	{"FilterAnyHomeSystem", filter_home_system_any},
+	{"FilterBombardment", filter_ability, 0, Bombardment},
+	{"FilterCommodities", filter_indicator, 0, Commodities},
+	{"FilterCultural", filter_trait, 0, Cultural},
+	{"FilterCruiserOrDestroyer", filter_cruiser_or_destroyer},
+	{"FilterEnemyShipSystem", filter_enemy_ships_system},
+	{"FilterExhaust", filter_tag, 0, Exhaust},
+	{"FilterFree", filter_free},
+	{"FilterIndustrial", filter_trait, 0, Industrial},
+	{"FilterHasardous", filter_trait, 0, Hazardous},
+	{"FilterHomeSystem", filter_home_system},
+	{"FilterMoveStop", 0, filter_move},
+	{"FilterPlanetTrait", filter_trait, 0, NoTrait},
+	{"FilterPlayer", filter_player},
+	{"FilterProduction", filter_ability, 0, Production},
+	{"FilterSpeaker", filter_speaker},
+	{"FilterSystem", filter_system},
+	{"FilterRedTechnology", filter_speciality, 0, Red},
+	{"FilterNoTechnology", filter_speciality, 0, NoTech},
+	{"FilterWormhole", filter_wormhole},
+};
+BSDATAF(filteri);
 BSDATA(script) = {
 	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
@@ -1468,6 +1485,8 @@ BSDATA(script) = {
 	{"AddNeighboring", add_neighboring},
 	{"AddSpeaker", add_speaker},
 	{"AddStrategy", add_strategy},
+	{"AddUnit", add_unit},
+	{"AddUnitQuerry", add_querry_unit},
 	{"ApplyHeader", apply_header},
 	{"Break", do_break},
 	{"CancelOrder", cancel_order},
@@ -1480,7 +1499,6 @@ BSDATA(script) = {
 	{"ChooseMany", choose_many},
 	{"ChooseMove", choose_movement},
 	{"ChooseMoveOption", choose_move_options},
-	{"ChoosePDSorDock", choose_pds_or_dock},
 	{"ChoosePlanet", choose_planet},
 	{"ChoosePlayer", choose_player},
 	{"ChooseProduction", choose_production},
@@ -1488,33 +1506,11 @@ BSDATA(script) = {
 	{"ChooseSystem", choose_system},
 	{"ChooseTechnology", choose_technology},
 	{"ChooseTroop", choose_troop},
+	{"ClearQuerry", clear_querry},
 	{"ContinueBattle", combat_continue},
 	{"Exhaust", exhaust},
 	{"EndTurn", end_turn},
-	{"FilterActivated", filter_activated},
-	{"FilterActivePlayer", filter_active_player},
-	{"FilterAnyHomeSystem", filter_home_system_any},
-	{"FilterBombardment", filter_bombardment},
 	{"FilterControled", filter_controled},
-	{"FilterCommodities", filter_commodities},
-	{"FilterCultural", filter_cultural_planet},
-	{"FilterCruiserOrDestroyer", filter_cruiser_or_destroyer},
-	{"FilterEnemyShipSystem", filter_enemy_ship_system},
-	{"FilterExhaust", filter_exhaust},
-	{"FilterFree", filter_free},
-	{"FilterIndustrial", filter_industrial_planet},
-	{"FilterHasardous", filter_hazardous_planet},
-	{"FilterHomeSystem", filter_home_system_you},
-	{"FilterMoveStop", filter_move},
-	{"FilterPlanetTrait", filter_notrait_planet},
-	{"FilterPlayer", filter_player},
-	{"FilterPlayerControled", filter_player_controled},
-	{"FilterProduction", filter_production_ability},
-	{"FilterSpeaker", filter_speaker},
-	{"FilterSystem", filter_system},
-	{"FilterRedTechnology", filter_red_technology},
-	{"FilterTechnologySpeciality", filter_any_technology},
-	{"FilterWormhole", filter_wormhole},
 	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
@@ -1539,11 +1535,10 @@ BSDATA(script) = {
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
 	{"Select", select_variant},
-	{"SelectPDS", select_pds},
 	{"SelectPlanets", select_planets},
 	{"SelectPlayers", select_players},
 	{"SelectSystems", select_systems},
-	{"SelectSystemCanShoot", select_system_can_shoot},
+	//{"SelectSystemCanShoot", select_system_can_shoot},
 	{"SelectSystemReach", select_system_reach},
 	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
 	{"SelectTroopActive", select_troop},

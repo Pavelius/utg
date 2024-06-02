@@ -9,6 +9,8 @@ TechnologyShort: Тех
 TradeGoodsShort: Тов
 VictoryPointsShort: ОП
 
+SpaceDock: Доки
+PDS: ПСЗ
 Carrier: Транспорт
 Cruiser: Крейсер
 Destroyer: Эсминец
@@ -16,6 +18,7 @@ Dreadnought: Дредноут
 Infantry: Пехота
 Fighter: Истребители
 WarSun: Звезда смерти
+
 CMorranNorr: К'Морран
 Genesis: Генезис
 
@@ -143,7 +146,6 @@ MoveShip: Переместить корабль
 Nar: Нар
 NoCasualties: Ни одна сторона не понесла потери
 OrbitalDrop: Высадка с орбиты
-PDS: ПВС
 PassAction: Закончить фазу действий
 PayAnswer: %1 (оплата %2i)
 PayPrompt: Оплатить %indicator
@@ -167,7 +169,6 @@ SaudorSystem: Система Саудор
 SetControlPlanet: %1 установили контроль над планетой %2
 SonOfRagh: Сын Рагха
 SpaceCombat: Космический бой
-SpaceDock: Доки
 Starpoint: Старпоинт
 TacticAction: Тактическое действие
 Tech: Технология
