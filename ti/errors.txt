@@ -1,2 +1,2 @@
-﻿In file `rules/Objectives.txt`:
- Line 25: Can't find variant `FilterNoTech`
+﻿In file `Names.txt`:
+ChooseNewSpeaker: Define translate

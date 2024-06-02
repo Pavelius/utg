@@ -1262,7 +1262,7 @@ static void apply_choose() {
 		last_planet = (planeti*)choose_result;
 	else if(bsdata<systemi>::have(choose_result))
 		last_system = (systemi*)choose_result;
-	else if(bsdata<uniti>::have(choose_result))
+	else if(bsdata<uniti>::have(choose_result) || bsdata<prototype>::have(choose_result))
 		last_unit = (uniti*)choose_result;
 	else if(bsdata<playeri>::have(choose_result))
 		player = (playeri*)choose_result;
@@ -1459,6 +1459,7 @@ BSDATA(filteri) = {
 	{"FilterAnyHomeSystem", filter_home_system_any},
 	{"FilterBombardment", filter_ability, 0, Bombardment},
 	{"FilterCommodities", filter_indicator, 0, Commodities},
+	{"FilterControled", 0, filter_controled},
 	{"FilterCultural", filter_trait, 0, Cultural},
 	{"FilterCruiserOrDestroyer", filter_cruiser_or_destroyer},
 	{"FilterEnemyShipSystem", filter_enemy_ships_system},
@@ -1510,7 +1511,6 @@ BSDATA(script) = {
 	{"ContinueBattle", combat_continue},
 	{"Exhaust", exhaust},
 	{"EndTurn", end_turn},
-	{"FilterControled", filter_controled},
 	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
