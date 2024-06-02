@@ -11,12 +11,14 @@ ChooseNewSpeaker
 GainGoods
  elements TradeGoods+3
 LookLawsAndChange
+PlaceUnitOnPlanet
+ elements ApplyHeader SelectPlanets FilterAddUnitPlanet ChooseSingle
 PlacePDSOnPlanet
- elements SelectPlanets+1 ChoosePlanet PDS
+ elements PDS ApplyHeader SelectPlanets FilterAddUnitPlanet ChooseSingle AddUnit
 PlacePDSorDocksOnPlanet
- elements ChoosePDSorDock SelectPlanets+1 FilterAddUnitPlanet ChooseSingle AddUnit
+ elements ChoosePDSorDock PlaceUnitOnPlanet AddUnit
 PlacePDSorDocksOnPlanetAndActivate
- elements ChoosePDSorDock SelectPlanets+1 FilterAddUnitPlanet ChooseSingle AddUnit
+ elements ChoosePDSorDock PlaceUnitOnPlanet AddUnit ActivateSystem
 ProduceOneUnit
  elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
 ProtectYourSystem

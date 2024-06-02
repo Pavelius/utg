@@ -10,3 +10,5 @@ PrimaryAbility: Первичная способность
 SecondaryAbility: Вторичная способность
 
 TestingScript: Тестовый сценарий
+PlacePDSOnPlanet: На какой планете построить ПСЗ?
+PlaceUnitOnPlanet: На какой планете построить?

@@ -61,7 +61,6 @@ int	getrate(indicator_s need, indicator_s currency, int count);
 bool reaction(const char* id, const playeri* need_player, const playeri* exclude_player, ...);
 
 void initialize_game();
-bool is_free(const entity* p);
 void play_game();
 void prepare_game();
 void prepare_game_ui();

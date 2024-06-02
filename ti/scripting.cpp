@@ -910,6 +910,7 @@ static void add_querry_unit(int bonus) {
 }
 
 static void add_unit(int bonus) {
+	last_unit->placement(bonus);
 }
 
 static void set_value(int bonus) {
