@@ -37,6 +37,8 @@ static pointline players6[] = {
 };
 static galaxymap galaxy6 = {players6, {{1, 0}, {4, 0}, {0, 3}, {6, 3}, {1, 6}, {4, 6}}};
 
+void initialize_decks();
+
 static point getdirection(point hex, int direction) {
 	static point evenr_directions[2][6] = {
 		{{+1, 0}, {1, -1}, {0, -1}, {-1, 0}, {0, +1}, {+1, +1}},
@@ -186,26 +188,9 @@ static void create_galaxy() {
 	create_galaxy(systems, galaxy6);
 }
 
-static void add_card(decka& deck, void* parent) {
-	auto p = bsdata<entity>::add();
-	p->id = (const char*)parent;
-	p->flags = 0;
-	p->location = 0;
-	p->player = 0;
-	deck.add(p);
-}
-
-static void create_action_card_deck() {
-	actioncards.clear();
-	for(auto& e : bsdata<card>()) {
-		for(auto i = 0; i < e.count; i++)
-			add_card(actioncards, &e);
-	}
-	actioncards.shuffle();
-}
-
 void prepare_game() {
 	clear_galaxy();
+	initialize_decks();
 	assign_factions();
 	assign_prototypes();
 	determine_speaker();
@@ -213,7 +198,6 @@ void prepare_game() {
 	prepare_players();
 	assign_starting_positions();
 	create_galaxy();
-	create_action_card_deck();
 	prepare_finish();
 	prepare_game_ui();
 	update_control();

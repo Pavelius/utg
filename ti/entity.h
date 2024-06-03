@@ -5,7 +5,8 @@
 
 #pragma once
 
-struct card;
+struct componenti;
+struct decki;
 struct playeri;
 struct planeti;
 struct systemi;
@@ -26,7 +27,8 @@ struct entity : nameable {
 	void				focusing() const;
 	int					get(ability_s v) const;
 	int					get(indicator_s v) const;
-	const card*			getcard() const;
+	const componenti*	getcard() const;
+	decki*				getdeck() const;
 	const char*			getid() const;
 	playeri*			getenemy() const;
 	const char*			getname() const;
@@ -44,4 +46,5 @@ struct entity : nameable {
 	void				set(tag_s v, bool n);
 	void				startcombat();
 	void				status(int type, const char* format) const;
+	bool				usedeck() const { return getdeck() != 0; }
 };

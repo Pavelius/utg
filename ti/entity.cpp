@@ -1,5 +1,6 @@
-#include "card.h"
 #include "answers.h"
+#include "card.h"
+#include "deck.h"
 #include "entity.h"
 #include "player.h"
 #include "planet.h"
@@ -62,8 +63,8 @@ const char* entity::getname() const {
 const char* entity::getid() const {
 	if(bsdata<uniti>::have(id) || bsdata<prototype>::have(id))
 		return ((uniti*)id)->id;
-	else if(bsdata<card>::have(id))
-		return ((card*)id)->id;
+	else if(bsdata<componenti>::have(id))
+		return ((componenti*)id)->id;
 	else if(id)
 		return id;
 	return "";
@@ -120,9 +121,15 @@ const uniti* entity::getunit() const {
 	return 0;
 }
 
-const card* entity::getcard() const {
-	if(bsdata<card>::have(id))
-		return (card*)id;
+const componenti* entity::getcard() const {
+	if(bsdata<componenti>::have(id))
+		return (componenti*)id;
+	return 0;
+}
+
+decki* entity::getdeck() const {
+	if(bsdata<decki>::have(id))
+		return (decki*)id;
 	return 0;
 }
 
@@ -167,8 +174,9 @@ void entity::exhaust() {
 }
 
 void entity::discard() {
-	if(bsdata<card>::have(id))
-		actioncards.add(this); // To the down of deck
+	auto p = getdeck();
+	if(p)
+		p->cards.add(this); // To the down of deck
 	flags = 0; // Remove all players token
 	player = 0; // Clear player
 }

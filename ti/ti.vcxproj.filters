@@ -102,6 +102,9 @@
     <ClCompile Include="filter.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="deck.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="strategy.h">
@@ -135,9 +138,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="card.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="decka.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="army.h">
@@ -174,6 +174,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="filter.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="deck.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#ActionCard trigger(ChooseAction)
+#Component trigger(ChooseAction) location(ActionCards)
 
 TacticAction
  use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
@@ -7,7 +7,7 @@ OrbitalDrop player(TheFederationOfSol)
 PassAction
  use IfPlayStrategy ActionPhasePass
 
-#ActionCard count(1)
+#Component count(1) location(ActionCards)
 
 AncientBurialSites
 AssassinateRepresentative
@@ -29,13 +29,13 @@ FireTeam
 FocusedResearch trigger(ChooseAction)
  use TradeGoods-4 ResearchTechnology
 FrontlineDeployment trigger(ChooseAction)
- use SelectPlanets+1 ChoosePlanet Infantry+3
+ use SelectPlanets ChoosePlanet Infantry+3
 GhostShip trigger(ChooseAction)
  use SelectSystems FilterHomeSystem-1 FilterWormhole ChooseSystem Destroyer AddUnit
 ImperialRider
 InTheSilenceOfSpace
 IndustrialInitiative trigger(ChooseAction)
- use SelectPlanets+1 FilterIndustrial+1 TradeGoods+1
+ use SelectPlanets FilterIndustrial+1 TradeGoods+1
 Infiltrate
 Insubordination trigger(ChooseAction)
  use SelectPlayers-1 ChoosePlayer TacticToken-1
@@ -43,7 +43,7 @@ Intercept
 LeadershipRider
 LostStarChart
 LuckyShot trigger(ChooseAction)
- use SelectPlanets+1 GroupSystems JoinTroopsBySystems
+ use SelectPlanets ChangeToSystem JoinTroopsBySystems
 MiningInitiative trigger(ChooseAction)
 Parley
 Plague
@@ -56,11 +56,11 @@ RepealLaw trigger(ChooseAction)
 RiseOfAMessiah trigger(ChooseAction)
 Salvage trigger(AfterWinSpaceCombat)
 SignalJamming trigger(ChooseAction)
- use SelectTroops GroupSystems AddNeighboring FilterPlayer-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
+ use SelectTroops ChangeToSystem AddNeighboring FilterPlayer-1 ChooseSystem SelectPlayers ChoosePlayer ActivateSystem
 Spy trigger(ChooseAction)
 Summit
 TacticalBombardment trigger(ChooseAction)
- use SelectTroops+1 FilterProduction GroupSystems JoinPlanetsBySystems FilterPlayer-1 ChooseSystem SelectPlanets-1 FilterSystem Exhaust-1
+ use SelectTroops FilterProduction ChangeToSystem JoinPlanetsBySystems FilterPlayer-1 ChooseSystem SelectPlanets-1 FilterSystem Exhaust-1
 TechnologyRider
 TradeRider
 UnexpectedAction trigger(ChooseAction)
@@ -71,15 +71,15 @@ Upgrade
 Uprising trigger(ChooseAction)
 Veto
 WarEffort trigger(ChooseAction)
- use SelectTroops+1 GroupSystems ChooseSystem Cruiser+1
+ use SelectTroops ChangeToSystem ChooseSystem Cruiser+1
 WarfareRider
 
-#ActionCard trigger(Reaction) count(1)
+#Component trigger(Reaction) count(1) location(ActionCards)
 
 DirectHit count(4)
 Sabotage count(4)
 
-#ActionCard count(4)
+#Component count(4) location(ActionCards)
 
 FlankSpeed
 ManeuveringJets

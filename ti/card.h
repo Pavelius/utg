@@ -1,13 +1,15 @@
-#include "decka.h"
+#pragma once
+
 #include "entity.h"
 #include "variant.h"
 
-#pragma once
+struct decki;
 
-struct card : entity {
+struct componenti : entity {
 	variants		use;
 	const char*		trigger;
 	char			count;
 	bool			isallow() const;
 };
-extern decka actioncards;
+struct card : entity {
+};

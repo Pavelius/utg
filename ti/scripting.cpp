@@ -2,6 +2,7 @@
 #include "army.h"
 #include "card.h"
 #include "condition.h"
+#include "deck.h"
 #include "filter.h"
 #include "list.h"
 #include "pathfind.h"
@@ -132,6 +133,14 @@ static void sort_by_initiative() {
 	querry.sort(compare_initiative);
 }
 
+static void human_focusing() {
+	if(!player->ishuman())
+		return;
+	auto system_focus = querry[0]->getsystem();
+	if(system_focus)
+		system_focus->focusing();
+}
+
 static void add_choose_options() {
 	if(choose_options > 0)
 		sb.adds(getnm("ChooseOptions"), choose_options);
@@ -194,7 +203,7 @@ static int ai_load(const playeri* player, const systemi* system, unit_type_s typ
 }
 
 static void standart_answers() {
-	for(auto& e : bsdata<card>()) {
+	for(auto& e : bsdata<componenti>()) {
 		if(e.count)
 			continue;
 		if(strcmp(e.trigger, choose_id) != 0)
@@ -208,8 +217,8 @@ static void standart_answers() {
 }
 
 static bool standart_apply() {
-	if(bsdata<card>::have(choose_result))
-		script_run(((card*)choose_result)->use);
+	if(bsdata<componenti>::have(choose_result))
+		script_run(((componenti*)choose_result)->use);
 	else if(bsdata<script>::have(choose_result))
 		((script*)choose_result)->proc(0);
 	else
@@ -422,6 +431,30 @@ static void apply_value(indicator_s v, int value) {
 	}
 }
 
+static void change_to_system(int bonus) {
+	auto ps = querry.begin(), pb = ps;
+	auto pe = querry.end();
+	while(pb < pe) {
+		auto p = (*pb++)->getsystem();
+		if(p)
+			*ps++ = p;
+	}
+	querry.count = ps - querry.begin();
+	querry.distinct();
+}
+
+static void change_to_planet(int bonus) {
+	auto ps = querry.begin(), pb = ps;
+	auto pe = querry.end();
+	while(pb < pe) {
+		auto p = (*pb++)->getplanet();
+		if(p)
+			*ps++ = p;
+	}
+	querry.count = ps - querry.begin();
+	querry.distinct();
+}
+
 static bool filter_player(const void* object) {
 	return ((entity*)object)->player == player;
 }
@@ -445,33 +478,10 @@ static void select_planets(int bonus) {
 	querry.select(bsdata<planeti>::source, filter_player, bonus >= 0);
 }
 
-static void select_planet_not_you_control(int bonus) {
-	querry.clear();
-	querry.select(bsdata<planeti>::source);
-	querry.match(player, false);
-}
-
-static void select_planet_you_control(int bonus) {
-	querry.clear();
-	querry.select(bsdata<planeti>::source);
-	querry.match(player, true);
-}
-
-static void group_systems(int bonus) {
-	for(auto& e : querry)
-		e = e->getsystem();
-	querry.distinct();
-}
-
 static void group_location() {
 	for(auto& e : querry)
 		e = e->location;
 	querry.distinct();
-}
-
-static void select_system_own_planet(int bonus) {
-	select_planet_you_control(bonus);
-	group_systems(0);
 }
 
 static void select_troops(int bonus) {
@@ -571,6 +581,7 @@ static void choose_player(int bonus) {
 }
 
 static void choose_system(int bonus) {
+	human_focusing();
 	last_system = (systemi*)querry.choose(0);
 }
 
@@ -1008,9 +1019,16 @@ static void add_speaker(int bonus) {
 	speaker = player;
 }
 
+static void add_system(int bonus) {
+	if(bonus >= 0)
+		querry.add(last_system);
+	else
+		querry.remove(last_system);
+}
+
 static void action_card(int bonus) {
 	for(auto i = 0; i < bonus; i++) {
-		auto p = actioncards.pick();
+		auto p = bsdata<decki>::elements[ActionCards].cards.pick();
 		if(p)
 			p->player = player;
 	}
@@ -1143,13 +1161,6 @@ void playeri::event(const char* id) {
 		standart_apply();
 	}
 }
-
-//static void select_system_can_shoot(int bonus) {
-//	select_pds(0);
-//	filter_player_controled(0);
-//	group_systems(0);
-//	filter_enemy_ship_system(0);
-//}
 
 static bool allow_continue_execute() {
 	while(script_begin < script_end) {
@@ -1376,12 +1387,8 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 			choose_result = querry.random();
 		apply_choose();
 		return;
-	} else {
-		// Human player focusing first valid systems
-		auto system_focus = querry[0]->getsystem();
-		if(system_focus)
-			system_focus->focusing();
-	}
+	} else
+		human_focusing();
 	an.clear();
 	for(auto p : querry) {
 		sb.clear(); getname(p, sb);
@@ -1463,6 +1470,11 @@ static bool common_action(int bonus) {
 	return true;
 }
 
+static bool not_impotant(int bonus) {
+	script_stop();
+	return true;
+}
+
 static bool common_choose(int bonus) {
 	return querry.getcount() > 0;
 }
@@ -1537,6 +1549,8 @@ BSDATA(script) = {
 	{"ApplyHeader", apply_header, allow_apply_header},
 	{"Break", do_break},
 	{"CancelOrder", cancel_order},
+	{"ChangeToPlanet", change_to_planet, common_choose},
+	{"ChangeToSystem", change_to_system, common_choose},
 	{"ChooseAction", choose_action, common_choose},
 	{"ChooseCombatOption", choose_combat_option, common_choose},
 	{"ChooseCommandToken", choose_command_token, common_choose},
@@ -1561,7 +1575,6 @@ BSDATA(script) = {
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
 	{"ForEachTroop", for_each_troop},
-	{"GroupSystems", group_systems},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", play_strategy, if_play_strategy},
 	{"IfNonZero", conditional, if_non_zero},
@@ -1570,6 +1583,7 @@ BSDATA(script) = {
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
 	{"NoMecatolRex", no_mecatol_rex},
+	{"NotImpotant", script_none, not_impotant},
 	{"PayCommandTokens", pay_command_tokens},
 	{"PushPlayer", push_player},
 	{"QuerryCount", querry_count},
@@ -1585,7 +1599,6 @@ BSDATA(script) = {
 	{"SelectPlayers", select_players, common_select},
 	{"SelectSystems", select_systems, common_select},
 	{"SelectSystemReach", select_system_reach, common_select},
-	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, common_select},
 	{"SelectTroopActive", select_troop, common_select},
 	{"SelectTroopHome", select_troop_home, common_select},
 	{"SelectTroops", select_troops, common_select},

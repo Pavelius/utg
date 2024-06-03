@@ -6,7 +6,7 @@ DiversifyResearch
 ErectAMonument
  condition Resources-8
 ExpandBorders
- condition SelectPlanets+1 FilterHomeSystem-1 QuerryCount-6
+ condition SelectPlanets FilterHomeSystem-1 QuerryCount-6
 FoundResearchOutposts
 IntimidateCouncil
 LeadFromTheFront
@@ -20,7 +20,7 @@ SwayTheCouncil
 CentralizeGalacticTrade
  condition TradeGoods-5
 ConquerTheWeak
- condition SelectSystemOwnPlanetYouControl FilterHomeSystem-1 FilterAnyHomeSystem QuerryCount-1
+ condition SelectPlanets ChangeToSystem FilterHomeSystem-1 FilterAnyHomeSystem QuerryCount-1
 FormGalacticBrainTrust
  condition SelectPlanets+1 FilterNoTechnology-1 QuerryCount-5
 FoundAGoldenAge

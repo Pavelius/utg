@@ -1,4 +1,5 @@
 #include "card.h"
+#include "deck.h"
 #include "bsreq.h"
 #include "condition.h"
 #include "filter.h"
@@ -18,9 +19,8 @@
 #include "unit_type.h"
 #include "variant.h"
 
-decka actioncards;
-
-BSDATAC(card, 128)
+BSDATAC(card, 512)
+BSDATAC(componenti, 128)
 BSDATAC(entity, 512)
 BSDATAC(objectivei, 64)
 BSDATAC(planeti, 64)
@@ -36,9 +36,10 @@ NOBSDATA(color)
 BSMETA(abilityi) = {
 	BSREQ(id),
 	{}};
-BSMETA(card) = {
+BSMETA(componenti) = {
 	BSREQ(id),
 	BSREQ(player),
+	BSREF(location, decki),
 	BSREQ(count),
 	BSREQ(trigger),
 	BSREQ(use),
@@ -48,6 +49,9 @@ BSMETA(colori) = {
 	{}};
 BSMETA(color) = {
 	BSREQ(r), BSREQ(g), BSREQ(b),
+	{}};
+BSMETA(decki) = {
+	BSREQ(id),
 	{}};
 BSMETA(entity) = {
 	BSREQ(id),
@@ -139,8 +143,9 @@ BSMETA(varianti) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"ActionCard", VAR(card, 1)},
+	{"Component", VAR(componenti, 1)},
 	{"Condition", VAR(conditioni, 1)},
+	{"Deck", VAR(decki, 1)},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},

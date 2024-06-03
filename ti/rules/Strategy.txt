@@ -22,11 +22,11 @@ PlacePDSorDocksOnPlanetAndActivate
 ProduceOneUnit
  elements SelectTroopHome FilterProduction FilterActivePlayer ChooseTroop ChooseProduction
 ProtectYourSystem
- elements SelectSystemOwnPlanetYouControl NoMecatolRex ChooseSystem SelectPlayers-1 ForEachPlayer ActivateSystem
+ elements SelectPlanets ChangeToSystem NoMecatolRex ChooseSystem PushPlayer SelectPlayers FilterPlayer-1 ForEachPlayer ActivateSystem
 ReadyExhaustPlanet
- elements SelectPlanets+1 FilterExhaust+1 ChoosePlanet Exhaust-1
-ReadyExhaustPlanetsInSystems
- elements SelectPlanets+1 FilterSystem Exhaust-1
+ elements SelectPlanets FilterExhaust ChooseSingle Exhaust-1
+ReadyExhaustPlanetsInSystem
+ elements NotImpotant SelectPlanets FilterSystem Exhaust-1
 RemoveCommandTokenFromBoard
  elements SelectSystems FilterActivated ChooseSystem ActivateSystem-1
 ReplenishOtherPlayerCommodities
@@ -69,7 +69,7 @@ Leadership initiative(1)
  primary CommandToken+3 PayCommandTokens+3
  secondary PayCommandTokens+3
 Diplomacy initiative(2)
- primary ProtectYourSystem ReadyExhaustPlanetsInSystems
+ primary ProtectYourSystem ReadyExhaustPlanetsInSystem
  secondary StrategyToken-1 ReadyExhaustPlanet+2
 Politics initiative(3)
  primary ChooseNewSpeaker ActionCard+2 LookLawsAndChange
