@@ -1151,6 +1151,14 @@ void playeri::event(const char* id) {
 //	filter_enemy_ship_system(0);
 //}
 
+static bool allow_continue_execute() {
+	while(script_begin < script_end) {
+		if(!script_allow(*script_begin++))
+			return false;
+	}
+	return true;
+}
+
 static void continue_execute() {
 	while(script_begin < script_end)
 		script_run(*script_begin++);
@@ -1216,6 +1224,24 @@ static void apply_header(int bonus) {
 	answers::resid = push_res;
 	answers::header = push_header;
 	choose_id = push_id;
+}
+
+static bool allow_apply_header(int bonus) {
+	auto push_id = choose_id;
+	auto push_header = answers::header;
+	auto push_res = answers::resid;
+	if(last_list) {
+		choose_id = last_list->id;
+		answers::header = getnm(last_list->id);
+	}
+	if(player)
+		answers::resid = player->id;
+	if(!allow_continue_execute())
+		return false;
+	answers::resid = push_res;
+	answers::header = push_header;
+	choose_id = push_id;
+	return true;
 }
 
 static void entity_name(const void* object, stringbuilder& sb) {
@@ -1361,6 +1387,7 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 		sb.clear(); getname(p, sb);
 		an.add(p, sb_temp);
 	}
+	standart_answers();
 	auto cancel = getdescription(stw(choose_id, "Cancel"));
 	sb.clear(); getheader(sb);
 	auto push_promp = answers::prompt; answers::prompt = sb_temp;
@@ -1426,12 +1453,30 @@ static void clear_querry(int bonus) {
 	querry.clear();
 }
 
+static bool common_select(int bonus) {
+	last_script->proc(bonus);
+	return querry.getcount() > 0;
+}
+
+static bool common_action(int bonus) {
+	last_script->proc(bonus);
+	return true;
+}
+
+static bool common_choose(int bonus) {
+	return querry.getcount() > 0;
+}
+
 template<> void fnscript<filteri>(int index, int bonus) {
 	last_filter = bsdata<filteri>::elements + index;
 	if(last_filter->custom)
 		last_filter->custom(bonus);
 	else
 		querry.match(last_filter->proc, bonus >= 0);
+}
+template<> bool fntest<filteri>(int index, int bonus) {
+	fnscript<filteri>(index, bonus);
+	return querry.getcount() > 0;
 }
 
 template<> bool fntest<indicatori>(int index, int bonus) {
@@ -1489,26 +1534,26 @@ BSDATA(script) = {
 	{"AddStrategy", add_strategy},
 	{"AddUnit", add_unit},
 	{"AddUnitQuerry", add_querry_unit},
-	{"ApplyHeader", apply_header},
+	{"ApplyHeader", apply_header, allow_apply_header},
 	{"Break", do_break},
 	{"CancelOrder", cancel_order},
-	{"ChooseAction", choose_action},
-	{"ChooseCombatOption", choose_combat_option},
-	{"ChooseCommandToken", choose_command_token},
-	{"ChooseDock", choose_dock},
-	{"ChooseInvasion", choose_invasion},
-	{"ChooseInvasionPlanet", choose_invasion_planet},
-	{"ChooseMany", choose_many},
-	{"ChooseMove", choose_movement},
-	{"ChooseMoveOption", choose_move_options},
-	{"ChoosePlanet", choose_planet},
-	{"ChoosePlayer", choose_player},
-	{"ChooseProduction", choose_production},
-	{"ChooseSingle", choose_single},
-	{"ChooseSystem", choose_system},
-	{"ChooseTechnology", choose_technology},
-	{"ChooseTroop", choose_troop},
-	{"ClearQuerry", clear_querry},
+	{"ChooseAction", choose_action, common_choose},
+	{"ChooseCombatOption", choose_combat_option, common_choose},
+	{"ChooseCommandToken", choose_command_token, common_choose},
+	{"ChooseDock", choose_dock, common_choose},
+	{"ChooseInvasion", choose_invasion, common_choose},
+	{"ChooseInvasionPlanet", choose_invasion_planet, common_choose},
+	{"ChooseMany", choose_many, common_choose},
+	{"ChooseMove", choose_movement, common_choose},
+	{"ChooseMoveOption", choose_move_options, common_choose},
+	{"ChoosePlanet", choose_planet, common_choose},
+	{"ChoosePlayer", choose_player, common_choose},
+	{"ChooseProduction", choose_production, common_choose},
+	{"ChooseSingle", choose_single, common_choose},
+	{"ChooseSystem", choose_system, common_choose},
+	{"ChooseTechnology", choose_technology, common_choose},
+	{"ChooseTroop", choose_troop, common_choose},
+	{"ClearQuerry", clear_querry, common_action},
 	{"ContinueBattle", combat_continue},
 	{"Exhaust", exhaust},
 	{"EndTurn", end_turn},
@@ -1535,16 +1580,15 @@ BSDATA(script) = {
 	{"ResearchTechnology", research_technology},
 	{"ScorePublicObjective", score_objective},
 	{"SecretObjective", secret_objective},
-	{"Select", select_variant},
-	{"SelectPlanets", select_planets},
-	{"SelectPlayers", select_players},
-	{"SelectSystems", select_systems},
-	//{"SelectSystemCanShoot", select_system_can_shoot},
-	{"SelectSystemReach", select_system_reach},
-	{"SelectSystemOwnPlanetYouControl", select_system_own_planet},
-	{"SelectTroopActive", select_troop},
-	{"SelectTroopHome", select_troop_home},
-	{"SelectTroops", select_troops},
+	{"Select", select_variant, common_select},
+	{"SelectPlanets", select_planets, common_select},
+	{"SelectPlayers", select_players, common_select},
+	{"SelectSystems", select_systems, common_select},
+	{"SelectSystemReach", select_system_reach, common_select},
+	{"SelectSystemOwnPlanetYouControl", select_system_own_planet, common_select},
+	{"SelectTroopActive", select_troop, common_select},
+	{"SelectTroopHome", select_troop_home, common_select},
+	{"SelectTroops", select_troops, common_select},
 	{"SetValue", set_value},
 	{"ShowActionCards", show_action_cards},
 	{"ShowTech", show_tech},
