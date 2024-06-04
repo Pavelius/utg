@@ -20,15 +20,6 @@ const int button_height = 20;
 const int size = 256;
 const int tech_padding = 16;
 
-//static color player_colors[] = {
-//	{40, 40, 40},
-//	{97, 189, 79},
-//	{242, 214, 0},
-//	{255, 159, 26},
-//	{235, 90, 70},
-//	{195, 119, 224},
-//	{0, 121, 191},
-//};
 static color tech_colors[] = {
 	{40, 40, 40},
 	{227, 91, 110},

@@ -1,4 +1,6 @@
 #include "answers.h"
+#include "card.h"
+#include "deck.h"
 #include "entitya.h"
 #include "pushvalue.h"
 #include "speech.h"
@@ -98,16 +100,20 @@ int	playeri::getinitiative() const {
 	return strategy->initiative;
 }
 
-int	playeri::getactioncards() const {
+static int cards_count(const playeri* player, const decki* deck) {
 	auto result = 0;
-	for(auto& e : bsdata<entity>()) {
-		auto p = e.getcard();
-		if(!p)
+	for(auto& e : bsdata<card>()) {
+		if(e.player != player)
 			continue;
-		if(e.player == this)
-			result++;
+		if(e.getdeck() != deck)
+			continue;
+		result++;
 	}
 	return result;
+}
+
+int	playeri::getactioncards() const {
+	return cards_count(player, bsdata<decki>::elements + ActionCards);
 }
 
 int playeri::gettechs() const {
