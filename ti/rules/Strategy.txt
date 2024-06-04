@@ -72,8 +72,8 @@ Diplomacy initiative(2)
  primary ProtectYourSystem ReadyExhaustPlanetsInSystem
  secondary StrategyToken-1 ReadyExhaustPlanet+2
 Politics initiative(3)
- primary ChooseNewSpeaker ActionCard+2 LookLawsAndChange
- secondary StrategyToken-1 ActionCard+2
+ primary ChooseNewSpeaker ActionCards+2 LookLawsAndChange
+ secondary StrategyToken-1 ActionCards+2
 Construction initiative(4)
  primary PlacePDSorDocksOnPlanet PlacePDSOnPlanet
  secondary StrategyToken-1 PlacePDSorDocksOnPlanetAndActivate

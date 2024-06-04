@@ -9,6 +9,7 @@ Warfare: Военная стратегия
 PrimaryAbility: Первичная способность
 SecondaryAbility: Вторичная способность
 
-TestingScript: Тестовый сценарий
+ChooseNewSpeaker: Кто будет новым спикером?
 PlacePDSOnPlanet: На какой планете построить ПСЗ?
 PlaceUnitOnPlanet: На какой планете построить?
+TestingScript: Тестовый сценарий

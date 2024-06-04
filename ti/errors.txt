@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
 ChoosePay: Define translate
+ReturnStrategyCards: Define translate

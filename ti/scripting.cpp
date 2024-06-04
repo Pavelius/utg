@@ -1026,14 +1026,6 @@ static void add_system(int bonus) {
 		querry.remove(last_system);
 }
 
-static void action_card(int bonus) {
-	for(auto i = 0; i < bonus; i++) {
-		auto p = bsdata<decki>::elements[ActionCards].cards.pick();
-		if(p)
-			p->player = player;
-	}
-}
-
 static void redistribute_command_tokens(int bonus) {
 }
 
@@ -1470,13 +1462,22 @@ static bool common_action(int bonus) {
 	return true;
 }
 
+static bool common_choose(int bonus) {
+	return querry.getcount() > 0;
+}
+
 static bool not_impotant(int bonus) {
 	script_stop();
 	return true;
 }
 
-static bool common_choose(int bonus) {
-	return querry.getcount() > 0;
+template<> void fnscript<decki>(int index, int bonus) {
+	auto pd = bsdata<decki>::elements + index;
+	for(auto i = 0; i < bonus; i++) {
+		auto p = pd->cards.pick();
+		if(p)
+			p->player = player;
+	}
 }
 
 template<> void fnscript<filteri>(int index, int bonus) {
@@ -1538,7 +1539,6 @@ BSDATA(filteri) = {
 };
 BSDATAF(filteri);
 BSDATA(script) = {
-	{"ActionCard", action_card},
 	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"AddNeighboring", add_neighboring},

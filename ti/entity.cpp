@@ -130,6 +130,8 @@ const componenti* entity::getcard() const {
 decki* entity::getdeck() const {
 	if(bsdata<decki>::have(id))
 		return (decki*)id;
+	else if(bsdata<componenti>::have(this))
+		return (decki*)location;
 	return 0;
 }
 

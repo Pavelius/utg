@@ -1,4 +1,4 @@
-#Component trigger(ChooseAction) location(ActionCards)
+#Component trigger(ChooseAction)
 
 TacticAction
  use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce

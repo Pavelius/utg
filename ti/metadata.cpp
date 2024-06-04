@@ -145,7 +145,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Component", VAR(componenti, 1)},
 	{"Condition", VAR(conditioni, 1)},
-	{"Deck", VAR(decki, 1)},
+	{"Deck", VAR(decki, 1), 0, 0, fnscript<decki>},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},
