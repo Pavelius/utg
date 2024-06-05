@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-ChoosePay: Define translate
+﻿In file `rules/Strategy.txt`:
+ Line 54: Can't find variant `ForEachPlayerBreak`

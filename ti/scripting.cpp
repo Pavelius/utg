@@ -1042,11 +1042,8 @@ static void if_control_mecatol_rex(int bonus) {
 static void if_able(int bonus) {
 }
 
-static void play_strategy(int bonus) {
-}
-
 static bool if_play_strategy(int bonus) {
-	return player && player->use_strategy;
+	return (player->use_strategy==(bonus>=0));
 }
 
 static void secret_objective(int bonus) {
@@ -1182,6 +1179,21 @@ static void for_each_player(int bonus) {
 		script_run(v);
 	}
 	player = push_last;
+}
+
+static bool for_each_player_do(int bonus) {
+	auto push_last = player;
+	auto v = *script_begin++;
+	auto result = bonus >= 0;
+	for(auto p : players) {
+		player = static_cast<playeri*>(p);
+		if(!script_allow(v)) {
+			result = !result;
+			break;
+		}
+	}
+	player = push_last;
+	return result;
 }
 
 static void for_each_troop(int bonus) {
@@ -1448,6 +1460,10 @@ static void if_winner_break(int bonus) {
 	}
 }
 
+static bool if_pass(int bonus) {
+	return player->pass_action_phase == (bonus>=0);
+}
+
 static void clear_querry(int bonus) {
 	querry.clear();
 }
@@ -1463,6 +1479,7 @@ static bool common_action(int bonus) {
 }
 
 static bool common_choose(int bonus) {
+	script_stop();
 	return querry.getcount() > 0;
 }
 
@@ -1574,9 +1591,11 @@ BSDATA(script) = {
 	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
+	{"ForEachPlayerDo", conditional, for_each_player_do},
 	{"ForEachTroop", for_each_troop},
+	{"IfPass", conditional, if_pass},
 	{"IfControlMecatolRex", if_control_mecatol_rex},
-	{"IfPlayStrategy", play_strategy, if_play_strategy},
+	{"IfPlayStrategy", conditional, if_play_strategy},
 	{"IfNonZero", conditional, if_non_zero},
 	{"IfWinnerBreak", if_winner_break},
 	{"JoinPlanetsBySystems", join_planets_by_systems},

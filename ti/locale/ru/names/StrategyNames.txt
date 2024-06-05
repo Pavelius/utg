@@ -10,6 +10,7 @@ PrimaryAbility: Первичная способность
 SecondaryAbility: Вторичная способность
 
 ChooseNewSpeaker: Кто будет новым спикером?
+ChoosePay: Чем будете оплачивать?
 PlacePDSOnPlanet: На какой планете построить ПСЗ?
 PlaceUnitOnPlanet: На какой планете построить?
 TestingScript: Тестовый сценарий

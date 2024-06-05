@@ -1,7 +1,7 @@
 #Component trigger(ChooseAction)
 
 TacticAction
- use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove TacticalInvasion TacticalProduce
+ use TacticToken-1 FocusHomeSystem ChooseSystemToActivate TacticalMove NotImpotant TacticalInvasion TacticalProduce
 OrbitalDrop player(TheFederationOfSol)
  use StrategyToken-1 SelectPlanets ChoosePlanet Infantry AddUnit+2
 PassAction

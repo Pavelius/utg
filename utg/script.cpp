@@ -93,11 +93,20 @@ bool script_allow(variant v) {
 }
 
 bool script_allow(const variants& source) {
-	for(auto v : source) {
-		if(!script_allow(v))
-			return false;
+	auto push_begin = script_begin;
+	auto push_end = script_end;
+	script_begin = source.begin();
+	script_end = source.end();
+	auto result = true;
+	while(script_begin < script_end) {
+		if(!script_allow(*script_begin++)) {
+			result = false;
+			break;
+		}
 	}
-	return true;
+	script_end = push_end;
+	script_begin = push_begin;
+	return result;
 }
 
 variants script_body() {

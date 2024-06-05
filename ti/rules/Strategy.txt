@@ -30,7 +30,7 @@ ReadyExhaustPlanetsInSystem
 RemoveCommandTokenFromBoard
  elements SelectSystems FilterActivated ChooseSystem ActivateSystem-1
 ReplenishOtherPlayerCommodities
- elements SelectPlayers-1 FilterCommodities-1 ChoosePlayer ReplenishCommodities
+ elements SelectPlayers FilterActivePlayer-1 FilterCommodities-1 ChoosePlayer ReplenishCommodities
 TacticalInvasion
  elements ChooseInvasionPlanet
 TacticalMove
@@ -51,7 +51,7 @@ DetermineSpeaker
  elements SelectPlayers QuerryShuffle+1 ForEachPlayer AddSpeaker
 
 ActionPhase
- elements SelectPlayers+2 ForEachPlayer ChooseAction
+ elements Repeat ForEachPlayerDo-1 IfPass SelectPlayers+2 ForEachPlayer ChooseAction
 StrategyPhase
  elements SelectPlayers+1 ForEachPlayer ChooseStrategy
 StatusPhase
@@ -59,7 +59,7 @@ StatusPhase
 AgendaPhase
 
 GameTurn
- elements Repeat IfWinnerBreak StrategyPhase ActionPhase StatusPhase AgendaPhase
+ elements Repeat StrategyPhase ActionPhase StatusPhase AgendaPhase
 TestingScript
  elements GameTurn
 
