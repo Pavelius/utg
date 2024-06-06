@@ -1,4 +1,6 @@
-﻿ChooseMoveOptions: 
+﻿JNSHylarim: 
+P0p0p1: 
+ReturnStrategyCards: 
 Вли: 
 Военная стратегия: 
 Дипломатическая стратегия: 

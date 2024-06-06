@@ -5,7 +5,7 @@ TacticAction
 OrbitalDrop player(TheFederationOfSol)
  use StrategyToken-1 SelectPlanets ChoosePlanet Infantry AddUnit+2
 PassAction
- use IfPlayStrategy ActionPhasePass
+ use IfPlayStrategy PassTurn
 
 #Component count(1) location(ActionCards)
 

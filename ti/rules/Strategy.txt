@@ -51,7 +51,7 @@ DetermineSpeaker
  elements SelectPlayers QuerryShuffle+1 ForEachPlayer AddSpeaker
 
 ActionPhase
- elements Repeat ForEachPlayerDo-1 IfPass SelectPlayers+2 ForEachPlayer ChooseAction
+ elements Repeat IfAllPlayers-1 IfPass SelectPlayers+2 ForEachPlayer ChooseAction
 StrategyPhase
  elements SelectPlayers+1 ForEachPlayer ChooseStrategy
 StatusPhase
@@ -59,7 +59,7 @@ StatusPhase
 AgendaPhase
 
 GameTurn
- elements Repeat StrategyPhase ActionPhase StatusPhase AgendaPhase
+ elements Repeat IfOnePlayer-1 IfWinner StrategyPhase ActionPhase StatusPhase AgendaPhase
 TestingScript
  elements GameTurn
 

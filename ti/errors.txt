@@ -1,2 +1,2 @@
 ﻿In file `rules/Strategy.txt`:
- Line 54: Can't find variant `ForEachPlayerBreak`
+ Line 54: Can't find variant `ForEachPlayerDo`

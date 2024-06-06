@@ -355,6 +355,8 @@ static void apply_choose_action() {
 	}
 }
 void choose_action(int bonus) {
+	if(player->pass_action_phase)
+		return;
 	choose_complex("ChooseAction", 0, ask_choose_action, apply_choose_action, 0);
 }
 
@@ -1036,7 +1038,8 @@ static void research_technology(int bonus) {
 static void score_objective(int bonus) {
 }
 
-static void if_control_mecatol_rex(int bonus) {
+static bool if_control_mecatol_rex(int bonus) {
+	return bsdata<planeti>::elements[0].player == player;
 }
 
 static void if_able(int bonus) {
@@ -1067,7 +1070,7 @@ static void filter_move(int bonus) {
 	querry.matchmove(0, bonus >= 0);
 }
 
-static void action_phase_pass(int bonus) {
+static void pass_turn(int bonus) {
 	player->pass_action_phase = (bonus != -1);
 }
 
@@ -1181,13 +1184,28 @@ static void for_each_player(int bonus) {
 	player = push_last;
 }
 
-static bool for_each_player_do(int bonus) {
+static bool if_all_players(int bonus) {
 	auto push_last = player;
 	auto v = *script_begin++;
 	auto result = bonus >= 0;
 	for(auto p : players) {
 		player = static_cast<playeri*>(p);
 		if(!script_allow(v)) {
+			result = !result;
+			break;
+		}
+	}
+	player = push_last;
+	return result;
+}
+
+static bool if_one_player(int bonus) {
+	auto push_last = player;
+	auto v = *script_begin++;
+	auto result = (bonus < 0);
+	for(auto p : players) {
+		player = static_cast<playeri*>(p);
+		if(script_allow(v)) {
 			result = !result;
 			break;
 		}
@@ -1426,6 +1444,16 @@ static void conditional(int bonus) {
 		script_stop();
 }
 
+static void do_break(int bonus) {
+	script_stop();
+	choose_stop = true;
+}
+
+static void conditional_break(int bonus) {
+	if(!last_script->test(bonus))
+		do_break(0);
+}
+
 static void do_repeat(int bonus) {
 	commandstack stack;
 	auto push_stop = choose_stop; choose_stop = false;
@@ -1448,16 +1476,8 @@ static void do_switch(int bonus) {
 	script_begin += bonus;
 }
 
-static void do_break(int bonus) {
-	script_stop();
-	choose_stop = true;
-}
-
-static void if_winner_break(int bonus) {
-	if(game_winner) {
-		script_stop();
-		choose_stop = true;
-	}
+static bool if_winner(int bonus) {
+	return player==game_winner;
 }
 
 static bool if_pass(int bonus) {
@@ -1476,6 +1496,10 @@ static bool common_select(int bonus) {
 static bool common_action(int bonus) {
 	last_script->proc(bonus);
 	return true;
+}
+
+static bool allow_choose_action(int bonus) {
+	return !player->pass_action_phase;
 }
 
 static bool common_choose(int bonus) {
@@ -1556,7 +1580,6 @@ BSDATA(filteri) = {
 };
 BSDATAF(filteri);
 BSDATA(script) = {
-	{"ActionPhasePass", action_phase_pass},
 	{"ActivateSystem", activate_system},
 	{"AddNeighboring", add_neighboring},
 	{"AddSpeaker", add_speaker},
@@ -1568,7 +1591,7 @@ BSDATA(script) = {
 	{"CancelOrder", cancel_order},
 	{"ChangeToPlanet", change_to_planet, common_choose},
 	{"ChangeToSystem", change_to_system, common_choose},
-	{"ChooseAction", choose_action, common_choose},
+	{"ChooseAction", choose_action, allow_choose_action},
 	{"ChooseCombatOption", choose_combat_option, common_choose},
 	{"ChooseCommandToken", choose_command_token, common_choose},
 	{"ChooseDock", choose_dock, common_choose},
@@ -1591,19 +1614,21 @@ BSDATA(script) = {
 	{"FocusHomeSystem", focus_home_system},
 	{"ForEachPlanet", for_each_planet},
 	{"ForEachPlayer", for_each_player},
-	{"ForEachPlayerDo", conditional, for_each_player_do},
 	{"ForEachTroop", for_each_troop},
+	{"IfAllPlayers", conditional_break, if_all_players},
+	{"IfControlMecatolRex", conditional, if_control_mecatol_rex},
+	{"IfOnePlayer", conditional_break, if_one_player},
 	{"IfPass", conditional, if_pass},
-	{"IfControlMecatolRex", if_control_mecatol_rex},
 	{"IfPlayStrategy", conditional, if_play_strategy},
 	{"IfNonZero", conditional, if_non_zero},
-	{"IfWinnerBreak", if_winner_break},
+	{"IfWinner", conditional, if_winner},
 	{"JoinPlanetsBySystems", join_planets_by_systems},
 	{"JoinTroopsBySystems", join_troop_by_systems},
 	{"MoveShip", move_ship},
 	{"NoMecatolRex", no_mecatol_rex},
 	{"NotImpotant", script_none, not_impotant},
 	{"PayCommandTokens", pay_command_tokens},
+	{"PassTurn", pass_turn},
 	{"PushPlayer", push_player},
 	{"QuerryCount", querry_count},
 	{"QuerryShuffle", querry_shuffle},
