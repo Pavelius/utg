@@ -13,6 +13,12 @@
     <Filter Include="Locale">
       <UniqueIdentifier>{7bcefb8f-8481-494d-9aec-cb4f5c96bcfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Locale\names">
+      <UniqueIdentifier>{f46c3078-7227-4f7b-9b6a-d6da9e7129ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Locale\tips">
+      <UniqueIdentifier>{ef2e50f1-8da0-4fcd-80ee-d2d6d130b710}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -95,35 +101,32 @@
     <Text Include="errors.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\Names.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\BuildingDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\Descriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\SiteDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\TacticDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\TacticNames.txt">
-      <Filter>Locale</Filter>
+    <Text Include="locale\ru\NamesNewbe.txt">
+      <Filter>Locale\names</Filter>
     </Text>
     <Text Include="locale\ru\ProvinceNames.txt">
-      <Filter>Locale</Filter>
+      <Filter>Locale\names</Filter>
     </Text>
-    <Text Include="locale\ru\NamesNewbe.txt">
-      <Filter>Locale</Filter>
+    <Text Include="locale\ru\TacticNames.txt">
+      <Filter>Locale\names</Filter>
     </Text>
-    <Text Include="locale\ru\ActionNames.txt">
-      <Filter>Locale</Filter>
+    <Text Include="locale\ru\tips\BuildingDescriptions.txt">
+      <Filter>Locale\tips</Filter>
     </Text>
-    <Text Include="locale\ru\UnitDescriptions.txt">
-      <Filter>Locale</Filter>
+    <Text Include="locale\ru\tips\Descriptions.txt">
+      <Filter>Locale\tips</Filter>
+    </Text>
+    <Text Include="locale\ru\tips\Site.txt">
+      <Filter>Locale\tips</Filter>
+    </Text>
+    <Text Include="locale\ru\tips\TacticDescriptions.txt">
+      <Filter>Locale\tips</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>Locale\names</Filter>
+    </Text>
+    <Text Include="locale\ru\names\ActionNames.txt">
+      <Filter>Locale\names</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

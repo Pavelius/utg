@@ -16,7 +16,6 @@ BSDATA(costi) = {
 	{"Sail"},
 	{"Explore"},
 	{"ExploreNext"},
-	{"Siege"},
 	{"Recruit"},
 	{"Size", 0, 0, 0, 5},
 	{"Limit"},

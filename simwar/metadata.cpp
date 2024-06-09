@@ -5,6 +5,7 @@
 #include "list.h"
 #include "player.h"
 #include "randomizer.h"
+#include "stringbuilder.h"
 #include "script.h"
 #include "tactic.h"
 #include "tag.h"
@@ -97,17 +98,17 @@ BSMETA(tagi) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(costi, 1), ftstatus<costi>, 0, fnscript<costi>},
+	{"Ability", VAR(costi, 1), ftinfo<costi>, 0, fnscript<costi>},
 	{"Action", VAR(actioni, 1)},
-	{"Building", VAR(buildingi, 1), ftstatus<buildingi>, 0, fnscript<buildingi>},
+	{"Building", VAR(buildingi, 1), ftinfo<buildingi>, 0, fnscript<buildingi>},
 	{"Hero", VAR(heroi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
-	{"PlayerBuilding", VAR(building, 0), ftstatus<building>},
+	{"PlayerBuilding", VAR(building, 0), ftinfo<building>},
 	{"PlayerSite", VAR(site, 0)},
-	{"Province", VAR(provincei, 1), ftstatus<provincei>},
+	{"Province", VAR(provincei, 1), ftinfo<provincei>},
 	{"RandomList", VAR(randomizeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Site", VAR(sitei, 1)},

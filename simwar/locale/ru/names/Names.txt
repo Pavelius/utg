@@ -2,18 +2,12 @@
 Kalipse: Калипсо
 Mistra: Мистра
 
-Archers: Лучники
-Cavalry: Кавалерия
-Goblins: Гоблины
-Milita: Ополчение
-Orks: Орки
-Spearmans: Копейщики
-WolfRiders: Всадники на волках
-
 August: Август
 January: Январь
 February: Февраль
 March: Март
+April: Апрель
+May: Май
 
 BanditLair: Логово бандитов
 DarkCave: Темная пещера

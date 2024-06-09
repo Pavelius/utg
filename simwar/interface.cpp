@@ -312,8 +312,7 @@ void update_provinces_ui() {
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
-		auto p = addobject(e.position, &e, ftpaint<provincei>, 0);
-		p->priority = 1;
+		auto p = addobject(e.position, &e, ftpaint<provincei>, 0, 21);
 	}
 }
 

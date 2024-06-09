@@ -10,6 +10,7 @@
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
+#include "stringbuilder.h"
 #include "script.h"
 #include "statable.h"
 
@@ -137,30 +138,34 @@ static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn(pn);
 }
 
-void costi::getinfo(stringbuilder& sb) const {
-	auto v = (cost_s)(this - bsdata<costi>::elements);
-	add_description(id, sb);
+template<> void ftinfo<costi>(const void* object, stringbuilder& sb) {
+	auto p = (costi*)object;
+	auto v = (cost_s)(p - bsdata<costi>::elements);
+	add_description(p->id, sb);
 	sb.addn("---");
 	get_income(v, sb);
 }
 
-void provincei::getinfo(stringbuilder& sb) const {
-	add_description(id, sb);
+template<> void ftinfo<provincei>(const void* object, stringbuilder& sb) {
+	auto p = (provincei*)object;
+	add_description(p->id, sb);
 	sb.addn("---");
-	add_line_upkeep(this, sb);
+	add_line_upkeep(p, sb);
 }
 
-void buildingi::getinfo(stringbuilder& sb) const {
-	add_description(this, sb);
+template<> void ftinfo<buildingi>(const void* object, stringbuilder& sb) {
+	auto p = (buildingi*)object;
+	add_description(p, sb);
 	sb.addn("---");
-	add_line(sb, "Cost", cost);
-	add_line(sb, "Upkeep", upkeep);
-	if(upgrade)
-		sb.addn("%Exchange %1", upgrade->getname());
+	add_line(sb, "Cost", p->cost);
+	add_line(sb, "Upkeep", p->upkeep);
+	if(p->upgrade)
+		sb.addn("%Exchange %1", p->upgrade->getname());
 }
 
-void building::getinfo(stringbuilder& sb) const {
-	add_description(type, sb);
+template<> void ftinfo<building>(const void* object, stringbuilder& sb) {
+	auto p = (building*)object;
+	add_description(p->type, sb);
 	sb.addn("---");
-	add_line(sb, "Upkeep", type->upkeep);
+	add_line(sb, "Upkeep", p->type->upkeep);
 }

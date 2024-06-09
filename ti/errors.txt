@@ -1,2 +1,4 @@
-﻿In file `rules/Strategy.txt`:
- Line 54: Can't find variant `ForEachPlayerDo`
+﻿In file `Names.txt`:
+JNSHylarim: Define translate
+P0p0p1: Define translate
+ReturnStrategyCards: Define translate

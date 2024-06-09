@@ -175,16 +175,15 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\ActionNames.txt" />
-    <Text Include="locale\ru\BuildingDescriptions.txt" />
-    <Text Include="locale\ru\Descriptions.txt" />
-    <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\NamesNewbe.txt" />
+    <Text Include="locale\ru\names\ActionNames.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\ProvinceNames.txt" />
-    <Text Include="locale\ru\SiteDescriptions.txt" />
-    <Text Include="locale\ru\TacticDescriptions.txt" />
     <Text Include="locale\ru\TacticNames.txt" />
-    <Text Include="locale\ru\UnitDescriptions.txt" />
+    <Text Include="locale\ru\tips\BuildingDescriptions.txt" />
+    <Text Include="locale\ru\tips\Descriptions.txt" />
+    <Text Include="locale\ru\tips\Site.txt" />
+    <Text Include="locale\ru\tips\TacticDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
   </ItemGroup>
   <ItemGroup>
