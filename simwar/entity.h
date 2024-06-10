@@ -2,9 +2,14 @@
 
 #include "nameable.h"
 
+struct cardi;
 struct playeri;
+struct provincei;
+struct landscapei;
 
 struct entityi : nameable {
-	playeri*		player;
-	playeri*		getplayer() const { return player; }
+	cardi*				getcard() const;
+	provincei*			getprovince() const { return 0; }
+	playeri*			getplayer() const;
+	const landscapei*	getlandscape() const;
 };

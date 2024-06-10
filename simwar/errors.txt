@@ -1,2 +1,2 @@
 ﻿In file `Names.txt`:
-June: Define translate
+DoDefaultActionExplore: Define translate

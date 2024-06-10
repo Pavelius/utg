@@ -85,11 +85,6 @@ static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
 	sbo.add(temp);
 }
 
-//static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
-//	costa translate = {}; addvalue(translate, source);
-//	add_line(sbo, id, translate);
-//}
-
 static void add_description(const buildingi* p, stringbuilder& sb) {
 	sb.addn("##%1", getnm(p->id));
 	auto need_line = true;

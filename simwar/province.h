@@ -14,6 +14,7 @@ struct site;
 typedef flagable<32> provincef;
 
 struct provincei : entityi {
+	playeri*			player;
 	point				position;
 	const landscapei*	landscape;
 	costa				current, income;
