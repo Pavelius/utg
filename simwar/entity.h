@@ -8,8 +8,8 @@ struct provincei;
 struct landscapei;
 
 struct entityi : nameable {
-	cardi*				getcard() const;
-	provincei*			getprovince() const { return 0; }
-	playeri*			getplayer() const;
+	const cardi*		getcard() const { return 0; }
 	const landscapei*	getlandscape() const;
+	playeri*			getplayer() const;
+	provincei*			getprovince() const { return 0; }
 };
