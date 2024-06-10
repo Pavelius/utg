@@ -16,9 +16,10 @@
 #include "script.h"
 #include "statable.h"
 
+void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
+
 typedef collection<heroi> heroa;
 
-void add_line(stringbuilder& sb, const costac& source);
 void add_line(stringbuilder& sb, const costa& source);
 void next_turn();
 void player_turn();
@@ -639,17 +640,19 @@ static bool troops_mobilization(int value, int defence) {
 		sb.clear();
 		troops_army.act(sb, getnm("ArmyMobilize"));
 		an.clear();
-		//for(auto& e : bsdata<troop>()) {
-		//	if(e.player != player)
-		//		continue;
+		for(auto& e : bsdata<provincei>()) {
+			if(e.player != player)
+				continue;
+			if(&e == province)
+				continue;
+			if(!e.units)
+				continue;
+			if(e.getcost() > value)
+				continue;
 		//	if(e.moveto)
 		//		continue;
-		//	if(e.province->getcost() > value)
-		//		continue;
-		//	if(e.province == province)
-		//		continue;
-		//	an.add(&e, e.getname());
-		//}
+			an.add(&e, e.getname());
+		}
 		if(troops_army.get(Strenght) >= defence)
 			an.add(apply_confirm, getnm("Confirm"));
 		else if(defence)
@@ -847,13 +850,6 @@ static void battle_stage(stringbuilder& sb, army& attacker, army& defender, cost
 }
 
 static void prepare_battle(army& attacker, army& defender) {
-	if(!attacker.tactic)
-		attacker.randomtactic();
-	if(!defender.tactic)
-		defender.randomtactic();
-	// Same tactic - win attacker
-	if(defender.tactic == attacker.tactic)
-		defender.tactic = 0;
 	// Attacker and defender can disable tactic
 	//if(defender.tactic && attacker.tactic) {
 	//	if(attacker.tactic->disable.is(getbsi(defender.tactic)))
@@ -1068,7 +1064,7 @@ static void acth(stringbuilder& sb, const char* id, ...) {
 	if(!pn)
 		return;
 	sb.addsep(' ');
-	hero->actv(sb, pn, xva_start(id), hero->getname(), hero->gender);
+	stract(sb, hero->gender, hero->getname(), pn, xva_start(id));
 }
 
 static void quest_result(stringbuilder& sb, const char* prefix, const variants& reward) {

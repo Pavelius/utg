@@ -7,11 +7,5 @@
 
 typedef flagable<8> tacticaf;
 struct tactici : nameable {
-	costac			effect, perunit;
-	const tactici*	upgrade;
-	//bool			isdisable(const tactici* v) const;
-};
-struct tactica : collection<tactici> {
-	void			add(const tactici* v);
-	void			add(const tacticaf& v);
+	costa			effect;
 };

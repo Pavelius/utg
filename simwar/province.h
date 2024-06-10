@@ -1,4 +1,5 @@
 #include "collection.h"
+#include "entity.h"
 #include "flagable.h"
 #include "landscape.h"
 #include "point.h"
@@ -8,16 +9,14 @@
 
 #pragma once
 
-struct playeri;
 struct site;
 
 typedef flagable<32> provincef;
 
-struct provincei : nameable {
-	playeri*			player;
+struct provincei : entityi {
 	point				position;
 	const landscapei*	landscape;
-	costac				current, income;
+	costa				current, income;
 	char				buildings, units, recruit, builded;
 	void				add(cost_s v, int value);
 	void				explore(int value);

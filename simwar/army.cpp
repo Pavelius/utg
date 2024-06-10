@@ -2,7 +2,7 @@
 #include "costitem.h"
 #include "player.h"
 
-void add_line(stringbuilder& sb, const costac& source);
+void add_line(stringbuilder& sb, const costa& source);
 int get_value(const char* id, int value);
 
 const army* last_army;
@@ -109,10 +109,8 @@ int army::get(cost_s v) const {
 	int result = geteffect(v);
 	//if(hero)
 	//	result += get_value(hero->id, hero->effect[v]);
-	if(tactic) {
+	if(tactic)
 		result += get_value(tactic->id, tactic->effect[v]);
-		result += get_value(tactic->id, tactic->perunit[v] * units);
-	}
 	if(province)
 		result += get_value(province->id, province->current[v]);
 	return result;
@@ -136,14 +134,6 @@ void army::select(const provincei* province) {
 void army::select(const provincei* province, const playeri* player) {
 	if(province->player==player)
 		units = province->units;
-}
-
-void army::fill(tactica& source) {
-}
-
-void army::randomtactic() {
-	tactica source; fill(source);
-	tactic = source.random();
 }
 
 int	army::getunitcount(const tactici* v) const {

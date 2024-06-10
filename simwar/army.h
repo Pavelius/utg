@@ -8,7 +8,7 @@ struct army {
 	provincei*		province;
 	int				strenght, units, casualty;
 	const tactici*	tactic;
-	costac			spoils;
+	costa			spoils;
 	operator bool() const { return units != 0; }
 	void			act(stringbuilder& sb, const char* format, ...) const;
 	void			addprompt(stringbuilder& sb) const;
@@ -23,12 +23,10 @@ struct army {
 	const char*		getname() const;
 	const char*		getnameof() const;
 	int				getunitcount(const tactici* v) const;
-	void			fill(tactica& source);
 	void			normalize();
 	void			match(cost_s v, bool keep);
 	void			select(const provincei* province);
 	void			select(const provincei* province, const playeri* player);
 	void			setcasualty(const army& source);
 	void			sort();
-	void			randomtactic();
 };

@@ -27,27 +27,7 @@ void addvalue(costa& v1, const costa& v2) {
 		v1[i] += v2[i];
 }
 
-void addvalue(costa& v1, const costac& v2) {
-	for(auto i = 0; i <= Limit; i++)
-		v1[i] += v2[i];
-}
-
-void addvalue(costac& v1, const costac& v2) {
-	for(auto i = 0; i <= Limit; i++)
-		v1[i] += v2[i];
-}
-
 void subvalue(costa& v1, const costa& v2) {
-	for(auto i = 0; i <= Limit; i++)
-		v1[i] -= v2[i];
-}
-
-void subvalue(costac& v1, const costac& v2) {
-	for(auto i = 0; i <= Limit; i++)
-		v1[i] -= v2[i];
-}
-
-void subvalue(costa& v1, const costac& v2) {
 	for(auto i = 0; i <= Limit; i++)
 		v1[i] -= v2[i];
 }
@@ -55,22 +35,6 @@ void subvalue(costa& v1, const costac& v2) {
 bool isenought(const costa& v1, const costa& v2) {
 	for(auto i = 0; i <= Limit; i++) {
 		if(v2[i] && v1[i] < v2[i])
-			return false;
-	}
-	return true;
-}
-
-bool isenought(const costa& v1, const costac& v2) {
-	for(auto i = 0; i <= Limit; i++) {
-		if(v1[i] < v2[i])
-			return false;
-	}
-	return true;
-}
-
-bool isempthy(const costac& v) {
-	for(auto i = 0; i <= Limit; i++) {
-		if(v[i])
 			return false;
 	}
 	return true;

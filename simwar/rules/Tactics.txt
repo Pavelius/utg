@@ -1,0 +1,6 @@
+#Tactic
+
+CarefulDefence
+ effect Strenght(1)
+LightingAttack
+ effect Strenght(3)

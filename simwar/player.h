@@ -6,8 +6,7 @@
 
 struct playeri : nameable {
 	int			shield;
-	costa		resources, upgrade;
-	costac		income, faith;
+	costa		resources, upgrade, income, faith;
 	variants	start;
 	tacticaf	tactics;
 	provincef	visibility;

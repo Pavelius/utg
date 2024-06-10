@@ -4,5 +4,5 @@
 
 struct landscapei : nameable {
 	bool		water;
-	costac		effect, upkeep;
+	costa		effect, upkeep;
 };

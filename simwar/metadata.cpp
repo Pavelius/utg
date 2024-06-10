@@ -91,7 +91,6 @@ BSMETA(sitei) = {
 BSMETA(tactici) = {
 	BSREQ(id),
 	BSDST(effect, costi),
-	BSDST(perunit, costi),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

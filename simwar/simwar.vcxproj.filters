@@ -128,6 +128,9 @@
     <Text Include="locale\ru\names\ActionNames.txt">
       <Filter>Locale\names</Filter>
     </Text>
+    <Text Include="rules\Tactics.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="statable.h">
@@ -182,6 +185,15 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="moveorder.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="card.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="deck.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

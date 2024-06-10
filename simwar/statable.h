@@ -23,14 +23,7 @@ struct costi : nameable {
 	void		getinfo(stringbuilder& sb) const;
 };
 typedef short costa[Limit + 1];
-typedef char costac[Limit + 1];
 void addvalue(costa& v1, const costa& v2);
-void addvalue(costa& v1, const costac& v2);
-void addvalue(costac& v1, const costac& v2);
 bool isenought(const costa& v1, const costa& v2);
-bool isenought(const costa& v1, const costac& v2);
 bool isempthy(const costa& v);
-bool isempthy(const costac& v);
 void subvalue(costa& v1, const costa& v2);
-void subvalue(costac& v1, const costac& v2);
-void subvalue(costa& v1, const costac& v2);

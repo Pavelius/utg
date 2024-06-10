@@ -129,7 +129,7 @@ static void field(cost_s v, const char* format, int width, int v1, int v2, int v
 	paint_vborder();
 }
 
-static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costac& a3) {
+static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
 	field(v, format, width, a1[v], a2[v], a3[v]);
 }
 
@@ -140,7 +140,7 @@ static void field_date() {
 	paint_vborder();
 }
 
-static void paint_cost(const costa& v, const costac& u, const costa& n) {
+static void paint_cost(const costa& v, const costa& u, const costa& n) {
 	field_date();
 	field(Gold, 0, 100, v, n, u);
 	field(Mana, 0, 80, v, n, u);
@@ -273,24 +273,25 @@ static void paint_income(const provincei* province) {
 	fore = push_fore;
 }
 
-void provincei::paint() const {
-	if(player) {
-		paint_hilite_province(player->shield);
-		if(units)
-			show_banner(16, 1, str("%1i", units));
+static void paint_province() {
+	auto p = (provincei*)last_object->data;
+	if(p->player) {
+		paint_hilite_province(p->player->shield);
+		if(p->units)
+			show_banner(16, 1, str("%1i", p->units));
 	} else {
-		if(units)
-			show_banner(16, 0, str("%1i", units));
+		if(p->units)
+			show_banner(16, 0, str("%1i", p->units));
 	}
 	if(show_names)
-		stroke_texth2(getname());
-	if(province == this)
+		stroke_texth2(p->getname());
+	if(province == p)
 		paint_neighbor();
 	if(input_province) {
-		if(ishilite(24, this)) {
+		if(ishilite(24, p)) {
 			hot.cursor = cursor::Hand;
 			if(hot.key == MouseLeft && !hot.pressed)
-				execute(input_province, (int)this);
+				execute(input_province, (int)p);
 		}
 	}
 }
@@ -312,7 +313,7 @@ void update_provinces_ui() {
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
-		auto p = addobject(e.position, &e, ftpaint<provincei>, 0, 21);
+		auto p = addobject(e.position, &e, paint_province, 0, 21);
 	}
 }
 

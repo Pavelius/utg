@@ -185,6 +185,7 @@
     <Text Include="locale\ru\tips\Site.txt" />
     <Text Include="locale\ru\tips\TacticDescriptions.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Tactics.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actable.h" />
@@ -192,7 +193,10 @@
     <ClInclude Include="army.h" />
     <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />
+    <ClInclude Include="card.h" />
     <ClInclude Include="costitem.h" />
+    <ClInclude Include="deck.h" />
+    <ClInclude Include="entity.h" />
     <ClInclude Include="hero.h" />
     <ClInclude Include="moveorder.h" />
     <ClInclude Include="report.h" />

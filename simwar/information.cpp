@@ -65,18 +65,6 @@ void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, 5, province->buildings);
 }
 
-void add_line(stringbuilder& sb, const costac& source) {
-	for(auto i = 0; i <= Limit; i++) {
-		auto& e = bsdata<costi>::elements[i];
-		auto n = source[i];
-		if(!n)
-			continue;
-		if(e.frame == -1)
-			continue;
-		add_line(sb, e.frame, n);
-	}
-}
-
 void add_line(stringbuilder& sb, const costa& source) {
 	for(auto i = 0; i <= Limit; i++) {
 		auto& e = bsdata<costi>::elements[i];
@@ -97,10 +85,10 @@ static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
 	sbo.add(temp);
 }
 
-static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
-	costa translate = {}; addvalue(translate, source);
-	add_line(sbo, id, translate);
-}
+//static void add_line(stringbuilder& sbo, const char* id, const costac& source) {
+//	costa translate = {}; addvalue(translate, source);
+//	add_line(sbo, id, translate);
+//}
 
 static void add_description(const buildingi* p, stringbuilder& sb) {
 	sb.addn("##%1", getnm(p->id));
