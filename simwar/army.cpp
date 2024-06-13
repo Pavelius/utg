@@ -107,8 +107,6 @@ int army::geteffect(cost_s v) const {
 
 int army::get(cost_s v) const {
 	int result = geteffect(v);
-	//if(hero)
-	//	result += get_value(hero->id, hero->effect[v]);
 	if(tactic)
 		result += get_value(tactic->id, tactic->effect[v]);
 	if(province)

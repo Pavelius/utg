@@ -5,7 +5,7 @@
 
 enum tag_s : unsigned char {
 	Independed, Water,
-	Walking, Flying,
+	Discard, Shuffle, Extend,
 };
 typedef flagable<4> tagf;
 struct tagi : nameable {

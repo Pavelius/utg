@@ -1,4 +1,5 @@
 #include "action.h"
+#include "card.h"
 #include "bsreq.h"
 #include "building.h"
 #include "hero.h"
@@ -15,6 +16,7 @@ bool fntestlist(int index, int bonus);
 
 NOBSDATA(point)
 
+BSDATAC(cardi, 512)
 BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
 BSDATAC(heroi, 64)
@@ -44,6 +46,16 @@ BSMETA(building) = {
 BSMETA(costi) = {
 	BSREQ(id),
 	{}};
+BSMETA(cardi) = {
+	BSREQ(id),
+	BSREQ(count),
+	BSDST(effect, costi),
+	BSREQ(deck),
+	BSFLG(tags, tagi),
+	{}};
+BSMETA(decki) = {
+	BSREQ(id),
+	{}};
 BSMETA(heroi) = {
 	BSREQ(id),
 	BSREQ(resid),
@@ -64,7 +76,6 @@ BSMETA(playeri) = {
 	BSDST(resources, costi),
 	BSDST(income, costi),
 	BSREQ(start),
-	BSFLG(tactics, tactici),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -100,6 +111,7 @@ BSDATA(varianti) = {
 	{"Ability", VAR(costi, 1), ftinfo<costi>, 0, fnscript<costi>},
 	{"Action", VAR(actioni, 1)},
 	{"Building", VAR(buildingi, 1), ftinfo<buildingi>, 0, fnscript<buildingi>},
+	{"Card", VAR(cardi, 1)},
 	{"Hero", VAR(heroi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},

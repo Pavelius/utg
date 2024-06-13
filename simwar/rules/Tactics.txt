@@ -1,6 +1,30 @@
-#Tactic
+#Card deck(TacticCards) count(1)
 
-CarefulDefence
- effect Strenght(1)
+HeroicFeats
+ effect Fame(1) Death(1)
+ tags Extend
 LightingAttack
  effect Strenght(3)
+MessyFight
+ effect Sword(3) Strenght(1) Death(2)
+DeathTrap
+ effect Death(2)
+ tags Shuffle
+ArrowRain count(3)
+ effect Sword(1)
+ tags Extend
+ShieldWall count(3)
+ effect Shield(1)
+ tags Extend
+CarefulDefence
+ effect Shield(2)
+ExhaustCombat
+ effect Sword(1) Death(1)
+Curse
+ effect Death(1)
+ tags Discard Shuffle
+Bless
+ effect Sword(1) Shield(1)
+ tags Discard Shuffle
+Adventurers
+ effect Strenght(2) Fame(1)

@@ -154,6 +154,7 @@
     <ClCompile Include="building.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="costitem.cpp" />
+    <ClCompile Include="deck.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hero.cpp" />

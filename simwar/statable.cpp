@@ -11,6 +11,7 @@ BSDATA(costi) = {
 	{"Strenght", 0, 0, 0, 2},
 	{"Sword"},
 	{"Shield"},
+	{"Death"},
 	{"Experience", 0, 0, 0, 9},
 	{"Movement"},
 	{"Sail"},

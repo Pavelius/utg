@@ -96,6 +96,9 @@
     <ClCompile Include="entity.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="deck.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">

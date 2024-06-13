@@ -110,3 +110,5 @@ MercenaryCamp resid(MercenaryCamp)
  fail Experience+2 
  partial Experience+4
  success Experience+8
+
+#include "rules/Tactics.txt"
