@@ -4,7 +4,7 @@ HeroicFeats
  effect Fame(1) Death(1)
  tags Extend
 LightingAttack
- effect Strenght(3)
+ effect Strenght(4) Death(1)
 MessyFight
  effect Sword(3) Strenght(1) Death(2)
 DeathTrap
@@ -17,7 +17,7 @@ ShieldWall count(3)
  effect Shield(1)
  tags Extend
 CarefulDefence
- effect Shield(2)
+ effect Shield(1)
 ExhaustCombat
  effect Sword(1) Death(1)
 Curse

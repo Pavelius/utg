@@ -374,6 +374,23 @@ static void fix_fiscard(point origin, int mode) {
 	image(pt.x, pt.y, pi, 2, 0);
 }
 
+static int textcm(const char* string) {
+	auto push_caret = caret;
+	auto dy = texth();
+	while(true) {
+		auto c = textbc(string, width);
+		if(!c)
+			break;
+		auto w = textw(string, c);
+		caret.x = push_caret.x - w / 2;
+		text(string, c);
+		caret.y += dy;
+		string = skiptr(string + c);
+	}
+	caret.x = push_caret.x;
+	return caret.y - push_caret.y;
+}
+
 static void paint_effect(variants effect, point origin, int mode) {
 	char temp[260]; stringbuilder sb(temp);
 	auto push_font = font;
@@ -392,11 +409,7 @@ static void paint_effect(variants effect, point origin, int mode) {
 			font = metrics::h2;
 		else
 			font = metrics::font;
-		auto push_caret = caret;
-		caret.x -= (textw(temp) + 1) / 2;
-		text(temp, -1);
-		caret = push_caret;
-		caret.y += texth();
+		textcm(temp);
 	}
 	font = push_font;
 }
@@ -439,6 +452,7 @@ void playercardi::paint_statistic() const {
 	caret.y = push_caret.y + 232;
 	font = metrics::h1;
 	textvalue(initiative);
+	width = 240;
 	// Upper
 	caret.y = push_caret.y + 80;
 	paint_effect(upper, 120, 0);
@@ -574,18 +588,6 @@ void creaturei::paint() const {
 		active_hexagon();
 }
 
-static void tips() {
-	if(!hilite_object)
-		return;
-	auto push_caret = caret;
-	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
-	caret.y = 39;
-	auto i = bsdata<playercardi>::source.indexof(hilite_object);
-	if(i != -1)
-		((playercardi*)bsdata<playercardi>::source.ptr(i))->paint();
-	caret = push_caret;
-}
-
 static void overlaped_window() {
 	auto push_caret = caret;
 	caret.y = 37 + metrics::padding + metrics::border;
@@ -605,10 +607,20 @@ static void main_finish() {
 	input_camera();
 }
 
+static void main_tips() {
+	if(!hilite_object)
+		return;
+	auto push_caret = caret;
+	caret.x = getwidth() - 320 * 2 - metrics::padding * 2 - metrics::border * 2;
+	caret.y = 39;
+	auto i = bsdata<playercardi>::source.indexof(hilite_object);
+	if(i != -1)
+		((playercardi*)bsdata<playercardi>::source.ptr(i))->paint();
+	caret = push_caret;
+}
+
 void ui_initialize() {
-	draw::ptips = tips;
+	draw::ptips = main_tips;
 	draw::pbackground = main_background;
 	draw::pfinish = main_finish;
-	//draw::object::afterpaint = object_afterpaint;
-	//draw::object::afterpaintall = overlaped_window;
 }
