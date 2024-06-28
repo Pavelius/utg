@@ -46,33 +46,35 @@ void creature_getproperty(const void* object, variant v, stringbuilder& sb) {
 	}
 }
 
-template<> void ftstatus<dice>(const void* object, stringbuilder& sb) {
+template<> void ftinfo<dice>(const void* object, stringbuilder& sb) {
 	auto p = (dice*)object;
 	sb.add("%1id%2i", p->c, p->d);
 	if(p->b)
 		sb.add("%+1i", p->b);
 }
 
-void item::getinfo(stringbuilder& sb) const {
-	auto po = getowner(*this);
-	sb.add(getname());
-	auto& ei = geti();
+template<> void ftinfo<item>(const void* object, stringbuilder& sb) {
+	auto p = (item*)object;
+	auto po = getowner(*p);
+	sb.add(p->getname());
+	auto& ei = p->geti();
 	sb.adds("(%Weight %1i", ei.slot);
-	auto damage = getdamage();
+	auto damage = p->getdamage();
 	if(damage.d != 0) {
 		sb.adds(", %Damage ");
-		ftstatus<dice>(&damage, sb);
+		ftinfo<dice>(&damage, sb);
 	}
 	sb.add(")");
 }
 
-void creature::getinfo(stringbuilder& sb) const {
-	if(bsdata<creature>::source.haveio(this)) {
-		sb.add("%1 - %2", getname(), getkindname(), get(Level));
-	} else if(bsdata<creature>::source.have(this)) {
-		auto p = (creature*)bsdata<creature>::source.ptr(bsdata<creature>::source.indexof(this));
-		if(p->isitem(this))
-			((item*)this)->getinfo(sb);
+template<> void ftinfo<creature>(const void* object, stringbuilder& sb) {
+	if(bsdata<creature>::source.haveio(object)) {
+		auto p = (creature*)object;
+		sb.add("%1 - %2", p->getname(), p->getkindname(), p->get(Level));
+	} else if(bsdata<creature>::source.have(object)) {
+		auto p = (creature*)bsdata<creature>::source.ptr(bsdata<creature>::source.indexof(object));
+		if(p->isitem(object))
+			ftinfo<item>(object, sb);
 	}
 }
 

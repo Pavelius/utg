@@ -97,7 +97,7 @@ BSMETA(weari) = {
 	{}};
 
 void creature_getproperty(const void* object, variant v, stringbuilder& sb);
-template<> void ftstatus<dice>(const void* object, stringbuilder& sb);
+template<> void ftinfo<dice>(const void* object, stringbuilder& sb);
 
 BSDATA(varianti) = {
 	{"NoVariant"},
@@ -107,9 +107,9 @@ BSDATA(varianti) = {
 	{"Area", VAR(areai, 1)},
 	{"Class", VAR(classi, 1)},
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
-	{"Creature", VAR(creature, 0), ftstatus<creature>, creature_getproperty},
+	{"Creature", VAR(creature, 0), ftinfo<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
-	{"ItemObject", VAR(item, 0), ftstatus<item>},
+	{"ItemObject", VAR(item, 0), ftinfo<item>},
 	{"Feat", VAR(feati, 1)},
 	{"List", VAR(listi, 1)},
 	{"Location", VAR(locationi, 0)},

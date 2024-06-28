@@ -58,15 +58,7 @@ void gamei::initialize() {
 	game.setwalls();
 }
 
-void gamei::choosecards() {
-	for(auto& e : bsdata<creaturei>()) {
-		if(!e || !e.isplayer())
-			continue;
-		e.choosecards();
-	}
-}
-
-void gamei::playmoves() {
+static void play_moves() {
 	creaturea source;
 	source.select();
 	source.sort();
@@ -77,13 +69,21 @@ void gamei::playmoves() {
 	}
 }
 
-void gamei::checkinitiative() {
+static void check_initiative() {
+}
+
+static void choose_cards() {
+	for(auto& e : bsdata<creaturei>()) {
+		if(!e || !e.isplayer())
+			continue;
+		e.choosecards();
+	}
 }
 
 void gamei::playround() {
-	choosecards();
-	checkinitiative();
-	playmoves();
+	choose_cards();
+	check_initiative();
+	play_moves();
 }
 
 void gamei::dropcoin(point hex) {

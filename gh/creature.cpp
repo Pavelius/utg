@@ -168,7 +168,7 @@ void creaturei::attack(creaturei& enemy, int bonus, int pierce, int advantage) {
 	fixattack(enemy);
 	enemy.damage(bonus);
 	if(enemy) {
-
+		// TODO: Retaliate
 	}
 }
 

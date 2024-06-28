@@ -1,7 +1,5 @@
 #include "main.h"
 
-playeri* playeri::last;
-
 playercardi* playercardi::last;
 
 void playerdeck::addcards(const char* id, int level) {

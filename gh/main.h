@@ -109,7 +109,6 @@ struct playeri {
 	playerdeck			hand, discard, lost;
 	combatdeck			combat;
 	color				fore;
-	static playeri*		last;
 };
 struct monstercardi {
 	const char*			id;
@@ -231,8 +230,8 @@ class creaturei : public indexable {
 	const void*			parent;
 	char				level, hits;
 	statef				state;
+	adat<unsigned short, 16> movement;
 public:
-	//static creaturei*	active;
 	explicit operator bool() const { return parent != 0; }
 	void				activate();
 	static creaturei*	add(const char* id, point position, bool elite = false, bool hostile = true);
@@ -298,14 +297,11 @@ struct gamei : public location {
 	combatdeck			combat;
 	creaturea			targets;
 	int					dungeon_level;
-	static void			checkinitiative();
-	static void			choosecards();
 	static void			dropcoin(point hex);
 	static void			focusing(point pt);
 	static void			initialize();
 	static duration_s	getduration(variants source);
 	static int			getrounds(variants source);
-	static void			playmoves();
 	static void			playround();
 	void				set(element_s v) { elements[v] = 2; }
 	static void			updateui(void* parent, point position);

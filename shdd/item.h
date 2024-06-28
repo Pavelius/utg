@@ -44,7 +44,6 @@ public:
 	int			getcost() const;
 	int			getcount() const;
 	dice		getdamage() const;
-	void		getinfo(stringbuilder& sb) const;
 	const char*	getname() const { return geti().getname(); }
 	variant		getpower() const;
 	void		getstatus(stringbuilder& sb) const;
