@@ -35,7 +35,8 @@ void speech_read(const char* url) {
 			sb.clear();
 			p = sb.psstrlf(skipwscr(p));
 			p = skipwscr(p);
-			speech::element e = {szdup(temp)};
+			speech::element e = {};
+			e.name = szdup(temp);
 			bsdata<speech::element>::source.add(&e);
 		}
 		if(psb != bsdata<speech::element>::source.count)

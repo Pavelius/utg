@@ -170,7 +170,6 @@
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
     <ClCompile Include="chooseable.cpp" />
-    <ClCompile Include="consumable.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="enumerator.cpp" />
     <ClCompile Include="information.cpp" />

@@ -15,9 +15,9 @@ void stringbuilder_proc(stringbuilder& sb, const char* id);
 void initialize_ui();
 
 static void starting() {
-	creature::add("Orc");
-	creature::add(Dwarf, Male, Fighter);
-	creature::add(Human, Male, Fighter);
+	add_creature("Orc");
+	add_creature("Human", Male, Fighter);
+	add_creature("Dwarf", Male, Fighter);
 	auto pn = bsdata<listi>::find("MainScript");
 	if(!pn)
 		return;

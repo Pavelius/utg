@@ -3,6 +3,7 @@
 #include "bsreq.h"
 #include "creature.h"
 #include "item.h"
+#include "gender.h"
 #include "location.h"
 #include "list.h"
 #include "menu.h"
@@ -25,6 +26,7 @@ BSDATAC(creature, 1024)
 BSDATAC(itemi, 256)
 BSDATAC(locationi, 2048)
 BSDATAC(monsteri, 64)
+BSDATAC(racei, 32)
 BSDATAC(spelli, 256)
 BSDATAC(speciali, 128)
 
@@ -105,18 +107,20 @@ BSDATA(varianti) = {
 	{"Advancement", VAR(advancement, 2)},
 	{"Ancestry", VAR(racei, 1)},
 	{"Area", VAR(areai, 1)},
-	{"Class", VAR(classi, 1)},
+	{"Class", VAR(classi, 1), 0, 0, fnscript<classi>},
 	{"Consumable", VAR(consumablei, 1), 0, 0, fnscript<consumablei>},
 	{"Creature", VAR(creature, 0), ftinfo<creature>, creature_getproperty},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"ItemObject", VAR(item, 0), ftinfo<item>},
 	{"Feat", VAR(feati, 1)},
+	{"Gender", VAR(genderi, 1), 0, 0, fnscript<genderi>},
 	{"List", VAR(listi, 1)},
 	{"Location", VAR(locationi, 0)},
 	{"Menu", VAR(menu, 1)},
-	{"Modifier", VAR(modifieri, 1)},
+	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
 	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist::read},
+	{"Race", VAR(racei, 1), 0, 0, fnscript<racei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Spell", VAR(spelli, 1)},
 	{"State", VAR(statei, 1), 0, 0, fnscript<statei>},

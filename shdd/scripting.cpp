@@ -2,6 +2,7 @@
 #include "ability.h"
 #include "creature.h"
 #include "item.h"
+#include "gender.h"
 #include "modifier.h"
 #include "nametable.h"
 #include "pushvalue.h"
@@ -11,10 +12,41 @@
 #include "special.h"
 #include "state.h"
 
-static int special_attacks;
+static int		special_attacks;
+racei*			last_race;
+static genderi*	last_gender;
+static const void* last_result;
 
 static int d100() {
 	return rand() % 100;
+}
+
+static void choose_action(const char* cancel) {
+	last_result = an.choose(getnm("WhatDoYouDo"), cancel);
+}
+
+static bool apply_quest() {
+	if(!last_result)
+		return true;
+	else if(items.have(last_result)) {
+		auto p = (item*)last_result;
+		player->act(getnm("PlayerPickUp"), p->getname());
+		player->addequip(*p);
+		return false;
+	} else if(bsdata<quest>::have(last_result)) {
+		last_quest = (quest*)last_result;
+		if(last_quest->tags)
+			script_run(last_quest->tags);
+	}
+	return true;
+}
+
+static void pick_up_answers(int bonus) {
+	for(auto& e : items) {
+		if(!e)
+			continue;
+		an.add(&e, getnm("PickUp"), e.getname());
+	}
 }
 
 static item& create_item(int type, int count) {
@@ -46,29 +78,28 @@ static void print_answers(const quest* pb) {
 			continue;
 		if(p->tags && !script_allow(p->tags))
 			continue;
-		an.add(p, p->text);
+		if(p->text[0] == '/') {
+			auto pn = bsdata<script>::find(p->text+1);
+			if(pn)
+				pn->proc(0);
+		} else
+			an.add(p, p->text);
 	}
 	if(!an)
 		an.add(0, getnm("Continue"));
 }
 
-static void apply_quest() {
-	if(!last_quest || !last_quest->tags)
-		return;
-	script_run(last_quest->tags);
-}
-
 static bool apply_next() {
 	if(!last_quest || !last_questlist)
 		return false;
-	last_quest = last_questlist->find(last_quest->next);
+	last_result = last_questlist->find(last_quest->next);
 	return true;
 }
 
 static void ask_what_to_do() {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add(getnm("WhatDoYouDo"), player->getname());
-	last_quest = (quest*)an.choose(temp);
+	last_result = an.choose(temp);
 }
 
 static void play_quest() {
@@ -77,16 +108,38 @@ static void play_quest() {
 	apply_quest();
 	while(last_quest) {
 		print_prompt(last_quest);
-		print_answers(last_quest);
-		ask_what_to_do();
-		apply_quest();
+		while(true) {
+			print_answers(last_quest);
+			ask_what_to_do();
+			if(apply_quest())
+				break;
+		}
 		if(!apply_next())
 			break;
 		apply_quest();
 	}
 }
 
+static void normalize_bonus(int& bonus) {
+	if(!bonus)
+		bonus = 1;
+}
+
 template<> void fnscript<consumablei>(int value, int bonus) {
+	normalize_bonus(bonus);
+	player->consumables[value] += bonus;
+}
+
+template<> void fnscript<racei>(int value, int bonus) {
+	last_race = bsdata<racei>::elements + value;
+}
+
+template<> void fnscript<classi>(int value, int bonus) {
+	last_class = bsdata<classi>::elements + value;
+}
+
+template<> void fnscript<genderi>(int value, int bonus) {
+	last_gender = bsdata<genderi>::elements + value;
 }
 
 template<> void fnscript<questlist>(int value, int bonus) {
@@ -103,8 +156,7 @@ template<> void fnscript<itemi>(int value, int bonus) {
 }
 
 template<> void fnscript<abilityi>(int value, int bonus) {
-	if(!bonus)
-		bonus = 1;
+	normalize_bonus(bonus);
 	switch(modifier) {
 	case Permanent: player->basic.abilities[value] += bonus; break;
 	default: player->abilities[value] += bonus; break;
@@ -242,24 +294,24 @@ static void make_identify(int bonus) {
 	last_item->setidentify(bonus);
 }
 
-static bool chanceroll(int bonus) {
+static bool chance_roll(int bonus) {
 	if(bonus > 0)
 		return d100() < bonus;
 	return false;
 }
 
 static void chance_cursed(int bonus) {
-	if(chanceroll(bonus))
+	if(chance_roll(bonus))
 		last_item->setcursed(1);
 }
 
 static void chance_masterwork(int bonus) {
-	if(chanceroll(bonus))
+	if(chance_roll(bonus))
 		last_item->setmasterwork(1);
 }
 
 static void chance_benefit(int bonus) {
-	if(chanceroll(bonus)) {
+	if(chance_roll(bonus)) {
 	}
 }
 
@@ -297,6 +349,24 @@ static void if_have(int bonus) {
 	}
 }
 
+static creature* find_npc(short unsigned location, int bonus) {
+	for(auto& e : bsdata<creature>()) {
+		if(e.location == location && e.npc_index == bonus)
+			return &e;
+	}
+	return 0;
+}
+
+static void create_npc(int bonus) {
+	pushvalue push(player);
+	player = find_npc(0, bonus);
+	if(!player) {
+		add_npc_creature();
+		player->npc_index = (char)bonus;
+	}
+	opponent = player;
+}
+
 BSDATA(script) = {
 	{"ArmorMastery", armor_mastery},
 	{"Attack", raise_attack},
@@ -304,12 +374,14 @@ BSDATA(script) = {
 	{"ChanceBenefit", chance_benefit},
 	{"ChanceCursed", chance_cursed},
 	{"ChanceMasterwork", chance_masterwork},
+	{"CreateNPC", create_npc},
 	{"Damage", raise_damage},
 	{"IfHave", if_have},
 	{"LookEnemy", look_enemy, if_look_enemy},
 	{"MakeIdentify", make_identify},
 	{"MakeMeleeAttack", make_melee_attack, if_melee_weapon},
 	{"MakeRangeAttack", make_range_attack},
+	{"PickUpAnswers", pick_up_answers},
 	{"RaiseAbility", raise_ability},
 	{"RaiseClassStats", raise_class_ability},
 	{"TalentRoll", talent_roll},

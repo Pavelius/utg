@@ -1,0 +1,9 @@
+#Race
+
+Monster
+Animal
+
+Human
+Dwarf
+Elf
+HalfOrc

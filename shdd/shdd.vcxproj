@@ -163,7 +163,6 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="nametable.cpp" />
     <ClCompile Include="ongoing.cpp" />
-    <ClCompile Include="race.cpp" />
     <ClCompile Include="roll.cpp" />
     <ClCompile Include="serial.cpp" />
     <ClCompile Include="statable.cpp" />
@@ -199,7 +198,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\CityEncounters.txt" />
     <Text Include="locale\ru\Combat.txt" />
+    <Text Include="locale\ru\names\ItemNames.txt" />
+    <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\Players.txt" />
     <Text Include="locale\ru\Talks.txt" />
     <Text Include="locale\ru\Treasure0.txt" />
@@ -208,6 +210,7 @@
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Items.txt" />
     <Text Include="rules\Monsters.txt" />
+    <Text Include="rules\Race.txt" />
     <Text Include="rules\Spells.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

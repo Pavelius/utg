@@ -37,3 +37,7 @@ ChainArmor: Кольчуга
 LeatherArmor: Кожанная броня
 Shield: Щит
 
+Latern: Фонарь
+PotionEmpthy: Бутылка
+ObsidianStatue: Обсидиановая статуэтка
+

@@ -108,7 +108,8 @@ struct adat {
 	int								find(const T t) const { for(auto& e : *this) if(e == t) return &e - data; return -1; }
 	int								getcount() const { return count; }
 	size_t							getmaximum() const { return count_max; }
-	int								indexof(const void* e) const { if(e >= data && e < data + count) return (T*)e - data; return -1; }
+	bool							have(const void* e) const { return e >= data && e < data + count; }
+	int								indexof(const void* e) const { if(have(e)) return (T*)e - data; return -1; }
 	bool							is(const T t) const { for(auto& e : *this) if(e == t) return true; return false; }
 	slice<T>						records() const { return slice<T>((T*)data, count); }
 	void							remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0]) * (count - index - 1)); count--; }

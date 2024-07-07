@@ -73,6 +73,8 @@ void item::add(item& v) {
 
 bool item::canequip(wear_s v) const {
 	auto w = geti().wear;
+	if(v <= BackpackLast)
+		v = Backpack;
 	switch(w) {
 	case FingerRight: case FingerLeft:
 		return v == FingerLeft || v == FingerRight;

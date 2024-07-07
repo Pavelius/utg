@@ -12,6 +12,7 @@
 
 creature* player;
 creature* opponent;
+genderi* last_gender;
 
 static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
 
@@ -190,10 +191,28 @@ static void apply_level_up() {
 	player->abilities[Level]++;
 }
 
-void creature::add(race_s race, gender_s gender, class_s kind) {
+void add_npc_creature() {
 	player = bsdata<creature>::add();
 	player->clear();
-	player->ancestry = race;
+	player->ancestry = getbsi(last_race);
+	player->kind = (class_s)getbsi(last_class);
+	if(last_gender)
+		player->gender = (gender_s)getbsi(last_gender);
+	else
+		player->gender = (gender_s)xrand(Male, Female);
+	roll_random_abilities();
+	roll_hit_points();
+	starting_hits();
+	apply_level_up();
+	finish_create();
+	random_name();
+	player->setavatar(random_avatar(player->kind, player->gender));
+}
+
+void add_creature(const char* race, gender_s gender, class_s kind) {
+	player = bsdata<creature>::add();
+	player->clear();
+	player->ancestry = variant(race).value;
 	player->kind = kind;
 	player->gender = gender;
 	roll_random_abilities();
@@ -205,11 +224,11 @@ void creature::add(race_s race, gender_s gender, class_s kind) {
 	player->setavatar(random_avatar(player->kind, player->gender));
 }
 
-void creature::add(const char* id) {
-	add(bsdata<monsteri>::find(id));
+void add_creature(const char* id) {
+	add_creature(bsdata<monsteri>::find(id));
 }
 
-void creature::add(const monsteri* pm) {
+void add_creature(const monsteri* pm) {
 	if(!pm)
 		return;
 	player = bsdata<creature>::add();

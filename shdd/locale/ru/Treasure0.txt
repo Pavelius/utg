@@ -23,3 +23,9 @@
 44-45 Большая жемчужина #Pearl
 46-47 украшенная золотом нефритовая булавка #GoldenPin
 48-49 Мешочек с серебрянными шипами #Spikes ChanceMasterwork+100
+50-53 Медальон из мифрила с изображением хоббита #BlueAmulet ChanceMasterwork+100
+54-55 Два гномьих щита мастерской работы #Shield ChanceMasterwork+100 Shield ChanceMasterwork+100
+56-57 Парочку серебрянных кинжалов #Dagger ChanceMasterwork+100 Dagger ChanceMasterwork+100
+58-59 Медно-золотую кружку для медовухи #Tankard ChanceMasterwork+50
+60-61 Связку из 5 красных чешуек большого монстра, может даже дракона #DragonScale+5 ChanceMasterwork+50
+62-63 Легкий, теплый плащ, сотканный из паучьего шелка #Cloack ChanceMasterwork+50

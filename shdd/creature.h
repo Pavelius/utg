@@ -8,17 +8,17 @@
 
 #pragma once
 
+struct genderi;
+
 struct creature : actable, statable, consumablea, wearable, avatarable {
 	class_s		kind;
-	race_s		ancestry;
 	featable	feats;
 	statable	basic;
+	short unsigned ancestry;
 	short unsigned distance;
 	short unsigned enemy, leader;
 	short unsigned location;
-	static void add(race_s race, gender_s gender, class_s kind);
-	static void add(const char* id);
-	static void add(const struct monsteri* pm);
+	char		npc_index;
 	void		clear();
 	void		damage(int value);
 	const char*	getkindname() const;
@@ -37,5 +37,11 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 };
 extern creature* player;
 extern creature* opponent;
+extern genderi* last_gender;
+
+void add_creature(const char* id, gender_s gender, class_s kind);
+void add_creature(const char* id);
+void add_creature(const struct monsteri* pm);
+void add_npc_creature();
 
 creature* getowner(const item& it);

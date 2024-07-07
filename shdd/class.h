@@ -8,3 +8,4 @@ enum class_s : unsigned char {
 struct classi : nameable {
 	int		hits;
 };
+extern classi* last_class;

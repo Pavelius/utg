@@ -140,9 +140,6 @@
     <ClCompile Include="enumerator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="consumable.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="modifier.cpp">
       <Filter>logic</Filter>
     </ClCompile>

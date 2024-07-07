@@ -1,3 +1,4 @@
+#include "rules/Race.txt"
 #include "rules/Spells.txt"
 #include "rules/Items.txt"
 #include "rules/Advancement.txt"
@@ -5,12 +6,14 @@
 #include "rules/Area.txt"
 
 #import Quest "locale/ru/Combat.txt"
+
+#import RollTable "CityEncounters"
 #import RollTable "Treasure0"
 
 #List
 
 MainScript
- elements Treasure0 Combat+1
+ elements Enviroment Treasure0 Combat+20
 
 #Menu
 

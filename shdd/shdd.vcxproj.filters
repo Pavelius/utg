@@ -48,9 +48,6 @@
     <ClCompile Include="creature.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="race.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="class.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -192,6 +189,18 @@
     </Text>
     <Text Include="rules\Area.txt">
       <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\CityEncounters.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="rules\Race.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\names\ItemNames.txt">
+      <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>
 </Project>

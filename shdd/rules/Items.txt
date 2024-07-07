@@ -54,3 +54,7 @@ Stone
 GoldenPin cost(200)
 GoldenTooth
 ObsidianStatue
+Tankard
+DragonScale cost(50)
+
+BlueAmulet

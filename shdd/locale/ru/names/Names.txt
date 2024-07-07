@@ -6,6 +6,9 @@ DarkForest: Темный лес
 
 Slots: Слот
 
+PickUp: Взять [%-1].
+PlayerPickUp: %герой подобрал%а %-1.
+
 ToHit: к попаданию
 ToDamage: к урону
 

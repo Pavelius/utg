@@ -1,1 +1,2 @@
-﻿Can't find file 'Combat'
+﻿In file `Names.txt`:
+GoldenTooth: Define translate

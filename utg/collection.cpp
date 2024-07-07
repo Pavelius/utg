@@ -173,6 +173,6 @@ void* collectiona::pick() {
 }
 
 void collectiona::top(int number) {
-	if(count > number)
+	if(count > (size_t)number)
 		count = number;
 }

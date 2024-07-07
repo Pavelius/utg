@@ -1,6 +1,8 @@
 #include "crt.h"
 #include "class.h"
 
+classi* last_class;
+
 BSDATA(classi) = {
 	{"NoClass", 6},
 	{"Fighter", 8},
