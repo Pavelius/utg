@@ -38,6 +38,7 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 extern creature* player;
 extern creature* opponent;
 extern genderi* last_gender;
+extern bool action_change_player;
 
 void add_creature(const char* id, gender_s gender, class_s kind);
 void add_creature(const char* id);

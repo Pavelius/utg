@@ -7,6 +7,7 @@ DarkForest: Темный лес
 Slots: Слот
 
 PickUp: Взять [%-1].
+PickUpMany: Взять [%-1], %2i шт.
 PlayerPickUp: %герой подобрал%а %-1.
 
 ToHit: к попаданию
@@ -14,4 +15,4 @@ ToDamage: к урону
 
 No: Нет
 Yes: Да
-WhatDoYouDo: Что будет делать [%Name]?
+WhatDoYouDo: Что будет делать [%1]?

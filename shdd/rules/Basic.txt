@@ -20,4 +20,4 @@ MainScript
 General source(Creature)
  elements Strenght Dexterity Constitution Intellect Wisdow Charisma Separator HP AC Separator MeleeAttack RangeAttack
 Items source(Creature)
- elements EquipmentList
+ elements EquipmentList BackpackList

@@ -18,6 +18,7 @@ extern const void* focus_object;
 extern array* heroes;
 extern fngetname heroes_getavatar;
 extern fnvisible heroes_isplayer;
+extern fncommand heroes_setplayer;
 extern fngetint heroes_getfade;
 extern const void* hilite_object;
 extern int title_width;

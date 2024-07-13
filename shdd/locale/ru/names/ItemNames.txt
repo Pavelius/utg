@@ -33,11 +33,17 @@ Longbow: Длинный лук
 Longsword: Длинный меч
 Shortsword: Меч
 
-ChainArmor: Кольчуга
+Chainmail: Кольчуга
 LeatherArmor: Кожанная броня
 Shield: Щит
 
+Cloack: Плащ
+DragonScale: Драконья чешуя
+GoldenPin: Золотая брощь
 Latern: Фонарь
+Mirror: Зеркало
 PotionEmpthy: Бутылка
+Stone: Камень
 ObsidianStatue: Обсидиановая статуэтка
+Torch: Факел
 

@@ -13,6 +13,7 @@
 creature* player;
 creature* opponent;
 genderi* last_gender;
+bool action_change_player;
 
 static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
 

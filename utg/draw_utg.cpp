@@ -10,6 +10,7 @@ using namespace draw;
 array*		draw::heroes;
 fngetname	draw::heroes_getavatar;
 fnvisible	draw::heroes_isplayer;
+fncommand	draw::heroes_setplayer;
 fngetint	draw::heroes_getfade;
 const void*	draw::focus_object;
 int			draw::title_width = 220;
@@ -244,6 +245,8 @@ static void properties() {
 
 static void set_focused() {
 	focus_object = (void*)hot.param;
+	if(heroes_setplayer)
+		heroes_setplayer((void*)hot.param);
 }
 
 static void avatars() {

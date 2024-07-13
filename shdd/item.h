@@ -50,7 +50,7 @@ public:
 	int			getweight() const;
 	bool		is(feat_s v) const { return geti().is(v); }
 	bool		iscursed() const { return cursed != 0; }
-	bool		iscountable() const { return geti().powers != 0; }
+	bool		iscountable() const { return geti().powers == 0; }
 	void		setcount(int v);
 	void		setcursed(int v) { cursed = (v >= 0) ? 1 : 0; }
 	void		setidentify(int v) { identified = v; }

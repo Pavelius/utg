@@ -44,17 +44,19 @@ PotionEmpthy
 
 Pearl cost(200)
 Emerald
+Sapfire cost(600)
 
+BoardGame
+DragonScale cost(50)
 Fork
+GoldenPin cost(200)
+GoldenTooth
 Latern
 Mirror
 Spikes
-Torch
 Stone
-GoldenPin cost(200)
-GoldenTooth
+Torch
 ObsidianStatue
 Tankard
-DragonScale cost(50)
 
 BlueAmulet

@@ -21,14 +21,17 @@ static int d100() {
 	return rand() % 100;
 }
 
-static void choose_action(const char* cancel) {
-	last_result = an.choose(getnm("WhatDoYouDo"), cancel);
-}
+//static void choose_action(const char* cancel) {
+//	last_result = an.choose(getnm("WhatDoYouDo"), cancel);
+//}
 
 static bool apply_quest() {
 	if(!last_result)
 		return true;
-	else if(items.have(last_result)) {
+	else if(bsdata<creature>::have(last_result)) {
+		player = (creature*)last_result;
+		return false;
+	}  else if(items.have(last_result)) {
 		auto p = (item*)last_result;
 		player->act(getnm("PlayerPickUp"), p->getname());
 		player->addequip(*p);
@@ -45,7 +48,10 @@ static void pick_up_answers(int bonus) {
 	for(auto& e : items) {
 		if(!e)
 			continue;
-		an.add(&e, getnm("PickUp"), e.getname());
+		if(e.getcount()>1)
+			an.add(&e, getnm("PickUpMany"), e.getname(), e.getcount());
+		else
+			an.add(&e, getnm("PickUp"), e.getname());
 	}
 }
 
@@ -90,7 +96,7 @@ static void print_answers(const quest* pb) {
 }
 
 static bool apply_next() {
-	if(!last_quest || !last_questlist)
+	if(!last_quest || !last_questlist || !last_quest->next)
 		return false;
 	last_result = last_questlist->find(last_quest->next);
 	return true;
@@ -143,6 +149,7 @@ template<> void fnscript<genderi>(int value, int bonus) {
 }
 
 template<> void fnscript<questlist>(int value, int bonus) {
+	pushvalue push_change_player(action_change_player, true);
 	last_questlist = bsdata<questlist>::elements + value;
 	last_quest = last_questlist->find(bonus);
 	play_quest();

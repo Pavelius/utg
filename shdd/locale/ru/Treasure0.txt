@@ -29,3 +29,7 @@
 58-59 Медно-золотую кружку для медовухи #Tankard ChanceMasterwork+50
 60-61 Связку из 5 красных чешуек большого монстра, может даже дракона #DragonScale+5 ChanceMasterwork+50
 62-63 Легкий, теплый плащ, сотканный из паучьего шелка #Cloack ChanceMasterwork+50
+64-65 Набор фигурок из слоновой кости для настольной игры #BoardGame ChanceMasterwork+100
+66-67 Не до конца законченная кольчуга #Chainmail DamageItem+1
+68-69 Три одиноковых боевых молота #Warhammer+3
+70-71 Фрагмент сапфира #Sapfire DamageItem+1

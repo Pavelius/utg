@@ -38,10 +38,16 @@ static bool isplayer(const void* p) {
 	return p == player;
 }
 
+static void setplayer(void* p) {
+	if(action_change_player)
+		draw::breakmodal((long)p);
+}
+
 static void initialize_avatars() {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;
+	draw::heroes_setplayer = setplayer;
 }
 
 int main(int argc, char* argv[]) {
@@ -49,7 +55,7 @@ int main(int argc, char* argv[]) {
 	quest::initialize();
 	initialize_avatars();
 	srand(getcputime());
-	//srand(1123);
+	srand(8381);
 	stringbuilder::custom = stringbuilder_proc;
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
