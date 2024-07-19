@@ -13,10 +13,8 @@ struct color {
 	inline bool	operator!=(const color& e) const { return b != e.b || g != e.g || r != e.r || a != e.a; }
 	//
 	inline void				clear() { *((int*)this) = 0; }
-	static void				convert(void* output, int width, int height, int output_bpp, const void* output_pallette, const void* input, int input_bpp, const void* input_pallette = 0, int input_scanline = 0);
 	color					darken() const;
 	int						find(const void* pallette, int count) const;
-	static void				flipv(unsigned char* bits, unsigned scanline, int height);
 	char*					getname(char* result, const char* result_maximum) const;
 	color					gray() const;
 	color					lighten() const;
@@ -24,8 +22,6 @@ struct color {
 	color					mix(const color c1, unsigned char s = 128) const;
 	color					negative() const;
 	void					read(const void* scanline, int x, int bpp, const void* pallette = 0);
-	static void				rgb2bgr(color* source, int count);
-	static int				scanline(int width, int bpp);
 	void					write(void* scanline, int x, int bpp, const void* pallette = 0, int color_count = 0) const;
 };
 namespace colors {
@@ -37,3 +33,9 @@ extern color				red;
 extern color				yellow;
 extern color				white;
 }
+
+void color_convert(void* output, int width, int height, int output_bpp, const void* output_pallette, const void* input, int input_bpp, const void* input_pallette = 0, int input_scanline = 0);
+void color_flipv(unsigned char* bits, unsigned scanline, int height);
+void rgb2bgr(color* source, int count);
+
+int	color_scanline(int width, int bpp);

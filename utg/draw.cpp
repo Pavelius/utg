@@ -2358,13 +2358,13 @@ void surface::resize(int width, int height, int bpp, bool alloc_memory) {
 	this->bpp = bpp;
 	this->width = width;
 	this->height = height;
-	this->scanline = color::scanline(width, bpp);
+	this->scanline = color_scanline(width, bpp);
 	if(alloc_memory)
 		bits = allocator(bits, height ? (height + 1) * scanline : 0);
 }
 
 void surface::flipv() {
-	color::flipv(bits, scanline, height);
+	color_flipv(bits, scanline, height);
 }
 
 void surface::convert(int new_bpp, color* pallette) {
@@ -2373,12 +2373,12 @@ void surface::convert(int new_bpp, color* pallette) {
 		return;
 	}
 	auto old_scanline = scanline;
-	scanline = color::scanline(width, new_bpp);
+	scanline = color_scanline(width, new_bpp);
 	if(iabs(new_bpp) <= bpp)
-		color::convert(bits, width, height, new_bpp, 0, bits, bpp, pallette, old_scanline);
+		color_convert(bits, width, height, new_bpp, 0, bits, bpp, pallette, old_scanline);
 	else {
 		unsigned char* new_bits = (unsigned char*)allocator(0, (height + 1) * scanline);
-		color::convert(
+		color_convert(
 			new_bits, width, height, new_bpp, pallette,
 			bits, bpp, pallette, old_scanline);
 		allocator(bits, 0);
@@ -2407,7 +2407,7 @@ void surface::rotate() {
 	free(bits);
 	bits = pn;
 	iswap(width, height);
-	scanline = color::scanline(width, bpp);
+	scanline = color_scanline(width, bpp);
 }
 
 void draw::key2str(stringbuilder& sb, int key) {

@@ -56,7 +56,7 @@ static struct tga_bitmap_plugin : public draw::surface::plugin {
 		auto total_pixels = p->width * p->height;
 		auto ps = input + (p->idlength + p->colourmaptype * p->colourmaplength) + sizeof(header);
 		auto bytes = p->bitsperpixel / 8;
-		auto output_scanline = color::scanline(image_width, output_bpp);
+		auto output_scanline = color_scanline(image_width, output_bpp);
 		auto n = 0;
 		if(p->datatypecode == 10) {
 			while(n < total_pixels) {
