@@ -202,5 +202,8 @@
     <Text Include="locale\ru\names\ItemNames.txt">
       <Filter>locale\ru</Filter>
     </Text>
+    <Text Include="locale\ru\DungeonEncounters.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
   </ItemGroup>
 </Project>

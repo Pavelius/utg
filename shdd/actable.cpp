@@ -8,7 +8,7 @@ void actable::actv(const char* format, const char* format_param) const {
 	if(!answers::console)
 		return;
 	if(answers::console->begin()[0])
-		answers::console->addsep(' ');
+		answers::console->addsep('\n');
 	stract(*answers::console, gender, getname(), format, format_param);
 }
 

@@ -68,7 +68,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Move", VAR(movei, 1)},
-	{"MoveOption", VAR(moveoptioni, 3), ftstatus<moveoptioni>},
+	{"MoveOption", VAR(moveoptioni, 3), ftinfo<moveoptioni>},
 	{"Resource", VAR(harmi, 1), 0, 0, fnscript<harmi>},
 	{"Result", VAR(resulti, 1)},
 	{"Risk", VAR(riski, 1)},

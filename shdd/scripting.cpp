@@ -21,10 +21,6 @@ static int d100() {
 	return rand() % 100;
 }
 
-//static void choose_action(const char* cancel) {
-//	last_result = an.choose(getnm("WhatDoYouDo"), cancel);
-//}
-
 static bool apply_quest() {
 	if(!last_result)
 		return true;
@@ -68,9 +64,8 @@ static void print_prompt(const quest* p) {
 	auto resid = p->getimage();
 	if(resid)
 		answers::resid = resid;
-	if(!p->text)
-		return;
-	an.console->add(p->text);
+	if(p->text)
+		an.console->add(p->text);
 }
 
 static void print_answers(const quest* pb) {

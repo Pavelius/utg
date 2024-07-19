@@ -1,4 +1,3 @@
 ﻿In file `Names.txt`:
-JNSHylarim: Define translate
-P0p0p1: Define translate
+ChooseMoveOptions: Define translate
 ReturnStrategyCards: Define translate

@@ -12,6 +12,7 @@ static void script_info(const variants& elements, stringbuilder& sb) {
 	}
 }
 
-void moveoptioni::getinfo(stringbuilder& sb) const {
-	script_info(effect, sb);
+template<> void ftinfo<moveoptioni>(const void* object, stringbuilder& sb) {
+	auto p = (moveoptioni*)object;
+	script_info(p->effect, sb);
 }
