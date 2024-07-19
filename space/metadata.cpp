@@ -92,7 +92,7 @@ BSDATA(varianti) = {
 	{"Querry", VAR(querryi, 1), 0, 0, fnscript<querryi>},
 	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist::read},
 	{"Ship", VAR(shipi, 1), 0, 0, fnscript<shipi>},
-	{"ShipObject", VAR(ship, 0), ftstatus<ship>},
+	{"ShipObject", VAR(ship, 0), ftinfo<ship>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"System", VAR(systemi, 1)},
 	{"Tag", VAR(tagi, 1)},

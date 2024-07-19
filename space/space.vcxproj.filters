@@ -2,131 +2,131 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="metadata.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="mission.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="tag.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="scripting.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="interface.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="planetr.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="variable.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="combat.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="module.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="ship.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="system.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="planet.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="drawable.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="moveable.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="information.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="action.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="calculation.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="modifier.cpp">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Логика">
-      <UniqueIdentifier>{47534718-efd7-4009-aecc-0d6310c1a3b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Данные">
       <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Локализация">
       <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{47534718-efd7-4009-aecc-0d6310c1a3b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timeable.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="tag.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="planetr.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="landscape.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="planet.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="system.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="mission.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="variable.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="combat.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="module.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="range.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="ship.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="moveable.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="drawable.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="action.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="calculation.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="modifier.h">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +167,7 @@
       <Filter>Локализация</Filter>
     </Text>
     <Text Include="rules\Weapons.txt">
-      <Filter>Логика</Filter>
+      <Filter>logic</Filter>
     </Text>
     <Text Include="locale\ru\Moves.txt">
       <Filter>Локализация</Filter>

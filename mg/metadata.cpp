@@ -84,7 +84,7 @@ BSDATA(varianti) = {
 	{"Animal", VAR(animali, 1)},
 	{"Conflict", VAR(conflicti, 1)},
 	{"Enviroment", VAR(enviromenti, 1)},
-	{"Hero", VAR(hero, 1), ftstatus<hero>, hero::getproperty},
+	{"Hero", VAR(hero, 1), ftinfo<hero>, hero::getproperty},
 	{"Item", VAR(itemi, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},

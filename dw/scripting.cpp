@@ -7,9 +7,9 @@ static variant last;
 
 static void fix_value(const char* format, const char* name, int value) {
 	if(value > 0)
-		draw::information(format, name, value);
+		information(format, name, value);
 	else
-		draw::warning(format, name, -value);
+		warning(format, name, -value);
 }
 
 static int getdiscountcost(int item_type, int bonus) {
@@ -41,7 +41,7 @@ template<> bool fntest<itemi>(int index, int bonus) {
 template<> void fnscript<itemi>(int index, int bonus) {
 	item it(index);
 	if(bonus > 0)
-		draw::information(getnm("AddItem"), it.getname(), bonus);
+		information(getnm("AddItem"), it.getname(), bonus);
 	player->additem(it);
 }
 

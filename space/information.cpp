@@ -9,13 +9,14 @@ static void add_header(stringbuilder& sb, const char* name) {
 	sb.addn("---");
 }
 
-void ship::getinfo(stringbuilder& sb) const {
-	auto& ei = geti();
+template<> void ftinfo<ship>(const void* object, stringbuilder& sb) {
+	auto p = (ship*)object;
+	auto& ei = p->geti();
 	add_header(sb, ei.getname());
-	sb.addn("%Hull: %1i/%2i", hull, modules[Hull]);
-	if(shield)
-		sb.addn("%Shield: %1i/%2i", shield, modules[Shield]);
-	sb.addn("%Speed: %1i", modules[Engine]);
+	sb.addn("%Hull: %1i/%2i", p->hull, p->modules[Hull]);
+	if(p->shield)
+		sb.addn("%Shield: %1i/%2i", p->shield, p->modules[Shield]);
+	sb.addn("%Speed: %1i", p->modules[Engine]);
 }
 
 static void planet_text(stringbuilder& sb) {

@@ -1,13 +1,12 @@
 #include "actable.h"
 #include "answers.h"
-#include "stringact.h"
 #include "stringlist.h"
 
 void actable::actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s female, char separator) {
 	if(!format)
 		return;
 	sb.addsep(separator);
-	stract(sb, female, name, format, format_param);
+	//stract(sb, female, name, format, format_param);
 }
 
 void actable::act(const char* format, ...) const {
