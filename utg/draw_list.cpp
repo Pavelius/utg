@@ -49,7 +49,7 @@ static void list_input(int& current, int& origin, int perpage, int perline) {
 		origin = current;
 	if(origin + perpage < current)
 		origin = current - perpage;
-	switch(hot.key) {
+	switch(hkey) {
 	case MouseWheelUp:
 		if(gui.hilighted && origin)
 			execute(cbsetint, origin - 1, 0, &origin);
@@ -113,7 +113,7 @@ void draw::list(int& origin, int& current, int perline, fnevent prow) {
 			rectfhl(128);
 		else if(gui.hilighted)
 			rectfhl(32);
-		if(ishilite() && hot.key == MouseLeft && hot.pressed)
+		if(ishilite() && hkey == MouseLeft && hpressed)
 			execute(cbsetint, gui.index, 0, &current);
 		auto push_value = gui.value;
 		gui.data = list_data.ptr(gui.index);

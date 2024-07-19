@@ -111,17 +111,6 @@ extern sprite*			icons;
 extern int				border, padding;
 }
 namespace draw {
-struct hoti {
-	enum cursor			cursor; // set this mouse cursor
-	unsigned			key; // if pressed key or mouse this field has key
-	point				mouse; // current mouse coordinates
-	bool				pressed; // flag if any of mouse keys is pressed
-	long				param, param2; // command context or parameters
-	const void*			object; // command object
-	rect				hilite, focus;
-	explicit operator bool() const { return key != 0; }
-};
-extern hoti				hot;
 struct surface {
 	struct plugin {
 		const char*		name;
@@ -158,6 +147,13 @@ extern rect				clipping; // Clipping area
 extern fnevent			domodal;
 extern point			dragmouse, caret, camera, tips_caret, tips_size;
 extern color			fore, fore_stroke;
+extern cursor			hcursor; // set this mouse cursor
+extern unsigned			hkey; // if pressed key or mouse this field has key
+extern point			hmouse; // current mouse coordinates
+extern const void*		hobject; // command object
+extern bool				hpressed; // flag if any of mouse keys is pressed
+extern long				hparam, hparam2; // command context or parameters
+extern rect				hilite;
 extern const void*		hilite_object;
 extern point			hilite_position;
 extern int				hilite_size;
@@ -212,7 +208,6 @@ inline bool				ishilite(int size) { return ishilite({caret.x-size, caret.y - siz
 void					image(int x, int y, const sprite* e, int id, int flags);
 inline void				image(const sprite* e, int id, int flags) { image(caret.x, caret.y, e, id, flags); }
 void					image(const sprite* e, int id, int flags, color* pal);
-//void					imager(int xm, int ym, const sprite* p, int id, int radius);
 void					key2str(stringbuilder& sb, int key);
 void					line(int x, int y); // Draw line
 void					linet(int x, int y);

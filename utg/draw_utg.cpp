@@ -23,7 +23,7 @@ void set_light_theme();
 static void stroke_active_fill() {
 	auto push_fore = fore;
 	auto push_alpha = alpha;
-	if(hot.pressed)
+	if(hpressed)
 		fore = colors::active.mix(colors::button, 128);
 	else
 		fore = colors::active;
@@ -40,7 +40,7 @@ bool draw::buttonfd(const char* title) {
 	caret = push_caret;
 	auto hilited = ishilite();
 	if(hilited)
-		hot.cursor = cursor::Hand;
+		hcursor = cursor::Hand;
 	return hilited;
 }
 
@@ -141,7 +141,7 @@ static void paintbar(const char* id, const void* element) {
 	} else {
 		bartext(id);
 		hilitingx(id, figure::Rect3D);
-		if(control_hilited && hot.key == MouseLeft && hot.pressed)
+		if(control_hilited && hkey == MouseLeft && hpressed)
 			execute(cbsetptr, (long)element, 0, &current_tab);
 	}
 	caret.x += width;
@@ -244,9 +244,9 @@ static void properties() {
 }
 
 static void set_focused() {
-	focus_object = (void*)hot.param;
+	focus_object = (void*)hparam;
 	if(heroes_setplayer)
-		heroes_setplayer((void*)hot.param);
+		heroes_setplayer((void*)hparam);
 }
 
 static void avatars() {
@@ -306,7 +306,7 @@ void draw::label(const char* title, const char* value, const void* object) {
 
 void draw::label(const char* title, const char* value, const void* object, fnevent click) {
 	label(title, value, object);
-	if(click && control_hilited && hot.key == MouseLeft && !hot.pressed)
+	if(click && control_hilited && hkey == MouseLeft && !hpressed)
 		execute(click, 0, 0, object);
 }
 
@@ -484,8 +484,8 @@ void draw::avatar(int index, const void* object, const char* id, fnevent press_e
 	if(heroes_isplayer && heroes_isplayer(object))
 		strokeout(strokered, 2);
 	if(press_event && control_hilited) {
-		hot.cursor = cursor::Hand;
-		if(hot.key == MouseLeft && !hot.pressed)
+		hcursor = cursor::Hand;
+		if(hkey == MouseLeft && !hpressed)
 			execute(press_event, (long)hilite_object, 0, focus_object);
 	}
 	if(right_line)
@@ -505,7 +505,7 @@ static void circleactive() {
 	caret.y += height / 2;
 	fore = colors::active;
 	auto w = width / 2;
-	if(hot.pressed)
+	if(hpressed)
 		w -= 2;
 	circle(w);
 	caret = push_caret;
@@ -514,10 +514,8 @@ static void circleactive() {
 
 static void hilite_paint() {
 	rectpush push;
-	caret.x = hot.hilite.x1;
-	caret.y = hot.hilite.y1;
-	width = hot.hilite.width();
-	height = hot.hilite.height();
+	caret.x = hilite.x1; caret.y = hilite.y1;
+	width = hilite.width(); height = hilite.height();
 	switch(hilite_type) {
 	case figure::Circle: circleactive(); break;
 	case figure::Rect: strokeout(strokeactive); break;
@@ -528,7 +526,7 @@ static void hilite_paint() {
 }
 
 static void tooltips_paint() {
-	if(hot.hilite)
+	if(hilite)
 		hilite_paint();
 }
 

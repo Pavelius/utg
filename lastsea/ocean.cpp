@@ -42,12 +42,12 @@ static void paint_selection() {
 	fore = colors::button;
 	circle(figure_size);
 	if(ishilite(figure_size)) {
-		hot.cursor = cursor::Hand;
+		hcursor = cursor::Hand;
 		fore = colors::active;
 		circle(figure_size - 2);
 		hilite_type = figure::None;
 		hilite_object = last_object->data;
-		if(hot.key == MouseLeft && hot.pressed)
+		if(hkey == MouseLeft && hpressed)
 			execute(buttonparam, (long)hilite_object, 0, 0);
 	}
 	fore = push_fore;
@@ -84,9 +84,9 @@ static void add_select(indext index) {
 
 static void paint_objects_show_mode() {
 	paint_objects();
-	if(hot.key == KeyEscape)
+	if(hkey == KeyEscape)
 		execute(buttoncancel);
-	if(!hot.pressed && hot.key == MouseLeft)
+	if(!hpressed && hkey == MouseLeft)
 		execute(buttoncancel);
 }
 

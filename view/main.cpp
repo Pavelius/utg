@@ -158,7 +158,7 @@ void mainview(const char* url) {
 		else
 			text(rc, temp, AlignLeft);
 		domodal();
-		switch(hot.key) {
+		switch(hkey) {
 		case KeyRight:
 			current++;
 			break;

@@ -24,7 +24,7 @@ void draw::tooltipspaint() {
 		return;
 	if(!tips_sb)
 		return;
-	if(draw::hot.key != InputIdle)
+	if(draw::hkey != InputIdle)
 		return;
 	tooltips_render();
 }

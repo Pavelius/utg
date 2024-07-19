@@ -137,14 +137,14 @@ static void show_widget_scene() {
 
 static void open_widget() {
 	if(show_widget) {
-		auto p = (widget*)hot.object;
+		auto p = (widget*)hobject;
 		if(show_widget == p)
 			show_widget = 0;
 		else
 			show_widget = p;
 	} else {
 		auto push = show_widget;
-		show_widget = (widget*)hot.object;
+		show_widget = (widget*)hobject;
 		show_widget_scene();
 		show_widget = push;
 	}
@@ -152,7 +152,7 @@ static void open_widget() {
 
 static void hilite_button() {
 	pushvalue push_fore(fore, colors::button);
-	pushvalue push_alpha(alpha, (unsigned char)(hot.pressed ? 16 : 32));
+	pushvalue push_alpha(alpha, (unsigned char)(hpressed ? 16 : 32));
 	pushvalue push_height(height, height + 4);
 	rectf();
 }
@@ -179,7 +179,7 @@ static void status(const char* id, const char* value, const void* object, int ad
 	if(ishilite(object)) {
 		if(bsdata<widget>::have(object)) {
 			hilite_button();
-			if(hot.key == MouseLeft && !hot.pressed)
+			if(hkey == MouseLeft && !hpressed)
 				execute(open_widget, 0, 0, object);
 		}
 	}
@@ -439,7 +439,7 @@ template<> void updateui<provincei>(provincei* p) {
 }
 
 static void marker_press() {
-	auto p = (object*)hot.param;
+	auto p = (object*)hparam;
 	breakmodal((long)p->data);
 }
 
@@ -450,12 +450,12 @@ static void paint_green_marker() {
 	alpha = 16;
 	auto radius = last_object->param;
 	if(ishilite(radius - 4, last_object->data)) {
-		if(hot.pressed)
+		if(hpressed)
 			alpha = 32;
 		else
 			alpha = 42;
-		hot.cursor = cursor::Hand;
-		if(hot.key == MouseLeft && !hot.pressed)
+		hcursor = cursor::Hand;
+		if(hkey == MouseLeft && !hpressed)
 			execute(marker_press, (long)last_object);
 	}
 	circlef(radius);

@@ -30,6 +30,13 @@ color				colors::tips::back;
 fnevent				draw::domodal, draw::pbackground, draw::pfinish, draw::ptips;
 fnevent				draw::pbeforemodal, draw::pleavemodal, draw::psetfocus;
 unsigned char       draw::alpha = 255;
+cursor				draw::hcursor;
+unsigned			draw::hkey;
+point				draw::hmouse;
+const void*			draw::hobject;
+bool				draw::hpressed;
+long				draw::hparam, draw::hparam2;
+rect				draw::hilite;
 color				draw::fore;
 color				draw::fore_stroke;
 int					draw::width, draw::height, draw::dialog_width = 500;
@@ -39,7 +46,6 @@ const sprite*		draw::font;
 double				draw::linw = 1.0;
 color*				draw::palt;
 rect				draw::clipping;
-hoti				draw::hot;
 const void*			draw::hilite_object;
 point				draw::hilite_position;
 int					draw::hilite_size;
@@ -969,7 +975,7 @@ static void cpy32t(unsigned char* d, int d_scan, unsigned char* s, int s_scan, i
 
 void draw::dragbegin(const void* p) {
 	drag_object = p;
-	dragmouse = hot.mouse;
+	dragmouse = hmouse;
 }
 
 bool draw::dragactive() {
@@ -982,10 +988,10 @@ const void* draw::getdragactive() {
 
 bool draw::dragactive(const void* p) {
 	if(p && drag_object == p) {
-		if(!hot.pressed || hot.key == KeyEscape) {
+		if(!hpressed || hkey == KeyEscape) {
 			drag_object = 0;
-			hot.key = InputUpdate;
-			hot.cursor = cursor::Arrow;
+			hkey = InputUpdate;
+			hcursor = cursor::Arrow;
 			return false;
 		}
 		return true;
@@ -1389,7 +1395,7 @@ void draw::setclip(rect rcn) {
 static void intersect_rect(rect& r1, const rect& r2) {
 	if(!r1.intersect(r2))
 		return;
-	if(hot.mouse.in(r2)) {
+	if(hmouse.in(r2)) {
 		if(r2.y1 > r1.y1)
 			r1.y1 = r2.y1;
 		if(r2.x1 > r1.x1)
@@ -1399,27 +1405,27 @@ static void intersect_rect(rect& r1, const rect& r2) {
 		if(r2.x2 < r1.x2)
 			r1.x2 = r2.x2;
 	} else {
-		if(hot.mouse.y > r2.y2 && r2.y2 > r1.y1)
+		if(hmouse.y > r2.y2 && r2.y2 > r1.y1)
 			r1.y1 = r2.y2;
-		else if(hot.mouse.y < r2.y1 && r2.y1 < r1.y2)
+		else if(hmouse.y < r2.y1 && r2.y1 < r1.y2)
 			r1.y2 = r2.y1;
-		else if(hot.mouse.x > r2.x2 && r2.x2 > r1.x1)
+		else if(hmouse.x > r2.x2 && r2.x2 > r1.x1)
 			r1.x1 = r2.x2;
-		else if(hot.mouse.x < r2.x1 && r2.x1 < r1.x2)
+		else if(hmouse.x < r2.x1 && r2.x1 < r1.x2)
 			r1.x2 = r2.x1;
 	}
 }
 
 bool draw::ishilite(const rect& rc) {
-	if(hot.key == InputNoUpdate)
+	if(hkey == InputNoUpdate)
 		return false;
 	intersect_rect(sys_static_area, rc);
 	if(dragactive())
 		return false;
-	if(!hot.mouse.in(clipping))
+	if(!hmouse.in(clipping))
 		return false;
-	if(hot.mouse.in(rc)) {
-		hot.hilite = rc;
+	if(hmouse.in(rc)) {
+		hilite = rc;
 		return true;
 	}
 	return false;
@@ -2454,19 +2460,17 @@ void draw::key2str(stringbuilder& sb, int key) {
 
 void draw::execute(fnevent proc, long value, long value2, const void* object) {
 	domodal = proc;
-	// Это важно, так как мы никогда не обнуляем эту переменную при исполнении не стандартной команды.
-	// Если не делать, будет зацикливание.
-	hot.key = 0;
-	hot.param = value;
-	hot.param2 = value2;
-	hot.object = object;
+	hkey = 0; // Это важно, так как мы никогда не обнуляем эту переменную при исполнении не стандартной команды. Если не делать, будет зацикливание.
+	hparam = value;
+	hparam2 = value2;
+	hobject = object;
 }
 
 static void standart_domodal() {
 	if(draw::ptips)
 		draw::ptips();
-	draw::hot.key = draw::rawinput();
-	if(!draw::hot.key)
+	hkey = draw::rawinput();
+	if(!hkey)
 		exit(0);
 }
 
@@ -2474,16 +2478,16 @@ static void beforemodal() {
 	caret = {0, 0};
 	width = getwidth();
 	height = getheight();
+	hilite.clear();
 	hilite_object = 0;
 	hilite_position.clear();
 	hilite_size = 0;
-	hot.cursor = cursor::Arrow;
-	hot.hilite.clear();
-	if(hot.key == InputNeedUpdate)
-		hot.key = InputUpdate;
+	hcursor = cursor::Arrow;
+	if(hkey == InputNeedUpdate)
+		hkey = InputUpdate;
 	else
 		domodal = standart_domodal;
-	if(hot.mouse.x < 0 || hot.mouse.y < 0)
+	if(hmouse.x < 0 || hmouse.y < 0)
 		sys_static_area.clear();
 	else
 		sys_static_area = {0, 0, draw::getwidth(), draw::getheight()};
@@ -2518,7 +2522,7 @@ void draw::buttonok() {
 }
 
 void draw::buttonparam() {
-	breakmodal(hot.param);
+	breakmodal(hparam);
 }
 
 long draw::getresult() {
@@ -2526,18 +2530,18 @@ long draw::getresult() {
 }
 
 void draw::cbsetint() {
-	auto p = (int*)hot.object;
-	*p = hot.param;
+	auto p = (int*)hobject;
+	*p = hparam;
 }
 
 void draw::cbsetsht() {
-	auto p = (short*)hot.object;
-	*p = (short)hot.param;
+	auto p = (short*)hobject;
+	*p = (short)hparam;
 }
 
 void draw::cbsetptr() {
-	auto p = (void**)hot.object;
-	*p = (void*)hot.param;
+	auto p = (void**)hobject;
+	*p = (void*)hparam;
 }
 
 void draw::fillform() {
@@ -2616,7 +2620,7 @@ void draw::start() {
 }
 
 void draw::setneedupdate() {
-	hot.key = InputNeedUpdate;
+	hkey = InputNeedUpdate;
 }
 
 void draw::initialize(const char* title) {
@@ -2669,8 +2673,8 @@ bool draw::button(const char* title, unsigned key, fnbutton proc, bool vertical)
 			return false;
 		caret.x += width + metrics::padding;
 	}
-	return (key && hot.key == key)
-		|| (hot.key == MouseLeft && control_hilited && !hot.pressed);
+	return (key && hkey == key)
+		|| (hkey == MouseLeft && control_hilited && !hpressed);
 }
 
 void draw::fire(bool run, fnevent proc, long value, long value2, const void* object) {
@@ -2691,12 +2695,12 @@ void draw::tipspos() {
 	textfs(tips_sb);
 	// Calculate rect
 	if(!tips_size.x) {
-		if(hot.hilite) {
-			caret.x = hot.hilite.x1;
-			caret.y = hot.hilite.y2 + 2;
+		if(hilite) {
+			caret.x = hilite.x1;
+			caret.y = hilite.y2 + 2;
 		} else {
-			caret.x = hot.mouse.x + 32;
-			caret.y = hot.mouse.y + 32;
+			caret.x = hmouse.x + 32;
+			caret.y = hmouse.y + 32;
 		}
 	}
 }

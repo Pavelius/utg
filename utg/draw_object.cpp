@@ -148,9 +148,9 @@ void paint_sprite() {
 
 static void paint_objects_show_mode() {
 	paint_objects();
-	if(hot.key == KeyEscape)
+	if(hkey == KeyEscape)
 		execute(buttoncancel);
-	if(!hot.pressed && hot.key == MouseLeft)
+	else if(hkey == MouseLeft && !hpressed)
 		execute(buttoncancel);
 }
 
@@ -211,7 +211,7 @@ void paint_objects() {
 	static object* source[max_object_count];
 	auto push_caret = caret;
 	auto push_clip = clipping;
-	objects_mouse = camera + hot.mouse;
+	objects_mouse = camera + hmouse;
 	objects_screen = {caret.x, caret.y, caret.x + width, caret.y + height};
 	setclip(objects_screen);
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
@@ -320,9 +320,9 @@ void setcamera(point v) {
 
 void input_camera() {
 	const int step = 32;
-	if(!hot.mouse.in(objects_screen))
+	if(!hmouse.in(objects_screen))
 		return;
-	switch(hot.key) {
+	switch(hkey) {
 	case KeyLeft: execute(cbsetsht, camera.x - step, 0, &camera.x); break;
 	case KeyRight: execute(cbsetsht, camera.x + step, 0, &camera.x); break;
 	case KeyUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
@@ -331,23 +331,23 @@ void input_camera() {
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseLeft:
 		//case MouseRight:
-		if(hot.pressed && !hot.hilite) {
+		if(hpressed && !hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;
 		}
 		break;
 	default:
 		if(dragactive(&camera)) {
-			hot.cursor = cursor::All;
-			if(hot.mouse.x >= 0 && hot.mouse.y >= 0)
-				camera = camera_drag + (dragmouse - hot.mouse);
+			hcursor = cursor::All;
+			if(hmouse.x >= 0 && hmouse.y >= 0)
+				camera = camera_drag + (dragmouse - hmouse);
 		}
 		break;
 	}
 }
 
 bool mouseinobjects() {
-	return hot.mouse.in(objects_screen);
+	return hmouse.in(objects_screen);
 }
 
 bool cameravisible(point goal, int border) {

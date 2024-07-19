@@ -1,7 +1,8 @@
 #include "hero.h"
 
-void hero::getinfo(stringbuilder& sb) const {
-	sb.add(getname());
+template<> void ftinfo<hero>(const void* object, stringbuilder& sb) {
+	auto p = (hero*)object;
+	sb.add(p->getname());
 }
 
 void hero::getproperty(const void* object, variant v, stringbuilder& sb) {

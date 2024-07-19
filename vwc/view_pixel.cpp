@@ -38,7 +38,7 @@ static void draw_pixel() {
 
 static void control_pixels() {
 	if(ishilite()) {
-		switch(hot.key) {
+		switch(hkey) {
 		case MouseWheelUp:
 			if(pixel_size < 64)
 				execute(cbsetint, pixel_size + 1, 0, &pixel_size);

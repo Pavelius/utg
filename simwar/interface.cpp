@@ -72,7 +72,7 @@ static void buttonback(int size, void* data) {
 	rectb();
 	if(data && ishilite()) {
 		hilite_object = data;
-		if(hot.key == MouseLeft && !hot.pressed)
+		if(hkey == MouseLeft && !hpressed)
 			execute(buttonparam, (long)data);
 	}
 }
@@ -159,10 +159,10 @@ void status_info() {
 }
 
 static void hot_keys() {
-	switch(hot.key) {
+	switch(hkey) {
 	case MouseRight:
-		if(hot.pressed) {
-			auto pt = camera + hot.mouse;
+		if(hpressed) {
+			auto pt = camera + hmouse;
 			log_text("Province position(%1i %2i) landscape(Plains)", pt.x, pt.y);
 		}
 		break;
@@ -289,8 +289,8 @@ static void paint_province() {
 		paint_neighbor();
 	if(input_province) {
 		if(ishilite(24, p)) {
-			hot.cursor = cursor::Hand;
-			if(hot.key == MouseLeft && !hot.pressed)
+			hcursor = cursor::Hand;
+			if(hkey == MouseLeft && !hpressed)
 				execute(input_province, (int)p);
 		}
 	}

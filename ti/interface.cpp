@@ -267,7 +267,7 @@ static void buttonback(int size, const void* data) {
 	rectb();
 	if(data && ishilite()) {
 		hilite_object = data;
-		if(hot.key == MouseLeft && !hot.pressed)
+		if(hkey == MouseLeft && !hpressed)
 			execute(buttonparam, (long)data);
 	}
 }
@@ -400,7 +400,7 @@ static void remove_all_markers() {
 }
 
 static void marker_press() {
-	auto p = (object*)hot.param;
+	auto p = (object*)hparam;
 	breakmodal((long)p->data);
 }
 
@@ -519,7 +519,7 @@ static void rectbc(color v, bool mark, void* hilite_item) {
 		alpha += 64;
 	if(ishilite(hilite_item)) {
 		alpha += 16;
-		if(hot.pressed)
+		if(hpressed)
 			alpha -= 32;
 	}
 	rectf();

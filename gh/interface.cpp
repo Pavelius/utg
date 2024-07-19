@@ -261,8 +261,8 @@ static void movemarker(indext index, int value) {
 	fore = colors::button;
 	if(ishilite(radius)) {
 		fore = fore.mix(colors::white);
-		if(hot.key == MouseLeft) {
-			if(hot.pressed)
+		if(hkey == MouseLeft) {
+			if(hpressed)
 				fore = fore.mix(colors::white);
 			else
 				execute(buttonparam, index);
@@ -282,8 +282,8 @@ static void targetmarker(const void* param, color v) {
 	fore = v;
 	if(ishilite(radius)) {
 		fore = fore.mix(colors::white);
-		if(hot.key == MouseLeft) {
-			if(hot.pressed)
+		if(hkey == MouseLeft) {
+			if(hpressed)
 				fore = fore.mix(colors::white);
 			else
 				execute(buttonparam, (long)param);

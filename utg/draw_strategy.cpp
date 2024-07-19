@@ -54,7 +54,7 @@ bool draw::swindow(bool hilight) {
 	auto rs = ishilite();
 	fore = colors::form;
 	if(hilight && rs)
-		fore = colors::button.mix(fore, hot.pressed ? 128 : 216);
+		fore = colors::button.mix(fore, hpressed ? 128 : 216);
 	alpha = 220;
 	rectf();
 	alpha = push_alpha;
@@ -206,7 +206,7 @@ static void menubt(int i, const void* pv, const char* title, fnevent press_event
 			hilite_object = pv;
 	} else if(hilite_object) {
 		if(pv == hilite_object)
-			hot.cursor = cursor::Hand;
+			hcursor = cursor::Hand;
 	}
 }
 
@@ -237,17 +237,17 @@ void draw::strategy_background() {
 static void tipsposition(const char* format) {
 	textfs(format);
 	auto x2 = getwidth(), y2 = getheight();
-	auto y = hot.hilite.bottom();
+	auto y = hilite.bottom();
 	if(y + height > y2 || y > y2 - (y2 / 4))
 		y = y - height - metrics::border * 3;
 	else
-		y = hot.hilite.bottom() + metrics::border * 2 + metrics::padding;
-	auto x = hot.hilite.right();
+		y = hilite.bottom() + metrics::border * 2 + metrics::padding;
+	auto x = hilite.right();
 	if(x + width > x2 || x > x2 - (x2 / 3)) {
-		x = hot.hilite.left() - width - metrics::border - metrics::padding;
-		y = hot.hilite.top();
+		x = hilite.left() - width - metrics::border - metrics::padding;
+		y = hilite.top();
 	} else
-		x = hot.hilite.left() + metrics::border;
+		x = hilite.left() + metrics::border;
 	caret.x = x;
 	caret.y = y;
 }

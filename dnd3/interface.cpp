@@ -59,7 +59,7 @@ void creature::paint() const {
 	circle_image(caret.x, caret.y, pa, 0, 32);
 	circle(32);
 	if(ishilite(32, last_object))
-		hot.cursor = cursor::Hand;
+		hcursor = cursor::Hand;
 }
 
 void monsteri::paint() const {
@@ -90,7 +90,7 @@ static void paint_hilite_object(const void* pv) {
 	if(ishilite(width / 2)) {
 		hilite_object = pv;
 		paint_hilite_border();
-		if(hot.key == MouseLeft && hot.pressed)
+		if(hkey == MouseLeft && hpressed)
 			execute(cbsetptr, (long)pv, 0, &current_object);
 	}
 }
@@ -99,7 +99,7 @@ static void paint_drag_target() {
 	auto pv = getdragactive();
 	if(dragactive(pv)) {
 		auto push_caret = caret;
-		caret = hot.mouse;
+		caret = hmouse;
 		//object_painting_data(pv);
 		caret = push_caret;
 	}
@@ -149,10 +149,10 @@ static void show_panels() {
 }
 
 static void set_opened() {
-	if(hot.param)
-		opened_pages.add((void*)hot.object);
+	if(hparam)
+		opened_pages.add((void*)hobject);
 	else
-		opened_pages.remove((void*)hot.object);
+		opened_pages.remove((void*)hobject);
 }
 
 static void paint_hilite() {
@@ -251,16 +251,16 @@ static void paint_bullet(listi* list, bool opened) {
 	auto hilite = ishilite({caret.x, caret.y, caret.x + width, caret.y + texth()});
 	fore = colors::h3;
 	if(hilite) {
-		hot.cursor = cursor::Hand;
+		hcursor = cursor::Hand;
 		fore = colors::active;
 	}
 	if(opened) {
 		text("-");
-		if(hot.key == MouseLeft && hot.pressed && hilite)
+		if(hkey == MouseLeft && hpressed && hilite)
 			execute(set_opened, 0, 0, list);
 	} else {
 		text("+");
-		if(hot.key == MouseLeft && hot.pressed && hilite)
+		if(hkey == MouseLeft && hpressed && hilite)
 			execute(set_opened, 1, 0, list);
 	}
 	caret.x += textw("0") * 2;
@@ -365,7 +365,7 @@ static void add_current_object() {
 static void put_selected_object() {
 	if(!current_object)
 		return;
-	if(mouseinobjects() && hot.key == KeySpace)
+	if(mouseinobjects() && hkey == KeySpace)
 		execute(add_current_object);
 }
 
