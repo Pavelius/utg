@@ -12,13 +12,13 @@ static void create_hero() {
 
 static void play_settlement() {
 	pushvalue push(answers::header, getnm("Settlement"));
-	quest::run(1);
+	quest_run(1);
 }
 
 static void character_generation() {
 	answers::header = getnm("CharacterGeneration");
 	answers::resid = "meet";
-	pushvalue push(answers::interactive, false);
+	pushvalue push(answers::interactive, true);
 	create_hero();
 	create_hero();
 	create_hero();
@@ -27,9 +27,9 @@ static void character_generation() {
 }
 
 static void initialize() {
-	quest::initialize();
+	quest_initialize();
 	stringlist::read("locale/ru/other/CharacterNames.txt");
-	quest::read("rules/Quest.txt");
+	quest_read("rules/Quest.txt");
 }
 
 int main(int argc, char* argv[]) {

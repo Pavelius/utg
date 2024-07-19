@@ -12,7 +12,8 @@ struct propertyi {
 	};
 	struct key {
 		int			object, type;
-		constexpr explicit operator bool() const { return type != 0; }
+		constexpr explicit operator bool() const { return type != -1; }
+		void		clear() { type = -1; }
 	};
 	template<typename T>
 	struct value : key {
@@ -20,12 +21,16 @@ struct propertyi {
 	};
 	const char*		id;
 	int				type;
-	static int		add(const char* id, int type);
-	static void		initialize();
 	static const char* read(const char* p, int object);
 };
-void addnumber(int object, int type, int value);
+
 template<typename T> void setproperty(int object, int type, T value);
-int getnumber(int object, int type);
-const char* getstring(int object, int type);
+
+void addnumber(int object, int type, int value);
 void removenumber(int object, int type);
+void property_initialize();
+
+int getnumber(int object, int type);
+int property_add(const char* id, int type);
+
+const char* getstring(int object, int type);

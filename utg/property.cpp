@@ -47,7 +47,7 @@ void propertyi::typei::add(const char* id, array* source) {
 	p->source = source;
 }
 
-int propertyi::add(const char* id, int type) {
+int property_add(const char* id, int type) {
 	if(!id)
 		return 0;
 	auto p = (propertyi*)bsdata<propertyi>::source.addfind(id);
@@ -55,14 +55,13 @@ int propertyi::add(const char* id, int type) {
 	return getbsi(p);
 }
 
-void propertyi::initialize() {
-	typei::add("Text", bsdata<propertyi::value<const char*>>::source_ptr);
-	typei::add("Number", bsdata<propertyi::value<int>>::source_ptr);
-	add("NoProperty", Number);
+void property_initialize() {
+	propertyi::typei::add("Text", bsdata<propertyi::value<const char*>>::source_ptr);
+	propertyi::typei::add("Number", bsdata<propertyi::value<int>>::source_ptr);
 }
 
 int getnumber(int object, int type) {
-	if(!type)
+	if(type < 0)
 		return 0;
 	auto p = (propertyi::value<int>*)findv(object, type, bsdata<propertyi::value<int>>::source);
 	if(p)
@@ -70,18 +69,18 @@ int getnumber(int object, int type) {
 	return 0;
 }
 
-void addnumber(int object, int type, int value) {
-	setproperty(object, type, getnumber(object, type) + value);
+void addnumber(int object, int id, int value) {
+	setproperty(object, id, getnumber(object, id) + value);
 }
 
-void removenumber(int object, int type) {
-	auto p = findv(object, type, bsdata<propertyi::value<int>>::source);
+void removenumber(int object, int id) {
+	auto p = findv(object, id, bsdata<propertyi::value<int>>::source);
 	if(p)
-		p->type = 0;
+		p->clear();
 }
 
 const char* getstring(int object, int type) {
-	if(!type)
+	if(type < 0)
 		return 0;
 	auto p = (propertyi::value<const char*>*)findv(object, type, bsdata<propertyi::value<const char*>>::source);
 	if(p)

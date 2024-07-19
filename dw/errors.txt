@@ -1,1 +1,2 @@
-﻿Can't find file 'locale/ru/CharacterNames.txt'
+﻿In file `Names.txt`:
+AddItem: Define translate

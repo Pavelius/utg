@@ -6,8 +6,7 @@
 
 BSDATAC(quest, 256*8)
 
-int quest::prop_image;
-int quest::prop_header;
+static int prop_image, prop_header;
 const quest* last_quest;
 
 using namespace log;
@@ -121,23 +120,19 @@ void quest::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
+const char* quest_text(int id) {
+	auto p = quest_find(id);
+	if(!p)
+		return 0;
+	return p->text;
+}
+
 const char* quest::getheader() const {
 	return getstring(getbsi(this), prop_header);
 }
 
 const char* quest::getimage() const {
 	return getstring(getbsi(this), prop_image);
-}
-
-int	quest::getvalue(int prop) const {
-	return getnumber(getbsi(this), prop);
-}
-
-const char* quest::getname(int id) {
-	auto p = find(id);
-	if(!p)
-		return 0;
-	return p->text;
 }
 
 bool quest::is(variant v) const {
@@ -148,7 +143,7 @@ bool quest::is(variant v) const {
 	return false;
 }
 
-const quest* quest::find(short id) {
+const quest* quest_find(short id) {
 	for(auto& e : bsdata<quest>()) {
 		if(e.index == id)
 			return &e;
@@ -156,7 +151,7 @@ const quest* quest::find(short id) {
 	return 0;
 }
 
-const quest* quest::findprompt(short id) {
+const quest* quest_find_prompt(short id) {
 	for(auto& e : bsdata<quest>()) {
 		if(e.index != id)
 			continue;
@@ -167,7 +162,7 @@ const quest* quest::findprompt(short id) {
 	return 0;
 }
 
-void quest::read(const char* url) {
+void quest_read(const char* url) {
 	auto p = log::read(url);
 	if(!p)
 		return;
@@ -185,16 +180,16 @@ void quest::read(const char* url) {
 	log::close();
 }
 
-void quest::initialize() {
-	propertyi::initialize();
-	prop_header = propertyi::add("Header", propertyi::Text);
-	prop_image = propertyi::add("Image", propertyi::Text);
+void quest_initialize() {
+	property_initialize();
+	prop_header = property_add("Header", propertyi::Text);
+	prop_image = property_add("Image", propertyi::Text);
 }
 
 void quest::manual(short page) {
 	if(!answers::console)
 		return;
-	auto p = findprompt(page);
+	auto p = quest_find_prompt(page);
 	while(p) {
 		answers::console->clear();
 		answers::console->add(p->text);

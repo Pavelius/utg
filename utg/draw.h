@@ -142,7 +142,7 @@ struct surface {
 	void				rotate();
 	void				write(const char* url, color* pallette);
 };
-extern surface*			canvas;
+extern surface*			canvas; // Current output surface
 extern rect				clipping; // Clipping area
 extern fnevent			domodal;
 extern point			dragmouse, caret, camera, tips_caret, tips_size;
@@ -166,8 +166,7 @@ extern stringbuilder	tips_sb;
 extern long				text_params[16];
 extern color*			palt;
 extern int				tab_pixels;
-extern fnevent          pbackground, ptips, pfinish;
-extern fnevent          pbeforemodal, pleavemodal, psetfocus;
+extern fnevent          pbackground, ptips, pfinish, pbeforemodal, pleavemodal, psetfocus;
 struct rectpush {
 	point				caret;
 	int					width, height;
@@ -267,6 +266,7 @@ void					updatewindow();
 void					write(const char* url, unsigned char* bits, int width, int height, int bpp, int scanline, color* pallette);
 void					vertical(fnevent proc);
 }
+
 namespace draw {
 struct awindowi {
 	int			x, y, width, height;
@@ -282,6 +282,7 @@ void statuspaint();
 void tooltipspaint();
 void loginitialize();
 }
+
 namespace draw {
 void breakmodal(long result);
 bool button(const char* title, unsigned key, fnbutton proc, bool vertical = true);
@@ -303,6 +304,7 @@ void setneedupdate();
 void setnext(fnevent v);
 void start();
 }
+
 namespace draw {
 bool isclipped(int size);
 void setposct();

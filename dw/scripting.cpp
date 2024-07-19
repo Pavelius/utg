@@ -40,27 +40,38 @@ template<> bool fntest<itemi>(int index, int bonus) {
 }
 template<> void fnscript<itemi>(int index, int bonus) {
 	item it(index);
-	if(bonus > 0)
+	if(bonus >= 0) {
 		information(getnm("AddItem"), it.getname(), bonus);
-	player->additem(it);
+		player->additem(it);
+	}
 }
 
 static void choose_player(int bonus) {
 }
 
-void quest::run(int index) {
+static void apply_last_quest() {
+	if(!last_quest)
+		return;
+	auto p = last_quest->getheader();
+	if(p)
+		answers::header = p;
+	p = last_quest->getimage();
+	if(p)
+		answers::resid = p;
+	player->act(last_quest->text);
+	script_run(last_quest->tags);
+}
+
+void quest_run(int index) {
 	if(!answers::console)
 		return;
-	auto p = findprompt(index);
-	answers an;
-	while(p) {
+	last_quest = quest_find_prompt(index);
+	while(last_quest) {
 		an.clear();
-		auto push_last = an.last;
-		player->act(p->text);
-		script_run(p->tags);
-		auto index = p->index;
+		apply_last_quest();
+		auto index = last_quest->index;
 		auto pe = bsdata<quest>::end();
-		for(auto pa = p + 1; pa < pe; pa++) {
+		for(auto pa = last_quest + 1; pa < pe; pa++) {
 			if(pa->index != index)
 				continue;
 			if(!pa->isanswer())
@@ -69,13 +80,13 @@ void quest::run(int index) {
 				continue;
 			an.add(pa, pa->text);
 		}
-		an.last = push_last;
-		auto pv = an.choose(0, 0, 1);
-		if(!pv)
+		auto last_result = an.choose(0, 0, 1);
+		if(!last_result)
 			break;
-		if(bsdata<quest>::source.have(pv)) {
-			p = (quest*)pv;
-			p = findprompt(p->next);
+		if(bsdata<quest>::source.have(last_result)) {
+			last_quest = (quest*)last_result;
+			script_run(last_quest->tags);
+			last_quest = quest_find_prompt(last_quest->next);
 		}
 		answers::console->clear();
 	}

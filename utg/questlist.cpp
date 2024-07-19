@@ -16,7 +16,7 @@ void questlist::read(const char* url) {
 	auto p = bsdata<questlist>::add();
 	p->id = szdup(temp);
 	auto q1 = bsdata<quest>::end();
-	quest::read(url);
+	quest_read(url);
 	p->elements.set(q1, bsdata<quest>::end() - q1);
 }
 
