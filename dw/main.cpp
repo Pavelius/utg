@@ -1,8 +1,9 @@
-#include "main.h"
+#include "creature.h"
+#include "console.h"
 #include "pushvalue.h"
 #include "quest.h"
 
-static char console_text[4096];
+static char	console_text[4096];
 static stringbuilder console(console_text);
 
 static void create_hero() {
@@ -18,7 +19,7 @@ static void play_settlement() {
 static void character_generation() {
 	answers::header = getnm("CharacterGeneration");
 	answers::resid = "meet";
-	pushvalue push(answers::interactive, true);
+	pushvalue push(answers::interactive, false);
 	create_hero();
 	create_hero();
 	create_hero();
@@ -34,6 +35,7 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
+	initialize_console();
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = creature::getavatarst;
 	answers::console = &console;

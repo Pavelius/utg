@@ -1,13 +1,27 @@
+#include "assign.h"
 #include "bsreq.h"
+#include "class.h"
 #include "item.h"
 #include "list.h"
 #include "race.h"
-#include "main.h"
+#include "creature.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 static gender_s last_gender;
 
 creature* player;
+
+static int d100() {
+	return rand() % 100;
+}
+
+const classi& creature::geti() const {
+	return bsdata<classi>::elements[type];
+}
+
+int creature::getmaximumhp() const {
+	return get(Constitution) + geti().damage;
+}
 
 static void getinfo(variant v, stringbuilder& sb) {
 	if(v.iskind<itemi>()) {
@@ -54,7 +68,7 @@ const char* creature::getavatarst(const void* p) {
 }
 
 void creature::update() {
-	copy(basic);
+	assign(*static_cast<statable*>(this), basic);
 }
 
 void creature::finish() {

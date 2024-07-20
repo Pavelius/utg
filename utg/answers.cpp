@@ -14,6 +14,7 @@ stringbuilder* answers::console;
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;
 answers::fnpaint answers::paintcell;
+
 char answers::hotkeys[20] = {
 	'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
 	'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'
@@ -96,28 +97,6 @@ bool yesnov(const char* title, const char* title_param) {
 
 bool yesno(const char* title, ...) {
 	return yesnov(title, xva_start(title));
-}
-
-void information(const char* format, ...) {
-	if(!answers::console)
-		return;
-	answers::console->addn("[+");
-	answers::console->addv(format, xva_start(format));
-	answers::console->add("]");
-}
-
-void warning(const char* format, ...) {
-	if(!answers::console)
-		return;
-	answers::console->addn("[-");
-	answers::console->addv(format, xva_start(format));
-	answers::console->add("]");
-}
-
-void output(const char* format, ...) {
-	if(!answers::console)
-		return;
-	answers::console->addx("\n", format, xva_start(format));
 }
 
 static const char* find_separator(const char* pb) {

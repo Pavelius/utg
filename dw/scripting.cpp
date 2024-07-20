@@ -1,4 +1,5 @@
-#include "main.h"
+#include "creature.h"
+#include "console.h"
 #include "pushvalue.h"
 #include "quest.h"
 #include "script.h"
@@ -41,7 +42,7 @@ template<> bool fntest<itemi>(int index, int bonus) {
 template<> void fnscript<itemi>(int index, int bonus) {
 	item it(index);
 	if(bonus >= 0) {
-		information(getnm("AddItem"), it.getname(), bonus);
+		output(getnm("AddItem"), it.getname(), bonus ? bonus : 1);
 		player->additem(it);
 	}
 }
@@ -62,6 +63,12 @@ static void apply_last_quest() {
 	script_run(last_quest->tags);
 }
 
+static void* ask_player() {
+	char temp[128]; stringbuilder sb(temp);
+	sb.add(getnm("WhatPlayerWantToDo"), player->getname());
+	return an.choose(temp, 0, 1);
+}
+
 void quest_run(int index) {
 	if(!answers::console)
 		return;
@@ -80,7 +87,9 @@ void quest_run(int index) {
 				continue;
 			an.add(pa, pa->text);
 		}
-		auto last_result = an.choose(0, 0, 1);
+		auto last_result = ask_player();
+		clear_console();
+		an.console->clear();
 		if(!last_result)
 			break;
 		if(bsdata<quest>::source.have(last_result)) {
@@ -88,7 +97,6 @@ void quest_run(int index) {
 			script_run(last_quest->tags);
 			last_quest = quest_find_prompt(last_quest->next);
 		}
-		answers::console->clear();
 	}
 	pause();
 }

@@ -1,7 +1,7 @@
 #include "namenpc.h"
 #include "stringlist.h"
 
-void namenpc::actv(stringbuilder& sb, const char* format, const char* format_param) const {
+void namenpc::actv(stringbuilder& sb, const char* format, const char* format_param) {
 	if(!format || format[0] == 0)
 		return;
 	sb.addsep(' ');

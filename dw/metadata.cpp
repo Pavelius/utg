@@ -1,15 +1,13 @@
+#include "alignment.h"
+#include "class.h"
+#include "creature.h"
+#include "diety.h"
 #include "bsreq.h"
 #include "list.h"
-#include "main.h"
 #include "option.h"
 #include "quest.h"
 #include "script.h"
 #include "widget.h"
-
-template<typename T>
-void figetinfo(const void* object, stringbuilder& sb) {
-	((T*)object)->getinfo(sb);
-}
 
 BSMETA(variant) = {{}};
 BSMETA(varianti) = {BSREQ(id), {}};
@@ -76,7 +74,7 @@ BSDATA(varianti) = {
 	{"Advancement", VAR(advancement, 2)},
 	{"Alignment", VAR(alignmenti, 1)},
 	{"Class", VAR(classi, 1)},
-	{"Creature", VAR(creature, 0), figetinfo<creature>, creature::getpropertyst},
+	{"Creature", VAR(creature, 0), ftinfo<creature>, creature::getpropertyst},
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},

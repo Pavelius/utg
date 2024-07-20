@@ -1,4 +1,5 @@
-#include "main.h"
+#include "answers.h"
+#include "statable.h"
 
 void statable::update_player() {
 	abilities[HP] = abilities[Constitution];

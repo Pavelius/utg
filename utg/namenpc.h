@@ -7,7 +7,7 @@ class namenpc {
 	short unsigned	nameid;
 public:
 	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
-	void			actv(stringbuilder& sb, const char* format, const char* format_param) const;
+	static void		actv(stringbuilder& sb, const char* format, const char* format_param);
 	void			clearname() { nameid = 0xFFFF; }
 	constexpr bool	isvalidname() const { return nameid != 0xFFFF; }
 	gender_s		getgender() const;

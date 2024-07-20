@@ -1,5 +1,6 @@
+#include "class.h"
+#include "creature.h"
 #include "script.h"
-#include "main.h"
 
 static void addn(stringbuilder& sb, const char* id, int v) {
 	if(!v)
@@ -26,15 +27,12 @@ static void addn(stringbuilder& sb, const char* id, dice v) {
 	addn(sb, v);
 }
 
-int creature::getmaximumhp() const {
-	return get(Constitution) + geti().damage;
-}
-
-void creature::getinfo(stringbuilder& sb) const {
-	sb.add("%1-%2", getname(), getnm(bsdata<classi>::get(type).id));
+template<> void ftinfo<creature>(const void* object, stringbuilder& sb) {
+	auto p = (creature*)object;
+	sb.add("%1-%2", p->getname(), getnm(p->geti().id));
 	sb.adds("(");
-	sb.add("Хиты %1i/%2i", get(HP), getmaximumhp());
-	addn(sb, "Armor", get(Armor));
+	sb.add("Хиты %1i/%2i", p->get(HP), p->getmaximumhp());
+	addn(sb, "Armor", p->get(Armor));
 	sb.add(")");
 }
 

@@ -1,5 +1,5 @@
 #include "game.h"
-#include "main.h"
+#include "creature.h"
 
 int gamei::getaverage(ability_s v) const {
 	auto count = 0, total = 0;
