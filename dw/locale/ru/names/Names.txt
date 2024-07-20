@@ -43,7 +43,7 @@ Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да
 
-AddItem: %Player получил%а %1
+AddItem: %герой получил%а %1.
 
 Choose: Выбирай
 ChooseAlignment: Каков будет его характер?

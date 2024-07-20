@@ -5,6 +5,7 @@
 
 static char	console_text[4096];
 static stringbuilder console(console_text);
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
 
 static void create_hero() {
 	player = bsdata<creature>::add();
@@ -33,9 +34,18 @@ static void initialize() {
 	quest_read("rules/Quest.txt");
 }
 
+static void stringbuilder_custom(stringbuilder& sb, const char* id) {
+	if(player) {
+		if(apply_action(id, sb, player->getname(), player->getgender()))
+			return;
+	}
+	stringbuilder::defidentifier(sb, id);
+}
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	initialize_console();
+	stringbuilder::custom = stringbuilder_custom;
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = creature::getavatarst;
 	answers::console = &console;
