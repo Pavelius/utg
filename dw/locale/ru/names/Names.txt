@@ -1,19 +1,20 @@
-﻿AppTitle: Мир подземелья
+﻿Charisma: Харизма
+Constitution: Телосложение
+Dexterity: Ловкость
+Intellegence: Интеллект
+Strenght: Сила
+Wisdow: Мудрость
+
+AppTitle: Мир подземелья
 ApplyAbility: Какая ваша способность будет равна [%1i]?
 Bonus: Бонус
 Cancel: Отмена
-ChainMailArmor: Кольчуга
 Chaotic: Хаотичный
 CharacterAbility: Характеристики
 CharacterGeneration: Генерация персонажа
-Charisma: Харизма
 Cleric: Священник
-Constitution: Телосложение
 Continue: Продолжить
-Dagger: Кинжал
 Damage: Урон
-Dexterity: Ловкость
-DungeonRations: Еда
 Dwarf: Дварф
 Elf: Эльф
 Evil: Злой
@@ -22,9 +23,7 @@ Fighter: Воин
 Good: Добрый
 HP: Хиты
 Halfling: Полурослик 
-HealingPotion: Лечебное зелье
 Human: Человек
-Intellegence: Интеллект
 Lawful: Законопослушный
 Male: Мужчина
 Mistra: Мистра
@@ -35,15 +34,11 @@ Notes: Заметки
 Npc: НИП
 RuleshipOfThaine: Правительство Таинов
 Settlement: Деревня
-Strenght: Сила
 Theif: Вор
 UndeadInvasion: Нашествие мертвецов
 WhatPlayerWantToDo: Что будет делать %1?
-Wisdow: Мудрость
 Wizard: Волшебник
 Yes: Да
-
-AddItem: %герой получил%а %1.
 
 Choose: Выбирай
 ChooseAlignment: Каков будет его характер?
@@ -63,7 +58,11 @@ Antitoxin: Противоядие
 BagOfBooks: Сумка с книгами
 Bandages: Бинты
 BundleArrows: Стрелы
+ChainMailArmor: Кольчуга
 Coins: Монет
+Dagger: Кинжал
+DungeonRations: Еда
+HealingPotion: Лечебное зелье
 Knife: Нож
 LeatherArmor: Кожанная броня
 Mace: Булава

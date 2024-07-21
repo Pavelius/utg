@@ -13,5 +13,6 @@ public:
 	slice<item>		backpack() { return slice<item>(wears + Backpack, wears + LastBackpack + 1); }
 	int				getcoins() const { return coins; }
 	int				getuses(int item_type) const;
+	bool			removeitem(int item_type, int count);
 	void			setcoins(int v) { coins = v; }
 };

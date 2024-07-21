@@ -5,15 +5,9 @@
 #include "script.h"
 
 static variant last;
+static void* last_choose;
 
-static void fix_value(const char* format, const char* name, int value) {
-	if(value > 0)
-		information(format, name, value);
-	else
-		warning(format, name, -value);
-}
-
-static int getdiscountcost(int item_type, int bonus) {
+static int get_cost_discounted(int item_type, int bonus) {
 	auto value = bsdata<itemi>::elements[item_type].coins * bonus;
 	value -= player->get(Charisma);
 	if(value < 0)
@@ -21,19 +15,26 @@ static int getdiscountcost(int item_type, int bonus) {
 	return value;
 }
 
+static void fix(const char* id, ...) {
+	auto p = getdescription(id);
+	if(!p)
+		return;
+	add_console(' ', p, xva_start(id));
+}
+
 static int getcost(int item_type, int bonus) {
 	return bsdata<itemi>::elements[item_type].coins * bonus;
 }
 
 template<> void fnscript<abilityi>(int index, int bonus) {
-	fix_value("%1%+2i", getnm(bsdata<abilityi>::elements[index].id), bonus);
+	output("%1%+2i", getnm(bsdata<abilityi>::elements[index].id), bonus);
 	player->abilities[index] += bonus;
 }
 
 template<> bool fntest<itemi>(int index, int bonus) {
 	if(bonus < 0) {
 		if(bsdata<itemi>::elements[index].tags.is(Coins))
-			return getcost(index, -bonus);
+			return player->coins >= getcost(index, -bonus);
 		else
 			return player->getuses(index) >= (-bonus);
 	}
@@ -42,8 +43,21 @@ template<> bool fntest<itemi>(int index, int bonus) {
 template<> void fnscript<itemi>(int index, int bonus) {
 	item it(index);
 	if(bonus >= 0) {
-		output(getnm("AddItem"), it.getname(), bonus ? bonus : 1);
+		if(bonus > 1)
+			fix("AddItems", it.getname(), bonus);
+		else
+			fix("AddItem", it.getname());
 		player->additem(it);
+	} else {
+		auto& ei = bsdata<itemi>::elements[index];
+		bonus = -bonus;
+		if(ei.tags.is(Coins))
+			fix("RemoveCoins", bonus);
+		else if(bonus>1)
+			fix("RemoveItems", ei.getname(), bonus);
+		else
+			fix("RemoveItem", ei.getname());
+		player->removeitem(index, bonus);
 	}
 }
 
@@ -59,14 +73,46 @@ static void apply_last_quest() {
 	p = last_quest->getimage();
 	if(p)
 		answers::resid = p;
-	player->act(last_quest->text);
+	act(last_quest->text);
 	script_run(last_quest->tags);
 }
 
-static void* ask_player() {
+static void ask_player() {
 	char temp[128]; stringbuilder sb(temp);
 	sb.add(getnm("WhatPlayerWantToDo"), player->getname());
-	return an.choose(temp, 0, 1);
+	last_choose = an.choose(temp, 0, 1);
+}
+
+static void quest_add_answers() {
+	auto index = last_quest->index;
+	auto pe = bsdata<quest>::end();
+	for(auto pa = last_quest + 1; pa < pe; pa++) {
+		if(pa->index != index)
+			continue;
+		if(!pa->isanswer())
+			continue;
+		if(!script_allow(pa->tags))
+			continue;
+		an.add(pa, pa->text);
+	}
+}
+
+static bool choose_need_next() {
+	if(!last_choose)
+		return true;
+	if(bsdata<creature>::source.have(last_choose)) {
+		player = (creature*)last_choose;
+		return false;
+	}
+	return true;
+}
+
+static void choose_apply() {
+	if(bsdata<quest>::source.have(last_choose)) {
+		last_quest = (quest*)last_choose;
+		script_run(last_quest->tags);
+		last_quest = quest_find_prompt(last_quest->next);
+	}
 }
 
 void quest_run(int index) {
@@ -74,29 +120,19 @@ void quest_run(int index) {
 		return;
 	last_quest = quest_find_prompt(index);
 	while(last_quest) {
-		an.clear();
 		apply_last_quest();
-		auto index = last_quest->index;
-		auto pe = bsdata<quest>::end();
-		for(auto pa = last_quest + 1; pa < pe; pa++) {
-			if(pa->index != index)
-				continue;
-			if(!pa->isanswer())
-				continue;
-			if(!script_allow(pa->tags))
-				continue;
-			an.add(pa, pa->text);
+		while(true) {
+			an.clear();
+			quest_add_answers();
+			ask_player();
+			if(choose_need_next())
+				break;
 		}
-		auto last_result = ask_player();
 		clear_console();
 		an.console->clear();
-		if(!last_result)
+		if(!last_choose)
 			break;
-		if(bsdata<quest>::source.have(last_result)) {
-			last_quest = (quest*)last_result;
-			script_run(last_quest->tags);
-			last_quest = quest_find_prompt(last_quest->next);
-		}
+		choose_apply();
 	}
 	pause();
 }

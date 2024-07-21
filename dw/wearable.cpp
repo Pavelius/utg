@@ -22,6 +22,24 @@ void wearable::additem(const item& it, int count) {
 	}
 }
 
+bool wearable::removeitem(int item_type, int count) {
+	if(bsdata<itemi>::elements[item_type].tags.is(Coins)) {
+		if(coins >= count)
+			coins -= count;
+		else
+			coins = 0;
+		return true;
+	} else {
+		for(auto& e : backpack()) {
+			if(e || e.type != item_type)
+				continue;
+			e.clear();
+			return true;
+		}
+	}
+	return false;
+}
+
 int wearable::getuses(int item_type) const {
 	auto use_count = 0;
 	for(auto& e : wears) {

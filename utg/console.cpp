@@ -21,6 +21,13 @@ void add_console(const char* sym, const char* format, const char* format_param) 
 	sbc.add("]");
 }
 
+void add_console(char symbol, const char* format, const char* format_param) {
+	if(!format || format[0] == 0)
+		return;
+	sbc.addsep(symbol);
+	sbc.addv(format, format_param);
+}
+
 void add_console(const char* format, const char* format_param) {
 	sbc.addv(format, format_param);
 }
