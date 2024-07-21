@@ -118,5 +118,8 @@
     <Text Include="locale\ru\tips\Descriptions.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="locale\ru\other\CharacterNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

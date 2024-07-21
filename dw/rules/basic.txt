@@ -57,6 +57,7 @@ Rapier weight(1) coins(25)
  tags Close Precise
 DuelingRapier weight(2) coins(50) pierce(1)
  tags Close Precise
+MapOfTreasures coins(100)
 
 LeatherArmor weight(1) coins(10) armor(1)
 ChainMailArmor weight(1) coins(20) armor(1)

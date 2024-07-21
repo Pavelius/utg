@@ -1,7 +1,9 @@
 #include "creature.h"
 #include "console.h"
+#include "draw.h"
 #include "pushvalue.h"
-#include "quest.h"
+#include "questlist.h"
+#include "script.h"
 
 static char	console_text[4096];
 static stringbuilder console(console_text);
@@ -13,7 +15,7 @@ static void create_hero() {
 }
 
 static void play_settlement() {
-	pushvalue push(answers::header, getnm("Settlement"));
+	last_questlist = bsdata<questlist>::elements;
 	quest_run(1);
 }
 
@@ -31,7 +33,7 @@ static void character_generation() {
 static void initialize() {
 	quest_initialize();
 	stringlist::read("locale/ru/other/CharacterNames.txt");
-	quest_read("rules/Quest.txt");
+	questlist_read("rules/Quest.txt");
 }
 
 static void stringbuilder_custom(stringbuilder& sb, const char* id) {
@@ -42,12 +44,26 @@ static void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	stringbuilder::defidentifier(sb, id);
 }
 
+static void setplayer(void* p) {
+	draw::breakmodal((long)p);
+}
+
+static bool isplayer(const void* p) {
+	return p == player;
+}
+
+static void initialize_avatars() {
+	draw::heroes = bsdata<creature>::source_ptr;
+	draw::heroes_getavatar = creature::getavatarst;
+	draw::heroes_isplayer = isplayer;
+	draw::heroes_setplayer = setplayer;
+}
+
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	initialize_console();
+	initialize_avatars();
 	stringbuilder::custom = stringbuilder_custom;
-	draw::heroes = bsdata<creature>::source_ptr;
-	draw::heroes_getavatar = creature::getavatarst;
 	answers::console = &console;
 	return draw::start(character_generation, initialize);
 }

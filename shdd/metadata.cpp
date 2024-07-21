@@ -119,7 +119,7 @@ BSDATA(varianti) = {
 	{"Menu", VAR(menu, 1)},
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
-	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist::read},
+	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist_read},
 	{"Race", VAR(racei, 1), 0, 0, fnscript<racei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Spell", VAR(spelli, 1)},

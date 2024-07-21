@@ -3,6 +3,7 @@
 #include "log.h"
 #include "pushvalue.h"
 #include "questlist.h"
+#include "script.h"
 
 BSMETA(questlist) = {
 	BSREQ(id),
@@ -10,7 +11,7 @@ BSMETA(questlist) = {
 BSDATAC(questlist, 128)
 questlist* last_questlist;
 
-void questlist::read(const char* url) {
+void questlist_read(const char* url) {
 	char temp[260];
 	szfnamewe(temp, url);
 	auto p = bsdata<questlist>::add();
@@ -26,13 +27,16 @@ const quest* questlist::find(int index, const quest* pb) const {
 	for(auto pe = elements.end(); pb < pe; pb++) {
 		if(pb->isanswer())
 			continue;
-		if(pb->index == index)
+		if(pb->index == index) {
+			if(pb->tags && !script_allow(pb->tags))
+				continue;
 			return pb;
+		}
 	}
 	return 0;
 }
 
-questlist* find_quest(const quest* p) {
+const questlist* find_quest(const quest* p) {
 	if(!p)
 		return 0;
 	for(auto& e : bsdata<questlist>()) {
@@ -42,4 +46,8 @@ questlist* find_quest(const quest* p) {
 			return &e;
 	}
 	return 0;
+}
+
+const quest* questlist_find_prompt(short id) {
+	return last_questlist->find(id, 0);
 }

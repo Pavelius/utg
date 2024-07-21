@@ -1,7 +1,7 @@
 #include "creature.h"
 #include "console.h"
 #include "pushvalue.h"
-#include "quest.h"
+#include "questlist.h"
 #include "script.h"
 
 static variant last;
@@ -111,14 +111,14 @@ static void choose_apply() {
 	if(bsdata<quest>::source.have(last_choose)) {
 		last_quest = (quest*)last_choose;
 		script_run(last_quest->tags);
-		last_quest = quest_find_prompt(last_quest->next);
+		last_quest = questlist_find_prompt(last_quest->next);
 	}
 }
 
 void quest_run(int index) {
 	if(!answers::console)
 		return;
-	last_quest = quest_find_prompt(index);
+	last_quest = questlist_find_prompt(index);
 	while(last_quest) {
 		apply_last_quest();
 		while(true) {
@@ -134,7 +134,6 @@ void quest_run(int index) {
 			break;
 		choose_apply();
 	}
-	pause();
 }
 
 BSDATA(script) = {

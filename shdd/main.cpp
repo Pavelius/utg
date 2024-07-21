@@ -52,7 +52,7 @@ static void initialize_avatars() {
 
 int main(int argc, char* argv[]) {
 	initialize_ui();
-	quest::initialize();
+	quest_initialize();
 	initialize_avatars();
 	srand(getcputime());
 	srand(8381);
