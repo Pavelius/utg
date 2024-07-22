@@ -364,7 +364,8 @@ static void ui_finish() {
 }
 
 static void object_drag_droping_proc() {
-	last_object->position = caret + camera;
+	last_object->position = match_grid(caret + camera);
+	caret = last_object->position - camera;
 }
 
 void initialize_ui() {

@@ -14,3 +14,5 @@ struct resable : mapable, avatarable {
 	short unsigned	flags;
 	void			paint() const;
 };
+
+point match_grid(point screen);
