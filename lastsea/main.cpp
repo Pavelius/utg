@@ -39,7 +39,7 @@ void main_menu() {
 }
 
 static bool load_quest() {
-	quest::read("scenario/BeyondTheOceanEdge.txt");
+	quest_read("scenario/BeyondTheOceanEdge.txt");
 	if(log::geterrors() != 0)
 		return false;
 	game.script(0);
@@ -65,7 +65,7 @@ static void initializing() {
 	stringlist::read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
-	quest::read("locale/ru/QuestActions.txt");
+	quest_read("locale/ru/QuestActions.txt");
 }
 
 void initialize_information_widgets();
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
 	oceani::initialize();
-	quest::initialize();
+	quest_initialize();
 	goal::initialize();
 	goal::info = game.information;
 	initialize_script();

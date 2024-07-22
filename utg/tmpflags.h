@@ -1,6 +1,6 @@
 #pragma once
 
 template<typename T, typename ... TS>
-constexpr unsigned tpflg(T n, ...) {
-	return (1<<n) | 
+constexpr unsigned fg(T n, ...) {
+	return (1 << n);
 };

@@ -188,7 +188,7 @@ void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 		else if(p->next == 0)
 			print(sb, p->tags);
 		else {
-			auto ph = quest::find(p->next);
+			auto ph = quest_find(p->next);
 			if(ph)
 				print(sb, p->tags);
 		}
@@ -230,7 +230,7 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		sb.add(getdescription("YourPirate"), getnm(game.getclass().id));
 	} else if(bsdata<tilei>::have(object)) {
 		auto pt = (tilei*)object;
-		auto pq = quest::find(pt->param);
+		auto pq = quest_find(pt->param);
 		if(!pq)
 			return;
 		auto pv = pq->getheader();

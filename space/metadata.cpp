@@ -90,7 +90,7 @@ BSDATA(varianti) = {
 	{"Planet", VAR(planeti, 1), 0, 0, fnscript<planeti>},
 	{"PlanetResource", VAR(planetri, 1)},
 	{"Querry", VAR(querryi, 1), 0, 0, fnscript<querryi>},
-	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist::read},
+	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist_read},
 	{"Ship", VAR(shipi, 1), 0, 0, fnscript<shipi>},
 	{"ShipObject", VAR(ship, 0), ftinfo<ship>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},

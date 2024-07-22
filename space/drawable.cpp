@@ -153,7 +153,7 @@ void drawable::input_camera() {
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseRight:
-		if(hpressed && !hot.hilite) {
+		if(hpressed && !hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;
 		}

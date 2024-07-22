@@ -1,6 +1,2 @@
 ﻿In file `rules/Traits.txt`:
  Line 3: Can't find 'Bigpaw' in existing enumerator
- Line 6: Can't find 'Bitter' in existing enumerator
- Line 9: Can't find 'Bodyguard' in existing enumerator
- Line 12: Can't find 'OpenMinded' in existing enumerator
- Line 15: Can't find 'SteadyPaw' in existing enumerator

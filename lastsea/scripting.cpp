@@ -1035,7 +1035,7 @@ static void entry(int bonus, int param) {
 }
 
 static void counter_name(int bonus, int param) {
-	variables.setname(bonus, quest::getname(last_value));
+	variables.setname(bonus, quest_text(last_value));
 }
 
 static bool is_enemy_counter(int i) {
@@ -1113,9 +1113,9 @@ void initialize_script() {
 	test_correction();
 #endif // _DEBUG
 	// Properties
-	prop_end_scene = propertyi::add("EndScene", propertyi::Number);
-	prop_visit = propertyi::add("Visit", propertyi::Number);
-	prop_maximum_danger = propertyi::add("MaximumDanger", propertyi::Number);
+	prop_end_scene = property_add("EndScene", propertyi::Number);
+	prop_visit = property_add("Visit", propertyi::Number);
+	prop_maximum_danger = property_add("MaximumDanger", propertyi::Number);
 	// Prompt conditions for quest
 	conditioni::add("IfEatSupply", if_eat_supply, Supply);
 	conditioni::add("IfEntry", if_tag, AnswerEntry);

@@ -52,18 +52,18 @@ static void test_game() {
 	generate_planets();
 	script_run("StartScript");
 	last_modules = &game;
-	quest::run(1);
+	quest_run(1);
 	draw::setnext(play_player_turn);
 	draw::start();
 }
 
 static void game_initializa() {
-	log::readlocfolder(questlist::read, "actions", "*.txt");
+	log::readlocfolder(questlist_read, "actions", "*.txt");
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	quest::initialize();
+	quest_initialize();
 	answers::console = &sb_console;
 	answers::prompt = console;
 	stringbuilder::custom = stringbuilder_proc;

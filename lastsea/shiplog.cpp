@@ -7,7 +7,7 @@ void shiplog::clear() {
 const char* shiplog::getentryname(int v) {
 	if(v > AnswerEntry + sizeof(tags) * 8 || v < AnswerEntry)
 		return "Not valid entry number";
-	auto p = quest::find(v);
+	auto p = quest_find(v);
 	if(!p)
 		return "Not found entry";
 	auto pv = p->getheader();
@@ -25,7 +25,7 @@ const char* shiplog::getentrytext(int v) {
 
 const quest* shiplog::getentry(int v) {
 	if(v >= AnswerEntry && v < AnswerEntry + sizeof(tags) * 8)
-		return quest::find(v);
+		return quest_find(v);
 	return 0;
 }
 

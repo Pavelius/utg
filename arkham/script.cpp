@@ -187,7 +187,7 @@ bool gamei::isallow(const variants& source) {
 }
 
 static void play(int n) {
-	last_quest = quest::findprompt(n);
+	last_quest = quest_find_prompt(n);
 	play();
 }
 

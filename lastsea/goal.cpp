@@ -7,11 +7,11 @@ static int prop_danger_maximum;
 goal::fninfo goal::info;
 
 void goal::initialize() {
-	prop_danger_maximum = propertyi::add("DangerMaximum", propertyi::Number);
+	prop_danger_maximum = property_add("DangerMaximum", propertyi::Number);
 }
 
 const char* goal::getgoalname() const {
-	auto p = quest::find(AnswerGoal + value);
+	auto p = quest_find(AnswerGoal + value);
 	if(!p)
 		return "Not found goal";
 	auto pv = p->getheader();
@@ -21,14 +21,14 @@ const char* goal::getgoalname() const {
 }
 
 const char* goal::getgoaltext() const {
-	auto p = quest::find(AnswerGoal + value);
+	auto p = quest_find(AnswerGoal + value);
 	if(!p)
 		return 0;
 	return p->text;
 }
 
 int goal::getgoalmaximum() const {
-	auto p = quest::find(AnswerGoal + value);
+	auto p = quest_find(AnswerGoal + value);
 	if(!p)
 		return 0;
 	return p->getvalue(prop_danger_maximum);

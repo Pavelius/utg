@@ -8,6 +8,7 @@ using namespace draw;
 using namespace pathfind;
 
 const int size = 50;
+
 static indext current_index;
 static bool show_movement_cost, show_hex_grid, show_hex_coor;
 static fnevent override_paint;

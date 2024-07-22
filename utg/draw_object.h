@@ -1,6 +1,5 @@
-#include "point.h"
-
 #pragma once
+#include "point.h"
 
 extern point objects_mouse;
 

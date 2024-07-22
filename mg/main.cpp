@@ -40,8 +40,8 @@ static void initialize() {
 	groupname::read("locale/ru/Mouseguards.txt");
 	bsreq::read("rules/Wise.txt");
 	bsreq::read("rules/Traits.txt");
-	quest::initialize();
-	log::readlocfolder(questlist::read, "start", "*.txt");
+	quest_initialize();
+	log::readlocfolder(questlist_read, "start", "*.txt");
 }
 
 static const char* getavatarst(const void* p) {

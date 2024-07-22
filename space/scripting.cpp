@@ -157,17 +157,17 @@ static void roll(int bonus) {
 	apply_text();
 	apply_script();
 	pause();
-	last_quest = quest::findprompt(result);
+	last_quest = quest_find_prompt(result);
 	apply_header();
 	apply_text();
 }
 
-void quest::run(int index) {
+void quest_run(int index) {
 	if(!answers::console)
 		return;
 	pushvalue push_header(answers::header);
 	pushvalue push_image(answers::resid);
-	pushvalue push_last(last_quest, findprompt(index));
+	pushvalue push_last(last_quest, quest_find_prompt(index));
 	while(last_quest) {
 		an.clear();
 		apply_header();
@@ -180,7 +180,7 @@ void quest::run(int index) {
 		else if(bsdata<quest>::source.have(pv)) {
 			last_quest = (quest*)pv; result = last_quest->next;
 			script_run(last_quest->tags);
-			last_quest = findprompt(result);
+			last_quest = quest_find_prompt(result);
 		}
 	}
 }

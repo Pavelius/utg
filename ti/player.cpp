@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "card.h"
+#include "console.h"
 #include "deck.h"
 #include "entitya.h"
 #include "pushvalue.h"

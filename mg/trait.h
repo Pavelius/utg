@@ -18,7 +18,6 @@ enum trait_s : unsigned char {
 };
 typedef char traita[LastTraits+1];
 struct traiti : nameable {
-	const char* id;
 	skilla		advantages, disadvantages;
 };
 class traitable {
