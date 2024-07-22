@@ -301,6 +301,21 @@ static void paint_open_panel(listi* list) {
 	height = push_height;
 }
 
+static void paint_widget(widget* object) {
+	if(!object)
+		return;
+	auto push_caret = caret;
+	auto push_height = height;
+	auto push_width = width;
+	swindow(false);
+	object->proc();
+	caret.y += metrics::border * 2;
+	caret.x = push_caret.x;
+	width = push_width;
+	height = push_height;
+}
+
+
 static bool is_opened(const listi* list) {
 	return opened_pages.find((void*)list) != -1;
 }
@@ -320,7 +335,10 @@ static void paint_panel() {
 	caret.x += metrics::padding + metrics::border;
 	caret.y += metrics::padding + metrics::border;
 	height = last_panel->getheight();
-	width = last_panel->getwidth();
+	if(last_panel->width == -1)
+		width = getwidth() - caret.x - metrics::padding - metrics::border;
+	else
+		width = last_panel->getwidth();
 	column_width = width - textw("0") * 6;
 	if(last_panel->column)
 		column_width = last_panel->column;
@@ -328,7 +346,8 @@ static void paint_panel() {
 		if(v.iskind<listi>()) {
 			paint_panel_page(bsdata<listi>::elements + v.value);
 			caret.y += metrics::padding;
-		}
+		} else if(v.iskind<widget>())
+			paint_widget(bsdata<widget>::elements + v.value);
 	}
 	column_width = push_column;
 }
@@ -342,7 +361,7 @@ void status_info() {
 	height = push_height;
 }
 
-static void ui_background() {
+static void background_proc() {
 	strategy_background();
 	paint_objects();
 	paint_panel();
@@ -358,7 +377,7 @@ static void put_selected_object() {
 		execute(add_current_object);
 }
 
-static void ui_finish() {
+static void finish_proc() {
 	put_selected_object();
 	input_camera();
 }
@@ -368,10 +387,25 @@ static void object_drag_droping_proc() {
 	caret = last_object->position - camera;
 }
 
+static void monsters_toolbar() {
+	const int dx = 70;
+	caret.x += dx / 2;
+	caret.y += dx / 2;
+	for(auto& e : bsdata<monsteri>()) {
+		e.paint();
+		caret.x += 70 + metrics::padding;
+	}
+}
+
+static void initialize_widgets() {
+	widget::add("MonstersToolbar", monsters_toolbar);
+}
+
 void initialize_ui() {
+	initialize_widgets();
 	initialize_png();
-	pbackground = ui_background;
-	pfinish = ui_finish;
+	pbackground = background_proc;
+	pfinish = finish_proc;
 	metrics::padding = 2;
 	object_before_paint = object_drag_drop;
 	object_drag_droping = object_drag_droping_proc;

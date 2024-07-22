@@ -2,6 +2,8 @@ AppTitle: Врата Балдура
 CharacterSheet: Персонаж
 InitiativeCounter: Инициатива
 
+Monsters: Монстры
+
 PlayerAbilities: Способности персонажа
 PlayerAbilitiesFormat: %1i (бонус %+2i)
 PlayerCombat: Боевые способности

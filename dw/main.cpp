@@ -54,7 +54,7 @@ static bool isplayer(const void* p) {
 
 static void initialize_avatars() {
 	draw::heroes = bsdata<creature>::source_ptr;
-	draw::heroes_getavatar = creature::getavatarst;
+	draw::heroes_getavatar = party_avatar;
 	draw::heroes_isplayer = isplayer;
 	draw::heroes_setplayer = setplayer;
 }

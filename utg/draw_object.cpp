@@ -179,9 +179,10 @@ static void drag_drop() {
 }
 
 void object_drag_drop() {
-	if(dragactive(last_object))
+	if(dragactive(last_object)) {
 		caret = hmouse + drag_offset;
-	else if(ishilite(32)) {
+		hcursor = cursor::Hand;
+	} else if(ishilite(32)) {
 		if(hkey == MouseLeft && hpressed) {
 			drag_offset = caret - hmouse;
 			dragbegin(last_object, drag_drop);

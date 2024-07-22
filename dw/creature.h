@@ -11,7 +11,6 @@
 #include "result.h"
 #include "statable.h"
 #include "stringlist.h"
-//#include "tag.h"
 #include "draw_utg.h"
 #include "wearable.h"
 
@@ -23,6 +22,7 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	unsigned char	alignment, type, diety;
 	race_s			race;
 	statable		basic;
+	explicit operator bool() const { return isvalidname(); }
 	void			apply_advance();
 	void			choose_avatar();
 	void			choose_abilities();
@@ -30,11 +30,9 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	void			finish();
 	void			random_ability();
 	void			update();
-	explicit operator bool() const { return isvalidname(); }
 	void			act(const char* format) const { return actv(*answers::console, format, xva_start(format)); }
 	void			generate();
 	int				get(ability_s v) const { return abilities[v]; }
-	static const char* getavatarst(const void* object);
 	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
 	dice			getdamage() const;
 	const classi&	geti() const;
@@ -43,3 +41,8 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	bool			ismatch(variant v) const;
 };
 extern creature* player;
+
+const char* party_avatar(const void* object);
+
+creature* party_maximum(ability_s v, tag_s t);
+creature* party_maximum(ability_s v);

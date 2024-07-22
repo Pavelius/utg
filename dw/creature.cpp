@@ -61,12 +61,6 @@ static void getinfo(const variants& elements, stringbuilder& sb) {
 	}
 }
 
-const char* creature::getavatarst(const void* p) {
-	if(!((creature*)p)->isvalidname())
-		return 0;
-	return ((creature*)p)->avatarable::getavatar();
-}
-
 void creature::update() {
 	assign(*static_cast<statable*>(this), basic);
 }
@@ -199,4 +193,34 @@ bool creature::ismatch(variant v) const {
 		return race == v.value;
 	else
 		return false;
+}
+
+creature* party_maximum(ability_s v, tag_s t) {
+	creature* result = 0;
+	for(auto& e : bsdata<creature>()) {
+		if(!e)
+			continue;
+		if(result && result->get(v) >= e.get(v))
+			continue;
+		result = &e;
+	}
+	return result;
+}
+
+creature* party_maximum(ability_s v) {
+	creature* result = 0;
+	for(auto& e : bsdata<creature>()) {
+		if(!e)
+			continue;
+		if(result && result->get(v) >= e.get(v))
+			continue;
+		result = &e;
+	}
+	return result;
+}
+
+const char* party_avatar(const void* p) {
+	if(!((creature*)p)->isvalidname())
+		return 0;
+	return ((creature*)p)->avatarable::getavatar();
 }

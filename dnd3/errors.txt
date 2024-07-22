@@ -1,7 +1,2 @@
-﻿In file `rules/shdwdark/Abilities.txt`:
- Line 13: Not found Formula identifier `StrBonus`
- Line 15: Not found Formula identifier `DexBonus`
- Line 17: Not found Formula identifier `ConBonus`
- Line 19: Not found Formula identifier `IntBonus`
- Line 21: Not found Formula identifier `WisBonus`
- Line 23: Not found Formula identifier `ChaBonus`
+﻿In file `Names.txt`:
+Monsters: Define translate

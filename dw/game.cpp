@@ -1,7 +1,12 @@
 #include "game.h"
 #include "creature.h"
 
-int gamei::getaverage(ability_s v) const {
+struct gamei {
+	char		bolster;
+};
+static gamei game;
+
+int party_average(ability_s v) {
 	auto count = 0, total = 0;
 	for(auto& e : bsdata<creature>()) {
 		if(!e)
@@ -12,4 +17,12 @@ int gamei::getaverage(ability_s v) const {
 	if(!count)
 		return 0;
 	return total / count;
+}
+
+int party_bolster() {
+	return game.bolster;
+}
+
+void use_bolster() {
+	game.bolster--;
 }

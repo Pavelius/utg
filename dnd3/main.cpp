@@ -45,7 +45,6 @@ static void start_main() {
 
 static void initialize() {
 	initialize_str();
-	initialize_ui();
 	initialize_enumerators();
 	initialize_abilitites();
 }
@@ -53,6 +52,7 @@ static void initialize() {
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	numberlist::read("rules/shdwdark/Tables.txt");
+	initialize_ui();
 	return draw::strategy(start_main, initialize);
 }
 
