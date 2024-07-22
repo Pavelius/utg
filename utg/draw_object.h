@@ -32,19 +32,20 @@ struct object : drawable {
 	draworder*		addorder(int milliseconds = 1000, draworder* depend = 0);
 	void			disappear(int milliseconds);
 	void			clear();
-	void			paint() const;
 };
 
 extern object* last_object;
+extern fnevent object_before_paint;
 
 bool cameravisible(point goal, int border = 48);
-bool mouseinobjects();
-
 void clear_objects();
+void focusing(point goal);
 void input_camera();
 void instant_all();
-void focusing(point goal);
+bool mouseinobjects();
+void object_drag_drop();
 void paint_objects();
+void paint_sprite();
 void setcamera(point v);
 void slide_camera(point v, int step = 16);
 void splash_screen(unsigned milliseconds, fnevent proc = 0);
@@ -55,8 +56,6 @@ object* addobject(point screen, const void* data, fnevent painting, unsigned cha
 object* findobject(const void* p);
 
 void* choose_object();
-
-void paint_sprite();
 
 template<typename T> void ftpaint() { ((T*)last_object->data)->paint(); }
 template<typename T> void updateui(T* p);

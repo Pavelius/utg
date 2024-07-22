@@ -384,6 +384,7 @@ void initialize_ui() {
 	pbackground = ui_background;
 	pfinish = ui_finish;
 	metrics::padding = 2;
+	object_before_paint = object_drag_drop;
 }
 
 static draworder* modify(object* po) {

@@ -11,8 +11,9 @@ BSDATAC(object, max_object_count)
 BSDATAC(draworder, max_object_count)
 
 point objects_mouse;
-
 rect objects_screen;
+fnevent object_before_paint;
+
 static unsigned long timestamp, timestamp_last;
 static point camera_drag;
 
@@ -170,11 +171,22 @@ void splash_screen(unsigned milliseconds, fnevent proc) {
 	caret = push_caret;
 }
 
-void object::paint() const {
+void object_drag_drop() {
+	static point drag_offset;
+	if(dragactive(last_object))
+		caret = hmouse + drag_offset;
+	else if(ishilite(32)) {
+		if(hkey == MouseLeft && hpressed) {
+			drag_offset = caret - hmouse;
+			dragbegin(last_object);
+		}
+	}
+}
+
+static void object_paint() {
 	auto push_alpha = draw::alpha;
 	draw::alpha = alpha;
-	last_object = const_cast<object*>(this);
-	painting();
+	last_object->painting();
 	draw::alpha = push_alpha;
 }
 
@@ -219,7 +231,10 @@ void paint_objects() {
 	auto push_object = last_object;
 	for(size_t i = 0; i < count; i++) {
 		draw::caret = source[i]->getscreen();
-		source[i]->paint();
+		last_object = source[i];
+		if(object_before_paint)
+			object_before_paint();
+		object_paint();
 	}
 	last_object = push_object;
 	clipping = push_clip;
