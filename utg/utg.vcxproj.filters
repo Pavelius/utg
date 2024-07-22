@@ -273,9 +273,6 @@
     <ClCompile Include="code_lexer.cpp">
       <Filter>Code</Filter>
     </ClCompile>
-    <ClCompile Include="drawable.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
     <ClCompile Include="compiler.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
@@ -526,9 +523,6 @@
     </ClInclude>
     <ClInclude Include="interval.h">
       <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="drawable.h">
-      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="compiler.h">
       <Filter>Scripting</Filter>

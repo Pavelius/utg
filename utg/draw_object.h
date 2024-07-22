@@ -35,7 +35,7 @@ struct object : drawable {
 };
 
 extern object* last_object;
-extern fnevent object_before_paint;
+extern fnevent object_before_paint, object_drag_droping;
 
 bool cameravisible(point goal, int border = 48);
 void clear_objects();

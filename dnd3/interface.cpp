@@ -95,16 +95,6 @@ static void paint_hilite_object(const void* pv) {
 	}
 }
 
-static void paint_drag_target() {
-	auto pv = getdragactive();
-	if(dragactive(pv)) {
-		auto push_caret = caret;
-		caret = hmouse;
-		//object_painting_data(pv);
-		caret = push_caret;
-	}
-}
-
 static void show_panel(int dx, int dy) {
 	rectpush push;
 	height = dy; width = dx;
@@ -356,7 +346,6 @@ static void ui_background() {
 	strategy_background();
 	paint_objects();
 	paint_panel();
-	paint_drag_target();
 }
 
 static void add_current_object() {
@@ -369,14 +358,13 @@ static void put_selected_object() {
 		execute(add_current_object);
 }
 
-static void drag_selected_object() {
-	if(hilite_object) {
-	}
-}
-
 static void ui_finish() {
 	put_selected_object();
 	input_camera();
+}
+
+static void object_drag_droping_proc() {
+	last_object->position = caret + camera;
 }
 
 void initialize_ui() {
@@ -385,6 +373,7 @@ void initialize_ui() {
 	pfinish = ui_finish;
 	metrics::padding = 2;
 	object_before_paint = object_drag_drop;
+	object_drag_droping = object_drag_droping_proc;
 }
 
 static draworder* modify(object* po) {

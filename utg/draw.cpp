@@ -58,6 +58,7 @@ point				draw::caret, draw::camera, draw::tips_caret, draw::tips_size;
 bool			    line_antialiasing = true;
 // Drag
 static const void*	drag_object;
+static fnevent		drag_droped;
 point				draw::dragmouse;
 // Metrics
 sprite*				metrics::font = (sprite*)loadb("art/fonts/font.pma");
@@ -973,8 +974,9 @@ static void cpy32t(unsigned char* d, int d_scan, unsigned char* s, int s_scan, i
 	} while(--height);
 }
 
-void draw::dragbegin(const void* p) {
+void draw::dragbegin(const void* p, fnevent droped) {
 	drag_object = p;
+	drag_droped = droped;
 	dragmouse = hmouse;
 }
 
@@ -989,6 +991,10 @@ const void* draw::getdragactive() {
 bool draw::dragactive(const void* p) {
 	if(p && drag_object == p) {
 		if(!hpressed || hkey == KeyEscape) {
+			if(drag_droped) {
+				drag_droped();
+				drag_droped = 0;
+			}
 			drag_object = 0;
 			hkey = InputUpdate;
 			hcursor = cursor::Arrow;

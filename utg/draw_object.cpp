@@ -12,7 +12,7 @@ BSDATAC(draworder, max_object_count)
 
 point objects_mouse;
 rect objects_screen;
-fnevent object_before_paint;
+fnevent object_before_paint, object_drag_droping;
 
 static unsigned long timestamp, timestamp_last;
 static point camera_drag;
@@ -117,7 +117,6 @@ void draworder::update() {
 void object::disappear(int milliseconds) {
 	auto po = addorder(1000);
 	po->alpha = 0;
-	po->priority = 0;
 	po->autoclear();
 }
 
@@ -171,23 +170,23 @@ void splash_screen(unsigned milliseconds, fnevent proc) {
 	caret = push_caret;
 }
 
+static point drag_offset;
+
+static void drag_drop() {
+	caret = hmouse + drag_offset;
+	if(object_drag_droping)
+		object_drag_droping();
+}
+
 void object_drag_drop() {
-	static point drag_offset;
 	if(dragactive(last_object))
 		caret = hmouse + drag_offset;
 	else if(ishilite(32)) {
 		if(hkey == MouseLeft && hpressed) {
 			drag_offset = caret - hmouse;
-			dragbegin(last_object);
+			dragbegin(last_object, drag_drop);
 		}
 	}
-}
-
-static void object_paint() {
-	auto push_alpha = draw::alpha;
-	draw::alpha = alpha;
-	last_object->painting();
-	draw::alpha = push_alpha;
 }
 
 static size_t getobjects(object** pb, object** pe) {
@@ -229,13 +228,16 @@ void paint_objects() {
 	auto count = getobjects(source, source + sizeof(source) / sizeof(source[0]));
 	sortobjects(source, count);
 	auto push_object = last_object;
+	auto push_alpha = draw::alpha;
 	for(size_t i = 0; i < count; i++) {
 		draw::caret = source[i]->getscreen();
 		last_object = source[i];
 		if(object_before_paint)
 			object_before_paint();
-		object_paint();
+		draw::alpha = last_object->alpha;
+		last_object->painting();
 	}
+	draw::alpha = push_alpha;
 	last_object = push_object;
 	clipping = push_clip;
 	caret = push_caret;
