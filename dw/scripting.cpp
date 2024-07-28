@@ -3,9 +3,29 @@
 #include "pushvalue.h"
 #include "questlist.h"
 #include "script.h"
+#include "stringvar.h"
 
+extern stringbuilder sbc;
 static variant last;
 static void* last_choose;
+static creature *player_scout, *player_pathfinder, *player_supplier;
+
+static void printv(stringbuilder& sb, char separator, const char* id, const char* id_param) {
+	auto p = getdescription(id);
+	if(!p)
+		return;
+	if(separator)
+		sb.addsep(separator);
+	sb.addv(p, id_param);
+}
+
+static void printn(stringbuilder& sb, const char* id, ...) {
+	printv(sb, ' ', id, xva_start(id));
+}
+
+static void fix(const char* id, ...) {
+	printv(sbc, ' ', id, xva_start(id));
+}
 
 static int get_cost_discounted(int item_type, int bonus) {
 	auto value = bsdata<itemi>::elements[item_type].coins * bonus;
@@ -13,13 +33,6 @@ static int get_cost_discounted(int item_type, int bonus) {
 	if(value < 0)
 		value = 1;
 	return value;
-}
-
-static void fix(const char* id, ...) {
-	auto p = getdescription(id);
-	if(!p)
-		return;
-	add_console(' ', p, xva_start(id));
 }
 
 static int getcost(int item_type, int bonus) {
@@ -136,6 +149,19 @@ void quest_run(int index) {
 	}
 }
 
+static void travel_roles(stringbuilder& sb) {
+	if(player_scout)
+		printn(sb, "ScoutRole", player_scout->getname());
+	if(player_pathfinder)
+		printn(sb, "PathfinderRole", player_pathfinder->getname());
+	if(player_supplier)
+		printn(sb, "SuppliersRole", player_supplier->getname());
+}
+
+BSDATA(stringvari) = {
+	{"TravelRoles", travel_roles},
+};
+BSDATAF(stringvari)
 BSDATA(script) = {
 	{"ChoosePlayer", choose_player},
 };

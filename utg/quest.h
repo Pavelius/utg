@@ -10,6 +10,7 @@ struct quest {
 	void			clear();
 	const char*		getheader() const;
 	const char*		getimage() const;
+	int				getvalue(int index) const;
 	bool			is(variant v) const;
 	bool			isanswer() const { return next != -1; }
 	static void		manual(short page);

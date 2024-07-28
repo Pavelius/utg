@@ -6,7 +6,6 @@ class goal {
 	short unsigned	value;
 	typedef void (*fninfo)(const char* format, ...);
 public:
-	static void		initialize();
 	static fninfo	info;
 	int				getgoal() const { return value; }
 	const char*		getgoalname() const;
@@ -14,3 +13,4 @@ public:
 	int				getgoalmaximum() const;
 	void			setgoal(int v);
 };
+void goal_initialize();

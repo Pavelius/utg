@@ -135,6 +135,10 @@ const char* quest::getimage() const {
 	return getstring(getbsi(this), prop_image);
 }
 
+int	quest::getvalue(int index) const {
+	return getnumber(getbsi(this), index);
+}
+
 bool quest::is(variant v) const {
 	for(auto e : tags) {
 		if(e.type == v.type && e.value == v.value)

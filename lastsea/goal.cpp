@@ -6,7 +6,7 @@ static int prop_danger_maximum;
 
 goal::fninfo goal::info;
 
-void goal::initialize() {
+void goal_initialize() {
 	prop_danger_maximum = property_add("DangerMaximum", propertyi::Number);
 }
 

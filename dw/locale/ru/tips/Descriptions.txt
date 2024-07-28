@@ -5,3 +5,7 @@ AddItems: Получено %2i %-1.
 RemoveCoins: Отдано [%1i] монет.
 RemoveItem: Отдано %1.
 RemoveItems: Отдано %2i %-1.
+
+ScoutRole: %1 разведывает путь впереди.
+PathfinderRole: %1 ведет группу.
+SupplierRole: %1 следит за продовольствием.

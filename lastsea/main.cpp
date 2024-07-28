@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	answers::prompt = utg::sb.begin();
 	oceani::initialize();
 	quest_initialize();
-	goal::initialize();
+	goal_initialize();
 	goal::info = game.information;
 	initialize_script();
 	initialize_widgets();
