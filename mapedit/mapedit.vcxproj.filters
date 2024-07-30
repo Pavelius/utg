@@ -55,5 +55,8 @@
     <Text Include="tiles\Standart\Rules.txt">
       <Filter>rules</Filter>
     </Text>
+    <Text Include="tiles\Redux\Rules.txt">
+      <Filter>rules</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -42,5 +42,5 @@ void read_tiles() {
 		last_tileset->tiles.set(pb, (tilei*)bsdata<tilei>::source.end() - pb);
 		initialize_resources();
 	}
-	last_tileset = bsdata<tileseti>::find("Standart");
+	last_tileset = bsdata<tileseti>::find("Redux");
 }

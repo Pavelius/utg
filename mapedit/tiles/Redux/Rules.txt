@@ -1,0 +1,20 @@
+#Tile
+
+tiles_arid
+tiles_hills
+tiles_c_forest
+tiles_d_forest
+tiles_floodedmarsh
+tiles_frozen
+tiles_impassable
+tiles_major_river
+tiles_marsh
+tiles_mud
+tiles_r_sandy
+tiles_s_water
+tiles_d_water
+tiles_snow
+
+#Tileset
+
+Redux size(51 44) avatar_tile(64)

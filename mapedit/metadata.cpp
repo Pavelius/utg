@@ -18,6 +18,7 @@ BSMETA(tilei) = {
 BSMETA(tileseti) = {
 	BSREQ(id),
 	BSREQ(size),
+	BSREQ(avatar_tile),
 	{}};
 
 BSDATA(varianti) = {

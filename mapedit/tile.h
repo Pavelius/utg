@@ -13,6 +13,7 @@ struct tilei : nameable {
 struct tileseti : nameable {
 	point			size;
 	sliceu<tilei>	tiles;
+	int				avatar_tile;
 };
 extern tileseti* last_tileset;
 

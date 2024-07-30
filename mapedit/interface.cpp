@@ -56,7 +56,7 @@ static void paint_terrain() {
 		for(terrain_caret.y = 0; terrain_caret.y < terrain.my; terrain_caret.y++) {
 			auto n = terrain[terrain_caret];
 			caret = fsh2p(terrain_caret) - draw::camera;
-			tile_landscape(bsdata<tilei>::elements[n].getres(), terrain_random[terrain_caret]);
+			tile_landscape((last_tileset->tiles.begin() + n)->getres(), terrain_random[terrain_caret]);
 		}
 	}
 	caret = push_caret;
@@ -97,7 +97,7 @@ static void paint_tile(tilei& e, int index) {
 	auto push_caret = caret;
 	setclip({caret.x, caret.y, caret.x + size, caret.y + size});
 	caret.x += size / 2; caret.y += size / 2;
-	image(p, index, 0);
+	image(p, last_tileset->avatar_tile, 0);
 	caret = push_caret;
 	clipping = push_clip;
 	rectpush push;
@@ -112,7 +112,7 @@ static void paint_tile(tilei& e, int index) {
 
 static void tile_panel_tiles() {
 	auto index = 0;
-	for(auto& e : bsdata<tilei>()) {
+	for(auto& e : last_tileset->tiles) {
 		paint_tile(e, index++);
 		caret.x += avatar_size + 4;
 	}

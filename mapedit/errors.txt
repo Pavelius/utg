@@ -1,2 +1,1 @@
-﻿In file `tiles/Standart/Rules.txt`:
- Line 11: Not found requisit `size`
+﻿Can't find file 'tiles/Redux/Rules.txt'
