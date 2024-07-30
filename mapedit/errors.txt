@@ -1,2 +1,2 @@
-﻿Can't find file 'rules/Basic.txt'
-Can't find file 'locale/ru/names/Names.txt'
+﻿In file `rules/Basic.txt`:
+ Line 1: Not find data type for `Tile`

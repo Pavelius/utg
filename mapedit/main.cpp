@@ -1,19 +1,24 @@
 #include "crt.h"
+#include "draw.h"
 #include "draw_strategy.h"
+#include "draw_hexagon.h"
 
 void ui_initialize();
-
-static void start_game() {
-}
+void ui_start();
+void util_main();
 
 static void initialize() {
+	ui_initialize();
 }
 
 int main(int argc, char* argv[]) {
 	//srand(getcputime());
 	srand(505);
+#ifdef _DEBUG
+	util_main();
+#endif // _DEBUG
 	ui_initialize();
-	return draw::strategy(start_game, initialize);
+	return draw::strategy(ui_start, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

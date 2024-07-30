@@ -210,7 +210,7 @@ static void menubt(int i, const void* pv, const char* title, fnevent press_event
 	}
 }
 
-static void answers_beforepaint() {
+static void strategy_answers_beforepaint() {
 	width = 320;
 	caret.y += metrics::padding + metrics::border;
 	caret.x = getwidth() - width - (metrics::padding + metrics::border);
@@ -220,13 +220,6 @@ static void answers_beforepaint() {
 		window(false, answers::prompt, answers::resid, answers::prompa);
 		caret.y += metrics::padding;
 	}
-}
-
-static void paint_window() {
-	rectpush push;
-	width = window_width;
-	height = window_height;
-	swindow(false);
 }
 
 void draw::strategy_background() {
@@ -300,7 +293,7 @@ int draw::strategy(fnevent proc, fnevent afterread, const char* rules_url) {
 	pbeforemodal = beforemodal;
 	if(!pbackground)
 		pbackground = strategy_background;
-	answers::beforepaint = answers_beforepaint;
+	answers::beforepaint = strategy_answers_beforepaint;
 	answers::paintcell = menubt;
 	ptips = tips;
 	awindow.flags = WFResize | WFMinmax;

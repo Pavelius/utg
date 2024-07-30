@@ -14,6 +14,7 @@ BSMETA(tileseti) = {
 	{}};
 
 BSDATA(varianti) = {
+	{"Tile", VAR(tilei, 1)},
 	{"Tileset", VAR(tileseti, 1)},
 };
 BSDATAF(varianti);

@@ -166,13 +166,13 @@ int creaturei::getactive(action_s id, variant* p, variant* pe) const {
 			p = getmodifiers(p + 1, pe, modifiers);
 			if(id == pid)
 				result += modifiers[Bonus];
-		} else if(p->iskind<elementi>()) {
+		} else if(p->iskind<elementi>())
 			p = getmodifiers(p + 1, pe, modifiers);
-		} else if(p->iskind<targeti>())
+		else if(p->iskind<targeti>())
 			p++;
-		else if(p->iskind<statei>()) {
+		else if(p->iskind<statei>())
 			p++;
-		} else
+		else
 			break;
 	}
 	return result;

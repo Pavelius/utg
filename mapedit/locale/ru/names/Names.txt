@@ -1,0 +1,76 @@
+﻿Charisma: Харизма
+Constitution: Телосложение
+Dexterity: Ловкость
+Intellegence: Интеллект
+Strenght: Сила
+Wisdow: Мудрость
+
+AppTitle: Мир подземелья
+ApplyAbility: Какая ваша способность будет равна [%1i]?
+Bonus: Бонус
+Cancel: Отмена
+Chaotic: Хаотичный
+CharacterAbility: Характеристики
+CharacterGeneration: Генерация персонажа
+Cleric: Священник
+Continue: Продолжить
+Damage: Урон
+Dwarf: Дварф
+Elf: Эльф
+Evil: Злой
+Female: Женщина
+Fighter: Воин
+Good: Добрый
+HP: Хиты
+Halfling: Полурослик 
+Human: Человек
+Lawful: Законопослушный
+Male: Мужчина
+Mistra: Мистра
+Neutral: Нейтральный
+No: Нет
+NoGender: Безполый
+Notes: Заметки
+Npc: НИП
+RuleshipOfThaine: Правительство Таинов
+Settlement: Деревня
+Theif: Вор
+UndeadInvasion: Нашествие мертвецов
+WhatPlayerWantToDo: Что будет делать %1?
+Wizard: Волшебник
+Yes: Да
+
+Choose: Выбирай
+ChooseAlignment: Каков будет его характер?
+ChooseArmament: Что будет вашим оружием?
+ChooseClass: Кто будет ваш персонаж?
+ChooseDefences: Что будет служить вам защитой?
+ChooseGears: Что вы таскаете с собой?
+ChooseGender: Кто вы?
+ChooseLook: Как вы выглядите?
+ChooseRace: Из каких краев вы родом?
+ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
+
+Armor: Броня
+
+AdventuringGear: Инструменты
+Antitoxin: Противоядие
+BagOfBooks: Сумка с книгами
+Bandages: Бинты
+BundleArrows: Стрелы
+ChainMailArmor: Кольчуга
+Coins: Монет
+Dagger: Кинжал
+DungeonRations: Еда
+HealingPotion: Лечебное зелье
+Knife: Нож
+LeatherArmor: Кожанная броня
+Mace: Булава
+PoulticesAndHerbs: Травы
+Rapier: Рапира
+RaggedBow: Лук
+ScaleMailArmor: Хаулберк
+Shield: Щит
+ShortSword: Короткий меч
+Staff: Посох
+Warhammer: Молот

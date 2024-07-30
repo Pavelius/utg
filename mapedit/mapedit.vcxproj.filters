@@ -1,12 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="interface.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="tile.cpp" />
-    <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="interface.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tile.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main_util.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tile.h" />
+    <Filter Include="logic">
+      <UniqueIdentifier>{b67a72fa-6fe0-4815-b461-073c295ae472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{9aa93418-14b9-4c8f-952d-bbda7c0bcc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rules">
+      <UniqueIdentifier>{65f2277e-095f-4edd-babf-1a44d28a5b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{fa1bfda9-999e-4a7a-b0a9-66659c949bba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tile.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="locale\ru\names\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\names\NamesNewbe.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="errors.txt">
+      <Filter>rules</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>rules</Filter>
+    </Text>
   </ItemGroup>
 </Project>
