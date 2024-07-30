@@ -6,15 +6,6 @@
 tileseti* last_tileset;
 
 sprite* tilei::getres() {
-	if(!resource) {
-		if(not_found)
-			return 0;
-		char temp[260]; stringbuilder sb(temp);
-		sb.add("art/images/%1.pma", id);
-		resource = (sprite*)loadb(temp);
-		if(!resource)
-			not_found = true;
-	}
 	return resource;
 }
 
@@ -30,6 +21,14 @@ tileseti* find_tileset(const tilei* p) {
 	return 0;
 }
 
+static void initialize_resources() {
+	for(auto& e : last_tileset->tiles) {
+		char temp[260]; stringbuilder sb(temp);
+		sb.add("tiles/%1/%2.pma", last_tileset->id, e.id);
+		e.resource = (sprite*)loadb(temp);
+	}
+}
+
 void read_tiles() {
 	for(io::file::find file("tiles"); file; file.next()) {
 		auto pn = file.name();
@@ -41,6 +40,7 @@ void read_tiles() {
 		last_tileset = bsdata<tileseti>::end();
 		bsreq::read(temp);
 		last_tileset->tiles.set(pb, (tilei*)bsdata<tilei>::source.end() - pb);
+		initialize_resources();
 	}
 	last_tileset = bsdata<tileseti>::find("Standart");
 }
