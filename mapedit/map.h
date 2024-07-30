@@ -1,10 +1,10 @@
 #pragma once
 
-template<int X, int Y>
+template<int X, int Y, typename T = unsigned char>
 struct mapi {
 	static const int mx = X;
 	static const int my = Y;
-	unsigned char data[mx][my];
-	unsigned char operator[](point v) const { return data[v.x][v.y]; }
-	unsigned char& operator[](point v) { return data[v.x][v.y]; }
+	T data[mx][my];
+	T operator[](point v) const { return data[v.x][v.y]; }
+	T& operator[](point v) { return data[v.x][v.y]; }
 };

@@ -8,7 +8,7 @@ sprite* tilei::getres() {
 		if(not_found)
 			return 0;
 		char temp[260]; stringbuilder sb(temp);
-		sb.add("art/%1/%2.pma", last_tileset->getid(), id);
+		sb.add("art/images/%1.pma", id);
 		resource = (sprite*)loadb(temp);
 		if(!resource)
 			not_found = true;
