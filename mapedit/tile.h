@@ -2,6 +2,7 @@
 
 #include "crt.h"
 #include "nameable.h"
+#include "point.h"
 
 struct sprite;
 struct tilei : nameable {
@@ -10,6 +11,7 @@ struct tilei : nameable {
 	sprite*			getres();
 };
 struct tileseti : nameable {
+	point			size;
 	sliceu<tilei>	tiles;
 };
 extern tileseti* last_tileset;

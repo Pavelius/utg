@@ -1,2 +1,2 @@
-﻿In file `rules/Basic.txt`:
- Line 1: Not find data type for `Tile`
+﻿In file `tiles/Standart/Rules.txt`:
+ Line 11: Not found requisit `size`

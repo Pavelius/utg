@@ -1,13 +1,15 @@
 #include "crt.h"
+#include "bsreq.h"
 #include "draw.h"
 #include "draw_strategy.h"
-#include "draw_hexagon.h"
 
+void read_tiles();
 void ui_initialize();
 void ui_start();
 void util_main();
 
 static void initialize() {
+	read_tiles();
 	ui_initialize();
 }
 

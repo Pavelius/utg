@@ -1,0 +1,11 @@
+#Tile
+
+LightGrass
+RoughIsland
+Lakes
+PineForest
+Brush
+
+#Tileset
+
+Standart size(72 72)

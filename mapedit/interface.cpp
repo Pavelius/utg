@@ -7,6 +7,8 @@
 
 using namespace draw;
 
+const int avatar_size = 32;
+
 static mapi<16, 16>		terrain, terrain_random;
 static unsigned char	terrain_param, terrain_land;
 static point			terrain_hilite, terrain_caret;
@@ -22,22 +24,10 @@ void terrain_clear() {
 	terrain_clear_random();
 }
 
-point fsh2p(point hex, int size) {
-	auto x = (short)(size * hex.x * 3 / 2);
-	auto y = (short)(2 * size * (hex.y + 0.5 * (hex.x & 1)));
+static point fsh2p(point hex) {
+	auto x = (short)(last_tileset->size.x * hex.x * 3 / 4);
+	auto y = (short)(last_tileset->size.y * (hex.y + 0.5 * (hex.x & 1)));
 	return {x, y};
-}
-
-void fshexagon() {
-	auto pt = caret;
-	caret.x += fsize;
-	line(pt.x + fsize / 2, pt.y + fsize);
-	line(pt.x - fsize / 2, pt.y + fsize);
-	line(pt.x - fsize, pt.y);
-	line(pt.x - fsize / 2, pt.y - fsize);
-	line(pt.x + fsize / 2, pt.y - fsize);
-	line(pt.x + fsize, pt.y);
-	caret = pt;
 }
 
 static void set_current_tile() {
@@ -49,7 +39,7 @@ void tile_landscape(sprite* p, unsigned char param) {
 	if(!p || !p->count)
 		return;
 	image(p, param % p->count, 0);
-	auto fr = fsize / 2;
+	auto fr = last_tileset->size.x / 4;
 	if(ishilite(fr)) {
 		terrain_hilite = terrain_caret;
 		circle(fr);
@@ -65,7 +55,7 @@ static void paint_terrain() {
 	for(terrain_caret.x = 0; terrain_caret.x < terrain.mx; terrain_caret.x++) {
 		for(terrain_caret.y = 0; terrain_caret.y < terrain.my; terrain_caret.y++) {
 			auto n = terrain[terrain_caret];
-			caret = fsh2p(terrain_caret, 36) - draw::camera;
+			caret = fsh2p(terrain_caret) - draw::camera;
 			tile_landscape(bsdata<tilei>::elements[n].getres(), terrain_random[terrain_caret]);
 		}
 	}
@@ -90,7 +80,6 @@ static void main_finish() {
 
 void ui_initialize() {
 	terrain_clear();
-	fsize = 36;
 	pfinish = main_finish;
 }
 
@@ -103,15 +92,16 @@ static void paint_tile(tilei& e, int index) {
 	auto p = e.getres();
 	if(!p)
 		return;
+	auto size = 32;
 	auto push_clip = clipping;
 	auto push_caret = caret;
-	setclip({caret.x, caret.y, caret.x + fsize, caret.y + fsize});
-	caret.x += fsize / 2; caret.y += fsize / 2;
+	setclip({caret.x, caret.y, caret.x + size, caret.y + size});
+	caret.x += size / 2; caret.y += size / 2;
 	image(p, index, 0);
 	caret = push_caret;
 	clipping = push_clip;
 	rectpush push;
-	width = fsize; height = fsize;
+	width = size; height = size;
 	if(index == terrain_land)
 		rectb();
 	if(ishilite()) {
@@ -124,18 +114,8 @@ static void tile_panel_tiles() {
 	auto index = 0;
 	for(auto& e : bsdata<tilei>()) {
 		paint_tile(e, index++);
-		caret.x += fsize + 4;
+		caret.x += avatar_size + 4;
 	}
-}
-
-static void tile_panel_background() {
-	rectpush push;
-	auto n = bsdata<tilei>::source.getcount();
-	if(n > 10)
-		n = 10;
-	height = fsize;
-	width = ((fsize * 2) + 4) * n;
-	swindow(false);
 }
 
 static void tile_panel() {
@@ -148,7 +128,7 @@ void status_info() {
 	caret.x += metrics::padding + metrics::border;
 	tile_panel();
 	caret = push_caret;
-	caret.y += fsize + (metrics::padding + metrics::border) * 2;
+	caret.y += avatar_size + (metrics::padding + metrics::border) * 2;
 }
 
 BSDATA(widget) = {

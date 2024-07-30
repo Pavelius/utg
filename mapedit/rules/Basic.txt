@@ -1,7 +1,0 @@
-#Tile
-
-LightGrass
-RoughIsland
-Lakes
-PineForest
-Brush

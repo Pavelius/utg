@@ -52,5 +52,8 @@
     <Text Include="rules\Basic.txt">
       <Filter>rules</Filter>
     </Text>
+    <Text Include="tiles\Standart\Rules.txt">
+      <Filter>rules</Filter>
+    </Text>
   </ItemGroup>
 </Project>

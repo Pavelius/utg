@@ -7,11 +7,17 @@
 BSDATAC(tilei, 128)
 BSDATAC(tileseti, 32)
 
+NOBSDATA(point)
+
+BSMETA(point) = {
+	BSREQ(x), BSREQ(y),
+	{}};
 BSMETA(tilei) = {
 	BSREQ(id),
 	{}};
 BSMETA(tileseti) = {
 	BSREQ(id),
+	BSREQ(size),
 	{}};
 
 BSDATA(varianti) = {
