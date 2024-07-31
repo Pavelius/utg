@@ -7,6 +7,9 @@
 
 using namespace log;
 
+const bsreq* bsreq_file_meta;
+void* bsreq_file_object;
+
 static char	temp[512];
 static const char* p;
 static int last_bonus;
@@ -520,6 +523,14 @@ static bool set_locale() {
 	return true;
 }
 
+static void read_file_abilities() {
+	if(!bsreq_file_meta)
+		log::error(0, "Not defined file metadata");
+	if(!bsreq_file_object)
+		log::error(0, "Not defined file object");
+	read_dictionary(bsreq_file_object, bsreq_file_meta + 1, 0);
+}
+
 static bool parse_directives() {
 	if(equal(temp, "include")) {
 		if(!read_string())
@@ -534,6 +545,10 @@ static bool parse_directives() {
 		return read_import(true, true);
 	else if(equal(temp, "setlocale"))
 		return set_locale();
+	else if(equal(temp, "File")) {
+		read_file_abilities();
+		return true;
+	}
 	return false;
 }
 

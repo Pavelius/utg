@@ -15,6 +15,4 @@ h_tiles_s_water
 h_tiles_d_water
 h_tiles_snow
 
-#Tileset
-
-ReduxLarge size(102 88) avatar_tile(64)
+#File size(102 88) avatar_tile(64)

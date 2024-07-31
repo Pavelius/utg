@@ -6,6 +6,4 @@ Lakes
 PineForest
 Brush
 
-#Tileset
-
-Standart size(72 72)
+#File size(72 72)

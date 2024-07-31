@@ -53,6 +53,8 @@ struct bsreq {
 	static void				read(const char* url);
 	void					set(const void* p, long value) const;
 };
+extern const bsreq* bsreq_file_meta;
+extern void* bsreq_file_object;
 NOBSDATA(bsreq)
 // Abstract metadata class
 template<typename T> struct bsmeta {

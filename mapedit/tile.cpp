@@ -2,6 +2,7 @@
 #include "io_stream.h"
 #include "tile.h"
 #include "stringbuilder.h"
+#include "variant.h"
 
 tileseti* last_tileset;
 
@@ -30,17 +31,24 @@ static void initialize_resources() {
 }
 
 void read_tiles() {
+	auto push_object = bsreq_file_object;
+	auto push_meta = bsreq_file_meta;
+	bsreq_file_meta = bsdata<varianti>::find("Tileset")->metadata;
 	for(io::file::find file("tiles"); file; file.next()) {
 		auto pn = file.name();
 		if(pn[0] == '.')
 			continue;
 		char temp[260]; stringbuilder sb(temp);
 		sb.add("tiles/%1/Rules.txt", pn);
-		auto pb = (tilei*)bsdata<tilei>::source.end();
-		last_tileset = bsdata<tileseti>::end();
+		last_tileset = bsdata<tileseti>::add();
+		last_tileset->id = szdup(pn);
+		last_tileset->tiles.setbegin();
+		bsreq_file_object = last_tileset;
 		bsreq::read(temp);
-		last_tileset->tiles.set(pb, (tilei*)bsdata<tilei>::source.end() - pb);
+		last_tileset->tiles.setend();
 		initialize_resources();
 	}
+	bsreq_file_meta = push_meta;
+	bsreq_file_object = push_object;
 	last_tileset = bsdata<tileseti>::find("Redux");
 }
