@@ -152,6 +152,7 @@
     <Text Include="locale\ru\names\Names.txt" />
     <Text Include="locale\ru\names\NamesNewbe.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="tiles\ReduxLarge\Rules.txt" />
     <Text Include="tiles\Redux\Rules.txt" />
     <Text Include="tiles\Standart\Rules.txt" />
   </ItemGroup>
