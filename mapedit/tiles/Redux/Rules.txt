@@ -1,18 +1,31 @@
+#Mapper
+
+ReduxMediumBorder indecies(63 0 1 2 3 4 5 6 7 8\
+	9 10 11 12 13 14 15 16 17 18\
+	19 20 21 22 23 24 25 26 27 28\
+	29 30 31 32 33 34 35 36 37 38\
+	39 40 41 42 43 44 45 46 47 48\
+	49 50 51 52 53 54 55 56 57 58\
+	59 60 61 62)
+
+ReduxMediumBody
+ indecies 64
+
 #Tile
 
-tiles_arid
-tiles_hills
-tiles_c_forest
-tiles_d_forest
-tiles_floodedmarsh
-tiles_frozen
-tiles_impassable
-tiles_major_river
-tiles_marsh
-tiles_mud
-tiles_r_sandy
-tiles_s_water
-tiles_d_water
-tiles_snow
+tiles_arid border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_hills border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_c_forest border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_d_forest border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_floodedmarsh border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_frozen border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_impassable border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_major_river border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_marsh border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_mud border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_r_sandy border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_s_water border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_d_water border(ReduxMediumBorder) body(ReduxMediumBody)
+tiles_snow border(ReduxMediumBorder) body(ReduxMediumBody)
 
 #File size(51 44) avatar_tile(64)

@@ -5,7 +5,12 @@
 #include "point.h"
 
 struct sprite;
+struct mapperi : nameable {
+	int				indecies[64];
+};
 struct tilei : nameable {
+	mapperi*		border;
+	mapperi*		body;
 	sprite*			resource;
 	bool			not_found;
 	sprite*			getres();

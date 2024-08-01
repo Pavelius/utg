@@ -360,19 +360,24 @@ static void read_array(void* object, const bsreq* req) {
 	}
 }
 
-static void read_data_line(void* object, const bsreq* req) {
+static void read_data_line(void* object, const bsreq* req, bool read_struct) {
 	auto index = 0;
 	while(allowparse && isvalue()) {
 		valuei v;
-		read_value(v, req + index);
-		write_value(object, req + index, 0, v);
+		if(read_struct) {
+			read_value(v, req + index);
+			write_value(object, req + index, 0, v);
+		} else {
+			read_value(v, req);
+			write_value(object, req, 0, v);
+		}
 		index++;
 	}
 }
 
 static void read_adat(void* object, const bsreq* type) {
 	auto pd = (adat<char>*)object;
-	read_data_line(pd->data + (pd->count++) * type->size, type->type);
+	read_data_line(pd->data + (pd->count++) * type->size, type->type, true);
 }
 
 static void read_dictionary(void* object, const bsreq* type, int level, bool need_linefeed = true) {
@@ -412,8 +417,7 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 						ptr = req->ptr(object, index);
 					}
 					read_dictionary(ptr, req->type, level + 1, false);
-				}
-				else if(req->is(KindADat)) {
+				} else if(req->is(KindADat)) {
 					read_adat(req->ptr(object), req);
 					skiplinefeed();
 				} else {

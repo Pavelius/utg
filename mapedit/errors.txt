@@ -1,1 +1,2 @@
-﻿Can't find file 'tiles/Redux/Rules.txt'
+﻿In file `tiles/Redux/Rules.txt`:
+ Line 4: Unknown type in requisit `number`

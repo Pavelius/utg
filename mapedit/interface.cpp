@@ -10,8 +10,41 @@ using namespace draw;
 const int avatar_size = 32;
 
 static mapi<16, 16>		terrain, terrain_random;
+static mapi<16, 16, unsigned> terrain_state;
 static unsigned char	terrain_param, terrain_land;
 static point			terrain_hilite, terrain_caret;
+
+static int get_terrain_mask(point v, unsigned char t) {
+	unsigned char result = 0;
+	static point all_0[] = {{-1, -1}, {-1, 0}, {0, 1}, {1, 0}, {1, -1}, {0, -1}};
+	static point all_1[] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {0, -1}};
+	auto pz = ((v.x & 1) ? all_1 : all_0);
+	for(auto i = 0; i < 6; i++) {
+		auto m = v + pz[i];
+		if(m.x < 0 || m.x >= terrain.mx || m.y < 0 || m.y >= terrain.my || terrain[m] == t)
+			result |= 1;
+		if(i<5)
+			result <<= 1;
+	}
+	return result;
+}
+
+static bool isflag(point v, int f) {
+	return (terrain_state[v] & (1 << f)) != 0;
+}
+
+static int get_terrain_mask_state(point v, unsigned char t) {
+	unsigned char result = 0;
+	static point all_0[] = {{0, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
+	static point all_1[] = {{0, -1}, {1, -1}, {1, 0}, {0, 1}, {-1, 0}, {-1, -1}};
+	for(auto n : ((v.x&1) ? all_1 : all_0)) {
+		auto m = n + v;
+		if(m.x < 0 || m.x >= terrain.mx || m.y < 0 || m.y >= terrain.my || isflag(m, t))
+			result |= 1;
+		result <<= 1;
+	}
+	return result;
+}
 
 static void terrain_clear_random() {
 	for(short x = 0; x < terrain.mx; x++)
@@ -35,6 +68,11 @@ static void set_current_tile() {
 		terrain[terrain_hilite] = terrain_land;
 }
 
+static void set_current_state() {
+	if(terrain_hilite.y != -1)
+		terrain_state[terrain_hilite] |= (1<<terrain_land);
+}
+
 void tile_landscape(sprite* p, unsigned char param) {
 	if(!p || !p->count)
 		return;
@@ -56,7 +94,11 @@ static void paint_terrain() {
 		for(terrain_caret.y = 0; terrain_caret.y < terrain.my; terrain_caret.y++) {
 			auto n = terrain[terrain_caret];
 			caret = fsh2p(terrain_caret) - draw::camera;
-			tile_landscape((last_tileset->tiles.begin() + n)->getres(), terrain_random[terrain_caret]);
+			auto param = get_terrain_mask(terrain_caret, n);
+			auto pt = last_tileset->tiles.begin() + n;
+			if(pt->border)
+				param = pt->border->indecies[param];
+			tile_landscape(pt->getres(), param);
 		}
 	}
 	caret = push_caret;
