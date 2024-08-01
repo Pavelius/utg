@@ -7,6 +7,7 @@
 struct sprite;
 struct mapperi : nameable {
 	int				indecies[64];
+	int				maximum;
 };
 struct tilei : nameable {
 	mapperi*		border;

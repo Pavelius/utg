@@ -50,5 +50,5 @@ void read_tiles() {
 	}
 	bsreq_file_meta = push_meta;
 	bsreq_file_object = push_object;
-	last_tileset = bsdata<tileseti>::find("Redux");
+	last_tileset = bsdata<tileseti>::find("ReduxLarge");
 }

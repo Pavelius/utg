@@ -12,7 +12,7 @@ NOBSDATA(point)
 
 BSMETA(mapperi) = {
 	BSREQ(id),
-	BSREQ(indecies),
+	BSREQ(indecies), BSREQ(maximum),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),

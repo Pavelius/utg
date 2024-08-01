@@ -9,9 +9,9 @@ using namespace draw;
 
 const int avatar_size = 32;
 
-static mapi<16, 16>		terrain, terrain_random;
-static mapi<16, 16, unsigned> terrain_state;
-static unsigned char	terrain_param, terrain_land;
+static mapi<32, 16>		terrain, terrain_random;
+static mapi<32, 16, unsigned> terrain_state;
+static unsigned char	terrain_land;
 static point			terrain_hilite, terrain_caret;
 
 static int get_terrain_mask(point v, unsigned char t) {
@@ -35,13 +35,17 @@ static bool isflag(point v, int f) {
 
 static int get_terrain_mask_state(point v, unsigned char t) {
 	unsigned char result = 0;
-	static point all_0[] = {{0, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
-	static point all_1[] = {{0, -1}, {1, -1}, {1, 0}, {0, 1}, {-1, 0}, {-1, -1}};
-	for(auto n : ((v.x&1) ? all_1 : all_0)) {
-		auto m = n + v;
+	static point all_0[] = {{-1, -1}, {-1, 0}, {0, 1}, {1, 0}, {1, -1}, {0, -1}};
+	static point all_1[] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {0, -1}};
+	auto pz = ((v.x & 1) ? all_1 : all_0);
+	auto m = v + pz[0];
+	if(m.x < 0 || m.x >= terrain.mx || m.y < 0 || m.y >= terrain.my || isflag(m, t))
+		result |= 1;
+	for(auto i = 1; i < 6; i++) {
+		result <<= 1;
+		auto m = v + pz[i];
 		if(m.x < 0 || m.x >= terrain.mx || m.y < 0 || m.y >= terrain.my || isflag(m, t))
 			result |= 1;
-		result <<= 1;
 	}
 	return result;
 }
@@ -54,6 +58,7 @@ static void terrain_clear_random() {
 
 void terrain_clear() {
 	memset(terrain.data, 0, sizeof(terrain.data));
+	memset(terrain_state.data, 0, sizeof(terrain_state.data));
 	terrain_clear_random();
 }
 
@@ -77,28 +82,51 @@ void tile_landscape(sprite* p, unsigned char param) {
 	if(!p || !p->count)
 		return;
 	image(p, param % p->count, 0);
-	auto fr = last_tileset->size.x / 4;
-	if(ishilite(fr)) {
-		terrain_hilite = terrain_caret;
-		circle(fr);
-		hcursor = cursor::Hand;
-		if(hkey == MouseLeft && hpressed)
-			execute(set_current_tile);
-	}
 }
 
 static void paint_terrain() {
 	auto push_caret = caret;
 	terrain_hilite = {0, -1};
+	int param;
+	auto frame_size = last_tileset->size.x / 4;
+	auto use_states = true;
 	for(terrain_caret.x = 0; terrain_caret.x < terrain.mx; terrain_caret.x++) {
 		for(terrain_caret.y = 0; terrain_caret.y < terrain.my; terrain_caret.y++) {
-			auto n = terrain[terrain_caret];
 			caret = fsh2p(terrain_caret) - draw::camera;
-			auto param = get_terrain_mask(terrain_caret, n);
-			auto pt = last_tileset->tiles.begin() + n;
-			if(pt->border)
-				param = pt->border->indecies[param];
-			tile_landscape(pt->getres(), param);
+			if(use_states) {
+				for(auto n = 0; n < 32; n++) {
+					if(!isflag(terrain_caret, n))
+						continue;
+					auto tile = last_tileset->tiles.begin() + n;
+					if(tile->border) {
+						auto n1 = get_terrain_mask_state(terrain_caret, n);
+						param = tile->border->indecies[n1];
+						if(n1 == 63 && tile->body && tile->body->maximum)
+							param = tile->body->indecies[terrain_random[terrain_caret] % tile->body->maximum];
+					} else
+						param = terrain_random[terrain_caret];
+					tile_landscape(tile->getres(), param);
+				}
+			} else {
+				auto n = terrain[terrain_caret];
+				auto tile = last_tileset->tiles.begin() + n;
+				if(tile->border)
+					param = tile->border->indecies[get_terrain_mask(terrain_caret, n)];
+				else
+					param = terrain_random[terrain_caret];
+				tile_landscape(tile->getres(), param);
+			}
+			if(ishilite(frame_size)) {
+				terrain_hilite = terrain_caret;
+				circle(frame_size);
+				hcursor = cursor::Hand;
+				if(hkey == MouseLeft && hpressed) {
+					if(use_states)
+						execute(set_current_state);
+					else
+						execute(set_current_tile);
+				}
+			}
 		}
 	}
 	caret = push_caret;
