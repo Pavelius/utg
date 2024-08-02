@@ -110,6 +110,7 @@ struct playeri {
 	combatdeck			combat;
 	color				fore;
 };
+extern playeri* player;
 struct monstercardi {
 	const char*			id;
 	int					initiative;
@@ -242,9 +243,7 @@ public:
 	void				apply(state_s type);
 	void				apply(target_s type);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0, int advantage = 0);
-	void				choosecards();
 	creaturei*			chooseenemy() const;
-	void				chooseinitiative();
 	creaturei*			choosenearest(bool hostile, int range) const;
 	void				clear();
 	void				damage(int v);
@@ -261,7 +260,8 @@ public:
 	int					getmaximumhp() const;
 	static variant*		getmodifiers(variant* p, variant* pe, char* modifiers);
 	static void			getmodifiers(stringbuilder& sb);
-	const summoni*		getmonster() const;
+	const monsteri*		getmonster() const;
+	const summoni*		getsummon() const;
 	pathfind::indext	getmovetarget() const;
 	creaturei*			getnearestenemy() const;
 	int					getongoing(action_s v) const;
@@ -275,7 +275,6 @@ public:
 	void				move(int bonus);
 	bool				moveto(pathfind::indext index, int bonus, int range);
 	void				paint() const;
-	void				play();
 	bool				pull(pathfind::indext from, int bonus);
 	bool				push(pathfind::indext from, int bonus);
 	void				set(state_s v) { return state.set(v); }

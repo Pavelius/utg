@@ -59,9 +59,6 @@ BSMETA(playercardi) = {
 	BSREQ(owner),
 	BSREQ(upper), BSREQ(lower),
 	{}};
-BSMETA(scripti) = {
-	BSREQ(id),
-	{}};
 BSMETA(tilei) = {
 	BSREQ(id),
 	BSREQ(priority),
@@ -123,7 +120,7 @@ BSDATA(varianti) = {
 	{"Player", VRSTD(playeri), 1},
 	{"PlayerCard", VRSTD(playercardi), 1},
 	{"Scenario", VRSTD(scenarioi), 1},
-	{"Script", VRSTD(scripti), 1},
+	{"Script", VRSTD(script), 1},
 	{"Special", VRSTD(speciali), 1},
 	{"State", VRSTD(statei), 1},
 	{"Summon", VRSTD(summoni), 1},

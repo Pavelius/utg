@@ -13,12 +13,15 @@ struct tilei : nameable {
 	mapperi*		border;
 	mapperi*		body;
 	sprite*			resource;
+	int				avatar;
+	tilei*			background;
 	bool			not_found;
 	sprite*			getres();
 };
 struct tileseti : nameable {
 	point			size;
 	sliceu<tilei>	tiles;
+	const char*		url;
 	int				avatar_tile;
 };
 extern tileseti* last_tileset;

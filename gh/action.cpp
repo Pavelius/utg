@@ -199,7 +199,7 @@ void creaturei::apply(variants source) {
 		} else if(p->iskind<actioni>()) {
 			clear_modifiers();
 			auto type = (action_s)p->value;
-			auto pm = getmonster();
+			auto pm = getsummon();
 			if(pm) {
 				if(type == Attack || type == Move)
 					modifiers[Bonus] += pm->get(type);

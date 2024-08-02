@@ -568,7 +568,7 @@ void status_info(void) {
 
 void creaturei::paint() const {
 	const char* id = 0;
-	auto pm = getmonster();
+	auto pm = getsummon();
 	if(pm)
 		id = pm->id;
 	auto pp = getplayer();

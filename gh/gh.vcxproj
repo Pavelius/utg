@@ -147,7 +147,6 @@
     <ClInclude Include="duration.h" />
     <ClInclude Include="element.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="script.h" />
     <ClInclude Include="tile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +168,7 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="monsterdeck.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="playercard.cpp" />
     <ClCompile Include="scenario.cpp" />
     <ClCompile Include="script.cpp" />

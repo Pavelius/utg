@@ -30,6 +30,12 @@ static void initialize_resources() {
 	}
 }
 
+const char* szt(const char* format, ...) {
+	char temp[512]; stringbuilder sb(temp);
+	sb.addv(format, xva_start(format));
+	return szdup(temp);
+}
+
 void read_tiles() {
 	auto push_object = bsreq_file_object;
 	auto push_meta = bsreq_file_meta;
@@ -43,6 +49,7 @@ void read_tiles() {
 		last_tileset = bsdata<tileseti>::add();
 		last_tileset->id = szdup(pn);
 		last_tileset->tiles.setbegin();
+		last_tileset->url = szt("tiles/%1", last_tileset->id);
 		bsreq_file_object = last_tileset;
 		bsreq::read(temp);
 		last_tileset->tiles.setend();
@@ -50,5 +57,5 @@ void read_tiles() {
 	}
 	bsreq_file_meta = push_meta;
 	bsreq_file_object = push_object;
-	last_tileset = bsdata<tileseti>::find("ReduxLarge");
+	last_tileset = bsdata<tileseti>::find("Redux");
 }

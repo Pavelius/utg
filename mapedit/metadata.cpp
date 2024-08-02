@@ -21,6 +21,8 @@ BSMETA(tilei) = {
 	BSREQ(id),
 	BSREQ(border),
 	BSREQ(body),
+	BSREQ(avatar),
+	BSREQ(background),
 	{}};
 BSMETA(tileseti) = {
 	BSREQ(id),

@@ -13,18 +13,14 @@ ReduxLargeBody maximum(16) indecies(64 65 66 67 68 69 70 71 72 73 74 75 76 77 78
 #Tile
 
 h_tiles_arid border(ReduxLargeBorder) body(ReduxLargeBody)
+h_tiles_r_sandy border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_hills border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_c_forest border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_d_forest border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_floodedmarsh border(ReduxLargeBorder) body(ReduxLargeBody)
-h_tiles_frozen border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_impassable border(ReduxLargeBorder) body(ReduxLargeBody)
-h_tiles_major_river border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_marsh border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_mud border(ReduxLargeBorder) body(ReduxLargeBody)
-h_tiles_r_sandy border(ReduxLargeBorder) body(ReduxLargeBody)
-h_tiles_s_water border(ReduxLargeBorder) body(ReduxLargeBody)
-h_tiles_d_water border(ReduxLargeBorder) body(ReduxLargeBody)
 h_tiles_snow border(ReduxLargeBorder) body(ReduxLargeBody)
 
 #File size(102 88) avatar_tile(64)

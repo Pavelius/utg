@@ -7,14 +7,6 @@ BSDATAC(creaturei, 128)
 static indext moves[hms * hms];
 creaturei* active_creature;
 
-static creaturei* addnew() {
-	for(auto& e : bsdata<creaturei>()) {
-		if(!e)
-			return &e;
-	}
-	return bsdata<creaturei>::add();
-}
-
 static monsteri* find_monster(const char* id, char elite) {
 	id = szdup(id);
 	for(auto& e : bsdata<monsteri>()) {
@@ -25,7 +17,7 @@ static monsteri* find_monster(const char* id, char elite) {
 }
 
 creaturei* creaturei::add(const char* id, point position, bool elite, bool hostile) {
-	auto p = addnew();
+	auto p = bsdata<creaturei>::addz();
 	p->clear();
 	if(!p->parent) {
 		auto pc = bsdata<playeri>::find(id);
@@ -61,12 +53,20 @@ void creaturei::clear() {
 }
 
 playeri* creaturei::getplayer() const {
-	return bsdata<playeri>::have(parent) ? (playeri*)parent : 0;
+	if(bsdata<playeri>::have(parent))
+		return (playeri*)parent;
+	return 0;
 }
 
-const summoni* creaturei::getmonster() const {
+const summoni* creaturei::getsummon() const {
 	if(bsdata<summoni>::have(parent) || bsdata<monsteri>::have(parent))
 		return (summoni*)parent;
+	return 0;
+}
+
+const monsteri* creaturei::getmonster() const {
+	if(bsdata<monsteri>::have(parent))
+		return (monsteri*)parent;
 	return 0;
 }
 
@@ -74,7 +74,7 @@ int creaturei::getmaximumhp() const {
 	auto pc = getplayer();
 	if(pc)
 		return pc->health[pc->level];
-	auto pm = getmonster();
+	auto pm = getsummon();
 	if(pm)
 		return pm->hits;
 	return 0;
@@ -268,69 +268,6 @@ int	creaturei::getinitiative(int index) const {
 			return pc->initiative;
 	}
 	return 99;
-}
-
-void creaturei::play() {
-	activate();
-	if(getplayer()) {
-		auto p = getplayer();
-		bool use_card_1 = false;
-		bool use_card_2 = false;
-		bool use_upper = false;
-		bool use_lower = false;
-		for(auto i = 0; i < 2; i++) {
-			answers an;
-			if(!use_card_1)
-				an.add(p->cards[0], getnm(p->cards[0]->id));
-			if(!use_card_2)
-				an.add(p->cards[1], getnm(p->cards[1]->id));
-			auto pc = (playercardi*)an.choose(0, 0, 1);
-			if(pc == p->cards[0])
-				use_card_1 = true;
-			if(pc == p->cards[1])
-				use_card_2 = true;
-			an.clear();
-			if(!use_upper)
-				an.add(&pc->upper, getnm("UpperCardPart"));
-			if(!use_lower)
-				an.add(&pc->lower, getnm("LowerCardPart"));
-			auto pv = (variants*)an.choose(0, 0, 1);
-			if(pv == &pc->upper)
-				use_upper = true;
-			if(pv == &pc->lower)
-				use_lower = true;
-			playercardi::last = pc;
-			apply(*pv);
-		}
-	} else if(bsdata<monsteri>::have(parent)) {
-		auto p = (monsteri*)parent;
-		auto pc = monsterdeck::get(p->getdeck()).current();
-		if(pc)
-			apply(pc->abilities);
-	}
-}
-
-void creaturei::choosecards() {
-	auto p = getplayer();
-	if(!p)
-		return;
-	activate();
-	p->cards[0] = p->hand.choose(0, true);
-	p->cards[1] = p->hand.choose(0, true);
-	chooseinitiative();
-}
-
-void creaturei::chooseinitiative() {
-	auto p = getplayer();
-	if(!p || !p->cards[0] || !p->cards[1])
-		return;
-	const char* format = getnm("InitiativeOrder");
-	answers an;
-	an.add((void*)0, format, p->cards[0]->initiative);
-	an.add((void*)1, format, p->cards[1]->initiative);
-	auto result = an.choose(getnm("ChooseInitiative"));
-	if(result)
-		iswap(p->cards[0], p->cards[1]);
 }
 
 creaturei* creaturei::chooseenemy() const {

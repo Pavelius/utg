@@ -24,9 +24,6 @@
     <ClInclude Include="deck.h">
       <Filter>Поддержка</Filter>
     </ClInclude>
-    <ClInclude Include="script.h">
-      <Filter>Логика</Filter>
-    </ClInclude>
     <ClInclude Include="element.h">
       <Filter>Логика</Filter>
     </ClInclude>
@@ -117,6 +114,9 @@
       <Filter>Логика</Filter>
     </ClCompile>
     <ClCompile Include="decorationa.cpp">
+      <Filter>Логика</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
       <Filter>Логика</Filter>
     </ClCompile>
   </ItemGroup>

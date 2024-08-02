@@ -14,6 +14,10 @@ static mapi<32, 16, unsigned> terrain_state;
 static unsigned char	terrain_land;
 static point			terrain_hilite, terrain_caret;
 
+static const sprite* grest(const char* id) {
+	return gres(id, last_tileset->url);
+}
+
 static int get_terrain_mask(point v, unsigned char t) {
 	unsigned char result = 0;
 	static point all_0[] = {{-1, -1}, {-1, 0}, {0, 1}, {1, 0}, {1, -1}, {0, -1}};
@@ -78,6 +82,11 @@ static void set_current_state() {
 		terrain_state[terrain_hilite] |= (1<<terrain_land);
 }
 
+static void remove_current_state() {
+	if(terrain_hilite.y != -1)
+		terrain_state[terrain_hilite] &= ~(1 << terrain_land);
+}
+
 void tile_landscape(sprite* p, unsigned char param) {
 	if(!p || !p->count)
 		return;
@@ -103,8 +112,11 @@ static void paint_terrain() {
 						param = tile->border->indecies[n1];
 						if(n1 == 63 && tile->body && tile->body->maximum)
 							param = tile->body->indecies[terrain_random[terrain_caret] % tile->body->maximum];
-					} else
+					} else {
 						param = terrain_random[terrain_caret];
+						if(tile->body && tile->body->maximum)
+							param = tile->body->indecies[param % tile->body->maximum];
+					}
 					tile_landscape(tile->getres(), param);
 				}
 			} else {
@@ -120,11 +132,21 @@ static void paint_terrain() {
 				terrain_hilite = terrain_caret;
 				circle(frame_size);
 				hcursor = cursor::Hand;
-				if(hkey == MouseLeft && hpressed) {
-					if(use_states)
-						execute(set_current_state);
-					else
-						execute(set_current_tile);
+				switch(hkey) {
+				case MouseLeft:
+					if(hpressed) {
+						if(use_states)
+							execute(set_current_state);
+						else
+							execute(set_current_tile);
+					}
+					break;
+				case MouseRight:
+					if(hpressed) {
+						if(use_states)
+							execute(remove_current_state);
+					}
+					break;
 				}
 			}
 		}
@@ -158,16 +180,25 @@ static void cbsetuc() {
 	*p = (unsigned char)hparam;
 }
 
-static void paint_tile(tilei& e, int index) {
+static void paint_tile_background(tilei& e) {
 	auto p = e.getres();
 	if(!p)
 		return;
+	auto frame = last_tileset->avatar_tile;
+	if(e.avatar)
+		frame = e.avatar;
+	image(p, frame, 0);
+}
+
+static void paint_tile(tilei& e, int index) {
 	auto size = 32;
 	auto push_clip = clipping;
 	auto push_caret = caret;
 	setclip({caret.x, caret.y, caret.x + size, caret.y + size});
 	caret.x += size / 2; caret.y += size / 2;
-	image(p, last_tileset->avatar_tile, 0);
+	if(e.background)
+		paint_tile_background(*e.background);
+	paint_tile_background(e);
 	caret = push_caret;
 	clipping = push_clip;
 	rectpush push;
