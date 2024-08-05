@@ -73,6 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)utg</IncludePath>
+    <ExternalIncludePath />
+    <LibraryWPath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -145,6 +147,7 @@
     <ClInclude Include="ability.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="chooseable.h" />
+    <ClInclude Include="command.h" />
     <ClInclude Include="consumable.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="enumerator.h" />

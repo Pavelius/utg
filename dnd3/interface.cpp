@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "collection.h"
+#include "command.h"
 #include "crt.h"
 #include "creature.h"
 #include "draw.h"
@@ -14,13 +15,13 @@
 
 using namespace draw;
 
-static void* current_object;
-static collectiona opened_pages;
-static int column_width;
-static const char* value_format = "%1i";
+static collectiona	opened_pages;
+static int			column_width;
+static const char*	value_format = "%1i";
 
 void initialize_png();
 void circle_image(int xm, int ym, const sprite* e, int id, int r);
+void update_ui();
 
 int calculate(statable* p, variants source);
 
@@ -62,53 +63,6 @@ void creature::paint() const {
 		hcursor = cursor::Hand;
 }
 
-void monsteri::paint() const {
-	auto pa = gres(id, "art/avatars");
-	circle_image(caret.x, caret.y, pa, 0, 32);
-	//circle(32);
-}
-
-static void paint_selected_border() {
-	auto push_fore = fore;
-	fore = colors::button;
-	circle(34);
-	circle(33);
-	circle(32);
-	fore = push_fore;
-}
-
-static void paint_hilite_border() {
-	auto push_fore = fore;
-	fore = colors::active;
-	circle(32);
-	fore = push_fore;
-}
-
-static void paint_hilite_object(const void* pv) {
-	if(current_object == pv)
-		paint_selected_border();
-	if(ishilite(width / 2)) {
-		hilite_object = pv;
-		paint_hilite_border();
-		if(hkey == MouseLeft && hpressed)
-			execute(cbsetptr, (long)pv, 0, &current_object);
-	}
-}
-
-static void show_panel(int dx, int dy) {
-	rectpush push;
-	height = dy; width = dx;
-	caret.y += metrics::padding;
-	caret.x += metrics::padding;
-	caret.x += dx / 2;
-	caret.y += dy / 2;
-	for(auto& e : bsdata<monsteri>()) {
-		e.paint();
-		paint_hilite_object(&e);
-		caret.x += width + metrics::padding;
-	}
-}
-
 static bool menurd(const char* title) {
 	if(!title)
 		return false;
@@ -123,10 +77,7 @@ static bool menurd(const char* title) {
 	return result;
 }
 
-static void show_panels() {
-	rectpush push;
-	caret.x += metrics::border + metrics::padding;
-	caret.y += metrics::border + metrics::padding;
+static void show_widget_panels() {
 	for(auto& e : bsdata<paneli>()) {
 		auto w = e.getname();
 		if(button(w, 0, menurd, false)) {
@@ -136,6 +87,22 @@ static void show_panels() {
 				execute(cbsetptr, (long)&e, 0, &last_panel);
 		}
 	}
+}
+
+static void show_command_panels() {
+	for(auto& e : bsdata<commandi>()) {
+		auto w = e.getname();
+		if(button(w, 0, menurd, false))
+			execute(e.proc);
+	}
+}
+
+static void show_panels() {
+	rectpush push;
+	caret.x += metrics::border + metrics::padding;
+	caret.y += metrics::border + metrics::padding;
+	show_widget_panels();
+	show_command_panels();
 }
 
 static void set_opened() {
@@ -219,12 +186,10 @@ static void paint_block(const char* id, const variants& source) {
 		if(v.iskind<paneli>()) {
 			auto p = bsdata<paneli>::elements + v.value;
 			paint_block(p->id, p->elements);
-		}
-		else if(v.iskind<listi>()) {
+		} else if(v.iskind<listi>()) {
 			auto p = bsdata<listi>::elements + v.value;
 			paint_values(p->elements);
-		}
-		else if(v.iskind<abilityi>()) {
+		} else if(v.iskind<abilityi>()) {
 			auto p = bsdata<abilityi>::elements + v.value;
 			paint_block(p->id, p, player->abilities[v.value]);
 		} else if(v.iskind<consumablei>()) {
@@ -315,7 +280,6 @@ static void paint_widget(widget* object) {
 	height = push_height;
 }
 
-
 static bool is_opened(const listi* list) {
 	return opened_pages.find((void*)list) != -1;
 }
@@ -327,13 +291,7 @@ static void paint_panel_page(listi* list) {
 		paint_closed_panel(list);
 }
 
-static void paint_panel() {
-	if(!last_panel)
-		return;
-	rectpush push;
-	auto push_column = column_width;
-	caret.x += metrics::padding + metrics::border;
-	caret.y += metrics::padding + metrics::border;
+static void paint_menu_panel() {
 	height = last_panel->getheight();
 	if(last_panel->width == -1)
 		width = getwidth() - caret.x - metrics::padding - metrics::border;
@@ -349,6 +307,16 @@ static void paint_panel() {
 		} else if(v.iskind<widget>())
 			paint_widget(bsdata<widget>::elements + v.value);
 	}
+}
+
+static void paint_panel() {
+	if(!last_panel)
+		return;
+	rectpush push;
+	auto push_column = column_width;
+	caret.x += metrics::padding + metrics::border;
+	caret.y += metrics::padding + metrics::border;
+	paint_menu_panel();
 	column_width = push_column;
 }
 
@@ -367,42 +335,168 @@ static void background_proc() {
 	paint_panel();
 }
 
-static void add_current_object() {
-}
-
-static void put_selected_object() {
-	if(!current_object)
-		return;
-	if(mouseinobjects() && hkey == KeySpace)
-		execute(add_current_object);
-}
-
 static void finish_proc() {
-	put_selected_object();
 	input_camera();
 }
 
 static void object_drag_droping_proc() {
 	last_object->position = match_grid(caret + camera);
 	caret = last_object->position - camera;
-}
-
-static void monsters_toolbar() {
-	const int dx = 70;
-	caret.x += dx / 2;
-	caret.y += dx / 2;
-	for(auto& e : bsdata<monsteri>()) {
-		e.paint();
-		caret.x += 70 + metrics::padding;
+	if(bsdata<creature>::have(last_object->data)) {
+		auto p = (creature*)last_object->data;
+		p->index = s2i(last_object->position);
 	}
 }
 
-static void initialize_widgets() {
-	widget::add("MonstersToolbar", monsters_toolbar);
+static void paint_monster_avatar(monsteri* p) {
+	auto pa = gres(p->id, "art/avatars");
+	circle_image(caret.x, caret.y, pa, 0, 32);
+}
+
+static void paint_standart_circle() {
+	auto push_fore = fore;
+	fore = colors::button;
+	circle(32);
+	fore = push_fore;
+}
+
+static void paint_drop_position() {
+	auto push_fore = fore;
+	auto push_caret = caret;
+	fore = colors::border;
+	caret = match_grid(caret + camera);
+	circle(32);
+	caret = push_caret;
+	fore = push_fore;
+}
+
+static void paint_monster(void* object) {
+	auto p = (monsteri*)object;
+	// paint_drop_position();
+	paint_monster_avatar(p);
+	paint_standart_circle();
+}
+
+static point place_element(fncommand paint, void* object) {
+	rectpush push;
+	dragbegin(object);
+	while(ismodal()) {
+		strategy_background();
+		paint_objects();
+		caret = hmouse;
+		paint(object);
+		dragactive();
+		domodal();
+		switch(hkey) {
+		case MouseLeft:
+			if(hpressed)
+				buttonok();
+			break;
+		case KeyEscape:
+			buttoncancel();
+			break;
+		}
+	}
+	if(getresult())
+		return hmouse + camera;
+	return {-1, -1};
+}
+
+static void place_monster() {
+	auto choosed_monster = (monsteri*)hparam;
+	if(!choosed_monster)
+		return;
+	auto pt = place_element(paint_monster, choosed_monster);
+	if(pt.x < 0)
+		return;
+	auto push_player = player;
+	player->create(choosed_monster->id);
+	player->index = s2i(pt);
+	update_ui();
+	player = push_player;
+}
+
+static void paint_hilite_circle(const void* object, int size, fnevent choose_event) {
+	auto push_fore = fore;
+	if(ishilite(size)) {
+		fore = colors::active;
+		if(hkey == MouseLeft && hpressed)
+			fore = fore.mix(colors::button);
+		hcursor = cursor::Hand;
+		if(hkey == MouseLeft && !hpressed)
+			execute(choose_event, (long)object);
+	} else
+		fore = colors::button;
+	circle(size);
+	fore = push_fore;
+}
+
+static void monsters_toolbar() {
+	const int dx = 72;
+	caret.x += dx / 2;
+	caret.y += dx / 2;
+	for(auto& e : bsdata<monsteri>()) {
+		paint_monster_avatar(&e);
+		paint_hilite_circle(&e, 32, place_monster);
+		// paint_hilite_circle(&e, 32);
+		caret.x += dx + metrics::padding;
+	}
+}
+
+static void cancel_area() {
+	auto is_hilite = ishilite();
+	if(hkey == KeyEscape || (hkey == MouseLeft && hpressed && !is_hilite))
+		execute(buttoncancel);
+}
+
+static void choose_menu_window(const array& source, fncommand paint) {
+	const int dx = 72;
+	rectpush push;
+	auto maximum = source.getcount();
+	width = imin(maximum, size_t(10)) * dx + metrics::padding;
+	height = dx;
+	swindow(false);
+	cancel_area();
+	caret.x += dx / 2;
+	caret.y += dx / 2;
+	for(size_t i = 0; i < maximum; i++) {
+		auto p = source.ptr(i);
+		paint(source.ptr(i));
+		paint_hilite_circle(p, 33, buttonparam);
+		caret.x += dx;
+	}
+}
+
+static long choose_menu(const array& source, fncommand paint) {
+	rectpush push;
+	while(ismodal()) {
+		strategy_background();
+		paint_objects();
+		caret.x += metrics::padding + metrics::border;
+		caret.y += metrics::padding + metrics::border;
+		choose_menu_window(source, paint);
+		paintfinish();
+		domodal();
+	}
+	return getresult();
+}
+
+static void monsters_select_and_place() {
+	auto choosen = (monsteri*)choose_menu(bsdata<monsteri>::source, paint_monster);
+	if(!choosen)
+		return;
+	auto pt = place_element(paint_monster, choosen);
+	//point pt = {72*4, 72*4};
+	if(pt.x < 0)
+		return;
+	auto push_player = player;
+	player->create(choosen->id);
+	player->index = s2i(pt);
+	update_ui();
+	player = push_player;
 }
 
 void initialize_ui() {
-	initialize_widgets();
 	initialize_png();
 	pbackground = background_proc;
 	pfinish = finish_proc;
@@ -442,3 +536,12 @@ void update_ui() {
 	update_creatures();
 	wait_all();
 }
+
+BSDATA(widget) = {
+	{"MonstersToolbar", monsters_toolbar}
+};
+BSDATAF(widget)
+BSDATA(commandi) = {
+	{"Monsters", monsters_select_and_place}
+};
+BSDATAF(commandi)

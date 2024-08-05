@@ -90,6 +90,9 @@
     <ClInclude Include="roll.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

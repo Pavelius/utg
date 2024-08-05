@@ -2,7 +2,7 @@
 #include "crt.h"
 #include "widget.h"
 
-BSDATAC(widget, 128)
+// BSDATAC(widget, 128)
 BSMETA(widget) = {
 	BSREQ(id),
 	{}};

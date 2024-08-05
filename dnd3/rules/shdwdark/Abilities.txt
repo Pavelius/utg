@@ -121,5 +121,3 @@ MonsterCreating
 CharacterSheet width(220) column(100)
  elements PlayerAbilities PlayerCombat
 InitiativeCounter
-Monsters width(-1) height(70)
- elements MonstersToolbar

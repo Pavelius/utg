@@ -15,4 +15,6 @@ struct resable : mapable, avatarable {
 	void			paint() const;
 };
 
+point i2s(point v);
 point match_grid(point screen);
+point s2i(point v);

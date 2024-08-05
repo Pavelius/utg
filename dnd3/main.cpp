@@ -21,7 +21,7 @@ static void add_player(point index, bool interactive) {
 	answers::interactive = push;
 }
 
-static void add_creature(point index, const char* id) {
+void add_creature(point index, const char* id) {
 	player->create(id);
 	player->index = index;
 }
@@ -34,7 +34,7 @@ static void add_map(point index, const char* avatar) {
 static void test_creature() {
 	//add_player({12, 10}, true);
 	add_creature({12, 10}, "Skeleton");
-	add_map({0, 0}, "hills");
+	add_map({0, 0}, "forest_hh");
 	update_ui();
 }
 
