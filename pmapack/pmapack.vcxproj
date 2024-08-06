@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0f43f2a3-6176-4ece-9560-f741c47304b9}</ProjectGuid>
-    <RootNamespace>mg</RootNamespace>
+    <ProjectGuid>{30aa14cf-8bb0-43cf-9d09-25111e4484fe}</ProjectGuid>
+    <RootNamespace>pmapack</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,18 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)utg</IncludePath>
     <ExternalIncludePath />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,10 +81,9 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -143,65 +132,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="actable.cpp" />
-    <ClCompile Include="action.cpp" />
-    <ClCompile Include="animal.cpp" />
-    <ClCompile Include="conflict.cpp" />
-    <ClCompile Include="enviroment.cpp" />
-    <ClCompile Include="hero_roll.cpp" />
-    <ClCompile Include="information.cpp" />
-    <ClCompile Include="item.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="hero_generate.cpp" />
-    <ClCompile Include="natureable.cpp" />
-    <ClCompile Include="result.cpp" />
-    <ClCompile Include="scripting.cpp" />
-    <ClCompile Include="skill.cpp" />
-    <ClCompile Include="tag.cpp" />
-    <ClCompile Include="trait.cpp" />
-    <ClCompile Include="weather.cpp" />
-    <ClCompile Include="wise.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="actable.h" />
-    <ClInclude Include="action.h" />
-    <ClInclude Include="animal.h" />
-    <ClInclude Include="condition.h" />
-    <ClInclude Include="conflict.h" />
-    <ClInclude Include="hero.h" />
-    <ClInclude Include="item.h" />
-    <ClInclude Include="enviroment.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="natureable.h" />
-    <ClInclude Include="rang.h" />
-    <ClInclude Include="result.h" />
-    <ClInclude Include="roll.h" />
-    <ClInclude Include="skill.h" />
-    <ClInclude Include="tag.h" />
-    <ClInclude Include="trait.h" />
-    <ClInclude Include="weather.h" />
-    <ClInclude Include="wise.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
       <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="errors.txt" />
-    <Text Include="locale\ru\Mouseguards.txt" />
-    <Text Include="locale\ru\names\CityNames.txt" />
-    <Text Include="locale\ru\names\ItemNames.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
-    <Text Include="locale\ru\names\SkillNames.txt" />
-    <Text Include="locale\ru\names\TraitNames.txt" />
-    <Text Include="locale\ru\names\WiseNames.txt" />
-    <Text Include="rules\Animal.txt" />
-    <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Traits.txt" />
-    <Text Include="rules\Wise.txt" />
+    <ClCompile Include="image.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="metadata.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

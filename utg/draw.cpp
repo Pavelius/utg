@@ -980,6 +980,10 @@ void draw::dragbegin(const void* p, fnevent droped) {
 	dragmouse = hmouse;
 }
 
+void draw::dragcancel() {
+	drag_object = 0;
+}
+
 bool draw::dragactive() {
 	return drag_object != 0;
 }

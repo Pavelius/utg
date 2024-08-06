@@ -20,7 +20,6 @@ struct creature : resable, statable, consumable, enumerable, wearable {
 	static void	create(const monsteri* pm);
 	rolli		getdamage() const;
 	rolli		getdamage(wear_s n) const;
-	void		paint() const;
 	void		update();
 };
 extern creature* player;

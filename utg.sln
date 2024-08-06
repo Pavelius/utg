@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cosmic", "cosmic\cosmic.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mapedit", "mapedit\mapedit.vcxproj", "{B67FCFC0-B872-4BE9-96F6-B94097F122D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pmapack", "pmapack\pmapack.vcxproj", "{30AA14CF-8BB0-43CF-9D09-25111E4484FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -211,6 +213,14 @@ Global
 		{B67FCFC0-B872-4BE9-96F6-B94097F122D6}.Release|x64.Build.0 = Release|x64
 		{B67FCFC0-B872-4BE9-96F6-B94097F122D6}.Release|x86.ActiveCfg = Release|Win32
 		{B67FCFC0-B872-4BE9-96F6-B94097F122D6}.Release|x86.Build.0 = Release|Win32
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Debug|x64.ActiveCfg = Debug|x64
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Debug|x64.Build.0 = Debug|x64
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Debug|x86.ActiveCfg = Debug|Win32
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Debug|x86.Build.0 = Debug|Win32
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Release|x64.ActiveCfg = Release|x64
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Release|x64.Build.0 = Release|x64
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Release|x86.ActiveCfg = Release|Win32
+		{30AA14CF-8BB0-43CF-9D09-25111E4484FE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

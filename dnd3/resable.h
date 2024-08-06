@@ -12,7 +12,6 @@ struct mapable {
 };
 struct resable : mapable, avatarable {
 	short unsigned	flags;
-	void			paint() const;
 };
 
 point i2s(point v);

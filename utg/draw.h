@@ -183,6 +183,7 @@ void					create(int x, int y, int width, int height, unsigned flags, int bpp);
 bool					dragactive(const void* p);
 bool					dragactive();
 void					dragbegin(const void* p, fnevent droped = 0);
+void					dragcancel();
 void					dropshadow();
 void					execute(fnevent proc, long value = 0, long value2 = 0, const void* object = 0);
 void					fhexagon();

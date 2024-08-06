@@ -15,6 +15,7 @@
 
 using namespace draw;
 
+static bool			disable_map;
 static collectiona	opened_pages;
 static int			column_width;
 static const char*	value_format = "%1i";
@@ -53,14 +54,6 @@ static void copy(point& p1, const point& p2) {
 
 void roomi::paint() const {
 	image(gres(avatar, "maps"), 0, flags);
-}
-
-void creature::paint() const {
-	auto pa = gres(avatar, "art/avatars");
-	circle_image(caret.x, caret.y, pa, 0, 32);
-	circle(32);
-	if(ishilite(32, last_object))
-		hcursor = cursor::Hand;
 }
 
 static bool menurd(const char* title) {
@@ -345,6 +338,7 @@ static void object_drag_droping_proc() {
 	if(bsdata<creature>::have(last_object->data)) {
 		auto p = (creature*)last_object->data;
 		p->index = s2i(last_object->position);
+		player = p;
 	}
 }
 
@@ -355,7 +349,7 @@ static void paint_monster_avatar(monsteri* p) {
 
 static void paint_standart_circle() {
 	auto push_fore = fore;
-	fore = colors::button;
+	fore = colors::border;
 	circle(32);
 	fore = push_fore;
 }
@@ -377,7 +371,26 @@ static void paint_monster(void* object) {
 	paint_standart_circle();
 }
 
-static point place_element(fncommand paint, void* object) {
+static void paint_player_marker() {
+	auto push_fore = fore;
+	fore = colors::active;
+	circle(32);
+	circle(31);
+	fore = push_fore;
+}
+
+static void paint_creature() {
+	auto p = (creature*)last_object->data;
+	auto pa = gres(p->avatar, "art/avatars");
+	circle_image(caret.x, caret.y, pa, 0, 32);
+	paint_standart_circle();
+	if(player == p)
+		paint_player_marker();
+	if(ishilite(32, last_object))
+		hcursor = cursor::Hand;
+}
+
+static point drag_drop_element(fncommand paint, void* object) {
 	rectpush push;
 	dragbegin(object);
 	while(ismodal()) {
@@ -385,35 +398,25 @@ static point place_element(fncommand paint, void* object) {
 		paint_objects();
 		caret = hmouse;
 		paint(object);
-		dragactive();
-		domodal();
 		switch(hkey) {
 		case MouseLeft:
 			if(hpressed)
-				buttonok();
+				execute(buttonok);
+			break;
+		case MouseRight:
+			if(hpressed)
+				execute(buttoncancel);
 			break;
 		case KeyEscape:
-			buttoncancel();
+			execute(buttoncancel);
 			break;
 		}
+		domodal();
 	}
+	dragcancel();
 	if(getresult())
 		return hmouse + camera;
 	return {-1, -1};
-}
-
-static void place_monster() {
-	auto choosed_monster = (monsteri*)hparam;
-	if(!choosed_monster)
-		return;
-	auto pt = place_element(paint_monster, choosed_monster);
-	if(pt.x < 0)
-		return;
-	auto push_player = player;
-	player->create(choosed_monster->id);
-	player->index = s2i(pt);
-	update_ui();
-	player = push_player;
 }
 
 static void paint_hilite_circle(const void* object, int size, fnevent choose_event) {
@@ -421,26 +424,14 @@ static void paint_hilite_circle(const void* object, int size, fnevent choose_eve
 	if(ishilite(size)) {
 		fore = colors::active;
 		if(hkey == MouseLeft && hpressed)
-			fore = fore.mix(colors::button);
+			fore = fore.mix(colors::border);
 		hcursor = cursor::Hand;
 		if(hkey == MouseLeft && !hpressed)
 			execute(choose_event, (long)object);
 	} else
-		fore = colors::button;
+		fore = colors::border;
 	circle(size);
 	fore = push_fore;
-}
-
-static void monsters_toolbar() {
-	const int dx = 72;
-	caret.x += dx / 2;
-	caret.y += dx / 2;
-	for(auto& e : bsdata<monsteri>()) {
-		paint_monster_avatar(&e);
-		paint_hilite_circle(&e, 32, place_monster);
-		// paint_hilite_circle(&e, 32);
-		caret.x += dx + metrics::padding;
-	}
 }
 
 static void cancel_area() {
@@ -462,7 +453,7 @@ static void choose_menu_window(const array& source, fncommand paint) {
 	for(size_t i = 0; i < maximum; i++) {
 		auto p = source.ptr(i);
 		paint(source.ptr(i));
-		paint_hilite_circle(p, 33, buttonparam);
+		paint_hilite_circle(p, 32, buttonparam);
 		caret.x += dx;
 	}
 }
@@ -485,7 +476,7 @@ static void monsters_select_and_place() {
 	auto choosen = (monsteri*)choose_menu(bsdata<monsteri>::source, paint_monster);
 	if(!choosen)
 		return;
-	auto pt = place_element(paint_monster, choosen);
+	auto pt = drag_drop_element(paint_monster, choosen);
 	//point pt = {72*4, 72*4};
 	if(pt.x < 0)
 		return;
@@ -509,12 +500,15 @@ static draworder* modify(object* po) {
 	return po->addorder(1000);
 }
 
-static void update_object(void* object, point pt, fnevent paint, int priority) {
+static void update_object(void* object, point pt, fnevent paint, int priority, bool appearing = true) {
 	auto pd = findobject(object);
 	if(!pd) {
 		pd = addobject(pt, object, paint, 0, priority, 0);
-		auto po = modify(pd);
-		po->alpha = 255;
+		if(appearing) {
+			auto po = modify(pd);
+			po->alpha = 255;
+		} else
+			pd->alpha = 255;
 	} else if(pt != pd->position) {
 		auto po = modify(pd);
 		po->position = pt;
@@ -528,7 +522,7 @@ static void update_rooms() {
 
 static void update_creatures() {
 	for(auto& e : bsdata<creature>())
-		update_object(&e, e.getscreenc(), ftpaint<creature>, 30);
+		update_object(&e, e.getscreenc(), paint_creature, 30, false);
 }
 
 void update_ui() {
@@ -538,7 +532,7 @@ void update_ui() {
 }
 
 BSDATA(widget) = {
-	{"MonstersToolbar", monsters_toolbar}
+	{"EmphtyWidget"}
 };
 BSDATAF(widget)
 BSDATA(commandi) = {

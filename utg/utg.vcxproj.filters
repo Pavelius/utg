@@ -300,6 +300,12 @@
     <ClCompile Include="draw_marker.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="widget_def.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="win_console.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
