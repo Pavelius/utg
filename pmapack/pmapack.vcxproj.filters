@@ -4,6 +4,9 @@
     <Filter Include="logic">
       <UniqueIdentifier>{1e189114-415d-4c5c-9076-4cffcb06879b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{585452fe-bf68-488c-a33a-6ceb431757d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -15,10 +18,24 @@
     <ClCompile Include="metadata.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="calculator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="calculator.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="example.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="code.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

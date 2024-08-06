@@ -5,14 +5,18 @@
 
 BSDATAC(imagei, 4096)
 BSDATAC(imagea, 256)
+NOBSDATA(point)
 
 BSMETA(imagei) = {
 	BSREQ(id),
 	BSREQ(name), BSREQ(url), BSREQ(suffix), BSREQ(prefix),
-	BSREQ(x), BSREQ(y), BSREQ(sx), BSREQ(sy),
+	BSREQ(position), BSREQ(offset),
 	{}};
 BSMETA(imagea) = {
 	BSREQ(id),
+	{}};
+BSMETA(point) = {
+	BSREQ(x), BSREQ(y),
 	{}};
 
 BSDATA(varianti) = {

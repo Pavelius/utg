@@ -1,3 +1,4 @@
+#include "calculator.h"
 #include "draw.h"
 #include "image.h"
 #include "stringbuilder.h"
@@ -21,8 +22,16 @@ static void println(const char* format, ...) {
 	printcnf("\r\n");
 }
 
+static void print_symbols() {
+	for(auto& e : bsdata<symboli>())
+		println(string_name(e.ids));
+}
+
 int main() {
 	println("Size of imagei = %1i", sizeof(imagei));
 	println("Size of imagea = %1i", sizeof(imagea));
+	calculator_initialize();
+	calculator_file_parse("code.txt");
+	print_symbols();
 	return 0;
 }

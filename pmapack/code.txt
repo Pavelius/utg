@@ -1,0 +1,6 @@
+// Some comments
+
+int x, y;
+int z = 10;
+
+int main();

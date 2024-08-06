@@ -1,13 +1,14 @@
 #pragma once
 #include "crt.h"
 #include "nameable.h"
+#include "point.h"
 
 struct imagei : nameable {
 	const char*		name;
 	const char*		url;
 	const char*		suffix;
 	const char*		prefix;
-	int				x, y, sx, sy;
+	point			position, offset;
 	void*			object;
 };
 

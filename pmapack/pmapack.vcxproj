@@ -137,12 +137,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="calculator.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="calculator.h" />
     <ClInclude Include="image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="code.txt" />
+    <Text Include="example.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,14 @@
+#Terrain center(-1 -1)
+
+CreateSprite elements(32)
+AddFrame position(10 10)
+AddFrame position(20 10)
+AddFrame position(30 10)
+AddFrame position(40 10)
+SaveSprite
+
+#Main url("D:\resources")
+
+Terrain name(arid)
+Terrain name(arctic)
+Terrain name(forest)
