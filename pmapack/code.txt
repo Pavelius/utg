@@ -3,4 +3,7 @@
 int x, y;
 int z = 10;
 
-int main();
+int main() {
+	if(x < 10)
+		return;
+}

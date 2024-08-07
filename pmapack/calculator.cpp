@@ -14,6 +14,7 @@ static adat<int>		operations;
 static adat<int>		scopes;
 
 static void parse_expression();
+static int expression();
 
 void symbol_code_set(int sid, int value) {
 	if(sid == -1)
@@ -108,6 +109,14 @@ static void skip(const char* symbol) {
 		error("Expected token `%1`", symbol);
 }
 
+static bool isnumber() {
+	return isnum(*p);
+}
+
+static bool isidentifier() {
+	return ischa(*p);
+}
+
 static int findsym(int ids, int parent, int scope) {
 	for(auto& e : bsdata<symboli>()) {
 		if(e.ids == ids && e.parent == parent && e.scope == scope)
@@ -136,12 +145,12 @@ int ast_add(operation_s op, int left, int right) {
 	return ids;
 }
 
-static int addop(operation_s op, int value) {
-	return ast_add(op, value, -1);
+static int ast_add(operation_s op, int left) {
+	return ast_add(op, left, -1);
 }
 
 static void pushop(operation_s op, int value) {
-	operations.add(addop(op, value));
+	operations.add(ast_add(op, value));
 }
 
 static void parse_number() {
@@ -162,14 +171,23 @@ static void literal() {
 
 static void parse_identifier() {
 	stringbuilder sb(last_string); sb.clear();
-	if(!ischa(*p))
+	if(!isidentifier())
 		error("Expected identifier");
 	while(*p && (ischa(*p) || isnum(*p) || *p == '_'))
 		sb.add(*p++);
 	skipws();
 }
 
-static int get_scope() {
+static void parse_url_identifier() {
+	stringbuilder sb(last_string); sb.clear();
+	if(!isidentifier())
+		error("Expected identifier");
+	while(*p && (ischa(*p) || isnum(*p) || *p == '_' || *p=='.'))
+		sb.add(*p++);
+	skipws();
+}
+
+static int getscope() {
 	if(scopes)
 		return scopes[scopes.count - 1];
 	return 0;
@@ -180,10 +198,11 @@ static int create_symbol(int id, int parent, int type, unsigned flags, int scope
 	p->ids = id;
 	p->parent = parent;
 	if(scope == -1)
-		scope = get_scope();
+		scope = getscope();
 	p->scope = scope;
 	p->type = i32;
 	p->flags = flags;
+	p->value = -1;
 	return p - bsdata<symboli>::begin();
 }
 
@@ -199,13 +218,17 @@ static void parse_flags(unsigned& flags) {
 	}
 }
 
+static int getop(int top) {
+	return operations.data[operations.count - top];
+}
+
 static void unary_operation(operation_s v) {
 	if(operations.count < 1) {
 		error("Unary operations stack corupt");
 		return;
 	}
-	auto p1 = operations.data[operations.count - 1];
-	operations.data[operations.count - 1] = ast_add(v, p1, -1);
+	auto p1 = getop(-1);
+	operations.data[operations.count - 1] = ast_add(v, p1);
 }
 
 static void binary_operation(operation_s v) {
@@ -213,13 +236,26 @@ static void binary_operation(operation_s v) {
 		error("Binary operations stack corupt");
 		return;
 	}
-	auto p1 = operations.data[operations.count - 1];
-	auto p2 = operations.data[operations.count - 2];
+	auto p1 = getop(-1);
+	auto p2 = getop(-2);
 	operations.data[operations.count - 2] = ast_add(v, p1, p2);
 	operations.count--;
 }
 
 static void postfix() {
+	while(*p) {
+		if(match("(")) {
+			skip(")");
+		} else if(match("[")) {
+			expression();
+			skip("]");
+		} else if(match("++")) {
+
+		} else if(match("--")) {
+
+		} else
+			break;
+	}
 }
 
 static void unary() {
@@ -273,7 +309,7 @@ static void unary() {
 		pushop(Number, last_number);
 		break;
 	default:
-		if(ischa(*p)) {
+		if(isidentifier()) {
 			unsigned flags;
 			parse_flags(flags);
 			parse_identifier();
@@ -436,9 +472,62 @@ static int expression() {
 	return operations.data[operations.count--];
 }
 
-static void parse_enum() {
-	while(word("enum")) {
+static int getmoduleposition() {
+	return p - p_start;
+}
+
+static void parse_statement() {
+	if(match("{")) {
+		scopes.add(getmoduleposition());
+		parse_statement();
+		scopes.count--;
+		skip("}");
+	} else if(match(";")) {
+		// Empthy statement
+	} else if(match("if")) {
+		skip("(");
+		expression();
+		skip(")");
+		parse_statement();
+	} else if(match("swith")) {
+		skip("(");
+		expression();
+		skip(")");
+		parse_statement();
+	} else if(match("while")) {
+		skip("(");
+		expression();
+		skip(")");
+		parse_statement();
+	} else if(match("for")) {
+		skip("(");
+		expression();
+		skip(";");
+		expression();
+		skip(";");
+		expression();
+		skip(")");
+		parse_statement();
+	} else if(match("return")) {
+		expression();
+		skip(";");
+	} else {
+		// TODO: assigment
 	}
+}
+
+static void parse_enum() {
+	if(!word("enum"))
+		return;
+	auto index = 0;
+	skip("{");
+	while(*p) {
+		parse_identifier();
+		if(!match(","))
+			break;
+	}
+	skip("}");
+	skip(";");
 }
 
 static int match_type() {
@@ -461,17 +550,20 @@ static void parse_declaration() {
 		p = push_p;
 		return;
 	}
-	if(!ischa(*p)) {
+	if(!isidentifier()) {
 		p = push_p;
 		return;
 	}
-	while(ischa(*p)) {
+	while(isidentifier()) {
 		parse_identifier();
 		auto id = strings.add(last_string);
 		if(match("(")) {
 			auto sid = create_symbol(id, This, type, flags, -1);
+			// TODO: parameter list
 			skip(")");
-			skip(";");
+			if(match(";"))
+				break; // TODO: forward declaration
+			parse_statement();
 			break;
 		} else {
 			auto sid = create_symbol(id, This, type, flags, -1);
@@ -486,20 +578,26 @@ static void parse_declaration() {
 }
 
 static void parse_import() {
-	while(word("import")) {
-	}
+	if(!word("import"))
+		return;
+	parse_url_identifier();
+	skip(";");
 }
 
 static void parse_module() {
-	parse_import();
 	while(*p) {
 		auto push_p = p;
+		parse_import();
+		if(p != push_p)
+			continue;
 		parse_enum();
+		if(p != push_p)
+			continue;
 		parse_declaration();
-		if(p == push_p) {
-			error("Expected declaration");
-			break;
-		}
+		if(p != push_p)
+			continue;
+		error("Expected declaration");
+		break;
 	}
 }
 
@@ -539,7 +637,7 @@ void calculator_initialize() {
 void calculator_file_parse(const char* url) {
 	auto p1 = loadt(url);
 	if(!p1) {
-		error("Can't find file");
+		error("Can't find file `%1`", url);
 		return;
 	}
 	auto push_p = p;
