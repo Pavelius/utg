@@ -1,10 +1,23 @@
-// Some comments
+import crt
+import geo.rect as rect
 
-int x, y;
-int z = 10;
+enum {OK, CANCEL};
+
+static int x, y;
+static int z = 10;
+
+int fnfive(int a) {
+	return a * 2 + 1;
+}
+
+int zero_hive(int a) {
+	return a * 3;
+}
 
 int main() {
-	if(x < 10)
+	int b = fnfive(zero_hive(4)+4);
+	int c = 10;
+	if(x+b < 10)
 		return;
 	x = 12;
 }

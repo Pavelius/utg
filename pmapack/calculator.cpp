@@ -5,24 +5,37 @@
 BSDATAD(asti)
 BSDATAD(symboli)
 
-static int				last_type;
-static unsigned			last_flags;
-static long				last_number;
-static char				last_string[4096];
-static const char*		p;
-static const char*		p_start;
-static stringa			strings;
-static adat<int>		operations;
-static adat<int>		scopes;
+calculator_fnprint	calculator_error_proc;
+static int			last_type;
+static unsigned		last_flags;
+static long			last_number;
+static char			last_string[4096];
+static const char*	p;
+static const char*	p_start;
+static stringa		strings;
+static adat<int>	operations;
+static adat<int>	scopes;
 
 static void parse_expression();
 static int expression();
 
-void symbol_code_set(int sid, int value) {
+static void error(const char* format, ...) {
+	if(calculator_error_proc)
+		calculator_error_proc(format, xva_start(format));
+}
+
+void symbol_code(int sid, int value) {
 	if(sid == -1)
 		return;
 	auto& e = bsdata<symboli>::get(sid);
 	e.value = value;
+}
+
+void symbol_scope(int sid, int value) {
+	if(sid == -1)
+		return;
+	auto& e = bsdata<symboli>::get(sid);
+	e.scope = value;
 }
 
 const char* string_name(int sid) {
@@ -36,9 +49,6 @@ const char* symbol_name(int sid) {
 		return "";
 	auto& e = bsdata<symboli>::get(sid);
 	return strings.get(e.ids);
-}
-
-static void error(const char* format, ...) {
 }
 
 static void skipws() {
@@ -119,9 +129,9 @@ static bool isidentifier() {
 	return ischa(*p);
 }
 
-static int findsym(int ids, int parent, int scope) {
+int findsym(int ids, int scope) {
 	for(auto& e : bsdata<symboli>()) {
-		if(e.ids == ids && e.parent == parent && e.scope == scope)
+		if(e.ids == ids && e.scope == scope)
 			return &e - bsdata<symboli>::begin();
 	}
 	return -1;
@@ -147,12 +157,31 @@ int ast_add(operation_s op, int left, int right) {
 	return ids;
 }
 
+static int getscope() {
+	if(scopes)
+		return scopes[scopes.count - 1];
+	return 0;
+}
+
 static int ast_add(operation_s op, int left) {
 	return ast_add(op, left, -1);
 }
 
+static int getop(int top) {
+	return operations.data[operations.count - top];
+}
+
 static void pushop(operation_s op, int value) {
 	operations.add(ast_add(op, value));
+}
+
+static int popop() {
+	auto result = -1;
+	if(operations.count > 0) {
+		result = getop(-1);
+		operations.count--;
+	}
+	return result;
 }
 
 static void parse_number() {
@@ -192,6 +221,36 @@ static void parse_flags() {
 	}
 }
 
+static int create_symbol(int id, int type, unsigned flags, int scope) {
+	auto p = bsdata<symboli>::add();
+	p->ids = id;
+	if(scope == -1)
+		scope = getscope();
+	p->scope = scope;
+	p->type = i32;
+	p->flags = flags;
+	p->value = -1;
+	return p - bsdata<symboli>::begin();
+}
+
+static int create_symbol(int ids, int type, unsigned flags, int scope, const char* error_format) {
+	if(scope == -1)
+		scope = getscope();
+	auto sid = findsym(ids, scope);
+	if(sid != -1) {
+		if(error_format)
+			error(error_format, string_name(ids));
+	} else
+		sid = create_symbol(ids, type, flags, scope);
+	return sid;
+}
+
+static int reference(int type) {
+	if(type == -1)
+		return -1;
+	return create_symbol(0, type, 0, PointerScope);
+}
+
 static void parse_type() {
 	last_type = -1;
 	last_flags = 0;
@@ -201,16 +260,17 @@ static void parse_type() {
 	parse_flags();
 	parse_identifier();
 	auto ids = strings.add(last_string);
-	last_type = findsym(ids, Modules, 0);
+	last_type = findsym(ids, TypeScope);
 	if(last_type == -1) {
 		p = p_push;
 		return;
 	}
+	while(match("*"))
+		last_type = reference(last_type);
 }
 
 static bool parse_member_declaration() {
 	auto push_p = p;
-	parse_flags();
 	parse_type();
 	if(last_type==-1) {
 		p = push_p;
@@ -230,29 +290,6 @@ static void parse_url_identifier() {
 	while(*p && (ischa(*p) || isnum(*p) || *p == '_' || *p=='.'))
 		sb.add(*p++);
 	skipws();
-}
-
-static int getscope() {
-	if(scopes)
-		return scopes[scopes.count - 1];
-	return 0;
-}
-
-static int create_symbol(int id, int parent, int type, unsigned flags, int scope = -1) {
-	auto p = bsdata<symboli>::add();
-	p->ids = id;
-	p->parent = parent;
-	if(scope == -1)
-		scope = getscope();
-	p->scope = scope;
-	p->type = i32;
-	p->flags = flags;
-	p->value = -1;
-	return p - bsdata<symboli>::begin();
-}
-
-static int getop(int top) {
-	return operations.data[operations.count - top];
 }
 
 static void unary_operation(operation_s v) {
@@ -275,9 +312,30 @@ static void binary_operation(operation_s v) {
 	operations.count--;
 }
 
+static void add_list(int& result, int value) {
+	if(result == -1)
+		result = value;
+	else
+		result = ast_add(List, result, value);
+}
+
+static int parameter_list() {
+	auto result = -1;
+	while(true) {
+		add_list(result, expression());
+		if(match(","))
+			continue;
+		break;
+	}
+	return result;
+}
+
 static void postfix() {
 	while(*p) {
 		if(match("(")) {
+			auto params = -1;
+			if(*p != ')')
+				params = parameter_list();
 			skip(")");
 		} else if(match("[")) {
 			expression();
@@ -294,11 +352,11 @@ static void postfix() {
 static int find_variable(int ids) {
 	auto sid = -1;
 	for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
-		sid = findsym(ids, This, scopes.data[i]);
+		sid = findsym(ids, scopes.data[i]);
 	if(sid == -1)
-		sid = findsym(ids, This, 0);
+		sid = findsym(ids, 0);
 	if(sid == -1)
-		sid = findsym(ids, Modules, 0);
+		sid = findsym(ids, TypeScope);
 	return sid;
 }
 
@@ -342,8 +400,8 @@ static void unary() {
 		skipws(1);
 		parse_type();
 		if(last_type != -1 && *p==')') {
-			skip(")");
 			auto type = last_type;
+			skipws(1);
 			unary();
 			pushop(Cast, type);
 		} else {
@@ -365,8 +423,10 @@ static void unary() {
 			parse_identifier();
 			auto ids = strings.add(last_string);
 			auto sid = find_variable(ids);
-			if(sid == -1)
-				sid = create_symbol(ids, This, i32, 0); // TODO: error if exist
+			if(sid == -1) {
+				error("Symbol `%1` not exist", string_name(ids));
+				sid = create_symbol(ids, i32, 0, -1);
+			}
 			pushop(Identifier, sid);
 		}
 		break;
@@ -508,11 +568,11 @@ static void parse_expression() {
 
 static int expression() {
 	parse_expression();
-	if(operations.count < 1) {
-		error("Expression stack corruption");
-		return -1;
-	}
-	return operations.data[operations.count--];
+	return popop();
+}
+
+static int getnumber(int ast) {
+	return 0;
 }
 
 static int getmoduleposition() {
@@ -528,16 +588,24 @@ static void parse_assigment() {
 	}
 }
 
+static void push_visibility_scope() {
+	scopes.add(getmoduleposition());
+}
+
+static void pop_visibility_scope() {
+	scopes.count--;
+}
+
 static void parse_statement() {
 	if(match("{")) {
-		scopes.add(getmoduleposition());
+		push_visibility_scope();
 		auto push_p = p;
 		while(*p && *p != '}') {
 			parse_statement();
 			if(p == push_p)
 				break;
 		}
-		scopes.count--;
+		pop_visibility_scope();
 		skip("}");
 	} else if(match(";")) {
 		// Empthy statement
@@ -575,6 +643,15 @@ static void parse_statement() {
 		skip(";");
 	} else if(match("continue")) {
 		skip(";");
+	} else if(parse_member_declaration()) {
+		auto type = last_type;
+		auto flags = last_flags;
+		parse_identifier();
+		auto ids = strings.add(last_string);
+		auto sid = create_symbol(ids, type, flags, -1);
+		if(match("="))
+			symbol_code(sid, expression());
+		skip(";");
 	} else {
 		parse_assigment();
 		skip(";");
@@ -588,6 +665,8 @@ static void parse_enum() {
 	skip("{");
 	while(*p) {
 		parse_identifier();
+		if(match("="))
+			index = getnumber(expression());
 		if(!match(","))
 			break;
 	}
@@ -595,10 +674,21 @@ static void parse_enum() {
 	skip(";");
 }
 
-static int match_type() {
-	auto id = strings.add(last_string);
-	auto sid = findsym(id, Modules, 0);
-	return sid;
+static void parse_parameters() {
+	auto scope = getscope();
+	while(*p && *p != ')') {
+		auto ast = -1;
+		parse_type();
+		auto type = last_type;
+		auto flags = last_flags;
+		parse_identifier();
+		if(match("="))
+			ast = expression();
+		auto ids = strings.add(last_string);
+		auto sid = create_symbol(ids, type, flags, scope, "Parameter `%1` is already defined");
+		symbol_code(sid, ast);
+	}
+	skip(")");
 }
 
 static void parse_declaration() {
@@ -609,18 +699,17 @@ static void parse_declaration() {
 	while(isidentifier()) {
 		parse_identifier();
 		auto ids = strings.add(last_string);
+		auto sid = create_symbol(ids, type, flags, -1, "Module member `%1` is already defined");
 		if(match("(")) {
-			auto sid = create_symbol(ids, This, type, flags, -1);
-			// TODO: parameter list
-			skip(")");
-			if(match(";"))
-				break; // TODO: forward declaration
-			parse_statement();
+			push_visibility_scope();
+			parse_parameters();
+			if(!match(";"))
+				parse_statement();
+			pop_visibility_scope();
 			break;
 		} else {
-			auto sid = create_symbol(ids, This, type, flags, -1);
 			if(match("="))
-				symbol_code_set(sid, expression());
+				symbol_code(sid, expression());
 			if(match(","))
 				continue;
 			skip(";");
@@ -633,7 +722,12 @@ static void parse_import() {
 	if(!word("import"))
 		return;
 	parse_url_identifier();
-	skip(";");
+	auto ids = strings.add(last_string);
+	auto sid = create_symbol(ids, 0, 0, TypeScope, "Type `%1` already imported");
+	if(match("as")) {
+		parse_identifier();
+		auto als = strings.add(last_string);
+	}
 }
 
 static void parse_module() {
@@ -665,16 +759,13 @@ void calculator_parse(const char* code) {
 
 static void add_symbol(symbol_s v, const char* id) {
 	auto ids = strings.add(id);
-	if(findsym(ids, This, 0) != -1)
+	if(findsym(ids, TypeScope) != -1)
 		return;
-	create_symbol(strings.add(id), Modules, v, 0);
+	create_symbol(strings.add(id), v, FG(Predefined), TypeScope);
 }
 
-void calculator_initialize() {
+static void calculator_initialize() {
 	add_symbol(This, "this");
-	add_symbol(Systems, ".systems");
-	add_symbol(Modules, ".modules");
-	add_symbol(Pointers, ".pointers");
 	add_symbol(Void, "void");
 	add_symbol(i8, "char");
 	add_symbol(u8, "uchar");
@@ -692,6 +783,7 @@ void calculator_file_parse(const char* url) {
 		error("Can't find file `%1`", url);
 		return;
 	}
+	calculator_initialize();
 	auto push_p = p;
 	auto push_p_start = p_start;
 	p = p1; p_start = p1;

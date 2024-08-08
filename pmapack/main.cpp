@@ -23,14 +23,23 @@ static void println(const char* format, ...) {
 }
 
 static void print_symbols() {
-	for(auto& e : bsdata<symboli>())
-		println(string_name(e.ids));
+	for(auto& e : bsdata<symboli>()) {
+		if(!e.ispredefined())
+			println(string_name(e.ids));
+	}
+}
+
+static void errorv(const char* format, const char* format_param) {
+	printcnf("Error: "); printv(format, format_param);
+	printcnf("\r\n");
+}
+
+static void initialize_parser() {
+	calculator_error_proc = errorv;
 }
 
 int main() {
-	println("Size of imagei = %1i", sizeof(imagei));
-	println("Size of imagea = %1i", sizeof(imagea));
-	calculator_initialize();
+	initialize_parser();
 	calculator_file_parse("code.txt");
 	print_symbols();
 	return 0;
