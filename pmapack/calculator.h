@@ -8,7 +8,7 @@ enum operation_s {
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
 	Or, And,
 	BooleanChoose, LeftIfTrue,
-	Increment, Decrement, AdressOf, Dereference, Scope,
+	Increment, Decrement, AdressOf, Dereference, Scope, Cast,
 	Assign, If, While, Return, Switch, Case, Break, Default,
 	Number, Text, Identifier, Statement
 };

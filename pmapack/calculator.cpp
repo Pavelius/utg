@@ -5,6 +5,8 @@
 BSDATAD(asti)
 BSDATAD(symboli)
 
+static int				last_type;
+static unsigned			last_flags;
 static long				last_number;
 static char				last_string[4096];
 static const char*		p;
@@ -178,6 +180,49 @@ static void parse_identifier() {
 	skipws();
 }
 
+static void parse_flags() {
+	last_flags = 0;
+	while(*p) {
+		if(word("static"))
+			last_flags |= FG(Static);
+		else if(word("public"))
+			last_flags |= FG(Public);
+		else
+			break;
+	}
+}
+
+static void parse_type() {
+	last_type = -1;
+	last_flags = 0;
+	if(!isidentifier())
+		return;
+	auto p_push = p;
+	parse_flags();
+	parse_identifier();
+	auto ids = strings.add(last_string);
+	last_type = findsym(ids, Modules, 0);
+	if(last_type == -1) {
+		p = p_push;
+		return;
+	}
+}
+
+static bool parse_member_declaration() {
+	auto push_p = p;
+	parse_flags();
+	parse_type();
+	if(last_type==-1) {
+		p = push_p;
+		return false;
+	}
+	if(!isidentifier()) {
+		p = push_p;
+		return false;
+	}
+	return true;
+}
+
 static void parse_url_identifier() {
 	stringbuilder sb(last_string); sb.clear();
 	if(!isidentifier())
@@ -204,18 +249,6 @@ static int create_symbol(int id, int parent, int type, unsigned flags, int scope
 	p->flags = flags;
 	p->value = -1;
 	return p - bsdata<symboli>::begin();
-}
-
-static void parse_flags(unsigned& flags) {
-	flags = 0;
-	while(*p) {
-		if(word("static"))
-			flags |= FG(Static);
-		else if(word("public"))
-			flags |= FG(Public);
-		else
-			break;
-	}
 }
 
 static int getop(int top) {
@@ -258,6 +291,17 @@ static void postfix() {
 	}
 }
 
+static int find_variable(int ids) {
+	auto sid = -1;
+	for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
+		sid = findsym(ids, This, scopes.data[i]);
+	if(sid == -1)
+		sid = findsym(ids, This, 0);
+	if(sid == -1)
+		sid = findsym(ids, Modules, 0);
+	return sid;
+}
+
 static void unary() {
 	switch(p[0]) {
 	case '-':
@@ -296,8 +340,16 @@ static void unary() {
 		break;
 	case '(':
 		skipws(1);
-		parse_expression();
-		skip(")");
+		parse_type();
+		if(last_type != -1 && *p==')') {
+			skip(")");
+			auto type = last_type;
+			unary();
+			pushop(Cast, type);
+		} else {
+			parse_expression();
+			skip(")");
+		}
 		break;
 	case '\"':
 		literal();
@@ -310,22 +362,13 @@ static void unary() {
 		break;
 	default:
 		if(isidentifier()) {
-			unsigned flags;
-			parse_flags(flags);
 			parse_identifier();
-			auto id = strings.add(last_string);
-			auto sid = -1;
-			for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
-				sid = findsym(id, This, scopes.data[i]);
+			auto ids = strings.add(last_string);
+			auto sid = find_variable(ids);
 			if(sid == -1)
-				sid = findsym(id, This, 0);
-			if(sid == -1)
-				sid = findsym(id, Modules, 0);
-			if(sid == -1)
-				sid = create_symbol(id, This, i32, flags);
+				sid = create_symbol(ids, This, i32, 0); // TODO: error if exist
 			pushop(Identifier, sid);
-		} else
-			error("Unknown symbol");
+		}
 		break;
 	}
 	postfix();
@@ -476,10 +519,24 @@ static int getmoduleposition() {
 	return p - p_start;
 }
 
+static void parse_assigment() {
+	unary();
+	while(p[0] == '=') {
+		skipws(1);
+		parse_expression();
+		binary_operation(Assign);
+	}
+}
+
 static void parse_statement() {
 	if(match("{")) {
 		scopes.add(getmoduleposition());
-		parse_statement();
+		auto push_p = p;
+		while(*p && *p != '}') {
+			parse_statement();
+			if(p == push_p)
+				break;
+		}
 		scopes.count--;
 		skip("}");
 	} else if(match(";")) {
@@ -511,8 +568,16 @@ static void parse_statement() {
 	} else if(match("return")) {
 		expression();
 		skip(";");
+	} else if(match("case")) {
+		expression();
+		skip(":");
+	} else if(match("break")) {
+		skip(";");
+	} else if(match("continue")) {
+		skip(";");
 	} else {
-		// TODO: assigment
+		parse_assigment();
+		skip(";");
 	}
 }
 
@@ -537,28 +602,15 @@ static int match_type() {
 }
 
 static void parse_declaration() {
-	auto push_p = p;
-	unsigned flags = 0;
-	parse_flags(flags);
-	parse_identifier();
-	if(!last_string[0]) {
-		p = push_p;
+	if(!parse_member_declaration())
 		return;
-	}
-	auto type = findsym(strings.add(last_string), Modules, 0);
-	if(type == -1) {
-		p = push_p;
-		return;
-	}
-	if(!isidentifier()) {
-		p = push_p;
-		return;
-	}
+	auto type = last_type;
+	auto flags = last_flags;
 	while(isidentifier()) {
 		parse_identifier();
-		auto id = strings.add(last_string);
+		auto ids = strings.add(last_string);
 		if(match("(")) {
-			auto sid = create_symbol(id, This, type, flags, -1);
+			auto sid = create_symbol(ids, This, type, flags, -1);
 			// TODO: parameter list
 			skip(")");
 			if(match(";"))
@@ -566,7 +618,7 @@ static void parse_declaration() {
 			parse_statement();
 			break;
 		} else {
-			auto sid = create_symbol(id, This, type, flags, -1);
+			auto sid = create_symbol(ids, This, type, flags, -1);
 			if(match("="))
 				symbol_code_set(sid, expression());
 			if(match(","))

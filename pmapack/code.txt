@@ -6,4 +6,5 @@ int z = 10;
 int main() {
 	if(x < 10)
 		return;
+	x = 12;
 }
