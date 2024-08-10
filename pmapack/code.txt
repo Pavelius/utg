@@ -1,9 +1,10 @@
 import crt
 import geo.rect as rect
+import geo.point
 
 enum {OK, CANCEL};
 
-static int x, y;
+static int x, y, a[CANCEL+2];
 static int z = 10;
 
 int fnfive(int a) {

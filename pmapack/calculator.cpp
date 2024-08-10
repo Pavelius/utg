@@ -13,7 +13,8 @@ static char			last_string[4096];
 static const char*	p;
 static const char*	p_start;
 static stringa		strings;
-static adat<int>	operations;
+static int			operations[128];
+static int*			operation;
 static adat<int>	scopes;
 
 static void parse_expression();
@@ -24,11 +25,24 @@ static void error(const char* format, ...) {
 		calculator_error_proc(format, xva_start(format));
 }
 
-void symbol_code(int sid, int value) {
+int symbol_ast(int sid) {
+	if(sid == -1)
+		return -1;
+	return bsdata<symboli>::get(sid).value;
+}
+
+void symbol_ast(int sid, int value) {
 	if(sid == -1)
 		return;
 	auto& e = bsdata<symboli>::get(sid);
 	e.value = value;
+}
+
+void symbol_count(int sid, int value) {
+	if(sid == -1)
+		return;
+	auto& e = bsdata<symboli>::get(sid);
+	e.count = value;
 }
 
 void symbol_scope(int sid, int value) {
@@ -145,16 +159,25 @@ static int findast(operation_s op, int left, int right) {
 	return -1;
 }
 
+static bool is_strict_operands(operation_s op) {
+	switch(op) {
+	case Plus: case Mul: case BinaryOr: case BinaryAnd: case BinaryXor: return false;
+	default: return true;
+	}
+}
+
 int ast_add(operation_s op, int left, int right) {
-	auto ids = findast(op, left, right);
-	if(ids == -1) {
+	auto sid = findast(op, left, right);
+	if(sid == -1 && !is_strict_operands(op))
+		sid = findast(op, right, left);
+	if(sid == -1) {
 		auto p = bsdata<asti>::add();
 		p->op = op;
 		p->left = left;
 		p->right = right;
-		ids = p - bsdata<asti>::begin();
+		sid = p - bsdata<asti>::begin();
 	}
-	return ids;
+	return sid;
 }
 
 static int getscope() {
@@ -163,23 +186,20 @@ static int getscope() {
 	return 0;
 }
 
-static int ast_add(operation_s op, int left) {
-	return ast_add(op, left, -1);
+static int ast_add(operation_s op, int value) {
+	return ast_add(op, -1, value);
 }
 
-static int getop(int top) {
-	return operations.data[operations.count - top];
+static void add_op(operation_s op, int value) {
+	operation[0] = ast_add(op, value);
+	operation++;
 }
 
-static void pushop(operation_s op, int value) {
-	operations.add(ast_add(op, value));
-}
-
-static int popop() {
+static int pop_op() {
 	auto result = -1;
-	if(operations.count > 0) {
-		result = getop(-1);
-		operations.count--;
+	if(operation > operations) {
+		operation--;
+		result = operation[0];
 	}
 	return result;
 }
@@ -245,10 +265,20 @@ static int create_symbol(int ids, int type, unsigned flags, int scope, const cha
 	return sid;
 }
 
-static int reference(int type) {
+int dereference(int type) {
 	if(type == -1)
 		return -1;
-	return create_symbol(0, type, 0, PointerScope);
+	auto p = bsdata<symboli>::begin() + type;
+	return p->type;
+}
+
+int reference(int type) {
+	if(type == -1)
+		return -1;
+	auto sid = findsym(type, PointerScope);
+	if(sid != -1)
+		return sid;
+	return create_symbol(type, type, 0, PointerScope);
 }
 
 static void parse_type() {
@@ -272,7 +302,7 @@ static void parse_type() {
 static bool parse_member_declaration() {
 	auto push_p = p;
 	parse_type();
-	if(last_type==-1) {
+	if(last_type == -1) {
 		p = push_p;
 		return false;
 	}
@@ -287,29 +317,26 @@ static void parse_url_identifier() {
 	stringbuilder sb(last_string); sb.clear();
 	if(!isidentifier())
 		error("Expected identifier");
-	while(*p && (ischa(*p) || isnum(*p) || *p == '_' || *p=='.'))
+	while(*p && (ischa(*p) || isnum(*p) || *p == '_' || *p == '.'))
 		sb.add(*p++);
 	skipws();
 }
 
 static void unary_operation(operation_s v) {
-	if(operations.count < 1) {
+	if(operation <= operations) {
 		error("Unary operations stack corupt");
 		return;
 	}
-	auto p1 = getop(-1);
-	operations.data[operations.count - 1] = ast_add(v, p1);
+	operation[-1] = ast_add(v, operation[-1]);
 }
 
 static void binary_operation(operation_s v) {
-	if(operations.count < 2) {
+	if(operation <= operations + 1) {
 		error("Binary operations stack corupt");
 		return;
 	}
-	auto p1 = getop(-1);
-	auto p2 = getop(-2);
-	operations.data[operations.count - 2] = ast_add(v, p1, p2);
-	operations.count--;
+	operation[-2] = ast_add(v, operation[-2], operation[-1]);
+	operation--;
 }
 
 static void add_list(int& result, int value) {
@@ -399,11 +426,11 @@ static void unary() {
 	case '(':
 		skipws(1);
 		parse_type();
-		if(last_type != -1 && *p==')') {
+		if(last_type != -1 && *p == ')') {
 			auto type = last_type;
 			skipws(1);
 			unary();
-			pushop(Cast, type);
+			add_op(Cast, type);
 		} else {
 			parse_expression();
 			skip(")");
@@ -411,12 +438,12 @@ static void unary() {
 		break;
 	case '\"':
 		literal();
-		pushop(Text, strings.add(last_string));
+		add_op(Text, strings.add(last_string));
 		break;
 	case '0':case '1':case '2':case '3':case '4':
 	case '5':case '6':case '7':case '8':case '9':
 		parse_number();
-		pushop(Number, last_number);
+		add_op(Number, last_number);
 		break;
 	default:
 		if(isidentifier()) {
@@ -427,7 +454,7 @@ static void unary() {
 				error("Symbol `%1` not exist", string_name(ids));
 				sid = create_symbol(ids, i32, 0, -1);
 			}
-			pushop(Identifier, sid);
+			add_op(Identifier, sid);
 		}
 		break;
 	}
@@ -509,7 +536,7 @@ static void binary_xor() {
 	while(p[0] == '^') {
 		skipws(1);
 		binary_and();
-		binary_operation(BinaryÕîr);
+		binary_operation(BinaryXor);
 	}
 }
 
@@ -561,18 +588,12 @@ static void parse_expression() {
 		parse_expression();
 		skip(":");
 		parse_expression();
-		binary_operation(LeftIfTrue);
-		binary_operation(BooleanChoose);
 	}
 }
 
 static int expression() {
 	parse_expression();
-	return popop();
-}
-
-static int getnumber(int ast) {
-	return 0;
+	return pop_op();
 }
 
 static int getmoduleposition() {
@@ -594,6 +615,14 @@ static void push_visibility_scope() {
 
 static void pop_visibility_scope() {
 	scopes.count--;
+}
+
+static void parse_array_declaration(int sid) {
+	if(match("[")) {
+		auto index = const_number(expression());
+		symbol_count(sid, index);
+		skip("]");
+	}
 }
 
 static void parse_statement() {
@@ -649,8 +678,9 @@ static void parse_statement() {
 		parse_identifier();
 		auto ids = strings.add(last_string);
 		auto sid = create_symbol(ids, type, flags, -1);
+		parse_array_declaration(sid);
 		if(match("="))
-			symbol_code(sid, expression());
+			symbol_ast(sid, expression());
 		skip(";");
 	} else {
 		parse_assigment();
@@ -666,7 +696,10 @@ static void parse_enum() {
 	while(*p) {
 		parse_identifier();
 		if(match("="))
-			index = getnumber(expression());
+			index = const_number(expression());
+		auto ids = strings.add(last_string);
+		auto sid = create_symbol(ids, i32, 0, -1, "Identifier `%1` is already defined");
+		symbol_ast(sid, ast_add(Number, index));
 		if(!match(","))
 			break;
 	}
@@ -686,7 +719,7 @@ static void parse_parameters() {
 			ast = expression();
 		auto ids = strings.add(last_string);
 		auto sid = create_symbol(ids, type, flags, scope, "Parameter `%1` is already defined");
-		symbol_code(sid, ast);
+		symbol_ast(sid, ast);
 	}
 	skip(")");
 }
@@ -708,8 +741,9 @@ static void parse_declaration() {
 			pop_visibility_scope();
 			break;
 		} else {
+			parse_array_declaration(sid);
 			if(match("="))
-				symbol_code(sid, expression());
+				symbol_ast(sid, expression());
 			if(match(","))
 				continue;
 			skip(";");
@@ -761,11 +795,10 @@ static void add_symbol(symbol_s v, const char* id) {
 	auto ids = strings.add(id);
 	if(findsym(ids, TypeScope) != -1)
 		return;
-	create_symbol(strings.add(id), v, FG(Predefined), TypeScope);
+	create_symbol(strings.add(id), -1, FG(Predefined), TypeScope);
 }
 
-static void calculator_initialize() {
-	add_symbol(This, "this");
+static void symbol_initialize() {
 	add_symbol(Void, "void");
 	add_symbol(i8, "char");
 	add_symbol(u8, "uchar");
@@ -775,6 +808,11 @@ static void calculator_initialize() {
 	add_symbol(u32, "unsigned");
 	add_symbol(i64, "long");
 	add_symbol(u64, "ulong");
+}
+
+static void calculator_initialize() {
+	symbol_initialize();
+	operation = operations;
 }
 
 void calculator_file_parse(const char* url) {

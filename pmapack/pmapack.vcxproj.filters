@@ -21,6 +21,9 @@
     <ClCompile Include="calculator.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="scripter.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">
