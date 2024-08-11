@@ -20,6 +20,7 @@ static int get_string_type() {
 bool isterminal(operation_s v) {
 	switch(v) {
 	case Number: case Text: case Identifier: return true;
+	case Continue: case Break: return true;
 	default: return false;
 	}
 }

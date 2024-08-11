@@ -20,5 +20,7 @@ int main() {
 	int c = 10;
 	if(x+b < 10)
 		return;
+	for(int i=1; i<10; i++)
+		b = b + zero_hive(i);
 	x = 12;
 }

@@ -190,9 +190,17 @@ static int ast_add(operation_s op, int value) {
 	return ast_add(op, -1, value);
 }
 
-static void add_op(operation_s op, int value) {
-	operation[0] = ast_add(op, value);
+static void add_op(int a) {
+	operation[0] = a;
 	operation++;
+}
+
+static void add_op(operation_s op, int value) {
+	add_op(ast_add(op, value));
+}
+
+static void add_op(operation_s op, int left, int right) {
+	add_op(ast_add(op, left, right));
 }
 
 static int pop_op() {
@@ -340,6 +348,8 @@ static void binary_operation(operation_s v) {
 }
 
 static void add_list(int& result, int value) {
+	if(value == -1)
+		return;
 	if(result == -1)
 		result = value;
 	else
@@ -625,54 +635,8 @@ static void parse_array_declaration(int sid) {
 	}
 }
 
-static void parse_statement() {
-	if(match("{")) {
-		push_visibility_scope();
-		auto push_p = p;
-		while(*p && *p != '}') {
-			parse_statement();
-			if(p == push_p)
-				break;
-		}
-		pop_visibility_scope();
-		skip("}");
-	} else if(match(";")) {
-		// Empthy statement
-	} else if(match("if")) {
-		skip("(");
-		expression();
-		skip(")");
-		parse_statement();
-	} else if(match("swith")) {
-		skip("(");
-		expression();
-		skip(")");
-		parse_statement();
-	} else if(match("while")) {
-		skip("(");
-		expression();
-		skip(")");
-		parse_statement();
-	} else if(match("for")) {
-		skip("(");
-		expression();
-		skip(";");
-		expression();
-		skip(";");
-		expression();
-		skip(")");
-		parse_statement();
-	} else if(match("return")) {
-		expression();
-		skip(";");
-	} else if(match("case")) {
-		expression();
-		skip(":");
-	} else if(match("break")) {
-		skip(";");
-	} else if(match("continue")) {
-		skip(";");
-	} else if(parse_member_declaration()) {
+static void parse_local_declaration() {
+	if(parse_member_declaration()) {
 		auto type = last_type;
 		auto flags = last_flags;
 		parse_identifier();
@@ -686,6 +650,72 @@ static void parse_statement() {
 		parse_assigment();
 		skip(";");
 	}
+}
+
+static void parse_statement() {
+	if(match("{")) {
+		push_visibility_scope();
+		auto push_p = p;
+		auto previous = -1;
+		while(*p && *p != '}') {
+			parse_statement();
+			add_list(previous, pop_op());
+			if(p == push_p)
+				break;
+		}
+		pop_visibility_scope();
+		skip("}");
+		add_op(previous);
+	} else if(match(";")) {
+		// Empthy statement
+	} else if(match("if")) {
+		skip("(");
+		auto e = expression();
+		skip(")");
+		parse_statement();
+		auto s = pop_op();
+		add_op(If, s, e);
+	} else if(match("swith")) {
+		skip("(");
+		auto e = expression();
+		skip(")");
+		parse_statement();
+		auto s = pop_op();
+		add_op(Switch, s, e);
+	} else if(match("while")) {
+		skip("(");
+		auto e = expression();
+		skip(")");
+		parse_statement();
+		auto s = pop_op();
+		add_op(While, s, e);
+	} else if(match("for")) {
+		skip("(");
+		parse_local_declaration();
+		auto bs = pop_op();
+		auto e = expression();
+		skip(";");
+		auto es = expression();
+		skip(")");
+		parse_statement();
+		auto s = pop_op();
+		add_list(s, es);
+		add_list(bs, ast_add(While, e, s));
+		add_op(bs);
+	} else if(match("return")) {
+		add_op(Return, expression());
+		skip(";");
+	} else if(match("case")) {
+		add_op(Case, expression());
+		skip(":");
+	} else if(match("break")) {
+		add_op(Break, -1);
+		skip(";");
+	} else if(match("continue")) {
+		add_op(Continue, -1);
+		skip(";");
+	} else
+		parse_local_declaration();
 }
 
 static void parse_enum() {
@@ -736,8 +766,10 @@ static void parse_declaration() {
 		if(match("(")) {
 			push_visibility_scope();
 			parse_parameters();
-			if(!match(";"))
+			if(!match(";")) {
 				parse_statement();
+				symbol_ast(pop_op());
+			}
 			pop_visibility_scope();
 			break;
 		} else {
