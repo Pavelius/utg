@@ -1,6 +1,5 @@
-import crt
-import geo.rect as rect
-import geo.point
+import rect
+import point
 
 enum {OK, CANCEL};
 

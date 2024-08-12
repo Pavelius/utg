@@ -24,8 +24,11 @@ static void println(const char* format, ...) {
 
 static void print_symbols() {
 	for(auto& e : bsdata<symboli>()) {
-		if(!e.ispredefined())
-			println(string_name(e.ids));
+		if(e.ispredefined() || e.type==-1)
+			continue;
+		auto pt = bsdata<symboli>::begin() + e.type;
+		auto sid = &e - bsdata<symboli>::begin();
+		println("%2 %1 : size %3i", string_name(e.ids), string_name(pt->ids), symbol_size(sid));
 	}
 }
 
@@ -40,7 +43,9 @@ static void initialize_parser() {
 
 int main() {
 	initialize_parser();
-	calculator_file_parse("code.txt");
+	project_compile("code/project/test");
+	if(iserrors())
+		return -1;
 	print_symbols();
 	return 0;
 }

@@ -148,8 +148,12 @@
     <ClInclude Include="image.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="code.txt" />
     <Text Include="example.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code\project\test\main.c2" />
+    <None Include="code\project\test\point.c2" />
+    <None Include="code\project\test\rect.c2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

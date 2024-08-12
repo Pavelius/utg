@@ -7,6 +7,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{585452fe-bf68-488c-a33a-6ceb431757d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="code">
+      <UniqueIdentifier>{f755cb03-4c0e-4599-942e-af75fd603804}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,8 +40,16 @@
     <Text Include="example.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="code.txt">
-      <Filter>data</Filter>
-    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code\project\test\main.c2">
+      <Filter>code</Filter>
+    </None>
+    <None Include="code\project\test\rect.c2">
+      <Filter>code</Filter>
+    </None>
+    <None Include="code\project\test\point.c2">
+      <Filter>code</Filter>
+    </None>
   </ItemGroup>
 </Project>

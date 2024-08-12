@@ -1,0 +1,18 @@
+/////////////////////////////////////////////////
+// RECTANGLE data structure
+
+import point
+
+int x1, y1;
+int x2, y2;
+
+point center() {
+}
+
+int width() {
+	return x2-x1;
+}
+
+int height() {
+	return y2-y1;
+}
