@@ -4,14 +4,14 @@
 #include "point.h"
 
 struct imagei : nameable {
-	const char*		name;
-	const char*		url;
-	const char*		suffix;
-	const char*		prefix;
-	point			position, offset;
-	void*			object;
+	const char*	name;
+	const char*	url;
+	const char*	suffix;
+	const char*	prefix;
+	point		position, offset;
+	void*		object;
 };
 
-struct imagea : nameable {
-	sliceu<imagei>	elements;
+struct imagea : imagei {
+	sliceu<imagei> elements;
 };

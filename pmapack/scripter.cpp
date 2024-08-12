@@ -17,31 +17,10 @@ static int get_string_type() {
 	return r;
 }
 
-bool isterminal(operation_s v) {
-	switch(v) {
-	case Number: case Text: case Identifier: return true;
-	case Continue: case Break: return true;
-	default: return false;
-	}
-}
-
-bool isbinary(operation_s v) {
-	return v <= And;
-}
-
 static const asti* get_ast(int v) {
 	if(v == -1)
 		return 0;
 	return bsdata<asti>::begin() + v;
-}
-
-static int getsize(int type) {
-	switch(type) {
-	case i8: case u8: return 1;
-	case i16: case u16: return 2;
-	case i32: case u32: return 4;
-	default: return 0;
-	}
 }
 
 static bool isnumber(int type) {

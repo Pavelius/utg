@@ -7,9 +7,9 @@ enum operation_s {
 	ShiftLeft, ShiftRight,
 	Less, LessEqual, Greater, GreaterEqual, Equal, NotEqual,
 	Or, And,
-	Increment, Decrement, AdressOf, Dereference, Scope, Cast,
+	Increment, Decrement, AdressOf, Dereference, Scope, Cast, Point,
 	Assign, If, While, Return, Switch, Case, Break, Continue, Default,
-	Number, Text, Identifier, List, Initialization,
+	Number, Text, Identifier, Type, List, Initialization,
 };
 enum symbol_s {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
@@ -39,13 +39,23 @@ struct asti {
 	int			left;
 	int			right;
 };
+struct definei {
+	int			ids;
+	int			ast;
+};
+struct typedefi {
+	int			ids; // string id, use string_name() to get text or -1 for pointer
+	int			result; // other symbol id (like base class)
+	unsigned	flags; // Some flags
+};
 
 typedef void(*calculator_fnprint)(const char* format, const char* format_param);
 extern calculator_fnprint calculator_error_proc;
 
 void calculator_file_parse(const char* url);
 void calculator_parse(const char* code);
-bool isterminal(operation_s v);
+bool isterminal(operation_s op);
+bool isbinary(operation_s op);
 void symbol_ast(int sid, int value);
 void symbol_count(int sid, int value);
 void symbol_scope(int sid, int value);
@@ -53,8 +63,10 @@ void symbol_type(int sid, int value);
 
 int ast_add(operation_s op, int left, int right);
 int const_number(int ast);
+int define_ast(int sid);
 int dereference(int type);
-int findsym(int ids, int scope);
+int getsize(int type);
+int find_symbol(int ids, int scope);
 int reference(int type);
 int symbol_ast(int sid);
 int symbol_type(int sid);

@@ -3,6 +3,7 @@
 #include "stringa.h"
 
 BSDATAD(asti)
+BSDATAD(definei)
 BSDATAD(symboli)
 
 calculator_fnprint	calculator_error_proc;
@@ -18,12 +19,56 @@ static int*			operation;
 static adat<int>	scopes;
 
 static void parse_expression();
+static void unary();
 static int expression();
+
+bool isterminal(operation_s v) {
+	switch(v) {
+	case Number: case Text: case Identifier: return true;
+	case Continue: case Break: return true;
+	default: return false;
+	}
+}
+
+bool isbinary(operation_s op) {
+	switch(op) {
+	case Plus: case Minus: case Div: case Mul: case DivRest:
+	case BinaryOr: case BinaryAnd: case BinaryXor:
+	case ShiftLeft: case ShiftRight:
+	case Less: case LessEqual: case Greater: case GreaterEqual: case Equal: case NotEqual:
+	case Or: case And:
+	case Scope: case Cast: case Point:
+		return true;
+	default: return false;
+	}
+}
+
+bool isstrict(operation_s op) {
+	switch(op) {
+	case Plus: case Mul: case BinaryOr: case BinaryAnd: case BinaryXor: return false;
+	default: return true;
+	}
+}
+
+int getsize(int type) {
+	switch(type) {
+	case i8: case u8: return 1;
+	case i16: case u16: return 2;
+	case i32: case u32: return 4;
+	default: return 0;
+	}
+}
 
 static void error(const char* format, ...) {
 	if(calculator_error_proc)
 		calculator_error_proc(format, xva_start(format));
 }
+
+int define_ast(int sid) {
+	if(sid == -1)
+		return -1;
+	return bsdata<definei>::get(sid).ast;
+} 
 
 int symbol_ast(int sid) {
 	if(sid == -1)
@@ -157,12 +202,45 @@ static bool isidentifier() {
 	return ischa(*p);
 }
 
-int findsym(int ids, int scope) {
+int find_symbol(int ids, int scope) {
 	for(auto& e : bsdata<symboli>()) {
 		if(e.ids == ids && e.scope == scope)
 			return &e - bsdata<symboli>::begin();
 	}
 	return -1;
+}
+
+static int find_type(int ids) {
+	for(auto& e : bsdata<typedefi>()) {
+		if(e.ids == ids)
+			return &e - bsdata<typedefi>::begin();
+	}
+	return -1;
+}
+
+static int find_define(int ids) {
+	for(auto& e : bsdata<definei>()) {
+		if(e.ids == ids)
+			return &e - bsdata<definei>::begin();
+	}
+	return -1;
+}
+
+static void find_type(int ast, int& result) {
+	if(ast == -1 || result != -1)
+		return;
+	auto p = bsdata<asti>::begin() + ast;
+	if(p->op == Identifier) {
+		auto type = symbol_type(p->right);
+		if(type != -1)
+			result = type;
+	} else if(isbinary(p->op)) {
+		find_type(p->right, result);
+		find_type(p->left, result);
+	} else if(isterminal(p->op)) {
+		// Nothing to do
+	} else
+		find_type(p->right, result);
 }
 
 static int findast(operation_s op, int left, int right) {
@@ -173,16 +251,9 @@ static int findast(operation_s op, int left, int right) {
 	return -1;
 }
 
-static bool is_strict_operands(operation_s op) {
-	switch(op) {
-	case Plus: case Mul: case BinaryOr: case BinaryAnd: case BinaryXor: return false;
-	default: return true;
-	}
-}
-
 int ast_add(operation_s op, int left, int right) {
 	auto sid = findast(op, left, right);
-	if(sid == -1 && !is_strict_operands(op))
+	if(sid == -1 && !isstrict(op))
 		sid = findast(op, right, left);
 	if(sid == -1) {
 		auto p = bsdata<asti>::add();
@@ -207,14 +278,6 @@ static int ast_add(operation_s op, int value) {
 static void add_op(int a) {
 	operation[0] = a;
 	operation++;
-}
-
-static void add_op(operation_s op, int value) {
-	add_op(ast_add(op, value));
-}
-
-static void add_op(operation_s op, int left, int right) {
-	add_op(ast_add(op, left, right));
 }
 
 static int pop_op() {
@@ -263,6 +326,31 @@ static void parse_flags() {
 	}
 }
 
+static int create_define(int ids, int ast) {
+	auto p = bsdata<definei>::add();
+	p->ids = ids;
+	p->ast = ast;
+	return p - bsdata<definei>::begin();
+}
+
+static int create_define(int ids, int ast, const char* error_format) {
+	auto sid = find_define(ids);
+	if(sid != -1) {
+		if(error_format)
+			error(error_format, string_name(ids));
+	} else
+		sid = create_define(ids, ast);
+	return sid;
+}
+
+static int create_type(int ids, int result) {
+	auto p = bsdata<typedefi>::add();
+	p->ids = ids;
+	p->result = result;
+	p->flags = 0;
+	return p - bsdata<typedefi>::begin();
+}
+
 static int create_symbol(int id, int type, unsigned flags, int scope) {
 	auto p = bsdata<symboli>::add();
 	p->ids = id;
@@ -278,12 +366,23 @@ static int create_symbol(int id, int type, unsigned flags, int scope) {
 static int create_symbol(int ids, int type, unsigned flags, int scope, const char* error_format) {
 	if(scope == -1)
 		scope = getscope();
-	auto sid = findsym(ids, scope);
+	auto sid = find_symbol(ids, scope);
 	if(sid != -1) {
 		if(error_format)
 			error(error_format, string_name(ids));
 	} else
 		sid = create_symbol(ids, type, flags, scope);
+	return sid;
+}
+
+static int find_variable(int ids) {
+	auto sid = -1;
+	for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
+		sid = find_symbol(ids, scopes.data[i]);
+	if(sid == -1)
+		sid = find_symbol(ids, 0);
+	if(sid == -1)
+		sid = find_symbol(ids, TypeScope);
 	return sid;
 }
 
@@ -297,7 +396,7 @@ int dereference(int type) {
 int reference(int type) {
 	if(type == -1)
 		return -1;
-	auto sid = findsym(type, PointerScope);
+	auto sid = find_symbol(type, PointerScope);
 	if(sid != -1)
 		return sid;
 	return create_symbol(type, type, 0, PointerScope);
@@ -312,7 +411,12 @@ static void parse_type() {
 	parse_flags();
 	parse_identifier();
 	auto ids = strings.add(last_string);
-	last_type = findsym(ids, TypeScope);
+	last_type = find_symbol(ids, TypeScope);
+	if(last_type == -1) {
+		auto sid = find_define(ids);
+		if(sid != -1)
+			find_type(define_ast(sid), last_type);
+	}
 	if(last_type == -1) {
 		p = p_push;
 		return;
@@ -396,20 +500,17 @@ static void postfix() {
 
 		} else if(match("--")) {
 
+		} else if(match(".")) {
+			parse_identifier();
+			auto ids = strings.add(last_string);
+			auto sid = find_variable(ids);
+			if(sid == -1)
+				sid = create_symbol(ids, i32, 0, -1);
+			add_op(ast_add(Identifier, sid));
+			binary_operation(Point);
 		} else
 			break;
 	}
-}
-
-static int find_variable(int ids) {
-	auto sid = -1;
-	for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
-		sid = findsym(ids, scopes.data[i]);
-	if(sid == -1)
-		sid = findsym(ids, 0);
-	if(sid == -1)
-		sid = findsym(ids, TypeScope);
-	return sid;
 }
 
 static void unary() {
@@ -455,7 +556,7 @@ static void unary() {
 			auto type = last_type;
 			skipws(1);
 			unary();
-			add_op(Cast, type);
+			add_op(ast_add(Cast, type));
 		} else {
 			parse_expression();
 			skip(")");
@@ -463,23 +564,28 @@ static void unary() {
 		break;
 	case '\"':
 		literal();
-		add_op(Text, strings.add(last_string));
+		add_op(ast_add(Text, strings.add(last_string)));
 		break;
 	case '0':case '1':case '2':case '3':case '4':
 	case '5':case '6':case '7':case '8':case '9':
 		parse_number();
-		add_op(Number, last_number);
+		add_op(ast_add(Number, last_number));
 		break;
 	default:
 		if(isidentifier()) {
 			parse_identifier();
 			auto ids = strings.add(last_string);
+			auto idf = find_define(ids);
+			if(idf != -1) {
+				add_op(define_ast(idf));
+				break;
+			}
 			auto sid = find_variable(ids);
 			if(sid == -1) {
 				error("Symbol `%1` not exist", string_name(ids));
 				sid = create_symbol(ids, i32, 0, -1);
 			}
-			add_op(Identifier, sid);
+			add_op(ast_add(Identifier, sid));
 		}
 		break;
 	}
@@ -631,7 +737,7 @@ static void parse_initialization_list() {
 				break;
 			add_list(result, pop_op());
 		} while(match(","));
-		add_op(Initialization, result);
+		add_op(ast_add(Initialization, result));
 		skip("}");
 	} else
 		parse_expression();
@@ -710,21 +816,21 @@ static void parse_statement() {
 		skip(")");
 		parse_statement();
 		auto s = pop_op();
-		add_op(If, s, e);
+		add_op(ast_add(If, s, e));
 	} else if(match("swith")) {
 		skip("(");
 		auto e = expression();
 		skip(")");
 		parse_statement();
 		auto s = pop_op();
-		add_op(Switch, s, e);
+		add_op(ast_add(Switch, s, e));
 	} else if(match("while")) {
 		skip("(");
 		auto e = expression();
 		skip(")");
 		parse_statement();
 		auto s = pop_op();
-		add_op(While, s, e);
+		add_op(ast_add(While, s, e));
 	} else if(match("for")) {
 		skip("(");
 		parse_local_declaration();
@@ -739,16 +845,16 @@ static void parse_statement() {
 		add_list(bs, ast_add(While, e, s));
 		add_op(bs);
 	} else if(match("return")) {
-		add_op(Return, expression());
+		add_op(ast_add(Return, expression()));
 		skip(";");
 	} else if(match("case")) {
-		add_op(Case, expression());
+		add_op(ast_add(Case, expression()));
 		skip(":");
 	} else if(match("break")) {
-		add_op(Break, -1);
+		add_op(ast_add(Break, -1));
 		skip(";");
 	} else if(match("continue")) {
-		add_op(Continue, -1);
+		add_op(ast_add(Continue, -1));
 		skip(";");
 	} else
 		parse_local_declaration();
@@ -764,8 +870,7 @@ static void parse_enum() {
 		if(match("="))
 			index = const_number(expression());
 		auto ids = strings.add(last_string);
-		auto sid = create_symbol(ids, i32, 0, -1, "Identifier `%1` is already defined");
-		symbol_ast(sid, ast_add(Number, index));
+		auto sid = create_define(ids, ast_add(Number, index), "Identifier `%1` is already defined");
 		if(!match(","))
 			break;
 	}
@@ -835,15 +940,26 @@ static void parse_import() {
 	if(match("as")) {
 		parse_identifier();
 		auto als = strings.add(last_string);
-		auto sip = create_symbol(als, 0, 0, TypeScope, "Type `%1` already imported");
-		symbol_type(sip, sid);
+		create_define(als, ast_add(Identifier, sid));
 	}
+}
+
+static void parse_define() {
+	if(!word("define"))
+		return;
+	parse_identifier();
+	skip("=");
+	auto ids = strings.add(last_string);
+	create_define(ids, expression());
 }
 
 static void parse_module() {
 	while(*p) {
 		auto push_p = p;
 		parse_import();
+		if(p != push_p)
+			continue;
+		parse_define();
 		if(p != push_p)
 			continue;
 		parse_enum();
@@ -869,7 +985,7 @@ void calculator_parse(const char* code) {
 
 static void add_symbol(symbol_s v, const char* id) {
 	auto ids = strings.add(id);
-	if(findsym(ids, TypeScope) != -1)
+	if(find_symbol(ids, TypeScope) != -1)
 		return;
 	create_symbol(strings.add(id), -1, FG(Predefined), TypeScope);
 }

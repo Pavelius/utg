@@ -1,6 +1,6 @@
 #Terrain center(-1 -1)
 
-CreateSprite elements(32)
+CreateSprite count(32)
 AddFrame position(10 10)
 AddFrame position(20 10)
 AddFrame position(30 10)
