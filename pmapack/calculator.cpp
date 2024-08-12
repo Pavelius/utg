@@ -34,8 +34,22 @@ int symbol_ast(int sid) {
 void symbol_ast(int sid, int value) {
 	if(sid == -1)
 		return;
-	auto& e = bsdata<symboli>::get(sid);
-	e.value = value;
+	bsdata<symboli>::get(sid).value = value;
+}
+
+int symbol_type(int sid) {
+	if(sid == -1)
+		return -1;
+	auto n = bsdata<symboli>::get(sid).type;
+	if(n == -1)
+		return sid;
+	return n;
+}
+
+void symbol_type(int sid, int value) {
+	if(sid == -1)
+		return;
+	bsdata<symboli>::get(sid).type = value;
 }
 
 void symbol_count(int sid, int value) {
@@ -255,7 +269,7 @@ static int create_symbol(int id, int type, unsigned flags, int scope) {
 	if(scope == -1)
 		scope = getscope();
 	p->scope = scope;
-	p->type = i32;
+	p->type = type;
 	p->flags = flags;
 	p->value = -1;
 	return p - bsdata<symboli>::begin();
@@ -303,6 +317,7 @@ static void parse_type() {
 		p = p_push;
 		return;
 	}
+	last_type = symbol_type(last_type);
 	while(match("*"))
 		last_type = reference(last_type);
 }
@@ -606,12 +621,12 @@ static int expression() {
 	return pop_op();
 }
 
-static void parse_initialization() {
+static void parse_initialization_list() {
 	if(match("{")) {
 		auto result = -1;
 		do {
 			auto p1 = p;
-			parse_expression();
+			parse_initialization_list();
 			if(p1 == p)
 				break;
 			add_list(result, pop_op());
@@ -620,6 +635,11 @@ static void parse_initialization() {
 		skip("}");
 	} else
 		parse_expression();
+}
+
+static int initialization_list() {
+	parse_initialization_list();
+	return pop_op();
 }
 
 static int getmoduleposition() {
@@ -660,7 +680,7 @@ static void parse_local_declaration() {
 		auto sid = create_symbol(ids, type, flags, -1);
 		parse_array_declaration(sid);
 		if(match("="))
-			symbol_ast(sid, expression());
+			symbol_ast(sid, initialization_list());
 		skip(";");
 	} else {
 		parse_assigment();
@@ -757,7 +777,10 @@ static void parse_parameters() {
 	auto scope = getscope();
 	while(*p && *p != ')') {
 		auto ast = -1;
+		auto p1 = p;
 		parse_type();
+		if(p1 == p)
+			break;
 		auto type = last_type;
 		auto flags = last_flags;
 		parse_identifier();
@@ -766,6 +789,8 @@ static void parse_parameters() {
 		auto ids = strings.add(last_string);
 		auto sid = create_symbol(ids, type, flags, scope, "Parameter `%1` is already defined");
 		symbol_ast(sid, ast);
+		if(match(","))
+			continue;
 	}
 	skip(")");
 }
@@ -791,7 +816,7 @@ static void parse_declaration() {
 		} else {
 			parse_array_declaration(sid);
 			if(match("="))
-				symbol_ast(sid, expression());
+				symbol_ast(sid, initialization_list());
 			if(match(","))
 				continue;
 			skip(";");
@@ -806,9 +831,12 @@ static void parse_import() {
 	parse_url_identifier();
 	auto ids = strings.add(last_string);
 	auto sid = create_symbol(ids, 0, 0, TypeScope, "Type `%1` already imported");
+	symbol_type(sid, sid);
 	if(match("as")) {
 		parse_identifier();
 		auto als = strings.add(last_string);
+		auto sip = create_symbol(als, 0, 0, TypeScope, "Type `%1` already imported");
+		symbol_type(sip, sid);
 	}
 }
 

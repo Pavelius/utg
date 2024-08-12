@@ -49,6 +49,7 @@ bool isterminal(operation_s v);
 void symbol_ast(int sid, int value);
 void symbol_count(int sid, int value);
 void symbol_scope(int sid, int value);
+void symbol_type(int sid, int value);
 
 int ast_add(operation_s op, int left, int right);
 int const_number(int ast);
@@ -56,5 +57,6 @@ int dereference(int type);
 int findsym(int ids, int scope);
 int reference(int type);
 int symbol_ast(int sid);
+int symbol_type(int sid);
 
 const char* string_name(int sid);

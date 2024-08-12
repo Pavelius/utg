@@ -4,6 +4,10 @@ import geo.point
 
 enum {OK, CANCEL};
 
+void bubble_sort(void* data, int count) {
+}
+
+static rect rc = {10, 10, 12, 13};
 static int x, y, a[CANCEL+2];
 static int z = 10;
 
