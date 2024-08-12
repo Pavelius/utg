@@ -606,6 +606,22 @@ static int expression() {
 	return pop_op();
 }
 
+static void parse_initialization() {
+	if(match("{")) {
+		auto result = -1;
+		do {
+			auto p1 = p;
+			parse_expression();
+			if(p1 == p)
+				break;
+			add_list(result, pop_op());
+		} while(match(","));
+		add_op(Initialization, result);
+		skip("}");
+	} else
+		parse_expression();
+}
+
 static int getmoduleposition() {
 	return p - p_start;
 }

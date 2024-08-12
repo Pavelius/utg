@@ -9,7 +9,7 @@ enum operation_s {
 	Or, And,
 	Increment, Decrement, AdressOf, Dereference, Scope, Cast,
 	Assign, If, While, Return, Switch, Case, Break, Continue, Default,
-	Number, Text, Identifier, List
+	Number, Text, Identifier, List, Initialization,
 };
 enum symbol_s {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
