@@ -1,0 +1,9 @@
+﻿In file `example.txt`:
+ Line 3: Expected token `#`
+ Line 4: Expected token `#`
+ Line 5: Expected token `#`
+ Line 6: Expected token `#`
+ Line 7: Expected token `#`
+ Line 8: Expected token `#`
+ Line 12: Expected token `#`
+ Line 13: Expected token `#`

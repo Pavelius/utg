@@ -1,4 +1,5 @@
 #include "calculator.h"
+#include "scope.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
 #include "stringa.h"
@@ -13,7 +14,7 @@ static int			function_params;
 static int			last_type;
 static unsigned		last_flags;
 static long			last_number;
-static char			last_string[4096];
+static char			last_string[256 * 256];
 static const char*	p;
 static const char*	p_start;
 static const char*	p_url;
@@ -21,7 +22,6 @@ static stringa		strings;
 static int			operations[128];
 static int*			operation;
 static int			errors_count;
-static adat<int>	scopes;
 
 static int			module_sid;
 static const char*	project_url;
@@ -30,6 +30,10 @@ const char*			library_url;
 static void parse_expression();
 static void unary();
 static int expression();
+
+int symboli::getindex() const {
+	return this - bsdata<symboli>::begin();
+}
 
 bool isterminal(operation_s v) {
 	switch(v) {
@@ -79,7 +83,7 @@ static const char* create_example() {
 	auto p1 = p;
 	// Find line begin
 	while(p1 > p_start) {
-		if(p1[-1] == 10 || p1[-1] == 13 || p1[-1]==9)
+		if(p1[-1] == 10 || p1[-1] == 13 || p1[-1] == 9)
 			break;
 		p1--;
 	}
@@ -149,6 +153,10 @@ int symbol_type(int sid) {
 int symbol_size(int sid) {
 	if(sid == -1)
 		return 0;
+	return bsdata<symboli>::get(sid).instance.size;
+}
+
+static int calculate_symbol_size(int sid) {
 	auto type = symbol_type(sid);
 	if(symbol_scope(type) == PointerScope)
 		return 4;
@@ -157,10 +165,16 @@ int symbol_size(int sid) {
 		// Calculate each member size
 		for(auto& e : bsdata<symboli>()) {
 			if(e.parent == sid && e.scope == 0 && !e.is(Static))
-				result += symbol_size(&e - bsdata<symboli>::begin());
+				result += e.instance.size;
 		}
 	}
 	return result;
+}
+
+void symbol_frame(int sid, int value) {
+	if(sid == -1)
+		return;
+	bsdata<symboli>::get(sid).instance.frame = value;
 }
 
 offseti symbol_section(int sid) {
@@ -195,41 +209,38 @@ void symbol_scope(int sid, int value) {
 	e.scope = value;
 }
 
+const char* symbol_name(int sid, int value) {
+	if(sid == -1)
+		return "unknown";
+	return string_name(bsdata<symboli>::get(sid).ids);
+}
+
 static int getscope() {
-	if(scopes)
-		return scopes[scopes.count - 1];
+	if(current_scope)
+		return current_scope->scope;
 	return 0;
 }
 
-static int local_size(int sid) {
-	auto scope = getscope();
-	auto scope_size = 0;
-	for(auto& e : bsdata<symboli>()) {
-		if(e.parent == module_sid && e.scope == scope) {
-			auto esid = bsdata<symboli>::begin() - &e;
-			if(esid == sid)
-				break;
-			scope_size += symbol_size(esid);
-		}
-	}
-	return scope_size;
-}
-
-static void symbol_alloc(int sid, int data_sid, int data_size) {
-	if(sid==-1 || data_sid == -1 || !data_size)
+static void symbol_alloc(int sid, int data_sid) {
+	if(sid == -1 || data_sid == -1)
 		return;
 	auto& e = bsdata<symboli>::get(sid);
 	if(e.instance.sid != -1)
 		return;
-	if(symbol_scope(sid) != PointerScope && !symbol(e.type, Predefined) && !symbol(e.type, Complete))
-		error("Use incomplete type `%1`", symbol_name(e.type));
 	e.instance.sid = data_sid;
-	if(data_sid == LocalSection)
-		e.instance.value = local_size(sid);
-	else {
+	e.instance.size = calculate_symbol_size(sid);
+	if(data_sid == LocalSection) {
+		if(current_scope) {
+			e.instance.value = current_scope->getsize();
+			current_scope->size += e.instance.size;
+		}
+	} else if(data_sid == ModuleSection) {
+		auto& et = bsdata<symboli>::get(module_sid);
+		et.instance.size += e.instance.size;
+	} else {
 		auto& s = bsdata<sectioni>::get(data_sid);
 		e.instance.value = s.size;
-		s.size += data_size;
+		s.size += e.instance.size;
 	}
 }
 
@@ -320,7 +331,7 @@ static bool isidentifier() {
 int find_symbol(int ids, int scope, int parent) {
 	for(auto& e : bsdata<symboli>()) {
 		if(e.ids == ids && e.scope == scope && e.parent == parent)
-			return &e - bsdata<symboli>::begin();
+			return e.getindex();
 	}
 	return -1;
 }
@@ -472,7 +483,9 @@ static int create_symbol(int id, int type, unsigned flags, int scope, int parent
 	p->value = -1;
 	p->instance.sid = -1;
 	p->instance.value = 0;
-	return p - bsdata<symboli>::begin();
+	p->instance.size = 0;
+	p->instance.frame = 0;
+	return p->getindex();
 }
 
 static int create_symbol(int ids, int type, unsigned flags, int scope, int parent, const char* error_format) {
@@ -511,16 +524,15 @@ static const char* get_type_url(const char* id) {
 }
 
 static void instance_symbol(int sid) {
-	auto size = symbol_size(sid);
 	auto section = ModuleSection;
 	if(symbol(sid, Static)) {
-		if(symbol_ast(sid)==-1)
+		if(symbol_ast(sid) == -1)
 			section = UDataSection;
 		else
 			section = DataSection;
-	} else if(symbol_scope(sid) != 0)
+	} else if(current_scope)
 		section = LocalSection;
-	symbol_alloc(sid, section, size);
+	symbol_alloc(sid, section);
 }
 
 static int create_module(int ids) {
@@ -544,8 +556,8 @@ static int create_module(int ids) {
 
 static int find_variable(int ids) {
 	auto sid = -1;
-	for(auto i = (int)scopes.count - 1; sid == -1 && i >= 0; i--)
-		sid = find_symbol(ids, scopes.data[i], module_sid);
+	for(auto p = current_scope; sid == -1 && p; p = p->previous)
+		sid = find_symbol(ids, p->scope, module_sid);
 	if(sid == -1 && function_params != -1)
 		sid = find_symbol(ids, 0, function_params);
 	if(sid == -1)
@@ -928,14 +940,6 @@ static void parse_assigment() {
 	}
 }
 
-static void push_visibility_scope() {
-	scopes.add(getmoduleposition());
-}
-
-static void pop_visibility_scope() {
-	scopes.count--;
-}
-
 static void parse_array_declaration(int sid) {
 	if(match("[")) {
 		auto index = const_number(expression());
@@ -964,7 +968,7 @@ static void parse_local_declaration() {
 
 static void parse_statement() {
 	if(match("{")) {
-		push_visibility_scope();
+		scopei push_scope(getmoduleposition());
 		auto push_p = p;
 		auto previous = -1;
 		while(*p && *p != '}') {
@@ -973,7 +977,6 @@ static void parse_statement() {
 			if(p == push_p)
 				break;
 		}
-		pop_visibility_scope();
 		skip("}");
 		add_op(previous);
 	} else if(match(";")) {
@@ -1078,13 +1081,18 @@ static void parse_declaration() {
 		auto ids = strings.add(last_string);
 		auto sid = create_symbol(ids, type, flags, -1, module_sid, "Module member `%1` is already defined");
 		if(match("(")) {
+			symbol_set(sid, Function);
 			auto push_params = function_params;
+			auto push_scope_maximum = scope_maximum;
+			scope_maximum = 0;
 			function_params = sid;
 			parse_parameters();
 			if(!match(";")) {
 				parse_statement();
 				symbol_ast(pop_op());
 			}
+			symbol_frame(sid, scope_maximum);
+			scope_maximum = push_scope_maximum;
 			function_params = push_params;
 			break;
 		} else {

@@ -15,7 +15,7 @@ enum symbol_s {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 };
 enum symbol_flag_s {
-	Static, Public, Predefined, UseRead, UseWrite, Complete,
+	Static, Public, Predefined, UseRead, UseWrite, Complete, Function,
 };
 enum scope_s {
 	TypeScope = -2, PointerScope = -3,
@@ -29,8 +29,10 @@ struct sectioni {
 	int			size;
 };
 struct offseti {
-	int			sid; // section identifier
+	int			sid; // section identifier, -1 for not instaced identifier
 	int			value; // offset from section base
+	int			size; // symbol size
+	int			frame; // symbol stack frame
 	void		alloc(int sid, int size);
 };
 struct symboli {
@@ -42,6 +44,7 @@ struct symboli {
 	int			count; // 0 - default, 1+ for array
 	unsigned	flags; // Some flags
 	offseti		instance;
+	int			getindex() const;
 	bool		is(symbol_flag_s v) const { return (flags & (1 << v)) != 0; }
 	bool		isarray() const { return count >= 0; }
 	bool		istype() const { return scope == TypeScope || scope == PointerScope; }
@@ -91,3 +94,4 @@ int symbol_type(int sid);
 offseti symbol_section(int sid);
 
 const char* string_name(int sid);
+const char* symbol_name(int sid);

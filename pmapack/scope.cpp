@@ -1,7 +1,7 @@
 #include "scope.h"
 
 scopei*	current_scope;
-int	locale_maximum;
+int	scope_maximum;
 
 scopei::scopei(int value) {
 	scope = value;
@@ -12,8 +12,8 @@ scopei::scopei(int value) {
 
 scopei::~scopei() {
 	auto n = getsize();
-	if(locale_maximum < n)
-		locale_maximum = n;
+	if(scope_maximum < n)
+		scope_maximum = n;
 	current_scope = previous;
 }
 

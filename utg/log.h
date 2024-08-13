@@ -1,15 +1,19 @@
 #pragma once
 
 namespace log {
-typedef void (*fnread)(const char* url);
-extern bool allowparse;
 struct contexti {
 	const char*	url;
 	const char*	file;
 };
+typedef void (*fnread)(const char* url);
+typedef void (*fnerror)(const char* position, const char* format);
+extern bool		allowparse;
+extern fnerror	error_proc;
+extern int		error_count;
 extern contexti	context;
 void			close();
 int				geterrors();
+int				getline(const char* pb, const char* pc);
 void			error(const char* position, const char* format, ...);
 void			errorv(const char* position, const char* format);
 const char*		read(const char* url, bool error_if_not_exist = true);
