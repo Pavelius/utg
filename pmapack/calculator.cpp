@@ -16,6 +16,7 @@ static long			last_number;
 static char			last_string[4096];
 static const char*	p;
 static const char*	p_start;
+static const char*	p_url;
 static stringa		strings;
 static int			operations[128];
 static int*			operation;
@@ -62,7 +63,7 @@ bool iserrors() {
 	return errors_count > 0;
 }
 
-int getsize(int type) {
+int predefined_symbol_size(int type) {
 	switch(type) {
 	case i8: case u8: return 1;
 	case i16: case u16: return 2;
@@ -71,10 +72,32 @@ int getsize(int type) {
 	}
 }
 
+static const char* create_example() {
+	static char temp[260]; stringbuilder sb(temp); sb.clear();
+	if(!p)
+		return 0;
+	auto p1 = p;
+	// Find line begin
+	while(p1 > p_start) {
+		if(p1[-1] == 10 || p1[-1] == 13 || p1[-1]==9)
+			break;
+		p1--;
+	}
+	// Skip until line end
+	while(*p1 && *p1 != 10 && *p1 != 13) {
+		sb.add(*p1);
+		p1++;
+		if(sb.isempthy())
+			break;
+	}
+	return temp;
+}
+
 static void error(const char* format, ...) {
 	errors_count++;
-	if(calculator_error_proc)
-		calculator_error_proc(format, xva_start(format));
+	if(!calculator_error_proc)
+		return;
+	calculator_error_proc(p_url, format, xva_start(format), create_example());
 }
 
 int define_ast(int sid) {
@@ -87,6 +110,13 @@ bool symbol(int sid, symbol_flag_s v) {
 	if(sid == -1)
 		return false;
 	return bsdata<symboli>::get(sid).is(v);
+}
+
+const char* symbol_name(int sid) {
+	if(sid == -1)
+		return "";
+	auto& e = bsdata<symboli>::get(sid);
+	return strings.get(e.ids);
 }
 
 void symbol_set(int sid, symbol_flag_s v) {
@@ -122,14 +152,21 @@ int symbol_size(int sid) {
 	auto type = symbol_type(sid);
 	if(symbol_scope(type) == PointerScope)
 		return 4;
-	auto result = getsize(type);
+	auto result = predefined_symbol_size(type);
 	if(!result) {
+		// Calculate each member size
 		for(auto& e : bsdata<symboli>()) {
 			if(e.parent == sid && e.scope == 0 && !e.is(Static))
 				result += symbol_size(&e - bsdata<symboli>::begin());
 		}
 	}
 	return result;
+}
+
+offseti symbol_section(int sid) {
+	if(sid == -1)
+		return {};
+	return bsdata<symboli>::get(sid).instance;
 }
 
 void symbol_type(int sid, int value) {
@@ -164,6 +201,8 @@ static void symbol_alloc(int sid, int data_sid, int data_size) {
 	auto& e = bsdata<symboli>::get(sid);
 	if(e.instance.sid != -1)
 		return;
+	if(symbol_scope(sid) != PointerScope && !symbol(e.type, Complete) && !symbol(e.type, Predefined))
+		error("Use incomplete type `%1`", symbol_name(e.type));
 	auto& s = bsdata<sectioni>::get(data_sid);
 	e.instance.sid = data_sid;
 	e.instance.value = s.size;
@@ -174,13 +213,6 @@ const char* string_name(int sid) {
 	if(sid == -1)
 		return "";
 	return strings.get(sid);
-}
-
-const char* symbol_name(int sid) {
-	if(sid == -1)
-		return "";
-	auto& e = bsdata<symboli>::get(sid);
-	return strings.get(e.ids);
 }
 
 static void skipws() {
@@ -472,14 +504,6 @@ static void instance_symbol(int sid) {
 	symbol_alloc(sid, section, size);
 }
 
-static void complete_module(int sid) {
-	auto pb = bsdata<symboli>::begin();
-	for(auto& e : bsdata<symboli>()) {
-		if(e.parent == sid && e.scope == 0 && e.instance.sid==-1)
-			instance_symbol(&e - pb);
-	}
-}
-
 static int create_module(int ids) {
 	auto sid = find_symbol(ids, TypeScope, 0);
 	if(sid == -1) {
@@ -492,7 +516,6 @@ static int create_module(int ids) {
 		module_sid = create_symbol(ids, -1, 0, TypeScope, 0);
 		symbol_type(module_sid, module_sid);
 		calculator_file_parse(url);
-		complete_module(module_sid);
 		symbol(module_sid, Complete);
 		sid = module_sid;
 		module_sid = push_module;
@@ -1046,6 +1069,8 @@ static void parse_declaration() {
 			break;
 		} else {
 			parse_array_declaration(sid);
+			if(!symbol(sid, Static))
+				instance_symbol(sid);
 			if(match("="))
 				symbol_ast(sid, initialization_list());
 			if(match(","))
@@ -1153,9 +1178,11 @@ void calculator_file_parse(const char* url) {
 	calculator_initialize();
 	auto push_p = p;
 	auto push_p_start = p_start;
-	p = p1; p_start = p1;
+	auto push_p_url = p_url;
+	p = p1; p_start = p1; p_url = url;
 	skipws();
 	parse_module();
+	p_url = push_p_url;
 	p_start = push_p_start;
 	p = push_p;
 	delete p1;

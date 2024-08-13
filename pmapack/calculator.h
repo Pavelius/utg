@@ -59,7 +59,7 @@ struct definei {
 	int			ast;
 };
 
-typedef void(*calculator_fnprint)(const char* format, const char* format_param);
+typedef void(*calculator_fnprint)(const char* header, const char* format, const char* format_param, const char* example);
 extern calculator_fnprint calculator_error_proc;
 
 void calculator_file_parse(const char* url);
@@ -80,12 +80,14 @@ int ast_add(operation_s op, int left, int right);
 int const_number(int ast);
 int define_ast(int sid);
 int dereference(int type);
-int getsize(int type);
 int find_symbol(int ids, int scope, int parent);
+int predefined_symbol_size(int type);
 int reference(int type);
 int symbol_ast(int sid);
 int symbol_scope(int sid);
 int symbol_size(int sid);
 int symbol_type(int sid);
+
+offseti symbol_section(int sid);
 
 const char* string_name(int sid);

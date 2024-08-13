@@ -30,7 +30,7 @@ static bool isnumber(int type) {
 	}
 }
 
-static void dereference(evaluei* p) {	
+static void dereference(evaluei* p) {
 }
 
 static int arifmetic(operation_s op, int v1, int v2) {
@@ -63,7 +63,7 @@ static void binary_operation(operation_s op, evaluei& e1, evaluei& e2) {
 	if(isnumber(e1.type) && isnumber(e2.type))
 		e1.value = arifmetic(op, e1.value, e2.value);
 	else if(isnumber(e2.type))
-		e1.value = arifmetic(op, e1.value, e2.value*getsize(dereference(e1.type)));
+		e1.value = arifmetic(op, e1.value, e2.value * symbol_size(dereference(e1.type)));
 }
 
 static void run_ast(evaluei& e, int v) {

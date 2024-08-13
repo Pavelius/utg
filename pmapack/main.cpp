@@ -5,7 +5,13 @@
 
 using namespace draw;
 
+static const char* last_url_error;
+
 void printcnf(const char* text);
+
+static void println() {
+	printcnf("\r\n");
+}
 
 static void printv(const char* format, const char* format_param) {
 	char temp[512]; stringbuilder sb(temp);
@@ -19,7 +25,7 @@ static void print(const char* format, ...) {
 
 static void println(const char* format, ...) {
 	printv(format, xva_start(format));
-	printcnf("\r\n");
+	println();
 }
 
 static void print_symbols() {
@@ -32,9 +38,17 @@ static void print_symbols() {
 	}
 }
 
-static void errorv(const char* format, const char* format_param) {
-	printcnf("Error: "); printv(format, format_param);
-	printcnf("\r\n");
+static void errorv(const char* url, const char* format, const char* format_param, const char* example) {
+	if(last_url_error != url) {
+		printcnf("Error when parsing `"); printcnf(url); printcnf("`");
+		println();
+		last_url_error = url;
+	}
+	printcnf(" "); printv(format, format_param);
+	if(example) {
+		printcnf(" in `"); printcnf(example); printcnf("`");
+	}
+	println();
 }
 
 static void initialize_parser() {

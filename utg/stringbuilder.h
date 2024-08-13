@@ -61,8 +61,9 @@ public:
 	static int			getnum(const char* v);
 	unsigned			getlenght() const { return p - pb; }
 	unsigned			getmaximum() const { return pe - pb - 1; }
-	bool				isempthy() const { return !pb || pb[0] == 0; }
 	static bool			ischa(unsigned char sym) { return (sym >= 'A' && sym <= 'Z') || (sym >= 'a' && sym <= 'z') || sym >= 0xC0; }
+	bool				isempthy() const { return !pb || pb[0] == 0; }
+	bool				isfull() const { return p >= pe; }
 	static bool			isnum(unsigned char sym) { return sym >= '0' && sym <= '9'; }
 	bool				ispos(const char* v) const { return p == v; }
 	static unsigned char lower(unsigned char sym);
