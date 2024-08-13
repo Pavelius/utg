@@ -9,7 +9,7 @@ struct imagei : nameable {
 	const char*	name;
 	const char*	suffix;
 	const char*	prefix;
-	point		position, center;
+	point		position, size, center;
 	int			count;
 	void*		object;
 };

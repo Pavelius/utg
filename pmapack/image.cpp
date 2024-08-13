@@ -144,17 +144,24 @@ static void read_fields(void* object, const bsreq* req, int key) {
 		read_field(object, req);
 }
 
+static void create_image(imagei* p) {
+	p->center = {-1, -1};
+	p->size = {-1, -1};
+}
+
 static void parse() {
 	while(allowparse && *p) {
 		skip("#");
 		auto header = bsdata<imagea>::add();
 		memset(header, 0, sizeof(*header));
+		create_image(header);
 		read_fields(header, bsmeta<imagea>::meta, 1);
 		nextline();
 		header->elements.setbegin();
 		while(ischa(*p)) {
 			auto element = bsdata<imagei>::add();
 			memset(element, 0, sizeof(*element));
+			create_image(element);
 			read_fields(element, bsmeta<imagei>::meta, 1);
 			nextline();
 		}
