@@ -195,18 +195,42 @@ void symbol_scope(int sid, int value) {
 	e.scope = value;
 }
 
+static int getscope() {
+	if(scopes)
+		return scopes[scopes.count - 1];
+	return 0;
+}
+
+static int local_size(int sid) {
+	auto scope = getscope();
+	auto scope_size = 0;
+	for(auto& e : bsdata<symboli>()) {
+		if(e.parent == module_sid && e.scope == scope) {
+			auto esid = bsdata<symboli>::begin() - &e;
+			if(esid == sid)
+				break;
+			scope_size += symbol_size(esid);
+		}
+	}
+	return scope_size;
+}
+
 static void symbol_alloc(int sid, int data_sid, int data_size) {
 	if(sid==-1 || data_sid == -1 || !data_size)
 		return;
 	auto& e = bsdata<symboli>::get(sid);
 	if(e.instance.sid != -1)
 		return;
-	if(symbol_scope(sid) != PointerScope && !symbol(e.type, Complete) && !symbol(e.type, Predefined))
+	if(symbol_scope(sid) != PointerScope && !symbol(e.type, Predefined) && !symbol(e.type, Complete))
 		error("Use incomplete type `%1`", symbol_name(e.type));
-	auto& s = bsdata<sectioni>::get(data_sid);
 	e.instance.sid = data_sid;
-	e.instance.value = s.size;
-	s.size += data_size;
+	if(data_sid == LocalSection)
+		e.instance.value = local_size(sid);
+	else {
+		auto& s = bsdata<sectioni>::get(data_sid);
+		e.instance.value = s.size;
+		s.size += data_size;
+	}
 }
 
 const char* string_name(int sid) {
@@ -356,12 +380,6 @@ int ast_add(operation_s op, int left, int right) {
 	return sid;
 }
 
-static int getscope() {
-	if(scopes)
-		return scopes[scopes.count - 1];
-	return 0;
-}
-
 static int ast_add(operation_s op, int value) {
 	return ast_add(op, -1, value);
 }
@@ -500,7 +518,8 @@ static void instance_symbol(int sid) {
 			section = UDataSection;
 		else
 			section = DataSection;
-	}
+	} else if(symbol_scope(sid) != 0)
+		section = LocalSection;
 	symbol_alloc(sid, section, size);
 }
 
@@ -933,6 +952,7 @@ static void parse_local_declaration() {
 		auto ids = strings.add(last_string);
 		auto sid = create_symbol(ids, type, flags, -1, module_sid);
 		parse_array_declaration(sid);
+		instance_symbol(sid);
 		if(match("="))
 			symbol_ast(sid, initialization_list());
 		skip(";");
@@ -1159,6 +1179,7 @@ static void symbol_initialize() {
 	add_symbol(i64, "long");
 	add_symbol(u64, "ulong");
 	add_symbol(ModuleSection, ".module");
+	add_symbol(LocalSection, ".local");
 	add_symbol(DataSection, ".data");
 	add_symbol(UDataSection, ".bss");
 }

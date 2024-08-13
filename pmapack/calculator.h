@@ -21,7 +21,7 @@ enum scope_s {
 	TypeScope = -2, PointerScope = -3,
 };
 enum section_s {
-	ModuleSection, DataSection, UDataSection,
+	ModuleSection, LocalSection, DataSection, UDataSection,
 };
 struct sectioni {
 	int			ids;

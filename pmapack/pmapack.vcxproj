@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="calculator.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="scope.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="scripter.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="calculator.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="scope.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="example.txt" />
