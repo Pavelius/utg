@@ -4,8 +4,6 @@
 #include "nameable.h"
 #include "point.h"
 
-typedef void(*fnimagemsg)(const char* format, const char* format_param);
-
 const int DefaultImageNumber = -1000;
 
 struct imagei : nameable {
@@ -24,7 +22,6 @@ struct imageplugini : nameable {
 	fnevent		proc;
 };
 extern imagei last_image;
-extern fnimagemsg image_errorv_proc, image_messagev_proc;
 
 void image_read(const char* url);
 void image_run(const char* id);

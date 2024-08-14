@@ -3,21 +3,55 @@
 #include "log.h"
 #include "stringbuilder.h"
 
-bool log::allowparse = true;
 log::contexti log::context;
+
+bool log::allowparse = true;
 int log::error_count;
 
-void log::errorv(const char* position, const char* format) {
+static void print_file_error(const char* format) {
 	static io::file file("errors.txt", StreamWrite | StreamText);
 	if(!file)
 		return;
-	error_count++;
-	if(position && context.file)
-		file << " Line " << getline(context.file, position) << ": ";
-	file << format << "\n";
+	file << format;
+}
+log::fnprint log::print_proc = print_file_error;
+
+void log::printv(const char* format) {
+	if(!print_proc)
+		return;
+	print_proc(format);
 }
 
-log::fnerror log::error_proc = log::errorv;
+void log::printv(const char* format, const char* format_param) {
+	char temp[4096]; stringbuilder sb(temp);
+	sb.addv(format, format_param);
+	printv(temp);
+}
+
+void log::print(const char* format, ...) {
+	printv(format, xva_start(format));
+}
+
+void log::println() {
+	printv("\n\r");
+}
+
+void log::errorv(const char* position, const char* format, const char* format_param) {
+	error_count++;
+	if(context.url) {
+		print("In file `%1`:", context.url);
+		println();
+		context.url = 0;
+	}
+	if(position && context.file)
+		print(" Line %1i: ", getline(context.file, position));
+	printv(format, format_param);
+	println();
+}
+
+void log::error(const char* position, const char* format, ...) {
+	errorv(position, format, xva_start(format));
+}
 
 void log::setfile(const char* v) {
 	context.file = v;
@@ -61,18 +95,6 @@ int log::getline(const char* pb, const char* pc) {
 		r++;
 	}
 	return r;
-}
-
-void log::error(const char* position, const char* format, ...) {
-	char temp[4096]; stringbuilder sb(temp);
-	if(context.url) {
-		sb.add("In file `%1`:", context.url);
-		context.url = 0;
-		error_proc(0, temp);
-		sb.clear();
-	}
-	sb.addv(format, xva_start(format));
-	error_proc(position, temp);
 }
 
 int log::geterrors() {

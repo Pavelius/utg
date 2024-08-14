@@ -11,8 +11,6 @@ static char			last_string[512];
 static int			last_value;
 imagei				last_image;
 
-fnimagemsg image_errorv_proc, image_messagev_proc;
-
 static void skipws() {
 	p = skipws(p);
 }
