@@ -41,7 +41,7 @@ static void println(const char* format, ...) {
 static void print_error(const char* position, const char* format) {
 	log::error_count++;
 	if(position && log::context.file)
-		print(" Line %1i:", log::getline(log::context.file, position));
+		print(" Line %1i: ", log::getline(log::context.file, position));
 	print(format);
 	println();
 }
@@ -50,7 +50,6 @@ static void image_test() {
 	image_read("example.txt");
 	if(log::geterrors() > 0)
 		return;
-	println("Read %1i header and %2i elements", bsdata<imagea>::source.getcount(), bsdata<imagei>::source.getcount());
 	image_run("Main");
 }
 

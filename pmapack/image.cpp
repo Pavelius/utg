@@ -11,8 +11,6 @@ static char			last_string[512];
 static int			last_value;
 imagei				last_image;
 
-const int DefaultImageNumber = -1000;
-
 fnimagemsg image_errorv_proc, image_messagev_proc;
 
 static void skipws() {
@@ -120,7 +118,7 @@ static void write_value(void* object, const bsreq* req, int index) {
 		auto data = (unsigned char*)req->ptr(object);
 		data[last_value / 8] |= 1 << (last_value % 8);
 	} else
-		log::error(p, "Unknown type in requisit `%1`", req->id);
+		error(p, "Unknown type in requisit `%1`", req->id);
 }
 
 static void read_field(void* object, const bsreq* req) {
@@ -129,7 +127,7 @@ static void read_field(void* object, const bsreq* req) {
 		return;
 	auto pr = req->find(last_string);
 	if(!pr)
-		error("Can\'t find requisit `%1`", last_string);
+		error(p, "Can\'t find requisit `%1`", last_string);
 	skip("(");
 	auto index = 0;
 	while(*p) {
@@ -155,7 +153,7 @@ static void create_image(imagei* p) {
 	p->center = {DefaultImageNumber, DefaultImageNumber};
 	p->size = {DefaultImageNumber, DefaultImageNumber};
 	p->position = {DefaultImageNumber, DefaultImageNumber};
-	p->count = DefaultImageNumber;
+	p->param = DefaultImageNumber;
 }
 
 static void parse() {
@@ -255,7 +253,7 @@ static void add_image(const imagei& e) {
 	add_value(last_image.dest_url, e.dest_url);
 	add_value(last_image.name, e.name);
 	add_value(last_image.ext, e.ext);
-	add_value(last_image.count, e.count);
+	add_value(last_image.param, e.param);
 	add_value(last_image.center, e.center);
 	add_value(last_image.position, e.position);
 	add_value(last_image.size, e.size);

@@ -6,13 +6,15 @@
 
 typedef void(*fnimagemsg)(const char* format, const char* format_param);
 
+const int DefaultImageNumber = -1000;
+
 struct imagei : nameable {
 	const char*	url;
 	const char*	name;
 	const char*	ext;
 	const char*	dest_url;
 	point		position, size, center;
-	int			count, bpp;
+	int			param, bpp;
 	void*		object;
 };
 struct imagea : imagei {

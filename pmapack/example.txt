@@ -1,13 +1,13 @@
-#TerrainLarge name("h_tiles_%1")
+#TerrainLarge name("h_tiles_%1") size(80 80)
 
 LoadImage
-CreateSprite count(32)
+CreateSprite param(32)
 AddFrame position(10 10)
 AddFrame position(20 10)
 AddFrame position(30 10)
 AddFrame position(40 10)
 SaveSprite
 
-#Main url("D:/resources/hexagon/redux/Terrain") ext("png") dest_url("test")
+#Main url("D:/resources/hexagon/redux/terrain") ext("png") dest_url("test")
 
 TerrainLarge name("c_forest")
