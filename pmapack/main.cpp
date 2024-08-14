@@ -8,6 +8,8 @@ using namespace draw;
 
 static const char* last_url_error;
 
+void initialize_image_plugins();
+void initialize_png();
 void printcnf(const char* text);
 
 static void println() {
@@ -18,6 +20,13 @@ static void printv(const char* format, const char* format_param) {
 	char temp[512]; stringbuilder sb(temp);
 	sb.addv(format, format_param);
 	printcnf(temp);
+}
+
+static void printlnv(const char* format, const char* format_param) {
+	char temp[512]; stringbuilder sb(temp);
+	sb.addv(format, format_param);
+	printcnf(temp);
+	println();
 }
 
 static void print(const char* format, ...) {
@@ -120,6 +129,10 @@ static void print_error(const char* position, const char* format) {
 }
 
 static void image_test() {
+	initialize_png();
+	initialize_image_plugins();
+	image_errorv_proc = printlnv;
+	image_messagev_proc = printlnv;
 	auto push_error = log::error_proc;
 	log::error_proc = print_error;
 	image_read("example.txt");
@@ -127,6 +140,7 @@ static void image_test() {
 	if(log::geterrors() > 0)
 		return;
 	println("Read %1i header and %2i elements", bsdata<imagea>::source.getcount(), bsdata<imagei>::source.getcount());
+	image_run("Main");
 }
 
 int main() {

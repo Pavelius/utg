@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="calculator.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="image_plugin.cpp" />
     <ClCompile Include="scope.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />

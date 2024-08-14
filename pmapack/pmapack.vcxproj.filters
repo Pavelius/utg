@@ -30,6 +30,9 @@
     <ClCompile Include="scope.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="image_plugin.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">

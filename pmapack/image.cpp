@@ -9,6 +9,11 @@ using namespace log;
 static const char*	p;
 static char			last_string[512];
 static int			last_value;
+imagei				last_image;
+
+const int DefaultImageNumber = -1000;
+
+fnimagemsg image_errorv_proc, image_messagev_proc;
 
 static void skipws() {
 	p = skipws(p);
@@ -74,6 +79,8 @@ static void read_value() {
 		last_value = 1;
 	else if(match("false"))
 		last_value = 0;
+	else if(match("default"))
+		last_value = DefaultImageNumber;
 	else if(ischa(*p)) {
 		readid();
 	} else if(*p == '"') {
@@ -145,8 +152,10 @@ static void read_fields(void* object, const bsreq* req, int key) {
 }
 
 static void create_image(imagei* p) {
-	p->center = {-1, -1};
-	p->size = {-1, -1};
+	p->center = {DefaultImageNumber, DefaultImageNumber};
+	p->size = {DefaultImageNumber, DefaultImageNumber};
+	p->position = {DefaultImageNumber, DefaultImageNumber};
+	p->count = DefaultImageNumber;
 }
 
 static void parse() {
@@ -169,6 +178,18 @@ static void parse() {
 	}
 }
 
+static void image_after_read() {
+	for(auto& e : bsdata<imagei>()) {
+		if(e.object)
+			continue;
+		e.object = bsdata<imagea>::find(e.id);
+		if(!e.object)
+			e.object = bsdata<imageplugini>::find(e.id);
+		if(!e.object)
+			error(0, " Don`t find image plugin of list `%1`", e.id);
+	}
+}
+
 void image_read(const char* url) {
 	pushvalue push(context);
 	pushvalue push_parser(p);
@@ -178,4 +199,94 @@ void image_read(const char* url) {
 	skipws();
 	parse();
 	close();
+	image_after_read();
+}
+
+const char* image_source_url() {
+	static char temp[1024]; stringbuilder sb(temp); sb.clear();
+	if(last_image.url && last_image.url[0]) {
+		sb.add(last_image.url);
+		sb.add("/");
+	}
+	if(last_image.name && last_image.name[0])
+		sb.add(last_image.name);
+	if(last_image.ext && last_image.ext[0]) {
+		sb.add(".");
+		sb.add(last_image.ext);
+	}
+	return temp;
+}
+
+const char* image_dest_url() {
+	static char temp[1024]; stringbuilder sb(temp); sb.clear();
+	if(last_image.dest_url && last_image.dest_url[0]) {
+		sb.add(last_image.dest_url);
+		sb.add("/");
+	}
+	if(last_image.name && last_image.name[0]) {
+		sb.add(last_image.name);
+		sb.add(".pma");
+	}
+	return temp;
+}
+
+static void add_value(point& d, point s) {
+	if(s.x != DefaultImageNumber)
+		d.x = s.x;
+	if(s.y != DefaultImageNumber)
+		d.y = s.y;
+}
+
+static void add_value(int& d, int s) {
+	if(s != DefaultImageNumber)
+		d = s;
+}
+
+static void add_value(const char*& d, const char* s) {
+	if(!s)
+		return;
+	char temp[512]; stringbuilder sb(temp);
+	sb.add(s, d);
+	d = szdup(temp);
+}
+
+static void add_image(const imagei& e) {
+	add_value(last_image.url, e.url);
+	add_value(last_image.dest_url, e.dest_url);
+	add_value(last_image.name, e.name);
+	add_value(last_image.ext, e.ext);
+	add_value(last_image.count, e.count);
+	add_value(last_image.center, e.center);
+	add_value(last_image.position, e.position);
+	add_value(last_image.size, e.size);
+}
+
+static void image_run(const imagea& list) {
+	auto push_image = last_image;
+	add_image(list);
+	auto core_copy = last_image;
+	for(auto& e : list.elements) {
+		last_image = core_copy; add_image(e);
+		if(bsdata<imagea>::have(e.object)) {
+			auto p = (imagea*)e.object;
+			image_run(*p);
+		} else if(bsdata<imageplugini>::have(e.object)) {
+			auto p = (imageplugini*)e.object;
+			p->proc();
+		}
+	}
+	last_image = push_image;
+}
+
+void image_run(const char* id) {
+	auto p = bsdata<imagea>::find(id);
+	if(!p)
+		return;
+	auto push_image = last_image;
+	memset(&last_image, 0, sizeof(last_image));
+	last_image.center = {-1, -1};
+	last_image.size = {-1, -1};
+	last_image.bpp = 32;
+	image_run(*p);
+	last_image = push_image;
 }

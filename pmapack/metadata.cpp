@@ -9,13 +9,15 @@ NOBSDATA(point)
 
 BSMETA(imagei) = {
 	BSREQ(id),
-	BSREQ(name), BSREQ(url), BSREQ(suffix), BSREQ(prefix),
-	BSREQ(position), BSREQ(center), BSREQ(count),
+	BSREQ(name), BSREQ(url), BSREQ(dest_url), BSREQ(ext),
+	BSREQ(position), BSREQ(center),
+	BSREQ(count), BSREQ(bpp),
 	{}};
 BSMETA(imagea) = {
 	BSREQ(id),
-	BSREQ(name), BSREQ(url), BSREQ(suffix), BSREQ(prefix),
-	BSREQ(position), BSREQ(center), BSREQ(count),
+	BSREQ(name), BSREQ(url), BSREQ(dest_url), BSREQ(ext),
+	BSREQ(position), BSREQ(center),
+	BSREQ(count), BSREQ(bpp),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
