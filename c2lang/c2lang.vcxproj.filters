@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="code">
+      <UniqueIdentifier>{1623b5ba-a52d-4525-9dab-80d07f4802cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{d436db67-31c7-4496-91bd-c119f51a7721}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="code\project\test\main.c2">
+      <Filter>code</Filter>
+    </None>
+    <None Include="code\project\test\point.c2">
+      <Filter>code</Filter>
+    </None>
+    <None Include="code\project\test\rect.c2">
+      <Filter>code</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="calculator.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scope.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scripter.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="calculator.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="scope.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{30aa14cf-8bb0-43cf-9d09-25111e4484fe}</ProjectGuid>
-    <RootNamespace>pmapack</RootNamespace>
+    <ProjectGuid>{fd96e8ed-f077-4511-b548-d94563ef8673}</ProjectGuid>
+    <RootNamespace>c2lang</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -80,7 +80,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,21 +131,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="code\project\test\main.c2" />
+    <None Include="code\project\test\point.c2" />
+    <None Include="code\project\test\rect.c2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="calculator.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="scope.cpp" />
+    <ClCompile Include="scripter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="calculator.h" />
+    <ClInclude Include="scope.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
       <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="image.cpp" />
-    <ClCompile Include="image_plugin.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="metadata.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="image.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="example.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

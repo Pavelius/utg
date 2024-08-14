@@ -7,9 +7,6 @@
     <Filter Include="data">
       <UniqueIdentifier>{585452fe-bf68-488c-a33a-6ceb431757d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="code">
-      <UniqueIdentifier>{f755cb03-4c0e-4599-942e-af75fd603804}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,15 +18,6 @@
     <ClCompile Include="metadata.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="calculator.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="scripter.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="scope.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="image_plugin.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -38,27 +26,10 @@
     <ClInclude Include="image.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="calculator.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="scope.h">
-      <Filter>logic</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="example.txt">
       <Filter>data</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="code\project\test\main.c2">
-      <Filter>code</Filter>
-    </None>
-    <None Include="code\project\test\rect.c2">
-      <Filter>code</Filter>
-    </None>
-    <None Include="code\project\test\point.c2">
-      <Filter>code</Filter>
-    </None>
   </ItemGroup>
 </Project>
