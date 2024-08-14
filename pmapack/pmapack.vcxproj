@@ -148,6 +148,13 @@
   <ItemGroup>
     <Text Include="example.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test\h_tiles_canal.pma" />
+    <None Include="test\h_tiles_c_forest.pma">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="test\h_tiles_d_forest.pma" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

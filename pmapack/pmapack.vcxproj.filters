@@ -32,4 +32,15 @@
       <Filter>data</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="test\h_tiles_c_forest.pma">
+      <Filter>data</Filter>
+    </None>
+    <None Include="test\h_tiles_canal.pma">
+      <Filter>data</Filter>
+    </None>
+    <None Include="test\h_tiles_d_forest.pma">
+      <Filter>data</Filter>
+    </None>
+  </ItemGroup>
 </Project>
