@@ -46,14 +46,14 @@ static void load_image() {
 
 static void default_sprite_coordinates() {
 	
-	if(last_image.size.x == DefaultImageNumber)
+	if(last_image.size.x == -1)
 		last_image.size.x = bitmap.width;
-	if(last_image.size.y == DefaultImageNumber)
+	if(last_image.size.y == -1)
 		last_image.size.y = bitmap.height;
 
-	if(last_image.center.x == DefaultImageNumber)
+	if(last_image.center.x == -1)
 		last_image.center.x = last_image.size.x / 2;
-	if(last_image.center.y == DefaultImageNumber)
+	if(last_image.center.y == -1)
 		last_image.center.y = last_image.size.y / 2;
 
 }

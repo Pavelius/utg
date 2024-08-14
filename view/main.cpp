@@ -139,8 +139,13 @@ void mainview(const char* url) {
 			image(x, y, pi, current_frame, flags_image);
 		else
 			image(0, 0, pi, current_frame, ImageNoOffset | flags_image);
-		if(setting::show::offset)
+		if(setting::show::offset) {
+			auto push_caret = caret;
+			caret.x = x;
+			caret.y = y;
 			show_marker(sx, sy);
+			caret = push_caret;
+		}
 		sb.clear();
 		sb.add("[%2i/%3i](%4i,%5i, size=%6ix%7i)", szfname(url), current, maximum, sx, sy, cx, cy);
 		if(animated_sprite)

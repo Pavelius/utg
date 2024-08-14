@@ -1,11 +1,11 @@
-#TerrainLarge name("h_tiles_%1") size(80 80)
+#TerrainLarge name("h_tiles_%1") size(102 88)
 
 LoadImage
 CreateSprite param(32)
-AddFrame position(10 10)
-AddFrame position(20 10)
-AddFrame position(30 10)
-AddFrame position(40 10)
+AddFrame position(0 0) size(102 84)
+AddFrame position(0 88) size(102 84)
+AddFrame position(0 176) size(102 84)
+AddFrame position(0 264) size(102 84)
 SaveSprite
 
 #Main url("D:/resources/hexagon/redux/terrain") ext("png") dest_url("test")

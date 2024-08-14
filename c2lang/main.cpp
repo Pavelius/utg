@@ -104,6 +104,7 @@ static void errorv(const char* url, const char* format, const char* format_param
 }
 
 static void initialize_parser() {
+	log::print_proc = printcnf;
 	calculator_error_proc = errorv;
 }
 

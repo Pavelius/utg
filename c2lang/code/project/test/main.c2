@@ -36,7 +36,7 @@ int main() {
 	int b = fnfive(zero_hive(4)+4);
 	int c = 10;
 	if(x+b < 10)
-		return;
+		return -1;
 	for(int i=1; i<10; i++)
 		b = b + zero_hive(i);
 	x = 12;
