@@ -42,7 +42,10 @@ static void skipline() {
 
 static void nextline() {
 	skipline();
-	p = skipspcr(p);
+	while(*p == 10 || *p == 13) {
+		p = skipspcr(p);
+		skipws();
+	}
 }
 
 static void skip(const char* command) {
@@ -52,6 +55,50 @@ static void skip(const char* command) {
 		error(p, "Expected token `%1`", command);
 		allowparse = false;
 	}
+}
+
+static int number() {
+	int r = 0;
+	if(*p == '-' || isnum(*p)) {
+		auto minus = false;
+		if(*p == '-') {
+			minus = true;
+			p++;
+		}
+		p = stringbuilder::read(p, r);
+		if(minus)
+			r = -r;
+	}
+	return r;
+}
+
+static int multiplication() {
+	auto r = number();
+	while((p[0] == '*' || p[0] == '/' || p[0] == '%') && p[1] != '=') {
+		char s = *p++;
+		skipws();
+		auto n = number();
+		switch(s) {
+		case '/': r /= n; break;
+		case '%': r %= n; break;
+		default: r *= n; break;
+		}
+	}
+	return r;
+}
+
+static int expression() {
+	auto r = multiplication();
+	while((p[0] == '+' || p[0] == '-') && p[1] != '=') {
+		char s = *p++;
+		skipws();
+		auto n = multiplication();
+		switch(s) {
+		case '-': r -= n; break;
+		default: r += n; break;
+		}
+	}
+	return r;
 }
 
 static void readid() {
@@ -84,14 +131,7 @@ static void read_value() {
 		p = sb.psstr(p + 1, '"');
 		skipws();
 	} else if(isnum(*p) || *p == '-') {
-		auto minus = false;
-		if(*p == '-') {
-			minus = true;
-			p++;
-		}
-		p = stringbuilder::read(p, last_value);
-		if(minus)
-			last_value = -last_value;
+		last_value = expression();
 		skipws();
 	} else {
 		error(p, "Unknown value");
@@ -213,7 +253,7 @@ const char* image_source_url() {
 	return temp;
 }
 
-const char* image_dest_url() {
+const char* image_dest_url(const char* ext) {
 	static char temp[1024]; stringbuilder sb(temp); sb.clear();
 	if(last_image.dest_url && last_image.dest_url[0]) {
 		sb.add(last_image.dest_url);
@@ -221,7 +261,10 @@ const char* image_dest_url() {
 	}
 	if(last_image.name && last_image.name[0]) {
 		sb.add(last_image.name);
-		sb.add(".pma");
+		if(!ext)
+			ext = "pma";
+		sb.add(".");
+		sb.add(ext);
 	}
 	return temp;
 }

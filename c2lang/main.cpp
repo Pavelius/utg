@@ -83,7 +83,7 @@ static void print_symbols() {
 		auto size = e.instance.size;
 		if(size)
 			print(" size(%1i)", size);
-		auto frame = e.instance.frame;
+		auto frame = e.frame;
 		if(frame)
 			print(" frame(%1i)", frame);
 		println();

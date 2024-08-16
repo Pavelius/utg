@@ -174,7 +174,7 @@ static int calculate_symbol_size(int sid) {
 void symbol_frame(int sid, int value) {
 	if(sid == -1)
 		return;
-	bsdata<symboli>::get(sid).instance.frame = value;
+	bsdata<symboli>::get(sid).frame = value;
 }
 
 offseti symbol_section(int sid) {
@@ -231,7 +231,7 @@ static void symbol_alloc(int sid, int data_sid) {
 	e.instance.size = calculate_symbol_size(sid);
 	if(data_sid == LocalSection) {
 		if(current_scope) {
-			e.instance.value = current_scope->getsize();
+			e.instance.offset = current_scope->getsize();
 			current_scope->size += e.instance.size;
 		}
 	} else if(data_sid == ModuleSection) {
@@ -239,7 +239,7 @@ static void symbol_alloc(int sid, int data_sid) {
 		et.instance.size += e.instance.size;
 	} else {
 		auto& s = bsdata<sectioni>::get(data_sid);
-		e.instance.value = s.size;
+		e.instance.offset = s.size;
 		s.size += e.instance.size;
 	}
 }
@@ -481,10 +481,10 @@ static int create_symbol(int id, int type, unsigned flags, int scope, int parent
 	p->type = type;
 	p->flags = flags;
 	p->value = -1;
+	p->frame = 0;
 	p->instance.sid = -1;
-	p->instance.value = 0;
+	p->instance.offset = 0;
 	p->instance.size = 0;
-	p->instance.frame = 0;
 	return p->getindex();
 }
 

@@ -26,7 +26,7 @@ static void println(const char* format, ...) {
 }
 
 static void image_test() {
-	image_read("example.txt");
+	image_read("herbs.txt");
 	if(log::geterrors() > 0)
 		return;
 	image_run("Main");

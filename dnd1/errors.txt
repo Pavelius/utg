@@ -1,2 +1,3 @@
 ﻿In file `Names.txt`:
-Light: Define translate
+Wererat: Define translate
+

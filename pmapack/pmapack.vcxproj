@@ -143,17 +143,24 @@
     <ClCompile Include="metadata.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scope.h" />
     <ClInclude Include="image.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="example.txt" />
+    <Text Include="herbs.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\h_tiles_canal.pma" />
+    <None Include="test\herbs.pma" />
+    <None Include="test\h_tiles_canal.pma">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
     <None Include="test\h_tiles_c_forest.pma">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
-    <None Include="test\h_tiles_d_forest.pma" />
+    <None Include="test\h_tiles_d_forest.pma">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

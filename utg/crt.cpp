@@ -401,6 +401,14 @@ int array::find(int i1, int i2, void* value, unsigned offset, size_t size) const
 	return -1;
 }
 
+void array::sort(int i1, int i2, fncompare compare) {
+	if(i2 == -1)
+		i2 = count;
+	if(i1 == -1)
+		i1 = 0;
+	qsort((char*)data + i1 * size, i2 - i1, size, compare);
+}
+
 void array::sort(int i1, int i2, pcompare compare, void* param) {
 	if(i2 == -1)
 		i2 = count;

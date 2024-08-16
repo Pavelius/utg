@@ -28,15 +28,17 @@ typedef decltype(sizeof(0)) size_t;
 #define NOBSDATA(e) template<> struct bsdata<e> : bsdata<int> {};
 #define assert_enum(e, last) static_assert(sizeof(bsdata<e>::elements) / sizeof(bsdata<e>::elements[0]) == static_cast<int>(last) + 1, "Invalid count of " #e " elements"); BSDATAF(e)
 
+typedef int(*fncompare)(const void*, const void*);
+
 extern "C" int						atexit(void(*func)(void));
-extern "C" void*					bsearch(const void* key, const void* base, unsigned num, size_t size, int(*compar)(const void*, const void*));
+extern "C" void*					bsearch(const void* key, const void* base, unsigned num, size_t size, fncompare compare);
 extern "C" void						exit(int exit_code);
 extern "C" int						memcmp(const void* p1, const void* p2, size_t size) noexcept(true);
 extern "C" void*					memmove(void* destination, const void* source, size_t size) noexcept(true);
 extern "C" void*					memchr(const void* ptr, int value, long unsigned num);
 extern "C" void*					memcpy(void* destination, const void* source, long unsigned size) noexcept(true);
 extern "C" void*					memset(void* destination, int value, long unsigned size) noexcept(true);
-extern "C" void						qsort(void* base, unsigned num, long unsigned size, int(*compar)(const void*, const void*));
+extern "C" void						qsort(void* base, unsigned num, long unsigned size, fncompare compare);
 extern "C" int						rand(void); // Get next random value
 extern "C" void						srand(unsigned seed); // Set random seed
 extern "C" int						strcmp(const char* s1, const char* s2) noexcept(true); // Compare two strings
@@ -166,8 +168,10 @@ public:
 	void							shift(int i1, int i2, size_t c1, size_t c2);
 	void							setcount(unsigned value) { count = value; }
 	void							setup(size_t size);
+	void							sort(int i1, int i2, fncompare compare);
 	void							sort(int i1, int i2, pcompare compare, void* param);
 	void							sort(pcompare compare, void* param) { sort(-1, -1, compare, param); }
+	void							sort(fncompare compare) { sort(-1, -1, compare); }
 	void							swap(int i1, int i2);
 };
 template<class T> class vector : public array {

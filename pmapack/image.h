@@ -15,16 +15,17 @@ struct imagei : nameable {
 	int			param, bpp;
 	void*		object;
 };
+extern imagei last_image;
 struct imagea : imagei {
 	sliceu<imagei> elements;
 };
 struct imageplugini : nameable {
 	fnevent		proc;
+	const char*	description;
 };
-extern imagei last_image;
 
 void image_read(const char* url);
 void image_run(const char* id);
 
 const char* image_source_url();
-const char* image_dest_url();
+const char* image_dest_url(const char* ext = 0);

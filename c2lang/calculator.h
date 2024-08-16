@@ -30,9 +30,8 @@ struct sectioni {
 };
 struct offseti {
 	int			sid; // section identifier, -1 for not instaced identifier
-	int			value; // offset from section base
+	int			offset; // offset from section base
 	int			size; // symbol size
-	int			frame; // symbol stack frame
 	void		alloc(int sid, int size);
 };
 struct symboli {
@@ -43,6 +42,7 @@ struct symboli {
 	int			value; // initialization value
 	int			count; // 0 - default, 1+ for array
 	unsigned	flags; // Some flags
+	int			frame; // symbol stack frame
 	offseti		instance;
 	int			getindex() const;
 	bool		is(symbol_flag_s v) const { return (flags & (1 << v)) != 0; }

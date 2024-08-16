@@ -2,11 +2,11 @@
 
 struct scopei {
 	scopei* previous;
-	int	scope;
-	int	size;
+	int		scope;
+	int		size;
 	scopei(int value);
 	~scopei();
-	int	getsize() const;
+	int		getsize() const;
 };
 extern scopei* current_scope;
 extern int scope_maximum;

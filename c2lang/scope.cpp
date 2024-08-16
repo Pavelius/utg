@@ -1,7 +1,7 @@
 #include "scope.h"
 
 scopei*	current_scope;
-int	scope_maximum;
+int		scope_maximum;
 
 scopei::scopei(int value) {
 	scope = value;

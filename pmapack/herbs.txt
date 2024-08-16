@@ -1,0 +1,61 @@
+#ConvertHerbs name("herbs") size(32 32) center(16 16)
+
+LoadImage
+CreateSprite param(44)
+
+AddFrame position(94+0*32 160)
+AddFrame position(94+1*32 160)
+AddFrame position(94+2*32 160)
+AddFrame position(94+3*32 160)
+AddFrame position(94+4*32 160)
+AddFrame position(94+5*32 160)
+AddFrame position(94+6*32 160)
+AddFrame position(94+7*32 160)
+AddFrame position(94+8*32 160)
+AddFrame position(94+9*32 160)
+
+AddFrame position(94+0*32 160+1*32)
+AddFrame position(94+1*32 160+1*32)
+AddFrame position(94+2*32 160+1*32)
+AddFrame position(94+3*32 160+1*32)
+AddFrame position(94+4*32 160+1*32)
+AddFrame position(94+5*32 160+1*32)
+AddFrame position(94+6*32 160+1*32)
+AddFrame position(94+7*32 160+1*32)
+AddFrame position(94+8*32 160+1*32)
+AddFrame position(94+9*32 160+1*32)
+
+AddFrame position(94+0*32 160+2*32)
+AddFrame position(94+1*32 160+2*32)
+AddFrame position(94+2*32 160+2*32) size(32 29)
+AddFrame position(94+3*32 160+2*32)
+AddFrame position(94+4*32 160+2*32)
+AddFrame position(94+5*32 160+2*32)
+AddFrame position(94+6*32 160+2*32)
+AddFrame position(94+7*32 160+2*32)
+AddFrame position(94+8*32 160+2*32)
+AddFrame position(94+9*32 160+2*32)
+
+AddFrame position(94+0*32 160+3*32)
+AddFrame position(94+1*32 160+3*32)
+AddFrame position(94+2*32 160+3*32)
+AddFrame position(94+3*32 160+3*32)
+AddFrame position(94+4*32 160+3*32)
+AddFrame position(94+5*32 160+3*32)
+AddFrame position(94+6*32 160+3*32)
+AddFrame position(94+7*32 160+3*32)
+AddFrame position(94+8*32 160+3*32)
+AddFrame position(94+9*32 160+3*32)
+
+AddFrame position(0+0*32 224) center(13 24)
+AddFrame position(0+1*32 224)
+AddFrame position(0+0*32 256)
+AddFrame position(0+1*32 256)
+
+SaveSprite
+
+#Main url("D:/resources/pixart") ext("png") dest_url("test")
+
+ConvertHerbs
+// TerrainLarge name("canal")
+// TerrainLarge name("d_forest")

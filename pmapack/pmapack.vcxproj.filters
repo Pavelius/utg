@@ -26,9 +26,15 @@
     <ClInclude Include="image.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="scope.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="example.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="herbs.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>
@@ -40,6 +46,9 @@
       <Filter>data</Filter>
     </None>
     <None Include="test\h_tiles_d_forest.pma">
+      <Filter>data</Filter>
+    </None>
+    <None Include="test\herbs.pma">
       <Filter>data</Filter>
     </None>
   </ItemGroup>

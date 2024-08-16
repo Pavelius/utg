@@ -22,7 +22,7 @@ union item {
 		unsigned char type;
 		unsigned char signature : 1;
 		unsigned char uses : 3;
-		itemufa feats;
+		itemufa		feats;
 	};
 	constexpr item() : u(0) {}
 	constexpr item(unsigned char type) : type(type), signature(0), uses(geti().uses), feats() {}
