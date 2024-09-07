@@ -81,11 +81,14 @@ static void show_marker(int sx, int sy) {
 	auto push_caret = caret;
 	auto push_fore = fore;
 	fore = colors::red;
-	line(caret.x - sx, caret.y);
 	line(caret.x, caret.y - sy);
+	caret = push_caret;
+	line(caret.x - sx, caret.y);
 	fore = push_fore;
 	caret = push_caret;
 }
+
+void dlgmsg(const char* title, const char* format);
 
 void mainview(const char* url) {
 	unsigned char* pal = 0;
@@ -225,18 +228,23 @@ static void correct_font() {
 		pc[-1] = 0;
 	else
 		pc[0] = 0;
-	static const char* font_directories[] = {"", modl};
+	// dlgmsg("Module", modl);
+	static const char* font_directories[] = {modl, ""};
 	for(auto temp : font_directories) {
 		szurl(furl, temp, "font", "pma");
 		metrics::font = (sprite*)loadb(furl);
 		if(!metrics::font) {
+			// dlgmsg("Not found", furl);
 			szurl(furl, temp, "art/font", "pma");
 			metrics::font = (sprite*)loadb(furl);
 		}
 		if(!metrics::font) {
+			// dlgmsg("Not found", furl);
 			szurl(furl, temp, "art/fonts/font", "pma");
 			metrics::font = (sprite*)loadb(furl);
 		}
+		//if(!metrics::font)
+		//	dlgmsg("Not found", furl);
 		if(metrics::font)
 			break;
 	}
@@ -252,9 +260,9 @@ int main(int argc, char *argv[]) {
 	//test_directory();
 	correct_font();
 	set_light_theme();
-	if(argc > 1 && argv[1][0])
+	if(argc > 1 && argv[1][0]) {
 		mainview(argv[1]);
-	else {
+	} else {
 		//dlgmsg("PMA view", "Show sprites in PMA format. Pass to command line path to file wich you want to see.");
 		return -1;
 	}

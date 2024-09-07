@@ -1,0 +1,17 @@
+#AddItem
+
+LoadImage
+AddFrame
+
+#CreateItems url("%1/items") size(64 48) center(32 24)
+
+CreateSprite param(520)
+AddItem name("836")
+AddItem name("item0")
+AddItem name("item1")
+AddItem name("item2")
+SaveSprite name("items_new")
+
+#Main url("D:/games/adom/gfx/adom") ext("png") dest_url("test")
+
+CreateItems

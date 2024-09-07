@@ -37,18 +37,12 @@
     <Text Include="herbs.txt">
       <Filter>data</Filter>
     </Text>
+    <Text Include="items.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\h_tiles_c_forest.pma">
-      <Filter>data</Filter>
-    </None>
-    <None Include="test\h_tiles_canal.pma">
-      <Filter>data</Filter>
-    </None>
-    <None Include="test\h_tiles_d_forest.pma">
-      <Filter>data</Filter>
-    </None>
-    <None Include="test\herbs.pma">
+    <None Include="test\items_new.pma">
       <Filter>data</Filter>
     </None>
   </ItemGroup>

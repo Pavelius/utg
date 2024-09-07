@@ -149,18 +149,10 @@
   <ItemGroup>
     <Text Include="example.txt" />
     <Text Include="herbs.txt" />
+    <Text Include="items.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test\herbs.pma" />
-    <None Include="test\h_tiles_canal.pma">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="test\h_tiles_c_forest.pma">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="test\h_tiles_d_forest.pma">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
+    <None Include="test\items_new.pma" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

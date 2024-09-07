@@ -9,6 +9,8 @@ using namespace log;
 
 static const char* last_url_error;
 
+const char* get_command_line();
+
 void initialize_image_plugins();
 void initialize_png();
 void printcnf(const char* text);
@@ -25,17 +27,18 @@ static void println(const char* format, ...) {
 	println();
 }
 
-static void image_test() {
-	image_read("herbs.txt");
+static void image_script(const char* url) {
+	image_read(url);
 	if(log::geterrors() > 0)
 		return;
 	image_run("Main");
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	initialize_png();
 	initialize_image_plugins();
 	log::print_proc = printcnf;
-	image_test();
+	if(argc==2)
+		image_script(argv[1]);
 	return 0;
 }
