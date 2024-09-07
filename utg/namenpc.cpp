@@ -1,5 +1,6 @@
+#include "bsdata.h"
 #include "namenpc.h"
-#include "stringlist.h"
+#include "groupname.h"
 
 void namenpc::actv(stringbuilder& sb, const char* format, const char* format_param) {
 	if(!format || format[0] == 0)
@@ -17,5 +18,5 @@ gender_s namenpc::getgender() const {
 const char* namenpc::getname() const {
 	if(nameid == 0xFFFF)
 		return "Noname";
-	return bsdata<stringlist>::elements[nameid].name;
+	return bsdata<groupname>::elements[nameid].name;
 }

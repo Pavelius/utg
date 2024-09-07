@@ -1,11 +1,12 @@
 #include "alignment.h"
+#include "bsreq.h"
 #include "class.h"
 #include "creature.h"
 #include "diety.h"
-#include "bsreq.h"
+#include "groupname.h"
 #include "list.h"
 #include "option.h"
-#include "quest.h"
+#include "questlist.h"
 #include "script.h"
 #include "widget.h"
 
@@ -78,11 +79,13 @@ BSDATA(varianti) = {
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},
+	{"GroupName", VAR(groupname, 2), 0, 0, 0, 0, read_group_names},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>, fntest<itemi>},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Move", VAR(movei, 1)},
 	{"Option", VAR(optioni, 1)},
+	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist_read},
 	{"Race", VAR(racei, 1)},
 	{"Script", VAR(script, 1)},
 	{"Tag", VAR(tagi, 1)},

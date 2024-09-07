@@ -1,5 +1,5 @@
 #include "alignment.h"
-#include "crt.h"
+#include "bsdata.h"
 
 BSDATA(alignmenti) = {
 	{"Lawful"},

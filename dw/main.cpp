@@ -3,10 +3,10 @@
 #include "draw.h"
 #include "pushvalue.h"
 #include "questlist.h"
+#include "rand.h"
 #include "script.h"
+#include "timer.h"
 
-static char	console_text[4096];
-static stringbuilder console(console_text);
 bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
 
 static void create_hero() {
@@ -27,13 +27,8 @@ static void character_generation() {
 	create_hero();
 	create_hero();
 	create_hero();
+	draw::focus_object = player;
 	draw::setnext(play_settlement);
-}
-
-static void initialize() {
-	quest_initialize();
-	stringlist::read("locale/ru/other/CharacterNames.txt");
-	questlist_read("rules/Quest.txt");
 }
 
 static void stringbuilder_custom(stringbuilder& sb, const char* id) {
@@ -41,7 +36,7 @@ static void stringbuilder_custom(stringbuilder& sb, const char* id) {
 		if(apply_action(id, sb, player->getname(), player->getgender()))
 			return;
 	}
-	stringbuilder::defidentifier(sb, id);
+	default_string(sb, id);
 }
 
 static void setplayer(void* p) {
@@ -63,9 +58,9 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	initialize_console();
 	initialize_avatars();
+	quest_initialize();
 	stringbuilder::custom = stringbuilder_custom;
-	answers::console = &console;
-	return draw::start(character_generation, initialize);
+	return utg::start(character_generation);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

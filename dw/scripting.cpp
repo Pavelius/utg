@@ -11,7 +11,7 @@ static void* last_choose;
 static creature *player_scout, *player_pathfinder, *player_supplier;
 
 static void printv(stringbuilder& sb, char separator, const char* id, const char* id_param) {
-	auto p = getdescription(id);
+	auto p = getnme(id, "Info");
 	if(!p)
 		return;
 	if(separator)

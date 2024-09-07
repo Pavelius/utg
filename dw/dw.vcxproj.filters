@@ -109,16 +109,25 @@
     <Text Include="rules\Quest.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
+    <Text Include="rules\Items.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Advance.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="rules\Class.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Descriptions.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
+    <Text Include="locale\ru\Names.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\tips\Descriptions.txt">
+    <Text Include="locale\ru\UnknownNames.txt">
       <Filter>Locale</Filter>
     </Text>
-    <Text Include="locale\ru\other\CharacterNames.txt">
+    <Text Include="names\ru\CharacterNames.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

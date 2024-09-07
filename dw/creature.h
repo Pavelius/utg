@@ -1,7 +1,6 @@
 #include "ability.h"
 #include "advancement.h"
 #include "avatarable.h"
-#include "crt.h"
 #include "dice.h"
 #include "flagable.h"
 #include "front.h"
@@ -10,7 +9,6 @@
 #include "collection.h"
 #include "result.h"
 #include "statable.h"
-#include "stringlist.h"
 #include "draw_utg.h"
 #include "wearable.h"
 

@@ -99,6 +99,7 @@ using namespace log;
 const char* propertyi::read(const char* p, int object) {
 	char temp[512]; stringbuilder sb(temp);
 	while(allowparse) {
+		sb.clear();
 		auto p1 = sb.psidf(p);
 		if(!temp[0] || p1[0] != '(')
 			break;

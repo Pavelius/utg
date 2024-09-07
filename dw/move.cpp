@@ -1,5 +1,5 @@
+#include "bsdata.h"
 #include "move.h"
-#include "crt.h"
 
 BSDATA(movei) = {
 	{"HackAndSlash", Strenght},

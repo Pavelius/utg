@@ -59,10 +59,10 @@ static const char* read_params(const char* p, stringbuilder& result) {
 	if(!checksym(p, '('))
 		return p;
 	p = skipws(p + 1);
-	if(p[0] == '\"') {
-		result.clear();
+	result.clear();
+	if(p[0] == '\"')
 		p = result.psstr(p + 1, p[0]);
-	} else
+	else
 		p = result.psidf(p);
 	p = skipws(p);
 	if(!checksym(p, ')'))
@@ -73,6 +73,7 @@ static const char* read_params(const char* p, stringbuilder& result) {
 
 static const char* read_variants(const char* p, stringbuilder& result, variants& source, quest* pe) {
 	while(allowparse && ischa(*p)) {
+		result.clear();
 		p = result.psidf(p);
 		p = skipws(p);
 		auto pn = result.begin();

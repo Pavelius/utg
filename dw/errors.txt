@@ -1,2 +1,1 @@
-﻿In file `Names.txt`:
-SP: Define translate
+﻿Can't find file 'locale/ru/other/CharacterNames.txt'

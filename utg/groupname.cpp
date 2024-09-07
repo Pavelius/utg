@@ -1,19 +1,41 @@
-#include "collection.h"
+#include "bsreq.h"
 #include "groupname.h"
 #include "log.h"
+#include "rand.h"
 #include "stringbuilder.h"
 
 using namespace log;
 
 BSDATAC(groupname, 2048);
+BSMETA(groupname) = {
+	BSREQ(parent),
+	BSREQ(name),
+	{}};
+
+size_t select_group_name(unsigned short* result, size_t count, const char* parent) {
+	auto pb = result;
+	auto pe = result + count;
+	for(auto& e : bsdata<groupname>()) {
+		if(szpmatch(e.parent, parent)) {
+			if(pb < pe)
+				*pb++ = &e - bsdata<groupname>::elements;
+		}
+	}
+	return pb - result;
+}
 
 const groupname* random_group_name(const char* parent) {
-	collection<groupname> source;
-	for(auto& e : bsdata<groupname>()) {
-		if(szpmatch(e.parent, parent))
-			source.add(&e);
-	}
-	return source.random();
+	unsigned short result[512];
+	auto count = select_group_name(result, lenghtof(result), parent);
+	if(!count)
+		return 0;
+	return bsdata<groupname>::elements + rand() % count;
+}
+
+const char* get_group_name(short unsigned v) {
+	if(v==0xFFFF)
+		return "";
+	return bsdata<groupname>::elements[v].name;
 }
 
 short unsigned random_group_namei(const char* parent) {

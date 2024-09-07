@@ -1,3 +1,4 @@
+#include "bsdata.h"
 #include "answers.h"
 #include "statable.h"
 

@@ -1,19 +1,18 @@
 #include "assign.h"
 #include "bsreq.h"
 #include "class.h"
+#include "groupname.h"
 #include "item.h"
 #include "list.h"
+#include "math.h"
 #include "race.h"
+#include "rand.h"
 #include "creature.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
 static gender_s last_gender;
 
 creature* player;
-
-static int d100() {
-	return rand() % 100;
-}
 
 const classi& creature::geti() const {
 	return bsdata<classi>::elements[type];
@@ -36,7 +35,7 @@ static void getinfo(variant v, stringbuilder& sb) {
 
 static void getinfo(const variants& elements, stringbuilder& sb) {
 	auto m = elements.count;
-	variant last = 0;
+	variant last = {};
 	int count = 1;
 	auto pbg = sb.get(); pbg[0] = 0;
 	auto pse = elements.begin();
@@ -93,7 +92,7 @@ void creature::choose_name() {
 	variant vclass = bsdata<classi>::elements + type;
 	variant vrace = bsdata<racei>::elements + race;
 	variant source[3] = {vgender, vclass, vrace};
-	auto count = stringlist::select(temp, temp + sizeof(temp) / sizeof(temp[0]), str("%1%2%3",
+	auto count = select_group_name(temp, lenghtof(temp), str("%1%2%3",
 		bsdata<racei>::elements[race].id,
 		bsdata<genderi>::elements[last_gender].id,
 		bsdata<classi>::elements[type].id));
@@ -101,7 +100,7 @@ void creature::choose_name() {
 		return;
 	answers an;
 	for(auto v : slice<short unsigned>(temp, count))
-		an.add((void*)v, stringlist::getname(v));
+		an.add((void*)v, get_group_name(v));
 	setname((int)an.choose("Как вас зовут?", 0));
 }
 

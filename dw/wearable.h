@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "item.h"
 #include "wear.h"
 
