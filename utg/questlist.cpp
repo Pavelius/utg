@@ -10,7 +10,7 @@ BSMETA(questlist) = {
 	BSREQ(id),
 	{}};
 BSDATAC(questlist, 128)
-questlist* last_questlist;
+const questlist* last_questlist;
 
 void questlist_read(const char* url) {
 	char temp[260];

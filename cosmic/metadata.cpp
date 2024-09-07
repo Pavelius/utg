@@ -42,7 +42,7 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
 	{"Module", VAR(modulei, 1), 0, 0, fnscript<modulei>},
-	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist::read},
+	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist_read},
 	{"RandomList", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Ship", VAR(shipi, 1), 0, 0, fnscript<shipi>},
 	{"ShipClass", VAR(shipclassi, 1)},

@@ -1,5 +1,6 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "module.h"
+#include "rand.h"
 
 BSDATA(modulei) = {
 	{"ShardCannons", {1, 2}},
@@ -41,10 +42,6 @@ int			critical_count;
 module_s	last_module;
 modulea		inflict, suffer;
 modulea*	last_modules;
-
-inline int d100() {
-	return rand() % 100;
-}
 
 int roll_hits(int count, int chance) {
 	if(chance <= 0)

@@ -1,5 +1,4 @@
 #include "assign.h"
-#include "crt.h"
 #include "pushvalue.h"
 #include "ship.h"
 

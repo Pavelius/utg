@@ -1,0 +1,33 @@
+﻿Assault: Схватка
+AssaultShort: Схв
+Comunication: Связи
+ComunicationShort: Свз
+Exploration: Разведка
+ExplorationShort: Раз
+Hunting: Охота
+HuntingShort: Охт
+Medicine: Медицина
+MedicineShort: Мед
+Pilot: Пилотирование
+PilotShort: Пил
+Research: Исследование
+ResearchShort: Исл
+
+Insight: Знания
+
+Hull: Корпус
+Shield: Щит
+Speed: Скорость
+
+ShardCannons: Осколочное оружие
+ShardCannonsInfo: Рельсовое оружие, осколочное оружие и другие пушки. Эффективно на близких дистанциях, отличается высокой кучностью стрельбы, но малым наносимым уроном.
+ShardCannonsShort: КОр
+LaserBeams: Лазерное оружие
+LaserBeamsInfo: Промышленный лазер и плазменное оружие. Высокоточное оружие эффективное на средних и дальних дистанциях.
+LaserBeamsShort: ЛОр
+RocketLaunchers: Ракетное оружие
+RocketLaunchersInfo: Самоноводящиеся ракеты и торпеды. Эффективны на дальних дистанциях и наносят большой урон при попадании.
+RocketLaunchersShort: РОр
+Sensors: Сенсоры
+SensorsInfo: Радиус действия радара. В радиусе действия радара вы замечаете корабли и обнаруживаете разнообразные аномалии. Кроме того, чем выше значение сенсоров тем выше шанс обнаружить аномалию на планете.
+SensorsShort: Снс

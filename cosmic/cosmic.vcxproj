@@ -151,12 +151,16 @@
     <ClInclude Include="ship.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="actions\Encounter.txt" />
+    <Text Include="actions\Snow.txt" />
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\actions\Encounter.txt" />
-    <Text Include="locale\ru\actions\Snow.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\Ships.txt" />
-    <Text Include="locale\ru\speech\Encounter.txt" />
+    <Text Include="locale\ru\AbilityNames.txt" />
+    <Text Include="locale\ru\ActionNames.txt" />
+    <Text Include="locale\ru\MonthNames.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\PlanetNames.txt" />
+    <Text Include="locale\ru\Ships.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Ships.txt" />
   </ItemGroup>

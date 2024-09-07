@@ -2,13 +2,14 @@
 #include "condition.h"
 #include "console.h"
 #include "collection.h"
-#include "crt.h"
 #include "draw.h"
 #include "list.h"
+#include "math.h"
 #include "pushvalue.h"
 #include "quest.h"
 #include "questlist.h"
 #include "querry.h"
+#include "rand.h"
 #include "script.h"
 #include "ship.h"
 #include "speech.h"
@@ -205,7 +206,7 @@ static void roll(int bonus) {
 	apply_text();
 	apply_script();
 	pause();
-	last_quest = quest::findprompt(result);
+	last_quest = quest_find_prompt(result);
 	apply_header();
 	apply_text();
 }
@@ -229,7 +230,7 @@ void run_current_quest() {
 		add_quest_answers();
 		if(an) {
 			auto pv = an.choose(0, 0, 1);
-			sbc.clear();
+			answers::console->clear();
 			if(!pv)
 				break;
 			else if(bsdata<quest>::source.have(pv)) {

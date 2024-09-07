@@ -7,7 +7,7 @@ struct questlist {
 	sliceu<quest>	elements;
 	const quest*	find(int index, const quest* start = 0) const;
 };
-extern questlist*	last_questlist;
+extern const questlist* last_questlist;
 
 const questlist* find_quest(const quest* p);
 

@@ -13,14 +13,11 @@
     <Filter Include="locale\ru">
       <UniqueIdentifier>{b40d0cc1-4ad2-45b6-8868-983af53e17e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="locale\ru\actions">
-      <UniqueIdentifier>{6af07622-a95e-406b-b558-fd605eb2ec80}</UniqueIdentifier>
+    <Filter Include="quest">
+      <UniqueIdentifier>{0da61ff3-3bfa-4f9a-b23e-70a35504b1c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="locale\ru\speech">
-      <UniqueIdentifier>{91c43105-203e-4286-ad9b-c5f8831655c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="locale\ru\names">
-      <UniqueIdentifier>{39822d7f-03d0-4100-94e8-0e933a5fd577}</UniqueIdentifier>
+    <Filter Include="quest\ru">
+      <UniqueIdentifier>{126ff393-706d-4a44-a727-03336067ac6d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,20 +64,32 @@
     <Text Include="rules\Ships.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\actions\Snow.txt">
-      <Filter>locale\ru\actions</Filter>
+    <Text Include="locale\ru\AbilityNames.txt">
+      <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\actions\Encounter.txt">
-      <Filter>locale\ru\actions</Filter>
+    <Text Include="locale\ru\ActionNames.txt">
+      <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\speech\Encounter.txt">
-      <Filter>locale\ru\speech</Filter>
+    <Text Include="locale\ru\MonthNames.txt">
+      <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
-      <Filter>locale\ru\names</Filter>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\names\Ships.txt">
-      <Filter>locale\ru\names</Filter>
+    <Text Include="locale\ru\PlanetNames.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\Ships.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="actions\Encounter.txt">
+      <Filter>quest\ru</Filter>
+    </Text>
+    <Text Include="actions\Snow.txt">
+      <Filter>quest\ru</Filter>
     </Text>
   </ItemGroup>
 </Project>

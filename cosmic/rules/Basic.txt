@@ -1,9 +1,9 @@
-﻿#setlocale ru
+﻿#setlocale "ru"
 
 #include "rules/Ships.txt"
 
-#importloc Quest "actions"
-#importloc Speech "speech"
+#include "actions" Quest "*.txt"
+#include "speech" Speech "*.txt"
 
 #List
 

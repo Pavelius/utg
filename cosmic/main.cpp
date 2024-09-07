@@ -3,8 +3,10 @@
 #include "draw_utg.h"
 #include "log.h"
 #include "quest.h"
+#include "rand.h"
 #include "script.h"
 #include "ship.h"
+#include "timer.h"
 
 void initilize_script();
 void run_current_quest();
@@ -19,10 +21,10 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	quest::initialize();
+	quest_initialize();
 	initialize_console();
 	initilize_script();
-	return draw::start(starting, initialize);
+	return utg::start(starting, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

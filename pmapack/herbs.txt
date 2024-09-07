@@ -57,5 +57,3 @@ SaveSprite
 #Main url("D:/resources/pixart") ext("png") dest_url("test")
 
 ConvertHerbs
-// TerrainLarge name("canal")
-// TerrainLarge name("d_forest")

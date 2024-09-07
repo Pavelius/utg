@@ -24,7 +24,7 @@ static void main_custom(stringbuilder& sb, const char* id) {
 		return;
 	if(stringvar_identifier(sb, id))
 		return;
-	stringbuilder::defidentifier(sb, id);
+	default_string(sb, id);
 }
 
 static void opponent_class(stringbuilder& sb) {
