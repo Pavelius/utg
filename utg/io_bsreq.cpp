@@ -410,7 +410,10 @@ static void read_dictionary(void* object, const bsreq* type, int level, bool nee
 					else
 						read_slice(object, req, level + 1);
 					skiplinefeed();
-				} else if(req->is(KindScalar) && req->count > 0) {
+				} else if(req->is(KindEnum) && req->count > 0) {
+					read_array(object, req);
+					skiplinefeed();
+				} else if((req->is(KindScalar) || req->is(KindEnum)) && req->count > 0) {
 					auto ptr = req->ptr(object);
 					if(last_req && last_req == req) {
 						if(index > req->count)

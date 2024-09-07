@@ -1,1 +1,2 @@
-﻿Can't find file 'locale/ru/other/CharacterNames.txt'
+﻿Error in file `rules/Class.txt`:
+ Line 5: Expected token `#`

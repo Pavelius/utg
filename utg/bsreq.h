@@ -15,7 +15,7 @@ bsdata<meta_decoy<decltype(data_type::fn)>::value>::source_ptr}
 #define	BSADT(fn, TE) BSCST(fn, KindADat, decltype(data_type::fn)::data_type, TE, sizeof(decltype(data_type::fn)::data)/sizeof(decltype(data_type::fn)::data[0]))
 #define	BSDST(fn, TE) {#fn, FO(data_type, fn), sizeof(data_type::fn[0]), sizeof(data_type::fn), sizeof(data_type::fn)/sizeof(data_type::fn[0]), bsmeta<TE>::meta, KindDSet, bsdata<TE>::source_ptr}
 #define	BSFLG(fn, T) {#fn, FO(data_type, fn), sizeof(data_type::fn), sizeof(data_type::fn), 1, bsmeta<T>::meta, KindFlags, bsdata<T>::source_ptr}
-#define	BSENM(fn, T) {#fn, FO(data_type, fn), sizeof(data_type::fn), sizeof(data_type::fn), meta_count<decltype(data_type::fn)>::value, bsmeta<T>::meta, KindEnum, bsdata<T>::source_ptr}
+#define	BSENM(fn, T) {#fn, FO(data_type, fn), sizeof(meta_size<decltype(data_type::fn)>::value), sizeof(data_type::fn), meta_count<decltype(data_type::fn)>::value, bsmeta<T>::meta, KindEnum, bsdata<T>::source_ptr}
 #define	BSREF(fn, T) {#fn, FO(data_type, fn), sizeof(data_type::fn), sizeof(data_type::fn), 1, bsmeta<T>::meta, KindReference, bsdata<T>::source_ptr}
 #define BSMETA(e) template<> const bsreq bsmeta<e>::meta[]
 #define BSINF(N, T) {#N, 0, sizeof(T), sizeof(T), 1, bsmeta<T>::meta, KindScalar, bsdata<T>::source_ptr}

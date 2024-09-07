@@ -1,3 +1,5 @@
+#include "bsreq.h"
+#include "class.h"
 #include "creature.h"
 #include "console.h"
 #include "draw.h"
@@ -52,6 +54,9 @@ static void initialize_avatars() {
 	draw::heroes_getavatar = party_avatar;
 	draw::heroes_isplayer = isplayer;
 	draw::heroes_setplayer = setplayer;
+}
+
+static void test_type() {
 }
 
 int main(int argc, char* argv[]) {
