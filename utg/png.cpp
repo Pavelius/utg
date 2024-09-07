@@ -455,15 +455,15 @@ static struct png_bitmap_plugin : public draw::surface::plugin {
 		} else {
 			unsigned char* ptemp = new unsigned char[size_compressed];
 			if(!read_idat(ptemp, input, input + input_size, 0, transparent, use_transparent)) {
-				delete ptemp;
+				delete[] ptemp;
 				return false;
 			}
 			unsigned result = decode_zip(output, ptemp, size_compressed);
 			if(!result) {
-				delete ptemp;
+				delete[] ptemp;
 				return false;
 			}
-			delete ptemp;
+			delete[] ptemp;
 		}
 		postprocess_scanlines(output, output, image_width, image_height, bpp, interlace);
 		color_convert(output, image_width, image_height, output_bpp, 0, output, input_bpp, 0);

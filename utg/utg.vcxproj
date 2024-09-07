@@ -169,9 +169,6 @@
     <ClCompile Include="logvalue.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="querry.cpp" />
-    <ClCompile Include="stringlist.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="chooselist.cpp" />
     <ClCompile Include="chooseoption.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -259,6 +256,7 @@
     <ClInclude Include="anymap.h" />
     <ClInclude Include="archive.h" />
     <ClInclude Include="array.h" />
+    <ClInclude Include="assert.h" />
     <ClInclude Include="avatarable.h" />
     <ClInclude Include="banner.h" />
     <ClInclude Include="bonus.h" />
@@ -279,6 +277,7 @@
     <ClInclude Include="math.h" />
     <ClInclude Include="ownerable.h" />
     <ClInclude Include="parentable.h" />
+    <ClInclude Include="rand.h" />
     <ClInclude Include="seqlink.h" />
     <ClInclude Include="slice.h" />
     <ClInclude Include="sliceu.h" />
@@ -286,9 +285,6 @@
     <ClInclude Include="tmpflags.h" />
     <ClInclude Include="tmpfunct.h" />
     <ClInclude Include="querry.h" />
-    <ClInclude Include="stringlist.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="chooselist.h" />
     <ClInclude Include="chooseoption.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

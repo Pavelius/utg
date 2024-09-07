@@ -138,9 +138,6 @@
     <ClCompile Include="win_time.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="stringlist.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="namenpc.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -398,9 +395,6 @@
     <ClInclude Include="bonus.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="stringlist.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="namenpc.h">
       <Filter>Support</Filter>
     </ClInclude>
@@ -597,6 +591,12 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="seqlink.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="assert.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="rand.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
