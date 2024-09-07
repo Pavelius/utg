@@ -163,5 +163,8 @@
     <Text Include="locale\ru\WiseNames.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="rules\Core.txt">
+      <Filter>Basic</Filter>
+    </Text>
   </ItemGroup>
 </Project>

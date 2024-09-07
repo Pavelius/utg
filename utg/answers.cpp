@@ -2,7 +2,6 @@
 #include "pushvalue.h"
 #include "rand.h"
 
-answers* answers::last;
 const char* answers::header;
 const char* answers::prompt;
 const char* answers::prompa;
@@ -15,6 +14,7 @@ stringbuilder* answers::console;
 fnevent answers::beforepaint;
 fnevent answers::afterpaint;
 answers::fnpaint answers::paintcell;
+answers* answers::last;
 
 char answers::hotkeys[20] = {
 	'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',

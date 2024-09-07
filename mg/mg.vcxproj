@@ -199,6 +199,7 @@
     <Text Include="locale\ru\WiseNames.txt" />
     <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Core.txt" />
     <Text Include="rules\Traits.txt" />
     <Text Include="rules\Wise.txt" />
   </ItemGroup>

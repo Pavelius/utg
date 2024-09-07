@@ -48,7 +48,7 @@ void propertyi::typei::add(const char* id, array* source) {
 	p->source = source;
 }
 
-int property_add(const char* id, int type) {
+int add_property(const char* id, int type) {
 	if(!id)
 		return 0;
 	auto p = (propertyi*)bsdata<propertyi>::source.addfind(id);

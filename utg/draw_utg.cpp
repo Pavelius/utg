@@ -7,14 +7,13 @@
 
 using namespace draw;
 
-utg::fngetint utg::callback::getfade;
-
-array*		draw::heroes;
-fngetname	draw::heroes_getavatar;
-fnvisible	draw::heroes_isplayer;
-fncommand	draw::heroes_setplayer;
+array* draw::heroes;
+fngetname draw::heroes_getavatar;
+fnvisible draw::heroes_isplayer;
+fncommand draw::heroes_setplayer;
+fngetint draw::heroes_fade;
 const void*	draw::focus_object;
-int			draw::title_width = 220;
+int	draw::title_width = 220;
 static point hide_separator;
 static void* current_tab;
 
@@ -135,6 +134,8 @@ static void hilitingx(const char* id, figure v) {
 static void paintbar(const char* id, const void* element) {
 	auto push_width = width;
 	width = textw(id) + metrics::padding * 2;
+	if(!current_tab)
+		current_tab = (void*)element;
 	if(current_tab == element) {
 		fillwindow();
 		barborder();
@@ -476,8 +477,8 @@ void draw::avatar(int index, const void* object, const char* id, fnevent press_e
 	width = p->get(0).sx;
 	height = p->get(0).sy;
 	image(caret.x, caret.y, p, 0, 0);
-	if(utg::callback::getfade)
-		rect_fade(utg::callback::getfade(object), color(87, 0, 13));
+	if(heroes_fade)
+		rect_fade(heroes_fade(object), color(87, 0, 13));
 	hiliting(object);
 	strokeout(focus_object == object ? strokeactive : strokeborder);
 	if(control_hilited)

@@ -33,15 +33,8 @@ static void create_party() {
 
 static void starting() {
 	create_party();
+	draw::focus_object = player;
 	player->roll(Fighter);
-}
-
-static void initialize() {
-	read_group_names("names/ru/Mouseguards.txt");
-	bsreq::read("rules/Wise.txt");
-	bsreq::read("rules/Traits.txt");
-	log::readlf(questlist_read, "quest", "*.txt");
-	quest_initialize();
 }
 
 static const char* getavatarst(const void* p) {
@@ -56,10 +49,9 @@ int	main(int argc, char *argv[]) {
 	draw::heroes = bsdata<hero>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;
-	answers::console = &sb;
-	answers::prompt = sb.begin();
 	answers::resid = "hamlet";
-	return utg::start(starting, initialize);
+	quest_initialize();
+	return utg::start(starting);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

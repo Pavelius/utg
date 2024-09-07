@@ -11,6 +11,7 @@
 #pragma once
 
 typedef flagable<4> flaga;
+typedef int(*fngetint)(const void* object);
 
 namespace draw {
 extern const void* focus_object;
@@ -18,6 +19,7 @@ extern array* heroes;
 extern fngetname heroes_getavatar;
 extern fnvisible heroes_isplayer;
 extern fncommand heroes_setplayer;
+extern fngetint heroes_fade;
 extern const void* hilite_object;
 extern int title_width;
 void avatar(int index, const void* object, const char* id, fnevent press_event);
@@ -33,9 +35,7 @@ bool buttonfd(const char* title);
 bool isnext();
 }
 namespace utg {
-typedef int(*fngetint)(const void* object);
 namespace callback {
-extern fngetint getfade;
 extern fngetinfo getinfo;
 extern fnstatus	getstatus;
 }

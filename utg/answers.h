@@ -13,7 +13,6 @@ class answers {
 	adat<element, 32>	elements;
 public:
 	typedef void(*fnpaint)(int index, const void* value, const char* text, fnevent press_event);
-	static answers*		last;
 	static fnevent		afterpaint;
 	static fnevent		beforepaint;
 	static fnpaint		paintcell;
@@ -27,6 +26,7 @@ public:
 	static const char*	prompi;
 	static const char*	resid;
 	static bool			show_tips;
+	static answers*		last;
 	answers() : sc(buffer) {}
 	constexpr operator bool() const { return elements.count != 0; }
 	void				add(const void* value, const char* name, ...) { addv(value, name, xva_start(name)); }

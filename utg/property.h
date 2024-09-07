@@ -30,7 +30,7 @@ void addnumber(int object, int type, int value);
 void removenumber(int object, int type);
 void property_initialize();
 
+int add_property(const char* id, int type);
 int getnumber(int object, int type);
-int property_add(const char* id, int type);
 
 const char* getstring(int object, int type);

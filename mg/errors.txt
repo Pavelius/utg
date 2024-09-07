@@ -1,2 +1,2 @@
-﻿Error in file `UnknownNames.txt`:
- Define translation for `HardWorker`
+﻿Error in file `rules/Basic.txt`:
+ Line 7: Can't find type `Ques1t`

@@ -186,8 +186,8 @@ void quest_read(const char* url) {
 
 void quest_initialize() {
 	property_initialize();
-	prop_header = property_add("Header", propertyi::Text);
-	prop_image = property_add("Image", propertyi::Text);
+	prop_header = add_property("Header", propertyi::Text);
+	prop_image = add_property("Image", propertyi::Text);
 }
 
 void quest::manual(short page) {

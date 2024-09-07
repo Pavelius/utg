@@ -5,6 +5,7 @@
 #include "enviroment.h"
 #include "item.h"
 #include "list.h"
+#include "groupname.h"
 #include "menu.h"
 #include "hero.h"
 #include "questlist.h"
@@ -49,6 +50,10 @@ BSMETA(enviromenti) = {
 BSMETA(enviroment_typei) = {
 	BSREQ(id),
 	{}};
+BSMETA(groupname) = {
+	BSREQ(parent),
+	BSREQ(name),
+	{}};
 BSMETA(hero) = {
 	{}};
 BSMETA(rangi) = {
@@ -84,10 +89,12 @@ BSDATA(varianti) = {
 	{"Animal", VAR(animali, 1)},
 	{"Conflict", VAR(conflicti, 1)},
 	{"Enviroment", VAR(enviromenti, 1)},
+	{"GroupName", VAR(groupname, 2), 0, 0, 0, 0, read_group_names},
 	{"Hero", VAR(hero, 1), ftinfo<hero>, hero::getproperty},
 	{"Item", VAR(itemi, 1)},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
+	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist_read},
 	{"Rang", VAR(rangi, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>},
