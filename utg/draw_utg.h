@@ -31,7 +31,6 @@ void texth2(const char* title);
 void vertical(fnevent proc);
 bool buttonfd(const char* title);
 bool isnext();
-int	start(fnevent proc, fnevent afterread = 0);
 }
 namespace utg {
 typedef int(*fngetint)(const void* object);
@@ -44,4 +43,5 @@ extern stringbuilder sb;
 extern const char* url_avatars;
 const char* getchoose(const char* id);
 void getstatus(const void* object, stringbuilder& sb);
+int	start(fnevent proc, fnevent afterread = 0);
 }

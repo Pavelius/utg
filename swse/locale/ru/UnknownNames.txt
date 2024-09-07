@@ -1,12 +1,1 @@
-﻿AppTitle: 
-AttackWithMeleeWeapon: 
-Charge: 
-DropItemInHands: 
-FallProne: 
-FightDefencively: 
-FullAttack: 
-Move: 
-ReloadWeapon: 
-Run: 
-SwitchWeaponToAutoFire: 
-WhatYouDo: 
+﻿

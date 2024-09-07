@@ -1,2 +1,13 @@
-﻿In file `Names.txt`:
-NoVariant: Define translate
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `AppTitle`
+ Define translation for `AttackWithMeleeWeapon`
+ Define translation for `Charge`
+ Define translation for `DropItemInHands`
+ Define translation for `FallProne`
+ Define translation for `FightDefencively`
+ Define translation for `FullAttack`
+ Define translation for `Move`
+ Define translation for `ReloadWeapon`
+ Define translation for `Run`
+ Define translation for `SwitchWeaponToAutoFire`
+ Define translation for `WhatYouDo`

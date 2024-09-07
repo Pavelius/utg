@@ -42,7 +42,7 @@ static void generate_character() {
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	initialize();
-	return draw::start(generate_character);
+	return utg::start(generate_character);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

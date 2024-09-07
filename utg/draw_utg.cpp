@@ -607,7 +607,7 @@ static void initialize_widgets() {
 
 void initialize_png();
 
-int draw::start(fnevent proc, fnevent afterread) {
+int utg::start(fnevent proc, fnevent afterread) {
 	initialize_png();
 	answers::console = &utg::sb;
 	if(!utg::callback::getstatus)
@@ -634,6 +634,6 @@ int draw::start(fnevent proc, fnevent afterread) {
 		answers::prompt = answers::console->begin();
 	initialize(getnm("AppTitle"));
 	setnext(proc);
-	start();
+	draw::start();
 	return 0;
 }

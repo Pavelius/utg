@@ -172,12 +172,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\names\Actions.txt" />
-    <Text Include="locale\ru\names\Areas.txt" />
-    <Text Include="locale\ru\names\Items.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
+    <Text Include="locale\ru\Actions.txt" />
+    <Text Include="locale\ru\Areas.txt" />
+    <Text Include="locale\ru\Items.txt" />
+    <Text Include="locale\ru\Moves.txt" />
+    <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\Quest.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Advance.txt" />
     <Text Include="rules\Basic.txt" />

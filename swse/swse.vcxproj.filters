@@ -113,19 +113,22 @@
     <Text Include="rules\Actions.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
+    <Text Include="locale\ru\UnknownNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\Actions.txt">
+    <Text Include="locale\ru\Actions.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\Areas.txt">
+    <Text Include="locale\ru\Areas.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
+    <Text Include="locale\ru\Items.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\Items.txt">
+    <Text Include="locale\ru\Moves.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>
