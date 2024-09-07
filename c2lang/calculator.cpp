@@ -1,4 +1,6 @@
+#include "bsdata.h"
 #include "calculator.h"
+#include "flagable.h"
 #include "scope.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
@@ -412,7 +414,7 @@ static int pop_op() {
 static void parse_number() {
 	auto p1 = p;
 	last_number = 0;
-	p = stringbuilder::read(p, last_number);
+	p = psnum(p, last_number);
 	if(p1 != p)
 		skipws();
 }
