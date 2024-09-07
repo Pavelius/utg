@@ -27,7 +27,7 @@ void lexer::read(const char* url) {
 	auto start_rules = bsdata<rule>::source.getcount();
 	auto start_lexer = bsdata<lexer>::source.getcount();
 	bsreq::read(url);
-	if(log::geterrors())
+	if(log::errors > 0)
 		return;
 	auto end_lexer = bsdata<lexer>::source.getcount();
 	auto end_rules = bsdata<rule>::source.getcount();

@@ -6,6 +6,7 @@
 #include "list.h"
 #include "modifier.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "script.h"
 #include "skill.h"
 
@@ -300,7 +301,7 @@ static bool fix_message(stringbuilder& sb, const char* p1, const char* p2) {
 	sb.add(last_id);
 	sb.add(p1);
 	sb.add(p2);
-	auto p = getdescription(sb);
+	auto p = getnme(sb);
 	if(!p)
 		return false;
 	add_format(p);

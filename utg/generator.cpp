@@ -1,7 +1,8 @@
 #include "bsreq.h"
 #include "generator.h"
 #include "list.h"
-#include "logparse.h"
+#include "log.h"
+#include "rand.h"
 
 using namespace log;
 
@@ -80,14 +81,14 @@ static const char* readid(const char* p, const char*& result) {
 
 static const char* readval(const char* p, char& value) {
 	int v;
-	p = stringbuilder::read(p, v);
+	p = psnum(p, v);
 	value = v;
 	return skipws(p);
 }
 
 static const char* readval(const char* p, variant& value) {
 	char temp[260]; stringbuilder sb(temp);
-	p = readval(p, sb, value);
+	// p = readval(p, sb, value);
 	return skipws(p);
 }
 

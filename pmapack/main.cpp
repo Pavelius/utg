@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "draw.h"
 #include "image.h"
 #include "log.h"
@@ -29,7 +28,7 @@ static void println(const char* format, ...) {
 
 static void image_script(const char* url) {
 	image_read(url);
-	if(log::geterrors() > 0)
+	if(log::errors > 0)
 		return;
 	image_run("Main");
 }

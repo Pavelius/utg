@@ -1,8 +1,8 @@
 #pragma once
 
-#include "crt.h"
 #include "nameable.h"
 #include "point.h"
+#include "sliceu.h"
 
 const int DefaultImageNumber = -1000;
 

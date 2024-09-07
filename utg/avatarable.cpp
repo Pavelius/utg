@@ -1,6 +1,6 @@
 #include "avatarable.h"
-#include "crt.h"
 #include "stringbuilder.h"
+#include "slice.h"
 
 void avatarable::clear() {
 	memset(this, 0, sizeof(*this));

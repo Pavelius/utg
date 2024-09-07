@@ -1,7 +1,7 @@
-#include "crt.h"
 #include "draw.h"
 #include "draw_gui.h"
 #include "draw_list.h"
+#include "io_stream.h"
 
 using namespace draw;
 

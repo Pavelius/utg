@@ -1,5 +1,6 @@
-﻿#include "crt.h"
-#include "draw.h"
+﻿#include "draw.h"
+#include "math.h"
+#include "slice.h"
 
 enum colortypes {
 	PngColorGrey = 0, // greyscale: 1,2,4,8,16 bit

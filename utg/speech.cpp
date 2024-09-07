@@ -1,8 +1,9 @@
 #include "bsreq.h"
-#include "crt.h"
-#include "logparse.h"
+#include "log.h"
 #include "nameable.h"
+#include "rand.h"
 #include "speech.h"
+#include "stringbuilder.h"
 
 using namespace log;
 
@@ -24,7 +25,7 @@ void speech_read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
-		p = readidn(p + 1, sb);
+		p = sb.psidf(p + 1);
 		auto pr = bsdata<speech>::add();
 		pr->id = szdup(temp);
 		if(!checksym(p, '\n'))
@@ -109,8 +110,4 @@ bool apply_speech(const char* id, stringbuilder& sb) {
 		return false;
 	sb.add(p);
 	return true;
-}
-
-void speech_initialize() {
-	readlocfolder(speech_read, "speech", "*.txt");
 }

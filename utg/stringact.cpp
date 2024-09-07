@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "gender.h"
 #include "stringlist.h"
 
@@ -45,7 +44,7 @@ static bool apply_name(const char* identifier, stringbuilder& sb, const char* na
 
 static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
 	for(auto& e : player_gender) {
-		if(strcmp(e.female, identifier) != 0)
+		if(!equal(e.female, identifier))
 			continue;
 		if(gender == NoGender)
 			sb.add(e.multiply);

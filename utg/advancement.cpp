@@ -31,7 +31,7 @@ void* advancement::choosevalue(const void* object, fnadd padd) const {
 		padd = def_add;
 	if(elements) {
 		for(auto v : elements) {
-			if(applied_answers.is(v.getpointer()))
+			if(applied_answers.have(v.getpointer()))
 				continue;
 			padd(an, object, v);
 		}
@@ -40,8 +40,8 @@ void* advancement::choosevalue(const void* object, fnadd padd) const {
 		if(!ps)
 			return 0;
 		auto pe = ps->end();
-		for(auto p = ps->begin(); p < pe; p += ps->size) {
-			if(applied_answers.is(p))
+		for(auto p = ps->begin(); p < pe; p += ps->element_size) {
+			if(applied_answers.have(p))
 				continue;
 			padd(an, object, p);
 		}
@@ -54,10 +54,10 @@ void* advancement::choosevalue(const void* object, fnadd padd) const {
 static void apply_result(void* object, advancement::fnset pset, const char* result, void* data, int count) {
 	if(pset && pset(object, result, data, count))
 		return;
-	auto pm = varianti::find(object);
+	auto pm = find_variant(object);
 	if(!pm)
 		return;
-	auto pmv = varianti::find(data);
+	auto pmv = find_variant(data);
 	if(!pmv)
 		return;
 	auto pr = pm->metadata->find(result);

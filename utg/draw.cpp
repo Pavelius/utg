@@ -1,13 +1,18 @@
 #include "color.h"
-#include "crt.h"
 #include "draw.h"
 #include "kering.h"
+#include "io_stream.h"
+#include "math.h"
+#include "seqlink.h"
+#include "slice.h"
+#include "stringbuilder.h"
 
 #ifndef __GNUC__
 #pragma optimize("t", on)
 #endif
 
 extern "C" void* malloc(unsigned long size);
+extern "C" void	exit(int code);
 extern "C" void* realloc(void *ptr, unsigned long size);
 extern "C" void	free(void* pointer);
 
@@ -77,11 +82,11 @@ static char			tips_text[4096];
 stringbuilder		draw::tips_sb(tips_text);
 awindowi			draw::awindow = {-1, -1, 800, 600, 160, WFMinmax | WFResize};
 
-long distance(point p1, point p2) {
-	auto dx = p1.x - p2.x;
-	auto dy = p1.y - p2.y;
-	return isqrt(dx * dx + dy * dy);
-}
+//long distance(point p1, point p2) {
+//	auto dx = p1.x - p2.x;
+//	auto dy = p1.y - p2.y;
+//	return isqrt(dx * dx + dy * dy);
+//}
 
 static void correct(int& x1, int& y1, int& x2, int& y2) {
 	if(x1 > x2)
@@ -1589,12 +1594,12 @@ int draw::textw(const char* string, int count) {
 		if(pk) {
 			while(*s1) {
 				unsigned char sr = *((unsigned char*)s1);
-				x1 += textw(szget(&s1)) + add_kering(pk, s0, sr);
+				x1 += textw(szget(&s1, codepage::W1251)) + add_kering(pk, s0, sr);
 				s0 = sr;
 			}
 		} else {
 			while(*s1)
-				x1 += textw(szget(&s1));
+				x1 += textw(szget(&s1, codepage::W1251));
 		}
 	} else {
 		const char *s1 = string;
@@ -1602,12 +1607,12 @@ int draw::textw(const char* string, int count) {
 		if(pk) {
 			while(s1 < s2) {
 				unsigned char sr = *((unsigned char*)s1);
-				x1 += textw(szget(&s1)) + add_kering(pk, s0, sr);
+				x1 += textw(szget(&s1, codepage::W1251)) + add_kering(pk, s0, sr);
 				s0 = sr;
 			}
 		} else {
 			while(s1 < s2)
-				x1 += textw(szget(&s1));
+				x1 += textw(szget(&s1, codepage::W1251));
 		}
 	}
 	return x1;
@@ -1628,7 +1633,7 @@ void draw::textmc(const char* string, int count, unsigned flags) {
 	if(pk) {
 		while(s1 < s2) {
 			unsigned char sr = *((unsigned char*)s1);
-			int sm = szget(&s1);
+			int sm = szget(&s1, codepage::W1251);
 			caret.x += add_kering(pk, s0, sr);
 			s0 = sr;
 			if(sm >= 0x21)
@@ -1637,7 +1642,7 @@ void draw::textmc(const char* string, int count, unsigned flags) {
 		}
 	} else {
 		while(s1 < s2) {
-			int sm = szget(&s1);
+			int sm = szget(&s1, codepage::W1251);
 			if(sm >= 0x21)
 				glyph(sm, flags);
 			caret.x += textw(sm);
@@ -1699,7 +1704,7 @@ int draw::textbc(const char* string, int width) {
 	int w = 0;
 	const char* s1 = string;
 	while(true) {
-		unsigned s = szget(&s1);
+		unsigned s = szget(&s1, codepage::W1251);
 		if(s == 0x20 || s == 9)
 			p = s1 - string;
 		else if(s == 0) {
@@ -1878,7 +1883,7 @@ int draw::hittest(int x, int hit_x, const char* p, int lenght) {
 	int index = 0;
 	int syw = 0;
 	while(index < lenght) {
-		syw = draw::textw(szget(&p));
+		syw = draw::textw(szget(&p, codepage::W1251));
 		if(hit_x <= x + 1 + syw / 2)
 			break;
 		x += syw;
@@ -2277,7 +2282,7 @@ const char* pma::getstring(int id) const {
 
 int pma::find(const char* name) const {
 	for(int i = 1; i <= count; i++) {
-		if(strcmp(getstring(i), name) == 0)
+		if(equal(getstring(i), name))
 			return i;
 	}
 	return 0;
@@ -2461,7 +2466,7 @@ void draw::key2str(stringbuilder& sb, int key) {
 	case KeyEscape: sb.add("Esc"); break;
 	default:
 		if(key >= 0x20) {
-			char temp[2] = {(char)szupper(key), 0};
+			char temp[2] = {(char)upper_symbol(key), 0};
 			sb.add(temp);
 		}
 		break;

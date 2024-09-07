@@ -1,7 +1,7 @@
 #include "collection.h"
 #include "groupname.h"
 #include "log.h"
-#include "logparse.h"
+#include "stringbuilder.h"
 
 using namespace log;
 
@@ -35,8 +35,8 @@ static const char* read_line(const char* p, const char* parent, stringbuilder& s
 		auto pe = bsdata<groupname>::add();
 		memset(pe, 0, sizeof(*pe));
 		pe->parent = parent;
-		p = readname(skipws(p), sb);
-		pe->name = getstring(sb);
+		p = sb.psidf(skipws(p));
+		pe->name = szdup(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
 			break;
@@ -56,7 +56,7 @@ void groupname::read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
-		p = readname(skipws(p + 1), sb);
+		p = sb.psidf(skipws(p + 1));
 		if(!checksym(p, '\n'))
 			break;
 		p = read_line(skipwscr(p), szdup(temp), sb);

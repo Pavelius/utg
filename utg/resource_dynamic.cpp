@@ -1,5 +1,8 @@
-#include "crt.h"
 #include "draw.h"
+#include "io_stream.h"
+#include "math.h"
+#include "stringbuilder.h"
+#include "vector.h"
 
 using namespace draw;
 
@@ -20,9 +23,9 @@ bool is_dynamic_image(const void* data) {
 
 static resei* find(const char* name, const char* folder) {
 	for(auto& e : source) {
-		if(strcmp(e.name, name))
+		if(!equal(e.name, name))
 			continue;
-		if(folder && strcmp(e.folder, folder))
+		if(folder && !equal(e.folder, folder))
 			continue;
 		return &e;
 	}
@@ -93,7 +96,7 @@ const sprite* draw::gres(const char* name, const char* folder, point maxsize, in
 					ef.sx = rc.width();
 					ef.sy = rc.height();
 					ef.offset = sizeof(sprite);
-					// Дешевый и простой алгоритм сжатия без прозрачности
+					// Cheap and simple method encoding without alpha channel
 					auto pb = (unsigned char*)p->data->ptr(p->data->frames[0].offset);
 					auto pd = pb;
 					for(auto y = rc.y1; y < rc.y2; y++) {

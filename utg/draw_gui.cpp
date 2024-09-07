@@ -1,5 +1,5 @@
-#include "crt.h"
 #include "draw_gui.h"
+#include "slice.h"
 
 using namespace draw;
 

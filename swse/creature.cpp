@@ -2,6 +2,7 @@
 #include "creature.h"
 #include "feat.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "script.h"
 
 creature *player, *opponent;

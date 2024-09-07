@@ -1,12 +1,11 @@
-#include "crt.h"
 #include "io_stream.h"
 #include "log.h"
+#include "slice.h"
 #include "stringbuilder.h"
 
-log::contexti log::context;
-
 bool log::allowparse = true;
-int log::error_count;
+int log::errors;
+log::contexti log::context;
 
 static void print_file_error(const char* format) {
 	static io::file file("errors.txt", StreamWrite | StreamText);
@@ -14,7 +13,11 @@ static void print_file_error(const char* format) {
 		return;
 	file << format;
 }
-log::fnprint log::print_proc = print_file_error;
+fnoutput log::print_proc = print_file_error;
+
+void log::contexti::clear() {
+	memset(this, 0, sizeof(*this));
+}
 
 void log::printv(const char* format) {
 	if(!print_proc)
@@ -33,44 +36,20 @@ void log::print(const char* format, ...) {
 }
 
 void log::println() {
-	printv("\n\r");
-}
-
-void log::errorv(const char* position, const char* format, const char* format_param) {
-	error_count++;
-	if(context.url) {
-		print("In file `%1`:", context.url);
-		println();
-		context.url = 0;
-	}
-	if(position && context.file)
-		print(" Line %1i: ", getline(context.file, position));
-	printv(format, format_param);
-	println();
-}
-
-void log::error(const char* position, const char* format, ...) {
-	errorv(position, format, xva_start(format));
-}
-
-void log::setfile(const char* v) {
-	context.file = v;
-}
-
-void log::seturl(const char* v) {
-	context.url = v;
+	printv("\r\n");
 }
 
 const char* log::read(const char* url, bool error_if_not_exist) {
+	context.clear();
 	auto p_alloc = loadt(url);
 	if(!p_alloc) {
-		context.url = 0;
 		if(error_if_not_exist)
-			error(0, "Can't find file '%1'", url);
+			errorp(0, "Can't find file '%1'", url);
 		return 0;
 	}
-	seturl(url);
-	setfile(p_alloc);
+	context.header = "Error in file `%1`:";
+	context.url = url;
+	context.file = p_alloc;
 	return p_alloc;
 }
 
@@ -80,25 +59,21 @@ void log::close() {
 	context.file = 0;
 }
 
-const char* endline(const char* p) {
-	while(*p && !(*p == 10 || *p == 13))
-		p++;
-	return p;
-}
-
-int log::getline(const char* pb, const char* pc) {
-	auto p = pb;
-	auto r = 0;
-	while(*p && p < pc) {
-		p = endline(p);
-		p = skipcr(p);
-		r++;
+void log::errorv(const char* position, const char* format, const char* format_param) {
+	errors++;
+	if(context.header) {
+		print(context.header, context.url);
+		println();
+		context.header = 0;
 	}
-	return r;
+	if(position && context.file)
+		print(" Line %1i: ", get_line_number(context.file, position));
+	printv(format, format_param);
+	println();
 }
 
-int log::geterrors() {
-	return error_count;
+void log::errorp(const char* position, const char* format, ...) {
+	errorv(position, format, xva_start(format));
 }
 
 const char* log::skipws(const char* p) {
@@ -120,14 +95,8 @@ const char* log::skipws(const char* p) {
 		}
 		if(p[0] == '/' && p[1] == '*') { // Complex comment
 			p += 2;
-			while(*p) {
-				if(p[0] == '*' && p[1] == '/') {
-					p += 2;
-					break;
-				}
+			while(*p && !(p[0] == '*' && p[1] == '/'))
 				p++;
-			}
-			continue;
 		}
 		break;
 	}
@@ -147,17 +116,8 @@ const char* log::skipwscr(const char* p) {
 	return p;
 }
 
-void log::readloc(fnread proc, const char* folder, const char* id) {
-	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(folder, id, "txt");
-	proc(temp);
-}
-
-void log::readlocfolder(fnread proc, const char* folder, const char* filter) {
-	char temp2[260]; stringbuilder s2(temp2);
-	char temp[260]; stringbuilder sb(temp);
-	sb.addlocaleurl(folder);
-	for(io::file::find find(temp); find; find.next()) {
+void log::readf(fnread proc, const char* folder, const char* filter) {
+	for(io::file::find find(folder); find; find.next()) {
 		auto pn = find.name();
 		if(!pn || pn[0] == '.')
 			continue;
@@ -165,9 +125,50 @@ void log::readlocfolder(fnread proc, const char* folder, const char* filter) {
 			if(!szpmatch(pn, filter))
 				continue;
 		}
-		s2.clear();
-		s2.add(temp);
-		s2.add(pn);
+		char temp2[260];
+		find.fullname(temp2);
 		proc(temp2);
 	}
+}
+
+void log::readlf(fnread proc, const char* folder, const char* filter) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add("%1/%2", folder, current_locale);
+	readf(proc, temp, filter);
+}
+
+static const char* example(const char* p, stringbuilder& sb) {
+	while(*p && *p != '\n' && *p != '\r') {
+		if(sb.isfull())
+			break;
+		sb.add(*p++);
+	}
+	return sb.begin();
+}
+
+bool log::checksym(const char* p, char sym) {
+	if(!allowparse)
+		return false;
+	if(sym == '\n') {
+		if(*p != '\n' && *p != '\r') {
+			log::errorp(p, "Expected symbol line feed");
+			allowparse = false;
+			return false;
+		}
+	} else if(*p != sym) {
+		char result[] = {sym, 0};
+		char string[16]; stringbuilder sb(string); sb.clear();
+		log::errorp(p, "Expected symbol `%1`, but you have string `%2`", result, example(p, sb));
+		allowparse = false;
+		return false;
+	}
+	return true;
+}
+
+bool log::errorpresent() {
+	if(errors > 0)
+		return true;
+	if(io::file::exist("errors.txt"))
+		io::file::remove("errors.txt");
+	return false;
 }

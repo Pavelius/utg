@@ -1,6 +1,6 @@
-﻿#include "crt.h"
-#include "draw.h"
+﻿#include "draw.h"
 #include "screenshoot.h"
+#include "timer.h"
 
 using namespace draw;
 

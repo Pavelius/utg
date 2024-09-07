@@ -1,5 +1,7 @@
+#include "bsdata.h"
+#include "log.h"
+#include "rand.h"
 #include "stringlist.h"
-#include "logparse.h"
 
 using namespace log;
 
@@ -22,7 +24,7 @@ unsigned stringlist::select(short unsigned* pb, short unsigned* pe, const char* 
 		if(!e.match(id))
 			continue;
 		if(ps < pe)
-			*ps++ = getbse(e);
+			*ps++ = getbsi(&e);
 	}
 	return ps - pb;
 }
@@ -47,10 +49,10 @@ static const char* read_line(const char* p, const char* id, stringbuilder& sb) {
 	while(ischax(*p)) {
 		auto pe = bsdata<stringlist>::add();
 		memset(pe, 0, sizeof(*pe));
-		p = readname(skipws(p), sb);
+		p = sb.psidf(skipws(p));
 		pe->id = id;
 		pe->index = index;
-		pe->name = getstring(sb);
+		pe->name = szdup(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
 			break;
@@ -71,7 +73,7 @@ void stringlist::read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
-		p = readidn(p+1, sb);
+		p = sb.psidf(p+1);
 		if(!checksym(p, '\n'))
 			break;
 		auto id = szdup(temp);

@@ -1,6 +1,6 @@
 #include "answers.h"
 #include "condition.h"
-#include "logparse.h"
+#include "log.h"
 #include "property.h"
 #include "quest.h"
 
@@ -47,7 +47,7 @@ static const char* read_params(const char* p, short& v) {
 	if(!checksym(p, '('))
 		return p;
 	p = skipws(p + 1);
-	p = stringbuilder::read(p, v);
+	p = psnum(p, v);
 	p = skipws(p);
 	if(!checksym(p, ')'))
 		return p;
@@ -63,7 +63,7 @@ static const char* read_params(const char* p, stringbuilder& result) {
 		result.clear();
 		p = result.psstr(p + 1, p[0]);
 	} else
-		p = readidn(p, result);
+		p = result.psidf(p);
 	p = skipws(p);
 	if(!checksym(p, ')'))
 		return p;
@@ -73,14 +73,14 @@ static const char* read_params(const char* p, stringbuilder& result) {
 
 static const char* read_variants(const char* p, stringbuilder& result, variants& source, quest* pe) {
 	while(allowparse && ischa(*p)) {
-		p = readidn(p, result);
+		p = result.psidf(p);
 		p = skipws(p);
 		auto pn = result.begin();
-		int bonus; p = readbon(p, bonus);
+		int bonus; p = psbon(p, bonus);
 		p = skipws(p);
 		variant v = (const char*)result.begin();
 		if(!v)
-			log::error(p, "Can't find variant `%1`", result.begin());
+			log::errorp(p, "Can't find variant `%1`", result.begin());
 		else
 			v.counter = bonus;
 		add(source, v);
@@ -91,14 +91,14 @@ static const char* read_variants(const char* p, stringbuilder& result, variants&
 static const char* read_event(const char* p, short& parent, stringbuilder& sb) {
 	if(!allowparse)
 		return p;
-	p = stringbuilder::read(skipws(p), parent);
+	p = psnum(skipws(p), parent);
 	auto pe = bsdata<quest>::add(); pe->clear();
 	pe->index = parent;
 	pe->next = -1;
 	p = propertyi::read(skipws(p), getbsi(pe));
 	p = read_variants(skipws(p), sb, pe->tags, pe);
 	p = read_string(skipwscr(p), sb);
-	pe->text = getstring(sb);
+	pe->text = szdup(sb);
 	return p;
 }
 
@@ -106,12 +106,12 @@ static const char* read_answers(const char* p, short parent, stringbuilder& sb) 
 	while(allowparse && isanswer(p)) {
 		auto pe = bsdata<quest>::add(); pe->clear();
 		pe->index = parent;
-		p = stringbuilder::read(p, pe->next);
+		p = psnum(p, pe->next);
 		p = read_variants(skipws(p), sb, pe->tags, pe);
 		if(!checksym(p, ')'))
 			break;
 		p = read_string(skipws(p + 1), sb);
-		pe->text = getstring(sb);
+		pe->text = szdup(sb);
 	}
 	return p;
 }
@@ -174,7 +174,7 @@ void quest_read(const char* url) {
 	allowparse = true;
 	while(allowparse && *p) {
 		if(!isevent(p)) {
-			log::error(p, "Expected symbol `#` followed by event number");
+			log::errorp(p, "Expected symbol `#` followed by event number");
 			break;
 		}
 		short event_parent = -1; sb.clear();

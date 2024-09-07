@@ -1,5 +1,5 @@
-#include "crt.h"
 #include "stringa.h"
+#include "vector.h"
 
 #pragma once
 

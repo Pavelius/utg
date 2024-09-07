@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "bsreq.h"
+#include "io_stream.h"
 #include "log.h"
 #include "pushvalue.h"
 #include "questlist.h"

@@ -1,8 +1,10 @@
 #include "bsreq.h"
 #include "image.h"
 #include "io_stream.h"
-#include "logparse.h"
+#include "log.h"
 #include "pushvalue.h"
+#include "stringbuilder.h"
+#include "variant.h"
 
 using namespace log;
 
@@ -52,7 +54,7 @@ static void skip(const char* command) {
 	if(!allowparse)
 		return;
 	if(!match(command)) {
-		error(p, "Expected token `%1`", command);
+		errorp(p, "Expected token `%1`", command);
 		allowparse = false;
 	}
 }
@@ -65,7 +67,7 @@ static int number() {
 			minus = true;
 			p++;
 		}
-		p = stringbuilder::read(p, r);
+		p = psnum(p, r);
 		if(minus)
 			r = -r;
 	}
@@ -109,7 +111,7 @@ static void readid() {
 	while(*p && (ischa(*p) || isnum(*p) || *p == '_'))
 		sb.add(*p++);
 	if(p_push == p) {
-		error(p, "Expected identifier");
+		errorp(p, "Expected identifier");
 		allowparse = false;
 	}
 	skipws();
@@ -134,7 +136,7 @@ static void read_value() {
 		last_value = expression();
 		skipws();
 	} else {
-		error(p, "Unknown value");
+		errorp(p, "Unknown value");
 		allowparse = false;
 	}
 }
@@ -156,7 +158,7 @@ static void write_value(void* object, const bsreq* req, int index) {
 		auto data = (unsigned char*)req->ptr(object);
 		data[last_value / 8] |= 1 << (last_value % 8);
 	} else
-		error(p, "Unknown type in requisit `%1`", req->id);
+		errorp(p, "Unknown type in requisit `%1`", req->id);
 }
 
 static void read_field(void* object, const bsreq* req) {
@@ -165,7 +167,7 @@ static void read_field(void* object, const bsreq* req) {
 		return;
 	auto pr = req->find(last_string);
 	if(!pr)
-		error(p, "Can\'t find requisit `%1`", last_string);
+		errorp(p, "Can\'t find requisit `%1`", last_string);
 	skip("(");
 	auto index = 0;
 	while(*p) {
@@ -222,7 +224,7 @@ static void image_after_read() {
 		if(!e.object)
 			e.object = bsdata<imageplugini>::find(e.id);
 		if(!e.object)
-			error(0, " Don`t find image plugin of list `%1`", e.id);
+			errorp(0, " Don`t find image plugin of list `%1`", e.id);
 	}
 }
 

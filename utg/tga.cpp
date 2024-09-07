@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "draw.h"
 
 static struct tga_bitmap_plugin : public draw::surface::plugin {

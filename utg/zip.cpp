@@ -1,5 +1,6 @@
-﻿#include "bstream.h"
-#include "crt.h"
+﻿#include "assert.h"
+#include "bstream.h"
+#include "slice.h"
 
 #define FIRST_LENGTH_CODE_INDEX 257
 #define LAST_LENGTH_CODE_INDEX 285

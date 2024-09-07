@@ -2,11 +2,11 @@
 #include "pushvalue.h"
 #include "draw_utg.h"
 
-fngetinfo		utg::callback::getinfo;
-fnstatus		utg::callback::getstatus;
-const char*		utg::url_avatars = "art/avatars";
-static char		sb_value[4096];
-stringbuilder	utg::sb(sb_value);
+fngetinfo utg::callback::getinfo;
+fnstatus utg::callback::getstatus;
+const char* utg::url_avatars = "art/avatars";
+static char	sb_value[4096];
+stringbuilder utg::sb(sb_value);
 
 const char* utg::getchoose(const char* id) {
 	char temp[128]; stringbuilder sb(temp);

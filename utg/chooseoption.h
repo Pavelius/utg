@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "stringbuilder.h"
 
 #pragma once

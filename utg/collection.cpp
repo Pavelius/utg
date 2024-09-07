@@ -1,12 +1,15 @@
 #include "answers.h"
 #include "collection.h"
+#include "math.h"
+#include "rand.h"
+#include "stringbuilder.h"
 
 static fngetname sort_proc;
 
 static int compare_proc(const void* v1, const void* v2) {
 	auto p1 = *((void**)v1);
 	auto p2 = *((void**)v2);
-	return strcmp(sort_proc(p1), sort_proc(p2));
+	return szcmp(sort_proc(p1), sort_proc(p2));
 }
 
 static bool exist(void** pb, void** pe, const void* v) {
@@ -49,7 +52,7 @@ void collectiona::select(array& source) {
 	auto ps = data;
 	auto pe = endof();
 	auto ae = source.end();
-	auto s = source.getsize();
+	auto s = source.size();
 	for(auto p = source.begin(); p < ae; p += s) {
 		if(ps >= pe)
 			break;
@@ -66,7 +69,7 @@ void collectiona::select(array& source, fnvisible proc, bool keep) {
 	auto ps = data;
 	auto pe = endof();
 	auto ae = source.end();
-	auto s = source.getsize();
+	auto s = source.size();
 	for(auto p = source.begin(); p < ae; p += s) {
 		if(ps >= pe)
 			break;
@@ -85,7 +88,7 @@ void collectiona::select(array& source, fnallow proc, int param, bool keep) {
 	auto ps = data;
 	auto pe = endof();
 	auto ae = source.end();
-	auto s = source.getsize();
+	auto s = source.size();
 	for(auto p = source.begin(); p < ae; p += s) {
 		if(ps >= pe)
 			break;

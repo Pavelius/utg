@@ -1,4 +1,5 @@
 #include "stringa.h"
+#include "stringbuilder.h"
 
 unsigned stringa::find(const char* v, unsigned len) const {
 	if(v && len) {

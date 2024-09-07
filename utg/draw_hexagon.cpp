@@ -1,6 +1,6 @@
-#include "crt.h"
 #include "draw.h"
 #include "draw_hexagon.h"
+#include "math.h"
 
 using namespace draw;
 

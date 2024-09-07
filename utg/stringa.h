@@ -1,6 +1,6 @@
-#include "crt.h"
-
 #pragma once
+
+#include "array.h"
 
 class stringa : public array {
 	unsigned			find(const char* v, unsigned len) const;

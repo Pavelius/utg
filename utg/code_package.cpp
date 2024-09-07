@@ -1,4 +1,6 @@
+#include "bsdata.h"
 #include "code_package.h"
+#include "flagable.h"
 #include "io_stream.h"
 
 using namespace code;
@@ -133,7 +135,7 @@ static void serialx(io::stream& file, array& e, bool write_mode) {
 	if(write_mode) {
 		file.write(&e.count, sizeof(e.count));
 		if(e.count)
-			file.write(e.begin(), e.count * e.getsize());
+			file.write(e.begin(), e.count * e.size());
 	} else {
 		e.clear();
 		unsigned v = 0;
@@ -141,7 +143,7 @@ static void serialx(io::stream& file, array& e, bool write_mode) {
 		if(v) {
 			e.reserve(v);
 			e.setcount(v);
-			file.read(e.begin(), e.count * e.getsize());
+			file.read(e.begin(), e.count * e.size());
 		}
 	}
 }
@@ -150,8 +152,8 @@ bool package::serial(const char* url, bool write_mode) {
 	io::file file(url, write_mode ? StreamWrite : StreamRead);
 	if(!file)
 		return false;
-	if(!file.version("PKG", 0, TypePointer, write_mode))
-		return false;
+	//if(!file.version("PKG", 0, TypePointer, write_mode))
+	//	return false;
 	serialx(file, strings, write_mode);
 	serialx(file, symbols, write_mode);
 	serialx(file, asts, write_mode);

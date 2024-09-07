@@ -1,5 +1,4 @@
 #include "creature.h"
-#include "crt.h"
 #include "stringbuilder.h"
 #include "stringvar.h"
 

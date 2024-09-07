@@ -1,4 +1,4 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "stringvar.h"
 
 bool stringvar_identifier(stringbuilder& sb, const char* identifier) {

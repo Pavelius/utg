@@ -3,6 +3,8 @@
 #include "bsreq.h"
 #include "creature.h"
 #include "draw_utg.h"
+#include "timer.h"
+#include "rand.h"
 
 void one_combat_round();
 void initialize_printer();

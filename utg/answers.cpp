@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "pushvalue.h"
+#include "rand.h"
 
 answers* answers::last;
 const char* answers::header;
@@ -23,7 +24,7 @@ char answers::hotkeys[20] = {
 answers an;
 
 int answers::compare(const void* v1, const void* v2) {
-	return strcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
+	return szcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
 }
 
 void answers::addv(const void* value, const char* text, const char* format) {

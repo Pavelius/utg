@@ -1,5 +1,5 @@
 #include "banner.h"
-#include "crt.h"
+#include "bsdata.h"
 #include "draw.h"
 
 BSDATA(banneri) = {

@@ -252,13 +252,19 @@ static void paint_tips() {
 		if(object) {
 			hilite_object = object.getpointer();
 			tips_sb.clear();
-		} 
+		}
 	}
 	if(hilite_object && !tips_sb) {
 		variant v = hilite_object;
 		if(!v)
 			return;
-		v.getinfo(tips_sb);
+		auto pv = v.getpointer();
+		auto pm = bsdata<varianti>::elements + v.type;
+		if(pm->pstatus)
+			pm->pstatus(pv, tips_sb);
+		if(!tips_sb && pm->isnamed()) {
+			auto id = *((const char**)pv);
+		}
 	}
 	if(tips_sb) {
 		rectpush push;
@@ -288,7 +294,7 @@ int draw::strategy(fnevent proc, fnevent afterread, const char* rules_url) {
 	if(afterread)
 		afterread();
 	check_translation();
-	if(log::geterrors())
+	if(log::errors > 0)
 		return -1;
 	pbeforemodal = beforemodal;
 	if(!pbackground)

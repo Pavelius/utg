@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "logparse.h"
+#include "log.h"
 #include "group.h"
 #include "draw_utg.h"
 
@@ -55,7 +55,7 @@ static const char* read_variant(const char* p, stringbuilder& sb, variant& resul
 	p = read_identifier(p, sb);
 	result = (const char*)sb.begin();
 	if(!result)
-		log::error(p, "Can't find variant `%1`", sb.begin());
+		log::errorp(p, "Can't find variant `%1`", sb.begin());
 	return p;
 }
 
@@ -72,12 +72,12 @@ static const char* read_line(const char* p, variant& type, stringbuilder& sb, bo
 		auto pe = bsdata<groupvaluei>::add();
 		pe->type = type;
 		p = read_name(skipws(p), sb);
-		pe->name = getstring(sb);
+		pe->name = szdup(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
 			break;
 		if(*p != ',') {
-			log::error(p, "Expected symbol `,`");
+			log::errorp(p, "Expected symbol `,`");
 			allowrun = false;
 			break;
 		}
@@ -94,13 +94,13 @@ void groupvaluei::read(const char* url) {
 	auto allowrun = true;
 	while(allowrun && *p) {
 		if(*p != '#') {
-			log::error(p, "Expected symbol `#`");
+			log::errorp(p, "Expected symbol `#`");
 			break;
 		}
 		variant id;
 		p = read_variant(skipws(p + 1), sb, id);
 		if(*p != 10 && *p != 13) {
-			log::error(p, "Expected line feed");
+			log::errorp(p, "Expected line feed");
 			break;
 		}
 		p = read_line(skipwscr(p), id, sb, allowrun);

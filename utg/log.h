@@ -1,30 +1,31 @@
 #pragma once
 
+typedef void (*fnoutput)(const char* format);
+typedef void(*fnread)(const char* url);
+
 namespace log {
 struct contexti {
-	const char*	url;
-	const char*	file;
+	const char* url;
+	const char* file;
+	const char* header;
+	void clear();
 };
-typedef void (*fnread)(const char* url);
-typedef void (*fnprint)(const char* format);
-extern bool		allowparse;
-extern fnprint	print_proc;
-extern int		error_count;
-extern contexti	context;
+extern contexti context;
+extern bool allowparse;
+extern fnoutput	print_proc;
 void			close();
-int				geterrors();
-int				getline(const char* pb, const char* pc);
-void			error(const char* position, const char* format, ...);
+bool			checksym(const char* p, char sym);
+void			errorp(const char* position, const char* format, ...);
+extern int		errors;
 void			errorv(const char* position, const char* format, const char* format_param);
+bool			errorpresent();
 void			print(const char* format, ...);
 void			println();
 void			printv(const char* format);
 void			printv(const char* format, const char* format_param);
 const char*		read(const char* url, bool error_if_not_exist = true);
-void			readloc(fnread proc, const char* folder, const char* id);
-void			readlocfolder(fnread proc, const char* folder, const char* filter);
-void            setfile(const char* v);
-void            seturl(const char* v);
+void			readf(fnread proc, const char* url, const char* filter);
+void			readlf(fnread proc, const char* url, const char* filter);
 const char*		skipws(const char* p);
 const char*		skipwscr(const char* p);
 }

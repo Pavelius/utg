@@ -1,7 +1,7 @@
 #include "archive.h"
 #include "bsreq.h"
 #include "collection.h"
-#include "logparse.h"
+#include "log.h"
 #include "stringbuilder.h"
 #include "variant.h"
 
@@ -124,6 +124,6 @@ void serial_object(archive& f, array& source, const bsreq* type) {
 		source.setcount(size);
 	}
 	auto pe = source.end();
-	for(auto p = source.begin(); p < pe; p += source.size)
+	for(auto p = source.begin(); p < pe; p += source.element_size)
 		serial_object(f, (void*)p, type);
 }

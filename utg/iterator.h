@@ -1,6 +1,7 @@
-#include "crt.h"
-
 #pragma once
+
+#include "adat.h"
+#include "bsdata.h"
 
 typedef unsigned short indext;
 

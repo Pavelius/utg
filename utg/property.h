@@ -1,6 +1,6 @@
 #pragma once
 
-class array;
+struct array;
 struct propertyi {
 	enum {
 		Text, Number,

@@ -1,5 +1,6 @@
-#include "crt.h"
 #include "interval.h"
+#include "math.h"
+#include "rand.h"
 
 int interval::roll() const {
 	return max ? min + rand() % (max - min) : min;

@@ -1,5 +1,7 @@
+#include "bsdata.h"
 #include "code_command.h"
 #include "code_parser.h"
+#include "flagable.h"
 #include "stringbuilder.h"
 
 using namespace code;
@@ -98,7 +100,7 @@ static void string() {
 static void number() {
 	auto p1 = p;
 	long value = 0;
-	p = stringbuilder::read(p, value);
+	p = psnum(p, value);
 	if(p1 != p) {
 		skipws();
 		operations.add(last_package->add(operation::Number, value));
@@ -200,7 +202,7 @@ static void parse_rule(const rule& v) {
 
 static rule* find_rule(const char* id) {
 	for(auto& e : rules) {
-		if(strcmp(e.id, id) == 0)
+		if(equal(e.id, id))
 			return &e;
 	}
 	error("Not found rule `%1`", id);

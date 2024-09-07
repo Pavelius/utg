@@ -152,6 +152,7 @@
     <ClCompile Include="advancement.cpp" />
     <ClCompile Include="answers.cpp" />
     <ClCompile Include="archive.cpp" />
+    <ClCompile Include="array.cpp" />
     <ClCompile Include="avatarable.cpp" />
     <ClCompile Include="banner.cpp" />
     <ClCompile Include="bsreq.cpp" />
@@ -164,6 +165,9 @@
     <ClCompile Include="draw_imager.cpp" />
     <ClCompile Include="draw_marker.cpp" />
     <ClCompile Include="interval.cpp" />
+    <ClCompile Include="locale.cpp" />
+    <ClCompile Include="logvalue.cpp" />
+    <ClCompile Include="math.cpp" />
     <ClCompile Include="querry.cpp" />
     <ClCompile Include="stringlist.cpp" />
     <ClCompile Include="chooselist.cpp" />
@@ -177,9 +181,9 @@
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="condition.cpp" />
     <ClCompile Include="color.cpp" />
-    <ClCompile Include="crt.cpp" />
-    <ClCompile Include="crt_file.cpp" />
-    <ClCompile Include="crt_locale.cpp" />
+    <ClCompile Include="crt_file.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="dataset.cpp" />
     <ClCompile Include="datasource.cpp" />
     <ClCompile Include="dice.cpp" />
@@ -200,7 +204,6 @@
     <ClCompile Include="io_bsreq_bin.cpp" />
     <ClCompile Include="iterator.cpp" />
     <ClCompile Include="list.cpp" />
-    <ClCompile Include="logparse.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="nameable.cpp" />
@@ -248,13 +251,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
+    <ClInclude Include="adat.h" />
     <ClInclude Include="advancement.h" />
     <ClInclude Include="answers.h" />
     <ClInclude Include="anymap.h" />
     <ClInclude Include="archive.h" />
+    <ClInclude Include="array.h" />
     <ClInclude Include="avatarable.h" />
     <ClInclude Include="banner.h" />
     <ClInclude Include="bonus.h" />
+    <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsenum.h" />
     <ClInclude Include="bsref.h" />
     <ClInclude Include="bsreq.h" />
@@ -267,8 +273,14 @@
     <ClInclude Include="console.h" />
     <ClInclude Include="draw_marker.h" />
     <ClInclude Include="flagux.h" />
+    <ClInclude Include="logvalue.h" />
+    <ClInclude Include="math.h" />
     <ClInclude Include="ownerable.h" />
     <ClInclude Include="parentable.h" />
+    <ClInclude Include="seqlink.h" />
+    <ClInclude Include="slice.h" />
+    <ClInclude Include="sliceu.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="tmpflags.h" />
     <ClInclude Include="tmpfunct.h" />
     <ClInclude Include="querry.h" />
@@ -298,10 +310,8 @@
     <ClInclude Include="iterator.h" />
     <ClInclude Include="kering.h" />
     <ClInclude Include="list.h" />
-    <ClInclude Include="logparse.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="color.h" />
-    <ClInclude Include="crt.h" />
     <ClInclude Include="dice.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="draw_figure.h" />
@@ -337,6 +347,7 @@
     <ClInclude Include="stringbuilder.h" />
     <ClInclude Include="typeable.h" />
     <ClInclude Include="variant.h" />
+    <ClInclude Include="vector.h" />
     <ClInclude Include="widget.h" />
     <ClInclude Include="win.h" />
   </ItemGroup>

@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "win.h"
 
 //char** szcmdargv(int& argc) {

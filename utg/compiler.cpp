@@ -1,6 +1,8 @@
+#include "bsdata.h"
 #include "compiler.h"
-#include "logparse.h"
+#include "log.h"
 #include "stringa.h"
+#include "stringbuilder.h"
 
 #define EMPTHY 0xFFFFFFFF
 
@@ -9,12 +11,12 @@ using namespace compiler;
 
 BSDATAC(evaluei, 256 * 256)
 
-static const char*	p;
-static stringa		literals;
-static evaluei		stack[32];
-static evaluei*		pv = stack;
-static char			name[260];
-static unsigned		last_exression;
+static const char* p;
+static char name[260];
+static stringa literals;
+static evaluei stack[32];
+static evaluei* pv = stack;
+static unsigned last_exression;
 
 void evaluei::clear() {
 	op = NOP;
@@ -64,7 +66,7 @@ static bool skip(const char* value) {
 	while(*value) {
 		if(*p != *value) {
 			p = ps;
-			error("Expected `%1`", value);
+			errorp("Expected `%1`", value);
 			return false;
 		}
 	}
@@ -112,7 +114,7 @@ static bool binary_optimization(op_s v, evaluei& e1, evaluei& e2) {
 		case Mul: e1.p1 *= e2.p1; break;
 		case Div:
 			if(!e2.p1)
-				error(p, "Division by zero");
+				errorp(p, "Division by zero");
 			else
 				e1.p1 /= e2.p1;
 			break;
@@ -151,7 +153,7 @@ static void unary(op_s v) {
 
 static void binary(op_s v) {
 	if(pv <= stack) {
-		error(p, "Binary operation stack corrupt");
+		errorp(p, "Binary operation stack corrupt");
 		return;
 	}
 	if(binary_optimization(v, pv[-1], pv[0])) {

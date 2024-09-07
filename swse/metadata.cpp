@@ -4,7 +4,7 @@
 #include "area.h"
 #include "bsreq.h"
 #include "classi.h"
-#include "crt.h"
+#include "bsreq.h"
 #include "creature.h"
 #include "dice.h"
 #include "item.h"

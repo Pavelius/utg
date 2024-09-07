@@ -1,14 +1,14 @@
 #pragma once
 
-#include "crt.h"
+#include "sliceu.h"
 
 struct speech {
 	struct element {
 		const char*	name;
 	};
 	typedef sliceu<element> elementa;
-	const char*		id;
-	elementa		source;
+	const char*	id;
+	elementa	source;
 };
 
 void speech_initialize();

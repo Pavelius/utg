@@ -1,8 +1,9 @@
+#include "adat.h"
 #include "image.h"
-#include "crt.h"
 #include "draw.h"
 #include "log.h"
 #include "sprite_util.h"
+#include "vector.h"
 
 using namespace draw;
 
@@ -142,7 +143,7 @@ static void create_color_map() {
 		}
 	}
 	delete[] pcol;
-	qsort(colormap.data, colormap.count, colormap.size, compare_colormap);
+	qsort(colormap.data, colormap.count, colormap.element_size, compare_colormap);
 }
 
 static void create_grayscale_pallette() {

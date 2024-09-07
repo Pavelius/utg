@@ -1,6 +1,7 @@
-#include "crt.h"
-
 #pragma once
+
+#include "adat.h"
+#include "bsdata.h"
 
 struct collectiona : adat<void*, 256> {
 	typedef void* fngroup(const void* object);

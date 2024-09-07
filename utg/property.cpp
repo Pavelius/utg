@@ -1,5 +1,6 @@
-#include "crt.h"
-#include "logparse.h"
+#include "bsdata.h"
+#include "log.h"
+#include "logvalue.h"
 #include "property.h"
 #include "stringbuilder.h"
 
@@ -10,7 +11,7 @@ BSDATAC(propertyi::typei, 16)
 
 static propertyi::key* findv(int object, int type, array& source) {
 	auto pe = source.end();
-	auto sz = source.getsize();
+	auto sz = source.size();
 	for(auto p = source.begin(); p < pe; p += sz) {
 		if(((propertyi::key*)p)->object == object
 			&& ((propertyi::key*)p)->type == type)
@@ -21,7 +22,7 @@ static propertyi::key* findv(int object, int type, array& source) {
 
 static propertyi::key* addnew(array& source) {
 	auto pe = source.end();
-	auto sz = source.getsize();
+	auto sz = source.size();
 	for(auto p = source.begin(); p < pe; p += sz) {
 		if(!((propertyi::key*)p)->operator bool())
 			return (propertyi::key*)p;
@@ -36,7 +37,7 @@ static void addv(int object, int type, array& source, const void* v) {
 		p->object = object;
 		p->type = type;
 	}
-	auto sz = source.getsize() - sizeof(propertyi::key);
+	auto sz = source.size() - sizeof(propertyi::key);
 	memcpy((char*)p + sizeof(propertyi::key), v, sz);
 }
 
@@ -98,12 +99,12 @@ using namespace log;
 const char* propertyi::read(const char* p, int object) {
 	char temp[512]; stringbuilder sb(temp);
 	while(allowparse) {
-		auto p1 = readidn(p, sb);
+		auto p1 = sb.psidf(p);
 		if(!temp[0] || p1[0] != '(')
 			break;
-		auto pi = bsdata<propertyi>::source.findps(temp, 0, sb.getlenght());
+		auto pi = bsdata<propertyi>::source.indexof(bsdata<propertyi>::source.findv(temp, 0, sb.size()));
 		if(pi == -1)
-			error(p, "Unknown property name `%1`", temp);
+			errorp(p, "Unknown property name `%1`", temp);
 		valuei value;
 		p1 = value.read(p1 + 1, sb);
 		if(!checksym(p1, ')'))

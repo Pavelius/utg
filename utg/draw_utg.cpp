@@ -7,11 +7,12 @@
 
 using namespace draw;
 
+utg::fngetint utg::callback::getfade;
+
 array*		draw::heroes;
 fngetname	draw::heroes_getavatar;
 fnvisible	draw::heroes_isplayer;
 fncommand	draw::heroes_setplayer;
-fngetint	draw::heroes_getfade;
 const void*	draw::focus_object;
 int			draw::title_width = 220;
 static point hide_separator;
@@ -169,7 +170,7 @@ static void paintbars(void** pages, unsigned count) {
 
 static unsigned choose_pages_by_focus(void** ps, void** pe) {
 	auto pb = ps;
-	auto pm = varianti::find(focus_object);
+	auto pm = find_variant(focus_object);
 	if(pm) {
 		for(auto& e : bsdata<menu>()) {
 			if(e.source != pm)
@@ -192,7 +193,7 @@ static unsigned choose_pages_by_focus(void** ps, void** pe) {
 }
 
 static void standart_getproperty(const void* object, variant v, stringbuilder& sb) {
-	auto pm = varianti::find(object);
+	auto pm = find_variant(object);
 	if(!pm)
 		return;
 	for(auto p = pm->metadata; *p; p++) {
@@ -229,8 +230,8 @@ static void properties() {
 		menu::last = (menu*)current_tab;
 		if(menu::last->source) {
 			auto proc = standart_getproperty;
-			if(menu::last->source->pgetproperty)
-				proc = menu::last->source->pgetproperty;
+			if(menu::last->source->pgetinfo)
+				proc = menu::last->source->pgetinfo;
 			label(focus_object, menu::last->elements, proc);
 		} else {
 			auto proc = standart_getproperty;
@@ -254,7 +255,7 @@ static void avatars() {
 	if(!heroes || !heroes_getavatar)
 		return;
 	auto index = 0;
-	auto size = heroes->size;
+	auto size = heroes->element_size;
 	auto pe = heroes->end();
 	char temp[128]; stringbuilder sb(temp);
 	for(auto p = heroes->begin(); p < pe; p += size) {
@@ -475,10 +476,10 @@ void draw::avatar(int index, const void* object, const char* id, fnevent press_e
 	width = p->get(0).sx;
 	height = p->get(0).sy;
 	image(caret.x, caret.y, p, 0, 0);
-	if(heroes_getfade)
-		rect_fade(heroes_getfade(object), color(87, 0, 13));
+	if(utg::callback::getfade)
+		rect_fade(utg::callback::getfade(object), color(87, 0, 13));
 	hiliting(object);
-	strokeout(focus_object==object ? strokeactive : strokeborder);
+	strokeout(focus_object == object ? strokeactive : strokeborder);
 	if(control_hilited)
 		strokeactive();
 	if(heroes_isplayer && heroes_isplayer(object))
@@ -564,25 +565,18 @@ static void downbar() {
 	caret = push_caret;
 }
 
-static void getinformation(const char* id, stringbuilder& sb) {
-	auto p = getdescription(id);
-	if(!p)
-		return;
-	sb.add(p);
-}
-
 void utg::getstatus(const void* object, stringbuilder& sb) {
-	auto pm = varianti::find(object);
+	auto pm = find_variant(object);
 	if(!pm)
 		return;
-	if(pm->pgetinfo)
-		pm->pgetinfo(object, sb);
-	else if(pm->metadata) {
-		auto pk = pm->metadata->find("id");
-		if(pk) {
-			auto id = pk->gets(object);
-			if(id)
-				getinformation(id, sb);
+	if(pm->pstatus)
+		pm->pstatus(object, sb);
+	else if(pm->isnamed()) {
+		auto id = *((const char**)object);
+		if(id) {
+			auto p = getnme(ids(id, "Info"));
+			if(p)
+				sb.add(p);
 		}
 	}
 }
@@ -612,8 +606,6 @@ static void initialize_widgets() {
 }
 
 void initialize_png();
-void check_translation();
-void initialize_translation(const char* locale);
 
 int draw::start(fnevent proc, fnevent afterread) {
 	initialize_png();
@@ -625,12 +617,10 @@ int draw::start(fnevent proc, fnevent afterread) {
 	set_dark_theme();
 	initialize_widgets();
 	bsreq::read("rules/Basic.txt");
-	if(getcurrentlocale()[0]==0)
-		initialize_translation("ru");
+	initialize_translation();
 	if(afterread)
 		afterread();
-	check_translation();
-	if(log::geterrors())
+	if(log::errors > 0)
 		return -1;
 	pbeforemodal = beforemodal;
 	pbackground = paint;

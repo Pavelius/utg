@@ -1,4 +1,5 @@
-#include "crt.h"
+#include "adat.h"
+#include "array.h"
 #include "io_stream.h"
 
 #pragma once
