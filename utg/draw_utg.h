@@ -41,7 +41,6 @@ extern fnstatus	getstatus;
 }
 extern stringbuilder sb;
 extern const char* url_avatars;
-const char* getchoose(const char* id);
 void getstatus(const void* object, stringbuilder& sb);
 int	start(fnevent proc, fnevent afterread = 0);
 }

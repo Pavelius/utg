@@ -7,35 +7,29 @@ using namespace log;
 
 BSDATAC(groupname, 2048);
 
-const groupname* groupname::random(const char* parent) {
+const groupname* random_group_name(const char* parent) {
 	collection<groupname> source;
 	for(auto& e : bsdata<groupname>()) {
-		if(equal(e.parent, parent))
+		if(szpmatch(e.parent, parent))
 			source.add(&e);
 	}
 	return source.random();
 }
 
-short unsigned groupname::randomid(const char* parent) {
-	auto pn = random(parent);
+short unsigned random_group_namei(const char* parent) {
+	auto pn = random_group_name(parent);
 	if(!pn)
 		return 0xFFFF;
 	return pn - bsdata<groupname>::elements;
 }
 
-static bool ischax(unsigned char u) {
-	return (u >= 'A' && u <= 'Z')
-		|| (u >= 'a' && u <= 'z')
-		|| (u >= 0xC0 && u <= 0xFF)
-		|| (u >= 0x410 && u <= 0x44F);
-}
-
 static const char* read_line(const char* p, const char* parent, stringbuilder& sb) {
-	while(ischax(*p)) {
+	while(ischa(*p)) {
 		auto pe = bsdata<groupname>::add();
 		memset(pe, 0, sizeof(*pe));
+		sb.clear();
 		pe->parent = parent;
-		p = sb.psidf(skipws(p));
+		p = sb.psparam(skipws(p));
 		pe->name = szdup(sb);
 		p = skipws(p);
 		if(*p == 13 || *p == 10 || *p == 0)
@@ -47,7 +41,7 @@ static const char* read_line(const char* p, const char* parent, stringbuilder& s
 	return p;
 }
 
-void groupname::read(const char* url) {
+void read_group_names(const char* url) {
 	auto p = log::read(url);
 	if(!p)
 		return;
@@ -56,11 +50,12 @@ void groupname::read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
+		sb.clear();
 		p = sb.psidf(skipws(p + 1));
 		if(!checksym(p, '\n'))
 			break;
 		p = read_line(skipwscr(p), szdup(temp), sb);
 		p = skipwscr(p);
 	}
-	log::close();
+	close();
 }

@@ -111,4 +111,6 @@ constexpr const char* zchr(const char* p, char e) { while(*p) { if(*p == e) retu
 constexpr const char* zend(const char* p) { while(*p) p++; return p; }
 constexpr size_t zlen(const char* p) { return zend(p) - p; }
 
+template<class T> void ftinfo(const void* object, stringbuilder& sb);
+
 extern char current_locale[4];

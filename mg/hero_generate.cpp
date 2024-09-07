@@ -1,6 +1,5 @@
 #include "answers.h"
 #include "actable.h"
-#include "crt.h"
 #include "groupname.h"
 #include "list.h"
 #include "hero.h"
@@ -177,7 +176,7 @@ void hero::clear() {
 void hero::create() {
 	pushvalue push_player(player, this);
 	clear();
-	setname(groupname::randomid("MouseguardMale"));
+	setname(random_group_namei("MouseguardMale"));
 	add_player_rang();
 	add_player_born();
 	add_skill_list("YouTalentedSkills", 2, getrang()->talented);

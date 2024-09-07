@@ -1,4 +1,5 @@
 #include "hero.h"
+#include "stringbuilder.h"
 
 template<> void ftinfo<hero>(const void* object, stringbuilder& sb) {
 	auto p = (hero*)object;

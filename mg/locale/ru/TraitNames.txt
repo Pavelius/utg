@@ -26,6 +26,7 @@ Fearless: Безстрашный
 Fiery: Пылкий
 Generous: Щедрый
 Graceful: Грациозный
+HardWorker: Работяга
 Innocent: Невинный
 Jaded: Черствый
 Leader: Лидер

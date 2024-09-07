@@ -1,7 +1,9 @@
+#include "adat.h"
 #include "answers.h"
 #include "hero.h"
 #include "groupname.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "rang.h"
 #include "roll.h"
 #include "result.h"
@@ -20,7 +22,7 @@ static int compare_dice_result(const void* v1, const void* v2) {
 
 static int dice_result(int number) {
 	auto result = 0;
-	for(auto i = 0; i < dices.getcount(); i++) {
+	for(size_t i = 0; i < dices.getcount(); i++) {
 		if(dices[i] >= number)
 			result++;
 	}

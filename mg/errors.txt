@@ -1,2 +1,2 @@
-﻿In file `rules/Traits.txt`:
- Line 3: Can't find 'Bigpaw' in existing enumerator
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `HardWorker`

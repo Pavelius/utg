@@ -1,5 +1,4 @@
 #include "answers.h"
-#include "crt.h"
 #include "gender.h"
 #include "stringbuilder.h"
 

@@ -1,6 +1,5 @@
 #include "avatarable.h"
 #include "condition.h"
-#include "crt.h"
 #include "enviroment.h"
 #include "natureable.h"
 #include "rang.h"

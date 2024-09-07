@@ -83,8 +83,8 @@ static void readl_extend(const char* p, int& records_read) {
 	char name[128], value[8192]; stringbuilder sb(value);
 	while(*p && log::allowparse) {
 		p = log::skipwscr(p);
-		if(p[0]=='#')
-			p = read_identifier(p+1, name, name + sizeof(name) - 1);
+		if(p[0] == '#')
+			p = read_identifier(p + 1, name, name + sizeof(name) - 1);
 		p = log::skipwscr(p);
 		p = read_string_v2(p, sb);
 		apply_value(name, value);
@@ -133,11 +133,13 @@ static void save_names(const char* url) {
 	}
 }
 
+#ifdef _DEBUG
 static void deinitialize() {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add("locale/%1/UnknownNames.txt", current_locale);
 	save_names(temp);
 }
+#endif
 
 static void check_translation() {
 	log::context.url = "UnknownNames.txt";
@@ -201,7 +203,7 @@ void check_description(const char* id, const char** psuffix) {
 	if(!getnme(id))
 		log::errorp(0, " Define translation for `%1`", id);
 	for(auto p = psuffix; *p; p++) {
-		auto name = str("%1%2", id, *p);
+		auto name = ids(id, *p);
 		if(!getnme(name))
 			log::errorp(0, " Define translation for `%1`", name);
 	}

@@ -330,11 +330,11 @@ static void right_align_value() {
 	title_width = 320 - textw('0') * 4 - metrics::padding * 2;
 }
 
-void widget::button() {
-	if(!lastwidget)
+static void button_widget() {
+	if(!last_widget)
 		return;
-	if(lastwidget->click)
-		label(getnm(lastwidget->id), 0, lastwidget, lastwidget->click);
+	if(last_widget->click)
+		label(getnm(last_widget->id), 0, last_widget, last_widget->click);
 }
 
 void draw::label(const void* object, const variants& elements, fngetinfo pget) {
@@ -601,8 +601,8 @@ static void tips() {
 }
 
 static void initialize_widgets() {
-	widget::add("Separator", separator);
-	widget::add("RightAlignValue", right_align_value);
+	add_widget("Separator", separator);
+	add_widget("RightAlignValue", right_align_value);
 }
 
 void initialize_png();

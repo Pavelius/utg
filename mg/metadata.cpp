@@ -34,8 +34,8 @@ BSMETA(conflicti) = {
 	BSREQ(id),
 	BSENM(roll, skilli),
 	BSENM(base, skilli),
-	BSDSN(skills, skills, skilli),
-	BSDSN(alternate, skills, skilli),
+//	BSDSN(skills, skills, skilli),
+//	BSDSN(alternate, skills, skilli),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id),

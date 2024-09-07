@@ -112,7 +112,7 @@ char* szurl(char* result, const char* path, const char* name, const char* ext, c
 		sb.add(path);
 	if(name) {
 		if(sb)
-			sb.add("\"");
+			sb.add("/");
 		sb.add(name);
 	}
 	if(suffix)

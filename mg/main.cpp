@@ -37,11 +37,11 @@ static void starting() {
 }
 
 static void initialize() {
-	groupname::read("locale/ru/Mouseguards.txt");
+	read_group_names("names/ru/Mouseguards.txt");
 	bsreq::read("rules/Wise.txt");
 	bsreq::read("rules/Traits.txt");
+	log::readlf(questlist_read, "quest", "*.txt");
 	quest_initialize();
-	log::readlocfolder(questlist_read, "start", "*.txt");
 }
 
 static const char* getavatarst(const void* p) {
@@ -59,7 +59,7 @@ int	main(int argc, char *argv[]) {
 	answers::console = &sb;
 	answers::prompt = sb.begin();
 	answers::resid = "hamlet";
-	return draw::start(starting, initialize);
+	return utg::start(starting, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

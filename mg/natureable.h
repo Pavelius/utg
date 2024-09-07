@@ -1,5 +1,6 @@
 #include "actable.h"
 #include "animal.h"
+#include "bsdata.h"
 
 #pragma once
 

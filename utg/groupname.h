@@ -3,7 +3,9 @@
 struct groupname {
 	const char*	parent;
 	const char*	name;
-	static const groupname* random(const char* parent);
-	static unsigned short randomid(const char* parent);
-	static void read(const char* url);
 };
+
+void read_group_names(const char* url);
+const groupname* random_group_name(const char* parent);
+unsigned short random_group_namei(const char* parent);
+

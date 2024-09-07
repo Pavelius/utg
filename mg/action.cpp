@@ -1,5 +1,5 @@
 #include "action.h"
-#include "crt.h"
+#include "bsdata.h"
 
 BSDATA(actioni) {
 	{"Attack", {IndependedRoll, VersusRoll, IndependedRoll, VersusRoll}},

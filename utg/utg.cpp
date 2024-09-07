@@ -8,12 +8,6 @@ const char* utg::url_avatars = "art/avatars";
 static char	sb_value[4096];
 stringbuilder utg::sb(sb_value);
 
-const char* utg::getchoose(const char* id) {
-	char temp[128]; stringbuilder sb(temp);
-	sb.add("Choose%1", id);
-	return getnm(temp);
-}
-
 static const char* chooseavatar(answers& an, const char* title) {
 	auto push_paint = answers::paintcell;
 	answers::paintcell = draw::avatar;

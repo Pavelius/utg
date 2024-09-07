@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "enviroment.h"
 
 BSDATA(enviroment_typei) = {

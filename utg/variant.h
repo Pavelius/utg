@@ -18,8 +18,8 @@ struct varianti {
 	const bsreq*	metadata;
 	array*			source;
 	int             key_count;
-	fngetinfo		pgetinfo;
 	fnstatus		pstatus;
+	fngetinfo		pgetinfo;
 	fnscript		pscript;
 	fntest			ptest;
 	fnread			pread;

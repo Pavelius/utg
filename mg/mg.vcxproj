@@ -190,14 +190,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\Mouseguards.txt" />
-    <Text Include="locale\ru\names\CityNames.txt" />
-    <Text Include="locale\ru\names\ItemNames.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
-    <Text Include="locale\ru\names\SkillNames.txt" />
-    <Text Include="locale\ru\names\TraitNames.txt" />
-    <Text Include="locale\ru\names\WiseNames.txt" />
+    <Text Include="locale\ru\CityNames.txt" />
+    <Text Include="locale\ru\ItemNames.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\SkillNames.txt" />
+    <Text Include="locale\ru\TraitNames.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
+    <Text Include="locale\ru\WiseNames.txt" />
     <Text Include="rules\Animal.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Traits.txt" />
