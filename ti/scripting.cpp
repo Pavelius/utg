@@ -5,11 +5,13 @@
 #include "deck.h"
 #include "filter.h"
 #include "list.h"
+#include "math.h"
 #include "pathfind.h"
 #include "pushvalue.h"
 #include "planet.h"
 #include "planet_trait.h"
 #include "player.h"
+#include "rand.h"
 #include "script.h"
 #include "strategy.h"
 #include "system.h"
@@ -206,7 +208,7 @@ static void standart_answers() {
 	for(auto& e : bsdata<componenti>()) {
 		if(e.count)
 			continue;
-		if(strcmp(e.trigger, choose_id) != 0)
+		if(!equal(e.trigger, choose_id))
 			continue;
 		if(!e.isallow())
 			continue;
@@ -224,10 +226,6 @@ static bool standart_apply() {
 	else
 		return false;
 	return true;
-}
-
-static int d100() {
-	return rand() % 100;
 }
 
 static void choose_player(const char* cancel_text) {
@@ -345,7 +343,7 @@ static void apply_primary_ability(strategyi& e) {
 
 static void ask_choose_action() {
 	if(player->strategy && !player->use_strategy)
-		an.add(player->strategy, getnm(player->strategy->getname()));
+		an.add(player->strategy, player->strategy->getname());
 }
 static void apply_choose_action() {
 	if(bsdata<strategyi>::have(choose_result)) {
@@ -546,7 +544,7 @@ static void sort_by_speaker() {
 	if(!speaker)
 		return;
 	auto maximum = querry.getcount();
-	for(auto i = 0; i < maximum; i++) {
+	for(size_t i = 0; i < maximum; i++) {
 		auto p = querry[0];
 		if(p == speaker)
 			break;
@@ -678,7 +676,7 @@ static void ai_invasion() {
 	if(average < 1)
 		average = 1;
 	for(auto planet : planets) {
-		auto count = 0;
+		size_t count = 0;
 		for(auto p : ground) {
 			if(count >= average)
 				break;
@@ -730,7 +728,7 @@ static void choose_invasion_planet(int bonus) {
 static void ask_move_options() {
 	auto ship = last_troop;
 	auto system = ship->getsystem();
-	auto capacity = ship->get(Capacity);
+	size_t capacity = ship->get(Capacity);
 	sb.clear();
 	sb.add(getnm("ChooseMoveOption"), ship->getname(), last_system->getname());
 	char temp[260]; stringbuilder sbt(temp);
@@ -1285,9 +1283,9 @@ static void entity_name(const void* object, stringbuilder& sb) {
 static void header_many_choose(stringbuilder& sb) {
 	const char* pd = 0;
 	if(onboard)
-		pd = getdescription(stw(choose_id, "AskChoosed"));
+		pd = getnme(ids(choose_id, "AskChoosed"));
 	if(!pd)
-		pd = getdescription(stw(choose_id, "Ask"));
+		pd = getnme(ids(choose_id, "Ask"));
 	if(pd) {
 		sb.addn("###%1", pd);
 		if(choose_options) {
@@ -1341,7 +1339,7 @@ static void choose_many(int maximum_count, fnstatus getname, fnprint getheader) 
 	if(!choose_id || !answers::console)
 		return;
 	if(!player->ishuman()) {
-		auto ps = bsdata<script>::find(stw(choose_id, "AI"));
+		auto ps = bsdata<script>::find(ids(choose_id, "AI"));
 		if(ps)
 			ps->proc(maximum_count);
 		else {
@@ -1353,11 +1351,11 @@ static void choose_many(int maximum_count, fnstatus getname, fnprint getheader) 
 	auto push_stop = choose_stop; choose_stop = false;
 	auto push_options_count = choose_options; choose_options = maximum_count;
 	choose_result = 0;
-	auto cancel = getdescription(stw(choose_id, "Cancel"));
+	auto cancel = getnme(ids(choose_id, "Cancel"));
 	onboard.clear();
 	while(!choose_stop) {
 		an.clear();
-		auto count = onboard.getcount();
+		int count = onboard.getcount();
 		if(!choose_options || choose_options > count) {
 			for(auto p : querry) {
 				if(onboard.find(p) != -1)
@@ -1369,7 +1367,7 @@ static void choose_many(int maximum_count, fnstatus getname, fnprint getheader) 
 		if(onboard) {
 			an.add(clear_onboard, getnm("ClearSelection"));
 			if(!maximum_count || count >= maximum_count) {
-				auto pd = getdescription(stw(choose_id, "Apply"));
+				auto pd = getnme(ids(choose_id, "Apply"));
 				if(!pd)
 					pd = getnm("Continue");
 				an.add(apply_onboard_to_querry, pd);
@@ -1390,7 +1388,7 @@ static void choose_many(int maximum_count, fnstatus getname, fnprint getheader) 
 }
 
 static void header_single_choose(stringbuilder& sb) {
-	auto pd = getdescription(stw(choose_id, "Ask"));
+	auto pd = getnme(ids(choose_id, "Ask"));
 	if(pd)
 		sb.addn("###%1", pd);
 }
@@ -1402,7 +1400,7 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 		return;
 	choose_result = 0;
 	if(!player->ishuman()) {
-		auto ps = bsdata<script>::find(stw(choose_id, "AI"));
+		auto ps = bsdata<script>::find(ids(choose_id, "AI"));
 		if(ps)
 			ps->proc(1);
 		else
@@ -1417,7 +1415,7 @@ static void choose_single(fnstatus getname, fnprint getheader) {
 		an.add(p, sb_temp);
 	}
 	standart_answers();
-	auto cancel = getdescription(stw(choose_id, "Cancel"));
+	auto cancel = getnme(ids(choose_id, "Cancel"));
 	sb.clear(); getheader(sb);
 	auto push_promp = answers::prompt; answers::prompt = sb_temp;
 	choose_result = an.choose(0, cancel);

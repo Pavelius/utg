@@ -1,8 +1,10 @@
 #include "answers.h"
 #include "entitya.h"
+#include "math.h"
 #include "pathfind.h"
 #include "planet.h"
 #include "player.h"
+#include "rand.h"
 #include "system.h"
 #include "troop.h"
 #include "unit.h"
@@ -393,9 +395,13 @@ int entitya::getcap() const {
 }
 
 entityd::entityd(const entitya& source) {
-	alloc(source.getcount(), source.begin());
+	typedef entity* T;
+	auto count = source.getcount();
+	auto p = new T[count];
+	memcpy(p, source.begin(), count*sizeof(T));
+	*static_cast<slice<T>*>(this) = slice<T>(p, count);
 }
 
 entityd::~entityd() {
-	free();
+	delete[](begin());
 }

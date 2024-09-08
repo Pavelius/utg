@@ -5,6 +5,7 @@
 #include "player.h"
 #include "point.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "script.h"
 #include "strategy.h"
 #include "system.h"

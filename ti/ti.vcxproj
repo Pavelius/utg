@@ -207,17 +207,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\names\AbilityNames.txt" />
-    <Text Include="locale\ru\names\ActionCardNames.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
-    <Text Include="locale\ru\names\NamesSh.txt" />
-    <Text Include="locale\ru\names\StrategyNames.txt" />
-    <Text Include="locale\ru\names\TechNames.txt" />
-    <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
-    <Text Include="locale\ru\tips\Descriptions.txt" />
-    <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
-    <Text Include="locale\ru\tips\TechDescriptions.txt" />
+    <Text Include="locale\ru\Ability.txt" />
+    <Text Include="locale\ru\ActionCards.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\Planets.txt" />
+    <Text Include="locale\ru\Strategy.txt" />
+    <Text Include="locale\ru\Techs.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Objectives.txt" />

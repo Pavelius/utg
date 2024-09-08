@@ -1,3 +1,5 @@
-﻿In file `Names.txt`:
-ChooseMoveOptions: Define translate
-ReturnStrategyCards: Define translate
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `Вли`
+ Define translation for `КД`
+ Define translation for `Рес`
+ Define translation for `Тех`

@@ -13,8 +13,6 @@ static int window_width = 400, window_height = 400;
 void set_dark_theme();
 void set_light_theme();
 void initialize_png();
-void check_translation();
-void initialize_translation(const char* locale);
 
 static void beforemodal() {
 	tips_caret.x = metrics::padding + metrics::border;
@@ -290,10 +288,9 @@ int draw::strategy(fnevent proc, fnevent afterread, const char* rules_url) {
 	if(!rules_url)
 		rules_url = "rules/Basic.txt";
 	bsreq::read(rules_url);
-	initialize_translation("ru");
+	initialize_translation();
 	if(afterread)
 		afterread();
-	check_translation();
 	if(log::errors > 0)
 		return -1;
 	pbeforemodal = beforemodal;

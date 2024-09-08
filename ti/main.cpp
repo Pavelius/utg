@@ -3,9 +3,11 @@
 #include "draw_strategy.h"
 #include "entitya.h"
 #include "player.h"
+#include "rand.h"
 #include "script.h"
 #include "system.h"
 #include "speech.h"
+#include "timer.h"
 #include "troop.h"
 
 void initialize_ui();

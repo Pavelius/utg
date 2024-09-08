@@ -2,6 +2,7 @@
 #include "player.h"
 #include "script.h"
 #include "strategy.h"
+#include "math.h"
 #include "troop.h"
 #include "unit.h"
 
@@ -14,9 +15,9 @@ static void add_line(stringbuilder& sb, const char* id, int value) {
 	auto nm = iabs(value);
 	auto op = value >= 0 ? "Gain" : "Lose";
 	auto ct = (nm == 1) ? "Single" : "Many";
-	auto pn = getdescription(stw(op, id, ct));
+	auto pn = getnme(ids(op, id, ct));
 	if(!pn)
-		pn = getdescription(stw(op, id, 0));
+		pn = getnme(ids(op, id, 0));
 	if(!pn)
 		return;
 	sb.addn("* ");
@@ -56,7 +57,7 @@ static void addreq(stringbuilder& sb, const char* requiqment) {
 }
 
 static void add_description(stringbuilder& sb, const char* id) {
-	auto pn = getdescription(id);
+	auto pn = getnme(ids(id, "Info"));
 	if(pn) {
 		sb.addn("---");
 		sb.addn(pn);
@@ -106,7 +107,7 @@ static void add_action_cards(stringbuilder& sb) {
 
 template<> void ftinfo<strategyi>(const void* object, stringbuilder& sb) {
 	auto p = (strategyi*)object;
-	auto pn = getdescription(p->id);
+	auto pn = getnme(ids(p->id, "Info"));
 	if(!pn)
 		return;
 	add_h3(sb, getnm("PrimaryAbility"));

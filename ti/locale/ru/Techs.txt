@@ -13,6 +13,7 @@ FleetLogistics: Логистика флота
 LightWaveDeflector: Отражатель световых волн
 
 PlasmaScoring: Плазменные боеголовки
+PlasmaScoringInfo: Когда один из ваших отрядов использует [Бомбардировку] или [Космическую пушку] один отряд бросает на один кубик больше.
 MagenDefenseGrid: Защитная сеть "Маген"
 DuraniumArmor: Дураниевая броня
 AssaultCannon: Осадная пушка

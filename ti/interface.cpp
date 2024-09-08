@@ -161,14 +161,14 @@ static void show_indicators() {
 	for(auto v : source_goods)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("Resources"), player->getplanetsummary(Resources), bsdata<indicatori>::elements + Resources);
-	status(getnmsh("Influence"), player->getplanetsummary(Influence), bsdata<indicatori>::elements + Influence);
+	status("Resources", player->getplanetsummary(Resources), bsdata<indicatori>::elements + Resources);
+	status("Influence", player->getplanetsummary(Influence), bsdata<indicatori>::elements + Influence);
 	caret.x += 2;
 	for(auto v : source_score)
 		status(v);
 	caret.x += 2;
-	status(getnmsh("ActionCards"), player->getactioncards(), bsdata<script>::find("ShowActionCards"));
-	status(getnmsh("Technology"), player->gettechs(), bsdata<script>::find("ShowTech"));
+	status("ActionCards", player->getactioncards(), bsdata<script>::find("ShowActionCards"));
+	status("Technology", player->gettechs(), bsdata<script>::find("ShowTech"));
 }
 
 void status_info() {
@@ -461,8 +461,8 @@ static void update_units(point position, const entity* location) {
 			p = addobject({(short)x, (short)y}, (troop*)pt, ftpaint<troop>, 0, 30);
 		if(p->position.x != x || p->position.y != y) {
 			auto po = p->addorder(1000);
-			po->position.x = x;
-			po->position.y = y;
+			po->position.x = (short)x;
+			po->position.y = (short)y;
 		}
 		y += button_height;
 	}

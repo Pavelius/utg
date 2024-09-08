@@ -1,15 +1,4 @@
-﻿ActionCardsShort: КД
-CommoditiesShort: Прд
-InfluenceShort: Вли
-FleetTokenShort: Флот
-ResourcesShort: Рес
-StrategyTokenShort: СР
-TacticTokenShort: ТР
-TechnologyShort: Тех
-TradeGoodsShort: Тов
-VictoryPointsShort: ОП
-
-SpaceDock: Доки
+﻿SpaceDock: Доки
 PDS: ПСЗ
 Carrier: Транспорт
 Cruiser: Крейсер
@@ -24,67 +13,8 @@ Genesis: Генезис
 
 SpaceCannon: Космическая пушка
 
-Abyz: Абиз
-AbyzSystem: Система Абиз
-ArcPrime: Акр Прайм
-ArcSecundus: Арк Секундус
-Arinam: Эринам
-ArinamSystem: Система Аринам
-Arnor: Арнор
-ArnorSystem: Система Арнор
-Bereg: Берег
-BeregSystem: Система Берег
-Centauri: Центаури
-CentauriSystem: Система Центаури
-Coorneeq: Корник
-CoorneeqSystem: Система Курниик
-DalBootha: Дал Бутса
-DalBoothaSystem: Система Дал Бутса
-EmpthySystem1: Система Криоли
-EmpthySystem2: Система Юзали
-EmpthySystem3: Система Крейз
-EmpthySystem4: Система Ямполь
-EmpthySystem5: Систета Млечный путь
-Fria: Фрия
-Jol: Жол
-Jord: Йорд
-Lazar: Лазар
-LazarSystem: Система Лазар
-LirtaVI: Лирта VI
-Lodor: Лодор
-LodorSystem: Система Лодор
-MecatolRex: Мекатол Рекс
-MecatolRexSystem: Система Мекатол Рекс
-Meer: Миир
-MeharXull: Мехар Ксулл
-MeharXullSystem: Система Мехар Ксулл
-Mellon: Меллон
-MellonSystem: Система Мелон
-NebulaSystem: Небула
-NewAlbion: Новый Альбион
-NewAlbionSystem: Система Новый Альбион
-P0p0p0: [0.0.0]
-Quann: Кван
-QuannSystem: Система Кван
-Qucenn: Куцент
-QucennSystem: Система Куцент
-Quetzecoatl: Кведзкуатл
-Quinarra: Куинарра
-SupernovaSystem: Супернова
-TarMann: Тип Манн
-TarMannSystem: Система Тар Манн
-Thibah: Тсибан
-ThibahSystem: Система Тсибан
-Torkan: Торкан
-Wellon: Веллон
-WellonSystem: Система Веллон
-WrenTerra: Врен Терра
-VefutII: Верфут II
-VefutIISystem: Система Вефут II
-Xxehan: Ксехан
-Zhobat: Зобат
-
 ActionCards: Карты действий
+ActionPhase: Фаза действий
 AddCommandToken: Какие резервы хотите пополнить?
 AntiFighterBarrage: Заградительный огонь
 AppTitle: Сумрачная империя

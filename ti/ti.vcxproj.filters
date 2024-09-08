@@ -196,44 +196,32 @@
     <Text Include="rules\Objectives.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="locale\ru\names\AbilityNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\ActionCardNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Names.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\NamesSh.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\StrategyNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\TechNames.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\AbilityDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\Descriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\StrategyDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\TechDescriptions.txt">
-      <Filter>Locale</Filter>
-    </Text>
     <Text Include="rules\Strategy.txt">
       <Filter>Data</Filter>
     </Text>
     <Text Include="rules\Players.txt">
       <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Ability.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\ActionCards.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Planets.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Strategy.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Techs.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>Locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

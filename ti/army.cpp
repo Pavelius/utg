@@ -7,6 +7,7 @@
 #include "unit.h"
 #include "troop.h"
 #include "script.h"
+#include "rand.h"
 
 army*				last_army;
 static army			attacker, defender;
@@ -88,7 +89,7 @@ int army::roll(ability_s id, ability_s id_count) const {
 
 static int find_sustain(entitya& source) {
 	auto m = source.getcount();
-	for(auto i = 0; i < m; i++) {
+	for(size_t i = 0; i < m; i++) {
 		auto p = source[i];
 		if(p->is(SustainDamage) && !p->is(Exhaust))
 			return source.indexof(p);

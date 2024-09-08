@@ -42,9 +42,6 @@
     <ClCompile Include="color.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="crt_file.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="dice.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -215,9 +212,6 @@
     </ClCompile>
     <ClCompile Include="draw_gui.cpp">
       <Filter>Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="chooseoption.cpp">
-      <Filter>Support</Filter>
     </ClCompile>
     <ClCompile Include="list.cpp">
       <Filter>Support</Filter>
@@ -477,9 +471,6 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="cdat.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="chooseoption.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="list.h">

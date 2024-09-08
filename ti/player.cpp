@@ -4,6 +4,7 @@
 #include "deck.h"
 #include "entitya.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "speech.h"
 #include "system.h"
 #include "planet.h"
@@ -19,10 +20,6 @@ playeri* game_winner;
 playeri* players[6];
 
 int finale_score;
-
-static int d100() {
-	return rand() % 100;
-}
 
 bool playeri::ishuman() const {
 	return human_player == this;

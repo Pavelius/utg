@@ -1,7 +1,7 @@
-#include "crt.h"
 #include "planet.h"
 #include "player.h"
 #include "system.h"
+#include "math.h"
 #include "troop.h"
 #include "unit.h"
 #include "unit_type.h"

@@ -1,4 +1,4 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "planet_trait.h"
 
 BSDATA(planet_traiti) = {
