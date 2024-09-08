@@ -172,7 +172,6 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
     <ClCompile Include="scripting.cpp" />
-    <ClCompile Include="tactic.cpp" />
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,10 @@
 #include "game.h"
 #include "pushvalue.h"
 #include "script.h"
+#include "rand.h"
 #include "randomizer.h"
 
 gamei game;
-
-inline int d100() {
-	return rand() % 100;
-}
 
 static void random_explore() {
 	for(auto& e : bsdata<provincei>()) {

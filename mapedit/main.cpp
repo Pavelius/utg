@@ -1,7 +1,8 @@
-#include "crt.h"
 #include "bsreq.h"
 #include "draw.h"
 #include "draw_strategy.h"
+#include "rand.h"
+#include "timer.h"
 
 void read_tiles();
 void ui_initialize();

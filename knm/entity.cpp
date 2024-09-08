@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "card.h"
 #include "draw_object.h"
 #include "entity.h"

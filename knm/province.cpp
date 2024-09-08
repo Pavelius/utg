@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "player.h"
 #include "province.h"
 #include "structure.h"

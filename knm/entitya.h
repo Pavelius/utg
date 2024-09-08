@@ -1,5 +1,6 @@
 #include "collection.h"
 #include "entity.h"
+#include "vector.h"
 
 #pragma once
 
@@ -21,6 +22,6 @@ struct entitya : collection<entity> {
 };
 struct entityv : vector<entity*> {
 	entityv() : vector<entity*>() {}
-	entityv(const collection<entity>& source) : vector<entity*>() { create(source.data, source.getcount()); }
+	entityv(const slice<entity*>& source) : vector<entity*>(source) {}
 };
 extern entitya querry;

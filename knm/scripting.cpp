@@ -2,7 +2,6 @@
 #include "army.h"
 #include "area.h"
 #include "card.h"
-#include "crt.h"
 #include "deck.h"
 #include "draw.h"
 #include "draw_object.h"
@@ -133,14 +132,14 @@ static void apply_trigger(int bonus) {
 			continue;
 		if(e.player != player)
 			continue;
-		if(strcmp(e.trigger, last_id) == 0)
+		if(equal(e.trigger, last_id))
 			script_run(e.effect);
 	}
 	// Upgrade trigger (autouse)
 	for(auto& e : bsdata<upgradei>()) {
 		if(!e.trigger || !player->isupgrade(&e))
 			continue;
-		if(strcmp(e.trigger, last_id) == 0)
+		if(equal(e.trigger, last_id))
 			script_run(e.effect);
 	}
 }
@@ -193,7 +192,7 @@ static void logging(const playeri* player, const char* format, ...) {
 }
 
 static const char* get_log(const char* id) {
-	return getdescription(stw(id, "Log"));
+	return getnme(ids(id, "Log"));
 }
 
 static const char* get_script_log() {
@@ -339,7 +338,7 @@ static void add_component_cards(const char* trigger) {
 	for(auto& e : bsdata<cardi>()) {
 		if((e.player && e.player != player) || e.usedeck())
 			continue;
-		if(!e.trigger || strcmp(e.trigger, trigger) != 0)
+		if(!e.trigger || !equal(e.trigger, trigger))
 			continue;
 		if(!script_allow(e.effect))
 			continue;
@@ -356,7 +355,7 @@ static void add_tactic_cards(const char* trigger) {
 			continue;
 		if(!p->usedeck())
 			continue;
-		if(!p->trigger || strcmp(p->trigger, trigger) != 0)
+		if(!p->trigger || !equal(p->trigger, trigger))
 			continue;
 		if(!script_allow(p->effect))
 			continue;
@@ -418,7 +417,7 @@ static void apply_input(void* result, bool play_card = true) {
 static const char* get_title(const char* id, int count = 0) {
 	static char temp[260];
 	stringbuilder sb(temp); sb.clear(); sb.add("%1Ask", id);
-	auto title = getdescription(temp);
+	auto title = getnme(temp);
 	if(!title)
 		return 0;
 	sb.clear(); sb.add(title, count);
@@ -535,7 +534,7 @@ static bool filter_trigger(const void* object) {
 	auto pc = p->getcomponent();
 	if(!pc || !pc->trigger)
 		return false;
-	return strcmp(pc->trigger, last_id) == 0;
+	return equal(pc->trigger, last_id);
 }
 
 static bool filter_speaker(const void* object) {
@@ -723,7 +722,7 @@ static void pay_hero(int bonus) {
 }
 
 static void pay_hero_yesno(int bonus) {
-	if(yesno(getdescription("StrategySecondaryAsk"), last_strategy->getname()))
+	if(yesno(getnme("StrategySecondaryAsk"), last_strategy->getname()))
 		pay_hero(bonus);
 	else
 		script_stop();
@@ -732,12 +731,12 @@ static void pay_hero_yesno(int bonus) {
 static void pay_ability(const char* id, ability_s v, ability_s currency, int gain, int cost, int maximum_cap, abilitya& gainer, abilitya& payer) {
 	pushtitle push_title(id);
 	an.clear();
-	auto choose_prompt = getdescription(stw(id, "Answer"));
+	auto choose_prompt = getnme(ids(id, "Answer"));
 	if(!choose_prompt)
-		choose_prompt = getdescription("PayResource");
-	auto choose_cancel = getdescription(stw(id, "Cancel"));
+		choose_prompt = getnme("PayResource");
+	auto choose_cancel = getnme(ids(id, "Cancel"));
 	if(!choose_cancel)
-		choose_cancel = getdescription("PayResourceCancel");
+		choose_cancel = getnme("PayResourceCancel");
 	for(auto i = 1; i <= maximum_cap; i++) {
 		auto cost_total = cost * i;
 		auto value = player->get(currency);
@@ -776,7 +775,7 @@ static void recruit_troops(int army_used, int army_maximum, int build_troops_max
 	last_pay = 0;
 	while(true) {
 		clear_input(0);
-		auto troops_count = choosing.getcount();
+		int troops_count = choosing.getcount();
 		last_pay = choosing.gettotal(Cost);
 		last_pay -= player->getarmy(Tools);
 		if(last_pay < 0)
@@ -803,7 +802,7 @@ static void recruit_troops(int army_used, int army_maximum, int build_troops_max
 		}
 		if(choosing)
 			an.add(choosing_reset, getnm("RecruitReset"));
-		auto p = (uniti*)an.choose(getdescription("RecruitWhatTroop"), getnm("CheckOut"), 1);
+		auto p = (uniti*)an.choose(getnme("RecruitWhatTroop"), getnm("CheckOut"), 1);
 		if(!p)
 			break; // Check out;
 		else if(bsdata<uniti>::have(p))
@@ -1279,7 +1278,7 @@ static void choose_querry_list(int bonus) {
 		console.clear();
 		clear_input(0);
 		if(choosing) {
-			auto pd = getdescription(stw(last_id, "Choosed"));
+			auto pd = getnme(ids(last_id, "Choosed"));
 			if(pd) {
 				console.addn("###");
 				console.add(pd, player->getname(), province->getname());
@@ -1287,7 +1286,7 @@ static void choose_querry_list(int bonus) {
 					console.addn(p->getname());
 			}
 		} else {
-			auto p = getdescription(stw(last_id, "Empthy"));
+			auto p = getnme(ids(last_id, "Empthy"));
 			if(p)
 				console.add(p, player->getname(), province->getname());
 		}
@@ -1297,7 +1296,7 @@ static void choose_querry_list(int bonus) {
 		}
 		if(choosing)
 			an.add((void*)1, getnm("ResetList"));
-		const char* cancel_id = stw("Apply", last_id);
+		const char* cancel_id = ids("Apply", last_id);
 		if(!choosing)
 			cancel_id = "SkipThisStep";
 		auto result = an.choose(get_title(last_id), getnm(cancel_id), 0);
@@ -1490,9 +1489,9 @@ static void play_tactic() {
 	pushvalue push_army(last_army, get_player_army());
 	pushtitle push_title(last_card->getcomponent()->id);
 	console.clear();
-	auto pd = getdescription(stw(last_card->getcomponent()->id, "Use"));
+	auto pd = getnme(ids(last_card->getcomponent()->id, "Use"));
 	if(!pd)
-		pd = getdescription("PlayerTacticUse");
+		pd = getnme("PlayerTacticUse");
 	console.add(pd);
 	pause();
 	last_card->play();
@@ -1519,7 +1518,7 @@ static void play_tactics(int bonus) {
 }
 
 static void battle_result(int bonus) {
-	auto pn = getdescription("TotalStrenght");
+	auto pn = getnm("TotalStrenght");
 	console.clear();
 	console.addn(pn, attacker.player->getname(), attacker_strenght);
 	console.addn(pn, defender.player->getname(), defender_strenght);

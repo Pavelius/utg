@@ -3,6 +3,7 @@
 #include "player.h"
 #include "province.h"
 #include "script.h"
+#include "rand.h"
 
 const short unsigned Unknown = 0xFFF0;
 const short unsigned ZeroCost = 0xFFF1;

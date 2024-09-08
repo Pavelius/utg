@@ -166,27 +166,6 @@
     <Text Include="rules\Provinces.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Players.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Strategy.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Units.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\AbilityDescriptions.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\StrategyDescriptions.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Structures.txt">
       <Filter>rules</Filter>
     </Text>
@@ -196,37 +175,43 @@
     <Text Include="rules\Laws.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\names\Tactics.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Structures.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Laws.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Upgrades.txt">
       <Filter>rules</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Provinces.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Upgrade.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\tips\UpgradeDescriptions.txt">
-      <Filter>locale</Filter>
     </Text>
     <Text Include="rules\Objectives.txt">
       <Filter>rules</Filter>
     </Text>
-    <Text Include="locale\ru\names\Objectives.txt">
+    <Text Include="locale\ru\Abilitites.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\tips\ObjectivesDescriptions.txt">
+    <Text Include="locale\ru\Laws.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\tips\TacticsDescription.txt">
+    <Text Include="locale\ru\Objectives.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Players.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Provinces.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Strategy.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Structures.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Tactics.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Units.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Upgrade.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

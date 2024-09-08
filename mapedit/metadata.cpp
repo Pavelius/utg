@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "crt.h"
 #include "tile.h"
 #include "variant.h"
 #include "widget.h"

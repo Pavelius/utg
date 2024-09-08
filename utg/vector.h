@@ -6,6 +6,7 @@ template<class T>
 struct vector : public array {
 	typedef T data_type;
 	constexpr vector() : array(sizeof(T)) {}
+	vector(const slice<T>& source) : array(sizeof(T)) { reserve(source.size()); count = source.size(); memcpy(data, source.begin(), count * element_size); }
 	~vector() { for(auto& e : *this) e.~T(); }
 	constexpr T& operator[](int index) { return ((T*)data)[index]; }
 	constexpr const T& operator[](int index) const { return ((T*)data)[index]; }

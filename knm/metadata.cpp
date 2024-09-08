@@ -1,6 +1,5 @@
 #include "bsreq.h"
 #include "card.h"
-#include "crt.h"
 #include "deck.h"
 #include "filter.h"
 #include "list.h"

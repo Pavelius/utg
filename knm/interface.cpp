@@ -606,12 +606,6 @@ static void textct(const char* format) {
 	texta(format, AlignCenterCenter);
 }
 
-static void tips_text(const entity* p, fnstatus proc) {
-	char temp[512]; stringbuilder sb(temp);
-	proc(p, sb);
-	
-}
-
 static void window_frame(color v, const entity* pe, const char* format) {
 	rectpush push;
 	auto push_fore = fore;

@@ -12,6 +12,7 @@
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "randomizer.h"
 #include "script.h"
 #include "statable.h"
@@ -545,7 +546,7 @@ static void choose_site_option(site* pv) {
 	pushvalue push_resid(answers::resid);
 	if(pv->type->resid)
 		answers::resid = pv->type->resid;
-	answers::prompt = getdescription(pv->type->getid());
+	answers::prompt = getnme(pv->type->getid());
 	an.clear();
 	an.add(attack_site, getnm("VisitSite"));
 	auto result = an.choose(0, getnm("Leave"), 1);
@@ -939,13 +940,13 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 	}
 	if(attacker.tactic) {
 		sb.addsep(' ');
-		attacker.act(sb, getdescription(attacker.tactic->id));
+		attacker.act(sb, getnme(ids(attacker.tactic->id, "Info")));
 	}
 	sb.addsep(' ');
 	defender.act(sb, getnm("ArmyDefend"), province->getname());
 	if(defender.tactic) {
 		sb.addsep(' ');
-		defender.act(sb, getdescription(defender.tactic->id));
+		defender.act(sb, getnme(ids(defender.tactic->id, "Info")));
 	}
 	auto win_battle = battle_result(sb, attacker, defender);
 	if(win_battle) {
@@ -1060,7 +1061,7 @@ static void action_explore() {
 }
 
 static void acth(stringbuilder& sb, const char* id, ...) {
-	auto pn = getdescription(id);
+	auto pn = getnme(id);
 	if(!pn)
 		return;
 	sb.addsep(' ');

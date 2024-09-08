@@ -1,7 +1,7 @@
-#include "crt.h"
-#include "stringbuilder.h"
-
 #pragma once
+
+#include "adat.h"
+#include "stringbuilder.h"
 
 struct costitem {
 	const char*		id;

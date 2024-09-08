@@ -92,7 +92,7 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 		auto n = p->effect[v];
 		if(!n)
 			continue;
-		auto pd = getdescription(str("%1Effect", bsdata<costi>::elements[v].id));
+		auto pd = getnme(ids(bsdata<costi>::elements[v].id, "Effect"));
 		if(!pd)
 			continue;
 		if(need_line) {
@@ -105,7 +105,7 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 		auto id = v.getid();
 		if(!id)
 			continue;
-		auto pd = getdescription(str("%1Condition", id));
+		auto pd = getnme(ids(id, "Condition"));
 		if(!pd)
 			continue;
 		sb.adds(pd);
@@ -114,7 +114,7 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
-	auto pn = getdescription(id);
+	auto pn = getnme(id);
 	if(!pn)
 		return;
 	sb.addn("---");

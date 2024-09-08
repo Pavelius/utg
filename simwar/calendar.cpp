@@ -1,5 +1,4 @@
 #include "calendar.h"
-#include "crt.h"
 
 static const char* names[] = {
 	"January", "February",

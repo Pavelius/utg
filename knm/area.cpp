@@ -1,6 +1,5 @@
 #include "area.h"
 #include "province.h"
-#include "crt.h"
 
 const short unsigned Blocked = 0xFF;
 const short unsigned NotCalculatedMovement = 0xFE;

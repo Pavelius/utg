@@ -2,6 +2,7 @@
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "map.h"
+#include "rand.h"
 #include "tile.h"
 #include "widget.h"
 

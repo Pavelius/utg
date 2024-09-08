@@ -14,6 +14,8 @@
 #include "pushvalue.h"
 #include "stringbuilder.h"
 #include "script.h"
+#include "rand.h"
+#include "timer.h"
 
 using namespace draw;
 
@@ -50,7 +52,7 @@ static void start_game() {
 	util_main();
 #endif // _DEBUG
 	bsreq::read("maps/silentseas.txt");
-	if(log::geterrors())
+	if(log::errors > 0)
 		return;
 	if(game.read("autosave"))
 		draw::setnext(show_messages);

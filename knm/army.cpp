@@ -1,8 +1,8 @@
 #include "army.h"
-#include "crt.h"
 #include "entitya.h"
 #include "player.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "variant.h"
 #include "unit.h"
 

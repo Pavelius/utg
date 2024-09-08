@@ -262,6 +262,12 @@ static void paint_tips() {
 			pm->pstatus(pv, tips_sb);
 		if(!tips_sb && pm->isnamed()) {
 			auto id = *((const char**)pv);
+			auto idn = getnme(ids(id, "Info"));
+			if(idn) {
+				tips_sb.add("###%1", getnm(id));
+				tips_sb.addn("---");
+				tips_sb.addn(idn);
+			}
 		}
 	}
 	if(tips_sb) {

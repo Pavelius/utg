@@ -195,22 +195,17 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
-    <Text Include="locale\ru\names\Laws.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
-    <Text Include="locale\ru\names\Objectives.txt" />
-    <Text Include="locale\ru\names\Players.txt" />
-    <Text Include="locale\ru\names\Provinces.txt" />
-    <Text Include="locale\ru\names\Strategy.txt" />
-    <Text Include="locale\ru\names\Structures.txt" />
-    <Text Include="locale\ru\names\Tactics.txt" />
-    <Text Include="locale\ru\names\Units.txt" />
-    <Text Include="locale\ru\names\Upgrade.txt" />
-    <Text Include="locale\ru\tips\AbilityDescriptions.txt" />
-    <Text Include="locale\ru\tips\ObjectivesDescriptions.txt" />
-    <Text Include="locale\ru\tips\StrategyDescriptions.txt" />
-    <Text Include="locale\ru\tips\TacticsDescription.txt" />
-    <Text Include="locale\ru\tips\UpgradeDescriptions.txt" />
+    <Text Include="locale\ru\Abilitites.txt" />
+    <Text Include="locale\ru\Laws.txt" />
+    <Text Include="locale\ru\Objectives.txt" />
+    <Text Include="locale\ru\Players.txt" />
+    <Text Include="locale\ru\Provinces.txt" />
+    <Text Include="locale\ru\Strategy.txt" />
+    <Text Include="locale\ru\Structures.txt" />
+    <Text Include="locale\ru\Tactics.txt" />
+    <Text Include="locale\ru\Units.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
+    <Text Include="locale\ru\Upgrade.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Laws.txt" />
     <Text Include="rules\Objectives.txt" />

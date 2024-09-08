@@ -1,0 +1,98 @@
+Construction: Строительство
+Diplomacy: Дипломатия
+GatherPower: Власть
+Leadership: Лидерство
+Politics: Политика
+Technology: Развитие
+Trade: Торговля
+Warfare: Война
+
+ActionPhase: Фаза действий
+ActivateProvince: Активация провинции
+ActivateProvinceInfo: Активируйте провинцию, в которой нет вашего жетона активности. После этого разместите в ней ваш жетон активности.
+ActivateProvinceAsk: Выбирайте провинцию, которая будет активирована.
+AddLeaders: Призыв лидеров
+AddLeadersInfo: Получите [%1i] героев.
+AddLeadersAsk: Куда хотите распределить вновь прибывших лидеров (осталось [%1i])?
+AddActionsInfo: Возьмите [%1i] карты действия.
+AddGoodsInfo: Получите [%1i] золотых.
+AddResearchInfo: Получите [%1i] очков исследования.
+AddSecretGoalInfo: Получите [%1i] секретных цели.
+AddTacticsInfo: Получите [%1i] карт тактики.
+AddUpgradeInfo: Получите [1] развитие.
+ApplyBattleTactic: Применить выбранную тактику
+ApplyCasualty: Понести потери
+ApplyCombat: Битва
+ApplyCombatInfo: Если есть враг, проведите бой в активной провинции.
+ApplyMove: Подтвердить передвижение
+ApplyTactics: Подтвердить тактику
+ApplyTradeRouteInfo: Обновите товары до максимума всем, с кем имеете торговые пути, затем сбросьте торговые пути.
+BattleResult: Результат битвы
+BattleTactic: Выбор тактики
+BattleTacticChoosed: %Player использует в бою
+BattleTacticEmpthy: Если хотите укажите тактику боя и списка ниже.
+Casualty: Потери %1: 
+ChooseProvinceYouControl: Выбор вашей провинции
+ChooseProvinceYouControlInfo: Выбирите одну провинцию под вашим контролем.
+ChooseStrategy: Выбор стратегии
+ChooseTacticsPrompt: %1 выбрали следующую тактику
+ClaimSpeaker: Назначение спикера
+ClaimSpeakerInfo: Выберите любого игрока, кроме спикера. Этот игрок становится новым [спикером].
+ConstructBuilding: Постройка объектов
+ConstructBuildingInfo: Постройте здание в вашей провинции.
+ConstructBuildingInProvince: Выбор объекта постройки
+DiplomaticTreaty: Дипломатическая неприкосновенность
+DiplomaticTreatyAsk: Выберите провинцию, которая окажется под защитой до конца года.
+DiplomaticTreatyInfo: Выберите провинцию под вашим контролем. Положите в нее жетон активности других игроков.
+DoubleProvinceResources: Дополнительные ресурсы
+DoubleProvinceResourcesAsk: Выбирайте провинцию, ресурсы и влияние которой тут же добявятся к вашим.
+DoubleProvinceResourcesInfo: Выберите провинцию под вашим контролем. Добавьте ее ресурсы к вашим ресурсам игрока.
+EndRoundInfo: Завершите ваш ход. Вы не сможете больше тратить геров или проявлять какую-либо активность, пока все игроки не завершат свои ходы.
+EsteblishControlInfo: Установите контроль над активной провинцией.
+GainFameIfControlCapitalInfo: Получите [1] славу, если контролируете столицу, иначе получите [1] секретную цель.
+HailOfArrows: Обстрел врага
+LookLaws: Посмотреть законы
+LookLawsInfo: Посмотрите [2] верхних карты законов. Положите их в любом порядке либо наверх колоды, либо под низ.
+MakeAction: Выполнить действие
+MakeMelee: Атака %1
+MeleeClash: Ближний бой
+MoveTroops: Передвижение войск
+MoveTroopsInfo: Передвиньте войска в активную провинцию.
+PassAction: Закончить ход
+PayHirelings: Оплатить наемников
+PayHero: Потратьте героя.
+PayHeroYesNo: Потратьте героя.
+PayForLeaders: Найм лидеров
+PayForLeadersInfo: Получите героя за каждые [%1i] потраченных влияния.
+PayForLeadersAnswer: Нанять %3i лидера за %4i влияния
+PayForLeadersCancel: Никого не нанимать
+PayResearch: Инвестиции в развитие
+PayResearchInfo: Получите одно очко исследований за каждый [1] потраченный ресурс.
+PayResource: Получить %3i, заплатив %4i %2
+PayResourceCancel: Ничего не покупать
+PayUpgradePrimaryInfo: Если хотите заплатите [6] ресурсов, чтобы получить еще одно развитие.
+PayUpgradeSecondanaryInfo: Заплатите [4] ресурсов, чтобы получить развитие.
+PlaceTroopsInfo: Разместите отряд %2 в количестве %1i штук.
+PlanningPhase: Выбор стратегии на год
+RecruitTroopsInfo: Наймите войска в активной провинции.
+RecruitTroopsInHomelandInfo: Наймите войска в столице.
+RefreshTradeInfo: Обновите свои товары до макимума.
+RemoveActivityTokenInfo: Уберите жетон активности с любой провинции.
+ResetMovement: Сбросить выбор
+Retreat: Отступление
+RetreatAsk: Выберите провинцию, куда отступит ваша армия.
+RetreatTroops: Отступление войск
+ScorePublicGoalInfo: Отметьте прямо сейчас общую цель, если вы удовлетворите ее требованиям.
+SkipThisStep: Пропустить этот шаг
+StandartAsk: Осталось %1i.
+StrategySecondaryAsk: Потратить героя, чтобы выполнить вторичную способность [%1]?
+TacticAction: Тактическое действие
+TypeBattleTactic: Боевая
+TotalStrenght: %1 сила [%2i].
+ToTheBottom: Вниз колоды
+ToTheTop: Наверх колоды
+TroopReinforsment: Местное ополчение
+
+Effect: Эффект
+PrimaryAbility: Основная способность
+SecondaryAbility: Вторичная способность

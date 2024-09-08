@@ -1,7 +1,6 @@
 #include "banner.h"
 #include "calendar.h"
 #include "collection.h"
-#include "crt.h"
 #include "draw.h"
 #include "draw_object.h"
 #include "draw_strategy.h"

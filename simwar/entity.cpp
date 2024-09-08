@@ -1,5 +1,4 @@
 #include "building.h"
-#include "crt.h"
 #include "entity.h"
 #include "player.h"
 #include "province.h"

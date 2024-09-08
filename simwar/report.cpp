@@ -1,5 +1,6 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "report.h"
+#include "stringbuilder.h"
 
 BSDATAD(reporti)
 

@@ -69,9 +69,6 @@
     <ClCompile Include="army.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="tactic.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="action.cpp">
       <Filter>Logic</Filter>
     </ClCompile>

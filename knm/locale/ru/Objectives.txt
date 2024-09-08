@@ -1,0 +1,2 @@
+ErectAMonument: Возведите монумент
+ErectAMonumentInfo: Потратьте [8] ресурсов.

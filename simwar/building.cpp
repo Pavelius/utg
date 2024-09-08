@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "building.h"
 
 buildingi* lastbuilding;

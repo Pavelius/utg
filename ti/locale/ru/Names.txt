@@ -61,27 +61,20 @@ PlaceUnits: %1 разместили %3i %2
 PlayerChooseStrategy: %1 на этот ход выбрали [%2].
 ProductionTotal: Осталось [%1i] ресурсов и [%2i] отрядов
 RaiseIndicatorTo: %1 повысили %2 до %3i
-Rarron: Рарун
 RatePrompt: Сколько хотите приобрести %1?
 Resculon: Рескульон
 Resources: Ресурсы
 Required: Требует
 RetreatBattle: Отступить из битвы
 Round: Раунд
-Sakulag: Сакулаг
 SardakkHomeSystem: Домашняя система Сардак
 SardakkNorr: Сардак Н'орр
-Saudor: Саудор
-SaudorSystem: Система Саудор
 SetControlPlanet: %1 установили контроль над планетой %2
-SonOfRagh: Сын Рагха
 SpaceCombat: Космический бой
 Starpoint: Старпоинт
 TacticAction: Тактическое действие
 Tech: Технология
 Technology: Технологическая стратегия
-Tequran: Текуран
-TequranSystem: Система Текуран
 TheBaronyOfLetnev: Баронство Летнев
 TheBaronyOfLetnevHomeSystem: Домашняя система Баронства Летнев
 TheEmiratesOfHacan: Эмираты Хаканов
@@ -93,12 +86,9 @@ TheL1Z1XMindnetHomeSystem: Домашняя система L1Z1
 TheUniversitiesOfJolNar: Вселенные Жол-Наров
 TheUniversitiesOfJolNarHomeSystem: Домашняя система Жол-Наров
 TradeGoods: Товары
-TrenLak: Трен'ллак
 UnboardTroop: Выгрузить %1
 UploadUnits: Погрузить отряды на борт
 VictoryPoints: Очки победы
-WormholeAlphaSystem: Кротовая нора Альфа
-WormholeBetaSystem: Кротовая нора Бэта
 
 No: Нет
 Yes: Да

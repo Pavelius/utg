@@ -1,6 +1,5 @@
 #include "army.h"
 #include "card.h"
-#include "crt.h"
 #include "player.h"
 #include "province.h"
 #include "strategy.h"
@@ -29,7 +28,7 @@ static entitydatai entity_data[] = {
 
 static entity* find_variable(const char* id) {
 	for(auto& e : entity_data) {
-		if(strcmp(e.id, id) == 0)
+		if(equal(e.id, id))
 			return (entity*)(*e.data);
 	}
 	return 0;
@@ -46,7 +45,7 @@ static void add_head(stringbuilder& sb, const char* id) {
 }
 
 static void add_head(stringbuilder& sb, const char* id, const char* trigger) {
-	auto pd = getdescription(stw("Type", trigger));
+	auto pd = getnme(ids("Type", trigger));
 	if(!pd)
 		add_head(sb, id);
 	else
@@ -62,7 +61,7 @@ static void add_value(stringbuilder& sb, const char* id, int bonus) {
 static void add_value(stringbuilder& sb, const char* prefix, const char* id, int bonus) {
 	if(!bonus)
 		return;
-	auto p = getdescription(stw(prefix, id, "Tips"));
+	auto p = getnme(ids(prefix, id, "Tips"));
 	if(!p)
 		return;
 	sb.addn(p, bonus);
@@ -82,7 +81,7 @@ static const char* get_ten_times(int value) {
 static const char* get_times(const char* id, int value) {
 	static char temp[32]; stringbuilder sb(temp);
 	sb.add("%1%2i", id, value);
-	auto p = getdescription(temp);
+	auto p = getnme(temp);
 	if(!p)
 		return "";
 	sb.clear();
@@ -94,7 +93,7 @@ static void add_value_unit(stringbuilder& sb, ability_s i, int bonus, int bonus2
 	if(!bonus)
 		return;
 	auto id = bsdata<abilityi>::elements[i].id;
-	auto p = getdescription(stw("Unit", id, "Tips"));
+	auto p = getnme(ids("Unit", id, "Tips"));
 	if(!p)
 		return;
 	switch(i) {
@@ -139,7 +138,9 @@ static void add_value_unit(stringbuilder& sb, abilitya& source) {
 }
 
 static void add_script(stringbuilder& sb, const char* id, int bonus) {
-	auto p = getdescription(id);
+	auto p = getnme(ids(id, "Info"));
+	if(!p)
+		p = getnme(id);
 	if(!p)
 		return;
 	sb.addn("- ");
@@ -147,7 +148,9 @@ static void add_script(stringbuilder& sb, const char* id, int bonus) {
 }
 
 static void add_script(stringbuilder& sb, const char* id, const char* name, int bonus) {
-	auto p = getdescription(id);
+	auto p = getnme(ids(id, "Info"));
+	if(!p)
+		p = getnme(id);
 	if(!p)
 		return;
 	sb.addn("- ");
@@ -175,7 +178,7 @@ static void add_ability(stringbuilder& sb, const variants& source, const char* i
 }
 
 static bool add_textinfo(stringbuilder& sb, const char* id) {
-	auto p = getdescription(id);
+	auto p = getnme(ids(id, "Info"));
 	if(p) {
 		sb.addn(p);
 		return true;
@@ -254,5 +257,5 @@ static bool add_entity(const char* identifier, stringbuilder& sb) {
 void game_var_identifier(stringbuilder& sb, const char* identifier) {
 	if(add_entity(identifier, sb))
 		return;
-	stringbuilder::defidentifier(sb, identifier);
+	default_string(sb, identifier);
 }

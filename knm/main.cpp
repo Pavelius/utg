@@ -1,11 +1,12 @@
 #include "area.h"
-#include "crt.h"
 #include "deck.h"
 #include "draw_strategy.h"
 #include "entitya.h"
 #include "list.h"
 #include "province.h"
 #include "player.h"
+#include "rand.h"
+#include "timer.h"
 
 void prepare_game_ui();
 void initialize_decks();
