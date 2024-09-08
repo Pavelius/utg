@@ -1,0 +1,15 @@
+﻿SpaceDock: Доки
+PDS: ПСЗ
+Carrier: Транспорт
+Cruiser: Крейсер
+Destroyer: Эсминец
+Dreadnought: Дредноут
+Infantry: Пехота
+Fighter: Истребители
+WarSun: Звезда смерти
+
+CMorranNorr: К'Морран
+Genesis: Генезис
+SonOfRagh: Сын Рагха
+
+SpaceCannon: Космическая пушка

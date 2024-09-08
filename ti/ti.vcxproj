@@ -213,6 +213,7 @@
     <Text Include="locale\ru\Planets.txt" />
     <Text Include="locale\ru\Strategy.txt" />
     <Text Include="locale\ru\Techs.txt" />
+    <Text Include="locale\ru\Units.txt" />
     <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\ActionCards.txt" />
     <Text Include="rules\Basic.txt" />

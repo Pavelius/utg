@@ -1,19 +1,4 @@
-﻿SpaceDock: Доки
-PDS: ПСЗ
-Carrier: Транспорт
-Cruiser: Крейсер
-Destroyer: Эсминец
-Dreadnought: Дредноут
-Infantry: Пехота
-Fighter: Истребители
-WarSun: Звезда смерти
-
-CMorranNorr: К'Морран
-Genesis: Генезис
-
-SpaceCannon: Космическая пушка
-
-ActionCards: Карты действий
+﻿ActionCards: Карты действий
 ActionPhase: Фаза действий
 AddCommandToken: Какие резервы хотите пополнить?
 AntiFighterBarrage: Заградительный огонь
@@ -21,9 +6,6 @@ AppTitle: Сумрачная империя
 Apply: Применить
 ApplyExhaust: Планета %1 истощена
 ApplySecondanaryStrategy: Ваш противник выполнил первичную способность стратегии [%1]. Вы хотите выполнить вторичную?
-Arretze: Аретзе
-AsteroidFieldSystem: Поле астероидов
-AsteroidFieldSystem2: Поле астероидов
 BoardTroop: Погрузить %1
 Cancel: Отмена
 CancelInvasion: Отменить высадку
@@ -63,17 +45,12 @@ FocusedResearch: Сфокусированное исследование
 FrontlineDeployment: Развертывание на фронте
 GainIndicator: %1 получили %3i %2
 GhostShip: Призрачный корабль
-Gral: Грал
-Hercant: Херкант
 IndustrialInitiative: Промышленная инициатива
 Influence: Влияние
 Insubordination: Неподчинение
-Kamdorn: Камдорн
 LearnTechnology: %1 изичили технологию %2
-Lor: Лор
 LoseIndicator: %1 потратили %3i %2
 MoveShip: Переместить корабль
-Nar: Нар
 NoCasualties: Ни одна сторона не понесла потери
 OrbitalDrop: Высадка с орбиты
 PassAction: Закончить фазу действий

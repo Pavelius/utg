@@ -223,5 +223,8 @@
     <Text Include="locale\ru\UnknownNames.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="locale\ru\Units.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>
