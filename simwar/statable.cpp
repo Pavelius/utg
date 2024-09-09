@@ -2,23 +2,21 @@
 #include "statable.h"
 
 BSDATA(costi) = {
-	{"Gold", 0, 0, 0, 4},
-	{"Mana", 0, 0, 0, 6},
-	{"Happiness", 0, 0, "%3i", 10},
-	{"Fame", 0, 0, 0, 8},
+	{"Resources", 0, 4},
+	{"Influence", 0, 4},
+	{"Gold", 0, 4},
+	{"Happiness", "%3i", 10},
+	{"Fame", 0, 8},
 	{"Lore"},
-	{"Warfire", 0, 0, "%1i/%3i", 1},
-	{"Strenght", 0, 0, 0, 2},
+	{"Warfire", "%1i/%3i", 1},
+	{"Strenght", 0, 2},
 	{"Sword"},
 	{"Shield"},
 	{"Death"},
-	{"Experience", 0, 0, 0, 9},
 	{"Movement"},
 	{"Sail"},
-	{"Explore"},
-	{"ExploreNext"},
 	{"Recruit"},
-	{"Size", 0, 0, 0, 5},
+	{"Size", 0, 5},
 	{"Limit"},
 };
 assert_enum(costi, Limit)

@@ -27,7 +27,7 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 	else if(szstart(identifier, "Total")) {
 		auto pv = bsdata<costi>::find(identifier + 5);
 		if(pv) {
-			auto v = (cost_s)(pv - bsdata<costi>::elements);
+			auto v = (costn)(pv - bsdata<costi>::elements);
 			last_army->addtotal(sb, v);
 		}
 	} else
@@ -83,11 +83,9 @@ const char*	army::getnameof() const {
 
 void army::addprompt(stringbuilder& sb) const {
 	sb.adds("%-1", getnameof());
-	if(hero)
-		sb.adds(getnm("LeadedBy"), hero->getname());
 }
 
-void army::addtotal(stringbuilder& sb, cost_s v) const {
+void army::addtotal(stringbuilder& sb, costn v) const {
 	auto push_cost = lastcostitem; costitema it;
 	lastcostitem = &it;
 	auto total = get(v);
@@ -97,7 +95,7 @@ void army::addtotal(stringbuilder& sb, cost_s v) const {
 	sb.adds("[({"); sb.addv(temp, 0); sb.add("})%1i]", total);
 }
 
-int army::geteffect(cost_s v) const {
+int army::geteffect(costn v) const {
 	switch(v) {
 	case Strenght: return strenght;
 	case Sword: return casualty;
@@ -105,7 +103,7 @@ int army::geteffect(cost_s v) const {
 	}
 }
 
-int army::get(cost_s v) const {
+int army::get(costn v) const {
 	int result = geteffect(v);
 	if(tactic)
 		result += get_value(tactic->id, tactic->effect[v]);
@@ -114,7 +112,7 @@ int army::get(cost_s v) const {
 	return result;
 }
 
-int army::get(cost_s v, const army* opponent, cost_s mv) const {
+int army::get(costn v, const army* opponent, costn mv) const {
 	int result = get(v);
 	auto push_cost = lastcostitem;
 	lastcostitem = 0; auto value = opponent->get(mv);
@@ -138,7 +136,7 @@ int	army::getunitcount(const tactici* v) const {
 	return 0;
 }
 
-void army::match(cost_s v, bool keep) {
+void army::match(costn v, bool keep) {
 }
 
 void army::sort() {

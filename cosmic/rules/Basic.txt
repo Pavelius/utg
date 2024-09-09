@@ -9,3 +9,8 @@
 
 StartScript
  elements RandomShip SetOpponent Cobra Encounter+1
+
+#Menu
+
+Abilitites
+ elements ShardCannons ShardCannonsII ShardCannonsIII

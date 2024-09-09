@@ -19,12 +19,12 @@ struct provincei : entityi {
 	const landscapei*	landscape;
 	costa				current, income;
 	char				buildings, units, recruit, builded;
-	void				add(cost_s v, int value);
+	void				add(costn v, int value);
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
 	bool				isvisible() const;
 	void				makewave() const;
-	int					get(cost_s v) const { return current[v]; }
+	int					get(costn v) const { return current[v]; }
 	int					getbuildings() const;
 	int					getcost() const;
 	int					getindex() const { return this - bsdata<provincei>::elements; }

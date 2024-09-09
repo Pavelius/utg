@@ -1,6 +1,7 @@
 #include "bsreq.h"
 #include "interval.h"
 #include "list.h"
+#include "menu.h"
 #include "questlist.h"
 #include "randomizer.h"
 #include "script.h"
@@ -41,6 +42,7 @@ BSMETA(tagi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>},
+	{"Menu", VAR(menu, 1)},
 	{"Module", VAR(modulei, 1), 0, 0, fnscript<modulei>},
 	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist_read},
 	{"RandomList", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},

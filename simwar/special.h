@@ -7,6 +7,6 @@
 struct speciali {
 	variant			object;
 	const char*		group;
-	cost_s			ability;
+	costn			ability;
 	int				multiplier, divider;
 };

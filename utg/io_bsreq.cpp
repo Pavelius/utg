@@ -514,10 +514,14 @@ static bool parse_directives() {
 		sb.add(url, current_locale);
 		if(!allowparse)
 			return true;
+		auto push_context = context;
+		auto push_p = p;
 		if(mask_name)
 			readf(reader, temp, mask_name);
 		else
 			reader(szdup(temp));
+		p = push_p;
+		context = push_context;
 		return true;
 	} else if(equal(temp, "setlocale")) {
 		auto url = read_string(true);

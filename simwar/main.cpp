@@ -28,9 +28,6 @@ void conquest();
 
 static void test_army() {
 	province = bsdata<provincei>::find("NandaDevi");
-	auto hero = bsdata<heroi>::find("Gordek");
-	hero->province = province;
-	hero->player = player;
 	add_neutral("Spearmans");
 	add_neutral("Spearmans");
 	add_neutral("Spearmans");

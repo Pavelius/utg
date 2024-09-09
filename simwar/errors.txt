@@ -1,3 +1,7 @@
-﻿In file `rules/Tactics.txt`:
- Line 4: Invalid source array where read identifier `Strenght`
- Line 4: Expected line feed
+﻿Error in file `rules/Basic.txt`:
+ Line 7: Not found field `Mana` in dataset `effect`
+ Line 15: Not found field `Mana` in dataset `effect`
+ Line 18: Not found field `Mana` in dataset `effect`
+ Line 41: Not found field `Mana` in dataset `effect`
+ Line 81: Not found field `Mana` in dataset `resources`
+ Line 84: Not find data type for `Hero`

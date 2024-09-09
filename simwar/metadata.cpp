@@ -2,7 +2,6 @@
 #include "card.h"
 #include "bsreq.h"
 #include "building.h"
-#include "hero.h"
 #include "list.h"
 #include "player.h"
 #include "randomizer.h"
@@ -19,7 +18,6 @@ NOBSDATA(point)
 BSDATAC(cardi, 512)
 BSDATAC(buildingi, 128)
 BSDATAC(building, 1024)
-BSDATAC(heroi, 64)
 BSDATAC(landscapei, 32)
 BSDATAC(neighbor, 1024)
 BSDATAC(playeri, 16)
@@ -55,12 +53,6 @@ BSMETA(cardi) = {
 	{}};
 BSMETA(decki) = {
 	BSREQ(id),
-	{}};
-BSMETA(heroi) = {
-	BSREQ(id),
-	BSREQ(resid),
-	BSREQ(player),
-	BSREQ(wounds),
 	{}};
 BSMETA(landscapei) = {
 	BSREQ(id), BSREQ(water),
@@ -112,7 +104,6 @@ BSDATA(varianti) = {
 	{"Action", VAR(actioni, 1)},
 	{"Building", VAR(buildingi, 1), ftinfo<buildingi>, 0, fnscript<buildingi>},
 	{"Card", VAR(cardi, 1)},
-	{"Hero", VAR(heroi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Neighbor", VAR(neighbor, 2)},

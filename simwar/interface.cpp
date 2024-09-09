@@ -107,7 +107,7 @@ static void field(const char* format, int minimal_width) {
 	height = push_height;
 }
 
-static void field(cost_s v, const char* format, int width, int v1, int v2, int v3) {
+static void field(costn v, const char* format, int width, int v1, int v2, int v3) {
 	auto& e = bsdata<costi>::elements[v];
 	if(!width)
 		width = 60;
@@ -128,7 +128,7 @@ static void field(cost_s v, const char* format, int width, int v1, int v2, int v
 	paint_vborder();
 }
 
-static void field(cost_s v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
+static void field(costn v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
 	field(v, format, width, a1[v], a2[v], a3[v]);
 }
 
@@ -141,8 +141,9 @@ static void field_date() {
 
 static void paint_cost(const costa& v, const costa& u, const costa& n) {
 	field_date();
+	field(Resources, 0, 80, v, n, u);
+	field(Influence, 0, 80, v, n, u);
 	field(Gold, 0, 100, v, n, u);
-	field(Mana, 0, 80, v, n, u);
 	field(Happiness, "%3i", 40, v, n, u);
 	field(Fame, "%1i", 0, v, n, u);
 	field(Warfire, "%3i", 0, v, n, u);

@@ -1,5 +1,4 @@
 #include "building.h"
-#include "hero.h"
 #include "player.h"
 #include "province.h"
 #include "script.h"
@@ -106,27 +105,11 @@ int provincei::getunits() const {
 	return units;
 }
 
-void provincei::add(cost_s v, int value) {
+void provincei::add(costn v, int value) {
 	income[v] += value;
-	switch(v) {
-	case Explore: case ExploreNext:
-		if(income[v] >= 100)
-			income[v] = 100;
-		break;
-	}
 }
 
 void provincei::explore(int value) {
-	if(!income[ExploreNext])
-		income[ExploreNext] = xrand(10, 30);
-	add(Explore, value);
-	while(income[Explore] >= income[ExploreNext] && income[ExploreNext] < 100) {
-		auto push_province = province; province = this;
-		script_run("RandomSite", 0);
-		script_run("AddSite", 0);
-		province = push_province;
-		add(ExploreNext, xrand(8, 20));
-	}
 }
 
 void provincei::update() {

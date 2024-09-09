@@ -5,7 +5,6 @@
 #include "draw.h"
 #include "draw_object.h"
 #include "game.h"
-#include "hero.h"
 #include "list.h"
 #include "player.h"
 #include "province.h"
@@ -14,10 +13,10 @@
 #include "script.h"
 #include "statable.h"
 
-int get_income(cost_s v);
-int get_income_modified(cost_s v, int result);
+int get_income(costn v);
+int get_income_modified(costn v, int result);
 
-static int get_income(cost_s v, stringbuilder& sb) {
+static int get_income(costn v, stringbuilder& sb) {
 	auto push = lastcostitem;
 	costitema source; lastcostitem = &source;
 	auto result = get_income(v);
@@ -27,7 +26,7 @@ static int get_income(cost_s v, stringbuilder& sb) {
 	return result;
 }
 
-static void add_line(stringbuilder& sb, const provincei* province, cost_s v, int n) {
+static void add_line(stringbuilder& sb, const provincei* province, costn v, int n) {
 	if(!n)
 		return;
 	auto& e = bsdata<costi>::elements[v];
@@ -59,8 +58,9 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 }
 
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
+	add_line(sb, 4, province->current[Resources]);
+	add_line(sb, 4, province->current[Influence]);
 	add_line(sb, 4, province->current[Gold]);
-	add_line(sb, 6, province->current[Mana]);
 	add_line(sb, 0, province->current[Lore]);
 	add_line(sb, 5, province->buildings);
 }
@@ -88,7 +88,7 @@ static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
 static void add_description(const buildingi* p, stringbuilder& sb) {
 	sb.addn("##%1", getnm(p->id));
 	auto need_line = true;
-	for(auto v = (cost_s)0; v <= Limit; v = (cost_s)(v + 1)) {
+	for(auto v = (costn)0; v <= Limit; v = (costn)(v + 1)) {
 		auto n = p->effect[v];
 		if(!n)
 			continue;
@@ -123,7 +123,7 @@ static void add_description(const char* id, stringbuilder& sb) {
 
 template<> void ftinfo<costi>(const void* object, stringbuilder& sb) {
 	auto p = (costi*)object;
-	auto v = (cost_s)(p - bsdata<costi>::elements);
+	auto v = (costn)(p - bsdata<costi>::elements);
 	add_description(p->id, sb);
 	sb.addn("---");
 	get_income(v, sb);

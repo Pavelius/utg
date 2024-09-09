@@ -1,2 +1,2 @@
 ﻿Error in file `rules/Basic.txt`:
- Line 5: Not find data type for `importloc`
+ Line 16: Can't find variant `ShardCannonII`

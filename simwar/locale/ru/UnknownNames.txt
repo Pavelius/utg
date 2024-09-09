@@ -1,7 +1,1 @@
-﻿AppTitle: 
-DoRandomAction: 
-EndTurn: 
-Gordek: 
-March: 
-Mistra: 
-NandaDevi: 
+﻿

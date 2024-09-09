@@ -231,7 +231,7 @@ static void properties() {
 		menu::last = (menu*)current_tab;
 		if(menu::last->source) {
 			auto proc = standart_getproperty;
-			if(menu::last->source->pgetinfo)
+			if(menu::last->source && menu::last->source->pgetinfo)
 				proc = menu::last->source->pgetinfo;
 			label(focus_object, menu::last->elements, proc);
 		} else {

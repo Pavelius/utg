@@ -1,3 +1,0 @@
-﻿CarefulDefence: Тщательная защита
-LightingAttack: Внезапная атака
-MessyAttack: Кровавая бойня
