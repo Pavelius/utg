@@ -3,14 +3,13 @@
 #pragma once
 
 enum costn : unsigned char {
-	Resources, Influence, Gold, Happiness, Fame, Lore, Warfire,
+	Resources, Influence, Gold, Happiness, Fame, Lore, Units,
 	Strenght, Sword, Shield, Death,
-	Movement, Sail,
+	Movement, Sail, Explore,
 	Recruit, Size,
 	Limit,
 };
 struct costi : nameable {
-	const char*	format;
 	int			frame = -1;
 };
 typedef short costa[Limit + 1];

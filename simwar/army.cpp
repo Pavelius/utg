@@ -124,12 +124,12 @@ int army::get(costn v, const army* opponent, costn mv) const {
 }
 
 void army::select(const provincei* province) {
-	units = province->units;
+	units = province->getunits();
 }
 
 void army::select(const provincei* province, const playeri* player) {
 	if(province->player==player)
-		units = province->units;
+		units = province->getunits();
 }
 
 int	army::getunitcount(const tactici* v) const {

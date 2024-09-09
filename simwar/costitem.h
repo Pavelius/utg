@@ -4,8 +4,8 @@
 #include "stringbuilder.h"
 
 struct costitem {
-	const char*		id;
-	int				value;
+	const char*	id;
+	int			value;
 };
 struct costitema : adat<costitem, 32> {
 };

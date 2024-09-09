@@ -8,8 +8,8 @@ const short unsigned Unknown = 0xFFF0;
 const short unsigned ZeroCost = 0xFFF1;
 const short unsigned Blocked = 0xFFFF;
 
-provincei*	province;
-provincef	visibility;
+provincei* province;
+provincef visibility;
 
 static short unsigned pstart, pstop;
 static short unsigned movecost[128];
@@ -102,7 +102,7 @@ int provincei::getsites() const {
 }
 
 int provincei::getunits() const {
-	return units;
+	return current[Units];
 }
 
 void provincei::add(costn v, int value) {
@@ -117,7 +117,6 @@ void provincei::update() {
 	addvalue(current, landscape->effect);
 	subvalue(current, landscape->upkeep);
 	buildings = getbuildings();
-	units = getunits();
 }
 
 bool provincei::isvisible() const {

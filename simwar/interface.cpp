@@ -26,7 +26,7 @@ static color player_colors[] = {
 };
 
 static bool troops_in_province(const void* object) {
-	return province->units > 0;
+	return province->getunits() > 0;
 }
 
 static bool building_in_province(const void* object) {
@@ -34,7 +34,7 @@ static bool building_in_province(const void* object) {
 }
 
 static bool troops_player(const void* object) {
-	return province->units > 0;
+	return province->getunits() > 0;
 }
 
 static color getplayercolor(playeri* p) {
@@ -141,12 +141,12 @@ static void field_date() {
 
 static void paint_cost(const costa& v, const costa& u, const costa& n) {
 	field_date();
-	field(Resources, 0, 80, v, n, u);
-	field(Influence, 0, 80, v, n, u);
+	field(Resources, "%1i/%2i", 80, v, n, u);
+	field(Influence, "%1i/%2i", 80, v, n, u);
 	field(Gold, 0, 100, v, n, u);
 	field(Happiness, "%3i", 40, v, n, u);
 	field(Fame, "%1i", 0, v, n, u);
-	field(Warfire, "%3i", 0, v, n, u);
+	field(Units, "%3i", 0, v, n, u);
 	field(Lore, 0, 120, v, n, u);
 }
 
@@ -256,32 +256,16 @@ static void paint_neighbor() {
 	caret = push_caret;
 }
 
-void add_line_upkeep(const provincei* province, stringbuilder& sb);
-
-static void paint_income(const provincei* province) {
-	char temp[260]; stringbuilder sb(temp); temp[0] = 0;
-	add_line_upkeep(province, sb);
-	if(temp[0] == 0)
-		return;
-	rectpush push;
-	auto push_fore = fore;
-	textfs(temp);
-	caret.x -= width / 2;
-	caret.y -= texth() / 2;
-	fore = colors::black;
-	textf(temp);
-	fore = push_fore;
-}
-
 static void paint_province() {
 	auto p = (provincei*)last_object->data;
+	auto n = p->getunits();
 	if(p->player) {
 		paint_hilite_province(p->player->shield);
-		if(p->units)
-			show_banner(16, 1, str("%1i", p->units));
+		if(n)
+			show_banner(16, 1, str("%1i", n));
 	} else {
-		if(p->units)
-			show_banner(16, 0, str("%1i", p->units));
+		if(n)
+			show_banner(16, 0, str("%1i", n));
 	}
 	if(show_names)
 		stroke_texth2(p->getname());
@@ -291,7 +275,7 @@ static void paint_province() {
 		if(ishilite(24, p)) {
 			hcursor = cursor::Hand;
 			if(hkey == MouseLeft && !hpressed)
-				execute(input_province, (int)p);
+				execute(input_province, (long)p);
 		}
 	}
 }

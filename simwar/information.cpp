@@ -114,7 +114,7 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 
 static void add_description(const char* id, stringbuilder& sb) {
 	sb.addn("##%1", getnm(id));
-	auto pn = getnme(id);
+	auto pn = getnme(ids(id, "Info"));
 	if(!pn)
 		return;
 	sb.addn("---");

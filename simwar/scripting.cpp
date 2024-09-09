@@ -144,7 +144,7 @@ static void payunit(int bonus) {
 }
 
 static void recruit() {
-	province->units++;
+	province->current[Units]++;
 }
 
 static void add_site(int bonus) {
@@ -244,7 +244,7 @@ static int get_units_upkeep(costn v) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
 		if(e.player == player)
-			result += e.units * units_gold_upkeep;
+			result += e.getunits() * units_gold_upkeep;
 	}
 	return get_value("UnitsUpkeep", -result);
 }
@@ -543,7 +543,7 @@ static bool troops_mobilization(int value, int defence) {
 				continue;
 			if(&e == province)
 				continue;
-			if(!e.units)
+			if(!e.getunits())
 				continue;
 			if(e.getcost() > value)
 				continue;
@@ -805,9 +805,10 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 }
 
 static void add_unit(int bonus) {
-	province->units += bonus;
-	if(province->units < 0)
-		province->units = 0;
+	bonus += province->current[Units];
+	if(bonus < 0)
+		bonus = 0;
+	province->current[Units] = bonus;
 }
 
 BSDATA(script) = {

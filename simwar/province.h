@@ -18,7 +18,7 @@ struct provincei : entityi {
 	point				position;
 	const landscapei*	landscape;
 	costa				current, income;
-	char				buildings, units, recruit, builded;
+	char				buildings, recruit, builded;
 	void				add(costn v, int value);
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
@@ -30,7 +30,7 @@ struct provincei : entityi {
 	int					getindex() const { return this - bsdata<provincei>::elements; }
 	void				getinfo(stringbuilder& sb) const;
 	int					getsites() const;
-	int					getstrenght() const { return units; }
+	int					getstrenght() const { return current[Units]; }
 	int					getunits() const;
 	void				paint() const;
 	void				setblocked() const;

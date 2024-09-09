@@ -1,72 +1,34 @@
 #Landscape
 
 Plains
- effect Size(3) Gold(4)
+ effect Size(3) Influence(1)
  upkeep Happiness(1)
 Forest
- effect Size(3) Gold(2) Mana(1)
+ effect Size(3) Resources(1)
  upkeep Happiness(1)
 Hills
- effect Strenght(1) Size(3) Gold(2)
+ effect Strenght(1) Resources(1) Size(3)
  upkeep Happiness(1)
 Ocean water(true)
  effect Size(2)
 Swamp
- effect Size(2) Mana(2)
+ effect Size(2)
  upkeep Happiness(1)
 Wasteland
- effect Size(2) Mana(1)
+ effect Size(2)
  upkeep Happiness(1)
 
 #Building
 
-WatchTower
- effect Warfire(1) Strenght(1)
- cost Gold(60)
-Fort upgrade(WatchTower)
- effect Happiness(1) Warfire(2) Strenght(2) Recruit(1)
- upkeep Gold(2)
- cost Gold(250)
-Citadel upgrade(Fort)
- effect Happiness(2) Gold(1) Warfire(4) Strenght(3) Size(1) Recruit(2)
- cost Gold(650)
-DarkCitadel upgrade(Fort)
- effect Happiness(2) Gold(2) Warfire(6) Limit(1) Strenght(3) Size(1)
- cost Gold(750)
-Palace upgrade(Fort)
- effect Happiness(2) Gold(3) Warfire(2) Limit(1) Strenght(2) Size(1)
- cost Gold(1000)
-
-Laboratory
- effect Mana(1)
- cost Gold(50)
- upkeep Gold(1)
-
-IronMine
- effect Gold(3)
- cost Gold(50)
- conditions Hills
-
-Harbor
- effect Gold(1) Sail(1)
- cost Gold(80)
- conditions Coastal
-Marketplace
- effect Gold(2)
- cost Gold(60)
-
-Tavern
- effect Happiness(1)
- cost Gold(40)
- upkeep Gold(1)
-Circus upgrade(Tavern)
- effect Happiness(5)
- cost Gold(200) Limit(1)
- upkeep Gold(2)
-Inn upgrade(Tavern)
- effect Happiness(2)
- cost Gold(70)
- upkeep Gold(2)
+Fort
+ effect Strenght(1) Recruit(1)
+ cost Resources(20)
+City upgrade(Fort)
+ effect Influence(1)
+ cost Resources(20)
+Temple
+ effect Influence(1)
+ cost Resources(20)
 
 #Tactic
 
@@ -78,37 +40,17 @@ LightingAttack
 #Player
 
 SouthernKindom
- resources Gold(100) Mana(20)
- start Citadel+1 Laboratory+1 Unit+2
-
-#Hero
-
-Gordek resid("2MHUM6_S") player(SouthernKindom)
-Mistra resid("2FELF2_S") player(SouthernKindom)
-Kalipse resid("2MDEF2_S")
+ resources Gold(100)
+ start City+1 Unit+2
 
 #Site
 
 BanditLair resid(DarkCave)
- fail Wounds+2
- partial Wounds+1
- success Gold+60
 DarkCave resid(DarkCave)
- fail Wounds+1
 DarkYard resid(DarkCave)
 StoneCanion resid(DarkCave)
- partial Mana+5
- success Gold+50 Mana+10
 UnholyGraveyard resid(Graveyard)
- fail Wounds+1
- success Lore+20 Mana+20
 WolfLair resid(Lair)
- fail Wounds+2
- partial Wounds+1 Gold+30
- success Gold+30
 MercenaryCamp resid(MercenaryCamp)
- fail Experience+2 
- partial Experience+4
- success Experience+8
 
 #include "rules/Tactics.txt"

@@ -78,7 +78,7 @@ BSMETA(provincei) = {
 	BSREQ(position),
 	BSREQ(landscape),
 	BSDST(income, costi),
-	BSREQ(builded), BSREQ(recruit), BSREQ(units),
+	BSREQ(builded), BSREQ(recruit),
 	{}};
 BSMETA(site) = {
 	BSREQ(type),
@@ -88,7 +88,7 @@ BSMETA(sitei) = {
 	BSREQ(id),
 	BSREQ(resid),
 	BSREQ(effect),
-	BSREQ(conditions), BSREQ(fail), BSREQ(partial), BSREQ(success),
+	BSREQ(conditions),
 	BSREQ(upkeep),
 	{}};
 BSMETA(tactici) = {
