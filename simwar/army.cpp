@@ -108,7 +108,7 @@ int army::get(costn v) const {
 	if(tactic)
 		result += get_value(tactic->id, tactic->effect[v]);
 	if(province)
-		result += get_value(province->id, province->effect[v]);
+		result += get_value(province->id, province->income[v]);
 	return result;
 }
 

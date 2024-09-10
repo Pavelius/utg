@@ -1,34 +1,49 @@
 #Landscape
 
 Plains
- effect Size(3) Influence(1)
+ income Size(3) Influence(1)
  upkeep Happiness(1)
 Forest
- effect Size(3) Resources(1)
+ income Size(3) Resources(1)
  upkeep Happiness(1)
 Hills
- effect Strenght(1) Resources(1) Size(3)
+ income Size(3) Resources(1) Strenght(1)
  upkeep Happiness(1)
-Ocean water(true)
- effect Size(2)
+Ocean
+ feat Water
 Swamp
- effect Size(2)
+ income Size(2)
  upkeep Happiness(1)
 Wasteland
- effect Size(2)
+ income Size(2)
  upkeep Happiness(1)
 
-#Building
+#Site
 
 Fort
- effect Strenght(1) Recruit(1)
+ income Strenght(1) Recruit(1)
  cost Resources(20)
-City upgrade(Fort)
- effect Influence(1)
+ feat Building
+City
+ income Influence(1)
  cost Resources(20)
+ feat Building
 Temple
- effect Influence(1)
+ income Influence(1)
  cost Resources(20)
+ feat Building
+Mine
+ income Resources(1)
+ cost Resources(20)
+ feat Building
+
+BanditLair resid(DarkCave)
+DarkCave resid(DarkCave)
+DarkYard resid(DarkCave)
+StoneCanion resid(DarkCave)
+UnholyGraveyard resid(Graveyard)
+WolfLair resid(Lair)
+MercenaryCamp resid(MercenaryCamp)
 
 #Tactic
 
@@ -42,15 +57,5 @@ LightingAttack
 SouthernKindom
  resources Gold(100)
  start City+1 Unit+2
-
-#Site
-
-BanditLair resid(DarkCave)
-DarkCave resid(DarkCave)
-DarkYard resid(DarkCave)
-StoneCanion resid(DarkCave)
-UnholyGraveyard resid(Graveyard)
-WolfLair resid(Lair)
-MercenaryCamp resid(MercenaryCamp)
 
 #include "rules/Tactics.txt"

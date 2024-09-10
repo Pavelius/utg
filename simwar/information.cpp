@@ -88,7 +88,7 @@ static void add_description(const sitei* p, stringbuilder& sb) {
 	sb.addn("##%1", getnm(p->id));
 	auto need_line = true;
 	for(auto v = (costn)0; v <= Limit; v = (costn)(v + 1)) {
-		auto n = p->effect[v];
+		auto n = p->income[v];
 		if(!n)
 			continue;
 		auto pd = getnme(ids(bsdata<costi>::elements[v].id, "Effect"));

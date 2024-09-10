@@ -1,18 +1,20 @@
-#include "province.h"
-#include "variant.h"
+#include "feat.h"
+#include "statable.h"
 
 #pragma once
 
-struct sitei : nameable {
+struct provincei;
+
+struct sitei : nameable, featable {
 	const char*		resid;
-	costa			effect, upkeep, cost;
+	costa			income, upkeep, cost;
 };
 struct site {
 	const sitei*	type;
 	provincei*		province;
-	costa			current;
 	explicit operator bool() const { return type != 0; }
 	void			clear();
+	bool			is(featn v) const { return type->is(v); }
 };
-extern sitei* lastsite;
+extern const sitei* last_site;
 extern site* location;

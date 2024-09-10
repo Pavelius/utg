@@ -3,5 +3,10 @@
 
 BSDATA(feati) = {
 	{"Building"},
+	{"Water"},
+	{"Independed"},
+	{"Discard"},
+	{"Shuffle"},
+	{"Extend"},
 };
-assert_enum(feati, Building)
+assert_enum(feati, Extend)

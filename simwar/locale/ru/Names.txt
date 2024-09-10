@@ -2,13 +2,6 @@
 Kalipse: Калипсо
 Mistra: Мистра
 
-August: Август
-January: Январь
-February: Февраль
-March: Март
-April: Апрель
-May: Май
-
 BanditLair: Логово бандитов
 DarkCave: Темная пещера
 DarkYard: Темная поляна

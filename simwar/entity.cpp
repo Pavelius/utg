@@ -19,19 +19,17 @@ const cardi* entityi::getcard() const {
 }
 
 const short* entityi::getupkeep() const {
-	if(bsdata<landscapei>::have(this))
-		return ((landscapei*)this)->upkeep;
-	else if(bsdata<sitei>::have(this))
+	if(bsdata<sitei>::have(this))
 		return ((sitei*)this)->upkeep;
 	return 0;
 }
 
 const short* entityi::geteffect() const {
 	if(bsdata<playeri>::have(this))
-		return ((landscapei*)this)->effect;
+		return ((landscapei*)this)->income;
 	else if(bsdata<sitei>::have(this))
-		return ((sitei*)this)->effect;
+		return ((sitei*)this)->income;
 	else if(bsdata<provincei>::have(this))
-		return ((provincei*)this)->effect;
+		return ((provincei*)this)->income;
 	return 0;
 }

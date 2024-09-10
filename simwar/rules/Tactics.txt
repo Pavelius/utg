@@ -2,29 +2,29 @@
 
 HeroicFeats
  effect Fame(1) Death(1)
- tags Extend
+ feat Extend
 LightingAttack
  effect Strenght(4) Death(1)
 MessyFight
  effect Sword(3) Strenght(1) Death(2)
 DeathTrap
  effect Death(2)
- tags Shuffle
+ feat Shuffle
 ArrowRain count(3)
  effect Sword(1)
- tags Extend
+ feat Extend
 ShieldWall count(3)
  effect Shield(1)
- tags Extend
+ feat Extend
 CarefulDefence
  effect Shield(1)
 ExhaustCombat
  effect Sword(1) Death(1)
 Curse
  effect Death(1)
- tags Discard Shuffle
+ feat Discard Shuffle
 Bless
  effect Sword(1) Shield(1)
- tags Discard Shuffle
+ feat Discard Shuffle
 Adventurers
  effect Strenght(2) Fame(1)

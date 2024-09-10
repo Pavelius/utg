@@ -1,6 +1,7 @@
 #include "site.h"
+#include "slice.h"
 
-sitei* lastsite;
+const sitei* last_site;
 site* location;
 
 void site::clear() {

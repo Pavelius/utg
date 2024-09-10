@@ -113,16 +113,20 @@ static void field(costn v, const char* format, int width, int v1, int v2, int v3
 	if(!width)
 		width = 60;
 	char temp[260]; stringbuilder sb(temp);
-	if(e.frame != -1)
-		sb.add(":%1i:", e.frame);
+	if(e.frame != -1) {
+		if(e.frame_negative !=-1 && v1<0)
+			sb.add(":%1i:", e.frame_negative);
+		else
+			sb.add(":%1i:", e.frame);
+	}
 	if(format)
 		sb.add(format, v1, v2, v3);
 	else {
 		sb.add("%1i", v1);
 		if(v2)
-			sb.add("/%1i", v2);
+			sb.add("%+1i", v2);
 		if(v3)
-			sb.add("%+1i", v3);
+			sb.add("/%1i", v3);
 	}
 	hiliting_object(&e, width);
 	field(temp, width);
@@ -140,7 +144,7 @@ static void field_date() {
 	paint_vborder();
 }
 
-static void paint_cost(const costa& v, const costa& u, const costa& n) {
+static void paint_cost(const costa& v, const costa& n, const costa& u) {
 	field_date();
 	field(Resources, "%1i/%2i", 80, v, n, u);
 	field(Influence, "%1i/%2i", 80, v, n, u);

@@ -1,8 +1,8 @@
 #include "statable.h"
+#include "feat.h"
 
 #pragma once
 
-struct landscapei : nameable {
-	bool		water;
-	costa		effect, upkeep;
+struct landscapei : nameable, featable {
+	costa		income, upkeep;
 };

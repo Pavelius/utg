@@ -1,4 +1,3 @@
-#include "building.h"
 #include "player.h"
 #include "province.h"
 #include "script.h"
@@ -83,17 +82,8 @@ void neightbors::selectn(const provincei* province) {
 	}
 }
 
-int provincei::getsites() const {
-	auto count = 0;
-	for(auto& e : bsdata<site>()) {
-		if(e.province == this)
-			count++;
-	}
-	return count;
-}
-
 void provincei::add(costn v, int value) {
-	effect[v] += value;
+	income[v] += value;
 }
 
 void provincei::explore(int value) {

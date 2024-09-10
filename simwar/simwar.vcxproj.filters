@@ -45,9 +45,6 @@
     <ClCompile Include="log_text.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="tag.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="main_util.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -119,6 +116,9 @@
     <Text Include="locale\ru\UnknownNames.txt">
       <Filter>Locale</Filter>
     </Text>
+    <Text Include="locale\ru\Calendar.txt">
+      <Filter>Locale</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="statable.h">
@@ -143,9 +143,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="calendar.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="tag.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="costitem.h">

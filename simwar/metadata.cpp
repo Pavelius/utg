@@ -8,7 +8,6 @@
 #include "stringbuilder.h"
 #include "script.h"
 #include "tactic.h"
-#include "tag.h"
 #include "variant.h"
 
 bool fntestlist(int index, int bonus);
@@ -35,15 +34,19 @@ BSMETA(cardi) = {
 	BSREQ(count),
 	BSDST(effect, costi),
 	BSREQ(deck),
-	BSFLG(tags, tagi),
+	BSFLG(feat, feati),
 	{}};
 BSMETA(decki) = {
 	BSREQ(id),
 	{}};
+BSMETA(feati) = {
+	BSREQ(id),
+	{}};
 BSMETA(landscapei) = {
-	BSREQ(id), BSREQ(water),
-	BSDST(effect, costi),
+	BSREQ(id),
+	BSDST(income, costi),
 	BSDST(upkeep, costi),
+	BSFLG(feat, feati),
 	{}};
 BSMETA(neighbor) = {
 	BSENM(n1, provincei),
@@ -63,6 +66,7 @@ BSMETA(provincei) = {
 	BSREQ(player),
 	BSREQ(position),
 	BSREQ(landscape),
+	BSDST(income, costi),
 	BSREQ(builded), BSREQ(recruit),
 	{}};
 BSMETA(site) = {
@@ -72,8 +76,10 @@ BSMETA(site) = {
 BSMETA(sitei) = {
 	BSREQ(id),
 	BSREQ(resid),
-	BSREQ(effect),
-	BSREQ(upkeep),
+	BSDST(income, costi),
+	BSDST(upkeep, costi),
+	BSDST(cost, costi),
+	BSFLG(feat, feati),
 	{}};
 BSMETA(tactici) = {
 	BSREQ(id),
@@ -95,7 +101,7 @@ BSDATA(varianti) = {
 	{"Province", VAR(provincei, 1), ftinfo<provincei>},
 	{"RandomList", VAR(randomizeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
-	{"Site", VAR(sitei, 1)},
+	{"Site", VAR(sitei, 1), 0, 0, fnscript<sitei>},
 	{"Tactic", VAR(tactici, 1)},
 	{"Tag", VAR(tagi, 1)},
 };

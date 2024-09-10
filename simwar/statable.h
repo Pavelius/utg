@@ -11,6 +11,7 @@ enum costn : unsigned char {
 };
 struct costi : nameable {
 	int			frame = -1;
+	int			frame_negative = -1;
 };
 typedef short costa[Limit + 1];
 

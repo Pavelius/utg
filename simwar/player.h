@@ -9,7 +9,7 @@
 struct playeri : entityi {
 	deck			cards;
 	int				shield;
-	costa			resources, upgrade, income, faith;
+	costa			resources, income, upgrade, faith;
 	variants		start;
 	provincef		visibility;
 	int				getindex() const;

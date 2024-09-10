@@ -77,7 +77,7 @@ static bool is_coastal(int bonus) {
 }
 
 static bool canrecruit(int bonus) {
-	return province->recruit < province->effect[Recruit];
+	return province->recruit < province->income[Recruit];
 }
 
 static bool is_province_player(const void* pv) {
@@ -89,7 +89,9 @@ static bool is_province_ocean(const void* pv) {
 }
 
 static bool canbuild(int bonus) {
-	if(have_exist(lastsite))
+	if(!last_site->is(Building))
+		return false;
+	if(have_exist(last_site))
 		return false;
 	return true;
 }
@@ -101,7 +103,7 @@ static void payunit(int bonus) {
 
 static void add_site(int bonus) {
 	auto p = bsdata<site>::add();
-	p->type = lastsite;
+	p->type = last_site;
 	p->province = province;
 }
 
@@ -182,7 +184,7 @@ static int get_buildings_effect(const sitei* b, costn v) {
 	auto result = 0;
 	for(auto& e : bsdata<site>()) {
 		if(e.province && e.province->player == player && e.type == b)
-			result += e.type->effect[v];
+			result += e.type->income[v];
 	}
 	return get_value(b->id, result);
 }
@@ -194,40 +196,20 @@ static int get_buildings_effect(costn v) {
 	return result;
 }
 
-static int get_units_upkeep(costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player == player)
-			result += e.getunits() * units_gold_upkeep;
-	}
-	return get_value("UnitsUpkeep", -result);
-}
-
 static int get_provinces_income(costn v) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
 		if(e.player == player)
-			result += e.landscape->effect[v] + e.effect[v];
+			result += e.landscape->income[v];
 	}
 	return get_value("ProvincesIncome", result);
-}
-
-static int get_provinces_upkeep(costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player == player)
-			result += e.landscape->upkeep[v];
-	}
-	return get_value("ProvincesUpkeep", -result);
 }
 
 int get_income(costn v) {
 	auto result = get_provinces_income(v);
 	result += get_buildings_effect(v);
 	result += get_value("FaithBonus", player->faith[v]);
-	result += get_provinces_upkeep(v);
 	result += get_buildings_upkeep(v);
-	result += get_units_upkeep(v);
 	return result;
 }
 
@@ -248,14 +230,18 @@ int get_income_modified(costn v, int result) {
 	return result;
 }
 
-void update_provinces() {
+static void update_provinces() {
 	for(auto& e : bsdata<provincei>()) {
-		memcpy(e.effect, e.landscape->effect, sizeof(e.effect));
+		memcpy(e.income, e.landscape->income, sizeof(e.income));
 		e.buildings = 0;
+		e.sites = 0;
 	}
 	for(auto& e : bsdata<site>()) {
-		e.province->buildings++;
-		addvalue(e.province->effect, e.type->effect);
+		if(e.is(Building))
+			e.province->buildings++;
+		else
+			e.province->sites++;
+		addvalue(e.province->income, e.type->income);
 	}
 }
 
@@ -302,20 +288,20 @@ static void gain_income(int bonus) {
 static void random_site(int bonus) {
 	collection<sitei> source;
 	source.select();
-	lastsite = source.random();
+	last_site = source.random();
 }
 
 static void build(int bonus) {
-	if(!have_exist(lastsite)) {
-		auto p = bsdata<site>::add();
-		p->type = lastsite;
-		p->province = province;
-	}
+	if(have_exist(last_site))
+		return;
+	auto p = bsdata<site>::add();
+	p->type = last_site;
+	p->province = province;
 	update_player(0);
 }
 
 template<> void fnscript<sitei>(int value, int bonus) {
-	lastsite = bsdata<sitei>::elements + value;
+	last_site = bsdata<sitei>::elements + value;
 	if(bonus > 0)
 		build(bonus);
 }
@@ -327,8 +313,8 @@ static void choose_troops() {
 	pushvalue push_image(answers::resid, "Units");
 	while(!draw::isnext()) {
 		an.clear();
-		if(province->recruit < province->effect[Recruit])
-			an.add(recruit_units, getnm("Recruit"), province->effect[Recruit] - province->recruit);
+		if(province->recruit < province->income[Recruit])
+			an.add(recruit_units, getnm("Recruit"), province->income[Recruit] - province->recruit);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)
 			return;
@@ -338,31 +324,33 @@ static void choose_troops() {
 }
 
 static void choose_build(int bonus) {
+	auto push_last = last_site;
 	an.clear();
 	for(auto& e : bsdata<sitei>()) {
-		lastsite = &e;
+		last_site = &e;
 		if(!canbuild(0))
 			continue;
 		if(!isenought(player->resources, e.cost))
 			continue;
-		an.add(lastsite, getnm(lastsite->id));
+		an.add(last_site, getnm(last_site->id));
 	}
-	lastsite = (sitei*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
+	last_site = push_last;
+	last_site = (sitei*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
 }
 
 static void paycost(int bonus) {
-	subvalue(player->resources, lastsite->cost);
+	subvalue(player->resources, last_site->cost);
 }
 
 static void add_building() {
-	auto push_building = lastsite;
+	auto push_building = last_site;
 	choose_build(0);
-	if(lastsite) {
+	if(last_site) {
 		paycost(0);
 		build(0);
 		province->builded++;
 	}
-	lastsite = push_building;
+	last_site = push_building;
 }
 
 static void remove_building(site* pb) {
@@ -380,7 +368,7 @@ static void choose_buildings() {
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
 		auto maximum_build = 1;
-		if(province->buildings < province->effect[Size] && province->builded < maximum_build)
+		if(province->buildings < province->income[Size] && province->builded < maximum_build)
 			an.add(add_building, getnm("AddBuilding"), maximum_build - province->builded);
 		auto result = an.choose(0, getnm("Cancel"), 1);
 		if(!result)
@@ -724,8 +712,8 @@ BSDATA(script) = {
 	{"Build", build, canbuild},
 	{"Coastal", 0, is_coastal},
 	{"GainIncome", gain_income},
-	{"Recruit", recruit},
 	{"RandomSite", random_site},
+	{"Recruit", recruit},
 	{"ShowMessages", show_messages},
 	{"Unit", add_unit},
 	{"UpdatePlayer", update_player},
@@ -841,13 +829,29 @@ static void update_province_per_turn() {
 	}
 }
 
-static void update_player_per_turn() {
+static bool is_per_turn(costn v) {
+	switch(v) {
+	case Resources:
+	case Influence:
+		return true;
+	default:
+		return false;
+	}
+}
+
+static void clear_per_turn_resources() {
+	for(auto i = Resources; i <= Limit; i = (costn)(i + 1)) {
+		if(is_per_turn(i)) {
+			for(auto& e : bsdata<playeri>())
+				e.resources[i] = 0;
+		}
+	}
 }
 
 void next_turn() {
 	game.turn++;
 	update_province_per_turn();
-	update_player_per_turn();
+	clear_per_turn_resources();
 	update_player(0);
 	gain_income(0);
 	draw::setnext(show_messages);
