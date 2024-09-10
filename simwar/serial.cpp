@@ -14,34 +14,6 @@ static void serial(archive& f, const char* id, bool clean_all = false) {
 	serial_object(f, *p->source, p->metadata);
 }
 
-static unsigned long metadata_checksum() {
-	unsigned long result = 0;
-	int i = 0;
-	for(auto& e : bsdata<varianti>()) {
-		if(!e.metadata)
-			continue;
-		for(auto p = e.metadata; *p; p++) {
-			result += (i++) * p->count;
-			result += (i++) * p->offset;
-			result += (i++) * p->size;
-			result += (i++) * p->subtype;
-		}
-	}
-	return result;
-}
-
-static bool valid_checksum(archive& f) {
-	unsigned long v1 = metadata_checksum(), v2 = 0;
-	if(f.writemode)
-		f.set(v1);
-	else {
-		f.set(v2);
-		if(v1 != v2)
-			return false;
-	}
-	return true;
-}
-
 static bool serial_game_file(const char* id, bool write) {
 	char temp[260]; stringbuilder sb(temp); sb.add("saves/%1.sav", id);
 	io::file file(temp, write ? StreamWrite : StreamRead);
@@ -50,7 +22,7 @@ static bool serial_game_file(const char* id, bool write) {
 	archive a(file, write);
 	if(!a.signature("SAV"))
 		return false;
-	if(!valid_checksum(a))
+	if(!a.signature(bsreq_signature()))
 		return false;
 	a.set(game);
 	serial(a, "Player");

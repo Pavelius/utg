@@ -99,3 +99,19 @@ const varianti* find_variant(const void* object) {
 	}
 	return 0;
 }
+
+unsigned long bsreq_signature() {
+	unsigned long result = 0;
+	int i = 1;
+	for(auto& e : bsdata<varianti>()) {
+		if(!e.metadata)
+			continue;
+		for(auto p = e.metadata; *p; p++) {
+			result += (i++) * p->count;
+			// result += (i++) * p->offset;
+			result += (i++) * p->size;
+			result += (i++) * p->subtype;
+		}
+	}
+	return result;
+}

@@ -1,2 +1,7 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `Resources`
+ Define translation for `December`
+ Define translation for `July`
+ Define translation for `June`
+ Define translation for `November`
+ Define translation for `October`
+ Define translation for `September`

@@ -15,6 +15,18 @@ bool archive::signature(const char* id) {
 	return true;
 }
 
+bool archive::signature(unsigned long value) {
+	unsigned long v2 = 0;
+	if(writemode)
+		set(value);
+	else {
+		set(v2);
+		if(value != v2)
+			return false;
+	}
+	return true;
+}
+
 bool archive::version(short major, short minor) {
 	short major_reader = major;
 	short minor_reader = minor;
