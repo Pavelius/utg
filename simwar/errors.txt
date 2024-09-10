@@ -1,4 +1,6 @@
-﻿Error in file `UnknownNames.txt`:
+﻿Error in file `rules/Basic.txt`:
+ Line 21: Not find data type for `Building`
+Error in file `UnknownNames.txt`:
  Define translation for `December`
  Define translation for `July`
  Define translation for `June`

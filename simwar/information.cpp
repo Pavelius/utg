@@ -1,5 +1,4 @@
 #include "army.h"
-#include "building.h"
 #include "collection.h"
 #include "costitem.h"
 #include "draw.h"
@@ -9,6 +8,7 @@
 #include "player.h"
 #include "province.h"
 #include "pushvalue.h"
+#include "site.h"
 #include "stringbuilder.h"
 #include "script.h"
 #include "statable.h"
@@ -84,7 +84,7 @@ static void add_line(stringbuilder& sbo, const char* id, const costa& source) {
 	sbo.add(temp);
 }
 
-static void add_description(const buildingi* p, stringbuilder& sb) {
+static void add_description(const sitei* p, stringbuilder& sb) {
 	sb.addn("##%1", getnm(p->id));
 	auto need_line = true;
 	for(auto v = (costn)0; v <= Limit; v = (costn)(v + 1)) {
@@ -100,15 +100,15 @@ static void add_description(const buildingi* p, stringbuilder& sb) {
 		}
 		sb.adds(pd, n);
 	}
-	for(auto v : p->conditions) {
-		auto id = v.getid();
-		if(!id)
-			continue;
-		auto pd = getnme(ids(id, "Condition"));
-		if(!pd)
-			continue;
-		sb.adds(pd);
-	}
+	//for(auto v : p->conditions) {
+	//	auto id = v.getid();
+	//	if(!id)
+	//		continue;
+	//	auto pd = getnme(ids(id, "Condition"));
+	//	if(!pd)
+	//		continue;
+	//	sb.adds(pd);
+	//}
 }
 
 static void add_description(const char* id, stringbuilder& sb) {
@@ -135,18 +135,16 @@ template<> void ftinfo<provincei>(const void* object, stringbuilder& sb) {
 	add_line_upkeep(p, sb);
 }
 
-template<> void ftinfo<buildingi>(const void* object, stringbuilder& sb) {
-	auto p = (buildingi*)object;
+template<> void ftinfo<sitei>(const void* object, stringbuilder& sb) {
+	auto p = (sitei*)object;
 	add_description(p, sb);
 	sb.addn("---");
 	add_line(sb, "Cost", p->cost);
 	add_line(sb, "Upkeep", p->upkeep);
-	if(p->upgrade)
-		sb.addn("%Exchange %1", p->upgrade->getname());
 }
 
-template<> void ftinfo<building>(const void* object, stringbuilder& sb) {
-	auto p = (building*)object;
+template<> void ftinfo<site>(const void* object, stringbuilder& sb) {
+	auto p = (site*)object;
 	add_description(p->type, sb);
 	sb.addn("---");
 	add_line(sb, "Upkeep", p->type->upkeep);

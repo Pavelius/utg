@@ -6,6 +6,7 @@
 #include "draw_strategy.h"
 #include "game.h"
 #include "player.h"
+#include "site.h"
 
 using namespace draw;
 
@@ -30,7 +31,7 @@ static bool troops_in_province(const void* object) {
 }
 
 static bool building_in_province(const void* object) {
-	return ((building*)object)->province == province;
+	return ((site*)object)->province == province;
 }
 
 static bool troops_player(const void* object) {

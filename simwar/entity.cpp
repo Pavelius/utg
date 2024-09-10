@@ -1,7 +1,7 @@
-#include "building.h"
 #include "entity.h"
 #include "player.h"
 #include "province.h"
+#include "site.h"
 
 const landscapei* entityi::getlandscape() const {
 	if(bsdata<landscapei>::have(this))
@@ -21,16 +21,16 @@ const cardi* entityi::getcard() const {
 const short* entityi::getupkeep() const {
 	if(bsdata<landscapei>::have(this))
 		return ((landscapei*)this)->upkeep;
-	else if(bsdata<buildingi>::have(this))
-		return ((buildingi*)this)->upkeep;
+	else if(bsdata<sitei>::have(this))
+		return ((sitei*)this)->upkeep;
 	return 0;
 }
 
 const short* entityi::geteffect() const {
 	if(bsdata<playeri>::have(this))
 		return ((landscapei*)this)->effect;
-	else if(bsdata<buildingi>::have(this))
-		return ((buildingi*)this)->effect;
+	else if(bsdata<sitei>::have(this))
+		return ((sitei*)this)->effect;
 	else if(bsdata<provincei>::have(this))
 		return ((provincei*)this)->effect;
 	return 0;

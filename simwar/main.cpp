@@ -1,7 +1,7 @@
 #include "answers.h"
 #include "army.h"
 #include "bsreq.h"
-#include "building.h"
+#include "site.h"
 #include "collection.h"
 #include "costitem.h"
 #include "draw.h"

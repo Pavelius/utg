@@ -1,5 +1,6 @@
 #include "deck.h"
 #include "statable.h"
+#include "province.h"
 #include "tactic.h"
 #include "variant.h"
 

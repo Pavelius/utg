@@ -1,7 +1,6 @@
 #include "action.h"
 #include "answers.h"
 #include "army.h"
-#include "building.h"
 #include "collection.h"
 #include "costitem.h"
 #include "draw.h"
@@ -16,6 +15,7 @@
 #include "rand.h"
 #include "randomizer.h"
 #include "script.h"
+#include "site.h"
 #include "statable.h"
 
 void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
@@ -47,16 +47,6 @@ static void focus(const provincei* p) {
 		slide_camera(p->position);
 }
 
-static bool build_upgrade() {
-	for(auto& e : bsdata<building>()) {
-		if(e.province == province && lastbuilding->upgrade == e.type) {
-			e.type = lastbuilding;
-			return true;
-		}
-	}
-	return false;
-}
-
 static void* choose_province_header(const char* title) {
 	auto push_header = answers::header;
 	answers::header = province->getname();
@@ -65,34 +55,9 @@ static void* choose_province_header(const char* title) {
 	return pu;
 }
 
-static bool have_builded(const buildingi* pv) {
-	for(auto& e : bsdata<building>()) {
-		if(e.province == province && e.type == pv)
-			return true;
-	}
-	return false;
-}
-
 static bool have_exist(const sitei* pv) {
 	for(auto& e : bsdata<site>()) {
 		if(e.province == province && e.type == pv)
-			return true;
-	}
-	return false;
-}
-
-static bool have_upgraded(const buildingi* pb, const buildingi* p) {
-	while(pb->upgrade) {
-		if(pb->upgrade == p)
-			return true;
-		pb = pb->upgrade;
-	}
-	return false;
-}
-
-static bool have_upgraded(const buildingi* p) {
-	for(auto& e : bsdata<building>()) {
-		if(e.province == province && have_upgraded(e.type, p))
 			return true;
 	}
 	return false;
@@ -124,16 +89,7 @@ static bool is_province_ocean(const void* pv) {
 }
 
 static bool canbuild(int bonus) {
-	if(have_builded(lastbuilding))
-		return false;
-	if(lastbuilding->upgrade) {
-		if(!have_builded(lastbuilding->upgrade))
-			return false;
-	} else {
-		if(have_upgraded(lastbuilding))
-			return false;
-	}
-	if(lastbuilding->conditions && !lastbuilding->isallow())
+	if(have_exist(lastsite))
 		return false;
 	return true;
 }
@@ -192,11 +148,11 @@ static void choose_province() {
 }
 
 static bool player_building(const void* pv) {
-	return ((building*)pv)->province && ((building*)pv)->province->player == player;
+	return ((site*)pv)->province && ((site*)pv)->province->player == player;
 }
 
 static bool player_province_building(const void* pv) {
-	return ((building*)pv)->province == province;
+	return ((site*)pv)->province == province;
 }
 
 static void add_answers(fnevent proc, const char* id, int count, const char* piece_id = 0) {
@@ -215,16 +171,16 @@ static void add_sites(fnevent proc, int count, int explore) {
 
 static int get_buildings_upkeep(costn v) {
 	auto result = 0;
-	for(auto& e : bsdata<building>()) {
+	for(auto& e : bsdata<site>()) {
 		if(e.province && e.province->player == player)
 			result += e.type->upkeep[v];
 	}
 	return get_value("BuildingsUpkeep", -result);
 }
 
-static int get_buildings_effect(const buildingi* b, costn v) {
+static int get_buildings_effect(const sitei* b, costn v) {
 	auto result = 0;
-	for(auto& e : bsdata<building>()) {
+	for(auto& e : bsdata<site>()) {
 		if(e.province && e.province->player == player && e.type == b)
 			result += e.type->effect[v];
 	}
@@ -233,7 +189,7 @@ static int get_buildings_effect(const buildingi* b, costn v) {
 
 static int get_buildings_effect(costn v) {
 	auto result = 0;
-	for(auto& e : bsdata<buildingi>())
+	for(auto& e : bsdata<sitei>())
 		result += get_buildings_effect(&e, v);
 	return result;
 }
@@ -297,7 +253,7 @@ void update_provinces() {
 		memcpy(e.effect, e.landscape->effect, sizeof(e.effect));
 		e.buildings = 0;
 	}
-	for(auto& e : bsdata<building>()) {
+	for(auto& e : bsdata<site>()) {
 		e.province->buildings++;
 		addvalue(e.province->effect, e.type->effect);
 	}
@@ -350,20 +306,18 @@ static void random_site(int bonus) {
 }
 
 static void build(int bonus) {
-	if(!build_upgrade()) {
-		auto p = bsdata<building>::add();
-		p->type = lastbuilding;
+	if(!have_exist(lastsite)) {
+		auto p = bsdata<site>::add();
+		p->type = lastsite;
 		p->province = province;
 	}
 	update_player(0);
 }
 
-template<> void fnscript<buildingi>(int value, int bonus) {
-	lastbuilding = bsdata<buildingi>::elements + value;
-	if(bonus > 0) {
+template<> void fnscript<sitei>(int value, int bonus) {
+	lastsite = bsdata<sitei>::elements + value;
+	if(bonus > 0)
 		build(bonus);
-	} else if(bonus < 0) {
-	}
 }
 
 static void recruit_units() {
@@ -385,33 +339,33 @@ static void choose_troops() {
 
 static void choose_build(int bonus) {
 	an.clear();
-	for(auto& e : bsdata<buildingi>()) {
-		lastbuilding = &e;
+	for(auto& e : bsdata<sitei>()) {
+		lastsite = &e;
 		if(!canbuild(0))
 			continue;
 		if(!isenought(player->resources, e.cost))
 			continue;
-		an.add(lastbuilding, getnm(lastbuilding->id));
+		an.add(lastsite, getnm(lastsite->id));
 	}
-	lastbuilding = (buildingi*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
+	lastsite = (sitei*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
 }
 
 static void paycost(int bonus) {
-	subvalue(player->resources, lastbuilding->cost);
+	subvalue(player->resources, lastsite->cost);
 }
 
 static void add_building() {
-	auto push_building = lastbuilding;
+	auto push_building = lastsite;
 	choose_build(0);
-	if(lastbuilding) {
+	if(lastsite) {
 		paycost(0);
 		build(0);
 		province->builded++;
 	}
-	lastbuilding = push_building;
+	lastsite = push_building;
 }
 
-static void remove_building(building* pb) {
+static void remove_building(site* pb) {
 	if(!yesno(getnm("DoYouWantRemoveBuilding"), pb->type->getname()))
 		return;
 	pb->clear();
@@ -422,7 +376,7 @@ static void choose_buildings() {
 	while(!draw::isnext()) {
 		update_header("%1 - %Settlements", province->getname());
 		an.clear();
-		collection<building> buildings; buildings.select(player_province_building);
+		collection<site> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
 		auto maximum_build = 1;
@@ -431,8 +385,8 @@ static void choose_buildings() {
 		auto result = an.choose(0, getnm("Cancel"), 1);
 		if(!result)
 			break;
-		if(bsdata<building>::have(result))
-			remove_building((building*)result);
+		if(bsdata<site>::have(result))
+			remove_building((site*)result);
 		else
 			standart_result(result);
 	}
@@ -552,7 +506,7 @@ static bool troops_mobilization(int value, int defence) {
 }
 
 static void add_settlement_options() {
-	collection<building> buildings; buildings.select(player_province_building);
+	collection<site> buildings; buildings.select(player_province_building);
 	add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
 }
 
@@ -617,34 +571,6 @@ bool fntestlist(int index, int bonus) {
 			return true;
 	}
 	return false;
-}
-
-bool is_oneof(const sitei* p, variants& conditions) {
-	for(auto v : conditions) {
-		if(p->isallow(v))
-			return true;
-	}
-	return false;
-}
-
-bool sitei::isallow(variant v) const {
-	if(v.iskind<sitei>())
-		return have_exist(bsdata<sitei>::elements + v.value);
-	else if(v.iskind<script>())
-		return fntest<script>(v.value, v.counter);
-	else if(v.iskind<landscapei>())
-		return province->landscape == (bsdata<landscapei>::elements + v.value);
-	else if(v.iskind<listi>())
-		return is_oneof(this, bsdata<listi>::elements[v.value].elements);
-	return true;
-}
-
-bool sitei::isallow() const {
-	for(auto v : conditions) {
-		if(!isallow(v))
-			return false;
-	}
-	return true;
 }
 
 static void battle_stage(stringbuilder& sb, army& attacker, army& defender, costn ability) {

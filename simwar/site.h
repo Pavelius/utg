@@ -6,9 +6,6 @@
 struct sitei : nameable {
 	const char*		resid;
 	costa			effect, upkeep, cost;
-	variants		conditions;
-	bool			isallow(variant v) const;
-	bool			isallow() const;
 };
 struct site {
 	const sitei*	type;

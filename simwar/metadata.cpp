@@ -1,7 +1,7 @@
 #include "action.h"
 #include "card.h"
 #include "bsreq.h"
-#include "building.h"
+#include "site.h"
 #include "list.h"
 #include "player.h"
 #include "randomizer.h"
@@ -16,8 +16,6 @@ bool fntestlist(int index, int bonus);
 NOBSDATA(point)
 
 BSDATAC(cardi, 512)
-BSDATAC(buildingi, 128)
-BSDATAC(building, 1024)
 BSDATAC(landscapei, 32)
 BSDATAC(neighbor, 1024)
 BSDATAC(playeri, 16)
@@ -28,18 +26,6 @@ BSDATAC(tactici, 64)
 
 BSMETA(actioni) = {
 	BSREQ(id),
-	{}};
-BSMETA(buildingi) = {
-	BSREQ(id),
-	BSDST(effect, costi),
-	BSREQ(upgrade),
-	BSDST(upkeep, costi),
-	BSDST(cost, costi),
-	BSREQ(conditions),
-	{}};
-BSMETA(building) = {
-	BSREQ(type),
-	BSREQ(province),
 	{}};
 BSMETA(costi) = {
 	BSREQ(id),
@@ -87,7 +73,6 @@ BSMETA(sitei) = {
 	BSREQ(id),
 	BSREQ(resid),
 	BSREQ(effect),
-	BSREQ(conditions),
 	BSREQ(upkeep),
 	{}};
 BSMETA(tactici) = {
@@ -101,13 +86,11 @@ BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(costi, 1), ftinfo<costi>, 0, fnscript<costi>},
 	{"Action", VAR(actioni, 1)},
-	{"Building", VAR(buildingi, 1), ftinfo<buildingi>, 0, fnscript<buildingi>},
 	{"Card", VAR(cardi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
 	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
-	{"PlayerBuilding", VAR(building, 0), ftinfo<building>},
 	{"PlayerSite", VAR(site, 0)},
 	{"Province", VAR(provincei, 1), ftinfo<provincei>},
 	{"RandomList", VAR(randomizeri, 1)},

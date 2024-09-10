@@ -27,10 +27,7 @@ static bool serial_game_file(const char* id, bool write) {
 	a.set(game);
 	serial(a, "Player");
 	serial(a, "Province");
-	serial(a, "Hero");
-	serial(a, "PlayerBuilding", true);
 	serial(a, "PlayerSite", true);
-	serial(a, "Troop", true);
 	return true;
 }
 

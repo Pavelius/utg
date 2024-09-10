@@ -151,11 +151,11 @@
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="army.cpp" />
-    <ClCompile Include="building.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="costitem.cpp" />
     <ClCompile Include="deck.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="feat.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="interface.cpp" />
@@ -189,12 +189,12 @@
     <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="army.h" />
-    <ClInclude Include="building.h" />
     <ClInclude Include="calendar.h" />
     <ClInclude Include="card.h" />
     <ClInclude Include="costitem.h" />
     <ClInclude Include="deck.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="feat.h" />
     <ClInclude Include="moveorder.h" />
     <ClInclude Include="report.h" />
     <ClInclude Include="statable.h" />

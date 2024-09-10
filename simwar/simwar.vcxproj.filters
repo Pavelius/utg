@@ -27,9 +27,6 @@
     <ClCompile Include="statable.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="building.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="deck.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="feat.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="rules\Basic.txt">
@@ -122,9 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="statable.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="building.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="province.h">
@@ -179,6 +176,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="deck.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="feat.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
