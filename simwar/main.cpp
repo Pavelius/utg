@@ -51,12 +51,12 @@ static void start_game() {
 	bsreq::read("maps/silentseas.txt");
 	if(log::errors > 0)
 		return;
-	if(game.read("autosave"))
-		draw::setnext(show_messages);
-	else {
+	//if(false && game.read("autosave"))
+	//	draw::setnext(show_messages);
+	//else {
 		initialize_scene();
 		draw::setnext(next_turn);
-	}
+//	}
 }
 
 void initialize_game() {

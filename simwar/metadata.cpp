@@ -77,7 +77,6 @@ BSMETA(provincei) = {
 	BSREQ(player),
 	BSREQ(position),
 	BSREQ(landscape),
-	BSDST(income, costi),
 	BSREQ(builded), BSREQ(recruit),
 	{}};
 BSMETA(site) = {

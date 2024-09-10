@@ -262,10 +262,10 @@ static void paint_province() {
 	if(p->player) {
 		paint_hilite_province(p->player->shield);
 		if(n)
-			show_banner(16, 1, str("%1i", n));
+			show_banner(14 + n, 1, str("%1i", n));
 	} else {
 		if(n)
-			show_banner(16, 0, str("%1i", n));
+			show_banner(14 + n, 0, str("%1i", n));
 	}
 	if(show_names)
 		stroke_texth2(p->getname());

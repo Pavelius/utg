@@ -17,25 +17,22 @@ struct provincei : entityi {
 	playeri*			player;
 	point				position;
 	const landscapei*	landscape;
-	costa				current, income;
-	char				buildings, recruit, builded;
+	costa				effect;
+	char				buildings, recruit, builded, units;
 	void				add(costn v, int value);
 	void				explore(int value);
 	bool				iswater() const { return landscape->water; }
 	bool				isvisible() const;
 	void				makewave() const;
-	int					get(costn v) const { return current[v]; }
-	int					getbuildings() const;
+	int					get(costn v) const { return effect[v]; }
 	int					getcost() const;
 	int					getindex() const { return this - bsdata<provincei>::elements; }
-	void				getinfo(stringbuilder& sb) const;
 	int					getsites() const;
-	int					getstrenght() const { return current[Units]; }
-	int					getunits() const;
+	int					getstrenght() const { return get(Strenght) + getunits(); }
+	int					getunits() const { return units; }
 	void				paint() const;
 	void				setblocked() const;
 	void				setzerocost() const;
-	void				update();
 };
 struct moveable {
 	playeri*			player;

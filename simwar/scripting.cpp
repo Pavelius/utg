@@ -112,7 +112,7 @@ static bool is_coastal(int bonus) {
 }
 
 static bool canrecruit(int bonus) {
-	return province->recruit < province->current[Recruit];
+	return province->recruit < province->effect[Recruit];
 }
 
 static bool is_province_player(const void* pv) {
@@ -143,10 +143,6 @@ static void payunit(int bonus) {
 	subvalue(player->resources, cost);
 }
 
-static void recruit() {
-	province->current[Units]++;
-}
-
 static void add_site(int bonus) {
 	auto p = bsdata<site>::add();
 	p->type = lastsite;
@@ -154,8 +150,10 @@ static void add_site(int bonus) {
 }
 
 static void recruit(int bonus) {
-	for(auto i = 0; i < bonus; i++)
-		recruit();
+	bonus += province->units;
+	if(bonus < 0)
+		bonus = 0;
+	province->units = bonus;
 }
 
 void add_neutral(const char* id) {
@@ -253,7 +251,7 @@ static int get_provinces_income(costn v) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
 		if(e.player == player)
-			result += e.landscape->effect[v] + e.income[v];
+			result += e.landscape->effect[v] + e.effect[v];
 	}
 	return get_value("ProvincesIncome", result);
 }
@@ -294,28 +292,15 @@ int get_income_modified(costn v, int result) {
 	return result;
 }
 
-static void update_provinces() {
-	for(auto& e : bsdata<provincei>())
-		e.update();
-	for(auto& e : bsdata<building>())
-		addvalue(e.province->current, e.type->effect);
-	//for(auto& e : bsdata<troop>()) {
-	//	if(e.moveto && e.player == player) {
-	//		if(e.moveto->player != player)
-	//			e.moveto->attack += e.type->effect[Strenght];
-	//	} else if(e.province)
-	//		e.province->defend += e.type->effect[Strenght];
-	//}
-	//for(auto& e : bsdata<heroi>()) {
-	//	if(!e.province)
-	//		continue;
-	//	if(e.player == player) {
-	//		if(e.province->player == player)
-	//			e.province->defend += e.get(Strenght);
-	//		else
-	//			e.province->attack += e.get(Strenght);
-	//	}
-	//}
+void update_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		memcpy(e.effect, e.landscape->effect, sizeof(e.effect));
+		e.buildings = 0;
+	}
+	for(auto& e : bsdata<building>()) {
+		e.province->buildings++;
+		addvalue(e.province->effect, e.type->effect);
+	}
 }
 
 static void mark_player_provinces() {
@@ -388,8 +373,8 @@ static void choose_troops() {
 	pushvalue push_image(answers::resid, "Units");
 	while(!draw::isnext()) {
 		an.clear();
-		if(province->recruit < province->current[Recruit])
-			an.add(recruit_units, getnm("Recruit"), province->current[Recruit] - province->recruit);
+		if(province->recruit < province->effect[Recruit])
+			an.add(recruit_units, getnm("Recruit"), province->effect[Recruit] - province->recruit);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)
 			return;
@@ -441,7 +426,7 @@ static void choose_buildings() {
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
 		auto maximum_build = 1;
-		if(province->buildings < province->current[Size] && province->builded < maximum_build)
+		if(province->buildings < province->effect[Size] && province->builded < maximum_build)
 			an.add(add_building, getnm("AddBuilding"), maximum_build - province->builded);
 		auto result = an.choose(0, getnm("Cancel"), 1);
 		if(!result)
@@ -805,10 +790,7 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 }
 
 static void add_unit(int bonus) {
-	bonus += province->current[Units];
-	if(bonus < 0)
-		bonus = 0;
-	province->current[Units] = bonus;
+	recruit(bonus);
 }
 
 BSDATA(script) = {

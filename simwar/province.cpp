@@ -83,15 +83,6 @@ void neightbors::selectn(const provincei* province) {
 	}
 }
 
-int provincei::getbuildings() const {
-	auto count = 0;
-	for(auto& e : bsdata<building>()) {
-		if(e.province == this)
-			count++;
-	}
-	return count;
-}
-
 int provincei::getsites() const {
 	auto count = 0;
 	for(auto& e : bsdata<site>()) {
@@ -101,22 +92,11 @@ int provincei::getsites() const {
 	return count;
 }
 
-int provincei::getunits() const {
-	return current[Units];
-}
-
 void provincei::add(costn v, int value) {
-	income[v] += value;
+	effect[v] += value;
 }
 
 void provincei::explore(int value) {
-}
-
-void provincei::update() {
-	memcpy(current, income, sizeof(current));
-	addvalue(current, landscape->effect);
-	subvalue(current, landscape->upkeep);
-	buildings = getbuildings();
 }
 
 bool provincei::isvisible() const {

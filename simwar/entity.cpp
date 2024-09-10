@@ -32,6 +32,6 @@ const short* entityi::geteffect() const {
 	else if(bsdata<buildingi>::have(this))
 		return ((buildingi*)this)->effect;
 	else if(bsdata<provincei>::have(this))
-		return ((provincei*)this)->income;
+		return ((provincei*)this)->effect;
 	return 0;
 }

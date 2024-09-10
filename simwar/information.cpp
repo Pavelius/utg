@@ -34,7 +34,7 @@ static void add_line(stringbuilder& sb, const provincei* province, costn v, int 
 		return;
 	switch(v) {
 	case Size:
-		sb.adds(":%1i:%2i/%3i", e.frame, province->getbuildings(), n);
+		sb.adds(":%1i:%2i/%3i", e.frame, province->buildings, n);
 		break;
 	default:
 		sb.adds(":%2i:%1i", n, e.frame);
@@ -58,11 +58,10 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 }
 
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
-	add_line(sb, 4, province->current[Resources]);
-	add_line(sb, 4, province->current[Influence]);
-	add_line(sb, 4, province->current[Gold]);
-	add_line(sb, 0, province->current[Lore]);
-	add_line(sb, 5, province->buildings);
+	add_line(sb, 4, province->get(Resources));
+	add_line(sb, 4, province->get(Influence));
+	add_line(sb, 4, province->get(Gold));
+	add_line(sb, 0, province->get(Lore));
 }
 
 void add_line(stringbuilder& sb, const costa& source) {
