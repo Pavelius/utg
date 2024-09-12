@@ -19,3 +19,5 @@ void addvalue(costa& v1, const costa& v2);
 bool isenought(const costa& v1, const costa& v2);
 bool isempthy(const costa& v);
 void subvalue(costa& v1, const costa& v2);
+
+costn pay_alternate(costn v);

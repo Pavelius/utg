@@ -27,3 +27,10 @@ SnakeUphills: Змеинное подгорье
 SouthenCoast: Южное побережье
 WesternCoast: Западное побережье
 WhiteTower: Белая башня
+
+AfflictedShores: Режущие утесы
+DiamirValley: Долина Диамира
+Lhasa: Лхасса
+NamcheBazaar: Намешский базар
+ShunnedLands: Камнистая земля
+Szczebrzeszyn: Шеребрин

@@ -1,5 +1,6 @@
 #include "army.h"
 #include "costitem.h"
+#include "moveorder.h"
 #include "player.h"
 
 void add_line(stringbuilder& sb, const costa& source);
@@ -97,7 +98,7 @@ void army::addtotal(stringbuilder& sb, costn v) const {
 
 int army::geteffect(costn v) const {
 	switch(v) {
-	case Strenght: return strenght;
+	case Strenght: return strenght + units;
 	case Sword: return casualty;
 	default: return 0;
 	}
@@ -130,6 +131,13 @@ void army::select(const provincei* province) {
 void army::select(const provincei* province, const playeri* player) {
 	if(province->player==player)
 		units = province->getunits();
+	else {
+		units = 0;
+		for(auto& e : bsdata<moveorder>()) {
+			if(e.getto() == province && e.player == player)
+				units += e.count;
+		}
+	}
 }
 
 void army::setcasualty(const army & source) {

@@ -14,7 +14,7 @@ static costitem* find_add(const char* id, int value) {
 }
 
 int get_value(const char* id, int value) {
-	if(lastcostitem) {
+	if(lastcostitem && value) {
 		auto p = find_add(id, value);
 		p->value += value;
 	}
@@ -22,6 +22,7 @@ int get_value(const char* id, int value) {
 }
 
 void add_cost_items(stringbuilder& sb) {
+	sb.clear();
 	if(!lastcostitem)
 		return;
 	for(auto& e : *lastcostitem) {

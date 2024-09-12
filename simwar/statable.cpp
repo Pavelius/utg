@@ -47,3 +47,11 @@ bool isempthy(const costa& v) {
 	}
 	return true;
 }
+
+costn pay_alternate(costn v) {
+	switch(v) {
+	case Resources: return Gold;
+	case Influence: return Gold;
+	default: return v;
+	}
+}

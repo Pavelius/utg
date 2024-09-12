@@ -8,6 +8,7 @@
 #include "game.h"
 #include "gender.h"
 #include "list.h"
+#include "moveorder.h"
 #include "report.h"
 #include "player.h"
 #include "province.h"
@@ -28,12 +29,36 @@ void update_provinces_ui();
 static int units_gold_upkeep = 3;
 static char sb_buffer[4096];
 static stringbuilder sb(sb_buffer);
-static int troops_movement;
 static int modal_result;
 static costa rewards;
+static void* answer_result;
 
 static void clear_rewards() {
 	memset(rewards, 0, sizeof(rewards));
+}
+
+static bool pay(costa& resources, const costa& cost, bool run) {
+	for(auto i = Resources; i <= Limit; i = (costn)(i + 1)) {
+		auto v = cost[i];
+		if(!v)
+			continue;
+		if(resources[i] >= cost[i]) {
+			if(run)
+				resources[i] -= cost[i];
+		} else {
+			auto v1 = pay_alternate(i);
+			if(v1 == i)
+				return false;
+			if(resources[i] + resources[v1] >= cost[i]) {
+				if(run) {
+					v -= resources[i]; resources[i] = 0;
+					resources[v1] -= v;
+				}
+			} else
+				return false;
+		}
+	}
+	return true;
 }
 
 static void update_header(const char* format, ...) {
@@ -238,16 +263,16 @@ static void end_turn() {
 	next_turn();
 }
 
-static void standart_result(void* result) {
-	if(bsdata<provincei>::have(result))
-		province = (provincei*)result;
-	else if(bsdata<actioni>::have(result)) {
-		auto p = (actioni*)result;
-		subvalue(player->resources, p->cost);
+static void standart_result() {
+	if(bsdata<provincei>::have(answer_result))
+		province = (provincei*)answer_result;
+	else if(bsdata<actioni>::have(answer_result)) {
+		auto p = (actioni*)answer_result;
+		pay(player->resources, p->cost, true);
 		p->proc();
 		update_player(0);
 	} else
-		((fnevent)result)();
+		((fnevent)answer_result)();
 }
 
 static void choose_province() {
@@ -269,7 +294,7 @@ static void add_answers(fnevent proc, const char* id) {
 static void add_answers(actioni& e) {
 	if(e.test && !e.test(province))
 		return;
-	if(e.cost > player->resources)
+	if(pay(player->resources, e.cost, false))
 		return;
 	an.add(&e, e.getname());
 }
@@ -325,7 +350,7 @@ static void choose_build(int bonus) {
 		last_site = &e;
 		if(!canbuild(0))
 			continue;
-		if(!isenought(player->resources, e.cost))
+		if(!pay(player->resources, e.cost, false))
 			continue;
 		an.add(last_site, getnm(last_site->id));
 	}
@@ -334,7 +359,7 @@ static void choose_build(int bonus) {
 }
 
 static void paycost(int bonus) {
-	subvalue(player->resources, last_site->cost);
+	pay(player->resources, last_site->cost, true);
 }
 
 static void add_building() {
@@ -354,6 +379,11 @@ static void remove_building(site* pb) {
 	pb->clear();
 }
 
+static bool choose_answer() {
+	answer_result = an.choose(0, getnm("Cancel"), 1);
+	return answer_result != 0;
+}
+
 static void choose_buildings() {
 	pushvalue push_image(answers::resid, "Buildings");
 	while(!draw::isnext()) {
@@ -365,13 +395,12 @@ static void choose_buildings() {
 		auto maximum_build = 1;
 		if(province->buildings < province->income[Size] && province->builded < maximum_build)
 			an.add(add_building, getnm("AddBuilding"), maximum_build - province->builded);
-		auto result = an.choose(0, getnm("Cancel"), 1);
-		if(!result)
+		if(!choose_answer())
 			break;
-		if(bsdata<site>::have(result))
-			remove_building((site*)result);
+		if(bsdata<site>::have(answer_result))
+			remove_building((site*)choose_answer);
 		else
-			standart_result(result);
+			standart_result();
 	}
 }
 
@@ -413,14 +442,13 @@ static void choose_sites() {
 				continue;
 			an.add(&e, e.type->getname());
 		}
-		auto result = an.choose(0, getnm("Cancel"), 1);
-		if(!result)
+		if(!choose_answer())
 			break;
-		else if(bsdata<site>::have(result)) {
-			location = (site*)result;
+		else if(bsdata<site>::have(answer_result)) {
+			location = (site*)answer_result;
 			choose_site_option(location);
 		} else
-			standart_result(result);
+			standart_result();
 	}
 }
 
@@ -436,6 +464,7 @@ static bool player_troop_cost(const void* pv) {
 }
 
 static void clear_troops_movement() {
+	cancel_move(province, player);
 }
 
 static void apply_confirm() {
@@ -445,41 +474,44 @@ static void apply_confirm() {
 static bool troops_mobilization(int value, int defence) {
 	pushvalue push_image(answers::resid, "Marching");
 	pushvalue push_console(answers::prompt, (const char*)sb_buffer);
-	pushvalue push_movement(troops_movement, value);
 	modal_result = 0;
 	while(!draw::isnext() && !modal_result) {
 		clear_wave();
 		province->makewave();
-		army troops_army;
-		troops_army.clear();
-		troops_army.province = province;
 		update_provinces();
 		sb.clear();
+		army troops_army;
+		troops_army.clear();
+		for(auto& e : bsdata<moveorder>()) {
+			if(e.player != player)
+				continue;
+			if(e.getto() == province)
+				troops_army.units += e.count;
+		}
+		troops_army.province = province;
 		troops_army.act(sb, getnm("ArmyMobilize"));
 		an.clear();
 		for(auto& e : bsdata<provincei>()) {
-			if(e.player != player)
-				continue;
-			if(&e == province)
+			if(e.player != player || &e==province)
 				continue;
 			if(!e.getunits())
 				continue;
 			if(e.getcost() > value)
 				continue;
-		//	if(e.moveto)
-		//		continue;
 			an.add(&e, e.getname());
 		}
 		if(troops_army.get(Strenght) >= defence)
 			an.add(apply_confirm, getnm("Confirm"));
 		else if(defence)
 			sb.addn(getnm("MinimalStrenghtRequired"), defence);
-		auto result = an.choose(0, getnm("Cancel"));
-		if(!result) {
+		if(!choose_answer()) {
 			clear_troops_movement();
 			break;
+		} else if(bsdata<provincei>::have(answer_result)) {
+			((provincei*)answer_result)->units--;
+			add_move((provincei*)answer_result, province, player, 1);
 		} else
-			standart_result(result);
+			standart_result();
 	}
 	update_provinces();
 	return modal_result != 0;
@@ -512,11 +544,10 @@ static void choose_province_options() {
 			add_settlement_options();
 		for(auto& e : bsdata<actioni>())
 			add_answers(e);
-		auto result = an.choose(0, getnm("Cancel"));
-		if(!result)
+		if(!choose_answer())
 			province = 0;
 		else
-			standart_result(result);
+			standart_result();
 	}
 }
 
@@ -535,6 +566,7 @@ static void choose_game_options() {
 
 static void show_messages(int bonus) {
 	update_player(0);
+	pushvalue header(answers::resid, (const char*)0);
 	for(auto& e : bsdata<reporti>()) {
 		if(e.turn == game.turn && (e.reciever & (1 << (player->getindex()))) != 0)
 			message(e.text, e.header);
@@ -754,12 +786,6 @@ static bool visible_not_explored_province(const void* object) {
 }
 
 static void action_mobilize() {
-	//for(auto& e : bsdata<troop>()) {
-	//	if(e.player == player && e.moveto == province) {
-	//		e.province = e.moveto;
-	//		e.moveto = 0;
-	//	}
-	//}
 }
 
 static void action_recruit() {
@@ -778,20 +804,23 @@ static unsigned reciever(const playeri* p1, const playeri* p2) {
 }
 
 static void action_conquest() {
+	if(!troops_mobilization(1, province->getstrenght()))
+		return;
 	char temp[4096]; stringbuilder sb(temp);
 	army attacker, defender;
 	attacker.clear();
-	attacker.select(province, player);
 	attacker.province = province;
+	attacker.select(province, player);
 	attacker.player = player;
 	if(!attacker)
 		return;
 	defender.clear();
-	defender.select(province);
 	defender.province = province;
 	defender.player = province->player;
+	defender.select(province);
 	conquest(sb, attacker, defender);
 	reporti::add(temp, 0, game.turn, reciever(attacker.player, defender.player));
+	show_messages();
 }
 
 static void action_explore() {
