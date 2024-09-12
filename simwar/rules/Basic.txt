@@ -56,6 +56,12 @@ LightingAttack
 
 SouthernKindom
  resources Gold(100)
- start City+1 Unit+2
+ faith Resources(5) Influence(2) Warfire(3) Happiness(2)
+ start City+1 Fort+1 Unit+2
+
+#Action
+
+ActionRecruit
+ cost Resources(5)
 
 #include "rules/Tactics.txt"

@@ -1,6 +1,7 @@
 ﻿ActionConquer: Захватить
 ActionExplore: Исследовать
 ActionMobilize: Сбор войск
+ActionRecruit: Найм войск
 ActionRandom: Исследование случайной провинции
 
 DoActionConquer: Захватывает провинцию [%1].

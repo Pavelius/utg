@@ -132,6 +132,9 @@ void army::select(const provincei* province, const playeri* player) {
 		units = province->getunits();
 }
 
+void army::setcasualty(const army & source) {
+}
+
 int	army::getunitcount(const tactici* v) const {
 	return 0;
 }

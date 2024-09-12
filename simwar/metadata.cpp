@@ -25,6 +25,7 @@ BSDATAC(tactici, 64)
 
 BSMETA(actioni) = {
 	BSREQ(id),
+	BSDST(cost, costi),
 	{}};
 BSMETA(costi) = {
 	BSREQ(id),
@@ -55,7 +56,7 @@ BSMETA(neighbor) = {
 BSMETA(playeri) = {
 	BSREQ(id),
 	BSDST(resources, costi),
-	BSDST(income, costi),
+	BSDST(faith, costi),
 	BSREQ(start),
 	{}};
 BSMETA(point) = {

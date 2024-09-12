@@ -1,22 +1,5 @@
-﻿Gordek: Гордек
-Kalipse: Калипсо
-Mistra: Мистра
-
-BanditLair: Логово бандитов
-DarkCave: Темная пещера
-DarkYard: Темная поляна
-MercenaryCamp: Лагерь наемников
-StoneCanion: Каменное ущелье
-UnholyGraveyard: Проклятое кладбище
-WolfLair: Логово волков
-
-City: Город
-Fort: Форт
-Harbor: Гавань
-IronMine: Шахта
-Temple: Храм
-
-Faith: Вера
+﻿Faith: Вера
+FaithBonus: Бонус от веры
 FaithInfo: Вера в богов в вашем государстве. Накопив [2000] очков вы выигрываете игру. За каждые 200 очков вы получаете благословение.
 Fame: Слава
 Gold: Золото

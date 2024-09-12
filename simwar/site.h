@@ -12,6 +12,7 @@ struct sitei : nameable, featable {
 struct site {
 	const sitei*	type;
 	provincei*		province;
+	char			explore;
 	explicit operator bool() const { return type != 0; }
 	void			clear();
 	bool			is(featn v) const { return type->is(v); }

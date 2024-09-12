@@ -1,4 +1,18 @@
-﻿BuildEffect: Позволяет построить [%1i] здание в месяц.
+﻿BanditLair: Логово бандитов
+DarkCave: Темная пещера
+DarkYard: Темная поляна
+MercenaryCamp: Лагерь наемников
+StoneCanion: Каменное ущелье
+UnholyGraveyard: Проклятое кладбище
+WolfLair: Логово волков
+
+City: Город
+Fort: Форт
+Harbor: Гавань
+IronMine: Шахта
+Temple: Храм
+
+BuildEffect: Позволяет построить [%1i] здание в месяц.
 FaithEffect: Увеличивает доход веры на :3:[%1i].
 GoldEffect: Увеличивает доход золота в провинции на :4:[%1i].
 ManaEffect: Увеличивает сбор ингридиентов в провинции на :6:[%1i].

@@ -26,3 +26,14 @@ const char* log::valuei::read(const char* p, stringbuilder& sb) {
 	}
 	return p;
 }
+
+const char* log::psval(const char* p, variant& v) {
+	if(!ischa(p[0]))
+		return p;
+	char temp[128]; stringbuilder sb(temp);
+	sb.clear(); p = sb.psidf(p);
+	v = (const char*)sb.begin();
+	int bonus; p = psbon(p, bonus);
+	v.counter = bonus;
+	return p;
+}

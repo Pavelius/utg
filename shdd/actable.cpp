@@ -1,5 +1,6 @@
 #include "actable.h"
 #include "answers.h"
+#include "bsdata.h"
 #include "groupname.h"
 
 void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);

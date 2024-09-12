@@ -3,7 +3,7 @@
 #pragma once
 
 enum costn : unsigned char {
-	Resources, Influence, Gold, Happiness, Fame, Lore, Units,
+	Resources, Influence, Gold, Happiness, Fame, Lore, Warfire,
 	Strenght, Sword, Shield, Death,
 	Movement, Sail, Explore,
 	Recruit, Size,

@@ -1,7 +1,7 @@
 #include "answers.h"
+#include "bsdata.h"
 #include "bsreq.h"
 #include "creature.h"
-#include "crt.h"
 #include "draw.h"
 #include "draw_utg.h"
 #include "gender.h"
@@ -9,7 +9,9 @@
 #include "item.h"
 #include "log.h"
 #include "questlist.h"
+#include "rand.h"
 #include "script.h"
+#include "timer.h"
 
 void stringbuilder_proc(stringbuilder& sb, const char* id);
 void initialize_ui();
@@ -22,10 +24,6 @@ static void starting() {
 	if(!pn)
 		return;
 	script_run(pn->elements);
-}
-
-static void initialize() {
-	log::readloc(groupname::read, 0, "Players");
 }
 
 static const char* getavatarst(const void* p) {
@@ -59,7 +57,7 @@ int main(int argc, char* argv[]) {
 	stringbuilder::custom = stringbuilder_proc;
 	answers::console = &utg::sb;
 	answers::prompt = utg::sb.begin();
-	return draw::start(starting, initialize);
+	return utg::start(starting, 0);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

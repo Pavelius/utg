@@ -4,11 +4,11 @@
 #include "rules/Advancement.txt"
 #include "rules/Monsters.txt"
 #include "rules/Area.txt"
+#include "quests/%1/Combat.txt" Quest
+#include "quests/%1/Players.txt" GroupName
 
-#import Quest "locale/ru/Combat.txt"
-
-#import RollTable "CityEncounters"
-#import RollTable "Treasure0"
+#include "tables/%1/Treasure0.txt" RollTable
+#include "tables/%1/CityEncounters.txt" RollTable
 
 #List
 

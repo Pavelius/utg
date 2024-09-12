@@ -4,9 +4,11 @@
 #include "gender.h"
 #include "groupname.h"
 #include "ongoing.h"
+#include "math.h"
 #include "modifier.h"
 #include "monster.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "roll.h"
 #include "script.h"
 
@@ -170,10 +172,10 @@ const char* random_avatar(class_s type, gender_s gender) {
 static void random_name() {
 	char temp[260]; stringbuilder sb(temp);
 	sb.clear(); sb.add("%1%2", bsdata<classi>::elements[player->kind].id, bsdata<genderi>::elements[player->gender].id);
-	auto i = groupname::randomid(temp);
+	auto i = random_group_namei(temp);
 	if(i == 0xFFFF) {
 		sb.clear(); sb.add("%1%2", bsdata<racei>::elements[player->ancestry].id, bsdata<genderi>::elements[player->gender].id);
-		i = groupname::randomid(temp);
+		i = random_group_namei(temp);
 	}
 	player->name = i;
 }

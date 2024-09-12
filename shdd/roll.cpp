@@ -1,4 +1,4 @@
-#include "crt.h"
+#include "rand.h"
 
 int roll_result;
 

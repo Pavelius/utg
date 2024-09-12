@@ -13,6 +13,7 @@ struct nametable : nameable {
 	const element*	first(int value) const;
 	int				getrange() const;
 	const element*	random() const;
-	static void		read(const char* url);
 };
 extern const nametable::element* last_table_element;
+
+void read_nametable(const char* url);

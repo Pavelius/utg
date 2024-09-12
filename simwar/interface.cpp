@@ -5,6 +5,7 @@
 #include "draw_object.h"
 #include "draw_strategy.h"
 #include "game.h"
+#include "moveorder.h"
 #include "player.h"
 #include "site.h"
 
@@ -149,9 +150,9 @@ static void paint_cost(const costa& v, const costa& n, const costa& u) {
 	field(Resources, "%1i/%2i", 80, v, n, u);
 	field(Influence, "%1i/%2i", 80, v, n, u);
 	field(Gold, 0, 100, v, n, u);
-	field(Happiness, "%3i", 40, v, n, u);
+	field(Happiness, "%1i", 40, player->income[Happiness], 0, 0);
 	field(Fame, "%1i", 0, v, n, u);
-	field(Units, "%3i", 0, v, n, u);
+	field(Warfire, "%1i/%2i", 0, player->units, n[Warfire], 0);
 	field(Lore, 0, 120, v, n, u);
 }
 
@@ -261,6 +262,12 @@ static void paint_neighbor() {
 	caret = push_caret;
 }
 
+static void paint_move_order() {
+	auto order = (moveorder*)last_object->data;
+	auto n = order->count;
+	show_banner(14 + n, 1, str("%1i", n));
+}
+
 static void paint_province() {
 	auto p = (provincei*)last_object->data;
 	auto n = p->getunits();
@@ -274,8 +281,6 @@ static void paint_province() {
 	}
 	if(show_names)
 		stroke_texth2(p->getname());
-	if(province == p)
-		paint_neighbor();
 	if(input_province) {
 		if(ishilite(24, p)) {
 			hcursor = cursor::Hand;
@@ -285,8 +290,22 @@ static void paint_province() {
 	}
 }
 
-static void add_widget(fnevent proc, unsigned char priority, bool absolute_position = true) {
+static void remove_widget(fnevent proc) {
+	auto p = findobject(proc);
+	if(p)
+		p->clear();
+}
+
+static void add_widget(fnevent proc, unsigned char priority) {
 	auto p = addobject({0, 0}, proc, proc, 0);
+	p->priority = priority;
+}
+
+static void add_find_widget(fnevent proc, unsigned char priority, point position) {
+	auto p = findobject(proc);
+	if(!p)
+		p = addobject(position, proc, proc, 0);
+	p->position = position;
 	p->priority = priority;
 }
 
@@ -308,6 +327,10 @@ void update_provinces_ui() {
 
 static void ui_background() {
 	strategy_background();
+	if(!province)
+		remove_widget(paint_neighbor);
+	else
+		add_find_widget(paint_neighbor, 11, province->position);
 	paint_objects();
 }
 
@@ -316,7 +339,7 @@ static void ui_finish() {
 }
 
 void ui_initialize() {
-	add_widget(background_map, 10, false);
+	add_widget(background_map, 10);
 	pbackground = ui_background;
 	pfinish = ui_finish;
 }

@@ -1,4 +1,4 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "class.h"
 
 classi* last_class;

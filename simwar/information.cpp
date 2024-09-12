@@ -13,9 +13,6 @@
 #include "script.h"
 #include "statable.h"
 
-int get_income(costn v);
-int get_income_modified(costn v, int result);
-
 static int get_income(costn v, stringbuilder& sb) {
 	auto push = lastcostitem;
 	costitema source; lastcostitem = &source;

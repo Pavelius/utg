@@ -1,2 +1,2 @@
 ﻿Error in file `rules/Basic.txt`:
- Line 36: Not found field `Resource` in dataset `income`
+ Line 65: Not found requisit `cost`

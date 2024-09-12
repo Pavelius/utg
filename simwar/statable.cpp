@@ -8,7 +8,7 @@ BSDATA(costi) = {
 	{"Happiness", 10},
 	{"Fame", 8},
 	{"Lore"},
-	{"Units", 1},
+	{"Warfire", 1},
 	{"Strenght", 2},
 	{"Sword"},
 	{"Shield"},

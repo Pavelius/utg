@@ -13,7 +13,6 @@ struct army {
 	void			act(stringbuilder& sb, const char* format, ...) const;
 	void			addprompt(stringbuilder& sb) const;
 	void			addtotal(stringbuilder& sb, costn v) const;
-	void			addunits(stringbuilder& sb, bool use_distinct = true) const;
 	void			clear() { memset(this, 0, sizeof(*this)); }
 	void			damage(army& result, int value);
 	bool			isattacker() const { return province->player != player; }

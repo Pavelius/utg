@@ -68,10 +68,10 @@ template<> void ftinfo<item>(const void* object, stringbuilder& sb) {
 }
 
 template<> void ftinfo<creature>(const void* object, stringbuilder& sb) {
-	if(bsdata<creature>::source.haveio(object)) {
+	/*if(bsdata<creature>::source.haveio(object)) {
 		auto p = (creature*)object;
 		sb.add("%1 - %2", p->getname(), p->getkindname(), p->get(Level));
-	} else if(bsdata<creature>::source.have(object)) {
+	} else*/ if(bsdata<creature>::source.have(object)) {
 		auto p = (creature*)bsdata<creature>::source.ptr(bsdata<creature>::source.indexof(object));
 		if(p->isitem(object))
 			ftinfo<item>(object, sb);
@@ -118,5 +118,5 @@ void stringbuilder_proc(stringbuilder& sb, const char* id) {
 		pf->proc(sb);
 		return;
 	}
-	sb.defidentifier(sb, id);
+	default_string(sb, id);
 }

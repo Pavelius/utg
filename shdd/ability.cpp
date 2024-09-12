@@ -1,5 +1,5 @@
+#include "bsdata.h"
 #include "ability.h"
-#include "crt.h"
 
 BSDATA(abilityi) = {
 	{"Strenght"},

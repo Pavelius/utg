@@ -47,6 +47,108 @@ static void focus(const provincei* p) {
 		slide_camera(p->position);
 }
 
+static void update_player_income() {
+	memset(player->income, 0, sizeof(player->income));
+	for(auto v = (costn)0; v < Limit; v = (costn)(v + 1))
+		player->income[v] = get_income(v);
+	for(auto v = (costn)0; v < Limit; v = (costn)(v + 1))
+		player->income[v] = get_income_modified(v, player->income[v]);
+}
+
+static int get_buildings_upkeep(costn v) {
+	auto result = 0;
+	for(auto& e : bsdata<site>()) {
+		if(e.province && e.province->player == player)
+			result += e.type->upkeep[v];
+	}
+	return get_value("BuildingsUpkeep", -result);
+}
+
+static int get_buildings_income(costn v) {
+	auto result = 0;
+	for(auto& e : bsdata<site>()) {
+		if(e.province && e.province->player == player)
+			result += get_value(e.type->id, e.type->income[v]);
+	}
+	return result;
+}
+
+static int get_provinces_income(costn v) {
+	auto result = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			result += e.landscape->income[v];
+	}
+	return get_value("ProvincesIncome", result);
+}
+
+int get_income(costn v) {
+	auto result = get_provinces_income(v);
+	result += get_buildings_income(v);
+	result += get_value("FaithBonus", player->faith[v]);
+	result += get_buildings_upkeep(v);
+	return result;
+}
+
+static int get_happiness(costn v, int base) {
+	if(v != Gold && v != Lore)
+		return 0;
+	auto param = player->income[Happiness];
+	if(param <= -3)
+		return get_value("LowHappiness", base * (param + 2) * 5 / 100);
+	else if(param >= 3)
+		return get_value("HighHappiness", base * (param - 2) * 5 / 100);
+	return 0;
+}
+
+int get_income_modified(costn v, int result) {
+	auto base = result;
+	result += get_happiness(v, base);
+	return result;
+}
+
+static void update_player_units() {
+	player->units = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			player->units += e.units;
+	}
+}
+
+static void update_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		memcpy(e.income, e.landscape->income, sizeof(e.income));
+		e.buildings = 0;
+		e.sites = 0;
+	}
+	for(auto& e : bsdata<site>()) {
+		if(e.is(Building))
+			e.province->buildings++;
+		else
+			e.province->sites++;
+		addvalue(e.province->income, e.type->income);
+	}
+}
+
+static void update_province_visibility() {
+	for(auto& e : bsdata<neighbor>()) {
+		if(bsdata<provincei>::elements[e.n1].player == player
+			|| bsdata<provincei>::elements[e.n2].player == player) {
+			visibility.set(e.n1);
+			visibility.set(e.n2);
+		}
+	}
+	update_provinces_ui();
+}
+
+static void update_player(int bonus) {
+	update_provinces();
+	update_player_income();
+	update_player_units();
+	visibility.clear();
+	update_province_visibility();
+}
+
 static void* choose_province_header(const char* title) {
 	auto push_header = answers::header;
 	answers::header = province->getname();
@@ -63,21 +165,18 @@ static bool have_exist(const sitei* pv) {
 	return false;
 }
 
-static bool is_coastal(int bonus) {
-	auto ocean = bsdata<landscapei>::find("Ocean");
-	if(!ocean)
-		return false;
+static bool is_neighboar(featn v) {
 	neightbors source;
 	source.selectn(province);
 	for(auto p : source) {
-		if(p->landscape == ocean)
+		if(p->landscape->is(v))
 			return true;
 	}
 	return false;
 }
 
-static bool canrecruit(int bonus) {
-	return province->recruit < province->income[Recruit];
+static bool is_coastal(int bonus) {
+	return is_neighboar(Water);
 }
 
 static bool is_province_player(const void* pv) {
@@ -105,6 +204,7 @@ static void add_site(int bonus) {
 	auto p = bsdata<site>::add();
 	p->type = last_site;
 	p->province = province;
+	p->explore = 0;
 }
 
 static void recruit(int bonus) {
@@ -141,7 +241,12 @@ static void end_turn() {
 static void standart_result(void* result) {
 	if(bsdata<provincei>::have(result))
 		province = (provincei*)result;
-	else
+	else if(bsdata<actioni>::have(result)) {
+		auto p = (actioni*)result;
+		subvalue(player->resources, p->cost);
+		p->proc();
+		update_player(0);
+	} else
 		((fnevent)result)();
 }
 
@@ -157,92 +262,27 @@ static bool player_province_building(const void* pv) {
 	return ((site*)pv)->province == province;
 }
 
+static void add_answers(fnevent proc, const char* id) {
+	an.add(proc, getnm(id));
+}
+
+static void add_answers(actioni& e) {
+	if(e.test && !e.test(province))
+		return;
+	if(e.cost > player->resources)
+		return;
+	an.add(&e, e.getname());
+}
+
 static void add_answers(fnevent proc, const char* id, int count, const char* piece_id = 0) {
-	if(count > 0) {
-		if(piece_id)
-			an.add(proc, "%1 (%2i %-*3)", getnm(id), count, getnm(piece_id));
-		else
-			an.add(proc, "%1 (%2i %Piece)", getnm(id), count);
-	} else
-		an.add(proc, getnm(id));
+	if(piece_id)
+		an.add(proc, "%1 (%2i %-*3)", getnm(id), count, getnm(piece_id));
+	else
+		an.add(proc, "%1 (%2i %Piece)", getnm(id), count);
 }
 
 static void add_sites(fnevent proc, int count, int explore) {
 	an.add(proc, "%Explore %3i%% (%1i %-*2)", count, getnm("Site"), explore);
-}
-
-static int get_buildings_upkeep(costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<site>()) {
-		if(e.province && e.province->player == player)
-			result += e.type->upkeep[v];
-	}
-	return get_value("BuildingsUpkeep", -result);
-}
-
-static int get_buildings_effect(const sitei* b, costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<site>()) {
-		if(e.province && e.province->player == player && e.type == b)
-			result += e.type->income[v];
-	}
-	return get_value(b->id, result);
-}
-
-static int get_buildings_effect(costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<sitei>())
-		result += get_buildings_effect(&e, v);
-	return result;
-}
-
-static int get_provinces_income(costn v) {
-	auto result = 0;
-	for(auto& e : bsdata<provincei>()) {
-		if(e.player == player)
-			result += e.landscape->income[v];
-	}
-	return get_value("ProvincesIncome", result);
-}
-
-int get_income(costn v) {
-	auto result = get_provinces_income(v);
-	result += get_buildings_effect(v);
-	result += get_value("FaithBonus", player->faith[v]);
-	result += get_buildings_upkeep(v);
-	return result;
-}
-
-static int get_happiness(costn v, int base) {
-	if(v != Gold && v != Lore)
-		return 0;
-	auto param = player->income[Happiness];
-	if(param <= -3)
-		return get_value("LowHappiness", base * (param + 2) * 5 / 100);
-	else if(param >= 3)
-		return get_value("HighHappiness", base * (param - 2) * 5 / 100);
-	return 0;
-}
-
-int get_income_modified(costn v, int result) {
-	auto base = result;
-	result += get_happiness(v, base);
-	return result;
-}
-
-static void update_provinces() {
-	for(auto& e : bsdata<provincei>()) {
-		memcpy(e.income, e.landscape->income, sizeof(e.income));
-		e.buildings = 0;
-		e.sites = 0;
-	}
-	for(auto& e : bsdata<site>()) {
-		if(e.is(Building))
-			e.province->buildings++;
-		else
-			e.province->sites++;
-		addvalue(e.province->income, e.type->income);
-	}
 }
 
 static void mark_player_provinces() {
@@ -250,35 +290,6 @@ static void mark_player_provinces() {
 		if(e.player == player)
 			e.setzerocost();
 	}
-}
-
-static void update_province_visibility(const provincei* province) {
-}
-
-static void update_province_visibility() {
-	for(auto& e : bsdata<neighbor>()) {
-		if(bsdata<provincei>::elements[e.n1].player == player
-			|| bsdata<provincei>::elements[e.n2].player == player) {
-			visibility.set(e.n1);
-			visibility.set(e.n2);
-		}
-	}
-	update_provinces_ui();
-}
-
-static void update_player_income() {
-	memset(player->income, 0, sizeof(player->income));
-	for(auto v = (costn)0; v < Limit; v = (costn)(v + 1))
-		player->income[v] = get_income(v);
-	for(auto v = (costn)0; v < Limit; v = (costn)(v + 1))
-		player->income[v] = get_income_modified(v, player->income[v]);
-}
-
-static void update_player(int bonus) {
-	update_provinces();
-	update_player_income();
-	visibility.clear();
-	update_province_visibility();
 }
 
 static void gain_income(int bonus) {
@@ -297,6 +308,7 @@ static void build(int bonus) {
 	auto p = bsdata<site>::add();
 	p->type = last_site;
 	p->province = province;
+	p->explore = 100;
 	update_player(0);
 }
 
@@ -304,23 +316,6 @@ template<> void fnscript<sitei>(int value, int bonus) {
 	last_site = bsdata<sitei>::elements + value;
 	if(bonus > 0)
 		build(bonus);
-}
-
-static void recruit_units() {
-}
-
-static void choose_troops() {
-	pushvalue push_image(answers::resid, "Units");
-	while(!draw::isnext()) {
-		an.clear();
-		if(province->recruit < province->income[Recruit])
-			an.add(recruit_units, getnm("Recruit"), province->income[Recruit] - province->recruit);
-		auto result = an.choose(0, getnm("Cancel"));
-		if(!result)
-			return;
-		else
-			((fnevent)result)();
-	}
 }
 
 static void choose_build(int bonus) {
@@ -436,9 +431,6 @@ static const char* header(const char* prefix, const char* id) {
 	return getnm(id);
 }
 
-static void add_province_units() {
-}
-
 static bool player_troop_cost(const void* pv) {
 	return false;
 }
@@ -493,8 +485,18 @@ static bool troops_mobilization(int value, int defence) {
 	return modal_result != 0;
 }
 
+static bool can_recruit_troops(const void* object) {
+	if(player->units >= player->income[Warfire])
+		return false;
+	auto province = (provincei*)object;
+	if(province->recruit >= province->income[Recruit])
+		return false;
+	return true;
+}
+
 static void add_settlement_options() {
-	collection<site> buildings; buildings.select(player_province_building);
+	collection<site> buildings;
+	buildings.select(player_province_building);
 	add_answers(choose_buildings, "Settlements", buildings.getcount(), "Building");
 }
 
@@ -506,10 +508,10 @@ static void choose_province_options() {
 		update_header(province->getname());
 		answers::resid = province->landscape->id;
 		an.clear();
-		if(province->player == player) {
-			add_province_units();
+		if(province->player == player)
 			add_settlement_options();
-		}
+		for(auto& e : bsdata<actioni>())
+			add_answers(e);
 		auto result = an.choose(0, getnm("Cancel"));
 		if(!result)
 			province = 0;
@@ -707,19 +709,6 @@ static void add_unit(int bonus) {
 	recruit(bonus);
 }
 
-BSDATA(script) = {
-	{"AddSite", add_site},
-	{"Build", build, canbuild},
-	{"Coastal", 0, is_coastal},
-	{"GainIncome", gain_income},
-	{"RandomSite", random_site},
-	{"Recruit", recruit},
-	{"ShowMessages", show_messages},
-	{"Unit", add_unit},
-	{"UpdatePlayer", update_player},
-};
-BSDATAF(script)
-
 static bool enemy_province(const void* pv) {
 	auto p = (provincei*)pv;
 	if(!p->isvisible() || p->iswater())
@@ -727,26 +716,39 @@ static bool enemy_province(const void* pv) {
 	return p->player != player && p->getcost() <= 1;
 }
 
-static bool friendly_province_vacant_army(const void* pv) {
+static bool friendly_province(const void* pv) {
 	auto p = (provincei*)pv;
 	if(p->player != player)
 		return false;
-	//troopa troops; troops.select(player_troop);
-	//pushvalue push_province(province, p);
-	//troops.match(player_province_troop, false);
+	return true;
+}
+
+static bool friendly_province_vacant_army(const void* pv) {
+	if(!friendly_province(pv))
+		return false;
 	return true;
 }
 
 static bool friendly_province_site(const void* pv) {
-	auto p = (provincei*)pv;
-	if(p->player != player)
+	if(!friendly_province(pv))
 		return false;
 	return true;
 }
 
-static bool visible_not_explored_province(const void* pv) {
-	auto p = (provincei*)pv;
-	if(!p->isvisible() || p->iswater())
+static site* find_site_not_explored(const provincei* province) {
+	for(auto& e : bsdata<site>()) {
+		if(e.province == province && e.explore < 100)
+			return &e;
+	}
+	return 0;
+}
+
+static bool visible_not_explored_province(const void* object) {
+	auto province = (provincei*)object;
+	if(!province->isvisible() || province->iswater())
+		return false;
+	auto ps = find_site_not_explored(province);
+	if(!ps)
 		return false;
 	return true;
 }
@@ -758,6 +760,11 @@ static void action_mobilize() {
 	//		e.moveto = 0;
 	//	}
 	//}
+}
+
+static void action_recruit() {
+	recruit(1);
+	province->recruit++;
 }
 
 static unsigned reciever(const playeri* player) {
@@ -788,9 +795,7 @@ static void action_conquest() {
 }
 
 static void action_explore() {
-	char temp[4096]; stringbuilder sb(temp); sb.clear();
-	auto value = xrand(1, 4);
-	province->explore(value);
+	province->explore(30);
 }
 
 static void acth(stringbuilder& sb, const char* id, ...) {
@@ -839,7 +844,7 @@ static bool is_per_turn(costn v) {
 	}
 }
 
-static void clear_per_turn_resources() {
+static void expend_per_turn_resources() {
 	for(auto i = Resources; i <= Limit; i = (costn)(i + 1)) {
 		if(is_per_turn(i)) {
 			for(auto& e : bsdata<playeri>())
@@ -851,7 +856,7 @@ static void clear_per_turn_resources() {
 void next_turn() {
 	game.turn++;
 	update_province_per_turn();
-	clear_per_turn_resources();
+	expend_per_turn_resources();
 	update_player(0);
 	gain_income(0);
 	draw::setnext(show_messages);
@@ -859,10 +864,20 @@ void next_turn() {
 }
 
 BSDATA(actioni) = {
-	{"ActionConquer", action_conquest, enemy_province, 0, 4, 1},
-	{"ActionExplore", action_explore, visible_not_explored_province, "ActionExplore", 1, 0},
-	{"ActionMobilize", action_mobilize, friendly_province_vacant_army, 0, 5, 2},
-	{"DefaultActionHeal", action_heal, special_action, 0, 5, 0},
-	{"DefaultActionExplore", action_explore, visible_not_explored_province, 0, 1, 0},
+	{"ActionConquer", action_conquest, enemy_province, 4, 1},
+	{"ActionExplore", action_explore, visible_not_explored_province, 1, 0},
+	// {"ActionMobilize", action_mobilize, friendly_province_vacant_army, 5, 2},
+	{"ActionRecruit", action_recruit, can_recruit_troops, 5, 2},
 };
 BSDATAF(actioni)
+BSDATA(script) = {
+	{"AddSite", add_site},
+	{"Build", build, canbuild},
+	{"GainIncome", gain_income},
+	{"RandomSite", random_site},
+	{"Recruit", recruit},
+	{"ShowMessages", show_messages},
+	{"Unit", add_unit},
+	{"UpdatePlayer", update_player},
+};
+BSDATAF(script)

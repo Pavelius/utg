@@ -1,5 +1,5 @@
 #include "bsreq.h"
-#include "crt.h"
+#include "bsdata.h"
 #include "consumable.h"
 
 BSMETA(consumablei) = {

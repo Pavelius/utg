@@ -7,6 +7,7 @@
 #include "nametable.h"
 #include "pushvalue.h"
 #include "questlist.h"
+#include "rand.h"
 #include "roll.h"
 #include "script.h"
 #include "special.h"
@@ -16,10 +17,6 @@ static int		special_attacks;
 racei*			last_race;
 static genderi*	last_gender;
 static const void* last_result;
-
-static int d100() {
-	return rand() % 100;
-}
 
 static bool apply_quest() {
 	if(!last_result)

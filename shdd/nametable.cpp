@@ -1,6 +1,9 @@
 #include "bsreq.h"
+#include "io_stream.h"
+#include "log.h"
+#include "logvalue.h"
 #include "nametable.h"
-#include "logparse.h"
+#include "rand.h"
 
 const nametable::element* last_table_element;
 
@@ -32,7 +35,7 @@ static const char* read_script(const char* p, variants& elements, stringbuilder&
 	while(allowparse && ischa(*p)) {
 		auto pe = (variant*)pr->add();
 		pe->clear();
-		p = readval(p, sb, *pe);
+		p = psval(p, *pe);
 		p = skipsp(p);
 		elements.count++;
 	}
@@ -41,15 +44,15 @@ static const char* read_script(const char* p, variants& elements, stringbuilder&
 
 static const char* read_weight(const char* p, nametable::element* ps) {
 	if(!isnum(*p)) {
-		error(p, "Expected number");
+		errorp(p, "Expected number");
 		allowparse = false;
 		return p;
 	}
 	int i1 = 0;
-	p = stringbuilder::read(p, i1);
+	p = psnum(p, i1);
 	if(*p == '-') {
 		int i2 = 0;
-		p = stringbuilder::read(skipsp(p+1), i2);
+		p = psnum(skipsp(p+1), i2);
 		i1 = i2 - i1 + 1;
 	}
 	ps->weight = i1;
@@ -67,7 +70,7 @@ static void read_content(const char* url) {
 		p = read_weight(p, ps);
 		p = read_line(p, sb);
 		if(temp[0] == 0) {
-			error(p, "Expected string line");
+			errorp(p, "Expected string line");
 			break;
 		}
 		ps->name = szdup(temp);
@@ -78,13 +81,12 @@ static void read_content(const char* url) {
 	log::close();
 }
 
-void nametable::read(const char* id) {
-	char temp[260]; stringbuilder sb(temp);
-	sb.addlocalefile(0, id, "txt");
+void read_nametable(const char* url) {
+	char temp[260];
 	auto ps = bsdata<nametable>::add();
-	ps->id = szdup(id);
+	ps->id = szdup(szfnamewe(temp, url));
 	auto p1 = bsdata<nametable::element>::end();
-	read_content(temp);
+	read_content(url);
 	ps->elements = slice<nametable::element>(p1, bsdata<nametable::element>::end() - p1);
 }
 

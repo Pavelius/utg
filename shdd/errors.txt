@@ -1,2 +1,2 @@
-﻿In file `Names.txt`:
-Tankard: Define translate
+﻿Error in file `rules/Basic.txt`:
+ Line 16: Can't find variant `Treasure0`

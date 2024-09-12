@@ -11,4 +11,5 @@ struct valuei {
 	void clear() { memset(this, 0, sizeof(*this)); }
 	const char* read(const char* p, stringbuilder& sb);
 };
+const char*		psval(const char* p, variant& v);
 }
