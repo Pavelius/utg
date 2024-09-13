@@ -1,5 +1,7 @@
 #include "action.h"
+#include "banner.h"
 #include "card.h"
+#include "color.h"
 #include "bsreq.h"
 #include "site.h"
 #include "list.h"
@@ -13,6 +15,7 @@
 bool fntestlist(int index, int bonus);
 
 NOBSDATA(point)
+NOBSDATA(color)
 
 BSDATAC(cardi, 512)
 BSDATAC(landscapei, 32)
@@ -27,8 +30,15 @@ BSMETA(actioni) = {
 	BSREQ(id),
 	BSDST(cost, costi),
 	{}};
+BSMETA(banneri) = {
+	BSREQ(id),
+	BSREQ(fore), BSREQ(border),
+	{}};
 BSMETA(costi) = {
 	BSREQ(id),
+	{}};
+BSMETA(color) = {
+	BSREQ(r), BSREQ(g), BSREQ(b),
 	{}};
 BSMETA(cardi) = {
 	BSREQ(id),
@@ -58,6 +68,7 @@ BSMETA(playeri) = {
 	BSDST(resources, costi),
 	BSDST(faith, costi),
 	BSREQ(start),
+	BSREQ(shield),
 	{}};
 BSMETA(point) = {
 	BSREQ(x), BSREQ(y),
@@ -81,6 +92,7 @@ BSMETA(sitei) = {
 	BSDST(upkeep, costi),
 	BSDST(cost, costi),
 	BSFLG(feat, feati),
+	BSREQ(avatar),
 	{}};
 BSMETA(tactici) = {
 	BSREQ(id),

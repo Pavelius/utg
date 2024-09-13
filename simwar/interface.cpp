@@ -17,15 +17,15 @@ const int button_height = 20;
 fnevent input_province;
 void log_text(const char* format, ...);
 
-static color player_colors[] = {
-	{40, 40, 40},
-	{97, 189, 79},
-	{242, 214, 0},
-	{255, 159, 26},
-	{235, 90, 70},
-	{195, 119, 224},
-	{0, 121, 191},
-};
+//static color player_colors[] = {
+//	{40, 40, 40},
+//	{97, 189, 79},
+//	{242, 214, 0},
+//	{255, 159, 26},
+//	{235, 90, 70},
+//	{195, 119, 224},
+//	{0, 121, 191},
+//};
 
 static bool troops_in_province(const void* object) {
 	return province->getunits() > 0;
@@ -37,12 +37,6 @@ static bool building_in_province(const void* object) {
 
 static bool troops_player(const void* object) {
 	return province->getunits() > 0;
-}
-
-static color getplayercolor(playeri* p) {
-	if(!p)
-		return player_colors[0];
-	return player_colors[p - bsdata<playeri>::elements + 1];
 }
 
 static void textcn(const char* format, unsigned flags) {
@@ -221,22 +215,19 @@ static void stroke_texth2(const char* format) {
 }
 
 static void paint_hilite_province(int index, bool need_stroke = false) {
-	auto push_fore = fore;
 	auto push_alpha = alpha;
-	fore = colors::red;
 	alpha = 32;
-	circlef(32);
+	show_bannerf(32, index);
 	alpha = push_alpha;
-	fore = push_fore;
 }
 
-static void paint_shield(int index, bool need_stroke = false) {
-	auto p = gres("shields", "art/sprites");
-	if(need_stroke)
-		stroke(caret.x, caret.y, p, index, 0, 2);
-	else
-		image(p, index, 0);
-}
+//static void paint_shield(int index, bool need_stroke = false) {
+//	auto p = gres("shields", "art/sprites");
+//	if(need_stroke)
+//		stroke(caret.x, caret.y, p, index, 0, 2);
+//	else
+//		image(p, index, 0);
+//}
 
 static void border_circle(int size) {
 	auto push_fore = fore;
@@ -268,17 +259,32 @@ static void paint_move_order() {
 	show_banner(14 + n, 1, str("%1i", n));
 }
 
+void add_line_upkeep_x(const provincei * province, stringbuilder& sb);
+
+static void paint_buildings(const provincei* p) {
+	char temp[260]; stringbuilder sb(temp); sb.clear();
+	add_line_upkeep_x(p, sb);
+	if(temp[0]) {
+		rectpush push;
+		textfs(temp);
+		caret.x -= width / 2;
+		caret.y += 16;
+		textf(temp);
+	}
+}
+
 static void paint_province() {
 	auto p = (provincei*)last_object->data;
 	auto n = p->getunits();
 	if(p->player) {
 		paint_hilite_province(p->player->shield);
 		if(n)
-			show_banner(14 + n, 1, str("%1i", n));
+			show_banner(14 + n, p->player->shield, str("%1i", n));
 	} else {
 		if(n)
 			show_banner(14 + n, 0, str("%1i", n));
 	}
+	paint_buildings(p);
 	if(show_names)
 		stroke_texth2(p->getname());
 	if(input_province) {

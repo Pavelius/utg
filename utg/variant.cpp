@@ -106,9 +106,9 @@ unsigned long bsreq_signature() {
 	for(auto& e : bsdata<varianti>()) {
 		if(!e.metadata)
 			continue;
+		result += (i++) * e.key_count;
 		for(auto p = e.metadata; *p; p++) {
 			result += (i++) * p->count;
-			// result += (i++) * p->offset;
 			result += (i++) * p->size;
 			result += (i++) * p->subtype;
 		}

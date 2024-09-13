@@ -18,17 +18,17 @@ Wasteland
  income Size(2)
  upkeep Happiness(1)
 
-#Site
+#Site avatar(-1)
 
-Fort
+Fort avatar(11)
  income Strenght(1) Recruit(1)
  cost Resources(30)
  feat Building
-City
+City avatar(5)
  income Influence(1) Warfire(1)
  cost Resources(30)
  feat Building
-Temple
+Temple avatar(12)
  income Influence(1) Happiness(1)
  cost Resources(30)
  feat Building
@@ -45,16 +45,9 @@ UnholyGraveyard resid(Graveyard)
 WolfLair resid(Lair)
 MercenaryCamp resid(MercenaryCamp)
 
-#Tactic
-
-CarefulDefence
- effect Strenght(1)
-LightingAttack
- effect Strenght(3)
-
 #Player
 
-SouthernKindom
+SouthernKindom shield(3)
  resources Gold(100)
  faith Resources(5) Influence(2) Warfire(3) Happiness(2)
  start City+1 Fort+1 Unit+2

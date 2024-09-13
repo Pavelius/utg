@@ -12,6 +12,15 @@ const landscapei* entityi::getlandscape() const {
 	return 0;
 }
 
+playeri* entityi::getplayer() const {
+	if(bsdata<playeri>::have(this))
+		return (playeri*)this;
+	auto p = getprovince();
+	if(p)
+		return p->player;
+	return 0;
+}
+
 const cardi* entityi::getcard() const {
 	if(bsdata<cardi>::have(this))
 		return (cardi*)this;
@@ -31,5 +40,7 @@ const short* entityi::geteffect() const {
 		return ((sitei*)this)->income;
 	else if(bsdata<provincei>::have(this))
 		return ((provincei*)this)->income;
+	else if(bsdata<playeri>::have(this))
+		return ((playeri*)this)->income;
 	return 0;
 }

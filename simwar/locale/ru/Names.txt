@@ -31,7 +31,7 @@ AddBuilding: Построить здание (осталось %1i)
 And: И
 AppTitle: Стратегия
 Army: Армия
-ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %1.
+ArmyConquest: Армия %-NameOf общей силой %TotalStrenght вторглась в провинцию %Province.
 ArmyDefend: В обороне находилась армия %-NameOf общей силой %TotalStrenght.
 ArmyMobilize: Армия %-NameOf общей силой %TotalStrenght отправляется на захват провинции %Province.
 AttackerArchery: %Units %-NameOfNoHero дали залп и нанесли %TotalArchery повреждений.

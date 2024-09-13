@@ -2,12 +2,12 @@
 #include "statable.h"
 
 BSDATA(costi) = {
-	{"Resources", 4},
+	{"Resources", 15},
 	{"Influence", 4},
 	{"Gold", 4},
 	{"Happiness", 10},
 	{"Fame", 8},
-	{"Lore"},
+	{"Lore", 14},
 	{"Warfire", 1},
 	{"Strenght", 2},
 	{"Sword"},

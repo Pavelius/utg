@@ -1,7 +1,2 @@
-﻿Error in file `UnknownNames.txt`:
- Define translation for `AfflictedShores`
- Define translation for `DiamirValley`
- Define translation for `Lhasa`
- Define translation for `NamcheBazaar`
- Define translation for `ShunnedLands`
- Define translation for `Szczebrzeszyn`
+﻿Error in file `rules/Basic.txt`:
+ Line 50: Not found requisit `shield`

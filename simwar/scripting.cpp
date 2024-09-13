@@ -294,7 +294,7 @@ static void add_answers(fnevent proc, const char* id) {
 static void add_answers(actioni& e) {
 	if(e.test && !e.test(province))
 		return;
-	if(pay(player->resources, e.cost, false))
+	if(!pay(player->resources, e.cost, false))
 		return;
 	an.add(&e, e.getname());
 }
@@ -597,8 +597,8 @@ bool fntestlist(int index, int bonus) {
 
 static void battle_stage(stringbuilder& sb, army& attacker, army& defender, costn ability) {
 	auto suffix = bsdata<costi>::elements[ability].id;
-	army af = attacker; af.match(ability, true);
-	army df = defender; df.match(ability, true);
+	army af = attacker;
+	army df = defender;
 	if(af && !df)
 		return;
 	sb.addn("---\n");
@@ -612,10 +612,8 @@ static void battle_stage(stringbuilder& sb, army& attacker, army& defender, cost
 		df.act(sb, getnm(str("Attacker%1", suffix)));
 	auto ad = af.get(ability);
 	auto dd = df.get(ability);
-	army ac; ac.setcasualty(attacker);
-	army dc; dc.setcasualty(defender);
-	attacker.damage(ac, dd);
-	defender.damage(dc, ad);
+	attacker.damage(dd);
+	defender.damage(ad);
 	//if(ac) {
 	//	sb.addsep('\n');
 	//	ac.act(sb, getnm("CasualtiesTotal"));
@@ -640,8 +638,8 @@ static void prepare_battle(army& attacker, army& defender) {
 
 static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {
 	auto win_battle = false;
-	sb.addn("---\n");
-	sb.addn("$image BattleWin 0 'art/images'\n");
+	//sb.addn("---\n");
+	//sb.addn("$image BattleWin 0 'art/images'\n");
 	if(attacker && defender) {
 		attacker.act(sb, getnm("AttackerFinale"));
 		sb.addsep('\n');
@@ -716,16 +714,16 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 		gain_control(attacker);
 		return;
 	}
-	if(attacker.tactic) {
-		sb.addsep(' ');
-		attacker.act(sb, getnme(ids(attacker.tactic->id, "Info")));
-	}
+	//if(attacker.tactic) {
+	//	sb.addsep(' ');
+	//	attacker.act(sb, getnme(ids(attacker.tactic->id, "Info")));
+	//}
 	sb.addsep(' ');
 	defender.act(sb, getnm("ArmyDefend"), province->getname());
-	if(defender.tactic) {
-		sb.addsep(' ');
-		defender.act(sb, getnme(ids(defender.tactic->id, "Info")));
-	}
+	//if(defender.tactic) {
+	//	sb.addsep(' ');
+	//	defender.act(sb, getnme(ids(defender.tactic->id, "Info")));
+	//}
 	auto win_battle = battle_result(sb, attacker, defender);
 	if(win_battle) {
 		retreat_defender(defender);
@@ -745,7 +743,7 @@ static bool enemy_province(const void* pv) {
 	auto p = (provincei*)pv;
 	if(!p->isvisible() || p->iswater())
 		return false;
-	return p->player != player && p->getcost() <= 1;
+	return p->player != player;
 }
 
 static bool friendly_province(const void* pv) {
@@ -803,23 +801,27 @@ static unsigned reciever(const playeri* p1, const playeri* p2) {
 	return reciever(p1) | reciever(p2);
 }
 
-static void action_conquest() {
-	if(!troops_mobilization(1, province->getstrenght()))
-		return;
+static void apply_battle() {
 	char temp[4096]; stringbuilder sb(temp);
 	army attacker, defender;
 	attacker.clear();
 	attacker.province = province;
-	attacker.select(province, player);
 	attacker.player = player;
+	attacker.attackers();
 	if(!attacker)
 		return;
 	defender.clear();
 	defender.province = province;
 	defender.player = province->player;
-	defender.select(province);
+	defender.defenders();
 	conquest(sb, attacker, defender);
 	reporti::add(temp, 0, game.turn, reciever(attacker.player, defender.player));
+}
+
+static void action_conquest() {
+	if(!troops_mobilization(1, province->getstrenght()))
+		return;
+	apply_battle();
 	show_messages();
 }
 

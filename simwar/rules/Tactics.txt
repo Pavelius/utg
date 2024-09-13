@@ -9,7 +9,6 @@ MessyFight
  effect Sword(3) Strenght(1) Death(2)
 DeathTrap
  effect Death(2)
- feat Shuffle
 ArrowRain count(3)
  effect Sword(1)
  feat Extend
@@ -22,9 +21,10 @@ ExhaustCombat
  effect Sword(1) Death(1)
 Curse
  effect Death(1)
- feat Discard Shuffle
+ feat Discard
 Bless
  effect Sword(1) Shield(1)
- feat Discard Shuffle
+ feat Discard
 Adventurers
- effect Strenght(2) Fame(1)
+ effect Fame(1) Strenght(1)
+ feat Extend

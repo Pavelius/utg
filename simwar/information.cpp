@@ -48,6 +48,13 @@ static void add_line(stringbuilder& sb, int f, int n) {
 		sb.adds(":%1i:", f);
 }
 
+static void add_line_x(stringbuilder& sb, int f, int n) {
+	if(!n)
+		return;
+	for(auto i = 0; i<n; i++)
+		sb.add(":%1i:", f);
+}
+
 static void add_line(stringbuilder& sb, int f, int n, int nm) {
 	if(!nm)
 		return;
@@ -55,10 +62,19 @@ static void add_line(stringbuilder& sb, int f, int n, int nm) {
 }
 
 void add_line_upkeep(const provincei* province, stringbuilder& sb) {
-	add_line(sb, 4, province->get(Resources));
-	add_line(sb, 4, province->get(Influence));
-	add_line(sb, 4, province->get(Gold));
-	add_line(sb, 0, province->get(Lore));
+	add_line(sb, bsdata<costi>::elements[Resources].frame, province->get(Resources));
+	add_line(sb, bsdata<costi>::elements[Influence].frame, province->get(Influence));
+	add_line(sb, bsdata<costi>::elements[Gold].frame, province->get(Gold));
+	add_line(sb, bsdata<costi>::elements[Lore].frame, province->get(Lore));
+	add_line(sb, 5, province->buildings);
+}
+
+void add_line_upkeep_x(const provincei* province, stringbuilder& sb) {
+	add_line_x(sb, bsdata<costi>::elements[Resources].frame, province->get(Resources));
+	add_line_x(sb, bsdata<costi>::elements[Influence].frame, province->get(Influence));
+	add_line_x(sb, bsdata<costi>::elements[Gold].frame, province->get(Gold));
+	add_line_x(sb, bsdata<costi>::elements[Lore].frame, province->get(Lore));
+	add_line_x(sb, 5, province->buildings);
 }
 
 void add_line(stringbuilder& sb, const costa& source) {
@@ -127,9 +143,9 @@ template<> void ftinfo<costi>(const void* object, stringbuilder& sb) {
 
 template<> void ftinfo<provincei>(const void* object, stringbuilder& sb) {
 	auto p = (provincei*)object;
-	add_description(p->id, sb);
-	sb.addn("---");
-	add_line_upkeep(p, sb);
+	//add_description(p->id, sb);
+	//sb.addn("---");
+	//add_line_upkeep(p, sb);
 }
 
 template<> void ftinfo<sitei>(const void* object, stringbuilder& sb) {

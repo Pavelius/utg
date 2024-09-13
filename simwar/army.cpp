@@ -60,14 +60,22 @@ static void army_identifier(stringbuilder& sb, const char* identifier) {
 //	}
 //}
 
-void army::act(stringbuilder& sb, const char* format, ...) const {
+static void act_army(stringbuilder& sb, const army* pa, const char* format, const char* format_param, char separator) {
+	if(!format || !format[0])
+		return;
 	auto push_army = last_army;
+	last_army = pa;
+	if(separator)
+		sb.addsep(separator);
 	auto push_custom = stringbuilder::custom;
 	stringbuilder::custom = army_identifier;
-	last_army = this;
 	sb.addv(format, xva_start(format));
-	last_army = push_army;
 	stringbuilder::custom = push_custom;
+	last_army = push_army;
+}
+
+void army::act(stringbuilder& sb, const char* format, ...) const {
+	act_army(sb, this, format, xva_start(format), ' ');
 }
 
 const char*	army::getname() const {
@@ -106,8 +114,6 @@ int army::geteffect(costn v) const {
 
 int army::get(costn v) const {
 	int result = geteffect(v);
-	if(tactic)
-		result += get_value(tactic->id, tactic->effect[v]);
 	if(province)
 		result += get_value(province->id, province->income[v]);
 	return result;
@@ -124,39 +130,19 @@ int army::get(costn v, const army* opponent, costn mv) const {
 	return result;
 }
 
-void army::select(const provincei* province) {
+void army::defenders() {
 	units = province->getunits();
 }
 
-void army::select(const provincei* province, const playeri* player) {
-	if(province->player==player)
-		units = province->getunits();
-	else {
-		units = 0;
-		for(auto& e : bsdata<moveorder>()) {
-			if(e.getto() == province && e.player == player)
-				units += e.count;
-		}
+void army::attackers() {
+	units = 0;
+	for(auto& e : bsdata<moveorder>()) {
+		if(e.player == player && e.getto() == province)
+			units += e.count;
 	}
 }
 
-void army::setcasualty(const army & source) {
-}
-
-int	army::getunitcount(const tactici* v) const {
-	return 0;
-}
-
-void army::match(costn v, bool keep) {
-}
-
-void army::sort() {
-}
-
-void army::normalize() {
-}
-
-void army::damage(army& result, int value) {
+void army::damage(int value) {
 	if(value > units)
 		value = units;
 	units -= value;

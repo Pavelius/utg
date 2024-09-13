@@ -7,6 +7,7 @@ struct provincei;
 
 struct sitei : nameable, featable {
 	const char*		resid;
+	int				avatar;
 	costa			income, upkeep, cost;
 };
 struct site {
