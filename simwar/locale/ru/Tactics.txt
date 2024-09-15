@@ -1,6 +1,16 @@
 ﻿CarefulDefence: Тщательная защита
-CarefulDefenceInfo: Отряды создали защитное построение, готовясь отразить удар врага.
+CarefulDefenceAction: Отряды %-NameOf создали защитное построение, готовясь отразить удар врага.
+DeathTrap: Смертельная ловушка
+DeathTrapAction: Отряды %-NameOf попали в ловушку.
+ExhaustCombat: Бой на истощение
+ExhaustCombatAction: Войска %-NameOf рубились до последнего воина.
+HeroicFeats: Героические действия 
+HeroicFeatsAction: Герой %-NameOf добрался в тыл врагу, убив вражеского лидера.
 LightingAttack: Внезапная атака
-LightingAttackInfo: Быстро развернув атакующий клин отряды бросились в атаку, в надежде застать противника врасплох.  
-MessyAttack: Кровавая бойня
-MessyAttackInfo: С диким ревом не щяда себя отряды бросились в атаку.
+LightingAttackAction: Быстро развернув атакующий клин отряды %-NameOf бросились в атаку.
+MessyFight: Кровавая бойня
+MessyFightAction: С диким ревом не щяда себя отряды %-NameOf бросились в атаку.
+
+AttackerWin: Армия %-NameOfNoHero полностью разгромила врага.
+BattleSpoils: %Name: %Spoils.
+NoneWin: В кровопролитной битве обе армии полностью уничтожили друг друга.

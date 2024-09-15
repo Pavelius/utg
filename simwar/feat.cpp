@@ -4,7 +4,6 @@
 BSDATA(feati) = {
 	{"Building"},
 	{"Water"},
-	{"Independed"},
 	{"Discard"},
 	{"Shuffle"},
 	{"Extend"},

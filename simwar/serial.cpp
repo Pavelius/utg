@@ -22,6 +22,8 @@ static bool serial_game_file(const char* id, bool write) {
 	archive a(file, write);
 	if(!a.signature("SAV"))
 		return false;
+	if(!a.version(0, 1))
+		return false;
 	if(!a.signature(bsreq_signature()))
 		return false;
 	a.set(game);

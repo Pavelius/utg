@@ -9,14 +9,14 @@ MessyFight
  effect Sword(3) Strenght(1) Death(2)
 DeathTrap
  effect Death(2)
-ArrowRain count(3)
+ArrowRain
  effect Sword(1)
  feat Extend
-ShieldWall count(3)
+ShieldWall
  effect Shield(1)
  feat Extend
 CarefulDefence
- effect Shield(1)
+ effect Shield(2) Sword(1)
 ExhaustCombat
  effect Sword(1) Death(1)
 Curse
@@ -28,3 +28,8 @@ Bless
 Adventurers
  effect Fame(1) Strenght(1)
  feat Extend
+
+#List
+
+StartTactics
+ elements LightingAttack MessyFight DeathTrap CarefulDefence ExhaustCombat

@@ -151,9 +151,6 @@
     <ClInclude Include="army.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="tactic.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="action.h">
       <Filter>Logic</Filter>
     </ClInclude>
@@ -176,6 +173,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="feat.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="cardaf.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>

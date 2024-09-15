@@ -24,15 +24,6 @@ void next_turn();
 void show_messages();
 void ui_initialize();
 void util_main();
-void conquest();
-
-static void test_army() {
-	province = bsdata<provincei>::find("NandaDevi");
-	add_neutral("Spearmans");
-	add_neutral("Spearmans");
-	add_neutral("Spearmans");
-	conquest();
-}
 
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
@@ -51,19 +42,20 @@ static void start_game() {
 	bsreq::read("maps/silentseas.txt");
 	if(log::errors > 0)
 		return;
-	//if(false && game.read("autosave"))
-	//	draw::setnext(show_messages);
-	//else {
+	if(game.read("autosave"))
+		draw::setnext(show_messages);
+	else {
 		initialize_scene();
 		draw::setnext(next_turn);
-//	}
+	}
 }
 
 void initialize_game() {
 }
 
 int main(int argc, char* argv[]) {
-	srand(getcputime());
+	// srand(getcputime());
+	srand(10293);
 	ui_initialize();
 	initialize_game();
 	return draw::strategy(start_game, 0);

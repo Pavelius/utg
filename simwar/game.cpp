@@ -3,6 +3,7 @@
 #include "script.h"
 #include "rand.h"
 #include "randomizer.h"
+#include "list.h"
 
 gamei game;
 
@@ -46,7 +47,33 @@ static void neutral_dwelvers() {
 	add_neutral_troops();
 }
 
+static void add_cards(deck& source, variants& elements) {
+	for(auto v : elements) {
+		if(v.iskind<cardi>()) {
+			auto count = script_count(v.counter);
+			for(auto i = 0; i < count; i++)
+				source.add(bsdata<cardi>::elements + v.value);
+		}
+	}
+}
+
+static void add_cards(deck& source) {
+	auto p = bsdata<listi>::find("StartTactics");
+	if(!p)
+		return;
+	source.clear();
+	add_cards(source, p->elements);
+	source.shuffle();
+}
+
+static void add_player_tactics() {
+	add_cards(neutral_tactics);
+	for(auto& e : bsdata<playeri>())
+		add_cards(e.tactics);
+}
+
 void gamei::initialize() {
 	year = 1410;
 	neutral_dwelvers();
+	add_player_tactics();
 }

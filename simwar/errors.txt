@@ -1,2 +1,2 @@
-﻿Error in file `rules/Basic.txt`:
- Line 50: Not found requisit `shield`
+﻿Error in file `rules/Tactics.txt`:
+ Line 35: Can't find variant `ExhaustCombats`

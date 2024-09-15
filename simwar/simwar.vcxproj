@@ -191,6 +191,7 @@
     <ClInclude Include="army.h" />
     <ClInclude Include="calendar.h" />
     <ClInclude Include="card.h" />
+    <ClInclude Include="cardaf.h" />
     <ClInclude Include="costitem.h" />
     <ClInclude Include="deck.h" />
     <ClInclude Include="entity.h" />
@@ -204,7 +205,6 @@
     <ClInclude Include="province.h" />
     <ClInclude Include="site.h" />
     <ClInclude Include="special.h" />
-    <ClInclude Include="tactic.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="maps\silentseas.txt" />

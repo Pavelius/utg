@@ -273,6 +273,12 @@ static void paint_buildings(const provincei* p) {
 	}
 }
 
+static void paint_moveto() {
+	auto p = (moveorder*)last_object->data;
+	auto n = p->count;
+	show_banner(14 + n, p->player->shield, str("%1i", n));
+}
+
 static void paint_province() {
 	auto p = (provincei*)last_object->data;
 	auto n = p->getunits();
@@ -322,13 +328,29 @@ static void remove_object(array& source) {
 	}
 }
 
-void update_provinces_ui() {
+static void update_provinces_ui() {
 	remove_object(bsdata<provincei>::source);
 	for(auto& e : bsdata<provincei>()) {
 		if(!e.isvisible())
 			continue;
 		auto p = addobject(e.position, &e, paint_province, 0, 21);
 	}
+}
+
+static void update_moveto_ui() {
+	remove_object(bsdata<moveorder>::source);
+	for(auto& e : bsdata<moveorder>()) {
+		if(!e.getto()->isvisible())
+			continue;
+		auto pt = e.getto()->position;
+		pt.x += 24;
+		auto p = addobject(pt, &e, paint_moveto, 0, 22);
+	}
+}
+
+void update_ui() {
+	update_provinces_ui();
+	update_moveto_ui();
 }
 
 static void ui_background() {

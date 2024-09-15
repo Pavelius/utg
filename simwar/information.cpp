@@ -66,7 +66,6 @@ void add_line_upkeep(const provincei* province, stringbuilder& sb) {
 	add_line(sb, bsdata<costi>::elements[Influence].frame, province->get(Influence));
 	add_line(sb, bsdata<costi>::elements[Gold].frame, province->get(Gold));
 	add_line(sb, bsdata<costi>::elements[Lore].frame, province->get(Lore));
-	add_line(sb, 5, province->buildings);
 }
 
 void add_line_upkeep_x(const provincei* province, stringbuilder& sb) {
@@ -74,7 +73,7 @@ void add_line_upkeep_x(const provincei* province, stringbuilder& sb) {
 	add_line_x(sb, bsdata<costi>::elements[Influence].frame, province->get(Influence));
 	add_line_x(sb, bsdata<costi>::elements[Gold].frame, province->get(Gold));
 	add_line_x(sb, bsdata<costi>::elements[Lore].frame, province->get(Lore));
-	add_line_x(sb, 5, province->buildings);
+	add_line_x(sb, bsdata<costi>::elements[Strenght].frame, province->get(Strenght));
 }
 
 void add_line(stringbuilder& sb, const costa& source) {
@@ -113,15 +112,6 @@ static void add_description(const sitei* p, stringbuilder& sb) {
 		}
 		sb.adds(pd, n);
 	}
-	//for(auto v : p->conditions) {
-	//	auto id = v.getid();
-	//	if(!id)
-	//		continue;
-	//	auto pd = getnme(ids(id, "Condition"));
-	//	if(!pd)
-	//		continue;
-	//	sb.adds(pd);
-	//}
 }
 
 static void add_description(const char* id, stringbuilder& sb) {
@@ -142,10 +132,6 @@ template<> void ftinfo<costi>(const void* object, stringbuilder& sb) {
 }
 
 template<> void ftinfo<provincei>(const void* object, stringbuilder& sb) {
-	auto p = (provincei*)object;
-	//add_description(p->id, sb);
-	//sb.addn("---");
-	//add_line_upkeep(p, sb);
 }
 
 template<> void ftinfo<sitei>(const void* object, stringbuilder& sb) {

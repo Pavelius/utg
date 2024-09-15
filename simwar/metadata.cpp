@@ -9,7 +9,6 @@
 #include "randomizer.h"
 #include "stringbuilder.h"
 #include "script.h"
-#include "tactic.h"
 #include "variant.h"
 
 bool fntestlist(int index, int bonus);
@@ -24,7 +23,6 @@ BSDATAC(playeri, 16)
 BSDATAC(provincei, 128)
 BSDATAC(sitei, 256)
 BSDATAC(site, 2048)
-BSDATAC(tactici, 64)
 
 BSMETA(actioni) = {
 	BSREQ(id),
@@ -94,10 +92,6 @@ BSMETA(sitei) = {
 	BSFLG(feat, feati),
 	BSREQ(avatar),
 	{}};
-BSMETA(tactici) = {
-	BSREQ(id),
-	BSDST(effect, costi),
-	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -115,7 +109,6 @@ BSDATA(varianti) = {
 	{"RandomList", VAR(randomizeri, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
 	{"Site", VAR(sitei, 1), 0, 0, fnscript<sitei>},
-	{"Tactic", VAR(tactici, 1)},
 	{"Tag", VAR(tagi, 1)},
 };
 BSDATAF(varianti)

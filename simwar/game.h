@@ -12,3 +12,5 @@ struct gamei : calendari {
 };
 extern gamei game;
 
+int script_count(int counter);
+

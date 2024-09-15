@@ -3,7 +3,7 @@
 #include "nameable.h"
 
 enum featn : unsigned char {
-	Building, Independed, Water,
+	Building, Water,
 	Discard, Shuffle, Extend,
 };
 struct feati : nameable {
