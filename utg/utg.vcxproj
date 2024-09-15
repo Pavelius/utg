@@ -206,6 +206,7 @@
     <ClCompile Include="quest.cpp" />
     <ClCompile Include="questlist.cpp" />
     <ClCompile Include="randomizer.cpp" />
+    <ClCompile Include="relation.cpp" />
     <ClCompile Include="resource_dynamic.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="screenshoot.cpp" />
@@ -272,6 +273,7 @@
     <ClInclude Include="ownerable.h" />
     <ClInclude Include="parentable.h" />
     <ClInclude Include="rand.h" />
+    <ClInclude Include="relation.h" />
     <ClInclude Include="seqlink.h" />
     <ClInclude Include="slice.h" />
     <ClInclude Include="sliceu.h" />

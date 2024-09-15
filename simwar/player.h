@@ -6,6 +6,8 @@
 
 #pragma once
 
+const int player_maximum = 16;
+
 struct playeri : entityi {
 	int			shield, units;
 	costa		resources, income, faith;

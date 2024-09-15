@@ -300,6 +300,9 @@
     <ClCompile Include="math.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="relation.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -588,6 +591,9 @@
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="rand.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="relation.h">
       <Filter>Support</Filter>
     </ClInclude>
   </ItemGroup>
