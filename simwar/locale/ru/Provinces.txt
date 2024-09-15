@@ -1,4 +1,5 @@
-﻿BialeTatry: Бьялые поля
+﻿BaltoroFlats: Плоскогорье Балтора
+BialeTatry: Бьялые поля
 BialowiezaForest: Беловежская пуща
 CapeBrumal: Мыс жестокости
 CathedralGap: Соборный путь
@@ -7,6 +8,7 @@ GelidSea: Ледяное море
 HiemalStrait: Химальский пролив
 FieldsOfRefuge: Поля утешения
 NandaDevi: Леса Нанды
+NangaParbat: Долина Нанды
 Opole: Ополье
 PlainsOfPolabia: Полабийские поля
 PtarmiganRidge: Хребет куропаток
@@ -15,6 +17,8 @@ SeaOfLostWinds: Море потерянных ветров
 SteelCliffs: Стальные утесы
 WesternExpanse: Западное море
 WesternZastrugi: Западный край
+Zakopane: Закопани
+JeleniaGora: Зеленая гора
 
 EastHills: Восточные холмы
 EasternAcres: Восточные луга

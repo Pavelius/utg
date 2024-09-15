@@ -1,2 +1,2 @@
-﻿Error in file `rules/Tactics.txt`:
- Line 35: Can't find variant `ExhaustCombats`
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `BaltoroFlats`

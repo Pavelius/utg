@@ -3,7 +3,7 @@
 
 BSDATA(costi) = {
 	{"Resources", 20},
-	{"Influence", 16},
+	{"Influence", 23},
 	{"Gold", 22},
 	{"Happiness", 10},
 	{"Fame", 8},

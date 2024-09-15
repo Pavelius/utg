@@ -128,8 +128,8 @@ static void field(costn v, const char* format, int width, int v1, int v2, int v3
 	paint_vborder();
 }
 
-static void field(costn v, const char* format, int width, const costa& a1, const costa& a2, const costa& a3) {
-	field(v, format, width, a1[v], a2[v], a3[v]);
+static void field(costn v, const char* format, int width, const costa& a1, const costa& a2) {
+	field(v, format, width, a1[v], a2[v], 0);
 }
 
 static void field_date() {
@@ -139,21 +139,21 @@ static void field_date() {
 	paint_vborder();
 }
 
-static void paint_cost(const costa& v, const costa& n, const costa& u) {
+static void paint_cost(const costa& v, const costa& n) {
 	field_date();
-	field(Resources, "%1i/%2i", 80, v, n, u);
-	field(Influence, "%1i/%2i", 80, v, n, u);
-	field(Gold, 0, 100, v, n, u);
+	field(Resources, "%1i/%2i", 80, v, n);
+	field(Influence, "%1i/%2i", 80, v, n);
+	field(Gold, 0, 100, v, n);
 	field(Happiness, "%1i", 40, player->income[Happiness], 0, 0);
-	field(Fame, "%1i", 0, v, n, u);
+	field(Fame, 0, 120, v[Fame], n[Fame], game.maximum_fame);
 	field(Warfire, "%1i/%2i", 0, player->units, n[Warfire], 0);
-	field(Lore, 0, 120, v, n, u);
+	field(Lore, 0, 120, v[Lore], n[Lore], 200);
 }
 
 void status_info() {
 	auto push_caret = caret;
 	caret.y += metrics::padding;
-	paint_cost(player->resources, player->income, player->upgrade);
+	paint_cost(player->resources, player->income);
 	caret = push_caret;
 	caret.y += texth() + metrics::padding * 2;
 }
@@ -353,6 +353,7 @@ static void update_moveto_ui() {
 }
 
 void update_ui() {
+	normalize_objects();
 	update_provinces_ui();
 	update_moveto_ui();
 }

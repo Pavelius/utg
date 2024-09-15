@@ -22,19 +22,19 @@ Wasteland
 
 Fort avatar(11)
  income Strenght(1) Recruit(1)
- cost Resources(30)
+ cost Resources(20)
  feat Building
 City avatar(5)
  income Influence(1) Warfire(1)
- cost Resources(30)
+ cost Resources(20)
  feat Building
 Temple avatar(12)
  income Influence(1) Happiness(1)
- cost Resources(30)
+ cost Resources(10)
  feat Building
 Mine
- income Resources(2)
- cost Resources(30)
+ income Resources(1)
+ cost Resources(10)
  feat Building
 
 BanditLair resid(DarkCave)

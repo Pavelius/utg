@@ -8,8 +8,6 @@ struct actioni : nameable {
 	typedef bool(*fntest)(const void* object);
 	fnaction	proc;
 	fntest		test;
-	char		priority; // 0 - 10
-	char		mobilize;
 	costa		cost;
 
 };

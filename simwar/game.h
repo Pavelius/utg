@@ -6,11 +6,12 @@
 #pragma once
 
 struct gamei : calendari {
-	void initialize();
+	int			maximum_fame;
 	static bool read(const char* id);
 	static void write(const char* id);
 };
 extern gamei game;
 
+void initialize_game();
 int script_count(int counter);
 

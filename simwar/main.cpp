@@ -29,9 +29,8 @@ static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
 	province = bsdata<provincei>::find("CapeBrumal");
 	province->player = player;
-	player->upgrade[Lore] += 50;
 	script_run(player->start);
-	game.initialize();
+	initialize_game();
 	script_run("UpdatePlayer");
 }
 
@@ -50,14 +49,10 @@ static void start_game() {
 	}
 }
 
-void initialize_game() {
-}
-
 int main(int argc, char* argv[]) {
 	srand(getcputime());
 	// srand(10293);
 	ui_initialize();
-	initialize_game();
 	return draw::strategy(start_game, 0);
 }
 

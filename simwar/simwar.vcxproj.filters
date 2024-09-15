@@ -39,9 +39,6 @@
     <ClCompile Include="calendar.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="log_text.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="locale\ru\Calendar.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Abilities.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

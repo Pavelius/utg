@@ -22,7 +22,6 @@ int get_value(const char* id, int value) {
 }
 
 void add_cost_items(stringbuilder& sb) {
-	sb.clear();
 	if(!lastcostitem)
 		return;
 	for(auto& e : *lastcostitem) {

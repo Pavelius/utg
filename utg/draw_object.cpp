@@ -220,6 +220,27 @@ static void sortobjects(object** pb, size_t count) {
 	qsort(pb, count, sizeof(pb[0]), compare);
 }
 
+void normalize_objects() {
+	auto pe = bsdata<object>::begin();
+	for(auto& e : bsdata<object>()) {
+		if(!e)
+			continue;
+		*pe++ = e;
+	}
+	bsdata<object>::source.count = pe - bsdata<object>::elements;
+}
+
+void shrink_objects() {
+	auto pb = bsdata<object>::begin();
+	auto pe = bsdata<object>::end();
+	while(pe > pb) {
+		if(pe[-1])
+			break;
+		pe--;
+	}
+	bsdata<object>::source.count = pe - bsdata<object>::elements;
+}
+
 void paint_objects() {
 	static object* source[max_object_count];
 	auto push_caret = caret;

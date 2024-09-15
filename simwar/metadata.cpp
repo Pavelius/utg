@@ -69,8 +69,7 @@ BSMETA(neighbor) = {
 	{}};
 BSMETA(playeri) = {
 	BSREQ(id),
-	BSDST(resources, costi),
-	BSDST(faith, costi),
+	BSDST(resources, costi), BSDST(faith, costi),
 	BSREQ(start),
 	BSREQ(shield),
 	{}};

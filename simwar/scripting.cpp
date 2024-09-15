@@ -19,6 +19,8 @@
 #include "site.h"
 #include "statable.h"
 
+gamei game;
+
 void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
 
 void add_line(stringbuilder& sb, const costa& source);
@@ -118,7 +120,7 @@ static int get_provinces_income(costn v) {
 int get_income(costn v) {
 	auto result = get_provinces_income(v);
 	result += get_buildings_income(v);
-	result += get_value("FaithBonus", player->faith[v]);
+	result += get_value(player->id, player->faith[v]);
 	result += get_buildings_upkeep(v);
 	return result;
 }
@@ -400,9 +402,8 @@ static void choose_buildings() {
 		collection<site> buildings; buildings.select(player_province_building);
 		for(auto p : buildings)
 			an.add(p, p->type->getname());
-		auto maximum_build = 1;
-		if(province->buildings < province->income[Size] && province->builded < maximum_build)
-			an.add(add_building, getnm("AddBuilding"), maximum_build - province->builded);
+		if(province->buildings < province->income[Size])
+			an.add(add_building, getnm("AddBuilding"), province->income[Size] - province->buildings);
 		if(!choose_answer())
 			break;
 		if(bsdata<site>::have(answer_result))
@@ -498,7 +499,10 @@ static bool troops_mobilization(int value, int defence) {
 			if(e.getto() == province)
 				troops_army.units += e.count;
 		}
-		troops_army.act(sb, getnm("ArmyMobilize"));
+		if(province->player == player)
+			troops_army.act(sb, getnm("ArmyLogistic"));
+		else
+			troops_army.act(sb, getnm("ArmyMobilize"));
 		an.clear();
 		for(auto& e : bsdata<provincei>()) {
 			if(e.player != player || &e == province)
@@ -518,7 +522,7 @@ static bool troops_mobilization(int value, int defence) {
 			break;
 		} else if(bsdata<provincei>::have(answer_result)) {
 			auto p = (provincei*)answer_result;
-			if(p->units > 0 && p->player == player) {
+			if(p->units > 0 && p->player == player && p->getcost() <= value) {
 				((provincei*)answer_result)->units--;
 				add_move(p, province, player, 1);
 			}
@@ -768,12 +772,6 @@ static bool friendly_province(const void* pv) {
 	return true;
 }
 
-static bool friendly_province_vacant_army(const void* pv) {
-	if(!friendly_province(pv))
-		return false;
-	return true;
-}
-
 static bool friendly_province_site(const void* pv) {
 	if(!friendly_province(pv))
 		return false;
@@ -799,6 +797,7 @@ static bool visible_not_explored_province(const void* object) {
 }
 
 static void action_mobilize() {
+	troops_mobilization(1, 0);
 }
 
 static void action_recruit() {
@@ -834,10 +833,7 @@ static void apply_battle() {
 }
 
 static void action_conquest() {
-	if(!troops_mobilization(1, province->getstrenght()))
-		return;
-	//apply_battle();
-	//show_messages();
+	troops_mobilization(1, province->getstrenght());
 }
 
 static void action_explore() {
@@ -875,6 +871,8 @@ static bool assign_random_action_target() {
 
 static void update_province_per_turn() {
 	for(auto& e : bsdata<provincei>()) {
+		if(!e)
+			continue;
 		e.recruit = 0;
 		e.builded = 0;
 	}
@@ -929,11 +927,74 @@ void next_turn() {
 	game.write("autosave");
 }
 
+static void mark_start_provinces() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player)
+			e.makewave();
+	}
+}
+
+static void add_neutral_troops() {
+	for(auto& e : bsdata<provincei>()) {
+		if(e.iswater() || e.player)
+			continue;
+		auto level = e.getcost();
+		if(!level)
+			continue;
+		auto count = level;
+		if(count > 8)
+			count = 8;
+		for(auto i = 0; i < count; i++) {
+			if(d100() < 40)
+				continue;
+			e.units++;
+		}
+	}
+}
+
+static void neutral_dwelvers() {
+	clear_wave();
+	mark_start_provinces();
+	add_neutral_troops();
+}
+
+static void add_cards(deck& source, variants& elements) {
+	for(auto v : elements) {
+		if(v.iskind<cardi>()) {
+			auto count = script_count(v.counter);
+			for(auto i = 0; i < count; i++)
+				source.add(bsdata<cardi>::elements + v.value);
+		}
+	}
+}
+
+static void add_cards(deck& source) {
+	auto p = bsdata<listi>::find("StartTactics");
+	if(!p)
+		return;
+	source.clear();
+	add_cards(source, p->elements);
+	source.shuffle();
+}
+
+static void add_player_tactics() {
+	add_cards(neutral_tactics);
+	for(auto& e : bsdata<playeri>())
+		add_cards(e.tactics);
+}
+
+void initialize_game() {
+	game.year = 1410;
+	game.maximum_fame = 400;
+	neutral_dwelvers();
+	add_player_tactics();
+}
+
 BSDATA(actioni) = {
-	{"ActionConquer", action_conquest, enemy_province, 4, 1},
-	{"ActionExplore", action_explore, visible_not_explored_province, 1, 0},
-	// {"ActionMobilize", action_mobilize, friendly_province_vacant_army, 5, 2},
-	{"ActionRecruit", action_recruit, can_recruit_troops, 5, 2},
+	{"ActionConquer", action_conquest, enemy_province, 4},
+	{"ActionExplore", action_explore, visible_not_explored_province, 1},
+	{"ActionMobilize", action_mobilize, friendly_province, 5},
+	{"ActionRecruit", action_recruit, can_recruit_troops, 5},
 };
 BSDATAF(actioni)
 BSDATA(script) = {

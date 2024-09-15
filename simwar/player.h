@@ -7,13 +7,12 @@
 #pragma once
 
 struct playeri : entityi {
-	int				shield;
-	char			units;
-	costa			resources, income, upgrade, faith;
-	variants		start;
-	provincef		visibility;
-	deck			tactics;
-	int				getindex() const;
+	int			shield, units;
+	costa		resources, income, faith;
+	variants	start;
+	provincef	visibility;
+	deck		tactics;
+	int			getindex() const;
 };
 extern playeri* player;
 
