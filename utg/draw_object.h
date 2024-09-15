@@ -54,6 +54,7 @@ void wait_all();
 
 object* addobject(point screen, const void* data, fnevent painting, unsigned char param, unsigned char priority = 21, unsigned char alpha = 0xFF, unsigned char flags = 0);
 object* findobject(const void* p);
+object* findobject(point position, fnevent proc);
 
 void* choose_object();
 

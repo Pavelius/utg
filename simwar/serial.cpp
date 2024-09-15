@@ -1,5 +1,6 @@
 #include "archive.h"
 #include "bsreq.h"
+#include "draw.h"
 #include "game.h"
 
 void serial_object(archive& f, array& source, const bsreq* type);
@@ -14,6 +15,20 @@ static void serial(archive& f, const char* id, bool clean_all = false) {
 	serial_object(f, *p->source, p->metadata);
 }
 
+static void serial(archive& a, deck& source) {
+	variant v;
+	a.set(source.count);
+	for(auto& e : source) {
+		if(a.writemode) {
+			v = e;
+			a.set(v);
+		} else {
+			a.set(v);
+			e = v;
+		}
+	}
+}
+
 static bool serial_game_file(const char* id, bool write) {
 	char temp[260]; stringbuilder sb(temp); sb.add("saves/%1.sav", id);
 	io::file file(temp, write ? StreamWrite : StreamRead);
@@ -22,14 +37,19 @@ static bool serial_game_file(const char* id, bool write) {
 	archive a(file, write);
 	if(!a.signature("SAV"))
 		return false;
-	if(!a.version(0, 1))
+	if(!a.version(0, 7))
 		return false;
 	if(!a.signature(bsreq_signature()))
 		return false;
 	a.set(game);
+	a.set(draw::camera);
 	serial(a, "Player");
 	serial(a, "Province");
 	serial(a, "PlayerSite", true);
+	serial(a, "MoveOrder", true);
+	serial(a, neutral_tactics);
+	for(auto& e : bsdata<playeri>())
+		serial(a, e.tactics);
 	return true;
 }
 

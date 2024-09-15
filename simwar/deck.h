@@ -6,6 +6,7 @@
 enum deck_s : unsigned char {
 	TacticCards,
 };
+
 struct deck : collection<cardi> {
 	void		addall(cardi& v);
 	void		create(deck_s v);

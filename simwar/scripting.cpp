@@ -686,10 +686,7 @@ static void gain_control(const army& troops) {
 	troops.province->units = troops.units;
 }
 
-static void retreat_attacker(const army& troops) {
-}
-
-static void retreat_defender(army& troops) {
+static void retreat_army(army& troops) {
 	neightbors provinces;
 	provinces.selectn(troops.province);
 	auto push_player = player; player = troops.player;
@@ -743,10 +740,10 @@ static void conquest(stringbuilder& sb, army& attacker, army& defender) {
 	print_result(sb, attacker);
 	print_result(sb, defender);
 	if(win_battle) {
-		retreat_defender(defender);
+		retreat_army(defender);
 		gain_control(attacker);
 	} else
-		retreat_attacker(attacker);
+		retreat_army(attacker);
 }
 
 static void add_unit(int bonus) {

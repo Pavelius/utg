@@ -262,6 +262,14 @@ object*	addobject(point screen, const void* data, fnevent painting, unsigned cha
 	return p;
 }
 
+object* findobject(point position, fnevent proc) {
+	for(auto& e : bsdata<object>()) {
+		if(e.position == position && e.painting == proc)
+			return &e;
+	}
+	return 0;
+}
+
 object* findobject(const void* p) {
 	for(auto& e : bsdata<object>()) {
 		if(e.data == p)

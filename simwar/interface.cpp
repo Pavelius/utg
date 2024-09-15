@@ -275,7 +275,7 @@ static void paint_buildings(const provincei* p) {
 
 static void paint_moveto() {
 	auto p = (moveorder*)last_object->data;
-	auto n = p->count;
+	auto n = last_object->param;
 	show_banner(14 + n, p->player->shield, str("%1i", n));
 }
 
@@ -344,7 +344,11 @@ static void update_moveto_ui() {
 			continue;
 		auto pt = e.getto()->position;
 		pt.x += 24;
-		auto p = addobject(pt, &e, paint_moveto, 0, 22);
+		auto p = findobject(pt, paint_moveto);
+		if(p)
+			p->param += e.count;
+		else
+			p = addobject(pt, &e, paint_moveto, e.count, 22);
 	}
 }
 

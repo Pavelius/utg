@@ -102,8 +102,10 @@ void army::defenders() {
 void army::attackers() {
 	units = 0;
 	for(auto& e : bsdata<moveorder>()) {
-		if(e.player == player && e.getto() == province)
+		if(e.player == player && e.getto() == province) {
 			units += e.count;
+			e.clear();
+		}
 	}
 }
 

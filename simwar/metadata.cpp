@@ -5,6 +5,7 @@
 #include "bsreq.h"
 #include "site.h"
 #include "list.h"
+#include "moveorder.h"
 #include "player.h"
 #include "randomizer.h"
 #include "stringbuilder.h"
@@ -57,6 +58,11 @@ BSMETA(landscapei) = {
 	BSDST(upkeep, costi),
 	BSFLG(feat, feati),
 	{}};
+BSMETA(moveorder) = {
+	BSREQ(from), BSREQ(to),
+	BSREQ(player),
+	BSREQ(count),
+	{}};
 BSMETA(neighbor) = {
 	BSENM(n1, provincei),
 	BSENM(n2, provincei),
@@ -77,7 +83,7 @@ BSMETA(provincei) = {
 	BSREQ(position),
 	BSREQ(landscape),
 	BSDST(income, costi),
-	BSREQ(builded), BSREQ(recruit),
+	BSREQ(builded), BSREQ(recruit), BSREQ(units),
 	{}};
 BSMETA(site) = {
 	BSREQ(type),
@@ -102,6 +108,7 @@ BSDATA(varianti) = {
 	{"Card", VAR(cardi, 1)},
 	{"Landscape", VAR(landscapei, 1)},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntestlist},
+	{"MoveOrder", VAR(moveorder, 3)},
 	{"Neighbor", VAR(neighbor, 2)},
 	{"Player", VAR(playeri, 1)},
 	{"PlayerSite", VAR(site, 0)},

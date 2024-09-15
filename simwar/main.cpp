@@ -54,8 +54,8 @@ void initialize_game() {
 }
 
 int main(int argc, char* argv[]) {
-	// srand(getcputime());
-	srand(10293);
+	srand(getcputime());
+	// srand(10293);
 	ui_initialize();
 	initialize_game();
 	return draw::strategy(start_game, 0);
