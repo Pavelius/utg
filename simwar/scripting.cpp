@@ -517,8 +517,11 @@ static bool troops_mobilization(int value, int defence) {
 			clear_troops_movement();
 			break;
 		} else if(bsdata<provincei>::have(answer_result)) {
-			((provincei*)answer_result)->units--;
-			add_move((provincei*)answer_result, province, player, 1);
+			auto p = (provincei*)answer_result;
+			if(p->units > 0 && p->player == player) {
+				((provincei*)answer_result)->units--;
+				add_move(p, province, player, 1);
+			}
 		} else
 			standart_result();
 		update_ui();
@@ -652,9 +655,10 @@ static bool battle_result(stringbuilder& sb, army& attacker, army& defender) {
 	auto win_battle = false;
 	province->units = defender.units;
 	if(attacker && defender) {
+		// Strenght only matter when defender or attackers have troops
 		auto attacker_strenght = attacker.result[Strenght];
 		auto defender_strenght = defender.result[Strenght];
-		win_battle = (attacker_strenght > defender_strenght); // Need more strenght to win
+		win_battle = (attacker_strenght > defender_strenght); // Attacker need more strenght to win defender
 		if(win_battle) {
 			attacker.result[Fame] += 1;
 			attacker.act(sb, getnm("BattleTotal"));
@@ -832,8 +836,8 @@ static void apply_battle() {
 static void action_conquest() {
 	if(!troops_mobilization(1, province->getstrenght()))
 		return;
-	apply_battle();
-	show_messages();
+	//apply_battle();
+	//show_messages();
 }
 
 static void action_explore() {
@@ -895,8 +899,28 @@ static void expend_per_turn_resources() {
 	}
 }
 
+static void move_troops_per_provinces() {
+	auto push_province = province;
+	auto push_player = player;
+	for(auto& e : bsdata<moveorder>()) {
+		if(!e)
+			continue;
+		province = e.getto();
+		if(province->player == e.player)
+			province->units += e.count;
+		else {
+			player = e.player;
+			apply_battle();
+		}
+		e.clear();
+	}
+	player = push_player;
+	province = push_province;
+}
+
 void next_turn() {
 	game.turn++;
+	move_troops_per_provinces();
 	update_province_per_turn();
 	expend_per_turn_resources();
 	update_player(0);

@@ -1,6 +1,6 @@
-#include "crt.h"
-
 #pragma once
+
+#include "bsdata.h"
 
 template<typename T>
 class bsref {

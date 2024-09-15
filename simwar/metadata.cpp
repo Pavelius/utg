@@ -88,6 +88,7 @@ BSMETA(provincei) = {
 BSMETA(site) = {
 	BSREQ(type),
 	BSREQ(province),
+	BSREQ(explore),
 	{}};
 BSMETA(sitei) = {
 	BSREQ(id),
