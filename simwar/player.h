@@ -6,15 +6,15 @@
 
 #pragma once
 
-const int player_maximum = 16;
-
 struct playeri : entityi {
 	int			shield, units;
+	char		explore, provinces;
 	costa		resources, income, faith;
 	variants	start;
 	provincef	visibility;
 	deck		tactics;
 	int			getindex() const;
+	int			getrelation(const playeri* player) const;
 };
 extern playeri* player;
 

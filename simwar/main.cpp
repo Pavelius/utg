@@ -24,6 +24,7 @@ void next_turn();
 void show_messages();
 void ui_initialize();
 void util_main();
+void initialize_relation();
 
 static void initialize_scene() {
 	player = bsdata<playeri>::find("SouthernKindom");
@@ -53,6 +54,7 @@ int main(int argc, char* argv[]) {
 	srand(getcputime());
 	// srand(10293);
 	ui_initialize();
+	initialize_relation();
 	return draw::strategy(start_game, 0);
 }
 

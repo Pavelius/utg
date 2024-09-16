@@ -7,6 +7,7 @@
 #include "list.h"
 #include "moveorder.h"
 #include "player.h"
+#include "relation.h"
 #include "randomizer.h"
 #include "stringbuilder.h"
 #include "script.h"
@@ -20,7 +21,7 @@ NOBSDATA(color)
 BSDATAC(cardi, 512)
 BSDATAC(landscapei, 32)
 BSDATAC(neighbor, 1024)
-BSDATAC(playeri, 16)
+BSDATAC(playeri, player_maximum)
 BSDATAC(provincei, 128)
 BSDATAC(sitei, 256)
 BSDATAC(site, 2048)

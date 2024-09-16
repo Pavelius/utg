@@ -162,6 +162,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="moveorder.cpp" />
+    <ClCompile Include="relation.cpp" />
     <ClCompile Include="report.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="serial.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="feat.h" />
     <ClInclude Include="moveorder.h" />
+    <ClInclude Include="relation.h" />
     <ClInclude Include="report.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="game.h" />

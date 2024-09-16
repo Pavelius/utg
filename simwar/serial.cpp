@@ -2,6 +2,7 @@
 #include "bsreq.h"
 #include "draw.h"
 #include "game.h"
+#include "relation.h"
 
 void serial_object(archive& f, array& source, const bsreq* type);
 void serial_object(archive& f, void* object, const bsreq* type);
@@ -37,12 +38,14 @@ static bool serial_game_file(const char* id, bool write) {
 	archive a(file, write);
 	if(!a.signature("SAV"))
 		return false;
-	if(!a.version(0, 7))
+	if(!a.version(0, 9))
 		return false;
 	if(!a.signature(bsreq_signature()))
 		return false;
 	a.set(game);
 	a.set(draw::camera);
+	a.set(current_relation);
+	a.set(bonus_relation);
 	serial(a, "Player");
 	serial(a, "Province");
 	serial(a, "PlayerSite", true);

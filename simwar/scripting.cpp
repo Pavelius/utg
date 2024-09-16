@@ -15,6 +15,7 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "randomizer.h"
+#include "relation.h"
 #include "script.h"
 #include "site.h"
 #include "statable.h"
@@ -176,7 +177,17 @@ static void update_province_visibility() {
 	update_ui();
 }
 
+static void update_player_provinces() {
+	for(auto& e : bsdata<playeri>())
+		e.provinces = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player)
+			e.player->provinces++;
+	}
+}
+
 static void update_player(int bonus) {
+	update_player_provinces();
 	update_provinces();
 	update_player_income();
 	update_player_units();
@@ -916,13 +927,54 @@ static void move_troops_per_provinces() {
 	province = push_province;
 }
 
+static void select_provinces(entitya& source, playeri* player) {
+	auto pb = bsdata<provincei>::begin();
+	auto pe = bsdata<provincei>::end();
+	auto ps = source.begin();
+	for(; pb < pe; pb++) {
+		if(!(*pb))
+			continue;
+		if(pb->player != player)
+			continue;
+		*ps++ = pb;
+	}
+	source.count = ps - source.begin();
+}
+
+static bool is_site_allow(const void* object) {
+	auto p = (provincei*)object;
+	if(p->sites >= p->get(Size))
+		return false;
+	return true;
+}
+
+static void add_new_location(playeri* player) {
+	entitya source;
+	select_provinces(source, player);
+	source.match(is_site_allow, true);
+}
+
+static void add_new_location() {
+	for(auto& e : bsdata<playeri>()) {
+		if(!e)
+			continue;
+		e.explore -= e.provinces;
+		while(e.explore <= 0) {
+			e.explore += xrand(20, 40);
+			add_new_location(&e);
+		}
+	}
+}
+
 void next_turn() {
 	game.turn++;
 	move_troops_per_provinces();
 	update_province_per_turn();
 	expend_per_turn_resources();
+	update_relation();
 	update_player(0);
 	gain_income(0);
+	add_new_location();
 	draw::setnext(show_messages);
 	game.write("autosave");
 }
