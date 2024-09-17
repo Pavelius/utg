@@ -38,7 +38,7 @@ static bool serial_game_file(const char* id, bool write) {
 	archive a(file, write);
 	if(!a.signature("SAV"))
 		return false;
-	if(!a.version(0, 9))
+	if(!a.version(0, 10))
 		return false;
 	if(!a.signature(bsreq_signature()))
 		return false;

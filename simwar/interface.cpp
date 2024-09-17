@@ -17,16 +17,6 @@ const int button_height = 20;
 fnevent input_province;
 void log_text(const char* format, ...);
 
-//static color player_colors[] = {
-//	{40, 40, 40},
-//	{97, 189, 79},
-//	{242, 214, 0},
-//	{255, 159, 26},
-//	{235, 90, 70},
-//	{195, 119, 224},
-//	{0, 121, 191},
-//};
-
 static bool troops_in_province(const void* object) {
 	return province->getunits() > 0;
 }
@@ -221,14 +211,6 @@ static void paint_hilite_province(int index, bool need_stroke = false) {
 	alpha = push_alpha;
 }
 
-//static void paint_shield(int index, bool need_stroke = false) {
-//	auto p = gres("shields", "art/sprites");
-//	if(need_stroke)
-//		stroke(caret.x, caret.y, p, index, 0, 2);
-//	else
-//		image(p, index, 0);
-//}
-
 static void border_circle(int size) {
 	auto push_fore = fore;
 	fore = colors::border;
@@ -277,6 +259,17 @@ static void paint_moveto() {
 	auto p = (moveorder*)last_object->data;
 	auto n = last_object->param;
 	show_banner(14 + n, p->player->shield, str("%1i", n));
+}
+
+static void paint_line_moveto() {
+	auto p = (moveorder*)last_object->data;
+	auto push_fore = fore;
+	auto push_caret = caret;
+	fore = bsdata<banneri>::elements[p->player->shield].border;
+	auto p1 = p->getfrom()->position - camera;
+	line(p1.x, p1.y);
+	caret = push_caret;
+	fore = push_fore;
 }
 
 static void paint_province() {
@@ -349,6 +342,7 @@ static void update_moveto_ui() {
 			p->param += e.count;
 		else
 			p = addobject(pt, &e, paint_moveto, e.count, 22);
+		addobject(pt, &e, paint_line_moveto, 0, 11);
 	}
 }
 

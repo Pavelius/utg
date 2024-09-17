@@ -149,6 +149,10 @@ static void update_player_units() {
 		if(e.player == player)
 			player->units += e.units;
 	}
+	for(auto& e : bsdata<moveorder>()) {
+		if(e.player == player)
+			player->units += e.count;
+	}
 }
 
 static void update_provinces() {

@@ -8,6 +8,7 @@ BSDATA(banneri) = {
 	{"YellowBanner", {226, 178, 3}, {90, 70, 1}},
 	{"GreenBanner", {148, 199, 72}, {90, 70, 1}},
 };
+BSDATAF(banneri)
 
 using namespace draw;
 

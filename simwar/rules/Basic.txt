@@ -47,7 +47,7 @@ MercenaryCamp resid(MercenaryCamp)
 
 #Player
 
-SouthernKindom shield(3)
+SouthernKindom shield(YellowBanner)
  resources Gold(100)
  faith Resources(5) Influence(2) Warfire(3) Happiness(2)
  start City+1 Fort+1 Unit+2
