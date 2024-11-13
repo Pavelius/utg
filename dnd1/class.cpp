@@ -2,7 +2,6 @@
 #include "avatarable.h"
 #include "class.h"
 #include "creature.h"
-#include "crt.h"
 #include "draw_utg.h"
 #include "gender.h"
 
@@ -76,7 +75,7 @@ static void choose_class() {
 		an.add(&e, getnm(e.id));
 	}
 	auto p = (classi*)an.choose(getnm("ChooseClass"));
-	player->type = p - bsdata<classi>::elements;
+	player->type = p;
 	draw::tab_pixels = push_tabs;
 	answers::console->clear();
 }

@@ -1,5 +1,4 @@
-﻿#include "crt.h"
-#include "draw.h"
+﻿#include "draw.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
 
@@ -27,18 +26,20 @@ static void enter_number(int& value) {
 	//controls::textedit te(temp, sizeof(temp), true);
 	//if(!te.editing(rc))
 	//	return;
-	stringbuilder::read(temp, value);
+	psnum(temp, value);
 }
 
 char* szpne(char* result, const char* url, const char* name, const char* ext) {
-	const char* p1 = szfname(url);
-	if(p1 == url)
-		result[0] = 0;
-	else
-		zcpy(result, url, p1 - url);
-	zcat(result, name);
-	zcat(result, ".");
-	zcat(result, ext);
+	char temp[260]; stringbuilder s1(temp); s1.add(url);
+	stringbuilder sb(result, result + 260);
+	char* p1 = (char*)szfname(temp);
+	if(p1)
+		p1[0] = 0;
+	sb.clear();
+	sb.add(temp);
+	sb.add(name);
+	sb.add(".");
+	sb.add(ext);
 	return result;
 }
 

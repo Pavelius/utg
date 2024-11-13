@@ -6,6 +6,8 @@
 #include "ongoing.h"
 #include "pushvalue.h"
 #include "roll.h"
+#include "rand.h"
+#include "math.h"
 #include "scenery.h"
 #include "script.h"
 #include "speech.h"

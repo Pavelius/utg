@@ -22,8 +22,8 @@ void printv(char separator, const char* format, const char* format_param, bool u
 	answers::console->addv(format, format_param);
 	if(uppercase) {
 		auto ps = (char*)p;
-		auto sym = szget(&p, metrics::code);
-		szput(&ps, szupper(sym));
+		auto sym = szget(&p);
+		szput(&ps, upper_symbol(sym));
 	}
 }
 
@@ -96,7 +96,7 @@ static void def_identifier(stringbuilder& sb, const char* id) {
 		return;
 	if(stringvar_identifier(sb, id))
 		return;
-	stringbuilder::defidentifier(sb, id);
+	default_string(sb, id);
 }
 
 static void item_identifier(stringbuilder& sb, const char* id) {
@@ -188,12 +188,12 @@ static void get_monsters(stringbuilder& sb) {
 				sb.add(" ");
 				auto p = sb.get();
 				sb.addofpl(encountered_monster->getlook()->getname());
-				szlower(p);
+				*p = lower_symbol(*p);
 			}
 		} else {
 			auto p = sb.get();
 			sb.addof(encountered_monster->getlook()->getname());
-			szlower(p);
+			*p = lower_symbol(*p);
 		}
 	}
 }

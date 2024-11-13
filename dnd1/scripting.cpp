@@ -6,6 +6,7 @@
 #include "itemlay.h"
 #include "modifier.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "randomizer.h"
 #include "roll.h"
 #include "reaction.h"
@@ -190,7 +191,7 @@ static bool isw(feat_s v) {
 static bool is_mighty_weapon() {
 	if(last_item)
 		return last_item->ismagic();
-	if(player->type == 0)
+	if(!player->type)
 		return player->get(Level) >= 5;
 	return false;
 }
@@ -500,7 +501,7 @@ static void random_encounter(int bonus) {
 	encountered_monster = 0;
 	encountered_count = 0;
 	reaction = Indifferent;
-	variant v = single(stw(scene->geti().id, "EncounterTable"));
+	variant v = single(ids(scene->geti().id, "EncounterTable"));
 	if(!v)
 		return;
 	if(v.iskind<script>())

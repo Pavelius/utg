@@ -7,6 +7,7 @@
 #include "draw_utg.h"
 #include "log.h"
 #include "questlist.h"
+#include "rand.h"
 #include "scenery.h"
 #include "speech.h"
 

@@ -1,4 +1,5 @@
-#include "crt.h"
+#include "math.h"
+#include "rand.h"
 #include "statable.h"
 
 static int ability_bonus[] = {

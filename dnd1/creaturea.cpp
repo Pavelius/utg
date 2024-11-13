@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "creature.h"
+#include "rand.h"
 
 creaturea creatures, encountered, targets;
 

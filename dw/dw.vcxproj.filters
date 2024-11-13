@@ -106,9 +106,6 @@
     <Text Include="rules\Basic.txt">
       <Filter>Data</Filter>
     </Text>
-    <Text Include="rules\Quest.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="rules\Items.txt">
       <Filter>Data</Filter>
     </Text>

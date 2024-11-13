@@ -1,6 +1,7 @@
-#include "crt.h"
+#include "bsdata.h"
 #include "creature.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "scenery.h"
 #include "spell.h"
 #include "ongoing.h"
@@ -76,7 +77,7 @@ int		last_level;
 void spell_initialize() {
 	for(auto& e : bsdata<spelli>()) {
 		if(!e.enchant)
-			e.enchant = (spell_s)getbse(e);
+			e.enchant = (spell_s)getbsi(e);
 	}
 }
 

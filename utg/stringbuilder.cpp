@@ -303,14 +303,9 @@ const char* str_count(const char* id, int count) {
 }
 
 void default_string(stringbuilder& sb, const char* id) {
-	auto p = getnme(id);
-	if(p)
-		sb.addv(p, 0);
-	else {
-		sb.addv("[-", 0);
-		sb.addv(id, 0);
-		sb.addv("]", 0);
-	}
+	sb.addv("[-", 0);
+	sb.addv(id, 0);
+	sb.addv("]", 0);
 }
 
 void stringbuilder::lower() {

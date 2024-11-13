@@ -1,5 +1,6 @@
 #include "draw_utg.h"
 #include "item.h"
+#include "rand.h"
 #include "randomizer.h"
 #include "roll.h"
 
