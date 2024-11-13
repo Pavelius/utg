@@ -14,7 +14,6 @@ AddFrame position(0 616)
 SaveSprite
 
 #Main url("D:/resources/hexagon/redux/terrain") ext("png") dest_url("test")
-
 Help
 
 // TerrainLarge name("c_forest")

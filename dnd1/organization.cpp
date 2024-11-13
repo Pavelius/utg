@@ -32,7 +32,7 @@ void start_game_organization() {
 
 void start_game_reputation() {
 	for(auto& e : bsdata<organizationi>()) {
-		auto index = getbse(e);
+		auto index = getbsi(&e);
 		for(auto p : creatures) {
 			if(p->geti().reputation.is(index))
 				e.abilities[Reputation]++;

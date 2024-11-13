@@ -70,7 +70,7 @@ static void combatant_list() {
 }
 
 void initialize_ui() {
-	//widget::add("EquipmentList", equipment_list);
-	//widget::add("BackpackList", backpack_list);
-	//widget::add("CombatantList", combatant_list);
+	add_widget("BackpackList", backpack_list);
+	add_widget("CombatantList", combatant_list);
+	add_widget("EquipmentList", equipment_list);
 }

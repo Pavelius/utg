@@ -56,9 +56,9 @@ private:
 };
 }
 
-unsigned szget(const char** input, codepage code);
+unsigned szget(const char** input, codepage code = codepage::W1251);
 
-char* szput(char* output, unsigned value, codepage code);
+char* szput(char* output, unsigned value, codepage code = codepage::W1251);
 char* loadt(const char* url, int* size = 0); // Load text file and decode it to system codepage.
 
 void* loadb(const char* url, int* size = 0, int additional_bytes_alloated = 0); // Load binary file.

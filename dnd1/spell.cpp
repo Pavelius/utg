@@ -77,7 +77,7 @@ int		last_level;
 void spell_initialize() {
 	for(auto& e : bsdata<spelli>()) {
 		if(!e.enchant)
-			e.enchant = (spell_s)getbsi(e);
+			e.enchant = (spell_s)getbsi(&e);
 	}
 }
 

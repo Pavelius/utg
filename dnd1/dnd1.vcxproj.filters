@@ -217,24 +217,6 @@
     <Text Include="errors.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Feats.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Monsters.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Items.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Actions.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="rules\Advance.txt">
       <Filter>data</Filter>
     </Text>
@@ -250,23 +232,41 @@
     <Text Include="rules\Organizations.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\speech\Adventures.txt">
-      <Filter>speech</Filter>
-    </Text>
-    <Text Include="locale\ru\speech\Characters.txt">
-      <Filter>speech</Filter>
-    </Text>
-    <Text Include="locale\ru\names\Scenery.txt">
-      <Filter>locale</Filter>
-    </Text>
-    <Text Include="locale\ru\quest\Adventures.txt">
-      <Filter>quest</Filter>
-    </Text>
     <Text Include="rules\Scenery.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\Spells.txt">
+    <Text Include="locale\ru\Actions.txt">
       <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Feats.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Items.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Monsters.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Scenery.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Spells.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="quest\ru\Adventures.txt">
+      <Filter>quest</Filter>
+    </Text>
+    <Text Include="speech\ru\Adventures.txt">
+      <Filter>speech</Filter>
+    </Text>
+    <Text Include="speech\ru\Characters.txt">
+      <Filter>speech</Filter>
     </Text>
   </ItemGroup>
 </Project>

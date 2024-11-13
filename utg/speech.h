@@ -11,7 +11,6 @@ struct speech {
 	elementa	source;
 };
 
-void speech_initialize();
 void speech_read(const char* url);
 
 const speech* speech_find(const char* id);

@@ -1,6 +1,7 @@
 #include "actable.h"
 #include "answers.h"
 #include "creature.h"
+#include "io_stream.h"
 #include "gender.h"
 #include "pushvalue.h"
 #include "speech.h"
@@ -23,7 +24,7 @@ void printv(char separator, const char* format, const char* format_param, bool u
 	if(uppercase) {
 		auto ps = (char*)p;
 		auto sym = szget(&p);
-		szput(&ps, upper_symbol(sym));
+		ps = szput(ps, upper_symbol(sym));
 	}
 }
 
@@ -187,7 +188,7 @@ static void get_monsters(stringbuilder& sb) {
 				//	sb.adds("%-LargePl");
 				sb.add(" ");
 				auto p = sb.get();
-				sb.addofpl(encountered_monster->getlook()->getname());
+				sb.addof(encountered_monster->getlook()->getname());
 				*p = lower_symbol(*p);
 			}
 		} else {

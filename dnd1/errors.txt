@@ -1,3 +1,2 @@
-﻿In file `Names.txt`:
-Wererat: Define translate
-
+﻿Error in file `rules/Basic.txt`:
+ Line 10: Can't find type `Quest`

@@ -12,6 +12,7 @@
 #include "speech.h"
 
 void combat_mode();
+void initialize_ui();
 void random_encounter(const char* id);
 void spell_initialize();
 
@@ -42,10 +43,8 @@ static void starting() {
 }
 
 void initialize_str();
-void initialize_ui();
 
 static void initializing() {
-	speech_initialize();
 	spell_initialize();
 	initialize_str();
 }
@@ -72,12 +71,12 @@ int main(int argc, char* argv[]) {
 	draw::heroes = bsdata<creature>::source_ptr;
 	draw::heroes_getavatar = getavatarst;
 	draw::heroes_isplayer = isplayer;
-	draw::heroes_getfade = get_fade;
+	draw::heroes_fade = get_fade;
 	//srand(getcputime());
 	srand(47167);
 	answers::resid = "meet";
 	initialize_ui();
-	return draw::start(starting, initializing);
+	return utg::start(starting, initializing);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {
