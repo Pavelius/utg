@@ -23,8 +23,7 @@ void printv(char separator, const char* format, const char* format_param, bool u
 	answers::console->addv(format, format_param);
 	if(uppercase) {
 		auto ps = (char*)p;
-		auto sym = szget(&p);
-		ps = szput(ps, upper_symbol(sym));
+		ps[0] = upper_symbol(p[0]);
 	}
 }
 

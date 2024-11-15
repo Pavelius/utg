@@ -16,6 +16,7 @@
 #include "reaction.h"
 #include "scenery.h"
 #include "script.h"
+#include "speech.h"
 #include "widget.h"
 
 NOBSDATA(attacki)
@@ -175,6 +176,7 @@ BSDATA(varianti) = {
 	{"Scene", VAR(scenery, 2), 0, 0},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Spell", VAR(spelli, 1), 0, 0, fnscript<spelli>, fntest<spelli>},
+	{"Speech", VAR(speech, 1), 0, 0, 0, 0, speech_read},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)
