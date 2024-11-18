@@ -20,9 +20,9 @@ struct spelli : nameable {
 	interval	random;
 	spella		dispell;
 	spelln		reversed, version, enchant;
-	spelln		getbasic() const { return reversed ? reversed : version; }
 	variants	wearing, instant, filter;
 	variant		summon;
+	spelln		getbasic() const { return reversed ? reversed : version; }
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;
 };

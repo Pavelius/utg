@@ -9,7 +9,7 @@ DetectEvil level(1) range(AllyItem) random(1)
  filter IfItemIdentify-1 IfItemCursed
  instant ItemIdentify+1 Speak
 DetectMagic level(1) range(AllyItem) random(1)
- filter IfItemIdentify-1 IfMagical
+ filter IfItemIdentify-1 IfItemMagical
  instant Speak
 Light level(1) range(Enviroment) duration(Turn12)
  filter Dark
@@ -25,7 +25,7 @@ ProtectionFromEvil level(1) range(OneAlly) duration(Turn12)
  filter IfYou ProtectedFromEvil-1
  wearing ProtectedFromEvil
 PurifyFoodAndDrink level(1) range(AllyItem) random(100)
- filter IfEdible IfDamaged
+ filter IfEdible IfItemDamaged
  instant ItemDamage-10 EffectCount+1
 RemoveFear level(1) range(OneAlly) duration(Turn2)
  filter Paniced
@@ -38,7 +38,7 @@ ResistCold level(1) range(OneAlly) duration(Turn2)
  wearing ColdResist
 
 Bless level(2) range(OneAlly) duration(Turn6) random(100)
- wearing Attack+1 Damage+1
+ wearing MeleeToHit+1 MeleeDamage+1
 FindTraps level(2) range(Scenery) random(100)
  filter Trapped
  instant Trapped-1
@@ -50,8 +50,8 @@ ResistFire level(2) range(OneAlly) duration(Turn2)
  filter FireResist-1
  wearing FireResist
 Silence15Radius level(2) range(Enviroment) duration(Turn12)
- filter Silence-1
- wearing Silence
+ filter Deaf-1
+ wearing Deaf
 SnakeCharm level(2)
 SpeakWithAnimals level(2)
 
@@ -108,7 +108,7 @@ DispelEvil level(5)
 InsectPlague level(5)
 Quest level(5)
 RaiseDead level(5)
-FingerOfDeath level(5) range(OneEnemy) reversed(RaiseDead) save_nagetes(SaveVsMagic)
+FingerOfDeath level(5) range(OneEnemy) reversed(RaiseDead)
  instant InstantKill
 
 AnimateTree
@@ -116,4 +116,4 @@ AnkhegAcidSquirt range(OneEnemy)
 BeetleOilOfPain range(OneEnemy) duration(Day1)
 ConeOfFire range(OneEnemy) random(2 4)
 DryadCharmMagic range(OneEnemy)
-ItemRepair range(AllyItems) random(1)
+ItemRepair range(AllyItem) random(1)

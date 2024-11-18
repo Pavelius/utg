@@ -1,22 +1,11 @@
 ﻿Error in file `rules/SpellsNew.txt`:
- Line 12: Can't find variant `IfMagical`
- Line 28: Can't find variant `IfEdible`
- Line 28: Can't find variant `IfDamaged`
  Line 29: Can't find variant `ItemDamage`
  Line 29: Can't find variant `EffectCount`
- Line 41: Can't find variant `Attack`
- Line 41: Can't find variant `Damage`
- Line 53: Can't find variant `Silence`
- Line 54: Can't find variant `Silence`
  Line 69: Can't find variant `GreenSlime`
  Line 75: Can't find variant `IfAnimal`
  Line 87: Can't find variant `FlameSwordHand`
  Line 93: Not found identifier `MeleeEnemy`
  Line 95: Can't find variant `NegativeEnergy`
- Line 97: Can't find variant `PoisonLevel`
- Line 98: Can't find variant `PoisonLevel`
- Line 111: Not found requisit `save_nagetes`
- Line 119: Not found identifier `AllyItems`
 Error in file `rules/Advance.txt`:
  Line 8: Can't find variant `PurifyFoodAndWater`
 Error in file `rules/Monsters.txt`:

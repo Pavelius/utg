@@ -42,6 +42,7 @@ BSDATA(abilityi) = {
 	{"SpellLevel6"},
 	{"HP"},
 	{"IllusionCopies"},
+	{"PoisonLevel"},
 	{"DiseaseLevel"},
 };
 assert_enum(abilityi, DiseaseLevel)

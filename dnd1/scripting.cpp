@@ -1198,12 +1198,24 @@ static bool if_alive() {
 	return player->get(HP) > 0;
 }
 
+static bool if_edible() {
+	return false;
+}
+
 static bool if_item_identify() {
 	return last_item->isidentified();
 }
 
+static bool if_item_magical() {
+	return last_item->ismagic();
+}
+
 static bool if_item_cursed() {
 	return last_item->iscursed();
+}
+
+static bool if_item_damaged() {
+	return last_item->isbroken();
 }
 
 static bool if_wounded() {
@@ -1219,8 +1231,11 @@ BSDATA(conditioni) = {
 	{"If4HD", if_4hd},
 	{"If5HD", if_5hd},
 	{"IfAlive", if_alive},
+	{"IfEdible", if_edible},
 	{"IfItemCursed", if_item_cursed},
+	{"IfItemDamaged", if_item_damaged},
 	{"IfItemIdentify", if_item_identify},
+	{"IfItemMagical", if_item_magical},
 	{"IfWounded", if_wounded},
 	{"IfYou", if_you},
 };
