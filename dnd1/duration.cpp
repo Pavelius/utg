@@ -29,6 +29,7 @@ BSDATA(durationi) = {
 	{"Roll1d10", 1, 10},
 	{"Roll1d12", 1, 12},
 	{"Roll1d20", 1, 20},
+	{"Roll2d6", 2, 12},
 	{"Concentration"},
 	{"PermanentDuration"},
 };

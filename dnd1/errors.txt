@@ -1,8 +1,4 @@
 ﻿Error in file `rules/SpellsNew.txt`:
- Line 7: Can't find variant `Heal`
- Line 9: Can't find variant `IfCursed`
- Line 10: Can't find variant `ItemIdentify`
- Line 12: Can't find variant `IfIdentify`
  Line 12: Can't find variant `IfMagical`
  Line 28: Can't find variant `IfEdible`
  Line 28: Can't find variant `IfDamaged`
@@ -10,27 +6,25 @@
  Line 29: Can't find variant `EffectCount`
  Line 41: Can't find variant `Attack`
  Line 41: Can't find variant `Damage`
- Line 42: Not found identifier `Scenery`
- Line 53: Can't find variant `AtEnviroment`
  Line 53: Can't find variant `Silence`
  Line 54: Can't find variant `Silence`
- Line 55: Not found requisit `Level`
- Line 64: Can't find variant `PushModifier`
- Line 66: Can't find variant `IfDiseased`
- Line 67: Can't find variant `DiseaseLevel`
- Line 68: Not found requisit `alternate`
  Line 69: Can't find variant `GreenSlime`
- Line 70: Can't find variant `InstantKill`
- Line 73: Can't find variant `DiseaseLevel`
  Line 75: Can't find variant `IfAnimal`
- Line 75: Can't find variant `DoubleSized`
- Line 76: Can't find variant `DoubleSized`
- Line 79: Can't find variant `IfCursed`
- Line 79: Can't find variant `IfIdentified`
- Line 80: Can't find variant `Curse`
- Line 82: Can't find variant `Cursed`
- Line 83: Can't find variant `Cursed`
- Line 85: Can't find variant `Cursed`
- Line 86: Can't find variant `PushModifier`
- Line 86: Can't find variant `Cursed`
- Line 89: Not found requisit `summon`
+ Line 87: Can't find variant `FlameSwordHand`
+ Line 93: Not found identifier `MeleeEnemy`
+ Line 95: Can't find variant `NegativeEnergy`
+ Line 97: Can't find variant `PoisonLevel`
+ Line 98: Can't find variant `PoisonLevel`
+ Line 111: Not found requisit `save_nagetes`
+ Line 119: Not found identifier `AllyItems`
+Error in file `rules/Advance.txt`:
+ Line 8: Can't find variant `PurifyFoodAndWater`
+Error in file `rules/Monsters.txt`:
+ Line 104: Can't find variant `DeathPoison`
+ Line 110: Can't find variant `DeathPoison`
+ Line 122: Can't find variant `DeathPoison`
+ Line 124: Can't find variant `DeathPoison`
+ Line 126: Can't find variant `DeathPoison`
+ Line 128: Can't find variant `DeathPoison`
+ Line 140: Can't find variant `Teleport`
+ Line 158: Can't find variant `DeathPoison`

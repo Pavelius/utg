@@ -9,30 +9,20 @@
 #pragma once
 
 enum abilityn : unsigned char;
-enum spell_s : unsigned char;
+enum spelln : unsigned char;
 
-//enum spell_s : unsigned char {
-//	CauseLightWound, CureLightWound, DetectEvil, DetectMagic, Light, LightBlindness, Darkness, ProtectionFromEvil, PurifyFoodAndWater, RemoveFear, CauseFear, ResistCold,
-//	CharmPerson, FloatingDisc, HoldPortal, MagicMissile, ReadLanguages, ReadMagic, Shield, Sleep, Ventriloquism,
-//	Blindness, ContinualDarkness, ContinualLight, DetectInvisibility, ESP, Invisibility, Knock, Levitation, MirrorImages, PhantasmalForce, Web, WizardLock,
-//	Bless, Blight, FindTraps, HoldPerson, KnowAlignment, ResistFire, Silence15Radius, SnakeCharm, SpeakWithAnimals,
-//	BestowCurse, CauseDisease, CureDisease, GrowthOfAnimals, LocateObject, RemoveCurse, FlameBlade,
-//	AntiMagicShell, Teleport, DeathSpell,
-//	LastSpell = DeathSpell,
-//	AnimateTree, AnkhegAcidSquirt, BeetleOilOfPain, ConeOfFire, DryadCharmMagic, ItemRepair,
-//	ShrinkSize, GrowthSize, GaseousForm, DeathPoison,
-//};
 typedef flagable<8> spellf;
 struct spelli : nameable {
-	typedef adat<spell_s, 8> spella;
+	typedef adat<spelln, 8> spella;
 	char		level[4];
 	durationn	duration;
 	rangen		range;
 	interval	random;
 	spella		dispell;
-	spell_s		reversed, version, enchant;
-	spell_s		getbasic() const { return reversed ? reversed : version; }
+	spelln		reversed, version, enchant;
+	spelln		getbasic() const { return reversed ? reversed : version; }
 	variants	wearing, instant, filter;
+	variant		summon;
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;
 };
@@ -46,8 +36,8 @@ struct spella : collection<spelli> {
 	void		select(int magic, int level);
 	void		match(int magic, int level, bool keep);
 };
-extern spell_s last_spell;
+extern spelln last_spell;
 extern int last_level;
 
-bool spell_effect(spell_s spell, int level, rangen range, const interval& target, const char* suffix, bool run);
-bool spell_effect(spell_s spell, int level, const char* suffix, bool run);
+bool spell_effect(spelln spell, int level, rangen range, const interval& target, const char* suffix, bool run);
+bool spell_effect(spelln spell, int level, const char* suffix, bool run);

@@ -76,13 +76,17 @@ void script_run(variant v) {
 	bsdata<varianti>::elements[v.type].pscript(v.value, v.counter);
 }
 
+void script_run() {
+	while(script_begin < script_end)
+		script_run(*script_begin++);
+}
+
 void script_run(const variants& source) {
 	auto push_begin = script_begin;
 	auto push_end = script_end;
 	script_begin = source.begin();
 	script_end = source.end();
-	while(script_begin < script_end)
-		script_run(*script_begin++);
+	script_run();
 	script_end = push_end;
 	script_begin = push_begin;
 }

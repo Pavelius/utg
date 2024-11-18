@@ -17,13 +17,13 @@ struct scenei : nameable {
 struct scenery : typeable<scenei>, parentable<scenery> {
 	featable	flags;
 	char		count;
-	bool		apply(spell_s id, int level, bool run);
+	bool		apply(spelln id, int level, bool run);
 	void		clear();
 	void		enter();
 	const char* getid() const { return geti().getid(); }
 	bool		haveitems() const;
 	bool		is(feat_s v) const { return flags.is(v); }
-	bool		is(spell_s v) const;
+	bool		is(spelln v) const;
 	void		set(feat_s v) { flags.set(v); }
 	void		remove(feat_s v) { flags.remove(v); }
 	void		update();

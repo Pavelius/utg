@@ -2,11 +2,11 @@
 #include "calendar.h"
 #include "ongoing.h"
 
-static void act(spell_s effect, const char* action) {
+static void act(spelln effect, const char* action) {
 	printa(bsdata<spelli>::elements[effect].id, action);
 }
 
-static ongoing* find_bonus(variant owner, spell_s effect) {
+static ongoing* find_bonus(variant owner, spelln effect) {
 	for(auto& e : bsdata<ongoing>()) {
 		if(e.owner == owner && e.effect == effect)
 			return &e;
@@ -14,7 +14,7 @@ static ongoing* find_bonus(variant owner, spell_s effect) {
 	return 0;
 }
 
-void enchant(variant caster, variant owner, spell_s effect, unsigned rounds) {
+void enchant(variant caster, variant owner, spelln effect, unsigned rounds) {
 	rounds += current_round;
 	auto p = find_bonus(owner, effect);
 	if(!p) {
@@ -27,7 +27,7 @@ void enchant(variant caster, variant owner, spell_s effect, unsigned rounds) {
 		p->rounds = rounds;
 }
 
-void dispell(variant owner, spell_s effect) {
+void dispell(variant owner, spelln effect) {
 	for(auto& e : bsdata<ongoing>()) {
 		if(e.effect == effect && e.owner == owner) {
 			act(e.effect, "Dispell");

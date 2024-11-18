@@ -66,14 +66,14 @@ template<> void fnscript<feati>(int index, int value) {
 
 template<> bool fntest<spelli>(int index, int value) {
 	switch(modifier) {
-	case NoModifier: return spell_effect((spell_s)index, player->get(Level), 0, false);
+	case NoModifier: return spell_effect((spelln)index, player->get(Level), 0, false);
 	default: return true;
 	}
 }
 template<> void fnscript<spelli>(int index, int value) {
 	switch(modifier) {
 	case Known: player->known_spells.set(index); break;
-	case NoModifier: spell_effect((spell_s)index, player->get(Level), 0, true); break;
+	case NoModifier: spell_effect((spelln)index, player->get(Level), 0, true); break;
 	default: break;
 	}
 }
@@ -363,7 +363,7 @@ static void apply_scene_actions(variant v) {
 			an.add(p, getnm(p->id));
 	} else if(v.iskind<spelli>()) {
 		auto p = bsdata<spelli>::elements + v.value;
-		if(spell_effect((spell_s)v.value, player->get(Level), 0, false))
+		if(spell_effect((spelln)v.value, player->get(Level), 0, false))
 			an.add(p, p->getname());
 	}
 }
@@ -375,7 +375,7 @@ static void apply_scene_actions(int bonus) {
 
 static void apply_scene_spells(int bonus) {
 	if(bonus == 0) {
-		for(auto i = (spell_s)0; i < (spell_s)128; i = (spell_s)(i + 1)) {
+		for(auto i = (spelln)0; i < (spelln)128; i = (spelln)(i + 1)) {
 			if(!player->get(i))
 				continue;
 			auto p = bsdata<spelli>::elements + i;
@@ -385,7 +385,7 @@ static void apply_scene_spells(int bonus) {
 		}
 	} else {
 		if(bsdata<spelli>::have(last_option)) {
-			auto spell = (spell_s)getbsi((spelli*)last_option); last_option = 0;
+			auto spell = (spelln)getbsi((spelli*)last_option); last_option = 0;
 			player->cast(spell, true);
 			player->use(spell);
 		}
@@ -1165,6 +1165,23 @@ static void party_run_away(int bonus) {
 static void player_speak(int bonus) {
 }
 
+static void item_curse(int bonus) {
+	last_item->curse(bonus >= 0 ? 1 : 0);
+}
+
+static void item_identify(int bonus) {
+	last_item->identify(bonus >= 0 ? 1 : 0);
+}
+
+static void push_modifier(int bonus) {
+	auto push_modifier = modifier;
+	script_run();
+	modifier = push_modifier;
+}
+
+static void instant_kill(int bonus) {
+}
+
 static bool if_2hd() {
 	return player->get(Level) >= 2;
 }
@@ -1231,13 +1248,18 @@ BSDATA(script) = {
 	{"FilterYou", filter_you},
 	{"FilterWounded", filter_wounded},
 	{"ForEachCreature", for_each_creature},
+	{"Heal", heal},
 	{"HuntPrey", hunt_prey},
+	{"ItemCurse", item_curse},
+	{"ItemIdentify", item_curse},
+	{"InstantKill", instant_kill},
 	{"LoseGame", lose_game},
 	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
 	{"MakeAmbushMonsters", make_ambush_monsters},
 	{"MakeLeader", make_leader},
 	{"PartyRunAway", party_run_away},
+	{"PushModifier", push_modifier},
 	{"RandomEncounter", random_encounter},
 	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},

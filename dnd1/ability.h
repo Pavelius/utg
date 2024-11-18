@@ -12,7 +12,7 @@ enum abilityn : unsigned char {
 	HideUndergrowth,
 	SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells, SavePoison,
 	SpellLevel1, SpellLevel2, SpellLevel3, SpellLevel4, SpellLevel5, SpellLevel6,
-	HP, IllusionCopies,
+	HP, IllusionCopies, DiseaseLevel,
 };
 struct abilityi : nameable {
 	char		multiplier;

@@ -9,7 +9,7 @@
 #include "variant.h"
 #include "wear.h"
 
-enum spell_s : unsigned char;
+enum spelln : unsigned char;
 
 struct itemi : attacki {
 	unsigned	cost, weight, count;
@@ -40,18 +40,13 @@ public:
 	bool		actid(const char* id, const char* p1, char separator = ' ') const;
 	void		add(item& v);
 	void		addname(stringbuilder& sb) const;
-	bool		apply(spell_s id, int level, bool run);
+	bool		apply(spelln id, int level, bool run);
 	bool		canequip(wear_s v) const;
 	void		clear() { memset(this, 0, sizeof(*this)); }
+	void		curse(int v) {}
 	bool		damage();
 	void		drop();
-	int			getcost() const;
-	int			getcount() const;
-	interval	getdamage() const;
-	const char*	getnamef() const;
-	variant		getpower() const;
-	void		getstatus(stringbuilder& sb) const;
-	int			getweight() const;
+	void		identify(int bonus) {}
 	bool		isallowspell() const;
 	bool		isbroken() const { return broken >= 3; }
 	bool		iscountable() const { return true; }
@@ -60,6 +55,13 @@ public:
 	bool		ismagic() const { return getpower().counter != 0; }
 	bool		isnatural() const { return geti().weight==0; }
 	bool		isready() const;
+	int			getcost() const;
+	int			getcount() const;
+	interval	getdamage() const;
+	const char*	getnamef() const;
+	variant		getpower() const;
+	void		getstatus(stringbuilder& sb) const;
+	int			getweight() const;
 	void		setcount(int v);
 };
 struct itema : collection<item> {

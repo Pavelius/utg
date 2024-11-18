@@ -71,13 +71,13 @@
 
 void choose_target();
 
-spell_s	last_spell;
+spelln	last_spell;
 int		last_level;
 
 void spell_initialize() {
 	for(auto& e : bsdata<spelli>()) {
 		if(!e.enchant)
-			e.enchant = (spell_s)getbsi(&e);
+			e.enchant = (spelln)getbsi(&e);
 	}
 }
 
@@ -182,7 +182,7 @@ bool item::isallowspell() const {
 	return const_cast<item*>(this)->apply(last_spell, last_level, false);
 }
 
-bool creature::apply(spell_s id, int level, bool run) {
+bool creature::apply(spelln id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	auto count = run ? ei.random.roll() : ei.random.maximum();
 	if(run) {
@@ -231,7 +231,7 @@ bool creature::apply(spell_s id, int level, bool run) {
 	return true;
 }
 
-bool item::apply(spell_s id, int level, bool run) {
+bool item::apply(spelln id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	//switch(id) {
 	//case DetectEvil:
@@ -260,7 +260,7 @@ bool item::apply(spell_s id, int level, bool run) {
 	return true;
 }
 
-bool scenery::apply(spell_s id, int level, bool run) {
+bool scenery::apply(spelln id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
 	//switch(id) {
 	//case CureLightWound:
@@ -278,7 +278,7 @@ bool scenery::apply(spell_s id, int level, bool run) {
 static void set_caster_melee() {
 }
 
-bool spell_effect(spell_s spell, int level, rangen range, const interval& target, const char* suffix, bool run) {
+bool spell_effect(spelln spell, int level, rangen range, const interval& target, const char* suffix, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
 	if(run) {
@@ -332,25 +332,25 @@ bool spell_effect(spell_s spell, int level, rangen range, const interval& target
 		if(!scene)
 			return false;
 		return scene->apply(last_spell, last_level, run);
-	case OneObject:
+	case Scenery:
 		return false;
 	default:
 		return false;
 	}
 }
 
-bool spell_effect(spell_s spell, int level, const char* suffix, bool run) {
+bool spell_effect(spelln spell, int level, const char* suffix, bool run) {
 	auto& ei = bsdata<spelli>::elements[spell];
 	return spell_effect(spell, player->get(Level), ei.range, ei.random, suffix, run);
 }
 
-bool creature::cast(spell_s spell, bool run) {
+bool creature::cast(spelln spell, bool run) {
 	pushvalue push_caster(caster, this);
 	auto& ei = bsdata<spelli>::elements[spell];
 	return spell_effect(spell, get(Level), ei.range, ei.random, "Cast", run);
 }
 
-void creature::use(spell_s spell) {
+void creature::use(spelln spell) {
 	if(spells[spell])
 		spells[spell]--;
 }
@@ -358,7 +358,7 @@ void creature::use(spell_s spell) {
 void spella::select(const spellf& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = (spell_s)0; i < (spell_s)128; i = (spell_s)(i+1)) {
+	for(auto i = (spelln)0; i < (spelln)128; i = (spelln)(i+1)) {
 		if(source.is(i)) {
 			if(ps < pe)
 				*ps++ = bsdata<spelli>::elements + i;
@@ -370,7 +370,7 @@ void spella::select(const spellf& source) {
 void spella::select(const spellable& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = (spell_s)0; i <= (spell_s)128; i = (spell_s)(i + 1)) {
+	for(auto i = (spelln)0; i <= (spelln)128; i = (spelln)(i + 1)) {
 		if(source.spells[i]) {
 			if(ps < pe)
 				*ps++ = bsdata<spelli>::elements + i;

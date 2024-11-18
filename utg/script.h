@@ -24,6 +24,7 @@ bool script_isrun();
 void conditional_script(int bonus);
 void script_list(const char* id);
 void script_none(int bonus);
+void script_run();
 void script_run(variant v);
 void script_run(const variants& source);
 void script_run(const char* id, int bonus);

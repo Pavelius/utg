@@ -7,8 +7,8 @@ BSDATA(rangei) = {
 	{"OneEnemyTouch"},
 	{"AllyItem"},
 	{"Enviroment"},
-	{"OneObject"},
+	{"Scenery"},
 };
-assert_enum(rangei, OneObject)
+assert_enum(rangei, Scenery)
 
 rangen range;

@@ -70,7 +70,7 @@ void scenery::clear() {
 	parent = 0xFFFF;
 }
 
-bool scenery::is(spell_s v) const {
+bool scenery::is(spelln v) const {
 	return scenery_spells.is(v);
 }
 

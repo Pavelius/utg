@@ -6,10 +6,10 @@ CureLightWound level(1) range(OneAlly)
  filter Undead-1 IfWounded
  instant Roll1d6+1 Heal+101 Paralized-1
 DetectEvil level(1) range(AllyItem) random(1)
- filter IfItemIdentify-1 IfCursed
+ filter IfItemIdentify-1 IfItemCursed
  instant ItemIdentify+1 Speak
 DetectMagic level(1) range(AllyItem) random(1)
- filter IfIdentify-1 IfMagical
+ filter IfItemIdentify-1 IfMagical
  instant Speak
 Light level(1) range(Enviroment) duration(Turn12)
  filter Dark
@@ -50,9 +50,9 @@ ResistFire level(2) range(OneAlly) duration(Turn2)
  filter FireResist-1
  wearing FireResist
 Silence15Radius level(2) range(Enviroment) duration(Turn12)
- filter AtEnviroment Silence-1
+ filter Silence-1
  wearing Silence
-SnakeCharm Level(2)
+SnakeCharm level(2)
 SpeakWithAnimals level(2)
 
 ContinualLight level(3) range(Enviroment)
@@ -63,9 +63,9 @@ Blindness level(3) range(OneEnemy) version(ContinualLight) duration(Turn1)
  filter Blind-1
  instant PushModifier Permanent Blind
 CureDisease level(3) range(OneAlly)
- filter IfDiseased
+ filter DiseaseLevel
  instant DiseaseLevel-100
-CureDiseaseKillSlime level(3) range(OneEnemy) alternate(CureDisease)
+CureDiseaseKillSlime level(3) range(OneEnemy) reversed(CureDisease)
  filter GreenSlime
  instant InstantKill
 CauseDisease level(3) range(OneEnemy) reversed(CureDisease)
@@ -76,18 +76,17 @@ GrowthAnimal level(3) range(OneAlly) duration(Turn12)
  instant DoubleSized
 LocateObjects level(3)
 RemoveCurse level(3) range(AllyItem)
- filter IfCursed IfIdentified
- instant Curse-1
+ filter IfItemIdentify IfItemCursed
+ instant ItemCurse-1
 RemoveCurseCreature level(3) range(OneAlly)
  filter Cursed
  instant Cursed-1
 CauseCurse level(3) range(OneEnemy) reversed(RemoveCurse)
  filter Cursed-1
  instant PushModifier Permanent Cursed
-FlameBlade level(3) range(OneAlly) duration(Turn1)
+FlameBlade level(3) range(OneAlly) duration(Turn1) summon(FlameSwordHand)
  filter IfYou
- summon FlameSwordHand
- 
+
 CureSeriousWound level(4) range(OneAlly)
  filter Undead-1 IfWounded
  instant Roll2d6+2 Heal+101
@@ -95,7 +94,7 @@ CauseSeriousWound level(4) range(MeleeEnemy)
  filter Undead-1
  instant Roll2d6+2 NegativeEnergy+101
 NeutralizePoison level(4) range(OneAlly)
- filter IfPoisoned
+ filter PoisonLevel
  instant PoisonLevel-100
 ProtectionFromEvil level(4) range(OneAlly) duration(Turn12) random(100)
  filter IfYou ProtectedFromEvil-1
@@ -111,3 +110,10 @@ Quest level(5)
 RaiseDead level(5)
 FingerOfDeath level(5) range(OneEnemy) reversed(RaiseDead) save_nagetes(SaveVsMagic)
  instant InstantKill
+
+AnimateTree
+AnkhegAcidSquirt range(OneEnemy)
+BeetleOilOfPain range(OneEnemy) duration(Day1)
+ConeOfFire range(OneEnemy) random(2 4)
+DryadCharmMagic range(OneEnemy)
+ItemRepair range(AllyItems) random(1)

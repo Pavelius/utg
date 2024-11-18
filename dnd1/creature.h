@@ -18,29 +18,29 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	char			initiative;
 	unsigned		experience;
 	raceable		languages;
-	bool			apply(spell_s, int level, bool run);
+	bool			apply(spelln, int level, bool run);
 	void			clear();
-	bool			cast(spell_s spell, bool run);
-	bool			castsp(spell_s spell, int level, bool run);
+	bool			cast(spelln spell, bool run);
+	bool			castsp(spelln spell, int level, bool run);
 	void			damage(int value);
-	void			drink(spell_s effect);
+	void			drink(spelln effect);
 	void			equip(item& v);
 	void			generate();
 	int				get(abilityn v) const { return statable::get(v); }
-	int				get(spell_s v) const { return spells[v]; }
+	int				get(spelln v) const { return spells[v]; }
 	const classi&	geti() const;
 	int				getaward() const;
 	creature*		getcontact() const;
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
-	int				getlevel(spell_s spell) const;
+	int				getlevel(spelln spell) const;
 	const monsteri*	getmonster() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;
 	static void		getstatus(const void* object, stringbuilder& sb);
 	void			heal(int value);
-	bool			is(spell_s v) const { return active_spells.is(v); }
+	bool			is(spelln v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;
 	bool			isallowspell() const { return const_cast<creature*>(this)->apply(last_spell, last_level, false); }
@@ -48,7 +48,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	bool			isally() const;
 	bool			ischaracter() const;
 	bool			isenemy() const;
-	bool			isknown(spell_s v) const { return known_spells.is(v); }
+	bool			isknown(spelln v) const { return known_spells.is(v); }
 	bool			isplayer() const;
 	bool			isready() const;
 	bool			iswounded() const;
@@ -57,14 +57,14 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			raiselevel();
 	void			remove();
 	void			rest();
-	bool			save(spell_s id, int& count) const;
+	bool			save(spelln id, int& count) const;
 	void			set(feat_s v) { feats.set(v); }
 	void			setleader(const creature* pv);
 	void			setcontact(const creature* pv);
 	void			update();
 	void			update_finish();
 	void			use(item& it);
-	void			use(spell_s spell);
+	void			use(spelln spell);
 };
 extern creature *player, *opponent, *caster;
 struct creaturea : adat<creature*, 32> {

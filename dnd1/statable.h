@@ -5,7 +5,7 @@
 #pragma once
 
 struct statable {
-	char			abilities[IllusionCopies + 1];
+	char			abilities[DiseaseLevel + 1];
 	featable		feats;
 	void			add(abilityn i, int v) { abilities[i] += v; }
 	void			applybest(abilityn v);

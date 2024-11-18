@@ -6,7 +6,7 @@ enum rangen : unsigned char {
 	OneAlly,
 	OneEnemy, OneEnemyTouch,
 	AllyItem,
-	Enviroment, OneObject,
+	Enviroment, Scenery,
 };
 struct rangei : nameable {
 };

@@ -278,7 +278,7 @@ static void random_prepare_spells() {
 	}
 }
 
-bool creature::save(spell_s spell, int& count) const {
+bool creature::save(spelln spell, int& count) const {
 	//auto& ei = bsdata<spelli>::elements[spell];
 	//auto id = ei.getsave();
 	//if(!id)
@@ -414,7 +414,7 @@ void add_creature(const monsteri* pi) {
 	finish_creature();
 }
 
-void creature::drink(spell_s spell) {
+void creature::drink(spelln spell) {
 	auto& ei = bsdata<spelli>::elements[spell];
 	if(ei.isdurable())
 		enchant(this, this, spell, (6 + d6()) * 10);
@@ -452,7 +452,7 @@ void creature::kill() {
 	abilities[HP] = 0;
 }
 
-int	creature::getlevel(spell_s spell) const {
+int	creature::getlevel(spelln spell) const {
 	return bsdata<spelli>::elements[spell].level[geti().magic];
 }
 
