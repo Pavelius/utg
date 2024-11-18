@@ -12,7 +12,7 @@ extern int tab_pixels;
 static avatarable last_avatar;
 
 static void add_abilitites() {
-	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
 		answers::console->addn("  %2i\t%1", getnm(bsdata<abilityi>::elements[i].id), player->basic.abilities[i]);
 }
 
@@ -24,7 +24,7 @@ static bool isallow(const char* minimal) {
 	return true;
 }
 
-static void add_adjust(answers& an, ability_s a) {
+static void add_adjust(answers& an, abilityn a) {
 	auto& ei = player->geti();
 	if(ei.prime == a)
 		return;
@@ -53,7 +53,7 @@ static void adjust_ability_scores() {
 		auto pi = (abilityi*)an.choose(getnm("WhatToDoYou"), getnm("DoNotAdjust"));
 		if(!pi)
 			break;
-		auto a = (ability_s)(pi - bsdata<abilityi>::elements);
+		auto a = (abilityn)(pi - bsdata<abilityi>::elements);
 		player->basic.abilities[ei.prime] += 1;
 		player->basic.abilities[a] -= 2;
 	}

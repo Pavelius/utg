@@ -50,7 +50,7 @@ void creature::getstatus(const void* object, stringbuilder& sb) {
 		((item*)object)->getstatus(sb);
 }
 
-static void save_information(stringbuilder& sb, const creature* p, const slice<ability_s>& source) {
+static void save_information(stringbuilder& sb, const creature* p, const slice<abilityn>& source) {
 	auto ps = sb.get();
 	for(auto v : source) {
 		auto i = 20 - p->get(v);
@@ -61,7 +61,7 @@ static void save_information(stringbuilder& sb, const creature* p, const slice<a
 }
 
 void creature::getproperty(const void* object, variant id, stringbuilder& sb) {
-	static ability_s saves[] = {SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells};
+	static abilityn saves[] = {SaveDeath, SaveWands, SaveParalize, SaveBreathWeapon, SaveSpells};
 	auto p = (creature*)object;
 	if(id.iskind<abilityi>()) {
 		switch(id.value) {

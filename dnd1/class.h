@@ -5,7 +5,7 @@
 #pragma once
 
 struct classi : nameable {
-	ability_s		prime;
+	abilityn		prime;
 	racei*			origin;
 	char			minimal[6];
 	char			hd, magic;

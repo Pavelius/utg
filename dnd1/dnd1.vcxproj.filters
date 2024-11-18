@@ -268,5 +268,8 @@
     <Text Include="speech\ru\Characters.txt">
       <Filter>speech</Filter>
     </Text>
+    <Text Include="rules\SpellsNew.txt">
+      <Filter>data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

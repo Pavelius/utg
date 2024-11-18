@@ -12,7 +12,7 @@
 #include "script.h"
 #include "speech.h"
 
-creature *player, *opponent;
+creature *player, *opponent, *caster;
 
 static int exp_base_award[] = {
 	5,
@@ -169,7 +169,7 @@ void creature::levelup() {
 	}
 }
 
-int random_name(const classi* pi, gender_s gender) {
+int random_name(const classi* pi, gendern gender) {
 	return speech_random(str("%1%2", pi->getid(), bsdata<genderi>::elements[gender].id));
 }
 
@@ -183,7 +183,7 @@ static bool allow_avatar(const char* avatar) {
 	return true;
 }
 
-const char* random_avatar(const classi* pi, gender_s gender) {
+const char* random_avatar(const classi* pi, gendern gender) {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
 	auto result = avatarable::choose(0, gender == Female ? "f*.*" : "m*.*", 6, allow_avatar);
@@ -279,18 +279,18 @@ static void random_prepare_spells() {
 }
 
 bool creature::save(spell_s spell, int& count) const {
-	auto& ei = bsdata<spelli>::elements[spell];
-	auto id = ei.getsave();
-	if(!id)
+	//auto& ei = bsdata<spelli>::elements[spell];
+	//auto id = ei.getsave();
+	//if(!id)
 		return false; // No save variant;
-	auto result = rolld20(get(id), 20, false);
-	if(result) {
-		// If save success alway show message
-		if(!actid(ei.id, "SaveSuccess", ' '))
-			actid("Common", "SaveSuccess", ' ');
-	} else
-		actid(ei.id, "SaveFailed", ' ');
-	return result;
+	//auto result = rolld20(get(id), 20, false);
+	//if(result) {
+	//	// If save success alway show message
+	//	if(!actid(ei.id, "SaveSuccess", ' '))
+	//		actid("Common", "SaveSuccess", ' ');
+	//} else
+	//	actid(ei.id, "SaveFailed", ' ');
+	//return result;
 }
 
 void creature::update_finish() {
@@ -315,10 +315,10 @@ void creature::update_finish() {
 	}
 	if(is(SunSensitive) && scene->is(SunSensitive))
 		abilities[MeleeToHit] -= 2;
-	if(is(BeetleOilOfPain)) {
-		abilities[MeleeToHit] -= 2;
-		abilities[RangedToHit] -= 2;
-	}
+	//if(is(BeetleOilOfPain)) {
+	//	abilities[MeleeToHit] -= 2;
+	//	abilities[RangedToHit] -= 2;
+	//}
 	// Maximum hit points
 	if(abilities[HPMax] < abilities[Level])
 		abilities[HPMax] = abilities[Level];
@@ -383,7 +383,7 @@ static creature* new_creature() {
 	return bsdata<creature>::add();
 }
 
-void add_creature(const classi* pi, gender_s gender, int level) {
+void add_creature(const classi* pi, gendern gender, int level) {
 	player = new_creature();
 	player->clear();
 	player->type = pi;
@@ -404,7 +404,7 @@ void add_creature(const monsteri* pi) {
 	player->clear();
 	player->type = pi;
 	player->gender = Male;
-	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
 		player->basic.abilities[i] = 10;
 	add_permanent(pi->feats);
 	add_hits_by_level();
@@ -444,7 +444,7 @@ void creature::rest() {
 }
 
 int	creature::getspells(int level) const {
-	auto n = (ability_s)(SpellLevel1 + level - 1);
+	auto n = (abilityn)(SpellLevel1 + level - 1);
 	return get(n);
 }
 
@@ -463,7 +463,7 @@ void creature::heal(int value) {
 	abilities[HP] = value;
 }
 
-int get_average(ability_s v) {
+int get_average(abilityn v) {
 	auto total = 0;
 	auto count = 0;
 	for(auto p : creatures) {
@@ -477,7 +477,7 @@ int get_average(ability_s v) {
 	return total / count;
 }
 
-int get_minimal(ability_s v) {
+int get_minimal(abilityn v) {
 	auto total = 0;
 	for(auto p : creatures) {
 		if(!p->isready() || !p->is(Player))
@@ -490,7 +490,7 @@ int get_minimal(ability_s v) {
 	return total;
 }
 
-int get_maximal(ability_s v) {
+int get_maximal(abilityn v) {
 	auto total = 0;
 	for(auto p : creatures) {
 		if(!p->isready() || !p->is(Player))

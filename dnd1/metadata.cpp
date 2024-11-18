@@ -2,7 +2,9 @@
 #include "advance.h"
 #include "alignment.h"
 #include "bsreq.h"
+#include "condition.h"
 #include "creature.h"
+#include "formula.h"
 #include "gender.h"
 #include "itemlay.h"
 #include "list.h"
@@ -34,6 +36,7 @@ BSDATAC(ongoing, 256)
 BSDATAC(racei, 32)
 BSDATAC(scenei, 64)
 BSDATAC(scenery, 2048)
+BSDATAC(spelli, 128)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -64,6 +67,9 @@ BSMETA(classi) = {
 	BSFLG(allow, itemi),
 	BSFLG(reputation, organizationi),
 	BSREQ(origin),
+	{}};
+BSMETA(conditioni) = {
+	BSREQ(id),
 	{}};
 BSMETA(creature) = {
 	BSDST(abilities, abilityi),
@@ -142,13 +148,14 @@ BSMETA(scenery) = {
 BSMETA(spelli) = {
 	BSREQ(id),
 	BSREQ(level),
-	BSREQ(count), BSREQ(targets),
+	BSREQ(random),
 	BSENM(duration, durationi),
+	BSREQ(filter),
+	BSREQ(instant),
+	BSREQ(wearing),
 	BSENM(range, rangei),
 	BSENM(dispell, spelli),
-	BSENM(save_negates, abilityi),
-	BSENM(save_halves, abilityi),
-	BSENM(reversed, spelli), BSENM(alternate, spelli), BSENM(enchant, spelli),
+	BSENM(reversed, spelli), BSENM(version, spelli), BSENM(enchant, spelli),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),
@@ -160,8 +167,11 @@ BSDATA(varianti) = {
 	{"Advance", VAR(advancei, 3)},
 	{"Alignment", VAR(alignmenti, 1), 0, 0, fnscript<alignmenti>},
 	{"Class", VAR(classi, 1)},
+	{"Condition", VAR(conditioni, 1), 0, 0, fnscript<conditioni>, fntest<conditioni>},
 	{"Creature", VAR(creature, 0), creature::getstatus, creature::getproperty},
+	{"Duration", VAR(durationi, 1), 0, 0, fnscript<durationi>},
 	{"Feat", VAR(feati, 1), 0, 0, fnscript<feati>},
+	{"Formula", VAR(formulai, 1), 0, 0, fnscript<formulai>},
 	{"Gender", VAR(genderi, 1)},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>},
 	{"List", VAR(listi, 1), 0, 0, fnscript<listi>, fntest<listi>},

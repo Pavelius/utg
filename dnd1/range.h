@@ -2,13 +2,12 @@
 
 #pragma once
 
-enum range_s : unsigned char {
-	Caster, CasterOrAlly, OneAlly,
+enum rangen : unsigned char {
+	OneAlly,
 	OneEnemy, OneEnemyTouch,
-	AllAlly, AllEnemies, AllEnemiesHD,
-	OneItem, OneAllyItem, AllCasterItems, AllAllyItems,
-	Enviroment, OneObject, OneRandomObject
+	AllyItem,
+	Enviroment, OneObject,
 };
 struct rangei : nameable {
 };
-extern range_s range;
+extern rangen range;

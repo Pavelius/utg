@@ -11,7 +11,7 @@
 
 struct creature : actable, spellable, statable, avatarable, wearable {
 	unsigned short	leader, tight;
-	alignment_s		alignment;
+	alignmentn		alignment;
 	statable		basic;
 	spellable		prepared;
 	spellf			active_spells, known_spells;
@@ -26,7 +26,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			drink(spell_s effect);
 	void			equip(item& v);
 	void			generate();
-	int				get(ability_s v) const { return statable::get(v); }
+	int				get(abilityn v) const { return statable::get(v); }
 	int				get(spell_s v) const { return spells[v]; }
 	const classi&	geti() const;
 	int				getaward() const;
@@ -66,7 +66,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			use(item& it);
 	void			use(spell_s spell);
 };
-extern creature *player, *opponent;
+extern creature *player, *opponent, *caster;
 struct creaturea : adat<creature*, 32> {
 	typedef bool (creature::*fnproc)() const;
 	creature*		choose(const char* title, bool random = false) const;
@@ -82,13 +82,13 @@ struct creaturea : adat<creature*, 32> {
 };
 extern creaturea creatures, targets;
 
-void add_creature(const classi* pi, gender_s gender, int level = 1);
+void add_creature(const classi* pi, gendern gender, int level = 1);
 void add_creature(const monsteri* pi);
 void finish_creature();
 
-const char* random_avatar(const classi* pi, gender_s gender);
+const char* random_avatar(const classi* pi, gendern gender);
 
-int get_average(ability_s v);
-int get_maximal(ability_s v);
-int get_minimal(ability_s v);
-int random_name(const classi* pi, gender_s gender);
+int get_average(abilityn v);
+int get_maximal(abilityn v);
+int get_minimal(abilityn v);
+int random_name(const classi* pi, gendern gender);

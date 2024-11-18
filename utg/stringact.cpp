@@ -42,7 +42,7 @@ static bool apply_name(const char* identifier, stringbuilder& sb, const char* na
 	return true;
 }
 
-static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gender) {
+static bool apply_gender(const char* identifier, stringbuilder& sb, gendern gender) {
 	for(auto& e : player_gender) {
 		if(!equal(e.female, identifier))
 			continue;
@@ -57,7 +57,7 @@ static bool apply_gender(const char* identifier, stringbuilder& sb, gender_s gen
 	return false;
 }
 
-bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender) {
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gendern gender) {
 	if(apply_name(identifier, sb, name))
 		return true;
 	if(apply_gender(identifier, sb, gender))
@@ -66,13 +66,13 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 }
 
 const char* act_name;
-gender_s act_gender;
+gendern act_gender;
 
 void act_custom(stringbuilder& sb, const char* identifier) {
 	apply_action(identifier, sb, act_name, act_gender);
 }
 
-void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param) {
+void stract(stringbuilder& sb, gendern gender, const char* name, const char* format, const char* format_param) {
 	auto push_name = act_name;
 	auto push_gender = act_gender;
 	auto push_proc = stringbuilder::custom;

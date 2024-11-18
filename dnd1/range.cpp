@@ -2,22 +2,13 @@
 #include "range.h"
 
 BSDATA(rangei) = {
-	{"Caster"},
-	{"CasterOrAlly"},
 	{"OneAlly"},
 	{"OneEnemy"},
 	{"OneEnemyTouch"},
-	{"AllAlly"},
-	{"AllEnemies"},
-	{"AllEnemiesHD"},
-	{"OneItem"},
-	{"OneAllyItem"},
-	{"AllCasterItems"},
-	{"AllAllyItems"},
+	{"AllyItem"},
 	{"Enviroment"},
 	{"OneObject"},
-	{"OneRandomObject"},
 };
-assert_enum(rangei, OneRandomObject)
+assert_enum(rangei, OneObject)
 
-range_s range;
+rangen range;

@@ -11,11 +11,11 @@ static int ability_bonush[] = {
 	0, 0, 0, 1, 1, 1, 1, 1, 2
 };
 
-int statable::getbonus(ability_s v) const {
+int statable::getbonus(abilityn v) const {
 	return maptbl(ability_bonus, get(v));
 }
 
-int statable::getbonush(ability_s v) const {
+int statable::getbonush(abilityn v) const {
 	return maptbl(ability_bonush, get(v));
 }
 
@@ -24,7 +24,7 @@ void statable::rollability() {
 		abilities[i] = 3 + (rand() % 6) + (rand() % 6) + (rand() % 6);
 }
 
-ability_s statable::getbestability() const {
+abilityn statable::getbestability() const {
 	auto r = 0;
 	auto m = 0;
 	for(auto i = 0; i < 6; i++) {
@@ -33,10 +33,10 @@ ability_s statable::getbestability() const {
 			m = abilities[i];
 		}
 	}
-	return (ability_s)r;
+	return (abilityn)r;
 }
 
-void statable::applybest(ability_s v) {
+void statable::applybest(abilityn v) {
 	auto m = getbestability();
 	if(v == m)
 		return;

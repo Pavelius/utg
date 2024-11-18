@@ -3,12 +3,12 @@
 #include "variant.h"
 
 class stringbuilder;
-enum gender_s : unsigned char;
+enum gendern : unsigned char;
 
 struct actable {
 	variant			type;
-	int				name;
-	gender_s		gender;
+	short			name;
+	gendern			gender;
 	void			act(const char* format, ...) const;
 	bool			actid(const char* prefix, const char* suffix, char separator = '\n') const;
 	void			actn(const char* format, ...) const;

@@ -10,7 +10,7 @@ Light level(1) duration(Turn12) range(Enviroment)
 LightBlindness level(1) range(OneEnemy) alternate(Light) save_negates(SaveSpells) enchant(Blindness)
 ProtectionFromEvil level(1) duration(Turn12) range(Caster)
 PurifyFoodAndWater level(1) range(OneAllyItem)
-RemoveFear level(1) range(OneAllyItem)
+RemoveFear level(1) range(OneAllyItem) dispell(CauseFear)
 ResistCold level(1) range(AllAlly)
 
 Teleport

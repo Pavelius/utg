@@ -9,7 +9,7 @@ void namenpc::actv(stringbuilder& sb, const char* format, const char* format_par
 	sb.addv(format, format_param);
 }
 
-gender_s namenpc::getgender() const {
+gendern namenpc::getgender() const {
 	if(nameid == 0xFFFF)
 		return NoGender;
 	return Male;

@@ -1,5 +1,6 @@
 #include "action.h"
 #include "collection.h"
+#include "condition.h"
 #include "creature.h"
 #include "draw_utg.h"
 #include "gender.h"
@@ -43,7 +44,7 @@ template<> void fnscript<abilityi>(int index, int value) {
 }
 
 template<> void fnscript<alignmenti>(int index, int value) {
-	player->alignment = (alignment_s)index;
+	player->alignment = (alignmentn)index;
 }
 
 template<> void fnscript<itemi>(int index, int value) {
@@ -126,7 +127,7 @@ bool have_feats(feat_s side, feat_s v, bool keep) {
 	return false;
 }
 
-static creature* get_greater(ability_s a, bool party) {
+static creature* get_greater(abilityn a, bool party) {
 	creature* result = 0;
 	int result_value = 0;
 	for(auto p : creatures) {
@@ -196,7 +197,7 @@ static bool is_mighty_weapon() {
 	return false;
 }
 
-static void make_attack(const char* id, int bonus, ability_s attack, ability_s damage, wear_s weapon) {
+static void make_attack(const char* id, int bonus, abilityn attack, abilityn damage, wear_s weapon) {
 	auto ac = opponent->get(AC);
 	if(opponent->is(Small) && player->is(Large))
 		ac += 2;
@@ -374,7 +375,7 @@ static void apply_scene_actions(int bonus) {
 
 static void apply_scene_spells(int bonus) {
 	if(bonus == 0) {
-		for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+		for(auto i = (spell_s)0; i < (spell_s)128; i = (spell_s)(i + 1)) {
 			if(!player->get(i))
 				continue;
 			auto p = bsdata<spelli>::elements + i;
@@ -860,7 +861,7 @@ static void combat_round() {
 			if(!p->isready())
 				continue;
 		}
-		if(player->is(CauseFear)) {
+		if(player->is(Paniced)) {
 			player->feats.remove(EngageMelee);
 			remove_player();
 			continue;
@@ -995,15 +996,15 @@ static void for_each_creature(int bonus) {
 static void hunt_prey(int bonus) {
 }
 
-static gender_s random_gender() {
+static gendern random_gender() {
 	if(d100() < 40)
 		return Female;
 	return Male;
 }
 
-static alignment_s aligment_chance[] = {Chaotic, Neutral, Lawful};
+static alignmentn aligment_chance[] = {Chaotic, Neutral, Lawful};
 
-static alignment_s random_alignment() {
+static alignmentn random_alignment() {
 	return maprnd(aligment_chance);
 }
 
@@ -1014,7 +1015,7 @@ static const classi* random_class(const char* id) {
 	return 0;
 }
 
-static int random_morale(alignment_s alignment) {
+static int random_morale(alignmentn alignment) {
 	switch(alignment) {
 	case -1: return xrand(-30, -10);
 	case 1: return xrand(10, 30);
@@ -1022,7 +1023,7 @@ static int random_morale(alignment_s alignment) {
 	}
 }
 
-static void add_character(const classi* pc, int level, alignment_s alignment, creature* leader = 0) {
+static void add_character(const classi* pc, int level, alignmentn alignment, creature* leader = 0) {
 	if(!pc)
 		return;
 	add_creature(pc, random_gender(), level);
@@ -1030,7 +1031,7 @@ static void add_character(const classi* pc, int level, alignment_s alignment, cr
 	player->setleader(leader);
 }
 
-static void add_followers(const classi* pc, alignment_s alignment, interval count, interval level) {
+static void add_followers(const classi* pc, alignmentn alignment, interval count, interval level) {
 	auto n = count.roll();
 	auto leader = player;
 	pushvalue push_player(player);
@@ -1038,7 +1039,7 @@ static void add_followers(const classi* pc, alignment_s alignment, interval coun
 		add_character(pc, level.roll(), alignment, leader);
 }
 
-static void add_followers(const char* class_id, alignment_s alignment, interval count, interval level) {
+static void add_followers(const char* class_id, alignmentn alignment, interval count, interval level) {
 	auto n = count.roll();
 	auto leader = player;
 	pushvalue push_player(player);
@@ -1161,31 +1162,77 @@ static void party_run_away(int bonus) {
 	encounter_action("PartyRunAwaySuccess");
 }
 
+static void player_speak(int bonus) {
+}
+
+static bool if_2hd() {
+	return player->get(Level) >= 2;
+}
+
+static bool if_4hd() {
+	return player->get(Level) >= 4;
+}
+
+static bool if_5hd() {
+	return player->get(Level) >= 5;
+}
+
+static bool if_alive() {
+	return player->get(HP) > 0;
+}
+
+static bool if_item_identify() {
+	return last_item->isidentified();
+}
+
+static bool if_item_cursed() {
+	return last_item->iscursed();
+}
+
+static bool if_wounded() {
+	return player->get(HP) < player->get(HPMax);
+}
+
+static bool if_you() {
+	return player == caster;
+}
+
+BSDATA(conditioni) = {
+	{"If2HD", if_2hd},
+	{"If4HD", if_4hd},
+	{"If5HD", if_5hd},
+	{"IfAlive", if_alive},
+	{"IfItemCursed", if_item_cursed},
+	{"IfItemIdentify", if_item_identify},
+	{"IfWounded", if_wounded},
+	{"IfYou", if_you},
+};
+BSDATAF(conditioni)
 BSDATA(script) = {
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
-	{"AttackCharge", attack_charge, allow_attack_charge},
-	{"AttackMelee", attack_melee, allow_attack_melee},
-	{"AttackRanged", attack_ranged, allow_attack_ranged},
-	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
+	{"AttackCharge", attack_charge},
+	{"AttackMelee", attack_melee},
+	{"AttackRanged", attack_ranged},
+	{"AttackUnarmed", attack_unarmed},
 	{"Chance", apply_chance},
-	{"ChooseTarget", choose_target, condition_passed},
+	{"ChooseTarget", choose_target},
 	{"ClericCaster", cleric_caster},
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
-	{"ContinueBattle", continue_battle, allow_continue_battle},
+	{"ContinueBattle", continue_battle},
 	{"DieAfterAttack", die_after_attack},
 	{"FighterGuards", fighter_guards},
 	{"FighterHightLevel", fighter_high_level},
-	{"FilterAlive", filter_alive, targets_filter},
-	{"FilterBroken", filter_cursed, items_filter},
-	{"FilterCursed", filter_cursed, items_filter},
-	{"FilterIdentified", filter_identified, items_filter},
-	{"FilterYou", filter_you, targets_filter},
-	{"FilterWounded", filter_wounded, targets_filter},
-	{"ForEachCreature", for_each_creature, targets_filter},
+	{"FilterAlive", filter_alive},
+	{"FilterBroken", filter_cursed},
+	{"FilterCursed", filter_cursed},
+	{"FilterIdentified", filter_identified},
+	{"FilterYou", filter_you},
+	{"FilterWounded", filter_wounded},
+	{"ForEachCreature", for_each_creature},
 	{"HuntPrey", hunt_prey},
-	{"LoseGame", lose_game, allow_lose_game},
+	{"LoseGame", lose_game},
 	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
 	{"MakeAmbushMonsters", make_ambush_monsters},
@@ -1194,12 +1241,13 @@ BSDATA(script) = {
 	{"RandomEncounter", random_encounter},
 	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},
-	{"RetreatMelee", retreat_melee, allow_retreat_melee},
-	{"RunAway", run_away, allow_run_away},
+	{"RetreatMelee", retreat_melee},
+	{"RunAway", run_away},
 	{"Saves", all_saves},
-	{"SelectAllies", select_backpack, targets_filter},
-	{"SelectBackpack", select_backpack, items_filter},
-	{"SelectItems", select_items, items_filter},
+	{"SelectAllies", select_backpack},
+	{"SelectBackpack", select_backpack},
+	{"SelectItems", select_items},
+	{"Speak", player_speak},
 	{"StartCombat", start_combat},
 	{"SurpriseRoll", surprise_roll},
 	{"Undead", undead_features},

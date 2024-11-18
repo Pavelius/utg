@@ -231,6 +231,7 @@
     <Text Include="rules\Races.txt" />
     <Text Include="rules\Scenery.txt" />
     <Text Include="rules\Spells.txt" />
+    <Text Include="rules\SpellsNew.txt" />
     <Text Include="speech\ru\Adventures.txt" />
     <Text Include="speech\ru\Characters.txt" />
   </ItemGroup>

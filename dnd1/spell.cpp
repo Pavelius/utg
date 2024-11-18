@@ -6,68 +6,68 @@
 #include "spell.h"
 #include "ongoing.h"
 
-BSDATA(spelli) = {
-	{"CauseLightWound"},
-	{"CureLightWound"},
-	{"DetectEvil"},
-	{"DetectMagic"},
-	{"Light"}, {"LightBlindness"}, {"Darkness"},
-	{"ProtectionFromEvil"},
-	{"PurifyFoodAndWater"},
-	{"RemoveFear"}, {"CauseFear"},
-	{"ResistCold"},	//
-	{"CharmPerson"},
-	{"FloatingDisc"},
-	{"HoldPortal"},
-	{"MagicMissile"},
-	{"ReadLanguages"},
-	{"ReadMagic"},
-	{"Shield"},
-	{"Sleep"},
-	{"Ventriloquism"}, // Second level spells
-	{"Blindness"},
-	{"ContinualDarkness"},
-	{"ContinualLight"},
-	{"DetectInvisibility"},
-	{"ESP"},
-	{"Invisibility"},
-	{"Knock"},
-	{"Levitate"},
-	{"MirrorImages"},
-	{"PhantasmalForce"},
-	{"Web"},
-	{"WizardLock"},
-	{"Bless"},
-	{"Blight"},
-	{"FindTraps"},
-	{"HoldPerson"},
-	{"KnownAlignment"},
-	{"ResistFire"},
-	{"Silence15Radius"},
-	{"SnakeCharm"},
-	{"SpeakWithAnimals"},
-	{"BestowCurse"}, // Three level spells
-	{"CauseDisease"},
-	{"CureDisease"},
-	{"GrowthOfAnimals"},
-	{"LocateObject"},
-	{"RemoveCurse"},
-	{"FlameBlade"},
-	{"AntiMagicShell"},
-	{"Teleport"},
-	{"DeathSpell"},
-	{"AnimateTree"}, // Some effective actions
-	{"AnkhegAcidSquirt"},
-	{"BeetleOilOfPain"},
-	{"ConeOfFire"},
-	{"DryadCharmMagic"},
-	{"ItemRepair"},
-	{"ShrinkSize"}, // Special spell effects
-	{"GrowthSize"},
-	{"GaseousForm"},
-	{"DeathPoison"},
-};
-assert_enum(spelli, DeathPoison)
+//BSDATA(spelli) = {
+//	{"CauseLightWound"},
+//	{"CureLightWound"},
+//	{"DetectEvil"},
+//	{"DetectMagic"},
+//	{"Light"}, {"LightBlindness"}, {"Darkness"},
+//	{"ProtectionFromEvil"},
+//	{"PurifyFoodAndWater"},
+//	{"RemoveFear"}, {"CauseFear"},
+//	{"ResistCold"},	//
+//	{"CharmPerson"},
+//	{"FloatingDisc"},
+//	{"HoldPortal"},
+//	{"MagicMissile"},
+//	{"ReadLanguages"},
+//	{"ReadMagic"},
+//	{"Shield"},
+//	{"Sleep"},
+//	{"Ventriloquism"}, // Second level spells
+//	{"Blindness"},
+//	{"ContinualDarkness"},
+//	{"ContinualLight"},
+//	{"DetectInvisibility"},
+//	{"ESP"},
+//	{"Invisibility"},
+//	{"Knock"},
+//	{"Levitate"},
+//	{"MirrorImages"},
+//	{"PhantasmalForce"},
+//	{"Web"},
+//	{"WizardLock"},
+//	{"Bless"},
+//	{"Blight"},
+//	{"FindTraps"},
+//	{"HoldPerson"},
+//	{"KnownAlignment"},
+//	{"ResistFire"},
+//	{"Silence15Radius"},
+//	{"SnakeCharm"},
+//	{"SpeakWithAnimals"},
+//	{"BestowCurse"}, // Three level spells
+//	{"CauseDisease"},
+//	{"CureDisease"},
+//	{"GrowthOfAnimals"},
+//	{"LocateObject"},
+//	{"RemoveCurse"},
+//	{"FlameBlade"},
+//	{"AntiMagicShell"},
+//	{"Teleport"},
+//	{"DeathSpell"},
+//	{"AnimateTree"}, // Some effective actions
+//	{"AnkhegAcidSquirt"},
+//	{"BeetleOilOfPain"},
+//	{"ConeOfFire"},
+//	{"DryadCharmMagic"},
+//	{"ItemRepair"},
+//	{"ShrinkSize"}, // Special spell effects
+//	{"GrowthSize"},
+//	{"GaseousForm"},
+//	{"DeathPoison"},
+//};
+//assert_enum(spelli, DeathPoison)
 
 void choose_target();
 
@@ -164,25 +164,17 @@ static bool cast_on_item(bool run) {
 	return true;
 }
 
-ability_s spelli::getsave() const {
-	if(save_negates)
-		return save_negates;
-	return save_halves;
-}
-
 bool spelli::isevil() const {
 	switch(range) {
 	case OneEnemy:
 	case OneEnemyTouch:
-	case AllEnemies:
-	case AllEnemiesHD:
 		return true;
 	default:
 		return false;
 	}
 }
 
-static int getduration(duration_s d, int level) {
+static int getduration(durationn d, int level) {
 	return bsdata<durationi>::elements[d].roll();
 }
 
@@ -192,77 +184,77 @@ bool item::isallowspell() const {
 
 bool creature::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
-	auto count = run ? ei.count.roll() : ei.count.maximum();
+	auto count = run ? ei.random.roll() : ei.random.maximum();
 	if(run) {
 		if(ei.range == OneEnemyTouch)
 			set(EngageMelee);
 		if(save(id, count))
 			return false;
 	}
-	switch(id) {
-	case CureLightWound:
-		if(is(Unholy))
-			return false;
-		if(!iswounded() && !allow_dispelling(ei.dispell, this))
-			return false;
-		if(run)
-			heal(count);
-		break;
-	case CauseLightWound:
-		if(run)
-			damage(count);
-		break;
-	case MirrorImages:
-		if(run) {
-			auto n = basic.abilities[IllusionCopies] + count;
-			if(abilities[IllusionCopies] < n)
-				abilities[IllusionCopies] = n;
-		}
-		break;
-	case DeathSpell:
-		if(is(Unholy))
-			return false;
-		if(get(Level) > 7)
-			return false;
-		if(run)
-			kill();
-		break;
-	default:
-		if(ei.duration != Instant)
-			enchant(player, this, ei.enchant, getduration(ei.duration, level));
-		break;
-	}
-	if(run) {
-		actid(ei.id, "Apply");
-		dispelling(ei.dispell, this);
-	}
+	//switch(id) {
+	//case CureLightWound:
+	//	if(is(Unholy))
+	//		return false;
+	//	if(!iswounded() && !allow_dispelling(ei.dispell, this))
+	//		return false;
+	//	if(run)
+	//		heal(count);
+	//	break;
+	//case CauseLightWound:
+	//	if(run)
+	//		damage(count);
+	//	break;
+	//case MirrorImages:
+	//	if(run) {
+	//		auto n = basic.abilities[IllusionCopies] + count;
+	//		if(abilities[IllusionCopies] < n)
+	//			abilities[IllusionCopies] = n;
+	//	}
+	//	break;
+	//case DeathSpell:
+	//	if(is(Unholy))
+	//		return false;
+	//	if(get(Level) > 7)
+	//		return false;
+	//	if(run)
+	//		kill();
+	//	break;
+	//default:
+	//	if(ei.duration != Instant)
+	//		enchant(player, this, ei.enchant, getduration(ei.duration, level));
+	//	break;
+	//}
+	//if(run) {
+	//	actid(ei.id, "Apply");
+	//	dispelling(ei.dispell, this);
+	//}
 	return true;
 }
 
 bool item::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
-	switch(id) {
-	case DetectEvil:
-		if(!iscursed() || isidentified())
-			return false;
-		if(run) {
-			identified = 1;
-			identified_magic = 1;
-		}
-		break;
-	case DetectMagic:
-		if(isidentified() || (!ismagic() && !iscursed()))
-			return false;
-		if(run)
-			identified_magic = 1;
-		break;
-	case ItemRepair:
-		if(!isbroken())
-			return false;
-		if(run)
-			broken = 0;
-		break;
-	}
+	//switch(id) {
+	//case DetectEvil:
+	//	if(!iscursed() || isidentified())
+	//		return false;
+	//	if(run) {
+	//		identified = 1;
+	//		identified_magic = 1;
+	//	}
+	//	break;
+	//case DetectMagic:
+	//	if(isidentified() || (!ismagic() && !iscursed()))
+	//		return false;
+	//	if(run)
+	//		identified_magic = 1;
+	//	break;
+	//case ItemRepair:
+	//	if(!isbroken())
+	//		return false;
+	//	if(run)
+	//		broken = 0;
+	//	break;
+	//}
 	if(run)
 		actid(ei.id, "Apply");
 	return true;
@@ -270,14 +262,14 @@ bool item::apply(spell_s id, int level, bool run) {
 
 bool scenery::apply(spell_s id, int level, bool run) {
 	auto& ei = bsdata<spelli>::elements[id];
-	switch(id) {
-	case CureLightWound:
-		break;
-	default:
-		if(ei.duration != Instant && ei.duration != PermanentDuration)
-			enchant(player, this, id, getduration(ei.duration, level));
-		break;
-	}
+	//switch(id) {
+	//case CureLightWound:
+	//	break;
+	//default:
+	//	if(ei.duration != Instant && ei.duration != PermanentDuration)
+	//		enchant(player, this, id, getduration(ei.duration, level));
+	//	break;
+	//}
 	if(run)
 		dispelling(ei.dispell, this);
 	return true;
@@ -286,7 +278,7 @@ bool scenery::apply(spell_s id, int level, bool run) {
 static void set_caster_melee() {
 }
 
-bool spell_effect(spell_s spell, int level, range_s range, const interval& target, const char* suffix, bool run) {
+bool spell_effect(spell_s spell, int level, rangen range, const interval& target, const char* suffix, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
 	if(run) {
@@ -298,12 +290,6 @@ bool spell_effect(spell_s spell, int level, range_s range, const interval& targe
 			player->actid(bsdata<spelli>::elements[spell].id, suffix);
 	}
 	switch(range) {
-	case Caster:
-		return player->apply(last_spell, last_level, true);
-	case CasterOrAlly:
-		targets = creatures;
-		targets.matchally(true);
-		return cast_on_target(run);
 	case OneAlly:
 		targets = creatures;
 		targets.matchally(true);
@@ -319,47 +305,34 @@ bool spell_effect(spell_s spell, int level, range_s range, const interval& targe
 		targets.matchenemy(true);
 		targets.match(EngageMelee, true);
 		return cast_on_target(run);
-	case AllAlly:
-		targets = creatures;
-		targets.matchally(true);
-		return cast_on_target(run, target.roll(), target, false);
-	case AllEnemies:
-		targets = creatures;
-		targets.matchenemy(true);
-		return cast_on_target(run, target.roll(), target, false);
-	case AllEnemiesHD:
-		targets = creatures;
-		targets.matchenemy(true);
-		return cast_on_target(run, target.roll(), target, true);
-	case OneItem:
-		items.clear();
-		items.select(player->backpack());
-		return cast_on_item(run);
-	case OneAllyItem:
-		items.clear();
-		for(auto p : creatures) {
-			if(p->isally())
-				items.select(player->backpack());
-		}
-		return cast_on_item(run);
-	case AllCasterItems:
-		items.clear();
-		items.select(player->backpack());
-		return cast_on_item(run, target.roll(), target);
-	case AllAllyItems:
+	//case AllAlly:
+	//	targets = creatures;
+	//	targets.matchally(true);
+	//	return cast_on_target(run, target.roll(), target, false);
+	//case AllEnemies:
+	//	targets = creatures;
+	//	targets.matchenemy(true);
+	//	return cast_on_target(run, target.roll(), target, false);
+	//case AllEnemiesHD:
+	//	targets = creatures;
+	//	targets.matchenemy(true);
+	//	return cast_on_target(run, target.roll(), target, true);
+	//case OneItem:
+	//	items.clear();
+	//	items.select(player->backpack());
+	//	return cast_on_item(run);
+	case AllyItem:
 		items.clear();
 		for(auto p : creatures) {
 			if(p->isally())
 				items.select(player->backpack());
 		}
-		return cast_on_item(run, target.roll(), target);
+		return cast_on_item(run);
 	case Enviroment:
 		if(!scene)
 			return false;
 		return scene->apply(last_spell, last_level, run);
 	case OneObject:
-		return false;
-	case OneRandomObject:
 		return false;
 	default:
 		return false;
@@ -368,12 +341,13 @@ bool spell_effect(spell_s spell, int level, range_s range, const interval& targe
 
 bool spell_effect(spell_s spell, int level, const char* suffix, bool run) {
 	auto& ei = bsdata<spelli>::elements[spell];
-	return spell_effect(spell, player->get(Level), ei.range, ei.targets, suffix, run);
+	return spell_effect(spell, player->get(Level), ei.range, ei.random, suffix, run);
 }
 
 bool creature::cast(spell_s spell, bool run) {
+	pushvalue push_caster(caster, this);
 	auto& ei = bsdata<spelli>::elements[spell];
-	return spell_effect(spell, get(Level), ei.range, ei.targets, "Cast", run);
+	return spell_effect(spell, get(Level), ei.range, ei.random, "Cast", run);
 }
 
 void creature::use(spell_s spell) {
@@ -384,7 +358,7 @@ void creature::use(spell_s spell) {
 void spella::select(const spellf& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i+1)) {
+	for(auto i = (spell_s)0; i < (spell_s)128; i = (spell_s)(i+1)) {
 		if(source.is(i)) {
 			if(ps < pe)
 				*ps++ = bsdata<spelli>::elements + i;
@@ -396,7 +370,7 @@ void spella::select(const spellf& source) {
 void spella::select(const spellable& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = (spell_s)0; i <= LastSpell; i = (spell_s)(i + 1)) {
+	for(auto i = (spell_s)0; i <= (spell_s)128; i = (spell_s)(i + 1)) {
 		if(source.spells[i]) {
 			if(ps < pe)
 				*ps++ = bsdata<spelli>::elements + i;
@@ -409,7 +383,7 @@ void spella::select(int magic, int level) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
 	for(auto& ei : bsdata<spelli>()) {
-		if(ei.alternate || ei.reversed)
+		if(ei.version || ei.reversed)
 			continue;
 		if(ei.level[magic] != level)
 			continue;

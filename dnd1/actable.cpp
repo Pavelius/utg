@@ -8,7 +8,7 @@
 #include "scenery.h"
 #include "stringvar.h"
 
-bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gendern gender);
 bool apply_list(const char* identifier, stringbuilder& sb);
 bool apply_speech(const char* id, stringbuilder& sb);
 

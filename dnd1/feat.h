@@ -9,8 +9,9 @@ enum feat_s : unsigned char {
 	Burrowing, Cling, Fly, ShapeChanging, InflictWound,
 	BattleRage, BearHug, StunningBlow, SurpriseEnemy, DancePoison, Dive,
 	SunSensitive, Slow, Quick, Small, Large, Leap, Swoop, NormalWeaponImmunity,
-	Blunt, TwoHanded, Burned, Frozen, Corrosed, Wounded,
-	EngageMelee, Surprised, Prone, Unholy, Summoned, Player, Enemy,
+	ColdResist, FireResist,
+	Blunt, TwoHanded, Burned, Dark, Frozen, Corrosed, Paniced, ProtectedFromEvil, Trapped, Wounded, Paralized,
+	EngageMelee, Blind, Deaf, Surprised, Prone, Unholy, Summoned, Player, Enemy,
 };
 struct feati : nameable {
 };

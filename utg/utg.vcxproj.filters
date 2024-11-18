@@ -303,6 +303,9 @@
     <ClCompile Include="relation.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="formula.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -595,6 +598,9 @@
     </ClInclude>
     <ClInclude Include="relation.h">
       <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="formula.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,17 +1,19 @@
 #include "bsreq.h"
 #include "condition.h"
+#include "script.h"
 
-BSDATAC(conditioni, 128)
 BSMETA(conditioni) = {
 	BSREQ(id),
-	BSREQ(param)
-};
+	{}};
 
-conditioni* conditioni::add(const char* id, fnproc proc, int param) {
-	if(!proc)
-		return 0;
-	auto p = (conditioni*)bsdata<conditioni>::source.addfind(id);
-	p->proc = proc;
-	p->param = param;
-	return p;
+template<> bool fntest<conditioni>(int index, int value) {
+	if(value>=0)
+		return bsdata<conditioni>::elements[index].proc();
+	else
+		return !bsdata<conditioni>::elements[index].proc();
+}
+
+template<> void fnscript<conditioni>(int index, int value) {
+	if(!fntest<conditioni>(index, value))
+		script_stop();
 }
