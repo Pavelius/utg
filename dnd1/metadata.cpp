@@ -156,7 +156,7 @@ BSMETA(spelli) = {
 	BSREQ(summon),
 	BSENM(range, rangei),
 	BSENM(dispell, spelli),
-	BSENM(reversed, spelli), BSENM(version, spelli), BSENM(enchant, spelli),
+	BSENM(reversed, spelli), BSENM(version, spelli),
 	{}};
 BSMETA(weari) = {
 	BSREQ(id),

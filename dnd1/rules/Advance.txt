@@ -5,7 +5,7 @@ Cleric 1 Equipment
 Cleric 2 SpellCasting
  elements SpellLevel1+1
 Cleric 2 Spells
- elements Known CureLightWound DetectEvil DetectMagic Light ProtectionFromEvil PurifyFoodAndWater RemoveFear ResistCold
+ elements Known CureLightWound DetectEvil DetectMagic Light ProtectionFromEvil PurifyFoodAndDrink RemoveFear ResistCold
 
 Dwarf 1 Equipment
  elements BattleAxe ChainArmor

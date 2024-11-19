@@ -3,6 +3,7 @@
 #include "attackable.h"
 #include "avatarable.h"
 #include "monster.h"
+#include "reaction.h"
 #include "spell.h"
 #include "statable.h"
 #include "wearable.h"
@@ -12,6 +13,7 @@
 struct creature : actable, spellable, statable, avatarable, wearable {
 	unsigned short	leader, tight;
 	alignmentn		alignment;
+	reactionn		reaction;
 	statable		basic;
 	spellable		prepared;
 	spellf			active_spells, known_spells;

@@ -19,7 +19,7 @@ struct spelli : nameable {
 	rangen		range;
 	interval	random;
 	spella		dispell;
-	spelln		reversed, version, enchant;
+	spelln		reversed, version;
 	variants	wearing, instant, filter;
 	variant		summon;
 	spelln		getbasic() const { return reversed ? reversed : version; }

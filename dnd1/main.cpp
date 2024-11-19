@@ -14,7 +14,6 @@
 void combat_mode();
 void initialize_ui();
 void random_encounter(const char* id);
-void spell_initialize();
 
 static void add_creature(const char* id, gendern gender, feat_s feat, int level) {
 	auto pi = bsdata<classi>::find(id);
@@ -45,7 +44,6 @@ static void starting() {
 void initialize_str();
 
 static void initializing() {
-	spell_initialize();
 	initialize_str();
 }
 

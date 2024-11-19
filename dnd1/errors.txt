@@ -6,8 +6,6 @@
  Line 87: Can't find variant `FlameSwordHand`
  Line 93: Not found identifier `MeleeEnemy`
  Line 95: Can't find variant `NegativeEnergy`
-Error in file `rules/Advance.txt`:
- Line 8: Can't find variant `PurifyFoodAndWater`
 Error in file `rules/Monsters.txt`:
  Line 104: Can't find variant `DeathPoison`
  Line 110: Can't find variant `DeathPoison`

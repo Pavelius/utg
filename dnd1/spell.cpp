@@ -1,85 +1,16 @@
 #include "bsdata.h"
 #include "creature.h"
+#include "condition.h"
 #include "pushvalue.h"
 #include "rand.h"
 #include "scenery.h"
 #include "spell.h"
 #include "ongoing.h"
 
-//BSDATA(spelli) = {
-//	{"CauseLightWound"},
-//	{"CureLightWound"},
-//	{"DetectEvil"},
-//	{"DetectMagic"},
-//	{"Light"}, {"LightBlindness"}, {"Darkness"},
-//	{"ProtectionFromEvil"},
-//	{"PurifyFoodAndWater"},
-//	{"RemoveFear"}, {"CauseFear"},
-//	{"ResistCold"},	//
-//	{"CharmPerson"},
-//	{"FloatingDisc"},
-//	{"HoldPortal"},
-//	{"MagicMissile"},
-//	{"ReadLanguages"},
-//	{"ReadMagic"},
-//	{"Shield"},
-//	{"Sleep"},
-//	{"Ventriloquism"}, // Second level spells
-//	{"Blindness"},
-//	{"ContinualDarkness"},
-//	{"ContinualLight"},
-//	{"DetectInvisibility"},
-//	{"ESP"},
-//	{"Invisibility"},
-//	{"Knock"},
-//	{"Levitate"},
-//	{"MirrorImages"},
-//	{"PhantasmalForce"},
-//	{"Web"},
-//	{"WizardLock"},
-//	{"Bless"},
-//	{"Blight"},
-//	{"FindTraps"},
-//	{"HoldPerson"},
-//	{"KnownAlignment"},
-//	{"ResistFire"},
-//	{"Silence15Radius"},
-//	{"SnakeCharm"},
-//	{"SpeakWithAnimals"},
-//	{"BestowCurse"}, // Three level spells
-//	{"CauseDisease"},
-//	{"CureDisease"},
-//	{"GrowthOfAnimals"},
-//	{"LocateObject"},
-//	{"RemoveCurse"},
-//	{"FlameBlade"},
-//	{"AntiMagicShell"},
-//	{"Teleport"},
-//	{"DeathSpell"},
-//	{"AnimateTree"}, // Some effective actions
-//	{"AnkhegAcidSquirt"},
-//	{"BeetleOilOfPain"},
-//	{"ConeOfFire"},
-//	{"DryadCharmMagic"},
-//	{"ItemRepair"},
-//	{"ShrinkSize"}, // Special spell effects
-//	{"GrowthSize"},
-//	{"GaseousForm"},
-//	{"DeathPoison"},
-//};
-//assert_enum(spelli, DeathPoison)
-
 void choose_target();
 
-spelln	last_spell;
-int		last_level;
-
-void spell_initialize() {
-	for(auto& e : bsdata<spelli>()) {
-		if(!e.enchant)
-			e.enchant = (spelln)getbsi(&e);
-	}
-}
+spelln last_spell;
+int last_level;
 
 static void dispelling(const spelli::spella& source, variant owner) {
 	for(auto v : source)
@@ -278,7 +209,23 @@ bool scenery::apply(spelln id, int level, bool run) {
 static void set_caster_melee() {
 }
 
-bool spell_effect(spelln spell, int level, rangen range, const interval& target, const char* suffix, bool run) {
+bool allow_creature(variant v) {
+	if(v.iskind<feati>())
+		return player->is((feat_s)v.value);
+	else if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else
+		return false;
+}
+
+bool allow_item(variant v) {
+	if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else
+		return false;
+}
+
+bool spell_effect(spelln spell, int level, rangen range, const interval& random, const char* suffix, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
 	if(run) {
@@ -289,6 +236,7 @@ bool spell_effect(spelln spell, int level, rangen range, const interval& target,
 		if(suffix)
 			player->actid(bsdata<spelli>::elements[spell].id, suffix);
 	}
+	auto count = random;
 	switch(range) {
 	case OneAlly:
 		targets = creatures;

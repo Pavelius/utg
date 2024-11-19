@@ -3,6 +3,7 @@
 #include "condition.h"
 #include "creature.h"
 #include "draw_utg.h"
+#include "formula.h"
 #include "gender.h"
 #include "itemlay.h"
 #include "modifier.h"
@@ -28,18 +29,10 @@ void combat_mode(int bonus);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
-static int getbonus(int bonus) {
-	switch(bonus) {
-	case 101: return last_roll;
-	case -101: return -last_roll;
-	default: return bonus;
-	}
-}
-
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
-	case Permanent: player->basic.abilities[index] += getbonus(value); break;
-	default: player->abilities[index] += getbonus(value); break;
+	case Permanent: player->basic.abilities[index] += get_bonus(value); break;
+	default: player->abilities[index] += get_bonus(value); break;
 	}
 }
 
@@ -486,8 +479,8 @@ static void reaction_mode(int bonus) {
 }
 
 static bool surprise_side(int bonus) {
-	last_roll = d6() + bonus;
-	return last_roll <= 2;
+	last_number = d6() + bonus;
+	return last_number <= 2;
 }
 
 static void random_surprise() {
