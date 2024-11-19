@@ -16,7 +16,7 @@ BSDATA(organizationi) = {
 	{"MerchantsGuild"},
 	{"WizardCouncil"},
 };
-assert_enum(organizationi, WizardCouncil)
+BSDATAF(organizationi)
 
 BSDATA(orgstati) = {
 	{"Reputation"},

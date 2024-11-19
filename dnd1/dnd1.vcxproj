@@ -166,6 +166,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="ongoing.h" />
     <ClInclude Include="organization.h" />
+    <ClInclude Include="party.h" />
     <ClInclude Include="race.h" />
     <ClInclude Include="range.h" />
     <ClInclude Include="reaction.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="ongoing.cpp" />
     <ClCompile Include="organization.cpp" />
+    <ClCompile Include="party.cpp" />
     <ClCompile Include="range.cpp" />
     <ClCompile Include="reaction.cpp" />
     <ClCompile Include="roll.cpp" />

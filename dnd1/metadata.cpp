@@ -13,6 +13,7 @@
 #include "monster.h"
 #include "ongoing.h"
 #include "organization.h"
+#include "party.h"
 #include "race.h"
 #include "randomizer.h"
 #include "reaction.h"
@@ -119,6 +120,9 @@ BSMETA(organizationi) = {
 	BSDST(abilities, orgstati),
 	{}};
 BSMETA(orgstati) = {
+	BSREQ(id),
+	{}};
+BSMETA(partystati) = {
 	BSREQ(id),
 	{}};
 BSMETA(randomizeri) = {

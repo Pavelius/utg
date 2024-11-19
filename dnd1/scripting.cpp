@@ -1191,6 +1191,10 @@ static bool if_alive() {
 	return player->get(HP) > 0;
 }
 
+static bool if_animal() {
+	return player->get(Intellect) <= 3;
+}
+
 static bool if_edible() {
 	return false;
 }
@@ -1224,6 +1228,7 @@ BSDATA(conditioni) = {
 	{"If4HD", if_4hd},
 	{"If5HD", if_5hd},
 	{"IfAlive", if_alive},
+	{"IfAnimal", if_animal},
 	{"IfEdible", if_edible},
 	{"IfItemCursed", if_item_cursed},
 	{"IfItemDamaged", if_item_damaged},

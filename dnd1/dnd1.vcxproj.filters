@@ -105,6 +105,9 @@
     <ClInclude Include="statistic.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="party.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,6 +204,9 @@
       <Filter>logic</Filter>
     </ClCompile>
     <ClCompile Include="statistic.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="party.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>

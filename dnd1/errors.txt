@@ -2,7 +2,6 @@
  Line 29: Can't find variant `ItemDamage`
  Line 29: Can't find variant `EffectCount`
  Line 69: Can't find variant `GreenSlime`
- Line 75: Can't find variant `IfAnimal`
  Line 87: Can't find variant `FlameSwordHand`
  Line 93: Not found identifier `MeleeEnemy`
  Line 95: Can't find variant `NegativeEnergy`
