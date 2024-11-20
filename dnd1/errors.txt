@@ -1,16 +1,2 @@
-﻿Error in file `rules/SpellsNew.txt`:
- Line 29: Can't find variant `ItemDamage`
- Line 29: Can't find variant `EffectCount`
- Line 69: Can't find variant `GreenSlime`
- Line 87: Can't find variant `FlameSwordHand`
- Line 93: Not found identifier `MeleeEnemy`
- Line 95: Can't find variant `NegativeEnergy`
-Error in file `rules/Monsters.txt`:
- Line 104: Can't find variant `DeathPoison`
- Line 110: Can't find variant `DeathPoison`
- Line 122: Can't find variant `DeathPoison`
- Line 124: Can't find variant `DeathPoison`
- Line 126: Can't find variant `DeathPoison`
- Line 128: Can't find variant `DeathPoison`
+﻿Error in file `rules/Monsters.txt`:
  Line 140: Can't find variant `Teleport`
- Line 158: Can't find variant `DeathPoison`

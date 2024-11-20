@@ -184,6 +184,7 @@ BSDATA(varianti) = {
 	{"Modifier", VAR(modifieri, 1), 0, 0, fnscript<modifieri>},
 	{"Monster", VAR(monsteri, 1)},
 	{"Organization", VAR(organizationi, 1)},
+	{"PartyStat", VAR(partystati, 1), 0, 0, fnscript<partystati>},
 	{"Race", VAR(racei, 1)},
 	{"Random", VAR(randomizeri, 1), 0, 0, fnscript<randomizeri>},
 	{"Reaction", VAR(reactioni, 1)},

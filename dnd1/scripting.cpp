@@ -563,6 +563,10 @@ static bool allow_attack_melee(int bonus) {
 	return targets.operator bool();
 }
 
+static void damage_necrotic(int bonus) {
+	opponent->damage(bonus);
+}
+
 static void attack_melee(int bonus) {
 	if(!allow_attack_melee(bonus))
 		return;
@@ -1162,6 +1166,9 @@ static void item_curse(int bonus) {
 	last_item->curse(bonus >= 0 ? 1 : 0);
 }
 
+static void item_damage(int bonus) {
+}
+
 static void item_identify(int bonus) {
 	last_item->identify(bonus >= 0 ? 1 : 0);
 }
@@ -1251,6 +1258,7 @@ BSDATA(script) = {
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
 	{"ContinueBattle", continue_battle},
+	{"DamageNecrotic", damage_necrotic},
 	{"DieAfterAttack", die_after_attack},
 	{"FighterGuards", fighter_guards},
 	{"FighterHightLevel", fighter_high_level},
@@ -1264,6 +1272,7 @@ BSDATA(script) = {
 	{"Heal", heal},
 	{"HuntPrey", hunt_prey},
 	{"ItemCurse", item_curse},
+	{"ItemDamage", item_damage},
 	{"ItemIdentify", item_curse},
 	{"InstantKill", instant_kill},
 	{"LoseGame", lose_game},

@@ -1,3 +1,7 @@
+#Monster
+
+GreenSlime
+
 #Spell
 
 Darkness
@@ -90,9 +94,9 @@ FlameBlade level(3) range(OneAlly) duration(Turn1) summon(FlameSwordHand)
 CureSeriousWound level(4) range(OneAlly)
  filter Undead-1 IfWounded
  instant Roll2d6+2 Heal+101
-CauseSeriousWound level(4) range(MeleeEnemy)
+CauseSeriousWound level(4) range(OneEnemy)
  filter Undead-1
- instant Roll2d6+2 NegativeEnergy+101
+ instant Roll2d6+2 DamageNecrotic+101
 NeutralizePoison level(4) range(OneAlly)
  filter PoisonLevel
  instant PoisonLevel-100
@@ -110,6 +114,8 @@ Quest level(5)
 RaiseDead level(5)
 FingerOfDeath level(5) range(OneEnemy) reversed(RaiseDead)
  instant InstantKill
+
+Teleport
 
 AnimateTree
 AnkhegAcidSquirt range(OneEnemy)

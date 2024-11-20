@@ -9,6 +9,7 @@ BSDATA(feati) = {
 	{"PoisonImmunity"},
 	{"CharmImmunity"},
 	{"StrenghtDrain"},
+	{"PoisonAttack"},
 	{"AcidDamage"},
 	{"Blink"},
 	{"ChargeDouble"},

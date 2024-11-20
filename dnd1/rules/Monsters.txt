@@ -101,13 +101,13 @@ HawkGiant wilderness(1 6)
 Hipogriff wilderness(2 16)
  feats AC+4 Level+3 Claws1d6 Bite1d10 Movement+6 Fly Intellect-10 Constitution+3 Morale+8 Neutral
 KillerBee dungeon(1 6) wilderness(5 30)
- feats AC+2 Level+0 Claws1d6 Movement+5 Fly Intellect-10 Morale+9 Neutral DeathPoison InflictWound
+ feats AC+2 Level+0 Claws1d6 Movement+5 Fly Intellect-10 Morale+9 Neutral PoisonAttack InflictWound
 LizardGecko dungeon(1 6) wilderness(1 10) treasure("U")
  feats AC+4 Level+3 Bite1d6 Movement+4 Intellect-10 Morale+7 Neutral
 LizardTuatara dungeon(1 2) wilderness(1 4) treasure("V")
  feats AC+5 Level+6 Claws1d4 Bite2d6 Movement+3 Intellect-10 Morale+6 Neutral
 Medusa dungeon(1 3) wilderness(1 4) treasure("F")
- feats AC+1 Level+4 Bite1d6 Movement+3 Morale+8 Chaotic PetrifyingGaze DeathPoison
+ feats AC+1 Level+4 Bite1d6 Movement+3 Morale+8 Chaotic PetrifyingGaze PoisonAttack
 Pegasus wilderness(1 12)
  feats AC+3 Level+2 Hoofs1d6 Constitution+6 Intellect-10 Movement+8 Fly Morale+8 Lawful
 Pixie dungeon(2 8) wilderness(10 40) treasure("RS")
@@ -119,13 +119,13 @@ RobberFly dungeon(1 6) wilderness(2 12) treasure("U")
 RocSmall wilderness(1 12) treasure("I")
  feats AC+5 Level+6 Bite2d6 Intellect-8 Strenght+3 Movement+16 Fly Morale+9 Lawful Swoop
 ScorpionGiant dungeon(1 6) wilderness(1 6) treasure("V")
- feats AC+7 Level+4 Claws1d10 Sting1d4 Intellect-10 Movement+5 Morale+11 Chaotic DeathPoison
+ feats AC+7 Level+4 Claws1d10 Sting1d4 Intellect-10 Movement+5 Morale+11 Chaotic PoisonAttack
 SnakePitViper dungeon(1 8) wilderness(1 8)
- feats AC+3 Level+2 Bite1d4 Intellect-10 Movement+3 Morale+7 Neutral Quick DeathPoison
+ feats AC+3 Level+2 Bite1d4 Intellect-10 Movement+3 Morale+7 Neutral Quick PoisonAttack
 SpiderBalackWidow dungeon(1 3) wilderness(1 3) treasure("U")
- feats AC+3 Level+3 Bite2d6 Intellect-10 Movement+2 Morale+8 Neutral DeathPoison
+ feats AC+3 Level+3 Bite2d6 Intellect-10 Movement+2 Morale+8 Neutral PoisonAttack
 SpiderCrab dungeon(1 4) wilderness(1 4) treasure("U")
- feats AC+2 Level+2 Bite1d8 Intellect-10 Movement+4 Morale+7 Neutral DeathPoison SurpriseEnemy
+ feats AC+2 Level+2 Bite1d8 Intellect-10 Movement+4 Morale+7 Neutral PoisonAttack SurpriseEnemy
 SpiderTarantella dungeon(1 3) wilderness(1 3) treasure("U")
  feats AC+4 Level+4 Bite1d8 Intellect-10 Movement+4 Morale+8 Neutral DancePoison
 Sprite dungeon(3 18) wilderness(5 40) treasure("S")
@@ -155,7 +155,7 @@ Wolf dungeon(2 12) wilderness(3 18)
 WolfDire dungeon(1 4) wilderness(2 8)
  feats AC+3 Level+4 Bite2d4 Constitution+3 Movement+5 Morale+8 Neutral
 Wyvern dungeon(1 2) wilderness(1 6) treasure("E")
- feats AC+6 Level+7 Bite2d8 Sting1d6 Movement+16 Fly Morale+9 Chaotic Large DeathPoison
+ feats AC+6 Level+7 Bite2d8 Sting1d6 Movement+16 Fly Morale+9 Chaotic Large PoisonAttack
 
 Ghost
 Skeleton dungeon(3 12) wilderness(3 30)
