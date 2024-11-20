@@ -95,6 +95,51 @@ static bool cast_on_item(bool run) {
 	return true;
 }
 
+static bool allow_creature(variant v) {
+	if(v.iskind<feati>())
+		return player->is((feat_s)v.value);
+	else if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else
+		return false;
+}
+
+static bool allow_item(variant v) {
+	if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else
+		return false;
+}
+
+static bool allow_one_of(const variants& source, bool(*proc)(variant)) {
+	for(auto v : source) {
+		if(proc(v))
+			return true;
+	}
+	return false;
+}
+
+static bool allow_all_of(const variants& source, bool(*proc)(variant)) {
+	for(auto v : source) {
+		if(!proc(v))
+			return false;
+	}
+	return true;
+}
+
+static void filter_targets(const variants& source, bool keep = true) {
+	auto push_player = player;
+	auto ps = targets.begin();
+	auto pe = targets.end();
+	for(auto pb = ps; pb < pe; pb++) {
+		player = *pb;
+		if(allow_all_of(source, allow_creature) != keep)
+			continue;
+		*ps++ = player;
+	}
+	player = push_player;
+}
+
 bool spelli::isevil() const {
 	switch(range) {
 	case OneEnemy:
@@ -206,25 +251,6 @@ bool scenery::apply(spelln id, int level, bool run) {
 	return true;
 }
 
-static void set_caster_melee() {
-}
-
-bool allow_creature(variant v) {
-	if(v.iskind<feati>())
-		return player->is((feat_s)v.value);
-	else if(v.iskind<conditioni>())
-		return bsdata<conditioni>::elements[v.value].proc();
-	else
-		return false;
-}
-
-bool allow_item(variant v) {
-	if(v.iskind<conditioni>())
-		return bsdata<conditioni>::elements[v.value].proc();
-	else
-		return false;
-}
-
 bool spell_effect(spelln spell, int level, rangen range, const interval& random, const char* suffix, bool run) {
 	pushvalue push_spell(last_spell, spell);
 	pushvalue push_level(last_level, level);
@@ -241,34 +267,32 @@ bool spell_effect(spelln spell, int level, rangen range, const interval& random,
 	case OneAlly:
 		targets = creatures;
 		targets.matchally(true);
-		targets.matchyou(false);
 		return cast_on_target(run);
 	case OneEnemy:
 		targets = creatures;
 		targets.matchenemy(true);
 		return cast_on_target(run);
 	case OneEnemyTouch:
-		set_caster_melee();
 		targets = creatures;
 		targets.matchenemy(true);
 		targets.match(EngageMelee, true);
 		return cast_on_target(run);
-	//case AllAlly:
-	//	targets = creatures;
-	//	targets.matchally(true);
-	//	return cast_on_target(run, target.roll(), target, false);
-	//case AllEnemies:
-	//	targets = creatures;
-	//	targets.matchenemy(true);
-	//	return cast_on_target(run, target.roll(), target, false);
-	//case AllEnemiesHD:
-	//	targets = creatures;
-	//	targets.matchenemy(true);
-	//	return cast_on_target(run, target.roll(), target, true);
-	//case OneItem:
-	//	items.clear();
-	//	items.select(player->backpack());
-	//	return cast_on_item(run);
+		//case AllAlly:
+		//	targets = creatures;
+		//	targets.matchally(true);
+		//	return cast_on_target(run, target.roll(), target, false);
+		//case AllEnemies:
+		//	targets = creatures;
+		//	targets.matchenemy(true);
+		//	return cast_on_target(run, target.roll(), target, false);
+		//case AllEnemiesHD:
+		//	targets = creatures;
+		//	targets.matchenemy(true);
+		//	return cast_on_target(run, target.roll(), target, true);
+		//case OneItem:
+		//	items.clear();
+		//	items.select(player->backpack());
+		//	return cast_on_item(run);
 	case AllyItem:
 		items.clear();
 		for(auto p : creatures) {
@@ -292,6 +316,80 @@ bool spell_effect(spelln spell, int level, const char* suffix, bool run) {
 	return spell_effect(spell, player->get(Level), ei.range, ei.random, suffix, run);
 }
 
+static bool effect_on_targets(int count, bool run) {
+	auto& ei = bsdata<spelli>::elements[last_spell];
+	filter_targets(ei.filter);
+	if(!targets)
+		return false;
+	if(run) {
+		if(!count) {
+			auto result = targets.choose("Test");
+		}
+	}
+	return true;
+}
+
+bool apply_effect(spelln spell, int level, rangen range, int count, const variants& filter, const char* suffix, bool run) {
+	pushvalue push_level(last_level, level);
+	pushvalue push_spell(last_spell, spell);
+	if(run) {
+		// First fix melee engage
+		if(range == OneEnemyTouch)
+			player->set(EngageMelee);
+		// Second fix spell casting
+		if(suffix)
+			player->actid(bsdata<spelli>::elements[spell].id, suffix);
+	}
+	switch(range) {
+	case OneAlly:
+		targets = creatures;
+		targets.matchally(true);
+		filter_targets(filter);
+		return effect_on_targets(count, run);
+	case OneEnemy:
+		targets = creatures;
+		targets.matchenemy(true);
+		return effect_on_targets(count, run);
+	case OneEnemyTouch:
+		targets = creatures;
+		targets.matchenemy(true);
+		targets.match(EngageMelee, true);
+		filter_targets(filter);
+		return effect_on_targets(count, run);
+		//case AllAlly:
+		//	targets = creatures;
+		//	targets.matchally(true);
+		//	return cast_on_target(run, target.roll(), target, false);
+		//case AllEnemies:
+		//	targets = creatures;
+		//	targets.matchenemy(true);
+		//	return cast_on_target(run, target.roll(), target, false);
+		//case AllEnemiesHD:
+		//	targets = creatures;
+		//	targets.matchenemy(true);
+		//	return cast_on_target(run, target.roll(), target, true);
+		//case OneItem:
+		//	items.clear();
+		//	items.select(player->backpack());
+		//	return cast_on_item(run);
+	case AllyItem:
+		items.clear();
+		for(auto p : creatures) {
+			if(p->isally())
+				items.select(player->backpack());
+		}
+		return cast_on_item(run);
+	case Enviroment:
+		if(!scene)
+			return false;
+		return scene->apply(last_spell, last_level, run);
+	case Scenery:
+		return false;
+	default:
+		return false;
+	}
+}
+
 bool creature::cast(spelln spell, bool run) {
 	pushvalue push_caster(caster, this);
 	auto& ei = bsdata<spelli>::elements[spell];
@@ -306,7 +404,7 @@ void creature::use(spelln spell) {
 void spella::select(const spellf& source) {
 	auto ps = begin();
 	auto pe = (spelli**)endof();
-	for(auto i = (spelln)0; i < (spelln)128; i = (spelln)(i+1)) {
+	for(auto i = (spelln)0; i < (spelln)128; i = (spelln)(i + 1)) {
 		if(source.is(i)) {
 			if(ps < pe)
 				*ps++ = bsdata<spelli>::elements + i;
