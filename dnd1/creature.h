@@ -23,7 +23,6 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	bool			apply(spelln, int level, bool run);
 	void			clear();
 	bool			cast(spelln spell, bool run);
-	bool			castsp(spelln spell, int level, bool run);
 	void			damage(int value);
 	void			drink(spelln effect);
 	void			equip(item& v);

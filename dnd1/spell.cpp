@@ -2,8 +2,10 @@
 #include "creature.h"
 #include "condition.h"
 #include "pushvalue.h"
+#include "math.h"
 #include "rand.h"
 #include "scenery.h"
+#include "script.h"
 #include "spell.h"
 #include "ongoing.h"
 
@@ -95,22 +97,6 @@ static bool cast_on_item(bool run) {
 	return true;
 }
 
-static bool allow_creature(variant v) {
-	if(v.iskind<feati>())
-		return player->is((feat_s)v.value);
-	else if(v.iskind<conditioni>())
-		return bsdata<conditioni>::elements[v.value].proc();
-	else
-		return false;
-}
-
-static bool allow_item(variant v) {
-	if(v.iskind<conditioni>())
-		return bsdata<conditioni>::elements[v.value].proc();
-	else
-		return false;
-}
-
 static bool allow_one_of(const variants& source, bool(*proc)(variant)) {
 	for(auto v : source) {
 		if(proc(v))
@@ -127,8 +113,26 @@ static bool allow_all_of(const variants& source, bool(*proc)(variant)) {
 	return true;
 }
 
+static bool allow_creature(variant v) {
+	if(v.iskind<feati>())
+		return player->is((feat_s)v.value);
+	else if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else if(v.iskind<monsteri>())
+		return player->getmonster() == (bsdata<monsteri>::elements + v.value);
+	else
+		return false;
+}
+
+static bool allow_item(variant v) {
+	if(v.iskind<conditioni>())
+		return bsdata<conditioni>::elements[v.value].proc();
+	else
+		return false;
+}
+
 static void filter_targets(const variants& source, bool keep = true) {
-	auto push_player = player;
+	pushvalue push_player(player);
 	auto ps = targets.begin();
 	auto pe = targets.end();
 	for(auto pb = ps; pb < pe; pb++) {
@@ -137,7 +141,18 @@ static void filter_targets(const variants& source, bool keep = true) {
 			continue;
 		*ps++ = player;
 	}
-	player = push_player;
+}
+
+static void filter_items(const variants& source, bool keep = true) {
+	pushvalue push(last_item);
+	auto ps = items.begin();
+	auto pe = items.end();
+	for(auto pb = ps; pb < pe; pb++) {
+		last_item = *pb;
+		if(allow_all_of(source, allow_item) != keep)
+			continue;
+		*ps++ = last_item;
+	}
 }
 
 bool spelli::isevil() const {
@@ -323,8 +338,20 @@ static bool effect_on_targets(int count, bool run) {
 		return false;
 	if(run) {
 		if(!count) {
-			auto result = targets.choose("Test");
-		}
+			choose_target();
+			auto index = targets.indexof(opponent);
+			if(index != -1)
+				iswap(targets.data[index], targets.data[0]);
+			count = 1;
+		} else
+			zshuffle(targets.data, targets.count);
+	}
+	if(targets.count > (size_t)count)
+		targets.count = count;
+	pushvalue push(player);
+	for(auto p : targets) {
+		player = p;
+		script_run(ei.instant);
 	}
 	return true;
 }
@@ -344,7 +371,6 @@ bool apply_effect(spelln spell, int level, rangen range, int count, const varian
 	case OneAlly:
 		targets = creatures;
 		targets.matchally(true);
-		filter_targets(filter);
 		return effect_on_targets(count, run);
 	case OneEnemy:
 		targets = creatures;
@@ -354,24 +380,7 @@ bool apply_effect(spelln spell, int level, rangen range, int count, const varian
 		targets = creatures;
 		targets.matchenemy(true);
 		targets.match(EngageMelee, true);
-		filter_targets(filter);
 		return effect_on_targets(count, run);
-		//case AllAlly:
-		//	targets = creatures;
-		//	targets.matchally(true);
-		//	return cast_on_target(run, target.roll(), target, false);
-		//case AllEnemies:
-		//	targets = creatures;
-		//	targets.matchenemy(true);
-		//	return cast_on_target(run, target.roll(), target, false);
-		//case AllEnemiesHD:
-		//	targets = creatures;
-		//	targets.matchenemy(true);
-		//	return cast_on_target(run, target.roll(), target, true);
-		//case OneItem:
-		//	items.clear();
-		//	items.select(player->backpack());
-		//	return cast_on_item(run);
 	case AllyItem:
 		items.clear();
 		for(auto p : creatures) {

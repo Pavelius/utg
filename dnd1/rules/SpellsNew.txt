@@ -94,7 +94,7 @@ FlameBlade level(3) range(OneAlly) duration(Turn1) summon(FlameSwordHand)
 CureSeriousWound level(4) range(OneAlly)
  filter Undead-1 IfWounded
  instant Roll2d6+2 Heal+101
-CauseSeriousWound level(4) range(OneEnemy)
+CauseSeriousWound level(4) range(OneEnemyTouch)
  filter Undead-1
  instant Roll2d6+2 DamageNecrotic+101
 NeutralizePoison level(4) range(OneAlly)
