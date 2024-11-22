@@ -15,6 +15,7 @@ struct script {
 extern variant* script_begin;
 extern variant* script_end;
 extern script* last_script;
+extern const char* last_id;
 
 bool choosing_script(int bonus);
 bool script_allow(variant v);
@@ -27,7 +28,7 @@ void script_none(int bonus);
 void script_run();
 void script_run(variant v);
 void script_run(const variants& source);
-void script_run(const char* id, int bonus);
+void script_run(const char* id, const variants& source);
 void script_stop();
 
 variants script_body();

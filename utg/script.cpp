@@ -9,6 +9,8 @@ variant* script_begin;
 variant* script_end;
 script*	last_script;
 
+const char* last_id;
+
 template<> bool fntest<script>(int value, int bonus) {
 	last_script = bsdata<script>::elements + value;
 	if(last_script->test)
@@ -24,10 +26,8 @@ template<> bool fntest<listi>(int value, int bonus) {
 	return script_allow(bsdata<listi>::elements[value].elements);
 }
 template<> void fnscript<listi>(int value, int bonus) {
-	auto push_list = last_list;
-	last_list = bsdata<listi>::elements + value;
-	script_run(last_list->elements);
-	last_list = push_list;
+	auto p = bsdata<listi>::elements + value;
+	script_run(p->id, p->elements);
 }
 
 void script_none(int bonus) {
@@ -53,23 +53,10 @@ bool script_isrun() {
 	return script_end > script_begin;
 }
 
-void script_run(const char* id, int bonus) {
-	last_script = bsdata<script>::find(id);
-	if(last_script) {
-		last_script->proc(bonus);
-		return;
-	}
-	last_list = bsdata<listi>::find(id);
-	if(last_list)
-		script_run(last_list->elements);
-}
-
 void script_list(const char* id) {
-	auto push_list = last_list;
-	last_list = bsdata<listi>::find(id);
-	if(last_list)
-		script_run(last_list->elements);
-	last_list = push_list;
+	auto p = bsdata<listi>::find(id);
+	if(p)
+		script_run(p->id, p->elements);
 }
 
 void script_run(variant v) {
@@ -89,6 +76,12 @@ void script_run(const variants& source) {
 	script_run();
 	script_end = push_end;
 	script_begin = push_begin;
+}
+
+void script_run(const char* id, const variants& source) {
+	auto push = last_id; last_id = id;
+	script_run(source);
+	last_id = push;
 }
 
 bool script_allow(variant v) {

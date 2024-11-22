@@ -8,6 +8,4 @@ struct listi : nameable {
 	void		run() const;
 };
 
-extern listi* last_list;
-
 void run_command(const char* id);
