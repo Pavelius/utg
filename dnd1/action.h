@@ -4,5 +4,5 @@
 #include "variant.h"
 
 struct actioni : nameable {
-	variants	effect;
+	variants	effect, filter;
 };

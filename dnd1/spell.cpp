@@ -266,71 +266,6 @@ bool scenery::apply(spelln id, int level, bool run) {
 	return true;
 }
 
-bool spell_effect(spelln spell, int level, rangen range, const interval& random, const char* suffix, bool run) {
-	pushvalue push_spell(last_spell, spell);
-	pushvalue push_level(last_level, level);
-	if(run) {
-		// First fix melee engage
-		if(range == OneEnemyTouch)
-			player->set(EngageMelee);
-		// Second fix spell casting
-		if(suffix)
-			player->actid(bsdata<spelli>::elements[spell].id, suffix);
-	}
-	auto count = random;
-	switch(range) {
-	case OneAlly:
-		targets = creatures;
-		targets.matchally(true);
-		return cast_on_target(run);
-	case OneEnemy:
-		targets = creatures;
-		targets.matchenemy(true);
-		return cast_on_target(run);
-	case OneEnemyTouch:
-		targets = creatures;
-		targets.matchenemy(true);
-		targets.match(EngageMelee, true);
-		return cast_on_target(run);
-		//case AllAlly:
-		//	targets = creatures;
-		//	targets.matchally(true);
-		//	return cast_on_target(run, target.roll(), target, false);
-		//case AllEnemies:
-		//	targets = creatures;
-		//	targets.matchenemy(true);
-		//	return cast_on_target(run, target.roll(), target, false);
-		//case AllEnemiesHD:
-		//	targets = creatures;
-		//	targets.matchenemy(true);
-		//	return cast_on_target(run, target.roll(), target, true);
-		//case OneItem:
-		//	items.clear();
-		//	items.select(player->backpack());
-		//	return cast_on_item(run);
-	case AllyItem:
-		items.clear();
-		for(auto p : creatures) {
-			if(p->isally())
-				items.select(player->backpack());
-		}
-		return cast_on_item(run);
-	case Enviroment:
-		if(!scene)
-			return false;
-		return scene->apply(last_spell, last_level, run);
-	case Scenery:
-		return false;
-	default:
-		return false;
-	}
-}
-
-bool spell_effect(spelln spell, int level, const char* suffix, bool run) {
-	auto& ei = bsdata<spelli>::elements[spell];
-	return spell_effect(spell, player->get(Level), ei.range, ei.random, suffix, run);
-}
-
 static bool effect_on_targets(int count, bool run) {
 	auto& ei = bsdata<spelli>::elements[last_spell];
 	filter_targets(ei.filter);
@@ -348,6 +283,7 @@ static bool effect_on_targets(int count, bool run) {
 	}
 	if(targets.count > (size_t)count)
 		targets.count = count;
+	// Instant effect on creatures
 	pushvalue push(player);
 	for(auto p : targets) {
 		player = p;
@@ -356,7 +292,7 @@ static bool effect_on_targets(int count, bool run) {
 	return true;
 }
 
-bool apply_effect(spelln spell, int level, rangen range, int count, const variants& filter, const char* suffix, bool run) {
+bool apply_effect(spelln spell, int level, rangen range, int count, const char* suffix, bool run) {
 	pushvalue push_level(last_level, level);
 	pushvalue push_spell(last_spell, spell);
 	if(run) {
@@ -399,10 +335,14 @@ bool apply_effect(spelln spell, int level, rangen range, int count, const varian
 	}
 }
 
+bool apply_effect(spelln spell, int level, const char* suffix, bool run) {
+	auto& ei = bsdata<spelli>::elements[spell];
+	return apply_effect(spell, level, ei.range, ei.random.roll(), suffix, run);
+}
+
 bool creature::cast(spelln spell, bool run) {
 	pushvalue push_caster(caster, this);
-	auto& ei = bsdata<spelli>::elements[spell];
-	return spell_effect(spell, get(Level), ei.range, ei.random, "Cast", run);
+	return apply_effect(spell, get(Level), "Cast", run);
 }
 
 void creature::use(spelln spell) {

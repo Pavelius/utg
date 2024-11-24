@@ -232,9 +232,6 @@
     <Text Include="rules\Races.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="rules\Spells.txt">
-      <Filter>data</Filter>
-    </Text>
     <Text Include="rules\Organizations.txt">
       <Filter>data</Filter>
     </Text>
@@ -274,7 +271,7 @@
     <Text Include="speech\ru\Characters.txt">
       <Filter>speech</Filter>
     </Text>
-    <Text Include="rules\SpellsNew.txt">
+    <Text Include="rules\Spells.txt">
       <Filter>data</Filter>
     </Text>
   </ItemGroup>

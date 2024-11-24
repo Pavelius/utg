@@ -39,5 +39,5 @@ struct spella : collection<spelli> {
 extern spelln last_spell;
 extern int last_level;
 
-bool spell_effect(spelln spell, int level, rangen range, const interval& target, const char* suffix, bool run);
-bool spell_effect(spelln spell, int level, const char* suffix, bool run);
+bool apply_effect(spelln spell, int level, rangen range, int count, const char* suffix, bool run);
+bool apply_effect(spelln spell, int level, const char* suffix, bool run);

@@ -5,6 +5,7 @@ DeathSpellCast: Тысячи черных огоньков мигающих ог
 DeathSpellSaveFailed: %герой вскрикнул%а и упал%а на землю.
 CauseFearApply: Внезапно %героя охватило животное чуство страха.
 CauseLightWoundApply: %герой почувствовал%а себя лучше, исцелив %1i ран.
+CureLightWound: Лечить легкие ранения
 PurifyFoodAndWater: Очистить еду и воду
 RepairItemApply: %герой был%а отремантирована.
 Light: Свет

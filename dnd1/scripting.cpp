@@ -29,6 +29,15 @@ void combat_mode(int bonus);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
+static const char* get_header() {
+	if(last_id) {
+		auto pn = getnme(ids(last_id, "Choose"));
+		if(pn)
+			return pn;
+	}
+	return getnm("ChooseTarget");
+}
+
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
 	case Permanent: player->basic.abilities[index] += get_bonus(value); break;
@@ -59,20 +68,20 @@ template<> void fnscript<feati>(int index, int value) {
 
 template<> bool fntest<spelli>(int index, int value) {
 	switch(modifier) {
-	case NoModifier: return spell_effect((spelln)index, player->get(Level), 0, false);
+	case NoModifier: return apply_effect((spelln)index, player->get(Level), 0, false);
 	default: return true;
 	}
 }
 template<> void fnscript<spelli>(int index, int value) {
 	switch(modifier) {
 	case Known: player->known_spells.set(index); break;
-	case NoModifier: spell_effect((spelln)index, player->get(Level), 0, true); break;
+	case NoModifier: apply_effect((spelln)index, player->get(Level), 0, true); break;
 	default: break;
 	}
 }
 
 void choose_target() {
-	opponent = targets.choose(getnm("ChooseTarget"), player->is(Enemy));
+	opponent = targets.choose(get_header(), player->is(Enemy));
 }
 
 static int player_count() {
@@ -356,7 +365,7 @@ static void apply_scene_actions(variant v) {
 			an.add(p, getnm(p->id));
 	} else if(v.iskind<spelli>()) {
 		auto p = bsdata<spelli>::elements + v.value;
-		if(spell_effect((spelln)v.value, player->get(Level), 0, false))
+		if(apply_effect((spelln)v.value, player->get(Level), 0, false))
 			an.add(p, p->getname());
 	}
 }
@@ -536,7 +545,6 @@ static void enter_melee_combat() {
 	if(!opponent->is(EngageMelee) || !player->is(EngageMelee)) {
 		player->set(EngageMelee);
 		opponent->set(EngageMelee);
-		random_melee_angry(1);
 	}
 }
 
@@ -568,11 +576,11 @@ static void damage_necrotic(int bonus) {
 }
 
 static void attack_melee(int bonus) {
-	if(!allow_attack_melee(bonus))
-		return;
-	choose_target();
-	enter_melee_combat();
-	melee_attack(bonus);
+	if(allow_attack_melee(bonus)) {
+		choose_target();
+		enter_melee_combat();
+		melee_attack(bonus);
+	}
 }
 
 static bool allow_attack_unarmed(int bonus) {
@@ -622,10 +630,10 @@ static bool allow_attack_ranged(int bonus) {
 }
 
 static void attack_ranged(int bonus) {
-	if(!allow_attack_ranged(bonus))
-		return;
-	choose_target();
-	range_attack(0);
+	if(allow_attack_ranged(bonus)) {
+		choose_target();
+		range_attack(0);
+	}
 }
 
 static bool allow_attack_charge(int bonus) {
@@ -1248,10 +1256,10 @@ BSDATAF(conditioni)
 BSDATA(script) = {
 	{"AdventurersBasic", adventurers_basic},
 	{"AdventurersExpert", adventurers_expert},
-	{"AttackCharge", attack_charge},
-	{"AttackMelee", attack_melee},
-	{"AttackRanged", attack_ranged},
-	{"AttackUnarmed", attack_unarmed},
+	{"AttackCharge", attack_charge, allow_attack_charge},
+	{"AttackMelee", attack_melee, allow_attack_melee},
+	{"AttackRanged", attack_ranged, allow_attack_ranged},
+	{"AttackUnarmed", attack_unarmed, allow_attack_unarmed},
 	{"Chance", apply_chance},
 	{"ChooseTarget", choose_target},
 	{"ClericCaster", cleric_caster},
@@ -1285,8 +1293,8 @@ BSDATA(script) = {
 	{"RandomEncounter", random_encounter},
 	{"RandomLevel3", random_level3},
 	{"ReactionRoll", reaction_roll},
-	{"RetreatMelee", retreat_melee},
-	{"RunAway", run_away},
+	{"RetreatMelee", retreat_melee, allow_retreat_melee},
+	{"RunAway", run_away, allow_run_away},
 	{"Saves", all_saves},
 	{"SelectAllies", select_backpack},
 	{"SelectBackpack", select_backpack},

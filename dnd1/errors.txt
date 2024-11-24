@@ -1,2 +1,2 @@
-﻿Error in file `rules/Monsters.txt`:
- Line 140: Can't find variant `Teleport`
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `CureLightWound`

@@ -9,6 +9,7 @@
 #include "questlist.h"
 #include "rand.h"
 #include "scenery.h"
+#include "script.h"
 #include "speech.h"
 
 void combat_mode();
@@ -32,13 +33,10 @@ static void starting() {
 	creatures.select();
 	start_game_organization();
 	start_game_reputation();
-	//answers::header = "Большой зал";
-	//random_encounter("Orc");
-	//treasure loot;
-	//loot.generate('A');
-	//loot.take();
-	//combat_mode();
-	scene->enter();
+	answers::header = "Большой зал";
+	random_encounter("Orc");
+	script_run("CombatMode");
+	//scene->enter();
 }
 
 void initialize_str();

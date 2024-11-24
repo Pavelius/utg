@@ -1,24 +1,125 @@
+#Monster
+
+GreenSlime
+
 #Spell
 
-CauseFear level(1) duration(Turn2) range(OneEnemy) save_negates(SaveSpells) reversed(RemoveFear)
-CauseLightWound level(1) range(OneEnemy) count(2 7) reversed(CureLightWound) dispell(BeetleOilOfPain)
-CureLightWound level(1) range(CasterOrAlly) count(2 7)
-Darkness level(1) duration(Turn12) range(Enviroment) reversed(Light)
-DetectEvil level(1) range(AllAllyItems) targets(1)
-DetectMagic level(1) range(AllAllyItems) targets(1)
-Light level(1) duration(Turn12) range(Enviroment)
-LightBlindness level(1) range(OneEnemy) alternate(Light) save_negates(SaveSpells) enchant(Blindness)
-ProtectionFromEvil level(1) duration(Turn12) range(Caster)
-PurifyFoodAndWater level(1) range(OneAllyItem)
-RemoveFear level(1) range(OneAllyItem) dispell(CauseFear)
-ResistCold level(1) range(AllAlly)
+Darkness
+
+CureLightWound level(1) range(OneAlly)
+ filter Undead-1 IfWounded
+ instant Roll1d6+1 Heal+101 Paralized-1
+DetectEvil level(1) range(AllyItem) random(1)
+ filter IfItemIdentify-1 IfItemCursed
+ instant ItemIdentify+1 Speak
+DetectMagic level(1) range(AllyItem) random(1)
+ filter IfItemIdentify-1 IfItemMagical
+ instant Speak
+Light level(1) range(Enviroment) duration(Turn12)
+ filter Dark
+ wearing Dark-1
+ dispell Darkness
+Blindness level(1) range(OneEnemy) version(Light) duration(Turn1)
+ wearing Blind
+Darkness level(1) range(Enviroment) duration(Turn12) reversed(Light)
+ filter Dark-1
+ wearing Dark
+ dispell Light
+ProtectionFromEvil level(1) range(OneAlly) duration(Turn12) 
+ filter IfYou ProtectedFromEvil-1
+ wearing ProtectedFromEvil
+PurifyFoodAndDrink level(1) range(AllyItem) random(100)
+ filter IfEdible IfItemDamaged
+ instant ItemDamage-10 EffectCount+1
+RemoveFear level(1) range(OneAlly) duration(Turn2)
+ filter Paniced
+ wearing Paniced-1
+CauseFear level(1) range(OneEnemy) duration(Turn2) reversed(RemoveFear)
+ filter Paniced
+ wearing Paniced-1
+ResistCold level(1) range(OneAlly) duration(Turn2)
+ filter ColdResist-1
+ wearing ColdResist
+
+Bless level(2) range(OneAlly) duration(Turn6) random(100)
+ wearing MeleeToHit+1 MeleeDamage+1
+FindTraps level(2) range(Scenery) random(100)
+ filter Trapped
+ instant Trapped-1
+HoldPerson level(2) range(OneEnemy) random(1 4) duration(Turn9)
+ filter Undead-1 If4HD-1
+ instant Paralized
+KnownAlignment level(2) range(OneEnemy)
+ResistFire level(2) range(OneAlly) duration(Turn2)
+ filter FireResist-1
+ wearing FireResist
+Silence15Radius level(2) range(Enviroment) duration(Turn12)
+ filter Deaf-1
+ wearing Deaf
+SnakeCharm level(2)
+SpeakWithAnimals level(2)
+
+ContinualLight level(3) range(Enviroment)
+ filter Dark
+ instant Dark-1
+ dispell Darkness
+Blindness level(3) range(OneEnemy) version(ContinualLight) duration(Turn1)
+ filter Blind-1
+ instant PushModifier Permanent Blind
+CureDisease level(3) range(OneAlly)
+ filter DiseaseLevel
+ instant DiseaseLevel-100
+CureDiseaseKillSlime level(3) range(OneEnemy) reversed(CureDisease)
+ filter GreenSlime
+ instant InstantKill
+CauseDisease level(3) range(OneEnemy) reversed(CureDisease)
+ filter Undead-1
+ instant DiseaseLevel+5
+GrowthAnimal level(3) range(OneAlly) duration(Turn12)
+ filter IfAnimal DoubleSized-1
+ instant DoubleSized
+LocateObjects level(3)
+RemoveCurse level(3) range(AllyItem)
+ filter IfItemIdentify IfItemCursed
+ instant ItemCurse-1
+RemoveCurseCreature level(3) range(OneAlly)
+ filter Cursed
+ instant Cursed-1
+CauseCurse level(3) range(OneEnemy) reversed(RemoveCurse)
+ filter Cursed-1
+ instant PushModifier Permanent Cursed
+FlameBlade level(3) range(OneAlly) duration(Turn1) summon(FlameSwordHand)
+ filter IfYou
+
+CureSeriousWound level(4) range(OneAlly)
+ filter Undead-1 IfWounded
+ instant Roll2d6+2 Heal+101
+CauseSeriousWound level(4) range(OneEnemyTouch)
+ filter Undead-1
+ instant Roll2d6+2 DamageNecrotic+101
+NeutralizePoison level(4) range(OneAlly)
+ filter PoisonLevel
+ instant PoisonLevel-100
+ProtectionFromEvil level(4) range(OneAlly) duration(Turn12) random(100)
+ filter IfYou ProtectedFromEvil-1
+ wearing ProtectedFromEvil
+SpeakWithPlants level(4) duration(Turn3)
+StickToSnakes level(4) duration(Turn6)
+
+Commune level(5)
+CreateFood level(5)
+DispelEvil level(5)
+InsectPlague level(5)
+Quest level(5)
+RaiseDead level(5)
+FingerOfDeath level(5) range(OneEnemy) reversed(RaiseDead)
+ instant InstantKill
 
 Teleport
-DeathSpell level(6) range(AllEnemiesHD) targets(4 24) save_negates(SaveDeath)
 
 AnimateTree
-AnkhegAcidSquirt range(OneEnemy) count(4 32) save_halves(SaveBreathWeapon)
+AnkhegAcidSquirt range(OneEnemy)
 BeetleOilOfPain range(OneEnemy) duration(Day1)
-ConeOfFire range(AllEnemies) targets(2 4) count(3 6) save_halves(SaveBreathWeapon)
-DryadCharmMagic range(OneEnemy) save_negates(SaveSpells)
-ItemRepair range(AllAllyItems) targets(1)
+ConeOfFire range(OneEnemy) random(2 4)
+DryadCharmMagic range(OneEnemy)
+ItemRepair range(AllyItem) random(1)

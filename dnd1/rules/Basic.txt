@@ -1,7 +1,7 @@
 #include "rules/Races.txt"
 #include "rules/Items.txt"
 #include "rules/Classes.txt"
-#include "rules/SpellsNew.txt"
+#include "rules/Spells.txt"
 #include "rules/Advance.txt"
 #include "rules/Monsters.txt"
 #include "rules/Scenery.txt"
