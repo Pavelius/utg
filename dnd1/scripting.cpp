@@ -985,6 +985,10 @@ static bool condition_passed(int bonus) {
 }
 
 static void heal(int bonus) {
+	bonus += player->get(HP);
+	if(bonus > player->get(HPMax))
+		bonus = player->get(HPMax);
+	player->abilities[HP] = bonus;
 }
 
 static void for_each_creature(int bonus) {
@@ -1265,7 +1269,7 @@ BSDATA(script) = {
 	{"ClericCaster", cleric_caster},
 	{"ClericHightLevel", cleric_high_level},
 	{"CombatMode", combat_mode},
-	{"ContinueBattle", continue_battle},
+	{"ContinueBattle", continue_battle, allow_continue_battle},
 	{"DamageNecrotic", damage_necrotic},
 	{"DieAfterAttack", die_after_attack},
 	{"FighterGuards", fighter_guards},
@@ -1283,7 +1287,7 @@ BSDATA(script) = {
 	{"ItemDamage", item_damage},
 	{"ItemIdentify", item_curse},
 	{"InstantKill", instant_kill},
-	{"LoseGame", lose_game},
+	{"LoseGame", lose_game, allow_lose_game},
 	{"MagicUserCaster", magic_user_caster},
 	{"MagicUserHightLevel", magic_user_high_level},
 	{"MakeAmbushMonsters", make_ambush_monsters},

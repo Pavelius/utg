@@ -3,6 +3,8 @@
 #include "variant.h"
 
 class stringbuilder;
+struct classi;
+struct monsteri;
 enum gendern : unsigned char;
 
 struct actable {
@@ -13,6 +15,8 @@ struct actable {
 	bool			actid(const char* prefix, const char* suffix, char separator = '\n') const;
 	void			actn(const char* format, ...) const;
 	void			actv(stringbuilder& sb, const char* format, const char* format_param, char separator) const;
+	const classi&	geti() const;
+	monsteri*		getmonster() const;
 	const char*		getname() const;
 };
 

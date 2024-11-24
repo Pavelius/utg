@@ -198,6 +198,18 @@ static void get_monsters(stringbuilder& sb) {
 	}
 }
 
+const classi& actable::geti() const {
+	if(type.iskind<classi>())
+		return bsdata<classi>::elements[type.value];
+	return bsdata<classi>::elements[0];
+}
+
+monsteri* actable::getmonster() const {
+	if(type.iskind<monsteri>())
+		return bsdata<monsteri>::elements + type.value;
+	return 0;
+}
+
 BSDATA(stringvari) = {
 	{"scenename", get_scenename},
 	{"monster", get_monster},

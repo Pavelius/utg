@@ -7,7 +7,7 @@ GreenSlime
 Darkness
 
 CureLightWound level(1) range(OneAlly)
- filter Undead-1 IfWounded
+ filter IfWounded
  instant Roll1d6+1 Heal+101 Paralized-1
 DetectEvil level(1) range(AllyItem) random(1)
  filter IfItemIdentify-1 IfItemCursed

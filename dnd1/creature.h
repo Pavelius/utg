@@ -29,13 +29,11 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			generate();
 	int				get(abilityn v) const { return statable::get(v); }
 	int				get(spelln v) const { return spells[v]; }
-	const classi&	geti() const;
 	int				getaward() const;
 	creature*		getcontact() const;
 	interval		getdamage(wear_s v) const;
 	creature*		getleader() const;
 	int				getlevel(spelln spell) const;
-	const monsteri*	getmonster() const;
 	static void		getproperty(const void* object, variant id, stringbuilder& sb);
 	int				getspells(int level) const;
 	void			getstatus(stringbuilder& sb) const;

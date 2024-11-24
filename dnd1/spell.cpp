@@ -141,6 +141,7 @@ static void filter_targets(const variants& source, bool keep = true) {
 			continue;
 		*ps++ = player;
 	}
+	targets.count = ps - targets.begin();
 }
 
 static void filter_items(const variants& source, bool keep = true) {
@@ -274,7 +275,7 @@ static bool effect_on_targets(int count, bool run) {
 	if(run) {
 		if(!count) {
 			choose_target();
-			auto index = targets.indexof(opponent);
+			auto index = targets.find(opponent);
 			if(index != -1)
 				iswap(targets.data[index], targets.data[0]);
 			count = 1;
