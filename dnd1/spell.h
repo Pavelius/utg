@@ -20,7 +20,7 @@ struct spelli : nameable {
 	interval	random;
 	spella		dispell;
 	spelln		reversed, version;
-	variants	wearing, instant, filter;
+	variants	wearing, instant, filter, use;
 	variant		summon;
 	spelln		getbasic() const { return reversed ? reversed : version; }
 	bool		isdurable() const { return duration != Instant; }

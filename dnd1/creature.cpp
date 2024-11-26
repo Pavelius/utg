@@ -406,8 +406,6 @@ void creature::drink(spelln spell) {
 	auto& ei = bsdata<spelli>::elements[spell];
 	if(ei.isdurable())
 		enchant(this, this, spell, (6 + d6()) * 10);
-	else
-		apply(spell, 10, true);
 }
 
 void creature::use(item& it) {

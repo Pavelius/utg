@@ -4,12 +4,16 @@
 #include "pushvalue.h"
 #include "math.h"
 #include "rand.h"
+#include "party.h"
 #include "scenery.h"
 #include "script.h"
 #include "spell.h"
 #include "ongoing.h"
 
 void choose_target();
+const char* get_header();
+
+typedef void(*fnrunable)(const variants&);
 
 spelln last_spell;
 int last_level;
@@ -25,76 +29,6 @@ static bool allow_dispelling(const spelli::spella& source, const creature* playe
 			return true;
 	}
 	return false;
-}
-
-static bool cast_on_target(bool run, int maximum_count, bool random, bool use_hit_dices) {
-	targets.match(&creature::isallowspell, true);
-	if(!targets)
-		return false;
-	if(random)
-		zshuffle(targets.begin(), targets.count);
-	if(maximum_count && !use_hit_dices) {
-		if((int)targets.count > maximum_count)
-			targets.count = maximum_count;
-	}
-	if(run) {
-		if(use_hit_dices) {
-			for(auto p : targets) {
-				if(maximum_count <= 0)
-					break;
-				p->apply(last_spell, last_level, run);
-				auto level = p->get(Level);
-				if(!level)
-					level = 1;
-				maximum_count -= level;
-			}
-		} else {
-			for(auto p : targets)
-				p->apply(last_spell, last_level, run);
-		}
-	}
-	return true;
-}
-
-static bool cast_on_target(bool run) {
-	targets.match(&creature::isallowspell, true);
-	if(!targets)
-		return false;
-	if(run) {
-		pushvalue push(opponent);
-		choose_target();
-		opponent->apply(last_spell, last_level, run);
-	}
-	return true;
-}
-
-static bool cast_on_item(bool run, unsigned maximum_count, bool random) {
-	items.match(&item::isallowspell, true);
-	if(!items)
-		return false;
-	if(random)
-		zshuffle(items.begin(), items.count);
-	if(maximum_count) {
-		if(items.count > maximum_count)
-			items.count = maximum_count;
-	}
-	if(run) {
-		for(auto p : items)
-			p->apply(last_spell, last_level, run);
-	}
-	return true;
-}
-
-static bool cast_on_item(bool run) {
-	items.match(&item::isallowspell, true);
-	if(!items)
-		return false;
-	if(run) {
-		pushvalue push(last_item);
-		last_item = items.choose(getnm(str(bsdata<spelli>::elements[last_spell].id, "Target")));
-		last_item->apply(last_spell, last_level, run);
-	}
-	return true;
 }
 
 static bool allow_one_of(const variants& source, bool(*proc)(variant)) {
@@ -166,105 +100,32 @@ bool spelli::isevil() const {
 	}
 }
 
-static int getduration(durationn d, int level) {
-	return bsdata<durationi>::elements[d].roll();
+static void apply_use(const spelli& ei) {
+	script_run(ei.use);
 }
 
-bool item::isallowspell() const {
-	return const_cast<item*>(this)->apply(last_spell, last_level, false);
+static void apply_duration(variant caster, creaturea targets, spelln spell, durationn duration) {
+	if(duration == Instant || duration==PermanentDuration)
+		return;
+	auto rounds = bsdata<durationi>::elements[duration].roll();
+	for(auto p : targets)
+		enchant(caster, p, spell, rounds);
 }
 
-bool creature::apply(spelln id, int level, bool run) {
-	auto& ei = bsdata<spelli>::elements[id];
-	auto count = run ? ei.random.roll() : ei.random.maximum();
-	if(run) {
-		if(ei.range == OneEnemyTouch)
-			set(EngageMelee);
-		if(save(id, count))
-			return false;
+static void apply_targets(const variants& source) {
+	pushvalue push(player);
+	for(auto p : targets) {
+		player = p;
+		script_run(source);
 	}
-	//switch(id) {
-	//case CureLightWound:
-	//	if(is(Unholy))
-	//		return false;
-	//	if(!iswounded() && !allow_dispelling(ei.dispell, this))
-	//		return false;
-	//	if(run)
-	//		heal(count);
-	//	break;
-	//case CauseLightWound:
-	//	if(run)
-	//		damage(count);
-	//	break;
-	//case MirrorImages:
-	//	if(run) {
-	//		auto n = basic.abilities[IllusionCopies] + count;
-	//		if(abilities[IllusionCopies] < n)
-	//			abilities[IllusionCopies] = n;
-	//	}
-	//	break;
-	//case DeathSpell:
-	//	if(is(Unholy))
-	//		return false;
-	//	if(get(Level) > 7)
-	//		return false;
-	//	if(run)
-	//		kill();
-	//	break;
-	//default:
-	//	if(ei.duration != Instant)
-	//		enchant(player, this, ei.enchant, getduration(ei.duration, level));
-	//	break;
-	//}
-	//if(run) {
-	//	actid(ei.id, "Apply");
-	//	dispelling(ei.dispell, this);
-	//}
-	return true;
 }
 
-bool item::apply(spelln id, int level, bool run) {
-	auto& ei = bsdata<spelli>::elements[id];
-	//switch(id) {
-	//case DetectEvil:
-	//	if(!iscursed() || isidentified())
-	//		return false;
-	//	if(run) {
-	//		identified = 1;
-	//		identified_magic = 1;
-	//	}
-	//	break;
-	//case DetectMagic:
-	//	if(isidentified() || (!ismagic() && !iscursed()))
-	//		return false;
-	//	if(run)
-	//		identified_magic = 1;
-	//	break;
-	//case ItemRepair:
-	//	if(!isbroken())
-	//		return false;
-	//	if(run)
-	//		broken = 0;
-	//	break;
-	//}
-	if(run)
-		actid(ei.id, "Apply");
-	return true;
-}
-
-bool scenery::apply(spelln id, int level, bool run) {
-	auto& ei = bsdata<spelli>::elements[id];
-	//switch(id) {
-	//case CureLightWound:
-	//	break;
-	//default:
-	//	if(ei.duration != Instant && ei.duration != PermanentDuration)
-	//		enchant(player, this, id, getduration(ei.duration, level));
-	//	break;
-	//}
-	if(run)
-		dispelling(ei.dispell, this);
-	return true;
+static void apply_items(const variants& source) {
+	pushvalue push(last_item);
+	for(auto p : items) {
+		last_item = p;
+		script_run(source);
+	}
 }
 
 static bool effect_on_targets(int count, bool run) {
@@ -284,12 +145,45 @@ static bool effect_on_targets(int count, bool run) {
 	}
 	if(targets.count > (size_t)count)
 		targets.count = count;
-	// Instant effect on creatures
-	pushvalue push(player);
-	for(auto p : targets) {
-		player = p;
-		script_run(ei.instant);
+	apply_targets(ei.instant);
+	apply_duration(player, targets, last_spell, ei.duration);
+	for(auto p : targets)
+		dispelling(ei.dispell, p);
+	apply_use(ei);
+	return true;
+}
+
+static bool effect_on_item(int count, bool run) {
+	auto& ei = bsdata<spelli>::elements[last_spell];
+	filter_items(ei.filter);
+	if(!items)
+		return false;
+	if(run) {
+		if(!count) {
+			auto result = items.choose(getnm(str(bsdata<spelli>::elements[last_spell].id, "Target")));
+			auto index = items.find(result);
+			if(index != -1)
+				iswap(items.data[index], items.data[0]);
+			count = 1;
+		} else
+			zshuffle(items.data, items.count);
 	}
+	if(items.count > (size_t)count)
+		items.count = count;
+	apply_items(ei.instant);
+	apply_use(ei);
+	return true;
+}
+
+static bool effect_on_scene(bool run) {
+	auto& ei = bsdata<spelli>::elements[last_spell];
+	apply_use(ei);
+	return true;
+}
+
+static bool effect_on_object(int count, bool run) {
+	auto& ei = bsdata<spelli>::elements[last_spell];
+	apply_use(ei);
 	return true;
 }
 
@@ -304,6 +198,7 @@ bool apply_effect(spelln spell, int level, rangen range, int count, const char* 
 		if(suffix)
 			player->actid(bsdata<spelli>::elements[spell].id, suffix);
 	}
+	party.abilities[EffectCount] = 0;
 	switch(range) {
 	case OneAlly:
 		targets = creatures;
@@ -324,13 +219,13 @@ bool apply_effect(spelln spell, int level, rangen range, int count, const char* 
 			if(p->isally())
 				items.select(player->backpack());
 		}
-		return cast_on_item(run);
+		return effect_on_item(count, run);
 	case Enviroment:
 		if(!scene)
 			return false;
-		return scene->apply(last_spell, last_level, run);
+		return effect_on_scene(run);
 	case Scenery:
-		return false;
+		return effect_on_object(count, run);
 	default:
 		return false;
 	}

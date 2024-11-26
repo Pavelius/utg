@@ -29,7 +29,7 @@ void combat_mode(int bonus);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
-static const char* get_header() {
+const char* get_header() {
 	if(last_id) {
 		auto pn = getnme(ids(last_id, "Choose"));
 		if(pn)

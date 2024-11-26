@@ -20,7 +20,6 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	char			initiative;
 	unsigned		experience;
 	raceable		languages;
-	bool			apply(spelln, int level, bool run);
 	void			clear();
 	bool			cast(spelln spell, bool run);
 	void			damage(int value);
@@ -42,7 +41,6 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	bool			is(spelln v) const { return active_spells.is(v); }
 	bool			is(feat_s v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;
-	bool			isallowspell() const { return const_cast<creature*>(this)->apply(last_spell, last_level, false); }
 	bool			isalive() const { return get(HP) > 0; }
 	bool			isally() const;
 	bool			ischaracter() const;
