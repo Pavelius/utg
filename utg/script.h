@@ -32,3 +32,5 @@ void script_run(const char* id, const variants& source);
 void script_stop();
 
 variants script_body();
+
+const char* script_header();

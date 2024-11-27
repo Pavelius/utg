@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "script.h"
+#include "stringbuilder.h"
 #include "list.h"
 
 BSMETA(script) = {
@@ -111,4 +112,13 @@ variants script_body() {
 	if(s1 == -1)
 		return {};
 	return variants(s1, script_end - script_begin);
+}
+
+const char* script_header() {
+	if(last_id) {
+		auto pn = getnme(ids(last_id, "Choose"));
+		if(pn)
+			return pn;
+	}
+	return getnm("DefaultChoose");
 }

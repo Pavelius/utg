@@ -29,15 +29,6 @@ void combat_mode(int bonus);
 void generate_lair_treasure(const char* symbols);
 void generate_treasure(const char* symbols, int group_count);
 
-const char* get_header() {
-	if(last_id) {
-		auto pn = getnme(ids(last_id, "Choose"));
-		if(pn)
-			return pn;
-	}
-	return getnm("ChooseTarget");
-}
-
 template<> void fnscript<abilityi>(int index, int value) {
 	switch(modifier) {
 	case Permanent: player->basic.abilities[index] += get_bonus(value); break;
@@ -81,7 +72,7 @@ template<> void fnscript<spelli>(int index, int value) {
 }
 
 void choose_target() {
-	opponent = targets.choose(get_header(), player->is(Enemy));
+	opponent = targets.choose(script_header(), player->is(Enemy));
 }
 
 static int player_count() {
