@@ -122,9 +122,6 @@
     <ClCompile Include="draw_marker.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="pushtitle.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="filter.cpp">
       <Filter>logic</Filter>
     </ClCompile>

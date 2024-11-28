@@ -179,7 +179,6 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
-    <ClCompile Include="pushtitle.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="strategy.cpp" />
     <ClCompile Include="structure.cpp" />

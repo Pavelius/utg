@@ -1,12 +1,12 @@
 #include "ability.h"
 #include "collection.h"
 #include "command.h"
-#include "crt.h"
 #include "creature.h"
 #include "draw.h"
 #include "draw_figure.h"
 #include "draw_object.h"
 #include "draw_strategy.h"
+#include "math.h"
 #include "list.h"
 #include "monster.h"
 #include "panel.h"
@@ -134,7 +134,7 @@ static void paint_block(const char* id, void* object, const char* value) {
 }
 
 static void check_format(const char* id) {
-	auto pn = getnme(stw(id, "Format"));
+	auto pn = getnme(ids(id, "Format"));
 	if(pn)
 		value_format = pn;
 }

@@ -441,7 +441,6 @@ static void input_querry(int bonus) {
 }
 
 static void choose_input(int bonus) {
-	pushtitle push(last_list->id);
 	apply_input();
 }
 
@@ -460,15 +459,13 @@ static void choose_querry(int bonus) {
 }
 
 static void choose_province(int bonus) {
-	pushtitle push(last_list->id);
-	pushvalue push_message(message_string, get_title(last_list->id, bonus));
+	pushvalue push_message(message_string, get_title(last_id, bonus));
 	province = querry.chooseprovince();
 	if(!province)
 		script_stop();
 }
 
 static void choose_card(int bonus) {
-	pushtitle push(last_list->id);
 	an.clear();
 	input_querry(bonus);
 	auto result = an.choose(get_title(last_id));
@@ -1004,7 +1001,6 @@ static void apply_movement(const entitya& source) {
 }
 
 static void choose_movement(int bonus) {
-	pushtitle push(last_list->id);
 	choose_movement();
 	apply_movement(choosing);
 }
@@ -1272,7 +1268,6 @@ static void melee_clash(int bonus) {
 }
 
 static void choose_querry_list(int bonus) {
-	pushtitle header(last_list->id);
 	entitya choosing;
 	while(true) {
 		console.clear();

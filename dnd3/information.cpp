@@ -32,7 +32,7 @@ static void custom_string(stringbuilder& sb, const char* id) {
 		return;
 	if(stringvar_identifier(sb, id))
 		return;
-	stringbuilder::defidentifier(sb, id);
+	default_string(sb, id);
 }
 
 void initialize_str() {

@@ -1,5 +1,4 @@
 #include "bsreq.h"
-#include "crt.h"
 #include "enumerator.h"
 
 BSDATAC(enumi, 4096)

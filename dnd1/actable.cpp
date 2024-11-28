@@ -96,6 +96,11 @@ static void def_identifier(stringbuilder& sb, const char* id) {
 		return;
 	if(stringvar_identifier(sb, id))
 		return;
+	auto name = getnm(id);
+	if(name) {
+		sb.add(name);
+		return;
+	}
 	default_string(sb, id);
 }
 

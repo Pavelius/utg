@@ -1,6 +1,5 @@
 #include "bsreq.h"
-#include "crt.h"
-#include "logparse.h"
+#include "log.h"
 #include "numberlist.h"
 
 typedef adat<int, 512> numbert;

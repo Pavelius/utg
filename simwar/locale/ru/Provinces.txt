@@ -4,6 +4,7 @@ BialowiezaForest: Беловежская пуща
 CapeBrumal: Мыс жестокости
 CathedralGap: Соборный путь
 Concordia: Холм изобилия
+DisappointmentCleaver: Разочарованный потрошитель
 GelidSea: Ледяное море
 HiemalStrait: Химальский пролив
 FieldsOfRefuge: Поля утешения
@@ -15,6 +16,7 @@ PtarmiganRidge: Хребет куропаток
 RupalValley: Долина деревьев
 SeaOfLostWinds: Море потерянных ветров
 SteelCliffs: Стальные утесы
+Tengpoche: Тенгпош
 WesternExpanse: Западное море
 WesternZastrugi: Западный край
 Zakopane: Закопани

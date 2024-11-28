@@ -22,7 +22,7 @@
 
 gamei game;
 
-void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
+void stract(stringbuilder& sb, gendern gender, const char* name, const char* format, const char* format_param);
 
 void add_line(stringbuilder& sb, const costa& source);
 void next_turn();

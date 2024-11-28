@@ -3,7 +3,6 @@
 #include "bsreq.h"
 #include "chooseable.h"
 #include "creature.h"
-#include "crt.h"
 #include "enumerator.h"
 #include "item.h"
 #include "list.h"

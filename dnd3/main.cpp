@@ -3,7 +3,9 @@
 #include "draw.h"
 #include "draw_strategy.h"
 #include "numberlist.h"
+#include "rand.h"
 #include "room.h"
+#include "timer.h"
 
 void initialize_abilitites();
 void initialize_ui();

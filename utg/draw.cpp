@@ -1,6 +1,5 @@
 #include "color.h"
 #include "draw.h"
-#include "kering.h"
 #include "io_stream.h"
 #include "math.h"
 #include "seqlink.h"
@@ -1567,53 +1566,36 @@ int draw::texth(const char* string, int width) {
 	return y1;
 }
 
-int kering::compare(const void* v1, const void* v2) {
-	return ((kering*)v1)->u - ((kering*)v2)->u;
-}
-
-static int add_kering(const pma* pk, int s1, int s2) {
-	if(!s1 || !s2)
-		return 0;
-	kering e;
-	e.c1 = s1;
-	e.c2 = s2;
-	auto pr = (kering*)bsearch(&e, (char*)pk + sizeof(pma), pk->count, sizeof(kering), kering::compare);
-	if(pr)
-		return pr->offset;
-	return 0;
-}
+//int kering::compare(const void* v1, const void* v2) {
+//	return ((kering*)v1)->u - ((kering*)v2)->u;
+//}
+//
+//static int add_kering(const pma* pk, int s1, int s2) {
+//	if(!s1 || !s2)
+//		return 0;
+//	kering e;
+//	e.c1 = s1;
+//	e.c2 = s2;
+//	auto pr = (kering*)bsearch(&e, (char*)pk + sizeof(pma), pk->count, sizeof(kering), kering::compare);
+//	if(pr)
+//		return pr->offset;
+//	return 0;
+//}
 
 int draw::textw(const char* string, int count) {
 	if(!font)
 		return 0;
 	int x1 = 0;
-	const pma* pk = 0;//font->getheader("KRN");
 	unsigned char s0 = 0x0;
 	if(count == -1) {
 		const char *s1 = string;
-		if(pk) {
-			while(*s1) {
-				unsigned char sr = *((unsigned char*)s1);
-				x1 += textw(szget(&s1, codepage::W1251)) + add_kering(pk, s0, sr);
-				s0 = sr;
-			}
-		} else {
-			while(*s1)
-				x1 += textw(szget(&s1, codepage::W1251));
-		}
+		while(*s1)
+			x1 += textw(szget(&s1, codepage::W1251));
 	} else {
 		const char *s1 = string;
 		const char *s2 = string + count;
-		if(pk) {
-			while(s1 < s2) {
-				unsigned char sr = *((unsigned char*)s1);
-				x1 += textw(szget(&s1, codepage::W1251)) + add_kering(pk, s0, sr);
-				s0 = sr;
-			}
-		} else {
-			while(s1 < s2)
-				x1 += textw(szget(&s1, codepage::W1251));
-		}
+		while(s1 < s2)
+			x1 += textw(szget(&s1, codepage::W1251));
 	}
 	return x1;
 }
@@ -1626,27 +1608,14 @@ void draw::textmc(const char* string, int count, unsigned flags) {
 		return;
 	if(count == -1)
 		count = zlen(string);
-	const pma* pk = 0; // font->getheader("KRN");
 	const char *s1 = string;
 	const char *s2 = string + count;
 	unsigned char s0 = 0x0;
-	if(pk) {
-		while(s1 < s2) {
-			unsigned char sr = *((unsigned char*)s1);
-			int sm = szget(&s1, codepage::W1251);
-			caret.x += add_kering(pk, s0, sr);
-			s0 = sr;
-			if(sm >= 0x21)
-				glyph(sm, flags);
-			caret.x += textw(sm);
-		}
-	} else {
-		while(s1 < s2) {
-			int sm = szget(&s1, codepage::W1251);
-			if(sm >= 0x21)
-				glyph(sm, flags);
-			caret.x += textw(sm);
-		}
+	while(s1 < s2) {
+		int sm = szget(&s1, codepage::W1251);
+		if(sm >= 0x21)
+			glyph(sm, flags);
+		caret.x += textw(sm);
 	}
 }
 

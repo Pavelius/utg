@@ -1,2 +1,3 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `BaltoroFlats`
+ Define translation for `DisappointmentCleaver`
+ Define translation for `Tengpoche`

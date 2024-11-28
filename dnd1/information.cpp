@@ -35,7 +35,7 @@ void creature::getstatus(stringbuilder& sb) const {
 	sb.add("%1 - %2 (%3i %-Level)", getname(),
 		geti().getname(),
 		get(Level));
-//	if(is(Player))
+	if(is(Player))
 		sb.adds("%-HP %1i/%2i", abilities[HP], abilities[HPMax]);
 }
 

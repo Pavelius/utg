@@ -6,6 +6,6 @@
 class stringbuilder;
 
 struct actable : nameable {
-	gender_s		gender;
+	gendern			gender;
 	void			act(stringbuilder& sb, const char* format, ...) const;
 };

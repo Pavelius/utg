@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "roll.h"
 #include "magic.h"
 #include "range.h"
