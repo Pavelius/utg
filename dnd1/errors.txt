@@ -1,2 +1,1 @@
-﻿Error in file `UnknownNames.txt`:
- Define translation for `DefaultChoose`
+﻿Can't find file 'speech/ru/Character1s.txt'

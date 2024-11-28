@@ -7,6 +7,8 @@
 #include "rules/Scenery.txt"
 #include "rules/Organizations.txt"
 
+#include "speech/%1/Characters.txt" Speech
+
 #Menu
 
 General source(Creature)

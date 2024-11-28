@@ -25,13 +25,14 @@ void speech_read(const char* url) {
 	while(allowparse && *p) {
 		if(!checksym(p, '#'))
 			break;
+		sb.clear();
 		p = sb.psidf(p + 1);
 		auto pr = bsdata<speech>::add();
 		pr->id = szdup(temp);
 		if(!checksym(p, '\n'))
 			break;
 		p = skipwscr(p);
-		auto psb = bsdata<speech::element>::source.count;
+		pr->source.setbegin();
 		while(allowparse && *p && *p != '#') {
 			sb.clear();
 			p = sb.psstrlf(skipwscr(p));
@@ -40,8 +41,7 @@ void speech_read(const char* url) {
 			e.name = szdup(temp);
 			bsdata<speech::element>::source.add(&e);
 		}
-		if(psb != bsdata<speech::element>::source.count)
-			pr->source.set((speech::element*)bsdata<speech::element>::source.ptr(psb), bsdata<speech::element>::source.count - psb);
+		pr->source.setend();
 	}
 	log::close();
 }
