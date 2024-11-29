@@ -19,4 +19,4 @@ SaveSprite name("items_new")
 
 #Main url("D:/games/adom/gfx/adom") ext("png") dest_url("test")
 
-CreateItems
+CreateFonts
