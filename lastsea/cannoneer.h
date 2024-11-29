@@ -1,6 +1,6 @@
-#include "crt.h"
-
 #pragma once
+
+#include "slice.h"
 
 class cannoneer {
 	unsigned char	guns[4];

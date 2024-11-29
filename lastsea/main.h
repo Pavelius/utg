@@ -132,7 +132,7 @@ class npcname {
 public:
 	const char*		getname() const;
 	void			getname(stringbuilder& sb) const;
-	gender_s		getgender() const;
+	gendern			getgender() const;
 	void			randomname();
 };
 struct classi {

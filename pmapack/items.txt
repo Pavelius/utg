@@ -3,6 +3,11 @@
 LoadImage
 AddFrame
 
+#CreateFonts url("Segoe UI")
+
+SaveFont name("font1") size(20)
+SaveFont name("font2") size(16)
+
 #CreateItems url("%1/items") size(64 48) center(32 24)
 
 CreateSprite param(520)

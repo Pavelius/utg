@@ -242,6 +242,10 @@ static void help_info() {
 	}
 }
 
+void save_fonts() {
+	font_write(image_dest_url("pma"), last_image.id, last_image.param);
+}
+
 void initialize_image_plugins() {
 }
 
@@ -254,6 +258,7 @@ BSDATA(imageplugini) = {
 	{"Help", help_info, "Show this information."},
 	{"LoadImage", load_image, "Load bitmap from disk by source path. Use [name] as it name."},
 	{"SaveImage", save_image, "Save bitmap to disk by destination path. Use [name] as it name."},
+	{"SaveFont", save_image, "Save font to disk by destination path. Use [name] as it name and [param] as size."},
 	{"SaveSprite", save_sprite, "Save sprite to disk by destination path. Use [name] as it name."},
 };
 BSDATAF(imageplugini)
