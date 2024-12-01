@@ -8,8 +8,6 @@
 #include "script.h"
 #include "stringvar.h"
 
-void one_combat_round();
-
 void act_custom(stringbuilder& sb, const char* identifier);
 
 static void main_custom(stringbuilder& sb, const char* identifier) {
@@ -41,7 +39,7 @@ static void initialize() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	return utg::start(one_combat_round, initialize);
+	return utg::start(0, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

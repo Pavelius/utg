@@ -1,3 +1,3 @@
 #include "skill.h"
 
-skill_s last_skill;
+skilln last_skill;

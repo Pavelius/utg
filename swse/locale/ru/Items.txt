@@ -1,5 +1,7 @@
 ﻿Quarterstaff: Посох
 
+BlasterPistol: Бластер
+
 Lightsaber: Световой меч
 Shield: Щит
 Sword: Меч

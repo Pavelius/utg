@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum skill_s : unsigned char;
+enum skilln : unsigned char;
 //enum skill_s : unsigned char {
 //	Acrobatics, Climb, Deception, Endurance, GatherInformation,
 //	Initiative, Jump, Mechanics, Perception, Persuasion,
@@ -12,12 +12,13 @@ enum skill_s : unsigned char;
 //	Bureaucracy, GalacticLore, LifeSciences, PhysicalSciences, SocialSciences,
 //	Tactics, Technology
 //};
-typedef flagable<4> skillf;
+typedef flag32 skillf;
 struct skillable {
 	skillf	skills_train;
+	bool	istrain(skilln v) const { return skills_train.is(v); }
 };
 struct skilli : nameable {
 	char	ability;
 	featf	reroll;
 };
-extern skill_s last_skill;
+extern skilln last_skill;

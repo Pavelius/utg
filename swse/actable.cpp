@@ -18,14 +18,14 @@ void actable::act(const char* format, ...) const {
 	actv(*answers::console, format, xva_start(format), getname(), gender, ' ');
 }
 
-bool actable::actid(const char* id, const char* id_action) const {
+bool actable::actid(const char* id, const char* id_suffix) const {
 	if(!answers::console)
 		return false;
-	char temp[260]; stringbuilder sx(temp);
-	if(!id_action)
-		id_action = "Action";
-	sx.addv(id_action, 0);
+	char temp[64]; stringbuilder sx(temp);
+	if(!id_suffix)
+		id_suffix = "Act";
 	sx.addv(id, 0);
+	sx.addv(id_suffix, 0);
 	auto pn = getnme(temp);
 	if(!pn)
 		return false;

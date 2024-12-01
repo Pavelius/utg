@@ -4,7 +4,9 @@
 #include "area.h"
 #include "condition.h"
 #include "creature.h"
+#include "draw.h"
 #include "list.h"
+#include "formula.h"
 #include "modifier.h"
 #include "pushvalue.h"
 #include "rand.h"
@@ -13,7 +15,7 @@
 #include "stringvar.h"
 
 static void* last_answer;
-static int last_roll, pure_roll, critical_roll;
+static int pure_roll, critical_roll;
 
 static void check_bonus(int& bonus, int minimum = 1) {
 	if(bonus < minimum)
@@ -56,7 +58,7 @@ template<> void fnscript<weari>(int value, int bonus) {
 	last_wear = (wear_s)value;
 }
 template<> void fnscript<skilli>(int value, int bonus) {
-	last_skill = (skill_s)value;
+	last_skill = (skilln)value;
 }
 template<> void fnscript<statei>(int value, int bonus) {
 	last_state = (staten)value;
@@ -72,15 +74,11 @@ template<> void fnscript<itemi>(int value, int bonus) {
 	add_item((itemi*)bsdata<itemi>::elements + value);
 }
 
-static int roll20() {
-	return 1 + rand() % 20;
-}
-
 bool roll20(int bonus, int dc) {
 	critical_roll = 0;
-	pure_roll = roll20();
-	last_roll = pure_roll + bonus;
-	auto result = last_roll >= dc;
+	pure_roll = d20();
+	last_number = pure_roll + bonus;
+	auto result = last_number >= dc;
 	if(pure_roll == 1) {
 		critical_roll = -1;
 		result = false;
@@ -90,10 +88,24 @@ bool roll20(int bonus, int dc) {
 		result = true;
 	}
 	if(result)
-		answers::console->addn("[{%1i%+2i=%3i}]", pure_roll, bonus, last_roll);
+		answers::console->addn("[{%1i%+2i=%3i}]", pure_roll, bonus, last_number);
 	else
-		answers::console->addn("[-{%1i%+2i=%3i}]", pure_roll, bonus, last_roll);
+		answers::console->addn("[-{%1i%+2i=%3i}]", pure_roll, bonus, last_number);
 	return result;
+}
+
+static void print_message(int bonus) {
+	switch(bonus) {
+	case -1:
+		player->actid(last_id, "Fail");
+		break;
+	case 1:
+		player->actid(last_id, "Success");
+		break;
+	default:
+		player->actid(last_id, "Act");
+		break;
+	}
 }
 
 static bool allow_combat() {
@@ -140,6 +152,23 @@ static void filter_state(int bonus) {
 }
 static void filter_weapon(int bonus) {
 	items.match(is_weapon, bonus >= 0);
+}
+
+static void roll_skill_value(int bonus) {
+	auto pi = bsdata<skilli>::elements + last_skill;
+	if(player->istrain(last_skill))
+		bonus += 5;
+	last_number = d20() + bonus;
+}
+
+static void for_each_creature(int bonus) {
+	pushvalue push_player(player);
+	auto elements = script_body();
+	for(auto p : creatures) {
+		player = p;
+		script_run(elements);
+	}
+	script_stop();
 }
 
 static void select_enemies(int bonus) {
@@ -295,12 +324,6 @@ static bool fix_message(stringbuilder& sb, const char* p1, const char* p2) {
 	return true;
 }
 
-static void fix_action(bool success) {
-	char temp[128]; stringbuilder sb(temp);
-	if(fix_message(sb, success ? "Success" : "Fail", 0))
-		return;
-}
-
 static bool prepare_opponent() {
 	opponent = opponents.choose(getnm("ChooseEnemy"));
 	return opponent != 0;
@@ -313,14 +336,12 @@ static void make_attack(int bonus) {
 	player->setenemy(opponent);
 	if(roll20(bonus, opponent->get(Reflex))) {
 		player->actid(last_id);
-		fix_action(false);
+		print_message(1);
 		script_stop();
 		return;
 	} else {
-		if(!player->actid(last_id, "Miss"))
-			player->actid(last_id);
+		print_message(-1);
 	}
-	fix_action(true);
 }
 
 static bool answers_have(const void* p) {
@@ -377,14 +398,44 @@ static void before_combat_round() {
 void one_combat_round() {
 	pushvalue push(player);
 	for(auto p : creatures) {
+		if(!p->isready())
+			continue;
 		player = p;
 		before_combat_round();
 		make_actions();
 	}
 }
 
+static int compare_initiative(const void* v1, const void* v2) {
+	return (*((creature**)v1))->abilities[InitiativeResult] - (*((creature**)v2))->abilities[InitiativeResult];
+}
+
+static void play_combat_rounds() {
+	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
+	while(allow_combat())
+		one_combat_round();
+}
+
+static void play_combat_rounds(int bonus) {
+	draw::setnext(play_combat_rounds);
+}
+
 static void add_creature(int bonus) {
 	creatures.add(player);
+}
+
+static void push_modifier(int bonus) {
+	auto push = modifier;
+	script_body();
+	modifier = push;
+}
+
+static void set_ability(int bonus) {
+	player->abilities[last_ability] = get_bonus(bonus);
+}
+
+static void set_hostile(int bonus) {
+	player->abilities[Relation] = -100;
 }
 
 static bool if_train() {
@@ -412,7 +463,7 @@ static bool if_state() {
 }
 
 static bool if_wounded() {
-	return false;
+	return player->hp < player->hpm;
 }
 
 static void print_hands(stringbuilder& sb) {
@@ -429,8 +480,8 @@ BSDATA(stringvari) = {
 };
 BSDATAF(stringvari)
 BSDATA(conditioni) = {
-	{"IfMeleeFight", if_melee_fight},
 	{"IfItemRange", if_item_range},
+	{"IfMeleeFight", if_melee_fight},
 	{"IfState", if_state},
 	{"IfTrained", if_train},
 	{"IfWounded", if_wounded},
@@ -447,11 +498,18 @@ BSDATA(script) = {
 	{"FilterState", filter_state, allow_opponents},
 	{"FilterYou", filter_you, allow_opponents},
 	{"FilterWeapon", filter_weapon, allow_opponents},
+	{"ForEachCreature", for_each_creature},
 	{"MakeAttack", make_attack},
+	{"PushModifier", push_modifier},
+	{"PlayCombatRounds", play_combat_rounds},
+	{"Print", print_message},
 	{"ReadyItem", ready_item, if_ready_item},
 	{"ReadyWeapon", ready_item, if_ready_weapon},
+	{"RollSkillValue", roll_skill_value},
 	{"SelectEnemies", select_enemies, allow_opponents},
 	{"SelectItems", select_items, allow_items},
+	{"SetAbility", set_ability},
+	{"SetHostile", set_hostile},
 	{"UseMove", use_move, if_use_move},
 	{"UseStandart", use_standart, if_use_standart},
 	{"UseSwift", use_swift, if_use_swift},

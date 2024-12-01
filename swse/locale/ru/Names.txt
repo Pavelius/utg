@@ -1,5 +1,8 @@
 ﻿AppTitle: Звездные войны
 
+Jedi: Джедай
+Scoundrell: Негодяй
+
 Charisma: Харизма
 Constitution: Телосложение
 Dexterity: Ловкость

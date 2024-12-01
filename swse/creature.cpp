@@ -1,6 +1,8 @@
 #include "advance.h"
 #include "creature.h"
 #include "feat.h"
+#include "math.h"
+#include "modifier.h"
 #include "pushvalue.h"
 #include "rand.h"
 #include "script.h"
@@ -9,8 +11,9 @@ creature *player, *opponent;
 collection<creature> creatures, opponents;
 
 static void advance_creature(int level, variant object) {
+	pushvalue push(modifier, Permanent);
 	for(auto& e : bsdata<advancei>()) {
-		if(e.object.counter == level && e.object.type == object.type && e.object.value==object.value)
+		if(e.object.counter == level && e.object.type == object.type && e.object.value == object.value)
 			script_run(e.elements);
 	}
 }
@@ -48,6 +51,8 @@ static void update_ability() {
 		player->abilities[Reflex] += armor_dexterity_bonus + player->get(DodgeBonus);
 	player->abilities[Fortitude] += 10 + player->getbonus(Constitution) + level + player->get(EquipmentBonus);
 	player->abilities[Will] += 10 + player->getbonus(Wisdow) + level;
+	auto m = player->getlevel();
+	player->hpm = player->basic.hpm + imax(m, player->getbonus(Constitution) * m);
 }
 
 void creature::update() {
@@ -110,6 +115,10 @@ creature* creature::getenemy() const {
 	return 0;
 }
 
+int	creature::getrange(const creature* p) const {
+	return iabs(abilities[Position] - p->abilities[Position]);
+}
+
 static int compare_int(const void* v1, const void* v2) {
 	return *((int*)v2) - *((int*)v1);
 }
@@ -147,6 +156,17 @@ static void add_default_items() {
 	script_run(pi->id, pi->elements);
 }
 
+static void add_class_hit_points() {
+	classi* pi = player->getkind();
+	if(!pi)
+		return;
+	player->basic.hpm += pi->hd * 3;
+}
+
+static void finish() {
+	player->hp = player->hpm;
+}
+
 void create_hero(int bonus) {
 	player = bsdata<creature>::add();
 	player->clear();
@@ -154,6 +174,8 @@ void create_hero(int bonus) {
 	player->setgender(last_gender);
 	random_ability();
 	player->add(last_class);
+	add_class_hit_points();
 	player->update();
+	finish();
 	add_default_items();
 }

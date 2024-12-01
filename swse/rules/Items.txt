@@ -31,3 +31,5 @@ ToolKit
 
 JediStartEquipment
  elements Lightsaber
+ScoundrellStartEquipment
+ elements BlasterPistol

@@ -30,6 +30,7 @@ BSDATA(abilityi) = {
 	{"MoveAction"},
 	{"StandartAction"},
 	{"InitiativeResult"},
+	{"Position"},
 	{"Relation"},
 };
 assert_enum(abilityi, LastAbility)

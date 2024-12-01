@@ -6,7 +6,7 @@
 #pragma once
 
 struct skillroll : nameable {
-	skill_s		skill;
+	skilln		skill;
 	variants	required, bonuses;
 	featf		reroll;
 	char		dc;

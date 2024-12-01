@@ -2,6 +2,9 @@
 Aim: Прицелиться
 AttackObject: Атаковать объект
 AttackWithMeleeWeapon: Нанести удар %-~Hands
+AttackWithRangedWeapon: Стрелять из %-$Hands
+AttackWithRangedWeaponSuccess: %герой выстрелил%а из %-$Hands.
+AttackWithRangedWeaponFail: %герой выстрелил%а из %-$Hands, но промазал%а.
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
 ChooseEnemy: Выбрать врага

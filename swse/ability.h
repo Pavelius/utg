@@ -12,7 +12,7 @@ enum abilityn : unsigned char {
 	HyperdrivenPerDay, RerollAttackPerDay, SecondWindPerDay,
 	ForcePoints, ForcePointsPerEncounter,
 	Reaction, SwiftAction, MoveAction, StandartAction,
-	InitiativeResult, Relation,
+	InitiativeResult, Position, Relation,
 	LastAbility = Relation
 };
 struct abilityi : nameable {

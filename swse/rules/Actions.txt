@@ -1,3 +1,10 @@
+#List
+
+RollInitiative
+ elements ForEachCreature Initiative RollSkillValue InitiativeResult SetAbility+101
+PlayCombat
+ elements RollInitiative PlayCombatRounds
+
 #Action
 
 AttackWithRangedWeapon
@@ -36,12 +43,12 @@ StandUpActrobatics
 StandUp upgrade(StandUpActrobatics)
  effect Prone IfState UseMove ApplyState-1
 Withdraw
- effect IfMeleeFight UseMove
+ effect UseMove IfMeleeFight
 
 Aim
  effect UseSwift+2 ReadyWeapon IfItemRange
 CatchSecondWind
- effect UseSwift SecondWindPerDay-1
+ effect UseSwift IfWounded SecondWindPerDay-1
 DropItemInHands
  effect UseSwift ReadyItem
 FallProne

@@ -15,4 +15,4 @@ CreateScoundrell
  elements Scoundrell Male CreateHero AddCreature
 
 MainScript
- elements CreateJedi Reaction-100 CreateScoundrell
+ elements CreateJedi SetHostile-100 Position+20 CreateScoundrell PlayCombat

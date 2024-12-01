@@ -613,8 +613,6 @@ int utg::start(fnevent proc, fnevent afterread) {
 	answers::console = &utg::sb;
 	if(!utg::callback::getstatus)
 		utg::callback::getstatus = utg::getstatus;
-	if(!proc)
-		return -1;
 	set_dark_theme();
 	initialize_widgets();
 	bsreq::read("rules/Basic.txt");
@@ -634,7 +632,8 @@ int utg::start(fnevent proc, fnevent afterread) {
 	if(answers::console)
 		answers::prompt = answers::console->begin();
 	initialize(getnm("AppTitle"));
-	setnext(proc);
+	if(proc)
+		setnext(proc);
 	draw::start();
 	return 0;
 }
