@@ -1,2 +1,3 @@
-﻿Error in file `UnknownNames.txt`:
- Define translation for `NoVariant`
+﻿Error in file `rules/Actions.txt`:
+ Line 20: Can't find variant `Unarmed`
+ Line 22: Can't find variant `Unarmed`

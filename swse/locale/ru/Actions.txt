@@ -22,6 +22,7 @@ Recover: Прийти в чувства
 ReloadWeapon: Перезарядить %-Hands
 Run: Бежать
 StandUpActrobatics: Вскочить на ноги
+StandUp: Подняться
 SwitchWeaponToAutoFire: Переключиться в автоматический режим стрельбы
 Withdraw: Отступить из ближнего боя
 

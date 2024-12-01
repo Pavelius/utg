@@ -45,5 +45,8 @@
     <None Include="test\items_new.pma">
       <Filter>data</Filter>
     </None>
+    <None Include="test\font1.pma">
+      <Filter>data</Filter>
+    </None>
   </ItemGroup>
 </Project>

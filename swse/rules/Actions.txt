@@ -1,59 +1,59 @@
 #Action
 
 AttackWithRangedWeapon
- effect StandartAction-1 RangedWeapon SelectEnemies FilterRange MakeAttack
+ effect UseStandart ReadyWeapon IfItemRange SelectEnemies FilterRange MakeAttack
 AttackWithMeleeWeapon
- effect StandartAction-1 MeleeWeapon SelectEnemies FilterRange-1 MakeAttack
+ effect UseStandart ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1 MakeAttack
 AidAnotherAlly
- effect StandartAction-1 SelectEnemies-1 FilterYou-1
+ effect UseStandart SelectEnemies-1 FilterYou-1
 Charge
- effect StandartAction-1 IfMeleeFight-1 MeleeWeapon SelectEnemies FilterRange-1 MakeAttack
+ effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1 MakeAttack
 Disarm
- effect StandartAction-1 SelectEnemies FilterArmed
+ effect UseStandart SelectEnemies FilterArmed
 FightDefencivelyAcrobatics
- effect StandartAction-1 Acrobatics IfTrained
+ effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1
 FightDefencivelyAcrobaticsNoAttack
- effect StandartAction-1 Acrobatics IfTrained
+ effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1
 FightDefencively upgrade(FightDefencivelyAcrobatics)
- effect StandartAction-1 MeleeWeapon
+ effect UseStandart ReadyWeapon IfItemRange-1
 Grab
- effect StandartAction-1 Unarmed SelectEnemies FilterRange
+ effect UseStandart ReadyItem-1 SelectEnemies FilterRange
 Grapple
- effect StandartAction-1 Unarmed SelectEnemies FilterRange
+ effect UseStandart ReadyItem-1 SelectEnemies FilterRange
 
 Move
- effect MoveAction-1
+ effect UseMove
 DrawWeaponQuick
- effect SwiftAction-1 SelectItems FilterWeapon
+ effect UseSwift SelectItems FilterWeapon
 DrawWeapon upgrade(DrawWeaponQuick)
- effect MoveAction-1 SelectItems FilterWeapon
+ effect UseMove SelectItems FilterWeapon
 ReloadWeapon
- effect MoveAction-1 ReadyWeapon
+ effect UseMove ReadyWeapon
 DrawBackpackItem
- effect MoveAction-1 SelectItems FilterWeapon-1
+ effect UseMove SelectItems FilterWeapon-1
 StandUpActrobatics
- effect Acrobatics IfTrained SwiftAction-1 Prone ApplyState-1
+ effect Acrobatics IfTrained Prone IfState UseSwift ApplyState-1
 StandUp upgrade(StandUpActrobatics)
- effect MoveAction-1 Prone ApplyState-1
+ effect Prone IfState UseMove ApplyState-1
 Withdraw
- effect MoveAction-1 IfMeleeFight
+ effect IfMeleeFight UseMove
 
 Aim
- effect SwiftAction-2 RangedWeapon
+ effect UseSwift+2 ReadyWeapon IfItemRange
 CatchSecondWind
- effect SwiftAction-1 SecondWindPerDay-1
+ effect UseSwift SecondWindPerDay-1
 DropItemInHands
- effect SwiftAction-1 ReadyItem
+ effect UseSwift ReadyItem
 FallProne
- effect SwiftAction-1 IfMeleeFight-1 Prone ApplyState
+ effect UseSwift IfMeleeFight-1 Prone IfState-1 ApplyState
 Recover
- effect SwiftAction-3 ConditionTrack-1
+ effect UseSwift+3 ConditionTrack-1
 SwitchWeaponToAutoFire
- effect SwiftAction-1 ReadyWeapon
+ effect UseSwift ReadyWeapon
 
 CoupDeGrace
- effect FullRoundAction-1 SelectEnemies Helpless FilterState
+ effect UseFullRound SelectEnemies Helpless FilterState
 FullAttack
- effect FullRoundAction-1
+ effect UseFullRound
 Run
- effect FullRoundAction-1 IfMeleeFight-1
+ effect IfMeleeFight-1 UseFullRound

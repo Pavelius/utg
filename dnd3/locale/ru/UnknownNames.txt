@@ -1,0 +1,14 @@
+﻿AppTitle: 
+Cha: 
+CharacterSheet: 
+Con: 
+Dex: 
+InitiativeCounter: 
+Int: 
+Melee: 
+Monsters: 
+PlayerAbilities: 
+PlayerCombat: 
+Range: 
+Str: 
+Wis: 

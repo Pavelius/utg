@@ -4,7 +4,7 @@
 #include "area.h"
 #include "bsreq.h"
 #include "classi.h"
-#include "bsreq.h"
+#include "condition.h"
 #include "creature.h"
 #include "dice.h"
 #include "item.h"
@@ -114,6 +114,7 @@ BSDATA(varianti) = {
 	{"Area", VAR(areai, 1)},
 	{"AreaObject", VAR(area, 0)},
 	{"Class", VAR(classi, 1)},
+	{"Condition", VAR(conditioni, 1), 0, 0, fnscript<conditioni>, fntest<conditioni>},
 	{"Creature", VAR(creature, 0)},
 	{"Feat", VAR(feati, 1)},
 	{"Item", VAR(itemi, 1)},
@@ -124,10 +125,10 @@ BSDATA(varianti) = {
 	{"Prototype", VAR(prototypei, 1)},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>, fntest<script>},
 	{"Size", VAR(sizei, 1)},
-	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>, fntest<skilli>},
+	{"Skill", VAR(skilli, 1), 0, 0, fnscript<skilli>},
 	{"SkillRoll", VAR(skillroll, 1)},
 	{"State", VAR(statei, 1), 0, 0, fnscript<statei>},
-	{"Wear", VAR(weari, 1), 0, 0, fnscript<weari>, fntest<weari>},
+	{"Wear", VAR(weari, 1), 0, 0, fnscript<weari>},
 	{"Widget", VAR(widget, 1)},
 };
 BSDATAF(varianti)

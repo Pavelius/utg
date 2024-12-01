@@ -1,5 +1,6 @@
 #include "bsreq.h"
 #include "log.h"
+#include "stringbuilder.h"
 #include "numberlist.h"
 
 typedef adat<int, 512> numbert;
@@ -21,7 +22,7 @@ int	numberlist::match(int value) const {
 static const char* read_numbers(const char* p, numbert& result) {
 	while(isnum(*p) || *p == '-') {
 		int value;
-		p = stringbuilder::read(p, value);
+		p = psnum(p, value);
 		p = skipwscr(p);
 		result.add(value);
 	}
@@ -35,7 +36,7 @@ void numberlist::read(const char* url) {
 	char temp[1024]; stringbuilder sb(temp);
 	allowparse = true;
 	while(allowparse && *p) {
-		p = readidn(p, sb);
+		p = psidf(p, sb);
 		if(!checksym(p, '\n'))
 			break;
 		auto pe = bsdata<numberlist>::add();
@@ -44,8 +45,8 @@ void numberlist::read(const char* url) {
 		numbert source;
 		p = read_numbers(p, source);
 		p = skipwscr(p);
-		if(source)
-			pe->elements.alloc(source.getcount(), source.data);
+		//if(source)
+		//	pe->elements.alloc(source.getcount(), source.data);
 	}
 	log::close();
 }

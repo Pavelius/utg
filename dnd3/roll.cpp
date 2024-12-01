@@ -1,5 +1,6 @@
-#include "crt.h"
+#include "rand.h"
 #include "roll.h"
+#include "slice.h"
 #include "stringbuilder.h"
 
 typedef int (*fncompare)(const void* p1, const void* p2);

@@ -153,7 +153,7 @@ static void random_ability() {
 		player->basic.abilities[i] = roll4d6m();
 }
 
-void create_hero(class_s type, gender_s gender) {
+void create_hero(class_s type, gendern gender) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->setgender(gender);

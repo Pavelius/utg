@@ -1,5 +1,5 @@
 #include "ability.h"
-#include "crt.h"
+#include "flagable.h"
 #include "list.h"
 #include "modifier.h"
 #include "pushvalue.h"

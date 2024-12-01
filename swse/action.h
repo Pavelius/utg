@@ -6,9 +6,9 @@
 enum ability_s : unsigned char;
 
 struct actioni : nameable {
-	variant			type;
-	variant			upgrade;
-	variants		effect;
-	const char*		getprompt() const;
+	variant		type;
+	variant		upgrade;
+	variants	effect;
+	const char*	getprompt() const;
 };
 extern actioni* last_action;

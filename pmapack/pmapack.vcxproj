@@ -152,6 +152,7 @@
     <Text Include="items.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="test\font1.pma" />
     <None Include="test\items_new.pma" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

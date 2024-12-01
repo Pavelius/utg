@@ -1,10 +1,10 @@
 #include "actable.h"
 #include "answers.h"
-#include "stringlist.h"
+#include "speech.h"
 
-void stract(stringbuilder& sb, gender_s gender, const char* name, const char* format, const char* format_param);
+void stract(stringbuilder& sb, gendern gender, const char* name, const char* format, const char* format_param);
 
-void actable::actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s female, char separator) {
+void actable::actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gendern female, char separator) {
 	if(!format)
 		return;
 	if(separator)
@@ -43,6 +43,6 @@ bool actable::ischaracter() const {
 
 const char* actable::getname() const {
 	if(name_id != 0xFFFF)
-		return stringlist::getname(name_id);
+		return speech_name(name_id);
 	return kind.getname();
 }

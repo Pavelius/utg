@@ -2,6 +2,7 @@
 #include "action.h"
 #include "answers.h"
 #include "area.h"
+#include "condition.h"
 #include "creature.h"
 #include "list.h"
 #include "modifier.h"
@@ -21,17 +22,13 @@ template<> void fnscript<modifieri>(int value, int bonus) {
 template<> void fnscript<weari>(int value, int bonus) {
 	last_wear = (wear_s)value;
 }
-template<> bool fntest<weari>(int value, int bonus) {
-	fnscript<weari>(value, bonus);
-	return true;
-}
 
 template<> void fnscript<skilli>(int value, int bonus) {
 	last_skill = (skill_s)value;
 }
-template<> bool fntest<skilli>(int value, int bonus) {
-	fnscript<skilli>(value, bonus);
-	return true;
+
+template<> void fnscript<statei>(int value, int bonus) {
+	last_state = (state_s)value;
 }
 
 static void reduce_ability(char& source, int& bonus) {
@@ -97,10 +94,6 @@ template<> bool fntest<abilityi>(int value, int bonus) {
 	case Permanent: return allow_reduce_ability(value, bonus);
 	default: return allow_reduce_ability(value, bonus);
 	}
-}
-
-template<> void fnscript<statei>(int value, int bonus) {
-	last_state = (state_s)value;
 }
 
 static int roll20() {
@@ -226,25 +219,64 @@ static void choose_opponent(int bonus) {
 		script_stop();
 }
 
-static bool if_train(int bonus) {
-	return player->istrain(last_skill) == (bonus >= 0);
-}
-
-static bool if_melee_fight(int bonus) {
-	return player->ismeleefight() == (bonus >= 0);
-}
-
 static bool if_choose_creature(int bonus) {
 	last_script->proc(bonus);
 	return (opponent != 0) == (bonus >= 0);
 }
 
-static bool if_full_round_action(int bonus) {
+static void use_action(char& value, int& bonus) {
+	if(!value)
+		return;
+	else if(value >= bonus) {
+		value -= bonus;
+		bonus = 0;
+	} else {
+		bonus -= value;
+		value = 0;
+	}
+}
+
+static void check_bonus(int& bonus, int minimum = 1) {
+	if(bonus < minimum)
+		bonus = minimum;
+}
+
+static bool if_use_standart(int bonus) {
+	check_bonus(bonus);
+	return player->abilities[StandartAction] >= bonus;
+}
+static void use_standart(int bonus) {
+	check_bonus(bonus);
+	player->abilities[StandartAction]--;
+}
+
+static bool if_use_move(int bonus) {
+	check_bonus(bonus);
+	return (player->abilities[StandartAction] + player->abilities[MoveAction]) >= bonus;
+}
+static void use_move(int bonus) {
+	check_bonus(bonus);
+	use_action(player->abilities[MoveAction], bonus);
+	use_action(player->abilities[StandartAction], bonus);
+}
+
+static bool if_use_swift(int bonus) {
+	check_bonus(bonus);
+	return (player->abilities[StandartAction] + player->abilities[MoveAction] + player->abilities[SwiftAction]) > bonus;
+}
+static void use_swift(int bonus) {
+	check_bonus(bonus);
+	use_action(player->abilities[SwiftAction], bonus);
+	use_action(player->abilities[MoveAction], bonus);
+	use_action(player->abilities[StandartAction], bonus);
+}
+
+static bool if_full_round(int bonus) {
 	return player->abilities[SwiftAction] > 0
 		&& player->abilities[MoveAction] > 0
 		&& player->abilities[StandartAction] > 0;
 }
-static void full_round_action(int bonus) {
+static void use_full_round(int bonus) {
 	player->abilities[SwiftAction] = 0;
 	player->abilities[MoveAction] = 0;
 	player->abilities[StandartAction] = 0;
@@ -254,36 +286,20 @@ static void select_creatures(int bonus) {
 	opponents = creatures;
 }
 
-static bool if_ready_item(int bonus) {
-	return player->wears[Hands].operator bool();
-}
-static bool if_melee_weapon(int bonus) {
-	auto& ei = player->wears[Hands].geti();
-	return !ei.ranged && ei.isweapon();
-}
-static bool if_ranged_weapon(int bonus) {
-	auto& ei = player->wears[Hands].geti();
-	return ei.ranged && ei.isweapon();
-}
-static bool if_ready_weapon(int bonus) {
-	return player->wears[Hands].geti().isweapon();
-}
 static void ready_item(int bonus) {
 	last_item = player->wears + Hands;
 }
+static bool if_ready_item(int bonus) {
+	ready_item(bonus);
+	return last_item->operator bool();
+}
+static bool if_ready_weapon(int bonus) {
+	ready_item(bonus);
+	return last_item->geti().isweapon();
+}
 
-static bool if_unarmed(int bonus) {
-	return !player->wears[Hands].operator bool();
-}
-static void unarmed(int bonus) {
-	last_item = 0;
-}
-
-static bool allow_apply_state(int bonus) {
-	return player->is(last_state) != (bonus >= 0);
-}
 static void apply_state(int bonus) {
-	if(bonus>=0)
+	if(bonus >= 0)
 		player->states.set(last_state);
 	else
 		player->states.remove(last_state);
@@ -344,12 +360,6 @@ static bool answers_have(const void* p) {
 	return false;
 }
 
-static bool allow_effect(const variants& source) {
-	last_wear = Backpack;
-	last_item = 0;
-	return script_allow(source);
-}
-
 void test_action(const char* id) {
 	auto pi = bsdata<actioni>::find(id);
 	if(!pi)
@@ -365,8 +375,8 @@ void test_action(const char* id) {
 
 static void add_actions() {
 	pushvalue push_action(last_action);
-	pushvalue push_wear(last_wear);
-	pushvalue push_item(last_item);
+	pushvalue push_wear(last_wear, Backpack);
+	pushvalue push_item(last_item, (item*)0);
 	for(auto& e : bsdata<actioni>()) {
 		last_action = &e;
 		if(e.upgrade) {
@@ -375,11 +385,9 @@ static void add_actions() {
 			else if(e.upgrade.iskind<actioni>() && answers_have(bsdata<actioni>::elements + e.upgrade.value))
 				continue;
 		}
-		if(!allow_effect(e.effect))
+		if(!script_allow(e.effect))
 			continue;
 		an.add(&e, e.getprompt());
-		if(an.getcount() > 16)
-			break;
 	}
 }
 
@@ -415,29 +423,57 @@ void one_combat_round() {
 	for(auto p : creatures) {
 		player = p;
 		before_combat_round();
-		//test_action("AttackWithMeleeWeapon");
 		make_actions();
 	}
 }
 
+static bool if_train() {
+	return player->istrain(last_skill);
+}
+
+static bool if_melee_fight() {
+	return player->ismeleefight();
+}
+
+static bool if_item_range() {
+	return last_item->geti().ranged != 0;
+}
+
+static bool if_move_action() {
+	return (player->abilities[MoveAction] + player->abilities[StandartAction]) > 0;
+}
+
+static bool if_swift_action() {
+	return (player->abilities[SwiftAction] + player->abilities[MoveAction] + player->abilities[StandartAction]) > 0;
+}
+
+static bool if_state() {
+	return player->states.is(last_state);
+}
+
+BSDATA(conditioni) = {
+	{"IfMeleeFight", if_melee_fight},
+	{"IfItemRange", if_item_range},
+	{"IfState", if_state},
+	{"IfTrained", if_train},
+};
+BSDATAF(conditioni)
 BSDATA(script) = {
-	{"ApplyState", apply_state, allow_apply_state},
+	{"ApplyState", apply_state},
 	{"FilterArmed", filter_armed, allow_opponents},
 	{"FilterEnemy", filter_enemy, allow_opponents},
 	{"FilterRange", filter_range, allow_opponents},
 	{"FilterState", filter_state, allow_opponents},
 	{"FilterYou", filter_you, allow_opponents},
 	{"FilterWeapon", filter_weapon, allow_opponents},
-	{"FullRoundAction", full_round_action, if_full_round_action},
-	{"IfTrained", conditional_script, if_train},
-	{"IfMeleeFight", conditional_script, if_melee_fight},
 	{"MakeAttack", make_attack},
-	{"MeleeWeapon", ready_item, if_melee_weapon},
-	{"RangedWeapon", ready_item, if_ranged_weapon},
 	{"ReadyItem", ready_item, if_ready_item},
 	{"ReadyWeapon", ready_item, if_ready_weapon},
 	{"SelectEnemies", select_enemies, allow_opponents},
 	{"SelectItems", select_items, allow_items},
-	{"Unarmed", unarmed, if_unarmed},
+	{"UseMove", use_move, if_use_move},
+	{"UseStandart", use_standart, if_use_standart},
+	{"UseSwift", use_swift, if_use_swift},
+	{"UseFullRound", use_full_round, if_full_round},
 };
 BSDATAF(script)
