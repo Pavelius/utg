@@ -1,13 +1,13 @@
 #pragma once
 #include "nameable.h"
 
-enum forcetype_s : unsigned char {
+enum forcetypen : unsigned char {
 	CommonForce, Telekinetic, DarkSide, LightSide,
 };
 struct forcetypei : nameable {
 };
 struct forcepower : nameable {
-	forcetype_s	type;
+	forcetypen type;
 };
 struct forceable {
 	char forcepowers[32];

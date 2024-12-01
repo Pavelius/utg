@@ -4,7 +4,6 @@
 #pragma once
 
 struct advancei : nameable {
-	char		level;
-	variant		object;
-	variants	elements;
+	variant	object;
+	variants elements;
 };

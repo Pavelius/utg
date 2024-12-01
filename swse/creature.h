@@ -1,6 +1,6 @@
 #include "ability.h"
 #include "collection.h"
-#include "classi.h"
+#include "class.h"
 #include "gender.h"
 #include "feat.h"
 #include "forcepower.h"
@@ -15,17 +15,15 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	featf			feats;
 	statef			states;
 	unsigned short	enemy_id;
-	void			add(class_s v);
+	void			add(classn v);
 	void			clear();
-	int				get(ability_s v) const { return abilities[v]; }
-	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
-	int				get(class_s v) const { return classes[v]; }
+	int				get(abilityn v) const { return abilities[v]; }
+	int				get(classn v) const { return classes[v]; }
+	int				getbonus(abilityn v) const { return abilities[v] / 2 - 5; }
 	creature*		getenemy() const;
-	int				getlevel() const;
-	int				gethlevel() const;
 	int				getrange(const creature* p) const { return 0; }
 	relation_s		getrelation() const;
-	bool			is(state_s v) const { return states.is(v); }
+	bool			is(staten v) const { return states.is(v); }
 	bool			is(relation_s v) const { return getrelation()==v; }
 	bool			isenemy(const creature* p) const;
 	bool			isfeat(int v) const { return feats.is(v); }
@@ -40,4 +38,4 @@ extern collection<creature> creatures, opponents;
 
 void add_creatures();
 void add_item(const char* id);
-void create_hero(class_s type, gendern gender);
+void create_hero(classn type, gendern gender);

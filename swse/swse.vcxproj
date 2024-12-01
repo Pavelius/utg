@@ -151,6 +151,7 @@
     <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="area.cpp" />
+    <ClCompile Include="class.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="damage.cpp" />
     <ClCompile Include="forcepower.cpp" />
@@ -159,7 +160,6 @@
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="placeable.cpp" />
-    <ClCompile Include="printer.cpp" />
     <ClCompile Include="prototype.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="size.cpp" />
@@ -194,7 +194,7 @@
     <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
-    <ClInclude Include="classi.h" />
+    <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
     <ClInclude Include="feat.h" />

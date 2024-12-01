@@ -10,7 +10,7 @@ collection<creature> creatures, opponents;
 
 static void advance_creature(int level, variant object) {
 	for(auto& e : bsdata<advancei>()) {
-		if(e.level == level && e.object == object)
+		if(e.object.counter == level && e.object.type == object.type && e.object.value==object.value)
 			script_run(e.elements);
 	}
 }
@@ -21,7 +21,7 @@ static void clear_creature(char* pd, const char* ps) {
 
 static bool test_prerequisit(variant v) {
 	if(v.iskind<abilityi>())
-		return player->get((ability_s)v.value) >= v.value;
+		return player->get((abilityn)v.value) >= v.value;
 	else if(v.iskind<feati>())
 		return player->feats.is(v.value);
 	else if(v.iskind<itemi>())
@@ -56,27 +56,13 @@ void creature::update() {
 	update_ability();
 }
 
-int	creature::getlevel() const {
-	auto r = 0;
-	for(auto v : classes)
-		r += v;
-	return r;
-}
-
-int	creature::gethlevel() const {
-	auto r = 0;
-	for(auto i = (class_s)Jedi; i <= Soldier; i = (class_s)(i + 1))
-		r += classes[i];
-	return r;
-}
-
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 	enemy_id = 0xFFFF;
 	setnoname();
 }
 
-void creature::add(class_s v) {
+void creature::add(classn v) {
 	pushvalue push_player(player, this);
 	advance_creature(++classes[v], bsdata<classi>::elements + v);
 }
@@ -149,11 +135,11 @@ static int roll4d6m() {
 }
 
 static void random_ability() {
-	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
 		player->basic.abilities[i] = roll4d6m();
 }
 
-void create_hero(class_s type, gendern gender) {
+void create_hero(classn type, gendern gender) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->setgender(gender);

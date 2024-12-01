@@ -10,89 +10,45 @@
 #include "rand.h"
 #include "script.h"
 #include "skill.h"
+#include "stringvar.h"
 
 static void* last_answer;
-static const char* last_id;
 static int last_roll, pure_roll, critical_roll;
 
+static void check_bonus(int& bonus, int minimum = 1) {
+	if(bonus < minimum)
+		bonus = minimum;
+}
+
+static void addvalue(char& value, int bonus) {
+	bonus += value;
+	if(bonus > 100)
+		bonus = 100;
+	else if(bonus < -100)
+		bonus = -100;
+	value = bonus;
+}
+
+template<> void fnscript<classi>(int value, int bonus) {
+	last_class = (classn)value;
+}
 template<> void fnscript<modifieri>(int value, int bonus) {
 	modifier = (modifier_s)value;
 }
-
 template<> void fnscript<weari>(int value, int bonus) {
 	last_wear = (wear_s)value;
 }
-
 template<> void fnscript<skilli>(int value, int bonus) {
 	last_skill = (skill_s)value;
 }
-
 template<> void fnscript<statei>(int value, int bonus) {
-	last_state = (state_s)value;
+	last_state = (staten)value;
 }
-
-static void reduce_ability(char& source, int& bonus) {
-	if(!source || !bonus)
-		return;
-	if(source >= -bonus) {
-		source += bonus;
-		bonus = 0;
-	} else {
-		bonus += source;
-		source = 0;
-	}
-}
-
-static void reduce_ability(int value, int bonus) {
-	switch(value) {
-	case SwiftAction:
-		reduce_ability(player->abilities[SwiftAction], bonus);
-		reduce_ability(player->abilities[MoveAction], bonus);
-		reduce_ability(player->abilities[StandartAction], bonus);
-		break;
-	case MoveAction:
-		reduce_ability(player->abilities[MoveAction], bonus);
-		reduce_ability(player->abilities[StandartAction], bonus);
-		break;
-	default:
-		reduce_ability(player->abilities[value], bonus);
-		break;
-	}
-}
-
-static void add_ability(int value, int bonus) {
-	if(bonus < 0)
-		reduce_ability(value, bonus);
-	else
-		player->abilities[value] += bonus;
-}
-
-static bool allow_reduce_ability(int value, int bonus) {
-	switch(value) {
-	case MoveAction: return (player->abilities[MoveAction] + player->abilities[StandartAction]) >= -bonus;
-	case SwiftAction: return (player->abilities[SwiftAction] + player->abilities[MoveAction] + player->abilities[StandartAction]) >= -bonus;
-	default: return player->abilities[value] >= -bonus;
-	}
-}
-
-static bool test_ability(int value, int bonus) {
-	if(bonus < 0)
-		return allow_reduce_ability(value, bonus);
-	return true;
-}
-
 template<> void fnscript<abilityi>(int value, int bonus) {
-	last_ability = (ability_s)value;
+	last_ability = (abilityn)value;
 	switch(modifier) {
-	case Permanent: player->basic.abilities[value] += bonus; break;
-	default: add_ability(value, bonus); break;
-	}
-}
-template<> bool fntest<abilityi>(int value, int bonus) {
-	last_ability = (ability_s)value;
-	switch(modifier) {
-	case Permanent: return allow_reduce_ability(value, bonus);
-	default: return allow_reduce_ability(value, bonus);
+	case Permanent: addvalue(player->basic.abilities[value], bonus); break;
+	default: addvalue(player->abilities[value], bonus); break;
 	}
 }
 
@@ -236,11 +192,6 @@ static void use_action(char& value, int& bonus) {
 	}
 }
 
-static void check_bonus(int& bonus, int minimum = 1) {
-	if(bonus < minimum)
-		bonus = minimum;
-}
-
 static bool if_use_standart(int bonus) {
 	check_bonus(bonus);
 	return player->abilities[StandartAction] >= bonus;
@@ -341,13 +292,13 @@ static void make_attack(int bonus) {
 	bonus += player->getbonus(Strenght);
 	player->setenemy(opponent);
 	if(roll20(bonus, opponent->get(Reflex))) {
-		player->actid(last_action->id);
+		player->actid(last_id);
 		fix_action(false);
 		script_stop();
 		return;
 	} else {
-		if(!player->actid(last_action->id, "Miss"))
-			player->actid(last_action->id);
+		if(!player->actid(last_id, "Miss"))
+			player->actid(last_id);
 	}
 	fix_action(true);
 }
@@ -358,19 +309,6 @@ static bool answers_have(const void* p) {
 			return true;
 	}
 	return false;
-}
-
-void test_action(const char* id) {
-	auto pi = bsdata<actioni>::find(id);
-	if(!pi)
-		return;
-	for(auto v : pi->effect) {
-		if(v.counter)
-			an.console->addn("%1%+2i", v.getid(), v.counter);
-		else
-			an.console->addn(v.getid(), v.counter);
-		an.console->add(script_allow(v) ? " pass" : " miss");
-	}
 }
 
 static void add_actions() {
@@ -396,11 +334,9 @@ static void ask_answer() {
 }
 
 static void apply_answers() {
-	pushvalue push_id(last_id);
 	if(bsdata<actioni>::have(last_answer)) {
 		last_action = (actioni*)last_answer;
-		last_id = last_action->id;
-		script_run(last_action->effect);
+		script_run(last_action->id, last_action->effect);
 	}
 }
 
@@ -451,11 +387,29 @@ static bool if_state() {
 	return player->states.is(last_state);
 }
 
+static bool if_wounded() {
+	return false;
+}
+
+static void print_hands(stringbuilder& sb) {
+	if(!player)
+		return;
+	if(!player->wears[Hands])
+		sb.add(getnm("Hands"));
+	else
+		sb.add(player->wears[Hands].getname());
+}
+
+BSDATA(stringvari) = {
+	{"Hands", print_hands}
+};
+BSDATAF(stringvari)
 BSDATA(conditioni) = {
 	{"IfMeleeFight", if_melee_fight},
 	{"IfItemRange", if_item_range},
 	{"IfState", if_state},
 	{"IfTrained", if_train},
+	{"IfWounded", if_wounded},
 };
 BSDATAF(conditioni)
 BSDATA(script) = {

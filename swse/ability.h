@@ -2,7 +2,7 @@
 
 #include "nameable.h"
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
 	Fortitude, Reflex, Will, Armor,
 	MaxDexterityBonus, DodgeBonus, EquipmentBonus, SneakAttackBonus, DemolitionistBonus, IndomitableBonus,
@@ -19,7 +19,7 @@ struct abilityi : nameable {
 struct abilityable {
 	char		abilities[LastAbility + 1];
 	void		clear();
-	bool		isallow(ability_s v, int count = 1) const;
-	void		setability(ability_s v, int i) { abilities[v] = i; }
+	bool		isallow(abilityn v, int count = 1) const;
+	void		setability(abilityn v, int i) { abilities[v] = i; }
 };
-extern ability_s last_ability;
+extern abilityn last_ability;

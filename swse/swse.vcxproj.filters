@@ -75,7 +75,7 @@
     <ClCompile Include="placeable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="printer.cpp">
+    <ClCompile Include="class.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,7 +133,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="classi.h">
+    <ClInclude Include="class.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="skill.h">

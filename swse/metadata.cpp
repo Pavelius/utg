@@ -3,7 +3,7 @@
 #include "advance.h"
 #include "area.h"
 #include "bsreq.h"
-#include "classi.h"
+#include "class.h"
 #include "condition.h"
 #include "creature.h"
 #include "dice.h"
@@ -37,7 +37,6 @@ BSMETA(actioni) = {
 	BSREQ(upgrade),
 	{}};
 BSMETA(advancei) = {
-	BSREQ(level),
 	BSREQ(object),
 	BSREQ(id),
 	BSREQ(elements),
@@ -108,12 +107,12 @@ BSMETA(weari) = {
 	{}};
 BSDATA(varianti) = {
 	{"NoVariant"},
-	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>, fntest<abilityi>},
+	{"Ability", VAR(abilityi, 1), 0, 0, fnscript<abilityi>},
 	{"Action", VAR(actioni, 1)},
-	{"Advance", VAR(advancei, 3)},
+	{"Advance", VAR(advancei, 2)},
 	{"Area", VAR(areai, 1)},
 	{"AreaObject", VAR(area, 0)},
-	{"Class", VAR(classi, 1)},
+	{"Class", VAR(classi, 1), 0, 0, fnscript<classi>},
 	{"Condition", VAR(conditioni, 1), 0, 0, fnscript<conditioni>, fntest<conditioni>},
 	{"Creature", VAR(creature, 0)},
 	{"Feat", VAR(feati, 1)},

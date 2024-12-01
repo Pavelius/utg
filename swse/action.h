@@ -3,7 +3,7 @@
 #include "nameable.h"
 #include "variant.h"
 
-enum ability_s : unsigned char;
+enum abilityn : unsigned char;
 
 struct actioni : nameable {
 	variant		type;

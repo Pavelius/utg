@@ -3,11 +3,11 @@
 
 #pragma once
 
-enum state_s : unsigned char {
+enum staten : unsigned char {
 	Concealment, Flatfooted, Immobilized, Prone, PermanentConditions, Helpless,
 	MeleeEngaged,
 };
 typedef flagable<4> statef;
 struct statei : nameable {
 };
-extern state_s last_state;
+extern staten last_state;

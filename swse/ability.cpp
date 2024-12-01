@@ -34,13 +34,13 @@ BSDATA(abilityi) = {
 };
 assert_enum(abilityi, LastAbility)
 
-ability_s last_ability;
+abilityn last_ability;
 
 void abilityable::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-bool abilityable::isallow(ability_s v, int count) const {
+bool abilityable::isallow(abilityn v, int count) const {
 	switch(v) {
 	case SwiftAction:
 		return (abilities[SwiftAction] + abilities[MoveAction] + abilities[StandartAction]) >= count;

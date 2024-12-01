@@ -1,8 +1,8 @@
 #Advance
 
-1 Jedi DefenseBonuses
+Jedi+1 DefenseBonuses
  elements Permanent Fortitude+1 Reflex+1 Will+1
-1 Jedi StartingFeats
+Jedi+1 StartingFeats
  elements WeaponProficiencySimpleWeapons WeaponProficiencyLightsabers ForceSensitivity
-1 Jedi Lightsaber
+Jedi+1 Lightsaber
  elements Lightsaber

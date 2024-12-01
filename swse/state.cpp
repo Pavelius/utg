@@ -1,7 +1,7 @@
 #include "bsdata.h"
 #include "state.h"
 
-state_s last_state;
+staten last_state;
 
 BSDATA(statei) = {
 	{"Concealment"},

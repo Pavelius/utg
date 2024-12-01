@@ -10,7 +10,7 @@
 #include "wear.h"
 #include "variant.h"
 
-enum ability_s : unsigned char;
+enum abilityn : unsigned char;
 
 struct itemi : nameable {
 	damage_s		hit;

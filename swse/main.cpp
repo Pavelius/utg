@@ -5,9 +5,21 @@
 #include "draw_utg.h"
 #include "timer.h"
 #include "rand.h"
+#include "stringvar.h"
 
 void one_combat_round();
-void initialize_printer();
+
+void act_custom(stringbuilder& sb, const char* identifier);
+
+static void main_custom(stringbuilder& sb, const char* identifier) {
+	if(stringvar_identifier(sb, identifier))
+		return;
+	act_custom(sb, identifier);
+}
+
+static void initialize_printer() {
+	stringbuilder::custom = main_custom;
+}
 
 static void initialize_answers() {
 	static char console_text[2048];
@@ -19,12 +31,6 @@ static void initialize_answers() {
 static void initialize() {
 	initialize_answers();
 	initialize_printer();
-}
-
-static bool test_area() {
-	area a1 = {};
-	auto n = a1.geti().id;
-	return n != 0;
 }
 
 static void generate_character() {
@@ -41,8 +47,7 @@ static void generate_character() {
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	initialize();
-	return utg::start(generate_character);
+	return utg::start(generate_character, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

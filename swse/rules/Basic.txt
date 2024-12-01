@@ -6,3 +6,8 @@
 #include "rules/Advance.txt"
 #include "rules/SkillRoll.txt"
 #include "rules/Prototype.txt"
+
+#List
+
+StartGame
+ elements Jedi Male CreateHero
