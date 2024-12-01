@@ -9,5 +9,10 @@
 
 #List
 
-StartGame
- elements Jedi Male CreateHero
+CreateJedi
+ elements Jedi Male CreateHero AddCreature
+CreateScoundrell
+ elements Scoundrell Male CreateHero AddCreature
+
+MainScript
+ elements CreateJedi Reaction-100 CreateScoundrell

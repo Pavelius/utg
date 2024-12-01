@@ -26,3 +26,8 @@ DoubleBladedLightsaber size(Large) cost(7000) weight(200) hit(Energy) damage(2 8
 
 SecurityKit
 ToolKit
+
+#List
+
+JediStartEquipment
+ elements Lightsaber

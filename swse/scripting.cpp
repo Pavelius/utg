@@ -29,8 +29,25 @@ static void addvalue(char& value, int bonus) {
 	value = bonus;
 }
 
+static void add_item(const itemi* pi) {
+	if(!pi)
+		return;
+	last_item = 0;
+	item it; it.create(pi);
+	player->equip(it);
+}
+
+template<> void fnscript<areai>(int value, int bonus) {
+	last_area_type = (arean)value;
+}
 template<> void fnscript<classi>(int value, int bonus) {
 	last_class = (classn)value;
+}
+template<> void fnscript<feati>(int value, int bonus) {
+	player->feats.set(value);
+}
+template<> void fnscript<genderi>(int value, int bonus) {
+	last_gender = (gendern)value;
 }
 template<> void fnscript<modifieri>(int value, int bonus) {
 	modifier = (modifier_s)value;
@@ -50,6 +67,9 @@ template<> void fnscript<abilityi>(int value, int bonus) {
 	case Permanent: addvalue(player->basic.abilities[value], bonus); break;
 	default: addvalue(player->abilities[value], bonus); break;
 	}
+}
+template<> void fnscript<itemi>(int value, int bonus) {
+	add_item((itemi*)bsdata<itemi>::elements + value);
 }
 
 static int roll20() {
@@ -363,6 +383,10 @@ void one_combat_round() {
 	}
 }
 
+static void add_creature(int bonus) {
+	creatures.add(player);
+}
+
 static bool if_train() {
 	return player->istrain(last_skill);
 }
@@ -413,7 +437,10 @@ BSDATA(conditioni) = {
 };
 BSDATAF(conditioni)
 BSDATA(script) = {
+	{"AddCreature", add_creature},
 	{"ApplyState", apply_state},
+	{"CreateArea", create_area},
+	{"CreateHero", create_hero},
 	{"FilterArmed", filter_armed, allow_opponents},
 	{"FilterEnemy", filter_enemy, allow_opponents},
 	{"FilterRange", filter_range, allow_opponents},

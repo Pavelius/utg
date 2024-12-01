@@ -5,12 +5,14 @@
 #include "placeable.h"
 #include "typeable.h"
 
+enum arean : unsigned short;
 struct areai : nameable {
 };
+extern arean last_area_type;
+
 struct area : typeable<areai> {
-	void	addlink(const area* to);
+	void addlink(const area* to);
 };
-extern collection<area> areas;
 extern area* last_area;
 
-void add_area(const char* id);
+void create_area(int bonus);

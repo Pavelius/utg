@@ -4,5 +4,3 @@ Jedi+1 DefenseBonuses
  elements Permanent Fortitude+1 Reflex+1 Will+1
 Jedi+1 StartingFeats
  elements WeaponProficiencySimpleWeapons WeaponProficiencyLightsabers ForceSensitivity
-Jedi+1 Lightsaber
- elements Lightsaber

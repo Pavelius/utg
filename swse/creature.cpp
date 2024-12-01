@@ -15,8 +15,8 @@ static void advance_creature(int level, variant object) {
 	}
 }
 
-static void clear_creature(char* pd, const char* ps) {
-	memcpy(pd, ps, Armor + 1);
+static void clear_creature() {
+	memcpy(player->abilities, player->basic.abilities, Armor + 1);
 }
 
 static bool test_prerequisit(variant v) {
@@ -52,7 +52,7 @@ static void update_ability() {
 
 void creature::update() {
 	pushvalue push_player(player, this);
-	clear_creature(abilities, basic.abilities);
+	clear_creature();
 	update_ability();
 }
 
@@ -139,24 +139,21 @@ static void random_ability() {
 		player->basic.abilities[i] = roll4d6m();
 }
 
-void create_hero(classn type, gendern gender) {
-	player = bsdata<creature>::add();
-	player->clear();
-	player->setgender(gender);
-	random_ability();
-	player->add(type);
-	player->update();
-}
-
-void add_creatures() {
-	creatures.add(player);
-}
-
-void add_item(const char* id) {
-	auto pi = bsdata<itemi>::find(id);
+static void add_default_items() {
+	auto id = player->getkind().getid();
+	auto pi = bsdata<listi>::find(ids(id, "StartEquipment"));
 	if(!pi)
 		return;
-	last_item = 0;
-	item it; it.create(pi);
-	player->equip(it);
+	script_run(pi->id, pi->elements);
+}
+
+void create_hero(int bonus) {
+	player = bsdata<creature>::add();
+	player->clear();
+	player->setkind(bsdata<classi>::elements + last_class);
+	player->setgender(last_gender);
+	random_ability();
+	player->add(last_class);
+	player->update();
+	add_default_items();
 }

@@ -15,6 +15,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	featf			feats;
 	statef			states;
 	unsigned short	enemy_id;
+	int				experience, hp;
 	void			add(classn v);
 	void			clear();
 	int				get(abilityn v) const { return abilities[v]; }
@@ -36,6 +37,4 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 extern creature *player, *opponent;
 extern collection<creature> creatures, opponents;
 
-void add_creatures();
-void add_item(const char* id);
-void create_hero(classn type, gendern gender);
+void create_hero(int bonus);

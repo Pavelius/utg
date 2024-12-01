@@ -5,6 +5,7 @@
 #include "draw_utg.h"
 #include "timer.h"
 #include "rand.h"
+#include "script.h"
 #include "stringvar.h"
 
 void one_combat_round();
@@ -28,26 +29,19 @@ static void initialize_answers() {
 	answers::console = &console;
 }
 
+static void initialize_code() {
+	script_run("MainScript");
+}
+
 static void initialize() {
 	initialize_answers();
 	initialize_printer();
-}
-
-static void generate_character() {
-	add_area("Hangar");
-	create_hero(Jedi, Male);
-	add_creatures();
-	add_item("Quarterstaff");
-	player->setability(Relation, -100);
-	create_hero(Scoundrell, Female);
-	add_item("Pistol");
-	add_creatures();
-	one_combat_round();
+	initialize_code();
 }
 
 int main(int argc, char* argv[]) {
 	srand(getcputime());
-	return utg::start(generate_character, initialize);
+	return utg::start(one_combat_round, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {
