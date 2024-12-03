@@ -9,7 +9,7 @@
 #include "script.h"
 #include "timer.h"
 
-bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gendern gender);
 
 static void create_hero() {
 	player = bsdata<creature>::add();

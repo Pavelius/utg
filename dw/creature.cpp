@@ -10,7 +10,7 @@
 #include "creature.h"
 
 static char standart_ability[] = {16, 15, 13, 12, 9, 8};
-static gender_s last_gender;
+static gendern last_gender;
 
 creature* player;
 
@@ -144,7 +144,7 @@ static bool set_value(void* object, const char* result, const void* value, int c
 			p->additem(it);
 		}
 	} else if(bsdata<genderi>::have(value))
-		last_gender = (gender_s)bsdata<genderi>::source.indexof(value);
+		last_gender = (gendern)bsdata<genderi>::source.indexof(value);
 	else if(bsdata<variant>::have(value)) {
 		auto p = (variant*)value;
 		return set_value(object, result, p->getpointer(), p->counter);

@@ -15,9 +15,9 @@ struct racei {
 struct raceable {
 	const char*		id;
 	race_s			race;
-	gender_s		gender;
+	gendern			gender;
 public:
-	gender_s		getgender() const { return gender; }
+	gendern			getgender() const { return gender; }
 	const char*		getname() const { return getnm(id); }
 	race_s			getrace() const { return race; }
 };
