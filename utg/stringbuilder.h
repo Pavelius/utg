@@ -2,8 +2,6 @@
 
 #ifdef _MSC_VER
 #define xva_start(v) (((const char*)&v) + sizeof(v))
-#else
-#define xva_start(v) (((const char*)&v) + sizeof(v)*4)
 #endif
 
 class stringbuilder {

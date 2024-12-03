@@ -96,15 +96,9 @@ bool roll20(int bonus, int dc) {
 
 static void print_message(int bonus) {
 	switch(bonus) {
-	case -1:
-		player->actid(last_id, "Fail");
-		break;
-	case 1:
-		player->actid(last_id, "Success");
-		break;
-	default:
-		player->actid(last_id, "Act");
-		break;
+	case -1: player->actid(' ', last_id, "Fail"); break;
+	case 1: player->actid(' ', last_id, "Success"); break;
+	default: player->actid(' ', last_id, "Act"); break;
 	}
 }
 
@@ -329,19 +323,23 @@ static bool prepare_opponent() {
 	return opponent != 0;
 }
 
+static void damage(int bonus) {
+	opponent->damage(bonus);
+}
+
 static void make_attack(int bonus) {
 	if(!prepare_opponent())
 		return;
-	bonus += player->getbonus(Strenght);
+	if(!player->wears[Hands].geti().ranged)
+		bonus += player->getbonus(Strenght);
 	player->setenemy(opponent);
 	if(roll20(bonus, opponent->get(Reflex))) {
-		player->actid(last_id);
+		player->actid(' ', last_id, "Act");
 		print_message(1);
-		script_stop();
-		return;
-	} else {
+		auto damage = player->wears[Hands].geti().damage.roll();
+		opponent->damage(damage);
+	} else
 		print_message(-1);
-	}
 }
 
 static bool answers_have(const void* p) {
@@ -450,6 +448,14 @@ static bool if_item_range() {
 	return last_item->geti().ranged != 0;
 }
 
+static bool if_item_reload() {
+	return false;
+}
+
+static bool if_item_multi_mode() {
+	return false;
+}
+
 static bool if_move_action() {
 	return (player->abilities[MoveAction] + player->abilities[StandartAction]) > 0;
 }
@@ -481,6 +487,8 @@ BSDATA(stringvari) = {
 BSDATAF(stringvari)
 BSDATA(conditioni) = {
 	{"IfItemRange", if_item_range},
+	{"IfItemReload", if_item_reload},
+	{"IfItemMultimode", if_item_multi_mode},
 	{"IfMeleeFight", if_melee_fight},
 	{"IfState", if_state},
 	{"IfTrained", if_train},

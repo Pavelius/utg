@@ -19,6 +19,7 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	short			position;
 	void			add(classn v);
 	void			clear();
+	void			damage(int value);
 	int				get(abilityn v) const { return abilities[v]; }
 	int				get(classn v) const { return classes[v]; }
 	int				getbonus(abilityn v) const { return abilities[v] / 2 - 5; }

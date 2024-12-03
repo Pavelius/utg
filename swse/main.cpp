@@ -8,17 +8,7 @@
 #include "script.h"
 #include "stringvar.h"
 
-void act_custom(stringbuilder& sb, const char* identifier);
-
-static void main_custom(stringbuilder& sb, const char* identifier) {
-	if(stringvar_identifier(sb, identifier))
-		return;
-	act_custom(sb, identifier);
-}
-
-static void initialize_printer() {
-	stringbuilder::custom = main_custom;
-}
+void initialize_printer();
 
 static void initialize_answers() {
 	static char console_text[2048];

@@ -6,6 +6,7 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "script.h"
+#include "stringvar.h"
 
 creature *player, *opponent;
 collection<creature> creatures, opponents;
@@ -119,6 +120,20 @@ int	creature::getrange(const creature* p) const {
 	return iabs(abilities[Position] - p->abilities[Position]);
 }
 
+void creature::damage(int value) {
+	if(value <= 0)
+		return;
+	auto push_player = player; player = this;
+	actid(' ', "Damage", "Act", value);
+	if(value > hp)
+		value = hp;
+	hp -= value;
+	if(hp <= 0)
+		actid(' ', "Die", "Act");
+	actns(".");
+	player = push_player;
+}
+
 static int compare_int(const void* v1, const void* v2) {
 	return *((int*)v2) - *((int*)v1);
 }
@@ -178,4 +193,18 @@ void create_hero(int bonus) {
 	player->update();
 	finish();
 	add_default_items();
+}
+
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gendern gender);
+
+static void main_custom(stringbuilder& sb, const char* identifier) {
+	if(stringvar_identifier(sb, identifier))
+		return;
+	if(apply_action(identifier, sb, player->getname(), player->getgender()))
+		return;
+	default_string(sb, identifier);
+}
+
+void initialize_printer() {
+	stringbuilder::custom = main_custom;
 }

@@ -2,11 +2,15 @@
 Aim: Прицелиться
 AttackObject: Атаковать объект
 AttackWithMeleeWeapon: Нанести удар %-~Hands
+AttackWithMeleeWeaponFail: %герой ударил%а %-$Hands, но промазал%а.
+AttackWithMeleeWeaponSuccess: %герой ударил%а %-$Hands.
 AttackWithRangedWeapon: Стрелять из %-$Hands
-AttackWithRangedWeaponSuccess: %герой выстрелил%а из %-$Hands.
 AttackWithRangedWeaponFail: %герой выстрелил%а из %-$Hands, но промазал%а.
+AttackWithRangedWeaponSuccess: %герой выстрелил%а из %-$Hands.
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
+ChargeFail: Издав крик %герой набросился на врага, но промазал%а.
+ChargeSuccess: Издав крик и подняв %Hands %герой набросил%ась на врага.
 ChooseEnemy: Выбрать врага
 CoupDeGrace: Прикончить врага
 Disarm: Обезаружить
@@ -29,6 +33,7 @@ StandUp: Подняться
 SwitchWeaponToAutoFire: Переключиться в автоматический режим стрельбы
 Withdraw: Отступить из ближнего боя
 
-ActionAttackWithMeleeWeapon: %герой нанес%ла удар %-~Hands.
+DamageAct: %герой получил%а [%1i] урона
+DieAct: и упал%а
 
-WhatYouDo: Что будете делать?
+WhatYouDo: Что будет делать?

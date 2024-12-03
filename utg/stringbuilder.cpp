@@ -462,7 +462,7 @@ void stringbuilder::addv(const char* src, const char* vl) {
 }
 
 void stringbuilder::addsep(char separator) {
-	if(p <= pb || p >= pe)
+	if(p <= pb || p >= pe || !separator)
 		return;
 	if(p[-1] == separator)
 		return;

@@ -14,28 +14,26 @@ AttackWithMeleeWeapon
 AidAnotherAlly
  effect UseStandart SelectEnemies-1 FilterYou-1
 Charge
- effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1 MakeAttack
+ effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange MakeAttack
 Disarm
- effect UseStandart SelectEnemies FilterArmed
+ effect UseStandart SelectEnemies FilterArmed FilterRange-1
 FightDefencivelyAcrobatics
- effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1
+ effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1
 FightDefencivelyAcrobaticsNoAttack
- effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1
+ effect UseStandart Acrobatics IfTrained ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1
 FightDefencively upgrade(FightDefencivelyAcrobatics)
- effect UseStandart ReadyWeapon IfItemRange-1
+ effect UseStandart ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1
 Grab
- effect UseStandart ReadyItem-1 SelectEnemies FilterRange
+ effect UseStandart ReadyItem-1 SelectEnemies FilterRange-1
 Grapple
- effect UseStandart ReadyItem-1 SelectEnemies FilterRange
+ effect UseStandart ReadyItem-1 SelectEnemies FilterRange-1
 
-Move
- effect UseMove
 DrawWeaponQuick
  effect UseSwift SelectItems FilterWeapon
 DrawWeapon upgrade(DrawWeaponQuick)
  effect UseMove SelectItems FilterWeapon
 ReloadWeapon
- effect UseMove ReadyWeapon
+ effect UseMove ReadyWeapon IfItemReload
 DrawBackpackItem
  effect UseMove SelectItems FilterWeapon-1
 StandUpActrobatics
@@ -56,7 +54,7 @@ FallProne
 Recover
  effect UseSwift+3 ConditionTrack-1
 SwitchWeaponToAutoFire
- effect UseSwift ReadyWeapon
+ effect UseSwift ReadyWeapon IfItemMultimode
 
 CoupDeGrace
  effect UseFullRound SelectEnemies Helpless FilterState
