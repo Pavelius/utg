@@ -1,5 +1,5 @@
 #include "combat.h"
-#include "crt.h"
+#include "bsdata.h"
 
 BSDATA(combati) = {
 	{"LongRange"},

@@ -1,8 +1,8 @@
+#include "bsdata.h"
 #include "answers.h"
 #include "move.h"
 #include "result.h"
-#include "crt.h"
-#include "logparse.h"
+#include "log.h"
 #include "script.h"
 #include "vagabond.h"
 
@@ -86,7 +86,7 @@ static const char* read_options(const char* p, stringbuilder& sb) {
 		p = readval(p, sb, bsdata<resulti>::source, ps->index);
 	} else if(isnum(*p)) {
 		int result = 0;
-		p = sb.read(p, result);
+		p = psnum(p, result);
 		ps->index = result;
 	} else
 		ps->index = 0xFFFF;
@@ -154,7 +154,7 @@ static adat<void*, 32> choosed_answers;
 const moveoptioni* movei::choose(const moveoptioni* p) const {
 	answers an; auto pe = options.end();
 	for(auto pa = getanswer(p); pa->isanswer() && pa < pe; pa++) {
-		if(choosed_answers.is((void*)pa))
+		if(choosed_answers.have((void*)pa))
 			continue;
 		an.add(pa, pa->text);
 	}

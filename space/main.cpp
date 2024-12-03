@@ -7,8 +7,10 @@
 #include "planet.h"
 #include "quest.h"
 #include "questlist.h"
+#include "rand.h"
 #include "script.h"
 #include "ship.h"
+#include "timer.h"
 
 static char console[512];
 static stringbuilder sb_console(console);
@@ -58,7 +60,7 @@ static void test_game() {
 }
 
 static void game_initializa() {
-	log::readlocfolder(questlist_read, "actions", "*.txt");
+	//log::readlocfolder(questlist_read, "actions", "*.txt");
 }
 
 int main(int argc, char* argv[]) {

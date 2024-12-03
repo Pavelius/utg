@@ -1,8 +1,8 @@
 #include "bsreq.h"
-#include "crt.h"
 #include "draw.h"
 #include "drawable.h"
 #include "screenshoot.h"
+#include "timer.h"
 #include "variant.h"
 
 using namespace draw;

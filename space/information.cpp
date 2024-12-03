@@ -39,5 +39,5 @@ BSDATAF(stringvari)
 void stringbuilder_proc(stringbuilder& sb, const char* identifier) {
 	if(stringvar_identifier(sb, identifier))
 		return;
-	stringbuilder::defidentifier(sb, identifier);
+	default_string(sb, identifier);
 }

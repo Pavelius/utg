@@ -1,0 +1,17 @@
+﻿AppTitle: 
+April: 
+Cancel: 
+Credits: 
+Earth: 
+FlyToOrbit: 
+Jupiter: 
+LandToPlanet: 
+Mars: 
+Planet: 
+RepairShip: 
+RoutePathToPlanet: 
+Venera: 
+VisitDocks: 
+VisitGoverment: 
+VisitMarket: 
+WhatYouWantToDo: 

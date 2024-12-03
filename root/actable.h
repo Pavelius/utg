@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "harmable.h"
 #include "gender.h"
 #include "nameable.h"
@@ -11,8 +10,8 @@ extern stringbuilder console;
 
 struct actable : nameable, harmable {
 	harmable	inflict;
-	gender_s	gender;
+	gendern		gender;
 	void		actv(stringbuilder& sb, const char* format, const char* param, char add_sep = ' ') const;
 	void		act(const char* format, ...) { actv(console, format, xva_start(format)); }
-	gender_s	getgender() const { return gender; }
+	gendern		getgender() const { return gender; }
 };

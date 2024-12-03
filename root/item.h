@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "nameable.h"
 #include "tagable.h"
 

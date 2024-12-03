@@ -1,3 +1,4 @@
+#include "bsdata.h"
 #include "harmable.h"
 
 BSDATA(harmi) {
@@ -59,7 +60,7 @@ void harmable::getinfo(stringbuilder& sb, const harma& source) const {
 		if(v == 1)
 			sb.adds("%-1", getnm(pn));
 		else
-			sb.adds("[%2i] %1", sb.getbycount(pn, v), v);
+			sb.adds("[%2i] %1", str_count(pn, v), v);
 		n--;
 	}
 }

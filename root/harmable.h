@@ -1,7 +1,7 @@
-#include "crt.h"
-#include "stringbuilder.h"
-
 #pragma once
+
+#include "stringbuilder.h"
+#include "slice.h"
 
 enum harm_s : unsigned char {
 	Injury, Exhaustion, Wear, Depletion,

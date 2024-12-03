@@ -43,7 +43,7 @@ BSMETA(npc) = {
 	BSREQ(id),
 	BSENM(group, groupi),
 	BSDST(harm, harmi),
-	BSDSN(inflict, inflict.harm, harmi),
+	//BSDSN(inflict, inflict.harm, harmi),
 	{}};
 BSMETA(harmi) = {
 	BSREQ(id),

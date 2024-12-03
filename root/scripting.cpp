@@ -1,5 +1,6 @@
 #include "ability.h"
 #include "answers.h"
+#include "console.h"
 #include "harmable.h"
 #include "modifier.h"
 #include "npc.h"

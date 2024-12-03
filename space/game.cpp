@@ -1,5 +1,5 @@
-#include "crt.h"
 #include "game.h"
+#include "slice.h"
 
 gamei game;
 

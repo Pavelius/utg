@@ -1,7 +1,8 @@
 #include "answers.h"
 #include "draw_utg.h"
 #include "quest.h"
-//#include "stringact.h"
+#include "rand.h"
+#include "timer.h"
 #include "vagabond.h"
 
 void initialize_str();
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]) {
 	answers::resid = "northmen";
 	answers::console = &console;
 	answers::prompt = console.begin();
-	return draw::start(generate_character, initialize);
+	return utg::start(generate_character, initialize);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

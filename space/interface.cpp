@@ -3,6 +3,7 @@
 #include "game.h"
 #include "planet.h"
 #include "pushvalue.h"
+#include "math.h"
 #include "ship.h"
 
 #define FOSC(T, D) ((unsigned)(D*)((T*)((void*)0x0000FFFF)) - 0x0000FFFF)

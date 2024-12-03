@@ -1,5 +1,6 @@
+#include "bsdata.h"
+#include "flagable.h"
 #include "tag.h"
-#include "crt.h"
 
 BSDATA(tagi) = {
 	{"ArrowProof", FG(Positive)},

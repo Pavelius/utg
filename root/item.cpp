@@ -1,5 +1,7 @@
 #include "answers.h"
+#include "console.h"
 #include "item.h"
+#include "math.h"
 
 const char*	item::getname() const {
 	return getnm(geti().id);
