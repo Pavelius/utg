@@ -1,3 +1,4 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `DisappointmentCleaver`
- Define translation for `Tengpoche`
+ Define translation for `MowichFace`
+ Define translation for `Regep`
+ Define translation for `Skardu`

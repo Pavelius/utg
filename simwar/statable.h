@@ -5,13 +5,14 @@
 enum costn : unsigned char {
 	Resources, Influence, Gold, Happiness, Fame, Lore, Warfire,
 	Strenght, Sword, Shield, Death,
-	Movement, Sail, Explore,
+	Movement, Sail,
 	Recruit, Size,
+	War, Trade, Culture, Noble,
 	Limit,
 };
 struct costi : nameable {
-	int			frame = -1;
-	int			frame_negative = -1;
+	int	frame = -1;
+	int	frame_negative = -1;
 };
 typedef short costa[Limit + 1];
 

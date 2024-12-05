@@ -10,11 +10,11 @@ PlayCombat
 AttackWithRangedWeapon
  effect UseStandart ReadyWeapon IfItemRange SelectEnemies FilterRange MakeAttack
 AttackWithMeleeWeapon
- effect UseStandart ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1 MakeAttack
+ effect UseStandart ReadyWeapon IfItemRange-1 SelectEnemies FilterRange-1 MakeMeleeAttack
 AidAnotherAlly
  effect UseStandart SelectEnemies-1 FilterYou-1
 Charge
- effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange MakeAttack+2
+ effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange MakeMeleeAttack+2
 Disarm
  effect UseStandart SelectEnemies FilterArmed FilterRange-1
 FightDefencivelyAcrobatics

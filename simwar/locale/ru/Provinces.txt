@@ -8,13 +8,16 @@ DisappointmentCleaver: Разочарованный потрошитель
 GelidSea: Ледяное море
 HiemalStrait: Химальский пролив
 FieldsOfRefuge: Поля утешения
+MowichFace: Лицо Мовича
 NandaDevi: Леса Нанды
 NangaParbat: Долина Нанды
 Opole: Ополье
 PlainsOfPolabia: Полабийские поля
 PtarmiganRidge: Хребет куропаток
+Regep: Регеп
 RupalValley: Долина деревьев
 SeaOfLostWinds: Море потерянных ветров
+Skardu: Скарду
 SteelCliffs: Стальные утесы
 Tengpoche: Тенгпош
 WesternExpanse: Западное море

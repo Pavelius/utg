@@ -422,7 +422,7 @@ static void choose_buildings() {
 		if(!choose_answer())
 			break;
 		if(bsdata<site>::have(answer_result))
-			remove_building((site*)choose_answer);
+			remove_building((site*)answer_result);
 		else
 			standart_result();
 	}

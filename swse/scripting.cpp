@@ -360,6 +360,11 @@ static void make_attack(int bonus) {
 		print_message(-1);
 }
 
+static void make_melee_attack(int bonus) {
+	player->abilities[Position] = opponent->abilities[Position];
+	make_attack(bonus);
+}
+
 static bool answers_have(const void* p) {
 	for(auto& e : an) {
 		if(e.value == p)
@@ -527,6 +532,7 @@ BSDATA(script) = {
 	{"ForEachPlayer", for_each_player},
 	{"ForEachOpponent", for_each_opponent},
 	{"MakeAttack", make_attack},
+	{"MakeMeleeAttack", make_melee_attack},
 	{"PushModifier", push_modifier},
 	{"PlayCombatRounds", play_combat_rounds},
 	{"Print", print_message},

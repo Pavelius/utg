@@ -15,9 +15,12 @@ BSDATA(costi) = {
 	{"Death", 17},
 	{"Movement"},
 	{"Sail"},
-	{"Explore"},
 	{"Recruit"},
 	{"Size", 5},
+	{"War"},
+	{"Trade"},
+	{"Culture"},
+	{"Noble"},
 	{"Limit"},
 };
 assert_enum(costi, Limit)
