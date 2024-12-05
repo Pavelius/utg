@@ -62,22 +62,3 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 		return true;
 	return false;
 }
-
-//const char* act_name;
-//gendern act_gender;
-//
-//void act_custom(stringbuilder& sb, const char* identifier) {
-//	apply_action(identifier, sb, act_name, act_gender);
-//}
-//
-//void stract(stringbuilder& sb, gendern gender, const char* name, const char* format, const char* format_param) {
-//	auto push_name = act_name;
-//	auto push_gender = act_gender;
-//	auto push_proc = stringbuilder::custom;
-//	act_name = name;
-//	act_gender = gender;
-//	stringbuilder::custom = act_custom;
-//	sb.addv(format, format_param);
-//	act_name = push_name;
-//	act_gender = push_gender;
-//}

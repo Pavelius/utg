@@ -96,15 +96,21 @@ bool roll20(int bonus, int dc) {
 
 static void print_message(int bonus) {
 	switch(bonus) {
-	case -1: player->actid(' ', last_id, "Fail"); break;
-	case 1: player->actid(' ', last_id, "Success"); break;
-	default: player->actid(' ', last_id, "Act"); break;
+	case -1: player->act(last_id, "Fail"); break;
+	case 1: player->act(last_id, "Success"); break;
+	default: player->act(last_id, "Act"); break;
 	}
 }
 
 static bool allow_combat() {
+	int side = 0;
 	for(auto p : creatures) {
-		if(p->is(Hostile))
+		if(!p->isready())
+			continue;
+		auto n = p->is(Hostile) ? -1 : 1;
+		if(!side)
+			side = n;
+		else if(side != n)
 			return true;
 	}
 	return false;
@@ -155,7 +161,17 @@ static void roll_skill_value(int bonus) {
 	last_number = d20() + bonus;
 }
 
-static void for_each_creature(int bonus) {
+static void for_each_opponent(int bonus) {
+	pushvalue push_player(opponent);
+	auto elements = script_body();
+	for(auto p : creatures) {
+		opponent = p;
+		script_run(elements);
+	}
+	script_stop();
+}
+
+static void for_each_player(int bonus) {
 	pushvalue push_player(player);
 	auto elements = script_body();
 	for(auto p : creatures) {
@@ -333,10 +349,12 @@ static void make_attack(int bonus) {
 	if(!player->wears[Hands].geti().ranged)
 		bonus += player->getbonus(Strenght);
 	player->setenemy(opponent);
+	player->act(last_id, "Act");
 	if(roll20(bonus, opponent->get(Reflex))) {
-		player->actid(' ', last_id, "Act");
 		print_message(1);
 		auto damage = player->wears[Hands].geti().damage.roll();
+		if(critical_roll > 0)
+			damage *= 2;
 		opponent->damage(damage);
 	} else
 		print_message(-1);
@@ -506,7 +524,8 @@ BSDATA(script) = {
 	{"FilterState", filter_state, allow_opponents},
 	{"FilterYou", filter_you, allow_opponents},
 	{"FilterWeapon", filter_weapon, allow_opponents},
-	{"ForEachCreature", for_each_creature},
+	{"ForEachPlayer", for_each_player},
+	{"ForEachOpponent", for_each_opponent},
 	{"MakeAttack", make_attack},
 	{"PushModifier", push_modifier},
 	{"PlayCombatRounds", play_combat_rounds},

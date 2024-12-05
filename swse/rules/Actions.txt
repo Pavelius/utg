@@ -1,7 +1,7 @@
 #List
 
 RollInitiative
- elements ForEachCreature Initiative RollSkillValue InitiativeResult SetAbility+101
+ elements ForEachPlayer Initiative RollSkillValue InitiativeResult SetAbility+101
 PlayCombat
  elements RollInitiative PlayCombatRounds
 
@@ -14,7 +14,7 @@ AttackWithMeleeWeapon
 AidAnotherAlly
  effect UseStandart SelectEnemies-1 FilterYou-1
 Charge
- effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange MakeAttack
+ effect UseStandart IfMeleeFight-1 ReadyWeapon IfItemRange-1 SelectEnemies FilterRange MakeAttack+2
 Disarm
  effect UseStandart SelectEnemies FilterArmed FilterRange-1
 FightDefencivelyAcrobatics

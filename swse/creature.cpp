@@ -1,4 +1,5 @@
 #include "advance.h"
+#include "answers.h"
 #include "creature.h"
 #include "feat.h"
 #include "math.h"
@@ -6,6 +7,7 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "script.h"
+#include "speech.h"
 #include "stringvar.h"
 
 creature *player, *opponent;
@@ -56,6 +58,32 @@ static void update_ability() {
 	player->hpm = player->basic.hpm + imax(m, player->getbonus(Constitution) * m);
 }
 
+const char* creature::getname() const {
+	if(name_id != 0xFFFF)
+		return speech_name(name_id);
+	return kind.getname();
+}
+
+void creature::actv(char separator, const char* format, const char* format_param) const {
+	if(!answers::console)
+		return;
+	auto push_player = player; player = const_cast<creature*>(this);
+	answers::console->addsep(separator);
+	answers::console->addv(format, format_param);
+	player = push_player;
+}
+
+bool creature::act(const char* id, const char* id_suffix, ...) const {
+	char temp[64]; stringbuilder sx(temp);
+	sx.addv(id, 0);
+	sx.addv(id_suffix, 0);
+	auto pn = getnme(temp);
+	if(!pn)
+		return false;
+	actv(' ', pn, xva_start(id_suffix));
+	return true;
+}
+
 void creature::update() {
 	pushvalue push_player(player, this);
 	clear_creature();
@@ -65,7 +93,7 @@ void creature::update() {
 void creature::clear() {
 	memset(this, 0, sizeof(*this));
 	enemy_id = 0xFFFF;
-	setnoname();
+	name_id = 0xFFFF;
 }
 
 void creature::add(classn v) {
@@ -123,15 +151,13 @@ int	creature::getrange(const creature* p) const {
 void creature::damage(int value) {
 	if(value <= 0)
 		return;
-	auto push_player = player; player = this;
-	actid(' ', "Damage", "Act", value);
+	act("Damage", "Act", value);
 	if(value > hp)
 		value = hp;
 	hp -= value;
 	if(hp <= 0)
-		actid(' ', "Die", "Act");
-	actns(".");
-	player = push_player;
+		act("Die", "Act");
+	actv(0, ".", 0);
 }
 
 static int compare_int(const void* v1, const void* v2) {
@@ -164,7 +190,7 @@ static void random_ability() {
 }
 
 static void add_default_items() {
-	auto id = player->getkind().getid();
+	auto id = player->kind.getid();
 	auto pi = bsdata<listi>::find(ids(id, "StartEquipment"));
 	if(!pi)
 		return;
@@ -172,7 +198,7 @@ static void add_default_items() {
 }
 
 static void add_class_hit_points() {
-	classi* pi = player->getkind();
+	classi* pi = player->kind;
 	if(!pi)
 		return;
 	player->basic.hpm += pi->hd * 3;
@@ -185,8 +211,8 @@ static void finish() {
 void create_hero(int bonus) {
 	player = bsdata<creature>::add();
 	player->clear();
-	player->setkind(bsdata<classi>::elements + last_class);
-	player->setgender(last_gender);
+	player->kind = bsdata<classi>::elements + last_class;
+	player->gender = last_gender;
 	random_ability();
 	player->add(last_class);
 	add_class_hit_points();
@@ -200,7 +226,7 @@ bool apply_action(const char* identifier, stringbuilder& sb, const char* name, g
 static void main_custom(stringbuilder& sb, const char* identifier) {
 	if(stringvar_identifier(sb, identifier))
 		return;
-	if(apply_action(identifier, sb, player->getname(), player->getgender()))
+	if(apply_action(identifier, sb, player->getname(), player->gender))
 		return;
 	default_string(sb, identifier);
 }

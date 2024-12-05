@@ -1,9 +1,8 @@
-#include "actable.h"
 #include "item.h"
 
 #pragma once
 
-struct wearable : actable {
+struct wearable {
 	item			wears[Hands + 1];
 	int				money;
 	void			addcoins(unsigned v);

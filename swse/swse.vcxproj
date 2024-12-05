@@ -148,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ability.cpp" />
-    <ClCompile Include="actable.cpp" />
     <ClCompile Include="action.cpp" />
     <ClCompile Include="area.cpp" />
     <ClCompile Include="class.cpp" />
@@ -191,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ability.h" />
-    <ClInclude Include="actable.h" />
     <ClInclude Include="action.h" />
     <ClInclude Include="advance.h" />
     <ClInclude Include="class.h" />

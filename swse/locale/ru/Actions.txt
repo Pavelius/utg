@@ -10,7 +10,7 @@ AttackWithRangedWeaponSuccess: %герой выстрелил%а из %-$Hands.
 CatchSecondWind: Открыть второе дыхание
 Charge: Набросится на врага
 ChargeFail: Издав крик %герой набросился на врага, но промазал%а.
-ChargeSuccess: Издав крик и подняв %Hands %герой набросил%ась на врага.
+ChargeSuccess: Издав крик и подняв %-Hands %герой набросил%ась на врага.
 ChooseEnemy: Выбрать врага
 CoupDeGrace: Прикончить врага
 Disarm: Обезаружить

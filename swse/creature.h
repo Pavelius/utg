@@ -11,12 +11,15 @@
 #pragma once
 
 struct creature : wearable, abilityable, classable, skillable, forceable {
+	variant			kind;
+	gendern			gender;
 	abilityable		basic;
 	featf			feats;
 	statef			states;
-	unsigned short	enemy_id;
 	int				experience, hp;
-	short			position;
+	unsigned short	enemy_id, name_id;
+	bool			act(const char* id, const char* id_action, ...) const;
+	void			actv(char separator, const char* format, const char* format_param) const;
 	void			add(classn v);
 	void			clear();
 	void			damage(int value);
@@ -24,6 +27,8 @@ struct creature : wearable, abilityable, classable, skillable, forceable {
 	int				get(classn v) const { return classes[v]; }
 	int				getbonus(abilityn v) const { return abilities[v] / 2 - 5; }
 	creature*		getenemy() const;
+	const char*		getname() const;
+	static const char* getname(const void* object) { return ((creature*)object)->getname(); }
 	int				getrange(const creature* p) const;
 	relation_s		getrelation() const;
 	bool			is(staten v) const { return states.is(v); }
