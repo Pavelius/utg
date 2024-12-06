@@ -1,4 +1,7 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `MowichFace`
- Define translation for `Regep`
- Define translation for `Skardu`
+ Define translation for `Death`
+ Define translation for `Limit`
+ Define translation for `Movement`
+ Define translation for `Sail`
+ Define translation for `Shield`
+ Define translation for `Sword`

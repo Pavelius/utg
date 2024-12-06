@@ -7,6 +7,7 @@ SouthernKindom: Южное королевство
 SouthernKindomOf: Южного королевства
 
 AddBuilding: Построить здание (осталось %1i)
+AddDistrict: Построить район
 And: И
 AppTitle: Стратегия
 Army: Армия
@@ -60,3 +61,8 @@ WhoWillBeMarching: Кто еще участвует в походе?
 YourArmyIs: В походе участвуют
 YourArmyIsEmpthy: Войска не участвуют в походе.
 YouForceMeetNoResistance: Армия не встретила никакого сопротивления.
+
+Culture: Культурный
+Noble: Благородный
+Trade: Торговый
+War: Военный

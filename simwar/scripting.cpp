@@ -35,6 +35,7 @@ static stringbuilder sb(sb_buffer);
 static int modal_result;
 static costa rewards;
 static void* answer_result;
+static costi* last_cost;
 
 int script_count(int counter) {
 	if(counter > 0)
@@ -362,10 +363,29 @@ static void build(int bonus) {
 	update_player(0);
 }
 
+static void build_district(int bonus) {
+	province->income[getbsi(last_cost)]++;
+	update_player(0);
+}
+
 template<> void fnscript<sitei>(int value, int bonus) {
 	last_site = bsdata<sitei>::elements + value;
 	if(bonus > 0)
 		build(bonus);
+}
+
+static void choose_build_district(int bonus) {
+	static costn districts[] = {War, Trade, Culture, Noble};
+	costa price = {};
+	price[Resources] = 10;
+	an.clear();
+	for(auto a : districts) {
+		if(!pay(player->resources, price, false))
+			continue;
+		auto p = bsdata<costi>::elements + a;
+		an.add(p, p->getname());
+	}
+	last_cost = (costi*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
 }
 
 static void choose_build(int bonus) {
@@ -383,6 +403,12 @@ static void choose_build(int bonus) {
 	last_site = (sitei*)an.choose(getnm("WhatDoYouWantToBuild"), getnm("Cancel"));
 }
 
+static void pay_resources(int bonus) {
+	costa price = {};
+	price[Resources] = bonus * 5;
+	pay(player->resources, price, true);
+}
+
 static void paycost(int bonus) {
 	pay(player->resources, last_site->cost, true);
 }
@@ -396,6 +422,17 @@ static void add_building() {
 		province->builded++;
 	}
 	last_site = push_building;
+}
+
+static void add_district() {
+	auto push_building = last_cost;
+	choose_build_district(0);
+	if(last_cost) {
+		pay_resources(2);
+		build_district(0);
+		province->builded++;
+	}
+	last_cost = push_building;
 }
 
 static void remove_building(site* pb) {
@@ -419,6 +456,7 @@ static void choose_buildings() {
 			an.add(p, p->type->getname());
 		if(province->buildings < province->income[Size])
 			an.add(add_building, getnm("AddBuilding"), province->income[Size] - province->buildings);
+		an.add(add_district, getnm("AddDistrict"), province->income[Size] - province->buildings);
 		if(!choose_answer())
 			break;
 		if(bsdata<site>::have(answer_result))
@@ -853,18 +891,6 @@ static void action_conquest() {
 
 static void action_explore() {
 	province->explore(30);
-}
-
-static void acth(stringbuilder& sb, const char* id, ...) {
-	auto pn = getnme(id);
-	if(!pn)
-		return;
-	sb.addsep(' ');
-}
-
-static void quest_result(stringbuilder& sb, const char* prefix, const variants& reward) {
-	acth(sb, str("Investigate%1%2", prefix, location->type->id), getnm(location->type->id));
-	script_run(reward);
 }
 
 static void action_heal() {
