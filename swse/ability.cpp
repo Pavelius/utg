@@ -12,6 +12,7 @@ BSDATA(abilityi) = {
 	{"Reflex"},
 	{"Will"},
 	{"Armor"},
+	{"Movement"},
 	{"MaxDexterityBonus"},
 	{"DodgeBonus"},
 	{"EquipmentBonus"},
@@ -43,11 +44,8 @@ void abilityable::clear() {
 
 bool abilityable::isallow(abilityn v, int count) const {
 	switch(v) {
-	case SwiftAction:
-		return (abilities[SwiftAction] + abilities[MoveAction] + abilities[StandartAction]) >= count;
-	case MoveAction:
-		return (abilities[MoveAction] + abilities[StandartAction]) >= count;
-	default:
-		return abilities[v] >= count;
+	case SwiftAction: return (abilities[SwiftAction] + abilities[MoveAction] + abilities[StandartAction]) >= count;
+	case MoveAction: return (abilities[MoveAction] + abilities[StandartAction]) >= count;
+	default: return abilities[v] >= count;
 	}
 }

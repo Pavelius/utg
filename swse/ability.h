@@ -5,7 +5,7 @@
 
 enum abilityn : unsigned char {
 	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
-	Fortitude, Reflex, Will, Armor,
+	Fortitude, Reflex, Will, Armor, Movement,
 	MaxDexterityBonus, DodgeBonus, EquipmentBonus, SneakAttackBonus, DemolitionistBonus, IndomitableBonus,
 	ConditionTrack,
 	GamblingCheck,
@@ -18,10 +18,10 @@ enum abilityn : unsigned char {
 struct abilityi : nameable {
 };
 struct abilityable {
-	char		abilities[LastAbility + 1];
-	short		hpm; // Maximum hit points
-	void		clear();
-	bool		isallow(abilityn v, int count = 1) const;
-	void		setability(abilityn v, int i) { abilities[v] = i; }
+	char abilities[LastAbility + 1];
+	short hpm; // Maximum hit points
+	void clear();
+	bool isallow(abilityn v, int count = 1) const;
+	void setability(abilityn v, int i) { abilities[v] = i; }
 };
 extern abilityn last_ability;

@@ -1,5 +1,8 @@
 #Class
 
+Nonheroic
+Beast
+
 Jedi hd(10) force(5)
  skills Acrobatics Endurance Initiative Jump\
   Bureaucracy GalacticLore LifeSciences PhysicalSciences SocialSciences Tactics\

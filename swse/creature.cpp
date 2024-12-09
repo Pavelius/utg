@@ -45,13 +45,14 @@ static bool test_prerequisit(const variants& source) {
 
 static void update_ability() {
 	auto level = player->gethlevel();
-	auto armor_dexterity_bonus = player->getbonus(Dexterity);
-	if(armor_dexterity_bonus > player->get(MaxDexterityBonus))
-		armor_dexterity_bonus = player->get(MaxDexterityBonus);
+	auto dodge_bonus = player->getbonus(Dexterity);
+	if(dodge_bonus > player->get(MaxDexterityBonus))
+		dodge_bonus = player->get(MaxDexterityBonus);
+	dodge_bonus += player->get(DodgeBonus);
 	auto armor = player->isweararmor() ? player->get(Armor) : level;
-	player->abilities[Reflex] += 10 + player->get(Armor);
+	player->abilities[Reflex] += 10 + armor;
 	if(!player->is(Flatfooted))
-		player->abilities[Reflex] += armor_dexterity_bonus + player->get(DodgeBonus);
+		player->abilities[Reflex] += dodge_bonus;
 	player->abilities[Fortitude] += 10 + player->getbonus(Constitution) + level + player->get(EquipmentBonus);
 	player->abilities[Will] += 10 + player->getbonus(Wisdow) + level;
 	auto m = player->getlevel();
@@ -165,7 +166,7 @@ static int compare_int(const void* v1, const void* v2) {
 }
 
 static int roll_dices(int c, int d, int b, int k) {
-	static int result[16];
+	int result[16] = {};
 	if(c > (int)(sizeof(result) / sizeof(result[0])))
 		c = sizeof(result) / sizeof(result[0]);
 	for(auto i = 0; i < c; i++)
@@ -180,13 +181,13 @@ static int roll_dices(int c, int d, int b, int k) {
 	return b;
 }
 
-static int roll4d6m() {
+static int roll4d6k3() {
 	return roll_dices(4, 6, 0, 3);
 }
 
 static void random_ability() {
 	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
-		player->basic.abilities[i] = roll4d6m();
+		player->basic.abilities[i] = roll4d6k3();
 }
 
 static void add_default_items() {

@@ -361,6 +361,8 @@ static void make_attack(int bonus) {
 }
 
 static void make_melee_attack(int bonus) {
+	if(!prepare_opponent())
+		return;
 	player->abilities[Position] = opponent->abilities[Position];
 	make_attack(bonus);
 }
@@ -451,6 +453,19 @@ static void push_modifier(int bonus) {
 	modifier = push;
 }
 
+static void make_move(int bonus) {
+	if(!prepare_opponent())
+		return;
+	auto movement = player->get(Movement);
+	auto range = player->getrange(opponent);
+	if(range < movement)
+		player->abilities[Position] = opponent->abilities[Position];
+	else if(player->abilities[Position] > opponent->abilities[Position])
+		player->abilities[Position] -= movement;
+	else
+		player->abilities[Position] += movement;
+}
+
 static void set_ability(int bonus) {
 	player->abilities[last_ability] = get_bonus(bonus);
 }
@@ -533,6 +548,7 @@ BSDATA(script) = {
 	{"ForEachOpponent", for_each_opponent},
 	{"MakeAttack", make_attack},
 	{"MakeMeleeAttack", make_melee_attack},
+	{"MakeMove", make_move},
 	{"PushModifier", push_modifier},
 	{"PlayCombatRounds", play_combat_rounds},
 	{"Print", print_message},

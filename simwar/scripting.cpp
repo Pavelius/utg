@@ -110,6 +110,16 @@ static int get_buildings_income(costn v) {
 	return result;
 }
 
+static int get_additional_income(costn v, const provincei& e) {
+	switch(v) {
+	case Resources: return e.income[Trade];
+	case Influence: return e.income[Noble];
+	case Warfire: return e.income[War];
+	case Happiness: return e.income[Culture];
+	default: return 0;
+	}
+}
+
 static int get_provinces_income(costn v) {
 	auto result = 0;
 	for(auto& e : bsdata<provincei>()) {
@@ -119,8 +129,18 @@ static int get_provinces_income(costn v) {
 	return get_value("ProvincesIncome", result);
 }
 
+static int get_provinces_upgrade_income(costn v) {
+	auto result = 0;
+	for(auto& e : bsdata<provincei>()) {
+		if(e.player == player)
+			result += get_additional_income(v, e);
+	}
+	return get_value("ProvincesUpgradeIncome", result);
+}
+
 int get_income(costn v) {
 	auto result = get_provinces_income(v);
+	result += get_provinces_upgrade_income(v);
 	result += get_buildings_income(v);
 	result += get_value(player->id, player->faith[v]);
 	result += get_buildings_upkeep(v);

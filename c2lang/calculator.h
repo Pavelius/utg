@@ -33,6 +33,8 @@ struct offseti {
 	int			offset; // offset from section base
 	int			size; // symbol size
 	void		alloc(int sid, int size);
+	bool		needalloc() const { return sid != -1; }
+	void*		ptr() const { return 0; }
 };
 struct symboli {
 	int			ids; // string id, use string_name() to get text

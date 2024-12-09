@@ -8,7 +8,7 @@
 
 #pragma once
 
-struct genderi;
+enum gendern : unsigned char;
 
 struct creature : actable, statable, consumablea, wearable, avatarable {
 	class_s		kind;
@@ -37,10 +37,10 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 };
 extern creature* player;
 extern creature* opponent;
-extern genderi* last_gender;
+extern gendern last_gender;
 extern bool action_change_player;
 
-void add_creature(const char* id, gender_s gender, class_s kind);
+void add_creature(const char* id, gendern gender, class_s kind);
 void add_creature(const char* id);
 void add_creature(const struct monsteri* pm);
 void add_npc_creature();

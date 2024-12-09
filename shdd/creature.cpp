@@ -14,7 +14,6 @@
 
 creature* player;
 creature* opponent;
-genderi* last_gender;
 bool action_change_player;
 
 static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
@@ -161,7 +160,7 @@ static bool is_unique_avatar(const char* id) {
 	return true;
 }
 
-const char* random_avatar(class_s type, gender_s gender) {
+const char* random_avatar(class_s type, gendern gender) {
 	auto push_interactive = answers::interactive;
 	answers::interactive = false;
 	auto result = avatarable::choose(0, gender == Female ? "f*.*" : "m*.*", 6, is_unique_avatar);
@@ -199,10 +198,7 @@ void add_npc_creature() {
 	player->clear();
 	player->ancestry = getbsi(last_race);
 	player->kind = (class_s)getbsi(last_class);
-	if(last_gender)
-		player->gender = (gender_s)getbsi(last_gender);
-	else
-		player->gender = (gender_s)xrand(Male, Female);
+	player->gender = (gendern)last_gender;
 	roll_random_abilities();
 	roll_hit_points();
 	starting_hits();
@@ -212,7 +208,7 @@ void add_npc_creature() {
 	player->setavatar(random_avatar(player->kind, player->gender));
 }
 
-void add_creature(const char* race, gender_s gender, class_s kind) {
+void add_creature(const char* race, gendern gender, class_s kind) {
 	player = bsdata<creature>::add();
 	player->clear();
 	player->ancestry = variant(race).value;

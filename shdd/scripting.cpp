@@ -15,7 +15,6 @@
 
 static int		special_attacks;
 racei*			last_race;
-static genderi*	last_gender;
 static const void* last_result;
 
 static bool apply_quest() {
@@ -137,7 +136,7 @@ template<> void fnscript<classi>(int value, int bonus) {
 }
 
 template<> void fnscript<genderi>(int value, int bonus) {
-	last_gender = bsdata<genderi>::elements + value;
+	last_gender = (gendern)value;
 }
 
 template<> void fnscript<questlist>(int value, int bonus) {
