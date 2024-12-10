@@ -192,14 +192,15 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Abilities.txt" />
+    <Text Include="locale\ru\Actions.txt" />
     <Text Include="locale\ru\actions\Quest.txt" />
+    <Text Include="locale\ru\BasicMoves.txt" />
+    <Text Include="locale\ru\Month.txt" />
     <Text Include="locale\ru\Moves.txt" />
-    <Text Include="locale\ru\names\AbilityNames.txt" />
-    <Text Include="locale\ru\names\ActionNames.txt" />
-    <Text Include="locale\ru\names\MonthNames.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\names\NamesNewbe.txt" />
-    <Text Include="locale\ru\names\PlanetNames.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\PlanetNames.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />

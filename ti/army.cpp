@@ -160,7 +160,7 @@ static void anti_fighter_barrage() {
 void army::choose(const char* id) {
 	pushvalue push_last(last_army, this);
 	pushvalue push_player(player, owner);
-	script_run(id, 0);
+	script_run(id);
 }
 
 static void echange_harms() {

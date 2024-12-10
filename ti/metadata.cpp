@@ -1,7 +1,6 @@
 #include "card.h"
 #include "deck.h"
 #include "bsreq.h"
-#include "condition.h"
 #include "filter.h"
 #include "list.h"
 #include "objective.h"
@@ -144,7 +143,6 @@ BSMETA(varianti) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Component", VAR(componenti, 1)},
-	{"Condition", VAR(conditioni, 1)},
 	{"Deck", VAR(decki, 1), 0, 0, fnscript<decki>},
 	{"Filter", VAR(filteri, 1), 0, 0, fnscript<filteri>},
 	{"Indicator", VAR(indicatori, 1), ftinfo<indicatori>, 0, fnscript<indicatori>, fntest<indicatori>},

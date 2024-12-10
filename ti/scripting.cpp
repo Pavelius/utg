@@ -383,7 +383,7 @@ static void ask_movement() {
 static void apply_movement() {
 	if(bsdata<troop>::have(choose_result)) {
 		pushvalue push(last_troop, (troop*)choose_result);
-		script_run("ChooseMoveOption", 0);
+		script_run("ChooseMoveOption");
 	}
 }
 static void ai_movement() {
@@ -714,7 +714,7 @@ static void apply_invasion_planet() {
 		auto push_last = last_planet;
 		auto push_result = choose_result;
 		last_planet = (planeti*)choose_result;
-		script_run("ChooseInvasion", 0);
+		script_run("ChooseInvasion");
 		choose_result = push_result;
 		last_planet = push_last;
 		update_control();
@@ -1245,9 +1245,9 @@ static void apply_header(int bonus) {
 	auto push_id = choose_id;
 	auto push_header = answers::header;
 	auto push_res = answers::resid;
-	if(last_list) {
-		choose_id = last_list->id;
-		answers::header = getnm(last_list->id);
+	if(last_id) {
+		choose_id = last_id;
+		answers::header = getnm(last_id);
 	}
 	if(player)
 		answers::resid = player->id;
@@ -1261,9 +1261,9 @@ static bool allow_apply_header(int bonus) {
 	auto push_id = choose_id;
 	auto push_header = answers::header;
 	auto push_res = answers::resid;
-	if(last_list) {
-		choose_id = last_list->id;
-		answers::header = getnm(last_list->id);
+	if(last_id) {
+		choose_id = last_id;
+		answers::header = getnm(last_id);
 	}
 	if(player)
 		answers::resid = player->id;
