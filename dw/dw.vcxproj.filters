@@ -54,6 +54,9 @@
     <ClCompile Include="item.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="creature.h">
@@ -63,9 +66,6 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="ability.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="option.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="item.h">
@@ -98,6 +98,12 @@
     <ClInclude Include="statable.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="option.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
@@ -125,6 +131,12 @@
       <Filter>Locale</Filter>
     </Text>
     <Text Include="names\ru\CharacterNames.txt">
+      <Filter>Locale</Filter>
+    </Text>
+    <Text Include="rules\Moves.txt">
+      <Filter>Data</Filter>
+    </Text>
+    <Text Include="locale\ru\Abilities.txt">
       <Filter>Locale</Filter>
     </Text>
   </ItemGroup>

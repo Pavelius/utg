@@ -30,8 +30,8 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	void			update();
 	void			act(const char* format) const { return actv(*answers::console, format, xva_start(format)); }
 	void			generate();
-	int				get(ability_s v) const { return abilities[v]; }
-	int				getbonus(ability_s v) const { return abilities[v] / 2 - 5; }
+	int				get(abilityn v) const { return abilities[v]; }
+	int				getbonus(abilityn v) const { return abilities[v] / 2 - 5; }
 	dice			getdamage() const;
 	const classi&	geti() const;
 	int				getmaximumhp() const;
@@ -39,8 +39,9 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	bool			ismatch(variant v) const;
 };
 extern creature* player;
+extern creature* opponent;
 
 const char* party_avatar(const void* object);
 
-creature* party_maximum(ability_s v, tag_s t);
-creature* party_maximum(ability_s v);
+creature* party_maximum(abilityn v, tagn t);
+creature* party_maximum(abilityn v);

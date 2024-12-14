@@ -1,0 +1,30 @@
+#Move
+
+HackAndSlash ability(Strenght)
+Volley ability(Dexterity)
+DefyDanger ability(Dexterity)
+DefyPoison ability(Constitution)
+Defend ability(Constitution)
+SpoutLore ability(Intellegence)
+DiscernRealities ability(Wisdow)
+Parley ability(Charisma)
+Aid
+Interfere
+LastBreath
+Encumbrance
+MakeCamp
+TakeWatch
+UndertakeAPerilousJourney ability(Wisdow)
+LevelUp
+EndOfSession
+Carouse ability(Charisma)
+Supply
+Recover
+Recruit
+OutstandingWarrants ability(Charisma)
+Bolster
+
+#Option parent(HackAndSlash)
+
+HackAndSlashMoreDamage
+HackAndSlashEvadeEnemy

@@ -47,7 +47,7 @@ void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 		case Intellegence:
 		case Wisdow:
 		case Charisma:
-			n = p->getbonus((ability_s)v.value);
+			n = p->getbonus((abilityn)v.value);
 			if(n)
 				sb.add("%1i\t%-Bonus %+2i", p->abilities[v.value], n);
 			else

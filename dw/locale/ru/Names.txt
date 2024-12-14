@@ -52,6 +52,7 @@ ChooseRace: Из каких краев вы родом?
 ChooseRangedWeapons: Какое дистанционное оружие у вас есть?
 
 Armor: Броня
+Bonus: Бонус
 
 AdventuringGear: Инструменты
 Antitoxin: Противоядие

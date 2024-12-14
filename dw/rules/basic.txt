@@ -1,3 +1,4 @@
+#include "rules/Moves.txt"
 #include "rules/Class.txt"
 #include "rules/Items.txt"
 #include "rules/Advance.txt"

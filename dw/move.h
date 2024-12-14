@@ -1,21 +1,19 @@
 #include "ability.h"
+#include "dice.h"
 #include "flagable.h"
 
 #pragma once
 
-enum move_s : unsigned char {
-	HackAndSlash, Volley, DefyDanger, DefyPoison, Defend, SpoutLore, DiscernRealities, Parley,
-	Aid, Interfere, LastBreath, Encumbrance,
-	MakeCamp, TakeWatch, UndertakeAPerilousJourney, LevelUp, EndOfSession,
-	Carouse, Supply, Recover, Recruit, OutstandingWarrants, Bolster,
-};
-typedef flagable<1 + Carouse / 8> movea;
+enum moven : unsigned char;
+typedef flagable<4, unsigned> movea;
 struct movei {
-	const char*		id;
-	ability_s		ability;
+	const char*	id;
+	abilityn	ability;
 };
 struct moveable {
-	movea			moves;
-	char			forward;
-	bool			is(move_s v) const { return moves.is(v); }
+	movea	moves; // Allowed moves
+	char	forward;
+	bool	is(moven v) const { return moves.is(v); }
 };
+
+extern dice	player_damage, enemy_damage;

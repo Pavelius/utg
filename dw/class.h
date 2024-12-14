@@ -1,9 +1,9 @@
 #pragma once
 
-enum ability_s : unsigned char;
+enum abilityn : unsigned char;
 
 struct classi {
 	const char*		id;
-	ability_s		abilities[6];
+	abilityn		abilities[6];
 	int				damage;
 };

@@ -37,7 +37,7 @@ int symboli::getindex() const {
 	return this - bsdata<symboli>::begin();
 }
 
-bool isterminal(operation_s v) {
+bool isterminal(operationn v) {
 	switch(v) {
 	case Number: case Text: case Identifier: return true;
 	case Continue: case Break: return true;
@@ -45,7 +45,7 @@ bool isterminal(operation_s v) {
 	}
 }
 
-bool isbinary(operation_s op) {
+bool isbinary(operationn op) {
 	switch(op) {
 	case Plus: case Minus: case Div: case Mul: case DivRest:
 	case BinaryOr: case BinaryAnd: case BinaryXor:
@@ -58,7 +58,7 @@ bool isbinary(operation_s op) {
 	}
 }
 
-bool isstrict(operation_s op) {
+bool isstrict(operationn op) {
 	switch(op) {
 	case Plus: case Mul: case BinaryOr: case BinaryAnd: case BinaryXor: return false;
 	default: return true;
@@ -371,7 +371,7 @@ static void find_type(int ast, int& result) {
 		find_type(p->right, result);
 }
 
-static int findast(operation_s op, int left, int right) {
+static int findast(operationn op, int left, int right) {
 	for(auto& e : bsdata<asti>()) {
 		if(e.op == op && e.left == left && e.right == right)
 			return &e - bsdata<asti>::begin();
@@ -379,7 +379,7 @@ static int findast(operation_s op, int left, int right) {
 	return -1;
 }
 
-int ast_add(operation_s op, int left, int right) {
+int ast_add(operationn op, int left, int right) {
 	auto sid = findast(op, left, right);
 	if(sid == -1 && !isstrict(op))
 		sid = findast(op, right, left);
@@ -393,7 +393,7 @@ int ast_add(operation_s op, int left, int right) {
 	return sid;
 }
 
-static int ast_add(operation_s op, int value) {
+static int ast_add(operationn op, int value) {
 	return ast_add(op, -1, value);
 }
 
@@ -630,7 +630,7 @@ static void parse_url_identifier() {
 	skipws();
 }
 
-static void unary_operation(operation_s v) {
+static void unary_operation(operationn v) {
 	if(operation <= operations) {
 		error("Unary operations stack corupt");
 		return;
@@ -638,7 +638,7 @@ static void unary_operation(operation_s v) {
 	operation[-1] = ast_add(v, operation[-1]);
 }
 
-static void binary_operation(operation_s v) {
+static void binary_operation(operationn v) {
 	if(operation <= operations + 1) {
 		error("Binary operations stack corupt");
 		return;
@@ -777,7 +777,7 @@ static void multiplication() {
 	unary();
 	while((p[0] == '*' || p[0] == '/' || p[0] == '%') && p[1] != '=') {
 		char s = p[0]; skipws(1);
-		operation_s op;
+		operationn op;
 		switch(s) {
 		case '/': op = Div; break;
 		case '%': op = DivRest; break;
@@ -792,7 +792,7 @@ static void addiction() {
 	multiplication();
 	while((p[0] == '+' || p[0] == '-') && p[1] != '=') {
 		char s = p[0]; skipws(1);
-		operation_s op;
+		operationn op;
 		switch(s) {
 		case '+': op = Plus; break;
 		case '-': op = Minus; break;
@@ -814,7 +814,7 @@ static void binary_cond() {
 		if(p[0] == '=')
 			t2 = *p++;
 		skipws();
-		operation_s op;
+		operationn op;
 		switch(t1) {
 		case '>':
 			op = Greater;
@@ -864,7 +864,7 @@ static void binary_or() {
 static void binary_shift() {
 	binary_or();
 	while((p[0] == '>' && p[1] == '>') || (p[0] == '<' && p[1] == '<')) {
-		operation_s op;
+		operationn op;
 		switch(p[0]) {
 		case '>': op = ShiftRight; break;
 		default: op = ShiftLeft; break;
@@ -1164,14 +1164,14 @@ void calculator_parse(const char* code) {
 	p = push_p;
 }
 
-static void add_symbol(symbol_s v, const char* id) {
+static void add_symbol(symboln v, const char* id) {
 	auto ids = strings.add(id);
 	if(find_symbol(ids, TypeScope, 0) != -1)
 		return;
 	create_symbol(ids, -1, FG(Predefined), TypeScope, 0);
 }
 
-static void add_symbol(section_s v, const char* id) {
+static void add_symbol(sectionn v, const char* id) {
 	auto ids = strings.add(id);
 	if(find_section(ids) != -1)
 		return;

@@ -1,9 +1,9 @@
 #pragma once
 
-enum ability_s : unsigned char;
-enum tag_s : unsigned char;
+enum abilityn : unsigned char;
+enum tagn : unsigned char;
 
-int	party_average(ability_s v);
+int	party_average(abilityn v);
 int	party_bolster();
 int	party_discount();
 

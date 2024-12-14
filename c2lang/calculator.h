@@ -1,6 +1,6 @@
 #pragma once
 
-enum operation_s {
+enum operationn {
 	Nop,
 	Plus, Minus, Div, Mul, DivRest,
 	BinaryOr, BinaryAnd, BinaryXor, Not, Neg,
@@ -11,7 +11,7 @@ enum operation_s {
 	Assign, If, While, Return, Switch, Case, Break, Continue, Default,
 	Number, Text, Identifier, List, Initialization,
 };
-enum symbol_s {
+enum symboln {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 };
 enum symbol_flag_s {
@@ -20,7 +20,7 @@ enum symbol_flag_s {
 enum scope_s {
 	TypeScope = -2, PointerScope = -3,
 };
-enum section_s {
+enum sectionn {
 	ModuleSection, LocalSection, DataSection, UDataSection,
 };
 struct sectioni {
@@ -55,7 +55,7 @@ struct symboli {
 	void		set(symbol_flag_s v) { flags |= (1 << v); }
 };
 struct asti {
-	operation_s op;
+	operationn op;
 	int			left;
 	int			right;
 };
@@ -69,9 +69,9 @@ extern calculator_fnprint calculator_error_proc;
 
 void calculator_file_parse(const char* url);
 void calculator_parse(const char* code);
-bool isbinary(operation_s op);
+bool isbinary(operationn op);
 bool iserrors();
-bool isterminal(operation_s op);
+bool isterminal(operationn op);
 void project_compile(const char* url);
 bool symbol(int sid, symbol_flag_s v);
 void symbol_alloc(int sid, int data_sid, int data_size);
@@ -81,7 +81,7 @@ void symbol_scope(int sid, int value);
 void symbol_set(int sid, symbol_flag_s v);
 void symbol_type(int sid, int value);
 
-int ast_add(operation_s op, int left, int right);
+int ast_add(operationn op, int left, int right);
 int const_number(int ast);
 int define_ast(int sid);
 int dereference(int type);

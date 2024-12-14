@@ -157,6 +157,7 @@
     <ClCompile Include="move.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="race.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="statable.cpp" />
     <ClCompile Include="tag.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="move.h" />
     <ClInclude Include="option.h" />
     <ClInclude Include="race.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="statable.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="wear.h" />
@@ -180,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Abilities.txt" />
     <Text Include="locale\ru\Descriptions.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\UnknownNames.txt" />
@@ -188,6 +191,7 @@
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Class.txt" />
     <Text Include="rules\Items.txt" />
+    <Text Include="rules\Moves.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

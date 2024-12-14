@@ -33,7 +33,7 @@ static bool isnumber(int type) {
 static void dereference(evaluei* p) {
 }
 
-static int arifmetic(operation_s op, int v1, int v2) {
+static int arifmetic(operationn op, int v1, int v2) {
 	switch(op) {
 	case Plus: return v1 + v2;
 	case Minus: return v1 - v2;
@@ -59,7 +59,7 @@ static int arifmetic(operation_s op, int v1, int v2) {
 	}
 }
 
-static void binary_operation(operation_s op, evaluei& e1, evaluei& e2) {
+static void binary_operation(operationn op, evaluei& e1, evaluei& e2) {
 	if(isnumber(e1.type) && isnumber(e2.type))
 		e1.value = arifmetic(op, e1.value, e2.value);
 	else if(isnumber(e2.type))

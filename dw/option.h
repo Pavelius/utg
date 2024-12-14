@@ -1,9 +1,9 @@
 #pragma once
 
-struct optiongroupi {
-	const char*		id;
-};
-struct optioni {
-	const char*		id;
-	unsigned short	group;
+#include "nameable.h"
+#include "variant.h"
+
+struct optioni : nameable {
+	variant parent;
+	variants use, condition;
 };

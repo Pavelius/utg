@@ -5,7 +5,9 @@
 #include "diety.h"
 #include "groupname.h"
 #include "list.h"
+#include "move.h"
 #include "option.h"
+#include "scene.h"
 #include "questlist.h"
 #include "script.h"
 #include "widget.h"
@@ -18,7 +20,8 @@ BSDATAC(classi, 16)
 BSDATAC(dietyi, 32)
 BSDATAC(itemi, 256)
 BSDATAC(menu, 256)
-BSDATAC(optioni, 256)
+BSDATAC(movei, 256)
+BSDATAC(optioni, 2048)
 
 BSMETA(creature) = {
 	BSENM(type, classi),
@@ -38,9 +41,6 @@ BSMETA(classi) = {
 	BSENM(abilities, abilityi),
 	BSREQ(damage),
 	{}};
-BSMETA(optioni) = {
-	BSREQ(id),
-	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
 	{}};
@@ -53,15 +53,24 @@ BSMETA(menu) = {
 	{}};
 BSMETA(movei) = {
 	BSREQ(id),
+	BSENM(ability, abilityi),
 	{}};
 BSMETA(genderi) = {
 	BSREQ(id),
+	{}};
+BSMETA(optioni) = {
+	BSREQ(id),
+	BSREQ(parent),
 	{}};
 BSMETA(racei) = {
 	BSREQ(id),
 	{}};
 BSMETA(script) = {
 	BSREQ(id),
+	{}};
+BSMETA(scenei) = {
+	BSREQ(id),
+	BSREQ(options),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses), BSREQ(forward),

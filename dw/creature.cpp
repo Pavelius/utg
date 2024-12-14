@@ -72,7 +72,7 @@ void creature::finish() {
 
 void creature::random_ability() {
 	auto& ei = bsdata<classi>::get(type);
-	ability_s random[6]; memcpy(random, ei.abilities, sizeof(random));
+	abilityn random[6]; memcpy(random, ei.abilities, sizeof(random));
 	zshuffle(random + 2, 4);
 	if(d100() < 30)
 		iswap(random[1], random[2]);
@@ -194,7 +194,7 @@ bool creature::ismatch(variant v) const {
 		return false;
 }
 
-creature* party_maximum(ability_s v, tag_s t) {
+creature* party_maximum(abilityn v, tagn t) {
 	creature* result = 0;
 	for(auto& e : bsdata<creature>()) {
 		if(!e)
@@ -206,7 +206,7 @@ creature* party_maximum(ability_s v, tag_s t) {
 	return result;
 }
 
-creature* party_maximum(ability_s v) {
+creature* party_maximum(abilityn v) {
 	creature* result = 0;
 	for(auto& e : bsdata<creature>()) {
 		if(!e)

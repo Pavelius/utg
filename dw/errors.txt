@@ -1,2 +1,3 @@
-﻿Error in file `rules/Class.txt`:
- Line 5: Expected token `#`
+﻿Error in file `rules/Moves.txt`:
+ Line 27: Not found requisit `parent`
+ Line 27: Not found requisit `parent`

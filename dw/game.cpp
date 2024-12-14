@@ -6,7 +6,7 @@ struct gamei {
 };
 static gamei game;
 
-int party_average(ability_s v) {
+int party_average(abilityn v) {
 	auto count = 0, total = 0;
 	for(auto& e : bsdata<creature>()) {
 		if(!e)

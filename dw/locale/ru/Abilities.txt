@@ -1,0 +1,7 @@
+﻿Charisma: Харизма
+Constitution: Телосложение
+Dexterity: Ловкость
+Intellegence: Интеллект
+Strenght: Сила
+StrenghtInfo: Физическая сила героя, влияющая на рукопашный бой и количество переносимых предметов.
+Wisdow: Мудрость

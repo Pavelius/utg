@@ -5,12 +5,12 @@
 
 #pragma once
 
-enum itemuf_s : unsigned char {
+enum itemufn : unsigned char {
 	HooksAndSpikes, Sharp, PerfectlyWeigthed, SerratedEdges, Glows, Huge, Versatile, WellCrafted,
 };
 typedef flagable<2> itemufa;
 struct itemi : raceable, moveable {
-	wear_s	slot;
+	wearn	slot;
 	taga	tags;
 	racea	need;
 	short	coins;
@@ -32,6 +32,6 @@ union item {
 	constexpr const itemi& geti() const { return bsdata<itemi>::elements[type]; }
 	const char*		getname() const { return getnm(geti().id); }
 	int				getuses() const;
-	constexpr bool	is(itemuf_s v) const { return feats.is(v); }
-	constexpr bool	is(tag_s v) const { return geti().tags.is(v); }
+	constexpr bool	is(itemufn v) const { return feats.is(v); }
+	constexpr bool	is(tagn v) const { return geti().tags.is(v); }
 };

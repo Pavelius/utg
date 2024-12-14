@@ -10,7 +10,7 @@ public:
 	static void		actv(stringbuilder& sb, const char* format, const char* format_param);
 	void			clearname() { nameid = 0xFFFF; }
 	constexpr bool	isvalidname() const { return nameid != 0xFFFF; }
-	gendern		getgender() const;
+	gendern			getgender() const;
 	const char*		getname() const;
 	void			setname(short unsigned v) { nameid = v; }
 };
