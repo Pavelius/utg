@@ -5,7 +5,7 @@
 
 #pragma once
 
-enum race_s : unsigned char {
+enum racen : unsigned char {
 	Human, Dwarf, Elf, Halfling,
 };
 typedef flagable<1 + Halfling / 8> racea;
@@ -14,10 +14,10 @@ struct racei {
 };
 struct raceable {
 	const char*		id;
-	race_s			race;
+	racen			race;
 	gendern			gender;
 public:
 	gendern			getgender() const { return gender; }
 	const char*		getname() const { return getnm(id); }
-	race_s			getrace() const { return race; }
+	racen			getrace() const { return race; }
 };

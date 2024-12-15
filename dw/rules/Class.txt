@@ -1,7 +1,7 @@
 #Class
 
 Npc
-Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(6)
-Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(10)
-Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow) damage(8)
-Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(4)
+Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(6) hits(16)
+Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(10) hits(20)
+Theif abilities(Dexterity Charisma Strenght Intellegence Constitution Wisdow) damage(8) hits(16)
+Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(4) hits(12)

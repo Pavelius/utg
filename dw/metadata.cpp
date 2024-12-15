@@ -23,14 +23,10 @@ BSDATAC(menu, 256)
 BSDATAC(movei, 256)
 BSDATAC(optioni, 2048)
 
-BSMETA(creature) = {
-	BSENM(type, classi),
-	BSENM(race, racei),
-	BSENM(alignment, alignmenti),
-	BSDST(abilities, abilityi),
-	BSENM(diety, dietyi),
-	{}};
 BSMETA(abilityi) = {
+	BSREQ(id),
+	{}};
+BSMETA(abilityseti) = {
 	BSREQ(id),
 	{}};
 BSMETA(alignmenti) = {
@@ -40,6 +36,15 @@ BSMETA(classi) = {
 	BSREQ(id),
 	BSENM(abilities, abilityi),
 	BSREQ(damage),
+	BSREQ(hits),
+	BSREQ(load),
+	{}};
+BSMETA(creature) = {
+	BSENM(type, classi),
+	BSENM(race, racei),
+	BSENM(alignment, alignmenti),
+	BSDST(abilities, abilityi),
+	BSENM(diety, dietyi),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),
@@ -54,6 +59,11 @@ BSMETA(menu) = {
 BSMETA(movei) = {
 	BSREQ(id),
 	BSENM(ability, abilityi),
+	BSENM(type, movetypei),
+	BSREQ(playbook),
+	{}};
+BSMETA(movetypei) = {
+	BSREQ(id),
 	{}};
 BSMETA(genderi) = {
 	BSREQ(id),
@@ -73,7 +83,7 @@ BSMETA(scenei) = {
 	BSREQ(options),
 	{}};
 BSMETA(itemi) = {
-	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses), BSREQ(forward),
+	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses),
 	BSREQ(damage), BSREQ(armor), BSREQ(pierce), BSREQ(heal), 
 	BSFLG(tags, tagi),
 	BSFLG(moves, movei),
@@ -81,6 +91,7 @@ BSMETA(itemi) = {
 BSDATA(varianti) = {
 	{"NoVariant"},
 	{"Ability", VAR(abilityi, 1)},
+	{"AbilitySet", VAR(abilityseti, 1)},
 	{"Advancement", VAR(advancement, 2)},
 	{"Alignment", VAR(alignmenti, 1)},
 	{"Class", VAR(classi, 1)},
@@ -93,6 +104,7 @@ BSDATA(varianti) = {
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
 	{"Move", VAR(movei, 1)},
+	{"MoveType", VAR(movetypei, 1)},
 	{"Option", VAR(optioni, 1)},
 	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist_read},
 	{"Race", VAR(racei, 1)},

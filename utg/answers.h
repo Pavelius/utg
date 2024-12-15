@@ -47,6 +47,11 @@ public:
 	void				sort();
 };
 extern answers an;
+struct pushanswer {
+	answers value;
+	pushanswer() : value(an) { an.clear(); }
+	~pushanswer() { an = value; }
+};
 
 void message(const char* format, const char* header = 0);
 void pause();

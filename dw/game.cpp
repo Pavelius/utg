@@ -2,7 +2,7 @@
 #include "creature.h"
 
 struct gamei {
-	char		bolster;
+	char	bolster;
 };
 static gamei game;
 

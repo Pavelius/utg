@@ -18,7 +18,8 @@ struct classi;
 
 struct creature : public namenpc, public avatarable, public statable, public wearable {
 	unsigned char	alignment, type, diety;
-	race_s			race;
+	racen			race;
+	taga			tags;
 	statable		basic;
 	explicit operator bool() const { return isvalidname(); }
 	void			apply_advance();
@@ -36,6 +37,8 @@ struct creature : public namenpc, public avatarable, public statable, public wea
 	const classi&	geti() const;
 	int				getmaximumhp() const;
 	static void		getpropertyst(const void* object, variant v, stringbuilder& sb);
+	bool			is(moven v) const { return moveable::is(v); }
+	bool			is(tagn v) const { return tags.is(v); }
 	bool			ismatch(variant v) const;
 };
 extern creature* player;

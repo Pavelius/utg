@@ -4,6 +4,7 @@
 #include "variant.h"
 
 struct optioni : nameable {
-	variant parent;
-	variants use, condition;
+	variant			parent;
+	unsigned char	index;
+	variants		use, condition;
 };

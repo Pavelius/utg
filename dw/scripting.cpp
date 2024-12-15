@@ -1,7 +1,11 @@
 #include "creature.h"
+#include "condition.h"
 #include "console.h"
+#include "formula.h"
 #include "pushvalue.h"
 #include "questlist.h"
+#include "option.h"
+#include "rand.h"
 #include "script.h"
 #include "stringvar.h"
 
@@ -9,6 +13,49 @@ extern stringbuilder sbc;
 static variant last;
 static void* last_choose;
 static creature *player_scout, *player_pathfinder, *player_supplier;
+static bool bad_roll;
+
+static void roll2d6(int bonus) {
+	auto d1 = d6();
+	auto d2 = d6();
+	bad_roll = (d1 == 1) || (d2 == 1);
+	last_number = d1 + d2 + bonus;
+}
+
+static void roll2d6w(int bonus) {
+	roll2d6(bonus);
+	auto r1 = last_number;
+	auto b1 = bad_roll;
+	roll2d6(bonus);
+	if(last_number > r1) {
+		last_number = r1;
+		bad_roll = b1;
+	}
+}
+
+static void roll2d6b(int bonus) {
+	roll2d6(bonus);
+	auto r1 = last_number;
+	auto b1 = bad_roll;
+	roll2d6(bonus);
+	if(last_number < r1) {
+		last_number = r1;
+		bad_roll = b1;
+	}
+}
+
+static void player_roll(int bonus) {
+	if(last_ability)
+		bonus += player->get(last_ability);
+	if(player->is(Advantage))
+		roll2d6b(bonus);
+	else if(player->is(Disadvantage))
+		roll2d6w(bonus);
+	else
+		roll2d6(bonus);
+	player->tags.remove(Advantage);
+	player->tags.remove(Disadvantage);
+}
 
 static void printv(stringbuilder& sb, char separator, const char* id, const char* id_param) {
 	auto p = getnme(id, "Info");
@@ -40,7 +87,9 @@ static int getcost(int item_type, int bonus) {
 }
 
 template<> void fnscript<abilityi>(int index, int bonus) {
-	output("%1%+2i", getnm(bsdata<abilityi>::elements[index].id), bonus);
+	last_ability = (abilityn)index;
+	if(bonus)
+		output("%1%+2i", getnm(bsdata<abilityi>::elements[index].id), bonus);
 	player->abilities[index] += bonus;
 }
 
@@ -149,6 +198,28 @@ void quest_run(int index) {
 	}
 }
 
+static void choose_enum(int bonus) {
+	variant parent = bsdata<abilityi>::elements + last_ability;
+	if(!parent)
+		return;
+	pushanswer push;
+	optioni* first = 0;
+	for(auto& e : bsdata<optioni>()) {
+		if(e.parent != parent)
+			continue;
+		if(!first)
+			first = &e;
+		an.add(&e, e.getname());
+	}
+	auto p = (optioni*)an.choose(getnm("Choose"), 0);
+	if(p)
+		player->abilities[last_ability] = (p - first) + bonus;
+}
+
+static bool if_bad_roll() {
+	return bad_roll;
+}
+
 static void travel_roles(stringbuilder& sb) {
 	if(player_scout)
 		printn(sb, "ScoutRole", player_scout->getname());
@@ -162,7 +233,12 @@ BSDATA(stringvari) = {
 	{"TravelRoles", travel_roles},
 };
 BSDATAF(stringvari)
+BSDATA(conditioni) = {
+	{"IfBadRoll", if_bad_roll},
+};
 BSDATA(script) = {
+	{"ChooseEnum", choose_enum},
 	{"ChoosePlayer", choose_player},
+	{"Roll", player_roll},
 };
 BSDATAF(script)

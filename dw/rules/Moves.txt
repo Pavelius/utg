@@ -1,4 +1,4 @@
-#Move
+#Move type(BasicMove)
 
 HackAndSlash ability(Strenght)
 Volley ability(Dexterity)
@@ -24,7 +24,45 @@ Recruit
 OutstandingWarrants ability(Charisma)
 Bolster
 
+#Move type(StartMove) playbook(Cleric)
+
+Deity
+Invocation
+DivineWard
+
+#Move type(AdvancedMove) playbook(Cleric)
+
+Chirugy
+PickerOfTheSlain
+OrisonForGuidance
+SacredSpace
+WardingPrayer
+BearWitness
+Anathema
+
+#Move type(StartMove) playbook(Wizard)
+
+CastSpell
+
 #Option parent(HackAndSlash)
 
 HackAndSlashMoreDamage
 HackAndSlashEvadeEnemy
+
+#Option parent(TravelRole)
+
+RoleScout
+RoleTrailblazer
+RoleQuartermaster
+
+#Option parent(SpellDomains)
+
+Cantrips
+Divination
+Evocation
+Illusion
+Abjuration
+Conjuration
+Enchantment
+Necromancy
+Transmutation

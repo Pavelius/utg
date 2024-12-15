@@ -3,7 +3,7 @@
 enum abilityn : unsigned char;
 
 struct classi {
-	const char*		id;
-	abilityn		abilities[6];
-	int				damage;
+	const char*	id;
+	abilityn	abilities[6];
+	int			damage, hits, load;
 };

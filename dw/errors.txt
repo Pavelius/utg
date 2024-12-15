@@ -1,3 +1,8 @@
 ﻿Error in file `rules/Moves.txt`:
- Line 27: Not found requisit `parent`
- Line 27: Not found requisit `parent`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
+ Line 33: Not found MoveType identifier `AdvencedMove`
