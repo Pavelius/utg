@@ -1,8 +1,2 @@
-﻿Error in file `rules/Moves.txt`:
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
- Line 33: Not found MoveType identifier `AdvencedMove`
+﻿Error in file `rules/Basic.txt`:
+ Line 6: Can't find type `GroupName`

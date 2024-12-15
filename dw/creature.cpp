@@ -1,15 +1,15 @@
 #include "assign.h"
 #include "bsreq.h"
 #include "class.h"
-#include "groupname.h"
+#include "creature.h"
 #include "item.h"
 #include "list.h"
 #include "math.h"
 #include "race.h"
 #include "rand.h"
-#include "creature.h"
+#include "speech.h"
 
-static char standart_ability[] = {16, 15, 13, 12, 9, 8};
+static char standart_ability[] = {2, 1, 1, 0, 0, -1};
 static gendern last_gender;
 
 creature* player;
@@ -19,7 +19,7 @@ const classi& creature::geti() const {
 }
 
 int creature::getmaximumhp() const {
-	return get(Constitution) + geti().damage;
+	return geti().hits;
 }
 
 static void getinfo(variant v, stringbuilder& sb) {
@@ -60,12 +60,7 @@ static void getinfo(const variants& elements, stringbuilder& sb) {
 	}
 }
 
-void creature::update() {
-	assign(*static_cast<statable*>(this), basic);
-}
-
 void creature::finish() {
-	update();
 	update_player();
 	abilities[HP] = getmaximumhp();
 }
@@ -77,31 +72,24 @@ void creature::random_ability() {
 	if(d100() < 30)
 		iswap(random[1], random[2]);
 	for(auto i = 0; i < 6; i++)
-		basic.abilities[random[i]] = standart_ability[i];
+		abilities[random[i]] = standart_ability[i];
 }
 
 void creature::choose_abilities() {
 	for(auto v : standart_ability)
-		basic.apply_ability(v);
+		apply_ability(v);
 }
 
 void creature::choose_name() {
 	clearname();
-	short unsigned temp[512];
-	variant vgender = bsdata<genderi>::elements + last_gender;
-	variant vclass = bsdata<classi>::elements + type;
-	variant vrace = bsdata<racei>::elements + race;
-	variant source[3] = {vgender, vclass, vrace};
-	auto count = select_group_name(temp, lenghtof(temp), str("%1%2%3",
-		bsdata<racei>::elements[race].id,
-		bsdata<genderi>::elements[last_gender].id,
-		bsdata<classi>::elements[type].id));
-	if(!count)
+	auto ps = bsdata<speech>::find(
+		ids(bsdata<racei>::elements[race].id, bsdata<genderi>::elements[last_gender].id, bsdata<classi>::elements[type].id));
+	if(!ps)
 		return;
 	answers an;
-	for(auto v : slice<short unsigned>(temp, count))
-		an.add((void*)v, get_group_name(v));
-	setname((int)an.choose("Как вас зовут?", 0));
+	for(auto& e : ps->source)
+		an.add((void*)(&e - bsdata<speech::element>::elements), e.name);
+	name_id = (int)an.choose("Как вас зовут?", 0);
 }
 
 static bool match_party(variant v) {
@@ -176,10 +164,9 @@ void creature::generate() {
 }
 
 dice creature::getdamage() const {
-	dice result = {1, 4};
-	auto damage = geti().damage;
-	if(damage)
-		result.d = damage;
+	dice result = {1, 6, (char)geti().damage};
+	result.b += wears[RightHand].geti().damage;
+	result.b += wears[LeftHand].geti().damage;
 	return result;
 }
 
@@ -187,7 +174,7 @@ bool creature::ismatch(variant v) const {
 	if(v.iskind<classi>())
 		return type == v.value;
 	else if(v.iskind<genderi>())
-		return getgender() == v.value;
+		return gender == v.value;
 	else if(v.iskind<racei>())
 		return race == v.value;
 	else
@@ -219,7 +206,7 @@ creature* party_maximum(abilityn v) {
 }
 
 const char* party_avatar(const void* p) {
-	if(!((creature*)p)->isvalidname())
+	if(((creature*)p)->name_id == 0xFFFF)
 		return 0;
 	return ((creature*)p)->avatarable::getavatar();
 }

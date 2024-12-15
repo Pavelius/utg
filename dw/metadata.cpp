@@ -3,13 +3,13 @@
 #include "class.h"
 #include "creature.h"
 #include "diety.h"
-#include "groupname.h"
 #include "list.h"
 #include "move.h"
 #include "option.h"
-#include "scene.h"
 #include "questlist.h"
+#include "scene.h"
 #include "script.h"
+#include "speech.h"
 #include "widget.h"
 
 BSMETA(variant) = {{}};
@@ -22,6 +22,8 @@ BSDATAC(itemi, 256)
 BSDATAC(menu, 256)
 BSDATAC(movei, 256)
 BSDATAC(optioni, 2048)
+BSDATAC(speech, 512)
+BSDATAC(speech::element, 4096)
 
 BSMETA(abilityi) = {
 	BSREQ(id),
@@ -99,7 +101,6 @@ BSDATA(varianti) = {
 	{"Diety", VAR(dietyi, 1)},
 	{"Front", VAR(front, 1)},
 	{"Gender", VAR(genderi, 1)},
-	{"GroupName", VAR(groupname, 2), 0, 0, 0, 0, read_group_names},
 	{"Item", VAR(itemi, 1), 0, 0, fnscript<itemi>, fntest<itemi>},
 	{"List", VAR(listi, 1)},
 	{"Menu", VAR(menu, 1)},
@@ -109,6 +110,7 @@ BSDATA(varianti) = {
 	{"Quest", VAR(questlist, 1), 0, 0, 0, 0, questlist_read},
 	{"Race", VAR(racei, 1)},
 	{"Script", VAR(script, 1)},
+	{"Speech", VAR(speech, 1), 0, 0, 0, 0, speech_read},
 	{"Tag", VAR(tagi, 1)},
 	{"Widget", VAR(widget, 1)},
 };

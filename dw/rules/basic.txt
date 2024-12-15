@@ -3,7 +3,7 @@
 #include "rules/Items.txt"
 #include "rules/Advance.txt"
 
-#include "names/%1/CharacterNames.txt" GroupName
+#include "names/%1/CharacterNames.txt" Speech
 #include "quest/%1" Quest "*.txt"
 
 #Front

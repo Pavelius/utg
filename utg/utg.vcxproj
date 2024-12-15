@@ -193,7 +193,6 @@
     <ClCompile Include="front.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="group.cpp" />
-    <ClCompile Include="groupname.cpp" />
     <ClCompile Include="io_bsreq.cpp" />
     <ClCompile Include="io_bsreq_bin.cpp" />
     <ClCompile Include="iterator.cpp" />
@@ -299,7 +298,6 @@
     <ClInclude Include="draw_hexagon.h" />
     <ClInclude Include="generator.h" />
     <ClInclude Include="group.h" />
-    <ClInclude Include="groupname.h" />
     <ClInclude Include="informable.h" />
     <ClInclude Include="interval.h" />
     <ClInclude Include="iterator.h" />

@@ -240,9 +240,6 @@
     <ClCompile Include="win_message.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
-    <ClCompile Include="groupname.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="questlist.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -498,9 +495,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="bsenum.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="groupname.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="questlist.h">

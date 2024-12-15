@@ -16,23 +16,17 @@
 
 struct classi;
 
-struct creature : public namenpc, public avatarable, public statable, public wearable {
-	unsigned char	alignment, type, diety;
-	racen			race;
+struct creature : public namenpc, raceable, public avatarable, public statable, public wearable {
+	unsigned char	type, alignment, diety;
 	taga			tags;
-	statable		basic;
-	explicit operator bool() const { return isvalidname(); }
-	void			apply_advance();
+	explicit operator bool() const { return name_id!=0xFFFF; }
 	void			choose_avatar();
 	void			choose_abilities();
 	void			choose_name();
 	void			finish();
 	void			random_ability();
-	void			update();
-	void			act(const char* format) const { return actv(*answers::console, format, xva_start(format)); }
 	void			generate();
 	int				get(abilityn v) const { return abilities[v]; }
-	int				getbonus(abilityn v) const { return abilities[v] / 2 - 5; }
 	dice			getdamage() const;
 	const classi&	geti() const;
 	int				getmaximumhp() const;

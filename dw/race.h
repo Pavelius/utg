@@ -8,16 +8,11 @@
 enum racen : unsigned char {
 	Human, Dwarf, Elf, Halfling,
 };
-typedef flagable<1 + Halfling / 8> racea;
+typedef flagable<1, unsigned char> racea;
 struct racei {
-	const char*		id;
+	const char*	id;
 };
 struct raceable {
-	const char*		id;
-	racen			race;
-	gendern			gender;
-public:
-	gendern			getgender() const { return gender; }
-	const char*		getname() const { return getnm(id); }
-	racen			getrace() const { return race; }
+	racen		race;
+	gendern		gender;
 };

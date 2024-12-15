@@ -14,9 +14,12 @@ BSDATA(abilityi) = {
 	{"Wisdow"},
 	{"Charisma"},
 	{"FightingFocus"},
-	{"TravelRole"},
+	{"PaladinZeal"},
+	{"DietyDemand"},
+	{"DruidInstinct"},
+	{"RangerReadiness"},
 };
-assert_enum(abilityi, TravelRole)
+assert_enum(abilityi, RangerReadiness)
 
 BSDATA(abilityseti) = {
 	{"FightingStyles"},

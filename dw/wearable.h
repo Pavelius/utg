@@ -3,9 +3,8 @@
 
 #pragma once
 
-class wearable {
+struct wearable {
 	item			wears[LastBackpack + 1];
-public:
 	int				coins;
 	void			additem(item& it);
 	void			additem(const item& it, int count);

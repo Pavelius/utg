@@ -14,7 +14,7 @@ static void addn(stringbuilder& sb, dice v) {
 	if(v.c)
 		sb.add("%1id%2i", v.c, v.d);
 	if(v.b)
-	sb.add("%+1i", v.b);
+		sb.add("%+1i", v.b);
 }
 
 static void addn(stringbuilder& sb, const char* id, dice v) {
@@ -41,17 +41,9 @@ void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	int n;
 	if(v.iskind<abilityi>()) {
 		switch(v.value) {
-		case Strenght:
-		case Dexterity:
-		case Constitution:
-		case Intellegence:
-		case Wisdow:
-		case Charisma:
-			n = p->getbonus((abilityn)v.value);
-			if(n)
-				sb.add("%1i\t%-Bonus %+2i", p->abilities[v.value], n);
-			else
-				sb.add("%1i", p->abilities[v.value]);
+		case Strenght: case Dexterity: case Constitution:
+		case Intellegence: case Wisdow: case Charisma:
+			sb.add("%+1i", p->abilities[v.value]);
 			break;
 		case Damage:
 			addn(sb, p->getdamage());

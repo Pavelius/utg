@@ -1,16 +1,8 @@
-#include "gender.h"
-#include "stringbuilder.h"
-
 #pragma once
 
-class namenpc {
-	short unsigned	nameid;
-public:
-	void			act(stringbuilder& sb, const char* format, ...) const { actv(sb, format, xva_start(format)); }
-	static void		actv(stringbuilder& sb, const char* format, const char* format_param);
-	void			clearname() { nameid = 0xFFFF; }
-	constexpr bool	isvalidname() const { return nameid != 0xFFFF; }
-	gendern			getgender() const;
+struct namenpc {
+	short unsigned	name_id;
+	constexpr explicit operator bool() const { return name_id != 0xFFFF; }
+	void			clearname() { name_id = 0xFFFF; }
 	const char*		getname() const;
-	void			setname(short unsigned v) { nameid = v; }
 };

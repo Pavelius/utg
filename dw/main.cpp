@@ -35,7 +35,7 @@ static void character_generation() {
 
 static void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	if(player) {
-		if(apply_action(id, sb, player->getname(), player->getgender()))
+		if(apply_action(id, sb, player->getname(), player->gender))
 			return;
 	}
 	default_string(sb, id);

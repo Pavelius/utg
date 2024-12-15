@@ -3,7 +3,7 @@
 enum abilityn : unsigned char {
 	HP, Damage, Armor, Pierce, Load,
 	Strenght, Dexterity, Constitution, Intellegence, Wisdow, Charisma,
-	FightingFocus, TravelRole,
+	FightingFocus, Zeal, DietyDemand, DruidInstinct, RangerReadiness
 };
 enum abilitysetn : unsigned char {
 	FightingStyles, SpellDomains,

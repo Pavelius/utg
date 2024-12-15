@@ -49,12 +49,6 @@ CastSpell
 HackAndSlashMoreDamage
 HackAndSlashEvadeEnemy
 
-#Option parent(TravelRole)
-
-RoleScout
-RoleTrailblazer
-RoleQuartermaster
-
 #Option parent(SpellDomains)
 
 Cantrips
