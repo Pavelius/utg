@@ -10,9 +10,8 @@
 #include "speech.h"
 
 static char standart_ability[] = {2, 1, 1, 0, 0, -1};
-static gendern last_gender;
-
-creature* player;
+dice player_damage, enemy_damage;
+creature *player, *opponent;
 
 const classi& creature::geti() const {
 	return bsdata<classi>::elements[type];
@@ -61,7 +60,6 @@ static void getinfo(const variants& elements, stringbuilder& sb) {
 }
 
 void creature::finish() {
-	update_player();
 	abilities[HP] = getmaximumhp();
 }
 

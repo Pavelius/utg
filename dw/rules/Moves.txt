@@ -27,8 +27,8 @@ Bolster
 #Move type(StartMove) playbook(Cleric)
 
 Deity
-Invocation
-DivineWard
+Invocation ability(Wisdow)
+DivineWard ability(Wisdow)
 
 #Move type(AdvancedMove) playbook(Cleric)
 
@@ -39,6 +39,21 @@ SacredSpace
 WardingPrayer
 BearWitness
 Anathema
+
+#Move type(StartMove) playbook(Fighter)
+
+Armored
+FightingStyle
+
+#Move type(AdvancedMove) playbook(Fighter)
+
+BendBarsLiftGates ability(Strenght)
+ComeAndGetIt ability(Charisma)
+BattlefieldTactics
+SetupStrike
+ArmorMastery
+ThroughDeathEyes ability(Wisdow)
+WarCry ability(Strenght)
 
 #Move type(StartMove) playbook(Wizard)
 
@@ -60,3 +75,7 @@ Conjuration
 Enchantment
 Necromancy
 Transmutation
+
+#Tag
+
+Clumsy ignore(Armored)

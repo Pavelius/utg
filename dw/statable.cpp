@@ -2,10 +2,6 @@
 #include "answers.h"
 #include "statable.h"
 
-void statable::update_player() {
-	abilities[HP] = abilities[Constitution];
-}
-
 void statable::apply_ability(int v) {
 	answers an;
 	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1)) {

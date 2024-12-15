@@ -114,9 +114,8 @@ void message(const char* format, const char* header) {
 	if(!format)
 		return;
 	answers an;
-	auto push_header = answers::header;
+	auto push_header = answers::header; answers::header = header;
 	auto push_prompt = answers::prompt;
-	answers::header = header;
 	while(true) {
 		auto p = find_separator(format);
 		if(!p)

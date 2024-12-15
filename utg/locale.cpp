@@ -208,3 +208,11 @@ void check_description(const char* id, const char** psuffix) {
 			log::errorp(0, " Define translation for `%1`", name);
 	}
 }
+
+bool locale_identifier(stringbuilder& sb, const char* identifier) {
+	auto pn = getnme(identifier);
+	if(!pn)
+		return false;
+	sb.add(pn);
+	return true;
+}

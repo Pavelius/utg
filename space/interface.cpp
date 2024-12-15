@@ -142,7 +142,7 @@ static void showform() {
 	fore = push_fore;
 }
 
-static void req_panel(module_s id) {
+static void req_panel(modulen id) {
 	auto p = bsdata<modulei>::elements + id;
 	req_panel(p, getnmsh(p->getid()), player->basic.modules[id], 32);
 }

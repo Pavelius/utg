@@ -35,24 +35,6 @@ static void correct_camera(point result, int offs) {
 	}
 }
 
-//static void remove_orders() {
-//	auto pb = bsdata<orderable>::begin();
-//	auto pe = bsdata<orderable>::end();
-//	while(pe > pb) {
-//		pe--;
-//		if(*pe)
-//			break;
-//		bsdata<orderable>::source.count--;
-//	}
-//}
-
-//static void update_all_orders() {
-//	for(auto& e : bsdata<orderable>()) {
-//		if(e)
-//			e.domove();
-//	}
-//}
-
 static void start_timer() {
 	drawable_stamp_last = getcputime();
 }
@@ -152,7 +134,7 @@ void drawable::input_camera() {
 	case KeyDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
 	case MouseWheelUp: execute(cbsetsht, camera.y - step, 0, &camera.y); break;
 	case MouseWheelDown: execute(cbsetsht, camera.y + step, 0, &camera.y); break;
-	case MouseRight:
+	case MouseLeft:
 		if(hpressed && !hilite) {
 			dragbegin(&camera);
 			camera_drag = camera;

@@ -2,6 +2,6 @@
 
 Npc
 Cleric abilities(Wisdow Strenght Charisma Constitution Intellegence Dexterity) damage(0) hits(16)
-Fighter abilities(Strenght Dexterity Constitution Wisdow Intellegence Charisma) damage(2) hits(20)
+Fighter abilities(Strenght Wisdow Charisma Dexterity Constitution Intellegence) damage(2) hits(20)
 Theif abilities(Dexterity Strenght Charisma Intellegence Constitution Wisdow) damage(1) hits(16)
 Wizard abilities(Intellegence Wisdow Dexterity Charisma Strenght Constitution) damage(-1) hits(12)

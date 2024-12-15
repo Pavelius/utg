@@ -1,2 +1,2 @@
-﻿Error in file `rules/Basic.txt`:
- Line 6: Can't find type `GroupName`
+﻿Error in file `rules/Moves.txt`:
+ Line 66: Not found Move identifier `Armored`

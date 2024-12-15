@@ -38,7 +38,6 @@ template<> void ftinfo<creature>(const void* object, stringbuilder& sb) {
 
 void creature::getpropertyst(const void* object, variant v, stringbuilder& sb) {
 	auto p = (creature*)object;
-	int n;
 	if(v.iskind<abilityi>()) {
 		switch(v.value) {
 		case Strenght: case Dexterity: case Constitution:

@@ -8,6 +8,7 @@ extern "C" void srand(unsigned seed); // Set random seed
 inline int d20() { return 1 + rand() % 20; }
 inline int d4() { return 1 + rand() % 4; }
 inline int d6() { return 1 + rand() % 6; }
+inline int d12() { return 1 + rand() % 12; }
 inline int d100() { return rand() % 100; }
 inline int xrand(int n1, int n2) { return n1 + rand() % (n2 - n1 + 1); }
 

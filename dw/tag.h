@@ -1,6 +1,7 @@
-#include "flagable.h"
-
 #pragma once
+
+#include "flagable.h"
+#include "nameable.h"
 
 enum tagn : unsigned char {
 	Arrows, CharismaMinus, Clumsy, Dangerous, Forceful, IgnoreArmor, Messy, NeedArrows, Precise,
@@ -12,8 +13,8 @@ enum tagn : unsigned char {
 	Advantage, Disadvantage,
 	Hand, Close, Reach, Near, Far,
 };
-struct tagi {
-	const char*	id;
+struct tagi : nameable {
+	unsigned char	ignore;
 };
 typedef flagable<1, unsigned long> taga;
 

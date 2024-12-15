@@ -44,6 +44,15 @@ static void roll2d6b(int bonus) {
 	}
 }
 
+static void fix_roll_result() {
+	if(last_number < 6)
+		output("[-%1i]", last_number);
+	else if(last_number >= 10)
+		output("[+%1i]", last_number);
+	else
+		output("[%1i]", last_number);
+}
+
 static void player_roll(int bonus) {
 	if(last_ability)
 		bonus += player->get(last_ability);
@@ -198,6 +207,11 @@ void quest_run(int index) {
 	}
 }
 
+static void prepare_damage(int bonus) {
+	player_damage = player->getdamage();
+	enemy_damage = opponent->getdamage();
+}
+
 static void choose_enum(int bonus) {
 	variant parent = bsdata<abilityi>::elements + last_ability;
 	if(!parent)
@@ -239,6 +253,7 @@ BSDATA(conditioni) = {
 BSDATA(script) = {
 	{"ChooseEnum", choose_enum},
 	{"ChoosePlayer", choose_player},
+	{"PrepareDamage", prepare_damage},
 	{"Roll", player_roll},
 };
 BSDATAF(script)

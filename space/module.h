@@ -4,27 +4,27 @@
 
 #pragma once
 
-enum module_s : unsigned char {
+enum modulen : unsigned char {
 	ShardCannons, ShardCannonsII, ShardCannonsIII,
 	LaserBeams, LaserBeamsII, LaserBeamsIII,
 	RocketLaunchers, RocketLaunchersII, RocketLaunchersIII,
-	LightWeapon, HeavyWeapon, Exploration,
+	Combat, Exploration,
 	Damage, Bonus, Effect, Insight, Problem,
 	Crew, Hull, Engine, Sensors, Shield, Armor,
 	Foods, Medicaments, Technics, Luxury, Minerals, Alloys, Alchogols, Weapons, Drugs,
-	Credits,
+	Credits
 };
 struct modulei : nameable {
-	interval	damage;
-	short		weight, cost;
-	bool		isweapon() const { return damage; }
+	interval damage;
+	short	weight, cost;
+	bool	isweapon() const { return damage; }
 };
 struct modulea {
-	short		modules[Credits + 1];
-	void		add(module_s v, int i) { modules[v] += i; }
-	int			get(module_s v) const { return modules[v]; }
+	short	modules[Drugs + 1];
+	void	add(modulen v, int i) { modules[v] += i; }
+	int		get(modulen v) const { return modules[v]; }
 };
-extern module_s	last_module;
+extern modulen	last_module;
 extern modulea inflict, suffer;
 extern modulea*	last_modules;
 extern int critical_count;

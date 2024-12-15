@@ -21,12 +21,12 @@ struct ship : moveable, modulea {
 	unsigned short	type, system, homeworld;
 	short			hull, shield;
 	int				credits;
-	actionstate_s	state;
+	actionstaten	state;
 	modulea			basic;
 	bool			cansee(const ship& v) const;
 	const shipi&	geti() const;
 	void			getinfo(stringbuilder& sb) const;
-	int				getmaximum(module_s v) const;
+	int				getmaximum(modulen v) const;
 	planeti*		gethomeworld() const;
 	planeti*		getplanet() const;
 	int				getpixelsize() const;

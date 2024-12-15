@@ -49,9 +49,6 @@
     <ClCompile Include="moveable.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="information.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="action.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -63,14 +60,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Данные">
-      <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Локализация">
-      <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
-    </Filter>
     <Filter Include="logic">
       <UniqueIdentifier>{47534718-efd7-4009-aecc-0d6310c1a3b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{2a62f64f-dc5d-42f6-9dee-cc36c5ec5ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{6bebcafa-be67-47c2-87bf-227462361003}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -131,52 +128,52 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Basic.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Galaxy.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Ships.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Landscape.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Actions.txt">
-      <Filter>Данные</Filter>
+      <Filter>data</Filter>
     </Text>
     <Text Include="rules\Weapons.txt">
       <Filter>logic</Filter>
     </Text>
     <Text Include="locale\ru\Moves.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\actions\Quest.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\Abilities.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\Actions.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\BasicMoves.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\Month.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\Names.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\PlanetNames.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\UnknownNames.txt">
-      <Filter>Локализация</Filter>
+      <Filter>locale</Filter>
     </Text>
   </ItemGroup>
 </Project>

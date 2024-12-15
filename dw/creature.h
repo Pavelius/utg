@@ -37,6 +37,7 @@ struct creature : public namenpc, raceable, public avatarable, public statable, 
 };
 extern creature* player;
 extern creature* opponent;
+extern dice player_damage, enemy_damage;
 
 const char* party_avatar(const void* object);
 

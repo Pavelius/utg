@@ -99,6 +99,7 @@ int szcmp(const char* p1, const char* p2);
 void default_string(stringbuilder& sb, const char* id);
 bool equal(const char* s1, const char* s2);
 void initialize_translation();
+bool locale_identifier(stringbuilder& sb, const char* identifier);
 bool szstart(const char* text, const char* value);
 bool szmatch(const char* text, const char* value);
 bool szpmatch(const char* text, const char* pattern);

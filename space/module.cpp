@@ -12,8 +12,7 @@ BSDATA(modulei) = {
 	{"RocketLaunchers", {5, 10}},
 	{"RocketLaunchersII", {10, 15}},
 	{"RocketLaunchersIII", {15, 25}},
-	{"LightWeapon"},
-	{"HeavyWeapon"},
+	{"Combat"},
 	{"Exploration"},
 	{"Damage"},
 	{"Effect"},
@@ -35,14 +34,13 @@ BSDATA(modulei) = {
 	{"Alchogols"},
 	{"Weapons"},
 	{"Drugs"},
-	{"Credits"},
 };
-assert_enum(modulei, Credits)
+assert_enum(modulei, Drugs)
 
-int			critical_count;
-module_s	last_module;
-modulea		inflict, suffer;
-modulea*	last_modules;
+int	critical_count;
+modulen last_module;
+modulea inflict, suffer;
+modulea* last_modules;
 
 int roll_hits(int count, int chance) {
 	auto result = 0;
@@ -67,7 +65,7 @@ int apply_percent(int value, int percent) {
 	return (percent > 0) ? value * 100 / percent : 0;
 }
 
-int get_critical(module_s v) {
+int get_critical(modulen v) {
 	switch(v) {
 	case ShardCannons: return 5;
 	case ShardCannonsII: return 7;
@@ -80,7 +78,7 @@ int get_critical(module_s v) {
 	}
 }
 
-int get_critical_multiplayer(module_s v) {
+int get_critical_multiplayer(modulen v) {
 	switch(v) {
 	case LaserBeams:
 	case LaserBeamsII:

@@ -1,18 +1,2 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `AppTitle`
- Define translation for `April`
- Define translation for `Cancel`
- Define translation for `Credits`
- Define translation for `Earth`
- Define translation for `FlyToOrbit`
- Define translation for `Jupiter`
- Define translation for `LandToPlanet`
- Define translation for `Mars`
- Define translation for `Planet`
- Define translation for `RepairShip`
- Define translation for `RoutePathToPlanet`
- Define translation for `Venera`
- Define translation for `VisitDocks`
- Define translation for `VisitGoverment`
- Define translation for `VisitMarket`
- Define translation for `WhatYouWantToDo`
+ Define translation for `RefuelShip`

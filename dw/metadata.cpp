@@ -48,9 +48,6 @@ BSMETA(creature) = {
 	BSDST(abilities, abilityi),
 	BSENM(diety, dietyi),
 	{}};
-BSMETA(tagi) = {
-	BSREQ(id),
-	{}};
 BSMETA(dietyi) = {
 	BSREQ(id),
 	{}};
@@ -83,6 +80,10 @@ BSMETA(script) = {
 BSMETA(scenei) = {
 	BSREQ(id),
 	BSREQ(options),
+	{}};
+BSMETA(tagi) = {
+	BSREQ(id),
+	BSENM(ignore, movei),
 	{}};
 BSMETA(itemi) = {
 	BSREQ(id), BSREQ(weight), BSREQ(coins), BSREQ(uses),

@@ -11,6 +11,7 @@
 #include "rand.h"
 #include "script.h"
 #include "ship.h"
+#include "stringvar.h"
 #include "variable.h"
 
 static answers an;
@@ -18,6 +19,11 @@ static int result;
 static void* last_choose_result;
 static collection<ship> ships;
 static int last_value;
+
+static void add_header(stringbuilder& sb, const char* name) {
+	sb.addn("###%1", name);
+	sb.addn("---");
+}
 
 static void set_permanent(int bonus) {
 	last_modules = &last_ship->basic;
@@ -27,12 +33,12 @@ static void set_current(int bonus) {
 	last_modules = last_ship;
 }
 
-static void change_ability(module_s v, int bonus) {
+static void change_ability(modulen v, int bonus) {
 	last_modules->modules[v] += bonus;
 }
 
 template<> void fnscript<modulei>(int index, int bonus) {
-	last_module = (module_s)index;
+	last_module = (modulen)index;
 	change_ability(last_module, bonus);
 }
 
@@ -52,8 +58,14 @@ template<> void fnscript<shipi>(int index, int bonus) {
 	last_ship->update();
 }
 
-static int d12() {
-	return 1 + (rand() % 12);
+template<> void ftinfo<ship>(const void* object, stringbuilder& sb) {
+	auto p = (ship*)object;
+	auto& ei = p->geti();
+	add_header(sb, ei.getname());
+	sb.addn("%Hull: %1i/%2i", p->hull, p->modules[Hull]);
+	if(p->shield)
+		sb.addn("%Shield: %1i/%2i", p->shield, p->modules[Shield]);
+	sb.addn("%Speed: %1i", p->modules[Engine]);
 }
 
 static void make_roll(int bonus) {
@@ -85,7 +97,7 @@ static void make_roll(int bonus) {
 		if(!p)
 			break;
 		if(bsdata<modulei>::have(p)) {
-			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
+			change_ability((modulen)((modulei*)p - bsdata<modulei>::elements), -1);
 			need_reroll = true;
 			continue;
 		}
@@ -229,7 +241,7 @@ static void select_route_path_to_planet(int bonus) {
 	}
 }
 
-static void choose_action(actionstate_s state) {
+static void choose_action(actionstaten state) {
 	pushvalue interactive(answers::interactive, isplayer());
 	auto& ei = bsdata<actionstatei>::elements[state];
 	const char* cancel = 0;
@@ -262,7 +274,7 @@ static void set_state(int bonus) {
 	last_ship->state = last_action_state;
 }
 
-static void select_actions(actionstate_s state) {
+static void select_actions(actionstaten state) {
 	for(auto& e : bsdata<actioni>()) {
 		if(e.state != state)
 			continue;
@@ -340,7 +352,7 @@ static void apply_action_header() {
 	}
 }
 
-static void update_player_action(actionstate_s state) {
+static void update_player_action(actionstaten state) {
 	pushvalue resid(answers::resid);
 	pushvalue header(answers::header);
 	apply_action_header();
@@ -395,11 +407,34 @@ static void shoot_ships() {
 
 }
 
+static void planet_text(stringbuilder& sb) {
+	if(!last_planet)
+		sb.add(getnm("NoPlanet"));
+	else
+		sb.add(last_planet->getname());
+}
+
+static void ship_text(stringbuilder& sb) {
+	if(!player)
+		sb.add(getnm("NoShip"));
+}
+
+void stringbuilder_proc(stringbuilder& sb, const char* identifier) {
+	if(stringvar_identifier(sb, identifier))
+		return;
+	if(locale_identifier(sb, identifier))
+		return;
+	default_string(sb, identifier);
+}
+
+BSDATA(stringvari) = {
+	{"Planet", planet_text},
+};
+BSDATAF(stringvari)
 BSDATA(querryi) = {
 	{"SelectRoutePathToPlanet", select_route_path_to_planet},
 };
 BSDATAF(querryi)
-
 BSDATA(script) = {
 	{"AddEffect", add_effect},
 	{"Inflict", set_inflict},
