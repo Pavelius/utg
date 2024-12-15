@@ -24,9 +24,7 @@ struct modulea {
 	void	add(modulen v, int i) { modules[v] += i; }
 	int		get(modulen v) const { return modules[v]; }
 };
-extern modulen	last_module;
-extern modulea inflict, suffer;
-extern modulea*	last_modules;
+extern modulen last_module;
 extern int critical_count;
 
 int apply_percent(int value, int percent);

@@ -39,8 +39,6 @@ assert_enum(modulei, Drugs)
 
 int	critical_count;
 modulen last_module;
-modulea inflict, suffer;
-modulea* last_modules;
 
 int roll_hits(int count, int chance) {
 	auto result = 0;

@@ -19,7 +19,7 @@ struct ship : typeable<shipi>, modulea {
 	bool			cansee(const ship& v) const;
 	//void			getinfo(stringbuilder& sb) const;
 	int				getspeed() const { return modules[Engine]; }
-	int				getmaximum(module_s v) const;
+	int				getmaximum(modulen v) const;
 	void			paint() const;
 	void			update();
 };

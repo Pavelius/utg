@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum module_s : unsigned char {
+enum modulen : unsigned char {
 	ShardCannons, ShardCannonsII, ShardCannonsIII,
 	LaserBeams, LaserBeamsII, LaserBeamsIII,
 	RocketLaunchers, RocketLaunchersII, RocketLaunchersIII,
@@ -19,19 +19,17 @@ struct modulei : nameable {
 };
 struct modulea {
 	short		modules[Credits + 1];
-	void		add(module_s v, int i) { modules[v] += i; }
-	int			get(module_s v) const { return modules[v]; }
+	void		add(modulen v, int i) { modules[v] += i; }
+	int			get(modulen v) const { return modules[v]; }
 };
-extern module_s	last_module;
-extern modulea inflict, suffer;
-extern modulea*	last_modules;
+extern modulen last_module;
 extern int critical_count;
 
 int apply_percent(int value, int percent);
-int get_creating_multiplier(module_s v);
-int get_critical(module_s v);
-int get_critical_multiplayer(module_s v);
-int get_hit_chance(module_s v, int distance, int engine);
+int get_creating_multiplier(modulen v);
+int get_critical(modulen v);
+int get_critical_multiplayer(modulen v);
+int get_hit_chance(modulen v, int distance, int engine);
 int roll_damage(int count, int minimum, int maximum);
 int roll_damage(int count, int minimum, int maximum, int critical, int multiplier);
 int roll_hits(int count, int chance);

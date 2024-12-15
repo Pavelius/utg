@@ -39,9 +39,7 @@ BSDATA(modulei) = {
 assert_enum(modulei, Credits)
 
 int			critical_count;
-module_s	last_module;
-modulea		inflict, suffer;
-modulea*	last_modules;
+modulen	last_module;
 
 int roll_hits(int count, int chance) {
 	if(chance <= 0)
@@ -68,7 +66,7 @@ int apply_percent(int value, int percent) {
 	return (percent > 0) ? value * 100 / percent : 0;
 }
 
-int get_critical(module_s v) {
+int get_critical(modulen v) {
 	switch(v) {
 	case ShardCannons: return 5;
 	case ShardCannonsII: return 7;
@@ -81,7 +79,7 @@ int get_critical(module_s v) {
 	}
 }
 
-int get_critical_multiplayer(module_s v) {
+int get_critical_multiplayer(modulen v) {
 	switch(v) {
 	case LaserBeams:
 	case LaserBeamsII:
@@ -92,14 +90,14 @@ int get_critical_multiplayer(module_s v) {
 	}
 }
 
-int get_creating_multiplier(module_s v) {
+int get_creating_multiplier(modulen v) {
 	switch(v) {
 	case Hull: return 10;
 	default: return 0;
 	}
 }
 
-int get_hit_chance(module_s v, int distance, int engine) {
+int get_hit_chance(modulen v, int distance, int engine) {
 	switch(v) {
 	case LaserBeams: case LaserBeamsII: case LaserBeamsIII:
 		switch(distance) {

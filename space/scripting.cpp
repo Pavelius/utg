@@ -2,6 +2,7 @@
 #include "condition.h"
 #include "collection.h"
 #include "draw.h"
+#include "formula.h"
 #include "game.h"
 #include "math.h"
 #include "planet.h"
@@ -18,23 +19,14 @@ static answers an;
 static int result;
 static void* last_choose_result;
 static collection<ship> ships;
-static int last_value;
 
 static void add_header(stringbuilder& sb, const char* name) {
 	sb.addn("###%1", name);
 	sb.addn("---");
 }
 
-static void set_permanent(int bonus) {
-	last_modules = &last_ship->basic;
-}
-
-static void set_current(int bonus) {
-	last_modules = last_ship;
-}
-
 static void change_ability(modulen v, int bonus) {
-	last_modules->modules[v] += bonus;
+	player->add(v, bonus);
 }
 
 template<> void fnscript<modulei>(int index, int bonus) {
@@ -47,15 +39,14 @@ template<> void fnscript<planeti>(int index, int bonus) {
 }
 
 template<> void fnscript<shipi>(int index, int bonus) {
-	last_ship = bsdata<ship>::addz();
-	last_ship->type = index;
-	last_ship->homeworld = getbsi(last_planet);
-	last_ship->position = last_planet->position;
-	last_ship->priority = 21;
-	last_ship->state = ShipOnOrbit;
-	set_permanent(0);
-	script_run(last_ship->geti().elements);
-	last_ship->update();
+	player = bsdata<ship>::addz();
+	player->type = index;
+	player->homeworld = getbsi(last_planet);
+	player->position = last_planet->position;
+	player->priority = 21;
+	player->state = ShipOnOrbit;
+	script_run(player->geti().elements);
+	player->update();
 }
 
 template<> void ftinfo<ship>(const void* object, stringbuilder& sb) {
@@ -71,7 +62,7 @@ template<> void ftinfo<ship>(const void* object, stringbuilder& sb) {
 static void make_roll(int bonus) {
 	int	rolled[2];
 	char temp[260]; stringbuilder sb(temp);
-	if(last_modules->get(Problem) > 0) {
+	if(player->get(Problem) > 0) {
 		change_ability(Problem, -1);
 		rolled[1] = d12();
 	} else
@@ -91,7 +82,7 @@ static void make_roll(int bonus) {
 		else
 			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
 		an.clear();
-		if(last_modules->get(Insight) > 0)
+		if(player->get(Insight) > 0)
 			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
 		auto p = an.choose(temp, getnm("AcceptResult"), 1);
 		if(!p)
@@ -165,7 +156,7 @@ static void choose_quest_result() {
 }
 
 static void roll(int bonus) {
-	make_roll(last_modules->get(last_module) + bonus);
+	make_roll(player->get(last_module) + bonus);
 	choose_quest_result();
 	apply_text();
 	apply_script();
@@ -206,16 +197,8 @@ static void set_variable(int bonus) {
 	last_variable->value = bonus;
 }
 
-static void add_value(int bonus) {
-	last_value += bonus;
-}
-
-static void set_value(int bonus) {
-	last_value = bonus;
-}
-
 static void pass_hours(int bonus) {
-	last_ship->wait(bonus * 60);
+	player->wait(bonus * 60);
 }
 
 static void jump_next(int bonus) {
@@ -223,11 +206,11 @@ static void jump_next(int bonus) {
 }
 
 static bool isplayer() {
-	return last_ship == player;
+	return game.getship()==player;
 }
 
 static void move_to(int bonus) {
-	last_ship->move(last_planet->position);
+	player->move(last_planet->position);
 }
 
 static void select_route_path_to_planet(int bonus) {
@@ -235,7 +218,7 @@ static void select_route_path_to_planet(int bonus) {
 	for(auto& e : bsdata<planeti>()) {
 		if(e.system != system_id)
 			continue;
-		if(last_ship->position == e.position)
+		if(player->position == e.position)
 			continue;
 		an.add(&e, e.getname());
 	}
@@ -254,7 +237,7 @@ static void choose_action(actionstaten state) {
 	last_action = (actioni*)an.choose(getnm("WhatYouWantToDo"), cancel);
 	if(!last_action) {
 		if(ei.cancel_state)
-			last_ship->state = ei.cancel_state;
+			player->state = ei.cancel_state;
 	}
 	an.clear();
 }
@@ -263,15 +246,15 @@ static void update_planets() {
 }
 
 static void add_effect(int bonus) {
-	game.modules[last_module] += game.modules[Effect] * bonus;
+	player->add(last_module, player->get(Effect) * bonus);
 }
 
 static void set_player(int bonus) {
-	player = last_ship;
+	game.setship(player);
 }
 
 static void set_state(int bonus) {
-	last_ship->state = last_action_state;
+	player->state = last_action_state;
 }
 
 static void select_actions(actionstaten state) {
@@ -323,16 +306,8 @@ static void choose_action_querry(int bonus) {
 		script_run(last_action->effect);
 }
 
-static void set_inflict(int bonus) {
-	last_modules = &inflict;
-}
-
-static void set_suffer(int bonus) {
-	last_modules = &suffer;
-}
-
 static void update_ship_enviroment() {
-	last_planet = last_ship->getplanet();
+	last_planet = player->getplanet();
 	last_system = last_planet ? last_planet->getsystem() : 0;
 }
 
@@ -373,25 +348,25 @@ static void update_each_day() {
 
 static void update_ships() {
 	ships.clear();
-	auto system_id = last_ship->system;
+	auto system_id = player->system;
 	for(auto& e : bsdata<ship>()) {
 		if(e.system != system_id)
 			continue;
-		if(!last_ship->cansee(e))
+		if(!player->cansee(e))
 			continue;
 		ships.add(&e);
 	}
 }
 
 static void update_order() {
-	pushvalue push_ship(last_ship);
+	pushvalue push_ship(player);
 	for(auto& e : bsdata<ship>()) {
-		last_ship = &e;
+		player = &e;
 		update_ships();
-		if(last_ship->ismoving())
-			last_ship->domove();
+		if(player->ismoving())
+			player->domove();
 		else
-			update_player_action(last_ship->state);
+			update_player_action(player->state);
 	}
 }
 
@@ -437,19 +412,13 @@ BSDATA(querryi) = {
 BSDATAF(querryi)
 BSDATA(script) = {
 	{"AddEffect", add_effect},
-	{"Inflict", set_inflict},
 	{"MoveTo", move_to},
 	{"Next", jump_next},
 	{"PassHours", pass_hours},
 	{"Roll", roll},
-	{"SetCurrent", set_current},
-	{"SetPermanent", set_permanent},
 	{"SetPlayer", set_player},
 	{"SetState", set_state},
-	{"SetValue", set_value},
 	{"SetVariable", set_variable},
-	{"Suffer", set_suffer},
-	{"Value", add_value},
 	{"Variable", add_variable},
 };
 BSDATAF(script)

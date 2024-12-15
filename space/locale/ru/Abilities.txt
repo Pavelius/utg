@@ -14,6 +14,9 @@ Research: Исследование
 ResearchShort: Исл
 
 Insight: Знания
+InsightShort: Зна
+Problem: Проблема
+ProblemShort: Прб
 
 Hull: Корпус
 Shield: Щит
@@ -21,13 +24,13 @@ Speed: Скорость
 
 ShardCannons: Осколочное оружие
 ShardCannonsInfo: Рельсовое оружие, осколочное оружие и другие пушки. Эффективно на близких дистанциях, отличается высокой кучностью стрельбы, но малым наносимым уроном.
-ShardCannonsShort: КОр
+ShardCannonsShort: Пушки
 LaserBeams: Лазерное оружие
 LaserBeamsInfo: Промышленный лазер и плазменное оружие. Высокоточное оружие эффективное на средних и дальних дистанциях.
-LaserBeamsShort: ЛОр
+LaserBeamsShort: Лазеры
 RocketLaunchers: Ракетное оружие
 RocketLaunchersInfo: Самоноводящиеся ракеты и торпеды. Эффективны на дальних дистанциях и наносят большой урон при попадании.
-RocketLaunchersShort: РОр
+RocketLaunchersShort: Ракеты
 Sensors: Сенсоры
 SensorsInfo: Радиус действия радара. В радиусе действия радара вы замечаете корабли и обнаруживаете разнообразные аномалии. Кроме того, чем выше значение сенсоров тем выше шанс обнаружить аномалию на планете.
 SensorsShort: Снс

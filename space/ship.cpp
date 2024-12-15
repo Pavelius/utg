@@ -17,7 +17,6 @@ assert_enum(shipclassi, Carrier)
 
 long distance(point p1, point p2);
 
-ship* last_ship;
 ship* player;
 
 const shipclassi& shipi::geti() const {
@@ -60,12 +59,12 @@ void ship::move(point position) {
 }
 
 static void update_stats() {
-	auto& ei = last_ship->geti(); auto& ec = ei.geti();
-	last_ship->modules[Hull] = ec.hull + last_ship->modules[Hull] * 10;
-	last_ship->modules[Engine] = ec.speed * (2 + last_ship->modules[Engine]); // Pixels per day
-	last_ship->modules[Sensors] = 30 * (2 + last_ship->modules[Sensors]); // Pixels for radar
-	last_ship->modules[Shield] = ec.shield + 15 * last_ship->modules[Shield];
-	last_ship->modules[Armor] = ec.armor + last_ship->modules[Armor];
+	auto& ei = player->geti(); auto& ec = ei.geti();
+	player->modules[Hull] = ec.hull + player->modules[Hull] * 10;
+	player->modules[Engine] = ec.speed * (2 + player->modules[Engine]); // Pixels per day
+	player->modules[Sensors] = 30 * (2 + player->modules[Sensors]); // Pixels for radar
+	player->modules[Shield] = ec.shield + 15 * player->modules[Shield];
+	player->modules[Armor] = ec.armor + player->modules[Armor];
 }
 
 void ship::update_correction() {
@@ -76,7 +75,7 @@ void ship::update_correction() {
 }
 
 void ship::update() {
-	pushvalue push(last_ship, this);
+	pushvalue push(player, this);
 	assign<modulea>(*this, basic);
 	update_stats();
 	update_correction();

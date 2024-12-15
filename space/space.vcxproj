@@ -151,7 +151,6 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="interface.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mission.cpp" />
     <ClCompile Include="modifier.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="moveable.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="drawable.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="landscape.h" />
-    <ClInclude Include="mission.h" />
     <ClInclude Include="modifier.h" />
     <ClInclude Include="moveable.h" />
     <ClInclude Include="planet.h" />
@@ -193,13 +191,13 @@
     <Text Include="errors.txt" />
     <Text Include="locale\ru\Abilities.txt" />
     <Text Include="locale\ru\Actions.txt" />
-    <Text Include="locale\ru\actions\Quest.txt" />
     <Text Include="locale\ru\BasicMoves.txt" />
     <Text Include="locale\ru\Month.txt" />
     <Text Include="locale\ru\Moves.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\PlanetNames.txt" />
     <Text Include="locale\ru\UnknownNames.txt" />
+    <Text Include="quest\ru\Quest.txt" />
     <Text Include="rules\Actions.txt" />
     <Text Include="rules\Basic.txt" />
     <Text Include="rules\Galaxy.txt" />

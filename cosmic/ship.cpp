@@ -5,7 +5,7 @@
 ship* player;
 ship* opponent;
 
-static void check_maximum(short& value, module_s v) {
+static void check_maximum(short& value, modulen v) {
 	short m = player->getmaximum(v);
 	if(value > m)
 		value = m;
@@ -18,7 +18,7 @@ void ship::update() {
 	player->shield = player->getmaximum(Shield);
 }
 
-int	ship::getmaximum(module_s v) const {
+int	ship::getmaximum(modulen v) const {
 	switch(v) {
 	case Hull: return modules[v] * 10;
 	default: return modules[v];

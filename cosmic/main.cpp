@@ -23,7 +23,7 @@ static void initialize() {
 
 static void get_property(const void* object, variant v, stringbuilder& sb) {
 	if(v.iskind<modulei>()) {
-		auto n = player->get((module_s)v.value);
+		auto n = player->get((modulen)v.value);
 		if(!n)
 			return;
 		sb.add("%1i", n);

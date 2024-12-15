@@ -22,22 +22,6 @@ static collection<ship> ships;
 static int last_value;
 static int target_distance;
 
-static void set_permanent(int bonus) {
-	last_modules = &player->basic;
-}
-
-static void set_inflict(int bonus) {
-	last_modules = &inflict;
-}
-
-static void set_suffer(int bonus) {
-	last_modules = &suffer;
-}
-
-static void set_current(int bonus) {
-	last_modules = player;
-}
-
 static void set_opponent(int bonus) {
 	opponent = player;
 }
@@ -53,12 +37,9 @@ static void run_script(const char* id, const char* postfix) {
 		script_run(pi->elements);
 }
 
-static void change_ability(module_s v, int bonus) {
-	last_modules->modules[v] += bonus;
-	if(last_modules->modules[v] <= 0) {
-		if(last_modules == player) {
-
-		}
+static void change_ability(modulen v, int bonus) {
+	player->modules[v] += bonus;
+	if(player->modules[v] <= 0) {
 	}
 }
 
@@ -70,7 +51,6 @@ template<> void fnscript<modulei>(int index, int bonus) {
 template<> void fnscript<shipi>(int index, int bonus) {
 	player = bsdata<ship>::addz();
 	player->type = index;
-	set_permanent(0);
 	script_run(player->geti().geti().elements);
 	script_run(player->geti().elements);
 	player->update();
@@ -106,7 +86,7 @@ static int d12() {
 static void make_roll(int bonus) {
 	int	rolled[2] = {};
 	char temp[260]; stringbuilder sb(temp);
-	if(last_modules->get(Problem) > 0) {
+	if(player->get(Problem) > 0) {
 		change_ability(Problem, -1);
 		rolled[1] = d12();
 	} else
@@ -126,13 +106,13 @@ static void make_roll(int bonus) {
 		else
 			sb.add(getnm("YouRolled"), rolled[0], rolled[1], bonus, result);
 		an.clear();
-		if(last_modules->get(Insight) > 0)
+		if(player->get(Insight) > 0)
 			an.add(bsdata<modulei>::elements + Insight, getnm("UseInside"));
 		auto p = an.choose(temp, getnm("AcceptResult"), 1);
 		if(!p)
 			break;
 		if(bsdata<modulei>::have(p)) {
-			change_ability((module_s)((modulei*)p - bsdata<modulei>::elements), -1);
+			change_ability((modulen)((modulei*)p - bsdata<modulei>::elements), -1);
 			need_reroll = true;
 			continue;
 		}
@@ -201,7 +181,7 @@ static void choose_quest_result() {
 }
 
 static void roll(int bonus) {
-	make_roll(last_modules->get(last_module) + bonus);
+	make_roll(player->get(last_module) + bonus);
 	choose_quest_result();
 	apply_text();
 	apply_script();
@@ -279,7 +259,7 @@ static void add_target_distance(int bonus) {
 		print_value("TargetDistance", target_distance);
 }
 
-static void fire_weapon(module_s v) {
+static void fire_weapon(modulen v) {
 	auto& ei = bsdata<modulei>::elements[v];
 	auto total_shoots = player->modules[v];
 	if(!total_shoots)
@@ -297,7 +277,7 @@ static void fire_weapon(module_s v) {
 }
 
 static void fire_weapons(int bonus) {
-	for(auto i = ShardCannons; i <= RocketLaunchersIII; i = (module_s)(i + 1))
+	for(auto i = ShardCannons; i <= RocketLaunchersIII; i = (modulen)(i + 1))
 		fire_weapon(i);
 }
 

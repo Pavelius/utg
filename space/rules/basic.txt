@@ -3,7 +3,7 @@
 #include "rules/Ships.txt"
 #include "rules/Actions.txt"
 
-//#import Quest "Quest"
+#include "quest/%1" Quest "*.txt"
 
 #List
 

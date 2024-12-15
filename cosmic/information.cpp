@@ -14,8 +14,8 @@ static void addcms(stringbuilder& sb, const char* name, int count) {
 		sb.adds("x%1i", count);
 }
 
-static void add_line(stringbuilder& sb, module_s f1, module_s f2) {
-	for(auto i = f1; i<=f2; i = (module_s)(i+1))
+static void add_line(stringbuilder& sb, modulen f1, modulen f2) {
+	for(auto i = f1; i<=f2; i = (modulen)(i+1))
 		addcms(sb, bsdata<modulei>::elements[i].getname(), opponent->modules[i]);
 }
 

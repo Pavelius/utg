@@ -7,9 +7,6 @@
     <ClCompile Include="metadata.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="mission.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
     <ClCompile Include="tag.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -92,9 +89,6 @@
     <ClInclude Include="game.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="mission.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="variable.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -151,9 +145,6 @@
     <Text Include="locale\ru\Moves.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\actions\Quest.txt">
-      <Filter>locale</Filter>
-    </Text>
     <Text Include="locale\ru\Abilities.txt">
       <Filter>locale</Filter>
     </Text>
@@ -173,6 +164,9 @@
       <Filter>locale</Filter>
     </Text>
     <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="quest\ru\Quest.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

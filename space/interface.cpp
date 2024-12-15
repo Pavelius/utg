@@ -45,7 +45,7 @@ static void textcnx(const char* format) {
 	caret.x += (width - textw(format)) / 2;
 	text(format);
 	caret = push_caret;
-	auto dy = texth();
+	auto dy = texth() - 1;
 	caret.y += dy;
 	height -= dy;
 }
@@ -76,7 +76,7 @@ static void texth3(const char* format) {
 }
 
 static const char* getnmsh(const char* id) {
-	auto pn = getnme(str("%1Short", id));
+	auto pn = getnme(ids(id, "Short"));
 	if(pn)
 		return pn;
 	return getnm(id);
@@ -129,9 +129,15 @@ static void data_panel() {
 	panel(temp, 120);
 }
 
-static void req_panel(const void* object, const char* header_text, int value, int width) {
+static void req_panel(const void* object, int width, const char* header_text, int value) {
 	char temp[32]; stringbuilder sb(temp);
 	sb.add("%1i", value);
+	panel(object, header_text, temp, width);
+}
+
+static void req_panel(const void* object, int width, const char* header_text, int v1, int v2, int v3) {
+	char temp[32]; stringbuilder sb(temp);
+	sb.add("%1i/%2i/%3i", v1, v2, v3);
 	panel(object, header_text, temp, width);
 }
 
@@ -144,16 +150,22 @@ static void showform() {
 
 static void req_panel(modulen id) {
 	auto p = bsdata<modulei>::elements + id;
-	req_panel(p, getnmsh(p->getid()), player->basic.modules[id], 32);
+	req_panel(p, 32, getnmsh(p->getid()), player->modules[id]);
 }
 
 void status_info(void) {
 	auto push_caret = caret;
 	auto push_height = height;
+	auto player = game.getship();
 	height = 32;
 	showform();
 	data_panel();
-	req_panel(0, getnm("Credits"), player->credits, 64);
+	req_panel(0, 64, getnm("Credits"), player->credits);
+	req_panel(0, 64, getnmsh("ShardCannons"), player->get(ShardCannons), player->get(ShardCannonsII), player->get(ShardCannonsIII));
+	req_panel(0, 64, getnmsh("LaserBeams"), player->get(LaserBeams), player->get(LaserBeamsII), player->get(LaserBeamsIII));
+	req_panel(0, 64, getnmsh("RocketLaunchers"), player->get(RocketLaunchers), player->get(RocketLaunchersII), player->get(RocketLaunchersIII));
+	req_panel(Insight);
+	req_panel(Problem);
 	caret = push_caret;
 	caret.y += height;
 	height = push_height;
@@ -232,7 +244,7 @@ void ship::paint() const {
 	case Carrier: show_rect(size); break;
 	default: show_marker(size); break;
 	}
-	if(player == this)
+	if(game.getship() == this)
 		show_sensors(modules[Sensors]);
 	ishilite(8, this);
 	fore = push_fore;
