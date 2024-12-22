@@ -9,7 +9,7 @@ LifeDomain
  effect Proficient HeavyArmor
 
 WarDomain
- spells Bless CureWounds
+ spells Bless
  effect Proficient HeavyArmor MartialWeapon
 
 #List

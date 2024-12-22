@@ -1,14 +1,10 @@
-#include "crt.h"
 #include "item.h"
+#include "rand.h"
 #include "stringbuilder.h"
 
 item* last_item;
 
 static_assert(sizeof(item) == 4, "Invalid size of `item` structure");
-
-static int d100() {
-	return rand() % 100;
-}
 
 void item::clear() {
 	memset(this, 0, sizeof(*this));

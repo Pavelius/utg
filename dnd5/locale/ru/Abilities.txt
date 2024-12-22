@@ -1,0 +1,12 @@
+﻿Constitution: Телосложение
+ConstitutionShort: Тел
+Charisma: Харизма
+CharismaShort: Хар
+Dexterity: Ловкость
+DexterityShort: Лов
+Intellegence: Интеллект
+IntellegenceShort: Инт
+Strenght: Сила
+StrenghtShort: Cил
+Wisdow: Мудрость
+WisdowShort: Муд

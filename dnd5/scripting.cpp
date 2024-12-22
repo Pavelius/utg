@@ -123,7 +123,7 @@ static void character_generate(int bonus) {
 	} else if(last_result.iskind<alignmenti>())
 		player->alignment = (char)last_result.value;
 	else if(last_result.iskind<genderi>())
-		player->setgender((gender_s)last_result.value);
+		player->setgender((gendern)last_result.value);
 	else if(last_result.iskind<classi>())
 		player->classes[last_result.value]++;
 	else if(last_result.iskind<optioni>()) {

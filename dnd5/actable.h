@@ -5,10 +5,9 @@
 
 class actable {
 	variant			kind;
-	gender_s		gender;
+	gendern			gender;
 	short unsigned	name_id;
 public:
-	static void		actv(stringbuilder& sb, const char* format, const char* format_param, const char* name, gender_s female, char separator);
 	void			act(const char* format, ...) const;
 	variant			getkind() const { return kind; }
 	const char*		getname() const;
@@ -16,7 +15,7 @@ public:
 	bool			ischaracter() const;
 	bool			iskind(variant v) const;
 	bool			isnamed() const { return name_id != 0xFFFF; }
-	void			setgender(gender_s v) { gender = v; }
+	void			setgender(gendern v) { gender = v; }
 	void			setkind(variant v) { kind = v; }
 	void			setnoname() { name_id = 0xFFFF; }
 	void			setname(unsigned short v) { name_id = v; }

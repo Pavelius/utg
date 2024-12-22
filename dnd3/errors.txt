@@ -1,2 +1,15 @@
-﻿In file `Names.txt`:
-MonstersPlace: Define translate
+﻿Error in file `UnknownNames.txt`:
+ Define translation for `AppTitle`
+ Define translation for `Cha`
+ Define translation for `CharacterSheet`
+ Define translation for `Con`
+ Define translation for `Dex`
+ Define translation for `InitiativeCounter`
+ Define translation for `Int`
+ Define translation for `Melee`
+ Define translation for `Monsters`
+ Define translation for `PlayerAbilities`
+ Define translation for `PlayerCombat`
+ Define translation for `Range`
+ Define translation for `Str`
+ Define translation for `Wis`

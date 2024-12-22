@@ -142,25 +142,28 @@
     <Text Include="rules\ClassRogue.txt">
       <Filter>data</Filter>
     </Text>
-    <Text Include="locale\ru\names\ItemNames.txt">
+    <Text Include="locale\ru\ItemNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\LanguageNames.txt">
+    <Text Include="locale\ru\LanguageNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\Names.txt">
+    <Text Include="locale\ru\Names.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\NamesNewbe.txt">
+    <Text Include="locale\ru\OptionNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\OptionNames.txt">
+    <Text Include="locale\ru\SkillNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\SkillNames.txt">
+    <Text Include="locale\ru\SpellNames.txt">
       <Filter>locale</Filter>
     </Text>
-    <Text Include="locale\ru\names\SpellNames.txt">
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\Abilities.txt">
       <Filter>locale</Filter>
     </Text>
   </ItemGroup>

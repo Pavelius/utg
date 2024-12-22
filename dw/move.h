@@ -17,7 +17,7 @@ typedef flagable<4, unsigned> movea;
 struct movei : nameable {
 	movetypen	type;
 	classi*		playbook;
-	abilityn	ability;
+	abilityn	ability; // If need roll
 };
 struct movetypei : nameable {
 };

@@ -180,16 +180,16 @@ static void footer(const variants& elements) {
 }
 
 static void character_sheet() {
-	auto pm = bsdata<menu>::find(lastwidget->id);
-	if(!pm)
-		return;
-	rectpush push;
-	width = 320; height = 400;
-	caret.x = metrics::padding + metrics::border;
-	caret.y = 1 + metrics::padding + metrics::border;
-	draw::swindow(false);
-	footer(pm->elements);
-	paint(*pm);
+	//auto pm = bsdata<menu>::find(lastwidget->id);
+	//if(!pm)
+	//	return;
+	//rectpush push;
+	//width = 320; height = 400;
+	//caret.x = metrics::padding + metrics::border;
+	//caret.y = 1 + metrics::padding + metrics::border;
+	//draw::swindow(false);
+	//footer(pm->elements);
+	//paint(*pm);
 }
 
 static void background_map() {
@@ -208,11 +208,11 @@ static void object_painting(const object* p) {
 }
 
 void ui_initialize() {
-	widget::add("AbilityBox", ability_box_widget);
-	widget::add("PaddingBox", padding_box);
-	widget::add("GroupHorizontal", group_horizontal);
-	widget::add("Separator", separator);
-	widget::add("SkillBox", skill_box_widget);
+	//widget::add("AbilityBox", ability_box_widget);
+	//widget::add("PaddingBox", padding_box);
+	//widget::add("GroupHorizontal", group_horizontal);
+	//widget::add("Separator", separator);
+	//widget::add("SkillBox", skill_box_widget);
 	add_widget(character_sheet, 50);
 	add_widget(background_map, 0);
 }
