@@ -5,7 +5,7 @@ using namespace draw;
 
 static void tooltips_render() {
 	auto push_fore = draw::fore;
-	rectpush push;
+	pushrect push;
 	tipspos();
 	fore = colors::tips::back;
 	setoffset(-metrics::border, -metrics::border);

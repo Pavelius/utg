@@ -63,7 +63,7 @@ static void window_border(int total_height) {
 }
 
 static void small_bonus_box(int total_height, int bonus) {
-	rectpush push;
+	pushrect push;
 	height = width = 16;
 	caret.x += 56;
 	caret.y += (total_height - height) / 2;
@@ -156,7 +156,7 @@ static void rightline() {
 }
 
 static void tabs(const variants& elements) {
-	rectpush push;
+	pushrect push;
 	caret.x -= metrics::padding;
 	height = texth() + metrics::padding * 2;
 	for(auto& e : elements) {

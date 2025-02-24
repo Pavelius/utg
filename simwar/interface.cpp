@@ -46,7 +46,7 @@ static void textcw(const char* format) {
 
 static void buttonback(int size, void* data) {
 	auto push_alpha = alpha;
-	rectpush push;
+	pushrect push;
 	width = size * 2;
 	height = button_height - 1;
 	caret.y -= (height + 1) / 2;
@@ -73,7 +73,7 @@ static void paint_vborder() {
 }
 
 static void hiliting_object(const void* object, int minimal_width) {
-	rectpush push;
+	pushrect push;
 	height = texth();
 	width = minimal_width;
 	ishilite(object);
@@ -189,7 +189,7 @@ static void texth2(const char* format) {
 }
 
 static void stroke_texth2(const char* format) {
-	rectpush push;
+	pushrect push;
 	auto push_stroke = fore_stroke;
 	auto push_font = font;
 	auto push_fore = fore;
@@ -247,7 +247,7 @@ static void paint_buildings(const provincei* p) {
 	char temp[260]; stringbuilder sb(temp); sb.clear();
 	add_line_upkeep_x(p, sb);
 	if(temp[0]) {
-		rectpush push;
+		pushrect push;
 		textfs(temp);
 		caret.x -= width / 2;
 		caret.y += 16;

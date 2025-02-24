@@ -11,7 +11,7 @@ interval monsteri::getcount(group_s v) const {
 	}
 }
 
-bool monsteri::is(feat_s i) const {
+bool monsteri::is(featn i) const {
 	for(auto v : feats) {
 		if(v.iskind<feati>()) {
 			if(v.value == i)

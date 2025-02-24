@@ -18,7 +18,7 @@ struct itemi : attacki {
 	featable	flags;
 	listi*		powers;
 	variants	use, wearing;
-	bool		is(feat_s v) const { return flags.is(v); }
+	bool		is(featn v) const { return flags.is(v); }
 };
 class item : public typeable<itemi, unsigned char> {
 	union {

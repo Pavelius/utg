@@ -1,1 +1,2 @@
-﻿Can't find file 'speech/ru/Character1s.txt'
+﻿Error in file `rules/Spells.txt`:
+ Line 91: Not found requisit `summon`

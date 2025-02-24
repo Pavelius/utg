@@ -45,7 +45,7 @@ static void statusbar() {
 }
 
 bool draw::swindow(bool hilight) {
-	rectpush push;
+	pushrect push;
 	auto push_alpha = alpha;
 	auto push_fore = fore;
 	setoffset(-metrics::border, -metrics::border);
@@ -271,7 +271,7 @@ static void paint_tips() {
 		}
 	}
 	if(tips_sb) {
-		rectpush push;
+		pushrect push;
 		width = 400;
 		tipsposition(tips_sb.begin());
 		tipswindow();

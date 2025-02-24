@@ -75,7 +75,7 @@ int draw::getdistance(point h1, point h2) {
 }
 
 static void rectfsized() {
-	rectpush push;
+	pushrect push;
 	short dy = (short)(fsize * cos_30);
 	short dx = fsize / 2;
 	caret.x -= dx;

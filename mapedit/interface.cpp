@@ -202,7 +202,7 @@ static void paint_tile(tilei& e, int index) {
 	paint_tile_background(e);
 	caret = push_caret;
 	clipping = push_clip;
-	rectpush push;
+	pushrect push;
 	width = size; height = size;
 	if(index == terrain_land)
 		rectb();

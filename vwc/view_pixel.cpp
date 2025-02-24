@@ -13,7 +13,7 @@ static unsigned char pixel_index;
 static int		pixel_size = 4, pixel_index_hilite;
 
 static void paint_hilite_index() {
-	rectpush push;
+	pushrect push;
 	caret.x--;
 	caret.y--;
 	height += 2;
@@ -65,7 +65,7 @@ void view_pixels() {
 	setclipall();
 	center_paint();
 	control_pixels();
-	rectpush push;
+	pushrect push;
 	pushvalue push_index(pixel_index);
 	auto x2 = caret.x + push.width;
 	auto y2 = caret.y + push.height;

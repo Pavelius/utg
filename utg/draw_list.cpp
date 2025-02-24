@@ -31,7 +31,7 @@ void draw::showborder() {
 }
 
 void draw::showbackground() {
-	rectpush push;
+	pushrect push;
 	auto push_fore = fore;
 	fore = colors::window;
 	width -= 1; height -= 1;

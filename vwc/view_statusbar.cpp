@@ -21,7 +21,7 @@ void tips_statusbar() {
 		return;
 	if(!status_rect)
 		return;
-	rectpush push;
+	pushrect push;
 	setpos(status_rect);
 	textcnw(status_text);
 }

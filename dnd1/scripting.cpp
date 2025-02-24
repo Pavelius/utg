@@ -98,7 +98,7 @@ static void damage_item() {
 		last_item->act(' ', getnm("ItemBroken"), last_item->getname());
 }
 
-bool have_feats(feat_s v, bool keep) {
+bool have_feats(featn v, bool keep) {
 	for(auto p : creatures) {
 		if(!p->isready())
 			continue;
@@ -108,7 +108,7 @@ bool have_feats(feat_s v, bool keep) {
 	return false;
 }
 
-bool have_feats(feat_s side, feat_s v, bool keep) {
+bool have_feats(featn side, featn v, bool keep) {
 	for(auto p : creatures) {
 		if(!p->isready())
 			continue;
@@ -134,7 +134,7 @@ static creature* get_greater(abilityn a, bool party) {
 	return result;
 }
 
-static void set_all_feat(bool party, feat_s v) {
+static void set_all_feat(bool party, featn v) {
 	for(auto p : creatures) {
 		if(p->is(Player) != party)
 			continue;
@@ -143,11 +143,11 @@ static void set_all_feat(bool party, feat_s v) {
 }
 
 static bool is_melee_fight() {
-	feat_s feat = {};
+	featn feat = {};
 	for(auto p : creatures) {
 		if(!p->isready() || !p->is(EngageMelee))
 			continue;
-		feat_s t = {};
+		featn t = {};
 		if(p->is(Enemy))
 			t = Enemy;
 		else if(p->is(Player))
@@ -169,7 +169,7 @@ static void update_melee_fight() {
 		p->feats.remove(EngageMelee);
 }
 
-static bool isw(feat_s v) {
+static bool isw(featn v) {
 	if(player->is(v))
 		return true;
 	if(last_item) {
@@ -313,7 +313,7 @@ static void roll_initiative() {
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
 }
 
-static void add_monsters(const monsteri* pm, int count, feat_s feat) {
+static void add_monsters(const monsteri* pm, int count, featn feat) {
 	pushvalue push_player(player);
 	opponent = 0;
 	for(auto i = 0; i < count; i++) {

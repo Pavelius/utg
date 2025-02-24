@@ -91,7 +91,7 @@ static void show_command_panels() {
 }
 
 static void show_panels() {
-	rectpush push;
+	pushrect push;
 	caret.x += metrics::border + metrics::padding;
 	caret.y += metrics::border + metrics::padding;
 	show_widget_panels();
@@ -106,7 +106,7 @@ static void set_opened() {
 }
 
 static void paint_hilite() {
-	rectpush push;
+	pushrect push;
 	auto push_fore = fore;
 	auto push_alpha = alpha;
 	fore = colors::active;
@@ -305,7 +305,7 @@ static void paint_menu_panel() {
 static void paint_panel() {
 	if(!last_panel)
 		return;
-	rectpush push;
+	pushrect push;
 	auto push_column = column_width;
 	caret.x += metrics::padding + metrics::border;
 	caret.y += metrics::padding + metrics::border;
@@ -391,7 +391,7 @@ static void paint_creature() {
 }
 
 static point drag_drop_element(fncommand paint, void* object) {
-	rectpush push;
+	pushrect push;
 	dragbegin(object);
 	while(ismodal()) {
 		strategy_background();
@@ -442,7 +442,7 @@ static void cancel_area() {
 
 static void choose_menu_window(const array& source, fncommand paint) {
 	const int dx = 72;
-	rectpush push;
+	pushrect push;
 	auto maximum = source.getcount();
 	width = imin(maximum, size_t(10)) * dx + metrics::padding;
 	height = dx;
@@ -459,7 +459,7 @@ static void choose_menu_window(const array& source, fncommand paint) {
 }
 
 static long choose_menu(const array& source, fncommand paint) {
-	rectpush push;
+	pushrect push;
 	while(ismodal()) {
 		strategy_background();
 		paint_objects();

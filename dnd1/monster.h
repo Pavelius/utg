@@ -15,7 +15,7 @@ struct monsteri : nameable {
 	const monsteri*	look;
 	char			treasure[8];
 	char			magic;
-	bool			is(feat_s v) const;
+	bool			is(featn v) const;
 	bool			isfalselook() { return look != getlook(); }
 	interval		getcount(group_s v) const;
 	const monsteri*	getlook() const;

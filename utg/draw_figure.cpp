@@ -4,7 +4,7 @@
 figure	draw::hilite_type;
 
 void draw::field(figure type, int size) {
-	rectpush push;
+	pushrect push;
 	int push_size;
 	switch(type) {
 	case figure::Check:

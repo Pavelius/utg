@@ -256,7 +256,7 @@ static void textv(const char* format, ...) {
 
 static void buttonback(int size, const void* data) {
 	auto push_alpha = alpha;
-	rectpush push;
+	pushrect push;
 	width = size * 2;
 	height = button_height - 1;
 	caret.y -= (height + 1) / 2;
@@ -285,7 +285,7 @@ void troop::paint() const {
 }
 
 static void windowed(const char* format) {
-	rectpush push;
+	pushrect push;
 	swindow(false);
 	textf(format);
 }
@@ -504,13 +504,13 @@ static void empthy_scene() {
 }
 
 static void textct(const char* format) {
-	rectpush push;
+	pushrect push;
 	setoffset(4, 4);
 	texta(format, AlignCenterCenter);
 }
 
 static void rectbc(color v, bool mark, void* hilite_item) {
-	rectpush push;
+	pushrect push;
 	auto push_fore = fore;
 	fore = v;
 	auto push_alpha = alpha;
@@ -539,7 +539,7 @@ static void tech_paint(tech_s i) {
 }
 
 static void basic_technology_paint() {
-	rectpush push;
+	pushrect push;
 	width = 128;
 	height = texth() * 3 + 24;
 	for(auto i = PlasmaScoring; i <= IntegratedEconomy; i = (tech_s)(i + 1)) {
@@ -553,7 +553,7 @@ static void basic_technology_paint() {
 }
 
 static void faction_technology_paint() {
-	rectpush push;
+	pushrect push;
 	width = 128;
 	height = texth() * 3;
 }

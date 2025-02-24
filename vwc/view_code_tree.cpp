@@ -60,7 +60,7 @@ symbol* get_active_symbol() {
 
 static void code_tree_widget() {
 	static int origin;
-	rectpush push;
+	pushrect push;
 	showborder();
 	partoffset(1, 1);
 	showbackground();

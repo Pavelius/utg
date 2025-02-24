@@ -39,7 +39,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	static void		getstatus(const void* object, stringbuilder& sb);
 	void			heal(int value);
 	bool			is(spelln v) const { return active_spells.is(v); }
-	bool			is(feat_s v) const { return feats.is(v); }
+	bool			is(featn v) const { return feats.is(v); }
 	bool			isallow(const item& it) const;
 	bool			isalive() const { return get(HP) > 0; }
 	bool			isally() const;
@@ -55,7 +55,7 @@ struct creature : actable, spellable, statable, avatarable, wearable {
 	void			remove();
 	void			rest();
 	bool			save(spelln id, int& count) const;
-	void			set(feat_s v) { feats.set(v); }
+	void			set(featn v) { feats.set(v); }
 	void			setleader(const creature* pv);
 	void			setcontact(const creature* pv);
 	void			update();
@@ -67,7 +67,7 @@ extern creature *player, *opponent, *caster;
 struct creaturea : adat<creature*, 32> {
 	typedef bool (creature::*fnproc)() const;
 	creature*		choose(const char* title, bool random = false) const;
-	void			match(feat_s v, bool keep);
+	void			match(featn v, bool keep);
 	void			match(fnproc proc, bool keep);
 	void			matchally(bool keep);
 	void			matchenemy(bool keep);
@@ -75,7 +75,7 @@ struct creaturea : adat<creature*, 32> {
 	void			matchyou(bool keep) { match(&creature::isplayer, keep); }
 	creature*		random() const;
 	void			select();
-	void			set(feat_s v);
+	void			set(featn v);
 };
 extern creaturea creatures, targets;
 

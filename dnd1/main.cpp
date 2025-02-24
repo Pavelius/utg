@@ -16,7 +16,7 @@ void combat_mode();
 void initialize_ui();
 void random_encounter(const char* id);
 
-static void add_creature(const char* id, gendern gender, feat_s feat, int level) {
+static void add_creature(const char* id, gendern gender, featn feat, int level) {
 	auto pi = bsdata<classi>::find(id);
 	if(!pi)
 		return;

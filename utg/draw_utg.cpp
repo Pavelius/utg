@@ -125,7 +125,7 @@ static void bartextselected(const char* format) {
 }
 
 static void hilitingx(const char* id, figure v) {
-	rectpush push;
+	pushrect push;
 	caret.x += 1;
 	caret.y += 1;
 	hiliting(id, v);
@@ -155,7 +155,7 @@ static int getbarpageheight() {
 }
 
 static void paintbars(void** pages, unsigned count) {
-	rectpush push;
+	pushrect push;
 	caret.y += height + metrics::border - 1;
 	caret.x -= metrics::border;
 	height = getbarpageheight() + metrics::border;
@@ -459,7 +459,7 @@ static void rect_fade(int percent, color fill_fore) {
 		return;
 	else if(percent <= 0)
 		percent = 0;
-	rectpush push;
+	pushrect push;
 	auto push_alpha = alpha; alpha = 160;
 	auto push_fore = fore; fore = fill_fore;
 	auto dy = percent * height / 100;
@@ -515,7 +515,7 @@ static void circleactive() {
 }
 
 static void hilite_paint() {
-	rectpush push;
+	pushrect push;
 	caret.x = hilite.x1; caret.y = hilite.y1;
 	width = hilite.width(); height = hilite.height();
 	switch(hilite_type) {
@@ -539,7 +539,7 @@ static void statusbar_paint() {
 	utg::callback::getstatus(hilite_object, sb);
 	if(!temp[0])
 		return;
-	rectpush push;
+	pushrect push;
 	caret.x = metrics::padding + metrics::border;
 	caret.y = getheight() - texth() - metrics::border - 1;
 	width = getwidth() - caret.x * 2;

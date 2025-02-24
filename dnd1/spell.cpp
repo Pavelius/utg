@@ -49,7 +49,7 @@ static bool allow_all_of(const variants& source, bool(*proc)(variant)) {
 
 static bool allow_creature(variant v) {
 	if(v.iskind<feati>())
-		return player->is((feat_s)v.value);
+		return player->is((featn)v.value);
 	else if(v.iskind<conditioni>())
 		return bsdata<conditioni>::elements[v.value].proc();
 	else if(v.iskind<monsteri>())

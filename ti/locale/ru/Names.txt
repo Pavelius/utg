@@ -20,6 +20,7 @@ ChooseInvasion: Выберайте отряды вторжения
 ChooseInvasionPlanet: Выберайте планету вторжения
 ChooseMove: Выбирайте корабли для передвижения
 ChooseMoveOption: Что будет делать %1?
+ChooseMoveOptions: Что будет делать %1?
 ChooseOptions: (осталось [%1i])
 ChoosePDSorDock: Выбирайте что построить?
 ChooseProduction: Что хотите построить?

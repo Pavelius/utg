@@ -20,8 +20,8 @@ struct spelli : nameable {
 	interval	random;
 	spella		dispell;
 	spelln		reversed, version;
-	variants	wearing, instant, filter, use;
-	variant		summon;
+	variants	wearing, instant, filter, filter_items, use;
+	//variant		summon;
 	spelln		getbasic() const { return reversed ? reversed : version; }
 	bool		isdurable() const { return duration != Instant; }
 	bool		isevil() const;

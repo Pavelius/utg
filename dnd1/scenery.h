@@ -21,10 +21,10 @@ struct scenery : typeable<scenei>, parentable<scenery> {
 	void		enter();
 	const char* getid() const { return geti().getid(); }
 	bool		haveitems() const;
-	bool		is(feat_s v) const { return flags.is(v); }
+	bool		is(featn v) const { return flags.is(v); }
 	bool		is(spelln v) const;
-	void		set(feat_s v) { flags.set(v); }
-	void		remove(feat_s v) { flags.remove(v); }
+	void		set(featn v) { flags.set(v); }
+	void		remove(featn v) { flags.remove(v); }
 	void		update();
 };
 extern scenery* scene;
@@ -32,4 +32,4 @@ extern int		encountered_count;
 
 void add_scene(const char* id);
 
-bool have_feats(feat_s v, bool keep = true);
+bool have_feats(featn v, bool keep = true);

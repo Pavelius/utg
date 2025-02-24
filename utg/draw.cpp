@@ -1170,7 +1170,7 @@ void draw::rectb3d() {
 }
 
 void draw::rectf() {
-	rectpush push;
+	pushrect push;
 	int x1 = caret.x, y1 = caret.y, x2 = caret.x + width, y2 = caret.y + height;
 	if(correct(x1, y1, x2, y2, clipping))
 		set32x(ptr(x1, y1), canvas->scanline, x2 - x1, y2 - y1);
@@ -1234,7 +1234,7 @@ void draw::rectx() {
 }
 
 void draw::rectfocus() {
-	rectpush push;
+	pushrect push;
 	setoffset(1, 1);
 	rectx();
 }
@@ -2074,7 +2074,7 @@ void draw::image(const sprite* e, int id, int flags, color* pal) {
 }
 
 static void rectfall() {
-	rectpush push;
+	pushrect push;
 	caret.x = caret.y = 0;
 	width = getwidth();
 	height = getheight();
@@ -2543,7 +2543,7 @@ void draw::fillwindow() {
 }
 
 void draw::strokeout(fnevent proc, int dx) {
-	rectpush push;
+	pushrect push;
 	if(!dx)
 		dx = metrics::border;
 	caret.x -= dx;
@@ -2638,6 +2638,16 @@ void* draw::scene(fnevent proc) {
 	return (void*)getresult();
 }
 
+void* draw::scene(fnevent proc, fnevent input) {
+	while(ismodal()) {
+		proc();
+		if(input)
+			input();
+		domodal();
+	}
+	return (void*)getresult();
+}
+
 void draw::scene() {
 	scene(0);
 }
@@ -2691,7 +2701,7 @@ void draw::tipspos() {
 
 void draw::dropshadow() {
 	int size = 4;
-	rectpush push;
+	pushrect push;
 	auto push_fore = fore;
 	auto push_alpha = alpha;
 	fore = colors::form;

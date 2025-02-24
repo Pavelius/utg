@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum feat_s : unsigned char {
+enum featn : unsigned char {
 	EnergyDrain, Paralysis, PetrifyingBreath, PetrifyingGaze, PoisonImmunity, CharmImmunity, StrenghtDrain,
 	PoisonAttack,
 	AcidDamage, Blink, ChargeDouble, DeathGaze, Defensive, Regeneration, Stampede, BloodSucking,

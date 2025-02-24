@@ -88,7 +88,7 @@ RemoveCurseCreature level(3) range(OneAlly)
 CauseCurse level(3) range(OneEnemy) reversed(RemoveCurse)
  filter Cursed-1
  instant PushModifier Permanent Cursed
-FlameBlade level(3) range(OneAlly) duration(Turn1) summon(FlameSwordHand)
+FlameBlade level(3) range(OneAlly) duration(Turn1)
  filter IfYou
 
 CureSeriousWound level(4) range(OneAlly)

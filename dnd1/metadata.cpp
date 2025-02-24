@@ -157,7 +157,6 @@ BSMETA(spelli) = {
 	BSREQ(filter),
 	BSREQ(instant),
 	BSREQ(wearing),
-	BSREQ(summon),
 	BSENM(range, rangei),
 	BSENM(dispell, spelli),
 	BSENM(reversed, spelli), BSENM(version, spelli),

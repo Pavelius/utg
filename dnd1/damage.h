@@ -7,5 +7,5 @@ enum damage_s : unsigned char {
 	Iron, Wood, Fire, Cold,
 };
 struct damagei : nameable {
-	feat_s	immunity, resistance;
+	featn	immunity, resistance;
 };

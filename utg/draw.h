@@ -167,11 +167,17 @@ extern long				text_params[16];
 extern color*			palt;
 extern int				tab_pixels;
 extern fnevent          pbackground, ptips, pfinish, pbeforemodal, pleavemodal, psetfocus;
-struct rectpush {
-	point				caret;
-	int					width, height;
-	constexpr rectpush() : caret(draw::caret), width(draw::width), height(draw::height) {}
-	~rectpush() { draw::caret = caret; draw::width = width; draw::height = height; }
+struct pushrect {
+	point caret;
+	int	width, height;
+	constexpr pushrect() : caret(draw::caret), width(draw::width), height(draw::height) {}
+	~pushrect() { draw::caret = caret; draw::width = width; draw::height = height; }
+};
+struct pushfore {
+	color fore;
+	pushfore() : fore(draw::fore) {}
+	pushfore(color v) : fore(draw::fore) { draw::fore = v; }
+	~pushfore() { draw::fore = fore; }
 };
 int						aligned(int x, int width, unsigned state, int string_width);
 int						alignedh(const rect& rc, const char* string, unsigned state);
@@ -300,6 +306,7 @@ bool isnext();
 void initialize(const char* title);
 bool ismodal();
 void* scene(fnevent proc);
+void* scene(fnevent proc, fnevent input);
 void scene();
 void setneedupdate();
 void setnext(fnevent v);

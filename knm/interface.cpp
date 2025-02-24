@@ -364,7 +364,7 @@ static void textv(const char* format, ...) {
 
 static void buttonback(int size, const void* data) {
 	auto push_alpha = alpha;
-	rectpush push;
+	pushrect push;
 	width = size * 2;
 	height = button_height - 1;
 	caret.y -= (height + 1) / 2;
@@ -389,7 +389,7 @@ void troopi::paint() const {
 }
 
 static void windowed(const char* format) {
-	rectpush push;
+	pushrect push;
 	swindow(false);
 	textf(format);
 }
@@ -566,7 +566,7 @@ void update_ui() {
 }
 
 static void transparent_window() {
-	rectpush push;
+	pushrect push;
 	auto push_alpha = alpha;
 	auto push_fore = fore;
 	setoffset(-metrics::border, -metrics::border);
@@ -582,7 +582,7 @@ static void transparent_window() {
 static void paint_message_string() {
 	if(!message_string)
 		return;
-	rectpush push;
+	pushrect push;
 	textfs(message_string);
 	caret.x = (getwidth() - width) / 2;
 	caret.y += metrics::border * 3;
@@ -601,13 +601,13 @@ static void main_finish() {
 }
 
 static void textct(const char* format) {
-	rectpush push;
+	pushrect push;
 	setoffset(4, 4);
 	texta(format, AlignCenterCenter);
 }
 
 static void window_frame(color v, const entity* pe, const char* format) {
-	rectpush push;
+	pushrect push;
 	auto push_fore = fore;
 	fore = v;
 	auto push_alpha = alpha;
@@ -631,7 +631,7 @@ static void window_frame(color v, const entity* pe) {
 }
 
 static void paint_querry() {
-	rectpush push; width = 280; height = 100;
+	pushrect push; width = 280; height = 100;
 	auto origin = caret;
 	for(auto p : querry) {
 		window_frame(colors::window, p);
