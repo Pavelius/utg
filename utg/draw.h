@@ -296,6 +296,7 @@ bool button(const char* title, unsigned key, fnbutton proc, bool vertical = true
 void buttoncancel();
 void buttonok();
 void buttonparam();
+void cbsetuc();
 void cbsetsht();
 void cbsetint();
 void cbsetptr();

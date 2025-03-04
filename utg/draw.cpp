@@ -2523,6 +2523,11 @@ void draw::cbsetsht() {
 	*p = (short)hparam;
 }
 
+void draw::cbsetuc() {
+	auto p = (unsigned char*)hobject;
+	*p = (unsigned char)hparam;
+}
+
 void draw::cbsetptr() {
 	auto p = (void**)hobject;
 	*p = (void*)hparam;

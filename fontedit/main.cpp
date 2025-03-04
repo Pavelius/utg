@@ -29,8 +29,18 @@ static void rectb_current() {
 	rectb();
 }
 
+static void setvert(int v) {
+	caret.y += v;
+	height -= v;
+}
+
 static void rectb_spot() {
 	pushfore push(colors::active);
+	rectb();
+}
+
+static void rectb_spot_pallette() {
+	pushfore push(pallette[pallette_current]);
 	rectb();
 }
 
@@ -100,6 +110,27 @@ static void paint_pallette() {
 	}
 }
 
+static void raw832(unsigned char* d, int d_scan, unsigned char* s, int s_scan, int width, int height, const color* pallette) {
+	const int cbd = 4;
+	while(height-- > 0) {
+		unsigned char* p1 = d;
+		unsigned char* sb = s;
+		unsigned char* se = s + width;
+		while(sb < se) {
+			*((color*)p1) = pallette[*sb++];
+			p1 += cbd;
+		}
+		s += s_scan;
+		d += d_scan;
+	}
+}
+
+static void paint_preview() {
+	raw832(canvas->ptr(caret.x, caret.y), canvas->scanline,
+		bitdata.ptr(0, 0), bitdata.scanline, bitdata.width, bitdata.height, pallette);
+	setvert(metrics::padding + bitdata.height);
+}
+
 static void paint_bitdata() {
 	pushrect push;
 	pushfore push_fore;
@@ -119,7 +150,11 @@ static void paint_bitdata() {
 				bitdata_spot = point(x, y);
 				status.adds("Position: %1i %2i", bitdata_spot.x, bitdata_spot.y);
 				status.adds("Index: %1i", index);
-				rectb_spot();
+				rectb_spot_pallette();
+				if((hkey == MouseMove || hkey == MouseLeft) && hpressed)
+					execute(cbsetuc, pallette_current, 0, bitdata.ptr(x, y));
+				if(hkey==MouseRight && !hpressed)
+					execute(cbsetint, index, 0, &pallette_current);
 			}
 		}
 	}
@@ -146,7 +181,7 @@ static void paint_statusbar() {
 	status_rect.y1 = caret.y + metrics::padding;
 	status_rect.x2 = push_caret.x + width - metrics::padding;
 	status_rect.y2 = caret.y + height - metrics::padding;
-	height = getheight() - height;
+	height = getheight() - height - push_caret.y;
 	caret = push_caret;
 }
 
@@ -169,6 +204,7 @@ void mainview() {
 	rectf();
 	paint_toolbar();
 	setoffset(metrics::padding, metrics::padding);
+	paint_preview();
 	paint_pallette();
 	caret.x += pallette_zoom * 16 + metrics::padding;
 	width -= pallette_zoom * 16 + metrics::padding;
