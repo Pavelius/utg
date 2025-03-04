@@ -303,6 +303,9 @@
     <ClCompile Include="formula.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="win_draw_shell.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">

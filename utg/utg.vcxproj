@@ -238,6 +238,7 @@
     <ClCompile Include="win_cmd.cpp" />
     <ClCompile Include="win_console.cpp" />
     <ClCompile Include="win_draw.cpp" />
+    <ClCompile Include="win_draw_shell.cpp" />
     <ClCompile Include="win_io_file.cpp" />
     <ClCompile Include="win_message.cpp" />
     <ClCompile Include="win_time.cpp" />

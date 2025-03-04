@@ -1,4 +1,5 @@
 ﻿#include "draw.h"
+#include "editor.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
 
@@ -14,11 +15,11 @@ static point bitdata_spot;
 static int zoom = 16;
 
 const int pallette_zoom = 14; // Pallette zoom view
-static color pallette[256]; // Currently selected pallette
 static int pallette_spot, pallette_current;
 
 void set_light_theme();
 void set_dark_theme();
+void open_file();
 
 static void rectb_current() {
 	pushrect push_rect;
@@ -31,6 +32,45 @@ static void rectb_current() {
 static void rectb_spot() {
 	pushfore push(colors::active);
 	rectb();
+}
+
+static void rectf_hilite(unsigned char v) {
+	auto push_alpha = alpha; alpha = v;
+	pushfore push_fore(colors::button);
+	rectf();
+	alpha = push_alpha;
+}
+
+static void rectf_active() {
+	if(hpressed)
+		rectf_hilite(128);
+	else
+		rectf_hilite(64);
+	rectb();
+}
+
+static void tool(int id, unsigned key, fnevent proc) {
+	if(ishilite()) {
+		rectf_active();
+		if(hkey == MouseLeft && !hpressed)
+			execute(proc);
+	}
+	image(caret.x + width / 2, caret.y + height / 2, metrics::icons, id, 0);
+}
+
+static void paint_tool(int size) {
+	pushrect push;
+	height = size + metrics::padding * 2;
+	gradv(colors::form, colors::window);
+	caret.y += metrics::padding; height = size;
+	caret.x += metrics::padding; width = size;
+	tool(0, 0, open_file);
+}
+
+static void paint_toolbar() {
+	const int size = 24;
+	paint_tool(size);
+	caret.y += size + metrics::padding * 2; height -= size + metrics::padding;
 }
 
 static void paint_pallette() {
@@ -127,6 +167,7 @@ void mainview() {
 	paint_statusbar();
 	fore = colors::form;
 	rectf();
+	paint_toolbar();
 	setoffset(metrics::padding, metrics::padding);
 	paint_pallette();
 	caret.x += pallette_zoom * 16 + metrics::padding;

@@ -136,7 +136,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="editor.cpp" />
+    <ClCompile Include="filehandle.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scripting.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="editor.h" />
+    <ClInclude Include="filehandle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
