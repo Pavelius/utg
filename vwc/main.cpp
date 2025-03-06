@@ -2,11 +2,12 @@
 #include "bsreq.h"
 #include "code_package.h"
 #include "code_lexer.h"
-#include "crt.h"
 #include "draw.h"
 #include "draw_gui.h"
 #include "draw_list.h"
 #include "log.h"
+#include "rand.h"
+#include "timer.h"
 #include "view_source.h"
 #include "view_statusbar.h"
 #include "viewpackage.h"
@@ -18,7 +19,6 @@ void before_modal_statusbar();
 void check_translation();
 void initialize_interface();
 void initialize_pixels();
-void initialize_translation(const char* locale);
 void paint_statusbar();
 void set_dark_theme();
 void view_code_tree();
@@ -30,7 +30,7 @@ symbol* get_active_symbol();
 static void code_error(const char* position, const char* format, const char* format_param) {
 	char temp[2048]; stringbuilder sb(temp);
 	sb.addv(format, format_param);
-	log::errorv(position, temp);
+	//log::errorv(position, temp);
 }
 
 static void clear_fill() {
@@ -53,7 +53,7 @@ static bool test_code() {
 	bsdata<lexer>::elements[0].activate();
 	last_package = code::openview("test");
 	last_package->write("code/test.c2b");
-	return log::geterrors() == 0;
+	return log::errors == 0;
 }
 
 static void mainscene() {
@@ -83,10 +83,8 @@ int main(int argc, char* argv[]) {
 	set_dark_theme();
 	perror = code_error;
 	bsreq::read("rules/Basic.txt");
-	initialize_translation("ru");
-	check_translation();
 	initialize_pixels();
-	if(log::geterrors())
+	if(log::errors)
 		return -1;
 	awindow.flags = WFResize | WFMinmax;
 	metrics::border = 6;

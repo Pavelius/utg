@@ -1,5 +1,2 @@
-﻿ Line 27: Binary operations stack corrupt in `return 10;`
- Line 27: Can't add emphty statement
- Line 27: Can't add emphty statement
- Line 29: Operations stack corrupted when add symbol result
- Line 33: Operations stack corrupted when add symbol result
+﻿Error in file `rules/Basic.txt`:
+ Line 1: Not find data type for `importdir`

@@ -164,6 +164,7 @@
     <ClCompile Include="console.cpp" />
     <ClCompile Include="draw_imager.cpp" />
     <ClCompile Include="draw_marker.cpp" />
+    <ClCompile Include="draw_scroll.cpp" />
     <ClCompile Include="formula.cpp" />
     <ClCompile Include="interval.cpp" />
     <ClCompile Include="locale.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="assign.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="draw_marker.h" />
+    <ClInclude Include="draw_scroll.h" />
     <ClInclude Include="flagux.h" />
     <ClInclude Include="formula.h" />
     <ClInclude Include="logvalue.h" />

@@ -306,6 +306,9 @@
     <ClCompile Include="win_draw_shell.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
+    <ClCompile Include="draw_scroll.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -598,6 +601,9 @@
     </ClInclude>
     <ClInclude Include="formula.h">
       <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_scroll.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

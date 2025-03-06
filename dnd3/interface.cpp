@@ -477,7 +477,6 @@ static void monsters_select_and_place() {
 	if(!choosen)
 		return;
 	auto pt = drag_drop_element(paint_monster, choosen);
-	//point pt = {72*4, 72*4};
 	if(pt.x < 0)
 		return;
 	auto push_player = player;

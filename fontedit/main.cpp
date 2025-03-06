@@ -1,4 +1,5 @@
 ﻿#include "draw.h"
+#include "draw_scroll.h"
 #include "editor.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
@@ -12,6 +13,7 @@ static stringbuilder status(status_text);
 static surface bitdata(32, 32, 8);
 static surface bitcopy(32, 32, 8);
 static point bitdata_spot;
+static int bitdata_oy, bitdata_ox;
 static int zoom = 16;
 
 const int pallette_zoom = 14; // Pallette zoom view
@@ -20,6 +22,27 @@ static int pallette_spot, pallette_current;
 void set_light_theme();
 void set_dark_theme();
 void open_file();
+
+static void window(fnevent proc) {
+	pushfore push_fore(colors::border);
+	setoffset(metrics::padding, metrics::padding);
+	rectb();
+	setoffset(1, 1);
+	rectb();
+	setoffset(1, 1);
+	proc();
+}
+
+static void groupv(fnevent proc) {
+	auto push_caret = caret;
+	auto push_width = width;
+	auto push_height = height;
+	window(proc);
+	caret = push_caret;
+	width = push_width;
+	caret.y += height + metrics::padding + metrics::padding;
+	height = push_height;
+}
 
 static void rectb_current() {
 	pushrect push_rect;
@@ -53,9 +76,9 @@ static void rectf_hilite(unsigned char v) {
 
 static void rectf_active() {
 	if(hpressed)
-		rectf_hilite(128);
-	else
 		rectf_hilite(64);
+	else
+		rectf_hilite(128);
 	rectb();
 }
 
@@ -137,12 +160,12 @@ static void paint_bitdata() {
 	auto push_clip = clipping; setclipall();
 	bitdata_spot = point(-10000, -10000);
 	width = zoom - 1; height = zoom - 1;
-	for(auto y = 0; y < bitdata.height; y++) {
-		caret.y = push.caret.y + y * zoom;
-		for(auto x = 0; x < bitdata.width; x++) {
+	for(auto y = bitdata_oy; y < bitdata.height; y++) {
+		caret.y = push.caret.y + (y - bitdata_oy) * zoom;
+		for(auto x = bitdata_ox; x < bitdata.width; x++) {
 			auto index = *bitdata.ptr(x, y);
 			fore = pallette[index];
-			caret.x = push.caret.x + x * zoom;
+			caret.x = push.caret.x + (x - bitdata_ox) * zoom;
 			if(caret.x >= clipping.x2)
 				break;
 			rectf();
@@ -153,7 +176,7 @@ static void paint_bitdata() {
 				rectb_spot_pallette();
 				if((hkey == MouseMove || hkey == MouseLeft) && hpressed)
 					execute(cbsetuc, pallette_current, 0, bitdata.ptr(x, y));
-				if(hkey==MouseRight && !hpressed)
+				if(hkey == MouseRight && !hpressed)
 					execute(cbsetint, index, 0, &pallette_current);
 			}
 		}
@@ -161,10 +184,18 @@ static void paint_bitdata() {
 	clipping = push_clip;
 }
 
+static void paint_bitdata_scroll() {
+	input_scroll(bitdata_oy, bitdata.height, zoom);
+	input_scroll_horiz(bitdata_ox, bitdata.width, zoom);
+	paint_bitdata();
+	paint_scroll(bitdata_oy, bitdata.height, zoom);
+	paint_scroll_horiz(bitdata_ox, bitdata.width, zoom);
+}
+
 static void mouse_input() {
 	switch(hkey) {
-	case MouseWheelDown: if(zoom > 4) execute(cbsetint, zoom - 1, 0, &zoom); break;
-	case MouseWheelUp: if(zoom < 64) execute(cbsetint, zoom + 1, 0, &zoom); break;
+	case Ctrl | MouseWheelDown: if(zoom > 4) execute(cbsetint, zoom - 1, 0, &zoom); break;
+	case Ctrl | MouseWheelUp: if(zoom < 64) execute(cbsetint, zoom + 1, 0, &zoom); break;
 	default: break;
 	}
 }
@@ -208,7 +239,7 @@ void mainview() {
 	paint_pallette();
 	caret.x += pallette_zoom * 16 + metrics::padding;
 	width -= pallette_zoom * 16 + metrics::padding;
-	paint_bitdata();
+	paint_bitdata_scroll();
 	paint_status_text();
 	mouse_input();
 }

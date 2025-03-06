@@ -982,6 +982,7 @@ void draw::dragbegin(const void* p, fnevent droped) {
 	drag_object = p;
 	drag_droped = droped;
 	dragmouse = hmouse;
+	hkey = InputUpdate;
 }
 
 void draw::dragcancel() {
@@ -997,7 +998,7 @@ const void* draw::getdragactive() {
 }
 
 bool draw::dragactive(const void* p) {
-	if(p && drag_object == p) {
+	if(drag_object) {
 		if(!hpressed || hkey == KeyEscape) {
 			if(drag_droped) {
 				drag_droped();
@@ -1008,7 +1009,7 @@ bool draw::dragactive(const void* p) {
 			hcursor = cursor::Arrow;
 			return false;
 		}
-		return true;
+		return drag_object == p;
 	}
 	return false;
 }

@@ -59,10 +59,10 @@ viewpackage* code::openview(const char* id) {
 		if(geturl(sb, id, "c2")) {
 			p->source = loadt(temp);
 			p->create(id);
-			log::setfile(p->source);
-			pushvalue push(last_package, static_cast<package*>(p));
-			code::parse(p->source, 0);
-			log::setfile(0);
+			//log::setfile(p->source);
+			//pushvalue push(last_package, static_cast<package*>(p));
+			//code::parse(p->source, 0);
+			//log::setfile(0);
 		}
 	}
 	return p;
