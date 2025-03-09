@@ -7,15 +7,16 @@ struct vector : public array {
 	typedef T data_type;
 	constexpr vector() : array(sizeof(T)) {}
 	vector(const slice<T>& source) : array(sizeof(T)) { reserve(source.size()); count = source.size(); memcpy(data, source.begin(), count * element_size); }
-	~vector() { for(auto& e : *this) e.~T(); }
+	~vector() { clear(); }
 	constexpr T& operator[](int index) { return ((T*)data)[index]; }
 	constexpr const T& operator[](int index) const { return ((T*)data)[index]; }
 	constexpr explicit operator bool() const { return count != 0; }
 	constexpr operator slice<T>() const { return slice<T>((T*)data, count); }
-	T*					add() { return (T*)array::add(); }
+	T*					add() { auto p = (T*)array::add(); *p = T(); return p; }
 	void				add(const T& v) { *((T*)array::add()) = v; }
 	constexpr const T*	begin() const { return (T*)data; }
 	constexpr T*		begin() { return (T*)data; }
+	void				clear() { for(auto& e : *this) e.~T(); count = 0; }
 	constexpr const T*	end() const { return (T*)data + count; }
 	constexpr T*		end() { return (T*)data + count; }
 	constexpr int		indexof(const T* e) const { if(e >= (T*)data && e < (T*)data + count) return e - (T*)data; return -1; }

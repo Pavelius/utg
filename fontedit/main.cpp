@@ -1,8 +1,8 @@
-﻿#include "draw.h"
-#include "draw_scroll.h"
+﻿#include "draw_scroll.h"
 #include "editor.h"
 #include "io_stream.h"
 #include "stringbuilder.h"
+#include "vector.h"
 
 using namespace draw;
 
@@ -10,8 +10,6 @@ static char status_text[260];
 static rect status_rect;
 static stringbuilder status(status_text);
 
-static surface bitdata(32, 32, 8);
-static surface bitcopy(32, 32, 8);
 static point bitdata_spot;
 static int bitdata_oy, bitdata_ox;
 static int zoom = 16;
@@ -151,7 +149,10 @@ static void raw832(unsigned char* d, int d_scan, unsigned char* s, int s_scan, i
 static void paint_preview() {
 	raw832(canvas->ptr(caret.x, caret.y), canvas->scanline,
 		bitdata.ptr(0, 0), bitdata.scanline, bitdata.width, bitdata.height, pallette);
-	setvert(metrics::padding + bitdata.height);
+	auto height = bitdata.height;
+	if(sprite_size.y)
+		height = sprite_size.y;
+	setvert(metrics::padding + height);
 }
 
 static void paint_bitdata() {
@@ -216,16 +217,26 @@ static void paint_statusbar() {
 	caret = push_caret;
 }
 
+static void paint_right_status(fnevent proc, int sx) {
+	auto push_caret = caret;
+	auto push_width = width;
+	caret.x = caret.x + width - sx; width = sx;
+	proc();
+	width -= push_width;
+	width = push_width; width -= sx;
+	caret = push_caret;
+}
+
 static void paint_status_text() {
-	if(!status_text[0])
-		return;
 	pushrect push;
 	pushfore push_fore(colors::text);
 	caret.x = status_rect.x1;
 	caret.y = status_rect.y1;
 	width = status_rect.width();
 	height = status_rect.height();
-	textc(status_text);
+	paint_right_status(paint_frames, 96);
+	if(status_text[0])
+		textc(status_text);
 }
 
 void mainview() {
@@ -242,6 +253,7 @@ void mainview() {
 	paint_bitdata_scroll();
 	paint_status_text();
 	mouse_input();
+	input_editor();
 }
 
 int main() {

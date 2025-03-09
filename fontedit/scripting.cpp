@@ -3,6 +3,7 @@
 #include "filehandle.h"
 
 BSDATA(filehandle) = {
-	{"FilePallette", "*.pal", read_pallette}
+	{"FilePallette", "*.pal", read_pallette},
+	{"FileImages", "*.pma", read_frames}
 };
 BSDATAF(filehandle)

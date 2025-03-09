@@ -6,7 +6,7 @@ using namespace draw;
 
 int scroll_size = 16;
 
-void correct_list(int& origin, int maximum, int per_page) {
+static void correct_list(int& origin, int maximum, int per_page) {
 	if(origin + per_page > maximum)
 		origin = maximum - per_page + 1;
 	if(origin < 0)

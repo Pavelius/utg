@@ -26,8 +26,12 @@ static size_t add_filter(char* result, const filehandle* p) {
 
 static size_t get_filter_string(char* result) {
 	size_t n = 0;
-	for(auto& e : bsdata<filehandle>())
-		n += add_filter(result, &e);
+	for(auto& e : bsdata<filehandle>()) {
+		if(result)
+			n += add_filter(result + n, &e);
+		else
+			n += add_filter(result, &e);
+	}
 	return n;
 }
 
