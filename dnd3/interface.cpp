@@ -19,6 +19,7 @@ static bool			disable_map;
 static collectiona	opened_pages;
 static int			column_width;
 static const char*	value_format = "%1i";
+static point		hilite_mouse;
 
 void initialize_png();
 void circle_image(int xm, int ym, const sprite* e, int id, int r);
@@ -322,16 +323,6 @@ void status_info() {
 	height = push_height;
 }
 
-static void object_drag_droping_proc() {
-	last_object->position = match_grid(camera + caret);
-	caret = last_object->position - camera;
-	if(bsdata<creature>::have(last_object->data)) {
-		auto p = (creature*)last_object->data;
-		p->index = s2i(last_object->position);
-		player = p;
-	}
-}
-
 static void paint_monster_avatar(monsteri* p) {
 	auto pa = gres(p->id, "art/avatars");
 	circle_image(caret.x, caret.y, pa, 0, 32);
@@ -376,14 +367,16 @@ static void paint_creature_object(void* pdata) {
 	paint_standart_circle();
 	if(player == p)
 		paint_player_marker();
-	if(ishilite(32, last_object))
-		hcursor = cursor::Hand;
 }
 
 static void paint_creature() {
 	if(getdragactive() == last_object)
 		return;
 	paint_creature_object(last_object);
+	if(ishilite(32, last_object)) {
+		hilite_mouse = hmouse - (last_object->position - camera);
+		hcursor = cursor::Hand;
+	}
 }
 
 static point drag_drop_element(fncommand paint, void* object) {
@@ -415,13 +408,13 @@ static point drag_drop_element(fncommand paint, void* object) {
 	return {-1, -1};
 }
 
-static point drag_object_scene(fncommand paint, void* object) {
+static point drag_object_scene(fncommand paint, void* object, point correct) {
 	pushrect push;
 	dragbegin(object);
 	while(ismodal()) {
 		strategy_background();
 		paint_objects();
-		caret = hmouse;
+		caret = hmouse - correct;
 		paint(object);
 		switch(hkey) {
 		case MouseLeft:
@@ -440,14 +433,19 @@ static point drag_object_scene(fncommand paint, void* object) {
 	}
 	dragcancel();
 	if(getresult())
-		return hmouse + camera;
+		return hmouse - correct + camera;
 	return {-1, -1};
 }
 
 static void drag_object_command() {
-	auto p = (void*)hobject;
+	auto p = (object*)hobject;
 	auto m = (fncommand)hparam;
-	drag_object_scene(m, p);
+	auto r = drag_object_scene(m, p, hilite_mouse);
+	if(r == point(-1, -1))
+		return;
+	p->position = match_grid(r);
+	player = (creature*)p->data;
+	player->index = s2i(p->position);
 }
 
 static void drag_hilite_object() {
