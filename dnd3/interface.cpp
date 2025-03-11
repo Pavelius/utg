@@ -322,18 +322,8 @@ void status_info() {
 	height = push_height;
 }
 
-static void background_proc() {
-	strategy_background();
-	paint_objects();
-	paint_panel();
-}
-
-static void finish_proc() {
-	input_camera();
-}
-
 static void object_drag_droping_proc() {
-	last_object->position = match_grid(caret + camera);
+	last_object->position = match_grid(camera + caret);
 	caret = last_object->position - camera;
 	if(bsdata<creature>::have(last_object->data)) {
 		auto p = (creature*)last_object->data;
@@ -379,8 +369,8 @@ static void paint_player_marker() {
 	fore = push_fore;
 }
 
-static void paint_creature() {
-	auto p = (creature*)last_object->data;
+static void paint_creature_object(void* pdata) {
+	auto p = (creature*)((object*)pdata)->data;
 	auto pa = gres(p->avatar, "art/avatars");
 	circle_image(caret.x, caret.y, pa, 0, 32);
 	paint_standart_circle();
@@ -390,8 +380,13 @@ static void paint_creature() {
 		hcursor = cursor::Hand;
 }
 
+static void paint_creature() {
+	if(getdragactive() == last_object)
+		return;
+	paint_creature_object(last_object);
+}
+
 static point drag_drop_element(fncommand paint, void* object) {
-	auto push_proc = object_before_paint; object_before_paint = 0;
 	pushrect push;
 	dragbegin(object);
 	while(ismodal()) {
@@ -414,11 +409,63 @@ static point drag_drop_element(fncommand paint, void* object) {
 		}
 		domodal();
 	}
-	object_before_paint = push_proc;
 	dragcancel();
 	if(getresult())
 		return hmouse + camera;
 	return {-1, -1};
+}
+
+static point drag_object_scene(fncommand paint, void* object) {
+	pushrect push;
+	dragbegin(object);
+	while(ismodal()) {
+		strategy_background();
+		paint_objects();
+		caret = hmouse;
+		paint(object);
+		switch(hkey) {
+		case MouseLeft:
+			if(!hpressed)
+				execute(buttonok);
+			break;
+		case MouseRight:
+			if(!hpressed)
+				execute(buttoncancel);
+			break;
+		case KeyEscape:
+			execute(buttoncancel);
+			break;
+		}
+		domodal();
+	}
+	dragcancel();
+	if(getresult())
+		return hmouse + camera;
+	return {-1, -1};
+}
+
+static void drag_object_command() {
+	auto p = (void*)hobject;
+	auto m = (fncommand)hparam;
+	drag_object_scene(m, p);
+}
+
+static void drag_hilite_object() {
+	if(!hilite_object)
+		return;
+	if(hkey == MouseLeft && hpressed)
+		execute(drag_object_command, (long)paint_creature_object, 0, hilite_object);
+}
+
+static void background_proc() {
+	strategy_background();
+	paint_objects();
+	paint_panel();
+}
+
+static void finish_proc() {
+	drag_hilite_object();
+	input_camera();
 }
 
 static void paint_hilite_circle(const void* object, int size, fnevent choose_event) {
@@ -493,8 +540,6 @@ void initialize_ui() {
 	pbackground = background_proc;
 	pfinish = finish_proc;
 	metrics::padding = 2;
-	object_before_paint = object_drag_drop;
-	object_drag_droping = object_drag_droping_proc;
 }
 
 static draworder* modify(object* po) {

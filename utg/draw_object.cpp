@@ -171,26 +171,6 @@ void splash_screen(unsigned milliseconds, fnevent proc) {
 	caret = push_caret;
 }
 
-static point drag_offset;
-
-static void drag_drop() {
-	caret = hmouse + drag_offset;
-	if(object_drag_droping)
-		object_drag_droping();
-}
-
-void object_drag_drop() {
-	if(dragactive(last_object)) {
-		caret = hmouse + drag_offset;
-		hcursor = cursor::Hand;
-	} else if(ishilite(32)) {
-		if(hkey == MouseLeft && hpressed) {
-			drag_offset = caret - hmouse;
-			dragbegin(last_object, drag_drop);
-		}
-	}
-}
-
 static size_t getobjects(object** pb, object** pe) {
 	auto ps = pb;
 	for(auto& e : bsdata<object>()) {
@@ -255,8 +235,6 @@ void paint_objects() {
 	for(size_t i = 0; i < count; i++) {
 		draw::caret = source[i]->getscreen();
 		last_object = source[i];
-		if(object_before_paint)
-			object_before_paint();
 		draw::alpha = last_object->alpha;
 		last_object->painting();
 	}
