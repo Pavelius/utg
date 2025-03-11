@@ -391,8 +391,9 @@ static void paint_creature() {
 }
 
 static point drag_drop_element(fncommand paint, void* object) {
+	auto push_proc = object_before_paint; object_before_paint = 0;
 	pushrect push;
-	// dragbegin(object);
+	dragbegin(object);
 	while(ismodal()) {
 		strategy_background();
 		paint_objects();
@@ -413,7 +414,8 @@ static point drag_drop_element(fncommand paint, void* object) {
 		}
 		domodal();
 	}
-	// dragcancel();
+	object_before_paint = push_proc;
+	dragcancel();
 	if(getresult())
 		return hmouse + camera;
 	return {-1, -1};
