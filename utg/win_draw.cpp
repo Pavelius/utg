@@ -15,7 +15,6 @@ static struct video_8t {
 static HWND		hwnd;
 static point	minimum;
 extern rect		sys_static_area;
-static bool		use_mouse = true;
 
 static struct sys_key_mapping {
 	unsigned    key;
@@ -79,21 +78,11 @@ static void set_cursor(cursor e) {
 	SetCursor(data[static_cast<int>(e)]);
 }
 
-static int handle(MSG& msg) {
-	POINT pt;
-	TRACKMOUSEEVENT tm;
+static int handle(const MSG& msg) {
 	switch(msg.message) {
 	case WM_MOUSEMOVE:
 		if(msg.hwnd != hwnd)
 			break;
-		if(!use_mouse)
-			break;
-		memset(&tm, 0, sizeof(tm));
-		tm.cbSize = sizeof(tm);
-		tm.dwFlags = TME_LEAVE | TME_HOVER;
-		tm.hwndTrack = hwnd;
-		tm.dwHoverTime = HOVER_DEFAULT;
-		TrackMouseEvent(&tm);
 		hmouse.x = LOWORD(msg.lParam);
 		hmouse.y = HIWORD(msg.lParam);
 		if(draw::dragactive())
@@ -101,64 +90,36 @@ static int handle(MSG& msg) {
 		if(hmouse.in(sys_static_area))
 			return InputNoUpdate;
 		return MouseMove;
-	case WM_MOUSELEAVE:
-		if(msg.hwnd != hwnd)
-			break;
-		if(!use_mouse)
-			break;
-		GetCursorPos(&pt);
-		ScreenToClient(msg.hwnd, &pt);
-		hmouse.x = (short)pt.x;
-		if(hmouse.x < 0)
-			hmouse.x = -10000;
-		hmouse.y = (short)pt.y;
-		if(hmouse.y < 0)
-			hmouse.y = -10000;
-		return MouseMove;
 	case WM_LBUTTONDOWN:
 		if(msg.hwnd != hwnd)
-			break;
-		if(!use_mouse)
 			break;
 		hpressed = true;
 		return MouseLeft;
 	case WM_LBUTTONDBLCLK:
 		if(msg.hwnd != hwnd)
 			break;
-		if(!use_mouse)
-			break;
 		hpressed = true;
 		return MouseLeftDBL;
 	case WM_LBUTTONUP:
 		if(msg.hwnd != hwnd)
-			break;
-		if(!use_mouse)
 			break;
 		if(!hpressed)
 			break;
 		hpressed = false;
 		return MouseLeft;
 	case WM_RBUTTONDOWN:
-		if(!use_mouse)
-			break;
 		hpressed = true;
 		return MouseRight;
 	case WM_RBUTTONUP:
-		if(!use_mouse)
-			break;
 		hpressed = false;
 		return MouseRight;
 	case WM_MOUSEWHEEL:
-		if(!use_mouse)
-			break;
 		if(msg.wParam & 0x80000000)
 			return MouseWheelDown;
 		else
 			return MouseWheelUp;
 		break;
 	case WM_MOUSEHOVER:
-		if(!use_mouse)
-			break;
 		return InputIdle;
 	case WM_TIMER:
 		if(msg.hwnd != hwnd)
@@ -230,35 +191,13 @@ static const char* register_class(const char* class_name) {
 	if(!GetClassInfoA(GetModuleHandleA(0), class_name, &wc)) {
 		memset(&wc, 0, sizeof(wc));
 		wc.style = CS_OWNDC | CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW; // Own DC For Window.
-		wc.lpfnWndProc = WndProc;	// WndProc Handles Messages
-		wc.hInstance = GetModuleHandleA(0);	// Set The Instance
+		wc.lpfnWndProc = WndProc;
+		wc.hInstance = GetModuleHandleA(0);
 		wc.hIcon = (void*)LoadIconA(wc.hInstance, (const char*)1); // WndProc Handles Messages
-		wc.lpszClassName = class_name; // Set The Class Name
-		RegisterClassA(&wc); // Attempt To Register The Window Class
+		wc.lpszClassName = class_name;
+		RegisterClassA(&wc);
 	}
 	return class_name;
-}
-
-void draw::getwindowpos(point& pos, point& size, unsigned* flags) {
-	RECT rc;
-	GetClientRect(hwnd, &rc);
-	size.x = (short)(rc.right - rc.left);
-	size.y = (short)(rc.bottom - rc.top);
-	GetWindowRect(hwnd, &rc);
-	pos.x = (short)rc.left;
-	pos.y = (short)rc.top;
-	if(flags) {
-		WINDOWPLACEMENT wp;
-		GetWindowPlacement(hwnd, &wp);
-		*flags = 0;
-		auto wf = GetWindowLongA(hwnd, GWL_STYLE);
-		if(wp.showCmd==SW_SHOWMAXIMIZED)
-			*flags |= WFMaximized;
-		if(wf&WS_THICKFRAME)
-			*flags |= WFResize;
-		if(wf&WS_MINIMIZEBOX)
-			*flags |= WFMinmax;
-	}
 }
 
 void draw::updatewindow() {

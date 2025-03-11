@@ -200,7 +200,6 @@ const void*				getdragactive();
 inline rect				getrect() { return {caret.x, caret.y, caret.x + width, caret.y + height}; }
 int						getheight();
 int						getwidth();
-void					getwindowpos(point& pos, point& size, unsigned* flags);
 void					glyph(int sym, unsigned flags);
 void					gradv(const color c1, const color c2, int skip = 0);
 void					gradh(const color c1, const color c2, int skip = 0);
