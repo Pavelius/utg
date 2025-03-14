@@ -1,4 +1,5 @@
 #include "main.h"
+#include "rand.h"
 
 static char		console[512];
 stringbuilder	sb(console);

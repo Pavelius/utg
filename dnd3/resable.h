@@ -4,9 +4,9 @@
 #pragma once
 
 struct mapable {
-	point			index;
-	point			getscreen() const;
-	point			getscreenc() const;
+	point index;
+	point getscreen() const;
+	point getscreenc() const;
 	const bool operator==(const mapable& v) const { return index == v.index; }
 	const bool operator!=(const mapable& v) const { return index != v.index; }
 };

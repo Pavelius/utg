@@ -1,6 +1,5 @@
 #include "ability.h"
 #include "answers.h"
-#include "crt.h"
 #include "draw.h"
 #include "flagable.h"
 #include "quest.h"

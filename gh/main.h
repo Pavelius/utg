@@ -2,7 +2,6 @@
 #include "answers.h"
 #include "color.h"
 #include "condition.h"
-#include "crt.h"
 #include "deck.h"
 #include "duration.h"
 #include "element.h"
@@ -102,7 +101,7 @@ struct playerdeck : deck {
 };
 struct playeri {
 	const char*			id;
-	gender_s			gender;
+	gendern				gender;
 	char				level, exp, coins;
 	playercardi*		cards[2];
 	short				health[10];

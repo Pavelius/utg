@@ -44,7 +44,7 @@ static void change_ability(modulen v, int bonus) {
 }
 
 template<> void fnscript<modulei>(int index, int bonus) {
-	last_module = (module_s)index;
+	last_module = (modulen)index;
 	change_ability(last_module, bonus);
 }
 
@@ -77,10 +77,6 @@ static const quest* find_prompt(short index) {
 
 template<> void fnscript<questlist>(int index, int bonus) {
 	last_quest = find_prompt(bsdata<questlist>::elements[index].elements, bonus);
-}
-
-static int d12() {
-	return 1 + (rand() % 12);
 }
 
 static void make_roll(int bonus) {

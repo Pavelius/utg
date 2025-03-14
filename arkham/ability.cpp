@@ -1,4 +1,3 @@
-#include "crt.h"
 #include "main.h"
 
 BSDATA(abilityi) = {

@@ -32,12 +32,18 @@
     <ClCompile Include="scripter.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="section.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator.h">
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="scope.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="section.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,3 +10,5 @@ struct scopei {
 };
 extern scopei* current_scope;
 extern int scope_maximum;
+
+void scope_clear();

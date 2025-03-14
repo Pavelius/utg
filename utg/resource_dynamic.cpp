@@ -72,7 +72,7 @@ const sprite* draw::gres(const char* name, const char* folder, point maxsize, in
 		}
 		p->data = (sprite*)loadb(szurl(temp, p->folder, name, "pma"));
 		if(!p->data) {
-			draw::surface dc;
+			surface dc;
 			for(auto pg = surface::plugin::first; pg; pg = pg->next) {
 				szurl(temp, p->folder, name, pg->name);
 				if(dc.read(temp, 0, 32)) {

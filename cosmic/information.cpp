@@ -2,7 +2,7 @@
 #include "ship.h"
 #include "stringvar.h"
 
-bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gender_s gender);
+bool apply_action(const char* identifier, stringbuilder& sb, const char* name, gendern gender);
 
 static void addcms(stringbuilder& sb, const char* name, int count) {
 	if(!count)

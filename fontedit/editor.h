@@ -5,8 +5,8 @@
 #include "vector.h"
 
 extern color pallette[256];
-extern vector<draw::surface> frames;
-extern draw::surface bitdata, bitcopy;
+extern vector<surface> frames;
+extern surface bitdata, bitcopy;
 extern point sprite_size;
 
 void input_editor();

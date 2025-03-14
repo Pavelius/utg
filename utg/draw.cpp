@@ -56,8 +56,8 @@ int					draw::hilite_size;
 // Hot keys and menus
 rect				sys_static_area;
 // Locale draw variables
-static draw::surface default_surface;
-draw::surface*		draw::canvas = &default_surface;
+static surface		default_surface;
+surface*			draw::canvas = &default_surface;
 point				draw::caret, draw::camera, draw::tips_caret, draw::tips_size;
 bool			    line_antialiasing = true;
 // Drag

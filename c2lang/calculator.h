@@ -14,25 +14,19 @@ enum operationn {
 enum symboln {
 	Void, i8, u8, i16, u16, i32, u32, i64, u64,
 };
-enum symbol_flag_s {
+enum symbolfn {
 	Static, Public, Predefined, UseRead, UseWrite, Complete, Function,
 };
-enum scope_s {
+enum scopen {
 	TypeScope = -2, PointerScope = -3,
 };
 enum sectionn {
 	ModuleSection, LocalSection, DataSection, UDataSection,
 };
-struct sectioni {
-	int			ids;
-	void*		data;
-	int			size;
-};
 struct offseti {
 	int			sid; // section identifier, -1 for not instaced identifier
 	int			offset; // offset from section base
 	int			size; // symbol size
-	void		alloc(int sid, int size);
 	bool		needalloc() const { return sid != -1; }
 	void*		ptr() const { return 0; }
 };
@@ -45,14 +39,14 @@ struct symboli {
 	int			count; // 0 - default, 1+ for array
 	unsigned	flags; // Some flags
 	int			frame; // symbol stack frame
-	offseti		instance;
+	offseti		instance; // symbol instance in memory
 	int			getindex() const;
-	bool		is(symbol_flag_s v) const { return (flags & (1 << v)) != 0; }
+	bool		is(symbolfn v) const { return (flags & (1 << v)) != 0; }
 	bool		isarray() const { return count >= 0; }
 	bool		istype() const { return scope == TypeScope || scope == PointerScope; }
 	bool		ispointer() const { return scope == PointerScope; }
 	bool		ispredefined() const { return is(Predefined); }
-	void		set(symbol_flag_s v) { flags |= (1 << v); }
+	void		set(symbolfn v) { flags |= (1 << v); }
 };
 struct asti {
 	operationn op;
@@ -73,12 +67,11 @@ bool isbinary(operationn op);
 bool iserrors();
 bool isterminal(operationn op);
 void project_compile(const char* url);
-bool symbol(int sid, symbol_flag_s v);
-void symbol_alloc(int sid, int data_sid, int data_size);
+bool symbol(int sid, symbolfn v);
 void symbol_ast(int sid, int value);
 void symbol_count(int sid, int value);
 void symbol_scope(int sid, int value);
-void symbol_set(int sid, symbol_flag_s v);
+void symbol_set(int sid, symbolfn v);
 void symbol_type(int sid, int value);
 
 int ast_add(operationn op, int left, int right);

@@ -1,6 +1,6 @@
 #include "draw.h"
 
-static struct tga_bitmap_plugin : public draw::surface::plugin {
+static struct tga_bitmap_plugin : public surface::plugin {
 
 #pragma pack(push)
 #pragma pack(1)

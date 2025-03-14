@@ -1,4 +1,6 @@
-#include "crt.h"
+#include "adat.h"
+#include "array.h"
+#include "rand.h"
 
 #pragma once
 

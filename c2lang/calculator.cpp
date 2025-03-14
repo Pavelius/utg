@@ -1,8 +1,9 @@
 #include "bsdata.h"
 #include "calculator.h"
 #include "flagable.h"
-#include "scope.h"
 #include "io_stream.h"
+#include "scope.h"
+#include "section.h"
 #include "stringbuilder.h"
 #include "stringa.h"
 
@@ -28,6 +29,8 @@ static int			errors_count;
 static int			module_sid;
 static const char*	project_url;
 const char*			library_url;
+
+static int			size_of_pointer = 4;
 
 static void parse_expression();
 static void unary();
@@ -112,7 +115,7 @@ int define_ast(int sid) {
 	return bsdata<definei>::get(sid).ast;
 }
 
-bool symbol(int sid, symbol_flag_s v) {
+bool symbol(int sid, symbolfn v) {
 	if(sid == -1)
 		return false;
 	return bsdata<symboli>::get(sid).is(v);
@@ -125,7 +128,7 @@ const char* symbol_name(int sid) {
 	return strings.get(e.ids);
 }
 
-void symbol_set(int sid, symbol_flag_s v) {
+void symbol_set(int sid, symbolfn v) {
 	if(sid == -1)
 		return;
 	bsdata<symboli>::get(sid).set(v);
@@ -161,7 +164,7 @@ int symbol_size(int sid) {
 static int calculate_symbol_size(int sid) {
 	auto type = symbol_type(sid);
 	if(symbol_scope(type) == PointerScope)
-		return 4;
+		return size_of_pointer;
 	auto result = predefined_symbol_size(type);
 	if(!result) {
 		// Calculate each member size
@@ -238,6 +241,7 @@ static void symbol_alloc(int sid, int data_sid) {
 		}
 	} else if(data_sid == ModuleSection) {
 		auto& et = bsdata<symboli>::get(module_sid);
+		e.instance.offset = et.instance.size;
 		et.instance.size += e.instance.size;
 	} else {
 		auto& s = bsdata<sectioni>::get(data_sid);

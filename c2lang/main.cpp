@@ -33,7 +33,8 @@ static void println(const char* format, ...) {
 	println();
 }
 
-static void symbol_info(stringbuilder& sb, const symboli& e) {
+void symbol_info(stringbuilder& sb, const symboli& e) {
+	// auto& e = bsdata<symboli>::elements[sid];
 	auto sid = e.getindex();
 	if(e.type != -1) {
 		auto& et = bsdata<symboli>::get(e.type);
@@ -59,13 +60,13 @@ static void symbol_info(stringbuilder& sb, const symboli& e) {
 static void print_types() {
 	char temp[260]; stringbuilder sb(temp);
 	for(auto& e : bsdata<symboli>()) {
-		if(e.ispredefined() || e.type==-1 || e.ispointer() || !e.istype())
+		if(e.ispredefined() || e.type == -1 || e.ispointer() || !e.istype())
 			continue;
 		auto pt = bsdata<symboli>::begin() + e.type;
 		auto sid = &e - bsdata<symboli>::begin();
 		println("Module %1 (size %2i)", string_name(e.ids), e.instance.size);
 		for(auto& m : bsdata<symboli>()) {
-			if(m.ispredefined() || m.type == -1 || m.parent!=sid)
+			if(m.ispredefined() || m.type == -1 || m.parent != sid)
 				continue;
 			sb.clear(); symbol_info(sb, m);
 			println(sb);
@@ -75,7 +76,7 @@ static void print_types() {
 
 static void print_symbols() {
 	for(auto& e : bsdata<symboli>()) {
-		if(e.ispredefined() || e.type==-1)
+		if(e.ispredefined() || e.type == -1)
 			continue;
 		auto pt = bsdata<symboli>::begin() + e.type;
 		auto sid = e.getindex();

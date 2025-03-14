@@ -1,5 +1,6 @@
 #include "condition.h"
 #include "main.h"
+#include "math.h"
 #include "quest.h"
 #include "pathfind.h"
 

@@ -136,7 +136,7 @@ int player::roll(ability_s v, int m, special_s special) {
 		sb.clear();
 		if(roll_result) {
 			sb.add("%Roll: ");
-			for(auto i = 0; i < roll_result.getcount(); i++) {
+			for(size_t i = 0; i < roll_result.getcount(); i++) {
 				if(i != 0)
 					sb.add(", ");
 				auto v = roll_result[i];
@@ -303,7 +303,7 @@ const investigator&	player::geti() const {
 }
 
 void player::introduction() const {
-	auto p = getdescription(geti().id);
+	auto p = getnme(geti().id);
 	if(p) {
 		auto push_header = answers::header;
 		answers::header = getnm("Introduction");

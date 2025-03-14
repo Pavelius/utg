@@ -29,7 +29,7 @@ int fnfive(int a) {
 }
 
 int zero_hive(int a) {
-	return a * 3;
+	return fnfive(a) * 3;
 }
 
 int main() {

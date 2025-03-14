@@ -110,7 +110,6 @@ extern sprite*			h3;
 extern sprite*			icons;
 extern int				border, padding;
 }
-namespace draw {
 struct surface {
 	struct plugin {
 		const char*		name;
@@ -142,6 +141,7 @@ struct surface {
 	void				rotate();
 	void				write(const char* url, color* pallette);
 };
+namespace draw {
 extern surface*			canvas; // Current output surface
 extern rect				clipping; // Clipping area
 extern fnevent			domodal;

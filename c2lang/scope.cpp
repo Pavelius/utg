@@ -23,3 +23,8 @@ int scopei::getsize() const {
 		r += p->size;
 	return r;
 }
+
+void scope_clear() {
+	current_scope = 0;
+	scope_maximum = 0;
+}

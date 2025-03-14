@@ -1,4 +1,5 @@
 #include "main.h"
+#include "rand.h"
 
 void deck::create(cardtype_s type) {
 	for(auto& e : bsdata<cardprotoi>()) {

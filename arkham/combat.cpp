@@ -141,7 +141,7 @@ bool player::fight(cardi& source) {
 	auto push_header = answers::header;
 	auto push_last = last; last = this;
 	answers::header = getnm(enemy.id);
-	auto p = getdescription(enemy.id);
+	auto p = getnme(ids(enemy.id, "Info"));
 	if(p)
 		answers::prompt = p;
 	auto proc = combat_options(true);

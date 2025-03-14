@@ -140,10 +140,12 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scope.cpp" />
     <ClCompile Include="scripter.cpp" />
+    <ClCompile Include="section.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="calculator.h" />
     <ClInclude Include="scope.h" />
+    <ClInclude Include="section.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

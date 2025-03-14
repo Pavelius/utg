@@ -1,3 +1,4 @@
+#include "rand.h"
 #include "main.h"
 
 static void select(questa& destination, const quests& source) {

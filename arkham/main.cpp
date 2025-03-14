@@ -1,7 +1,9 @@
 #include "bsreq.h"
 #include "draw_object.h"
-#include "main.h"
 #include "draw_strategy.h"
+#include "main.h"
+#include "rand.h"
+#include "timer.h"
 
 void initialize_ui();
 
@@ -12,7 +14,7 @@ void util_main();
 static void test_fight() {
 	cardi card;
 	card.clear();
-	card.type = bsdata<cardprotoi>::source.find("Ghoul", 0);
+	card.type = bsdata<cardprotoi>::source.indexof(bsdata<cardprotoi>::find("Ghoul"));
 	game.fight(card);
 }
 
@@ -26,7 +28,7 @@ static void test_encounter() {
 	cards.pick(Gate, 1);
 	cards.pick(Monster, 6);
 	//game.movement(bsdata<locationi>::find("SouthChurch"), false);
-	cards.add((cardt)bsdata<cardprotoi>::source.find("AncientTome", 0));
+	cards.add((cardt)bsdata<cardprotoi>::source.indexof(bsdata<cardprotoi>::find("AncientTome")));
 	game.play();
 	//game.movement(game.get(Speed));
 }
