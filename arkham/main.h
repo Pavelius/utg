@@ -5,6 +5,7 @@
 #include "quest.h"
 #include "nameable.h"
 #include "stringbuilder.h"
+#include "realm.h"
 #include "tag.h"
 #include "variant.h"
 
@@ -12,15 +13,6 @@
 
 typedef short unsigned cardt;
 
-enum realm_s : unsigned char {
-	Slash, Triangle, Hexagon, Circle, Star, Romb, Quad,
-};
-enum ability_s : unsigned char {
-	Speed, Sneak, Fight, Will, Lore, Luck,
-	Horror, Combat, Escape, HorrorDamage, CombatDamage, Toughness,
-	Health, Sanity, Clue, Money,
-	Focus,
-};
 enum gamef_s : unsigned char {
 	Bless, Curse, BankLoan, BankLoanNotAllowed, DeputyOfArkham, Retainer, SilverTwilightLodgeMembership,
 	ExtraClueDice,
@@ -56,15 +48,15 @@ struct abilitya {
 	char			abilities[Focus + 1];
 	abilityf		rerollall, tought, restore;
 	cardf			pickextra, scavenge;
-	void			add(ability_s v, int i) { abilities[v] += i; }
+	void			add(abilityn v, int i) { abilities[v] += i; }
 	void			addabilities(const abilitya& e);
-	constexpr int	get(ability_s v) const { return abilities[v]; }
+	constexpr int	get(abilityn v) const { return abilities[v]; }
 	bool			ispickextra(cardtype_s v) const { return pickextra.is(v); }
-	bool			isrestore(ability_s v) const { return restore.is(v); }
-	bool			isrerollall(ability_s v) const { return rerollall.is(v); }
-	bool			istought(ability_s v) const { return tought.is(v); }
+	bool			isrestore(abilityn v) const { return restore.is(v); }
+	bool			isrerollall(abilityn v) const { return rerollall.is(v); }
+	bool			istought(abilityn v) const { return tought.is(v); }
 	void			loadability(const abilitya& source);
-	void			set(ability_s v, int i) { abilities[v] = i; }
+	void			set(abilityn v, int i) { abilities[v] = i; }
 };
 struct locationi : nameable {
 	cardtype_s		type;
@@ -124,7 +116,7 @@ struct cardi {
 	static cardi*	last;
 	constexpr explicit operator bool() const { return type != 0; }
 	void			apply(variants effect);
-	bool			afterroll(ability_s v, int m, special_s special, bool run);
+	bool			afterroll(abilityn v, int m, special_s special, bool run);
 	void			clear();
 	void			discard();
 	cardprotoi&		geti() const { return bsdata<cardprotoi>::elements[type]; }
@@ -137,15 +129,15 @@ struct cardpool : public adat<cardi> {
 	void			add(cardt v, location_s a = PlayerArea);
 	void			discard();
 	bool			have(cardt v) const;
-	bool			isdoubleclue(ability_s v) const;
-	bool			isrerollall(ability_s v) const;
+	bool			isdoubleclue(abilityn v) const;
+	bool			isrerollall(abilityn v) const;
 	void			pick(cardtype_s type);
 	void			pick(cardtype_s type, int count);
 };
 struct cardquerry : adat<cardi*, 32> {
 	void			add(cardpool& source, cardtype_s type);
 	void			add(cardpool& source, special_s type);
-	int				get(ability_s v) const;
+	int				get(abilityn v) const;
 	bool			isonly(tag_s v) const;
 };
 struct investigator : nameable, abilitya {
@@ -168,7 +160,7 @@ struct player : abilitya {
 	bool			combat(cardprotoi& source);
 	void			create(const char* id);
 	void			clear();
-	void			damage(ability_s v, int count) { modify(v, -count); }
+	void			damage(abilityn v, int count) { modify(v, -count); }
 	void			delayed();
 	void			encounter();
 	void			equip(cardi* p);
@@ -176,24 +168,24 @@ struct player : abilitya {
 	bool			evade(cardprotoi& enemy);
 	bool			fight(cardi& source);
 	const investigator&	geti() const;
-	int				getbonus(ability_s v, int bonus) const;
-	int				getcluedices(ability_s v) const;
+	int				getbonus(abilityn v, int bonus) const;
+	int				getcluedices(abilityn v) const;
 	int				getcombat() const;
 	int				getcount(cardtype_s v) const;
 	int				getevade() const;
 	int				getfreehands() const;
 	int				gethorror() const;
 	int				getsuccess() const;
-	int				getmaximal(ability_s v) const;
-	int				getminimal(ability_s v) const;
+	int				getmaximal(abilityn v) const;
+	int				getminimal(abilityn v) const;
 	bool			is(gamef_s v) const { return flags.is(v); }
-	bool			isallowreroll(ability_s v) const;
+	bool			isallowreroll(abilityn v) const;
 	bool			isequiped(const cardi* e) const;
 	bool			isready() const { return get(Health) > 0 && get(Sanity) > 0; }
 	void			introduction() const;
 	void			leavestreet();
 	void			loseitems(int count);
-	void			modify(ability_s v, int bonus, bool payment = false);
+	void			modify(abilityn v, int bonus, bool payment = false);
 	void			modify(gamef_s v, bool activate = true);
 	void			movement(locationi* pv, bool animation = true);
 	void			movement(int speed);
@@ -204,7 +196,7 @@ struct player : abilitya {
 	void			phase_refresh_actions();
 	void			phase_refresh_focus();
 	void			phase_refresh_update();
-	int				roll(ability_s v, int m, special_s special = NoSpecial);
+	int				roll(abilityn v, int m, special_s special = NoSpecial);
 	int				rolld6(int count) const;
 	void			showcards();
 	void			unequip(cardi* p);

@@ -28,7 +28,7 @@ void cardquerry::add(cardpool& source, special_s type) {
 	count = pb - data;
 }
 
-int	cardquerry::get(ability_s v) const {
+int	cardquerry::get(abilityn v) const {
 	auto r = 0;
 	for(auto p : *this)
 		r += p->geti().abilities[v];

@@ -168,7 +168,7 @@ static bool test_value(variant v) {
 	if(v.iskind<cardprotoi>())
 		return !cards.have(v.value);
 	else if(v.iskind<abilityi>()) {
-		auto a = (ability_s)v.value;
+		auto a = (abilityn)v.value;
 		auto b = game.getbonus(a, v.counter);
 		auto n = game.get(a) + b;
 		if(!b)
@@ -198,7 +198,7 @@ static void apply_result(int r) {
 	play();
 }
 
-void player::modify(ability_s i, int bonus, bool payment) {
+void player::modify(abilityn i, int bonus, bool payment) {
 	auto n = game.getbonus(i, bonus);
 	if(bsdata<abilityi>::elements[i].is(abilityi::Indicator)) {
 		if(n < 0 && tought.is(i))
@@ -235,7 +235,7 @@ static void apply_value(variant v) {
 			cards.add(v.value);
 		}
 	} else if(v.iskind<abilityi>())
-		game.modify((ability_s)v.value, v.counter);
+		game.modify((abilityn)v.value, v.counter);
 	else if(v.iskind<cardtypei>())
 		apply_card_type((cardtype_s)v.value, v.counter);
 }
@@ -251,7 +251,7 @@ static void apply_result_title(const char* title, int columns = -1) {
 }
 
 static void make_pay(int bonus, int param) {
-	auto v = (ability_s)param;
+	auto v = (abilityn)param;
 	an.clear();
 	if(game.get(v) >= bonus) {
 		if(v == Money)
@@ -467,7 +467,7 @@ static void monster_appear(int bonus, int param) {
 static void remove_sanity_and_gain(int bonus, int param) {
 	auto n = game.d6();
 	game.modify(Sanity, -n);
-	game.modify((ability_s)param, n);
+	game.modify((abilityn)param, n);
 }
 
 static void change_investigator(int bonus, int param) {
@@ -487,14 +487,14 @@ static void lose_item(int bonus, int param) {
 static void lose_half_items(int bonus, int param) {
 }
 
-static void buy_ability(int count, int cost, const char* cancel, const slice<ability_s>& source) {
+static void buy_ability(int count, int cost, const char* cancel, const slice<abilityn>& source) {
 	while(count--) {
 		an.clear();
 		for(auto v : source) {
 			if(game.get(Money) >= cost)
 				an.add((void*)v, getnm("PayAbility"), getnm(bsdata<abilityi>::elements[v].id), cost);
 		}
-		auto v = (ability_s)(int)an.choose(0, cancel);
+		auto v = (abilityn)(int)an.choose(0, cancel);
 		if(!v)
 			break;
 		game.add(Money, -cost);
@@ -503,7 +503,7 @@ static void buy_ability(int count, int cost, const char* cancel, const slice<abi
 }
 
 static void heal(int bonus, int param) {
-	static ability_s source[] = {Health, Sanity};
+	static abilityn source[] = {Health, Sanity};
 	buy_ability(bonus, param, getnm("ThatEnought"), source);
 }
 
@@ -529,7 +529,7 @@ static void raise_health_sanity(int bonus, int param) {
 static void raise_ability(int bonus, int param) {
 	auto r = game.d6() + bonus;
 	if(r > 0)
-		game.add((ability_s)param, r);
+		game.add((abilityn)param, r);
 }
 
 static void play_block(int bonus, int param) {

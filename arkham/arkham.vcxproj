@@ -162,7 +162,9 @@
     <ClCompile Include="tag.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="realm.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">

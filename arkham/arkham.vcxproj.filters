@@ -74,6 +74,12 @@
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="realm.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ability.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt">

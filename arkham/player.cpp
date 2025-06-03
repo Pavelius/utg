@@ -3,7 +3,7 @@
 
 static adat<char, 32>	roll_result;
 player*					player::last;
-static ability_s		m_ability;
+static abilityn		m_ability;
 
 static int compare(const void* p1, const void* p2) {
 	return *((char*)p2) - *((char*)p1);
@@ -65,7 +65,7 @@ int player::getsuccess() const {
 	return 5;
 }
 
-int player::getcluedices(ability_s v) const {
+int player::getcluedices(abilityn v) const {
 	auto r = 1;
 	if(is(ExtraClueDice))
 		r++;
@@ -85,7 +85,7 @@ static void add_clue() {
 	add_dices(p->getcluedices(m_ability));
 }
 
-bool cardi::afterroll(ability_s v, int m, special_s special, bool run) {
+bool cardi::afterroll(abilityn v, int m, special_s special, bool run) {
 	auto& ei = geti();
 	auto have_failed_dices = roll_result
 		&& roll_result.data[roll_result.count - 1] >= player::last->getsuccess();
@@ -110,7 +110,7 @@ bool cardi::afterroll(ability_s v, int m, special_s special, bool run) {
 	return true;
 }
 
-static void use_items(ability_s v, int m, special_s special, answers& an) {
+static void use_items(abilityn v, int m, special_s special, answers& an) {
 	for(auto& e : cards) {
 		if(!e || e.area != PlayerArea)
 			continue;
@@ -119,7 +119,7 @@ static void use_items(ability_s v, int m, special_s special, answers& an) {
 	}
 }
 
-int player::roll(ability_s v, int m, special_s special) {
+int player::roll(abilityn v, int m, special_s special) {
 	auto push_header = answers::header;
 	auto push_player = player::last;
 	char header[128]; stringbuilder sh(header);
@@ -220,14 +220,14 @@ void player::delayed() {
 	}
 }
 
-int player::getminimal(ability_s v) const {
+int player::getminimal(abilityn v) const {
 	switch(v) {
 	case Sanity: case Health: return 1;
 	default: return 0;
 	}
 }
 
-int player::getmaximal(ability_s v) const {
+int player::getmaximal(abilityn v) const {
 	switch(v) {
 	case Sanity: return m_sanity;
 	case Health: return m_health;
@@ -410,7 +410,7 @@ void player::modify(gamef_s v, bool activate) {
 		flags.remove(v);
 }
 
-int	player::getbonus(ability_s v, int b) const {
+int	player::getbonus(abilityn v, int b) const {
 	auto m = getmaximal(v);
 	switch(b) {
 	case 100: b = game.d6(); break;
@@ -631,7 +631,7 @@ void player::phase_refresh_actions() {
 		for(auto& ea : bsdata<abilityi>()) {
 			if(!ea.is(abilityi::Indicator))
 				continue;
-			auto i = (ability_s)(&ea - bsdata<abilityi>::elements);
+			auto i = (abilityn)(&ea - bsdata<abilityi>::elements);
 			modify(i, ei.abilities[i]);
 		}
 		if(ei.tags.is(DiscardOn1)) {

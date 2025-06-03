@@ -59,7 +59,7 @@ void status_info() {
 	caret.y += metrics::border;
 	caret.x += textw(' ');
 	for(auto& e : bsdata<abilityi>()) {
-		auto v = ability_s(&e - bsdata<abilityi>::elements);
+		auto v = abilityn(&e - bsdata<abilityi>::elements);
 		if(e.is(abilityi::Stat) || e.is(abilityi::Indicator))
 			add_info(getnm(e.id), game.get(v));
 	}
