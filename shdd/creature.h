@@ -22,11 +22,11 @@ struct creature : actable, statable, consumablea, wearable, avatarable {
 	void		clear();
 	void		damage(int value);
 	const char*	getkindname() const;
-	dice		getdamage(ability_s ability) const;
+	dice		getdamage(abilityn ability) const;
 	creature*	getenemy() const;
 	const char*	getracename() const;
 	bool		is(feat_s v) const { return feats.is(v); }
-	bool		is(state_s v) const { return states.is(v); }
+	bool		is(staten v) const { return states.is(v); }
 	bool		isallow(const item& v) const;
 	bool		isenemy(const creature& v) const { return v.is(Enemy) != is(Enemy); }
 	bool		ismelee() const;

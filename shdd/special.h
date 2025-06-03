@@ -4,7 +4,7 @@
 #pragma once
 
 struct speciali : nameable {
-	ability_s	save;
+	abilityn	save;
 	int			dc;
 	variant		effect;
 };

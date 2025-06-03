@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum state_s : unsigned char {
+enum staten : unsigned char {
 	NoDexBonusAC,
 	BadSwim, BadStealth,
 	NoSwim,

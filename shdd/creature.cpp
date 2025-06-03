@@ -2,7 +2,6 @@
 #include "answers.h"
 #include "creature.h"
 #include "gender.h"
-#include "groupname.h"
 #include "ongoing.h"
 #include "math.h"
 #include "modifier.h"
@@ -18,7 +17,7 @@ bool action_change_player;
 
 static int dice_table[] = {2, 3, 4, 6, 8, 10, 12, 20};
 
-static ability_s get_attack_damage(ability_s v) {
+static abilityn get_attack_damage(abilityn v) {
 	switch(v) {
 	case MeleeAttack: return MeleeDamage;
 	case RangeAttack: return RangeDamage;
@@ -26,7 +25,7 @@ static ability_s get_attack_damage(ability_s v) {
 	}
 }
 
-dice creature::getdamage(ability_s ability) const {
+dice creature::getdamage(abilityn ability) const {
 	auto result = wears[ability].getdamage();
 	result.d = maptbl(dice_table, result.d + get(WeaponDiceRaise));
 	auto damage_ability = get_attack_damage(ability);
@@ -80,7 +79,7 @@ static void update_ongoing() {
 }
 
 static void update_maximum_ability() {
-	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1)) {
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1)) {
 		if(player->abilities[i] > 18)
 			player->abilities[i] = 18;
 	}
@@ -126,12 +125,12 @@ static void roll_random_abilities() {
 }
 
 static void copy_special_abilities(const statable& e) {
-	for(auto i = HP; i <= Dodge; i = (ability_s)(i + 1))
+	for(auto i = HP; i <= Dodge; i = (abilityn)(i + 1))
 		player->basic.abilities[i] = e.abilities[i];
 }
 
 static void transform_ability() {
-	for(auto i = Strenght; i <= Charisma; i = (ability_s)(i + 1))
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
 		player->basic.abilities[i] = (player->basic.abilities[i] + 5) * 2 + xrand(0, 1);
 }
 
@@ -145,7 +144,7 @@ static void starting_hits() {
 
 static void finish_create() {
 	player->update();
-	for(auto i = HP; i <= Dodge; i = (ability_s)(i + 1))
+	for(auto i = HP; i <= Dodge; i = (abilityn)(i + 1))
 		player->abilities[i] = player->basic.abilities[i];
 }
 

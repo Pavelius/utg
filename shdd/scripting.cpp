@@ -255,7 +255,7 @@ static void special_attack(item& weapon) {
 		special_attack(weapon, bsdata<speciali>::elements[power.value]);
 }
 
-static void single_attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+static void single_attack_enemy(abilityn attack, abilityn attack_damage, int advantage, item& weapon) {
 	roll20(advantage);
 	auto critical_miss = (roll_result <= 1);
 	auto critical_hit = (roll_result >= 20);
@@ -273,7 +273,7 @@ static void single_attack_enemy(ability_s attack, ability_s attack_damage, int a
 	special_attack(weapon);
 }
 
-static void attack_enemy(ability_s attack, ability_s attack_damage, int advantage, item& weapon) {
+static void attack_enemy(abilityn attack, abilityn attack_damage, int advantage, item& weapon) {
 	pushvalue push(special_attacks, 0);
 	auto number_of_attacks = weapon.getattacks();
 	for(auto i = 0; i < number_of_attacks; i++)

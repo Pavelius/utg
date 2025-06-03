@@ -1,7 +1,7 @@
 #include "actable.h"
 #include "answers.h"
 #include "bsdata.h"
-#include "groupname.h"
+#include "speech.h"
 
 void actable::actv(const char* format, const char* format_param) const {
 	if(!answers::console)
@@ -16,5 +16,5 @@ void actable::act(const char* format, ...) const {
 }
 
 const char* actable::getname() const {
-	return bsdata<groupname>::elements[name].name;
+	return bsdata<speech::element>::elements[name].name;
 }

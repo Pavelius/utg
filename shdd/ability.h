@@ -2,7 +2,7 @@
 
 #pragma once
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Strenght, Dexterity, Constitution, Intellect, Wisdow, Charisma,
 	MeleeAttack, MeleeDamage,
 	RangeAttack, RangeDamage,

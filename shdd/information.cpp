@@ -19,7 +19,7 @@ static void add_dice(stringbuilder& sb, const creature* p, const item& weapon) {
 		sb.add("%+1i", damage_bonus);
 }
 
-static void add_attack(stringbuilder& sb, const creature* p, ability_s attack, ability_s damage) {
+static void add_attack(stringbuilder& sb, const creature* p, abilityn attack, abilityn damage) {
 	sb.adds("%+1i %ToHit", p->get(attack));
 	auto i = p->get(damage);
 	if(i)
@@ -40,7 +40,7 @@ void creature_getproperty(const void* object, variant v, stringbuilder& sb) {
 			add_attack(sb, p, RangeAttack, RangeDamage);
 			break;
 		default:
-			sb.add("%1i", p->get((ability_s)v.value));
+			sb.add("%1i", p->get((abilityn)v.value));
 			break;
 		}
 	}
