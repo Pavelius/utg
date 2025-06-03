@@ -10,7 +10,7 @@
 #include "troop.h"
 #include "unit.h"
 
-int entity::get(ability_s v) const {
+int entity::get(abilityn v) const {
 	if(bsdata<troop>::have(this))
 		return ((uniti*)id)->abilities[v];
 	else if(bsdata<uniti>::have(this) || bsdata<prototype>::have(this))
@@ -47,7 +47,7 @@ int	entity::getsumary(unit_type_s v) const {
 	return result;
 }
 
-int	entity::getsumary(ability_s v) const {
+int	entity::getsumary(abilityn v) const {
 	auto result = 0;
 	for(auto& e : bsdata<troop>()) {
 		if(e.location != this)

@@ -197,7 +197,7 @@ static void paint_special(int index, int frame) {
 	caret = push_caret;
 }
 
-static void special_paint(tile_s special, int special_index) {
+static void special_paint(tilen special, int special_index) {
 	switch(special) {
 	case NoSpecialTile: break;
 	case WormholeAlpha: paint_special(special_index, special - 1); break;

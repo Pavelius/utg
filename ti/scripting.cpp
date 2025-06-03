@@ -1004,11 +1004,11 @@ static bool filter_speciality(const void* object) {
 }
 
 static bool filter_ability(const void* object) {
-	return ((entity*)object)->get((ability_s)last_filter->param) > 0;
+	return ((entity*)object)->get((abilityn)last_filter->param) > 0;
 }
 
 static bool filter_indicator(const void* object) {
-	return ((entity*)object)->get((ability_s)last_filter->param) > 0;
+	return ((entity*)object)->get((abilityn)last_filter->param) > 0;
 }
 
 static bool filter_active_player(const void* object) {

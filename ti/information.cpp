@@ -82,7 +82,7 @@ static void addcost(stringbuilder& sb, int value, int count) {
 		sb.addn("%Cost: %1i", value);
 }
 
-static void addv(stringbuilder& sb, ability_s id, int value, int count = 0) {
+static void addv(stringbuilder& sb, abilityn id, int value, int count = 0) {
 	addv(sb, getnm(bsdata<abilityi>::elements[id].id), value, count);
 }
 

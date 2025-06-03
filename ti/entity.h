@@ -25,7 +25,7 @@ struct entity : nameable {
 	void				discard();
 	void				exhaust();
 	void				focusing() const;
-	int					get(ability_s v) const;
+	int					get(abilityn v) const;
 	int					get(indicator_s v) const;
 	const componenti*	getcard() const;
 	decki*				getdeck() const;
@@ -36,7 +36,7 @@ struct entity : nameable {
 	playeri*			getplayer() const;
 	int					getproduction() const;
 	color_s				getspeciality() const;
-	int					getsumary(ability_s v) const;
+	int					getsumary(abilityn v) const;
 	int					getsumary(unit_type_s v) const;
 	systemi*			getsystem() const;
 	planet_trait_s		gettrait() const;

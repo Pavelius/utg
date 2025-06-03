@@ -22,7 +22,7 @@ struct uniti : nameable {
 	void			placement(int count, bool updateui = true) const;
 	bool			stackable() const { return abilities[CostCount] > 1; }
 private:
-	int				getscore(ability_s v) const;
+	int				getscore(abilityn v) const;
 	int				getscore(tag_s v, int n) const;
 };
 struct prototype {

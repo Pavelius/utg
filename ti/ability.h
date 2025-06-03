@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Cost, CostCount,
 	Combat, CombatCount, Bombardment, BombardmentCount,
 	AntiFighterBarrage, AntiFighterBarrageCount, SpaceCannon, SpaceCannonCount,

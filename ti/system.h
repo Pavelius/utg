@@ -10,7 +10,7 @@ const int hms = 8;
 struct systemi : entity {
 	playeri*		home;
 	char			special_index;
-	tile_s			special;
+	tilen			special;
 	unsigned short	index;
 	explicit operator bool() const;
 	planeti*		getbestplanet() const;

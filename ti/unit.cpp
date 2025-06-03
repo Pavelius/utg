@@ -31,8 +31,8 @@ void uniti::placement(int count, bool need_update_ui) const {
 	}
 }
 
-int uniti::getscore(ability_s v) const {
-	ability_s v1 = (ability_s)(v + 1);
+int uniti::getscore(abilityn v) const {
+	abilityn v1 = (abilityn)(v + 1);
 	auto count = abilities[v1];
 	if(!count)
 		count = 1;

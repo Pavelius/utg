@@ -12,6 +12,6 @@ struct army {
 	void			choose(const char* id);
 	void			hit(int value);
 	void			hit(int value, tag_s v, bool keep);
-	int				roll(ability_s id, ability_s id_count) const;
+	int				roll(abilityn id, abilityn id_count) const;
 };
 extern army* last_army;

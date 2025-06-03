@@ -10,7 +10,7 @@ struct entitya : public collection<entity> {
 	entity*			getbest(indicator_s v) const;
 	int				getcap() const;
 	int				getproductioncost() const;
-	int				getsummary(ability_s v) const;
+	int				getsummary(abilityn v) const;
 	int				getsummary(indicator_s v) const;
 	int				getsummary(unit_type_s v) const;
 	int				getsummary(const uniti* pv) const;

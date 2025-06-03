@@ -60,7 +60,7 @@ static void repair_units(entitya& source) {
 
 }
 
-int army::roll(ability_s id, ability_s id_count) const {
+int army::roll(abilityn id, abilityn id_count) const {
 	auto push_last = player; player = owner;
 	auto result = 0;
 	auto bonus = 0;

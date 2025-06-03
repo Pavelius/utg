@@ -341,7 +341,7 @@ int entitya::getsummary(indicator_s v) const {
 	return result_value;
 }
 
-int	entitya::getsummary(ability_s v) const {
+int	entitya::getsummary(abilityn v) const {
 	auto result = 0;
 	for(auto p : *this)
 		result += p->get(v);
