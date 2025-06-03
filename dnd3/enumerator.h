@@ -6,10 +6,10 @@
 struct enumgroupi : nameable {
 };
 struct enumi : nameable {
-	variant			type;
-	int				index;
+	variant	type;
+	int		index;
 };
 struct enumerable {
-	short			values[32];
+	short	values[32];
 };
 void initialize_enumerators();
