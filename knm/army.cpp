@@ -43,7 +43,7 @@ void armyi::clear() {
 	memset(this, 0, sizeof(*this));
 }
 
-int	armyi::getsummary(ability_s v) const {
+int	armyi::getsummary(abilityn v) const {
 	return troops.gettotal(v) + get(v);
 }
 
@@ -74,7 +74,7 @@ void armyi::engage(const char* name, int chance, int count) {
 	damage(chance, count);
 }
 
-void armyi::engage(ability_s type) {
+void armyi::engage(abilityn type) {
 	entitya querry = troops;
 	querry.group(get_unit);
 	auto skill = get(Combat);
@@ -95,7 +95,7 @@ void armyi::resist(int& hits) {
 	}
 }
 
-void armyi::prepare(ability_s type) {
+void armyi::prepare(abilityn type) {
 	abilities[type] = 0;
 	for(auto p : troops)
 		add(type, p->get(type));

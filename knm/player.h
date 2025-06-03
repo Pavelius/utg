@@ -17,10 +17,10 @@ struct playeri : entity, upgradea {
 	uniti*		troops[5];
 	abilitya	bonus[5];
 	variants	start;
-	void		add(ability_s v, int i) { current.abilities[v] += i; }
-	int			getarmy(ability_s v) const;
-	int			getmaximum(ability_s v) const;
-	void		set(ability_s v, int i) { current.abilities[v] = i; }
+	void		add(abilityn v, int i) { current.abilities[v] += i; }
+	int			getarmy(abilityn v) const;
+	int			getmaximum(abilityn v) const;
+	void		set(abilityn v, int i) { current.abilities[v] = i; }
 	void		set(tag_s v) { entity::set(v); }
 	void		remove(tag_s v) { entity::remove(v); }
 };

@@ -2,7 +2,7 @@
 
 #pragma once
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Cost, Limit, LimitInProvince, Recruit, Tools,
 	Strenght, Combat, Damage, Shoots, Shield, Hirelings, Milita, Move,
 	Resources, Influence, Goods,
@@ -10,9 +10,9 @@ enum ability_s : unsigned char {
 	Fame, Gold,
 };
 struct abilityi : nameable {
-	ability_s	payoff;
+	abilityn	payoff;
 };
 struct abilitya {
 	char		abilities[Gold + 1];
 };
-extern ability_s last_ability;
+extern abilityn last_ability;

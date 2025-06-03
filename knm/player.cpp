@@ -6,7 +6,7 @@
 playeri* player;
 playeri* speaker;
 
-int	playeri::getmaximum(ability_s v) const {
+int	playeri::getmaximum(abilityn v) const {
 	switch(v) {
 	case Goods:
 		return 3 + getbonus(v);
@@ -21,6 +21,6 @@ int	playeri::getmaximum(ability_s v) const {
 	}
 }
 
-int	playeri::getarmy(ability_s v) const {
+int	playeri::getarmy(abilityn v) const {
 	return current.abilities[v] + getupgrade(v);
 }

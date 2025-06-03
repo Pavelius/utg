@@ -44,7 +44,7 @@ void entity::remove(const entity* v) {
 		tags &= ~((0x80000000) >> getbsi((playeri*)v));
 }
 
-int entity::get(ability_s v) const {
+int entity::get(abilityn v) const {
 	if(bsdata<troopi>::have(this))
 		return ((uniti*)id)->abilities[v];
 	else if(bsdata<structure>::have(this))
@@ -91,7 +91,7 @@ bool entity::ishomeland() const {
 	return false;
 }
 
-int	entity::getbonus(ability_s v) const {
+int	entity::getbonus(abilityn v) const {
 	auto result = 0;
 	if(bsdata<provincei>::have(this)) {
 		for(auto& e : bsdata<structure>()) {

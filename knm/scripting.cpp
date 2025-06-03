@@ -144,7 +144,7 @@ static void apply_trigger(int bonus) {
 	}
 }
 
-static bool allow_pay(ability_s v, int bonus) {
+static bool allow_pay(abilityn v, int bonus) {
 	auto total = player->current.abilities[Gold];
 	if(v != Gold)
 		total += player->current.abilities[v];
@@ -232,7 +232,7 @@ void reapeated_list(int value, int counter) {
 	last_id = push;
 }
 
-static void use_ability_or_gold(ability_s v, int value) {
+static void use_ability_or_gold(abilityn v, int value) {
 	if(player->current.abilities[v] >= value)
 		player->current.abilities[v] -= value;
 	else {
@@ -242,7 +242,7 @@ static void use_ability_or_gold(ability_s v, int value) {
 	}
 }
 
-static void use_ability(ability_s v, int& value) {
+static void use_ability(abilityn v, int& value) {
 	while(value > 0 && v) {
 		if(player->current.abilities[v] >= value) {
 			player->current.abilities[v] -= value;
@@ -258,7 +258,7 @@ static void use_ability(ability_s v, int& value) {
 }
 
 template<> void fnscript<abilityi>(int value, int counter) {
-	last_ability = (ability_s)value;
+	last_ability = (abilityn)value;
 	if(counter > 0) {
 		player->current.abilities[value] += counter;
 		logging(player, get_log("RaiseAbility"), bsdata<abilityi>::elements[value].getname(), counter);
@@ -407,7 +407,7 @@ static void apply_input(void* result, bool play_card = true) {
 	else if(bsdata<upgradei>::have(result))
 		last_upgrade = (upgradei*)result;
 	else if(bsdata<abilityi>::have(result)) {
-		auto v = (ability_s)((abilityi*)result - bsdata<abilityi>::elements);
+		auto v = (abilityn)((abilityi*)result - bsdata<abilityi>::elements);
 		player->current.abilities[v] += 1;
 	} else
 		((fnevent)result)();
@@ -630,7 +630,7 @@ static int compare_player_priority(const void* v1, const void* v2) {
 	return p1->initiative - p2->initiative;
 }
 
-static void refresh_ability(ability_s v) {
+static void refresh_ability(abilityn v) {
 	player->set(v, player->getmaximum(v));
 }
 
@@ -646,7 +646,7 @@ static void refresh_influence(int bonus) {
 	refresh_ability(Influence);
 }
 
-static void add_consumbale(ability_s v, int bonus) {
+static void add_consumbale(abilityn v, int bonus) {
 	bonus = getone(bonus);
 	auto total = province->get(v) + province->getbonus(v);
 	player->add(v, total * bonus);
@@ -681,12 +681,12 @@ static void remove_strategy(int bonus) {
 	last_strategy->player = 0;
 }
 
-static void pay(ability_s v, int bonus) {
+static void pay(abilityn v, int bonus) {
 	if(player->current.abilities[v] >= bonus)
 		player->current.abilities[v] -= bonus;
 }
 
-static void pay_plus_good(ability_s v, int& bonus) {
+static void pay_plus_good(abilityn v, int& bonus) {
 	if(bonus < 0)
 		bonus = 0;
 	if(v != Gold) {
@@ -725,7 +725,7 @@ static void pay_hero_yesno(int bonus) {
 		script_stop();
 }
 
-static void pay_ability(const char* id, ability_s v, ability_s currency, int gain, int cost, int maximum_cap, abilitya& gainer, abilitya& payer) {
+static void pay_ability(const char* id, abilityn v, abilityn currency, int gain, int cost, int maximum_cap, abilitya& gainer, abilitya& payer) {
 	pushtitle push_title(id);
 	an.clear();
 	auto choose_prompt = getnme(ids(id, "Answer"));
@@ -758,7 +758,7 @@ static void choosing_reset() {
 	choosing.clear();
 }
 
-static void apply_pay(ability_s v, int bonus) {
+static void apply_pay(abilityn v, int bonus) {
 	last_pay -= bonus;
 	pay_plus_good(v, last_pay);
 }
@@ -815,7 +815,7 @@ static void add_troops(int bonus) {
 		add_troop((uniti*)p);
 }
 
-static int get_troops(ability_s v, provincei* province, playeri* player) {
+static int get_troops(abilityn v, provincei* province, playeri* player) {
 	auto result = 0;
 	for(auto& e : bsdata<troopi>()) {
 		if(e.getprovince() == province && e.player == player)
@@ -1179,14 +1179,14 @@ static void determine_winner() {
 		winner_army = &defender;
 }
 
-static void prepare_ability(ability_s v) {
+static void prepare_ability(abilityn v) {
 	if(attacker.player)
 		attacker.abilities[v] += attacker.player->getarmy(v);
 	if(defender.player)
 		defender.abilities[v] += defender.player->getarmy(v);
 }
 
-static void prepare_ability_if_valid(armyi& source, ability_s v) {
+static void prepare_ability_if_valid(armyi& source, abilityn v) {
 	if(!source.player)
 		return;
 	if(source.abilities[v] > 0 && v < sizeof(source.abilities) / sizeof(source.abilities[0]))
@@ -1229,7 +1229,7 @@ static void apply_casualty(int bonus) {
 	update_ui();
 }
 
-static void attack_army(armyi& source, ability_s type, bool milita_attack = false, bool hirelings_attack = false) {
+static void attack_army(armyi& source, abilityn type, bool milita_attack = false, bool hirelings_attack = false) {
 	pushvalue push_player(player, source.player);
 	pushvalue push_army(last_army, &source);
 	source.setheader("###%1");

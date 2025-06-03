@@ -31,7 +31,7 @@ void upgradea::setupgrade(const upgradei* v) {
 		upgrades |= (1 << i);
 }
 
-int	upgradea::getupgrade(ability_s v) const {
+int	upgradea::getupgrade(abilityn v) const {
 	auto result = 0;
 	for(auto i = 0; i <= max_upgrade; i++) {
 		if(isupgrade(i))

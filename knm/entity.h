@@ -3,7 +3,7 @@
 
 #pragma once
 
-enum ability_s : unsigned char;
+enum abilityn : unsigned char;
 enum tag_s : unsigned char;
 
 struct cardi;
@@ -16,8 +16,8 @@ struct entity : nameable, taga {
 	entity*			location; // Can be province, board area, deck, something else
 	void			clear();
 	void			focusing() const;
-	int				get(ability_s v) const;
-	int				getbonus(ability_s v) const;
+	int				get(abilityn v) const;
+	int				getbonus(abilityn v) const;
 	cardi*			getcomponent() const;
 	const char*		getname() const;
 	playeri*		getplayer() const;

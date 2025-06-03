@@ -9,7 +9,7 @@ struct provincei : entity, abilitya {
 	point			position;
 	adat<point,8>	points;
 	void			paint() const;
-	int				get(ability_s v) const { return abilities[v]; }
+	int				get(abilityn v) const { return abilities[v]; }
 	void			setposition(point v);
 };
 extern provincei* province;

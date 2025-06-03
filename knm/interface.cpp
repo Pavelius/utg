@@ -216,7 +216,7 @@ static void status(const char* id, int value, int maximum, const void* object) {
 	sb.add("%1i/%2i", value, maximum); status(id, temp, object);
 }
 
-static void status(ability_s v) {
+static void status(abilityn v) {
 	switch(v) {
 	case Goods: case Resources: case Influence:
 		status(bsdata<abilityi>::elements[v].id, player->get(v), player->getmaximum(v), bsdata<abilityi>::elements + v);
@@ -238,9 +238,9 @@ static void status(ability_s v) {
 }
 
 static void show_indicators() {
-	static ability_s source_tokes[] = {Hero, Army};
-	static ability_s source_goods[] = {Resources, Influence, Gold, Goods};
-	static ability_s source_score[] = {Fame};
+	static abilityn source_tokes[] = {Hero, Army};
+	static abilityn source_goods[] = {Resources, Influence, Gold, Goods};
+	static abilityn source_score[] = {Fame};
 	for(auto v : source_tokes)
 		status(v);
 	caret.x += 2;

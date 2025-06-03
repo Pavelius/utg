@@ -26,4 +26,4 @@ BSDATA(abilityi) = {
 };
 assert_enum(abilityi, Gold);
 
-ability_s last_ability;
+abilityn last_ability;

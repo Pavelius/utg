@@ -89,7 +89,7 @@ static const char* get_times(const char* id, int value) {
 	return temp;
 }
 
-static void add_value_unit(stringbuilder& sb, ability_s i, int bonus, int bonus2 = 0) {
+static void add_value_unit(stringbuilder& sb, abilityn i, int bonus, int bonus2 = 0) {
 	if(!bonus)
 		return;
 	auto id = bsdata<abilityi>::elements[i].id;
@@ -111,17 +111,17 @@ static void add_value_unit(stringbuilder& sb, ability_s i, int bonus, int bonus2
 }
 
 static void add_value(stringbuilder& sb, abilitya& source) {
-	for(auto i = (ability_s)0; i <= Gold; i = (ability_s)(i + 1))
+	for(auto i = (abilityn)0; i <= Gold; i = (abilityn)(i + 1))
 		add_value(sb, bsdata<abilityi>::elements[i].id, source.abilities[i]);
 }
 
 static void add_value(stringbuilder& sb, abilitya& source, const char* prefix) {
-	for(auto i = (ability_s)0; i <= Gold; i = (ability_s)(i + 1))
+	for(auto i = (abilityn)0; i <= Gold; i = (abilityn)(i + 1))
 		add_value(sb, prefix, bsdata<abilityi>::elements[i].id, source.abilities[i]);
 }
 
 static void add_value_unit(stringbuilder& sb, abilitya& source) {
-	for(auto i = (ability_s)0; i <= Gold; i = (ability_s)(i + 1)) {
+	for(auto i = (abilityn)0; i <= Gold; i = (abilityn)(i + 1)) {
 		switch(i) {
 		case Combat:
 			add_value_unit(sb, i, source.abilities[i], source.abilities[Damage]);

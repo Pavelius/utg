@@ -25,7 +25,7 @@ void entitya::sortunits() {
 	sort(compare_units);
 }
 
-int	entitya::gettotal(ability_s v) const {
+int	entitya::gettotal(abilityn v) const {
 	auto result = 0;
 	for(auto p : *this)
 		result += p->get(v);
