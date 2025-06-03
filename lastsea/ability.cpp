@@ -30,7 +30,7 @@ static void check_history(const abilityi& e, int bonus) {
 static void check_skill(const abilityi& e, int bonus) {
 	if(bonus <= 0)
 		return;
-	auto a = (ability_s)(&e - bsdata<abilityi>::elements);
+	auto a = (abilityn)(&e - bsdata<abilityi>::elements);
 	auto pa = game.getclass().getearn(a);
 	auto cv = game.get(a);
 	for(unsigned i = 0; i < sizeof(classi::aim) / sizeof(classi::aim[0]); i++) {

@@ -10,7 +10,7 @@ void chest::losstreasure(treasurei* p) {
 		p->setowner(0);
 }
 
-int chest::getbonus(ability_s v) const {
+int chest::getbonus(abilityn v) const {
 	auto r = 0;
 	for(auto& e : bsdata<treasurei>()) {
 		if(!e.isactive() || e.isdiscarded())
@@ -40,7 +40,7 @@ treasurei* chest::choosetreasure(const char* title, const char* cancel) const {
 	return (treasurei*)an.choose(title, cancel);
 }
 
-void chest::apply(trigger_s type, ability_s v) {
+void chest::apply(trigger_s type, abilityn v) {
 	for(auto& e : bsdata<treasurei>()) {
 		if(!e.isactive() || e.isdiscarded())
 			continue;

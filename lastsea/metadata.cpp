@@ -5,7 +5,7 @@
 #define LNK(V, T) template<> struct bsmeta<V> : bsmeta<T> {};\
 template<> struct bsdata<V> : bsdata<T> {};
 
-LNK(ability_s, abilityi)
+LNK(abilityn, abilityi)
 LNK(trigger_s, triggeri)
 
 BSMETA(variant) = {{}};

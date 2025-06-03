@@ -1,6 +1,6 @@
 #pragma once
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Charm, Cunning, Finess, Luck, Might,
 	Reputation,
 };

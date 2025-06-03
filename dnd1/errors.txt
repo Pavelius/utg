@@ -1,2 +1,2 @@
-﻿Error in file `rules/Spells.txt`:
- Line 91: Not found requisit `summon`
+﻿Error in file `rules/Scenery.txt`:
+ Line 4: Can't find variant `HuntPrey`

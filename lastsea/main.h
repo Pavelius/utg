@@ -10,14 +10,13 @@
 #include "pathfind.h"
 #include "quest.h"
 #include "collection.h"
-#include "stringlist.h"
 #include "tag.h"
 
 #pragma once
 
 template<typename T> struct bsmeta;
 
-enum ability_s : unsigned char {
+enum abilityn : unsigned char {
 	Exploration, Brawl, Hunting, Aim, Swagger, Navigation,
 	Reroll, Misfortune,
 	Crew, Discontent, Supply, Hull,
@@ -142,7 +141,7 @@ struct classi {
 	char			levelup[5];
 	char			exploration[4], brawl[4], hunting[4], aim[4], swagger[4], navigation[4];
 	variants		event1, event2, event3, event4, event5;
-	const char*		getearn(ability_s v) const;
+	const char*		getearn(abilityn v) const;
 	const variants&	getevent(int level) const;
 	int				getlevel(int stars) const;
 };
@@ -179,7 +178,7 @@ struct treasurei {
 	const char*		id;
 	char			abilities[6]; // Bonus to abilities
 	trigger_s		trigger;
-	ability_s		ability;
+	abilityn		ability;
 	char			bonus;
 	flaga			tags;
 	variants		gain, loss, use;
@@ -201,10 +200,10 @@ struct treasurei {
 };
 class chest {
 public:
-	void			apply(trigger_s type, ability_s v);
+	void			apply(trigger_s type, abilityn v);
 	treasurei*		choosetreasure(const char* title, const char* cancel) const;
 	void			gaintreasure(treasurei* pv);
-	int				getbonus(ability_s v) const;
+	int				getbonus(abilityn v) const;
 	int				gettreasurecount(tag_s v) const;
 	void			losstreasure(treasurei* pv);
 };
@@ -216,23 +215,23 @@ class pirate : public player, public chest {
 public:
 	char			abilities[Infamy + 1];
 	indext			actions[6];
-	void			add(ability_s v, int bonus);
+	void			add(abilityn v, int bonus);
 	void			addaction(indext v);
 	void			bury(int count);
 	void			choosebonus(variant v1, variant v2);
-	ability_s		chooseskill(const char* title) const;
+	abilityn		chooseskill(const char* title) const;
 	void			clear();
 	void			clearactions();
-	bool			confirm(ability_s v, int delta) const;
+	bool			confirm(abilityn v, int delta) const;
 	void			gaintreasures(int count = 1);
-	int				get(ability_s v) const { return abilities[v]; }
-	int				getmaximum(ability_s v) const;
+	int				get(abilityn v) const { return abilities[v]; }
+	int				getmaximum(abilityn v) const;
 	int				getnextstar(int value) const;
 	void			levelup();
 	void			raiseskills(int count);
 	void			roll(int mode);
 	static void		sfgetproperty(const void* object, variant v, stringbuilder& sb);
-	void			set(ability_s v, int i);
+	void			set(abilityn v, int i);
 	void			sortactions();
 	void			tradefriend();
 };

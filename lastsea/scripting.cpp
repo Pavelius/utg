@@ -11,7 +11,7 @@ static char round_skills_bonus[Navigation + 1];
 static bool	need_sail, need_stop, need_stop_actions;
 static tilei* last_tile;
 static int game_result;
-static ability_s last_ability;
+static abilityn last_ability;
 static int prop_end_scene, prop_visit, prop_maximum_danger;
 static const quest* last_location;
 static const quest* new_location;
@@ -63,7 +63,7 @@ static bool allow_promt(const quest* p, const variants& tags) {
 	for(auto v : tags) {
 		conditioni* pc = v;
 		if(pc) {
-			if(!pc->proc(v.counter, pc->param))
+			if(!pc->proc())
 				return false;
 			continue;
 		}
@@ -184,7 +184,7 @@ static void apply_effect(const quest* p) {
 	}
 }
 
-static bool allow_choose(ability_s v, int bonus) {
+static bool allow_choose(abilityn v, int bonus) {
 	switch(v) {
 	case Infamy: case Discontent: case Danger:
 		return true;
@@ -201,7 +201,7 @@ static bool allow_choose_script(const scripti& e, int counter) {
 
 static bool allow_choose(variant v) {
 	switch(v.type) {
-	case Ability: return allow_choose((ability_s)v.value, v.counter);
+	case Ability: return allow_choose((abilityn)v.value, v.counter);
 	case Script: return allow_choose_script(bsdata<scripti>::get(v.value), v.counter);
 	default: return true;
 	}
@@ -337,7 +337,7 @@ static const quest* find_action(int n) {
 	return 0;
 }
 
-static bool allow_action(ability_s v, int bonus) {
+static bool allow_action(abilityn v, int bonus) {
 	switch(v) {
 	case Mission: case Cabine:
 		return (game.get(v) + bonus) <= game.getmaximum(v);
@@ -347,7 +347,7 @@ static bool allow_action(ability_s v, int bonus) {
 
 static bool allow_action(variant v) {
 	switch(v.type) {
-	case Ability: return allow_action((ability_s)v.value, v.counter);
+	case Ability: return allow_action((abilityn)v.value, v.counter);
 	default: return true;
 	}
 }
@@ -409,7 +409,7 @@ static void add_treasure(answers& an, const treasurei* p) {
 	an.add(p, "%Use [%1].", getnm(p->id));
 }
 
-static void apply_treasure(trigger_s trigger, ability_s ability) {
+static void apply_treasure(trigger_s trigger, abilityn ability) {
 	for(auto& e : bsdata<treasurei>()) {
 		if(!e.isactive() || e.isdiscarded())
 			continue;
@@ -429,7 +429,7 @@ static void add_treasure(answers& an, trigger_s trigger) {
 	}
 }
 
-static void add_treasure(answers& an, trigger_s trigger, ability_s ability, useda& used) {
+static void add_treasure(answers& an, trigger_s trigger, abilityn ability, useda& used) {
 	for(auto& e : bsdata<treasurei>()) {
 		if(!e.isactive() || e.isdiscarded())
 			continue;
@@ -551,7 +551,7 @@ void pirate::makeroll(int mode) {
 	static bool gun_used;
 	answers an; useda used;
 	gun_used = false;
-	auto rolled_ability = (ability_s)last_ability;
+	auto rolled_ability = (abilityn)last_ability;
 	while(true) {
 		sb.clear();
 		if(last_ability >= Exploration && last_ability <= Navigation)
@@ -665,7 +665,7 @@ bool gamei::ischoosed(int i) const {
 	return false;
 }
 
-static void ability_command(ability_s v, int bonus) {
+static void ability_command(abilityn v, int bonus) {
 	last_ability = v;
 	if(bonus) {
 		game.add(last_ability, bonus);
@@ -680,7 +680,7 @@ static void script_command(int type, int bonus) {
 
 void gamei::apply(variant v) {
 	switch(v.type) {
-	case Ability: ability_command((ability_s)v.value, v.counter); break;
+	case Ability: ability_command((abilityn)v.value, v.counter); break;
 	case Card: game.gaintreasure((treasurei*)v.getpointer()); break;
 	case Script: script_command(v.value, v.counter); break;
 	}
@@ -691,7 +691,7 @@ static bool treasure_active(const treasurei* p) {
 }
 
 static bool if_eat_supply(int counter, int param) {
-	return game.get((ability_s)param) >= game.getmaximumeat();
+	return game.get((abilityn)param) >= game.getmaximumeat();
 }
 
 static bool if_tag(int counter, int param) {
@@ -744,7 +744,7 @@ static void set_value(int bonus, int param) {
 
 static void set_ability(int bonus, int param) {
 	last_value = bonus;
-	game.set((ability_s)param, bonus);
+	game.set((abilityn)param, bonus);
 }
 
 static void change_scene(int bonus, int param) {
@@ -833,8 +833,8 @@ static void set_ability_if_not_info(stringbuilder& sb, const scripti& e, int bon
 }
 
 static void set_ability_if_not(int bonus, int param) {
-	if(game.get((ability_s)param) > bonus) {
-		game.set((ability_s)param, bonus);
+	if(game.get((abilityn)param) > bonus) {
+		game.set((abilityn)param, bonus);
 		need_stop = true;
 	}
 }
@@ -991,12 +991,12 @@ static void reload_gun_or_add(int bonus, int param) {
 		if(game.reloadgun(4, true))
 			game.information(getnm("GunReloaded"));
 		else if(param)
-			game.add((ability_s)param, 1);
+			game.add((abilityn)param, 1);
 	} else {
 		if(game.unloadgun(4, true))
 			game.warning(getnm("GunUnloaded"));
 		else if(param)
-			game.add((ability_s)param, -1);
+			game.add((abilityn)param, -1);
 	}
 }
 
@@ -1085,7 +1085,7 @@ static void remove_all_navigation(int bonus, int param) {
 }
 
 static void eat_supply(int bonus, int param) {
-	game.add((ability_s)param, -(game.getmaximumeat() + bonus));
+	game.add((abilityn)param, -(game.getmaximumeat() + bonus));
 }
 
 void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep = ' ');
@@ -1113,15 +1113,15 @@ void initialize_script() {
 	test_correction();
 #endif // _DEBUG
 	// Properties
-	prop_end_scene = property_add("EndScene", propertyi::Number);
-	prop_visit = property_add("Visit", propertyi::Number);
-	prop_maximum_danger = property_add("MaximumDanger", propertyi::Number);
+	prop_end_scene = add_property("EndScene", propertyi::Number);
+	prop_visit = add_property("Visit", propertyi::Number);
+	prop_maximum_danger = add_property("MaximumDanger", propertyi::Number);
 	// Prompt conditions for quest
-	conditioni::add("IfEatSupply", if_eat_supply, Supply);
-	conditioni::add("IfEntry", if_tag, AnswerEntry);
-	conditioni::add("IfStory", if_story);
-	conditioni::add("IfTreasure", if_treasure);
-	conditioni::add("IfVisit", if_visit);
+	//conditioni::add("IfEatSupply", if_eat_supply, Supply);
+	//conditioni::add("IfEntry", if_tag, AnswerEntry);
+	//conditioni::add("IfStory", if_story);
+	//conditioni::add("IfTreasure", if_treasure);
+	//conditioni::add("IfVisit", if_visit);
 }
 
 BSDATA(scripti) = {

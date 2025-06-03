@@ -1,6 +1,6 @@
 #pragma once
 
-enum action_s : unsigned char {
+enum actionn : unsigned char {
 	Attack, Defend, Feint, Maneuver
 };
 enum maneuver_s : unsigned char {

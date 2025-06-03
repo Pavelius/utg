@@ -993,9 +993,6 @@ static void for_each_creature(int bonus) {
 	script_stop();
 }
 
-static void hunt_prey(int bonus) {
-}
-
 static gendern random_gender() {
 	if(d100() < 40)
 		return Female;
@@ -1183,6 +1180,9 @@ static void push_modifier(int bonus) {
 }
 
 static void instant_kill(int bonus) {
+}
+
+static void hunt_prey(int bonus) {
 }
 
 static bool if_2hd() {

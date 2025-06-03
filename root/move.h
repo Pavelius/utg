@@ -31,7 +31,7 @@ struct movei {
 	typedef void(*fnproc)();
 	const char*		id;
 	move_type_s		type;
-	ability_s		roll;
+	abilityn		roll;
 	sliceu<moveoptioni> options;
 	static int		choose_count;
 	const moveoptioni* choose(const moveoptioni* p) const;

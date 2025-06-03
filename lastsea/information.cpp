@@ -81,7 +81,7 @@ static void print(stringbuilder& sb, const char* format) {
 }
 
 static void printab(stringbuilder& sb, char* ability, const char* promt = 0) {
-	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
+	for(auto i = Exploration; i <= Navigation; i = (abilityn)(i + 1)) {
 		auto v = ability[i - Exploration];
 		if(v) {
 			if(promt) {
@@ -249,28 +249,28 @@ void pirate::sfgetproperty(const void* object, variant v, stringbuilder& sb) {
 	case Ability:
 		switch(v.value) {
 		case Stars:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->get((abilityn)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((abilityn)v.value));
 			value = p->getnextstar(value);
 			if(value)
 				sb.adds("(%1 %2i)", getnm("NextStar"), value);
 			break;
 		case Crew:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
+			value = p->get((abilityn)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((abilityn)v.value));
 			value = p->get(Discontent);
 			if(value)
 				sb.adds(getnm("ShowDiscontent"), value);
 			break;
 		case Reroll: case Misfortune:
-			value = p->get((ability_s)v.value);
+			value = p->get((abilityn)v.value);
 			if(value)
 				sb.add("%1i", value);
 			break;
 		default:
-			value = p->get((ability_s)v.value);
-			sb.add("%1i %-From %2i", value, p->getmaximum((ability_s)v.value));
-			value2 = p->getbonus((ability_s)v.value);
+			value = p->get((abilityn)v.value);
+			sb.add("%1i %-From %2i", value, p->getmaximum((abilityn)v.value));
+			value2 = p->getbonus((abilityn)v.value);
 			if(value2)
 				sb.adds("(%-IncludeItems %1i)", value + value2);
 			break;

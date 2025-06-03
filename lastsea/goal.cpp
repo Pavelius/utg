@@ -7,7 +7,7 @@ static int prop_danger_maximum;
 goal::fninfo goal::info;
 
 void goal_initialize() {
-	prop_danger_maximum = property_add("DangerMaximum", propertyi::Number);
+	prop_danger_maximum = add_property("DangerMaximum", propertyi::Number);
 }
 
 const char* goal::getgoalname() const {

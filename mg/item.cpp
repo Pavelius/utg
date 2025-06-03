@@ -1,6 +1,6 @@
 #include "item.h"
 
-int item::getbonus(action_s value) const {
+int item::getbonus(actionn value) const {
 	auto r = 0;
 	auto n = bsdata<tagi>::source.getcount();
 	for(size_t i = 0; i < n; i++) {
@@ -10,7 +10,7 @@ int item::getbonus(action_s value) const {
 	return r;
 }
 
-int item::getsuccess(action_s value) const {
+int item::getsuccess(actionn value) const {
 	auto r = 0;
 	auto n = bsdata<tagi>::source.getcount();
 	for(size_t i = 0; i < n; i++) {

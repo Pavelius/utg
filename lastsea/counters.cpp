@@ -1,5 +1,5 @@
-#include "crt.h"
 #include "counters.h"
+#include "slice.h"
 
 void counters::clear() {
 	memset(this, 0, sizeof(*this));

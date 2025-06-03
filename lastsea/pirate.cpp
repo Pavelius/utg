@@ -21,7 +21,7 @@ int pirate::getnextstar(int value) const {
 	return 0;
 }
 
-int	pirate::getmaximum(ability_s v) const {
+int	pirate::getmaximum(abilityn v) const {
 	switch(v) {
 	case Exploration:
 	case Brawl:
@@ -41,7 +41,7 @@ int	pirate::getmaximum(ability_s v) const {
 	}
 }
 
-const char* classi::getearn(ability_s v) const {
+const char* classi::getearn(abilityn v) const {
 	switch(v) {
 	case Exploration: return exploration;
 	case Brawl: return brawl;
@@ -74,7 +74,7 @@ int classi::getlevel(int stars) const {
 
 void print(stringbuilder& sb, const char* id, int count, unsigned flags, char sep);
 
-void pirate::add(ability_s v, int i) {
+void pirate::add(abilityn v, int i) {
 	// RULE: Solo mode increase Infamy whe raise stars
 	if(v == Stars) {
 		v = Infamy;
@@ -110,7 +110,7 @@ void pirate::add(ability_s v, int i) {
 		apply(WhenAbilityDecreased, v);
 }
 
-void pirate::set(ability_s v, int i) {
+void pirate::set(abilityn v, int i) {
 	add(v, i - get(v));
 }
 
@@ -144,7 +144,7 @@ void pirate::gaintreasures(int count) {
 	}
 }
 
-bool pirate::confirm(ability_s v, int delta) const {
+bool pirate::confirm(abilityn v, int delta) const {
 	if(delta <= 0)
 		return true;
 	if(get(Supply) < delta)
@@ -164,15 +164,15 @@ void pirate::sortactions() {
 	qsort(actions, sizeof(actions) / sizeof(actions[0]), sizeof(actions[0]), compare);
 }
 
-ability_s pirate::chooseskill(const char* title) const {
+abilityn pirate::chooseskill(const char* title) const {
 	answers an;
-	for(auto i = Exploration; i <= Navigation; i = (ability_s)(i + 1)) {
+	for(auto i = Exploration; i <= Navigation; i = (abilityn)(i + 1)) {
 		if(get(i) >= getmaximum(i))
 			continue;
 		auto& ei = bsdata<abilityi>::elements[i];
 		an.add(&ei, getnm(ei.id));
 	}
-	return (ability_s)bsdata<abilityi>::source.indexof(an.choose(title));
+	return (abilityn)bsdata<abilityi>::source.indexof(an.choose(title));
 }
 
 static const quest* find_next_action(const quest* p) {
