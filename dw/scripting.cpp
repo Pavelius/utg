@@ -124,7 +124,7 @@ template<> void fnscript<itemi>(int index, int bonus) {
 		bonus = -bonus;
 		if(ei.tags.is(Coins))
 			fix("RemoveCoins", bonus);
-		else if(bonus>1)
+		else if(bonus > 1)
 			fix("RemoveItems", ei.getname(), bonus);
 		else
 			fix("RemoveItem", ei.getname());
