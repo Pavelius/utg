@@ -14,7 +14,7 @@ void creaturea::select() {
 	count = ps - data;
 }
 
-void creaturea::match(state_s v, bool keep) {
+void creaturea::match(staten v, bool keep) {
 	auto ps = data;
 	auto pe = end();
 	for(auto p : *this) {

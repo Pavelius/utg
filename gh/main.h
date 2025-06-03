@@ -25,7 +25,7 @@ enum target_s : unsigned char {
 enum modifier_s : unsigned char {
 	Bonus, Experience, Pierce, Range, Target,
 };
-enum action_s : unsigned char {
+enum actionn : unsigned char {
 	Shield, Retaliate,
 	Move, Attack, Push, Pull, Heal, DisarmTrap, Loot, Kill,
 	Bless, Curse,
@@ -35,11 +35,11 @@ enum action_s : unsigned char {
 enum game_propery_s : unsigned char {
 	Reputation, Prosperty, Coins, Donate,
 };
-enum state_s : unsigned char {
+enum staten : unsigned char {
 	Disarmed, Immobilize, Wound, Muddle, Poison, Invisibility, Stun, Strenght,
 	Jump, Fly, Mirrored, Hostile, Elite,
 };
-enum tile_s : unsigned char {
+enum tilen : unsigned char {
 	Corridor, Coin,
 };
 enum color_s : unsigned char {
@@ -89,7 +89,7 @@ struct playercardi {
 	variants			upper, lower;
 	static playercardi*	last;
 	variants			getabilities(int n) const { return n ? lower : upper; }
-	void				getinfo(stringbuilder& sb) const;
+	//void				getinfo(stringbuilder& sb) const;
 	void				paint() const;
 	void				paint_statistic() const;
 };
@@ -143,7 +143,7 @@ struct summoni {
 	const char*			id;
 	char				hits, move, attack, range;
 	variants			feats;
-	int					get(action_s v) const;
+	int					get(actionn v) const;
 	int					get(modifier_s v) const;
 };
 struct monsteri : summoni {
@@ -182,8 +182,8 @@ struct activecardi {
 	creaturei*			target;
 	playercardi*		card;
 	char				uses, bonus;
-	action_s			type;
-	action_s			discard_action;
+	actionn				type;
+	actionn				discard_action;
 	constexpr explicit operator bool() const { return duration != Instant; }
 	static activecardi*	add(creaturei* target, playercardi* card, duration_s duration, char uses, const slice<variant>& source);
 	void				addsource(variant* p, variant* pe);
@@ -219,7 +219,7 @@ struct decoration : public indexable {
 	const tilei*		parent;
 	explicit operator bool() const { return parent != 0; }
 	static decoration*	add(const char* id, point position);
-	bool				is(tile_s v) const { return (parent - bsdata<tilei>::elements) == v; }
+	bool				is(tilen v) const { return (parent - bsdata<tilei>::elements) == v; }
 	void				updateui() const;
 };
 struct decorationa : adat<decoration*> {
@@ -238,8 +238,8 @@ public:
 	void				addcoins(int value);
 	void				addexperience(int value);
 	void				apply(variants source);
-	void				apply(action_s type);
-	void				apply(state_s type);
+	void				apply(actionn type);
+	void				apply(staten type);
 	void				apply(target_s type);
 	void				attack(creaturei& enemy, int bonus, int pierce = 0, int advantage = 0);
 	creaturei*			chooseenemy() const;
@@ -247,8 +247,8 @@ public:
 	void				clear();
 	void				damage(int v);
 	static int			get(modifier_s i);
-	int					getactive(action_s id) const;
-	int					getactive(action_s id, variant* p, variant* pe) const;
+	int					getactive(actionn id) const;
+	int					getactive(actionn id, variant* p, variant* pe) const;
 	int					getcoins() const;
 	combatdeck&			getcombatdeck() const;
 	void				getdefence(int& attack, int& retaliate);
@@ -263,10 +263,10 @@ public:
 	const summoni*		getsummon() const;
 	pathfind::indext	getmovetarget() const;
 	creaturei*			getnearestenemy() const;
-	int					getongoing(action_s v) const;
+	int					getongoing(actionn v) const;
 	playeri*			getplayer() const;
 	void				heal(int v);
-	bool				is(state_s v) const { return state.is(v); }
+	bool				is(staten v) const { return state.is(v); }
 	bool				iscomputer() const;
 	bool				isplayer() const;
 	void				kill();
@@ -276,7 +276,7 @@ public:
 	void				paint() const;
 	bool				pull(pathfind::indext from, int bonus);
 	bool				push(pathfind::indext from, int bonus);
-	void				set(state_s v) { return state.set(v); }
+	void				set(staten v) { return state.set(v); }
 	void				updateui() const;
 	void				useshield(int& attack);
 };
@@ -284,7 +284,7 @@ extern creaturei* active_creature;
 struct creaturea : adat<creaturei*> {
 	static const creaturea* last;
 	creaturei*			choose(const char* title) const;
-	void				match(state_s v, bool keep);
+	void				match(staten v, bool keep);
 	void				range(int v);
 	void				select();
 	void				sort();

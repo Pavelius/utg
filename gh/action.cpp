@@ -106,7 +106,7 @@ void creaturei::apply(target_s type) {
 	}
 }
 
-void creaturei::apply(action_s type) {
+void creaturei::apply(actionn type) {
 	switch(type) {
 	case Attack:
 		targets.clear();
@@ -153,13 +153,13 @@ void creaturei::apply(action_s type) {
 	}
 }
 
-int creaturei::getactive(action_s id, variant* p, variant* pe) const {
+int creaturei::getactive(actionn id, variant* p, variant* pe) const {
 	int result = 0;
 	while(p < pe) {
 		if(p->iskind<durationi>()) {
 			break;
 		} else if(p->iskind<actioni>()) {
-			auto pid = (action_s)p->value;
+			auto pid = (actionn)p->value;
 			if(id == pid)
 				result += p->counter;
 			modifiera modifiers = {};
@@ -178,7 +178,7 @@ int creaturei::getactive(action_s id, variant* p, variant* pe) const {
 	return result;
 }
 
-int creaturei::getactive(action_s id) const {
+int creaturei::getactive(actionn id) const {
 	if(bsdata<monsteri>::have(parent)) {
 		auto p = (monsteri*)parent;
 		auto pc = monsterdeck::get(p->getdeck()).current();
@@ -198,7 +198,7 @@ void creaturei::apply(variants source) {
 			break;
 		} else if(p->iskind<actioni>()) {
 			clear_modifiers();
-			auto type = (action_s)p->value;
+			auto type = (actionn)p->value;
 			auto pm = getsummon();
 			if(pm) {
 				if(type == Attack || type == Move)
@@ -217,7 +217,7 @@ void creaturei::apply(variants source) {
 			apply((target_s)p->value);
 			p++;
 		} else if(p->iskind<statei>()) {
-			auto i = (state_s)p->value;
+			auto i = (staten)p->value;
 			p = getmodifiers(p + 1, pe, modifiers);
 			for(auto p : targets)
 				set(i);

@@ -106,7 +106,7 @@ void creaturei::heal(int v) {
 		hits = getmaximumhp();
 }
 
-int creaturei::getongoing(action_s id) const {
+int creaturei::getongoing(actionn id) const {
 	auto result = 0;
 	for(auto& e : bsdata<activecardi>()) {
 		if(!e || e.target != this || e.type!=id)

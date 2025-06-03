@@ -1,6 +1,6 @@
 #include "main.h"
 
-int summoni::get(action_s v) const {
+int summoni::get(actionn v) const {
 	switch(v) {
 	case Attack: return attack;
 	case Move: return move;

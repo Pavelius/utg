@@ -16,9 +16,9 @@ void activecardi::addsource(variant* p, variant* pe) {
 	while(p < pe) {
 		if(p->iskind<actioni>()) {
 			if(p->type == Discard)
-				discard_action = (action_s)p->type;
+				discard_action = (actionn)p->type;
 			else {
-				type = (action_s)p->type;
+				type = (actionn)p->type;
 				modifiera modifiers = {};
 				p = creaturei::getmodifiers(p + 1, pe, modifiers);
 				bonus = modifiers[Bonus];

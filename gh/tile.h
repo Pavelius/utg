@@ -1,4 +1,5 @@
 #include "point.h"
+#include "slice.h"
 
 #pragma once
 
