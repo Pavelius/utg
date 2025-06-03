@@ -20,9 +20,6 @@ enum symbolfn {
 enum scopen {
 	TypeScope = -2, PointerScope = -3,
 };
-enum sectionn {
-	ModuleSection, LocalSection, DataSection, UDataSection,
-};
 struct offseti {
 	int			sid; // section identifier, -1 for not instaced identifier
 	int			offset; // offset from section base

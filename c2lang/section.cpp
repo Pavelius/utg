@@ -1,5 +1,8 @@
+#include "bsdata.h"
 #include "slice.h"
 #include "section.h"
+
+BSDATAC(sectioni, 256)
 
 extern "C" void exit(int exit_code);
 
@@ -39,4 +42,13 @@ void sectioni::reserve(size_t size) {
 		data = p;
 	} else
 		data = malloc(size_maximum);
+}
+
+sectioni& getsection(sectionn v) {
+	return bsdata<sectioni>::elements[v];
+}
+
+void initialize_sections() {
+	getsection(LocalSection).setvirtual();
+	getsection(UDataSection).setvirtual();
 }

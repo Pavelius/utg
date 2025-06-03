@@ -954,6 +954,12 @@ static void parse_array_declaration(int sid) {
 	}
 }
 
+static void symbol_instance(int sid, sectionn secid) {
+	auto& e = bsdata<symboli>::get(sid);
+	auto s = bsdata<sectioni>::elements + secid;
+	e.instance.offset = s->ptr();
+}
+
 static void parse_local_declaration() {
 	if(parse_member_declaration()) {
 		auto type = last_type;
@@ -965,6 +971,7 @@ static void parse_local_declaration() {
 		instance_symbol(sid);
 		if(match("="))
 			symbol_ast(sid, initialization_list());
+		symbol_instance(sid, LocalSection);
 		skip(";");
 	} else {
 		parse_assigment();

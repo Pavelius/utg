@@ -1,5 +1,8 @@
 #pragma once
 
+enum sectionn {
+	ModuleSection, LocalSection, DataSection, UDataSection,
+};
 struct sectioni {
 	int		ids;
 	void*	data;
@@ -11,3 +14,6 @@ struct sectioni {
 	void	reserve(size_t size);
 	void	setvirtual() { size_maximum = -1; }
 };
+sectioni& getsection(sectionn v);
+
+void initialize_sections();

@@ -1,6 +1,7 @@
 #include "bsdata.h"
 #include "calculator.h"
 #include "log.h"
+#include "section.h"
 #include "stringbuilder.h"
 
 static const char* last_url_error;
@@ -111,6 +112,7 @@ static void initialize_parser() {
 
 int main() {
 	initialize_parser();
+	initialize_sections();
 	project_compile("code/project/test");
 	if(iserrors())
 		return -1;
