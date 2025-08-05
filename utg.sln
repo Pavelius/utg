@@ -49,6 +49,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c2lang", "c2lang\c2lang.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fontedit", "fontedit\fontedit.vcxproj", "{A64407B9-C612-4EBE-A998-222FD8092CEC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arkham2", "arkham2\arkham2.vcxproj", "{FD677DF4-4ED5-4500-9694-179F4B08D882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -241,6 +243,14 @@ Global
 		{A64407B9-C612-4EBE-A998-222FD8092CEC}.Release|x64.Build.0 = Release|x64
 		{A64407B9-C612-4EBE-A998-222FD8092CEC}.Release|x86.ActiveCfg = Release|Win32
 		{A64407B9-C612-4EBE-A998-222FD8092CEC}.Release|x86.Build.0 = Release|Win32
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Debug|x64.ActiveCfg = Debug|x64
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Debug|x64.Build.0 = Debug|x64
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Debug|x86.Build.0 = Debug|Win32
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Release|x64.ActiveCfg = Release|x64
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Release|x64.Build.0 = Release|x64
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Release|x86.ActiveCfg = Release|Win32
+		{FD677DF4-4ED5-4500-9694-179F4B08D882}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

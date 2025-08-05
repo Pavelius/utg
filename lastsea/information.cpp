@@ -1,4 +1,5 @@
 #include "main.h"
+#include "math.h"
 #include "stringvar.h"
 #include "widget.h"
 
@@ -197,7 +198,7 @@ void gamei::sfgetinfo(const void* object, stringbuilder& sb) {
 
 void treasurei::sfgetinfo(const void* object, stringbuilder& sb) {
 	auto p = (treasurei*)object;
-	auto pn = getdescription(p->id);
+	auto pn = getnme(ids(p->id, "Info"));
 	if(pn)
 		sb.adds(pn);
 	switch(p->trigger) {
@@ -227,7 +228,7 @@ void gamei::sfgetstatus(const void* object, stringbuilder& sb) {
 		if(pn)
 			sb.add(pn);
 	} else if(game.getplayer(0)==object) {
-		sb.add(getdescription("YourPirate"), getnm(game.getclass().id));
+		sb.add(getnme("YourPirateInfo"), getnm(game.getclass().id));
 	} else if(bsdata<tilei>::have(object)) {
 		auto pt = (tilei*)object;
 		auto pq = quest_find(pt->param);
@@ -454,10 +455,10 @@ BSDATAF(stringvari)
 
 void initialize_information_widgets() {
 	stringbuilder::custom = custom_string;
-	widget::add("ListOfGoals", listofgoals);
-	widget::add("ListOfGuns", listofguns);
-	widget::add("ListOfCharacters", listofcharacters);
-	widget::add("ListOfRecords", listofrecords);
-	widget::add("ListOfTreasures", listoftreasures);
-	widget::add("ListOfCounters", listofcounters);
+	add_widget("ListOfGoals", listofgoals);
+	add_widget("ListOfGuns", listofguns);
+	add_widget("ListOfCharacters", listofcharacters);
+	add_widget("ListOfRecords", listofrecords);
+	add_widget("ListOfTreasures", listoftreasures);
+	add_widget("ListOfCounters", listofcounters);
 }

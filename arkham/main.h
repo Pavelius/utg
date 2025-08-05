@@ -82,8 +82,6 @@ struct scripti {
 	int				param;
 	fntest			choose;
 };
-struct realmi : nameable {
-};
 struct deck : adat<cardt> {
 	void			create(cardtype_s type);
 	void			drop(cardt v);
@@ -204,7 +202,7 @@ struct player : abilitya {
 	void			updatecombat();
 	void			usehands();
 };
-struct gamei : public player {
+struct gamei : player {
 	static quests	quest_other;
 	static int		d6();
 	static void		apply(const variants& source);

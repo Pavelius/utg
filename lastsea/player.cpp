@@ -1,4 +1,5 @@
 #include "main.h"
+#include "rand.h"
 
 static void* ask(answers& an, const char* id) {
 	if(!id)
@@ -11,7 +12,7 @@ static void* ask(answers& an, const char* id) {
 static int choose(array& source, const char* id) {
 	answers an;
 	auto pe = source.end();
-	auto sz = source.getsize();
+	auto sz = source.element_size;
 	for(auto p = source.begin(); p < source.end(); p += sz)
 		an.add(p, getnm(*(const char**)p));
 	return source.indexof(ask(an, id));

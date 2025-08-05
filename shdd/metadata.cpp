@@ -4,7 +4,6 @@
 #include "creature.h"
 #include "item.h"
 #include "gender.h"
-#include "groupname.h"
 #include "location.h"
 #include "list.h"
 #include "menu.h"
@@ -13,6 +12,7 @@
 #include "nametable.h"
 #include "questlist.h"
 #include "race.h"
+#include "speech.h"
 #include "spell.h"
 #include "special.h"
 #include "statable.h"
@@ -115,7 +115,6 @@ BSDATA(varianti) = {
 	{"ItemObject", VAR(item, 0), ftinfo<item>},
 	{"Feat", VAR(feati, 1)},
 	{"Gender", VAR(genderi, 1), 0, 0, fnscript<genderi>},
-	{"GroupName", VAR(groupname, 2), 0, 0, 0, 0, read_group_names},
 	{"List", VAR(listi, 1)},
 	{"Location", VAR(locationi, 0)},
 	{"Menu", VAR(menu, 1)},
@@ -124,6 +123,7 @@ BSDATA(varianti) = {
 	{"Quest", VAR(questlist, 1), 0, 0, fnscript<questlist>, 0, questlist_read},
 	{"Race", VAR(racei, 1), 0, 0, fnscript<racei>},
 	{"Script", VAR(script, 1), 0, 0, fnscript<script>},
+	{"Speech", VAR(speech, 1), 0, 0, 0, 0, speech_read},
 	{"Spell", VAR(spelli, 1)},
 	{"State", VAR(statei, 1), 0, 0, fnscript<statei>},
 	{"RollTable", VAR(nametable, 1), 0, 0, fnscript<nametable>, 0, read_nametable},

@@ -4,7 +4,7 @@ enum sectionn {
 	ModuleSection, LocalSection, DataSection, UDataSection,
 };
 struct sectioni {
-	int		ids;
+	int		ids; // section name
 	void*	data;
 	size_t	size, size_maximum;
 	void	add(const void* source, size_t size);

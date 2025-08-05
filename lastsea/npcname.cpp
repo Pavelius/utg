@@ -1,31 +1,29 @@
-#include "stringlist.h"
+#include "speech.h"
 #include "main.h"
 
-gender_s npcname::getgender() const {
-	return equal(bsdata<stringlist>::elements[nameid].id, "Female") ? Female : Male;
+gendern npcname::getgender() const {
+	return equal(speech_getid(nameid), "Female") ? Female : Male;
 }
 
 const char* npcname::getname() const {
-	return bsdata<stringlist>::elements[nameid].name;
+	return speech_name(nameid);
 }
 
 void npcname::randomname() {
-	nameid = stringlist::random(rollv(0) <= 3 ? "Female" : "Male");
-	nicknameid = stringlist::random(rollv(0) <= 2 ? "NicknameEnd" : "Nickname");
+	nameid = speech_random(rollv(0) <= 3 ? "Female" : "Male");
+	nicknameid = speech_random(rollv(0) <= 2 ? "NicknameEnd" : "Nickname");
 }
 
 void npcname::getname(stringbuilder& sb) const {
-	auto& e1 = bsdata<stringlist>::elements[nameid];
-	auto& e2 = bsdata<stringlist>::elements[nicknameid];
-	auto first = equal(e2.id, "Nickname");
+	auto first = equal(speech_getid(nicknameid), "Nickname");
 	auto female = (getgender()==Female);
 	if(first) {
 		if(female)
-			sb.addnounf(e2.name);
+			sb.addnounf(speech_name(nicknameid));
 		else
-			sb.adds(e2.name);
+			sb.adds(speech_name(nicknameid));
 	}
-	sb.adds(e1.name);
+	sb.adds(speech_name(nameid));
 	if(!first)
-		sb.adds(e2.name);
+		sb.adds(speech_name(nicknameid));
 }

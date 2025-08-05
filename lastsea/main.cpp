@@ -3,8 +3,9 @@
 #include "draw_object.h"
 #include "main.h"
 #include "log.h"
+#include "rand.h"
 #include "widget.h"
-#include "stringlist.h"
+#include "speech.h"
 
 // TODO: Ошибка - нельзя зайти в пестрые пещеры
 // TODO: Сделать сохранение.
@@ -40,7 +41,7 @@ void main_menu() {
 
 static bool load_quest() {
 	quest_read("scenario/BeyondTheOceanEdge.txt");
-	if(log::geterrors() != 0)
+	if(log::errors)
 		return false;
 	game.script(0);
 	menu::current_mode = "Game";
@@ -62,7 +63,7 @@ static void starting() {
 static void initializing() {
 	bsreq::read("rules/Treasures.txt");
 	bsreq::read("rules/Pirates.txt");
-	stringlist::read("locale/ru/PirateNames.txt");
+	speech_read("locale/ru/PirateNames.txt");
 	messagei::read("locale/ru/PirateHistory.txt");
 	groupvaluei::read("locale/ru/PirateHistoryVariants.txt");
 	quest_read("locale/ru/QuestActions.txt");
@@ -77,7 +78,7 @@ static void custom_background() {
 }
 
 static void initialize_widgets() {
-	widget::add("MapOfTheSeas", widget::button, gamei::showseamap);
+	add_widget("MapOfTheSeas", widget::button, gamei::showseamap);
 	draw::pbackground = custom_background;
 }
 

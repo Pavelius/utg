@@ -15,7 +15,6 @@
 #include "stringvar.h"
 #include "variable.h"
 
-static answers an;
 static int result;
 static void* last_choose_result;
 static collection<ship> ships;

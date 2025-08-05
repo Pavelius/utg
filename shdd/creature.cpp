@@ -10,6 +10,7 @@
 #include "rand.h"
 #include "roll.h"
 #include "script.h"
+#include "speech.h"
 
 creature* player;
 creature* opponent;
@@ -170,10 +171,10 @@ const char* random_avatar(class_s type, gendern gender) {
 static void random_name() {
 	char temp[260]; stringbuilder sb(temp);
 	sb.clear(); sb.add("%1%2", bsdata<classi>::elements[player->kind].id, bsdata<genderi>::elements[player->gender].id);
-	auto i = random_group_namei(temp);
+	auto i = speech_random(temp);
 	if(i == 0xFFFF) {
 		sb.clear(); sb.add("%1%2", bsdata<racei>::elements[player->ancestry].id, bsdata<genderi>::elements[player->gender].id);
-		i = random_group_namei(temp);
+		i = speech_random(temp);
 	}
 	player->name = i;
 }

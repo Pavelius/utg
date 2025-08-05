@@ -1,4 +1,5 @@
 #include "main.h"
+#include "rand.h"
 
 void tilei::discard() {
 	index = 0xFFFF;

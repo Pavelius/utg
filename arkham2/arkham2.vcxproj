@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{55a93fc2-b3b6-4276-8bfa-2424ccc3a5b7}</ProjectGuid>
-    <RootNamespace>shdd</RootNamespace>
+    <ProjectGuid>{fd677df4-4ed5-4500-9694-179f4b08d882}</ProjectGuid>
+    <RootNamespace>arkham2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,17 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)utg</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,8 +79,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <DisableSpecificWarnings>26812;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,77 +130,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="scripting.cpp" />
+    <ClCompile Include="tag.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
       <Project>{9783172d-540b-4517-b85c-5dd5643ec9db}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ability.cpp" />
-    <ClCompile Include="actable.cpp" />
-    <ClCompile Include="class.cpp" />
-    <ClCompile Include="consumable.cpp" />
-    <ClCompile Include="creature.cpp" />
-    <ClCompile Include="feat.cpp" />
-    <ClCompile Include="information.cpp" />
-    <ClCompile Include="interface.cpp" />
-    <ClCompile Include="item.cpp" />
-    <ClCompile Include="lyingitem.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="modifier.cpp" />
-    <ClCompile Include="monster.cpp" />
-    <ClCompile Include="nametable.cpp" />
-    <ClCompile Include="ongoing.cpp" />
-    <ClCompile Include="roll.cpp" />
-    <ClCompile Include="serial.cpp" />
-    <ClCompile Include="statable.cpp" />
-    <ClCompile Include="state.cpp" />
-    <ClCompile Include="wear.cpp" />
-    <ClCompile Include="wearable.cpp" />
-    <ClCompile Include="scripting.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ability.h" />
-    <ClInclude Include="actable.h" />
-    <ClInclude Include="area.h" />
-    <ClInclude Include="class.h" />
-    <ClInclude Include="consumable.h" />
-    <ClInclude Include="creature.h" />
-    <ClInclude Include="feat.h" />
-    <ClInclude Include="feature.h" />
-    <ClInclude Include="item.h" />
-    <ClInclude Include="location.h" />
-    <ClInclude Include="lyingitem.h" />
-    <ClInclude Include="modifier.h" />
-    <ClInclude Include="monster.h" />
-    <ClInclude Include="nametable.h" />
-    <ClInclude Include="ongoing.h" />
-    <ClInclude Include="race.h" />
-    <ClInclude Include="roll.h" />
-    <ClInclude Include="special.h" />
-    <ClInclude Include="spell.h" />
-    <ClInclude Include="statable.h" />
-    <ClInclude Include="state.h" />
-    <ClInclude Include="wear.h" />
-    <ClInclude Include="wearable.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="errors.txt" />
-    <Text Include="locale\ru\CityEncounters.txt" />
-    <Text Include="locale\ru\DungeonEncounters.txt" />
-    <Text Include="locale\ru\names\ItemNames.txt" />
-    <Text Include="locale\ru\names\Names.txt" />
-    <Text Include="locale\ru\Talks.txt" />
-    <Text Include="locale\ru\Treasure0.txt" />
-    <Text Include="quests\ru\Combat.txt" />
-    <Text Include="quests\ru\Players.txt" />
-    <Text Include="rules\Advancement.txt" />
-    <Text Include="rules\Area.txt" />
-    <Text Include="rules\Basic.txt" />
-    <Text Include="rules\Items.txt" />
-    <Text Include="rules\Monsters.txt" />
-    <Text Include="rules\Race.txt" />
-    <Text Include="rules\Spells.txt" />
+    <ClInclude Include="card.h" />
+    <ClInclude Include="tag.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

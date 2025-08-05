@@ -178,13 +178,7 @@
     <Text Include="locale\ru\Talks.txt">
       <Filter>locale\ru</Filter>
     </Text>
-    <Text Include="locale\ru\Combat.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
     <Text Include="locale\ru\Treasure0.txt">
-      <Filter>locale\ru</Filter>
-    </Text>
-    <Text Include="locale\ru\Players.txt">
       <Filter>locale\ru</Filter>
     </Text>
     <Text Include="rules\Area.txt">
@@ -203,6 +197,12 @@
       <Filter>locale\ru</Filter>
     </Text>
     <Text Include="locale\ru\DungeonEncounters.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="quests\ru\Players.txt">
+      <Filter>locale\ru</Filter>
+    </Text>
+    <Text Include="quests\ru\Combat.txt">
       <Filter>locale\ru</Filter>
     </Text>
   </ItemGroup>

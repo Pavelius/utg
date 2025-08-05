@@ -1,4 +1,6 @@
 #include "cannoneer.h"
+#include "math.h"
+#include "rand.h"
 
 bool cannoneer::addgun(int level, bool loaded, bool run) {
 	for(auto& e : guns) {

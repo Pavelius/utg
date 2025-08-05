@@ -8,7 +8,7 @@
 #include "rules/Area.txt"
 
 #include "quests/%1/Combat.txt" Quest
-#include "quests/%1/Players.txt" GroupName
+#include "quests/%1/Players.txt" Speech
 
 #include "tables/%1/Treasure0.txt" RollTable
 #include "tables/%1/CityEncounters.txt" RollTable

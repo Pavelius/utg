@@ -5,7 +5,6 @@
 #include "draw.h"
 #include "draw_utg.h"
 #include "gender.h"
-#include "groupname.h"
 #include "item.h"
 #include "log.h"
 #include "questlist.h"

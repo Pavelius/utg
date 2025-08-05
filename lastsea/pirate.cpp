@@ -1,4 +1,6 @@
 #include "main.h"
+#include "rand.h"
+#include "math.h"
 
 void pirate::clearactions() {
 	memset(actions, 0, sizeof(actions));

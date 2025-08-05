@@ -46,7 +46,7 @@ struct symboli {
 	void		set(symbolfn v) { flags |= (1 << v); }
 };
 struct asti {
-	operationn op;
+	operationn	op;
 	int			left;
 	int			right;
 };

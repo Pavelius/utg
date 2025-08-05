@@ -1,4 +1,4 @@
-#include "crt.h"
+#include "rand.h"
 
 int	last_result, last_roll, last_bonus;
 

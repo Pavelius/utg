@@ -4,8 +4,8 @@
 #pragma once
 
 struct spelli : nameable {
-	char	level;
-	char	classes[16];
+	char level;
+	char classes[16];
 };
 struct spellable {
 	char	slots[10];

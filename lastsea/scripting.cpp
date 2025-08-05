@@ -437,7 +437,7 @@ static void add_treasure(answers& an, trigger_s trigger, abilityn ability, useda
 			continue;
 		if(e.ability != ability)
 			continue;
-		if(used.is(&e))
+		if(used.have(&e))
 			continue;
 		an.add(&e, getnm("UseTreasureToGainBonus"), getnm(e.id), e.bonus);
 	}

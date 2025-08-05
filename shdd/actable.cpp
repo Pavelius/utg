@@ -16,5 +16,5 @@ void actable::act(const char* format, ...) const {
 }
 
 const char* actable::getname() const {
-	return bsdata<speech::element>::elements[name].name;
+	return speech_name(name);
 }

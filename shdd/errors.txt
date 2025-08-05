@@ -1,2 +1,2 @@
 ﻿Error in file `rules/Basic.txt`:
- Line 16: Can't find variant `Treasure0`
+ Line 11: Can't find type `GroupName`

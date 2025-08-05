@@ -65,7 +65,7 @@ struct pma {
 	const char*			getstring(int id) const;
 };
 struct sprite : pma {
-	enum encodes { Auto, RAW, RLE, ALC, RAW8, RLE8, ALC8, RAW1, ALC41 };
+	enum encodes { Auto, RAW, RLE, ALC, RAW8, RLE8, ALC8, RAW1, ALC41, ALC1 };
 	struct frame {
 		short 			sx, sy;
 		short			ox, oy;
@@ -84,8 +84,8 @@ struct sprite : pma {
 	unsigned			cicles; // count of anim structure
 	unsigned			cicles_offset;
 	frame				frames[1];
-	int					esize() const { return frames[0].offset - (sizeof(sprite) + sizeof(frame)*(count - 1)); }
-	const unsigned char* edata() const { return (const unsigned char*)this + sizeof(sprite) + sizeof(frame)*(count - 1); }
+	int					esize() const { return frames[0].offset - (sizeof(sprite) + sizeof(frame) * (count - 1)); }
+	const unsigned char* edata() const { return (const unsigned char*)this + sizeof(sprite) + sizeof(frame) * (count - 1); }
 	int					ganim(int index, int tick);
 	const frame&		get(int id) const { return frames[(id >= count) ? 0 : id]; }
 	cicle*				gcicle(int index) { return (cicle*)ptr(cicles_offset) + index; }
@@ -209,7 +209,7 @@ int						hittest(int x, int test_x, const char* string, int lenght);
 int						hittest(rect rc, const char* string, unsigned state, point mouse);
 bool					ishilite(const rect& rc);
 inline bool				ishilite() { return ishilite({caret.x, caret.y, caret.x + width, caret.y + height}); }
-inline bool				ishilite(int size) { return ishilite({caret.x-size, caret.y - size, caret.x + size, caret.y + size}); }
+inline bool				ishilite(int size) { return ishilite({caret.x - size, caret.y - size, caret.x + size, caret.y + size}); }
 void					image(int x, int y, const sprite* e, int id, int flags);
 inline void				image(const sprite* e, int id, int flags) { image(caret.x, caret.y, e, id, flags); }
 void					image(const sprite* e, int id, int flags, color* pal);
