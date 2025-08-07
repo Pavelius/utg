@@ -19,6 +19,9 @@
     <ClCompile Include="view.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="ability.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="card.h">
@@ -28,6 +31,9 @@
       <Filter>logic</Filter>
     </ClInclude>
     <ClInclude Include="view.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ability.h">
       <Filter>logic</Filter>
     </ClInclude>
   </ItemGroup>

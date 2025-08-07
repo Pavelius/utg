@@ -1,9 +1,11 @@
 #include "answers.h"
 #include "bsreq.h"
 #include "draw.h"
+#include "draw_board.h"
 #include "draw_button.h"
 #include "draw_figure.h"
 #include "log.h"
+#include "nameable.h"
 #include "variant.h"
 
 using namespace draw;
@@ -271,7 +273,7 @@ static void tips() {
 	paint_tips();
 }
 
-void board_tool_panel(int dx, int dy) {
+void board_tool_panel(int dy) {
 	height = dy;
 	gradv(colors::border.mix(colors::form, 128), colors::form);
 	auto push_caret = caret;
@@ -279,10 +281,9 @@ void board_tool_panel(int dx, int dy) {
 	pushfore push_fore(colors::border);
 	line(caret.x + width, caret.y);
 	caret = push_caret;
-	width = dx;
 }
 
-void board_tool_button(const char* id, const char* value) {
+void board_tool_button(const char* id, void* object, const char* value) {
 	pushfore push_fore(colors::h3);
 	auto push_font = font;
 	auto push_caret = caret;

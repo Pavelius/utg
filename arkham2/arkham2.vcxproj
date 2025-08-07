@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ability.cpp" />
     <ClCompile Include="card.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp20</LanguageStandard>
     </ClCompile>
@@ -146,6 +147,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ability.h" />
     <ClInclude Include="card.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="view.h" />
