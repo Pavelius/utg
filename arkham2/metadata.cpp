@@ -9,6 +9,10 @@ BSDATAC(cardi, 1024)
 
 BSMETA(cardi) = {
 	BSREQ(id),
+	BSENM(type, cardti),
+	{}};
+BSMETA(cardti) = {
+	BSREQ(id),
 	{}};
 BSMETA(tagi) = {
 	BSREQ(id),

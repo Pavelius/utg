@@ -1,13 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="metadata.cpp" />
-    <ClCompile Include="scripting.cpp" />
-    <ClCompile Include="tag.cpp" />
+    <ClCompile Include="scripting.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="metadata.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tag.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="card.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="view.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="card.h" />
-    <ClInclude Include="tag.h" />
+    <ClInclude Include="card.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="tag.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="view.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{4c01fbb6-b64c-48d2-9f82-08e5cab20aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{51502e10-1b88-4642-a04b-5f9f26c79d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="locale">
+      <UniqueIdentifier>{db275280-204f-468f-a486-abeffafda27c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Basic.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="rules\Items.txt">
+      <Filter>data</Filter>
+    </Text>
+    <Text Include="locale\ru\Names.txt">
+      <Filter>locale</Filter>
+    </Text>
+    <Text Include="locale\ru\UnknownNames.txt">
+      <Filter>locale</Filter>
+    </Text>
   </ItemGroup>
 </Project>

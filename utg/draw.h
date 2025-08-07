@@ -280,13 +280,7 @@ struct awindowi {
 	unsigned	flags;
 };
 extern awindowi awindow;
-//void applicationinitialize();
-//void applicationafterinitialize();
-//void fieldsetfocus();
-//void statusbeforemodal();
-//void statuspaint();
 void tooltipspaint();
-//void loginitialize();
 }
 
 namespace draw {

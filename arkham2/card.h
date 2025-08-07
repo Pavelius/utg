@@ -4,8 +4,12 @@
 #include "nameable.h"
 #include "variant.h"
 
-enum cardt : unsigned char;
+enum cardt : unsigned char {
+	Ally, Arkham, CommonItem, Gate, Monster, Myth, OtherWorld, Skill, Special, Spell, Street, UniqueItem,
+};
 
+struct cardti : nameable {
+};
 struct cardi : nameable {
 	cardt		type; // Card deck or card type
 	char		count; // Total card count in deck
@@ -14,7 +18,7 @@ struct cardi : nameable {
 	flag32		tags; // Any card tags
 };
 struct card {
-	short unsigned	type;
-	unsigned char exhaused : 1;
-	unsigned char marker : 3;
+	short unsigned type;
+	short unsigned exhaused : 1;
+	short unsigned marker : 3;
 };

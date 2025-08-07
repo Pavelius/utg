@@ -1,0 +1,152 @@
+﻿Abyss: Преисподня
+AdministrationBuilding: Здание администрации
+AncientTome: Древний фолиант
+And: и
+AppTitle: Ужас Аркхема
+ApplyRollResult: Применить результат броска
+ArkhamAsylum: Лечебница Аркхэма
+Axe: Топор
+Back: Назад
+BankOfArkham: Банк Аркхэма
+BlackCave: Темная пещера
+Bullwhip: Кнут
+BuyCard: Купить %1 за %2i$
+BuyCardNoMoney: Купить %1 за %2i$ (нет денег)
+Cancel: Отмена
+CavalrySaber: Кавалерийская Сабля
+ChangeFocus: Если хотите можете поменять некоторые ваши характеристики. Ваша собранность позволяет сделать это еще [%1i] раз.
+Choose: Выбирайте
+ChooseEncounter: Какое событие должно произойти?
+ChooseLeft: Выбирайте возможный вариант (осталось [%1i])
+ChooseLoseCard: Что хотите потерять? (осталось [%1i])
+ChooseOption: Выбирайте возможный вариант
+ChooseStreetOrLocation: Выбирайте улицу или локацию
+Clue: Улика
+CommonItem: Обычный предмет
+Continue: Продолжить
+Cross: Крест
+Cultist: Культист
+CuriositieShoppe: Лавка Древностей
+DarkCloack: Темный плащ
+Derringer18c: Дерингер 18 калибра
+DoNotChangeStats: Хватит. Больше не менять.
+DoNotPay: Не платить
+DoYouAgree: Вы согласны?
+Downtown: Даунтаун
+Dynamite: Динамит
+Easttown: Исттаун
+EnchantedBlade: Волшебный клинок
+EnchantedKnife: Волшебный кинжал
+EquipItem: Достать %1
+EricColt: Эрик Кольт
+Fight: Сражение
+FightSkill: Навык сражения
+Focus: Собранность
+Food: Еда
+FrenchHill: Фрэнч Хилл
+GateAnotherDimention: Врата в другое измерение
+GeneralStore: Магазин
+Ghoul: Упырь
+Graveyard: Кладбище
+Health: Здоровье
+HibbsRoadhouse: Забегаловка Гиббса
+HistoricalSociety: Историческое общество
+HolyWater: Святая вода
+IndependenceSquare: Площадь Независимости
+Introduction: Введение
+Knife: Нож
+LampOfAlhazred: Лампа Аль-Хазреда
+Lantern: Фонарь
+Library: Библиотека
+Lore: Знания
+LoreSkill: Навык знаний
+LoseCard: Потерять %1
+LostCard: Потеряно %1.
+Luck: Удача
+LuckSkill: Навык удачи
+LuckyCigaretteCase: Счастливый Портсигар
+MapOfArkham: Карта Аркхэма
+MasBoardingHouse: Меблированные комнаты Ма
+MerchantDistrict: Торговый район
+MiskatonicUniversity: Университет Мискатоник
+Money: Долларов
+Motorcycle: Мотоцикл
+Newspaper: Офис газеты
+No: Нет
+NoCard: Нет карты
+NoDicesForRoll: Нет кубиков для броска. Бросок не даст ни одного успеха.
+Northside: Нортсайд
+OldJournal: Старый дневник
+OldTome: Старый дневник
+PayAbility: Повысить %-1 за %2i$
+PayLeft: Осталось заплатить [%1i] единиц
+PayMoney: Заплатить %1i$
+PayTrophy: Отдать %1
+PayTrophyNumber: Отдать %1i единиц трофеев
+PickCard: Возьмите %-1:
+PickEncounter: Вступить в контакт
+PoliceStation: Полицейский участок
+ProfessorArmitage: Профессор Армитэйдж
+ReadTome: Вы начали читать %1.
+ResearchMaterial: Материалы следствия
+Revolver38c: Револьвер 38 калибра
+Revolver45c: Магнум 45 калибра
+RichardUptonPickman: Ричард Аптон Пикмэн
+Rifle: Ружье
+RiverDocks: Речной порт
+Rivertown: Ривертаун
+Roll: Бросок
+RubyStandish: Руби Стэндиш
+Sanity: Рассудок
+ScienceBuilding: Дом науки
+SellItem: Продать %1 за %2i$
+Shotgun: Дробовик
+Shrivelling: Увядание
+SilverTwilightLodge: Ложа серебрянных сумерок
+SirWilliamBrinton: Сэр Уильям Брайтон
+Skill: Навык
+Sneak: Скрытность
+SneakSkill: Навык скрытности
+SouthChurch: Южный приход
+Southside: Саутсайд
+Speed: Скорость
+Spell: Заклинание
+StMarysHospital: Больница Святой Марии
+StartCombat: Ужасное созданье преграждает вам путь.
+StartFight: Начать битву
+StopMoving: Закончить движение
+ThatEnought: Достаточно. Ничего больше не надо.
+TheUnnamable: Неименуемый
+TheWitchHouse: Дом Ведьмы
+ThomasFMalone: Томас Френсис Мэлоун
+TommyGun: Автомат
+TrainStation: Вокзал
+TryEscape: Попытаться отступить, выполнив бросок Скрытность%+1i.
+TryEvade: Попытаться уйти, выполнив бросок Скрытность%+1i.
+TryFight: Попытаться убить, выполнив бросок Сражения%+1i с %2i успехами.
+UnequipItem: Спрятать %1
+UniqueItem: Уникальный предмет
+UnvisitedIsle: Неприступный остров
+Uptown: Аптаун
+UseClueToAddDice: Потратить улику, чтобы добавить %1i кубиков
+UseItem: Использовать %1
+VelmasDiner: Закусочная "У Велмы"
+WhereYouWhantToMove: Куда хотите пройти (осталось [%1i])?
+Whiskey: Виски
+Will: Воля
+WillSkill: Навык воли
+Wither: Лишение силы
+Woods: Леса
+YeOldeMagickShoppe: Старинная лавка магических товаров
+Yes: Да
+YouDelayed: Вы [-задержаны] здесь.
+YouGain: Получите [+%2i] %-1.
+YouGainAlly: [%1] присоединился к вам.
+YouGainCard: Получите [%1].
+YouLose: Потеряйте [-%2i] %-1.
+YouLoseCard: Потеряйте [%1].
+YouWear: У вас в руках
+
+CarolynFernText: Кэролин проходит стажировку в клинике для душевнобольных в Провиденсе. Уже более полугода она с помощью гипноза проникает в сны своих пациентов. У одного из них видения отличаются яркостью и гнетущей, пугающей атмосферой. И именно этот безумец трагически погибает, зарезанный странным ножом. В форме клинка Кэролин улавливает сходство с предметами из кошмаров погибшего бедолаги.\n---\nВстревоженная и напуганная убийством, Кэролин поднимает свои записи и изучает их ночь напролет. В описаниях чужих снов она находит улики, которые приводят ее в Аркхэм: в местном доме скорби содержался погибший пациент до перевода в Провиденс. Здесь должны знать, почему безвредный псих был убит за разговоры со своим доктором.
+CultistText: "Да проснется спящий!!" темная фигура в капюшоне преградила дорогу. От нее исходила невыносимая злоба.
+GhoulText: Клацая зубами и издавая тихое шипение на вас бросился упырь, появившийся неизвестно откуда.

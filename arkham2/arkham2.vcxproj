@@ -79,6 +79,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp23</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,10 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="card.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp20</LanguageStandard>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tag.cpp" />
+    <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\utg\utg.vcxproj">
@@ -143,6 +148,14 @@
   <ItemGroup>
     <ClInclude Include="card.h" />
     <ClInclude Include="tag.h" />
+    <ClInclude Include="view.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="errors.txt" />
+    <Text Include="locale\ru\Names.txt" />
+    <Text Include="locale\ru\UnknownNames.txt" />
+    <Text Include="rules\Basic.txt" />
+    <Text Include="rules\Items.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -309,6 +309,12 @@
     <ClCompile Include="draw_scroll.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="draw_board.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_button.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="answers.h">
@@ -603,6 +609,12 @@
       <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="draw_scroll.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_board.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_button.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
