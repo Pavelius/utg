@@ -3,7 +3,6 @@
 #include "draw.h"
 #include "draw_board.h"
 #include "draw_button.h"
-#include "draw_figure.h"
 #include "log.h"
 #include "nameable.h"
 #include "variant.h"
@@ -16,11 +15,27 @@ void set_dark_theme();
 void set_light_theme();
 void initialize_png();
 
-static const char* getnms(const char* id) {
+const char* getnms(const char* id) {
 	auto p = getnme(ids(id, "Short"));
 	if(!p)
 		p = getnm(id);
 	return p;
+}
+
+bool ishilite(int size, const void* object) {
+	if(!ishilite({caret.x - size, caret.y - size, caret.x + size, caret.y + size}))
+		return false;
+	hilite_object = object;
+	return true;
+}
+
+bool ishilite(const void* object) {
+	if(!object)
+		return false;
+	if(!ishilite())
+		return false;
+	hilite_object = object;
+	return true;
 }
 
 static void movey(int d) {
@@ -55,20 +70,6 @@ static void paint_window(bool hilight) {
 	alpha = push_alpha;
 	fore = colors::border;
 	rectb();
-}
-
-bool ishilite(int size, const void* object) {
-	if(!ishilite({caret.x - size, caret.y - size, caret.x + size, caret.y + size}))
-		return false;
-	hilite_object = object;
-	return true;
-}
-
-bool ishilite(const void* object) {
-	if(!ishilite())
-		return false;
-	hilite_object = object;
-	return true;
 }
 
 static void window(bool hilite, const char* string, const char* resid, const char* prompt) {
@@ -232,7 +233,7 @@ static void tipsposition(const char* format) {
 	caret.y = y;
 }
 
-static void paint_tips() {
+static void board_tips() {
 	auto tips = tips_sb.begin();
 	if(tips[0] == '@') {
 		auto object = variant(tips + 1);
@@ -268,9 +269,13 @@ static void paint_tips() {
 	}
 }
 
-static void tips() {
-	paint_hilite_figure();
-	paint_tips();
+void board_button() {
+	if(!button_hilited && !button_pressed)
+		return;
+	pushrect push;
+	setoffset(1, 1);
+	pushfore push_fore(button_pressed ? colors::form.mix(colors::button) : colors::button);
+	rectf();
 }
 
 void board_tool_panel(int dy) {
@@ -283,7 +288,15 @@ void board_tool_panel(int dy) {
 	caret = push_caret;
 }
 
-void board_tool_button(const char* id, void* object, const char* value) {
+void board_tool(const char* id, unsigned key) {
+	button_clear();
+	button_check(key, false);
+	board_button();
+	lineright();
+	texta(getnm(id), AlignCenterCenter);
+}
+
+void board_tool(const char* id, void* object, const char* value) {
 	pushfore push_fore(colors::h3);
 	auto push_font = font;
 	auto push_caret = caret;
@@ -303,6 +316,12 @@ void board_tool_button(const char* id, void* object, const char* value) {
 	caret.x += width;
 }
 
+void board_tool(const char* id, void* object, int value, const char* format) {
+	char temp[64]; stringbuilder sb(temp);
+	sb.add(format, value);
+	board_tool(id, object, temp);
+}
+
 int board_game_run(fnevent proc, const char* rules_url) {
 	initialize_png();
 	if(!proc)
@@ -316,7 +335,7 @@ int board_game_run(fnevent proc, const char* rules_url) {
 	initialize_translation();
 	if(log::errors > 0)
 		return -1;
-	ptips = tips;
+	ptips = board_tips;
 	awindow.flags = WFResize | WFMinmax;
 	initialize(getnm("AppTitle"));
 	setnext(proc);

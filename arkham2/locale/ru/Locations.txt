@@ -1,0 +1,38 @@
+﻿Abyss: Преисподня
+AdministrationBuilding: Здание администрации
+ArkhamAsylum: Лечебница Аркхэма
+BankOfArkham: Банк Аркхэма
+BlackCave: Темная пещера
+CuriositieShoppe: Лавка Древностей
+GeneralStore: Магазин
+Graveyard: Кладбище
+HibbsRoadhouse: Забегаловка Гиббса
+HistoricalSociety: Историческое общество
+IndependenceSquare: Площадь Независимости
+MasBoardingHouse: Меблированные комнаты Ма
+Newspaper: Офис газеты
+PoliceStation: Полицейский участок
+RiverDocks: Речной порт
+ScienceBuilding: Дом науки
+SilverTwilightLodge: Ложа серебрянных сумерок
+SouthChurch: Южный приход
+StMarysHospital: Больница Святой Марии
+TheUnnamable: Неименуемый
+TheWitchHouse: Дом Ведьмы
+TrainStation: Вокзал
+UnvisitedIsle: Неприступный остров
+VelmasDiner: Закусочная "У Велмы"
+Woods: Леса
+YeOldeMagickShoppe: Старинная лавка магических товаров
+
+Downtown: Даунтаун
+Easttown: Исттаун
+FrenchHill: Фрэнч Хилл
+MerchantDistrict: Торговый район
+MiskatonicUniversity: Университет Мискатоник
+Northside: Нортсайд
+Rivertown: Ривертаун
+Southside: Саутсайд
+Uptown: Аптаун
+
+GateAnotherDimention: Врата в другое измерение

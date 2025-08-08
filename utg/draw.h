@@ -294,7 +294,6 @@ void cbsetsht();
 void cbsetint();
 void cbsetptr();
 void doredraw();
-void fire(bool run, fnevent proc, long value = 0, long value2 = 0, const void* object = 0);
 long getresult();
 bool isnext();
 void initialize(const char* title);

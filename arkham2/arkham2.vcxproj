@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)utg</IncludePath>
+    <ExternalIncludePath />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,6 +138,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="metadata.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="scripting.cpp" />
     <ClCompile Include="tag.cpp" />
     <ClCompile Include="view.cpp" />
@@ -149,11 +151,14 @@
   <ItemGroup>
     <ClInclude Include="ability.h" />
     <ClInclude Include="card.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="statable.h" />
     <ClInclude Include="tag.h" />
     <ClInclude Include="view.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="errors.txt" />
+    <Text Include="locale\ru\Locations.txt" />
     <Text Include="locale\ru\Names.txt" />
     <Text Include="locale\ru\UnknownNames.txt" />
     <Text Include="rules\Basic.txt" />

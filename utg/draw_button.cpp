@@ -6,13 +6,14 @@ using namespace draw;
 bool button_pressed, button_executed, button_hilited, input_disabled;
 
 void button_clear() {
+	button_pressed = false;
 	button_hilited = false;
 	button_executed = false;
 }
 
-void button_check(unsigned key, bool execute_by_press, bool disabled) {
+void button_check(unsigned key, bool execute_by_press) {
 	static rect	button_rect;
-	if(disabled)
+	if(input_disabled)
 		return;
 	rect rc = {caret.x, caret.y, caret.x + width, caret.y + height};
 	if(ishilite(rc)) {

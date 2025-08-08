@@ -1,3 +1,2 @@
 ﻿Error in file `UnknownNames.txt`:
- Define translation for `ClueShort`
- Define translation for `FoodShort`
+ Define translation for `Character`

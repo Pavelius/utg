@@ -2677,13 +2677,6 @@ bool draw::button(const char* title, unsigned key, fnbutton proc, bool vertical)
 		|| (hkey == MouseLeft && control_hilited && !hpressed);
 }
 
-void draw::fire(bool run, fnevent proc, long value, long value2, const void* object) {
-	if(!proc)
-		return;
-	if(run)
-		execute(proc, value, value2, object);
-}
-
 void draw::tipspos() {
 	caret = tips_caret;
 	width = 320;
